@@ -1,0 +1,569 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 12:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0>Läbi</0> and <1>ära</1> from lesson {object} work in every tense: <2>Kati on raamatu läbi lugenud</2>, Kati has read the book to the end."
+msgstr "<0>Läbi</0> and <1>ära</1> from lesson {object} work in every tense: <2>Kati on raamatu läbi lugenud</2>, Kati has read the book to the end."
+
+msgid "<0>Olema</0> agrees with the person: <1>me oleme</1>."
+msgstr "<0>Olema</0> agrees with the person: <1>me oleme</1>."
+
+msgid "<0>Olema</0> in the present, and the main verb in its <1>-nud</1> form at the end."
+msgstr "<0>Olema</0> in the present, and the main verb in its <1>-nud</1> form at the end."
+
+msgid "<0>Oli</0> plus the <1>-nud</1> form: the pluperfect."
+msgstr "<0>Oli</0> plus the <1>-nud</1> form: the pluperfect."
+
+msgid "<0>On</0> plus the <1>-nud</1> form: the perfect."
+msgstr "<0>On</0> plus the <1>-nud</1> form: the perfect."
+
+msgid "<et>Olema</et> agrees with the person: <et>me oleme</et>."
+msgstr "<et>Olema</et> agrees with the person: <et>me oleme</et>."
+
+msgid "<et>Olema</et> with the person and with <et>ei</et>"
+msgstr "<et>Olema</et> with the person and with <et>ei</et>"
+
+msgid "22 minutes"
+msgstr "22 minutes"
+
+msgid "7 exercises"
+msgstr "7 exercises"
+
+msgid "A short verb: learn its <0>-nud</0> form by heart."
+msgstr "A short verb: learn its <0>-nud</0> form by heart."
+
+msgid "A short verb: learn its <et>-nud</et> form by heart."
+msgstr "A short verb: learn its <et>-nud</et> form by heart."
+
+msgid "A time is named, last month, so the simple past: <0>käisin</0>."
+msgstr "A time is named, last month, so the simple past: <0>käisin</0>."
+
+msgid "A time is named, so the simple past."
+msgstr "A time is named, so the simple past."
+
+msgid "A time is named, yesterday, so the simple past."
+msgstr "A time is named, yesterday, so the simple past."
+
+msgid "After <0>ei</0>, <1>olema</1> is <2>ole</2> for every person."
+msgstr "After <0>ei</0>, <1>olema</1> is <2>ole</2> for every person."
+
+msgid "After <0>ei</0>: <1>ei ole</1>."
+msgstr "After <0>ei</0>: <1>ei ole</1>."
+
+msgid "After <et>ei</et>, <et>olema</et> is <et>ole</et> for every person."
+msgstr "After <et>ei</et>, <et>olema</et> is <et>ole</et> for every person."
+
+msgid "All eight, typed in full."
+msgstr "All eight, typed in full."
+
+msgid "All seven, each in the tense its meaning needs."
+msgstr "All seven, each in the tense its meaning needs."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six, each in the perfect."
+msgstr "All six, each in the perfect."
+
+msgid "All six. You heard each tense."
+msgstr "All six. You heard each tense."
+
+msgid "already"
+msgstr "already"
+
+msgid "Before another past event, the pluperfect: <0>oli</0>, not <1>on</1>."
+msgstr "Before another past event, the pluperfect: <0>oli</0>, not <1>on</1>."
+
+msgid "Before another past event: <et>olema</et> in the past and the <et>-nud</et> form."
+msgstr "Before another past event: <et>olema</et> in the past and the <et>-nud</et> form."
+
+msgid "Before another past event: the pluperfect, with <0>oli</0>."
+msgstr "Before another past event: the pluperfect, with <0>oli</0>."
+
+msgid "Before the course, another past: the pluperfect, <0>olin</0>."
+msgstr "Before the course, another past: the pluperfect, <0>olin</0>."
+
+msgid "Before this trip, Kati had swum in the sea only in Pärnu."
+msgstr "Before this trip, Kati had swum in the sea only in Pärnu."
+
+msgid "Drop <0>-da</0> or <1>-a</1> from the <2>-da</2> infinitive and add <3>-nud</3>."
+msgstr "Drop <0>-da</0> or <1>-a</1> from the <2>-da</2> infinitive and add <3>-nud</3>."
+
+msgid "Drop <et>-da</et> or <et>-a</et> from the <et>-da</et> infinitive and add <et>-nud</et>."
+msgstr "Drop <et>-da</et> or <et>-a</et> from the <et>-da</et> infinitive and add <et>-nud</et>."
+
+msgid "Each round gives a sentence and a cue. Write the sentence in the perfect."
+msgstr "Each round gives a sentence and a cue. Write the sentence in the perfect."
+
+msgid "Each round gives a verb’s <0>-ma</0> and <1>-da</1> infinitives. Type its <2>-nud</2> form."
+msgstr "Each round gives a verb’s <0>-ma</0> and <1>-da</1> infinitives. Type its <2>-nud</2> form."
+
+msgid "Each row holds the <0>-da</0> infinitive and the <1>-nud</1> form. The first five are regular; the last five are short verbs to learn by heart."
+msgstr "Each row holds the <0>-da</0> infinitive and the <1>-nud</1> form. The first five are regular; the last five are short verbs to learn by heart."
+
+msgid "Each sentence has one wrong word: a <0>-nud</0> form, or a form of <1>olema</1>. Tap it, then type it right."
+msgstr "Each sentence has one wrong word: a <0>-nud</0> form, or a form of <1>olema</1>. Tap it, then type it right."
+
+msgid "eaten"
+msgstr "eaten"
+
+msgid "Ei ole veel: not yet."
+msgstr "Ei ole veel: not yet."
+
+msgid "ever; once"
+msgstr "ever; once"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "Fix the tense"
+msgstr "Fix the tense"
+
+msgid "Had read"
+msgstr "Had read"
+
+msgid "Has done: the perfect"
+msgstr "Has done: the perfect"
+
+msgid "Has read"
+msgstr "Has read"
+
+msgid "Have you been to Tartu?"
+msgstr "Have you been to Tartu?"
+
+msgid "Have you seen this film?"
+msgstr "Have you seen this film?"
+
+msgid "he or she"
+msgstr "he or she"
+
+msgid "He or she has been learning Estonian for two years."
+msgstr "He or she has been learning Estonian for two years."
+
+msgid "He or she hasn’t seen this film."
+msgstr "He or she hasn’t seen this film."
+
+msgid "Hear a sentence, then pick what it means. Listen for <0>on</0>, <1>oli</1> or no <2>olema</2> at all."
+msgstr "Hear a sentence, then pick what it means. Listen for <0>on</0>, <1>oli</1> or no <2>olema</2> at all."
+
+msgid "I"
+msgstr "I"
+
+msgid "I am; I have"
+msgstr "I am; I have"
+
+msgid "I drank three cups of coffee."
+msgstr "I drank three cups of coffee."
+
+msgid "I have already eaten."
+msgstr "I have already eaten."
+
+msgid "I have been to Tartu."
+msgstr "I have been to Tartu."
+
+msgid "I haven’t eaten yet."
+msgstr "I haven’t eaten yet."
+
+msgid "I was; I had"
+msgstr "I was; I had"
+
+msgid "I went to Tartu yesterday."
+msgstr "I went to Tartu yesterday."
+
+msgid "I’ll call him tomorrow."
+msgstr "I’ll call him tomorrow."
+
+msgid "I’m eating."
+msgstr "I’m eating."
+
+msgid "I’ve made up my mind."
+msgstr "I’ve made up my mind."
+
+msgid "I’ve never heard of it."
+msgstr "I’ve never heard of it."
+
+msgid "I’ve taken a hundred photos."
+msgstr "I’ve taken a hundred photos."
+
+msgid "In a sentence"
+msgstr "In a sentence"
+
+msgid "Into the perfect"
+msgstr "Into the perfect"
+
+msgid "It comes from the <0>-da</0> infinitive of lesson {verbForms}: drop <1>-da</1> or <2>-a</2> and add <3>-nud</3>. <4>Lugeda</4> gives <5/>. Short verbs change more: <6>süüa</6> gives <7/>. Tap down the table."
+msgstr "It comes from the <0>-da</0> infinitive of lesson {verbForms}: drop <1>-da</1> or <2>-a</2> and add <3>-nud</3>. <4>Lugeda</4> gives <5/>. Short verbs change more: <6>süüa</6> gives <7/>. Tap down the table."
+
+msgid "it’s done now"
+msgstr "it’s done now"
+
+msgid "Jaan"
+msgstr "Jaan"
+
+msgid "Jaan ate lunch."
+msgstr "Jaan ate lunch."
+
+msgid "Jaan had eaten lunch."
+msgstr "Jaan had eaten lunch."
+
+msgid "Jaan has been to Saaremaa."
+msgstr "Jaan has been to Saaremaa."
+
+msgid "Jaan has eaten lunch."
+msgstr "Jaan has eaten lunch."
+
+msgid "Kati"
+msgstr "Kati"
+
+msgid "Kati had read the book to the end."
+msgstr "Kati had read the book to the end."
+
+msgid "Kati had seen such an old castle before."
+msgstr "Kati had seen such an old castle before."
+
+msgid "Kati has read the book to the end."
+msgstr "Kati has read the book to the end."
+
+msgid "Kati read the book to the end."
+msgstr "Kati read the book to the end."
+
+msgid "Kati tells Jaan about her summer trip to an island."
+msgstr "Kati tells Jaan about her summer trip to an island."
+
+msgid "Kati’s trip to Saaremaa"
+msgstr "Kati’s trip to Saaremaa"
+
+msgid "Last summer"
+msgstr "Last summer"
+
+msgid "Last week I read the book to the end."
+msgstr "Last week I read the book to the end."
+
+msgid "Last week is named, so the simple past."
+msgstr "Last week is named, so the simple past."
+
+msgid "Last winter"
+msgstr "Last winter"
+
+msgid "Lesson {past}’s simple past tells what happened at a time you name: <0/> The perfect reaches up to now, with no time named."
+msgstr "Lesson {past}’s simple past tells what happened at a time you name: <0/> The perfect reaches up to now, with no time named."
+
+msgid "Lesson {pastNo} used a verb form ending in <0>-nud</0> to say no in the past: <1>ma ei lugenud</1>. The same form builds two more tenses in this lesson."
+msgstr "Lesson {pastNo} used a verb form ending in <0>-nud</0> to say no in the past: <1>ma ei lugenud</1>. The same form builds two more tenses in this lesson."
+
+msgid "Liis had seen the film."
+msgstr "Liis had seen the film."
+
+msgid "Liis has seen the film."
+msgstr "Liis has seen the film."
+
+msgid "Liis saw the film."
+msgstr "Liis saw the film."
+
+msgid "Listen: Kati and Jaan"
+msgstr "Listen: Kati and Jaan"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Mari"
+msgstr "Mari"
+
+msgid "Mari asks you about Tartu, lunch and your Estonian. Pick what you say back. A wrong reply says why, then you hear the right one."
+msgstr "Mari asks you about Tartu, lunch and your Estonian. Pick what you say back. A wrong reply says why, then you hear the right one."
+
+msgid "Mari had been to Tallinn."
+msgstr "Mari had been to Tallinn."
+
+msgid "Mari has been to Tallinn."
+msgstr "Mari has been to Tallinn."
+
+msgid "Mari went to Tallinn."
+msgstr "Mari went to Tallinn."
+
+msgid "Mitte kunagi: never."
+msgstr "Mitte kunagi: never."
+
+msgid "Nearly. Check <0>olema</0> and the <1>-nud</1> form in the ones you got wrong."
+msgstr "Nearly. Check <0>olema</0> and the <1>-nud</1> form in the ones you got wrong."
+
+msgid "Nearly. Look at the tense in the ones you got wrong."
+msgstr "Nearly. Look at the tense in the ones you got wrong."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Nearly. Play the ones you got wrong once more."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Nearly. Read the reason under each one you got wrong."
+
+msgid "Nearly. Tap the table for the ones you got wrong."
+msgstr "Nearly. Tap the table for the ones you got wrong."
+
+msgid "never so far"
+msgstr "never so far"
+
+msgid "No time is named: <et>olema</et> in the present and the <et>-nud</et> form."
+msgstr "No time is named: <et>olema</et> in the present and the <et>-nud</et> form."
+
+msgid "No time is named: the perfect."
+msgstr "No time is named: the perfect."
+
+msgid "Only <0/> changes for the person. To say no, use <1>ei ole</1> or <2>pole</2> for everyone: <3/>"
+msgstr "Only <0/> changes for the person. To say no, use <1>ei ole</1> or <2>pole</2> for everyone: <3/>"
+
+msgid "Only <0>olema</0> changes for the person. The <1>-nud</1> form stays the same."
+msgstr "Only <0>olema</0> changes for the person. The <1>-nud</1> form stays the same."
+
+msgid "Past"
+msgstr "Past"
+
+msgid "Past, perfect or pluperfect"
+msgstr "Past, perfect or pluperfect"
+
+msgid "Past: jõudsin, I arrived."
+msgstr "Past: jõudsin, I arrived."
+
+msgid "Pluperfect"
+msgstr "Pluperfect"
+
+msgid "Present"
+msgstr "Present"
+
+msgid "Present perfect"
+msgstr "Present perfect"
+
+msgid "read"
+msgstr "read"
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "say no"
+msgstr "say no"
+
+msgid "She wanted to read"
+msgstr "She wanted to read"
+
+msgid "Talk: with Mari"
+msgstr "Talk: with Mari"
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap a tense"
+msgstr "Tap a tense"
+
+msgid "Tap down the table once more, then try again."
+msgstr "Tap down the table once more, then try again."
+
+msgid "Tap the tables once more, then try again."
+msgstr "Tap the tables once more, then try again."
+
+msgid "Tap the tenses on the line once more, then try again."
+msgstr "Tap the tenses on the line once more, then try again."
+
+msgid "Tenses of to eat"
+msgstr "Tenses of to eat"
+
+msgid "The -da infinitive and the -nud form of ten verbs"
+msgstr "The -da infinitive and the -nud form of ten verbs"
+
+msgid "The -nud form"
+msgstr "The -nud form"
+
+msgid "The -nud form of lugema."
+msgstr "The -nud form of lugema."
+
+msgid "The -nud form of sööma."
+msgstr "The -nud form of sööma."
+
+msgid "the -nud form of to eat"
+msgstr "the -nud form of to eat"
+
+msgid "The <0>-nud</0> form comes from <1>õppida</1>, so it keeps <2>pp</2>: <3>õppinud</3>."
+msgstr "The <0>-nud</0> form comes from <1>õppida</1>, so it keeps <2>pp</2>: <3>õppinud</3>."
+
+msgid "The <0>-nud</0> form comes from the <1>-da</1> infinitive: <2>lugeda, lugenud</2>. Short verbs are irregular: <3>läinud, teinud, söönud, näinud</3>."
+msgstr "The <0>-nud</0> form comes from the <1>-da</1> infinitive: <2>lugeda, lugenud</2>. Short verbs are irregular: <3>läinud, teinud, söönud, näinud</3>."
+
+msgid "The <0>-nud</0> form of <1>minema</1> is <2>läinud</2>."
+msgstr "The <0>-nud</0> form of <1>minema</1> is <2>läinud</2>."
+
+msgid "The <0>-nud</0> form of <1>nägema</1> is <2>näinud</2>."
+msgstr "The <0>-nud</0> form of <1>nägema</1> is <2>näinud</2>."
+
+msgid "The <0>-nud</0> form of <1>tegema</1> is <2>teinud</2>."
+msgstr "The <0>-nud</0> form of <1>tegema</1> is <2>teinud</2>."
+
+msgid "The <et>-nud</et> form"
+msgstr "The <et>-nud</et> form"
+
+msgid "The bus was late"
+msgstr "The bus was late"
+
+msgid "The ferry had already left"
+msgstr "The ferry had already left"
+
+msgid "The perfect and the pluperfect of lugema"
+msgstr "The perfect and the pluperfect of lugema"
+
+msgid "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form, for what has happened with no time named: <2>Ma olen Tartus käinud.</2>"
+msgstr "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form, for what has happened with no time named: <2>Ma olen Tartus käinud.</2>"
+
+msgid "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form: <2/> It says something has happened, with no time named: ever, already, or not yet."
+msgstr "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form: <2/> It says something has happened, with no time named: ever, already, or not yet."
+
+msgid "The perfect reaches up to now. The pluperfect is before another past."
+msgstr "The perfect reaches up to now. The pluperfect is before another past."
+
+msgid "The perfect: has done"
+msgstr "The perfect: has done"
+
+msgid "The pluperfect is <0>olema</0> in the past plus the <1>-nud</1> form, <2/> and the rest. It is a past before another past: <3/> Tap the tenses on the line."
+msgstr "The pluperfect is <0>olema</0> in the past plus the <1>-nud</1> form, <2/> and the rest. It is a past before another past: <3/> Tap the tenses on the line."
+
+msgid "The pluperfect is <0>olema</0> in the past plus the <1>-nud</1> form, for what had happened before another past event: <2>Kui ma jaama jõudsin, oli rong juba läinud.</2>"
+msgstr "The pluperfect is <0>olema</0> in the past plus the <1>-nud</1> form, for what had happened before another past event: <2>Kui ma jaama jõudsin, oli rong juba läinud.</2>"
+
+msgid "The simple past: one word, no <0>olema</0>."
+msgstr "The simple past: one word, no <0>olema</0>."
+
+msgid "they"
+msgstr "they"
+
+msgid "to arrive, to get to"
+msgstr "to arrive, to get to"
+
+msgid "to be"
+msgstr "to be"
+
+msgid "to be, in the past"
+msgstr "to be, in the past"
+
+msgid "to be, in the present"
+msgstr "to be, in the present"
+
+msgid "to buy"
+msgstr "to buy"
+
+msgid "to do, to make"
+msgstr "to do, to make"
+
+msgid "to eat"
+msgstr "to eat"
+
+msgid "to eat, in the past"
+msgstr "to eat, in the past"
+
+msgid "to eat, in the present"
+msgstr "to eat, in the present"
+
+msgid "to go"
+msgstr "to go"
+
+msgid "to go, to visit"
+msgstr "to go, to visit"
+
+msgid "to learn"
+msgstr "to learn"
+
+msgid "to live"
+msgstr "to live"
+
+msgid "to read"
+msgstr "to read"
+
+msgid "To say no, use <0>ei ole</0> or <1>ei olnud</1> for every person: <2>Ma ei ole veel söönud.</2>"
+msgstr "To say no, use <0>ei ole</0> or <1>ei olnud</1> for every person: <2>Ma ei ole veel söönud.</2>"
+
+msgid "To say no: <et>ei ole</et> for every person."
+msgstr "To say no: <et>ei ole</et> for every person."
+
+msgid "To say no: <et>ei ole</et> plus the <et>-nud</et> form."
+msgstr "To say no: <et>ei ole</et> plus the <et>-nud</et> form."
+
+msgid "to see"
+msgstr "to see"
+
+msgid "Two tenses built from <0>olema</0> and the <1>-nud</1> form: the perfect for what has happened, and the pluperfect for what had happened before."
+msgstr "Two tenses built from <0>olema</0> and the <1>-nud</1> form: the perfect for what has happened, and the pluperfect for what had happened before."
+
+msgid "Two years ago, in the autumn"
+msgstr "Two years ago, in the autumn"
+
+msgid "Type the -nud form"
+msgstr "Type the -nud form"
+
+msgid "we"
+msgstr "we"
+
+msgid "What should Jaan eat there? Write it in one word."
+msgstr "What should Jaan eat there? Write it in one word."
+
+msgid "When a time is named, use the simple past: <0>Eile käisin ma Tartus.</0>"
+msgstr "When a time is named, use the simple past: <0>Eile käisin ma Tartus.</0>"
+
+msgid "When I got home, Mari had already eaten."
+msgstr "When I got home, Mari had already eaten."
+
+msgid "When I got to the station, the train had already left."
+msgstr "When I got to the station, the train had already left."
+
+msgid "When was Kati on Saaremaa?"
+msgstr "When was Kati on Saaremaa?"
+
+msgid "Which country had Kati sailed to before? Write it as she says it."
+msgstr "Which country had Kati sailed to before? Write it as she says it."
+
+msgid "Which tense?"
+msgstr "Which tense?"
+
+msgid "Who says it?"
+msgstr "Who says it?"
+
+msgid "Why did Kati wait two hours?"
+msgstr "Why did Kati wait two hours?"
+
+msgid "With a -nud form: ma olen lugenud, I have read."
+msgstr "With a -nud form: ma olen lugenud, I have read."
+
+msgid "With a -nud form: ma olin lugenud, I had read."
+msgstr "With a -nud form: ma olin lugenud, I had read."
+
+msgid "Write each sentence in Estonian. First ask: is a time named, and is it before another past?"
+msgstr "Write each sentence in Estonian. First ask: is a time named, and is it before another past?"
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "Yesterday I ate at home."
+msgstr "Yesterday I ate at home."
+
+msgid "Yesterday I went to Tartu."
+msgstr "Yesterday I went to Tartu."
+
+msgid "yet, still"
+msgstr "yet, still"
+
+msgid "you"
+msgstr "you"
+
+msgid "You had learned a little before the course."
+msgstr "You had learned a little before the course."
+
+msgid "You haven’t eaten yet."
+msgstr "You haven’t eaten yet."
+
+msgid "You went to Tartu last month, you haven’t eaten yet, and you had learned a little Estonian before the course."
+msgstr "You went to Tartu last month, you haven’t eaten yet, and you had learned a little Estonian before the course."
+
+msgid "You went to Tartu last month."
+msgstr "You went to Tartu last month."
+
+msgid "you, to more than one"
+msgstr "you, to more than one"

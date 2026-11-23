@@ -178,7 +178,7 @@ const VERB_USES = [
     form: "da",
     label: msg`“Have done”`,
     tip: msg`With *olen* for have, *olin* for had.`,
-    taught: { et: "Olen lugenud, olin lugenud" },
+    taught: { slug: "olen-lugenud" },
     examples: [
       { et: "Ma olen juba *söönud*.", meaning: msg`I’ve already eaten.` },
       { et: "Kas sa oled Tartus *käinud*?", meaning: msg`Have you been to Tartu?` },

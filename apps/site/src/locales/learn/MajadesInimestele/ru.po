@@ -19,23 +19,17 @@ msgstr "22 минуты"
 msgid "8 exercises"
 msgstr "8 упражнений"
 
-msgid "A partitive in <0>-t</0> adds <1>-e</1>. Any other drops any <2>-d</2> and adds <3>-de</3>."
-msgstr "Партитив на <0>-t</0> добавляет <1>-e</1>. Любой другой теряет <2>-d</2>, если он есть, и добавляет <3>-de</3>."
-
-msgid "about many"
-msgstr "о нескольких"
-
-msgid "Add any ending you know to the plural genitive: <0>-s</0>, <1>-st</1>, <2>-le</2>, <3>-l</3>, <4>-ga</4>. <5/> is to people; <6>sõpradega</6> is with friends. Pick a noun and compare the columns."
-msgstr "К родительному множественного добавляй любое знакомое окончание: <0>-s</0>, <1>-st</1>, <2>-le</2>, <3>-l</3>, <4>-ga</4>. <5/> — «людям», <6>sõpradega</6> — «с друзьями». Выбери существительное и сравни столбцы."
+msgid "Add any ending you know to the plural genitive: <0>-s</0>, <1>-st</1>, <2>-sse</2>, <3>-le</3>, <4>-l</4>, <5>-ga</5>. <6/> is to people; <7>sõpradega</7> is with friends. Pick a noun and compare the columns."
+msgstr "К родительному множественного добавляй знакомое окончание: <0>-s</0>, <1>-st</1>, <2>-sse</2>, <3>-le</3>, <4>-l</4>, <5>-ga</5>. <6/> — «людям», <7>sõpradega</7> — «с друзьями». Выбери существительное и сравни столбцы."
 
 msgid "All eight, typed in full."
 msgstr "Все восемь написаны полностью."
 
 msgid "All eight. You heard both the number and the case."
-msgstr "Все восемь. Ты услышал и число, и падеж."
+msgstr "Все восемь: верно и число, и падеж."
 
 msgid "All seven, each plural on its genitive."
-msgstr "Все семь, каждое множественное от своего родительного."
+msgstr "Все семь, и каждое множественное — от родительного."
 
 msgid "All six found and fixed."
 msgstr "Все шесть найдены и исправлены."
@@ -58,8 +52,8 @@ msgstr "кафе"
 msgid "Compare the columns of the table once more, then try again."
 msgstr "Ещё раз сравни столбцы таблицы, потом попробуй снова."
 
-msgid "Don’t build on the plural of lesson {plural}: it’s <0>inimestega</0>, not <1>inimesedega</1>."
-msgstr "Не образуй от множественного числа из урока {plural}: правильно <0>inimestega</0>, а не <1>inimesedega</1>."
+msgid "Don’t build on the plural nominative from lesson {plural}: it’s <0>inimestega</0>, not <1>inimesedega</1>."
+msgstr "Не образуй от именительного множественного из урока {plural}: правильно <0>inimestega</0>, а не <1>inimesedega</1>."
 
 msgid "Drag a word into each gap, or tap one to fill the open gap. Two of the words belong nowhere."
 msgstr "Перетащи слово в каждый пропуск или нажми на него, чтобы заполнить открытый пропуск. Два слова лишние."
@@ -74,13 +68,10 @@ msgid "Each sentence has one plural built on the wrong stem. Tap it, then type i
 msgstr "В каждом предложении одна форма множественного образована не от той основы. Нажми на неё, потом напиши правильно."
 
 msgid "Endings on the plural genitive"
-msgstr "Окончания на родительном множественного"
+msgstr "Окончания после родительного множественного"
 
 msgid "Every case on one stem"
 msgstr "Все падежи на одной основе"
-
-msgid "Every other plural case is the plural genitive with the singular’s ending: <0>majades, inimestele, sõpradega</0>."
-msgstr "Все остальные падежи множественного — это родительный множественного с окончанием единственного: <0>majades, inimestele, sõpradega</0>."
 
 msgid "Everyone is welcome."
 msgstr "Всем рады."
@@ -127,14 +118,14 @@ msgstr "Я принесу пирожные."
 msgid "I’m going to the cinema with friends."
 msgstr "Я иду в кино с друзьями."
 
-msgid "I’m talking to people."
-msgstr "Я говорю людям."
-
 msgid "I’m talking with a person."
 msgstr "Я разговариваю с человеком."
 
 msgid "I’m talking with people."
 msgstr "Я разговариваю с людьми."
+
+msgid "I’m telling people."
+msgstr "Я рассказываю людям."
 
 msgid "In"
 msgstr "В"
@@ -144,6 +135,12 @@ msgstr "В предложении"
 
 msgid "in houses"
 msgstr "в домах"
+
+msgid "In most nouns the plural genitive comes from the partitive. A partitive in <0>-t</0> adds <1>-e</1>: <2>raamatut, raamatute</2>. Any other drops any <3>-d</3> and adds <4>-de</4>: <5>maja, majade</5>; <6>puud, puude</6>."
+msgstr "У большинства существительных родительный множественного образуется от партитива. Если партитив на <0>-t</0>, добавь <1>-e</1>: <2>raamatut, raamatute</2>. Иначе убери <3>-d</3>, если он есть, и добавь <4>-de</4>: <5>maja, majade</5>; <6>puud, puude</6>."
+
+msgid "In most nouns, a partitive in <0>-t</0> adds <1>-e</1>. Any other drops any <2>-d</2> and adds <3>-de</3>."
+msgstr "У большинства существительных: если партитив на <0>-t</0>, добавь <1>-e</1>. Иначе убери <2>-d</2>, если он есть, и добавь <3>-de</3>."
 
 msgid "In the singular, the endings of lesson {inside} go on the genitive: <0>maja, majas</0>. In the plural they go on the plural genitive: <1/>, of houses, and <2/>, in houses."
 msgstr "В единственном числе окончания из урока {inside} добавляются к родительному: <0>maja, majas</0>. Во множественном — к родительному множественного: <1/>, «домов», и <2/>, «в домах»."
@@ -166,6 +163,9 @@ msgstr "Только на слух, без микрофона"
 msgid "Majade, the plural genitive, with -s."
 msgstr "Majade, родительный множественного, с -s."
 
+msgid "make it plural"
+msgstr "во множественном"
+
 msgid "Many"
 msgstr "Много"
 
@@ -187,14 +187,17 @@ msgstr "Выходные Мари в Тарту"
 msgid "Match each singular form with its plural."
 msgstr "Соедини каждую форму единственного с её множественным."
 
+msgid "Most plural cases are one step away from the singular ones: build the plural genitive, then add the ending you already know."
+msgstr "Большинство падежей множественного — всего в шаге от единственного: образуй родительный множественного и добавь знакомое окончание."
+
 msgid "Nearly. Check the plural genitive in the ones you got wrong."
-msgstr "Почти. Проверь родительный множественного там, где ошибся."
+msgstr "Почти. Проверь родительный множественного там, где есть ошибка."
 
 msgid "Nearly. Look at the partitive in the ones you got wrong."
-msgstr "Почти. Посмотри на партитив там, где ошибся."
+msgstr "Почти. Посмотри на партитив там, где есть ошибка."
 
 msgid "Nearly. Play the ones you got wrong once more."
-msgstr "Почти. Ещё раз послушай те, где ошибся."
+msgstr "Почти. Ещё раз послушай те, где есть ошибка."
 
 msgid "Nearly. Read the reason under each one you got wrong."
 msgstr "Почти. Прочитай объяснение под каждой ошибкой."
@@ -232,17 +235,17 @@ msgstr "Один и много в шести падежах"
 msgid "One book: the singular genitive with <et>-s</et>."
 msgstr "Одна книга: родительный единственного с <et>-s</et>."
 
-msgid "One or many, heard"
+msgid "One or many, by ear"
 msgstr "Один или много на слух"
 
-msgid "One or many?"
-msgstr "Один или много?"
+msgid "One or many, heard"
+msgstr "Один или много на слух"
 
 msgid "One shop: the singular genitive with <et>-s</et>."
 msgstr "Один магазин: родительный единственного с <et>-s</et>."
 
-msgid "One: the singular stem with the ending."
-msgstr "Один: основа единственного с окончанием."
+msgid "One: the singular genitive with the ending."
+msgstr "Один: родительный единственного с окончанием."
 
 msgid "Out of"
 msgstr "Откуда"
@@ -275,7 +278,7 @@ msgid "shop"
 msgstr "магазин"
 
 msgid "Some words have a second, shorter plural, such as <0>majus</0> beside <1>majades</1>. The long one is always right, so this lesson uses it."
-msgstr "У некоторых слов есть ещё и более короткое множественное, например <0>majus</0> рядом с <1>majades</1>. Длинная форма всегда правильна, поэтому этот урок берёт её."
+msgstr "У некоторых слов есть ещё и более короткое множественное, например <0>majus</0> рядом с <1>majades</1>. Длинная форма всегда правильна, поэтому в уроке — она."
 
 msgid "Take the partitive, drop any <0>-d</0>, and add <1>-de</1>."
 msgstr "Возьми партитив, убери <0>-d</0>, если он есть, и добавь <1>-de</1>."
@@ -284,15 +287,15 @@ msgid "Tap a form"
 msgstr "Нажми на форму"
 
 msgid "Tap down the first table once more, then try again."
-msgstr "Ещё раз пройдись по первой таблице, потом попробуй снова."
+msgstr "Ещё раз нажми на формы в первой таблице по очереди, потом попробуй снова."
 
 msgid "Tap down the table once more, then try again."
-msgstr "Ещё раз пройдись по таблице, потом попробуй снова."
+msgstr "Ещё раз нажми на формы в таблице по очереди, потом попробуй снова."
 
 msgid "teacher"
 msgstr "учитель"
 
-msgid "That Mari has learned Estonian for only two years"
+msgid "That Mari has been learning Estonian for only two years"
 msgstr "Что Мари учит эстонский всего два года"
 
 msgid "That Mari is from Tartu"
@@ -301,8 +304,8 @@ msgstr "Что Мари из Тарту"
 msgid "That she bought two books"
 msgstr "Что она купила две книги"
 
-msgid "The birds are sitting on the trees."
-msgstr "Птицы сидят на деревьях."
+msgid "The birds have nests in the trees."
+msgstr "У птиц на деревьях гнёзда."
 
 msgid "The children are coming from the schools."
 msgstr "Дети идут из школ."
@@ -312,9 +315,6 @@ msgstr "Собака спит под детскими кроватями."
 
 msgid "The ending goes on the plural genitive."
 msgstr "Окончание добавляется к родительному множественного."
-
-msgid "The genitive, not the nominative"
-msgstr "Родительный, а не именительный"
 
 msgid "The partitive doesn’t end in <0>-t</0>: <1>sõpra, sõprade</1>."
 msgstr "Партитив не оканчивается на <0>-t</0>: <1>sõpra, sõprade</1>."
@@ -349,9 +349,6 @@ msgstr "Картинки в книге."
 msgid "The pictures are on top of the books."
 msgstr "Картинки лежат на книгах."
 
-msgid "The plural cases are one step away from the singular ones: build the plural genitive, then add the endings you already know."
-msgstr "Падежи множественного — всего в шаге от падежей единственного: образуй родительный множественного и добавь знакомые окончания."
-
 msgid "The plural forms are the plural genitive with the ending you already know."
 msgstr "Формы множественного — это родительный множественного со знакомым окончанием."
 
@@ -364,11 +361,8 @@ msgstr "Родительный множественного образуется
 msgid "The plural genitive comes from the partitive, the third of lesson {forms}’s three forms. If the partitive ends in <0>-t</0>, add <1>-e</1>: <2/>. If not, drop any <3>-d</3> and add <4>-de</4>: <5/>. Tap down both columns."
 msgstr "Родительный множественного образуется от партитива, третьей из трёх форм из урока {forms}. Если партитив оканчивается на <0>-t</0>, добавь <1>-e</1>: <2/>. Если нет, убери <3>-d</3>, если он есть, и добавь <4>-de</4>: <5/>. Пройдись по обоим столбцам."
 
-msgid "The plural genitive comes from the partitive. A partitive in <0>-t</0> adds <1>-e</1>: <2>raamatut, raamatute</2>. Any other drops any <3>-d</3> and adds <4>-de</4>: <5>maja, majade</5>; <6>puud, puude</6>."
-msgstr "Родительный множественного образуется от партитива. Партитив на <0>-t</0> добавляет <1>-e</1>: <2>raamatut, raamatute</2>. Любой другой теряет <3>-d</3>, если он есть, и добавляет <4>-de</4>: <5>maja, majade</5>; <6>puud, puude</6>."
-
 msgid "The plural genitive is <0>inimeste</0>, so <1>inimestega</1>, not the plural nominative <2>inimesed</2>."
-msgstr "Родительный множественного — <0>inimeste</0>, так что <1>inimestega</1>, а не от именительного множественного <2>inimesed</2>."
+msgstr "Родительный множественного — <0>inimeste</0>, так что <1>inimestega</1>. От именительного множественного <2>inimesed</2> не образуют."
 
 msgid "The plural genitive is <0>sõprade</0>, from <1>sõpra</1>: <2>sõpradega</2>."
 msgstr "Родительный множественного — <0>sõprade</0>, от <1>sõpra</1>: <2>sõpradega</2>."
@@ -390,6 +384,12 @@ msgstr "Родительный множественного от raamat."
 
 msgid "The plural genitive of sõber."
 msgstr "Родительный множественного от sõber."
+
+msgid "The plurals with <0>-s</0>, <1>-st</1>, <2>-sse</2>, <3>-le</3>, <4>-l</4> and <5>-ga</5> are the plural genitive plus that ending: <6>majades, inimestele, sõpradega</6>."
+msgstr "Формы множественного с <0>-s</0>, <1>-st</1>, <2>-sse</2>, <3>-le</3>, <4>-l</4> и <5>-ga</5> — это родительный множественного плюс это окончание: <6>majades, inimestele, sõpradega</6>."
+
+msgid "The right stem for the plural"
+msgstr "Правильная основа для множественного"
 
 msgid "There are pictures in the books."
 msgstr "В книгах есть картинки."
@@ -442,14 +442,14 @@ msgstr "Во что не поверил продавец?"
 msgid "What does it mean?"
 msgstr "Что это значит?"
 
+msgid "What were the old photos kept in? Write the word as Jaan says it."
+msgstr "В чём лежали старые фото? Напиши слово так, как говорит Яан."
+
 msgid "Where did they go on Saturday?"
 msgstr "Куда они ходили в субботу?"
 
-msgid "Where did they stay the night? Write it in two words, as Mari says it."
-msgstr "Где они ночевали? Напиши двумя словами, как говорит Мари."
-
-msgid "Where were the old photos? Write the first word as Jaan says it."
-msgstr "Где были старые фото? Напиши первое слово так, как говорит Яан."
+msgid "Where did they stay the night? Write the last two words Mari says."
+msgstr "Где они ночевали? Напиши два последних слова, которые говорит Мари."
 
 msgid "Which ending?"
 msgstr "Какое окончание?"
@@ -461,7 +461,7 @@ msgid "With"
 msgstr "С"
 
 msgid "With <0>käima</0>, going and coming back, the place takes <1>-s</1>."
-msgstr "С <0>käima</0>, когда ходишь и возвращаешься, место стоит с <1>-s</1>."
+msgstr "После <0>käima</0> («сходить и вернуться») место получает <1>-s</1>."
 
 msgid "Write each sentence in Estonian. Each one has a plural noun in a case."
 msgstr "Напиши каждое предложение по-эстонски. В каждом есть существительное во множественном числе в каком-то падеже."

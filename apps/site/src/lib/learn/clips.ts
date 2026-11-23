@@ -3506,7 +3506,7 @@ export const PLURAL_CASE_TRANSLATE = [
   "Ma räägin inimestega.",
   "Ta kirjutab sõpradele.",
   "Raamatutes on pilte.",
-  "Linnud istuvad puudel.",
+  "Lindudel on puudes pesad.",
   "Me käime poodides.",
   "Lapsed tulevad koolidest.",
   "Ma lähen sõpradega kinno.",
@@ -3555,9 +3555,9 @@ export const PLURAL_CASE_CONVERSATION: Conversation = {
       text: [
         "Jah, väga palju.",
         "Kõikides saalides olid lapsed ja nende vanemad.",
-        "Lapsed jooksid saalidest saalidesse.",
+        "Lapsed jooksid saalist saali.",
       ],
-      say: "[laughs] Jah, väga palju. Kõikides saalides olid lapsed ja nende vanemad. Lapsed jooksid saalidest saalidesse.",
+      say: "[laughs] Jah, väga palju. Kõikides saalides olid lapsed ja nende vanemad. Lapsed jooksid saalist saali.",
     },
     { voice: "main", text: "Kus te ööbisite?" },
     {
@@ -3603,7 +3603,7 @@ export const PLURAL_CASE_CONVERSATION: Conversation = {
       voice: "main",
       text: [
         "Need olid kastides keldris.",
-        "Mõnedel fotodel on minu vanaisa ja vanaema.",
+        "Mõnedel piltidel on minu vanaisa ja vanaema.",
         "Nad seisavad oma maja ees.",
         "Mõnel pildil on ka meie vana koer.",
         "Ta magab alati laste voodite all.",
@@ -3631,7 +3631,7 @@ export const PLURAL_CASE_CONVERSATION: Conversation = {
       voice: "main",
       text: [
         "Muidugi, kõik on oodatud.",
-        "Ma teen teed ja kohvi kõigile külalistele.",
+        "Ma teen teed ja kohvi kõikidele külalistele.",
         "Kohtumiseni!",
       ],
     },
@@ -3661,6 +3661,271 @@ const PLURAL_CASE_CLIPS: Record<string, Clip> = {
   ]),
   "p-shopping": { sentences: PLURAL_CASE_SHOPPING },
   "c-weekend": PLURAL_CASE_CONVERSATION,
+};
+
+export const PERFECT_NUD = [
+  { ma: "elama", da: "elada", nud: "elanud", regular: true },
+  { ma: "lugema", da: "lugeda", nud: "lugenud", regular: true },
+  { ma: "õppima", da: "õppida", nud: "õppinud", regular: true },
+  { ma: "käima", da: "käia", nud: "käinud", regular: true },
+  { ma: "ostma", da: "osta", nud: "ostnud", regular: true },
+  { ma: "olema", da: "olla", nud: "olnud", regular: false },
+  { ma: "minema", da: "minna", nud: "läinud", regular: false },
+  { ma: "tegema", da: "teha", nud: "teinud", regular: false },
+  { ma: "sööma", da: "süüa", nud: "söönud", regular: false },
+  { ma: "nägema", da: "näha", nud: "näinud", regular: false },
+] as const;
+
+export const PERFECT_TIMELINE = [
+  {
+    id: "pluperfect",
+    at: -2,
+    sentence: "Kui ma koju jõudsin, oli Mari juba söönud.",
+    build: ["ol|i", "söö|nud"],
+  },
+  { id: "past", at: -1, sentence: "Eile sõin ma kodus.", build: ["sõ|in"] },
+  {
+    id: "perfect",
+    at: -1,
+    reach: 0,
+    sentence: "Ma olen juba söönud.",
+    build: ["ole|n", "söö|nud"],
+  },
+  { id: "present", at: 0, sentence: "Ma söön.", build: ["söö|n"] },
+] as const;
+
+export const PERFECT_PERSONS = [
+  { person: "ma", olen: "Ma olen lugenud.", olin: "Ma olin lugenud." },
+  { person: "sa", olen: "Sa oled lugenud.", olin: "Sa olid lugenud." },
+  { person: "ta", olen: "Ta on lugenud.", olin: "Ta oli lugenud." },
+  { person: "me", olen: "Me oleme lugenud.", olin: "Me olime lugenud." },
+  { person: "te", olen: "Te olete lugenud.", olin: "Te olite lugenud." },
+  { person: "nad", olen: "Nad on lugenud.", olin: "Nad olid lugenud." },
+] as const;
+
+export const PERFECT_USES = [
+  "Ma olen Tartus käinud.",
+  "Ma olen juba söönud.",
+  "Ma ei ole veel söönud.",
+  "Ta pole seda filmi näinud.",
+  "Eile käisin ma Tartus.",
+  "Kui ma jaama jõudsin, oli rong juba läinud.",
+] as const;
+
+export const PERFECT_HEARD = [
+  {
+    id: "kaima",
+    past: "Mari käis Tallinnas.",
+    perfect: "Mari on Tallinnas käinud.",
+    pluperfect: "Mari oli Tallinnas käinud.",
+  },
+  {
+    id: "sooma",
+    past: "Jaan sõi lõunat.",
+    perfect: "Jaan on lõunat söönud.",
+    pluperfect: "Jaan oli lõunat söönud.",
+  },
+  {
+    id: "lugema",
+    past: "Kati luges selle raamatu läbi.",
+    perfect: "Kati on selle raamatu läbi lugenud.",
+    pluperfect: "Kati oli selle raamatu läbi lugenud.",
+  },
+  {
+    id: "nagema",
+    past: "Liis nägi seda filmi.",
+    perfect: "Liis on seda filmi näinud.",
+    pluperfect: "Liis oli seda filmi näinud.",
+  },
+] as const;
+
+export const PERFECT_REWRITE = [
+  { from: "Ma söön.", to: "Ma olen juba söönud.", cue: "already" },
+  { from: "Ta läheb koju.", to: "Ta on juba koju läinud.", cue: "already" },
+  { from: "Me teeme töö ära.", to: "Me oleme töö ära teinud.", cue: "done" },
+  { from: "Ma ei näe seda filmi.", to: "Ma ei ole seda filmi näinud.", cue: "never" },
+  { from: "Nad ostavad piletid.", to: "Nad on piletid ostnud.", cue: "done" },
+  { from: "Sa loed raamatu läbi.", to: "Sa oled raamatu läbi lugenud.", cue: "done" },
+] as const;
+
+export const PERFECT_TRANSLATE = [
+  "Ma käisin eile Tartus.",
+  "Ma olen Tartus käinud.",
+  "Ma ei ole veel söönud.",
+  "Kui ma koju jõudsin, oli Mari juba söönud.",
+  "Ta on eesti keelt kaks aastat õppinud.",
+  "Kas sa oled seda filmi näinud?",
+  "Eelmisel nädalal lugesin ma raamatu läbi.",
+] as const;
+
+export const PERFECT_FIXES = [
+  { wrong: "Ma ei olen seda filmi näinud.", right: "Ma ei ole seda filmi näinud." },
+  { wrong: "Ta on juba koju minnud.", right: "Ta on juba koju läinud." },
+  { wrong: "Me oleme töö ära tegenud.", right: "Me oleme töö ära teinud." },
+  { wrong: "Kas sa oled seda filmi nägenud?", right: "Kas sa oled seda filmi näinud?" },
+  {
+    wrong: "Ma olen eesti keelt kaks aastat õpinud.",
+    right: "Ma olen eesti keelt kaks aastat õppinud.",
+  },
+  { wrong: "Me ole Tartus käinud.", right: "Me oleme Tartus käinud." },
+  {
+    wrong: "Kui ma jaama jõudsin, on rong juba läinud.",
+    right: "Kui ma jaama jõudsin, oli rong juba läinud.",
+  },
+] as const;
+
+export const PERFECT_DIALOGUE = {
+  "d-mari-1": { text: "Tere! Kas sa oled Tartus käinud?", voice: "second" },
+  "d-sina-1": "Jah, olen. Ma käisin seal eelmisel kuul.",
+  "d-mari-2": { text: "Kas sa oled juba söönud?", voice: "second" },
+  "d-sina-2": "Ei, ma ei ole veel midagi söönud.",
+  "d-mari-3": { text: "Kas sa olid enne kursust eesti keelt õppinud?", voice: "second" },
+  "d-sina-3": "Jah, ma olin natuke õppinud.",
+  "d-mari-4": { text: "Tubli! Lähme siis koos sööma.", voice: "second" },
+} as const satisfies Record<string, Clip>;
+
+export const PERFECT_CONVERSATION: Conversation = {
+  turns: [
+    {
+      voice: "second",
+      text: ["Tere, Jaan!", "Kas sa oled kunagi Saaremaal käinud?"],
+      say: "[cheerful] Tere, Jaan! Kas sa oled kunagi Saaremaal käinud?",
+    },
+    {
+      voice: "main",
+      text: ["Ei, ma ei ole seal kunagi käinud.", "Aga mu vend on seal mitu korda käinud."],
+    },
+    {
+      voice: "second",
+      text: ["Mina käisin eelmisel suvel Saaremaal.", "See oli väga ilus reis."],
+    },
+    { voice: "main", text: "Mida sa seal tegid?" },
+    {
+      voice: "second",
+      text: ["Ma sõitsin rattaga ja ujusin meres.", "Varem olin ma ainult Pärnus meres ujunud."],
+    },
+    { voice: "main", text: "Kas Saaremaa meri on külm?" },
+    {
+      voice: "second",
+      text: ["Natuke.", "Aga ma olen ka külmemas vees ujunud."],
+    },
+    {
+      voice: "main",
+      text: ["Sa oled julge!", "Kuidas sa sinna sõitsid?"],
+      say: "[laughs] Sa oled julge! Kuidas sa sinna sõitsid?",
+    },
+    {
+      voice: "second",
+      text: [
+        "Ma sõitsin bussiga ja siis praamiga.",
+        "Aga kui ma sadamasse jõudsin, oli praam juba läinud.",
+      ],
+    },
+    {
+      voice: "main",
+      text: ["Oh ei!", "Mida sa siis tegid?"],
+      say: "[surprised] Oh ei! Mida sa siis tegid?",
+    },
+    {
+      voice: "second",
+      text: [
+        "Ma ootasin kaks tundi järgmist praami.",
+        "Ma lugesin raamatu läbi ja jõin kolm tassi kohvi.",
+      ],
+    },
+    { voice: "main", text: "Kas sa olid varem praamiga sõitnud?" },
+    {
+      voice: "second",
+      text: ["Ei, see oli esimene kord.", "Ma olin varem ainult laevaga Soome sõitnud."],
+    },
+    { voice: "main", text: "Kas sa oled Kuressaare lossi näinud?" },
+    {
+      voice: "second",
+      text: [
+        "Jah, olen.",
+        "Ma käisin seal teisel päeval.",
+        "Ma polnud varem nii vana lossi näinud.",
+      ],
+    },
+    {
+      voice: "main",
+      text: ["Ma tahan ka sinna minna.", "Mida sa soovitad?"],
+    },
+    {
+      voice: "second",
+      text: ["Kas sa oled kunagi suitsukala söönud?"],
+      say: "[curious] Kas sa oled kunagi suitsukala söönud?",
+    },
+    { voice: "main", text: ["Ei ole.", "Kas see on hea?"] },
+    {
+      voice: "second",
+      text: ["Väga hea!", "Ma sõin seda iga päev.", "Ja sa pead kindlasti Kaali kraatrit vaatama."],
+    },
+    { voice: "main", text: ["Kraatrit?", "Ma pole sellest kunagi kuulnud."] },
+    {
+      voice: "second",
+      text: ["See on väga vana auk maas.", "Sinna kukkus kunagi meteoriit."],
+    },
+    { voice: "main", text: ["Huvitav!", "Kas sa oled reisist pilte teinud?"] },
+    {
+      voice: "second",
+      text: ["Jah, ma olen teinud sada pilti.", "Ma saadan need sulle õhtul."],
+    },
+    {
+      voice: "second",
+      text: ["Kas sa oled oma vennaga juba rääkinud?", "Ta võib sulle ka midagi soovitada."],
+    },
+    {
+      voice: "main",
+      text: [
+        "Ei, ma pole temaga veel rääkinud.",
+        "Ma helistan talle homme.",
+        "Aga ma olen nüüd otsustanud.",
+        "Suvel lähen ma Saaremaale.",
+      ],
+    },
+    {
+      voice: "second",
+      text: ["Tore!", "Ja too mulle suitsukala!"],
+      say: "[laughs] Tore! Ja too mulle suitsukala!",
+    },
+    { voice: "main", text: "Kus sa seal ööbisid?" },
+    {
+      voice: "second",
+      text: [
+        "Väikeses külalistemajas.",
+        "Perenaine oli seal kolmkümmend aastat elanud.",
+        "Ma annan sulle tema numbri.",
+      ],
+    },
+  ],
+};
+
+export const PERFECT_WORDS = [
+  "juba",
+  "veel",
+  "kunagi",
+  "jõudma",
+  "lugenud",
+  "söönud",
+  "olen",
+  "olin",
+] as const;
+
+const PERFECT_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...PERFECT_WORDS,
+    ...PERFECT_NUD.flatMap(({ da, nud }) => [da, nud]),
+    ...PERFECT_TIMELINE.map(({ sentence }) => sentence),
+    ...PERFECT_PERSONS.flatMap(({ olen, olin }) => [olen, olin]),
+    ...PERFECT_USES,
+    ...PERFECT_HEARD.flatMap(({ past, perfect, pluperfect }) => [past, perfect, pluperfect]),
+    ...PERFECT_REWRITE.map(({ to }) => to),
+    ...PERFECT_TRANSLATE,
+    ...PERFECT_FIXES.map(({ right }) => right),
+  ]),
+  ...PERFECT_DIALOGUE,
+  "c-saaremaa": PERFECT_CONVERSATION,
 };
 
 export const CLIPS: Record<string, Record<string, Clip>> = {
@@ -3824,6 +4089,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "raamatut-voi-raamatu": OBJECT_CLIPS,
   "raamatuid-maju": PLURAL_PART_CLIPS,
   "majades-inimestele": PLURAL_CASE_CLIPS,
+  "olen-lugenud": PERFECT_CLIPS,
   lihtminevik: PAST_CLIPS,
   kit: KIT_CLIPS,
 };

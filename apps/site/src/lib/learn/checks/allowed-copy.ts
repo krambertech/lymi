@@ -19,6 +19,9 @@ export const ALLOWED_COPY: readonly { rule: "tell" | "uk" | "ru"; text: string; 
     { rule: "tell", text: "Perfect and pluperfect", reason: "The lesson's name: the tenses." },
     { rule: "tell", text: "Let’s and let them", reason: "The lesson's name: lähme and las." },
     { rule: "tell", text: "Present perfect", reason: "A tense's name on the kit's Timeline." },
+    { rule: "tell", text: "the perfect", reason: "The tense the perfect lesson teaches (täisminevik)." },
+    { rule: "tell", text: "The perfect", reason: "The tense the perfect lesson teaches (täisminevik)." },
+    { rule: "tell", text: "perfect or pluperfect", reason: "The tenses the perfect lesson tells apart." },
     { rule: "uk", text: "Ти молодець.", reason: "The gloss of Sa oled tubli." },
     { rule: "ru", text: "Ты молодец.", reason: "The gloss of Sa oled tubli." },
   ];

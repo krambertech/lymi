@@ -1,0 +1,569 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 12:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0>Läbi</0> and <1>ära</1> from lesson {object} work in every tense: <2>Kati on raamatu läbi lugenud</2>, Kati has read the book to the end."
+msgstr "<0>Läbi</0> і <1>ära</1> з уроку {object} працюють у будь-якому часі: <2>Kati on raamatu läbi lugenud</2> — Каті дочитала книжку до кінця."
+
+msgid "<0>Olema</0> agrees with the person: <1>me oleme</1>."
+msgstr "<0>Olema</0> узгоджується з особою: <1>me oleme</1>."
+
+msgid "<0>Olema</0> in the present, and the main verb in its <1>-nud</1> form at the end."
+msgstr "<0>Olema</0> в теперішньому часі, а основне дієслово у формі на <1>-nud</1> — у кінці."
+
+msgid "<0>Oli</0> plus the <1>-nud</1> form: the pluperfect."
+msgstr "<0>Oli</0> плюс форма на <1>-nud</1>: плюсквамперфект."
+
+msgid "<0>On</0> plus the <1>-nud</1> form: the perfect."
+msgstr "<0>On</0> плюс форма на <1>-nud</1>: перфект."
+
+msgid "<et>Olema</et> agrees with the person: <et>me oleme</et>."
+msgstr "<et>Olema</et> узгоджується з особою: <et>me oleme</et>."
+
+msgid "<et>Olema</et> with the person and with <et>ei</et>"
+msgstr "<et>Olema</et> з особою та з <et>ei</et>"
+
+msgid "22 minutes"
+msgstr "22 хвилини"
+
+msgid "7 exercises"
+msgstr "7 вправ"
+
+msgid "A short verb: learn its <0>-nud</0> form by heart."
+msgstr "Коротке дієслово: його форму на <0>-nud</0> треба запам’ятати."
+
+msgid "A short verb: learn its <et>-nud</et> form by heart."
+msgstr "Коротке дієслово: його форму на <et>-nud</et> треба запам’ятати."
+
+msgid "A time is named, last month, so the simple past: <0>käisin</0>."
+msgstr "Час назвали — минулого місяця, тож простий минулий: <0>käisin</0>."
+
+msgid "A time is named, so the simple past."
+msgstr "Час назвали, тож простий минулий."
+
+msgid "A time is named, yesterday, so the simple past."
+msgstr "Час назвали — учора, тож простий минулий."
+
+msgid "After <0>ei</0>, <1>olema</1> is <2>ole</2> for every person."
+msgstr "Після <0>ei</0> <1>olema</1> має форму <2>ole</2> для всіх осіб."
+
+msgid "After <0>ei</0>: <1>ei ole</1>."
+msgstr "Після <0>ei</0>: <1>ei ole</1>."
+
+msgid "After <et>ei</et>, <et>olema</et> is <et>ole</et> for every person."
+msgstr "Після <et>ei</et> <et>olema</et> має форму <et>ole</et> для всіх осіб."
+
+msgid "All eight, typed in full."
+msgstr "Усі вісім, написані повністю."
+
+msgid "All seven, each in the tense its meaning needs."
+msgstr "Усі сім, кожне в часі, якого вимагає зміст."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All six, each in the perfect."
+msgstr "Усі шість, кожне в перфекті."
+
+msgid "All six. You heard each tense."
+msgstr "Усі шість: кожен час правильно."
+
+msgid "already"
+msgstr "вже"
+
+msgid "Before another past event, the pluperfect: <0>oli</0>, not <1>on</1>."
+msgstr "Перед іншою подією в минулому — плюсквамперфект: <0>oli</0>, а не <1>on</1>."
+
+msgid "Before another past event: <et>olema</et> in the past and the <et>-nud</et> form."
+msgstr "Перед іншою подією в минулому: <et>olema</et> в минулому і форма на <et>-nud</et>."
+
+msgid "Before another past event: the pluperfect, with <0>oli</0>."
+msgstr "Перед іншою подією в минулому: плюсквамперфект з <0>oli</0>."
+
+msgid "Before the course, another past: the pluperfect, <0>olin</0>."
+msgstr "До курсу, тобто раніше за інше минуле: плюсквамперфект, <0>olin</0>."
+
+msgid "Before this trip, Kati had swum in the sea only in Pärnu."
+msgstr "До цієї поїздки Каті плавала в морі лише в Пярну."
+
+msgid "Drop <0>-da</0> or <1>-a</1> from the <2>-da</2> infinitive and add <3>-nud</3>."
+msgstr "Прибери <0>-da</0> або <1>-a</1> з інфінітива на <2>-da</2> і додай <3>-nud</3>."
+
+msgid "Drop <et>-da</et> or <et>-a</et> from the <et>-da</et> infinitive and add <et>-nud</et>."
+msgstr "Прибери <et>-da</et> або <et>-a</et> з інфінітива на <et>-da</et> і додай <et>-nud</et>."
+
+msgid "Each round gives a sentence and a cue. Write the sentence in the perfect."
+msgstr "У кожному раунді — речення і підказка. Напиши речення в перфекті."
+
+msgid "Each round gives a verb’s <0>-ma</0> and <1>-da</1> infinitives. Type its <2>-nud</2> form."
+msgstr "У кожному раунді — інфінітиви дієслова на <0>-ma</0> і <1>-da</1>. Напиши його форму на <2>-nud</2>."
+
+msgid "Each row holds the <0>-da</0> infinitive and the <1>-nud</1> form. The first five are regular; the last five are short verbs to learn by heart."
+msgstr "У кожному рядку — інфінітив на <0>-da</0> і форма на <1>-nud</1>. Перші п’ять правильні, останні п’ять — короткі дієслова, які треба запам’ятати."
+
+msgid "Each sentence has one wrong word: a <0>-nud</0> form, or a form of <1>olema</1>. Tap it, then type it right."
+msgstr "У кожному реченні одне неправильне слово: форма на <0>-nud</0> або форма <1>olema</1>. Натисни на нього, потім напиши правильно."
+
+msgid "eaten"
+msgstr "з’їв, поїв"
+
+msgid "Ei ole veel: not yet."
+msgstr "Ei ole veel: ще ні."
+
+msgid "ever; once"
+msgstr "колись"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "Fix the tense"
+msgstr "Виправ час"
+
+msgid "Had read"
+msgstr "Прочитав раніше"
+
+msgid "Has done: the perfect"
+msgstr "Зробив і є результат: перфект"
+
+msgid "Has read"
+msgstr "Прочитав"
+
+msgid "Have you been to Tartu?"
+msgstr "Ти бував у Тарту?"
+
+msgid "Have you seen this film?"
+msgstr "Ти бачив цей фільм?"
+
+msgid "he or she"
+msgstr "він чи вона"
+
+msgid "He or she has been learning Estonian for two years."
+msgstr "Він чи вона вчить естонську два роки."
+
+msgid "He or she hasn’t seen this film."
+msgstr "Він чи вона не бачили цей фільм."
+
+msgid "Hear a sentence, then pick what it means. Listen for <0>on</0>, <1>oli</1> or no <2>olema</2> at all."
+msgstr "Послухай речення й вибери, що воно означає. Слухай, чи є <0>on</0>, <1>oli</1> чи <2>olema</2> немає зовсім."
+
+msgid "I"
+msgstr "я"
+
+msgid "I am; I have"
+msgstr "я є; з -nud: я вже…"
+
+msgid "I drank three cups of coffee."
+msgstr "Я випила три чашки кави."
+
+msgid "I have already eaten."
+msgstr "Я вже поїв."
+
+msgid "I have been to Tartu."
+msgstr "Я бував у Тарту."
+
+msgid "I haven’t eaten yet."
+msgstr "Я ще не їв."
+
+msgid "I was; I had"
+msgstr "я був; з -nud: я вже… раніше"
+
+msgid "I went to Tartu yesterday."
+msgstr "Я вчора їздив у Тарту."
+
+msgid "I’ll call him tomorrow."
+msgstr "Я подзвоню йому завтра."
+
+msgid "I’m eating."
+msgstr "Я їм."
+
+msgid "I’ve made up my mind."
+msgstr "Я вирішив."
+
+msgid "I’ve never heard of it."
+msgstr "Я ніколи про це не чув."
+
+msgid "I’ve taken a hundred photos."
+msgstr "Я зробила сто фото."
+
+msgid "In a sentence"
+msgstr "У реченні"
+
+msgid "Into the perfect"
+msgstr "У перфект"
+
+msgid "It comes from the <0>-da</0> infinitive of lesson {verbForms}: drop <1>-da</1> or <2>-a</2> and add <3>-nud</3>. <4>Lugeda</4> gives <5/>. Short verbs change more: <6>süüa</6> gives <7/>. Tap down the table."
+msgstr "Вона утворюється від інфінітива на <0>-da</0> з уроку {verbForms}: прибери <1>-da</1> або <2>-a</2> і додай <3>-nud</3>. З <4>lugeda</4> виходить <5/>. Короткі дієслова змінюються більше: з <6>süüa</6> виходить <7/>. Натискай форми в таблиці по черзі."
+
+msgid "it’s done now"
+msgstr "уже зроблено"
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan ate lunch."
+msgstr "Яан пообідав."
+
+msgid "Jaan had eaten lunch."
+msgstr "Яан пообідав ще до того."
+
+msgid "Jaan has been to Saaremaa."
+msgstr "Яан бував на Сааремаа."
+
+msgid "Jaan has eaten lunch."
+msgstr "Яан уже пообідав."
+
+msgid "Kati"
+msgstr "Каті"
+
+msgid "Kati had read the book to the end."
+msgstr "Каті дочитала книжку ще до того."
+
+msgid "Kati had seen such an old castle before."
+msgstr "Каті вже бачила такий старий замок раніше."
+
+msgid "Kati has read the book to the end."
+msgstr "Каті вже дочитала книжку."
+
+msgid "Kati read the book to the end."
+msgstr "Каті дочитала книжку."
+
+msgid "Kati tells Jaan about her summer trip to an island."
+msgstr "Каті розповідає Яанові про літню поїздку на острів."
+
+msgid "Kati’s trip to Saaremaa"
+msgstr "Поїздка Каті на Сааремаа"
+
+msgid "Last summer"
+msgstr "Минулого літа"
+
+msgid "Last week I read the book to the end."
+msgstr "Минулого тижня я дочитав книжку."
+
+msgid "Last week is named, so the simple past."
+msgstr "Названо минулий тиждень, тож простий минулий."
+
+msgid "Last winter"
+msgstr "Минулої зими"
+
+msgid "Lesson {past}’s simple past tells what happened at a time you name: <0/> The perfect reaches up to now, with no time named."
+msgstr "Простий минулий з уроку {past} каже, що сталося в названий час: <0/> Перфект сягає аж до тепер, і час не названо."
+
+msgid "Lesson {pastNo} used a verb form ending in <0>-nud</0> to say no in the past: <1>ma ei lugenud</1>. The same form builds two more tenses in this lesson."
+msgstr "В уроці {pastNo} форма на <0>-nud</0> допомагала заперечувати в минулому: <1>ma ei lugenud</1>. У цьому уроці вона утворює ще два часи."
+
+msgid "Liis had seen the film."
+msgstr "Ліїс бачила фільм ще до того."
+
+msgid "Liis has seen the film."
+msgstr "Ліїс уже бачила фільм."
+
+msgid "Liis saw the film."
+msgstr "Ліїс подивилася фільм."
+
+msgid "Listen: Kati and Jaan"
+msgstr "Послухай: Каті та Яан"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Mari"
+msgstr "Марі"
+
+msgid "Mari asks you about Tartu, lunch and your Estonian. Pick what you say back. A wrong reply says why, then you hear the right one."
+msgstr "Марі питає тебе про Тарту, обід і твою естонську. Вибирай, що відповісти. Неправильна відповідь пояснить, чому вона не підходить, а потім ти почуєш правильну."
+
+msgid "Mari had been to Tallinn."
+msgstr "Марі бувала в Таллінні ще до того."
+
+msgid "Mari has been to Tallinn."
+msgstr "Марі вже бувала в Таллінні."
+
+msgid "Mari went to Tallinn."
+msgstr "Марі їздила в Таллінн."
+
+msgid "Mitte kunagi: never."
+msgstr "Mitte kunagi: ніколи."
+
+msgid "Nearly. Check <0>olema</0> and the <1>-nud</1> form in the ones you got wrong."
+msgstr "Майже. Перевір <0>olema</0> і форму на <1>-nud</1> там, де є помилка."
+
+msgid "Nearly. Look at the tense in the ones you got wrong."
+msgstr "Майже. Подивися на час там, де є помилка."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Майже. Ще раз послухай ті, де є помилка."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Майже. Прочитай пояснення під кожною помилкою."
+
+msgid "Nearly. Tap the table for the ones you got wrong."
+msgstr "Майже. Там, де є помилка, натисни форми в таблиці."
+
+msgid "never so far"
+msgstr "досі ніколи"
+
+msgid "No time is named: <et>olema</et> in the present and the <et>-nud</et> form."
+msgstr "Час не названо: <et>olema</et> в теперішньому і форма на <et>-nud</et>."
+
+msgid "No time is named: the perfect."
+msgstr "Час не названо: перфект."
+
+msgid "Only <0/> changes for the person. To say no, use <1>ei ole</1> or <2>pole</2> for everyone: <3/>"
+msgstr "За особами змінюється лише <0/>. Щоб заперечити, для всіх кажи <1>ei ole</1> або <2>pole</2>: <3/>"
+
+msgid "Only <0>olema</0> changes for the person. The <1>-nud</1> form stays the same."
+msgstr "За особами змінюється лише <0>olema</0>. Форма на <1>-nud</1> не змінюється."
+
+msgid "Past"
+msgstr "Простий минулий"
+
+msgid "Past, perfect or pluperfect"
+msgstr "Простий минулий, перфект чи плюсквамперфект"
+
+msgid "Past: jõudsin, I arrived."
+msgstr "Минулий час: jõudsin — я дістався."
+
+msgid "Pluperfect"
+msgstr "Плюсквамперфект"
+
+msgid "Present"
+msgstr "Теперішній"
+
+msgid "Present perfect"
+msgstr "Перфект"
+
+msgid "read"
+msgstr "прочитав"
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Що запам’ятати» нижче, потім спробуй знову."
+
+msgid "say no"
+msgstr "із запереченням"
+
+msgid "She wanted to read"
+msgstr "Вона хотіла почитати"
+
+msgid "Talk: with Mari"
+msgstr "Розмова: з Марі"
+
+msgid "Tap a form"
+msgstr "Натисни на форму"
+
+msgid "Tap a tense"
+msgstr "Натисни на час"
+
+msgid "Tap down the table once more, then try again."
+msgstr "Ще раз натисни форми в таблиці по черзі, потім спробуй знову."
+
+msgid "Tap the tables once more, then try again."
+msgstr "Ще раз натисни форми в таблицях, потім спробуй знову."
+
+msgid "Tap the tenses on the line once more, then try again."
+msgstr "Ще раз натисни часи на лінії, потім спробуй знову."
+
+msgid "Tenses of to eat"
+msgstr "Часи дієслова «їсти»"
+
+msgid "The -da infinitive and the -nud form of ten verbs"
+msgstr "Інфінітив на -da і форма на -nud десяти дієслів"
+
+msgid "The -nud form"
+msgstr "Форма на -nud"
+
+msgid "The -nud form of lugema."
+msgstr "Форма на -nud від lugema."
+
+msgid "The -nud form of sööma."
+msgstr "Форма на -nud від sööma."
+
+msgid "the -nud form of to eat"
+msgstr "форма на -nud від «їсти»"
+
+msgid "The <0>-nud</0> form comes from <1>õppida</1>, so it keeps <2>pp</2>: <3>õppinud</3>."
+msgstr "Форма на <0>-nud</0> утворюється від <1>õppida</1>, тож зберігає <2>pp</2>: <3>õppinud</3>."
+
+msgid "The <0>-nud</0> form comes from the <1>-da</1> infinitive: <2>lugeda, lugenud</2>. Short verbs are irregular: <3>läinud, teinud, söönud, näinud</3>."
+msgstr "Форма на <0>-nud</0> утворюється від інфінітива на <1>-da</1>: <2>lugeda, lugenud</2>. Короткі дієслова неправильні: <3>läinud, teinud, söönud, näinud</3>."
+
+msgid "The <0>-nud</0> form of <1>minema</1> is <2>läinud</2>."
+msgstr "Форма на <0>-nud</0> від <1>minema</1> — <2>läinud</2>."
+
+msgid "The <0>-nud</0> form of <1>nägema</1> is <2>näinud</2>."
+msgstr "Форма на <0>-nud</0> від <1>nägema</1> — <2>näinud</2>."
+
+msgid "The <0>-nud</0> form of <1>tegema</1> is <2>teinud</2>."
+msgstr "Форма на <0>-nud</0> від <1>tegema</1> — <2>teinud</2>."
+
+msgid "The <et>-nud</et> form"
+msgstr "Форма на <et>-nud</et>"
+
+msgid "The bus was late"
+msgstr "Автобус запізнився"
+
+msgid "The ferry had already left"
+msgstr "Пором уже відплив"
+
+msgid "The perfect and the pluperfect of lugema"
+msgstr "Перфект і плюсквамперфект дієслова lugema"
+
+msgid "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form, for what has happened with no time named: <2>Ma olen Tartus käinud.</2>"
+msgstr "Перфект — це <0>olema</0> в теперішньому плюс форма на <1>-nud</1>, для того, що сталося, коли час не названо: <2>Ma olen Tartus käinud.</2>"
+
+msgid "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form: <2/> It says something has happened, with no time named: ever, already, or not yet."
+msgstr "Перфект — це <0>olema</0> в теперішньому плюс форма на <1>-nud</1>: <2/> Він каже, що щось сталося, і час не названо: колись, уже чи ще ні."
+
+msgid "The perfect reaches up to now. The pluperfect is before another past."
+msgstr "Перфект сягає аж до тепер. Плюсквамперфект — раніше за інше минуле."
+
+msgid "The perfect: has done"
+msgstr "Перфект: уже зробив"
+
+msgid "The pluperfect is <0>olema</0> in the past plus the <1>-nud</1> form, <2/> and the rest. It is a past before another past: <3/> Tap the tenses on the line."
+msgstr "Плюсквамперфект — це <0>olema</0> в минулому плюс форма на <1>-nud</1>: <2/> тощо. Це минуле, раніше за інше минуле: <3/> Натискай часи на лінії."
+
+msgid "The pluperfect is <0>olema</0> in the past plus the <1>-nud</1> form, for what had happened before another past event: <2>Kui ma jaama jõudsin, oli rong juba läinud.</2>"
+msgstr "Плюсквамперфект — це <0>olema</0> в минулому плюс форма на <1>-nud</1>, для того, що сталося раніше за іншу подію в минулому: <2>Kui ma jaama jõudsin, oli rong juba läinud.</2>"
+
+msgid "The simple past: one word, no <0>olema</0>."
+msgstr "Простий минулий: одне слово, без <0>olema</0>."
+
+msgid "they"
+msgstr "вони"
+
+msgid "to arrive, to get to"
+msgstr "діставатися, прибувати"
+
+msgid "to be"
+msgstr "бути"
+
+msgid "to be, in the past"
+msgstr "«бути» в минулому"
+
+msgid "to be, in the present"
+msgstr "«бути» в теперішньому"
+
+msgid "to buy"
+msgstr "купувати"
+
+msgid "to do, to make"
+msgstr "робити"
+
+msgid "to eat"
+msgstr "їсти"
+
+msgid "to eat, in the past"
+msgstr "«їсти» в минулому"
+
+msgid "to eat, in the present"
+msgstr "«їсти» в теперішньому"
+
+msgid "to go"
+msgstr "іти"
+
+msgid "to go, to visit"
+msgstr "ходити, бувати"
+
+msgid "to learn"
+msgstr "вчити"
+
+msgid "to live"
+msgstr "жити"
+
+msgid "to read"
+msgstr "читати"
+
+msgid "To say no, use <0>ei ole</0> or <1>ei olnud</1> for every person: <2>Ma ei ole veel söönud.</2>"
+msgstr "Щоб заперечити, для всіх осіб кажи <0>ei ole</0> або <1>ei olnud</1>: <2>Ma ei ole veel söönud.</2>"
+
+msgid "To say no: <et>ei ole</et> for every person."
+msgstr "Заперечення: <et>ei ole</et> для всіх осіб."
+
+msgid "To say no: <et>ei ole</et> plus the <et>-nud</et> form."
+msgstr "Заперечення: <et>ei ole</et> плюс форма на <et>-nud</et>."
+
+msgid "to see"
+msgstr "бачити"
+
+msgid "Two tenses built from <0>olema</0> and the <1>-nud</1> form: the perfect for what has happened, and the pluperfect for what had happened before."
+msgstr "Два часи з <0>olema</0> і форми на <1>-nud</1>: перфект — для того, що сталося, і плюсквамперфект — для того, що сталося ще раніше."
+
+msgid "Two years ago, in the autumn"
+msgstr "Два роки тому, восени"
+
+msgid "Type the -nud form"
+msgstr "Напиши форму на -nud"
+
+msgid "we"
+msgstr "ми"
+
+msgid "What should Jaan eat there? Write it in one word."
+msgstr "Що Яанові варто там скуштувати? Напиши одним словом."
+
+msgid "When a time is named, use the simple past: <0>Eile käisin ma Tartus.</0>"
+msgstr "Коли час названо, кажи простий минулий: <0>Eile käisin ma Tartus.</0>"
+
+msgid "When I got home, Mari had already eaten."
+msgstr "Коли я прийшов додому, Марі вже поїла."
+
+msgid "When I got to the station, the train had already left."
+msgstr "Коли я дістався до вокзалу, потяг уже поїхав."
+
+msgid "When was Kati on Saaremaa?"
+msgstr "Коли Каті була на Сааремаа?"
+
+msgid "Which country had Kati sailed to before? Write it as she says it."
+msgstr "У яку країну Каті раніше пливла кораблем? Напиши так, як вона каже."
+
+msgid "Which tense?"
+msgstr "Який час?"
+
+msgid "Who says it?"
+msgstr "Хто це каже?"
+
+msgid "Why did Kati wait two hours?"
+msgstr "Чому Каті чекала дві години?"
+
+msgid "With a -nud form: ma olen lugenud, I have read."
+msgstr "З формою на -nud: ma olen lugenud — я вже прочитав."
+
+msgid "With a -nud form: ma olin lugenud, I had read."
+msgstr "З формою на -nud: ma olin lugenud — я прочитав ще до того."
+
+msgid "Write each sentence in Estonian. First ask: is a time named, and is it before another past?"
+msgstr "Напиши кожне речення естонською. Спершу подумай: чи назвали час і чи це раніше за інше минуле?"
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "Yesterday I ate at home."
+msgstr "Учора я їв удома."
+
+msgid "Yesterday I went to Tartu."
+msgstr "Учора я їздив у Тарту."
+
+msgid "yet, still"
+msgstr "ще"
+
+msgid "you"
+msgstr "ти"
+
+msgid "You had learned a little before the course."
+msgstr "До курсу ти трохи вчив мову."
+
+msgid "You haven’t eaten yet."
+msgstr "Ти ще не їв."
+
+msgid "You went to Tartu last month, you haven’t eaten yet, and you had learned a little Estonian before the course."
+msgstr "Минулого місяця ти їздив у Тарту, ще не обідав, а до курсу трохи вчив естонську."
+
+msgid "You went to Tartu last month."
+msgstr "Ти їздив у Тарту минулого місяця."
+
+msgid "you, to more than one"
+msgstr "ви, до кількох"

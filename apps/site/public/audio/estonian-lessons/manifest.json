@@ -12914,11 +12914,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "majades-inimestele/linnud-istuvad-puudel": {
-    "text": "Linnud istuvad puudel.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "majades-inimestele/lapsed-tulevad-koolidest": {
     "text": "Lapsed tulevad koolidest.",
     "model": "eleven_v4",
@@ -12940,7 +12935,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "majades-inimestele/c-weekend": {
-    "text": "Tere, Mari! Kuidas nädalavahetus läks? Väga hästi, aitäh! Ma olin kolm päeva Tartus koos sõpradega. Mida te seal tegite? Laupäeval käisime muuseumides ja kohvikutes. Tartu kohvikutes on väga head koogid. Kas muuseumides oli palju inimesi? Jah, väga palju. Kõikides saalides olid lapsed ja nende vanemad. Lapsed jooksid saalidest saalidesse. Kus te ööbisite? Ühe sõbra juures. Tal on vanalinnas korter. Vanades majades on kõrged laed ja suured aknad. Õhtul istusime köögis ja rääkisime tundide kaupa. Ja pühapäeval? Pühapäeval käisime poodides. Ma ostsin kingitusi oma õdedele. Neile meeldivad raamatud, nii et ma ostsin kaks raamatut. Kas sa rääkisid poodides eesti keelt? Muidugi! Ma rääkisin müüjatega ainult eesti keeles. Nad olid väga sõbralikud. Ühes raamatupoes küsis müüja, kust ma pärit olen. Ta ei uskunud, et ma õpin eesti keelt alles kaks aastat. Tubli! Mina olin terve nädalavahetuse kodus. Mida sa tegid? Kõigepealt kirjutasin kirju oma vanematele ja vendadele. Siis vaatasin vanu fotosid. Vanu fotosid? Kust sa need leidsid? Need olid kastides keldris. Mõnedel fotodel on minu vanaisa ja vanaema. Nad seisavad oma maja ees. Mõnel pildil on ka meie vana koer. Ta magab alati laste voodite all. Kui huvitav! Kas sa näitad neid mulle? Jah, muidugi. Ma panen kõige ilusamad pildid albumitesse. Tule homme minu juurde! Hea mõte! Ma toon Tartust kooke. Kas kell viis sobib? Jah, kell viis sobib väga hästi. Kas ma võin ka oma sõbrad kaasa võtta? Nad tahavad sinuga tuttavaks saada. Muidugi, kõik on oodatud. Ma teen teed ja kohvi kõigile külalistele. Kohtumiseni!",
+    "text": "Tere, Mari! Kuidas nädalavahetus läks? Väga hästi, aitäh! Ma olin kolm päeva Tartus koos sõpradega. Mida te seal tegite? Laupäeval käisime muuseumides ja kohvikutes. Tartu kohvikutes on väga head koogid. Kas muuseumides oli palju inimesi? Jah, väga palju. Kõikides saalides olid lapsed ja nende vanemad. Lapsed jooksid saalist saali. Kus te ööbisite? Ühe sõbra juures. Tal on vanalinnas korter. Vanades majades on kõrged laed ja suured aknad. Õhtul istusime köögis ja rääkisime tundide kaupa. Ja pühapäeval? Pühapäeval käisime poodides. Ma ostsin kingitusi oma õdedele. Neile meeldivad raamatud, nii et ma ostsin kaks raamatut. Kas sa rääkisid poodides eesti keelt? Muidugi! Ma rääkisin müüjatega ainult eesti keeles. Nad olid väga sõbralikud. Ühes raamatupoes küsis müüja, kust ma pärit olen. Ta ei uskunud, et ma õpin eesti keelt alles kaks aastat. Tubli! Mina olin terve nädalavahetuse kodus. Mida sa tegid? Kõigepealt kirjutasin kirju oma vanematele ja vendadele. Siis vaatasin vanu fotosid. Vanu fotosid? Kust sa need leidsid? Need olid kastides keldris. Mõnedel piltidel on minu vanaisa ja vanaema. Nad seisavad oma maja ees. Mõnel pildil on ka meie vana koer. Ta magab alati laste voodite all. Kui huvitav! Kas sa näitad neid mulle? Jah, muidugi. Ma panen kõige ilusamad pildid albumitesse. Tule homme minu juurde! Hea mõte! Ma toon Tartust kooke. Kas kell viis sobib? Jah, kell viis sobib väga hästi. Kas ma võin ka oma sõbrad kaasa võtta? Nad tahavad sinuga tuttavaks saada. Muidugi, kõik on oodatud. Ma teen teed ja kohvi kõikidele külalistele. Kohtumiseni!",
     "model": "eleven_v4",
     "turns": [
       {
@@ -12982,9 +12977,9 @@
         "sentences": [
           "Jah, väga palju.",
           "Kõikides saalides olid lapsed ja nende vanemad.",
-          "Lapsed jooksid saalidest saalidesse."
+          "Lapsed jooksid saalist saali."
         ],
-        "say": "[laughs] Jah, väga palju. Kõikides saalides olid lapsed ja nende vanemad. Lapsed jooksid saalidest saalidesse."
+        "say": "[laughs] Jah, väga palju. Kõikides saalides olid lapsed ja nende vanemad. Lapsed jooksid saalist saali."
       },
       {
         "voice": "jGja51dd7gcoK0zkxeyg",
@@ -13063,7 +13058,7 @@
         "voice": "jGja51dd7gcoK0zkxeyg",
         "sentences": [
           "Need olid kastides keldris.",
-          "Mõnedel fotodel on minu vanaisa ja vanaema.",
+          "Mõnedel piltidel on minu vanaisa ja vanaema.",
           "Nad seisavad oma maja ees.",
           "Mõnel pildil on ka meie vana koer.",
           "Ta magab alati laste voodite all."
@@ -13109,7 +13104,7 @@
         "voice": "jGja51dd7gcoK0zkxeyg",
         "sentences": [
           "Muidugi, kõik on oodatud.",
-          "Ma teen teed ja kohvi kõigile külalistele.",
+          "Ma teen teed ja kohvi kõikidele külalistele.",
           "Kohtumiseni!"
         ]
       }
@@ -13134,5 +13129,601 @@
     "text": "Me kirjutame kirju lastele.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/lindudel-on-puudes-pesad": {
+    "text": "Lindudel on puudes pesad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/juba": {
+    "text": "juba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/veel": {
+    "text": "veel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/kunagi": {
+    "text": "kunagi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/jo3udma": {
+    "text": "jõudma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/lugenud": {
+    "text": "lugenud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/so2o2nud": {
+    "text": "söönud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/olen": {
+    "text": "olen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/olin": {
+    "text": "olin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/elada": {
+    "text": "elada",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/elanud": {
+    "text": "elanud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/lugeda": {
+    "text": "lugeda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/o3ppida": {
+    "text": "õppida",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/o3ppinud": {
+    "text": "õppinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ka2ia": {
+    "text": "käia",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ka2inud": {
+    "text": "käinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/osta": {
+    "text": "osta",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ostnud": {
+    "text": "ostnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/olla": {
+    "text": "olla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/olnud": {
+    "text": "olnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/minna": {
+    "text": "minna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/la2inud": {
+    "text": "läinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/teha": {
+    "text": "teha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/teinud": {
+    "text": "teinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/su2u2a": {
+    "text": "süüa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/na2ha": {
+    "text": "näha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/na2inud": {
+    "text": "näinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/kui-ma-koju-jo3udsin-oli-mari-juba-so2o2nud": {
+    "text": "Kui ma koju jõudsin, oli Mari juba söönud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/eile-so3in-ma-kodus": {
+    "text": "Eile sõin ma kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-olen-juba-so2o2nud": {
+    "text": "Ma olen juba söönud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-so2o2n": {
+    "text": "Ma söön.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-olen-lugenud": {
+    "text": "Ma olen lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-olin-lugenud": {
+    "text": "Ma olin lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/sa-oled-lugenud": {
+    "text": "Sa oled lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/sa-olid-lugenud": {
+    "text": "Sa olid lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ta-on-lugenud": {
+    "text": "Ta on lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ta-oli-lugenud": {
+    "text": "Ta oli lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/me-oleme-lugenud": {
+    "text": "Me oleme lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/me-olime-lugenud": {
+    "text": "Me olime lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/te-olete-lugenud": {
+    "text": "Te olete lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/te-olite-lugenud": {
+    "text": "Te olite lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/nad-on-lugenud": {
+    "text": "Nad on lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/nad-olid-lugenud": {
+    "text": "Nad olid lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-olen-tartus-ka2inud": {
+    "text": "Ma olen Tartus käinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-ei-ole-veel-so2o2nud": {
+    "text": "Ma ei ole veel söönud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ta-pole-seda-filmi-na2inud": {
+    "text": "Ta pole seda filmi näinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/eile-ka2isin-ma-tartus": {
+    "text": "Eile käisin ma Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/kui-ma-jaama-jo3udsin-oli-rong-juba-la2inud": {
+    "text": "Kui ma jaama jõudsin, oli rong juba läinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/mari-ka2is-tallinnas": {
+    "text": "Mari käis Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/mari-on-tallinnas-ka2inud": {
+    "text": "Mari on Tallinnas käinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/mari-oli-tallinnas-ka2inud": {
+    "text": "Mari oli Tallinnas käinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/jaan-so3i-lo3unat": {
+    "text": "Jaan sõi lõunat.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/jaan-on-lo3unat-so2o2nud": {
+    "text": "Jaan on lõunat söönud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/jaan-oli-lo3unat-so2o2nud": {
+    "text": "Jaan oli lõunat söönud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/kati-luges-selle-raamatu-la2bi": {
+    "text": "Kati luges selle raamatu läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/kati-on-selle-raamatu-la2bi-lugenud": {
+    "text": "Kati on selle raamatu läbi lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/kati-oli-selle-raamatu-la2bi-lugenud": {
+    "text": "Kati oli selle raamatu läbi lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/liis-na2gi-seda-filmi": {
+    "text": "Liis nägi seda filmi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/liis-on-seda-filmi-na2inud": {
+    "text": "Liis on seda filmi näinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/liis-oli-seda-filmi-na2inud": {
+    "text": "Liis oli seda filmi näinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ta-on-juba-koju-la2inud": {
+    "text": "Ta on juba koju läinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/me-oleme-to2o2-a2ra-teinud": {
+    "text": "Me oleme töö ära teinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-ei-ole-seda-filmi-na2inud": {
+    "text": "Ma ei ole seda filmi näinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/nad-on-piletid-ostnud": {
+    "text": "Nad on piletid ostnud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/sa-oled-raamatu-la2bi-lugenud": {
+    "text": "Sa oled raamatu läbi lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-ka2isin-eile-tartus": {
+    "text": "Ma käisin eile Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ta-on-eesti-keelt-kaks-aastat-o3ppinud": {
+    "text": "Ta on eesti keelt kaks aastat õppinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/kas-sa-oled-seda-filmi-na2inud": {
+    "text": "Kas sa oled seda filmi näinud?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/eelmisel-na2dalal-lugesin-ma-raamatu-la2bi": {
+    "text": "Eelmisel nädalal lugesin ma raamatu läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-olen-eesti-keelt-kaks-aastat-o3ppinud": {
+    "text": "Ma olen eesti keelt kaks aastat õppinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/me-oleme-tartus-ka2inud": {
+    "text": "Me oleme Tartus käinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/d-mari-1": {
+    "text": "Tere! Kas sa oled Tartus käinud?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "olen-lugenud/d-sina-1": {
+    "text": "Jah, olen. Ma käisin seal eelmisel kuul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/d-mari-2": {
+    "text": "Kas sa oled juba söönud?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "olen-lugenud/d-sina-2": {
+    "text": "Ei, ma ei ole veel midagi söönud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/d-mari-3": {
+    "text": "Kas sa olid enne kursust eesti keelt õppinud?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "olen-lugenud/d-sina-3": {
+    "text": "Jah, ma olin natuke õppinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/d-mari-4": {
+    "text": "Tubli! Lähme siis koos sööma.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "olen-lugenud/c-saaremaa": {
+    "text": "Tere, Jaan! Kas sa oled kunagi Saaremaal käinud? Ei, ma ei ole seal kunagi käinud. Aga mu vend on seal mitu korda käinud. Mina käisin eelmisel suvel Saaremaal. See oli väga ilus reis. Mida sa seal tegid? Ma sõitsin rattaga ja ujusin meres. Varem olin ma ainult Pärnus meres ujunud. Kas Saaremaa meri on külm? Natuke. Aga ma olen ka külmemas vees ujunud. Sa oled julge! Kuidas sa sinna sõitsid? Ma sõitsin bussiga ja siis praamiga. Aga kui ma sadamasse jõudsin, oli praam juba läinud. Oh ei! Mida sa siis tegid? Ma ootasin kaks tundi järgmist praami. Ma lugesin raamatu läbi ja jõin kolm tassi kohvi. Kas sa olid varem praamiga sõitnud? Ei, see oli esimene kord. Ma olin varem ainult laevaga Soome sõitnud. Kas sa oled Kuressaare lossi näinud? Jah, olen. Ma käisin seal teisel päeval. Ma polnud varem nii vana lossi näinud. Ma tahan ka sinna minna. Mida sa soovitad? Kas sa oled kunagi suitsukala söönud? Ei ole. Kas see on hea? Väga hea! Ma sõin seda iga päev. Ja sa pead kindlasti Kaali kraatrit vaatama. Kraatrit? Ma pole sellest kunagi kuulnud. See on väga vana auk maas. Sinna kukkus kunagi meteoriit. Huvitav! Kas sa oled reisist pilte teinud? Jah, ma olen teinud sada pilti. Ma saadan need sulle õhtul. Kas sa oled oma vennaga juba rääkinud? Ta võib sulle ka midagi soovitada. Ei, ma pole temaga veel rääkinud. Ma helistan talle homme. Aga ma olen nüüd otsustanud. Suvel lähen ma Saaremaale. Tore! Ja too mulle suitsukala! Kus sa seal ööbisid? Väikeses külalistemajas. Perenaine oli seal kolmkümmend aastat elanud. Ma annan sulle tema numbri.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Kas sa oled kunagi Saaremaal käinud?"
+        ],
+        "say": "[cheerful] Tere, Jaan! Kas sa oled kunagi Saaremaal käinud?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, ma ei ole seal kunagi käinud.",
+          "Aga mu vend on seal mitu korda käinud."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mina käisin eelmisel suvel Saaremaal.",
+          "See oli väga ilus reis."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mida sa seal tegid?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ma sõitsin rattaga ja ujusin meres.",
+          "Varem olin ma ainult Pärnus meres ujunud."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas Saaremaa meri on külm?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Natuke.",
+          "Aga ma olen ka külmemas vees ujunud."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Sa oled julge!",
+          "Kuidas sa sinna sõitsid?"
+        ],
+        "say": "[laughs] Sa oled julge! Kuidas sa sinna sõitsid?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ma sõitsin bussiga ja siis praamiga.",
+          "Aga kui ma sadamasse jõudsin, oli praam juba läinud."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Oh ei!",
+          "Mida sa siis tegid?"
+        ],
+        "say": "[surprised] Oh ei! Mida sa siis tegid?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ma ootasin kaks tundi järgmist praami.",
+          "Ma lugesin raamatu läbi ja jõin kolm tassi kohvi."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas sa olid varem praamiga sõitnud?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, see oli esimene kord.",
+          "Ma olin varem ainult laevaga Soome sõitnud."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas sa oled Kuressaare lossi näinud?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, olen.",
+          "Ma käisin seal teisel päeval.",
+          "Ma polnud varem nii vana lossi näinud."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma tahan ka sinna minna.",
+          "Mida sa soovitad?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sa oled kunagi suitsukala söönud?"
+        ],
+        "say": "[curious] Kas sa oled kunagi suitsukala söönud?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei ole.",
+          "Kas see on hea?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Väga hea!",
+          "Ma sõin seda iga päev.",
+          "Ja sa pead kindlasti Kaali kraatrit vaatama."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kraatrit?",
+          "Ma pole sellest kunagi kuulnud."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "See on väga vana auk maas.",
+          "Sinna kukkus kunagi meteoriit."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Huvitav!",
+          "Kas sa oled reisist pilte teinud?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, ma olen teinud sada pilti.",
+          "Ma saadan need sulle õhtul."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sa oled oma vennaga juba rääkinud?",
+          "Ta võib sulle ka midagi soovitada."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, ma pole temaga veel rääkinud.",
+          "Ma helistan talle homme.",
+          "Aga ma olen nüüd otsustanud.",
+          "Suvel lähen ma Saaremaale."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tore!",
+          "Ja too mulle suitsukala!"
+        ],
+        "say": "[laughs] Tore! Ja too mulle suitsukala!"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kus sa seal ööbisid?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Väikeses külalistemajas.",
+          "Perenaine oli seal kolmkümmend aastat elanud.",
+          "Ma annan sulle tema numbri."
+        ]
+      }
+    ]
   }
 }

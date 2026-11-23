@@ -97,8 +97,8 @@ function StemTable() {
           title: t`Tap a form`,
           tip: (
             <Trans>
-              A partitive in <b lang="et">-t</b> adds <b lang="et">-e</b>. Any other drops any{" "}
-              <b lang="et">-d</b> and adds <b lang="et">-de</b>.
+              In most nouns, a partitive in <b lang="et">-t</b> adds <b lang="et">-e</b>. Any other{" "}
+              drops any <b lang="et">-d</b> and adds <b lang="et">-de</b>.
             </Trans>
           ),
         }}
@@ -156,7 +156,7 @@ const HEARD_MEANS: Record<
   inimene: {
     one: msg`I’m talking with a person.`,
     many: msg`I’m talking with people.`,
-    other: msg`I’m talking to people.`,
+    other: msg`I’m telling people.`,
   },
   sõber: {
     one: msg`He or she writes to a friend.`,
@@ -221,7 +221,7 @@ function useContent() {
         pair: [group.noun, group[kind]] as const,
         explain:
           kind === "one" ? (
-            <Trans>One: the singular stem with the ending.</Trans>
+            <Trans>One: the singular genitive with the ending.</Trans>
           ) : (
             <Trans>Many: the plural genitive with the ending.</Trans>
           ),
@@ -283,9 +283,9 @@ function useContent() {
       {
         kind: "translate",
         id: "birds-trees",
-        prompt: t`The birds are sitting on the trees.`,
-        src: src("Linnud istuvad puudel."),
-        answers: ["Linnud istuvad puudel.", "Linnud istuvad puude peal."],
+        prompt: t`The birds have nests in the trees.`,
+        src: src("Lindudel on puudes pesad."),
+        answers: ["Lindudel on puudes pesad.", "Lindudel on pesad puudes."],
         pair: ["l", "birds-trees"],
       },
       {
@@ -399,7 +399,7 @@ function useContent() {
       {
         id: "stayed",
         kind: "short",
-        ask: t`Where did they stay the night? Write it in two words, as Mari says it.`,
+        ask: t`Where did they stay the night? Write the last two words Mari says.`,
         answers: ["sõbra juures"],
         line: 12,
       },
@@ -415,7 +415,7 @@ function useContent() {
         ask: t`What did the shop assistant not believe?`,
         options: [
           { id: "from", label: t`That Mari is from Tartu` },
-          { id: "years", label: t`That Mari has learned Estonian for only two years` },
+          { id: "years", label: t`That Mari has been learning Estonian for only two years` },
           { id: "books", label: t`That she bought two books` },
         ],
         answer: "years",
@@ -424,7 +424,7 @@ function useContent() {
       {
         id: "photos",
         kind: "short",
-        ask: t`Where were the old photos? Write the first word as Jaan says it.`,
+        ask: t`What were the old photos kept in? Write the word as Jaan says it.`,
         answers: ["kastides"],
         line: 33,
       },
@@ -474,8 +474,8 @@ export function MajadesInimesteleLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          The plural cases are one step away from the singular ones: build the plural genitive, then
-          add the endings you already know.
+          Most plural cases are one step away from the singular ones: build the plural genitive,
+          then add the ending you already know.
         </Trans>
       }
       facts={[
@@ -486,14 +486,15 @@ export function MajadesInimesteleLesson() {
       words={["majades", "inimestele", "majade", "inimeste", "sõprade", "raamatute"]}
       recap={[
         <Trans key="1">
-          The plural genitive comes from the partitive. A partitive in <b lang="et">-t</b> adds{" "}
-          <b lang="et">-e</b>: <b lang="et">raamatut, raamatute</b>. Any other drops any{" "}
-          <b lang="et">-d</b> and adds <b lang="et">-de</b>: <b lang="et">maja, majade</b>;{" "}
-          <b lang="et">puud, puude</b>.
+          In most nouns the plural genitive comes from the partitive. A partitive in{" "}
+          <b lang="et">-t</b> adds <b lang="et">-e</b>: <b lang="et">raamatut, raamatute</b>. Any
+          other drops any <b lang="et">-d</b> and adds <b lang="et">-de</b>:{" "}
+          <b lang="et">maja, majade</b>; <b lang="et">puud, puude</b>.
         </Trans>,
         <Trans key="2">
-          Every other plural case is the plural genitive with the singular’s ending:{" "}
-          <b lang="et">majades, inimestele, sõpradega</b>.
+          The plurals with <b lang="et">-s</b>, <b lang="et">-st</b>, <b lang="et">-sse</b>,{" "}
+          <b lang="et">-le</b>, <b lang="et">-l</b> and <b lang="et">-ga</b> are the plural genitive
+          plus that ending: <b lang="et">majades, inimestele, sõpradega</b>.
         </Trans>,
         <Trans key="3">
           Not the plural nominative: <b lang="et">inimestega</b>, not <b lang="et">inimesedega</b>.
@@ -613,15 +614,15 @@ export function MajadesInimesteleLesson() {
                 <p>
                   <Trans>
                     Add any ending you know to the plural genitive: <b lang="et">-s</b>,{" "}
-                    <b lang="et">-st</b>, <b lang="et">-le</b>, <b lang="et">-l</b>,{" "}
-                    <b lang="et">-ga</b>. <Word w="Inimestele" /> is to people;{" "}
+                    <b lang="et">-st</b>, <b lang="et">-sse</b>, <b lang="et">-le</b>,{" "}
+                    <b lang="et">-l</b>, <b lang="et">-ga</b>. <Word w="Inimestele" /> is to people;{" "}
                     <b lang="et">sõpradega</b> is with friends. Pick a noun and compare the columns.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Don’t build on the plural of lesson {plural}: it’s <b lang="et">inimestega</b>,
-                    not <b lang="et">inimesedega</b>.
+                    Don’t build on the plural nominative from lesson {plural}: it’s{" "}
+                    <b lang="et">inimestega</b>, not <b lang="et">inimesedega</b>.
                   </Trans>
                 </p>
               </Prose>
@@ -642,7 +643,7 @@ export function MajadesInimesteleLesson() {
         },
         {
           id: "hear",
-          title: t`One or many?`,
+          title: t`One or many, by ear`,
           quiz: true,
           children: (
             <>

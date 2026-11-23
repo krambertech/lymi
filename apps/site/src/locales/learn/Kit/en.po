@@ -284,8 +284,8 @@ msgstr "A free lesson on saying where you are in Estonian: -s for in (Tallinnas,
 msgid "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
 
-msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, täna, homme and eile, and saying and writing what day it is. Every sentence is read aloud."
-msgstr "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, täna, homme and eile, and saying and writing what day it is. Every sentence is read aloud."
+msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, täna, homme and eile, saying and writing what day it is, and a short passage to listen to. Every sentence is read aloud."
+msgstr "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, täna, homme and eile, saying and writing what day it is, and a short passage to listen to. Every sentence is read aloud."
 
 msgid "A free lesson on the Estonian genitive case: minu, sinu, tema, meie, teie and nende for my, your, his or her, our and their, the owner before the noun (Mari raamat), kelle for whose, and the genitive as the form that takes -s and -l (kooli, koolis). Every sentence is read aloud."
 msgstr "A free lesson on the Estonian genitive case: minu, sinu, tema, meie, teie and nende for my, your, his or her, our and their, the owner before the noun (Mari raamat), kelle for whose, and the genitive as the form that takes -s and -l (kooli, koolis). Every sentence is read aloud."
@@ -753,8 +753,8 @@ msgstr "Free Estonian conversation practice for beginners: say your name, where 
 msgid "Free Estonian decks in Lymi"
 msgstr "Free Estonian decks in Lymi"
 
-msgid "Free Estonian practice for beginners: read opening hours and a message, follow a voice message and a phone call with times and days, write what you hear, fill in a plan for Saturday, talk with a friend at a café and write back. Every sentence is read aloud."
-msgstr "Free Estonian practice for beginners: read opening hours and a message, follow a voice message and a phone call with times and days, write what you hear, fill in a plan for Saturday, talk with a friend at a café and write back. Every sentence is read aloud."
+msgid "Free Estonian practice for beginners: read opening hours and a message, follow a voice message and a phone call with times and days, write what you hear, write short sentences in Estonian, fill in a plan for Saturday, talk with a friend at a café and write back. Every sentence is read aloud."
+msgstr "Free Estonian practice for beginners: read opening hours and a message, follow a voice message and a phone call with times and days, write what you hear, write short sentences in Estonian, fill in a plan for Saturday, talk with a friend at a café and write back. Every sentence is read aloud."
 
 msgid "friend"
 msgstr "friend"

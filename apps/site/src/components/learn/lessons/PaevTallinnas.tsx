@@ -400,9 +400,10 @@ export function PaevTallinnasLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Read a café sign and a text message, follow a voice message and a phone call, write what
-          you hear, fill in a plan for Saturday, talk with Mari at the café and answer her message:
-          numbers, times and days in sentences you know.
+          Read a café sign and a text message, tell times from prices and days, follow a voice
+          message and a phone call, write what you hear and write sentences in Estonian, fill in a
+          plan for Saturday, talk with Mari at the café and answer her message: numbers, times and
+          days in sentences you know.
         </Trans>
       }
       facts={[

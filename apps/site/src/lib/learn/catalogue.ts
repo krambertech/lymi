@@ -124,7 +124,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Days of the week in Estonian`,
         et: "Esmaspäev, teisipäev",
         minutes: 15,
-        blurb: msg`A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, täna, homme and eile, and saying and writing what day it is. Every sentence is read aloud.`,
+        blurb: msg`A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, täna, homme and eile, saying and writing what day it is, and a short passage to listen to. Every sentence is read aloud.`,
       },
       {
         slug: "kaskiv",
@@ -140,7 +140,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian reading and listening practice: a day in Tallinn`,
         et: "Päev Tallinnas",
         minutes: 20,
-        blurb: msg`Free Estonian practice for beginners: read opening hours and a message, follow a voice message and a phone call with times and days, write what you hear, fill in a plan for Saturday, talk with a friend at a café and write back. Every sentence is read aloud.`,
+        blurb: msg`Free Estonian practice for beginners: read opening hours and a message, follow a voice message and a phone call with times and days, write what you hear, write short sentences in Estonian, fill in a plan for Saturday, talk with a friend at a café and write back. Every sentence is read aloud.`,
       },
     ],
   },

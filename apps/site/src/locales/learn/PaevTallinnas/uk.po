@@ -343,8 +343,8 @@ msgstr "Pool neli: пів на четверту, 3:30."
 msgid "Pühapäev with the ending that says when, as in esmaspäeval."
 msgstr "Pühapäev із закінченням, яке відповідає на питання «коли», як у esmaspäeval."
 
-msgid "Read a café sign and a text message, follow a voice message and a phone call, write what you hear, fill in a plan for Saturday, talk with Mari at the café and answer her message: numbers, times and days in sentences you know."
-msgstr "Прочитай табличку на дверях кав’ярні й повідомлення, послухай голосове повідомлення й телефонну розмову, запиши почуте, заповни план на суботу, поговори з Марі в кав’ярні й відповідай на її повідомлення: числа, час і дні в реченнях, які ти вже знаєш."
+msgid "Read a café sign and a text message, tell times from prices and days, follow a voice message and a phone call, write what you hear and write sentences in Estonian, fill in a plan for Saturday, talk with Mari at the café and answer her message: numbers, times and days in sentences you know."
+msgstr "Прочитай табличку на дверях кав’ярні й повідомлення, відрізни час від ціни й дня, послухай голосове повідомлення й телефонну розмову, запиши почуте й напиши речення естонською, заповни план на суботу, поговори з Марі в кав’ярні й відповідай на її повідомлення: числа, час і дні в реченнях, які ти вже знаєш."
 
 msgid "Read Mari’s message once more, then try again."
 msgstr "Ще раз прочитай повідомлення від Марі, а тоді спробуй знову."

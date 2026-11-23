@@ -164,7 +164,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`The three forms of an Estonian noun`,
         et: "Kolm põhivormi",
         minutes: 12,
-        blurb: msg`A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the third. Every word is read aloud.`,
+        blurb: msg`A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the partitive. Every word is read aloud.`,
       },
       {
         slug: "omastav",
@@ -188,7 +188,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`The Estonian partitive case: after numbers, amounts and negation`,
         et: "Kaks kassi",
         minutes: 16,
-        blurb: msg`A free lesson on the Estonian partitive case, a noun’s third form: after numbers from two up (kaks kassi, viis eurot), after mitu and amounts (tass kohvi), after pole (mul pole kassi) and with food and drink (ma joon kohvi). Every sentence is read aloud.`,
+        blurb: msg`A free lesson on the Estonian partitive case: after numbers from two up (kaks kassi, viis eurot), after mitu and amounts (tass kohvi), after pole (mul pole kassi) and with food and drink (ma joon kohvi). Every sentence is read aloud.`,
       },
       {
         slug: "mitmus",
@@ -196,7 +196,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian plural`,
         et: "Kassid",
         minutes: 12,
-        blurb: msg`A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb with a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud.`,
+        blurb: msg`A free lesson on the Estonian plural: the genitive plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb with a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud.`,
       },
       {
         slug: "majas-majja-majast",
@@ -263,7 +263,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 12,
         blurb: msg`A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud.`,
       },
-      { name: msg`Practice: at the market`, et: "Turul" },
+      {
+        slug: "turul",
+        name: msg`Practice: at the market`,
+        title: msg`Estonian practice: shopping at the market`,
+        et: "Turul",
+        minutes: 15,
+        blurb: msg`Free Estonian practice at the market: read a friend’s message and answer it, say what you need and what it costs (kilo juustu, kaks eurot), choose between the -da and -ma infinitive after tahan and pean, fix the mistakes learners make, buy cheese at a stall and follow a conversation heard twice. Every sentence is read aloud.`,
+      },
       {
         slug: "lihtminevik",
         name: msg`Past tense`,
@@ -272,7 +279,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 14,
         blurb: msg`A free lesson on the Estonian past tense (lihtminevik): -si- on most verbs (elasin, lugesin, rääkisin), -i- on a few everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud.`,
       },
-      { name: msg`Saying no in the past`, et: "Ma ei läinud" },
+      {
+        slug: "mineviku-eitus",
+        name: msg`Saying no in the past`,
+        title: msg`How to say no in the past in Estonian`,
+        et: "Ma ei läinud",
+        minutes: 15,
+        blurb: msg`A free lesson on saying no in the Estonian past tense: ei and the -nud form (ma ei läinud, ei olnud, polnud), the same for every person, how the -nud form comes from the -da infinitive, the five forms to learn whole, and answering a question with no. Every sentence is read aloud.`,
+      },
       { name: msg`The future`, et: "Hakkan õppima" },
       { name: msg`Practice: last weekend, next week`, et: "Nädalavahetusel" },
     ],

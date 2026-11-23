@@ -85,8 +85,8 @@ msgstr "Українська розрізняє це прийменником і
 msgid "Estonian asks three questions about a place, <0>kus</0>, <1>kuhu</1> and <2>kust</2>, and answers each with its own ending: <3>majas, majja, majast</3>."
 msgstr "Естонська ставить про місце три питання — <0>kus</0>, <1>kuhu</1> і <2>kust</2>, тобто де, куди і звідки, — і на кожне відповідає своїм закінченням: <3>majas, majja, majast</3>."
 
-msgid "For <0/>, <1/> and <2/>, the short form is the third form a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. Two words have a short form of their own: <4/> for <5/>, <6/> for <7/>."
-msgstr "У <0/>, <1/> і <2/> коротка форма — це третя форма зі словника, яку показує урок {threeForms}: <3>pood, poe, poodi</3>. Два слова мають власну коротку форму: <4/> від <5/>, <6/> від <7/>."
+msgid "For <0/>, <1/> and <2/>, the short form is the same word as the partitive a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. Two words have a short form of their own: <4/> for <5/>, <6/> for <7/>."
+msgstr "У <0/>, <1/> і <2/> коротка форма збігається з партитивом зі словника, як показує урок {threeForms}: <3>pood, poe, poodi</3>. Два слова мають власну коротку форму: <4/> від <5/>, <6/> від <7/>."
 
 msgid "Four places, each with a form for kus, kuhu and kust"
 msgstr "Чотири місця, у кожного форма для kus, kuhu і kust"

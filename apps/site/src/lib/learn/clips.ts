@@ -1518,6 +1518,344 @@ const SOBRAGA_CLIPS: Record<string, Clip> = {
   "p-kati": { sentences: SOBRAGA_PASSAGES.kati },
 };
 
+/**
+ * Personal pronouns in every case, as EKI's morphology on Sõnaveeb gives them: the long form, and
+ * the short one speech uses where there is one. Meie, teie have only the short -le, -l, -lt and -st
+ * forms in speech, and nemad no short genitive.
+ */
+export const PRONOUN_CASES = [
+  {
+    id: "mina",
+    short: "ma",
+    genitive: "minu",
+    shortGenitive: "mu",
+    partitive: "mind",
+    le: "minule",
+    shortLe: "mulle",
+    l: "minul",
+    shortL: "mul",
+    lt: "minult",
+    shortLt: "mult",
+    st: "minust",
+    shortSt: null,
+  },
+  {
+    id: "sina",
+    short: "sa",
+    genitive: "sinu",
+    shortGenitive: "su",
+    partitive: "sind",
+    le: "sinule",
+    shortLe: "sulle",
+    l: "sinul",
+    shortL: "sul",
+    lt: "sinult",
+    shortLt: "sult",
+    st: "sinust",
+    shortSt: null,
+  },
+  {
+    id: "tema",
+    short: "ta",
+    genitive: "tema",
+    shortGenitive: "ta",
+    partitive: "teda",
+    le: "temale",
+    shortLe: "talle",
+    l: "temal",
+    shortL: "tal",
+    lt: "temalt",
+    shortLt: "talt",
+    st: "temast",
+    shortSt: null,
+  },
+  {
+    id: "meie",
+    short: "me",
+    genitive: "meie",
+    shortGenitive: "me",
+    partitive: "meid",
+    le: null,
+    shortLe: "meile",
+    l: null,
+    shortL: "meil",
+    lt: null,
+    shortLt: "meilt",
+    st: null,
+    shortSt: "meist",
+  },
+  {
+    id: "teie",
+    short: "te",
+    genitive: "teie",
+    shortGenitive: "te",
+    partitive: "teid",
+    le: null,
+    shortLe: "teile",
+    l: null,
+    shortL: "teil",
+    lt: null,
+    shortLt: "teilt",
+    st: null,
+    shortSt: "teist",
+  },
+  {
+    id: "nemad",
+    short: "nad",
+    genitive: "nende",
+    shortGenitive: null,
+    partitive: "neid",
+    le: "nendele",
+    shortLe: "neile",
+    l: "nendel",
+    shortL: "neil",
+    lt: "nendelt",
+    shortLt: "neilt",
+    st: "nendest",
+    shortSt: "neist",
+  },
+] as const;
+
+export type PronounCase = (typeof PRONOUN_CASES)[number];
+export type PronounId = PronounCase["id"];
+export const pronounWith = (genitive: string, ending: "ga" | "ta") => `${genitive}${ending}`;
+
+/** With me, without you: -ga and -ta on the genitive. */
+export const PRONOUN_WITH = [
+  "Tule minuga!",
+  "Ma räägin temaga.",
+  "Kas sa tuled meiega?",
+  "Ma ei tule sinuta.",
+  "Kas sa lähed nendega?",
+] as const;
+
+/** The short forms for to, has and from, one line each. */
+export const PRONOUN_SHORT = ["Helista mulle!", "Mul on aega.", "Ma küsin teilt."] as const;
+
+export type PronounWay = "le" | "l" | "lt";
+export const PRONOUN_WAYS: readonly PronounWay[] = ["le", "l", "lt"];
+
+export function pronounShort(person: PronounCase, way: PronounWay): string {
+  if (way === "le") return person.shortLe;
+  if (way === "lt") return person.shortLt;
+  return person.shortL;
+}
+
+/** A sentence for each short form: Jaan calls someone, someone has time, Jaan asks someone. */
+export function pronounSentence(way: PronounWay, form: string): string {
+  if (way === "le") return `Jaan helistab ${form}.`;
+  if (way === "lt") return `Jaan küsib ${form}.`;
+  return `${capital(form)} on aega.`;
+}
+
+/** The partitive after a verb such as ootama and armastama. */
+export const PRONOUN_PARTITIVE = [
+  "Ma armastan sind.",
+  "Oota mind!",
+  "Ma ootan teda.",
+  "Me ootame teid.",
+  "Nad ootavad meid.",
+  "Kas sa ootad neid?",
+] as const;
+
+/**
+ * My, I have, or me: the same pronoun's genitive, -l form and partitive, which only the sentence
+ * tells apart. `cue` is the sentence with its gap.
+ */
+export const PRONOUN_WHICH = [
+  {
+    id: "minu-kass",
+    person: "mina",
+    form: "genitive",
+    said: "See on minu kass.",
+    cue: "See on … kass.",
+  },
+  {
+    id: "jaan-ootab-mind",
+    person: "mina",
+    form: "partitive",
+    said: "Jaan ootab mind.",
+    cue: "Jaan ootab …",
+  },
+  { id: "sul-aega", person: "sina", form: "l", said: "Kas sul on aega?", cue: "Kas … on aega?" },
+  {
+    id: "armastan-sind",
+    person: "sina",
+    form: "partitive",
+    said: "Ma armastan sind.",
+    cue: "Ma armastan …",
+  },
+  { id: "tal-auto", person: "tema", form: "l", said: "Tal on auto.", cue: "… on auto." },
+  {
+    id: "tema-raamat",
+    person: "tema",
+    form: "genitive",
+    said: "Kus on tema raamat?",
+    cue: "Kus on … raamat?",
+  },
+  { id: "meil-kass", person: "meie", form: "l", said: "Meil on kass.", cue: "… on kass." },
+  {
+    id: "nende-auto",
+    person: "nemad",
+    form: "genitive",
+    said: "See on nende auto.",
+    cue: "See on … auto.",
+  },
+  {
+    id: "ootad-neid",
+    person: "nemad",
+    form: "partitive",
+    said: "Kas sa ootad neid?",
+    cue: "Kas sa ootad …?",
+  },
+] as const satisfies readonly {
+  id: string;
+  person: PronounId;
+  form: "genitive" | "l" | "partitive";
+  said: string;
+  cue: string;
+}[];
+
+/** About someone: -st, out of, also says who you talk about. */
+export const PRONOUN_ABOUT = ["Ma räägin sinust.", "Nad räägivad meist."] as const;
+
+/** Sentences the learner writes from their meaning, in the order a quiz first asks them. */
+export const PRONOUN_TRANSLATE = [
+  { id: "tule-minuga", answers: ["Tule minuga!", "Tulge minuga!"] },
+  { id: "ootan-sind", answers: ["Ma ootan sind.", "Mina ootan sind.", "Ootan sind."] },
+  { id: "helista-mulle", answers: ["Helista mulle!", "Helista minule!"] },
+  { id: "sul-on-aega", answers: ["Kas sul on aega?", "Kas sinul on aega?"] },
+  {
+    id: "raagime-sinust",
+    answers: ["Me räägime sinust.", "Meie räägime sinust.", "Räägime sinust."],
+  },
+  { id: "kusib-temalt", answers: ["Jaan küsib temalt.", "Jaan küsib talt."] },
+] as const;
+
+/** Mistakes in pronouns as learners write them, each with its one wrong word. */
+export const PRONOUN_FIX = [
+  { id: "fix-minuga", wrong: "Tule minaga!", answers: ["Tule minuga!"] },
+  { id: "fix-sind", wrong: "Ma ootan sinu.", answers: ["Ma ootan sind."] },
+  { id: "fix-mul", wrong: "Minu on aega.", answers: ["Mul on aega.", "Minul on aega."] },
+  {
+    id: "fix-minu-nimi",
+    wrong: "Mina nimi on Kati.",
+    answers: ["Minu nimi on Kati.", "Mu nimi on Kati."],
+  },
+  { id: "fix-mulle", wrong: "Helista mind!", answers: ["Helista mulle!", "Helista minule!"] },
+] as const;
+
+/** Kati's message to Mari, which the learner fills in. */
+export const PRONOUN_MESSAGE = [
+  "Tere, Mari!",
+  "Kas sa tuled täna minuga kohvikusse?",
+  "Jaan tuleb ka meiega.",
+  "Ma ootan sind kell viis.",
+  "Mul on sulle raamat.",
+  "Helista mulle!",
+] as const;
+
+/** Mari phones Jaan: about 70 seconds, Jaan in the main voice and Mari in the second. */
+export const PRONOUN_CALL: Conversation = {
+  turns: [
+    {
+      voice: "second",
+      text: ["Tere, Jaan! See on Mari.", "Kas sul on täna aega?"],
+      say: "[cheerful] Tere, Jaan! See on Mari. Kas sul on täna aega?",
+    },
+    { voice: "main", text: ["Tere, Mari! Jah, mul on aega.", "Miks sa küsid?"] },
+    {
+      voice: "second",
+      text: ["Me läheme Katiga kohvikusse.", "Kas sa tuled meiega?"],
+    },
+    {
+      voice: "main",
+      text: ["Jah, ma tulen teiega.", "Kas Peeter tuleb ka?"],
+      say: "[pleased] Jah, ma tulen teiega. Kas Peeter tuleb ka?",
+    },
+    {
+      voice: "second",
+      text: ["Ei, Peeter ei tule.", "Tal pole täna aega.", "Aga ta helistab sulle homme."],
+    },
+    { voice: "main", text: ["Hästi.", "Mul on talle raamat."] },
+    { voice: "second", text: "Mis raamat see on?" },
+    { voice: "main", text: "Üks hea raamat Tallinnast." },
+    {
+      voice: "second",
+      text: ["Kati räägib sinust palju.", "Ta tahab sinuga rääkida."],
+      say: "[teasing] Kati räägib sinust palju. Ta tahab sinuga rääkida.",
+    },
+    {
+      voice: "main",
+      text: ["Minuga?", "Mida ta minult tahab?"],
+      say: "[surprised] Minuga? Mida ta minult tahab?",
+    },
+    {
+      voice: "second",
+      text: [
+        "Ma ei tea.",
+        "Küsi temalt!",
+        "Me ootame sind kell seitse kohvikus.",
+        "Kas sa tuled bussiga?",
+      ],
+      say: "[laughs] Ma ei tea. Küsi temalt! Me ootame sind kell seitse kohvikus. Kas sa tuled bussiga?",
+    },
+    { voice: "main", text: ["Ei, ma tulen autoga.", "Head aega!"] },
+    { voice: "second", text: "Nägemiseni!" },
+  ],
+};
+
+/** The other words and lines the pronouns lesson says. */
+export const PRONOUN_WORDS = [
+  "keda?",
+  "kellega?",
+  "kellele?",
+  "kellel?",
+  "kellelt?",
+  "kellest?",
+  "Keda sa ootad?",
+  "Jaan ootab teda.",
+] as const;
+
+const PRONOUN_TABLE_FORMS = PRONOUN_CASES.flatMap((person) => [
+  person.id,
+  person.short,
+  person.genitive,
+  person.shortGenitive,
+  person.partitive,
+  pronounWith(person.genitive, "ga"),
+  pronounWith(person.genitive, "ta"),
+  person.le,
+  person.shortLe,
+  person.l,
+  person.shortL,
+  person.lt,
+  person.shortLt,
+  person.st,
+  person.shortSt,
+]).filter((form): form is string => form !== null);
+
+const PRONOUN_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...new Set([
+      ...PRONOUN_TABLE_FORMS,
+      ...PRONOUN_WITH,
+      ...PRONOUN_SHORT,
+      ...PRONOUN_CASES.flatMap((person) =>
+        PRONOUN_WAYS.map((way) => pronounSentence(way, pronounShort(person, way))),
+      ),
+      ...PRONOUN_PARTITIVE,
+      ...PRONOUN_WHICH.map(({ said }) => said),
+      ...PRONOUN_ABOUT,
+      ...PRONOUN_TRANSLATE.map(({ answers }) => answers[0]),
+      ...PRONOUN_FIX.map(({ answers }) => answers[0]),
+      ...PRONOUN_WORDS,
+    ]),
+  ]),
+  "p-message": { sentences: PRONOUN_MESSAGE },
+  "c-call": PRONOUN_CALL,
+};
+
 /** A noun's three forms in a dictionary's order: first, second, third. */
 export type NounForms = readonly [string, string, string];
 
@@ -2812,6 +3150,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     "p-saturday": { sentences: OUTER_PASSAGE },
   },
   "sobraga-rahata": SOBRAGA_CLIPS,
+  asesonad: PRONOUN_CLIPS,
   "mul-on": {
     ...words([
       ...MUL_ON_WORDS,

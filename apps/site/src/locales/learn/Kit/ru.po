@@ -238,6 +238,9 @@ msgstr "Бесплатный урок эстонского о четырёх п�
 msgid "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о meeldima, «нравиться»: mulle meeldib и другие лица, meeldivad, когда нравится несколько вещей, meeldib с глаголом, ei meeldi, вопросы с kas и kellele и чувства, например mul on külm. Каждое предложение озвучено."
 
+msgid "A free Estonian lesson on personal pronouns in their cases: minuga and sinuta on the genitive, the short forms mulle, mul and mult, the partitive mind, sind, teda, and telling minu, mul and mind apart. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о склонении личных местоимений: minuga и sinuta от родительного падежа, короткие формы mulle, mul и mult, партитив mind, sind, teda и как не путать minu, mul и mind. Каждое предложение озвучено."
+
 msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о личных местоимениях: mina, sina, tema и другие в полной и краткой форме, и глагол olema, «быть». Каждое предложение озвучено."
 
@@ -656,6 +659,9 @@ msgstr "Прошедшее время в эстонском языке"
 
 msgid "Estonian personal pronouns and “to be”"
 msgstr "Эстонские личные местоимения и «быть»"
+
+msgid "Estonian personal pronouns in every case"
+msgstr "Склонение личных местоимений в эстонском"
 
 msgid "Estonian plural"
 msgstr "Множественное число в эстонском языке"

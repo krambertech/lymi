@@ -3479,6 +3479,135 @@ export const VORMID_CLASS = [
   "Rääkige kodus eesti keelt!",
 ] as const;
 
+export const VORMID_SAY = [
+  { id: "lugeda", said: "Ma tahan lugeda.", also: ["Mina tahan lugeda.", "Tahan lugeda."] },
+  { id: "lugege", said: "Lugege, palun!", also: ["Palun lugege!"] },
+  {
+    id: "ootan",
+    said: "Ma ootan kohvikus.",
+    also: [
+      "Mina ootan kohvikus.",
+      "Ootan kohvikus.",
+      "Kohvikus ma ootan.",
+      "Kohvikus ootan.",
+      "Kohvikus ootan ma.",
+      "Kohvikus ootan mina.",
+      "Kohvikus mina ootan.",
+    ],
+  },
+  { id: "oodake", said: "Oodake, palun!", also: ["Palun oodake!"] },
+  { id: "suua", said: "Ma tahan süüa.", also: ["Mina tahan süüa.", "Tahan süüa."] },
+  {
+    id: "teeme",
+    said: "Me teeme tööd.",
+    also: ["Meie teeme tööd.", "Teeme tööd.", "Me töötame.", "Meie töötame.", "Töötame."],
+  },
+] as const;
+
+export const VORMID_FIX = [
+  { id: "loen", wrong: "Ma lugen raamatut.", right: "Ma loen raamatut." },
+  { id: "oodake", wrong: "Ootage, palun!", right: "Oodake, palun!" },
+  { id: "teen", wrong: "Ma tegen tööd.", right: "Ma teen tööd." },
+  { id: "suua", wrong: "Ma tahan sööma.", right: "Ma tahan süüa." },
+  { id: "kuulake", wrong: "Kuulage, palun!", right: "Kuulake, palun!" },
+  { id: "tulla", wrong: "Ma tahan tulema.", right: "Ma tahan tulla." },
+] as const;
+
+export const VORMID_DRILL = [
+  { id: "tulge", said: "Tulge siia!", rule: "command", also: ["Siia tulge!"] },
+  {
+    id: "juua",
+    said: "Ma tahan kohvi juua.",
+    rule: "da",
+    also: [
+      "Mina tahan kohvi juua.",
+      "Tahan kohvi juua.",
+      "Ma tahan juua kohvi.",
+      "Mina tahan juua kohvi.",
+      "Tahan juua kohvi.",
+      "Kohvi tahan ma juua.",
+      "Kohvi tahan juua.",
+      "Kohvi ma tahan juua.",
+      "Kohvi tahan mina juua.",
+      "Kohvi mina tahan juua.",
+    ],
+  },
+  {
+    id: "raagime",
+    said: "Me räägime eesti keelt.",
+    rule: "present",
+    also: [
+      "Meie räägime eesti keelt.",
+      "Räägime eesti keelt.",
+      "Eesti keelt me räägime.",
+      "Eesti keelt meie räägime.",
+      "Eesti keelt räägime.",
+    ],
+  },
+  {
+    id: "vaadake",
+    said: "Vaadake, palun!",
+    rule: "command",
+    also: ["Palun vaadake!"],
+  },
+  {
+    id: "elavad",
+    said: "Nad elavad Tartus.",
+    rule: "present",
+    also: [
+      "Nemad elavad Tartus.",
+      "Tartus nad elavad.",
+      "Tartus elavad nad.",
+      "Tartus nemad elavad.",
+      "Tartus elavad nemad.",
+    ],
+  },
+  {
+    id: "oppida",
+    said: "Ma tahan eesti keelt õppida.",
+    rule: "da",
+    also: [
+      "Mina tahan eesti keelt õppida.",
+      "Tahan eesti keelt õppida.",
+      "Ma tahan õppida eesti keelt.",
+      "Mina tahan õppida eesti keelt.",
+      "Tahan õppida eesti keelt.",
+      "Eesti keelt tahan ma õppida.",
+      "Eesti keelt tahan õppida.",
+      "Eesti keelt ma tahan õppida.",
+      "Eesti keelt tahan mina õppida.",
+      "Eesti keelt mina tahan õppida.",
+    ],
+  },
+] as const;
+
+export const VORMID_TALK = {
+  turns: [
+    { voice: "fourth", text: ["Tere, Mari!", "Mida sa teed?"] },
+    { voice: "third", text: ["Tere, Jaan!", "Ma loen raamatut.", "Mu sõber Kati tuleb ka."] },
+    { voice: "fourth", text: "Kas Kati tuleb täna?" },
+    { voice: "third", text: ["Jah, ta tuleb kell kolm.", "Istu, palun!"] },
+    { voice: "fourth", text: ["Aitäh.", "Mida sa loed?"] },
+    { voice: "third", text: ["Ma loen eesti raamatut.", "Ma õpin eesti keelt."] },
+    { voice: "fourth", text: "Kas sa räägid kodus eesti keelt?" },
+    {
+      voice: "third",
+      text: ["Natuke.", "Mu mees räägib soome keelt."],
+      say: "[laughs] Natuke. Mu mees räägib soome keelt.",
+    },
+    { voice: "fourth", text: "Ma tahan ka eesti keelt õppida." },
+    { voice: "third", text: ["Tule meie kooli!", "Me loeme ja räägime palju."] },
+    { voice: "fourth", text: ["Hästi!", "Kas õpetaja on hea?"] },
+    { voice: "third", text: "Jah, väga hea." },
+    { voice: "fourth", text: "Vaata, Kati tuleb!", say: "[excited] Vaata, Kati tuleb!" },
+    { voice: "third", text: ["Kati, tule siia!", "Istu, palun!"] },
+    { voice: "fourth", text: ["Tere, Kati!", "Mida te täna teete?"] },
+    { voice: "third", text: ["Me loeme koos eesti raamatut.", "Tule ka homme, Jaan!"] },
+    { voice: "fourth", text: ["Hästi, ma tulen.", "Head aega!"] },
+    { voice: "third", text: "Head aega, Jaan!" },
+  ],
+} as const satisfies Conversation;
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -3631,6 +3760,278 @@ export const INFINITIVE_MESSAGE = [
   "Ma ootan sind kohvikus.",
   "Mulle meeldib kohvikus lugeda.",
   "Ma pean kell kuus koju minema.",
+] as const;
+
+export const INFINITIVE_SAY = [
+  {
+    id: "juua",
+    said: "Ma tahan kohvi juua.",
+    also: [
+      "Mina tahan kohvi juua.",
+      "Tahan kohvi juua.",
+      "Ma tahan juua kohvi.",
+      "Mina tahan juua kohvi.",
+      "Tahan juua kohvi.",
+      "Kohvi tahan ma juua.",
+      "Kohvi tahan juua.",
+      "Kohvi ma tahan juua.",
+      "Kohvi tahan mina juua.",
+      "Kohvi mina tahan juua.",
+    ],
+  },
+  {
+    id: "minema",
+    said: "Ma pean koju minema.",
+    also: [
+      "Mina pean koju minema.",
+      "Pean koju minema.",
+      "Koju pean ma minema.",
+      "Koju pean minema.",
+      "Koju ma pean minema.",
+      "Ma pean minema koju.",
+      "Mina pean minema koju.",
+      "Pean minema koju.",
+      "Koju pean mina minema.",
+      "Koju mina pean minema.",
+      "Mul on vaja koju minna.",
+      "Minul on vaja koju minna.",
+      "Koju on mul vaja minna.",
+      "Mul tuleb koju minna.",
+    ],
+  },
+  {
+    id: "oppima",
+    said: "Ma hakkan eesti keelt õppima.",
+    also: [
+      "Mina hakkan eesti keelt õppima.",
+      "Hakkan eesti keelt õppima.",
+      "Ma hakkan õppima eesti keelt.",
+      "Mina hakkan õppima eesti keelt.",
+      "Hakkan õppima eesti keelt.",
+      "Eesti keelt hakkan ma õppima.",
+      "Eesti keelt hakkan õppima.",
+      "Eesti keelt ma hakkan õppima.",
+      "Eesti keelt hakkan mina õppima.",
+      "Eesti keelt mina hakkan õppima.",
+    ],
+  },
+  {
+    id: "tulla",
+    said: "Ma saan homme tulla.",
+    also: [
+      "Mina saan homme tulla.",
+      "Homme saan ma tulla.",
+      "Homme ma saan tulla.",
+      "Saan homme tulla.",
+      "Homme saan tulla.",
+      "Ma saan tulla homme.",
+      "Ma võin homme tulla.",
+      "Mina võin homme tulla.",
+      "Võin homme tulla.",
+      "Homme võin ma tulla.",
+      "Homme ma võin tulla.",
+      "Ma võin tulla homme.",
+      "Homme võin tulla.",
+      "Mina saan tulla homme.",
+      "Saan tulla homme.",
+      "Mina võin tulla homme.",
+      "Võin tulla homme.",
+      "Homme saan mina tulla.",
+      "Homme mina saan tulla.",
+      "Homme võin mina tulla.",
+      "Homme mina võin tulla.",
+    ],
+  },
+  {
+    id: "lugeda",
+    said: "Mulle meeldib lugeda.",
+    also: [
+      "Minule meeldib lugeda.",
+      "Lugeda mulle meeldib.",
+      "Lugeda meeldib mulle.",
+      "Lugeda meeldib minule.",
+      "Lugeda minule meeldib.",
+    ],
+  },
+  { id: "sooma", said: "Tule sööma!", also: [] },
+] as const;
+
+export const INFINITIVE_FIX = [
+  { id: "minna", wrong: "Ma tahan linna minema.", right: "Ma tahan linna minna." },
+  { id: "tulema", wrong: "Ma pean homme tulla.", right: "Ma pean homme tulema." },
+  { id: "jooma", wrong: "Ma lähen kohvi juua.", right: "Ma lähen kohvi jooma." },
+  { id: "raakida", wrong: "Ma oskan eesti keelt rääkima.", right: "Ma oskan eesti keelt rääkida." },
+  { id: "oppima", wrong: "Ma hakkan homme õppida.", right: "Ma hakkan homme õppima." },
+  { id: "lugeda", wrong: "Mulle meeldib lugema.", right: "Mulle meeldib lugeda." },
+] as const;
+
+export const INFINITIVE_TALK = {
+  turns: [
+    { voice: "third", text: ["Tere, Jaan!", "Mida sa täna teed?"] },
+    { voice: "fourth", text: ["Täna ma pean tööle minema.", "Aga kell viis ma tulen koju."] },
+    { voice: "third", text: "Kas sa tahad kohvikusse tulla?" },
+    {
+      voice: "fourth",
+      text: ["Jah, ma tahan kohvi juua.", "Aga ma pean kell seitse kodus olema."],
+    },
+    {
+      voice: "third",
+      text: ["Hästi.", "Mulle meeldib kohvikus lugeda.", "Ma võin sind kohvikus oodata."],
+    },
+    { voice: "fourth", text: "Kas Kati saab ka tulla?" },
+    { voice: "third", text: "Ei, Kati hakkab täna eesti keelt õppima." },
+    { voice: "fourth", text: "Kas sa oskad süüa teha?", say: "[curious] Kas sa oskad süüa teha?" },
+    { voice: "third", text: ["Natuke.", "Täna ma proovin süüa teha."] },
+    {
+      voice: "fourth",
+      text: ["Hästi!", "Ma tulen homme sööma!"],
+      say: "[laughs] Hästi! Ma tulen homme sööma!",
+    },
+    {
+      voice: "third",
+      text: ["Tule!", "Aga sa pead kell kuus tulema.", "Ma hakkan kell viis süüa tegema."],
+    },
+    { voice: "fourth", text: ["Hästi.", "Kas Kati võib ka tulla?"] },
+    { voice: "third", text: ["Jah, muidugi.", "Kati armastab süüa."] },
+    {
+      voice: "fourth",
+      text: ["Väga hea.", "Nüüd ma pean tööle minema.", "Homme näeme!", "Head aega!"],
+    },
+    { voice: "third", text: "Head aega, Jaan!" },
+  ],
+} as const satisfies Conversation;
+
+export const INFINITIVE_GAPS = [
+  { id: "juua", before: "Ma tahan vett ", answer: "juua", wrong: "jooma", after: ".", takes: "da" },
+  {
+    id: "tulla",
+    before: "Kas sa saad täna ",
+    answer: "tulla",
+    wrong: "tulema",
+    after: "?",
+    takes: "da",
+  },
+  {
+    id: "teha",
+    before: "Ma oskan süüa ",
+    answer: "teha",
+    wrong: "tegema",
+    after: ".",
+    takes: "da",
+  },
+  {
+    id: "olla",
+    before: "Mulle meeldib kodus ",
+    answer: "olla",
+    wrong: "olema",
+    after: ".",
+    takes: "da",
+  },
+  {
+    id: "minema",
+    before: "Nad peavad homme tööle ",
+    answer: "minema",
+    wrong: "minna",
+    after: ".",
+    takes: "ma",
+  },
+  { id: "sooma", before: "Ta läheb ", answer: "sööma", wrong: "süüa", after: ".", takes: "ma" },
+  {
+    id: "tegema",
+    before: "Ma hakkan õhtul süüa ",
+    answer: "tegema",
+    wrong: "teha",
+    after: ".",
+    takes: "ma",
+  },
+  {
+    id: "olema",
+    before: "Ma pean kell seitse kodus ",
+    answer: "olema",
+    wrong: "olla",
+    after: ".",
+    takes: "ma",
+  },
+] as const;
+
+export const infinitiveGapSaid = ({ before, answer, after }: (typeof INFINITIVE_GAPS)[number]) =>
+  `${before}${answer}${after}`;
+
+export const INFINITIVE_ORDERS = {
+  linna: [
+    "Ma tahan homme linna minna.",
+    "Homme tahan ma linna minna.",
+    "Homme ma tahan linna minna.",
+    "Ma tahan linna homme minna.",
+    "Linna tahan ma homme minna.",
+    "Ma tahan homme minna linna.",
+    "Homme tahan ma minna linna.",
+    "Linna ma tahan homme minna.",
+    "Homme ma tahan minna linna.",
+  ],
+  oppima: [
+    "Ma hakkan täna kodus õppima.",
+    "Täna hakkan ma kodus õppima.",
+    "Täna ma hakkan kodus õppima.",
+    "Kodus hakkan ma täna õppima.",
+    "Ma hakkan kodus täna õppima.",
+    "Kodus ma hakkan täna õppima.",
+    "Ma hakkan täna õppima kodus.",
+    "Täna hakkan ma õppima kodus.",
+    "Täna ma hakkan õppima kodus.",
+  ],
+  lugema: ["Ma jään koju lugema.", "Koju jään ma lugema.", "Koju ma jään lugema."],
+  toole: [
+    "Ma pean homme tööle minema.",
+    "Homme pean ma tööle minema.",
+    "Homme ma pean tööle minema.",
+    "Ma pean tööle homme minema.",
+    "Tööle pean ma homme minema.",
+    "Ma pean homme minema tööle.",
+    "Homme pean ma minema tööle.",
+    "Tööle ma pean homme minema.",
+    "Homme ma pean minema tööle.",
+  ],
+  lugeda: [
+    "Ma tahan täna kodus lugeda.",
+    "Täna tahan ma kodus lugeda.",
+    "Täna ma tahan kodus lugeda.",
+    "Kodus tahan ma täna lugeda.",
+    "Ma tahan kodus täna lugeda.",
+    "Kodus ma tahan täna lugeda.",
+    "Ma tahan täna lugeda kodus.",
+    "Täna tahan ma lugeda kodus.",
+    "Täna ma tahan lugeda kodus.",
+  ],
+  tool: [
+    "Me peame kell viis tööl olema.",
+    "Kell viis peame me tööl olema.",
+    "Kell viis me peame tööl olema.",
+    "Me peame tööl kell viis olema.",
+    "Tööl peame me kell viis olema.",
+    "Me peame kell viis olema tööl.",
+    "Kell viis peame me olema tööl.",
+    "Tööl me peame kell viis olema.",
+    "Kell viis me peame olema tööl.",
+  ],
+  oodata: [
+    "Ma võin sind kohvikus oodata.",
+    "Kohvikus võin ma sind oodata.",
+    "Ma võin kohvikus sind oodata.",
+    "Kohvikus ma võin sind oodata.",
+    "Ma võin sind oodata kohvikus.",
+    "Sind võin ma kohvikus oodata.",
+    "Sind ma võin kohvikus oodata.",
+  ],
+} as const;
+
+export const INFINITIVE_BUILD = [
+  { id: "linna", words: ["ma", "tahan", "homme", "linna", "minema"] },
+  { id: "oppima", words: ["ma", "hakkan", "täna", "kodus", "õppima"] },
+  { id: "toole", words: ["ma", "pean", "homme", "tööle", "minema"] },
+  { id: "lugeda", words: ["ma", "tahan", "täna", "kodus", "lugema"] },
+  { id: "tool", words: ["me", "peame", "kell viis", "tööl", "olema"] },
+  { id: "oodata", words: ["ma", "võin", "sind", "kohvikus", "ootama"] },
 ] as const;
 
 /** Words of the infinitives lesson with a card, and the sentences its build quiz plays. */
@@ -7622,7 +8023,11 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...words(VERB_FORMS.flatMap((verb) => [verb.ma, daForm(verb), verb.n, threeForms(verb)])),
     ...words(VERB_FORMS.filter((verb) => VORMID_COMMANDS.includes(verb.ma)).map((verb) => verb.ge)),
     ...words(["tahan", "Ma tahan lugeda."]),
+    ...words(VORMID_SAY.map(({ said }) => said)),
+    ...words(VORMID_FIX.map(({ right }) => right)),
+    ...words(VORMID_DRILL.map(({ said }) => said)),
     "p-class": { sentences: VORMID_CLASS },
+    "c-cafe": VORMID_TALK,
   },
   tegevusnimed: {
     ...words(INFINITIVE_LEADS.flatMap(({ lead, said }) => [lead, said])),
@@ -7631,7 +8036,13 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ),
     ...words(INFINITIVE_ORDER),
     ...words(INFINITIVE_WORDS),
+    ...words(INFINITIVE_SAY.map(({ said }) => said)),
+    ...words(INFINITIVE_FIX.map(({ right }) => right)),
+    ...words(INFINITIVE_GAPS.map(infinitiveGapSaid)),
+    ...words(INFINITIVE_BUILD.map(({ id }) => INFINITIVE_ORDERS[id][0])),
+    ...words(INFINITIVE_ORDERS.lugema.slice(0, 1)),
     "p-message": { sentences: INFINITIVE_MESSAGE },
+    "c-plans": INFINITIVE_TALK,
   },
   "ujuma-ujumas-ujumast": {
     ...words(GOING_VERBS.flatMap((verb) => WAYS.map((way) => goingForm(verb, way)))),

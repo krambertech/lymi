@@ -220,6 +220,8 @@ export const NUMBER_DRILLED = [
   "viiskümmend",
   "seitseteist",
   "seitsekümmend",
+  "üheksateist",
+  "üheksakümmend",
   "kaks",
   "kuus",
   "kaheksa",
@@ -1174,6 +1176,7 @@ export const TUTVUMINE_TALK: Conversation = {
 
 export const numberAnswers = (n: number): [string, ...string[]] => {
   const words = numberWords(n);
+  if (n > 10 && n < 20) return [words, `${words}kümmend`];
   return n === 100 ? [words, "ükssada"] : n === 1000 ? [words, "üks tuhat"] : [words];
 };
 
@@ -1197,17 +1200,23 @@ export const timeAnswers = (time: ClockTime): [string, ...string[]] => {
   const hour = numberWords(time.hour);
   const genitive = HOUR_GENITIVES[time.hour - 1];
   const next = numberWords((time.hour % 12) + 1);
+  const nextGenitive = HOUR_GENITIVES[time.hour % 12];
   const read =
     time.minute === 0
       ? []
       : [`${hour} ${time.minute < 10 ? "null " : ""}${numberWords(time.minute)}`];
+  const zeroes = time.minute === 0 ? [`${hour} null null`] : [];
   const past = [5, 10, 20].includes(time.minute)
     ? [
         `${numberWords(time.minute)} minutit üle ${genitive}`,
-        `${numberWords(time.minute)} minutit ${next} peal`,
+        `${numberWords(time.minute)} minutit ${nextGenitive} peal`,
       ]
     : time.minute === 15
-      ? [`viisteist minutit ${hour} läbi`, `viisteist minutit üle ${genitive}`]
+      ? [
+          `viisteist minutit ${hour} läbi`,
+          `viisteist minutit üle ${genitive}`,
+          `viisteist minutit ${nextGenitive} peal`,
+        ]
       : time.minute === 45
         ? [`viieteist minuti pärast ${next}`]
         : [];
@@ -1215,7 +1224,7 @@ export const timeAnswers = (time: ClockTime): [string, ...string[]] => {
     words,
     `kell on ${words}`,
     `kell ${words}`,
-    ...[...past, ...read].flatMap((each) => [each, `kell on ${each}`, `kell ${each}`]),
+    ...[...past, ...read, ...zeroes].flatMap((each) => [each, `kell on ${each}`, `kell ${each}`]),
   ];
 };
 
@@ -1479,6 +1488,18 @@ export const KELL_HEARD: readonly ClockTime[] = [
   { hour: 4, minute: 20 },
   { hour: 7, minute: 50 },
   { hour: 2, minute: 40 },
+];
+
+export const KELL_WRITTEN: readonly ClockTime[] = [
+  { hour: 5, minute: 0 },
+  { hour: 12, minute: 0 },
+  { hour: 1, minute: 15 },
+  { hour: 6, minute: 45 },
+  { hour: 4, minute: 45 },
+  { hour: 10, minute: 5 },
+  { hour: 12, minute: 10 },
+  { hour: 5, minute: 50 },
+  { hour: 6, minute: 40 },
 ];
 
 export const KELL_DRILLED: readonly ClockTime[] = [
@@ -4215,7 +4236,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   kell: {
     ...words(KELL_WORDS),
     ...Object.fromEntries(ALL_TIMES.map((time) => [timeClip(time), timeSentence(time)])),
-    ...words([...KELL_DRILLED, ...KELL_HEARD].map(timeSentence)),
+    ...words([...KELL_DRILLED, ...KELL_HEARD, ...KELL_WRITTEN].map(timeSentence)),
     "p-mari": { sentences: KELL_PASSAGE, voice: "third" },
   },
   paevad: { ...words(PAEVAD_WORDS), ...words(PAEVAD_SENTENCES) },
@@ -4231,7 +4252,14 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...words(TUTVUMINE_ASKED.map(({ answers }) => answers[0])),
     ...words(TUTVUMINE_TRANSLATED.map(({ answers }) => answers[0])),
     ...words(TUTVUMINE_FIXES.map(({ said }) => said)),
-    ...words(["Kus te elate?", "Kas te räägite eesti keelt?"]),
+    ...words([
+      "Ma ei ela Tallinnas.",
+      "Kati õpib Tallinnas.",
+      "Me töötame kohvikus.",
+      "Kus te õpite?",
+      "Kas te olete kodus?",
+      "Sa oled kodus.",
+    ]),
   },
   kaskiv: {
     ...words([

@@ -9,12 +9,12 @@ import {
 import type { DrillBank, FixDrill, SentenceDrill } from "../../../lib/learn/drill";
 
 const WHY: Record<string, MessageDescriptor> = {
-  ei: msg`After <et>ei</et> the verb has no ending; <et>olema</et> is <et>ole</et>.`,
+  ei: msg`After <et>ei</et> the verb usually has no ending; <et>olema</et> is <et>ole</et>.`,
   place: msg`In a town or a building, usually <et>-s</et>; at work, <et>-l</et>.`,
   ask: msg`A yes-or-no question usually starts with <et>kas</et>; the verb takes the ending for its person, as without <et>kas</et>.`,
   kas: msg`A yes-or-no question usually starts with <et>kas</et>.`,
   kus: msg`<et>Kus</et> asks where, and the verb takes its person’s ending: <et>Kus sa õpid? Kus ta õpib?</et>`,
-  mis: msg`<et>Mis</et> asks what; when the answer says <et>ma</et> or <et>minu</et>, ask with <et>sa</et> or <et>su</et>.`,
+  mis: msg`<et>Mis</et> asks what; when the answer says <et>ma</et> or <et>minu</et>, ask with <et>sa</et> or <et>su</et>, or polite <et>te</et>.`,
   olema: msg`<et>Mina</et> takes <et>olen</et>: <et>Mina olen Andres</et>.`,
 };
 
@@ -102,11 +102,11 @@ export const DRILLS: DrillBank = {
     ...TUTVUMINE_ASKED.map(asked),
     ...TUTVUMINE_TRANSLATED.map(translated),
     ...TUTVUMINE_FIXES.map(fixed),
-    written("Ma ei tööta kontoris.", "ei"),
-    written("Ta elab Tartus.", "place"),
-    written("Nad on tööl.", "place", ["tool"]),
-    written("Mina olen Andres.", "olema"),
-    written("Kus te elate?", "kus"),
-    written("Kas te räägite eesti keelt?", "ask"),
+    written("Ma ei ela Tallinnas.", "ei"),
+    written("Kati õpib Tallinnas.", "place"),
+    written("Me töötame kohvikus.", "place"),
+    written("Sa oled kodus.", "olema"),
+    written("Kus te õpite?", "kus"),
+    written("Kas te olete kodus?", "ask"),
   ],
 };

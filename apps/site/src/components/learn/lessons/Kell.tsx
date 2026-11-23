@@ -69,7 +69,10 @@ const GLOSSARY: Glossary = {
     en: msg`after; in, as in “in ten minutes”`,
     note: msg`Kümne minuti pärast neli: in ten minutes it’s four, 3:50.`,
   },
-  minutit: { en: msg`minutes`, note: msg`After a number from two up, minut becomes minutit.` },
+  minutit: {
+    en: msg`minutes`,
+    note: msg`After a number from two up, minut usually becomes minutit: kümme minutit. After kümne, it’s minuti.`,
+  },
   "pool neli": { en: msg`half past three, 3:30` },
   "veerand neli": { en: msg`quarter past three, 3:15` },
   "kolmveerand neli": { en: msg`quarter to four, 3:45` },
@@ -238,7 +241,7 @@ function HowItsSaid({ time }: { time: ClockTime }) {
   const past = time.minute;
   switch (time.minute) {
     case 0:
-      return <Trans>On the hour: the number alone.</Trans>;
+      return <Trans>On the hour: usually the number alone.</Trans>;
     case 15:
       return <Trans>A quarter of the way to {next}.</Trans>;
     case 30:
@@ -715,8 +718,8 @@ export function KellLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Ask the time and understand the answer. Halves and quarters count toward the hour that’s
-          coming.
+          Ask the time and understand the answer. Pool, veerand and kolmveerand count toward the
+          hour that’s coming.
         </Trans>
       }
       facts={[
@@ -748,9 +751,9 @@ export function KellLesson() {
           <b lang="et">Kolmveerand neli</b> is three quarters, 3:45.
         </Trans>,
         <Trans key="4">
-          Minutes past count from the hour that has struck: <b lang="et">kümme minutit kolm läbi</b>
-          , 3:10. Minutes to count down to the next: <b lang="et">kümne minuti pärast neli</b>,
-          3:50.
+          With <b lang="et">läbi</b>, minutes past count from the hour that has struck:{" "}
+          <b lang="et">kümme minutit kolm läbi</b>, 3:10. With <b lang="et">pärast</b>, minutes to
+          count down to the next: <b lang="et">kümne minuti pärast neli</b>, 3:50.
         </Trans>,
       ]}
       sections={[
@@ -885,11 +888,11 @@ export function KellLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Other minutes, up to twenty past, count from the hour that has struck.{" "}
+                    Other minutes, up to twenty past, usually count from the hour that has struck.{" "}
                     <Word w="Kümme minutit kolm läbi" /> is, word for word, “ten minutes, three
                     passed”: 3:10. <Word w="Läbi" /> means through or past, and <Word w="minutit" />{" "}
-                    is the partitive of <em>minut</em>, the form after a number; lesson {partitive}{" "}
-                    explains it.
+                    is the partitive of <em>minut</em>, its form after a number such as kümme;
+                    lesson {partitive} explains it.
                   </Trans>
                 </p>
               </Prose>
@@ -912,7 +915,7 @@ export function KellLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Before the hour, say how long until the next one.{" "}
+                    Before the hour, you usually say how long until the next one.{" "}
                     <Word w="Kümne minuti pärast neli" /> is, word for word, “in ten minutes, four”:
                     3:50.
                   </Trans>

@@ -22,8 +22,8 @@ msgstr "<0/> — двенадцать, а <1/> — двадцать. Оба на
 msgid "<0>Sada</0> and <1>tuhat</1> usually need no “one”. Hundreds join up; thousands stay separate."
 msgstr "Перед <0>sada</0> и <1>tuhat</1> «один» обычно не говорят. Сотни пишутся слитно, тысячи отдельно."
 
-msgid "<et>-teist</et> makes eleven to nineteen; <et>-kümmend</et> makes the tens."
-msgstr "<et>-teist</et> образует числа от одиннадцати до девятнадцати, <et>-kümmend</et> — десятки."
+msgid "<et>-teist</et> makes eleven to nineteen; <et>-kümmend</et> makes twenty to ninety."
+msgstr "<et>-teist</et> даёт числа от одиннадцати до девятнадцати; <et>-kümmend</et> — от двадцати до девяноста."
 
 msgid "<et>-teist</et> or <et>-kümmend</et>"
 msgstr "<et>-teist</et> или <et>-kümmend</et>"
@@ -127,11 +127,11 @@ msgstr "Eurot — партитив от euro."
 msgid "five"
 msgstr "пять"
 
-msgid "For the tens, add <0>-kümmend</0> to the digit: <1/> is two tens, twenty."
-msgstr "Для десятков добавь к цифре <0>-kümmend</0>: <1/> — два десятка, двадцать."
-
 msgid "four"
 msgstr "четыре"
+
+msgid "From twenty to ninety, add <0>-kümmend</0> to the digit: <1/> is two tens, twenty. Ten is just <2>kümme</2>."
+msgstr "От двадцати до девяноста добавь к цифре <0>-kümmend</0>: <1/> — два десятка, двадцать. Десять — просто <2>kümme</2>."
 
 msgid "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
 msgstr "Здесь каждое число звучит посреди фразы: цена, возраст, номер телефона. Введи число, которое слышишь."
@@ -268,17 +268,14 @@ msgstr "десять"
 msgid "Tens and ones are separate words: <0>kakskümmend üks</0>."
 msgstr "Десятки и единицы — отдельные слова: <0>kakskümmend üks</0>."
 
-msgid "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
-msgstr "С <0>-teist</0> получаются числа от одиннадцати до девятнадцати, а с <1>-kümmend</1> — десятки."
+msgid "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens from twenty to ninety."
+msgstr "Окончание <0>-teist</0> даёт числа от одиннадцати до девятнадцати, а <1>-kümmend</1> — десятки от двадцати до девяноста."
 
 msgid "The tens"
 msgstr "Десятки"
 
 msgid "The tens and the ones are two words."
 msgstr "Десятки и единицы — два отдельных слова."
-
-msgid "The tens: -kümmend"
-msgstr "Десятки: -kümmend"
 
 msgid "The word after the number changes too: <0/>, <1/>. That form is the partitive, which lesson {partitive} explains. For now, listen for the number."
 msgstr "Слово после числа тоже меняется: <0/>, <1/>. Эта форма — партитив, её объясняет урок {partitive}. Пока слушай число."
@@ -315,6 +312,9 @@ msgstr "двенадцать евро"
 
 msgid "twenty"
 msgstr "двадцать"
+
+msgid "Twenty to ninety: -kümmend"
+msgstr "От двадцати до девяноста: -kümmend"
 
 msgid "twenty-one"
 msgstr "двадцать один"

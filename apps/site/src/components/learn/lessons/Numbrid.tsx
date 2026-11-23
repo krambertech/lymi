@@ -86,8 +86,8 @@ const SENTENCES: readonly {
   { id: "c-aasta", answers: ["365"], en: msg`A year has 365 days.` },
   { id: "c-tund", answers: ["60"], en: msg`An hour has 60 minutes.` },
   { id: "c-klass", answers: ["22"], en: msg`There are 22 pupils in the class.` },
-  { id: "c-telefon", answers: ["52094"], en: msg`My number is 5 2 0 9 4.` },
-  { id: "c-kohv", answers: ["3.50", "3,50"], en: msg`Coffee costs €3.50.` },
+  { id: "c-telefon", answers: ["52094", "5 2 0 9 4"], en: msg`My number is 5 2 0 9 4.` },
+  { id: "c-kohv", answers: ["3.50", "3,50", "3.5", "3,5"], en: msg`Coffee costs €3.50.` },
 ];
 
 type AlikeItem = ChoiceItem & { pair: readonly [string, string] };
@@ -434,7 +434,7 @@ export function NumbridLesson() {
         </Trans>,
         <Trans key="2">
           The ending <b lang="et">-teist</b> makes eleven to nineteen, and <b lang="et">-kümmend</b>{" "}
-          makes the tens.
+          makes the tens from twenty to ninety.
         </Trans>,
         <Trans key="3">
           Tens and ones are separate words: <b lang="et">kakskümmend üks</b>.
@@ -507,14 +507,14 @@ export function NumbridLesson() {
         },
         {
           id: "tens",
-          title: t`The tens: -kümmend`,
+          title: t`Twenty to ninety: -kümmend`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    For the tens, add <em>-kümmend</em> to the digit: <Word w="kakskümmend" /> is
-                    two tens, twenty.
+                    From twenty to ninety, add <em>-kümmend</em> to the digit:{" "}
+                    <Word w="kakskümmend" /> is two tens, twenty. Ten is just <em>kümme</em>.
                   </Trans>
                 </p>
               </Prose>

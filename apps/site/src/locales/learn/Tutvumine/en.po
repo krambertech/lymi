@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
-msgid "<0>Kas</0> asks yes or no: the answer usually starts with <1>jah</1> or <2>ei</2>."
-msgstr "<0>Kas</0> asks yes or no: the answer usually starts with <1>jah</1> or <2>ei</2>."
+msgid "<0>Kas</0> usually asks yes or no; the answer often starts with <1>jah</1> or <2>ei</2>."
+msgstr "<0>Kas</0> usually asks yes or no; the answer often starts with <1>jah</1> or <2>ei</2>."
 
 msgid "<0>Kes</0> asks who, so a person answers it."
 msgstr "<0>Kes</0> asks who, so a person answers it."
@@ -52,14 +52,14 @@ msgstr "<et>Kus</et> asks where, and the verb takes its person’s ending: <et>K
 msgid "<et>Mina</et> takes <et>olen</et>: <et>Mina olen Andres</et>."
 msgstr "<et>Mina</et> takes <et>olen</et>: <et>Mina olen Andres</et>."
 
-msgid "<et>Mis</et> asks what; when the answer says <et>ma</et> or <et>minu</et>, ask with <et>sa</et> or <et>su</et>."
-msgstr "<et>Mis</et> asks what; when the answer says <et>ma</et> or <et>minu</et>, ask with <et>sa</et> or <et>su</et>."
+msgid "<et>Mis</et> asks what; when the answer says <et>ma</et> or <et>minu</et>, ask with <et>sa</et> or <et>su</et>, or polite <et>te</et>."
+msgstr "<et>Mis</et> asks what; when the answer says <et>ma</et> or <et>minu</et>, ask with <et>sa</et> or <et>su</et>, or polite <et>te</et>."
 
 msgid "20 minutes"
 msgstr "20 minutes"
 
-msgid "A <0/> question wants yes or no, a <1/> question a place, and a <2/> question a person. Put each answer under the question it fits."
-msgstr "A <0/> question wants yes or no, a <1/> question a place, and a <2/> question a person. Put each answer under the question it fits."
+msgid "A <0/> question usually wants yes or no, a <1/> question a place, and a <2/> question a person. Put each answer under the question it fits."
+msgstr "A <0/> question usually wants yes or no, a <1/> question a place, and a <2/> question a person. Put each answer under the question it fits."
 
 msgid "a little"
 msgstr "a little"
@@ -79,14 +79,14 @@ msgstr "A yes-or-no question usually starts with <et>kas</et>; the verb takes th
 msgid "A yes-or-no question usually starts with <et>kas</et>."
 msgstr "A yes-or-no question usually starts with <et>kas</et>."
 
-msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
-msgstr "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
+msgid "After <0>ei</0>, <1>olema</1> usually loses its ending: <2>ei ole</2>."
+msgstr "After <0>ei</0>, <1>olema</1> usually loses its ending: <2>ei ole</2>."
 
-msgid "After <et>ei</et> the verb has no ending; <et>olema</et> is <et>ole</et>."
-msgstr "After <et>ei</et> the verb has no ending; <et>olema</et> is <et>ole</et>."
+msgid "After <et>ei</et> the verb usually has no ending; <et>olema</et> is <et>ole</et>."
+msgstr "After <et>ei</et> the verb usually has no ending; <et>olema</et> is <et>ole</et>."
 
-msgid "After ei the verb has no ending: ei tööta, doesn’t work."
-msgstr "After ei the verb has no ending: ei tööta, doesn’t work."
+msgid "After ei the verb usually has no ending: ei tööta, doesn’t work."
+msgstr "After ei the verb usually has no ending: ei tööta, doesn’t work."
 
 msgid "All six, each with the right question word and verb ending."
 msgstr "All six, each with the right question word and verb ending."
@@ -136,8 +136,8 @@ msgstr "Do you speak Estonian?"
 msgid "Does he or she speak Estonian?"
 msgstr "Does he or she speak Estonian?"
 
-msgid "Each round gives an answer. Write the question it answers. When the answer says <0>ma</0> or <1>minu</1>, ask with <2>sa</2> or <3>su</3>."
-msgstr "Each round gives an answer. Write the question it answers. When the answer says <0>ma</0> or <1>minu</1>, ask with <2>sa</2> or <3>su</3>."
+msgid "Each round gives an answer. Write the question it answers. When the answer says <0>ma</0> or <1>minu</1>, ask with <2>sa</2> or <3>su</3>, or polite <4>te</4>."
+msgstr "Each round gives an answer. Write the question it answers. When the answer says <0>ma</0> or <1>minu</1>, ask with <2>sa</2> or <3>su</3>, or polite <4>te</4>."
 
 msgid "Each sentence needs one thing from lessons {first} to {last}: the verb after <0>ei</0>, a place with its ending, or a question."
 msgstr "Each sentence needs one thing from lessons {first} to {last}: the verb after <0>ei</0>, a place with its ending, or a question."
@@ -172,8 +172,8 @@ msgstr "Go through Asking Mari once more, then try again."
 msgid "Goodbye"
 msgstr "Goodbye"
 
-msgid "Has a sentence with <0>ei</0> and the verb without its ending."
-msgstr "Has a sentence with <0>ei</0> and the verb without its ending."
+msgid "Has a sentence with <0>ei</0> and the verb without its ending for the person."
+msgstr "Has a sentence with <0>ei</0> and the verb without its ending for the person."
 
 msgid "he or she drinks"
 msgstr "he or she drinks"
@@ -316,8 +316,8 @@ msgstr "Places with <et>-s</et> and <et>-l</et>"
 msgid "Practice for lessons {first} to {last}"
 msgstr "Practice for lessons {first} to {last}"
 
-msgid "Say no with <0>ei</0> and the verb without its ending: <1>Ma ei tööta. Ei, ma ei ole.</1>"
-msgstr "Say no with <0>ei</0> and the verb without its ending: <1>Ma ei tööta. Ei, ma ei ole.</1>"
+msgid "Say no with <0>ei</0> and the verb, usually without its ending: <1>Ma ei tööta. Ei, ma ei ole.</1>"
+msgstr "Say no with <0>ei</0> and the verb, usually without its ending: <1>Ma ei tööta. Ei, ma ei ole.</1>"
 
 msgid "Say where you live and work, with <0>-s</0> or <1>-l</1> on the place: <2>Ma elan Tartus. Ma töötan kontoris. Ta on tööl.</2>"
 msgstr "Say where you live and work, with <0>-s</0> or <1>-l</1> on the place: <2>Ma elan Tartus. Ma töötan kontoris. Ta on tööl.</2>"
@@ -358,8 +358,8 @@ msgstr "Tartu takes <0>-s</0>: <1>Tartus</1>."
 msgid "Tea"
 msgstr "Tea"
 
-msgid "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
-msgstr "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
+msgid "The verb usually drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
+msgstr "The verb usually drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
 
 msgid "They’re at work."
 msgstr "They’re at work."
@@ -367,8 +367,8 @@ msgstr "They’re at work."
 msgid "This time Mari’s lines are sound only. Tap a line to hear it again, or tap Show what Mari said to read it."
 msgstr "This time Mari’s lines are sound only. Tap a line to hear it again, or tap Show what Mari said to read it."
 
-msgid "turns a sentence into a yes-or-no question"
-msgstr "turns a sentence into a yes-or-no question"
+msgid "usually turns a sentence into a yes-or-no question"
+msgstr "usually turns a sentence into a yes-or-no question"
 
 msgid "Verb forms: after <et>ei</et>, and <et>olema</et>"
 msgstr "Verb forms: after <et>ei</et>, and <et>olema</et>"

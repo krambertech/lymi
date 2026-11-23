@@ -410,8 +410,8 @@ function useContent() {
 }
 
 const TRANSLATED_MEANS = [
-  msg`I don’t work, I study.`,
-  msg`She isn’t at home.`,
+  msg`We don’t work, we study.`,
+  msg`I’m not at home.`,
   msg`We live in Tallinn.`,
   msg`They’re at work.`,
   msg`Do you speak Estonian?`,

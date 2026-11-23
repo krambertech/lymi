@@ -172,14 +172,14 @@ msgstr "он или она учится"
 msgid "How are you?"
 msgstr "Как дела?"
 
-msgid "I don’t work, I study."
-msgstr "Я не работаю, я учусь."
-
 msgid "I live"
 msgstr "я живу"
 
 msgid "I work"
 msgstr "я работаю"
+
+msgid "I’m not at home."
+msgstr "Меня нет дома."
 
 msgid "in a café"
 msgstr "в кафе"
@@ -313,9 +313,6 @@ msgstr "Сказано, где ты живёшь, с <0>-s</0> в названи
 msgid "Says who you are."
 msgstr "Сказано, кто ты."
 
-msgid "She isn’t at home."
-msgstr "Её нет дома."
-
 msgid "She studies"
 msgstr "Она учится"
 
@@ -354,6 +351,9 @@ msgstr "Глагол после <et>ei</et> и формы <et>olema</et>"
 
 msgid "Water"
 msgstr "Вода"
+
+msgid "We don’t work, we study."
+msgstr "Мы не работаем, мы учимся."
 
 msgid "We live in Tallinn."
 msgstr "Мы живём в Таллине."

@@ -11365,7 +11365,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "kell/p-mari": {
-    "text": "Tere, Jaan! Kell on pool kaks. Ma olen tööl. Ma olen kodus kell kolm. Me joome kohvi kell veerand neli. Me ootame bussi kell kolmveerand viis.",
+    "text": "Tere, Jaan! Kell on pool kaks. Ma olen tööl. Ma olen kodus kell kolm. Me joome kohvi kell veerand viis. Me ootame bussi kell kolmveerand kuus.",
     "model": "eleven_v4",
     "voice": "xd3ufyLcuKKZZXDZO9H7"
   },
@@ -11463,16 +11463,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tutvumine/ma-ei-to2o2ta-ma-o3pin": {
-    "text": "Ma ei tööta, ma õpin.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "tutvumine/ta-ei-ole-kodus": {
-    "text": "Ta ei ole kodus.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "tutvumine/me-elame-tallinnas": {
     "text": "Me elame Tallinnas.",
     "model": "eleven_v4",
@@ -11520,6 +11510,16 @@
   },
   "numbrid/kohv-maksab-kuus-eurot": {
     "text": "Kohv maksab kuus eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/me-ei-to2o2ta-me-o3pime": {
+    "text": "Me ei tööta, me õpime.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/ma-ei-ole-kodus": {
+    "text": "Ma ei ole kodus.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

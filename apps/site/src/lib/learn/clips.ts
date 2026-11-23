@@ -1187,6 +1187,10 @@ export const TUTVUMINE_ASKED = [
       "Mis on su nimi?",
       "Mis on sinu nimi?",
       "Mis on teie nimi?",
+      "Kes sa oled?",
+      "Kes sina oled?",
+      "Kes te olete?",
+      "Kes teie olete?",
     ],
   },
   {
@@ -1259,17 +1263,17 @@ export const TUTVUMINE_TRANSLATED = [
   {
     kind: "ei",
     answers: [
-      "Ma ei tööta, ma õpin.",
-      "Mina ei tööta, ma õpin.",
-      "Ma ei tööta, mina õpin.",
-      "Mina ei tööta, mina õpin.",
-      "Ma ei tööta, õpin.",
-      "Mina ei tööta, õpin.",
+      "Me ei tööta, me õpime.",
+      "Meie ei tööta, me õpime.",
+      "Me ei tööta, meie õpime.",
+      "Meie ei tööta, meie õpime.",
+      "Me ei tööta, õpime.",
+      "Meie ei tööta, õpime.",
     ],
   },
   {
     kind: "ei",
-    answers: ["Ta ei ole kodus.", "Ta pole kodus.", "Tema ei ole kodus.", "Tema pole kodus."],
+    answers: ["Ma ei ole kodus.", "Ma pole kodus.", "Mina ei ole kodus.", "Mina pole kodus."],
   },
   { kind: "place", answers: ["Me elame Tallinnas.", "Meie elame Tallinnas.", "Elame Tallinnas."] },
   { kind: "place", answers: ["Nad on tööl.", "Nemad on tööl."] },
@@ -1351,8 +1355,8 @@ export const KELL_PASSAGE = [
   "Kell on pool kaks.",
   "Ma olen tööl.",
   "Ma olen kodus kell kolm.",
-  "Me joome kohvi kell veerand neli.",
-  "Me ootame bussi kell kolmveerand viis.",
+  "Me joome kohvi kell veerand viis.",
+  "Me ootame bussi kell kolmveerand kuus.",
 ] as const;
 
 export const KELL_DRILLED: readonly ClockTime[] = [

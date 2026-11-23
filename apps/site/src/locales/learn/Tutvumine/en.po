@@ -172,14 +172,14 @@ msgstr "he or she studies"
 msgid "How are you?"
 msgstr "How are you?"
 
-msgid "I don’t work, I study."
-msgstr "I don’t work, I study."
-
 msgid "I live"
 msgstr "I live"
 
 msgid "I work"
 msgstr "I work"
+
+msgid "I’m not at home."
+msgstr "I’m not at home."
 
 msgid "in a café"
 msgstr "in a café"
@@ -313,9 +313,6 @@ msgstr "Says where you live, with <0>-s</0> on the place."
 msgid "Says who you are."
 msgstr "Says who you are."
 
-msgid "She isn’t at home."
-msgstr "She isn’t at home."
-
 msgid "She studies"
 msgstr "She studies"
 
@@ -354,6 +351,9 @@ msgstr "Verb forms: after <et>ei</et>, and <et>olema</et>"
 
 msgid "Water"
 msgstr "Water"
+
+msgid "We don’t work, we study."
+msgstr "We don’t work, we study."
 
 msgid "We live in Tallinn."
 msgstr "We live in Tallinn."

@@ -172,14 +172,14 @@ msgstr "він чи вона вчиться"
 msgid "How are you?"
 msgstr "Як справи?"
 
-msgid "I don’t work, I study."
-msgstr "Я не працюю, я навчаюся."
-
 msgid "I live"
 msgstr "я живу"
 
 msgid "I work"
 msgstr "я працюю"
+
+msgid "I’m not at home."
+msgstr "Я не вдома."
 
 msgid "in a café"
 msgstr "у кав’ярні"
@@ -218,19 +218,19 @@ msgid "Kati writes about herself. Each gap needs one thing you’ve practised: a
 msgstr "Каті пише про себе. У кожному пропуску — одне з того, що ти вже знаєш: форма <0>olema</0>, закінчення дієслова, дієслово після <1>ei</1>, місце з <2>-l</2> або питальне слово."
 
 msgid "Liis"
-msgstr "Лііс"
+msgstr "Ліїс"
 
 msgid "Liis and Peeter meet. They ask each other where they live and say what they do."
-msgstr "Лііс і Пеетер знайомляться: питають одне одного, де живуть, і розповідають, чим займаються."
+msgstr "Ліїс і Пеетер знайомляться: питають одне одного, де живуть, і розповідають, чим займаються."
 
 msgid "Liis works in Tartu."
-msgstr "Лііс працює в Тарту."
+msgstr "Ліїс працює в Тарту."
 
 msgid "Listen: Jaan and Kati"
 msgstr "Слухання: Яан і Каті"
 
 msgid "Listen: Liis meets Peeter"
-msgstr "Слухання: Лііс знайомиться з Пеетером"
+msgstr "Слухання: Ліїс знайомиться з Пеетером"
 
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"
@@ -239,7 +239,7 @@ msgid "Listening: Jaan and Kati"
 msgstr "На слух: Яан і Каті"
 
 msgid "Listening: Liis meets Peeter"
-msgstr "На слух: Лііс знайомиться з Пеетером"
+msgstr "На слух: Ліїс знайомиться з Пеетером"
 
 msgid "Mari"
 msgstr "Марі"
@@ -313,9 +313,6 @@ msgstr "Сказано, де ти живеш, із <0>-s</0> у назві мі�
 msgid "Says who you are."
 msgstr "Сказано, хто ти."
 
-msgid "She isn’t at home."
-msgstr "Її немає вдома."
-
 msgid "She studies"
 msgstr "Вона вчиться"
 
@@ -355,6 +352,9 @@ msgstr "Дієслово після <et>ei</et> і форми <et>olema</et>"
 msgid "Water"
 msgstr "Вода"
 
+msgid "We don’t work, we study."
+msgstr "Ми не працюємо, ми вчимося."
+
 msgid "We live in Tallinn."
 msgstr "Ми живемо в Таллінні."
 
@@ -386,7 +386,7 @@ msgid "Where does Kati live?"
 msgstr "Де живе Каті?"
 
 msgid "Where does Liis live?"
-msgstr "Де живе Лііс?"
+msgstr "Де живе Ліїс?"
 
 msgid "Where does Peeter live?"
 msgstr "Де живе Пеетер?"

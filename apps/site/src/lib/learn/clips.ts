@@ -3728,6 +3728,7 @@ export const TRA_WORDS = [
   "nädalaks",
   "heaks arstiks",
   "kingiks",
+  "ilm",
   ...TRA_CHAINS.flatMap(({ steps }) => steps),
 ] as const;
 

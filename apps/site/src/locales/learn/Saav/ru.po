@@ -397,6 +397,9 @@ msgstr "транслатив"
 msgid "warm"
 msgstr "тёплый"
 
+msgid "weather"
+msgstr "погода"
+
 msgid "What do you eat for breakfast?"
 msgstr "Что ты ешь на завтрак?"
 

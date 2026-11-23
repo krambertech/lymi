@@ -16770,5 +16770,10 @@
     "text": "Kati alustas poes müüjana.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "saav/ilm": {
+    "text": "ilm",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

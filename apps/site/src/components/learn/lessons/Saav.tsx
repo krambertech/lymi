@@ -99,6 +99,7 @@ const GLOSSARY: Glossary = {
   "heaks arstiks": { en: msg`into a good doctor` },
   kingiks: { en: msg`as a present` },
   alustas: { en: msg`started` },
+  ilm: { en: msg`weather` },
   "ta töötab arstina": { en: msg`He or she works as a doctor.`, show: "Ta töötab arstina" },
   "ta sai arstiks": { en: msg`He or she became a doctor.`, show: "Ta sai arstiks" },
 };
@@ -446,6 +447,7 @@ export function SaavLesson() {
         "nädalaks",
         "heaks arstiks",
         "kingiks",
+        "ilm",
       ]}
       recap={[
         <Trans key="1">

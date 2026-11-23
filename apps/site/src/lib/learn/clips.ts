@@ -1,4 +1,5 @@
 import { numberWords } from "./estonian-numbers";
+import { MONTHS, ordinalOn, ordinalWords } from "./estonian-ordinals";
 import { ALL_TIMES, timeClip, timeSentence } from "./estonian-time";
 import { KIT_EXPLORE_TEXTS } from "./kit-explore";
 
@@ -1518,6 +1519,625 @@ const SOBRAGA_CLIPS: Record<string, Clip> = {
   "p-kati": { sentences: SOBRAGA_PASSAGES.kati },
 };
 
+export const PRONOUN_CASES = [
+  {
+    id: "mina",
+    short: "ma",
+    genitive: "minu",
+    shortGenitive: "mu",
+    partitive: "mind",
+    le: "minule",
+    shortLe: "mulle",
+    l: "minul",
+    shortL: "mul",
+    lt: "minult",
+    shortLt: "mult",
+    st: "minust",
+    shortSt: null,
+  },
+  {
+    id: "sina",
+    short: "sa",
+    genitive: "sinu",
+    shortGenitive: "su",
+    partitive: "sind",
+    le: "sinule",
+    shortLe: "sulle",
+    l: "sinul",
+    shortL: "sul",
+    lt: "sinult",
+    shortLt: "sult",
+    st: "sinust",
+    shortSt: null,
+  },
+  {
+    id: "tema",
+    short: "ta",
+    genitive: "tema",
+    shortGenitive: "ta",
+    partitive: "teda",
+    le: "temale",
+    shortLe: "talle",
+    l: "temal",
+    shortL: "tal",
+    lt: "temalt",
+    shortLt: "talt",
+    st: "temast",
+    shortSt: null,
+  },
+  {
+    id: "meie",
+    short: "me",
+    genitive: "meie",
+    shortGenitive: "me",
+    partitive: "meid",
+    le: null,
+    shortLe: "meile",
+    l: null,
+    shortL: "meil",
+    lt: null,
+    shortLt: "meilt",
+    st: null,
+    shortSt: "meist",
+  },
+  {
+    id: "teie",
+    short: "te",
+    genitive: "teie",
+    shortGenitive: "te",
+    partitive: "teid",
+    le: null,
+    shortLe: "teile",
+    l: null,
+    shortL: "teil",
+    lt: null,
+    shortLt: "teilt",
+    st: null,
+    shortSt: "teist",
+  },
+  {
+    id: "nemad",
+    short: "nad",
+    genitive: "nende",
+    shortGenitive: null,
+    partitive: "neid",
+    le: "nendele",
+    shortLe: "neile",
+    l: "nendel",
+    shortL: "neil",
+    lt: "nendelt",
+    shortLt: "neilt",
+    st: "nendest",
+    shortSt: "neist",
+  },
+] as const;
+
+export type PronounCase = (typeof PRONOUN_CASES)[number];
+export type PronounId = PronounCase["id"];
+export const pronounWith = (genitive: string, ending: "ga" | "ta") => `${genitive}${ending}`;
+
+export const PRONOUN_WITH = [
+  "Tule minuga!",
+  "Ma räägin temaga.",
+  "Kas sa tuled meiega?",
+  "Ma ei tule sinuta.",
+  "Kas sa lähed nendega?",
+] as const;
+
+export const PRONOUN_SHORT = ["Helista mulle!", "Mul on aega.", "Ma küsin teilt."] as const;
+
+export type PronounWay = "le" | "l" | "lt";
+export const PRONOUN_WAYS: readonly PronounWay[] = ["le", "l", "lt"];
+
+export function pronounShort(person: PronounCase, way: PronounWay): string {
+  if (way === "le") return person.shortLe;
+  if (way === "lt") return person.shortLt;
+  return person.shortL;
+}
+
+export function pronounSentence(way: PronounWay, form: string): string {
+  if (way === "le") return `Jaan helistab ${form}.`;
+  if (way === "lt") return `Jaan küsib ${form}.`;
+  return `${capital(form)} on aega.`;
+}
+
+export const PRONOUN_PARTITIVE = [
+  "Ma armastan sind.",
+  "Oota mind!",
+  "Ma ootan teda.",
+  "Me ootame teid.",
+  "Nad ootavad meid.",
+  "Kas sa ootad neid?",
+] as const;
+
+export const PRONOUN_WHICH = [
+  {
+    id: "minu-kass",
+    person: "mina",
+    form: "genitive",
+    said: "See on minu kass.",
+    cue: "See on … kass.",
+  },
+  {
+    id: "jaan-ootab-mind",
+    person: "mina",
+    form: "partitive",
+    said: "Jaan ootab mind.",
+    cue: "Jaan ootab …",
+  },
+  { id: "sul-aega", person: "sina", form: "l", said: "Kas sul on aega?", cue: "Kas … on aega?" },
+  {
+    id: "armastan-sind",
+    person: "sina",
+    form: "partitive",
+    said: "Ma armastan sind.",
+    cue: "Ma armastan …",
+  },
+  { id: "tal-auto", person: "tema", form: "l", said: "Tal on auto.", cue: "… on auto." },
+  {
+    id: "tema-raamat",
+    person: "tema",
+    form: "genitive",
+    said: "Kus on tema raamat?",
+    cue: "Kus on … raamat?",
+  },
+  { id: "meil-kass", person: "meie", form: "l", said: "Meil on kass.", cue: "… on kass." },
+  {
+    id: "nende-auto",
+    person: "nemad",
+    form: "genitive",
+    said: "See on nende auto.",
+    cue: "See on … auto.",
+  },
+  {
+    id: "ootad-neid",
+    person: "nemad",
+    form: "partitive",
+    said: "Kas sa ootad neid?",
+    cue: "Kas sa ootad …?",
+  },
+] as const satisfies readonly {
+  id: string;
+  person: PronounId;
+  form: "genitive" | "l" | "partitive";
+  said: string;
+  cue: string;
+}[];
+
+export const PRONOUN_ABOUT = ["Ma räägin sinust.", "Nad räägivad meist."] as const;
+
+export const PRONOUN_TRANSLATE = [
+  { id: "tule-minuga", answers: ["Tule minuga!", "Tulge minuga!"] },
+  { id: "ootan-sind", answers: ["Ma ootan sind.", "Mina ootan sind.", "Ootan sind."] },
+  { id: "helista-mulle", answers: ["Helista mulle!", "Helista minule!"] },
+  { id: "sul-on-aega", answers: ["Kas sul on aega?", "Kas sinul on aega?", "Sul on aega?"] },
+  {
+    id: "raagime-sinust",
+    answers: ["Me räägime sinust.", "Meie räägime sinust.", "Räägime sinust."],
+  },
+  { id: "kusib-temalt", answers: ["Jaan küsib temalt.", "Jaan küsib talt."] },
+] as const;
+
+export const PRONOUN_FIX = [
+  { id: "fix-minuga", wrong: "Tule minaga!", answers: ["Tule minuga!"] },
+  { id: "fix-sind", wrong: "Ma ootan sinu.", answers: ["Ma ootan sind."] },
+  { id: "fix-mul", wrong: "Minu on aega.", answers: ["Mul on aega.", "Minul on aega."] },
+  {
+    id: "fix-minu-nimi",
+    wrong: "Mina nimi on Kati.",
+    answers: ["Minu nimi on Kati.", "Mu nimi on Kati."],
+  },
+  { id: "fix-mulle", wrong: "Helista mind!", answers: ["Helista mulle!", "Helista minule!"] },
+] as const;
+
+export const PRONOUN_MESSAGE = [
+  "Tere, Mari!",
+  "Kas sa tuled täna minuga kohvikusse?",
+  "Jaan tuleb ka meiega.",
+  "Ma ootan sind kell viis.",
+  "Mul on sulle raamat.",
+  "Helista mulle!",
+] as const;
+
+export const PRONOUN_CALL: Conversation = {
+  turns: [
+    {
+      voice: "second",
+      text: ["Tere, Jaan! See on Mari.", "Kas sul on täna aega?"],
+      say: "[cheerful] Tere, Jaan! See on Mari. Kas sul on täna aega?",
+    },
+    { voice: "main", text: ["Tere, Mari! Jah, mul on aega.", "Miks sa küsid?"] },
+    { voice: "second", text: ["Me läheme Katiga kohvikusse.", "Kas sa tuled meiega?"] },
+    {
+      voice: "main",
+      text: ["Jah, ma tulen teiega.", "Kas Peeter tuleb ka?"],
+      say: "[pleased] Jah, ma tulen teiega. Kas Peeter tuleb ka?",
+    },
+    {
+      voice: "second",
+      text: [
+        "Ei, Peeter ei tule.",
+        "Tal pole täna aega, ta on tööl.",
+        "Aga ta helistab sulle homme.",
+      ],
+    },
+    { voice: "main", text: ["Hästi.", "Mul on talle raamat."] },
+    { voice: "second", text: "Mis raamat see on?" },
+    { voice: "main", text: "Üks hea raamat Tallinnast." },
+    { voice: "second", text: "Peeter armastab Tallinna!" },
+    { voice: "main", text: ["Ma tean.", "Ta räägib mulle palju Tallinnast."] },
+    {
+      voice: "second",
+      text: ["Kati räägib ka sinust palju.", "Ta tahab sinuga rääkida."],
+      say: "[teasing] Kati räägib ka sinust palju. Ta tahab sinuga rääkida.",
+    },
+    {
+      voice: "main",
+      text: ["Minuga?", "Mida ta minult tahab?"],
+      say: "[surprised] Minuga? Mida ta minult tahab?",
+    },
+    {
+      voice: "second",
+      text: ["Ma ei tea.", "Küsi temalt!"],
+      say: "[laughs] Ma ei tea. Küsi temalt!",
+    },
+    { voice: "main", text: ["Hästi, ma küsin temalt.", "Kas Kati tuleb sinuga?"] },
+    {
+      voice: "second",
+      text: [
+        "Jah, ta tuleb minuga.",
+        "Me ootame sind kell seitse kohvikus.",
+        "Kas sa tuled bussiga?",
+      ],
+    },
+    { voice: "main", text: ["Ei, ma tulen autoga.", "Kas ma ostan Katile kohvi?"] },
+    { voice: "second", text: ["Jah, osta talle kohvi piimaga!", "Ja helista mulle kell kuus."] },
+    { voice: "main", text: ["Hästi.", "Aitäh sulle!"] },
+    { voice: "second", text: ["Nägemiseni!", "Kell seitse kohvikus!"] },
+  ],
+};
+
+export const PRONOUN_WORDS = [
+  "keda?",
+  "kellega?",
+  "kellele?",
+  "kellel?",
+  "kellelt?",
+  "kellest?",
+  "Keda sa ootad?",
+  "Jaan ootab teda.",
+  "helistab",
+  "küsib",
+  "ootan",
+  "armastan",
+  "Mul on kass.",
+] as const;
+
+const PRONOUN_TABLE_FORMS = PRONOUN_CASES.flatMap((person) => [
+  person.id,
+  person.short,
+  person.genitive,
+  person.shortGenitive,
+  person.partitive,
+  pronounWith(person.genitive, "ga"),
+  pronounWith(person.genitive, "ta"),
+  person.le,
+  person.shortLe,
+  person.l,
+  person.shortL,
+  person.lt,
+  person.shortLt,
+  person.st,
+  person.shortSt,
+]).filter((form): form is string => form !== null);
+
+const PRONOUN_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...new Set([
+      ...PRONOUN_TABLE_FORMS,
+      ...PRONOUN_WITH,
+      ...PRONOUN_SHORT,
+      ...PRONOUN_CASES.flatMap((person) =>
+        PRONOUN_WAYS.map((way) => pronounSentence(way, pronounShort(person, way))),
+      ),
+      ...PRONOUN_PARTITIVE,
+      ...PRONOUN_WHICH.map(({ said }) => said),
+      ...PRONOUN_ABOUT,
+      ...PRONOUN_TRANSLATE.map(({ answers }) => answers[0]),
+      ...PRONOUN_FIX.map(({ answers }) => answers[0]),
+      ...PRONOUN_WORDS,
+    ]),
+  ]),
+  "p-message": { sentences: PRONOUN_MESSAGE },
+  "c-call": PRONOUN_CALL,
+};
+
+export const ordinalClip = (n: number) => `o${n}`;
+export const ordinalOnClip = (n: number) => `on${n}`;
+
+export const MONTH_DAYS: readonly number[] = Array.from({ length: 31 }, (_, i) => i + 1);
+
+export const JARGARVUD_CHAINS = [
+  { n: 4, genitive: "nelja" },
+  { n: 5, genitive: "viie" },
+  { n: 6, genitive: "kuue" },
+  { n: 7, genitive: "seitsme" },
+  { n: 8, genitive: "kaheksa" },
+  { n: 10, genitive: "kümne" },
+  { n: 3, genitive: "kolme" },
+] as const;
+
+export const JARGARVUD_MAKE = [6, 3, 9, 7, 10, 5] as const;
+
+export const JARGARVUD_ON = [1, 2, 3, 5, 10, 13, 20, 21] as const;
+
+export const JARGARVUD_DATES = [
+  "Mis kuupäev täna on?",
+  "Mitmes täna on?",
+  "Täna on kahekümne esimene november.",
+  "Homme on kahekümne teine november.",
+  "Täna on esimene jaanuar.",
+] as const;
+
+export const JARGARVUD_ON_SENTENCES = [
+  "Minu sünnipäev on viiendal mail.",
+  "Millal sinu sünnipäev on?",
+  "Ma elan kolmandal korrusel.",
+  "Mitmendal korrusel sa elad?",
+] as const;
+
+export const JARGARVUD_HEARD = [
+  { said: "Täna on teine veebruar.", day: 2, month: 2 },
+  { said: "Homme on kolmeteistkümnes märts.", day: 13, month: 3 },
+  { said: "Jaan tuleb esimesel septembril.", day: 1, month: 9 },
+  { said: "Pood on suletud kahekümne viiendal detsembril.", day: 25, month: 12 },
+  { said: "Ema sünnipäev on kaheteistkümnendal aprillil.", day: 12, month: 4 },
+  { said: "Täna on kolmekümne esimene oktoober.", day: 31, month: 10 },
+  { said: "Eesti sünnipäev on kahekümne neljandal veebruaril.", day: 24, month: 2 },
+  { said: "Ma lähen Tartusse kaheksandal juunil.", day: 8, month: 6 },
+  { said: "Homme on kahekümnes juuli.", day: 20, month: 7 },
+] as const;
+
+export const JARGARVUD_WHICH = [
+  {
+    id: "viies-mai",
+    way: "which",
+    base: "5.",
+    cue: "Täna on … mai.",
+    answer: "viies",
+    said: "Täna on viies mai.",
+    options: ["viis", "viies", "viiendal"],
+  },
+  {
+    id: "viiendal-mail",
+    way: "on",
+    base: "5.",
+    cue: "Minu sünnipäev on … mail.",
+    answer: "viiendal",
+    said: "Minu sünnipäev on viiendal mail.",
+    options: ["viis", "viies", "viiendal"],
+  },
+  {
+    id: "kolm-kassi",
+    way: "count",
+    base: "3",
+    cue: "Mul on … kassi.",
+    answer: "kolm",
+    said: "Mul on kolm kassi.",
+    options: ["kolm", "kolmas", "kolmandal"],
+  },
+  {
+    id: "kolmandal-korrusel",
+    way: "on",
+    base: "3.",
+    cue: "Ma elan … korrusel.",
+    answer: "kolmandal",
+    said: "Ma elan kolmandal korrusel.",
+    options: ["kolm", "kolmas", "kolmandal"],
+  },
+  {
+    id: "esimene-september",
+    way: "which",
+    base: "1.",
+    cue: "Homme on … september.",
+    answer: "esimene",
+    said: "Homme on esimene september.",
+    options: ["üks", "esimene", "esimesel"],
+  },
+  {
+    id: "esimesel-septembril",
+    way: "on",
+    base: "1.",
+    cue: "Jaan tuleb … septembril.",
+    answer: "esimesel",
+    said: "Jaan tuleb esimesel septembril.",
+    options: ["üks", "esimene", "esimesel"],
+  },
+  {
+    id: "kaks-last",
+    way: "count",
+    base: "2",
+    cue: "Mul on … last.",
+    answer: "kaks",
+    said: "Mul on kaks last.",
+    options: ["kaks", "teine", "teisel"],
+  },
+  {
+    id: "teine-aprill",
+    way: "which",
+    base: "2.",
+    cue: "Täna on … aprill.",
+    answer: "teine",
+    said: "Täna on teine aprill.",
+    options: ["kaks", "teine", "teisel"],
+  },
+  {
+    id: "kumme-eurot",
+    way: "count",
+    base: "10",
+    cue: "Raamat maksab … eurot.",
+    answer: "kümme",
+    said: "Raamat maksab kümme eurot.",
+    options: ["kümme", "kümnes", "kümnendal"],
+  },
+] as const satisfies readonly {
+  id: string;
+  way: "count" | "which" | "on";
+  base: string;
+  cue: string;
+  answer: string;
+  said: string;
+  options: readonly [string, string, string];
+}[];
+
+export const JARGARVUD_TRANSLATE = [
+  { id: "teine-mai", answers: ["Täna on teine mai."] },
+  { id: "kumnes", answers: ["Homme on kümnes."] },
+  {
+    id: "kolmandal-juunil",
+    answers: ["Minu sünnipäev on kolmandal juunil.", "Mu sünnipäev on kolmandal juunil."],
+  },
+  {
+    id: "neljandal-korrusel",
+    answers: [
+      "Ma elan neljandal korrusel.",
+      "Mina elan neljandal korrusel.",
+      "Elan neljandal korrusel.",
+    ],
+  },
+  { id: "esimesel-martsil", answers: ["Jaan tuleb esimesel märtsil."] },
+  {
+    id: "mis-kuupaev",
+    answers: ["Mis kuupäev täna on?", "Mis kuupäev on täna?", "Mitmes täna on?", "Mitmes on täna?"],
+  },
+] as const;
+
+export const JARGARVUD_FIX = [
+  { id: "fix-viies", wrong: "Täna on viis mai.", answers: ["Täna on viies mai."] },
+  {
+    id: "fix-viiendal",
+    wrong: "Minu sünnipäev on viies mail.",
+    answers: ["Minu sünnipäev on viiendal mail."],
+  },
+  { id: "fix-kolmas", wrong: "Täna on kolmes märts.", answers: ["Täna on kolmas märts."] },
+  {
+    id: "fix-esimesel",
+    wrong: "Jaan tuleb esimene septembril.",
+    answers: ["Jaan tuleb esimesel septembril."],
+  },
+  {
+    id: "fix-kahekumne",
+    wrong: "Täna on kahekümnes esimene november.",
+    answers: ["Täna on kahekümne esimene november."],
+  },
+  {
+    id: "fix-korrusel",
+    wrong: "Ma elan neljandal korrus.",
+    answers: ["Ma elan neljandal korrusel."],
+  },
+] as const;
+
+export const JARGARVUD_MESSAGE = [
+  "Tere! Minu sünnipäev on laupäeval, kahekümne kolmandal märtsil.",
+  "Tule kell kuus.",
+  "Minu korter on neljandal korrusel.",
+  "Peeter tuleb ka, kell seitse.",
+  "Tema sünnipäev on kolmekümne esimesel märtsil.",
+  "Kas sa tuled?",
+] as const;
+
+export const JARGARVUD_TALK: Conversation = {
+  turns: [
+    { voice: "second", text: ["Tere, Jaan!", "Kas sa tead, mis kuupäev täna on?"] },
+    { voice: "main", text: ["Tere, Mari!", "Täna on kahekümne kolmas november."] },
+    {
+      voice: "second",
+      text: ["Oi!", "Homme on Kati sünnipäev."],
+      say: "[surprised] Oi! Homme on Kati sünnipäev.",
+    },
+    { voice: "main", text: "Kahekümne neljandal novembril?" },
+    {
+      voice: "second",
+      text: ["Jah.", "Me läheme laupäeval temaga kohvikusse.", "Kohvik on teisel korrusel."],
+    },
+    { voice: "main", text: ["Hästi.", "Mis kell?"] },
+    { voice: "second", text: ["Kell kuus.", "Kati ootab meid kohvikus."] },
+    { voice: "main", text: "Kas Peeter tuleb ka?" },
+    {
+      voice: "second",
+      text: ["Ei.", "Peeter on Tartus.", "Ta tuleb Tallinna esimesel detsembril."],
+    },
+    { voice: "main", text: ["Esimesel detsembril?", "See on teisipäev."] },
+    { voice: "second", text: ["Jah.", "Aga millal sinu sünnipäev on?"] },
+    { voice: "main", text: ["Minu sünnipäev on kolmekümnendal juulil.", "Ja sinu?"] },
+    {
+      voice: "second",
+      text: [
+        "Minu sünnipäev on kaheteistkümnendal jaanuaril.",
+        "Aga minu ema sünnipäev on ka kolmekümnendal juulil!",
+      ],
+      say: "Minu sünnipäev on kaheteistkümnendal jaanuaril. [excited] Aga minu ema sünnipäev on ka kolmekümnendal juulil!",
+    },
+    { voice: "main", text: "Kas sa elad neljandal korrusel?" },
+    {
+      voice: "second",
+      text: ["Ei, ma elan esimesel korrusel.", "Ja sina?"],
+    },
+    {
+      voice: "main",
+      text: ["Mina elan seitsmendal korrusel.", "Majas on seitse korrust."],
+    },
+    {
+      voice: "second",
+      text: ["Seitsmendal!", "Hästi, laupäevani!"],
+      say: "[laughs] Seitsmendal! Hästi, laupäevani!",
+    },
+    { voice: "main", text: ["Laupäevani!", "Kell kuus, teisel korrusel!"] },
+  ],
+};
+
+export const JARGARVUD_DRILL = [
+  "Täna on kuues mai.",
+  "Homme on seitsmes juuni.",
+  "Mul on viis kassi.",
+] as const;
+
+export const JARGARVUD_WORDS = [
+  ...[3, 4, 5, 6, 7, 8, 10, 11, 20].map((n) => numberWords(n)),
+  ...JARGARVUD_CHAINS.map(({ genitive }) => genitive),
+  "üheteistkümne",
+  "kahekümne",
+  "mitu",
+  "mitmes",
+  "mitmendal",
+  "kuupäev",
+  "korrus",
+  "sünnipäev",
+  "esmaspäev",
+  ...MONTHS.map(({ name }) => name),
+  "viiendal mail",
+];
+
+const JARGARVUD_CLIPS: Record<string, Clip> = {
+  ...Object.fromEntries(MONTH_DAYS.map((n) => [ordinalClip(n), ordinalWords(n)])),
+  ...Object.fromEntries(JARGARVUD_ON.map((n) => [ordinalOnClip(n), ordinalOn(n)])),
+  ...words([
+    ...new Set([
+      ...JARGARVUD_WORDS,
+      ...JARGARVUD_DATES,
+      ...JARGARVUD_ON_SENTENCES,
+      ...JARGARVUD_HEARD.map(({ said }) => said),
+      ...JARGARVUD_WHICH.map(({ said }) => said),
+      ...JARGARVUD_TRANSLATE.map(({ answers }) => answers[0]),
+      ...JARGARVUD_FIX.map(({ answers }) => answers[0]),
+      ...JARGARVUD_DRILL,
+    ]),
+  ]),
+  "c-aastal": "Aastal kaks tuhat kakskümmend kuus.",
+  "p-message": { sentences: JARGARVUD_MESSAGE, voice: "second" },
+  "c-talk": JARGARVUD_TALK,
+};
+
 /** A noun's three forms in a dictionary's order: first, second, third. */
 export type NounForms = readonly [string, string, string];
 
@@ -2812,6 +3432,8 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     "p-saturday": { sentences: OUTER_PASSAGE },
   },
   "sobraga-rahata": SOBRAGA_CLIPS,
+  asesonad: PRONOUN_CLIPS,
+  jargarvud: JARGARVUD_CLIPS,
   "mul-on": {
     ...words([
       ...MUL_ON_WORDS,

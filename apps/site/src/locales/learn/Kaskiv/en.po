@@ -430,8 +430,8 @@ msgstr "To more than one person, or politely, the command ends in <0>-ge</0> or 
 msgid "To more than one, or polite"
 msgstr "To more than one, or polite"
 
-msgid "To more than one, or politely, the command ends in <et>-ge</et> or <et>-ke</et>."
-msgstr "To more than one, or politely, the command ends in <et>-ge</et> or <et>-ke</et>."
+msgid "To more than one, or politely, the verb ends in <et>-ge</et> or <et>-ke</et>."
+msgstr "To more than one, or politely, the verb ends in <et>-ge</et> or <et>-ke</et>."
 
 msgid "To one person"
 msgstr "To one person"
@@ -444,9 +444,6 @@ msgstr "to read"
 
 msgid "To say don’t, put <0>ära</0> before the stem: <1>Ära istu!</1>"
 msgstr "To say don’t, put <0>ära</0> before the stem: <1>Ära istu!</1>"
-
-msgid "to sit down"
-msgstr "to sit down"
 
 msgid "to speak"
 msgstr "to speak"

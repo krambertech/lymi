@@ -2094,6 +2094,8 @@ export const TALLINN_TRANSLATED = [
       "Mina homme ei tööta.",
       "Mina ei tööta homme.",
       "Homme mina ei tööta.",
+      "Homme ei tööta mina.",
+      "Homme ei tööta ma.",
     ],
   },
   {

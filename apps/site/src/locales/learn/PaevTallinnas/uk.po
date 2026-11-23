@@ -64,9 +64,6 @@ msgstr "Повідомлення від Марі"
 msgid "A number alone doesn’t say what it counts: <0>kaksteist</0> can be the time or a price. Listen to each line and put it under the question it answers."
 msgstr "Саме число не каже, що це: <0>kaksteist</0> може бути і часом, і ціною. Послухай кожен рядок і постав його під питання, на яке він відповідає."
 
-msgid "A price takes <et>maksab</et>, and after a number from two up, <et>euro</et> becomes <et>eurot</et>."
-msgstr "Ціну кажуть із <et>maksab</et>, а після числа від двох <et>euro</et> стає <et>eurot</et>."
-
 msgid "A sign shortens each day to its first letter, as in lesson {days}. Hours use the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
 msgstr "На табличці кожен день позначено першою літерою, як в уроці {days}. Час — у 24-годинному форматі. <0>E–R 9–18</0> — з понеділка до п’ятниці, з 9:00 до 18:00. <1/> — зачинено."
 
@@ -433,6 +430,9 @@ msgstr "бути"
 msgid "To say the day, use <et>täna on</et>, <et>homme on</et> or <et>ülehomme on</et> and its name, with a small letter."
 msgstr "Щоб назвати день, кажи <et>täna on</et>, <et>homme on</et> чи <et>ülehomme on</et> і назву дня з малої літери."
 
+msgid "To say what something costs, use <et>maksab</et>; after a number from two up, <et>euro</et> becomes <et>eurot</et>."
+msgstr "Щоб сказати, скільки щось коштує, вживай <et>maksab</et>; після числа від двох <et>euro</et> стає <et>eurot</et>."
+
 msgid "today"
 msgstr "сьогодні"
 
@@ -517,8 +517,8 @@ msgstr "З <0>ma</0> дієслово закінчується на <1>-n</1>: <
 msgid "Write back to Mari"
 msgstr "Напиши Марі"
 
-msgid "Write each sentence in Estonian, numbers in words. A time takes <0>kell</0>, a price takes <1>maksab</1> and <2>eurot</2>."
-msgstr "Напиши кожне речення естонською, числа — словами. Час кажуть із <0>kell</0>, ціну — з <1>maksab</1> і <2>eurot</2>."
+msgid "Write each sentence in Estonian, numbers in words. A time takes <0>kell</0>; what something costs takes <1>maksab</1>, and <2>eurot</2> after a number from two up."
+msgstr "Напиши кожне речення естонською, числа — словами. Час кажуть із <0>kell</0>, а скільки щось коштує — з <1>maksab</1> і <2>eurot</2> після числа від двох."
 
 msgid "Write it in Estonian"
 msgstr "Напиши естонською"

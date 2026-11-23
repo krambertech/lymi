@@ -396,13 +396,11 @@ function Explain({ said }: { said: string }) {
 }
 
 const COMMAND_VERB_MEANS: Record<string, MessageDescriptor> = {
-  lugema: msg`to read`,
   rääkima: msg`to speak`,
   ootama: msg`to wait`,
   sööma: msg`to eat`,
   jooma: msg`to drink`,
   õppima: msg`to learn, to study`,
-  istuma: msg`to sit down`,
   kuulama: msg`to listen`,
   vaatama: msg`to look`,
 };

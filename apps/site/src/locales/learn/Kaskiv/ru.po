@@ -430,8 +430,8 @@ msgstr "Нескольким людям или на «вы» команда за
 msgid "To more than one, or polite"
 msgstr "Нескольким людям или на «вы»"
 
-msgid "To more than one, or politely, the command ends in <et>-ge</et> or <et>-ke</et>."
-msgstr "Нескольким людям или на «вы» команда оканчивается на <et>-ge</et> или <et>-ke</et>."
+msgid "To more than one, or politely, the verb ends in <et>-ge</et> or <et>-ke</et>."
+msgstr "Нескольким людям или на «вы» глагол оканчивается на <et>-ge</et> или <et>-ke</et>."
 
 msgid "To one person"
 msgstr "Одному человеку"
@@ -444,9 +444,6 @@ msgstr "читать"
 
 msgid "To say don’t, put <0>ära</0> before the stem: <1>Ära istu!</1>"
 msgstr "Чтобы сказать «не делай», ставь <0>ära</0> перед основой: <1>Ära istu!</1>"
-
-msgid "to sit down"
-msgstr "садиться"
 
 msgid "to speak"
 msgstr "говорить"

@@ -22,7 +22,7 @@ const MEANS: Record<string, MessageDescriptor> = {
 const STEM = msg`The command to one person is usually the I form of the present without its <et>-n</et>.`;
 const DONT = msg`<et>Ära</et> before the stem tells one person not to do it.`;
 const ARGE = msg`<et>Ära</et> becomes <et>ärge</et>, and the verb takes its <et>-ge</et> or <et>-ke</et> form: <et>Ärge istuge!</et>`;
-const MORE = msg`To more than one, or politely, the command ends in <et>-ge</et> or <et>-ke</et>.`;
+const MORE = msg`To more than one, or politely, the verb ends in <et>-ge</et> or <et>-ke</et>.`;
 
 const typed = ({ verb, ma, stem, answers }: (typeof KASKIV_TYPED)[number]): FormDrill => ({
   kind: "form",

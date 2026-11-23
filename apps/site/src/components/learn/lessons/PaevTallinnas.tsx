@@ -674,8 +674,8 @@ export function PaevTallinnasLesson() {
                 <p>
                   <Trans>
                     Write each sentence in Estonian, numbers in words. A time takes{" "}
-                    <b lang="et">kell</b>, a price takes <b lang="et">maksab</b> and{" "}
-                    <b lang="et">eurot</b>.
+                    <b lang="et">kell</b>; what something costs takes <b lang="et">maksab</b>, and{" "}
+                    <b lang="et">eurot</b> after a number from two up.
                   </Trans>
                 </p>
               </Prose>

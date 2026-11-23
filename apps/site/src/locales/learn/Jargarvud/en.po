@@ -1,0 +1,808 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 09:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0/> asks which one in order, and its answer is an ordinal. <1/>, from lesson {partitive}, asks how many, and its answer is a plain number. <2>Mitmes</2> is built like <3>neljas</3>: <4>mitu, mitme, mitmes</4>."
+msgstr "<0/> asks which one in order, and its answer is an ordinal. <1/>, from lesson {partitive}, asks how many, and its answer is a plain number. <2>Mitmes</2> is built like <3>neljas</3>: <4>mitu, mitme, mitmes</4>."
+
+msgid "<0/> is the exception. Its genitive is <1/>, but third is <2/>, with an a. Pick a number and tap its forms to see what changes."
+msgstr "<0/> is the exception. Its genitive is <1/>, but third is <2/>, with an a. Pick a number and tap its forms to see what changes."
+
+msgid "<0>{number}</0> is its own genitive, so only <1>s</1> is new."
+msgstr "<0>{number}</0> is its own genitive, so only <1>s</1> is new."
+
+msgid "<0>{stem}</0>, the genitive of <1>{number}</1>, with <2>s</2>."
+msgstr "<0>{stem}</0>, the genitive of <1>{number}</1>, with <2>s</2>."
+
+msgid "<0>{stem}</0>, the genitive of <1>{tensWord}</1>, then <2>{last}</2>."
+msgstr "<0>{stem}</0>, the genitive of <1>{tensWord}</1>, then <2>{last}</2>."
+
+msgid "<0>Esimene</0> swaps <1>ne</1> for <2>sel</2>: <3>esimesel</3>."
+msgstr "<0>Esimene</0> swaps <1>ne</1> for <2>sel</2>: <3>esimesel</3>."
+
+msgid "<0>Esimene</0>, <1>teine</1> and <2>kolmas</2> are words of their own. From four on, an ordinal is the number’s genitive with <3>s</3>: <4>neli, nelja, neljas</4>."
+msgstr "<0>Esimene</0>, <1>teine</1> and <2>kolmas</2> are words of their own. From four on, an ordinal is the number’s genitive with <3>s</3>: <4>neli, nelja, neljas</4>."
+
+msgid "<0>Kolm</0> is the exception: <1>kolmas</1>, with <2>as</2>."
+msgstr "<0>Kolm</0> is the exception: <1>kolmas</1>, with <2>as</2>."
+
+msgid "<0>Kolm</0> with <1>as</1>."
+msgstr "<0>Kolm</0> with <1>as</1>."
+
+msgid "<0>Mitmes täna on?</0> asks the same."
+msgstr "<0>Mitmes täna on?</0> asks the same."
+
+msgid "<0>Mitu?</0> asks how many; <1>mitmes?</1> asks which one in order."
+msgstr "<0>Mitu?</0> asks how many; <1>mitmes?</1> asks which one in order."
+
+msgid "<0>ne</0> turns into <1>sel</1>."
+msgstr "<0>ne</0> turns into <1>sel</1>."
+
+msgid "<0>Neljas</0>, <1>neljateistkümnes</1> and <2>kahekümne neljas</2> all have <3>nelja</3> in them. Listen for <4>teistkümnes</4>, <5>kahekümne</5> or <6>kolmekümne</6>, then pick the day."
+msgstr "<0>Neljas</0>, <1>neljateistkümnes</1> and <2>kahekümne neljas</2> all have <3>nelja</3> in them. Listen for <4>teistkümnes</4>, <5>kahekümne</5> or <6>kolmekümne</6>, then pick the day."
+
+msgid "<0>s</0> turns into <1>ndal</1>."
+msgstr "<0>s</0> turns into <1>ndal</1>."
+
+msgid "<et>Esimene</et> swaps <et>-ne</et> for <et>-sel</et>: <et>esimesel</et>."
+msgstr "<et>Esimene</et> swaps <et>-ne</et> for <et>-sel</et>: <et>esimesel</et>."
+
+msgid "11 exercises, 4 of them typed, and a conversation"
+msgstr "11 exercises, 4 of them typed, and a conversation"
+
+msgid "20 minutes"
+msgstr "20 minutes"
+
+msgid "A date after <0>on</0>: the ordinal and the month as they are."
+msgstr "A date after <0>on</0>: the ordinal and the month as they are."
+
+msgid "A date after <et>on</et> is an ordinal and the month, as they are: <et>viies mai</et>."
+msgstr "A date after <et>on</et> is an ordinal and the month, as they are: <et>viies mai</et>."
+
+msgid "A date is an ordinal and a month, and the month takes a small letter. The full stop after the numeral makes it an ordinal: <0>21. november</0>, said <1>kahekümne esimene november</1>."
+msgstr "A date is an ordinal and a month, and the month takes a small letter. The full stop after the numeral makes it an ordinal: <0>21. november</0>, said <1>kahekümne esimene november</1>."
+
+msgid "A date is an ordinal: <0>viies mai</0>, not the number <1>viis</1>."
+msgstr "A date is an ordinal: <0>viies mai</0>, not the number <1>viis</1>."
+
+msgid "A number in a sentence can be said three ways. Without a full stop it counts: <0>Mul on kolm kassi</0>, I have three cats. With a full stop it is an ordinal: <1>Täna on 5. mai</1> is said <2>viies mai</2>."
+msgstr "A number in a sentence can be said three ways. Without a full stop it counts: <0>Mul on kolm kassi</0>, I have three cats. With a full stop it is an ordinal: <1>Täna on 5. mai</1> is said <2>viies mai</2>."
+
+msgid "A word of its own, not built from <0>kaks</0>. It also means “other”."
+msgstr "A word of its own, not built from <0>kaks</0>. It also means “other”."
+
+msgid "A word of its own, not built from <0>üks</0>."
+msgstr "A word of its own, not built from <0>üks</0>."
+
+msgid "A word of its own."
+msgstr "A word of its own."
+
+msgid "After <0>aastal</0>, the year is a plain number: <1/>, in 2026, is said <2>aastal kaks tuhat kakskümmend kuus</2>. Before <3>aastal</3> it takes a full stop and is an ordinal: <4>2026. aastal</4>, said <5>kahe tuhande kahekümne kuuendal aastal</5>."
+msgstr "After <0>aastal</0>, the year is a plain number: <1/>, in 2026, is said <2>aastal kaks tuhat kakskümmend kuus</2>. Before <3>aastal</3> it takes a full stop and is an ordinal: <4>2026. aastal</4>, said <5>kahe tuhande kahekümne kuuendal aastal</5>."
+
+msgid "All of them: how many, which one and on which one."
+msgstr "All of them: how many, which one and on which one."
+
+msgid "All six dates, inside sentences."
+msgstr "All six dates, inside sentences."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six ordinals."
+msgstr "All six ordinals."
+
+msgid "All six sentences, every ordinal in its form."
+msgstr "All six sentences, every ordinal in its form."
+
+msgid "All six, by ear."
+msgstr "All six, by ear."
+
+msgid "Also “other”."
+msgstr "Also “other”."
+
+msgid "April"
+msgstr "April"
+
+msgid "At five"
+msgstr "At five"
+
+msgid "At half past six"
+msgstr "At half past six"
+
+msgid "At seven"
+msgstr "At seven"
+
+msgid "At six"
+msgstr "At six"
+
+msgid "At two"
+msgstr "At two"
+
+msgid "August"
+msgstr "August"
+
+msgid "Bigger numbers follow the same rule. The genitive of <0/> is <1/>, so eleventh is <2><3/>.</2> The genitive of <4/> is <5/>, so twentieth is <6><7/>.</6>"
+msgstr "Bigger numbers follow the same rule. The genitive of <0/> is <1/>, so eleventh is <2><3/>.</2> The genitive of <4/> is <5/>, so twentieth is <6><7/>.</6>"
+
+msgid "birthday"
+msgstr "birthday"
+
+msgid "Birthdays and floors"
+msgstr "Birthdays and floors"
+
+msgid "Both words take <0>l</0>: <1>neljandal korrusel</1>."
+msgstr "Both words take <0>l</0>: <1>neljandal korrusel</1>."
+
+msgid "Building an ordinal: <et>neljas</et>, <et>kolmas</et>"
+msgstr "Building an ordinal: <et>neljas</et>, <et>kolmas</et>"
+
+msgid "date"
+msgstr "date"
+
+msgid "Dates by ear"
+msgstr "Dates by ear"
+
+msgid "Day of the month"
+msgstr "Day of the month"
+
+msgid "December"
+msgstr "December"
+
+msgid "Each sentence has a date in it, in its plain form or with <0>l</0>. Type the date you hear. Digits count, 5.5 for the fifth of May, and so do words, as in <1>5. mai</1> or 5 May."
+msgstr "Each sentence has a date in it, in its plain form or with <0>l</0>. Type the date you hear. Digits count, 5.5 for the fifth of May, and so do words, as in <1>5. mai</1> or 5 May."
+
+msgid "Each sentence has one wrong word in its date or number, as learners often write it. Tap the wrong word, then type it right."
+msgstr "Each sentence has one wrong word in its date or number, as learners often write it. Tap the wrong word, then type it right."
+
+msgid "eight"
+msgstr "eight"
+
+msgid "eighth"
+msgstr "eighth"
+
+msgid "eleven"
+msgstr "eleven"
+
+msgid "eleventh"
+msgstr "eleventh"
+
+msgid "Eleventh to thirty-first"
+msgstr "Eleventh to thirty-first"
+
+msgid "Estonia’s birthday, Independence Day, is on 24 February."
+msgstr "Estonia’s birthday, Independence Day, is on 24 February."
+
+msgid "Estonian writes the months with a small letter, as it writes the days: <0/>, <1/>, <2><3/>.</2> <4/> and <5/> differ in one sound, <6>n</6> or <7>l</7>."
+msgstr "Estonian writes the months with a small letter, as it writes the days: <0/>, <1/>, <2><3/>.</2> <4/> and <5/> differ in one sound, <6>n</6> or <7>l</7>."
+
+msgid "February"
+msgstr "February"
+
+msgid "fifth"
+msgstr "fifth"
+
+msgid "Fifth is <et>viies</et>: the genitive <et>viie</et> with <et>-s</et>."
+msgstr "Fifth is <et>viies</et>: the genitive <et>viie</et> with <et>-s</et>."
+
+msgid "first"
+msgstr "first"
+
+msgid "First to tenth"
+msgstr "First to tenth"
+
+msgid "First, second, third"
+msgstr "First, second, third"
+
+msgid "five"
+msgstr "five"
+
+msgid "Five, fifth or on the fifth"
+msgstr "Five, fifth or on the fifth"
+
+msgid "Five, fifth, on the fifth"
+msgstr "Five, fifth, on the fifth"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "floor, storey"
+msgstr "floor, storey"
+
+msgid "four"
+msgstr "four"
+
+msgid "fourth"
+msgstr "fourth"
+
+msgid "From <0>{number}</0>, {means}."
+msgstr "From <0>{number}</0>, {means}."
+
+msgid "From 11 to 19 the ordinal is one word: <et>kolmeteistkümnes</et>."
+msgstr "From 11 to 19 the ordinal is one word: <et>kolmeteistkümnes</et>."
+
+msgid "From four on, an ordinal is built on the genitive, the form lesson {genitive} uses for “of”. Take <0/>, four. Its genitive is <1/>, and with <2>s</2> it becomes <3><4/>,</3> fourth. In the same way <5/> goes to <6/> and <7><8/>.</7>"
+msgstr "From four on, an ordinal is built on the genitive, the form lesson {genitive} uses for “of”. Take <0/>, four. Its genitive is <1/>, and with <2>s</2> it becomes <3><4/>,</3> fourth. In the same way <5/> goes to <6/> and <7><8/>.</7>"
+
+msgid "From four on, an ordinal is the number’s genitive with <0>s</0>. A date is an ordinal and a month, and to say on which day, both take <1>l</1>."
+msgstr "From four on, an ordinal is the number’s genitive with <0>s</0>. A date is an ordinal and a month, and to say on which day, both take <1>l</1>."
+
+msgid "From four on, an ordinal is the number’s genitive with <et>-s</et>: <et>kuue</et>, <et>kuues</et>."
+msgstr "From four on, an ordinal is the number’s genitive with <et>-s</et>: <et>kuue</et>, <et>kuues</et>."
+
+msgid "From four on: the genitive and -s"
+msgstr "From four on: the genitive and -s"
+
+msgid "Go back to “Five, fifth, on the fifth” above, then try again."
+msgstr "Go back to “Five, fifth, on the fifth” above, then try again."
+
+msgid "Go back to the numbers above, then try again."
+msgstr "Go back to the numbers above, then try again."
+
+msgid "How do you say it?"
+msgstr "How do you say it?"
+
+msgid "How many, which one, on which one"
+msgstr "How many, which one, on which one"
+
+msgid "how many?"
+msgstr "how many?"
+
+msgid "I have three cats."
+msgstr "I have three cats."
+
+msgid "I have two children."
+msgstr "I have two children."
+
+msgid "I live on the fourth floor."
+msgstr "I live on the fourth floor."
+
+msgid "I live on the third floor."
+msgstr "I live on the third floor."
+
+msgid "I’m going to Tartu on 8 June."
+msgstr "I’m going to Tartu on 8 June."
+
+msgid "in 2026"
+msgstr "in 2026"
+
+msgid "In a number of two words only the last is an ordinal, and the tens go into the genitive: <0>kahekümne esimene</0>."
+msgstr "In a number of two words only the last is an ordinal, and the tens go into the genitive: <0>kahekümne esimene</0>."
+
+msgid "In a number of two words, only the last becomes an ordinal. The tens before it go into the genitive: <0><1/>,</0> twenty-first. Slide to a day, or tap − and +, to hear it."
+msgstr "In a number of two words, only the last becomes an ordinal. The tens before it go into the genitive: <0><1/>,</0> twenty-first. Slide to a day, or tap − and +, to hear it."
+
+msgid "In a number of two words, only the last is an ordinal; the tens stay in the genitive: <et>kahekümne esimene</et>."
+msgstr "In a number of two words, only the last is an ordinal; the tens stay in the genitive: <et>kahekümne esimene</et>."
+
+msgid "In lesson {days} you met <0/> and <1/>: <2/>, the first day of the week, sounds like <3>esimene</3>. Words like these are ordinals. They say which one in order, where the numbers from lesson {numbers} say how many."
+msgstr "In lesson {days} you met <0/> and <1/>: <2/>, the first day of the week, sounds like <3>esimene</3>. Words like these are ordinals. They say which one in order, where the numbers from lesson {numbers} say how many."
+
+msgid "Jaan"
+msgstr "Jaan"
+
+msgid "Jaan is coming on 1 March."
+msgstr "Jaan is coming on 1 March."
+
+msgid "Jaan is coming on 1 September."
+msgstr "Jaan is coming on 1 September."
+
+msgid "January"
+msgstr "January"
+
+msgid "July"
+msgstr "July"
+
+msgid "June"
+msgstr "June"
+
+msgid "Kati’s birthday"
+msgstr "Kati’s birthday"
+
+msgid "Kati’s birthday is tomorrow."
+msgstr "Kati’s birthday is tomorrow."
+
+msgid "Kuu, month, and päev, day."
+msgstr "Kuu, month, and päev, day."
+
+msgid "Listen: Mari and Jaan"
+msgstr "Listen: Mari and Jaan"
+
+msgid "Listen: when and where?"
+msgstr "Listen: when and where?"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "March"
+msgstr "March"
+
+msgid "Mari"
+msgstr "Mari"
+
+msgid "Mari and Jaan talk about birthdays and where they live. Read the questions, then listen. As in the exam, the talk plays twice and doesn’t stop."
+msgstr "Mari and Jaan talk about birthdays and where they live. Read the questions, then listen. As in the exam, the talk plays twice and doesn’t stop."
+
+msgid "Mari’s birthday is on 12 April."
+msgstr "Mari’s birthday is on 12 April."
+
+msgid "Mari’s mother has her birthday on the same day as Mari."
+msgstr "Mari’s mother has her birthday on the same day as Mari."
+
+msgid "Match each word with its meaning."
+msgstr "Match each word with its meaning."
+
+msgid "May"
+msgstr "May"
+
+msgid "Mitmes with -l, as in kolmandal."
+msgstr "Mitmes with -l, as in kolmandal."
+
+msgid "Monday"
+msgstr "Monday"
+
+msgid "Most of them. Check where on a day needs <0>l</0>."
+msgstr "Most of them. Check where on a day needs <0>l</0>."
+
+msgid "Most of them. Play the ones you missed once more."
+msgstr "Most of them. Play the ones you missed once more."
+
+msgid "Most of them. Read why each one you missed is wrong."
+msgstr "Most of them. Read why each one you missed is wrong."
+
+msgid "Most of them. Tap the numbers above once more."
+msgstr "Most of them. Tap the numbers above once more."
+
+msgid "My birthday is on 3 June."
+msgstr "My birthday is on 3 June."
+
+msgid "My birthday is on 5 May."
+msgstr "My birthday is on 5 May."
+
+msgid "My birthday is on the fifth of May."
+msgstr "My birthday is on the fifth of May."
+
+msgid "Nearly. Look for the full stop first, then for <0>l</0> on the word after the gap."
+msgstr "Nearly. Look for the full stop first, then for <0>l</0> on the word after the gap."
+
+msgid "nine"
+msgstr "nine"
+
+msgid "ninth"
+msgstr "ninth"
+
+msgid "No full stop: a plain number that says how many, as after <0>mitu?</0>"
+msgstr "No full stop: a plain number that says how many, as after <0>mitu?</0>"
+
+msgid "No full stop: a plain number that says how many."
+msgstr "No full stop: a plain number that says how many."
+
+msgid "Not <0>kolmes</0>: third has an a where the genitive has an e."
+msgstr "Not <0>kolmes</0>: third has an a where the genitive has an e."
+
+msgid "November"
+msgstr "November"
+
+msgid "Now write each sentence in Estonian, with the numbers in words. Ask yourself first whether it says which day or on which day."
+msgstr "Now write each sentence in Estonian, with the numbers in words. Ask yourself first whether it says which day or on which day."
+
+msgid "Number to ordinal"
+msgstr "Number to ordinal"
+
+msgid "Numbers"
+msgstr "Numbers"
+
+msgid "October"
+msgstr "October"
+
+msgid "of eleven"
+msgstr "of eleven"
+
+msgid "of four"
+msgstr "of four"
+
+msgid "of seven"
+msgstr "of seven"
+
+msgid "of three"
+msgstr "of three"
+
+msgid "of twenty"
+msgstr "of twenty"
+
+msgid "On 1 December"
+msgstr "On 1 December"
+
+msgid "On 11 December"
+msgstr "On 11 December"
+
+msgid "On 11 February"
+msgstr "On 11 February"
+
+msgid "On 12 January"
+msgstr "On 12 January"
+
+msgid "On 13 March"
+msgstr "On 13 March"
+
+msgid "On 13 May"
+msgstr "On 13 May"
+
+msgid "On 21 January"
+msgstr "On 21 January"
+
+msgid "On 21 July"
+msgstr "On 21 July"
+
+msgid "On 23 March"
+msgstr "On 23 March"
+
+msgid "On 30 May"
+msgstr "On 30 May"
+
+msgid "On 31 March"
+msgstr "On 31 March"
+
+msgid "On a date, both words take <0>l</0>: <1>kolmandal juunil</1>."
+msgstr "On a date, both words take <0>l</0>: <1>kolmandal juunil</1>."
+
+msgid "On a day or a floor, both words take <et>-l</et>: <et>viiendal mail</et>, <et>kolmandal korrusel</et>."
+msgstr "On a day or a floor, both words take <et>-l</et>: <et>viiendal mail</et>, <et>kolmandal korrusel</et>."
+
+msgid "On a day or a floor: <et>viiendal mail</et>"
+msgstr "On a day or a floor: <et>viiendal mail</et>"
+
+msgid "On a day or a floor: the ordinal takes <0>l</0>, as the word after it does."
+msgstr "On a day or a floor: the ordinal takes <0>l</0>, as the word after it does."
+
+msgid "On a floor, both words take <0>l</0>: <1>neljandal korrusel</1>."
+msgstr "On a floor, both words take <0>l</0>: <1>neljandal korrusel</1>."
+
+msgid "On Saturday they are going to a café with Kati."
+msgstr "On Saturday they are going to a café with Kati."
+
+msgid "On Sunday"
+msgstr "On Sunday"
+
+msgid "on the fifth"
+msgstr "on the fifth"
+
+msgid "on the fifth of May"
+msgstr "on the fifth of May"
+
+msgid "On the fifth of May"
+msgstr "On the fifth of May"
+
+msgid "On the first: <0>esimesel</0>, with <1>l</1> like the month."
+msgstr "On the first: <0>esimesel</0>, with <1>l</1> like the month."
+
+msgid "on the third"
+msgstr "on the third"
+
+msgctxt "date"
+msgid "on the third"
+msgstr "on the third"
+
+msgid "On which floor is <et>mitmendal korrusel</et>: <et>mitmes</et> with <et>-l</et>."
+msgstr "On which floor is <et>mitmendal korrusel</et>: <et>mitmes</et> with <et>-l</et>."
+
+msgid "On which one"
+msgstr "On which one"
+
+msgid "on which one?"
+msgstr "on which one?"
+
+msgid "One less"
+msgstr "One less"
+
+msgid "One more"
+msgstr "One more"
+
+msgid "Only the last word changes; <0>kahekümne</0> stays as it is."
+msgstr "Only the last word changes; <0>kahekümne</0> stays as it is."
+
+msgid "Only the last word is an ordinal. The tens stay in the genitive: <0>kahekümne</0>."
+msgstr "Only the last word is an ordinal. The tens stay in the genitive: <0>kahekümne</0>."
+
+msgid "Ordinals of two words: <et>kahekümne esimene</et>"
+msgstr "Ordinals of two words: <et>kahekümne esimene</et>"
+
+msgid "Ordinals, and with -l"
+msgstr "Ordinals, and with -l"
+
+msgid "Pick how to say the number in each sentence."
+msgstr "Pick how to say the number in each sentence."
+
+#. placeholder {0}: ordinalWords(n)
+msgid "Play {0}"
+msgstr "Play {0}"
+
+msgid "Play each sentence twice before you type."
+msgstr "Play each sentence twice before you type."
+
+msgid "Read “On the fifth of May” above once more, then try again."
+msgstr "Read “On the fifth of May” above once more, then try again."
+
+msgid "Saying in a month, or from one date to another, takes other endings, which lesson {when} teaches."
+msgstr "Saying in a month, or from one date to another, takes other endings, which lesson {when} teaches."
+
+msgid "second"
+msgstr "second"
+
+msgid "September"
+msgstr "September"
+
+msgid "seven"
+msgstr "seven"
+
+msgid "seventh"
+msgstr "seventh"
+
+msgid "six"
+msgstr "six"
+
+msgid "Six mistakes to catch"
+msgstr "Six mistakes to catch"
+
+msgid "sixth"
+msgstr "sixth"
+
+msgid "Slide through the days above once more, then try again."
+msgstr "Slide through the days above once more, then try again."
+
+msgid "Sünd, birth, and päev, day."
+msgstr "Sünd, birth, and päev, day."
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap a month to hear it. Its number is its place in the year."
+msgstr "Tap a month to hear it. Its number is its place in the year."
+
+msgid "Tap a number"
+msgstr "Tap a number"
+
+msgid "Tap the forms in the table above once more, then try again."
+msgstr "Tap the forms in the table above once more, then try again."
+
+msgid "ten"
+msgstr "ten"
+
+msgid "tenth"
+msgstr "tenth"
+
+msgid "Tenth is <et>kümnes</et>: the genitive <et>kümne</et> with <et>-s</et>."
+msgstr "Tenth is <et>kümnes</et>: the genitive <et>kümne</et> with <et>-s</et>."
+
+msgid "The book costs ten euros."
+msgstr "The book costs ten euros."
+
+msgid "The eleventh"
+msgstr "The eleventh"
+
+msgid "The fifth"
+msgstr "The fifth"
+
+msgid "The first day of the week."
+msgstr "The first day of the week."
+
+msgid "The fourth"
+msgstr "The fourth"
+
+msgid "The full stop makes it an ordinal, and after <0>on</0> the date keeps its plain form."
+msgstr "The full stop makes it an ordinal, and after <0>on</0> the date keeps its plain form."
+
+msgid "the genitive"
+msgstr "the genitive"
+
+msgid "The genitive of <et>seitse</et> is <et>seitsme</et>, so seventh is <et>seitsmes</et>."
+msgstr "The genitive of <et>seitse</et> is <et>seitsme</et>, so seventh is <et>seitsmes</et>."
+
+msgid "The genitive of kakskümmend."
+msgstr "The genitive of kakskümmend."
+
+msgid "The genitive of kolm."
+msgstr "The genitive of kolm."
+
+msgid "The genitive of neli."
+msgstr "The genitive of neli."
+
+msgid "The genitive of seitse."
+msgstr "The genitive of seitse."
+
+msgid "The genitive of üksteist."
+msgstr "The genitive of üksteist."
+
+msgid "The genitive with <0>s</0>."
+msgstr "The genitive with <0>s</0>."
+
+msgid "The genitive, the form for “of”: <0>{genitive}</0>."
+msgstr "The genitive, the form for “of”: <0>{genitive}</0>."
+
+msgid "The month has <0>l</0>, so the ordinal takes it too: <1>viiendal mail</1>."
+msgstr "The month has <0>l</0>, so the ordinal takes it too: <1>viiendal mail</1>."
+
+msgid "The months"
+msgstr "The months"
+
+msgid "The same <0>l</0> says on which floor: <1><2/>.</1> To ask, use <3/>: <4/> <5/> is a floor, and <6/> a birthday."
+msgstr "The same <0>l</0> says on which floor: <1><2/>.</1> To ask, use <3/>: <4/> <5/> is a floor, and <6/> a birthday."
+
+msgid "The same question, word for word “which one is it today?”"
+msgstr "The same question, word for word “which one is it today?”"
+
+msgid "The second"
+msgstr "The second"
+
+msgid "The shop is closed on 25 December."
+msgstr "The shop is closed on 25 December."
+
+msgid "The tenth is <0>kümnes</0>, the genitive <1>kümne</1> with <2>s</2>."
+msgstr "The tenth is <0>kümnes</0>, the genitive <1>kümne</1> with <2>s</2>."
+
+msgid "third"
+msgstr "third"
+
+msgid "Third is <0>kolmas</0>, with an a, though the genitive of three is <1>kolme</1>."
+msgstr "Third is <0>kolmas</0>, with an a, though the genitive of three is <1>kolme</1>."
+
+msgid "Third is <et>kolmas</et>, with an a, though the genitive of three is <et>kolme</et>."
+msgstr "Third is <et>kolmas</et>, with an a, though the genitive of three is <et>kolme</et>."
+
+msgid "three"
+msgstr "three"
+
+msgid "To ask the date, say <0/> <1/> is a date. The answer is an ordinal and a month: <2><3/>.</2>"
+msgstr "To ask the date, say <0/> <1/> is a date. The answer is an ordinal and a month: <2><3/>.</2>"
+
+msgid "To ask the date: <et>Mis kuupäev täna on?</et> or <et>Mitmes täna on?</et>"
+msgstr "To ask the date: <et>Mis kuupäev täna on?</et> or <et>Mitmes täna on?</et>"
+
+msgid "To say on which day or floor, the month or <0>korrus</0> takes <1>l</1>, and so does the ordinal: <2>5. mail</2> is said <3>viiendal mail</3>."
+msgstr "To say on which day or floor, the month or <0>korrus</0> takes <1>l</1>, and so does the ordinal: <2>5. mail</2> is said <3>viiendal mail</3>."
+
+msgid "To say on which day or on which floor, both words take <0>l</0>, and the ordinal’s <1>s</1> turns into <2>ndal</2>: <3>viiendal mail</3>, <4>kolmandal korrusel</4>."
+msgstr "To say on which day or on which floor, both words take <0>l</0>, and the ordinal’s <1>s</1> turns into <2>ndal</2>: <3>viiendal mail</3>, <4>kolmandal korrusel</4>."
+
+msgid "To say on which day, put <0>l</0> on both words: <1><2/>,</1> on the fifth of May. <3>Mail</3> is <4>mai</4> with <5>l</5>. In the ordinal, the final <6>s</6> turns into <7>ndal</7>: <8>viies</8>, <9/>; <10>kolmas</10>, <11><12/>.</11> <13>Esimene</13> and <14>teine</14> swap <15>ne</15> for <16>sel</16>: <17>esimesel, teisel</17>."
+msgstr "To say on which day, put <0>l</0> on both words: <1><2/>,</1> on the fifth of May. <3>Mail</3> is <4>mai</4> with <5>l</5>. In the ordinal, the final <6>s</6> turns into <7>ndal</7>: <8>viies</8>, <9/>; <10>kolmas</10>, <11><12/>.</11> <13>Esimene</13> and <14>teine</14> swap <15>ne</15> for <16>sel</16>: <17>esimesel, teisel</17>."
+
+msgid "Today is 1 January."
+msgstr "Today is 1 January."
+
+msgid "Today is 2 April."
+msgstr "Today is 2 April."
+
+msgid "Today is 2 February."
+msgstr "Today is 2 February."
+
+msgid "Today is 2 May."
+msgstr "Today is 2 May."
+
+msgid "Today is 21 November."
+msgstr "Today is 21 November."
+
+msgid "Today is 31 October."
+msgstr "Today is 31 October."
+
+msgid "Today is 5 May."
+msgstr "Today is 5 May."
+
+msgid "Today’s date"
+msgstr "Today’s date"
+
+msgid "Tomorrow is 1 September."
+msgstr "Tomorrow is 1 September."
+
+msgid "Tomorrow is 13 March."
+msgstr "Tomorrow is 13 March."
+
+msgid "Tomorrow is 20 July."
+msgstr "Tomorrow is 20 July."
+
+msgid "Tomorrow is 22 November."
+msgstr "Tomorrow is 22 November."
+
+msgid "Tomorrow is the tenth."
+msgstr "Tomorrow is the tenth."
+
+msgid "Try"
+msgstr "Try"
+
+msgid "twentieth"
+msgstr "twentieth"
+
+msgid "Twentieth is one word: the genitive <et>kahekümne</et> with <et>-s</et>."
+msgstr "Twentieth is one word: the genitive <et>kahekümne</et> with <et>-s</et>."
+
+msgid "twenty"
+msgstr "twenty"
+
+msgid "twenty-first"
+msgstr "twenty-first"
+
+msgid "Type the date"
+msgstr "Type the date"
+
+msgid "Type the date you hear"
+msgstr "Type the date you hear"
+
+msgid "Type the ordinal of each number."
+msgstr "Type the ordinal of each number."
+
+msgid "What is the date today? Write the day as Jaan says it."
+msgstr "What is the date today? Write the day as Jaan says it."
+
+msgid "What time are they meeting?"
+msgstr "What time are they meeting?"
+
+msgid "What’s the date today?"
+msgstr "What’s the date today?"
+
+msgid "When is Kati’s birthday?"
+msgstr "When is Kati’s birthday?"
+
+msgid "When is Mari coming?"
+msgstr "When is Mari coming?"
+
+msgid "When is Mari’s birthday?"
+msgstr "When is Mari’s birthday?"
+
+msgid "When is Peeter coming to Tallinn?"
+msgstr "When is Peeter coming to Tallinn?"
+
+msgid "When is your birthday?"
+msgstr "When is your birthday?"
+
+msgid "Which day did you hear?"
+msgstr "Which day did you hear?"
+
+msgid "Which floor do you live on?"
+msgstr "Which floor do you live on?"
+
+msgid "Which floor does Jaan live on? Write it as he says it."
+msgstr "Which floor does Jaan live on? Write it as he says it."
+
+msgid "Which floor is Kati’s flat on?"
+msgstr "Which floor is Kati’s flat on?"
+
+msgid "Which floor is the café on?"
+msgstr "Which floor is the café on?"
+
+msgid "Which one"
+msgstr "Which one"
+
+msgid "which one in order?"
+msgstr "which one in order?"
+
+msgid "Which one in order?"
+msgstr "Which one in order?"
+
+msgid "Word for word: “which one is it today?”"
+msgstr "Word for word: “which one is it today?”"
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "Write the date"
+msgstr "Write the date"
+
+msgid "Written in digits, an ordinal takes a full stop: 1. is first, 2. is second. Tap a number to hear its ordinal."
+msgstr "Written in digits, an ordinal takes a full stop: 1. is first, 2. is second. Tap a number to hear its ordinal."
+
+msgid "Written, the day is a numeral with a full stop: <0>21. november</0>. The full stop makes the number an ordinal, so you read it as <1>kahekümne esimene</1>. In digits the date is 21.11."
+msgstr "Written, the day is a numeral with a full stop: <0>21. november</0>. The full stop makes the number an ordinal, so you read it as <1>kahekümne esimene</1>. In digits the date is 21.11."
+
+msgid "You’ll hear it and see what changes."
+msgstr "You’ll hear it and see what changes."
+
+msgid "You’ll hear its ordinal and see where it comes from."
+msgstr "You’ll hear its ordinal and see where it comes from."
+
+msgid "Your friend Kati leaves you a voice message about her birthday. Listen, then answer."
+msgstr "Your friend Kati leaves you a voice message about her birthday. Listen, then answer."

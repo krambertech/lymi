@@ -178,7 +178,6 @@ const lit = (form: string, ending: string) =>
   `${form.slice(0, form.length - ending.length)}|${ending}`;
 const personOf = (id: PronounId) => PRONOUN_CASES.find((each) => each.id === id) as PronounCase;
 
-/** “With or without”: each pronoun with -ga and -ta, keyed by the pronoun. */
 export const BUILD = PRONOUN_CASES.flatMap((person) =>
   (["ga", "ta"] as const).map((ending) => ({
     person,
@@ -188,7 +187,6 @@ export const BUILD = PRONOUN_CASES.flatMap((person) =>
   })),
 );
 
-/** “To, has or from?”: each pronoun's short form in its sentence, keyed by the ending. */
 export const HEARD = PRONOUN_CASES.flatMap((person) =>
   PRONOUN_WAYS.map((way) => ({
     way,
@@ -218,14 +216,12 @@ type WhichItem = FormItem & {
   answers: readonly [string];
 };
 
-/** The three forms a “my, has or me” round offers: the genitive, the -l form, the partitive. */
 export const whichForms = (person: PronounCase) =>
   [person.genitive, person.shortL, person.partitive] as const;
 
 const formOf = (person: PronounCase, form: (typeof PRONOUN_WHICH)[number]["form"]) =>
   form === "genitive" ? person.genitive : form === "l" ? person.shortL : person.partitive;
 
-/** Each form once before any comes back; every round but the first shuffles its three forms. */
 export const whichRun = (items: readonly WhichItem[], pinned?: WhichItem): WhichItem[] =>
   eachPairFirst(items, pinned).map((item) =>
     item === pinned ? item : { ...item, options: shuffle([...item.options]) },
@@ -384,7 +380,6 @@ function useContent() {
     explain: fixWhy[id],
   }));
 
-  // The picks' answers sit in each place, and no answer is always the longest or the shortest.
   const call: PassageQuestion[] = [
     { id: "free", kind: "truefalse", ask: t`Jaan has time today.`, answer: true, line: 2 },
     {
@@ -443,7 +438,7 @@ function useContent() {
         { id: "kati", label: t`Kati` },
       ],
       answer: "kati",
-      line: 16,
+      line: 19,
     },
     {
       id: "time",
@@ -454,9 +449,9 @@ function useContent() {
         { id: "six", label: t`At six` },
       ],
       answer: "seven",
-      line: 21,
+      line: 27,
     },
-    { id: "bus", kind: "truefalse", ask: t`Jaan is coming by bus.`, answer: false, line: 23 },
+    { id: "bus", kind: "truefalse", ask: t`Jaan is coming by bus.`, answer: false, line: 29 },
   ];
   return { gaps, sentences, fix, call };
 }
@@ -657,7 +652,6 @@ export function AsesonadLesson() {
         </Trans>
       ),
     };
-    // The first round, as the server renders it, has its answer in the middle.
     const items = PRONOUN_WHICH.map(({ id, person: who, form, said, cue }, i): WhichItem => {
       const person = personOf(who);
       const three = whichForms(person);

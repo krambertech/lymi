@@ -262,6 +262,9 @@ msgstr "Безкоштовний урок про основу естонськи
 msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud."
 msgstr "Безкоштовний урок про естонські числа: від нуля до десяти, -teist і -kümmend, сотні й тисячі, а також числа в цінах, віці й номерах телефонів. Кожне число озвучене."
 
+msgid "A free lesson on Estonian ordinal numbers and dates: esimene, teine, kolmas and how the rest are built from the genitive, the months, asking mis kuupäev täna on?, writing 21. november, and -l for on a date or a floor (viiendal mail, kolmandal korrusel). Every sentence is read aloud."
+msgstr "Безкоштовний урок про порядкові числівники й дати в естонській мові: esimene, teine, kolmas і як решту утворюють від родового відмінка, назви місяців, питання mis kuupäev täna on?, запис 21. november і -l, щоб сказати «якого числа» чи «на якому поверсі» (viiendal mail, kolmandal korrusel). Кожне речення озвучене."
+
 msgid "A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and three everyday questions to learn whole. Every sentence is read aloud."
 msgstr "Безкоштовний урок про питання в естонській: kas для питань «так чи ні», відповіді jah і ei, питальні слова kes, mis, kus, millal, miks, kuidas і kui palju та три повсякденні питання, які вчать цілими. Кожне речення озвучене."
 
@@ -653,6 +656,9 @@ msgstr "Основа іменника в естонській"
 
 msgid "Estonian numbers"
 msgstr "Числа естонською"
+
+msgid "Estonian ordinal numbers and dates"
+msgstr "Порядкові числівники й дати в естонській мові"
 
 msgid "Estonian past tense"
 msgstr "Минулий час в естонській мові"

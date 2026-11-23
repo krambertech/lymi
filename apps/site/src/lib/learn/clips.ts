@@ -2708,6 +2708,237 @@ const OSASTAV_CLIPS: Record<string, Clip> = {
   "p-jaan": { sentences: OSASTAV_PASSAGES.jaan },
 };
 
+/*
+ * Saying no in the past, “Ma ei läinud”. Every form was checked against its verb's paradigm in
+ * Sõnaveeb's EKI morphology database (ÕS 2025): the simple past's negative column reads
+ * “ei lugenud” for every person, and olema's gives “ei olnud ~ polnud”.
+ */
+
+/** The six short pronouns, in the order the person table lists them. */
+export const PAST_NO_PERSONS = ["ma", "sa", "ta", "me", "te", "nad"] as const;
+
+/**
+ * The verbs of the person table: the past stem, what follows it for each person with yes, and the
+ * -nud form written with `|` before -nud.
+ */
+export const PAST_NO_TABLE = [
+  {
+    verb: "lugema",
+    stem: "luge",
+    yes: ["sin", "sid", "s", "sime", "site", "sid"],
+    nud: "luge|nud",
+  },
+  { verb: "olema", stem: "ol", yes: ["in", "id", "i", "ime", "ite", "id"], nud: "ol|nud" },
+  { verb: "minema", stem: "läks", yes: ["in", "id", "", "ime", "ite", "id"], nud: "läi|nud" },
+] as const;
+
+/** A person's past with yes, as one clip: “Ma lugesin”. */
+export const pastYesSaid = (pronoun: string, stem: string, ending: string) =>
+  presentWithPronoun(pronoun, stem, ending);
+
+/** A person's past with no, as one clip: “Ma ei lugenud”. */
+export const pastNoSaid = (pronoun: string, nud: string) =>
+  `${capital(pronoun)} ei ${nud.replace("|", "")}`;
+
+/** Time words on a line, each with a no sentence whose verb is built as `build` shows. */
+export const PAST_NO_TIMELINE = [
+  {
+    id: "last-week",
+    et: "eelmisel nädalal",
+    at: -2,
+    sentence: "Eelmisel nädalal ma ei olnud Tallinnas.",
+    build: "ol|nud",
+  },
+  { id: "yesterday", et: "eile", at: -1, sentence: "Eile ma ei töötanud.", build: "tööta|nud" },
+  { id: "today", et: "täna", at: 0, sentence: "Täna ma ei tööta.", build: "tööta" },
+] as const;
+
+/** The -nud form of a verb whose -da infinitive ends in -da, -ta or -la: that ending swapped. */
+export const nudForm = (verb: VerbForms) => `${verb.da[0]}nud`;
+
+/** The verbs of the three-forms lesson whose -nud form `nudForm` builds. */
+export const NUD_BUILT = VERB_FORMS.filter((verb) => ["da", "ta", "la"].includes(verb.pattern));
+
+/** The verbs the -nud explorer turns; the quiz asks the other seven. */
+export const NUD_SHOWN = ["elama", "lugema", "töötama", "ootama", "olema"] as const;
+
+/** Minema and the bare -a verbs: their -nud form learned whole, with a sentence for each. */
+export const NUD_WHOLE = [
+  { verb: "minema", da: "minna", nud: "läinud", said: "Ma ei läinud tööle." },
+  { verb: "tegema", da: "teha", nud: "teinud", said: "Ma ei teinud tööd." },
+  { verb: "nägema", da: "näha", nud: "näinud", said: "Ma ei näinud kassi." },
+  { verb: "sööma", da: "süüa", nud: "söönud", said: "Ma ei söönud kodus." },
+  { verb: "jooma", da: "juua", nud: "joonud", said: "Ma ei joonud kohvi." },
+] as const;
+
+/** One no said now and in the past, for “Now or in the past?”. */
+export const PAST_NO_WHEN = [
+  { verb: "olema", now: "Ta pole kodus.", past: "Ta polnud kodus." },
+  { verb: "tulema", now: "Mari ei tule koju.", past: "Mari ei tulnud koju." },
+  { verb: "minema", now: "Ta ei lähe tööle.", past: "Ta ei läinud tööle." },
+  { verb: "sööma", now: "Me ei söö leiba.", past: "Me ei söönud leiba." },
+  { verb: "jooma", now: "Sa ei joo vett.", past: "Sa ei joonud vett." },
+  { verb: "lugema", now: "Te ei loe raamatut.", past: "Te ei lugenud raamatut." },
+  { verb: "elama", now: "Nad ei ela Tartus.", past: "Nad ei elanud Tartus." },
+] as const;
+
+/** The words of “Which one?”: three no now, three yes in the past, three no in the past. */
+export const PAST_NO_SORT = [
+  { w: "ei loe", bin: "now" },
+  { w: "ei joo", bin: "now" },
+  { w: "pole", bin: "now" },
+  { w: "elasin", bin: "yes" },
+  { w: "läksin", bin: "yes" },
+  { w: "olin", bin: "yes" },
+  { w: "ei teinud", bin: "no" },
+  { w: "ei joonud", bin: "no" },
+  { w: "polnud", bin: "no" },
+] as const;
+
+/** “Say no”: a sentence with yes in the past, and what it says with no, as the clip says it. */
+export const PAST_NO_REWRITE = [
+  { id: "tool", from: "Ma läksin eile tööle.", to: "Ma ei läinud eile tööle." },
+  { id: "kodus", from: "Ta oli kodus.", to: "Ta ei olnud kodus." },
+  { id: "kohvikus", from: "Me sõime kohvikus.", to: "Me ei söönud kohvikus." },
+  { id: "raamatut", from: "Nad lugesid raamatut.", to: "Nad ei lugenud raamatut." },
+  { id: "bussi", from: "Sa ootasid bussi.", to: "Sa ei oodanud bussi." },
+  { id: "koju", from: "Te tulite koju.", to: "Te ei tulnud koju." },
+] as const;
+
+/** “Fix the sentence”: the past ending kept after ei, or the present where the past belongs. */
+export const PAST_NO_FIX = [
+  { id: "laksin", wrong: "Ma ei läksin poodi.", right: "Ma ei läinud poodi." },
+  { id: "oli", wrong: "Ta ei oli tööl.", right: "Ta ei olnud tööl." },
+  { id: "kaisime", wrong: "Me ei käisime turul.", right: "Me ei käinud turul." },
+  { id: "tootanud", wrong: "Eile ma ei tööta.", right: "Eile ma ei töötanud." },
+  { id: "soonud", wrong: "Sa ei söö eile kodus.", right: "Sa ei söönud eile kodus." },
+  { id: "lugesite", wrong: "Te ei lugesite raamatut.", right: "Te ei lugenud raamatut." },
+] as const;
+
+/** Mari asks about yesterday: her lines in the second voice, the learner's in the main one. */
+export const PAST_NO_DIALOGUE = {
+  "d-mari-1": { text: "Tere! Kas sa käisid eile poes?", voice: "second" },
+  "d-sina-1": "Ei, ma ei käinud.",
+  "d-mari-2": { text: "Miks sa ei käinud?", voice: "second" },
+  "d-sina-2": "Mul polnud aega.",
+  "d-mari-3": { text: "Mida sa siis tegid?", voice: "second" },
+  "d-sina-3": "Ma töötasin kodus.",
+  "d-mari-4": { text: "Kas Jaan oli kodus?", voice: "second" },
+  "d-sina-4": "Ei, ta ei olnud.",
+} as const satisfies Record<string, Clip>;
+
+/** Kati and Jaan on Monday morning: what each did and didn't do at the weekend. */
+export const PAST_NO_TALK = {
+  turns: [
+    {
+      voice: "third",
+      text: "Tere, Jaan! Mida sa laupäeval tegid?",
+      say: "[cheerful] Tere, Jaan! Mida sa laupäeval tegid?",
+    },
+    {
+      voice: "main",
+      text: ["Laupäeval olin ma kodus.", "Ma ei läinud tööle ja ma ei käinud poes."],
+    },
+    { voice: "third", text: "Miks sa poes ei käinud?", say: "[curious] Miks sa poes ei käinud?" },
+    {
+      voice: "main",
+      text: ["Mul polnud aega.", "Minu ema tuli Tartust ja me rääkisime palju."],
+    },
+    { voice: "third", text: "Kas te sõite kohvikus?" },
+    { voice: "main", text: ["Ei, me ei söönud kohvikus.", "Me sõime kodus.", "Ja sina?"] },
+    {
+      voice: "third",
+      text: ["Mina ei olnud laupäeval kodus.", "Ma käisin Tallinnas ja jõin seal kohvi."],
+    },
+    { voice: "main", text: "Ja pühapäeval?" },
+    {
+      voice: "third",
+      text: ["Pühapäeval olin kodus ja lugesin raamatut.", "Ma ei tahtnud linna minna."],
+      say: "[laughs] Pühapäeval olin kodus ja lugesin raamatut. Ma ei tahtnud linna minna.",
+    },
+    { voice: "main", text: "Kas sa poes käisid?" },
+    { voice: "third", text: ["Ei, ma ei käinud.", "Ma lähen täna."] },
+    { voice: "main", text: ["Mina ka.", "Mul pole kodus leiba."] },
+    { voice: "third", text: "Kas läheme koos kell kuus?" },
+    { voice: "main", text: ["Jah!", "Kell kuus olen poe ees."] },
+    { voice: "third", text: "Tore! Head aega!", say: "[cheerful] Tore! Head aega!" },
+  ],
+} as const satisfies Conversation;
+
+/** The drill's sentences, as its clips say them. */
+export const PAST_NO_DRILL = [
+  "Ma ei elanud Tartus.",
+  "Ta ei rääkinud eesti keelt.",
+  "Me ei õppinud eile.",
+  "Nad ei kuulanud.",
+  "Ta ei läinud koju.",
+  "Me ei teinud tööd.",
+  "Sa ei näinud kassi.",
+  "Nad ei söönud leiba.",
+  "Ma ei joonud vett.",
+  "Te ei käinud poes.",
+  "Ma ei tahtnud tulla.",
+  "Nad ei olnud kodus.",
+  "Sa ei töötanud eile.",
+  "Me ei oodanud.",
+  "Ta ei tulnud tööle.",
+  "Ta luges raamatut.",
+  "Ta ei loe raamatut.",
+  "Ta ei lugenud raamatut.",
+] as const;
+
+/** The words of the lesson with a card, each heard on its own. */
+export const PAST_NO_WORDS = [
+  "ei",
+  "eile",
+  "täna",
+  "töötasin",
+  "ma ei töötanud",
+  "lugesin",
+  "ma ei lugenud",
+  "nad ei lugenud",
+  "ei olnud",
+  "polnud",
+  "Ma polnud kodus.",
+  "ei lugenud",
+  "ei läinud",
+  "ei teinud",
+  "ei näinud",
+  "ei söönud",
+  "ei joonud",
+  "ei käinud",
+  "ei tahtnud",
+  "tahtma",
+  "tahta",
+  "tahtnud",
+  "Ma ei tahtnud.",
+  "käinud",
+  "Kas sa käisid poes?",
+  "mul polnud aega",
+] as const;
+
+const PAST_NO_CLIPS: Record<string, Clip> = {
+  ...words(PAST_NO_WORDS),
+  ...words(
+    PAST_NO_TABLE.flatMap(({ stem, yes, nud }) =>
+      PAST_NO_PERSONS.flatMap((pronoun, i) => [
+        pastYesSaid(pronoun, stem, yes[i] ?? ""),
+        pastNoSaid(pronoun, nud),
+      ]),
+    ),
+  ),
+  ...words(PAST_NO_TIMELINE.map(({ sentence }) => sentence)),
+  ...words(NUD_BUILT.flatMap((verb) => [verb.ma, daForm(verb), nudForm(verb)])),
+  ...words(NUD_WHOLE.flatMap(({ verb, da, nud, said }) => [verb, da, nud, said])),
+  ...words(PAST_NO_WHEN.flatMap(({ now, past }) => [now, past])),
+  ...words(PAST_NO_SORT.map(({ w }) => w)),
+  ...words(PAST_NO_REWRITE.map(({ to }) => to)),
+  ...words(PAST_NO_FIX.map(({ right }) => right)),
+  ...words(PAST_NO_DRILL),
+  ...PAST_NO_DIALOGUE,
+  "c-weekend": PAST_NO_TALK,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -2866,5 +3097,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   mitmus: MITMUS_CLIPS,
   osastav: OSASTAV_CLIPS,
   lihtminevik: PAST_CLIPS,
+  "mineviku-eitus": PAST_NO_CLIPS,
   kit: KIT_CLIPS,
 };

@@ -274,6 +274,9 @@ msgstr "Бесплатный урок эстонского о трёх внеш�
 msgid "A free lesson on saying “I have” in Estonian: mul, sul, tal, meil, teil and neil on, names with -l such as Maril on, the question kellel on?, mul on vaja for I need, and how to answer with jah, on or ei ole. Every sentence is read aloud."
 msgstr "Бесплатный урок о том, как сказать «у меня есть» по-эстонски: mul, sul, tal, meil, teil и neil on, имена с -l, например Maril on, вопрос kellel on?, mul on vaja — «мне нужно» — и ответы jah, on и ei ole. Каждое предложение озвучено."
 
+msgid "A free lesson on saying no in the Estonian past tense: ei and the -nud form (ma ei läinud, ei olnud, polnud), the same for every person, how the -nud form comes from the -da infinitive, the five forms to learn whole, and answering a question with no. Every sentence is read aloud."
+msgstr "Бесплатный урок об отрицании в эстонском прошедшем времени: ei и форма на -nud (ma ei läinud, ei olnud, polnud), одна для всех лиц, как форма на -nud образуется от инфинитива на -da, пять форм, которые учат наизусть, и как ответить «нет» на вопрос. Каждое предложение озвучено."
+
 msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о том, как сказать, где ты: -s значит «в» (Tallinnas, koolis), -l — «на» (laual, tööl), какие места получают какое окончание и как ответить на kus, «где». Каждое предложение озвучено."
 
@@ -883,6 +886,9 @@ msgstr "Как сказать «мне нравится» по-эстонски"
 
 msgid "How to say no in Estonian"
 msgstr "Как сказать «нет» по-эстонски"
+
+msgid "How to say no in the past in Estonian"
+msgstr "Как сказать «нет» в прошедшем времени по-эстонски"
 
 msgid "I"
 msgstr "я"

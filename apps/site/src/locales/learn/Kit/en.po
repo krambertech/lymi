@@ -274,6 +274,9 @@ msgstr "A free lesson on Estonian’s three “on” cases, the adessive, allati
 msgid "A free lesson on saying “I have” in Estonian: mul, sul, tal, meil, teil and neil on, names with -l such as Maril on, the question kellel on?, mul on vaja for I need, and how to answer with jah, on or ei ole. Every sentence is read aloud."
 msgstr "A free lesson on saying “I have” in Estonian: mul, sul, tal, meil, teil and neil on, names with -l such as Maril on, the question kellel on?, mul on vaja for I need, and how to answer with jah, on or ei ole. Every sentence is read aloud."
 
+msgid "A free lesson on saying no in the Estonian past tense: ei and the -nud form (ma ei läinud, ei olnud, polnud), the same for every person, how the -nud form comes from the -da infinitive, the five forms to learn whole, and answering a question with no. Every sentence is read aloud."
+msgstr "A free lesson on saying no in the Estonian past tense: ei and the -nud form (ma ei läinud, ei olnud, polnud), the same for every person, how the -nud form comes from the -da infinitive, the five forms to learn whole, and answering a question with no. Every sentence is read aloud."
+
 msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
 msgstr "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
 
@@ -883,6 +886,9 @@ msgstr "How to say “I like” in Estonian"
 
 msgid "How to say no in Estonian"
 msgstr "How to say no in Estonian"
+
+msgid "How to say no in the past in Estonian"
+msgstr "How to say no in the past in Estonian"
 
 msgid "I"
 msgstr "I"

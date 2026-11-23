@@ -5983,6 +5983,333 @@ const WEEKEND_CLIPS: Record<string, Clip> = {
   "c-weekend": WEEKEND_TALK,
 };
 
+export const PV_HOUSE = [
+  { id: "majja", word: "sisse", sentence: "Kass läheb sisse." },
+  { id: "majas", word: "sees", sentence: "Kass on sees." },
+  { id: "majast", word: "välja", sentence: "Kass tuleb välja." },
+] as const;
+
+export const PV_TABLE = [
+  { id: "lauale", word: "üles", sentence: "Kass hüppab üles." },
+  { id: "laual", word: "üleval", sentence: "Kass on üleval." },
+  { id: "laualt", word: "alla", sentence: "Kass hüppab alla." },
+] as const;
+
+export const PV_VERBS = [
+  "Ma tõusen kell seitse üles.",
+  "Tule sisse!",
+  "Me läheme õhtul välja.",
+  "Jaan tuleb alla.",
+  "Kati läks ära.",
+  "Ma tulen homme tagasi.",
+  "Võta mind kaasa!",
+  "Me kolime reedel sisse.",
+] as const;
+
+export const PV_MATCH = [
+  { id: "ules", verb: "üles tõusma", said: "Ma tõusen kell seitse üles." },
+  { id: "valja", verb: "välja minema", said: "Me läheme õhtul välja." },
+  { id: "sisse", verb: "sisse tulema", said: "Tule sisse!" },
+  { id: "tagasi", verb: "tagasi tulema", said: "Ma tulen homme tagasi." },
+  { id: "ara", verb: "ära minema", said: "Kati läks ära." },
+  { id: "kaasa", verb: "kaasa võtma", said: "Võta mind kaasa!" },
+] as const;
+
+export const PV_PLACE_SEEN = [
+  "Lapsed mängivad väljas.",
+  "Me läheme õhtul välja.",
+  "Kati on juba sees.",
+  "Tule sisse!",
+  "Kass on üleval.",
+  "Jaan tuleb alla.",
+] as const;
+
+export const PV_PLACE = [
+  {
+    id: "valjas",
+    said: "Kass on väljas.",
+    answer: "väljas",
+    other: "välja",
+    base: "välja",
+    to: false,
+  },
+  {
+    id: "valja",
+    said: "Kass läheb välja.",
+    answer: "välja",
+    other: "väljas",
+    base: "välja",
+    to: true,
+  },
+  { id: "sees", said: "Kati on sees.", answer: "sees", other: "sisse", base: "sisse", to: false },
+  { id: "sisse", said: "Tulge sisse!", answer: "sisse", other: "sees", base: "sisse", to: true },
+  {
+    id: "uleval",
+    said: "Mari on üleval.",
+    answer: "üleval",
+    other: "üles",
+    base: "üles",
+    to: false,
+  },
+  { id: "ules", said: "Ma lähen üles.", answer: "üles", other: "üleval", base: "üles", to: true },
+  { id: "all", said: "Jaan on all.", answer: "all", other: "alla", base: "alla", to: false },
+  { id: "alla", said: "Tule alla!", answer: "alla", other: "all", base: "alla", to: true },
+] as const;
+
+export const PV_ORDER = [
+  {
+    id: "tousen",
+    answers: withPronouns([
+      "Ma tõusen kell seitse üles.",
+      "Kell seitse tõusen ma üles.",
+      "Kell seitse ma tõusen üles.",
+      "Ma tõusen üles kell seitse.",
+    ]),
+  },
+  {
+    id: "pean",
+    answers: withPronouns([
+      "Ma pean homme vara üles tõusma.",
+      "Homme pean ma vara üles tõusma.",
+      "Homme ma pean vara üles tõusma.",
+      "Ma pean homme vara tõusma üles.",
+      "Homme pean ma vara tõusma üles.",
+      "Homme ma pean vara tõusma üles.",
+    ]),
+  },
+  {
+    id: "lahme",
+    answers: withPronouns([
+      "Me läheme õhtul välja.",
+      "Õhtul läheme me välja.",
+      "Õhtul me läheme välja.",
+      "Me läheme välja õhtul.",
+    ]),
+  },
+  { id: "tahab", answers: ["Kati tahab ära minna.", "Kati tahab minna ära."] },
+  {
+    id: "ei-tule",
+    answers: withPronouns([
+      "Ma ei tule täna tagasi.",
+      "Täna ma ei tule tagasi.",
+      "Ma täna ei tule tagasi.",
+      "Täna ei tule ma tagasi.",
+      "Ma ei tule tagasi täna.",
+      "Täna ma tagasi ei tule.",
+      "Ma täna tagasi ei tule.",
+    ]),
+  },
+] as const;
+
+export const PV_BUILD = [
+  {
+    id: "tousen",
+    words: ["ma", "üles tõusma", "kell kuus"],
+    answers: withPronouns([
+      "Ma tõusen kell kuus üles.",
+      "Kell kuus tõusen ma üles.",
+      "Kell kuus ma tõusen üles.",
+      "Ma tõusen üles kell kuus.",
+    ]),
+  },
+  {
+    id: "lahme",
+    words: ["me", "välja minema", "õhtul"],
+    answers: withPronouns([
+      "Me läheme õhtul välja.",
+      "Õhtul läheme me välja.",
+      "Õhtul me läheme välja.",
+      "Me läheme välja õhtul.",
+    ]),
+  },
+  {
+    id: "tagasi",
+    words: ["ma", "tagasi tulema", "homme"],
+    answers: withPronouns([
+      "Ma tulen homme tagasi.",
+      "Homme tulen ma tagasi.",
+      "Homme ma tulen tagasi.",
+      "Ma tulen tagasi homme.",
+    ]),
+  },
+  {
+    id: "kolib",
+    words: ["Jaan", "sisse kolima", "reedel"],
+    answers: [
+      "Jaan kolib reedel sisse.",
+      "Reedel kolib Jaan sisse.",
+      "Reedel Jaan kolib sisse.",
+      "Jaan kolib sisse reedel.",
+    ],
+  },
+  {
+    id: "kaasa",
+    words: ["ma", "kaasa võtma", "sind"],
+    answers: withPronouns(["Ma võtan sind kaasa."]),
+  },
+  {
+    id: "alla",
+    words: ["Mari", "alla tulema", "kohe"],
+    answers: [
+      "Mari tuleb kohe alla.",
+      "Kohe tuleb Mari alla.",
+      "Kohe Mari tuleb alla.",
+      "Mari tuleb alla kohe.",
+    ],
+  },
+] as const;
+
+export const PV_TRANSLATE = [
+  {
+    id: "tousen",
+    answers: withPronouns([
+      "Ma tõusen kell seitse üles.",
+      "Kell seitse tõusen ma üles.",
+      "Kell seitse ma tõusen üles.",
+      "Ma tõusen üles kell seitse.",
+      "Ma tõusen kell seitse.",
+      "Kell seitse tõusen ma.",
+      "Kell seitse ma tõusen.",
+    ]),
+  },
+  { id: "sisse", answers: ["Tule sisse!", "Tulge sisse!"] },
+  {
+    id: "valja",
+    answers: withPronouns([
+      "Me läheme täna õhtul välja.",
+      "Täna õhtul läheme me välja.",
+      "Täna õhtul me läheme välja.",
+      "Me läheme välja täna õhtul.",
+      "Lähme täna õhtul välja.",
+      "Me läheme õhtul välja.",
+      "Õhtul läheme me välja.",
+      "Õhtul me läheme välja.",
+      "Lähme õhtul välja.",
+    ]),
+  },
+  {
+    id: "ara",
+    answers: [
+      "Kati läks eile ära.",
+      "Eile läks Kati ära.",
+      "Eile Kati läks ära.",
+      "Kati läks ära eile.",
+    ],
+  },
+  {
+    id: "pean",
+    answers: withPronouns([
+      "Ma pean homme vara üles tõusma.",
+      "Homme pean ma vara üles tõusma.",
+      "Homme ma pean vara üles tõusma.",
+      "Ma pean homme vara tõusma üles.",
+      "Homme pean ma vara tõusma üles.",
+      "Homme ma pean vara tõusma üles.",
+      "Ma pean homme vara tõusma.",
+      "Homme pean ma vara tõusma.",
+      "Homme ma pean vara tõusma.",
+    ]),
+  },
+  { id: "kaasa", answers: ["Võta mind kaasa!", "Võtke mind kaasa!"] },
+] as const;
+
+export const PV_FIX = [
+  { id: "fix-valjas", wrong: "Lapsed mängivad välja.", answers: ["Lapsed mängivad väljas."] },
+  { id: "fix-valja", wrong: "Me läheme õhtul väljas.", answers: ["Me läheme õhtul välja."] },
+  { id: "fix-sisse", wrong: "Tule sees!", answers: ["Tule sisse!"] },
+  { id: "fix-sees", wrong: "Kati on juba sisse.", answers: ["Kati on juba sees."] },
+  {
+    id: "fix-ules",
+    wrong: "Ma tõusen kell seitse üleval.",
+    answers: ["Ma tõusen kell seitse üles."],
+  },
+  { id: "fix-all", wrong: "Jaan on alla.", answers: ["Jaan on all."] },
+] as const;
+
+export const PV_TALK: Conversation = {
+  turns: [
+    { voice: "main", text: ["Tere, Kati!", "Kuidas läheb?"] },
+    { voice: "second", text: ["Tere, Jaan!", "Väga hästi.", "Mul on uus korter."] },
+    { voice: "main", text: ["Tore!", "Millal sa sisse kolid?"] },
+    { voice: "second", text: ["Laupäeval.", "Aga reedel pean ma vanast korterist välja kolima."] },
+    { voice: "main", text: ["Miks sa vanast korterist ära kolid?"] },
+    { voice: "second", text: ["Vana korter on väike ja kallis.", "Uus on suurem ja odavam."] },
+    { voice: "main", text: ["Kui suur see on?"] },
+    { voice: "second", text: ["Kaks tuba.", "Üks on suur ja teine väike."] },
+    { voice: "main", text: ["Kus see on?"] },
+    {
+      voice: "second",
+      text: ["Kesklinnas, kolmandal korrusel.", "Majas ei ole lifti, aga see pole probleem."],
+    },
+    { voice: "main", text: ["Kas ma võin laupäeval appi tulla?"] },
+    {
+      voice: "second",
+      text: [
+        "Jah, palun!",
+        "Mu vend tuleb ka.",
+        "Ta tuleb reedel Tartust ja sõidab pühapäeval tagasi.",
+      ],
+    },
+    { voice: "main", text: ["Mis kell te alustate?"] },
+    { voice: "second", text: ["Kell kaheksa.", "Ma tõusen kell kuus üles."] },
+    { voice: "main", text: ["Kell kuus?", "See on vara!", "Kas ma võtan auto kaasa?"] },
+    { voice: "second", text: ["Jah, võta auto kaasa, palun.", "Minu auto on väike."] },
+    { voice: "main", text: ["Hästi.", "Ja õhtul läheme välja sööma."] },
+    { voice: "second", text: ["Hea mõte!", "Kesklinnas on üks hea restoran."] },
+    { voice: "main", text: ["Ja millal sa tööle tagasi lähed?"] },
+    { voice: "second", text: ["Esmaspäeval.", "Pühapäeval olen ma kodus ja loen raamatut."] },
+    { voice: "main", text: ["Siis näeme laupäeval!"] },
+  ],
+};
+
+export const PV_WORDS = [
+  "üles",
+  "alla",
+  "sisse",
+  "välja",
+  "ära",
+  "tagasi",
+  "kaasa",
+  "väljas",
+  "sees",
+  "üleval",
+  "all",
+  "üles tõusma",
+  "kolima",
+  "vara",
+  "kohe",
+] as const;
+
+export const PV_DRILL = [
+  "Ära mine ära!",
+  "Kati läks eile ära.",
+  "Mari tuleb kohe alla.",
+  "Ma võtan sind kaasa.",
+  "Jaan kolib reedel sisse.",
+  "Ma pean kell seitse üles tõusma.",
+  "Ma pean homme vara üles tõusma.",
+  "Ma tõusen kell kuus üles.",
+] as const;
+
+const PV_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...new Set([
+      ...PV_WORDS,
+      ...PV_HOUSE.map(({ sentence }) => sentence),
+      ...PV_TABLE.map(({ sentence }) => sentence),
+      ...PV_VERBS,
+      ...PV_MATCH.map(({ said }) => said),
+      ...PV_PLACE.map(({ said }) => said),
+      ...PV_ORDER.map(({ answers }) => answers[0]),
+      ...PV_BUILD.map(({ answers }) => answers[0]),
+      ...PV_TRANSLATE.map(({ answers }) => answers[0]),
+      ...PV_FIX.map(({ answers }) => answers[0]),
+      ...PV_DRILL,
+    ]),
+  ]),
+  "c-talk": PV_TALK,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -6095,6 +6422,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   vordlus: CMP_CLIPS,
   saav: TRA_CLIPS,
   keegi: GI_CLIPS,
+  "ules-valja-ara": PV_CLIPS,
   "mul-on": {
     ...words([
       ...MUL_ON_WORDS,

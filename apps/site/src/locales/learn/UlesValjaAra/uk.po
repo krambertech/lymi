@@ -1,0 +1,494 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 18:12+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0>Ära</0> at the start of a command is don’t, as in lesson {commands}. After a verb of moving, it usually means away: <1/>, don’t go away."
+msgstr "<0>Ära</0> на початку наказу — це «не», як в уроці {commands}. Після дієслова руху воно зазвичай означає «геть»: <1/> — «не йди геть»."
+
+msgid "<0>Ära</0> at the start says don’t; after a verb of moving it usually means away: <1>Ära mine ära!</1>"
+msgstr "<0>Ära</0> на початку каже «не»; після дієслова руху зазвичай означає «геть»: <1>Ära mine ära!</1>"
+
+msgid "<0>Minema</0> goes somewhere, so <1>välja</1>."
+msgstr "<0>Minema</0> — це рух кудись, тож <1>välja</1>."
+
+msgid "<0>Tõusma</0> says where to: <1>üles</1>, not <2>üleval</2>."
+msgstr "<0>Tõusma</0> каже, куди: <1>üles</1>, а не <2>üleval</2>."
+
+msgid "<et>Ära</et> after a verb of moving usually means away, <et>tagasi</et> is back, <et>kaasa</et> is along."
+msgstr "<et>Ära</et> після дієслова руху зазвичай означає «геть», <et>tagasi</et> — «назад», <et>kaasa</et> — «з собою»."
+
+msgid "<et>Ära</et> at the start is don’t; after a verb of moving it usually means away."
+msgstr "<et>Ära</et> на початку — «не»; після дієслова руху зазвичай «геть»."
+
+msgid "18 minutes"
+msgstr "18 хвилин"
+
+msgid "6 exercises, 3 of them typed, and a conversation"
+msgstr "6 вправ, у 3 треба писати, і розмова"
+
+msgid "A car"
+msgstr "Авто"
+
+msgid "A cat and a house"
+msgstr "Кіт і будинок"
+
+msgid "A cat and a table"
+msgstr "Кіт і стіл"
+
+msgid "A flat"
+msgstr "Квартира"
+
+msgid "A job in the centre"
+msgstr "Робота в центрі"
+
+msgid "a lift"
+msgstr "ліфт"
+
+msgid "a restaurant"
+msgstr "ресторан"
+
+msgid "A small word often gives the verb a direction: <0>üles</0>, up; <1>alla</1>, down; <2>sisse</2>, in; <3>välja</3>, out; <4>ära</4>, away; <5>tagasi</5>, back; <6>kaasa</6>, along."
+msgstr "Маленьке слово часто дає дієслову напрямок: <0>üles</0> — «вгору»; <1>alla</1> — «вниз»; <2>sisse</2> — «всередину»; <3>välja</3> — «назовні»; <4>ära</4> — «геть»; <5>tagasi</5> — «назад»; <6>kaasa</6> — «з собою»."
+
+msgid "All eight: going there or being there."
+msgstr "Усі вісім: рух туди чи перебування там."
+
+msgid "All five, the small word in its place."
+msgstr "Усі п’ять, маленьке слово на своєму місці."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All six sentences."
+msgstr "Усі шість речень."
+
+msgid "along, with you"
+msgstr "з собою"
+
+msgid "Appi tulema: to come and help."
+msgstr "Appi tulema — прийти допомогти."
+
+msgid "Ära mine ära! Don’t go away!"
+msgstr "Ära mine ära! — Не йди геть!"
+
+msgid "At eight"
+msgstr "О восьмій"
+
+msgid "At seven"
+msgstr "О сьомій"
+
+msgid "At six"
+msgstr "О шостій"
+
+msgid "Away, back, along"
+msgstr "Геть, назад, з собою"
+
+msgid "Away, back, along: <et>ära</et>, <et>tagasi</et>"
+msgstr "Геть, назад, з собою: <et>ära</et>, <et>tagasi</et>"
+
+msgid "away, off; don’t"
+msgstr "геть; не (у наказі)"
+
+msgid "back"
+msgstr "назад"
+
+msgid "Being somewhere, usually: <et>väljas</et>, <et>sees</et>, <et>üleval</et>, <et>all</et>."
+msgstr "Перебування десь — зазвичай: <et>väljas</et>, <et>sees</et>, <et>üleval</et>, <et>all</et>."
+
+msgid "Come down!"
+msgstr "Спускайся!"
+
+msgid "Come in says where to: <0>sisse</0>."
+msgstr "«Заходь» каже, куди: <0>sisse</0>."
+
+msgid "Come in!"
+msgstr "Заходь!"
+
+msgid "Come in! (to more than one, or politely)"
+msgstr "Заходьте! (до кількох людей або ввічливо)"
+
+msgid "Cook at Kati’s new flat"
+msgstr "Готувати в новій квартирі Каті"
+
+msgid "Don’t go away!"
+msgstr "Не йди геть!"
+
+msgid "down, downstairs: where"
+msgstr "унизу, на нижньому поверсі: де"
+
+msgid "down, downstairs: where to"
+msgstr "вниз, на нижній поверх: куди"
+
+msgid "down: where to"
+msgstr "вниз: куди"
+
+msgid "Each has a partner for where something is, as <0>majja</0> and <1>majas</1> are in lesson {places}: <2/>, up there; <3/>, inside. Tap a word to move the cat."
+msgstr "Кожне має пару для того, де щось є, як <0>majja</0> і <1>majas</1> в уроці {places}: <2/> — «нагорі»; <3/> — «всередині». Торкнися слова, щоб кіт перейшов."
+
+msgid "Each sentence should say what the line above it says, and one word is wrong. Tap it, then type it right."
+msgstr "Кожне речення має казати те саме, що й рядок над ним, але одне слово в ньому неправильне. Торкнися його, а потім напиши правильно."
+
+msgid "early"
+msgstr "рано"
+
+msgid "Estonian puts a small word after many verbs to say where to: <0/>, up; <1/>, down; <2/>, in; <3/>, out. <4>Hüppama</4> is to jump, so <5>Kass hüppab üles</5> is the cat jumps up."
+msgstr "Після багатьох дієслів естонська ставить маленьке слово, що каже, куди: <0/> — «вгору»; <1/> — «вниз»; <2/> — «всередину»; <3/> — «назовні». <4>Hüppama</4> — «стрибати», тож <5>Kass hüppab üles</5> — «кіт стрибає вгору»."
+
+msgid "Five"
+msgstr "П’ять"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "Go out to eat"
+msgstr "Піти кудись поїсти"
+
+msgid "Go to Tartu"
+msgstr "Поїхати в Тарту"
+
+msgid "Going somewhere takes one word, and being somewhere usually takes its partner: <0>Kass läheb välja</0>, the cat goes out; <1>Lapsed mängivad väljas</1>, the children are playing outside."
+msgstr "Рух кудись бере одне слово, а перебування десь зазвичай — його пару: <0>Kass läheb välja</0> — «кіт виходить надвір»; <1>Lapsed mängivad väljas</1> — «діти граються надворі»."
+
+msgid "Going somewhere: <et>välja</et>, <et>sisse</et>, <et>üles</et>, <et>alla</et>."
+msgstr "Рух кудись: <et>välja</et>, <et>sisse</et>, <et>üles</et>, <et>alla</et>."
+
+msgid "He is somewhere, not going there: <0>all</0>."
+msgstr "Він десь є, а не йде туди: <0>all</0>."
+
+msgid "How many rooms does the new flat have?"
+msgstr "Скільки кімнат у новій квартирі?"
+
+msgid "I get up at seven."
+msgstr "Я встаю о сьомій."
+
+msgid "I get up at six."
+msgstr "Я встаю о шостій."
+
+msgid "I have to get up early tomorrow."
+msgstr "Завтра мені треба рано вставати."
+
+msgid "I’ll come back tomorrow."
+msgstr "Я повернуся завтра."
+
+msgid "I’ll take you along."
+msgstr "Я візьму тебе з собою."
+
+msgid "I’m going up."
+msgstr "Я йду нагору."
+
+msgid "I’m not coming back today."
+msgstr "Сьогодні я не повернуся."
+
+msgid "In a question with a question word, it often comes just before the verb, which goes last: <0>Millal sa sisse kolid?</0>"
+msgstr "У питанні з питальним словом воно часто стоїть просто перед дієсловом, а дієслово — останнім: <0>Millal sa sisse kolid?</0>"
+
+msgid "In a statement the small word usually goes last: <0>Ma tõusen kell seitse üles</0>. With a second verb, it usually goes just before it: <1>Ma pean vara üles tõusma</1>."
+msgstr "У твердженні маленьке слово зазвичай стоїть останнім: <0>Ma tõusen kell seitse üles</0>. Із другим дієсловом воно зазвичай стоїть просто перед ним: <1>Ma pean vara üles tõusma</1>."
+
+msgid "In a statement the small word usually goes last: <et>Ma tõusen kell seitse üles</et>."
+msgstr "У твердженні маленьке слово зазвичай стоїть останнім: <et>Ma tõusen kell seitse üles</et>."
+
+msgid "In a statement the small word usually goes to the end, however long the sentence: <0>Ma tõusen kell seitse üles</0>. With a second verb, as in lesson {order}, it usually goes just before that verb: <1/>."
+msgstr "У твердженні маленьке слово зазвичай іде в кінець, хоч би яким довгим було речення: <0>Ma tõusen kell seitse üles</0>. Із другим дієсловом, як в уроці {order}, воно зазвичай стоїть просто перед ним: <1/>."
+
+msgid "in the city centre"
+msgstr "у центрі міста"
+
+msgid "in: where to"
+msgstr "всередину: куди"
+
+msgid "inside: where"
+msgstr "всередині: де"
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan is coming down."
+msgstr "Яан спускається."
+
+msgid "Jaan is downstairs."
+msgstr "Яан унизу."
+
+msgid "Jaan is moving in on Friday."
+msgstr "Яан в’їжджає в п’ятницю."
+
+msgid "Kati"
+msgstr "Каті"
+
+msgid "Kati has found a new flat, and Jaan offers to help. <0>Kolima</0> is to move house."
+msgstr "Каті знайшла нову квартиру, і Яан пропонує допомогти. <0>Kolima</0> — «переїжджати»."
+
+msgid "Kati is already inside."
+msgstr "Каті вже всередині."
+
+msgid "Kati is inside."
+msgstr "Каті всередині."
+
+msgid "Kati left yesterday."
+msgstr "Каті вчора пішла."
+
+msgid "Kati left."
+msgstr "Каті пішла."
+
+msgid "Kati wants to leave."
+msgstr "Каті хоче піти."
+
+msgid "Kati’s old flat is expensive."
+msgstr "Стара квартира Каті дорога."
+
+msgid "Lift; after ei ole: lifti."
+msgstr "Lift; після ei ole: lifti."
+
+msgid "Listen to the lines above once more, then try again."
+msgstr "Послухай рядки вище ще раз і спробуй знову."
+
+msgid "Listen: Kati and Jaan"
+msgstr "Слухання: Каті і Яан"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Ma tõusen üles: I get up."
+msgstr "Ma tõusen üles — я встаю."
+
+msgid "Make the sentence"
+msgstr "Склади речення"
+
+msgid "Many Estonian verbs take a small word that says where to: <0>tõusen üles</0>, I get up; <1>lähen välja</1>, I go out; <2>läks ära</2>, left. In a statement it usually goes last."
+msgstr "Багато естонських дієслів мають маленьке слово, що каже, куди: <0>tõusen üles</0> — «я встаю»; <1>lähen välja</1> — «я виходжу»; <2>läks ära</2> — «пішов». У твердженні воно зазвичай стоїть останнім."
+
+msgid "Mari is coming down right away."
+msgstr "Марі зараз спуститься."
+
+msgid "Mari is upstairs."
+msgstr "Марі нагорі."
+
+msgid "Most of them. Ask whether someone goes somewhere or is already there."
+msgstr "Більшість. Спитай себе, чи хтось кудись іде, чи вже там."
+
+msgid "Most of them. Check the small word in the ones you missed."
+msgstr "Більшість. Перевір маленьке слово в тих, що не вдалися."
+
+msgid "Most of them. Check the verb’s form and the small word’s place."
+msgstr "Більшість. Перевір форму дієслова і місце маленького слова."
+
+msgid "Most of them. Look where the small word went."
+msgstr "Більшість. Подивися, де опинилося маленьке слово."
+
+msgid "Most of them. Read the reason under each one you missed."
+msgstr "Більшість. Прочитай пояснення під кожною помилкою."
+
+msgid "Move out of her old flat"
+msgstr "Виїхати зі старої квартири"
+
+msgid "Moving house"
+msgstr "Переїзд"
+
+msgid "One"
+msgstr "Одна"
+
+msgid "out: where to"
+msgstr "назовні: куди"
+
+msgid "outside: where"
+msgstr "надворі: де"
+
+msgid "Put the words in order"
+msgstr "Розстав слова"
+
+msgid "Put the words into a sentence that means what the line says: the verb in its form, the small word in its place."
+msgstr "Склади зі слів речення, що означає те, що й рядок: дієслово в потрібній формі, маленьке слово на своєму місці."
+
+msgid "Read the two lines above once more, then try again."
+msgstr "Прочитай два рядки вище ще раз і спробуй знову."
+
+msgid "Read What to remember at the end, then try again."
+msgstr "Прочитай «Що запам’ятати» наприкінці й спробуй знову."
+
+msgid "right away"
+msgstr "зараз, одразу"
+
+msgid "She is somewhere already: <0>sees</0>."
+msgstr "Вона вже десь є: <0>sees</0>."
+
+msgid "Sisse kolima: to move in. Välja kolima: to move out."
+msgstr "Sisse kolima — в’їхати. Välja kolima — виїхати."
+
+msgid "Six mistakes to catch"
+msgstr "Шість помилок"
+
+msgid "Stay at home"
+msgstr "Лишитися вдома"
+
+msgid "Take me with you!"
+msgstr "Візьми мене з собою!"
+
+msgid "The building has a lift."
+msgstr "У будинку є ліфт."
+
+msgid "The cat comes out."
+msgstr "Кіт виходить."
+
+msgid "The cat goes in."
+msgstr "Кіт заходить."
+
+msgid "The cat goes out."
+msgstr "Кіт виходить надвір."
+
+msgid "The cat is inside."
+msgstr "Кіт усередині."
+
+msgid "The cat is outside."
+msgstr "Кіт надворі."
+
+msgid "The cat is up there."
+msgstr "Кіт нагорі."
+
+msgid "The cat jumps down."
+msgstr "Кіт стрибає вниз."
+
+msgid "The cat jumps up."
+msgstr "Кіт стрибає вгору."
+
+msgid "The children are playing outside."
+msgstr "Діти граються надворі."
+
+msgid "The small word usually goes last"
+msgstr "Маленьке слово зазвичай стоїть останнім"
+
+msgid "The small word usually goes last, or just before a second verb at the end."
+msgstr "Маленьке слово зазвичай стоїть останнім або просто перед другим дієсловом у кінці."
+
+msgid "The small word usually says where to: <et>üles</et>, up; <et>alla</et>, down; <et>sisse</et>, in; <et>välja</et>, out."
+msgstr "Маленьке слово зазвичай каже, куди: <et>üles</et> — «вгору»; <et>alla</et> — «вниз»; <et>sisse</et> — «всередину»; <et>välja</et> — «назовні»."
+
+msgid "They are somewhere, not going there: <0>väljas</0>."
+msgstr "Вони десь є, а не йдуть туди: <0>väljas</0>."
+
+msgid "Three more often go with verbs of moving: <0/>, away; <1/>, back; <2/>, along. A dictionary lists the pair with the small word first: <3/>, to get up; <4>ära minema</4>, to leave. Tap a line to hear it."
+msgstr "Ще три часто ходять із дієсловами руху: <0/> — «геть»; <1/> — «назад»; <2/> — «з собою». У словнику пару пишуть із маленьким словом попереду: <3/> — «вставати»; <4>ära minema</4> — «піти геть». Торкнися рядка, щоб послухати."
+
+msgid "to come back"
+msgstr "повертатися"
+
+msgid "to come in"
+msgstr "заходити"
+
+msgid "to get up"
+msgstr "вставати"
+
+msgid "to go out"
+msgstr "виходити"
+
+msgid "to jump"
+msgstr "стрибати"
+
+msgid "to leave"
+msgstr "піти геть"
+
+msgid "to move house"
+msgstr "переїжджати"
+
+msgid "to rise"
+msgstr "підніматися"
+
+msgid "to someone’s aid, to help"
+msgstr "на допомогу"
+
+msgid "to take along"
+msgstr "брати з собою"
+
+msgid "Two"
+msgstr "Дві"
+
+msgid "up there: where"
+msgstr "нагорі: де"
+
+msgid "Up, down, in, out"
+msgstr "Вгору, вниз, всередину, назовні"
+
+msgid "Up, down, in, out: <et>üles</et>, <et>välja</et>"
+msgstr "Вгору, вниз, всередину, назовні: <et>üles</et>, <et>välja</et>"
+
+msgid "up, upstairs: where"
+msgstr "нагорі: де"
+
+msgid "up, upstairs: where to"
+msgstr "вгору, нагору: куди"
+
+msgid "up: where to"
+msgstr "вгору: куди"
+
+msgid "We’re going out in the evening."
+msgstr "Увечері ми кудись підемо."
+
+msgid "We’re going out tonight."
+msgstr "Сьогодні ввечері ми кудись підемо."
+
+msgid "We’re moving in on Friday."
+msgstr "Ми в’їжджаємо в п’ятницю."
+
+msgid "What does it mean?"
+msgstr "Що це означає?"
+
+msgid "What does Kati have that is new?"
+msgstr "Що в Каті нового?"
+
+msgid "What does Kati have to do on Friday?"
+msgstr "Що Каті треба зробити в п’ятницю?"
+
+msgid "What time does Kati get up on Saturday?"
+msgstr "О котрій Каті встає в суботу?"
+
+msgid "What will they do in the evening?"
+msgstr "Що вони робитимуть увечері?"
+
+msgid "When does Kati move in? Write the day as she says it."
+msgstr "Коли Каті в’їжджає? Напиши день так, як вона його каже."
+
+msgid "Where is Kati’s brother coming from? Write the town as she says it."
+msgstr "Звідки приїде брат Каті? Напиши місто так, як вона його каже."
+
+msgid "Where the cat is and goes"
+msgstr "Де кіт і куди він іде"
+
+msgid "Where to and where are different words: <0>välja, väljas</0>; <1>sisse, sees</1>; <2>üles, üleval</2>; <3>alla, all</3>."
+msgstr "«Куди» і «де» — різні слова: <0>välja, väljas</0>; <1>sisse, sees</1>; <2>üles, üleval</2>; <3>alla, all</3>."
+
+msgid "Where to or where: <et>välja</et>, <et>väljas</et>"
+msgstr "Куди чи де: <et>välja</et>, <et>väljas</et>"
+
+msgid "Where to, or where"
+msgstr "Куди чи де"
+
+msgid "Where to, or where?"
+msgstr "Куди чи де?"
+
+msgid "Where to: <0>{answer}</0>."
+msgstr "Куди: <0>{answer}</0>."
+
+msgid "Where: <0>{answer}</0>."
+msgstr "Де: <0>{answer}</0>."
+
+msgid "With a second verb, the small word usually goes just before it: <et>Ma pean vara üles tõusma</et>."
+msgstr "Із другим дієсловом маленьке слово зазвичай стоїть просто перед ним: <et>Ma pean vara üles tõusma</et>."
+
+msgid "with pean"
+msgstr "з pean"
+
+msgid "with tahab"
+msgstr "з tahab"
+
+msgid "Work"
+msgstr "Працювати"
+
+msgid "Write each sentence in Estonian."
+msgstr "Напиши кожне речення естонською."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"

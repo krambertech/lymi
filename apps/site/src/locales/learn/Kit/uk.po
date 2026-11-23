@@ -262,6 +262,9 @@ msgstr "Безкоштовний урок естонської про те, як
 msgid "A free Estonian lesson on the translative case: -ks on the genitive for what someone becomes (Ta sai arstiks, Ma jäin haigeks), -na against -ks, reedeks for by Friday and nädalaks for a week, and heaks arstiks, where the adjective takes -ks too. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про транслатив: -ks до родового для того, ким хтось стає (Ta sai arstiks, Ma jäin haigeks), -na проти -ks, reedeks — «до п’ятниці» і nädalaks — «на тиждень», і heaks arstiks, де -ks отримує й прикметник. Кожне речення озвучене."
 
+msgid "A free Estonian lesson on verbs with a small word for direction: üles tõusma, välja minema, sisse tulema, ära minema, tagasi tulema and kaasa võtma; välja or väljas for where to or where; where the small word usually goes; and ära twice in Ära mine ära, don’t go away. Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про дієслова з маленьким словом напрямку: üles tõusma, välja minema, sisse tulema, ära minema, tagasi tulema і kaasa võtma; välja чи väljas — куди чи де; де зазвичай стоїть маленьке слово; і ära двічі в Ära mine ära — «не йди геть». Кожне речення озвучене."
+
 msgid "A free Estonian lesson on word order: the verb usually in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про порядок слів: дієслово зазвичай на другому місці (täna lähen ma), питання на кшталт kus sa elad?, два дієслова з другим зазвичай у кінці і де стоїть ei. Кожне речення озвучене."
 
@@ -692,6 +695,9 @@ msgstr "Числа естонською"
 
 msgid "Estonian ordinal numbers and dates"
 msgstr "Порядкові числівники й дати в естонській мові"
+
+msgid "Estonian particle verbs: up, out, away"
+msgstr "Естонські дієслова з частками: вгору, назовні, геть"
 
 msgid "Estonian past tense"
 msgstr "Минулий час в естонській мові"

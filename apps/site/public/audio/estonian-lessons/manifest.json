@@ -16775,5 +16775,404 @@
     "text": "ilm",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/u2les": {
+    "text": "üles",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/alla": {
+    "text": "alla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/sisse": {
+    "text": "sisse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/va2lja": {
+    "text": "välja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/a2ra": {
+    "text": "ära",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/tagasi": {
+    "text": "tagasi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kaasa": {
+    "text": "kaasa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/va2ljas": {
+    "text": "väljas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/sees": {
+    "text": "sees",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/u2leval": {
+    "text": "üleval",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/all": {
+    "text": "all",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/u2les-to3usma": {
+    "text": "üles tõusma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kolima": {
+    "text": "kolima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/vara": {
+    "text": "vara",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kohe": {
+    "text": "kohe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kass-la2heb-sisse": {
+    "text": "Kass läheb sisse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kass-on-sees": {
+    "text": "Kass on sees.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kass-tuleb-va2lja": {
+    "text": "Kass tuleb välja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kass-hu2ppab-u2les": {
+    "text": "Kass hüppab üles.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kass-on-u2leval": {
+    "text": "Kass on üleval.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kass-hu2ppab-alla": {
+    "text": "Kass hüppab alla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ma-to3usen-kell-seitse-u2les": {
+    "text": "Ma tõusen kell seitse üles.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/tule-sisse": {
+    "text": "Tule sisse!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/me-la2heme-o3htul-va2lja": {
+    "text": "Me läheme õhtul välja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/jaan-tuleb-alla": {
+    "text": "Jaan tuleb alla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kati-la2ks-a2ra": {
+    "text": "Kati läks ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ma-tulen-homme-tagasi": {
+    "text": "Ma tulen homme tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/vo3ta-mind-kaasa": {
+    "text": "Võta mind kaasa!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/me-kolime-reedel-sisse": {
+    "text": "Me kolime reedel sisse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kass-on-va2ljas": {
+    "text": "Kass on väljas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kass-la2heb-va2lja": {
+    "text": "Kass läheb välja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kati-on-sees": {
+    "text": "Kati on sees.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/tulge-sisse": {
+    "text": "Tulge sisse!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/mari-on-u2leval": {
+    "text": "Mari on üleval.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ma-la2hen-u2les": {
+    "text": "Ma lähen üles.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/jaan-on-all": {
+    "text": "Jaan on all.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/tule-alla": {
+    "text": "Tule alla!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ma-pean-homme-vara-u2les-to3usma": {
+    "text": "Ma pean homme vara üles tõusma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kati-tahab-a2ra-minna": {
+    "text": "Kati tahab ära minna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ma-ei-tule-ta2na-tagasi": {
+    "text": "Ma ei tule täna tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ma-to3usen-kell-kuus-u2les": {
+    "text": "Ma tõusen kell kuus üles.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/jaan-kolib-reedel-sisse": {
+    "text": "Jaan kolib reedel sisse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ma-vo3tan-sind-kaasa": {
+    "text": "Ma võtan sind kaasa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/mari-tuleb-kohe-alla": {
+    "text": "Mari tuleb kohe alla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/me-la2heme-ta2na-o3htul-va2lja": {
+    "text": "Me läheme täna õhtul välja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kati-la2ks-eile-a2ra": {
+    "text": "Kati läks eile ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/lapsed-ma2ngivad-va2ljas": {
+    "text": "Lapsed mängivad väljas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kati-on-juba-sees": {
+    "text": "Kati on juba sees.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/a2ra-mine-a2ra": {
+    "text": "Ära mine ära!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ma-pean-kell-seitse-u2les-to3usma": {
+    "text": "Ma pean kell seitse üles tõusma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/c-talk": {
+    "text": "Tere, Kati! Kuidas läheb? Tere, Jaan! Väga hästi. Mul on uus korter. Tore! Millal sa sisse kolid? Laupäeval. Aga reedel pean ma vanast korterist välja kolima. Miks sa vanast korterist ära kolid? Vana korter on väike ja kallis. Uus on suurem ja odavam. Kui suur see on? Kaks tuba. Üks on suur ja teine väike. Kus see on? Kesklinnas, kolmandal korrusel. Majas ei ole lifti, aga see pole probleem. Kas ma võin laupäeval appi tulla? Jah, palun! Mu vend tuleb ka. Ta tuleb reedel Tartust ja sõidab pühapäeval tagasi. Mis kell te alustate? Kell kaheksa. Ma tõusen kell kuus üles. Kell kuus? See on vara! Kas ma võtan auto kaasa? Jah, võta auto kaasa, palun. Minu auto on väike. Hästi. Ja õhtul läheme välja sööma. Hea mõte! Kesklinnas on üks hea restoran. Ja millal sa tööle tagasi lähed? Esmaspäeval. Pühapäeval olen ma kodus ja loen raamatut. Siis näeme laupäeval!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Kati!",
+          "Kuidas läheb?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Väga hästi.",
+          "Mul on uus korter."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tore!",
+          "Millal sa sisse kolid?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Laupäeval.",
+          "Aga reedel pean ma vanast korterist välja kolima."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Miks sa vanast korterist ära kolid?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Vana korter on väike ja kallis.",
+          "Uus on suurem ja odavam."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kui suur see on?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kaks tuba.",
+          "Üks on suur ja teine väike."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kus see on?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kesklinnas, kolmandal korrusel.",
+          "Majas ei ole lifti, aga see pole probleem."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas ma võin laupäeval appi tulla?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, palun!",
+          "Mu vend tuleb ka.",
+          "Ta tuleb reedel Tartust ja sõidab pühapäeval tagasi."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mis kell te alustate?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kell kaheksa.",
+          "Ma tõusen kell kuus üles."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kell kuus?",
+          "See on vara!",
+          "Kas ma võtan auto kaasa?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, võta auto kaasa, palun.",
+          "Minu auto on väike."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hästi.",
+          "Ja õhtul läheme välja sööma."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Hea mõte!",
+          "Kesklinnas on üks hea restoran."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja millal sa tööle tagasi lähed?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Esmaspäeval.",
+          "Pühapäeval olen ma kodus ja loen raamatut."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Siis näeme laupäeval!"
+        ]
+      }
+    ]
   }
 }

@@ -1,0 +1,288 @@
+import { msg } from "@lingui/core/macro";
+import { PV_BUILD, PV_FIX, PV_ORDER, PV_TRANSLATE } from "../../../lib/learn/clips";
+import type { DrillBank } from "../../../lib/learn/drill";
+import { withPronouns } from "../../../lib/learn/pronouns";
+
+const translateAnswers = (id: (typeof PV_TRANSLATE)[number]["id"]) =>
+  (PV_TRANSLATE.find((item) => item.id === id) as (typeof PV_TRANSLATE)[number]).answers;
+const fixAnswers = (id: (typeof PV_FIX)[number]["id"]) =>
+  (PV_FIX.find((item) => item.id === id) as (typeof PV_FIX)[number]).answers;
+const buildAnswers = (id: (typeof PV_BUILD)[number]["id"]) =>
+  (PV_BUILD.find((item) => item.id === id) as (typeof PV_BUILD)[number]).answers;
+const orderAnswers = (id: (typeof PV_ORDER)[number]["id"]) =>
+  (PV_ORDER.find((item) => item.id === id) as (typeof PV_ORDER)[number]).answers;
+
+const DIRECTION = msg`The small word usually says where to: <et>üles</et>, up; <et>alla</et>, down; <et>sisse</et>, in; <et>välja</et>, out.`;
+const AWAY = msg`<et>Ära</et> after a verb of moving usually means away, <et>tagasi</et> is back, <et>kaasa</et> is along.`;
+const TO = msg`Going somewhere: <et>välja</et>, <et>sisse</et>, <et>üles</et>, <et>alla</et>.`;
+const AT = msg`Being somewhere, usually: <et>väljas</et>, <et>sees</et>, <et>üleval</et>, <et>all</et>.`;
+const LAST = msg`In a statement the small word usually goes last: <et>Ma tõusen kell seitse üles</et>.`;
+const BEFORE = msg`With a second verb, the small word usually goes just before it: <et>Ma pean vara üles tõusma</et>.`;
+const WITH_PEAN = msg`with pean`;
+const WITH_TAHAB = msg`with tahab`;
+
+export const DRILLS: DrillBank = {
+  rules: {
+    direction: { label: msg`Up, down, in, out: <et>üles</et>, <et>välja</et>`, section: "up-down" },
+    away: { label: msg`Away, back, along: <et>ära</et>, <et>tagasi</et>`, section: "away-back" },
+    place: {
+      label: msg`Where to or where: <et>välja</et>, <et>väljas</et>`,
+      section: "where-or-where-to",
+    },
+    last: { label: msg`The small word usually goes last`, section: "last" },
+  },
+  items: [
+    {
+      kind: "dictation",
+      id: "dir-hyppab",
+      rule: "direction",
+      answers: ["Kass hüppab üles."],
+      say: "Kass hüppab üles.",
+      explain: DIRECTION,
+    },
+    {
+      kind: "translate",
+      id: "dir-sisse",
+      rule: "direction",
+      prompt: msg`Come in!`,
+      answers: translateAnswers("sisse"),
+      say: "Tule sisse!",
+      explain: DIRECTION,
+    },
+    {
+      kind: "translate",
+      id: "dir-tousen",
+      rule: "direction",
+      prompt: msg`I get up at seven.`,
+      answers: translateAnswers("tousen"),
+      say: "Ma tõusen kell seitse üles.",
+      explain: DIRECTION,
+    },
+    {
+      kind: "dictation",
+      id: "dir-alla",
+      rule: "direction",
+      answers: ["Jaan tuleb alla."],
+      say: "Jaan tuleb alla.",
+      explain: DIRECTION,
+    },
+    {
+      kind: "dictation",
+      id: "dir-valja",
+      rule: "direction",
+      answers: ["Me läheme õhtul välja."],
+      say: "Me läheme õhtul välja.",
+      explain: DIRECTION,
+    },
+    {
+      kind: "build",
+      id: "dir-build-alla",
+      rule: "direction",
+      words: ["Mari", "alla tulema", "kohe"],
+      cue: msg`Mari is coming down right away.`,
+      answers: buildAnswers("alla"),
+      say: "Mari tuleb kohe alla.",
+      explain: DIRECTION,
+    },
+    {
+      kind: "dictation",
+      id: "away-laks",
+      rule: "away",
+      answers: ["Kati läks ära."],
+      say: "Kati läks ära.",
+      explain: AWAY,
+    },
+    {
+      kind: "translate",
+      id: "away-eile",
+      rule: "away",
+      prompt: msg`Kati left yesterday.`,
+      answers: translateAnswers("ara"),
+      say: "Kati läks eile ära.",
+      explain: AWAY,
+    },
+    {
+      kind: "translate",
+      id: "away-kaasa",
+      rule: "away",
+      prompt: msg`Take me with you!`,
+      answers: translateAnswers("kaasa"),
+      say: "Võta mind kaasa!",
+      explain: AWAY,
+    },
+    {
+      kind: "dictation",
+      id: "away-tagasi",
+      rule: "away",
+      answers: ["Ma tulen homme tagasi."],
+      say: "Ma tulen homme tagasi.",
+      explain: AWAY,
+    },
+    {
+      kind: "build",
+      id: "away-build-tagasi",
+      rule: "away",
+      words: ["ma", "tagasi tulema", "homme"],
+      cue: msg`I’ll come back tomorrow.`,
+      answers: buildAnswers("tagasi"),
+      say: "Ma tulen homme tagasi.",
+      explain: AWAY,
+    },
+    {
+      kind: "dictation",
+      id: "away-ara-mine",
+      rule: "away",
+      answers: ["Ära mine ära!"],
+      say: "Ära mine ära!",
+      explain: msg`<et>Ära</et> at the start is don’t; after a verb of moving it usually means away.`,
+    },
+    {
+      kind: "build",
+      id: "away-build-kaasa",
+      rule: "away",
+      words: ["ma", "kaasa võtma", "sind"],
+      cue: msg`I’ll take you along.`,
+      answers: buildAnswers("kaasa"),
+      say: "Ma võtan sind kaasa.",
+      explain: AWAY,
+    },
+    {
+      kind: "fix",
+      id: "place-fix-valjas",
+      rule: "place",
+      wrong: "Lapsed mängivad välja.",
+      prompt: msg`The children are playing outside.`,
+      answers: fixAnswers("fix-valjas"),
+      say: "Lapsed mängivad väljas.",
+      explain: AT,
+    },
+    {
+      kind: "fix",
+      id: "place-fix-valja",
+      rule: "place",
+      wrong: "Me läheme õhtul väljas.",
+      prompt: msg`We’re going out in the evening.`,
+      answers: fixAnswers("fix-valja"),
+      say: "Me läheme õhtul välja.",
+      explain: TO,
+    },
+    {
+      kind: "fix",
+      id: "place-fix-sisse",
+      rule: "place",
+      wrong: "Tule sees!",
+      prompt: msg`Come in!`,
+      answers: fixAnswers("fix-sisse"),
+      say: "Tule sisse!",
+      explain: TO,
+    },
+    {
+      kind: "fix",
+      id: "place-fix-sees",
+      rule: "place",
+      wrong: "Kati on juba sisse.",
+      prompt: msg`Kati is already inside.`,
+      answers: fixAnswers("fix-sees"),
+      say: "Kati on juba sees.",
+      explain: AT,
+    },
+    {
+      kind: "fix",
+      id: "place-fix-ules",
+      rule: "place",
+      wrong: "Ma tõusen kell seitse üleval.",
+      prompt: msg`I get up at seven.`,
+      answers: fixAnswers("fix-ules"),
+      say: "Ma tõusen kell seitse üles.",
+      explain: TO,
+    },
+    {
+      kind: "fix",
+      id: "place-fix-all",
+      rule: "place",
+      wrong: "Jaan on alla.",
+      prompt: msg`Jaan is downstairs.`,
+      answers: fixAnswers("fix-all"),
+      say: "Jaan on all.",
+      explain: AT,
+    },
+    {
+      kind: "dictation",
+      id: "place-valjas",
+      rule: "place",
+      answers: ["Lapsed mängivad väljas."],
+      say: "Lapsed mängivad väljas.",
+      explain: AT,
+    },
+    {
+      kind: "rewrite",
+      id: "last-pean",
+      rule: "last",
+      from: "Ma tõusen kell seitse üles.",
+      cue: WITH_PEAN,
+      answers: withPronouns([
+        "Ma pean kell seitse üles tõusma.",
+        "Kell seitse pean ma üles tõusma.",
+        "Ma pean kell seitse tõusma üles.",
+      ]),
+      say: "Ma pean kell seitse üles tõusma.",
+      explain: BEFORE,
+    },
+    {
+      kind: "rewrite",
+      id: "last-tahab",
+      rule: "last",
+      from: "Kati läheb ära.",
+      cue: WITH_TAHAB,
+      answers: orderAnswers("tahab"),
+      say: "Kati tahab ära minna.",
+      explain: BEFORE,
+    },
+    {
+      kind: "translate",
+      id: "last-vara",
+      rule: "last",
+      prompt: msg`I have to get up early tomorrow.`,
+      answers: translateAnswers("pean"),
+      say: "Ma pean homme vara üles tõusma.",
+      explain: BEFORE,
+    },
+    {
+      kind: "build",
+      id: "last-build-lahme",
+      rule: "last",
+      words: ["me", "välja minema", "õhtul"],
+      cue: msg`We’re going out in the evening.`,
+      answers: buildAnswers("lahme"),
+      say: "Me läheme õhtul välja.",
+      explain: LAST,
+    },
+    {
+      kind: "dictation",
+      id: "last-dict-pean",
+      rule: "last",
+      answers: ["Ma pean homme vara üles tõusma."],
+      say: "Ma pean homme vara üles tõusma.",
+      explain: BEFORE,
+    },
+    {
+      kind: "translate",
+      id: "last-ei-tule",
+      rule: "last",
+      prompt: msg`I’m not coming back today.`,
+      answers: orderAnswers("ei-tule"),
+      say: "Ma ei tule täna tagasi.",
+      explain: LAST,
+    },
+    {
+      kind: "build",
+      id: "last-build-kolib",
+      rule: "last",
+      words: ["Jaan", "sisse kolima", "reedel"],
+      cue: msg`Jaan is moving in on Friday.`,
+      answers: buildAnswers("kolib"),
+      say: "Jaan kolib reedel sisse.",
+      explain: LAST,
+    },
+  ],
+};

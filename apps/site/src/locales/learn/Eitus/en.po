@@ -268,8 +268,8 @@ msgstr "Mari"
 msgid "Mari asks Jaan three questions. Listen to how he answers each, and to what he says after it."
 msgstr "Mari asks Jaan three questions. Listen to how he answers each, and to what he says after it."
 
-msgid "Nearly. Check that the whole ending went, -vad and -te too."
-msgstr "Nearly. Check that the whole ending went, -vad and -te too."
+msgid "Nearly. Check that the whole ending went, <0>-vad</0> and <1>-te</1> too."
+msgstr "Nearly. Check that the whole ending went, <0>-vad</0> and <1>-te</1> too."
 
 msgid "Nearly. Check the verb in the ones you missed."
 msgstr "Nearly. Check the verb in the ones you missed."

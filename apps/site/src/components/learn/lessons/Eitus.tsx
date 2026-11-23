@@ -808,7 +808,10 @@ export function EitusLesson() {
                   share === 1 ? (
                     <Trans>All six, each without its ending.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Nearly. Check that the whole ending went, -vad and -te too.</Trans>
+                    <Trans>
+                      Nearly. Check that the whole ending went, <span lang="et">-vad</span> and{" "}
+                      <span lang="et">-te</span> too.
+                    </Trans>
                   ) : (
                     <Trans>Flip the six lines at the top once more, then try again.</Trans>
                   )

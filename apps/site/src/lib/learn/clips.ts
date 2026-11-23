@@ -480,6 +480,10 @@ export const KUSIMUSED_ASKED = [
       "Millal nemad töötavad?",
       "Kes töötab homme?",
       "Kes homme töötab?",
+      "Mis nad homme teevad?",
+      "Mida nad homme teevad?",
+      "Mis nemad homme teevad?",
+      "Mida nemad homme teevad?",
     ],
   },
   {

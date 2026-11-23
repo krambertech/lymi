@@ -17,6 +17,7 @@ import { Listening, type PassageQuestion, Reading } from "./Passage";
 import { Quiz } from "./Quiz";
 import { Sort, type SortBin, type SortItem } from "./Sort";
 import { WordCards } from "./Word";
+import { Writing } from "./Writing";
 
 /** The demo's words with a card; the demo has no word clips of its own. */
 const GLOSSARY: Glossary = {
@@ -438,6 +439,24 @@ export function KitDemo() {
                 them={t`Mari`}
                 turns={content.dialogue}
                 text="sound"
+              />
+            </Part>
+            <Part
+              id="writing"
+              title={t`Writing`}
+              use={t`A short text written in a field with the Estonian letters, then shown beside a model answer and a checklist the learner ticks; nothing is marked for them.`}
+            >
+              <Writing
+                id="kit-writing"
+                title={t`Write to Mari`}
+                prompt={t`Write Mari a few lines: greet her, say who you are, what you do and where you live.`}
+                model={["Tere, Mari!", "Mina olen Jaan.", "Ma olen arst.", "Ma elan Tartus."]}
+                checks={[
+                  { id: "greet", label: t`Greets Mari.` },
+                  { id: "who", label: t`Says who you are.` },
+                  { id: "do", label: t`Says what you do.` },
+                  { id: "where", label: t`Says where you live.` },
+                ]}
               />
             </Part>
             <Part

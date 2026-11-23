@@ -362,6 +362,9 @@ msgstr "магазин"
 msgid "A short text to read and hear, every question at once; its words open their cards once checked."
 msgstr "Короткий текст, чтобы прочитать и послушать, и все вопросы сразу; карточки слов открываются после проверки."
 
+msgid "A short text written in a field with the Estonian letters, then shown beside a model answer and a checklist the learner ticks; nothing is marked for them."
+msgstr "Короткий текст, написанный в поле с эстонскими буквами, а потом показанный рядом с образцом и списком, где ученик сам ставит отметки; никто не проверяет за него."
+
 msgid "a town"
 msgstr "город"
 
@@ -806,6 +809,9 @@ msgstr "К уроку"
 
 msgid "Going, being, coming back: -ma, -mas, -mast"
 msgstr "Идти, быть там, возвращаться: -ma, -mas, -mast"
+
+msgid "Greets Mari."
+msgstr "Приветствие для Мари."
 
 msgid "hakkama, now"
 msgstr "hakkama, сейчас"
@@ -1713,6 +1719,15 @@ msgstr "Отрицание в прошлом"
 msgid "Saying where: -s and -l"
 msgstr "Как сказать, где: окончания -s и -l"
 
+msgid "Says what you do."
+msgstr "Чем ты занимаешься."
+
+msgid "Says where you live."
+msgstr "Где ты живёшь."
+
+msgid "Says who you are."
+msgstr "Кто ты."
+
 msgid "Scene"
 msgstr "Сцена"
 
@@ -2423,6 +2438,9 @@ msgstr "Напиши по-эстонски"
 msgid "Write it in Estonian."
 msgstr "Напиши по-эстонски."
 
+msgid "Write Mari a few lines: greet her, say who you are, what you do and where you live."
+msgstr "Напиши Мари несколько строк: поздоровайся, скажи, кто ты, чем занимаешься и где живёшь."
+
 msgid "Write the question"
 msgstr "Напиши вопрос"
 
@@ -2435,8 +2453,14 @@ msgstr "Напиши предложение, которое слышишь."
 msgid "Write the word you hear."
 msgstr "Напиши слово, которое слышишь."
 
+msgid "Write to Mari"
+msgstr "Напиши Мари"
+
 msgid "Write what you hear"
 msgstr "Напиши, что слышишь"
+
+msgid "Writing"
+msgstr "Письмо"
 
 msgid "Yes, she is"
 msgstr "Да"

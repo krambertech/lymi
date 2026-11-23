@@ -19,8 +19,8 @@ msgstr "<0/> — це сто, а <1/> — тисяча, і «один» пере
 msgid "<0/> is twelve and <1/> is twenty. Both start with kaks, so listen to how the word ends."
 msgstr "<0/> — дванадцять, а <1/> — двадцять. Обидва починаються з kaks, тож слухай, як закінчується слово."
 
-msgid "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
-msgstr "Перед <0>sada</0> і <1>tuhat</1> «один» не кажуть. Сотні пишуться разом, тисячі окремо."
+msgid "<0>Sada</0> and <1>tuhat</1> usually need no “one”. Hundreds join up; thousands stay separate."
+msgstr "Перед <0>sada</0> і <1>tuhat</1> «один» зазвичай не кажуть. Сотні пишуться разом, тисячі окремо."
 
 msgid "<et>-teist</et> makes eleven to nineteen; <et>-kümmend</et> makes the tens."
 msgstr "<et>-teist</et> утворює числа від одинадцяти до дев’ятнадцяти, <et>-kümmend</et> — десятки."
@@ -244,8 +244,8 @@ msgstr "Складаємо разом"
 msgid "Range"
 msgstr "Діапазон"
 
-msgid "Sada alone, usually with no “one” in front."
-msgstr "Лише sada, зазвичай без «один» перед ним."
+msgid "Sada, usually with no “one” in front."
+msgstr "Sada — зазвичай без «один» перед ним."
 
 msgid "seven"
 msgstr "сім"

@@ -159,7 +159,7 @@ function HowItsBuilt({ n }: { n: number }) {
         Built from <b className={b}>{teen}</b> and -teist: {digit} in the second ten.
       </Trans>
     );
-  if (n === 100) return <Trans>Sada alone, usually with no “one” in front.</Trans>;
+  if (n === 100) return <Trans>Sada, usually with no “one” in front.</Trans>;
   if (n % 10 === 0)
     return (
       <Trans>
@@ -440,7 +440,7 @@ export function NumbridLesson() {
           Tens and ones are separate words: <b lang="et">kakskümmend üks</b>.
         </Trans>,
         <Trans key="4">
-          <b lang="et">Sada</b> and <b lang="et">tuhat</b> need no “one”. Hundreds join up;
+          <b lang="et">Sada</b> and <b lang="et">tuhat</b> usually need no “one”. Hundreds join up;
           thousands stay separate.
         </Trans>,
       ]}

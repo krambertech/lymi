@@ -1195,6 +1195,12 @@ export const TUTVUMINE_ASKED = [
       "Kes teie olete?",
       "Kes oled?",
       "Kes olete?",
+      "Kuidas su nimi on?",
+      "Kuidas sinu nimi on?",
+      "Kuidas teie nimi on?",
+      "Kuidas on su nimi?",
+      "Kuidas on sinu nimi?",
+      "Kuidas on teie nimi?",
     ],
   },
   {

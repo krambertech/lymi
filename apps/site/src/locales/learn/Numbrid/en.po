@@ -19,8 +19,8 @@ msgstr "<0/> is a hundred and <1/> a thousand, usually with no “one” in fron
 msgid "<0/> is twelve and <1/> is twenty. Both start with kaks, so listen to how the word ends."
 msgstr "<0/> is twelve and <1/> is twenty. Both start with kaks, so listen to how the word ends."
 
-msgid "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
-msgstr "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
+msgid "<0>Sada</0> and <1>tuhat</1> usually need no “one”. Hundreds join up; thousands stay separate."
+msgstr "<0>Sada</0> and <1>tuhat</1> usually need no “one”. Hundreds join up; thousands stay separate."
 
 msgid "<et>-teist</et> makes eleven to nineteen; <et>-kümmend</et> makes the tens."
 msgstr "<et>-teist</et> makes eleven to nineteen; <et>-kümmend</et> makes the tens."
@@ -244,8 +244,8 @@ msgstr "Put them together"
 msgid "Range"
 msgstr "Range"
 
-msgid "Sada alone, usually with no “one” in front."
-msgstr "Sada alone, usually with no “one” in front."
+msgid "Sada, usually with no “one” in front."
+msgstr "Sada, usually with no “one” in front."
 
 msgid "seven"
 msgstr "seven"

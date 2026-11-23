@@ -100,7 +100,7 @@ const heard = (place: Place, say: string, explain: ChoiceDrill["explain"]): Choi
 
 export const DRILLS: DrillBank = {
   rules: {
-    amount: { label: msg`The partitive after an amount`, section: "say-it" },
+    amount: { label: msg`The partitive after an amount or a number`, section: "say-it" },
     infinitive: { label: msg`The -da or -ma infinitive after another verb`, section: "which-verb" },
     like: { label: msg`<et>Meeldib</et> or <et>meeldivad</et>`, section: "reply" },
     place: { label: msg`<et>Turule</et>, <et>turul</et> or <et>turult</et>`, section: "fix" },
@@ -116,7 +116,13 @@ export const DRILLS: DrillBank = {
       ["Juust maksab kaheksa eurot."],
       AMOUNT,
     ),
-    say("kilo", "amount", msg`I need a kilo of coffee.`, ["Mul on vaja kilo kohvi."], AMOUNT),
+    say(
+      "kilo",
+      "amount",
+      msg`I need a kilo of coffee.`,
+      ["Mul on vaja kilo kohvi.", "Mul on kilo kohvi vaja."],
+      AMOUNT,
+    ),
     fix("eurot", "amount", "Kohv maksab kolm euro.", "Kohv maksab kolm eurot.", AMOUNT),
 
     fix("minna", "infinitive", "Ma tahan turule minema.", "Ma tahan turule minna.", DA),
@@ -126,7 +132,12 @@ export const DRILLS: DrillBank = {
       "juua",
       "infinitive",
       msg`I want to drink coffee.`,
-      ["Ma tahan kohvi juua.", "Ma tahan juua kohvi.", "Mina tahan kohvi juua."],
+      [
+        "Ma tahan kohvi juua.",
+        "Ma tahan juua kohvi.",
+        "Mina tahan kohvi juua.",
+        "Tahan kohvi juua.",
+      ],
       DA,
     ),
     say(
@@ -140,8 +151,14 @@ export const DRILLS: DrillBank = {
       "suua",
       "infinitive",
       msg`We can eat at the café.`,
-      ["Me saame kohvikus süüa.", "Meie saame kohvikus süüa.", "Me saame süüa kohvikus."],
-      msg`After <et>saame</et>, the -da infinitive: <et>süüa</et>.`,
+      [
+        "Me saame kohvikus süüa.",
+        "Meie saame kohvikus süüa.",
+        "Me saame süüa kohvikus.",
+        "Me võime kohvikus süüa.",
+        "Me võime süüa kohvikus.",
+      ],
+      msg`After <et>saame</et> or <et>võime</et>, the -da infinitive: <et>süüa</et>.`,
     ),
 
     like("ounad", "Mulle", "õunad.", true),

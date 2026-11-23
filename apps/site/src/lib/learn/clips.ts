@@ -2920,7 +2920,7 @@ export const MARKET_PASSAGES = {
     "Mul on vaja kilo juustu, leiba ja piima.",
     "Kilo juustu maksab poes kümme eurot.",
     "Leib maksab kaks eurot.",
-    "Homme tuleb minu ema ja talle meeldivad turu õunad.",
+    "Homme tuleb minu ema meile ja talle meeldivad turu õunad.",
     "Mulle ei meeldi pood, mulle meeldib turg.",
     "Turul on ka väike kohvik.",
     "Kas sa tahad tulla?",

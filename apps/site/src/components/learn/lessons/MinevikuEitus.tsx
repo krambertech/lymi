@@ -386,7 +386,8 @@ const FIX_WHY: Record<(typeof PAST_NO_FIX)[number]["id"], ReactNode> = {
   ),
   kaisime: (
     <Trans>
-      The no is the same for every person, with no ending for <Et>me</Et>: <Et>ei käinud</Et>.
+      After <Et>ei</Et>, <Et>me</Et> takes the same form as every other person:{" "}
+      <Et>me ei käinud</Et>.
     </Trans>
   ),
   tootanud: (
@@ -611,8 +612,8 @@ function useContent() {
             line: "Jah, mul on palju aega.",
             why: (
               <Trans>
-                <Et>Mul on palju aega</Et> is I have a lot of time, now. Mari asked why you didn’t
-                go.
+                <Et>Mul on palju aega</Et> means “I have a lot of time”, and it’s about now. Mari
+                asked why you didn’t go, and you had no time.
               </Trans>
             ),
           },
@@ -710,7 +711,7 @@ export function MinevikuEitusLesson() {
       ),
       rule: (
         <Trans>
-          <Et>Ei</Et> and the present with no ending: <Et>ei tööta</Et>. <Et>Pole</Et> is{" "}
+          <Et>Ei</Et> and the present without its ending: <Et>ei tööta</Et>. <Et>Pole</Et> is{" "}
           <Et>ei ole</Et>.
         </Trans>
       ),
@@ -761,7 +762,7 @@ export function MinevikuEitusLesson() {
       sub={
         <Trans>
           Put <Et>ei</Et> before the verb’s <End>nud</End> form: <Et>ma ei läinud</Et>, I didn’t go.
-          As in the present, the no is the same for every person.
+          As in the present, it stays the same for every person.
         </Trans>
       }
       facts={[
@@ -788,7 +789,7 @@ export function MinevikuEitusLesson() {
           <b lang="et">ma ei läinud</b>, I didn’t go.
         </Trans>,
         <Trans key="2">
-          The no is the same for every person: <b lang="et">ma ei lugenud, nad ei lugenud</b>.{" "}
+          It is the same for every person: <b lang="et">ma ei lugenud, nad ei lugenud</b>.{" "}
           <b lang="et">Ei olnud</b> has a one-word form, <b lang="et">polnud</b>.
         </Trans>,
         <Trans key="3">
@@ -827,8 +828,8 @@ export function MinevikuEitusLesson() {
                 </p>
                 <p>
                   <Trans>
-                    Lesson {past} taught the past with yes, with an ending for each person:{" "}
-                    <Word w="töötasin" />, I worked. With no there is no person ending:{" "}
+                    Lesson {past} taught the past with yes, where each person has its own ending:{" "}
+                    <Word w="töötasin" />, I worked. With no, the person ending goes:{" "}
                     <Word w="ma ei töötanud" />, I didn’t work. Tap a time on the line to hear its
                     sentence.
                   </Trans>
@@ -1058,7 +1059,7 @@ export function MinevikuEitusLesson() {
         },
         {
           id: "sort",
-          title: t`Yes or no, now or then`,
+          title: t`No now, yes and no in the past`,
           quiz: true,
           children: (
             <>
@@ -1104,7 +1105,10 @@ export function MinevikuEitusLesson() {
                   ) : share >= 0.7 ? (
                     <Trans>Most of them. Check the verbs you missed against the table above.</Trans>
                   ) : (
-                    <Trans>Go back to the person table and the five forms, then try again.</Trans>
+                    <Trans>
+                      Go back to the table under “The same for every person” and the five forms,
+                      then try again.
+                    </Trans>
                   )
                 }
                 recall={sentenceRecall}
@@ -1139,7 +1143,8 @@ export function MinevikuEitusLesson() {
                     <Trans>Most of them. Look again at the ones you missed.</Trans>
                   ) : (
                     <Trans>
-                      After <Et>ei</Et> comes the <End>nud</End> form, with no ending. Try again.
+                      In the past, <Et>ei</Et> takes the <End>nud</End> form: <Et>ei läinud</Et>,
+                      never <Et>ei läksin</Et> or <Et>ei lähe</Et>. Try again.
                     </Trans>
                   )
                 }
@@ -1166,14 +1171,14 @@ export function MinevikuEitusLesson() {
                     <Nowrap>
                       <Word w="Ei käinud" />.
                     </Nowrap>{" "}
-                    Lesson {negation} answered about the present the same way:{" "}
-                    <b lang="et">Ei loe</b>.
+                    Lesson {negation} showed the same short answer in the present:{" "}
+                    <b lang="et">Ei loe</b>, I don’t read.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Your friend Mari asks about yesterday. Answer her in Estonian. If you pick a
-                    wrong reply, you see why, then hear the right one.
+                    Your friend Mari asks about yesterday. A wrong reply shows why, then you hear
+                    the right one.
                   </Trans>
                 </p>
               </Prose>

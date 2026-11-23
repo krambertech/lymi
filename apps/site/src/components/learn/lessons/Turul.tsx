@@ -45,7 +45,7 @@ const GLOSSARY: Glossary = {
   turul: { en: msg`at the market` },
   turult: { en: msg`from the market` },
   turu: { en: msg`of the market`, note: msg`The genitive of turg.` },
-  "turu õunad": { en: msg`the market’s apples` },
+  "turu õunad": { en: msg`apples from the market` },
   õunad: { en: msg`apples` },
   "kilo juustu": { en: msg`a kilo of cheese`, note: msg`After an amount, the partitive.` },
   maksab: { en: msg`costs` },
@@ -142,7 +142,7 @@ const SAY_PROMPTS: Record<(typeof MARKET_SAY)[number]["id"], MessageDescriptor> 
 };
 
 const SAY_ALSO: Record<(typeof MARKET_SAY)[number]["id"], readonly string[]> = {
-  juustu: [],
+  juustu: ["Mul on kilo juustu vaja."],
   maksab: ["Mis see maksab?"],
   ounad: [],
   turule: ["Ma tahan minna turule.", "Mina tahan turule minna.", "Tahan turule minna."],
@@ -307,7 +307,7 @@ function useContent() {
         options: [
           { id: "cafe", label: t`At a café` },
           { id: "shop", label: t`At the shop` },
-          { id: "here", label: t`Here` },
+          { id: "home", label: t`At home` },
         ],
         answer: "shop",
         line: 15,
@@ -362,7 +362,7 @@ function useContent() {
             line: "Jah, mul on vaja ka kaks leib.",
             why: (
               <Trans>
-                After <Et>kaks</Et>, the partitive: <Et>kaks leiba</Et>. And you need one loaf.
+                After <Et>kaks</Et>, the partitive: <Et>kaks leiba</Et>. And you need only one loaf.
               </Trans>
             ),
           },
@@ -453,7 +453,8 @@ export function TurulLesson() {
         <Trans>
           Read a friend’s message and answer it, buy cheese and bread at a stall, and follow a
           conversation at the market: amounts, prices, <Et>meeldib</Et> and <Et>meeldivad</Et>, and
-          the <End>da</End> and <End>ma</End> infinitive after <Et>tahan</Et> and <Et>pean</Et>.
+          the <End>da</End> and <End>ma</End> infinitive after <Et>tahan</Et> and <Et>pean</Et>, and{" "}
+          <Et>turule</Et>, <Et>turul</Et> and <Et>turult</Et>.
         </Trans>
       }
       facts={[
@@ -480,8 +481,8 @@ export function TurulLesson() {
           <b lang="et">kaks eurot</b>.
         </Trans>,
         <Trans key="2">
-          Say a price with <b lang="et">maksab</b>, and ask for one with{" "}
-          <b lang="et">Kui palju see maksab?</b>
+          Say a price with <b lang="et">maksab</b>: <b lang="et">Leib maksab kaks eurot.</b> Ask for
+          one with <b lang="et">Kui palju see maksab?</b>
         </Trans>,
         <Trans key="3">
           <b lang="et">Tahan</b>, <b lang="et">saan</b> and <b lang="et">mul on vaja</b> take the{" "}
@@ -508,8 +509,8 @@ export function TurulLesson() {
                 <p>
                   <Trans>
                     Mari is going to the <Word w="turg" />, the market, and asks Liis to come. Read
-                    her message, then answer the questions. Once you check, tap a word in the
-                    message to open its card.
+                    her message, then answer the questions. Once you check your answers, tap a word
+                    in the message to open its card.
                   </Trans>
                 </p>
               </Prose>
@@ -533,8 +534,8 @@ export function TurulLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Drag each word under Liis’s answer into a gap, or tap a word to put it in the
-                    open gap. Some words are spare. The gaps test the infinitive after{" "}
+                    Drag a word from below Liis’s answer into each gap, or tap a word to put it in
+                    the open gap. Some words are spare. The gaps test the infinitive after{" "}
                     <Et>tahan</Et> or <Et>pean</Et>, where someone is, an amount, the ending after{" "}
                     <Et>me</Et>, and <Et>meeldib</Et> or <Et>meeldivad</Et>.
                   </Trans>
@@ -671,7 +672,7 @@ export function TurulLesson() {
                     seller speaks first; pick what you say back.
                   </Trans>
                 }
-                them={t`Seller`}
+                them={t({ message: "Seller", context: "the woman at the stall in the dialogue" })}
                 turns={content.talk}
               />
             </>
@@ -696,7 +697,13 @@ export function TurulLesson() {
                 title={<Trans>Listen: Mari at a cheese stall</Trans>}
                 clip="c-stall"
                 turns={MARKET_TALK.turns}
-                names={{ third: "Mari", fourth: t`Seller` }}
+                names={{
+                  third: "Mari",
+                  fourth: t({
+                    message: "Seller",
+                    context: "the man at the stall in the recording",
+                  }),
+                }}
                 questions={content.stall}
                 plays={2}
               />

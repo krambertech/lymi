@@ -43,8 +43,8 @@ msgstr "Килограмм сыра"
 msgid "a pity, too bad"
 msgstr "жаль"
 
-msgid "After <0>kaks</0>, the partitive: <1>kaks leiba</1>. And you need one loaf."
-msgstr "После <0>kaks</0> — партитив: <1>kaks leiba</1>. И тебе нужна одна буханка."
+msgid "After <0>kaks</0>, the partitive: <1>kaks leiba</1>. And you need only one loaf."
+msgstr "После <0>kaks</0> — партитив: <1>kaks leiba</1>. И тебе нужна только одна буханка."
 
 msgid "After <0>kilo</0>, the partitive: <1>kilo juustu</1>."
 msgstr "После <0>kilo</0> — партитив: <1>kilo juustu</1>."
@@ -64,8 +64,8 @@ msgstr "После <0>tahan</0> то, чего хочешь, стоит в па�
 msgid "After <et>pean</et> or <et>lähen</et>, the -ma infinitive."
 msgstr "После <et>pean</et> или <et>lähen</et> — инфинитив на -ma."
 
-msgid "After <et>saame</et>, the -da infinitive: <et>süüa</et>."
-msgstr "После <et>saame</et> — инфинитив на -da: <et>süüa</et>."
+msgid "After <et>saame</et> or <et>võime</et>, the -da infinitive: <et>süüa</et>."
+msgstr "После <et>saame</et> или <et>võime</et> — инфинитив на -da: <et>süüa</et>."
 
 msgid "After <et>tahan</et>, <et>saan</et> or <et>mul on vaja</et>, the -da infinitive."
 msgstr "После <et>tahan</et>, <et>saan</et> или <et>mul on vaja</et> — инфинитив на -da."
@@ -99,6 +99,9 @@ msgstr "Что-нибудь ещё?"
 
 msgid "apples"
 msgstr "яблоки"
+
+msgid "apples from the market"
+msgstr "яблоки с рынка"
 
 msgid "At a café"
 msgstr "В кафе"
@@ -160,8 +163,8 @@ msgstr "Идти оттуда — <et>turult</et>."
 msgid "costs"
 msgstr "стоит"
 
-msgid "Drag each word under Liis’s answer into a gap, or tap a word to put it in the open gap. Some words are spare. The gaps test the infinitive after <0>tahan</0> or <1>pean</1>, where someone is, an amount, the ending after <2>me</2>, and <3>meeldib</3> or <4>meeldivad</4>."
-msgstr "Перетащи слова из-под ответа Лийс в пропуски или нажми на слово, чтобы поставить его в открытый пропуск. Некоторые слова лишние. Пропуски проверяют инфинитив после <0>tahan</0> или <1>pean</1>, где кто-то находится, количество, окончание после <2>me</2> и <3>meeldib</3> или <4>meeldivad</4>."
+msgid "Drag a word from below Liis’s answer into each gap, or tap a word to put it in the open gap. Some words are spare. The gaps test the infinitive after <0>tahan</0> or <1>pean</1>, where someone is, an amount, the ending after <2>me</2>, and <3>meeldib</3> or <4>meeldivad</4>."
+msgstr "Перетащи в каждый пропуск слово из-под ответа Лийс или нажми на слово, чтобы поставить его в открытый пропуск. Некоторые слова лишние. Пропуски проверяют инфинитив после <0>tahan</0> или <1>pean</1>, где кто-то находится, количество, окончание после <2>me</2> и <3>meeldib</3> или <4>meeldivad</4>."
 
 msgid "Each sentence has one wrong word. Tap it, then write it right."
 msgstr "В каждом предложении одно неверное слово. Нажми на него, а потом напиши правильно."
@@ -210,9 +213,6 @@ msgstr "После «должен», «иду» и «начинаю» — инф
 
 msgid "He or she likes apples."
 msgstr "Ему или ей нравятся яблоки."
-
-msgid "Here"
-msgstr "Здесь"
 
 msgid "How much does it cost?"
 msgstr "Сколько это стоит?"
@@ -269,7 +269,7 @@ msgid "Liis answers"
 msgstr "Лийс отвечает"
 
 msgid "Liis says where she will be, so <0>l</0>: <1>turul</1>. <2>Turule</2> would be where she goes."
-msgstr "Лийс говорит, где будет, поэтому <0>l</0>: <1>turul</1>. <2>Turule</2> — это было бы куда она идёт."
+msgstr "Лийс говорит, где будет, поэтому <0>l</0>: <1>turul</1>. А <2>turule</2> значило бы, что она туда идёт."
 
 msgid "Liking more than one thing takes <et>meeldivad</et>."
 msgstr "Когда нравится несколько вещей — <et>meeldivad</et>."
@@ -292,8 +292,8 @@ msgstr "Мари покупает сыр у прилавка. Сначала п�
 msgid "Mari buys coffee today."
 msgstr "Сегодня Мари покупает кофе."
 
-msgid "Mari is going to the <0/>, the market, and asks Liis to come. Read her message, then answer the questions. Once you check, tap a word in the message to open its card."
-msgstr "Мари идёт на <0/>, рынок, и зовёт с собой Лийс. Прочитай её сообщение и ответь на вопросы. После проверки нажми на слово в сообщении, чтобы открыть его карточку."
+msgid "Mari is going to the <0/>, the market, and asks Liis to come. Read her message, then answer the questions. Once you check your answers, tap a word in the message to open its card."
+msgstr "Мари идёт на <0/>, рынок, и зовёт с собой Лийс. Прочитай её сообщение и ответь на вопросы. После проверки ответов нажми на слово в сообщении, чтобы открыть его карточку."
 
 msgid "Mari likes the shop more than the market."
 msgstr "Мари больше нравится магазин, чем рынок."
@@ -325,17 +325,22 @@ msgstr "рынка, рыночный"
 msgid "One thing <0>meeldib</0>, more than one <1>meeldivad</1>: <2>mulle meeldib turg, mulle meeldivad õunad</2>."
 msgstr "Одна вещь — <0>meeldib</0>, несколько — <1>meeldivad</1>: <2>mulle meeldib turg, mulle meeldivad õunad</2>."
 
-msgid "Read a friend’s message and answer it, buy cheese and bread at a stall, and follow a conversation at the market: amounts, prices, <0>meeldib</0> and <1>meeldivad</1>, and the <2>da</2> and <3>ma</3> infinitive after <4>tahan</4> and <5>pean</5>."
-msgstr "Прочитай сообщение подруги и ответь, купи сыр и хлеб у прилавка и пойми разговор на рынке: количество, цены, <0>meeldib</0> и <1>meeldivad</1>, инфинитив на <2>da</2> и на <3>ma</3> после <4>tahan</4> и <5>pean</5>."
+msgid "Read a friend’s message and answer it, buy cheese and bread at a stall, and follow a conversation at the market: amounts, prices, <0>meeldib</0> and <1>meeldivad</1>, and the <2>da</2> and <3>ma</3> infinitive after <4>tahan</4> and <5>pean</5>, and <6>turule</6>, <7>turul</7> and <8>turult</8>."
+msgstr "Прочитай сообщение подруги и ответь, купи сыр и хлеб у прилавка и пойми разговор на рынке: количество, цены, <0>meeldib</0> и <1>meeldivad</1>, инфинитив на <2>da</2> и на <3>ma</3> после <4>tahan</4> и <5>pean</5>, а также <6>turule</6>, <7>turul</7> и <8>turult</8>."
 
 msgid "Read Mari’s message once more, then try again."
 msgstr "Перечитай сообщение Мари, а потом попробуй снова."
 
-msgid "Say a price with <0>maksab</0>, and ask for one with <1>Kui palju see maksab?</1>"
-msgstr "Цену называют через <0>maksab</0>, а спрашивают так: <1>Kui palju see maksab?</1>"
+msgid "Say a price with <0>maksab</0>: <1>Leib maksab kaks eurot.</1> Ask for one with <2>Kui palju see maksab?</2>"
+msgstr "Цену называют словом <0>maksab</0>: <1>Leib maksab kaks eurot.</1> А спрашивают так: <2>Kui palju see maksab?</2>"
 
+msgctxt "the man at the stall in the recording"
 msgid "Seller"
 msgstr "Продавец"
+
+msgctxt "the woman at the stall in the dialogue"
+msgid "Seller"
+msgstr "Продавщица"
 
 msgid "small"
 msgstr "маленький"
@@ -352,11 +357,8 @@ msgstr "Инфинитив на -da или -ma после другого гла�
 msgid "The genitive of turg."
 msgstr "Родительный падеж от turg."
 
-msgid "the market’s apples"
-msgstr "яблоки с рынка"
-
-msgid "The partitive after an amount"
-msgstr "Партитив после слова количества"
+msgid "The partitive after an amount or a number"
+msgstr "Партитив после слова количества или числа"
 
 msgid "The seller asks <0/> (What would you like?), then <1/> (Anything else?). If you pick a wrong reply, you see why, then hear the right one."
 msgstr "Продавец спрашивает <0/> («Что желаете?»), потом <1/> («Что-нибудь ещё?»). Если выберешь неверный ответ, увидишь почему, а потом услышишь правильный."
@@ -419,4 +421,4 @@ msgid "Write what you’d say at the market. After an amount comes the partitive
 msgstr "Напиши, что можно сказать на рынке. После слова количества идёт партитив, как показал урок {amounts}, а когда нравится несколько вещей — <0>meeldivad</0>, как в уроке {liking}."
 
 msgid "You need a kilo of cheese and a loaf of bread, and you have ten euros. The seller speaks first; pick what you say back."
-msgstr "Тебе нужны килограмм сыра и буханка хлеба, и у тебя есть десять евро. Продавец говорит первым; выбирай, что ответить."
+msgstr "Тебе нужны килограмм сыра и буханка хлеба, и у тебя есть десять евро. Продавщица говорит первой; выбирай, что ответить."

@@ -9,7 +9,7 @@ import type {
 } from "../../../lib/learn/drill";
 
 const NUD = msg`Take off the ending of the -da infinitive and add <et>-nud</et>.`;
-const NO_ENDING = msg`After <et>ei</et>, the <et>-nud</et> form, with no person ending.`;
+const NO_ENDING = msg`After <et>ei</et>, the <et>-nud</et> form, without a person ending.`;
 
 const made = (id: string, base: string, gloss: FormDrill["gloss"], nud: string): FormDrill => ({
   kind: "form",
@@ -134,7 +134,7 @@ export const DRILLS: DrillBank = {
     ),
     translate(
       "nainud",
-      msg`You didn’t see the cat.`,
+      msg`You (one person) didn’t see the cat.`,
       "Sa ei näinud kassi.",
       msg`<et>Nägema</et> gives <et>näinud</et>, as <et>tegema</et> gives <et>teinud</et>.`,
     ),

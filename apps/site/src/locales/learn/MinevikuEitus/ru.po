@@ -28,7 +28,7 @@ msgstr "<0>Ei tööta</0> — это «нет» о настоящем. А вче
 msgid "<0>Ei</0> and the <1>nud</1> form: <2>ei töötanud</2>. <3>Polnud</3> is <4>ei olnud</4>."
 msgstr "<0>Ei</0> и форма на <1>nud</1>: <2>ei töötanud</2>. <3>Polnud</3> — это <4>ei olnud</4>."
 
-msgid "<0>Ei</0> and the present with no ending: <1>ei tööta</1>. <2>Pole</2> is <3>ei ole</3>."
+msgid "<0>Ei</0> and the present without its ending: <1>ei tööta</1>. <2>Pole</2> is <3>ei ole</3>."
 msgstr "<0>Ei</0> и настоящее время без окончания: <1>ei tööta</1>. <2>Pole</2> — это <3>ei ole</3>."
 
 msgid "<0>Eile</0> puts it in the past, so the <1>nud</1> form: <2>ei söönud</2>."
@@ -37,8 +37,8 @@ msgstr "<0>Eile</0> переносит всё в прошлое, поэтому 
 msgid "<0>Eile</0> puts it in the past, so the <1>nud</1> form: <2>ei töötanud</2>."
 msgstr "<0>Eile</0> переносит всё в прошлое, поэтому нужна форма на <1>nud</1>: <2>ei töötanud</2>."
 
-msgid "<0>Mul on palju aega</0> is I have a lot of time, now. Mari asked why you didn’t go."
-msgstr "<0>Mul on palju aega</0> — это «у меня много времени», о настоящем. Мари спрашивала, почему не получилось сходить в магазин."
+msgid "<0>Mul on palju aega</0> means “I have a lot of time”, and it’s about now. Mari asked why you didn’t go, and you had no time."
+msgstr "<0>Mul on palju aega</0> значит «у меня много времени», и это о настоящем. Мари спрашивала, почему ты не пошёл (не пошла), а времени у тебя не было."
 
 msgid "<0>Pole</0> is no, now. In the past it is <1>polnud</1>."
 msgstr "<0>Pole</0> — это «нет» сейчас. В прошлом — <1>polnud</1>."
@@ -88,8 +88,8 @@ msgstr "12 минут"
 msgid "5 quizzes, a conversation and a recording you can play twice"
 msgstr "5 упражнений, разговор и запись, которую можно прослушать дважды"
 
-msgid "After <0>ei</0> comes the <1>nud</1> form, with no ending. Try again."
-msgstr "После <0>ei</0> идёт форма на <1>nud</1>, без личного окончания. Попробуй ещё раз."
+msgid "After <0>ei</0>, <1>me</1> takes the same form as every other person: <2>me ei käinud</2>."
+msgstr "После <0>ei</0> с <1>me</1> та же форма, что и со всеми другими лицами: <2>me ei käinud</2>."
 
 msgid "After <0>ei</0>, <1>olnud</1>: <2>ta ei olnud</2>, or in one word, <3>ta polnud</3>."
 msgstr "После <0>ei</0> — <1>olnud</1>: <2>ta ei olnud</2> или одним словом <3>ta polnud</3>."
@@ -103,7 +103,7 @@ msgstr "После <0>ei</0> — форма на <1>nud</1>, а не проше�
 msgid "After <0>ei</0>, the <1>nud</1> form: <2>ei olnud</2>, never <3>ei oli</3>."
 msgstr "После <0>ei</0> — форма на <1>nud</1>: <2>ei olnud</2>, а не <3>ei oli</3>."
 
-msgid "After <et>ei</et>, the <et>-nud</et> form, with no person ending."
+msgid "After <et>ei</et>, the <et>-nud</et> form, without a person ending."
 msgstr "После <et>ei</et> — форма на <et>-nud</et>, без личного окончания."
 
 msgid "All seven. You told now from the past every time."
@@ -211,8 +211,8 @@ msgstr "От <0>tegema</0>: g переходит в i, <1>tei-</1>, затем <
 msgid "From käima, käia: to go somewhere and come back."
 msgstr "От käima, käia: сходить куда-то и вернуться."
 
-msgid "Go back to the person table and the five forms, then try again."
-msgstr "Вернись к таблице лиц и пяти формам, а потом попробуй снова."
+msgid "Go back to the table under “The same for every person” and the five forms, then try again."
+msgstr "Вернись к таблице в разделе «Одинаково для всех лиц» и к пяти формам, а потом попробуй снова."
 
 msgid "Go back to the verbs above, then try again."
 msgstr "Вернись к глаголам выше, потом попробуй снова."
@@ -251,7 +251,7 @@ msgid "I"
 msgstr "я"
 
 msgid "I didn’t do any work."
-msgstr "Я не делал (не делала) никакой работы."
+msgstr "Я не сделал (не сделала) работу."
 
 msgid "I didn’t drink any water."
 msgstr "Я не пил (не пила) воды."
@@ -301,6 +301,12 @@ msgstr "В Тарту"
 msgid "In the past"
 msgstr "В прошлом"
 
+msgid "In the past, <0>ei</0> takes the <1>nud</1> form: <2>ei läinud</2>, never <3>ei läksin</3> or <4>ei lähe</4>. Try again."
+msgstr "В прошлом после <0>ei</0> идёт форма на <1>nud</1>: <2>ei läinud</2>, а не <3>ei läksin</3> или <4>ei lähe</4>. Попробуй ещё раз."
+
+msgid "It is the same for every person: <0>ma ei lugenud, nad ei lugenud</0>. <1>Ei olnud</1> has a one-word form, <2>polnud</2>."
+msgstr "Для всех лиц одинаково: <0>ma ei lugenud, nad ei lugenud</0>. У <1>ei olnud</1> есть форма одним словом: <2>polnud</2>."
+
 msgid "its -nud form"
 msgstr "его форма на -nud"
 
@@ -334,8 +340,8 @@ msgstr "На прошлой неделе, вчера и сегодня"
 msgid "Learn five by heart: <0>läinud, teinud, näinud, söönud, joonud</0>. <1>Tahtma</1> keeps its t: <2>tahtnud</2>."
 msgstr "Пять форм запомни: <0>läinud, teinud, näinud, söönud, joonud</0>. <1>Tahtma</1> сохраняет своё t: <2>tahtnud</2>."
 
-msgid "Lesson {past} taught the past with yes, with an ending for each person: <0/>, I worked. With no there is no person ending: <1/>, I didn’t work. Tap a time on the line to hear its sentence."
-msgstr "Урок {past} научил прошедшему времени без отрицания, с отдельным окончанием для каждого лица: <0/>, «я работал». С отрицанием личного окончания нет: <1/>, «я не работал». Нажми на время на линии, чтобы услышать предложение."
+msgid "Lesson {past} taught the past with yes, where each person has its own ending: <0/>, I worked. With no, the person ending goes: <1/>, I didn’t work. Tap a time on the line to hear its sentence."
+msgstr "В уроке {past} было прошедшее время без отрицания, с отдельным окончанием для каждого лица: <0/>, «я работал (работала)». С отрицанием личного окончания нет: <1/>, «я не работал (не работала)». Нажми на время на линии, чтобы услышать предложение."
 
 msgid "Listen: Kati and Jaan’s weekend"
 msgstr "Послушай: выходные Кати и Яана"
@@ -376,6 +382,9 @@ msgstr "Mul pole aega в прошлом."
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Почти. Переслушай те, где были ошибки."
 
+msgid "No now, yes and no in the past"
+msgstr "«Нет» сейчас, «да» и «нет» в прошлом"
+
 msgid "no, for every person"
 msgstr "«нет», для всех лиц"
 
@@ -415,8 +424,8 @@ msgstr "Одна форма для всех лиц"
 msgid "Pick a verb and tap a form."
 msgstr "Выбери глагол и нажми на форму."
 
-msgid "Put <0>ei</0> before the verb’s <1>nud</1> form: <2>ma ei läinud</2>, I didn’t go. As in the present, the no is the same for every person."
-msgstr "Поставь <0>ei</0> перед формой глагола на <1>nud</1>: <2>ma ei läinud</2>, «я не пошёл (не пошла)». Как и в настоящем времени, отрицание одинаково для всех лиц."
+msgid "Put <0>ei</0> before the verb’s <1>nud</1> form: <2>ma ei läinud</2>, I didn’t go. As in the present, it stays the same for every person."
+msgstr "Поставь <0>ei</0> перед формой глагола на <1>nud</1>: <2>ma ei läinud</2>, «я не пошёл (не пошла)». Как и в настоящем времени, для всех лиц одинаково."
 
 msgid "Put each form in its group, then check. Tap a form to hear it."
 msgstr "Разложи формы по группам, потом проверь. Нажми на форму, чтобы её услышать."
@@ -443,7 +452,7 @@ msgid "Take off the ending of the -da infinitive and add <et>-nud</et>."
 msgstr "Отбрось окончание инфинитива на -da и добавь <et>-nud</et>."
 
 msgid "Talk: Mari asks about yesterday"
-msgstr "Разговор: Мари спрашивает про вчера"
+msgstr "Разговор: Мари спрашивает о вчерашнем дне"
 
 msgid "Tap a form"
 msgstr "Нажми на форму"
@@ -458,7 +467,7 @@ msgid "Tap the times on the line above once more, then try again."
 msgstr "Ещё раз нажми на времена на линии выше, потом попробуй снова."
 
 msgid "That says you didn’t work at home, but you did. Answer with yes in the past."
-msgstr "Этот ответ говорит, что ты не работал (не работала) дома, а ты работал (работала). Отвечай «да» в прошедшем времени."
+msgstr "Тут сказано, что ты не работал (не работала) дома, а ты работал (работала). Отвечай «да» в прошедшем времени."
 
 msgid "The -da infinitive of elama."
 msgstr "Инфинитив на -da от elama."
@@ -529,12 +538,6 @@ msgstr "Пять форм на <et>-nud</et>, которые надо запом
 msgid "the infinitive"
 msgstr "инфинитив"
 
-msgid "The no is the same for every person, with no ending for <0>me</0>: <1>ei käinud</1>."
-msgstr "Отрицание одинаково для всех лиц, без отдельного окончания для <0>me</0>: <1>ei käinud</1>."
-
-msgid "The no is the same for every person: <0>ma ei lugenud, nad ei lugenud</0>. <1>Ei olnud</1> has a one-word form, <2>polnud</2>."
-msgstr "Отрицание одинаково для всех лиц: <0>ma ei lugenud, nad ei lugenud</0>. <1>Ei olnud</1> можно сказать одним словом: <2>polnud</2>."
-
 msgid "The past from lesson {past}: without <0>ei</0>, and with an ending that says who, as in <1>töötasin</1>."
 msgstr "Прошедшее время из урока {past}: без <0>ei</0>, а окончание показывает лицо, как в <1>töötasin</1>."
 
@@ -574,8 +577,8 @@ msgstr "они не читали"
 msgid "They don’t live in Tartu."
 msgstr "Они не живут в Тарту."
 
-msgid "To answer a question about the past with no, say <0>ei</0> and the <1>nud</1> form: <2><3/></2> <4><5/>.</4> Lesson {negation} answered about the present the same way: <6>Ei loe</6>."
-msgstr "Чтобы ответить «нет» на вопрос о прошлом, скажи <0>ei</0> и форму на <1>nud</1>: <2><3/></2> <4><5/>.</4> Так же урок {negation} отвечал о настоящем: <6>Ei loe</6>."
+msgid "To answer a question about the past with no, say <0>ei</0> and the <1>nud</1> form: <2><3/></2> <4><5/>.</4> Lesson {negation} showed the same short answer in the present: <6>Ei loe</6>, I don’t read."
+msgstr "Чтобы ответить «нет» на вопрос о прошлом, скажи <0>ei</0> и форму на <1>nud</1>: <2><3/></2> <4><5/>.</4> Так же в уроке {negation} коротко отвечали о настоящем: <6>Ei loe</6>, «я не читаю»."
 
 msgid "To answer a question about the past with no, say <0>ei</0> and the <1>nud</1> form: <2>Kas sa käisid poes? Ei käinud.</2>"
 msgstr "Чтобы ответить «нет» на вопрос о прошлом, скажи <0>ei</0> и форму на <1>nud</1>: <2>Kas sa käisid poes? Ei käinud.</2>"
@@ -730,9 +733,6 @@ msgstr "Напиши с отрицанием"
 msgid "Yes and no in the past"
 msgstr "Утверждение и отрицание в прошлом"
 
-msgid "Yes or no, now or then"
-msgstr "«Да» или «нет», сейчас или тогда"
-
 msgid "Yes, in the past"
 msgstr "«Да» в прошлом"
 
@@ -751,6 +751,9 @@ msgstr "Вчера у тебя весь день была работа дома,
 msgid "you"
 msgstr "ты"
 
+msgid "You (one person) didn’t see the cat."
+msgstr "Ты не видел (не видела) кота."
+
 msgid "You aren’t reading the book."
 msgstr "Вы не читаете книгу."
 
@@ -762,9 +765,6 @@ msgstr "В магазин ты вчера не ходил (не ходила), �
 
 msgid "You didn’t read the book."
 msgstr "Вы не прочитали книгу."
-
-msgid "You didn’t see the cat."
-msgstr "Ты не видел (не видела) кота."
 
 msgid "You don’t drink water."
 msgstr "Ты не пьёшь воду."
@@ -781,5 +781,5 @@ msgstr "Услышишь её вместе с местоимением."
 msgid "You’ll hear the form in a sentence."
 msgstr "Услышишь форму в предложении."
 
-msgid "Your friend Mari asks about yesterday. Answer her in Estonian. If you pick a wrong reply, you see why, then hear the right one."
-msgstr "Твоя подруга Мари спрашивает про вчерашний день. Отвечай ей по-эстонски. Если выберешь неправильный ответ, увидишь почему, а потом услышишь правильный."
+msgid "Your friend Mari asks about yesterday. A wrong reply shows why, then you hear the right one."
+msgstr "Твоя подруга Мари спрашивает о вчерашнем дне. Неверный ответ покажет почему, а потом ты услышишь правильный."

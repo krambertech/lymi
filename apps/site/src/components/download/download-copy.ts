@@ -1,6 +1,6 @@
 import { msg } from "@lingui/core/macro";
 
-export const DOWNLOAD_TITLE = msg`Download Lymi`;
+export const DOWNLOAD_TITLE = msg`Download Lymi for iPhone, Android and Mac`;
 export const DOWNLOAD_DESCRIPTION = msg`Get Lymi for iPhone, Android and Mac. Your decks and progress are the same on every device.`;
 export const DOWNLOAD_HEADING = msg`Get Lymi`;
 export const DOWNLOAD_LEDE = msg`Review and add cards on your phone and your Mac. Your decks and progress are the same everywhere.`;

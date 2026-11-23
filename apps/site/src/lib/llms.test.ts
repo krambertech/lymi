@@ -1,10 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { PAGES } from "../components/docs/nav";
 import { ASSISTANTS_QUESTIONS } from "../components/landing/faq";
-import { LANDING_BLURB } from "../components/landing/LandingView";
+import { LANDING_BLURB } from "../components/landing/landing-copy";
 import { EXAMS, examPath } from "./exams";
 import { pageI18n } from "./i18n";
 import { llmsTxt } from "./llms";
+import { isPrelaunch, type LocalizedPage, localizedPages, localizedPath } from "./routes";
 
 describe("llmsTxt", () => {
   const text = llmsTxt();
@@ -21,6 +22,13 @@ describe("llmsTxt", () => {
       "https://lymi.app/privacy",
     ]) {
       expect(text).toContain(url);
+    }
+  });
+
+  it("lists every launched page that is translated", () => {
+    for (const page of Object.keys(localizedPages) as LocalizedPage[]) {
+      if (isPrelaunch(page)) continue;
+      expect(text).toContain(`(https://lymi.app${localizedPath(page, "en")})`);
     }
   });
 

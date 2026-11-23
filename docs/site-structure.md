@@ -62,9 +62,9 @@ Reach for an existing section before writing markup. `FeatureSection` puts a cla
 
 ## Structured data and llms.txt
 
-`apps/site/src/lib/structured-data.ts` builds every page's JSON-LD. A marketing page declares the `SoftwareApplication`, which carries the same `@id` wherever it appears, and a `FAQPage` built from the same message descriptors the page renders, so a rich-result answer can never differ from the visible one. The homepage adds the `Organization` and the `WebSite`. The questions live in `apps/site/src/components/landing/questions.ts` as plain strings; a question that needs a link puts it beside the answer rather than inside it.
+`apps/site/src/lib/structured-data.ts` builds every page's JSON-LD. A marketing page declares the `SoftwareApplication`, which is identical wherever it appears, a `WebPage` about it that carries the page’s own name and description, and a `FAQPage` built from the same message descriptors the page renders, so a rich-result answer can never differ from the visible one. The homepage adds the `Organization` and the `WebSite`. An exam page adds the breadcrumb it shows, and a changelog update is a dated `BlogPosting`. The questions live in `apps/site/src/components/landing/questions.ts` as plain strings; a question that needs a link puts it beside the answer rather than inside it.
 
-`/llms.txt` gives an assistant one definition of Lymi, taken word for word from the homepage description, and the URLs worth following. It holds no count, and `llms.test.ts` fails when one appears.
+`/llms.txt` gives an assistant one definition of Lymi, taken word for word from the homepage description, and the URLs worth following. It holds no count and lists every launched page that is translated; `llms.test.ts` fails when a count appears or a page is missing.
 
 ## Header and footer links
 

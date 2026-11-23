@@ -30,7 +30,7 @@ import { SharedDeckDemo } from "./SharedDeckDemo";
 import { SignUpSection } from "./SignUpSection";
 import { WordFieldHero } from "./WordFieldHero";
 
-export const LANGUAGES_TITLE = msg`Lymi for language learning · Keep the words from every lesson`;
+export const LANGUAGES_TITLE = msg`Flashcards for language learning · Lymi`;
 export const LANGUAGES_BLURB = msg`Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards you review in Lymi.`;
 
 const SPANISH_ADDED: SampleCard = {

@@ -5,7 +5,7 @@ import { type Exam, examPath, GERMAN_GENERAL_DECK, GERMAN_STATES } from "../../l
 import { pageI18n } from "../../lib/i18n";
 import type { ExamsPage } from "../../lib/public-catalog";
 import { locales } from "../../lib/routes";
-import { exploreStructuredData, faqPage, softwareApplication } from "../../lib/structured-data";
+import { examBreadcrumbs, exploreStructuredData, faqPage, softwareApplication } from "../../lib/structured-data";
 import PublicNav from "../islands/PublicNav";
 import StateDecksIsland from "../islands/StateDecksIsland";
 import { PageFooter } from "../PageFooter";
@@ -22,7 +22,7 @@ import {
   examQuestions,
   OtherExams,
 } from "./ExamPageView";
-import { examDescription, examTitle } from "./exam-meta";
+import { examDescription, EXAMS_NAME, examTitle } from "./exam-meta";
 
 interface Props {
   page: ExamsPage;
@@ -53,7 +53,8 @@ const paths = Object.fromEntries(locales.map((each) => [each, examPath(exam, eac
   string
 >;
 const structuredData = [
-  softwareApplication({ description, path, locale }),
+  softwareApplication(i18n),
+  examBreadcrumbs(locale, i18n._(EXAMS_NAME), { name: i18n._(exam.name), path }),
   faqPage(questions, i18n, { name: heading, path }),
   exploreStructuredData(decks, locale, { name: heading, description, path }),
 ];

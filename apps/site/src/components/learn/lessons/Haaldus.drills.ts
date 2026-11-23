@@ -9,7 +9,7 @@ const MEANS = {
   üks: msg`one`,
   uks: msg`door`,
   säng: msg`bed`,
-  sang: msg`handle`,
+  sang: msg`bucket handle`,
   tüli: msg`a quarrel`,
   tuli: msg`fire`,
   sada: msg`a hundred`,
@@ -66,7 +66,7 @@ const written = (rule: string, word: Known, other: Known): SentenceDrill => ({
 const APART_LABELS: Record<ApartKind, MessageDescriptor> = {
   same: msg`The same word twice`,
   vowel: msg`A different vowel`,
-  length: msg`A longer sound`,
+  length: msg`A different length`,
 };
 
 const APART_WHY: Record<ApartKind, MessageDescriptor> = {

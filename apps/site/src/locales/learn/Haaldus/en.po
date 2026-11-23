@@ -20,6 +20,10 @@ msgstr "<0/> {0} · <1/> {1}: one sound is held longer."
 msgid "<0/> {0} · <1/> {1}: one vowel changes."
 msgstr "<0/> {0} · <1/> {1}: one vowel changes."
 
+#. placeholder {0}: meaning(first)
+msgid "<0/> {0}, said twice"
+msgstr "<0/> {0}, said twice"
+
 msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
 msgstr "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
 
@@ -38,6 +42,9 @@ msgstr "A basket"
 msgid "A bedsheet"
 msgstr "A bedsheet"
 
+msgid "A different length"
+msgstr "A different length"
+
 msgid "A different vowel"
 msgstr "A different vowel"
 
@@ -53,8 +60,8 @@ msgstr "a hen"
 msgid "a hundred"
 msgstr "a hundred"
 
-msgid "A longer sound"
-msgstr "A longer sound"
+msgid "A pear"
+msgstr "A pear"
 
 msgid "a quarrel"
 msgstr "a quarrel"
@@ -83,6 +90,9 @@ msgstr "Also “to get”, from saama."
 msgid "An ear"
 msgstr "An ear"
 
+msgid "and"
+msgstr "and"
+
 msgid "apple"
 msgstr "apple"
 
@@ -95,12 +105,8 @@ msgstr "basket"
 msgid "bed"
 msgstr "bed"
 
-msgid "Both change the word. <0/> and <1/> differ in a vowel; <2/> and <3/> in how long a sound is held."
-msgstr "Both change the word. <0/> and <1/> differ in a vowel; <2/> and <3/> in how long a sound is held."
-
-#. placeholder {0}: meaning(first)
-msgid "Both times <0/>, {0}."
-msgstr "Both times <0/>, {0}."
+msgid "bucket handle"
+msgstr "bucket handle"
 
 msgid "carry!"
 msgstr "carry!"
@@ -156,26 +162,14 @@ msgstr "From tuul, wind."
 msgid "Go back to the vowels and the pairs above, then try again."
 msgstr "Go back to the vowels and the pairs above, then try again."
 
-msgid "handle"
-msgstr "handle"
-
 msgid "handle, as on a bucket"
 msgstr "handle, as on a bucket"
 
-msgid "He takes it home."
-msgstr "He takes it home."
+msgid "He should carry it home."
+msgstr "He should carry it home."
 
 msgid "hello"
 msgstr "hello"
-
-msgid "His father"
-msgstr "His father"
-
-msgid "His mother"
-msgstr "His mother"
-
-msgid "His uncle"
-msgstr "His uncle"
 
 msgid "How do they differ?"
 msgstr "How do they differ?"
@@ -195,14 +189,17 @@ msgstr "Into town"
 msgid "It was <et>{word}</et>; <et>{other}</et> is another word."
 msgstr "It was <et>{word}</et>; <et>{other}</et> is another word."
 
+msgid "Jaan"
+msgstr "Jaan"
+
 msgid "Jaan says he will."
 msgstr "Jaan says he will."
 
 msgid "Jaan, a man’s name"
 msgstr "Jaan, a man’s name"
 
-msgid "Jaan’s mother asks him for something. Every word is from this lesson except <0/>, a name. Listen for the vowels and the long sounds: they tell <1/> from <2/> and <3/> from <4/>."
-msgstr "Jaan’s mother asks him for something. Every word is from this lesson except <0/>, a name. Listen for the vowels and the long sounds: they tell <1/> from <2/> and <3/> from <4/>."
+msgid "Jaan’s mother asks him for something. Two words are new: the name <0/> and <1/>, “and”. Listen for the vowels and the long sounds: they tell <2/> from <3/> and <4/> from <5/>."
+msgstr "Jaan’s mother asks him for something. Two words are new: the name <0/> and <1/>, “and”. Listen for the vowels and the long sounds: they tell <2/> from <3/> and <4/> from <5/>."
 
 msgid "junk"
 msgstr "junk"
@@ -273,8 +270,8 @@ msgstr "Nine vowels"
 msgid "No English sound is like it. Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 msgstr "No English sound is like it. Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 
-msgid "Now write the word. The keys under the field type õ, ä, ö and ü. A vowel without its marks makes another word, so it counts as wrong."
-msgstr "Now write the word. The keys under the field type õ, ä, ö and ü. A vowel without its marks makes another word, so it counts as wrong."
+msgid "Now write the word. Use the keys under the field to type õ, ä, ö and ü. A vowel without its marks makes another word, so it counts as wrong."
+msgstr "Now write the word. Use the keys under the field to type õ, ä, ö and ü. A vowel without its marks makes another word, so it counts as wrong."
 
 msgid "Õ or o, ä or a, ü or u"
 msgstr "Õ or o, ä or a, ü or u"
@@ -290,6 +287,9 @@ msgstr "old"
 
 msgid "one"
 msgstr "one"
+
+msgid "One apple"
+msgstr "One apple"
 
 msgid "One letter or two"
 msgstr "One letter or two"
@@ -372,6 +372,9 @@ msgstr "Tap a vowel"
 msgid "Tap õ, ä and ü in the vowels above once more, then try again."
 msgstr "Tap õ, ä and ü in the vowels above once more, then try again."
 
+msgid "Tea"
+msgstr "Tea"
+
 msgid "thank you"
 msgstr "thank you"
 
@@ -411,20 +414,23 @@ msgstr "Vowel or length?"
 msgid "Vowels"
 msgstr "Vowels"
 
+msgid "Vowels and length both change the word. <0/> and <1/> differ in a vowel; <2/> and <3/> in how long a sound is held."
+msgstr "Vowels and length both change the word. <0/> and <1/> differ in a vowel; <2/> and <3/> in how long a sound is held."
+
 msgid "Vowels with marks"
 msgstr "Vowels with marks"
+
+msgid "What else should he take?"
+msgstr "What else should he take?"
 
 msgid "What should he carry?"
 msgstr "What should he carry?"
 
-msgid "Where should Jaan come?"
-msgstr "Where should Jaan come?"
+msgid "Where does his mother ask him to come?"
+msgstr "Where does his mother ask him to come?"
 
 msgid "Which word did you hear?"
 msgstr "Which word did you hear?"
-
-msgid "Who is Jaan talking to?"
-msgstr "Who is Jaan talking to?"
 
 msgid "window"
 msgstr "window"
@@ -432,14 +438,14 @@ msgstr "window"
 msgid "Write one letter or two"
 msgstr "Write one letter or two"
 
-msgid "Write the vowel you hear"
-msgstr "Write the vowel you hear"
-
 msgid "Write the whole word this time. A long sound is written with two letters: <0/>, <1/>."
 msgstr "Write the whole word this time. A long sound is written with two letters: <0/>, <1/>."
 
 msgid "Write the word"
 msgstr "Write the word"
+
+msgid "Write the word you hear"
+msgstr "Write the word you hear"
 
 msgid "yes"
 msgstr "yes"

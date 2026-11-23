@@ -11,16 +11,6 @@ msgstr ""
 msgid "{0}, <0>ma {mine}</0>"
 msgstr "{0}, <0>ma {mine}</0>"
 
-#. placeholder {0}: verb.stem
-msgid "<et>{name}, ma {mine}</et>: the stem is <et>{0}-</et>, and <et>{pronoun}</et> takes <et>-{ending}</et>."
-msgstr "<et>{name}, ma {mine}</et>: the stem is <et>{0}-</et>, and <et>{pronoun}</et> takes <et>-{ending}</et>."
-
-msgid "<et>{pronoun}</et> takes <et>-{ending}</et>."
-msgstr "<et>{pronoun}</et> takes <et>-{ending}</et>."
-
-msgid "<et>{to}</et> takes its own ending."
-msgstr "<et>{to}</et> takes its own ending."
-
 msgid "15 minutes"
 msgstr "15 minutes"
 
@@ -57,6 +47,9 @@ msgstr "As with olema, the ending already says who, so ma, sa, me and te often g
 msgid "At home"
 msgstr "At home"
 
+msgid "Change the pronoun"
+msgstr "Change the pronoun"
+
 msgid "Coffee"
 msgstr "Coffee"
 
@@ -66,8 +59,8 @@ msgstr "Does the stem change?"
 msgid "Each pronoun has its ending: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, so <1>elan, elad, elab, elame, elate, elavad</1>."
 msgstr "Each pronoun has its ending: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, so <1>elan, elad, elab, elame, elate, elavad</1>."
 
-msgid "Each round gives a verb with its I form and a pronoun. Take the stem from the I form and type the form for that pronoun: <0>lugema, ma loen</0>, so with <1>nad</1> it is <2/>."
-msgstr "Each round gives a verb with its I form and a pronoun. Take the stem from the I form and type the form for that pronoun: <0>lugema, ma loen</0>, so with <1>nad</1> it is <2/>."
+msgid "Each round gives a verb and a pronoun, and the verb’s I form unless the pronoun is <0>ma</0>. Take the stem from the I form and type the form for that pronoun: <1>lugema, ma loen</1>, so with <2>nad</2> it is <3/>."
+msgstr "Each round gives a verb and a pronoun, and the verb’s I form unless the pronoun is <0>ma</0>. Take the stem from the I form and type the form for that pronoun: <1>lugema, ma loen</1>, so with <2>nad</2> it is <3/>."
 
 msgid "Each sentence has one wrong verb: a stem made from the -ma form, or an ending that belongs to another pronoun. Tap the wrong word, then type it right."
 msgstr "Each sentence has one wrong verb: a stem made from the -ma form, or an ending that belongs to another pronoun. Tap the wrong word, then type it right."
@@ -95,6 +88,9 @@ msgstr "Go back to the endings above, then try again."
 
 msgid "Go back to the endings at the top, then try again."
 msgstr "Go back to the endings at the top, then try again."
+
+msgid "Go back to the sort and the endings above, then try again."
+msgstr "Go back to the sort and the endings above, then try again."
 
 msgid "Go back to the table above, then try again."
 msgstr "Go back to the table above, then try again."
@@ -231,17 +227,14 @@ msgstr "Rewrite the sentence for the pronoun shown. The verb takes that pronoun�
 msgid "Same stem as the -ma form"
 msgstr "Same stem as the -ma form"
 
-msgid "Say it about someone else"
-msgstr "Say it about someone else"
-
 msgid "Six endings"
 msgstr "Six endings"
 
 msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 
-msgid "Sort the verbs above once more, then try again."
-msgstr "Sort the verbs above once more, then try again."
+msgid "Some verbs keep the stem of the -ma form: <0/>, <1/>. In others the stem changes, and only the I form shows it: <2/>, <3/>."
+msgstr "Some verbs keep the stem of the -ma form: <0/>, <1/>. In others the stem changes, and only the I form shows it: <2/>, <3/>."
 
 msgid "Sort the verbs. Tap one to hear its I form."
 msgstr "Sort the verbs. Tap one to hear its I form."
@@ -303,11 +296,18 @@ msgstr "The ending goes with the pronoun at the start of the sentence."
 msgid "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>"
 msgstr "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>"
 
-msgid "The I form shows the stem: <0>lugema, loen</0>."
-msgstr "The I form shows the stem: <0>lugema, loen</0>."
-
 msgid "The stem changes"
 msgstr "The stem changes"
+
+msgid "The stem differs from the -ma form: <0>lugema, loe-, loen</0>."
+msgstr "The stem differs from the -ma form: <0>lugema, loe-, loen</0>."
+
+#. placeholder {0}: verb.stem
+msgid "The stem is <et>{0}-</et>, as in <et>ma {mine}</et>, and <et>{pronoun}</et> takes <et>-{ending}</et>."
+msgstr "The stem is <et>{0}-</et>, as in <et>ma {mine}</et>, and <et>{pronoun}</et> takes <et>-{ending}</et>."
+
+msgid "The verb takes the ending for <et>{to}</et>."
+msgstr "The verb takes the ending for <et>{to}</et>."
 
 msgid "They eat at home."
 msgstr "They eat at home."
@@ -357,9 +357,6 @@ msgstr "to wait"
 msgid "to work"
 msgstr "to work"
 
-msgid "Two rules give the stem. For most verbs, take off -ma: <0/>, <1/>. For some, the stem changes, and only the I form shows it: <2/>, <3/>."
-msgstr "Two rules give the stem. For most verbs, take off -ma: <0/>, <1/>. For some, the stem changes, and only the I form shows it: <2/>, <3/>."
-
 msgid "Type the form"
 msgstr "Type the form"
 
@@ -404,6 +401,9 @@ msgstr "Which verbs change their stem"
 
 msgid "with {to}"
 msgstr "with {to}"
+
+msgid "With <et>{pronoun}</et>, the ending is <et>-{ending}</et>."
+msgstr "With <et>{pronoun}</et>, the ending is <et>-{ending}</et>."
 
 msgid "Working from home"
 msgstr "Working from home"

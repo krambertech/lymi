@@ -11,16 +11,6 @@ msgstr ""
 msgid "{0}, <0>ma {mine}</0>"
 msgstr "{0}, <0>ma {mine}</0>"
 
-#. placeholder {0}: verb.stem
-msgid "<et>{name}, ma {mine}</et>: the stem is <et>{0}-</et>, and <et>{pronoun}</et> takes <et>-{ending}</et>."
-msgstr "<et>{name}, ma {mine}</et>: основа <et>{0}-</et>, а з <et>{pronoun}</et> — закінчення <et>-{ending}</et>."
-
-msgid "<et>{pronoun}</et> takes <et>-{ending}</et>."
-msgstr "З <et>{pronoun}</et> — закінчення <et>-{ending}</et>."
-
-msgid "<et>{to}</et> takes its own ending."
-msgstr "З <et>{to}</et> — своє закінчення."
-
 msgid "15 minutes"
 msgstr "15 хвилин"
 
@@ -46,7 +36,7 @@ msgid "All six. You matched every pronoun with its ending."
 msgstr "Усі шість. Кожен займенник — зі своїм закінченням."
 
 msgid "All six. You put every ending on the right stem."
-msgstr "Усі шість. Кожне закінчення стоїть на правильній основі."
+msgstr "Усі шість. Кожне закінчення додано до правильної основи."
 
 msgid "already"
 msgstr "вже"
@@ -57,6 +47,9 @@ msgstr "Як і в olema, закінчення вже каже, хто це, т�
 msgid "At home"
 msgstr "Вдома"
 
+msgid "Change the pronoun"
+msgstr "Зміни займенник"
+
 msgid "Coffee"
 msgstr "Каву"
 
@@ -66,8 +59,8 @@ msgstr "Чи змінюється основа?"
 msgid "Each pronoun has its ending: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, so <1>elan, elad, elab, elame, elate, elavad</1>."
 msgstr "У кожного займенника своє закінчення: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, звідси <1>elan, elad, elab, elame, elate, elavad</1>."
 
-msgid "Each round gives a verb with its I form and a pronoun. Take the stem from the I form and type the form for that pronoun: <0>lugema, ma loen</0>, so with <1>nad</1> it is <2/>."
-msgstr "У кожному раунді є дієслово з формою для «я» і займенник. Візьми основу з форми для «я» й напиши форму для цього займенника: <0>lugema, ma loen</0>, тож із <1>nad</1> буде <2/>."
+msgid "Each round gives a verb and a pronoun, and the verb’s I form unless the pronoun is <0>ma</0>. Take the stem from the I form and type the form for that pronoun: <1>lugema, ma loen</1>, so with <2>nad</2> it is <3/>."
+msgstr "У кожному раунді є дієслово й займенник, а якщо займенник не <0>ma</0>, то й форма для «я». Візьми основу з форми для «я» й напиши форму для цього займенника: <1>lugema, ma loen</1>, тож із <2>nad</2> буде <3/>."
 
 msgid "Each sentence has one wrong verb: a stem made from the -ma form, or an ending that belongs to another pronoun. Tap the wrong word, then type it right."
 msgstr "У кожному реченні одне дієслово з помилкою: основа взята з форми на -ma або закінчення належить іншому займеннику. Натисни на хибне слово, а тоді напиши його правильно."
@@ -95,6 +88,9 @@ msgstr "Повернися до закінчень вище й спробуй щ
 
 msgid "Go back to the endings at the top, then try again."
 msgstr "Повернися до закінчень на початку уроку, а тоді спробуй ще раз."
+
+msgid "Go back to the sort and the endings above, then try again."
+msgstr "Повернися до сортування й закінчень вище, а тоді спробуй ще раз."
 
 msgid "Go back to the table above, then try again."
 msgstr "Повернися до таблиці вище, а тоді спробуй ще раз."
@@ -166,7 +162,7 @@ msgid "Jaan says where he lives and works, and what he and Mari do. Listen to th
 msgstr "Яан розповідає, де живе й працює і що роблять він і Марі. Слухай кінець кожного дієслова, щоб почути, хто це робить."
 
 msgid "Learning Estonian"
-msgstr "Учить естонську"
+msgstr "Вивчає естонську"
 
 msgid "Listen to the very end of the verb, then try again."
 msgstr "Слухай кінець дієслова до останнього звуку й спробуй ще раз."
@@ -226,13 +222,10 @@ msgid "Rewrite the sentence"
 msgstr "Перепиши речення"
 
 msgid "Rewrite the sentence for the pronoun shown. The verb takes that pronoun’s ending, and the rest stays: <0>Ma elan Tallinnas</0> with <1>nad</1> is <2/>."
-msgstr "Перепиши речення для вказаного займенника. Дієслово бере закінчення цього займенника, а решта не змінюється: <0>Ma elan Tallinnas</0> із <1>nad</1> — це <2/>."
+msgstr "Перепиши речення для вказаного займенника. Дієслово отримує закінчення цього займенника, а решта не змінюється: <0>Ma elan Tallinnas</0> із <1>nad</1> — це <2/>."
 
 msgid "Same stem as the -ma form"
 msgstr "Основа як у формі на -ma"
-
-msgid "Say it about someone else"
-msgstr "Про когось іншого"
 
 msgid "Six endings"
 msgstr "Шість закінчень"
@@ -240,8 +233,8 @@ msgstr "Шість закінчень"
 msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Деякі основи змінюються: <0>lugema, loen</0>. Запам’ятовуй кожне дієслово з формою для «я»."
 
-msgid "Sort the verbs above once more, then try again."
-msgstr "Ще раз розклади дієслова вище, а тоді спробуй знову."
+msgid "Some verbs keep the stem of the -ma form: <0/>, <1/>. In others the stem changes, and only the I form shows it: <2/>, <3/>."
+msgstr "Одні дієслова зберігають основу форми на -ma: <0/>, <1/>. В інших основа змінюється, і видно це лише з форми для «я»: <2/>, <3/>."
 
 msgid "Sort the verbs. Tap one to hear its I form."
 msgstr "Розклади дієслова. Натисни на дієслово, щоб почути форму для «я»."
@@ -295,7 +288,7 @@ msgid "The ending for te: you, to more than one; polite you."
 msgstr "Закінчення для te: «ви» до кількох людей і ввічливе «Ви»."
 
 msgid "The ending goes on the stem of the I form, not of the -ma form."
-msgstr "Закінчення стає на основу форми для «я», а не форми на -ma."
+msgstr "Закінчення додається до основи форми для «я», а не форми на -ma."
 
 msgid "The ending goes with the pronoun at the start of the sentence."
 msgstr "Закінчення залежить від займенника на початку речення."
@@ -303,11 +296,18 @@ msgstr "Закінчення залежить від займенника на �
 msgid "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>"
 msgstr "Закінчення каже, хто це, тому ma, sa, me і te можна пропустити: <0>Elan Tallinnas.</0>"
 
-msgid "The I form shows the stem: <0>lugema, loen</0>."
-msgstr "Основу видно з форми для «я»: <0>lugema, loen</0>."
-
 msgid "The stem changes"
 msgstr "Основа змінюється"
+
+msgid "The stem differs from the -ma form: <0>lugema, loe-, loen</0>."
+msgstr "Основа відрізняється від форми на -ma: <0>lugema, loe-, loen</0>."
+
+#. placeholder {0}: verb.stem
+msgid "The stem is <et>{0}-</et>, as in <et>ma {mine}</et>, and <et>{pronoun}</et> takes <et>-{ending}</et>."
+msgstr "Основа <et>{0}-</et>, як у <et>ma {mine}</et>, а з <et>{pronoun}</et> — закінчення <et>-{ending}</et>."
+
+msgid "The verb takes the ending for <et>{to}</et>."
+msgstr "До дієслова додається закінчення для <et>{to}</et>."
 
 msgid "They eat at home."
 msgstr "Вони їдять удома."
@@ -357,9 +357,6 @@ msgstr "чекати"
 msgid "to work"
 msgstr "працювати"
 
-msgid "Two rules give the stem. For most verbs, take off -ma: <0/>, <1/>. For some, the stem changes, and only the I form shows it: <2/>, <3/>."
-msgstr "Основу дають два правила. У більшості дієслів відкинь -ma: <0/>, <1/>. У деяких основа змінюється, і видно це лише з форми для «я»: <2/>, <3/>."
-
 msgid "Type the form"
 msgstr "Напиши форму"
 
@@ -405,8 +402,11 @@ msgstr "Які дієслова змінюють основу"
 msgid "with {to}"
 msgstr "із {to}"
 
+msgid "With <et>{pronoun}</et>, the ending is <et>-{ending}</et>."
+msgstr "З <et>{pronoun}</et> — закінчення <et>-{ending}</et>."
+
 msgid "Working from home"
-msgstr "Працює з дому"
+msgstr "Працює вдома"
 
 msgid "you are"
 msgstr "ти є"

@@ -20,6 +20,10 @@ msgstr "<0/> {0} · <1/> {1}: один звук тянется дольше."
 msgid "<0/> {0} · <1/> {1}: one vowel changes."
 msgstr "<0/> {0} · <1/> {1}: меняется одна гласная."
 
+#. placeholder {0}: meaning(first)
+msgid "<0/> {0}, said twice"
+msgstr "<0/> {0}, дважды"
+
 msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
 msgstr "<0/> — это сто, а <1/> — «отправь». Удвоенная буква — это более долгий звук, и с ним получается другое слово. С согласными так же: <2/> — курица, а <3/> — «неси» (одному человеку)."
 
@@ -38,6 +42,9 @@ msgstr "Корзину"
 msgid "A bedsheet"
 msgstr "Простыню"
 
+msgid "A different length"
+msgstr "Другая долгота"
+
 msgid "A different vowel"
 msgstr "Другая гласная"
 
@@ -53,17 +60,17 @@ msgstr "курица"
 msgid "a hundred"
 msgstr "сто"
 
-msgid "A longer sound"
-msgstr "Более долгий звук"
+msgid "A pear"
+msgstr "Грушу"
 
 msgid "a quarrel"
 msgstr "ссора"
 
 msgid "All of them, every long sound with two letters."
-msgstr "Всё верно, каждый долгий звук двумя буквами."
+msgstr "Все верно, каждый долгий звук двумя буквами."
 
 msgid "All of them, with every vowel right."
-msgstr "Всё верно, и каждая гласная на месте."
+msgstr "Все верно, и каждая гласная на месте."
 
 msgid "All of them. You can hear length."
 msgstr "Все верно. Ты слышишь долготу."
@@ -72,7 +79,7 @@ msgid "All of them. You can hear the difference."
 msgstr "Все верно. Ты слышишь разницу."
 
 msgid "All of them. You told vowels from length every time."
-msgstr "Всё верно. Гласную от долготы ты отличаешь каждый раз."
+msgstr "Все верно. Гласную от долготы ты отличаешь каждый раз."
 
 msgid "Also “came”: ta tuli, he or she came."
 msgstr "Ещё и «пришёл» или «пришла»: ta tuli — он пришёл или она пришла."
@@ -82,6 +89,9 @@ msgstr "Ещё и «получить», от saama."
 
 msgid "An ear"
 msgstr "Ухо"
+
+msgid "and"
+msgstr "и"
 
 msgid "apple"
 msgstr "яблоко"
@@ -95,12 +105,8 @@ msgstr "корзина"
 msgid "bed"
 msgstr "кровать"
 
-msgid "Both change the word. <0/> and <1/> differ in a vowel; <2/> and <3/> in how long a sound is held."
-msgstr "И то и другое меняет слово. <0/> и <1/> различаются гласной, а <2/> и <3/> — тем, как долго тянется звук."
-
-#. placeholder {0}: meaning(first)
-msgid "Both times <0/>, {0}."
-msgstr "Оба раза <0/>, {0}."
+msgid "bucket handle"
+msgstr "дужка"
 
 msgid "carry!"
 msgstr "неси!"
@@ -156,26 +162,14 @@ msgstr "От tuul — ветер."
 msgid "Go back to the vowels and the pairs above, then try again."
 msgstr "Вернись к гласным и парам выше, а потом попробуй ещё раз."
 
-msgid "handle"
-msgstr "ручка"
-
 msgid "handle, as on a bucket"
 msgstr "дужка, как у ведра"
 
-msgid "He takes it home."
-msgstr "Он несёт её домой."
+msgid "He should carry it home."
+msgstr "Он должен отнести её домой."
 
 msgid "hello"
 msgstr "привет"
-
-msgid "His father"
-msgstr "С папой"
-
-msgid "His mother"
-msgstr "С мамой"
-
-msgid "His uncle"
-msgstr "С дядей"
 
 msgid "How do they differ?"
 msgstr "Чем они различаются?"
@@ -195,14 +189,17 @@ msgstr "В город"
 msgid "It was <et>{word}</et>; <et>{other}</et> is another word."
 msgstr "Это было <et>{word}</et>; <et>{other}</et> — другое слово."
 
+msgid "Jaan"
+msgstr "Яан"
+
 msgid "Jaan says he will."
 msgstr "Яан говорит, что отнесёт."
 
 msgid "Jaan, a man’s name"
 msgstr "Яан, мужское имя"
 
-msgid "Jaan’s mother asks him for something. Every word is from this lesson except <0/>, a name. Listen for the vowels and the long sounds: they tell <1/> from <2/> and <3/> from <4/>."
-msgstr "Мама о чём-то просит Яана. Все слова из этого урока, кроме имени <0/>. Слушай гласные и долгие звуки: именно они отличают <1/> от <2/> и <3/> от <4/>."
+msgid "Jaan’s mother asks him for something. Two words are new: the name <0/> and <1/>, “and”. Listen for the vowels and the long sounds: they tell <2/> from <3/> and <4/> from <5/>."
+msgstr "Мама о чём-то просит Яана. Новых слов два: имя <0/> и <1/>, «и». Слушай гласные и долгие звуки: именно они отличают <2/> от <3/> и <4/> от <5/>."
 
 msgid "junk"
 msgstr "хлам"
@@ -273,8 +270,8 @@ msgstr "Девять гласных"
 msgid "No English sound is like it. Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 msgstr "В русском такого звука нет, но близко к нему «ы». Скажи «о», затем растяни губы, а язык оставь на месте."
 
-msgid "Now write the word. The keys under the field type õ, ä, ö and ü. A vowel without its marks makes another word, so it counts as wrong."
-msgstr "Теперь напиши слово. Кнопки под полем печатают õ, ä, ö и ü. Гласная без значков — это уже другое слово, так что ответ не засчитается."
+msgid "Now write the word. Use the keys under the field to type õ, ä, ö and ü. A vowel without its marks makes another word, so it counts as wrong."
+msgstr "Теперь напиши слово. Набрать õ, ä, ö и ü можно кнопками под полем. Гласная без значков — это уже другое слово, так что ответ не засчитается."
 
 msgid "Õ or o, ä or a, ü or u"
 msgstr "Õ или o, ä или a, ü или u"
@@ -290,6 +287,9 @@ msgstr "старый"
 
 msgid "one"
 msgstr "один"
+
+msgid "One apple"
+msgstr "Одно яблоко"
 
 msgid "One letter or two"
 msgstr "Одна буква или две"
@@ -372,6 +372,9 @@ msgstr "Нажми на гласную"
 msgid "Tap õ, ä and ü in the vowels above once more, then try again."
 msgstr "Ещё раз нажми на õ, ä и ü среди гласных выше, потом попробуй снова."
 
+msgid "Tea"
+msgstr "Чай"
+
 msgid "thank you"
 msgstr "спасибо"
 
@@ -411,35 +414,38 @@ msgstr "Гласная или долгота?"
 msgid "Vowels"
 msgstr "Гласные"
 
+msgid "Vowels and length both change the word. <0/> and <1/> differ in a vowel; <2/> and <3/> in how long a sound is held."
+msgstr "И гласная, и долгота меняют слово. <0/> и <1/> различаются гласной, а <2/> и <3/> — тем, как долго тянется звук."
+
 msgid "Vowels with marks"
 msgstr "Гласные со значками"
+
+msgid "What else should he take?"
+msgstr "Что ещё он должен взять?"
 
 msgid "What should he carry?"
 msgstr "Что он должен отнести?"
 
-msgid "Where should Jaan come?"
-msgstr "Куда должен прийти Яан?"
+msgid "Where does his mother ask him to come?"
+msgstr "Куда мама просит его прийти?"
 
 msgid "Which word did you hear?"
 msgstr "Какое слово прозвучало?"
-
-msgid "Who is Jaan talking to?"
-msgstr "С кем говорит Яан?"
 
 msgid "window"
 msgstr "окно"
 
 msgid "Write one letter or two"
-msgstr "Одна буква или две — на письме"
-
-msgid "Write the vowel you hear"
-msgstr "Напиши гласную, которую слышишь"
+msgstr "Напиши одну букву или две"
 
 msgid "Write the whole word this time. A long sound is written with two letters: <0/>, <1/>."
 msgstr "На этот раз напиши слово целиком. Долгий звук пишется двумя буквами: <0/>, <1/>."
 
 msgid "Write the word"
 msgstr "Напиши слово"
+
+msgid "Write the word you hear"
+msgstr "Напиши слово, которое слышишь"
 
 msgid "yes"
 msgstr "да"

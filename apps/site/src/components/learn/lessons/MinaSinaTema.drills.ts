@@ -34,7 +34,7 @@ const typed = (short: Short): FormDrill => {
     cue: { et: long },
     answers: [verb],
     say: `${capital(short)} ${verb}`,
-    explain: msg`<et>${capital(long)} ${verb}</et>, short <et>${short} ${verb}</et>.`,
+    explain: msg`<et>${capital(long)} ${verb}</et>; the short form is <et>${short} ${verb}</et>.`,
   };
 };
 
@@ -52,7 +52,7 @@ const WHO: readonly { id: keyof typeof PRONOUN_SENTENCES; who: Short; why: Messa
   {
     id: "s-olete-tublid",
     who: "te",
-    why: msg`<et>Olete</et> can only be you are, to more than one.`,
+    why: msg`<et>Olete</et> can only be you are, to more than one, or polite you.`,
   },
   { id: "s-nad-kodus", who: "nad", why: msg`<et>On</et> with <et>nad</et>: they are.` },
 ];
@@ -109,7 +109,7 @@ export const DRILLS: DrillBank = {
     olema: { label: msg`The forms of <et>olema</et>`, section: "type" },
     who: { label: msg`Who the sentence is about`, section: "who" },
     drop: { label: msg`When the pronoun can go`, section: "drop" },
-    build: { label: msg`A pronoun with its <et>olema</et>`, section: "build" },
+    build: { label: msg`Sentences with <et>olema</et>`, section: "build" },
   },
   items: [
     ...PRONOUNS.map(({ short }) => typed(short)),
@@ -128,7 +128,7 @@ export const DRILLS: DrillBank = {
       rule: "who",
       say: PRONOUN_SENTENCES["s-te-opetajad"],
       answers: [PRONOUN_SENTENCES["s-te-opetajad"]],
-      explain: msg`<et>Te olete</et>: you are, to more than one.`,
+      explain: msg`<et>Te olete</et>: you are, to more than one, or polite you.`,
     },
     dropped("olen-kodus", "Ma olen kodus.", PRONOUN_SENTENCES["s-olen-kodus"]),
     dropped("oleme-valmis", "Me oleme valmis.", PRONOUN_SENTENCES["s-oleme-valmis"]),

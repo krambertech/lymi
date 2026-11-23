@@ -20,6 +20,10 @@ msgstr "<0/> {0} · <1/> {1}: один звук тягнеться довше."
 msgid "<0/> {0} · <1/> {1}: one vowel changes."
 msgstr "<0/> {0} · <1/> {1}: змінюється одна голосна."
 
+#. placeholder {0}: meaning(first)
+msgid "<0/> {0}, said twice"
+msgstr "<0/> {0}, двічі"
+
 msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
 msgstr "<0/> — це сто, а <1/> — «надішли». Подвоєна літера — це довший звук, і з ним виходить інше слово. З приголосними так само: <2/> — курка, а <3/> — «неси» (до однієї людини)."
 
@@ -38,6 +42,9 @@ msgstr "Кошик"
 msgid "A bedsheet"
 msgstr "Простирадло"
 
+msgid "A different length"
+msgstr "Інша довгота"
+
 msgid "A different vowel"
 msgstr "Інша голосна"
 
@@ -53,8 +60,8 @@ msgstr "курка"
 msgid "a hundred"
 msgstr "сто"
 
-msgid "A longer sound"
-msgstr "Довший звук"
+msgid "A pear"
+msgstr "Грушу"
 
 msgid "a quarrel"
 msgstr "сварка"
@@ -83,6 +90,9 @@ msgstr "Ще й «отримати», від saama."
 msgid "An ear"
 msgstr "Вухо"
 
+msgid "and"
+msgstr "і"
+
 msgid "apple"
 msgstr "яблуко"
 
@@ -95,12 +105,8 @@ msgstr "кошик"
 msgid "bed"
 msgstr "ліжко"
 
-msgid "Both change the word. <0/> and <1/> differ in a vowel; <2/> and <3/> in how long a sound is held."
-msgstr "І те, і те змінює слово. <0/> і <1/> різняться голосною, а <2/> і <3/> — тим, як довго тягнеться звук."
-
-#. placeholder {0}: meaning(first)
-msgid "Both times <0/>, {0}."
-msgstr "Обидва рази <0/>, {0}."
+msgid "bucket handle"
+msgstr "дужка"
 
 msgid "carry!"
 msgstr "неси!"
@@ -156,26 +162,14 @@ msgstr "Від tuul — вітер."
 msgid "Go back to the vowels and the pairs above, then try again."
 msgstr "Повернися до голосних і пар вище, а тоді спробуй ще раз."
 
-msgid "handle"
-msgstr "ручка"
-
 msgid "handle, as on a bucket"
 msgstr "дужка, як у відра"
 
-msgid "He takes it home."
-msgstr "Він несе його додому."
+msgid "He should carry it home."
+msgstr "Він має віднести його додому."
 
 msgid "hello"
 msgstr "привіт"
-
-msgid "His father"
-msgstr "З батьком"
-
-msgid "His mother"
-msgstr "З мамою"
-
-msgid "His uncle"
-msgstr "З дядьком"
 
 msgid "How do they differ?"
 msgstr "Чим вони різняться?"
@@ -195,14 +189,17 @@ msgstr "До міста"
 msgid "It was <et>{word}</et>; <et>{other}</et> is another word."
 msgstr "Це було <et>{word}</et>; <et>{other}</et> — інше слово."
 
+msgid "Jaan"
+msgstr "Яан"
+
 msgid "Jaan says he will."
 msgstr "Яан каже, що віднесе."
 
 msgid "Jaan, a man’s name"
 msgstr "Яан, чоловіче ім’я"
 
-msgid "Jaan’s mother asks him for something. Every word is from this lesson except <0/>, a name. Listen for the vowels and the long sounds: they tell <1/> from <2/> and <3/> from <4/>."
-msgstr "Мама про щось просить Яана. Усі слова з цього уроку, крім імені <0/>. Слухай голосні й довгі звуки: саме вони відрізняють <1/> від <2/> і <3/> від <4/>."
+msgid "Jaan’s mother asks him for something. Two words are new: the name <0/> and <1/>, “and”. Listen for the vowels and the long sounds: they tell <2/> from <3/> and <4/> from <5/>."
+msgstr "Мама про щось просить Яана. Нових слів два: ім’я <0/> і <1/>, «і». Слухай голосні й довгі звуки: саме вони відрізняють <2/> від <3/> і <4/> від <5/>."
 
 msgid "junk"
 msgstr "мотлох"
@@ -273,8 +270,8 @@ msgstr "Дев’ять голосних"
 msgid "No English sound is like it. Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 msgstr "В українській такого звуку немає. Найближче до нього російське «ы», трохи схоже й українське «и». Скажи «о», потім розтягни губи, а язик залиш на місці."
 
-msgid "Now write the word. The keys under the field type õ, ä, ö and ü. A vowel without its marks makes another word, so it counts as wrong."
-msgstr "Тепер напиши слово. Кнопки під полем друкують õ, ä, ö та ü. Голосна без значків — це вже інше слово, тож відповідь не зарахується."
+msgid "Now write the word. Use the keys under the field to type õ, ä, ö and ü. A vowel without its marks makes another word, so it counts as wrong."
+msgstr "Тепер напиши слово. Набрати õ, ä, ö та ü можна кнопками під полем. Голосна без значків — це вже інше слово, тож відповідь не зарахується."
 
 msgid "Õ or o, ä or a, ü or u"
 msgstr "Õ чи o, ä чи a, ü чи u"
@@ -290,6 +287,9 @@ msgstr "старий"
 
 msgid "one"
 msgstr "один"
+
+msgid "One apple"
+msgstr "Одне яблуко"
 
 msgid "One letter or two"
 msgstr "Одна літера чи дві"
@@ -372,6 +372,9 @@ msgstr "Натисни на голосну"
 msgid "Tap õ, ä and ü in the vowels above once more, then try again."
 msgstr "Ще раз натисни õ, ä і ü серед голосних вище, потім спробуй знову."
 
+msgid "Tea"
+msgstr "Чай"
+
 msgid "thank you"
 msgstr "дякую"
 
@@ -411,35 +414,38 @@ msgstr "Голосна чи довгота?"
 msgid "Vowels"
 msgstr "Голосні"
 
+msgid "Vowels and length both change the word. <0/> and <1/> differ in a vowel; <2/> and <3/> in how long a sound is held."
+msgstr "І голосна, і довгота змінюють слово. <0/> і <1/> різняться голосною, а <2/> і <3/> — тим, як довго тягнеться звук."
+
 msgid "Vowels with marks"
 msgstr "Голосні зі значками"
+
+msgid "What else should he take?"
+msgstr "Що ще він має взяти?"
 
 msgid "What should he carry?"
 msgstr "Що він має віднести?"
 
-msgid "Where should Jaan come?"
-msgstr "Куди має прийти Яан?"
+msgid "Where does his mother ask him to come?"
+msgstr "Куди мама просить його прийти?"
 
 msgid "Which word did you hear?"
 msgstr "Яке слово прозвучало?"
-
-msgid "Who is Jaan talking to?"
-msgstr "З ким говорить Яан?"
 
 msgid "window"
 msgstr "вікно"
 
 msgid "Write one letter or two"
-msgstr "Одна літера чи дві — на письмі"
-
-msgid "Write the vowel you hear"
-msgstr "Напиши голосну, яку чуєш"
+msgstr "Напиши одну літеру чи дві"
 
 msgid "Write the whole word this time. A long sound is written with two letters: <0/>, <1/>."
 msgstr "Цього разу напиши слово повністю. Довгий звук пишеться двома літерами: <0/>, <1/>."
 
 msgid "Write the word"
 msgstr "Напиши слово"
+
+msgid "Write the word you hear"
+msgstr "Напиши слово, яке чуєш"
 
 msgid "yes"
 msgstr "так"

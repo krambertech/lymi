@@ -75,6 +75,7 @@ const GLOSSARY: Glossary = {
   jah: { en: msg`yes` },
   eesti: { en: msg`Estonia; Estonian`, show: "Eesti" },
   jaan: { en: msg`Jaan, a man’s name`, show: "Jaan" },
+  ja: { en: msg`and` },
 };
 
 /** Words that differ in one vowel. */
@@ -238,12 +239,12 @@ export function HaaldusLesson() {
     const labels: Record<ApartKind, string> = {
       same: t`The same word twice`,
       vowel: t`A different vowel`,
-      length: t`A longer sound`,
+      length: t`A different length`,
     };
     const why: Record<ApartKind, (first: string, second: string) => ReactNode> = {
       same: (first) => (
         <Trans>
-          Both times <Word w={first} />, {meaning(first)}.
+          <Word w={first} /> {meaning(first)}, said twice
         </Trans>
       ),
       vowel: (first, second) => (
@@ -280,19 +281,8 @@ export function HaaldusLesson() {
   const talkQuestions = useMemo<PassageQuestion[]>(
     () => [
       {
-        id: "who",
-        ask: t`Who is Jaan talking to?`,
-        options: [
-          { id: "uncle", label: t`His uncle` },
-          { id: "mother", label: t`His mother` },
-          { id: "father", label: t`His father` },
-        ],
-        answer: "mother",
-        line: 1,
-      },
-      {
         id: "come",
-        ask: t`Where should Jaan come?`,
+        ask: t`Where does his mother ask him to come?`,
         options: [
           { id: "school", label: t`To school` },
           { id: "home", label: t`Back home` },
@@ -315,7 +305,7 @@ export function HaaldusLesson() {
       {
         id: "home",
         kind: "truefalse",
-        ask: t`He takes it home.`,
+        ask: t`He should carry it home.`,
         answer: false,
         line: 3,
       },
@@ -325,6 +315,17 @@ export function HaaldusLesson() {
         ask: t`Jaan says he will.`,
         answer: true,
         line: 4,
+      },
+      {
+        id: "apple",
+        ask: t`What else should he take?`,
+        options: [
+          { id: "pear", label: t`A pear` },
+          { id: "one", label: t`One apple` },
+          { id: "tea", label: t`Tea` },
+        ],
+        answer: "one",
+        line: 5,
       },
     ],
     [t],
@@ -508,15 +509,15 @@ export function HaaldusLesson() {
         },
         {
           id: "write-vowels",
-          title: t`Write the vowel you hear`,
+          title: t`Write the word you hear`,
           quiz: true,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    Now write the word. The keys under the field type õ, ä, ö and ü. A vowel without
-                    its marks makes another word, so it counts as wrong.
+                    Now write the word. Use the keys under the field to type õ, ä, ö and ü. A vowel
+                    without its marks makes another word, so it counts as wrong.
                   </Trans>
                 </p>
               </Prose>
@@ -666,8 +667,9 @@ export function HaaldusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Both change the word. <Word w="Kõrv" /> and <Word w="korv" /> differ in a vowel;{" "}
-                    <Word w="kana" /> and <Word w="kanna" /> in how long a sound is held.
+                    Vowels and length both change the word. <Word w="Kõrv" /> and <Word w="korv" />{" "}
+                    differ in a vowel; <Word w="kana" /> and <Word w="kanna" /> in how long a sound
+                    is held.
                   </Trans>
                 </p>
                 <p>
@@ -707,10 +709,10 @@ export function HaaldusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Jaan’s mother asks him for something. Every word is from this lesson except{" "}
-                    <Word w="Jaan" />, a name. Listen for the vowels and the long sounds: they tell{" "}
-                    <Word w="korv" /> from <Word w="kõrv" /> and <Word w="kooli" /> from{" "}
-                    <Word w="koli" />.
+                    Jaan’s mother asks him for something. Two words are new: the name{" "}
+                    <Word w="Jaan" /> and <Word w="ja" />, “and”. Listen for the vowels and the long
+                    sounds: they tell <Word w="korv" /> from <Word w="kõrv" /> and{" "}
+                    <Word w="kooli" /> from <Word w="koli" />.
                   </Trans>
                 </p>
               </Prose>
@@ -719,7 +721,7 @@ export function HaaldusLesson() {
                 title={<Trans>Listen: Jaan and his mother</Trans>}
                 clip="d-ema"
                 turns={HAALDUS_TALK.turns}
-                names={{ third: t`Mother`, main: "Jaan" }}
+                names={{ third: t`Mother`, main: t`Jaan` }}
                 questions={talkQuestions}
               />
             </>

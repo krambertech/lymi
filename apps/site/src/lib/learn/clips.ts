@@ -161,12 +161,14 @@ export const HAALDUS_TALK: Conversation = {
     { voice: "main", text: "Tere, ema!" },
     { voice: "third", text: ["Tule linna.", "Kanna korv kooli."] },
     { voice: "main", text: "Korv kooli? Jah." },
+    { voice: "third", text: "Ja üks õun." },
+    { voice: "main", text: "Üks õun? Jah." },
     { voice: "third", text: "Aitäh!" },
   ],
 };
 
 /** Sentences from the exchange, each recorded on its own for writing down. */
-export const HAALDUS_SENTENCES = ["Jaan", "Tule linna.", "Kanna korv kooli."] as const;
+export const HAALDUS_SENTENCES = ["Jaan", "ja", "Tule linna.", "Kanna korv kooli."] as const;
 
 /** The numbers the numbers lesson says on their own. */
 export const SPOKEN_NUMBERS: readonly number[] = [
@@ -478,13 +480,13 @@ export const PRONOUN_SENTENCES = {
 
 /** Sentences to make from a pronoun, olema and a word: the lesson asks the first six, the drill the rest. */
 export const PRONOUN_BUILT = [
-  { pronoun: "ma", word: "kodus", said: "Ma olen kodus." },
+  { pronoun: "ma", word: "õpetaja", said: "Ma olen õpetaja." },
   { pronoun: "sa", word: "õpetaja", said: "Sa oled õpetaja." },
   { pronoun: "ta", word: "kodus", said: "Ta on kodus." },
   { pronoun: "me", word: "väsinud", said: "Me oleme väsinud." },
   { pronoun: "te", word: "valmis", said: "Te olete valmis." },
   { pronoun: "nad", word: "õpetajad", said: "Nad on õpetajad." },
-  { pronoun: "ma", word: "õpetaja", said: "Ma olen õpetaja." },
+  { pronoun: "ma", word: "kodus", said: "Ma olen kodus." },
   { pronoun: "sa", word: "kodus", said: "Sa oled kodus." },
   { pronoun: "ta", word: "valmis", said: "Ta on valmis." },
   { pronoun: "me", word: "kodus", said: "Me oleme kodus." },
@@ -511,8 +513,9 @@ export const PRONOUN_PASSAGE = [
   "Ma olen õpetaja.",
   "Tema on Peeter.",
   "Ta on väsinud.",
-  "Me oleme sõbrad.",
+  "Peeter ja mina oleme sõbrad.",
   "Mari ja Jaan on kodus.",
+  "Nad on väsinud.",
 ] as const;
 
 /** The verbs of the present-tense lesson: the -ma form and the stem the endings go on. */
@@ -563,7 +566,7 @@ export const PRESENT_SENTENCES = {
 
 /** A present sentence said about someone else: what the rewrite asks for, by the person it turns to. */
 export const PRESENT_TURNED = [
-  { from: "s-elan-tallinnas", to: "nad", said: "Nad elavad Tallinnas." },
+  { from: "s-elan-tallinnas", to: "te", said: "Te elate Tallinnas." },
   { from: "s-opin-eesti", to: "sa", said: "Sa õpid eesti keelt." },
   { from: "s-loen-raamatut", to: "me", said: "Me loeme raamatut." },
   { from: "s-raagib-eesti", to: "nad", said: "Nad räägivad eesti keelt." },

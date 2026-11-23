@@ -207,7 +207,7 @@ export function builtAnswers(pronoun: Short, said: string): [string, ...string[]
   return person.verb === "on" ? [said, long] : [said, long, capital(rest)];
 }
 
-/** The endings a gap offers/** The endings a gap offers: the answer and two near misses, so three fit on a phone. */
+/** The endings a gap offers: the answer and two near misses, so three fit on a phone. */
 const ENDINGS = ["n", "d", "me", "te"] as const;
 const LEAVE_OUT: Record<string, readonly string[]> = { n: ["te"], d: ["me"], me: ["d"], te: ["n"] };
 
@@ -692,9 +692,9 @@ export function MinaSinaTemaLesson() {
     () => [
       {
         id: "liis",
-        ask: t`What does Liis do?`,
+        ask: t`What does Liis say about herself?`,
         options: [
-          { id: "home", label: t`She’s at home all day.` },
+          { id: "home", label: t`She’s at home.` },
           { id: "teacher", label: t`She’s a teacher.` },
           { id: "tired", label: t`She’s tired.` },
         ],
@@ -954,8 +954,8 @@ export function MinaSinaTemaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Now type the form of <Word w="olema" /> for each pronoun, long or short. The
-                    long one takes the same form: <Word w="mina olen" />, <Word w="ma olen" />.
+                    Now type the form of <Word w="olema" /> for each pronoun. A long pronoun takes
+                    the same verb: <Word w="mina olen" />, <Word w="ma olen" />.
                   </Trans>
                 </p>
               </Prose>
@@ -967,7 +967,7 @@ export function MinaSinaTemaLesson() {
                 verdict={(share) =>
                   share === 1 ? (
                     <Trans>
-                      All six forms of <span lang="et">olema</span>, typed right.
+                      All six, each with the right form of <span lang="et">olema</span>.
                     </Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Tap the endings above once more.</Trans>
@@ -992,8 +992,8 @@ export function MinaSinaTemaLesson() {
                 <p>
                   <Trans>
                     <Word w="Olen" /> can only mean I am, so <Word w="ma" /> can go. <Word w="On" />{" "}
-                    is he or she is and they are, so <Word w="ta" /> or <Word w="nad" /> has to
-                    stay.
+                    means both he or she is and they are, so <Word w="ta" /> or <Word w="nad" /> has
+                    to stay.
                   </Trans>
                 </p>
                 <p>
@@ -1018,7 +1018,8 @@ export function MinaSinaTemaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a sentence and write it. Some have no pronoun, so write only what you hear.
+                    Hear a sentence from “Who is it about?” and write it. Some have no pronoun, so
+                    write only what you hear.
                   </Trans>
                 </p>
               </Prose>
@@ -1052,9 +1053,10 @@ export function MinaSinaTemaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each round gives a pronoun, <Word w="olema" /> and a word. Put{" "}
-                    <span lang="et">olema</span> in its form and write the sentence:{" "}
-                    <span lang="et">ma · olema · kodus</span> is <Word w="Ma olen kodus" />.
+                    Each round gives a pronoun, <Word w="olema" /> and a word. Change{" "}
+                    <span lang="et">olema</span> to the form for that pronoun and write the
+                    sentence: <span lang="et">ma · olema · kodus</span> is{" "}
+                    <Word w="Ma olen kodus" />.
                   </Trans>
                 </p>
               </Prose>
@@ -1083,7 +1085,7 @@ export function MinaSinaTemaLesson() {
         },
         {
           id: "listen",
-          title: t`Listening: Liis and her friends`,
+          title: t`Listening: Liis introduces people`,
           quiz: true,
           children: (
             <>
@@ -1097,7 +1099,7 @@ export function MinaSinaTemaLesson() {
               </Prose>
               <Listening
                 id="liis-and-friends"
-                title={<Trans>Listen: Liis and her friends</Trans>}
+                title={<Trans>Listen: Liis introduces people</Trans>}
                 clip="p-liis"
                 sentences={PRONOUN_PASSAGE}
                 questions={passageQuestions}

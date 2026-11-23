@@ -10614,7 +10614,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "haaldus/d-ema": {
-    "text": "Tere, Jaan! Tere, ema! Tule linna. Kanna korv kooli. Korv kooli? Jah. Aitäh!",
+    "text": "Tere, Jaan! Tere, ema! Tule linna. Kanna korv kooli. Korv kooli? Jah. Ja üks õun. Üks õun? Jah. Aitäh!",
     "model": "eleven_v4",
     "turns": [
       {
@@ -10640,6 +10640,18 @@
         "voice": "jGja51dd7gcoK0zkxeyg",
         "sentences": [
           "Korv kooli? Jah."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ja üks õun."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Üks õun? Jah."
         ]
       },
       {
@@ -10756,7 +10768,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "mina-sina-tema/p-liis": {
-    "text": "Tere! Mina olen Liis. Ma olen õpetaja. Tema on Peeter. Ta on väsinud. Me oleme sõbrad. Mari ja Jaan on kodus.",
+    "text": "Tere! Mina olen Liis. Ma olen õpetaja. Tema on Peeter. Ta on väsinud. Peeter ja mina oleme sõbrad. Mari ja Jaan on kodus. Nad on väsinud.",
     "model": "eleven_v4",
     "voice": "WtzwR2kNGVNuaTGaYLfK"
   },
@@ -10847,6 +10859,16 @@
   },
   "haaldus/sa2ng-sang": {
     "text": "Säng, sang.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "haaldus/ja": {
+    "text": "ja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/te-elate-tallinnas": {
+    "text": "Te elate Tallinnas.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
-msgid "<0/> can only mean I am, so <1/> can go. <2/> is he or she is and they are, so <3/> or <4/> has to stay."
-msgstr "<0/> can only mean I am, so <1/> can go. <2/> is he or she is and they are, so <3/> or <4/> has to stay."
+msgid "<0/> can only mean I am, so <1/> can go. <2/> means both he or she is and they are, so <3/> or <4/> has to stay."
+msgstr "<0/> can only mean I am, so <1/> can go. <2/> means both he or she is and they are, so <3/> or <4/> has to stay."
 
 msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 msgstr "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
@@ -32,8 +32,8 @@ msgid "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and pol
 msgstr "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and polite you to one person."
 
 #. placeholder {0}: capital(long)
-msgid "<et>{0} {verb}</et>, short <et>{short} {verb}</et>."
-msgstr "<et>{0} {verb}</et>, short <et>{short} {verb}</et>."
+msgid "<et>{0} {verb}</et>; the short form is <et>{short} {verb}</et>."
+msgstr "<et>{0} {verb}</et>; the short form is <et>{short} {verb}</et>."
 
 #. placeholder {0}: capital(pronoun)
 msgid "<et>{0}</et> takes <et>{verb}</et>."
@@ -48,8 +48,8 @@ msgstr "<et>Oleme</et> can only be we are."
 msgid "<et>Olen</et> can only be I am."
 msgstr "<et>Olen</et> can only be I am."
 
-msgid "<et>Olete</et> can only be you are, to more than one."
-msgstr "<et>Olete</et> can only be you are, to more than one."
+msgid "<et>Olete</et> can only be you are, to more than one, or polite you."
+msgstr "<et>Olete</et> can only be you are, to more than one, or polite you."
 
 msgid "<et>On</et> has no ending, so <et>ta</et> stays."
 msgstr "<et>On</et> has no ending, so <et>ta</et> stays."
@@ -60,8 +60,8 @@ msgstr "<et>On</et> with <et>nad</et>: they are."
 msgid "<et>On</et> with <et>ta</et>: he or she is."
 msgstr "<et>On</et> with <et>ta</et>: he or she is."
 
-msgid "<et>Te olete</et>: you are, to more than one."
-msgstr "<et>Te olete</et>: you are, to more than one."
+msgid "<et>Te olete</et>: you are, to more than one, or polite you."
+msgstr "<et>Te olete</et>: you are, to more than one, or polite you."
 
 msgid "15 minutes"
 msgstr "15 minutes"
@@ -69,17 +69,14 @@ msgstr "15 minutes"
 msgid "5 quizzes, a sort and a passage"
 msgstr "5 quizzes, a sort and a passage"
 
-msgid "A pronoun with its <et>olema</et>"
-msgstr "A pronoun with its <et>olema</et>"
-
 msgid "All of them. You can hear who it’s about."
 msgstr "All of them. You can hear who it’s about."
 
-msgid "All six forms of <0>olema</0>, typed right."
-msgstr "All six forms of <0>olema</0>, typed right."
-
 msgid "All six sentences, each with the right form."
 msgstr "All six sentences, each with the right form."
+
+msgid "All six, each with the right form of <0>olema</0>."
+msgstr "All six, each with the right form of <0>olema</0>."
 
 msgid "All six, every word in place."
 msgstr "All six, every word in place."
@@ -105,8 +102,8 @@ msgstr "Can the pronoun go?"
 msgid "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
 msgstr "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
 
-msgid "Each round gives a pronoun, <0/> and a word. Put <1>olema</1> in its form and write the sentence: <2>ma · olema · kodus</2> is <3/>."
-msgstr "Each round gives a pronoun, <0/> and a word. Put <1>olema</1> in its form and write the sentence: <2>ma · olema · kodus</2> is <3/>."
+msgid "Each round gives a pronoun, <0/> and a word. Change <1>olema</1> to the form for that pronoun and write the sentence: <2>ma · olema · kodus</2> is <3/>."
+msgstr "Each round gives a pronoun, <0/> and a word. Change <1>olema</1> to the form for that pronoun and write the sentence: <2>ma · olema · kodus</2> is <3/>."
 
 msgid "Endings of olema"
 msgstr "Endings of olema"
@@ -154,8 +151,8 @@ msgstr "He’s tired."
 msgid "Hear a sentence and pick who it’s about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
 msgstr "Hear a sentence and pick who it’s about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
 
-msgid "Hear a sentence and write it. Some have no pronoun, so write only what you hear."
-msgstr "Hear a sentence and write it. Some have no pronoun, so write only what you hear."
+msgid "Hear a sentence from “Who is it about?” and write it. Some have no pronoun, so write only what you hear."
+msgstr "Hear a sentence from “Who is it about?” and write it. Some have no pronoun, so write only what you hear."
 
 msgid "I"
 msgstr "I"
@@ -187,14 +184,14 @@ msgstr "Listen first."
 msgid "Listen to the end of the verb. Try the table above, then come back."
 msgstr "Listen to the end of the verb. Try the table above, then come back."
 
-msgid "Listen: Liis and her friends"
-msgstr "Listen: Liis and her friends"
+msgid "Listen: Liis introduces people"
+msgstr "Listen: Liis introduces people"
 
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
 
-msgid "Listening: Liis and her friends"
-msgstr "Listening: Liis and her friends"
+msgid "Listening: Liis introduces people"
+msgstr "Listening: Liis introduces people"
 
 msgctxt "pronoun form"
 msgid "Long"
@@ -224,8 +221,8 @@ msgstr "Nearly. Tap the endings above once more."
 msgid "No ending. Ta on and nad on: he or she is, they are."
 msgstr "No ending. Ta on and nad on: he or she is, they are."
 
-msgid "Now type the form of <0/> for each pronoun, long or short. The long one takes the same form: <1/>, <2/>."
-msgstr "Now type the form of <0/> for each pronoun, long or short. The long one takes the same form: <1/>, <2/>."
+msgid "Now type the form of <0/> for each pronoun. A long pronoun takes the same verb: <1/>, <2/>."
+msgstr "Now type the form of <0/> for each pronoun. A long pronoun takes the same verb: <1/>, <2/>."
 
 msgid "Olema, to be"
 msgstr "Olema, to be"
@@ -263,14 +260,17 @@ msgstr "Round the table"
 msgid "Say the long form when the pronoun carries the stress: when it stands alone, or when you set one person against another. <0/>"
 msgstr "Say the long form when the pronoun carries the stress: when it stands alone, or when you set one person against another. <0/>"
 
+msgid "Sentences with <et>olema</et>"
+msgstr "Sentences with <et>olema</et>"
+
 msgid "Setting two people side by side takes the long forms: <0/>"
 msgstr "Setting two people side by side takes the long forms: <0/>"
 
 msgid "She’s a teacher."
 msgstr "She’s a teacher."
 
-msgid "She’s at home all day."
-msgstr "She’s at home all day."
+msgid "She’s at home."
+msgstr "She’s at home."
 
 msgid "She’s tired."
 msgstr "She’s tired."
@@ -408,8 +408,8 @@ msgstr "We’re friends."
 msgid "We’re ready."
 msgstr "We’re ready."
 
-msgid "What does Liis do?"
-msgstr "What does Liis do?"
+msgid "What does Liis say about herself?"
+msgstr "What does Liis say about herself?"
 
 msgid "What does Liis say about Peeter?"
 msgstr "What does Liis say about Peeter?"

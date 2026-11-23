@@ -234,7 +234,7 @@ export const TYPED: readonly { verb: Verb["verb"]; ending: Ending }[] = [
   { verb: "jooma", ending: "me" },
   { verb: "sööma", ending: "te" },
   { verb: "armastama", ending: "te" },
-  { verb: "lugema", ending: "vad" },
+  { verb: "rääkima", ending: "vad" },
   { verb: "elama", ending: "vad" },
 ];
 
@@ -474,11 +474,14 @@ export function OlevikLesson() {
         const mine = `${verb.stem}n`;
         return {
           base: verb.verb,
-          gloss: (
-            <Trans>
-              {i18n._(MEANS[verb.verb])}, <span lang="et">ma {mine}</span>
-            </Trans>
-          ),
+          gloss:
+            ending === "n" ? (
+              i18n._(MEANS[verb.verb])
+            ) : (
+              <Trans>
+                {i18n._(MEANS[verb.verb])}, <span lang="et">ma {mine}</span>
+              </Trans>
+            ),
           cue: person.pronoun,
           cueLang: "et",
           answers: [form],
@@ -509,7 +512,7 @@ export function OlevikLesson() {
         lang: i18n.locale,
         rule: (
           <Trans>
-            The I form shows the stem: <span lang="et">lugema, loen</span>.
+            The stem differs from the -ma form: <span lang="et">lugema, loe-, loen</span>.
           </Trans>
         ),
       },
@@ -852,9 +855,10 @@ export function OlevikLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each round gives a verb with its I form and a pronoun. Take the stem from the I
-                    form and type the form for that pronoun: <b lang="et">lugema, ma loen</b>, so
-                    with <span lang="et">nad</span> it is <Word w="loevad" />.
+                    Each round gives a verb and a pronoun, and the verb’s I form unless the pronoun
+                    is <span lang="et">ma</span>. Take the stem from the I form and type the form
+                    for that pronoun: <b lang="et">lugema, ma loen</b>, so with{" "}
+                    <span lang="et">nad</span> it is <Word w="loevad" />.
                   </Trans>
                 </p>
               </Prose>
@@ -888,9 +892,9 @@ export function OlevikLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Two rules give the stem. For most verbs, take off -ma: <Word w="elama" />,{" "}
-                    <Word w="elan" />. For some, the stem changes, and only the I form shows it:{" "}
-                    <Word w="lugema" />, <Word w="ma loen" />.
+                    Some verbs keep the stem of the -ma form: <Word w="elama" />, <Word w="elan" />.
+                    In others the stem changes, and only the I form shows it: <Word w="lugema" />,{" "}
+                    <Word w="ma loen" />.
                   </Trans>
                 </p>
                 <p>
@@ -931,7 +935,7 @@ export function OlevikLesson() {
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Check the stem and the pronoun in the ones you missed.</Trans>
                   ) : (
-                    <Trans>Sort the verbs above once more, then try again.</Trans>
+                    <Trans>Go back to the sort and the endings above, then try again.</Trans>
                   )
                 }
                 recall={fixRecall}
@@ -943,7 +947,7 @@ export function OlevikLesson() {
         },
         {
           id: "turn",
-          title: t`Say it about someone else`,
+          title: t`Change the pronoun`,
           quiz: true,
           children: (
             <>

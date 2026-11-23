@@ -55,7 +55,7 @@ const typed = (rule: string, name: Verb["verb"], ending: Ending): FormDrill => {
     cue: { et: pronoun },
     answers: [`${verb.stem}${ending}`],
     say: presentWithPronoun(pronoun, verb.stem, ending),
-    explain: msg`<et>${name}, ma ${mine}</et>: the stem is <et>${verb.stem}-</et>, and <et>${pronoun}</et> takes <et>-${ending}</et>.`,
+    explain: msg`The stem is <et>${verb.stem}-</et>, as in <et>ma ${mine}</et>, and <et>${pronoun}</et> takes <et>-${ending}</et>.`,
   };
 };
 
@@ -70,7 +70,7 @@ const heard = (name: Verb["verb"], ending: Ending, wrong: readonly Ending[]): Ch
     say: presentWithPronoun(pronoun, verb.stem, ending),
     answer: form(ending),
     wrong: wrong.map(form),
-    explain: msg`<et>${pronoun}</et> takes <et>-${ending}</et>.`,
+    explain: msg`With <et>${pronoun}</et>, the ending is <et>-${ending}</et>.`,
   };
 };
 
@@ -100,7 +100,7 @@ const turned = ({ from, to, said }: (typeof PRESENT_TURNED)[number]): SentenceDr
     cue: msg`with ${to}`,
     say: said,
     answers: [said, `${LONG[to]} ${rest}`, ...dropped],
-    explain: msg`<et>${to}</et> takes its own ending.`,
+    explain: msg`The verb takes the ending for <et>${to}</et>.`,
   };
 };
 

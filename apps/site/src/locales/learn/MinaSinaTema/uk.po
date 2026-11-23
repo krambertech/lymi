@@ -7,6 +7,9 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: uk\n"
 
+msgid "<0/> can only mean I am, so <1/> can go. <2/> means both he or she is and they are, so <3/> or <4/> usually has to stay."
+msgstr "<0/> може означати лише «я є», тож <1/> можна опустити. <2/> означає і «він чи вона є», і «вони є», тому <3/> чи <4/> зазвичай мусить лишитися."
+
 msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 msgstr "<0/> не має закінчення і підходить і для «він чи вона», і для «вони». Тому <1/> — неправильне дієслово: інші дієслова й тут мають закінчення, про це розповідає урок {regularVerbs}."
 
@@ -16,38 +19,97 @@ msgstr "<0/> означає і «він», і «вона»: в естонськ�
 msgid "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> is you are. Tap an ending."
 msgstr "<0/> означає «бути». Його закінчення залежить від особи: <1/> — «я є», <2/> — «ти є». Натисни закінчення."
 
-msgid "<0>On</0> is both he or she is and they are. Only the pronoun tells them apart."
-msgstr "<0>On</0> — і «він чи вона є», і «вони є». Розрізнити їх можна лише за займенником."
+msgid "<0>Olen, oled, oleme, olete</0>: the ending says who."
+msgstr "<0>Olen, oled, oleme, olete</0>: закінчення вже показує, хто це."
+
+msgid "<0>On</0> has no ending, so here only <1>ta</1> or <2>nad</2> says who."
+msgstr "<0>On</0> не має закінчення, тож тут про кого мова, показує лише <1>ta</1> чи <2>nad</2>."
+
+msgid "<0>On</0> is both he or she is and they are. Usually only the pronoun tells them apart."
+msgstr "<0>On</0> — і «він чи вона є», і «вони є». Розрізнити їх зазвичай можна лише за займенником."
 
 msgid "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and polite you to one person."
 msgstr "<0>Ta</0> — і «він», і «вона». <1>Te</1> — «ви» до кількох людей і ввічливе «Ви» до однієї."
 
-msgid "10 minutes"
-msgstr "10 хвилин"
+#. placeholder {0}: capital(long)
+msgid "<et>{0} {verb}</et>; the short form is <et>{short} {verb}</et>."
+msgstr "<et>{0} {verb}</et>; коротка форма — <et>{short} {verb}</et>."
 
-msgid "2 quizzes"
-msgstr "2 тести"
+#. placeholder {0}: capital(pronoun)
+msgid "<et>{0}</et> takes <et>{verb}</et>."
+msgstr "<et>{0}</et>: форма <et>{verb}</et>."
+
+msgid "<et>Oled</et> can only be you are, to one person."
+msgstr "<et>Oled</et> — це лише «ти є»."
+
+msgid "<et>Oleme</et> can only be we are."
+msgstr "<et>Oleme</et> — це лише «ми є»."
+
+msgid "<et>Olen</et> can only be I am."
+msgstr "<et>Olen</et> — це лише «я є»."
+
+msgid "<et>Olete</et> can only be you are, to more than one, or polite you are."
+msgstr "<et>Olete</et> — це лише «ви є», до кількох людей або ввічливо."
+
+msgid "<et>On</et> has no ending, so <et>ta</et> usually stays."
+msgstr "<et>On</et> не має закінчення, тож <et>ta</et> зазвичай лишається."
+
+msgid "<et>On</et> with <et>nad</et>: they are."
+msgstr "<et>On</et> із <et>nad</et>: «вони є»."
+
+msgid "<et>On</et> with <et>ta</et>: he or she is."
+msgstr "<et>On</et> із <et>ta</et>: «він чи вона є»."
+
+msgid "<et>Te olete</et>: you are, to more than one; <et>õpetajad</et> is more than one teacher."
+msgstr "<et>Te olete</et>: «ви є», до кількох людей; <et>õpetajad</et> — кілька вчителів."
+
+msgid "15 minutes"
+msgstr "15 хвилин"
+
+msgid "5 quizzes, a sort and a passage"
+msgstr "5 тестів, сортування й текст"
 
 msgid "All of them. You can hear who it’s about."
 msgstr "Усі правильно. Ти чуєш, про кого мова."
 
+msgid "All six sentences, each with the right form."
+msgstr "Усі шість речень, і в кожному правильна форма."
+
+msgid "All six, each with the right form of <0>olema</0>."
+msgstr "Усі шість, і щоразу правильна форма <0>olema</0>."
+
+msgid "All six, every word in place."
+msgstr "Усі шість, кожне слово на місці."
+
 msgid "All six. Every ending was right."
 msgstr "Усі шість. Кожне закінчення правильне."
+
+msgid "and"
+msgstr "і"
 
 msgid "Answers"
 msgstr "Варіанти відповіді"
 
-msgid "Because the ending already says who, the pronoun can go. Both lines below mean I’m Mari. A sentence can drop the pronoun, but not the verb."
-msgstr "Закінчення вже каже, хто це, тож займенник можна опустити. Обидва рядки нижче означають «Я Mari». В українській часто пропускають «є», а в естонському реченні навпаки: без займенника можна, без дієслова — ні."
+msgid "As the subject, each pronoun has two forms. Usually say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
+msgstr "У ролі підмета кожен займенник має дві форми. Зазвичай кажи коротку, <0>ma</0>, а повну, <1>mina</1>, залиш для наголосу."
 
-msgid "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
-msgstr "У кожного займенника дві форми. Кажи коротку, <0>ma</0>, а повну, <1>mina</1>, залиш для наголосу."
+msgid "at home"
+msgstr "вдома"
+
+msgid "Because the ending already says who, the pronoun can go. Both lines below mean I’m Mari. A sentence can drop the pronoun, but usually not the verb."
+msgstr "Закінчення вже каже, хто це, тож займенник можна опустити. Обидва рядки нижче означають «Я Mari». В українській часто пропускають «є», а в естонському реченні навпаки: без займенника можна, без дієслова — зазвичай ні."
+
+msgid "Can the pronoun go?"
+msgstr "Чи можна опустити займенник?"
+
+msgid "Each round gives a pronoun, <0/> and a word. Change <1>olema</1> to the form for that pronoun and write the sentence: <2>ma · olema · valmis</2> is <3/>."
+msgstr "У кожному раунді є займенник, <0/> і слово. Постав <1>olema</1> у форму для цього займенника й напиши речення: <2>ma · olema · valmis</2> — це <3/>."
 
 msgid "Endings of olema"
 msgstr "Закінчення olema"
 
-msgid "Estonian has six words for people, and each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you’ll hear most. Tap any word."
-msgstr "В естонській шість особових займенників, і кожен має повну й коротку форму з однаковим значенням. <0/> і <1/> — це «я». Коротку, виділену кольором, ти чутимеш найчастіше. Натисни будь-яке слово."
+msgid "Estonian has six words for people, and as the subject each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you’ll hear most. Tap any word."
+msgstr "В естонській шість особових займенників, і в ролі підмета кожен має повну й коротку форму з однаковим значенням. <0/> і <1/> — це «я». Коротку, виділену кольором, ти чутимеш найчастіше. Натисни будь-яке слово."
 
 msgid "Fill the ending"
 msgstr "Встав закінчення"
@@ -55,6 +117,9 @@ msgstr "Встав закінчення"
 msgctxt "pronoun form"
 msgid "Form"
 msgstr "Форма"
+
+msgid "friends"
+msgstr "друзі"
 
 msgid "Go back to the endings above, then try again."
 msgstr "Повернися до закінчень вище й спробуй ще раз."
@@ -74,8 +139,20 @@ msgstr "Він утомився або вона втомилася."
 msgid "he or she is; they are"
 msgstr "він чи вона є; вони є"
 
+msgid "He’s a teacher."
+msgstr "Він учитель."
+
+msgid "He’s at home."
+msgstr "Він удома."
+
+msgid "He’s tired."
+msgstr "Він утомлений."
+
 msgid "Hear a sentence and pick who it’s about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
 msgstr "Послухай речення й вибери, про кого воно. Де займенника немає, слухай кінець дієслова. З <0/> відрізнити <1/> від <2/> можна лише за займенником."
+
+msgid "Hear a sentence and write it. Some have no pronoun, so write only what you hear."
+msgstr "Послухай речення й напиши його. У деяких немає займенника, тож пиши лише те, що чуєш."
 
 msgid "I"
 msgstr "я"
@@ -95,14 +172,26 @@ msgstr "Я Mari."
 msgid "I’m ready."
 msgstr "Я готовий (готова)."
 
+msgid "Liis and Peeter are friends."
+msgstr "Ліїс і Пеетер — друзі."
+
+msgid "Liis says who she is, who Peeter is, and where Mari and Jaan are. Listen for the pronoun and the form of <0/>."
+msgstr "Ліїс розповідає, хто вона, хто Пеетер і де Марі та Яан. Слухай займенник і форму <0/>."
+
 msgid "Listen first."
 msgstr "Спершу прослухай."
 
 msgid "Listen to the end of the verb. Try the table above, then come back."
 msgstr "Слухай кінець дієслова. Пограйся зі столом вище й повертайся."
 
+msgid "Listen: Liis introduces people"
+msgstr "Слухання: Ліїс розповідає, хто є хто"
+
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"
+
+msgid "Listening: Liis introduces people"
+msgstr "На слух: Ліїс розповідає, хто є хто"
 
 msgctxt "pronoun form"
 msgid "Long"
@@ -111,17 +200,29 @@ msgstr "Повна"
 msgid "Long forms, because the two people are set side by side."
 msgstr "Повні форми, бо двох людей протиставлено."
 
+msgid "Make a sentence"
+msgstr "Склади речення"
+
+msgid "Mari and Jaan are at school."
+msgstr "Марі та Яан у школі."
+
 msgid "More than one"
 msgstr "Кілька людей"
 
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Майже всі. Переслухай ще раз ті, де були помилки."
 
+msgid "Nearly. Check the form of <0>olema</0> in the ones you missed."
+msgstr "Майже. Перевір форму <0>olema</0> там, де була помилка."
+
 msgid "Nearly. Tap the endings above once more."
 msgstr "Майже. Ще раз понатискай закінчення вище."
 
 msgid "No ending. Ta on and nad on: he or she is, they are."
 msgstr "Без закінчення. Ta on і nad on: «він чи вона є», «вони є»."
+
+msgid "Now type the form of <0/> for each pronoun. A long pronoun takes the same form as its short one."
+msgstr "Тепер напиши форму <0/> для кожного займенника. З повним займенником <0/> має ту саму форму, що й з коротким."
 
 msgid "Olema, to be"
 msgstr "Olema, бути"
@@ -144,14 +245,32 @@ msgstr "Відтворити {word}"
 msgid "Pronouns"
 msgstr "Займенники"
 
+msgid "Put each sentence where it belongs. Tap a sentence to hear it."
+msgstr "Розклади речення по групах. Натисни на речення, щоб його послухати."
+
+msgid "ready"
+msgstr "готовий"
+
 msgid "Round the table"
 msgstr "За столом"
 
 msgid "Say the long form when the pronoun carries the stress: when it stands alone, or when you set one person against another. <0/>"
 msgstr "Повну форму кажуть, коли займенник під наголосом: коли він стоїть сам або коли одну людину протиставляють іншій. <0/>"
 
-msgid "Setting two people side by side takes the long forms: <0/>"
-msgstr "Коли двох людей протиставляють, кажуть повні форми: <0/>"
+msgid "Sentences with <et>olema</et>"
+msgstr "Речення з <et>olema</et>"
+
+msgid "Setting two people side by side usually takes the long forms: <0/>"
+msgstr "Коли двох людей протиставляють, зазвичай кажуть повні форми: <0/>"
+
+msgid "She’s a teacher."
+msgstr "Вона вчителька."
+
+msgid "She’s at home."
+msgstr "Вона вдома."
+
+msgid "She’s tired."
+msgstr "Вона втомлена."
 
 msgctxt "pronoun form"
 msgid "Short"
@@ -178,8 +297,8 @@ msgstr "Скорочено від tema."
 msgid "Six pronouns, two forms"
 msgstr "Шість займенників, дві форми"
 
-msgid "Six words for people, each with a long and a short form, and olema, to be, whose ending tells you who."
-msgstr "Шість особових займенників, кожен у повній і короткій формі, і дієслово olema, «бути», закінчення якого підказує, хто це."
+msgid "Six words for people, each with a long and a short form, and olema, to be, whose ending usually tells you who."
+msgstr "Шість особових займенників, кожен у повній і короткій формі, і дієслово olema, «бути», закінчення якого зазвичай підказує, хто це."
 
 msgid "Someone else, a man or a woman: one word for both."
 msgstr "Хтось інший, чоловік чи жінка: одне слово для обох."
@@ -189,6 +308,12 @@ msgstr "Натисни слово або людину"
 
 msgid "Tap an ending"
 msgstr "Натисни закінчення"
+
+msgid "teacher"
+msgstr "учитель"
+
+msgid "teachers"
+msgstr "учителі"
 
 msgid "The ending for ma, I."
 msgstr "Закінчення для ma, «я»."
@@ -202,14 +327,23 @@ msgstr "Закінчення для sa, «ти»."
 msgid "The ending for te: you, to more than one; polite you."
 msgstr "Закінчення для te: «ви» до кількох людей і ввічливе «Ви»."
 
-msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
-msgstr "Закінчення каже, хто це, тож займенник можна опустити: <0>Olen Mari.</0>"
+msgid "The ending says who, so the pronoun can go."
+msgstr "Закінчення каже, хто це, тож займенник можна опустити."
+
+msgid "The forms of <et>olema</et>"
+msgstr "Форми <et>olema</et>"
 
 msgid "The forms of olema, to be: <0>olen, oled, on, oleme, olete, on</0>."
 msgstr "Форми olema, «бути»: <0>olen, oled, on, oleme, olete, on</0>."
 
 msgid "The people you’re talking to, or one person, politely."
 msgstr "Люди, з якими ти говориш, або одна людина, якщо ввічливо."
+
+msgid "The pronoun can go"
+msgstr "Займенник можна опустити"
+
+msgid "The pronoun usually stays"
+msgstr "Займенник зазвичай лишається"
 
 msgid "The short form is ma."
 msgstr "Коротка форма: ma."
@@ -244,8 +378,20 @@ msgstr "Вони вдома."
 msgid "They’re tired."
 msgstr "Вони втомилися."
 
+msgid "tired"
+msgstr "втомлений"
+
 msgid "to be"
 msgstr "бути"
+
+msgid "Try again, and tap Slower before you write each sentence."
+msgstr "Спробуй ще раз і перед кожним реченням натисни «Повільніше»."
+
+msgid "Type the form"
+msgstr "Напиши форму"
+
+msgid "Type the forms above once more, then try again."
+msgstr "Ще раз напиши форми вище, а тоді спробуй знову."
 
 msgid "we"
 msgstr "ми"
@@ -259,14 +405,38 @@ msgstr "Ми друзі."
 msgid "We’re ready."
 msgstr "Ми готові."
 
+msgid "What does Liis say about herself?"
+msgstr "Що Ліїс каже про себе?"
+
+msgid "What does Liis say about Peeter?"
+msgstr "Що Ліїс каже про Пеетера?"
+
+msgid "When the pronoun can go"
+msgstr "Коли займенник можна опустити"
+
+msgid "Where the ending tells who, the pronoun can go: <0>Olen Mari.</0>"
+msgstr "Коли закінчення каже, хто це, займенник можна опустити: <0>Olen Mari.</0>"
+
 msgid "Which ending?"
 msgstr "Яке закінчення?"
 
 msgid "Who is it about?"
 msgstr "Про кого це?"
 
+msgid "Who the sentence is about"
+msgstr "Про кого речення"
+
 msgid "Who? Me!"
 msgstr "Хто? Я!"
+
+msgid "without the pronoun"
+msgstr "без займенника"
+
+msgid "Write the sentence"
+msgstr "Напиши речення"
+
+msgid "Write what you hear"
+msgstr "Напиши, що чуєш"
 
 msgid "you"
 msgstr "ти"

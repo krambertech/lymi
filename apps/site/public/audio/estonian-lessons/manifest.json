@@ -13662,11 +13662,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "laheksin/ma-la2hen-kinno": {
-    "text": "Ma lähen kinno.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "laheksin/ma-la2heksin-kinno": {
     "text": "Ma läheksin kinno.",
     "model": "eleven_v4",
@@ -14061,11 +14056,6 @@
   },
   "laheksin/ma-ei-la2heks": {
     "text": "Ma ei läheks.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "laheksin/ma-la2ksin-kinno": {
-    "text": "Ma läksin kinno.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -17177,5 +17167,20 @@
         ]
       }
     ]
+  },
+  "laheksin/ma-tulen-koju": {
+    "text": "Ma tulen koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-tuleksin-koju": {
+    "text": "Ma tuleksin koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-tulin-koju": {
+    "text": "Ma tulin koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

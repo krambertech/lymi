@@ -89,10 +89,10 @@ type Mood = "now" | "would" | "past";
 const MOODS: readonly Mood[] = ["now", "would", "past"];
 
 const HEARD_MEANS: Record<(typeof COND_HEARD)[number]["id"], Record<Mood, MessageDescriptor>> = {
-  minema: {
-    now: msg`I’m going to the cinema.`,
-    would: msg`I would go to the cinema.`,
-    past: msg`I went to the cinema.`,
+  tulema: {
+    now: msg`I’m coming home.`,
+    would: msg`I would come home.`,
+    past: msg`I came home.`,
   },
   olema: {
     now: msg`I have time.`,
@@ -690,7 +690,7 @@ export function LaheksinLesson() {
                   <Trans>
                     Hear a sentence, then pick what it means. Listen for <b lang="et">-ks</b>.
                     Without it, a changed stem or <b lang="et">-s</b> means the past:{" "}
-                    <b lang="et">läksin, oli, ostis</b>.
+                    <b lang="et">tulin, oli, ostis</b>.
                   </Trans>
                 </p>
               </Prose>
@@ -733,6 +733,13 @@ export function LaheksinLesson() {
                 </p>
               </Prose>
               <ListenRows items={rowsOf(COND_POLITE)} />
+              <Aside>
+                <Trans>
+                  In speech you’ll often hear the form for <b lang="et">ta</b> with{" "}
+                  <b lang="et">ma</b> too: <b lang="et">ma tahaks</b>, <b lang="et">ma läheks</b>.
+                  In writing, use <b lang="et">tahaksin</b> and <b lang="et">läheksin</b>.
+                </Trans>
+              </Aside>
               <Prose>
                 <p>
                   <Trans>
@@ -771,8 +778,8 @@ export function LaheksinLesson() {
                   <Trans>
                     <Word w="Kui" /> means if. When the if is imagined, English says “if I had”,
                     then “I would”; Estonian puts both halves in the would form:{" "}
-                    <Word w="Kui mul oleks aega, läheksin ma kinno." /> For a real if, both stay in
-                    the present: <b lang="et">Kui mul on aega, lähen ma kinno.</b>
+                    <Word w="Kui mul oleks aega, läheksin ma kinno." /> For a real if, both usually
+                    stay in the present: <b lang="et">Kui mul on aega, lähen ma kinno.</b>
                   </Trans>
                 </p>
               </Prose>

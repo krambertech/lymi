@@ -10,8 +10,8 @@ msgstr ""
 msgid "<0/> means I would go. Take the <1>ma</1> form of the present from lesson {present}, <2>lähen</2>, drop its <3>-n</3>, and add <4>-ksin</4>. Every verb works this way. Tap each form in the table to hear it."
 msgstr "<0/> значит «я пошёл бы». Возьми форму настоящего времени для <1>ma</1> из урока {present}, <2>lähen</2>, отбрось <3>-n</3> и добавь <4>-ksin</4>. Так работает каждый глагол. Нажми каждую форму в таблице, чтобы её услышать."
 
-msgid "<0/> means if. When the if is imagined, English says “if I had”, then “I would”; Estonian puts both halves in the would form: <1/> For a real if, both stay in the present: <2>Kui mul on aega, lähen ma kinno.</2>"
-msgstr "<0/> значит «если» и «если бы». Когда условие воображаемое, в эстонском обе половины стоят в условной форме: <1/> Когда условие реальное, обе остаются в настоящем времени: <2>Kui mul on aega, lähen ma kinno.</2>"
+msgid "<0/> means if. When the if is imagined, English says “if I had”, then “I would”; Estonian puts both halves in the would form: <1/> For a real if, both usually stay in the present: <2>Kui mul on aega, lähen ma kinno.</2>"
+msgstr "<0/> значит «если» и «если бы». Когда условие воображаемое, в эстонском обе половины стоят в условной форме: <1/> Когда условие реальное, обе обычно остаются в настоящем времени: <2>Kui mul on aega, lähen ma kinno.</2>"
 
 msgid "<0>-ks</0> in the verb: would."
 msgstr "<0>-ks</0> в глаголе: условная форма, «бы»."
@@ -142,14 +142,17 @@ msgstr "Он или она покупает машину."
 msgid "He or she would buy the car."
 msgstr "Он или она купил бы машину."
 
-msgid "Hear a sentence, then pick what it means. Listen for <0>-ks</0>. Without it, a changed stem or <1>-s</1> means the past: <2>läksin, oli, ostis</2>."
-msgstr "Послушай предложение и выбери, что оно значит. Слушай, есть ли <0>-ks</0>. Без него изменённая основа или <1>-s</1> означают прошедшее время: <2>läksin, oli, ostis</2>."
+msgid "Hear a sentence, then pick what it means. Listen for <0>-ks</0>. Without it, a changed stem or <1>-s</1> means the past: <2>tulin, oli, ostis</2>."
+msgstr "Послушай предложение и выбери, что оно значит. Слушай, есть ли <0>-ks</0>. Без него изменённая основа или <1>-s</1> означают прошедшее время: <2>tulin, oli, ostis</2>."
 
 msgid "How many weeks would Jaan stay there? Write the number as he says it."
 msgstr "Сколько недель Яан был бы там? Напиши число так, как он его говорит."
 
 msgid "I"
 msgstr "я"
+
+msgid "I came home."
+msgstr "Я пришёл домой."
 
 msgid "I do"
 msgstr "я делаю"
@@ -163,17 +166,14 @@ msgstr "У меня было время."
 msgid "I have time."
 msgstr "У меня есть время."
 
-msgid "I went to the cinema."
-msgstr "Я пошёл в кино."
-
 msgid "I would"
 msgstr "я сделал бы"
 
+msgid "I would come home."
+msgstr "Я пришёл бы домой."
+
 msgid "I would go"
 msgstr "я пошёл бы"
-
-msgid "I would go to the cinema."
-msgstr "Я пошёл бы в кино."
 
 msgid "I would have time."
 msgstr "У меня было бы время."
@@ -202,8 +202,8 @@ msgstr "Я хотел бы кофе."
 msgid "I’d love to come."
 msgstr "Я с удовольствием поехал бы."
 
-msgid "I’m going to the cinema."
-msgstr "Я иду в кино."
+msgid "I’m coming home."
+msgstr "Я иду домой."
 
 msgid "If I had time, I’d go to the cinema."
 msgstr "Если бы у меня было время, я пошёл бы в кино."
@@ -225,6 +225,9 @@ msgstr "если, если бы; когда; как, чем"
 
 msgid "In an imagined if sentence, both halves take it: <0>Kui mul oleks aega, läheksin ma kinno.</0>"
 msgstr "В предложении с воображаемым условием она в обеих половинах: <0>Kui mul oleks aega, läheksin ma kinno.</0>"
+
+msgid "In speech you’ll often hear the form for <0>ta</0> with <1>ma</1> too: <2>ma tahaks</2>, <3>ma läheks</3>. In writing, use <4>tahaksin</4> and <5>läheksin</5>."
+msgstr "В разговоре часто услышишь форму для <0>ta</0> и с <1>ma</1>: <2>ma tahaks</2>, <3>ma läheks</3>. На письме пиши <4>tahaksin</4> и <5>läheksin</5>."
 
 msgid "Jaan"
 msgstr "Яан"

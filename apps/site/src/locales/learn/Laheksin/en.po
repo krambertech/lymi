@@ -10,8 +10,8 @@ msgstr ""
 msgid "<0/> means I would go. Take the <1>ma</1> form of the present from lesson {present}, <2>lähen</2>, drop its <3>-n</3>, and add <4>-ksin</4>. Every verb works this way. Tap each form in the table to hear it."
 msgstr "<0/> means I would go. Take the <1>ma</1> form of the present from lesson {present}, <2>lähen</2>, drop its <3>-n</3>, and add <4>-ksin</4>. Every verb works this way. Tap each form in the table to hear it."
 
-msgid "<0/> means if. When the if is imagined, English says “if I had”, then “I would”; Estonian puts both halves in the would form: <1/> For a real if, both stay in the present: <2>Kui mul on aega, lähen ma kinno.</2>"
-msgstr "<0/> means if. When the if is imagined, English says “if I had”, then “I would”; Estonian puts both halves in the would form: <1/> For a real if, both stay in the present: <2>Kui mul on aega, lähen ma kinno.</2>"
+msgid "<0/> means if. When the if is imagined, English says “if I had”, then “I would”; Estonian puts both halves in the would form: <1/> For a real if, both usually stay in the present: <2>Kui mul on aega, lähen ma kinno.</2>"
+msgstr "<0/> means if. When the if is imagined, English says “if I had”, then “I would”; Estonian puts both halves in the would form: <1/> For a real if, both usually stay in the present: <2>Kui mul on aega, lähen ma kinno.</2>"
 
 msgid "<0>-ks</0> in the verb: would."
 msgstr "<0>-ks</0> in the verb: would."
@@ -142,14 +142,17 @@ msgstr "He or she is buying the car."
 msgid "He or she would buy the car."
 msgstr "He or she would buy the car."
 
-msgid "Hear a sentence, then pick what it means. Listen for <0>-ks</0>. Without it, a changed stem or <1>-s</1> means the past: <2>läksin, oli, ostis</2>."
-msgstr "Hear a sentence, then pick what it means. Listen for <0>-ks</0>. Without it, a changed stem or <1>-s</1> means the past: <2>läksin, oli, ostis</2>."
+msgid "Hear a sentence, then pick what it means. Listen for <0>-ks</0>. Without it, a changed stem or <1>-s</1> means the past: <2>tulin, oli, ostis</2>."
+msgstr "Hear a sentence, then pick what it means. Listen for <0>-ks</0>. Without it, a changed stem or <1>-s</1> means the past: <2>tulin, oli, ostis</2>."
 
 msgid "How many weeks would Jaan stay there? Write the number as he says it."
 msgstr "How many weeks would Jaan stay there? Write the number as he says it."
 
 msgid "I"
 msgstr "I"
+
+msgid "I came home."
+msgstr "I came home."
 
 msgid "I do"
 msgstr "I do"
@@ -163,17 +166,14 @@ msgstr "I had time."
 msgid "I have time."
 msgstr "I have time."
 
-msgid "I went to the cinema."
-msgstr "I went to the cinema."
-
 msgid "I would"
 msgstr "I would"
 
+msgid "I would come home."
+msgstr "I would come home."
+
 msgid "I would go"
 msgstr "I would go"
-
-msgid "I would go to the cinema."
-msgstr "I would go to the cinema."
 
 msgid "I would have time."
 msgstr "I would have time."
@@ -202,8 +202,8 @@ msgstr "I’d like a coffee."
 msgid "I’d love to come."
 msgstr "I’d love to come."
 
-msgid "I’m going to the cinema."
-msgstr "I’m going to the cinema."
+msgid "I’m coming home."
+msgstr "I’m coming home."
 
 msgid "If I had time, I’d go to the cinema."
 msgstr "If I had time, I’d go to the cinema."
@@ -225,6 +225,9 @@ msgstr "if; when; as, than"
 
 msgid "In an imagined if sentence, both halves take it: <0>Kui mul oleks aega, läheksin ma kinno.</0>"
 msgstr "In an imagined if sentence, both halves take it: <0>Kui mul oleks aega, läheksin ma kinno.</0>"
+
+msgid "In speech you’ll often hear the form for <0>ta</0> with <1>ma</1> too: <2>ma tahaks</2>, <3>ma läheks</3>. In writing, use <4>tahaksin</4> and <5>läheksin</5>."
+msgstr "In speech you’ll often hear the form for <0>ta</0> with <1>ma</1> too: <2>ma tahaks</2>, <3>ma läheks</3>. In writing, use <4>tahaksin</4> and <5>läheksin</5>."
 
 msgid "Jaan"
 msgstr "Jaan"

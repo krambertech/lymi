@@ -152,7 +152,7 @@ msgid "handle, as on a bucket"
 msgstr "дужка, как у ведра"
 
 msgid "He should carry it home."
-msgstr "Он должен отнести её домой."
+msgstr "Он должен отнести это домой."
 
 msgid "hello"
 msgstr "привет"

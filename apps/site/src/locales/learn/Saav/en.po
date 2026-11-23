@@ -247,9 +247,6 @@ msgstr "into a good doctor"
 msgid "Jaan became a teacher."
 msgstr "Jaan became a teacher."
 
-msgid "Jaan works as a cook in a restaurant."
-msgstr "Jaan works as a cook in a restaurant."
-
 msgid "Kati writes to Mari. Pick the form for each gap: the words around it say which one."
 msgstr "Kati writes to Mari. Pick the form for each gap: the words around it say which one."
 

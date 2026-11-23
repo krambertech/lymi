@@ -247,9 +247,6 @@ msgstr "хорошим врачом (стать)"
 msgid "Jaan became a teacher."
 msgstr "Яан стал учителем."
 
-msgid "Jaan works as a cook in a restaurant."
-msgstr "Яан работает поваром в ресторане."
-
 msgid "Kati writes to Mari. Pick the form for each gap: the words around it say which one."
 msgstr "Кати пишет Мари. Выбери форму для каждого пропуска: слова вокруг подскажут, какую."
 

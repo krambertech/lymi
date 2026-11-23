@@ -36,7 +36,7 @@ export const DRILLS: DrillBank = {
       cue: { et: "Ma tahan saada …" },
       answers: ["arstiks"],
       say: "Ma tahan saada arstiks.",
-      explain: BECOME,
+      explain: BUILD,
     },
     {
       kind: "form",
@@ -158,16 +158,10 @@ export const DRILLS: DrillBank = {
       explain: BECOME,
     },
     {
-      kind: "translate",
+      kind: "dictation",
       id: "naks-kokana",
       rule: "naks",
-      prompt: msg`Jaan works as a cook in a restaurant.`,
-      answers: [
-        "Jaan töötab restoranis kokana.",
-        "Jaan töötab kokana restoranis.",
-        "Jaan töötab restoranis kokaks.",
-        "Jaan töötab kokaks restoranis.",
-      ],
+      answers: ["Jaan töötab restoranis kokana."],
       say: "Jaan töötab restoranis kokana.",
       explain: AS,
     },

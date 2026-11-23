@@ -247,9 +247,6 @@ msgstr "хорошим лікарем (стати)"
 msgid "Jaan became a teacher."
 msgstr "Яан став учителем."
 
-msgid "Jaan works as a cook in a restaurant."
-msgstr "Яан працює кухарем у ресторані."
-
 msgid "Kati writes to Mari. Pick the form for each gap: the words around it say which one."
 msgstr "Каті пише Марі. Обери форму для кожного пропуску: слова довкола підкажуть, яку."
 
@@ -449,7 +446,7 @@ msgid "With <et>-na</et>, only the noun takes the ending: <et>uue arstina</et>."
 msgstr "З <et>-na</et> закінчення отримує лише іменник: <et>uue arstina</et>."
 
 msgid "With a time, <0>-ks</0> says by when, or how long something is planned for: <1/>, by Friday; <2/>, for a week. With a meal or an occasion, it says what for: <3>hommikusöögiks</3>, for breakfast. A day can take either meaning: <4>reedeks tagasi</4>, back by Friday; <5>laupäevaks</5>, for Saturday. Tap a line to hear it."
-msgstr "Коли йдеться про час, <0>-ks</0> каже «до коли» або на скільки щось заплановано: <1/> — «до п’ятниці», тобто не пізніше; <2/> — «на тиждень». З прийомом їжі чи подією — «на що»: <3>hommikusöögiks</3> — «на сніданок». День може мати обидва значення: <4>reedeks tagasi</4> — «назад до п’ятниці»; <5>laupäevaks</5> — «на суботу». Торкнися рядка, щоб послухати."
+msgstr "Коли йдеться про час, <0>-ks</0> каже «до коли» або на скільки щось заплановано: <1/> — «до п’ятниці», тобто не пізніше; <2/> — «на тиждень». З прийомом їжі чи подією — «на що»: <3>hommikusöögiks</3> — «на сніданок». День може мати обидва значення: <4>reedeks tagasi</4> — «повернуся до п’ятниці»; <5>laupäevaks</5> — «на суботу». Торкнися рядка, щоб послухати."
 
 msgid "Words"
 msgstr "Слова"

@@ -91,7 +91,7 @@ const written = (said: string, kind: string): SentenceDrill => ({
 
 export const DRILLS: DrillBank = {
   rules: {
-    ei: { label: msg`Verb forms: after <et>ei</et>, and <et>olema</et>`, section: "translate" },
+    ei: { label: msg`Verb forms: after <et>ei</et>, and <et>olema</et>`, section: "answering" },
     place: { label: msg`Places with <et>-s</et> and <et>-l</et>`, section: "translate" },
     ask: { label: msg`Asking questions`, section: "ask" },
   },

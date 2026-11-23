@@ -353,7 +353,7 @@ export function NumbridLesson() {
         options: [
           { id: "250", label: t`€2.50` },
           { id: "650", label: t`€6.50` },
-          { id: "1250", label: t`€12.50` },
+          { id: "615", label: t`€6.15` },
         ],
         answer: "250",
         line: 5,

@@ -37,11 +37,11 @@ msgstr "<et>Kaks</et> чи <et>kuus</et> у реченні"
 msgid "<et>Tuhat</et> alone, with no “one” in front."
 msgstr "Лише <et>tuhat</et>, без «один» перед ним."
 
-msgid "€12.50"
-msgstr "12,50 €"
-
 msgid "€2.50"
 msgstr "2,50 €"
+
+msgid "€6.15"
+msgstr "6,15 €"
 
 msgid "€6.50"
 msgstr "6,50 €"

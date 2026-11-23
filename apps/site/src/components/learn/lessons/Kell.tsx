@@ -470,22 +470,14 @@ const IN_WORDS = [
   at(9, 40),
 ];
 
-const PAST_OR_TO = [at(9, 10), at(5, 20), at(8, 5), at(7, 50), at(2, 40), at(11, 55)];
-
-const otherHour = (hour: number, by: number) => ((hour - 1 + by + 12) % 12) + 1;
-
-export const confusedWith = ({ hour, minute }: ClockTime): ClockTime[] =>
-  minute < 30
-    ? [
-        at(otherHour(hour, -1), (60 - minute) as Minute),
-        at(otherHour(hour, -1), minute),
-        at(hour, (60 - minute) as Minute),
-      ]
-    : [
-        at(otherHour(hour, 1), (60 - minute) as Minute),
-        at(otherHour(hour, 1), minute),
-        at(hour, (60 - minute) as Minute),
-      ];
+const PAST_OR_TO: readonly { time: ClockTime; others: readonly ClockTime[] }[] = [
+  { time: at(9, 10), others: [at(8, 50), at(8, 10), at(7, 50)] },
+  { time: at(5, 20), others: [at(4, 40), at(4, 20), at(5, 40)] },
+  { time: at(8, 5), others: [at(7, 55), at(8, 55), at(9, 5)] },
+  { time: at(7, 50), others: [at(8, 10), at(8, 50), at(9, 10)] },
+  { time: at(2, 40), others: [at(3, 20), at(3, 40), at(2, 20)] },
+  { time: at(11, 55), others: [at(12, 5), at(11, 5), at(10, 55)] },
+];
 
 type PastToItem = ChoiceItem & { pair: readonly [string, string] };
 
@@ -615,8 +607,8 @@ export function KellLesson() {
 
   const pastToItems = useMemo<PastToItem[]>(
     () =>
-      PAST_OR_TO.map((time, i) => {
-        const four = [time, ...confusedWith(time)].map((each) => ({
+      PAST_OR_TO.map(({ time, others }, i) => {
+        const four = [time, ...others].map((each) => ({
           id: timeClip(each),
           label: timeDigits(each),
         }));
@@ -668,9 +660,9 @@ export function KellLesson() {
         id: "home",
         ask: t`When is Mari at home?`,
         options: [
-          { id: "230", label: "2:30" },
-          { id: "200", label: "2:00" },
           { id: "300", label: "3:00" },
+          { id: "230", label: "2:30" },
+          { id: "330", label: "3:30" },
         ],
         answer: "300",
         line: 3,
@@ -1074,7 +1066,7 @@ export function KellLesson() {
                 <p>
                   <Trans>
                     Each round shows a time in digits. Type how you say it, without{" "}
-                    <span lang="et">kell on</span>.
+                    <b lang="et">kell on</b>.
                   </Trans>
                 </p>
               </Prose>
@@ -1148,9 +1140,8 @@ export function KellLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Mari leaves Jaan a message about her afternoon. Without{" "}
-                    <span lang="et">on</span>, <Word w="kell kuus" /> says when: at six. Listen for
-                    each time.
+                    Mari leaves Jaan a message about her afternoon. Without <b lang="et">on</b>,{" "}
+                    <Word w="kell kuus" /> says when: at six. Listen for each time.
                   </Trans>
                 </p>
               </Prose>

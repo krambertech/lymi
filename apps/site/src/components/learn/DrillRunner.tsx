@@ -66,7 +66,7 @@ export function DrillRunner(props: Props) {
       const body = bodyRef.current;
       if (body && !body.contains(document.activeElement))
         body
-          .querySelector<HTMLElement>("input:not([readonly]), button")
+          .querySelector<HTMLElement>("input:not([readonly]), textarea:not([readonly]), button")
           ?.focus({ preventScroll: true });
     }
   }, [run.status, run.turn]);

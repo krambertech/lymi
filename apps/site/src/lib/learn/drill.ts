@@ -43,7 +43,25 @@ export interface GapDrill extends Asked {
   listen: "first" | "after";
 }
 
-export type DrillItem = FormDrill | ChoiceDrill | GapDrill;
+interface Written extends Asked {
+  answers: readonly [string, ...string[]];
+  confusable?: readonly string[];
+}
+
+export type SentenceDrill = Written &
+  (
+    | { kind: "dictation" }
+    | { kind: "translate"; prompt: MessageDescriptor }
+    | { kind: "rewrite"; from: string; cue: MessageDescriptor }
+    | { kind: "ask"; reply: string }
+    | { kind: "build"; words: readonly string[]; cue?: MessageDescriptor }
+  );
+
+export type FixDrill = Written & { kind: "fix"; wrong: string; prompt?: MessageDescriptor };
+
+export type WrittenDrill = SentenceDrill | FixDrill;
+
+export type DrillItem = FormDrill | ChoiceDrill | GapDrill | WrittenDrill;
 
 export interface DrillRule {
   label: MessageDescriptor;
@@ -73,6 +91,12 @@ export function drawOptions<T>(
 
 export function drillWord(item: DrillItem): string {
   switch (item.kind) {
+    case "dictation":
+    case "translate":
+    case "rewrite":
+    case "ask":
+    case "build":
+    case "fix":
     case "form":
       return item.answers[0];
     case "choice":

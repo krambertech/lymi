@@ -25,6 +25,7 @@ import {
   seeded,
   strategyScore,
 } from "./giveaways";
+import { sentenceProblems } from "./sentences";
 
 const BANKS = import.meta.glob<{ DRILLS: DrillBank }>(
   "../../../components/learn/lessons/*.drills.ts",
@@ -80,6 +81,16 @@ function estonianOf(item: DrillItem): string {
         item.say,
         ...[item.answer, ...item.wrong].map((word) => `${item.before}${word}${item.after}`),
       ].join(" ");
+    case "dictation":
+    case "translate":
+    case "fix":
+      return [item.say, ...item.answers, ...(item.confusable ?? [])].join(" ");
+    case "rewrite":
+      return [item.say, item.from, ...item.answers, ...(item.confusable ?? [])].join(" ");
+    case "ask":
+      return [item.say, item.reply, ...item.answers, ...(item.confusable ?? [])].join(" ");
+    case "build":
+      return [item.say, ...item.words, ...item.answers, ...(item.confusable ?? [])].join(" ");
   }
 }
 
@@ -109,6 +120,13 @@ const picks = (item: DrillItem, read: (text: DrillText) => string): Pick | null 
       };
     case "gap":
       return { answer: item.answer, wrong: item.wrong };
+    case "dictation":
+    case "translate":
+    case "rewrite":
+    case "ask":
+    case "build":
+    case "fix":
+      return null;
   }
 };
 
@@ -191,6 +209,18 @@ describe.each(banks)("drill bank $slug", ({ slug, file, bank }) => {
       ];
     });
     expectNone(problems, "Options (checklists.md#drill-banks)");
+  });
+
+  it("can mark its written sentences fairly", () => {
+    const problems = bank.items.flatMap((item) =>
+      "answers" in item && item.kind !== "form"
+        ? sentenceProblems(
+            { ...item, src: item.say },
+            { verified: VERIFIED as Record<string, string>, clipSays: (said) => said },
+          ).map((problem) => `${file}: ${problem}`)
+        : [],
+    );
+    expectNone(problems, "Written sentences can be marked fairly (checklists.md#quizzes)");
   });
 
   it("keeps a gap’s sentence short enough for a phone", () => {

@@ -25,7 +25,7 @@ const MEANS: Record<string, MessageDescriptor> = {
 };
 
 const NO_ENDING = msg`After <et>ei</et>, the verb drops its ending.`;
-const OLE = msg`After <et>ei</et>, <et>olema</et> is always <et>ole</et>; <et>pole</et> says the same.`;
+const OLE = msg`After <et>ei</et>, <et>olema</et> is always <et>ole</et>. <et>Pole</et> is <et>ei ole</et> in one word.`;
 
 const typed = (stem: string, person: Person): FormDrill => ({
   kind: "form",

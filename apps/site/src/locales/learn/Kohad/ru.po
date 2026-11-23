@@ -94,6 +94,9 @@ msgstr "кафе"
 msgid "Dad"
 msgstr "Папа"
 
+msgid "Dad is at the market."
+msgstr "Папа на рынке."
+
 msgid "Each name took -s, and the -s says in. Tallinn took an extra a before it."
 msgstr "К каждому названию добавилось -s, и это -s значит «в». К Tallinn перед ним добавилось ещё и a."
 
@@ -193,6 +196,9 @@ msgstr "Я работаю в городе."
 msgid "I’m at work."
 msgstr "Я на работе."
 
+msgid "In a bar"
+msgstr "В баре"
+
 msgid "in a café"
 msgstr "в кафе"
 
@@ -204,9 +210,6 @@ msgstr "в больнице"
 
 msgid "In a hospital"
 msgstr "В больнице"
-
-msgid "In a school canteen"
-msgstr "В школьной столовой"
 
 msgid "In a town, a country or a building: <et>-s</et>."
 msgstr "В городе, стране или здании: <et>-s</et>."
@@ -388,6 +391,9 @@ msgstr "Окончание <0>-s</0> значит «в»: <1>Eestis, Tallinnas, 
 msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you’re doing something rather than inside a building: <2/>, at work."
 msgstr "Второе окончание — <0>-l</0>. Оно значит «на», когда речь о поверхности: <1/>, на столе. А ещё «на» там, где ты что-то делаешь, а не просто находишься в здании: <2/>, на работе."
 
+msgid "The picture is on the table."
+msgstr "Картина на столе."
+
 msgid "The picture is on the wall."
 msgstr "Картина на стене."
 
@@ -409,6 +415,9 @@ msgstr "Они учатся в Тарту."
 msgid "They work in an office."
 msgstr "Они работают в офисе."
 
+msgid "They’re at work."
+msgstr "Они на работе."
+
 msgid "town, city"
 msgstr "город"
 
@@ -423,6 +432,9 @@ msgstr "стена"
 
 msgid "We live in Estonia."
 msgstr "Мы живём в Эстонии."
+
+msgid "We live in Tartu."
+msgstr "Мы живём в Тарту."
 
 msgid "We live on Saaremaa."
 msgstr "Мы живём на Сааремаа."

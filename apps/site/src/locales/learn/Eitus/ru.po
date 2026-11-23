@@ -58,14 +58,11 @@ msgstr "После <0>ei</0> глагол <1>olema</1> всегда в форм�
 msgid "After <0>ei</0>, the verb drops its ending."
 msgstr "После <0>ei</0> глагол теряет окончание."
 
-msgid "After <et>ei</et>, <et>olema</et> is always <et>ole</et>; <et>pole</et> says the same."
-msgstr "После <et>ei</et> глагол <et>olema</et> всегда в форме <et>ole</et>; <et>pole</et> значит то же самое."
+msgid "After <et>ei</et>, <et>olema</et> is always <et>ole</et>. <et>Pole</et> is <et>ei ole</et> in one word."
+msgstr "После <et>ei</et> глагол <et>olema</et> всегда в форме <et>ole</et>. <et>Pole</et> — это <et>ei ole</et> одним словом."
 
 msgid "After <et>ei</et>, the verb drops its ending."
 msgstr "После <et>ei</et> глагол теряет окончание."
-
-msgid "All eight, every yes and every no."
-msgstr "Все восемь, и каждое «да», и каждое «нет»."
 
 msgid "All of them. <0>Ei</0>, and the ending goes."
 msgstr "Все. <0>Ei</0>, и окончание уходит."
@@ -81,6 +78,9 @@ msgstr "Все шесть, каждое с <0>ei</0> и без окончани�
 
 msgid "All six, each without its ending."
 msgstr "Все шесть, каждое без окончания."
+
+msgid "All six, every yes and every no."
+msgstr "Все шесть, и каждое «да», и каждое «нет»."
 
 msgid "am not, is not, are not"
 msgstr "не быть: я не, он не, они не"
@@ -208,11 +208,17 @@ msgstr "я не читаю"
 msgid "I don’t speak Estonian"
 msgstr "я не говорю по-эстонски"
 
+msgid "I don’t study."
+msgstr "Я не учусь."
+
 msgid "I read"
 msgstr "я читаю"
 
 msgid "I speak"
 msgstr "я говорю"
+
+msgid "I study."
+msgstr "Я учусь."
 
 msgid "I’m not tired"
 msgstr "я не устал (не устала)"
@@ -336,11 +342,11 @@ msgstr "Перепиши предложение"
 msgid "Say no"
 msgstr "Ответь «нет»"
 
-msgid "She doesn’t work."
-msgstr "Она не работает."
+msgid "She doesn’t drink."
+msgstr "Она не пьёт."
 
-msgid "She works."
-msgstr "Она работает."
+msgid "She drinks."
+msgstr "Она пьёт."
 
 msgid "Six endings"
 msgstr "Шесть окончаний"
@@ -365,12 +371,6 @@ msgstr "Одинаково для всех лиц."
 
 msgid "The verb without its ending"
 msgstr "Глагол без окончания"
-
-msgid "They don’t eat."
-msgstr "Они не едят."
-
-msgid "They eat."
-msgstr "Они едят."
 
 msgid "To answer no, say <0>ei</0>, or <1>ei</1> with the verb from the question: <2>Kas sa loed? Ei loe.</2>"
 msgstr "Чтобы ответить «нет», скажи <0>ei</0> или <1>ei</1> с глаголом из вопроса: <2>Kas sa loed? Ei loe.</2>"
@@ -428,12 +428,6 @@ msgstr "Глагол"
 
 msgid "Water"
 msgstr "Воду"
-
-msgid "We don’t speak."
-msgstr "Мы не говорим."
-
-msgid "We speak."
-msgstr "Мы говорим."
 
 msgid "What does Jaan drink?"
 msgstr "Что пьёт Яан?"

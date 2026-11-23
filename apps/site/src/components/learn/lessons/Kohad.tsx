@@ -81,11 +81,11 @@ const PLACE_MEANS: Record<Place["place"] | Where, MessageDescriptor> = {
 };
 
 const WRITTEN: readonly { means: MessageDescriptor; also: readonly string[] }[] = [
-  { means: msg`I live in Tartu.`, also: ["Mina elan Tartus.", "Elan Tartus."] },
-  { means: msg`Mum is at the market.`, also: [] },
+  { means: msg`We live in Tartu.`, also: ["Meie elame Tartus.", "Elame Tartus."] },
+  { means: msg`Dad is at the market.`, also: [] },
   { means: msg`We live in Estonia.`, also: ["Meie elame Eestis.", "Elame Eestis."] },
-  { means: msg`I’m at work.`, also: ["Mina olen tööl.", "Olen tööl."] },
-  { means: msg`The book is on the table.`, also: [] },
+  { means: msg`They’re at work.`, also: ["Nemad on tööl."] },
+  { means: msg`The picture is on the table.`, also: [] },
   { means: msg`He’s studying at school.`, also: ["Tema õpib koolis."] },
 ];
 
@@ -502,11 +502,11 @@ export function KohadLesson() {
         id: "job",
         ask: t`Where does Mari work?`,
         options: [
-          { id: "cafe", label: t`In a café` },
           { id: "hospital", label: t`In a hospital` },
-          { id: "canteen", label: t`In a school canteen` },
+          { id: "cafe", label: t`In a café` },
+          { id: "bar", label: t`In a bar` },
         ],
-        answer: "hospital",
+        answer: "cafe",
         line: 2,
       },
       {

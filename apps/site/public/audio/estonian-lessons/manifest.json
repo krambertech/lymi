@@ -10933,7 +10933,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "eitus/d-mari": {
-    "text": "Kas sa loed? Ei, ma ei loe. Ma olen väsinud. Kas sa jood kohvi? Ei joo. Ma joon teed. Kas Peeter on kodus? Pole. Ta töötab.",
+    "text": "Kas sa loed? Ei, ma ei loe. Ma olen väsinud. Kas sa jood kohvi? Ei joo. Ma joon vett. Kas Peeter on kodus? Pole. Ta töötab.",
     "model": "eleven_v4",
     "turns": [
       {
@@ -10959,7 +10959,7 @@
         "voice": "jGja51dd7gcoK0zkxeyg",
         "sentences": [
           "Ei joo.",
-          "Ma joon teed."
+          "Ma joon vett."
         ]
       },
       {
@@ -10977,33 +10977,8 @@
       }
     ]
   },
-  "kusimused/millal-sa-to2o2tad": {
-    "text": "Millal sa töötad?",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "kusimused/miks-sa-eesti-keelt-o3pid": {
-    "text": "Miks sa eesti keelt õpid?",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "kusimused/kuidas-sa-eesti-keelt-ra2a2gid": {
     "text": "Kuidas sa eesti keelt räägid?",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "kusimused/kui-palju-kohvi-sa-jood": {
-    "text": "Kui palju kohvi sa jood?",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "kusimused/kas-sa-elad-tallinnas": {
-    "text": "Kas sa elad Tallinnas?",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "kusimused/kas-sa-ra2a2gid-eesti-keelt": {
-    "text": "Kas sa räägid eesti keelt?",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -11012,18 +10987,8 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "kusimused/kas-ta-on-kodus": {
-    "text": "Kas ta on kodus?",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "kusimused/kus-ta-on": {
     "text": "Kus ta on?",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "kusimused/kas-sa-jood-kohvi": {
-    "text": "Kas sa jood kohvi?",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -11099,28 +11064,8 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "kohad/ma-elan-tartus": {
-    "text": "Ma elan Tartus.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "kohad/ema-on-turul": {
-    "text": "Ema on turul.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "kohad/me-elame-eestis": {
     "text": "Me elame Eestis.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "kohad/ma-olen-to2o2l": {
-    "text": "Ma olen tööl.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "kohad/raamat-on-laual": {
-    "text": "Raamat on laual.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -11150,7 +11095,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "kohad/p-mari": {
-    "text": "Tere, Kati! Ma olen täna tööl. Ma töötan haiglas. Jaan on kodus. Ema on turul. Isa on Tartus. Kus sina oled?",
+    "text": "Tere, Kati! Ma olen täna tööl. Ma töötan kohvikus. Jaan on kodus. Ema on turul. Isa on Tartus. Kus sina oled?",
     "model": "eleven_v4",
     "voice": "xd3ufyLcuKKZZXDZO9H7"
   },
@@ -11196,6 +11141,61 @@
   },
   "kohad/kus-ta-o3pib": {
     "text": "Kus ta õpib?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/millal-nad-to2o2tavad": {
+    "text": "Millal nad töötavad?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/miks-sa-oled-kodus": {
+    "text": "Miks sa oled kodus?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/kui-palju-kohvi-nad-joovad": {
+    "text": "Kui palju kohvi nad joovad?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/kas-ta-ra2a2gib-eesti-keelt": {
+    "text": "Kas ta räägib eesti keelt?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/kas-sa-to2o2tad-kodus": {
+    "text": "Kas sa töötad kodus?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/kas-nad-joovad-kohvi": {
+    "text": "Kas nad joovad kohvi?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohad/me-elame-tartus": {
+    "text": "Me elame Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohad/isa-on-turul": {
+    "text": "Isa on turul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohad/nad-on-to2o2l": {
+    "text": "Nad on tööl.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohad/pilt-on-laual": {
+    "text": "Pilt on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/kas-te-elate-tartus": {
+    "text": "Kas te elate Tartus?",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

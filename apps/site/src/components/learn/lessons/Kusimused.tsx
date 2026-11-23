@@ -167,13 +167,13 @@ const KAS: readonly { s: Id; q: Id; rest: string }[] = [
 ];
 
 const TRANSLATED_MEANS: readonly MessageDescriptor[] = [
-  msg`Do you live in Tallinn?`,
+  msg`Do you all live in Tartu?`,
   msg`Where do you work?`,
-  msg`Do you speak Estonian?`,
+  msg`Does he speak Estonian?`,
   msg`Who speaks Estonian?`,
-  msg`Is he at home?`,
+  msg`Do you work at home?`,
   msg`Where is he?`,
-  msg`Do you drink coffee?`,
+  msg`Do they drink coffee?`,
   msg`What are you reading?`,
 ];
 

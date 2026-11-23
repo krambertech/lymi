@@ -94,6 +94,9 @@ msgstr "café"
 msgid "Dad"
 msgstr "Dad"
 
+msgid "Dad is at the market."
+msgstr "Dad is at the market."
+
 msgid "Each name took -s, and the -s says in. Tallinn took an extra a before it."
 msgstr "Each name took -s, and the -s says in. Tallinn took an extra a before it."
 
@@ -193,6 +196,9 @@ msgstr "I work in town."
 msgid "I’m at work."
 msgstr "I’m at work."
 
+msgid "In a bar"
+msgstr "In a bar"
+
 msgid "in a café"
 msgstr "in a café"
 
@@ -204,9 +210,6 @@ msgstr "in a hospital"
 
 msgid "In a hospital"
 msgstr "In a hospital"
-
-msgid "In a school canteen"
-msgstr "In a school canteen"
 
 msgid "In a town, a country or a building: <et>-s</et>."
 msgstr "In a town, a country or a building: <et>-s</et>."
@@ -388,6 +391,9 @@ msgstr "The ending <0>-s</0> says in: <1>Eestis, Tallinnas, koolis</1>."
 msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you’re doing something rather than inside a building: <2/>, at work."
 msgstr "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you’re doing something rather than inside a building: <2/>, at work."
 
+msgid "The picture is on the table."
+msgstr "The picture is on the table."
+
 msgid "The picture is on the wall."
 msgstr "The picture is on the wall."
 
@@ -409,6 +415,9 @@ msgstr "They study in Tartu."
 msgid "They work in an office."
 msgstr "They work in an office."
 
+msgid "They’re at work."
+msgstr "They’re at work."
+
 msgid "town, city"
 msgstr "town, city"
 
@@ -423,6 +432,9 @@ msgstr "wall"
 
 msgid "We live in Estonia."
 msgstr "We live in Estonia."
+
+msgid "We live in Tartu."
+msgstr "We live in Tartu."
 
 msgid "We live on Saaremaa."
 msgstr "We live on Saaremaa."

@@ -130,6 +130,12 @@ msgstr "бо, тому що"
 msgid "Because I live in Tallinn."
 msgstr "Бо я живу в Таллінні."
 
+msgid "Do they drink coffee?"
+msgstr "Вони п’ють каву?"
+
+msgid "Do you all live in Tartu?"
+msgstr "Ви живете в Тарту?"
+
 msgid "Do you drink coffee?"
 msgstr "Ти п’єш каву?"
 
@@ -138,6 +144,12 @@ msgstr "Ти живеш у Таллінні?"
 
 msgid "Do you speak Estonian?"
 msgstr "Ти говориш естонською?"
+
+msgid "Do you work at home?"
+msgstr "Ти працюєш удома?"
+
+msgid "Does he speak Estonian?"
+msgstr "Він говорить естонською?"
 
 msgid "Each round gives an answer. Write the question it answers: start with the question word, and when the answer says <0>ma</0>, ask with <1>sa</1>."
 msgstr "У кожному раунді є відповідь. Напиши питання до неї: почни з питального слова, а якщо у відповіді <0>ma</0>, питай через <1>sa</1>."
@@ -246,9 +258,6 @@ msgstr "у Тарту"
 
 msgid "In Tartu"
 msgstr "У Тарту"
-
-msgid "Is he at home?"
-msgstr "Він удома?"
 
 msgid "Is he or she at home?"
 msgstr "Він чи вона вдома?"

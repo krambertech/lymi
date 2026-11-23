@@ -410,9 +410,8 @@ const YES_OR_NO: readonly {
   no: MessageDescriptor;
 }[] = [
   { stem: "oota", person: "sa", long: "Sina", yes: msg`You wait.`, no: msg`You don’t wait.` },
-  { stem: "tööta", person: "ta", long: "Tema", yes: msg`She works.`, no: msg`She doesn’t work.` },
-  { stem: "söö", person: "nad", long: "Nemad", yes: msg`They eat.`, no: msg`They don’t eat.` },
-  { stem: "räägi", person: "me", long: "Meie", yes: msg`We speak.`, no: msg`We don’t speak.` },
+  { stem: "joo", person: "ta", long: "Tema", yes: msg`She drinks.`, no: msg`She doesn’t drink.` },
+  { stem: "õpi", person: "ma", long: "Mina", yes: msg`I study.`, no: msg`I don’t study.` },
 ];
 
 interface PairedItem extends ChoiceItem {
@@ -565,7 +564,16 @@ export function EitusLesson() {
             id: `${mode ? "no" : "yes"}-${stem}-${person}`,
             prompt: i18n._(mode ? no : yes),
             src: src(text),
-            answers: [text, `${long}${rest(text)}`, ...(mode ? [] : dropped(text))],
+            answers: [
+              text,
+              `${long}${rest(text)}`,
+              ...(mode ? [] : dropped(text)),
+              ...(person === "sa"
+                ? mode
+                  ? ["Te ei oota.", "Teie ei oota."]
+                  : ["Te ootate.", "Teie ootate.", "Ootate."]
+                : []),
+            ] as [string, ...string[]],
             pair: [mode ? "no" : "yes", text] as const,
           };
         });
@@ -601,7 +609,7 @@ export function EitusLesson() {
           { id: "tea", label: t`Tea` },
           { id: "water", label: t`Water` },
         ],
-        answer: "tea",
+        answer: "water",
         line: 5,
       },
       {
@@ -1010,10 +1018,10 @@ export function EitusLesson() {
                 id="yes-or-no"
                 title={<Trans>Write it in Estonian</Trans>}
                 items={yesNoItems}
-                rounds={8}
+                rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All eight, every yes and every no.</Trans>
+                    <Trans>All six, every yes and every no.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Check whether each one meant yes or no.</Trans>
                   ) : (

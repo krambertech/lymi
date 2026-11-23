@@ -49,7 +49,7 @@ const TRANSLATED: readonly {
   { index: 7, prompt: msg`Jaan lives in Pärnu.`, also: [] },
   { index: 9, prompt: msg`They study in Tartu.`, also: ["Nemad õpivad Tartus."] },
   { index: 8, prompt: msg`The picture is on the wall.`, also: [] },
-  { index: 1, prompt: msg`Mum is at the market.`, also: [] },
+  { index: 1, prompt: msg`Dad is at the market.`, also: [] },
 ];
 
 const translated = ({ index, prompt, also }: (typeof TRANSLATED)[number]): SentenceDrill => {

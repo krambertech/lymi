@@ -47,13 +47,13 @@ const asked = ({ word, reply, answers }: Asked): SentenceDrill => ({
 });
 
 const MEANS: readonly MessageDescriptor[] = [
-  msg`Do you live in Tallinn?`,
+  msg`Do you all live in Tartu?`,
   msg`Where do you work?`,
-  msg`Do you speak Estonian?`,
+  msg`Does he speak Estonian?`,
   msg`Who speaks Estonian?`,
-  msg`Is he at home?`,
+  msg`Do you work at home?`,
   msg`Where is he?`,
-  msg`Do you drink coffee?`,
+  msg`Do they drink coffee?`,
   msg`What are you reading?`,
 ];
 
@@ -113,9 +113,9 @@ export const DRILLS: DrillBank = {
     },
     ...KUSIMUSED_ASKED.map(asked),
     ...[0, 1, 2, 3, 5, 7].map(translated),
-    made("Sa elad Tallinnas.", 0),
-    made("Sa räägid eesti keelt.", 2),
-    made("Ta on kodus.", 4),
-    made("Sa jood kohvi.", 6),
+    made("Te elate Tartus.", 0),
+    made("Ta räägib eesti keelt.", 2),
+    made("Sa töötad kodus.", 4),
+    made("Nad joovad kohvi.", 6),
   ],
 };

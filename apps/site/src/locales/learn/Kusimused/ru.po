@@ -130,6 +130,12 @@ msgstr "потому что"
 msgid "Because I live in Tallinn."
 msgstr "Потому что я живу в Таллине."
 
+msgid "Do they drink coffee?"
+msgstr "Они пьют кофе?"
+
+msgid "Do you all live in Tartu?"
+msgstr "Вы живёте в Тарту?"
+
 msgid "Do you drink coffee?"
 msgstr "Ты пьёшь кофе?"
 
@@ -138,6 +144,12 @@ msgstr "Ты живёшь в Таллине?"
 
 msgid "Do you speak Estonian?"
 msgstr "Ты говоришь по-эстонски?"
+
+msgid "Do you work at home?"
+msgstr "Ты работаешь дома?"
+
+msgid "Does he speak Estonian?"
+msgstr "Он говорит по-эстонски?"
 
 msgid "Each round gives an answer. Write the question it answers: start with the question word, and when the answer says <0>ma</0>, ask with <1>sa</1>."
 msgstr "В каждом раунде есть ответ. Напиши к нему вопрос: начни с вопросительного слова, а если в ответе <0>ma</0>, спрашивай через <1>sa</1>."
@@ -246,9 +258,6 @@ msgstr "в Тарту"
 
 msgid "In Tartu"
 msgstr "В Тарту"
-
-msgid "Is he at home?"
-msgstr "Он дома?"
 
 msgid "Is he or she at home?"
 msgstr "Он или она дома?"

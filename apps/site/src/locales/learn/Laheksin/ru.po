@@ -67,6 +67,9 @@ msgstr "Вежливая просьба"
 msgid "Bake cakes with her grandmother"
 msgstr "Пекла бы с бабушкой пироги"
 
+msgid "Both forms are correct for every person: <0>ma tahaksin</0> or <1>ma tahaks</1>, <2>me läheksime</2> or <3>me läheks</3>. The short one, like the form for <4>ta</4>, is common in speech."
+msgstr "Обе формы правильные для каждого лица: <0>ma tahaksin</0> или <1>ma tahaks</1>, <2>me läheksime</2> или <3>me läheks</3>. Короткая, как форма для <4>ta</4>, обычна в разговоре."
+
 msgid "can, to get"
 msgstr "мочь, получать"
 
@@ -231,9 +234,6 @@ msgstr "если, если бы; когда; как, чем"
 
 msgid "In an imagined if sentence, both halves take it: <0>Kui mul oleks aega, läheksin ma kinno.</0>"
 msgstr "В предложении с воображаемым условием она в обеих половинах: <0>Kui mul oleks aega, läheksin ma kinno.</0>"
-
-msgid "In speech you’ll often hear the form for <0>ta</0> with <1>ma</1> too: <2>ma tahaks</2>, <3>ma läheks</3>. In careful writing, <4>tahaksin</4> and <5>läheksin</5> are more usual."
-msgstr "В разговоре часто услышишь форму для <0>ta</0> и с <1>ma</1>: <2>ma tahaks</2>, <3>ma läheks</3>. В аккуратном письме привычнее <4>tahaksin</4> и <5>läheksin</5>."
 
 msgid "Jaan"
 msgstr "Яан"

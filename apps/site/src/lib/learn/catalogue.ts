@@ -68,7 +68,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian present tense`,
         et: "Ma loen",
         minutes: 10,
-        blurb: msg`A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad on ten everyday verbs. Every sentence is read aloud.`,
+        blurb: msg`A free lesson on Estonian verbs in the present tense: the -ma infinitive, the stem, and the six endings -n, -d, -b, -me, -te and -vad on ten everyday verbs. Every sentence is read aloud.`,
       },
       {
         slug: "eitus",
@@ -229,7 +229,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`The three forms of an Estonian verb`,
         et: "Lugema, lugeda, loen",
         minutes: 12,
-        blurb: msg`A free lesson on the three forms of an Estonian verb, lugema, lugeda and loen: how the -da form is made with -da, -ta, -la, -na or -a, including teha, näha, süüa and juua, and the -ge and -ke commands built on it. Every word and sentence is read aloud.`,
+        blurb: msg`A free lesson on the three forms of an Estonian verb, lugema, lugeda and loen: how the -da infinitive is made with -da, -ta, -la, -na or -a, including teha, näha, süüa and juua, and the -ge and -ke commands built on it. Every word and sentence is read aloud.`,
       },
       {
         slug: "tegevusnimed",
@@ -237,7 +237,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian infinitives after other verbs`,
         et: "Pean minema, tahan lugeda",
         minutes: 12,
-        blurb: msg`A free lesson on which Estonian verbs take the -da form after them and which take the -ma form: tahan lugeda but pean lugema, with võin, saan, oskan, tohin, proovin, armastan and mulle meeldib on one side and hakkan, lähen, tule and jään on the other. Every sentence is read aloud.`,
+        blurb: msg`A free lesson on which Estonian verbs take the -da infinitive after them and which take the -ma infinitive: tahan lugeda but pean lugema, with võin, saan, oskan, tohin, proovin, armastan and mulle meeldib on one side and hakkan, lähen, tule and jään on the other. Every sentence is read aloud.`,
       },
       {
         slug: "modaalverbid",

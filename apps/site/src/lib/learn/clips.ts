@@ -198,7 +198,7 @@ export const PAEVAD_SENTENCES = [
   ...WEEK.map((day) => `Täna on ${day}.`),
   ...WEEK.map((day) => `Homme on ${day}.`),
 ];
-/** The negation lesson's present-tense verbs, each by its stem: the ma form without its -n. */
+/** The negation lesson's present-tense verbs, each by its stem: the I form of the present without its -n. */
 export const NEGATION_VERBS = [
   { inf: "lugema", stem: "loe" },
   { inf: "rääkima", stem: "räägi" },
@@ -441,7 +441,7 @@ export const PRONOUN_SENTENCES = {
   "s-nad-vasinud": "Nad on väsinud.",
 } as const;
 
-/** The verbs of the present-tense lesson: the -ma form and the stem the endings go on. */
+/** The verbs of the present-tense lesson: the -ma infinitive and the stem the endings go on. */
 export const PRESENT_VERBS = [
   { verb: "elama", stem: "ela" },
   { verb: "õppima", stem: "õpi" },
@@ -724,7 +724,7 @@ export const KELL_WORDS = [
 ] as const;
 
 /**
- * The commands lesson's verbs from the present-tense lesson, each with its ma form and its stem,
+ * The commands lesson's verbs from the present-tense lesson, each with its I form of the present and its stem,
  * which is the command to one person. Checked in ÕS 2025 on Sõnaveeb (EKI morphology).
  */
 export const KASKIV_STEMS = [
@@ -744,7 +744,7 @@ export const commandTo = (stem: string, no = false) =>
 export const notSentence = (stem: string) => `Ma ei ${stem}.`;
 
 /**
- * Everyday commands: the verb, its ma form, the command to one person, and to more than one or
+ * Everyday commands: the verb, its I form of the present, the command to one person, and to more than one or
  * politely. Checked in ÕS 2025 on Sõnaveeb: istuge, tulge, oodake, kuulake, vaadake, rääkige.
  */
 export const KASKIV_EVERYDAY = [
@@ -1241,11 +1241,11 @@ const TALLINN_CLIPS: Record<string, Clip> = {
 
 /**
  * The lesson on can, may and must. Checked in ÕS 2025 on Sõnaveeb: oskama, saama, võima and
- * tohtima take the -da form (“mida teha”), pidama the -ma form (“mida tegema”), tulema as “has to”
+ * tohtima take the -da infinitive (“mida teha”), pidama the -ma infinitive (“mida tegema”), tulema as “has to”
  * takes “kellel + mida teha”, and vaja takes “mida teha”. ujuma: ujuda, ujun.
  */
 
-/** Know how or able to: the verbs that follow oskan and saan, each by its -ma and -da form. */
+/** Know how or able to: the verbs that follow oskan and saan, each by its -ma and -da infinitive. */
 export const MODAL_SKILLS = [
   { ma: "ujuma", da: "ujuda" },
   { ma: "lugema", da: "lugeda" },
@@ -1290,13 +1290,13 @@ export const MODAL_NOT = [
 /** The four ways not to, heard in “What does it say?”. */
 export const MODAL_HEARD_KINDS = ["oska", "saa", "tohi", "pea"] as const;
 export type HeardKind = (typeof MODAL_HEARD_KINDS)[number];
-/** The two verbs each way is heard with, by their -da and -ma forms. */
+/** The two verbs each way is heard with, by their -da and -ma infinitives. */
 export const MODAL_HEARD_VERBS = [
   { da: "ujuda", ma: "ujuma" },
   { da: "lugeda", ma: "lugema" },
 ] as const;
 export type HeardVerb = (typeof MODAL_HEARD_VERBS)[number];
-/** “Ma ei oska ujuda.”, or after pea, the -ma form: “Ma ei pea ujuma.” */
+/** “Ma ei oska ujuda.”, or after pea, the -ma infinitive: “Ma ei pea ujuma.” */
 export const notSaid = (kind: HeardKind, verb: HeardVerb) =>
   `Ma ei ${kind} ${kind === "pea" ? verb.ma : verb.da}.`;
 
@@ -1593,7 +1593,7 @@ const POHIVORMID_CLIPS: Record<string, Clip> = {
  * Sõnaveeb's EKI morphology database (ÕS 2025) on 21 November 2026.
  */
 
-/** Verbs whose past puts -si- on the -ma form's stem, with the stem the present builds on. */
+/** Verbs whose past puts -si- on the -ma infinitive's stem, with the stem the present builds on. */
 export const PAST_SI_VERBS = [
   { verb: "elama", now: "ela", past: "ela" },
   { verb: "lugema", now: "loe", past: "luge" },
@@ -1852,11 +1852,11 @@ const MEELDIMA_CLIPS: Record<string, Clip> = {
   ...MEELDIMA_DIALOGUE,
 };
 
-/** How a verb's -da form ends: -da, -ta, -la, -na, or a short -a. */
+/** How a verb's -da infinitive ends: -da, -ta, -la, -na, or a short -a. */
 export type DaPattern = "da" | "ta" | "la" | "na" | "a";
 
 /**
- * The verbs of the lesson on a verb's three forms: the -ma form, the -da form split before its
+ * The verbs of the lesson on a verb's three forms: the -ma infinitive, the -da infinitive split before its
  * ending, the I form, and the command to more than one. Checked in EKI's morphology database on
  * Sõnaveeb (21 Nov 2026); ÕS lists lugema as “lugeda, loen”.
  */
@@ -1888,13 +1888,13 @@ export const VERB_FORMS = [
 
 export type VerbForms = (typeof VERB_FORMS)[number];
 
-/** A verb's -da form whole: “lugeda”. */
+/** A -da infinitive whole: “lugeda”. */
 export const daForm = (verb: VerbForms) => verb.da.join("");
 
 /** The three forms said in a row, as a dictionary lists them: “lugema, lugeda, loen”. */
 export const threeForms = (verb: VerbForms) => `${verb.ma}, ${daForm(verb)}, ${verb.n}`;
 
-/** The commands the lesson builds from a -da form. */
+/** The commands the lesson builds from a -da infinitive. */
 export const VORMID_COMMANDS = [
   "lugema",
   "rääkima",
@@ -1906,7 +1906,7 @@ export const VORMID_COMMANDS = [
 ];
 
 /**
- * A teacher to her class, gap by gap: a command takes the -da form's stem, the present the I
+ * A teacher to her class, gap by gap: a command takes the -da infinitive's stem, the present the I
  * form's. Words from lessons 1–11.
  */
 export const VORMID_CLASS = [
@@ -1925,7 +1925,7 @@ export type Takes = "da" | "ma";
  * The verbs of the lesson on infinitives that a second verb follows: the verb, the form a learner
  * meets it in (`lead`), which form the second verb takes, how a sentence with it starts
  * (`frame`), and one sentence whose second verb is `form`, written with `|` before its ending.
- * Sõnaveeb's EKI dictionary names the form under Rektsioon: “mida teha” for the -da form, “mida
+ * Sõnaveeb's EKI dictionary names the form under Rektsioon: “mida teha” for the -da infinitive, “mida
  * tegema” for the -ma form (pidama in its second entry), checked 21 Nov 2026.
  */
 export const INFINITIVE_LEADS = [
@@ -2037,7 +2037,7 @@ export const INFINITIVE_LEADS = [
 
 export type InfinitiveLead = (typeof INFINITIVE_LEADS)[number];
 
-/** Six verbs in their -ma and -da forms, `|` before the ending, for tahan and pean side by side. */
+/** Six verbs in their -ma and -da infinitives, `|` before the ending, for tahan and pean side by side. */
 export const INFINITIVE_PAIRS = [
   { ma: "luge|ma", da: "luge|da" },
   { ma: "söö|ma", da: "süü|a" },

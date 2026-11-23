@@ -105,10 +105,8 @@ const firstDifference = (short: string, long: string) => {
 
 const APART_KINDS: readonly ApartKind[] = ["same", "vowel", "length"];
 
-/** A pair of words to hear and say how they differ, keyed by how, so a run meets all three early. */
 type ApartItem = ChoiceItem & { pair: readonly [string, string]; said: string };
 
-/** Every round after the first puts the three answers in a new order. */
 export const apartRun = (items: readonly ApartItem[], pinned?: ApartItem): ApartItem[] =>
   eachPairFirst(items, pinned).map((item) =>
     item === pinned ? item : { ...item, options: shuffle(item.options) },

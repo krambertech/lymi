@@ -171,7 +171,6 @@ const WHO: readonly { id: keyof typeof PRONOUN_SENTENCES; who: Short; en: Messag
   { id: "s-nad-vasinud", who: "nad", en: msg`They’re tired.` },
 ];
 
-/** Sentences to write down as heard, two per pronoun, keyed by the pronoun. */
 const HEARD: readonly { id: keyof typeof PRONOUN_SENTENCES; who: Short }[] = [
   { id: "s-olen-kodus", who: "ma" },
   { id: "s-ma-valmis", who: "ma" },
@@ -187,7 +186,6 @@ const HEARD: readonly { id: keyof typeof PRONOUN_SENTENCES; who: Short }[] = [
   { id: "s-nad-vasinud", who: "nad" },
 ];
 
-/** Sentences to sort by whether the pronoun can go: with on, it can't. */
 const KEEP_OR_DROP: readonly (keyof typeof PRONOUN_SENTENCES)[] = [
   "s-ma-valmis",
   "s-ta-opetaja",
@@ -199,7 +197,6 @@ const KEEP_OR_DROP: readonly (keyof typeof PRONOUN_SENTENCES)[] = [
   "s-nad-vasinud",
 ];
 
-/** Every way of writing a pronoun, olema and a word as a sentence. */
 export function builtAnswers(pronoun: Short, said: string): [string, ...string[]] {
   const person = PEOPLE.find((each) => each.short === pronoun) as (typeof PEOPLE)[number];
   const rest = said.slice(said.indexOf(" ") + 1);

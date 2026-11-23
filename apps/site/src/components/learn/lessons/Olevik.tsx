@@ -222,7 +222,6 @@ export const SENTENCES: readonly Sentence[] = [
   },
 ];
 
-/** Verb and person to type, two per ending, keyed by the ending; stems that change among them. */
 export const TYPED: readonly { verb: Verb["verb"]; ending: Ending }[] = [
   { verb: "lugema", ending: "n" },
   { verb: "elama", ending: "n" },
@@ -238,7 +237,6 @@ export const TYPED: readonly { verb: Verb["verb"]; ending: Ending }[] = [
   { verb: "elama", ending: "vad" },
 ];
 
-/** Verbs to sort by whether the stem is the -ma form without -ma. */
 const STEM_SORT: readonly Verb["verb"][] = [
   "elama",
   "lugema",

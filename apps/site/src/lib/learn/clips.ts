@@ -133,7 +133,6 @@ export const HAALDUS_WORDS = [
   "Eesti",
 ] as const;
 
-/** Two words said one after the other: the same word twice, or a pair that differs in a vowel or in length. */
 export const HAALDUS_APART = [
   { first: "kõrv", second: "korv", kind: "vowel" },
   { first: "uks", second: "üks", kind: "vowel" },
@@ -154,7 +153,6 @@ export type ApartKind = (typeof HAALDUS_APART)[number]["kind"];
 export const apartSaid = ({ first, second }: { first: string; second: string }) =>
   `${capital(first)}, ${second}.`;
 
-/** Jaan and his mother: a short exchange built from the lesson's words. */
 export const HAALDUS_TALK: Conversation = {
   turns: [
     { voice: "third", text: "Tere, Jaan!" },
@@ -167,7 +165,6 @@ export const HAALDUS_TALK: Conversation = {
   ],
 };
 
-/** Sentences from the exchange, each recorded on its own for writing down. */
 export const HAALDUS_SENTENCES = ["Jaan", "ja", "Tule linna.", "Kanna korv kooli."] as const;
 
 /** The numbers the numbers lesson says on their own. */
@@ -478,7 +475,6 @@ export const PRONOUN_SENTENCES = {
   "s-nad-vasinud": "Nad on väsinud.",
 } as const;
 
-/** Sentences to make from a pronoun, olema and a word: the lesson asks the first six, the drill the rest. */
 export const PRONOUN_BUILT = [
   { pronoun: "ma", word: "õpetaja", said: "Ma olen õpetaja." },
   { pronoun: "sa", word: "õpetaja", said: "Sa oled õpetaja." },
@@ -494,7 +490,6 @@ export const PRONOUN_BUILT = [
   { pronoun: "nad", word: "valmis", said: "Nad on valmis." },
 ] as const;
 
-/** The lesson's sentences a drill plays, recorded again under ids from their text. */
 export const PRONOUN_DRILLED = [
   "s-olen-kodus",
   "s-oled-tubli",
@@ -507,7 +502,6 @@ export const PRONOUN_DRILLED = [
   "c-olen-mari",
 ] as const satisfies readonly (keyof typeof PRONOUN_SENTENCES)[];
 
-/** Liis says who she and her friends are. */
 export const PRONOUN_PASSAGE = [
   "Tere! Mina olen Liis.",
   "Ma olen õpetaja.",
@@ -564,7 +558,6 @@ export const PRESENT_SENTENCES = {
   "c-mina-joon": "Mina joon kohvi, tema joob vett.",
 } as const;
 
-/** A present sentence said about someone else: what the rewrite asks for, by the person it turns to. */
 export const PRESENT_TURNED = [
   { from: "s-elan-tallinnas", to: "te", said: "Te elate Tallinnas." },
   { from: "s-opin-eesti", to: "sa", said: "Sa õpid eesti keelt." },
@@ -576,10 +569,6 @@ export const PRESENT_TURNED = [
   { from: "s-soovad-kodus", to: "te", said: "Te sööte kodus." },
 ] as const;
 
-/**
- * Sentences as learners write them, each with one wrong verb: a stem made from the -ma form, or an
- * ending carried over from another person.
- */
 export const PRESENT_FIXES = [
   { wrong: "Ma lugen raamatut.", said: "Ma loen raamatut.", kind: "stem" },
   { wrong: "Ma õppin eesti keelt.", said: "Ma õpin eesti keelt.", kind: "stem" },
@@ -591,7 +580,6 @@ export const PRESENT_FIXES = [
   { wrong: "Ta töötavad kodus.", said: "Ta töötab kodus.", kind: "ending" },
 ] as const;
 
-/** Jaan says where he lives and works, and what he and Mari do. */
 export const PRESENT_PASSAGE = [
   "Tere! Mina olen Jaan.",
   "Ma elan Tallinnas ja töötan kodus.",

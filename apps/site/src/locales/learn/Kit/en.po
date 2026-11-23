@@ -257,6 +257,9 @@ msgstr "A free Estonian lesson on telling the time: full hours, pool, veerand an
 msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
 msgstr "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
 
+msgid "A free lesson on consonant gradation in Estonian: why jalg becomes jala and tuba becomes toa, which forms take the strong or the weak stem, the four usual ways a consonant weakens (kapp, kapi; pank, panga; pood, poe; lind, linnu), words that go the other way (mõte, mõtte), and the same change in verbs (lugema, loen). Every sentence is read aloud."
+msgstr "A free lesson on consonant gradation in Estonian: why jalg becomes jala and tuba becomes toa, which forms take the strong or the weak stem, the four usual ways a consonant weakens (kapp, kapi; pank, panga; pood, poe; lind, linnu), words that go the other way (mõte, mõtte), and the same change in verbs (lugema, loen). Every sentence is read aloud."
+
 msgid "A free lesson on Estonian modal verbs: oskan for what you know how to do, saan for what nothing stops you doing, võin and tohin for what is allowed, pean, tuleb and mul on vaja for what you have to do, and how to say can’t, mustn’t and don’t have to. Every sentence is read aloud."
 msgstr "A free lesson on Estonian modal verbs: oskan for what you know how to do, saan for what nothing stops you doing, võin and tohin for what is allowed, pean, tuleb and mul on vaja for what you have to do, and how to say can’t, mustn’t and don’t have to. Every sentence is read aloud."
 
@@ -271,6 +274,9 @@ msgstr "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hu
 
 msgid "A free lesson on Estonian ordinal numbers and dates: esimene, teine, kolmas and how the rest are built from the genitive, the months, asking mis kuupäev täna on?, writing 21. november, and -l for on a date or a floor (viiendal mail, kolmandal korrusel). Every sentence is read aloud."
 msgstr "A free lesson on Estonian ordinal numbers and dates: esimene, teine, kolmas and how the rest are built from the genitive, the months, asking mis kuupäev täna on?, writing 21. november, and -l for on a date or a floor (viiendal mail, kolmandal korrusel). Every sentence is read aloud."
+
+msgid "A free lesson on Estonian postpositions of place: peal, all, taga, ees, kõrval and sees (on, under, behind, in front of, next to, inside), the genitive before them (laua peal, poe ees), their kuhu and kust forms (peale, pealt; taha, tagant; sisse, seest) and juures for a person’s place. Every sentence is read aloud."
+msgstr "A free lesson on Estonian postpositions of place: peal, all, taga, ees, kõrval and sees (on, under, behind, in front of, next to, inside), the genitive before them (laua peal, poe ees), their kuhu and kust forms (peale, pealt; taha, tagant; sisse, seest) and juures for a person’s place. Every sentence is read aloud."
 
 msgid "A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and three everyday questions to learn whole. Every sentence is read aloud."
 msgstr "A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and three everyday questions to learn whole. Every sentence is read aloud."
@@ -293,8 +299,14 @@ msgstr "A free lesson on saying no in the Estonian past tense: ei and the -nud f
 msgid "A free lesson on saying where you are in Estonian: -s, usually for in (Tallinnas, koolis), -l, usually for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
 msgstr "A free lesson on saying where you are in Estonian: -s, usually for in (Tallinnas, koolis), -l, usually for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
 
+msgid "A free lesson on suggesting and allowing in Estonian: let’s, usually the present’s me form without me (teeme, vaatame; minema gives lähme), lähme with the -ma infinitive (lähme ujuma), and las, usually with the present (las ta tuleb, las ma aitan). Every sentence is read aloud."
+msgstr "A free lesson on suggesting and allowing in Estonian: let’s, usually the present’s me form without me (teeme, vaatame; minema gives lähme), lähme with the -ma infinitive (lähme ujuma), and las, usually with the present (las ta tuleb, las ma aitan). Every sentence is read aloud."
+
 msgid "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
+
+msgid "A free lesson on the Estonian conditional, the would form: -ks with the person endings (ma läheksin, sa läheksid, ta läheks), ei läheks for every person, polite requests (ma tahaksin kohvi, kas sa saaksid aidata?) and if clauses (kui mul oleks aega, läheksin kinno). Every sentence is read aloud."
+msgstr "A free lesson on the Estonian conditional, the would form: -ks with the person endings (ma läheksin, sa läheksid, ta läheks), ei läheks for every person, polite requests (ma tahaksin kohvi, kas sa saaksid aidata?) and if clauses (kui mul oleks aega, läheksin kinno). Every sentence is read aloud."
 
 msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
 msgstr "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
@@ -305,11 +317,26 @@ msgstr "A free lesson on the Estonian genitive case: minu, sinu, tema, meie, tei
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 
+msgid "A free lesson on the Estonian impersonal, for what people do with no person named: building it from the -tud form (räägitud, räägitakse, räägiti), the verbs to learn by heart (tehakse, süüakse, minnakse), saying no (ei räägita, ei räägitud) and the case of the object. Every sentence is read aloud."
+msgstr "A free lesson on the Estonian impersonal, for what people do with no person named: building it from the -tud form (räägitud, räägitakse, räägiti), the verbs to learn by heart (tehakse, süüakse, minnakse), saying no (ei räägita, ei räägitud) and the case of the object. Every sentence is read aloud."
+
+msgid "A free lesson on the Estonian object: the partitive for part of something, an action still going on, after ei and after verbs such as ootama and otsima on their own; and for a noun, usually the genitive for the whole thing done (Ma lugesin raamatu läbi) and the nominative in commands (Osta pilet!). Every sentence is read aloud."
+msgstr "A free lesson on the Estonian object: the partitive for part of something, an action still going on, after ei and after verbs such as ootama and otsima on their own; and for a noun, usually the genitive for the whole thing done (Ma lugesin raamatu läbi) and the nominative in commands (Osta pilet!). Every sentence is read aloud."
+
 msgid "A free lesson on the Estonian partitive case: after numbers from two up (kaks kassi, viis eurot), after mitu and amounts (tass kohvi), after pole (mul pole kassi) and with food and drink (ma joon kohvi). Every sentence is read aloud."
 msgstr "A free lesson on the Estonian partitive case: after numbers from two up (kaks kassi, viis eurot), after mitu and amounts (tass kohvi), after pole (mul pole kassi) and with food and drink (ma joon kohvi). Every sentence is read aloud."
 
 msgid "A free lesson on the Estonian past tense (lihtminevik): -si- on most verbs (elasin, lugesin, rääkisin), -i- on a few everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian past tense (lihtminevik): -si- on most verbs (elasin, lugesin, rääkisin), -i- on a few everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
+
+msgid "A free lesson on the Estonian perfect and pluperfect: the -nud form (lugenud, käinud, läinud), olen with it for what has happened (ma olen Tartus käinud), olin for what had happened before (oli juba läinud), and when to use the simple past instead (eile käisin Tartus). Every sentence is read aloud."
+msgstr "A free lesson on the Estonian perfect and pluperfect: the -nud form (lugenud, käinud, läinud), olen with it for what has happened (ma olen Tartus käinud), olin for what had happened before (oli juba läinud), and when to use the simple past instead (eile käisin Tartus). Every sentence is read aloud."
+
+msgid "A free lesson on the Estonian plural cases: build the plural genitive, usually from the partitive (majade, raamatute, inimeste), then add the endings you know: majades, inimestele, sõpradega. Every sentence is read aloud."
+msgstr "A free lesson on the Estonian plural cases: build the plural genitive, usually from the partitive (majade, raamatute, inimeste), then add the endings you know: majades, inimestele, sõpradega. Every sentence is read aloud."
+
+msgid "A free lesson on the Estonian plural partitive, the partitive for more than one: palju raamatuid, poes on õunu, mul ei ole lapsi; its endings -id, -sid and a changed last vowel (raamatuid, autosid, maju, koole); and how it differs from kaks raamatut and the plural raamatud. Every sentence is read aloud."
+msgstr "A free lesson on the Estonian plural partitive, the partitive for more than one: palju raamatuid, poes on õunu, mul ei ole lapsi; its endings -id, -sid and a changed last vowel (raamatuid, autosid, maju, koole); and how it differs from kaks raamatut and the plural raamatud. Every sentence is read aloud."
 
 msgid "A free lesson on the Estonian plural: the genitive plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb with a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
 msgstr "A free lesson on the Estonian plural: the genitive plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb with a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
@@ -653,6 +680,12 @@ msgstr "Estonian"
 msgid "Estonian -ma, -mas and -mast: going, being and coming back"
 msgstr "Estonian -ma, -mas and -mast: going, being and coming back"
 
+msgid "Estonian conditional mood"
+msgstr "Estonian conditional mood"
+
+msgid "Estonian consonant gradation"
+msgstr "Estonian consonant gradation"
+
 msgid "Estonian conversation practice: meeting someone"
 msgstr "Estonian conversation practice: meeting someone"
 
@@ -667,6 +700,9 @@ msgstr "Estonian has both <0>{typed}</0> and <1>{right}</1>, and they don’t me
 
 msgid "Estonian imperative: giving commands"
 msgstr "Estonian imperative: giving commands"
+
+msgid "Estonian impersonal voice"
+msgstr "Estonian impersonal voice"
 
 msgid "Estonian infinitives after other verbs"
 msgstr "Estonian infinitives after other verbs"
@@ -689,6 +725,9 @@ msgstr "Estonian ordinal numbers and dates"
 msgid "Estonian past tense"
 msgstr "Estonian past tense"
 
+msgid "Estonian perfect and pluperfect"
+msgstr "Estonian perfect and pluperfect"
+
 msgid "Estonian personal pronouns and “to be”"
 msgstr "Estonian personal pronouns and “to be”"
 
@@ -697,6 +736,15 @@ msgstr "Estonian personal pronouns in every case"
 
 msgid "Estonian plural"
 msgstr "Estonian plural"
+
+msgid "Estonian plural cases"
+msgstr "Estonian plural cases"
+
+msgid "Estonian plural partitive"
+msgstr "Estonian plural partitive"
+
+msgid "Estonian postpositions: on, under, behind"
+msgstr "Estonian postpositions: on, under, behind"
 
 msgid "Estonian practice: last weekend and next week"
 msgstr "Estonian practice: last weekend and next week"
@@ -712,6 +760,9 @@ msgstr "Estonian pronunciation"
 
 msgid "Estonian reading and listening practice: a day in Tallinn"
 msgstr "Estonian reading and listening practice: a day in Tallinn"
+
+msgid "Estonian total and partial object"
+msgstr "Estonian total and partial object"
 
 msgid "Every word has a group. Check when you’re ready."
 msgstr "Every word has a group. Check when you’re ready."
@@ -1228,6 +1279,9 @@ msgstr "Lessons done: <0>{doneCount}</0> of {builtCount}"
 
 msgid "Let’s and let them"
 msgstr "Let’s and let them"
+
+msgid "Let’s and let them in Estonian"
+msgstr "Let’s and let them in Estonian"
 
 msgid "Listen"
 msgstr "Listen"
@@ -2579,66 +2633,3 @@ msgstr "Your sentence"
 
 msgid "Your text"
 msgstr "Your text"
-
-msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud."
-msgstr "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud."
-
-msgid "A free lesson on consonant gradation in Estonian: why jalg becomes jala and tuba becomes toa, which forms take the strong or the weak stem, the four usual ways a consonant weakens (kapp, kapi; pank, panga; pood, poe; lind, linnu), words that go the other way (mõte, mõtte), and the same change in verbs (lugema, loen). Every sentence is read aloud."
-msgstr "A free lesson on consonant gradation in Estonian: why jalg becomes jala and tuba becomes toa, which forms take the strong or the weak stem, the four usual ways a consonant weakens (kapp, kapi; pank, panga; pood, poe; lind, linnu), words that go the other way (mõte, mõtte), and the same change in verbs (lugema, loen). Every sentence is read aloud."
-
-msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud."
-msgstr "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud."
-
-msgid "A free lesson on Estonian postpositions of place: peal, all, taga, ees, kõrval and sees (on, under, behind, in front of, next to, inside), the genitive before them (laua peal, poe ees), their kuhu and kust forms (peale, pealt; taha, tagant; sisse, seest) and juures for a person’s place. Every sentence is read aloud."
-msgstr "A free lesson on Estonian postpositions of place: peal, all, taga, ees, kõrval and sees (on, under, behind, in front of, next to, inside), the genitive before them (laua peal, poe ees), their kuhu and kust forms (peale, pealt; taha, tagant; sisse, seest) and juures for a person’s place. Every sentence is read aloud."
-
-msgid "A free lesson on suggesting and allowing in Estonian: let’s, usually the present’s me form without me (teeme, vaatame; minema gives lähme), lähme with the -ma infinitive (lähme ujuma), and las, usually with the present (las ta tuleb, las ma aitan). Every sentence is read aloud."
-msgstr "A free lesson on suggesting and allowing in Estonian: let’s, usually the present’s me form without me (teeme, vaatame; minema gives lähme), lähme with the -ma infinitive (lähme ujuma), and las, usually with the present (las ta tuleb, las ma aitan). Every sentence is read aloud."
-
-msgid "A free lesson on the Estonian conditional, the would form: -ks with the person endings (ma läheksin, sa läheksid, ta läheks), ei läheks for every person, polite requests (ma tahaksin kohvi, kas sa saaksid aidata?) and if clauses (kui mul oleks aega, läheksin kinno). Every sentence is read aloud."
-msgstr "A free lesson on the Estonian conditional, the would form: -ks with the person endings (ma läheksin, sa läheksid, ta läheks), ei läheks for every person, polite requests (ma tahaksin kohvi, kas sa saaksid aidata?) and if clauses (kui mul oleks aega, läheksin kinno). Every sentence is read aloud."
-
-msgid "A free lesson on the Estonian impersonal, for what people do with no person named: building it from the -tud form (räägitud, räägitakse, räägiti), the verbs to learn by heart (tehakse, süüakse, minnakse), saying no (ei räägita, ei räägitud) and the case of the object. Every sentence is read aloud."
-msgstr "A free lesson on the Estonian impersonal, for what people do with no person named: building it from the -tud form (räägitud, räägitakse, räägiti), the verbs to learn by heart (tehakse, süüakse, minnakse), saying no (ei räägita, ei räägitud) and the case of the object. Every sentence is read aloud."
-
-msgid "A free lesson on the Estonian object: the partitive for part of something, an action still going on, after ei and after verbs such as ootama and otsima on their own; and for a noun, usually the genitive for the whole thing done (Ma lugesin raamatu läbi) and the nominative in commands (Osta pilet!). Every sentence is read aloud."
-msgstr "A free lesson on the Estonian object: the partitive for part of something, an action still going on, after ei and after verbs such as ootama and otsima on their own; and for a noun, usually the genitive for the whole thing done (Ma lugesin raamatu läbi) and the nominative in commands (Osta pilet!). Every sentence is read aloud."
-
-msgid "A free lesson on the Estonian perfect and pluperfect: the -nud form (lugenud, käinud, läinud), olen with it for what has happened (ma olen Tartus käinud), olin for what had happened before (oli juba läinud), and when to use the simple past instead (eile käisin Tartus). Every sentence is read aloud."
-msgstr "A free lesson on the Estonian perfect and pluperfect: the -nud form (lugenud, käinud, läinud), olen with it for what has happened (ma olen Tartus käinud), olin for what had happened before (oli juba läinud), and when to use the simple past instead (eile käisin Tartus). Every sentence is read aloud."
-
-msgid "A free lesson on the Estonian plural cases: build the plural genitive, usually from the partitive (majade, raamatute, inimeste), then add the endings you know: majades, inimestele, sõpradega. Every sentence is read aloud."
-msgstr "A free lesson on the Estonian plural cases: build the plural genitive, usually from the partitive (majade, raamatute, inimeste), then add the endings you know: majades, inimestele, sõpradega. Every sentence is read aloud."
-
-msgid "A free lesson on the Estonian plural partitive, the partitive for more than one: palju raamatuid, poes on õunu, mul ei ole lapsi; its endings -id, -sid and a changed last vowel (raamatuid, autosid, maju, koole); and how it differs from kaks raamatut and the plural raamatud. Every sentence is read aloud."
-msgstr "A free lesson on the Estonian plural partitive, the partitive for more than one: palju raamatuid, poes on õunu, mul ei ole lapsi; its endings -id, -sid and a changed last vowel (raamatuid, autosid, maju, koole); and how it differs from kaks raamatut and the plural raamatud. Every sentence is read aloud."
-
-msgid "Estonian conditional mood"
-msgstr "Estonian conditional mood"
-
-msgid "Estonian consonant gradation"
-msgstr "Estonian consonant gradation"
-
-msgid "Estonian impersonal voice"
-msgstr "Estonian impersonal voice"
-
-msgid "Estonian perfect and pluperfect"
-msgstr "Estonian perfect and pluperfect"
-
-msgid "Estonian plural cases"
-msgstr "Estonian plural cases"
-
-msgid "Estonian plural partitive"
-msgstr "Estonian plural partitive"
-
-msgid "Estonian postpositions: on, under, behind"
-msgstr "Estonian postpositions: on, under, behind"
-
-msgid "Estonian total and partial object"
-msgstr "Estonian total and partial object"
-
-msgid "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
-msgstr "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
-
-msgid "Let’s and let them in Estonian"
-msgstr "Let’s and let them in Estonian"

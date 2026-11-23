@@ -1656,6 +1656,10 @@ export const TUTVUMINE_TRANSLATED = [
       "Meie ei tööta, meie õpime.",
       "Me ei tööta, õpime.",
       "Meie ei tööta, õpime.",
+      "Me ei tööta, vaid õpime.",
+      "Meie ei tööta, vaid õpime.",
+      "Me ei tööta, vaid me õpime.",
+      "Meie ei tööta, vaid meie õpime.",
     ],
   },
   {
@@ -1716,7 +1720,7 @@ export const TUTVUMINE_TRANSLATED = [
   },
   {
     kind: "kus",
-    answers: ["Kus ta töötab?", "Kus tema töötab?"],
+    answers: ["Kus ta töötab?", "Kus tema töötab?", "Kus töötab ta?", "Kus töötab tema?"],
   },
 ] as const;
 

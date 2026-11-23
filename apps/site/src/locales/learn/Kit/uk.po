@@ -257,6 +257,9 @@ msgstr "Безкоштовний урок естонської про те, як
 msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
 msgstr "Безкоштовний урок естонської вимови: дев’ять голосних з õ, ä, ö та ü, наголос, зазвичай на першому складі, і те, як подвоєна літера може змінити слово. Кожне слово озвучено."
 
+msgid "A free lesson on consonant gradation in Estonian: why jalg becomes jala and tuba becomes toa, which forms take the strong or the weak stem, the four usual ways a consonant weakens (kapp, kapi; pank, panga; pood, poe; lind, linnu), words that go the other way (mõte, mõtte), and the same change in verbs (lugema, loen). Every sentence is read aloud."
+msgstr "Безкоштовний урок про чергування приголосних в естонській: чому jalg стає jala, а tuba — toa, які форми мають сильну чи слабку основу, чотири звичні способи ослаблення приголосного (kapp, kapi; pank, panga; pood, poe; lind, linnu), слова, що йдуть навпаки (mõte, mõtte), і та сама зміна в дієсловах (lugema, loen). Кожне речення озвучене."
+
 msgid "A free lesson on Estonian modal verbs: oskan for what you know how to do, saan for what nothing stops you doing, võin and tohin for what is allowed, pean, tuleb and mul on vaja for what you have to do, and how to say can’t, mustn’t and don’t have to. Every sentence is read aloud."
 msgstr "Безкоштовний урок про модальні дієслова в естонській мові: oskan — коли вмієш, saan — коли ніщо не заважає, võin і tohin — коли можна, pean, tuleb і mul on vaja — коли треба, а ще як сказати «не можу», «не можна» й «не обов’язково». Кожне речення можна послухати."
 
@@ -271,6 +274,9 @@ msgstr "Безкоштовний урок про естонські числа: 
 
 msgid "A free lesson on Estonian ordinal numbers and dates: esimene, teine, kolmas and how the rest are built from the genitive, the months, asking mis kuupäev täna on?, writing 21. november, and -l for on a date or a floor (viiendal mail, kolmandal korrusel). Every sentence is read aloud."
 msgstr "Безкоштовний урок про порядкові числівники й дати в естонській мові: esimene, teine, kolmas і як решту утворюють від родового відмінка, назви місяців, питання mis kuupäev täna on?, запис 21. november і -l, щоб сказати «якого числа» чи «на якому поверсі» (viiendal mail, kolmandal korrusel). Кожне речення озвучене."
+
+msgid "A free lesson on Estonian postpositions of place: peal, all, taga, ees, kõrval and sees (on, under, behind, in front of, next to, inside), the genitive before them (laua peal, poe ees), their kuhu and kust forms (peale, pealt; taha, tagant; sisse, seest) and juures for a person’s place. Every sentence is read aloud."
+msgstr "Безкоштовний урок про естонські післяйменники місця: peal, all, taga, ees, kõrval і sees (на, під, за, перед, поруч, всередині), родовий відмінок перед ними (laua peal, poe ees), їхні форми для kuhu і kust (peale, pealt; taha, tagant; sisse, seest) і juures — «у когось». Кожне речення озвучене."
 
 msgid "A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and three everyday questions to learn whole. Every sentence is read aloud."
 msgstr "Безкоштовний урок про питання в естонській: kas для питань «так чи ні», відповіді jah і ei, питальні слова kes, mis, kus, millal, miks, kuidas і kui palju та три повсякденні питання, які вчать цілими. Кожне речення озвучене."
@@ -293,8 +299,14 @@ msgstr "Безкоштовний урок про заперечення в ми�
 msgid "A free lesson on saying where you are in Estonian: -s, usually for in (Tallinnas, koolis), -l, usually for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про те, як сказати, де ти: -s зазвичай означає «в» (Tallinnas, koolis), -l — «на» (laual, tööl), які місця мають яке закінчення і як відповісти на kus, «де». Кожне речення озвучене."
 
+msgid "A free lesson on suggesting and allowing in Estonian: let’s, usually the present’s me form without me (teeme, vaatame; minema gives lähme), lähme with the -ma infinitive (lähme ujuma), and las, usually with the present (las ta tuleb, las ma aitan). Every sentence is read aloud."
+msgstr "Безкоштовний урок про те, як пропонувати й дозволяти естонською: «давай» — зазвичай форма теперішнього часу для me без me (teeme, vaatame; від minema — lähme), lähme з інфінітивом на -ma (lähme ujuma) і las, зазвичай із теперішнім часом (las ta tuleb, las ma aitan). Кожне речення озвучене."
+
 msgid "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
 msgstr "Безкоштовний урок про естонські форми на -ma, -mas і -mast: lähen ujuma (іду плавати), olen ujumas (на плаванні) і tulen ujumast (повертаюся з плавання). Вони відповідають на kuhu?, kus? і kust?, як і назви місць. А ще — коли казати lähen, käin чи tulen. Кожне речення озвучене."
+
+msgid "A free lesson on the Estonian conditional, the would form: -ks with the person endings (ma läheksin, sa läheksid, ta läheks), ei läheks for every person, polite requests (ma tahaksin kohvi, kas sa saaksid aidata?) and if clauses (kui mul oleks aega, läheksin kinno). Every sentence is read aloud."
+msgstr "Безкоштовний урок про умовний спосіб в естонській: -ks з особовими закінченнями (ma läheksin, sa läheksid, ta läheks), ei läheks для всіх осіб, ввічливі прохання (ma tahaksin kohvi, kas sa saaksid aidata?) і речення з «якби» (kui mul oleks aega, läheksin kinno). Кожне речення озвучене."
 
 msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
 msgstr "Безкоштовний урок про дні тижня естонською: сім назв, чотири з числами всередині, однолітерні позначення в годинах роботи, а ще täna, homme і eile. Кожне слово озвучене."
@@ -305,11 +317,26 @@ msgstr "Безкоштовний урок про родовий відмінок
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "Безкоштовний урок про наказовий спосіб в естонській мові: основа дієслова як наказ (loe!, istu!, tule siia!), ära для «не роби», форми на -ge і -ke для кількох людей або на «ви», щоденні накази на кшталт räägi aeglasemalt, palun і коротка розмова в кав’ярні. Кожне речення озвучене."
 
+msgid "A free lesson on the Estonian impersonal, for what people do with no person named: building it from the -tud form (räägitud, räägitakse, räägiti), the verbs to learn by heart (tehakse, süüakse, minnakse), saying no (ei räägita, ei räägitud) and the case of the object. Every sentence is read aloud."
+msgstr "Безкоштовний урок про безособову форму в естонській — що роблять люди, коли особу не названо: утворення від форми на -tud (räägitud, räägitakse, räägiti), дієслова, які треба вивчити напам’ять (tehakse, süüakse, minnakse), заперечення (ei räägita, ei räägitud) і відмінок об’єкта. Кожне речення озвучене."
+
+msgid "A free lesson on the Estonian object: the partitive for part of something, an action still going on, after ei and after verbs such as ootama and otsima on their own; and for a noun, usually the genitive for the whole thing done (Ma lugesin raamatu läbi) and the nominative in commands (Osta pilet!). Every sentence is read aloud."
+msgstr "Безкоштовний урок про об’єкт в естонській мові: партитив для частини, для дії, що триває, після ei і після дієслів на кшталт ootama та otsima без інших слів; а в іменника зазвичай родовий для завершеної дії над усім цілим (Ma lugesin raamatu läbi) і називний у наказах (Osta pilet!). Кожне речення озвучене."
+
 msgid "A free lesson on the Estonian partitive case: after numbers from two up (kaks kassi, viis eurot), after mitu and amounts (tass kohvi), after pole (mul pole kassi) and with food and drink (ma joon kohvi). Every sentence is read aloud."
 msgstr "Безкоштовний урок про партитив в естонській мові: після числівників від двох (kaks kassi, viis eurot), після mitu і слів кількості (tass kohvi), після pole (mul pole kassi) та з їжею й напоями (ma joon kohvi). Кожне речення озвучене."
 
 msgid "A free lesson on the Estonian past tense (lihtminevik): -si- on most verbs (elasin, lugesin, rääkisin), -i- on a few everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
 msgstr "Безкоштовний урок про минулий час в естонській (lihtminevik): -si- у більшості дієслів (elasin, lugesin, rääkisin), -i- у кількох щоденних (olin, läksin, sõin), закінчення, що показують, хто це зробив, і слова eile та eelmisel nädalal. Кожне речення озвучене."
+
+msgid "A free lesson on the Estonian perfect and pluperfect: the -nud form (lugenud, käinud, läinud), olen with it for what has happened (ma olen Tartus käinud), olin for what had happened before (oli juba läinud), and when to use the simple past instead (eile käisin Tartus). Every sentence is read aloud."
+msgstr "Безкоштовний урок про перфект і плюсквамперфект в естонській: форма на -nud (lugenud, käinud, läinud), olen з нею — для того, що сталося (ma olen Tartus käinud), olin — для того, що сталося раніше (oli juba läinud), і коли натомість потрібен простий минулий (eile käisin Tartus). Кожне речення озвучене."
+
+msgid "A free lesson on the Estonian plural cases: build the plural genitive, usually from the partitive (majade, raamatute, inimeste), then add the endings you know: majades, inimestele, sõpradega. Every sentence is read aloud."
+msgstr "Безкоштовний урок про відмінки множини в естонській: утвори родовий множини, зазвичай від партитива (majade, raamatute, inimeste), і додай знайомі закінчення: majades, inimestele, sõpradega. Кожне речення озвучене."
+
+msgid "A free lesson on the Estonian plural partitive, the partitive for more than one: palju raamatuid, poes on õunu, mul ei ole lapsi; its endings -id, -sid and a changed last vowel (raamatuid, autosid, maju, koole); and how it differs from kaks raamatut and the plural raamatud. Every sentence is read aloud."
+msgstr "Безкоштовний урок про партитив множини в естонській, партитив для кількох: palju raamatuid, poes on õunu, mul ei ole lapsi; його закінчення -id, -sid і змінена остання голосна (raamatuid, autosid, maju, koole); і чим він відрізняється від kaks raamatut та множини raamatud. Кожне речення озвучене."
 
 msgid "A free lesson on the Estonian plural: the genitive plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb with a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
 msgstr "Безкоштовний урок про множину в естонській мові: родовий плюс -d (kassid, raamatud), зміна основи, яка в ній зберігається (poed, toad, mehed), дієслово з іменником у множині (lapsed loevad) і прикметники в множині (suured majad). Кожне речення можна послухати."
@@ -653,6 +680,12 @@ msgstr "Естонська"
 msgid "Estonian -ma, -mas and -mast: going, being and coming back"
 msgstr "Естонські форми на -ma, -mas і -mast: іду, там, повертаюся"
 
+msgid "Estonian conditional mood"
+msgstr "Умовний спосіб в естонській мові"
+
+msgid "Estonian consonant gradation"
+msgstr "Чергування приголосних в естонській мові"
+
 msgid "Estonian conversation practice: meeting someone"
 msgstr "Розмовна практика естонської: знайомство"
 
@@ -667,6 +700,9 @@ msgstr "В естонській є і <0>{typed}</0>, і <1>{right}</1>, і зн
 
 msgid "Estonian imperative: giving commands"
 msgstr "Наказовий спосіб в естонській мові"
+
+msgid "Estonian impersonal voice"
+msgstr "Безособова форма в естонській мові"
 
 msgid "Estonian infinitives after other verbs"
 msgstr "Інфінітив після інших дієслів в естонській мові"
@@ -689,6 +725,9 @@ msgstr "Порядкові числівники й дати в естонськ�
 msgid "Estonian past tense"
 msgstr "Минулий час в естонській мові"
 
+msgid "Estonian perfect and pluperfect"
+msgstr "Перфект і плюсквам­перфект в естонській мові"
+
 msgid "Estonian personal pronouns and “to be”"
 msgstr "Естонські особові займенники і «бути»"
 
@@ -697,6 +736,15 @@ msgstr "Відмінювання особових займенників в ес
 
 msgid "Estonian plural"
 msgstr "Множина в естонській мові"
+
+msgid "Estonian plural cases"
+msgstr "Відмінки множини в естонській мові"
+
+msgid "Estonian plural partitive"
+msgstr "Партитив множини в естонській мові"
+
+msgid "Estonian postpositions: on, under, behind"
+msgstr "Естонські післяйменники: на, під, за"
 
 msgid "Estonian practice: last weekend and next week"
 msgstr "Практика естонської: минулі вихідні й наступний тиждень"
@@ -712,6 +760,9 @@ msgstr "Естонська вимова"
 
 msgid "Estonian reading and listening practice: a day in Tallinn"
 msgstr "Естонська мова: читання й аудіювання. День у Таллінні"
+
+msgid "Estonian total and partial object"
+msgstr "Повний і частковий об’єкт в естонській мові"
 
 msgid "Every word has a group. Check when you’re ready."
 msgstr "Усі слова в групах. Можна перевіряти."
@@ -1228,6 +1279,9 @@ msgstr "Пройдено уроків: <0>{doneCount}</0> з {builtCount}"
 
 msgid "Let’s and let them"
 msgstr "«Ходімо» і «нехай»"
+
+msgid "Let’s and let them in Estonian"
+msgstr "«Ходімо» і «нехай» в естонській мові"
 
 msgid "Listen"
 msgstr "Послухати"
@@ -2579,66 +2633,3 @@ msgstr "Твоє речення"
 
 msgid "Your text"
 msgstr "Твій текст"
-
-msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud."
-msgstr "Безкоштовний урок естонської про те, як сказати, котра година: повні години, pool, veerand і kolmveerand, що називають наступну годину, і хвилини до та після. Кожен приклад озвучено."
-
-msgid "A free lesson on consonant gradation in Estonian: why jalg becomes jala and tuba becomes toa, which forms take the strong or the weak stem, the four usual ways a consonant weakens (kapp, kapi; pank, panga; pood, poe; lind, linnu), words that go the other way (mõte, mõtte), and the same change in verbs (lugema, loen). Every sentence is read aloud."
-msgstr "Безкоштовний урок про чергування приголосних в естонській: чому jalg стає jala, а tuba — toa, які форми мають сильну чи слабку основу, чотири звичні способи ослаблення приголосного (kapp, kapi; pank, panga; pood, poe; lind, linnu), слова, що йдуть навпаки (mõte, mõtte), і та сама зміна в дієсловах (lugema, loen). Кожне речення озвучене."
-
-msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud."
-msgstr "Безкоштовний урок про естонські числа: від нуля до десяти, -teist і -kümmend, сотні й тисячі, а також числа в цінах, віці й номерах телефонів. Кожне число озвучене."
-
-msgid "A free lesson on Estonian postpositions of place: peal, all, taga, ees, kõrval and sees (on, under, behind, in front of, next to, inside), the genitive before them (laua peal, poe ees), their kuhu and kust forms (peale, pealt; taha, tagant; sisse, seest) and juures for a person’s place. Every sentence is read aloud."
-msgstr "Безкоштовний урок про естонські післяйменники місця: peal, all, taga, ees, kõrval і sees (на, під, за, перед, поруч, всередині), родовий відмінок перед ними (laua peal, poe ees), їхні форми для kuhu і kust (peale, pealt; taha, tagant; sisse, seest) і juures — «у когось». Кожне речення озвучене."
-
-msgid "A free lesson on suggesting and allowing in Estonian: let’s, usually the present’s me form without me (teeme, vaatame; minema gives lähme), lähme with the -ma infinitive (lähme ujuma), and las, usually with the present (las ta tuleb, las ma aitan). Every sentence is read aloud."
-msgstr "Безкоштовний урок про те, як пропонувати й дозволяти естонською: «давай» — зазвичай форма теперішнього часу для me без me (teeme, vaatame; від minema — lähme), lähme з інфінітивом на -ma (lähme ujuma) і las, зазвичай із теперішнім часом (las ta tuleb, las ma aitan). Кожне речення озвучене."
-
-msgid "A free lesson on the Estonian conditional, the would form: -ks with the person endings (ma läheksin, sa läheksid, ta läheks), ei läheks for every person, polite requests (ma tahaksin kohvi, kas sa saaksid aidata?) and if clauses (kui mul oleks aega, läheksin kinno). Every sentence is read aloud."
-msgstr "Безкоштовний урок про умовний спосіб в естонській: -ks з особовими закінченнями (ma läheksin, sa läheksid, ta läheks), ei läheks для всіх осіб, ввічливі прохання (ma tahaksin kohvi, kas sa saaksid aidata?) і речення з «якби» (kui mul oleks aega, läheksin kinno). Кожне речення озвучене."
-
-msgid "A free lesson on the Estonian impersonal, for what people do with no person named: building it from the -tud form (räägitud, räägitakse, räägiti), the verbs to learn by heart (tehakse, süüakse, minnakse), saying no (ei räägita, ei räägitud) and the case of the object. Every sentence is read aloud."
-msgstr "Безкоштовний урок про безособову форму в естонській — що роблять люди, коли особу не названо: утворення від форми на -tud (räägitud, räägitakse, räägiti), дієслова, які треба вивчити напам’ять (tehakse, süüakse, minnakse), заперечення (ei räägita, ei räägitud) і відмінок об’єкта. Кожне речення озвучене."
-
-msgid "A free lesson on the Estonian object: the partitive for part of something, an action still going on, after ei and after verbs such as ootama and otsima on their own; and for a noun, usually the genitive for the whole thing done (Ma lugesin raamatu läbi) and the nominative in commands (Osta pilet!). Every sentence is read aloud."
-msgstr "Безкоштовний урок про об’єкт в естонській мові: партитив для частини, для дії, що триває, після ei і після дієслів на кшталт ootama та otsima без інших слів; а в іменника зазвичай родовий для завершеної дії над усім цілим (Ma lugesin raamatu läbi) і називний у наказах (Osta pilet!). Кожне речення озвучене."
-
-msgid "A free lesson on the Estonian perfect and pluperfect: the -nud form (lugenud, käinud, läinud), olen with it for what has happened (ma olen Tartus käinud), olin for what had happened before (oli juba läinud), and when to use the simple past instead (eile käisin Tartus). Every sentence is read aloud."
-msgstr "Безкоштовний урок про перфект і плюсквамперфект в естонській: форма на -nud (lugenud, käinud, läinud), olen з нею — для того, що сталося (ma olen Tartus käinud), olin — для того, що сталося раніше (oli juba läinud), і коли натомість потрібен простий минулий (eile käisin Tartus). Кожне речення озвучене."
-
-msgid "A free lesson on the Estonian plural cases: build the plural genitive, usually from the partitive (majade, raamatute, inimeste), then add the endings you know: majades, inimestele, sõpradega. Every sentence is read aloud."
-msgstr "Безкоштовний урок про відмінки множини в естонській: утвори родовий множини, зазвичай від партитива (majade, raamatute, inimeste), і додай знайомі закінчення: majades, inimestele, sõpradega. Кожне речення озвучене."
-
-msgid "A free lesson on the Estonian plural partitive, the partitive for more than one: palju raamatuid, poes on õunu, mul ei ole lapsi; its endings -id, -sid and a changed last vowel (raamatuid, autosid, maju, koole); and how it differs from kaks raamatut and the plural raamatud. Every sentence is read aloud."
-msgstr "Безкоштовний урок про партитив множини в естонській, партитив для кількох: palju raamatuid, poes on õunu, mul ei ole lapsi; його закінчення -id, -sid і змінена остання голосна (raamatuid, autosid, maju, koole); і чим він відрізняється від kaks raamatut та множини raamatud. Кожне речення озвучене."
-
-msgid "Estonian conditional mood"
-msgstr "Умовний спосіб в естонській мові"
-
-msgid "Estonian consonant gradation"
-msgstr "Чергування приголосних в естонській мові"
-
-msgid "Estonian impersonal voice"
-msgstr "Безособова форма в естонській мові"
-
-msgid "Estonian perfect and pluperfect"
-msgstr "Перфект і плюсквам­перфект в естонській мові"
-
-msgid "Estonian plural cases"
-msgstr "Відмінки множини в естонській мові"
-
-msgid "Estonian plural partitive"
-msgstr "Партитив множини в естонській мові"
-
-msgid "Estonian postpositions: on, under, behind"
-msgstr "Естонські післяйменники: на, під, за"
-
-msgid "Estonian total and partial object"
-msgstr "Повний і частковий об’єкт в естонській мові"
-
-msgid "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
-msgstr "Безкоштовна розмовна практика естонської для початківців: скажи, як тебе звати, звідки ти, де живеш і працюєш, відповідай на запитання «так чи ні» і став власні. Кожна розмова й кожен текст озвучені."
-
-msgid "Let’s and let them in Estonian"
-msgstr "«Ходімо» і «нехай» в естонській мові"

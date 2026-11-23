@@ -89,6 +89,9 @@ msgstr "{left, plural, one {# question to review} other {# questions to review}}
 msgid "{lessonCount, plural, one {# lesson, coming soon} other {# lessons, coming soon}}"
 msgstr "{lessonCount, plural, one {# lesson, coming soon} other {# lessons, coming soon}}"
 
+msgid "{letters, plural, one {Not right: # letter differs.} other {Not right: # letters differ.}}"
+msgstr "{letters, plural, one {Not right: # letter differs.} other {Not right: # letters differ.}}"
+
 msgid "{more, plural, one {and # more} other {and # more}}"
 msgstr "{more, plural, one {and # more} other {and # more}}"
 
@@ -103,6 +106,10 @@ msgstr "{plays, plural, one {Read the questions first. You can play the recordin
 
 msgid "{position} of {count}"
 msgstr "{position} of {count}"
+
+#. placeholder {0}: checks.length
+msgid "{right} of {0} ticked"
+msgstr "{right} of {0} ticked"
 
 msgid "{right} of {total}"
 msgstr "{right} of {total}"
@@ -247,8 +254,8 @@ msgstr "A free Estonian lesson on personal pronouns: mina, sina, tema and the re
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud."
 msgstr "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud."
 
-msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud."
-msgstr "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud."
+msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
+msgstr "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
 
 msgid "A free lesson on Estonian modal verbs: oskan for what you know how to do, saan for what nothing stops you doing, võin and tohin for what is allowed, pean, tuleb and mul on vaja for what you have to do, and how to say can’t, mustn’t and don’t have to. Every sentence is read aloud."
 msgstr "A free lesson on Estonian modal verbs: oskan for what you know how to do, saan for what nothing stops you doing, võin and tohin for what is allowed, pean, tuleb and mul on vaja for what you have to do, and how to say can’t, mustn’t and don’t have to. Every sentence is read aloud."
@@ -286,8 +293,8 @@ msgstr "A free lesson on saying “I have” in Estonian: mul, sul, tal, meil, t
 msgid "A free lesson on saying no in the Estonian past tense: ei and the -nud form (ma ei läinud, ei olnud, polnud), the same for every person, how the -nud form comes from the -da infinitive, the five forms to learn whole, and answering a question with no. Every sentence is read aloud."
 msgstr "A free lesson on saying no in the Estonian past tense: ei and the -nud form (ma ei läinud, ei olnud, polnud), the same for every person, how the -nud form comes from the -da infinitive, the five forms to learn whole, and answering a question with no. Every sentence is read aloud."
 
-msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
-msgstr "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
+msgid "A free lesson on saying where you are in Estonian: -s, usually for in (Tallinnas, koolis), -l, usually for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
+msgstr "A free lesson on saying where you are in Estonian: -s, usually for in (Tallinnas, koolis), -l, usually for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
 
 msgid "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
@@ -340,6 +347,9 @@ msgstr "A longer conversation"
 msgid "a lot, much"
 msgstr "a lot, much"
 
+msgid "A model answer"
+msgstr "A model answer"
+
 msgid "A noun’s cases on the tray: tap a form to hear it, its ending lit. Question words can head the rows, and one row or column can be tinted. On a phone the rows stack."
 msgstr "A noun’s cases on the tray: tap a form to hear it, its ending lit. Question words can head the rows, and one row or column can be tinted. On a phone the rows stack."
 
@@ -369,6 +379,9 @@ msgstr "a shop"
 
 msgid "A short text to read and hear, every question at once; its words open their cards once checked."
 msgstr "A short text to read and hear, every question at once; its words open their cards once checked."
+
+msgid "A short text written in a field with the Estonian letters, then shown above a model answer and a checklist the learner ticks; nothing is marked for them."
+msgstr "A short text written in a field with the Estonian letters, then shown above a model answer and a checklist the learner ticks; nothing is marked for them."
 
 msgid "a town"
 msgstr "a town"
@@ -609,6 +622,10 @@ msgstr "Don’t wait!"
 msgid "Done"
 msgstr "Done"
 
+msgctxt "button that ends the checklist"
+msgid "Done"
+msgstr "Done"
+
 msgid "Drag each word to its gap, or tap it."
 msgstr "Drag each word to its gap, or tap it."
 
@@ -838,6 +855,9 @@ msgstr "Go to the lesson"
 
 msgid "Going, being, coming back: -ma, -mas, -mast"
 msgstr "Going, being, coming back: -ma, -mas, -mast"
+
+msgid "Greets Mari."
+msgstr "Greets Mari."
 
 msgid "hakkama, now"
 msgstr "hakkama, now"
@@ -1590,6 +1610,9 @@ msgstr "Play from {name}’s turn"
 msgid "Play from here"
 msgstr "Play from here"
 
+msgid "Play the model answer"
+msgstr "Play the model answer"
+
 msgid "Play what {name} said"
 msgstr "Play what {name} said"
 
@@ -1745,6 +1768,15 @@ msgstr "Saying no in the past"
 msgid "Saying where: -s and -l"
 msgstr "Saying where: -s and -l"
 
+msgid "Says what you do."
+msgstr "Says what you do."
+
+msgid "Says where you live."
+msgstr "Says where you live."
+
+msgid "Says who you are."
+msgstr "Says who you are."
+
 msgid "Scene"
 msgstr "Scene"
 
@@ -1786,6 +1818,9 @@ msgstr "She’s a teacher"
 
 msgid "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
 msgstr "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
+
+msgid "Show the model"
+msgstr "Show the model"
 
 msgid "Show what {name} said"
 msgstr "Show what {name} said"
@@ -2082,6 +2117,9 @@ msgstr "The questions didn’t load. Check your connection and try again."
 msgid "The right sentence"
 msgstr "The right sentence"
 
+msgid "The right word"
+msgstr "The right word"
+
 msgid "The same conversation with Mari’s lines heard, not shown; each can be read on request."
 msgstr "The same conversation with Mari’s lines heard, not shown; each can be read on request."
 
@@ -2163,6 +2201,9 @@ msgstr "This is Martin’s coffee."
 msgid "Through, over, along"
 msgstr "Through, over, along"
 
+msgid "Tick what your text does."
+msgstr "Tick what your text does."
+
 msgid "Time expressions: when things happen"
 msgstr "Time expressions: when things happen"
 
@@ -2223,6 +2264,9 @@ msgstr "Type the question"
 
 msgid "Type the sentence"
 msgstr "Type the sentence"
+
+msgid "Type the word"
+msgstr "Type the word"
 
 msgid "under"
 msgstr "under"
@@ -2437,11 +2481,20 @@ msgstr "Words that differ"
 msgid "work"
 msgstr "work"
 
+msgid "Write it again"
+msgstr "Write it again"
+
 msgid "Write it in Estonian"
 msgstr "Write it in Estonian"
 
 msgid "Write it in Estonian."
 msgstr "Write it in Estonian."
+
+msgid "Write Mari a few lines: greet her, say who you are, what you do and where you live."
+msgstr "Write Mari a few lines: greet her, say who you are, what you do and where you live."
+
+msgid "Write something first, then compare."
+msgstr "Write something first, then compare."
 
 msgid "Write the question"
 msgstr "Write the question"
@@ -2452,8 +2505,17 @@ msgstr "Write the question this answers."
 msgid "Write the sentence you hear."
 msgstr "Write the sentence you hear."
 
+msgid "Write the word you hear."
+msgstr "Write the word you hear."
+
+msgid "Write to Mari"
+msgstr "Write to Mari"
+
 msgid "Write what you hear"
 msgstr "Write what you hear"
+
+msgid "Writing"
+msgstr "Writing"
 
 msgid "Yes, she is"
 msgstr "Yes, she is"
@@ -2478,6 +2540,9 @@ msgstr "You found the wrong word."
 
 msgid "You live in Tartu."
 msgstr "You live in Tartu."
+
+msgid "You wrote"
+msgstr "You wrote"
 
 msgid "You wrote <0>{typed}</0>. It’s <1>{right}</1>."
 msgstr "You wrote <0>{typed}</0>. It’s <1>{right}</1>."
@@ -2517,3 +2582,6 @@ msgstr "Your reply"
 
 msgid "Your sentence"
 msgstr "Your sentence"
+
+msgid "Your text"
+msgstr "Your text"

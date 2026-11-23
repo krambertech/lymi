@@ -133,11 +133,11 @@ function SentenceDrillRound({ item, lesson, ...round }: Round<SentenceDrill>) {
   const task = (): SentenceItem => {
     switch (item.kind) {
       case "dictation":
-        return { ...written, kind: "dictation" };
+        return { ...written, kind: "dictation", ...(item.word ? { word: true } : {}) };
       case "translate":
         return { ...written, kind: "translate", prompt: i18n._(item.prompt) };
       case "rewrite":
-        return { ...written, kind: "rewrite", from: item.from, cue: i18n._(item.cue) };
+        return { ...written, kind: "rewrite", from: item.from, cue: <RichText text={item.cue} /> };
       case "ask":
         return { ...written, kind: "ask", reply: item.reply };
       case "build":
@@ -145,7 +145,7 @@ function SentenceDrillRound({ item, lesson, ...round }: Round<SentenceDrill>) {
           ...written,
           kind: "build",
           words: item.words,
-          ...(item.cue ? { cue: i18n._(item.cue) } : {}),
+          ...(item.cue ? { cue: <RichText text={item.cue} /> } : {}),
         };
     }
   };

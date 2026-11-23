@@ -937,7 +937,9 @@ export function KohadLesson() {
                 <p>
                   <Trans>
                     Each round gives an answer. Write the question it answers, starting with{" "}
-                    <Word w="kus" />. Leave out the place: that is what you ask about.
+                    <Word w="kus" />. Leave out the place: that is what you ask about. When the
+                    answer says <span lang="et">ma</span> or <span lang="et">me</span>, ask with{" "}
+                    <span lang="et">sa</span> or <span lang="et">te</span>.
                   </Trans>
                 </p>
               </Prose>

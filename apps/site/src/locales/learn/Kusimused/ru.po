@@ -154,6 +154,9 @@ msgstr "Пять предложений. Переключи на «Вопрос�
 msgid "For fun."
 msgstr "Для удовольствия."
 
+msgid "For his family."
+msgstr "Ради семьи."
+
 msgid "from, by birth"
 msgstr "родом из"
 
@@ -162,9 +165,6 @@ msgstr "Вернись к переключателю с <0>kas</0> в начал
 
 msgid "He or she is at home."
 msgstr "Он или она дома."
-
-msgid "He studies."
-msgstr "Он учится."
 
 msgid "He works in Tartu."
 msgstr "Он работает в Тарту."
@@ -179,7 +179,7 @@ msgid "Hear a question, then pick the answer that fits. A kas question takes yes
 msgstr "Послушай вопрос и выбери ответ, который подходит. На kas отвечают «да», «нет» или «не знаю», а на вопросительное слово — тем, о чём оно спрашивает: местом на kus, временем на millal."
 
 msgid "His name"
-msgstr "Как его зовут"
+msgstr "Его имя"
 
 msgid "how"
 msgstr "как"

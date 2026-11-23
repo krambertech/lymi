@@ -86,7 +86,7 @@ const asked = ({ reply, answers }: (typeof KOHAD_ASKED)[number]): SentenceDrill 
   reply,
   say: answers[0],
   answers,
-  explain: msg`Ask with <et>kus</et> and leave out the place.`,
+  explain: msg`Ask with <et>kus</et> and leave out the place; <et>me</et> in the answer is <et>te</et> in the question.`,
 });
 
 export const DRILLS: DrillBank = {

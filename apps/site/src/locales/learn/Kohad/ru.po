@@ -58,8 +58,8 @@ msgstr "Спроси «где»"
 msgid "Ask with <0>kus</0>, and answer with a sentence or the place alone: <1>Kus sa elad? Tartus.</1>"
 msgstr "Спрашивай словом <0>kus</0>, а отвечай предложением или одним словом: <1>Kus sa elad? Tartus.</1>"
 
-msgid "Ask with <et>kus</et> and leave out the place."
-msgstr "Спрашивай с <et>kus</et> и не называй место."
+msgid "Ask with <et>kus</et> and leave out the place; <et>me</et> in the answer is <et>te</et> in the question."
+msgstr "Спрашивай с <et>kus</et> и не называй место; <et>me</et> в ответе — это <et>te</et> в вопросе."
 
 msgid "Asking where with <et>kus</et>"
 msgstr "Вопрос «где» с <et>kus</et>"
@@ -100,8 +100,8 @@ msgstr "К каждому названию добавилось -s, и это -s
 msgid "Each round gives a place and asks <0/>, where. Type the place with <1>-s</1> or <2>-l</2>. Each of these takes its ending with no other change."
 msgstr "В каждом раунде есть место и вопрос <0/>, «где». Напиши место с <1>-s</1> или <2>-l</2>. К этим словам только добавляется окончание, больше ничего не меняется."
 
-msgid "Each round gives an answer. Write the question it answers, starting with <0/>. Leave out the place: that is what you ask about."
-msgstr "В каждом раунде есть ответ. Напиши к нему вопрос, начав с <0/>. Место не называй: о нём ты и спрашиваешь."
+msgid "Each round gives an answer. Write the question it answers, starting with <0/>. Leave out the place: that is what you ask about. When the answer says <1>ma</1> or <2>me</2>, ask with <3>sa</3> or <4>te</4>."
+msgstr "В каждом раунде есть ответ. Напиши к нему вопрос, начав с <0/>. Место не называй: о нём ты и спрашиваешь. Если в ответе <1>ma</1> или <2>me</2>, спрашивай через <3>sa</3> или <4>te</4>."
 
 msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 msgstr "В каждом раунде — место. Выбери окончание, а потом послушай предложение. Большинство городов, зданий и стран получают <0>-s</0>; работа, рынок и названия на <1>-maa</1> получают <2>-l</2>."

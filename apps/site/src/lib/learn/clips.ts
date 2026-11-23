@@ -418,7 +418,17 @@ export const KUSIMUSED_WORDS = [
 ] as const;
 
 export const KUSIMUSED_ASKED = [
-  { word: "kes", reply: "Mari elab Tartus.", answers: ["Kes elab Tartus?"] },
+  {
+    word: "kes",
+    reply: "Mari elab Tartus.",
+    answers: [
+      "Kes elab Tartus?",
+      "Kus Mari elab?",
+      "Kus elab Mari?",
+      "Kus ta elab?",
+      "Kus tema elab?",
+    ],
+  },
   {
     word: "mis",
     reply: "Ma joon kohvi.",
@@ -473,6 +483,8 @@ export const KUSIMUSED_ASKED = [
       "Miks eesti keelt õpid?",
       "Miks õpid eesti keelt?",
       "Miks eesti keelt õpite?",
+      "Miks teie õpite eesti keelt?",
+      "Miks õpite eesti keelt?",
     ],
   },
   {
@@ -489,6 +501,8 @@ export const KUSIMUSED_ASKED = [
       "Kuidas eesti keelt räägid?",
       "Kuidas räägid eesti keelt?",
       "Kuidas eesti keelt räägite?",
+      "Kuidas teie räägite eesti keelt?",
+      "Kuidas räägite eesti keelt?",
     ],
   },
   {
@@ -505,6 +519,8 @@ export const KUSIMUSED_ASKED = [
       "Kui palju kohvi teie joote?",
       "Kui palju kohvi jood?",
       "Kui palju kohvi joote?",
+      "Mis sa jood?",
+      "Mida sa jood?",
     ],
   },
 ] as const;
@@ -518,6 +534,7 @@ export const KUSIMUSED_TRANSLATED = [
       "Kas sina elad Tallinnas?",
       "Kas teie elate Tallinnas?",
       "Kas elad Tallinnas?",
+      "Kas elate Tallinnas?",
     ],
   },
   {
@@ -528,6 +545,7 @@ export const KUSIMUSED_TRANSLATED = [
       "Kus sina töötad?",
       "Kus teie töötate?",
       "Kus töötad?",
+      "Kus töötate?",
     ],
   },
   {
@@ -538,6 +556,7 @@ export const KUSIMUSED_TRANSLATED = [
       "Kas sina räägid eesti keelt?",
       "Kas teie räägite eesti keelt?",
       "Kas räägid eesti keelt?",
+      "Kas räägite eesti keelt?",
     ],
   },
   { kind: "word", answers: ["Kes räägib eesti keelt?"] },
@@ -551,6 +570,7 @@ export const KUSIMUSED_TRANSLATED = [
       "Kas sina jood kohvi?",
       "Kas teie joote kohvi?",
       "Kas jood kohvi?",
+      "Kas joote kohvi?",
     ],
   },
   {
@@ -565,6 +585,9 @@ export const KUSIMUSED_TRANSLATED = [
       "Mida teie loete?",
       "Mis loed?",
       "Mida loed?",
+      "Mis teie loete?",
+      "Mis loete?",
+      "Mida loete?",
     ],
   },
 ] as const;

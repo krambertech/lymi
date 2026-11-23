@@ -154,6 +154,9 @@ msgstr "Five sentences. Switch to Question and watch what changes."
 msgid "For fun."
 msgstr "For fun."
 
+msgid "For his family."
+msgstr "For his family."
+
 msgid "from, by birth"
 msgstr "from, by birth"
 
@@ -162,9 +165,6 @@ msgstr "Go back to the <0>kas</0> switch at the top, then try again."
 
 msgid "He or she is at home."
 msgstr "He or she is at home."
-
-msgid "He studies."
-msgstr "He studies."
 
 msgid "He works in Tartu."
 msgstr "He works in Tartu."

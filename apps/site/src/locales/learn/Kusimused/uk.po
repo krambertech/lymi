@@ -154,6 +154,9 @@ msgstr "П’ять речень. Перемкни на «Питання» й п
 msgid "For fun."
 msgstr "Для задоволення."
 
+msgid "For his family."
+msgstr "Заради родини."
+
 msgid "from, by birth"
 msgstr "родом з"
 
@@ -162,9 +165,6 @@ msgstr "Повернися до перемикача з <0>kas</0> на поча
 
 msgid "He or she is at home."
 msgstr "Він чи вона вдома."
-
-msgid "He studies."
-msgstr "Він навчається."
 
 msgid "He works in Tartu."
 msgstr "Він працює в Тарту."

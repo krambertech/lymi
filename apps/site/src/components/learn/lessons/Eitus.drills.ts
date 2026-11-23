@@ -101,7 +101,12 @@ const answered = ({ ask, answer }: (typeof NO_ANSWERS)[number]): SentenceDrill =
     answers:
       verb === "ole"
         ? [answer, "Pole.", "Ei.", ...full("ei ole"), ...full("pole")]
-        : [answer, "Ei.", ...full(`ei ${verb}`)],
+        : [
+            answer,
+            "Ei.",
+            ...full(`ei ${verb}`),
+            ...(asked === "te" ? [`Ei, ma ei ${verb}.`, `Ma ei ${verb}.`] : []),
+          ],
     explain: msg`<et>Ei</et>, then the verb from the question without its ending.`,
   };
 };

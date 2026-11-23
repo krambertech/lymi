@@ -558,7 +558,7 @@ export function KusimusedLesson() {
         options: [
           { id: "fun", label: t`For fun.` },
           { id: "work", label: t`He works in Tartu.` },
-          { id: "school", label: t`He studies.` },
+          { id: "school", label: t`For his family.` },
         ],
         answer: "work",
         line: 10,

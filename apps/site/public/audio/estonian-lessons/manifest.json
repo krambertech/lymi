@@ -11526,5 +11526,387 @@
     "text": "Sa olid",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/turg": {
+    "text": "turg",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/turule": {
+    "text": "turule",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/turul": {
+    "text": "turul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/turult": {
+    "text": "turult",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/o3unad": {
+    "text": "õunad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/turu-o3unad": {
+    "text": "turu õunad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/kilo-juustu": {
+    "text": "kilo juustu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/maksab": {
+    "text": "maksab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mida-te-soovite": {
+    "text": "Mida te soovite?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/midagi-veel": {
+    "text": "Midagi veel?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mul-on-vaja": {
+    "text": "mul on vaja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/kahju": {
+    "text": "kahju",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/tahan": {
+    "text": "tahan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/vo3in": {
+    "text": "võin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/saan": {
+    "text": "saan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mulle-meeldib": {
+    "text": "mulle meeldib",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/pean": {
+    "text": "pean",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/la2hen": {
+    "text": "lähen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/hakkan": {
+    "text": "hakkan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mul-on-vaja-kilo-juustu": {
+    "text": "Mul on vaja kilo juustu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/kui-palju-see-maksab": {
+    "text": "Kui palju see maksab?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mulle-meeldivad-o3unad": {
+    "text": "Mulle meeldivad õunad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-tahan-turule-minna": {
+    "text": "Ma tahan turule minna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-pean-kell-kaksteist-kodus-olema": {
+    "text": "Ma pean kell kaksteist kodus olema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-pean-turule-minema": {
+    "text": "Ma pean turule minema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-tahan-kohvi-juua": {
+    "text": "Ma tahan kohvi juua.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-la2hen-ta2na-turule": {
+    "text": "Ma lähen täna turule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mul-on-vaja-kilo-kohvi": {
+    "text": "Mul on vaja kilo kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/kolm-eurot": {
+    "text": "kolm eurot",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/juust-maksab-kaheksa-eurot": {
+    "text": "Juust maksab kaheksa eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-tahan-klaas-piima": {
+    "text": "Ma tahan klaas piima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-pean-kodus-olema": {
+    "text": "Ma pean kodus olema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mul-on-vaja-poodi-minna": {
+    "text": "Mul on vaja poodi minna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-pean-koju-minema": {
+    "text": "Ma pean koju minema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/me-saame-kohvikus-su2u2a": {
+    "text": "Me saame kohvikus süüa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mulle-meeldib-turg": {
+    "text": "Mulle meeldib turg.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/talle-meeldib-kohv": {
+    "text": "Talle meeldib kohv.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mulle-meeldivad-kassid": {
+    "text": "Mulle meeldivad kassid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/talle-meeldivad-o3unad": {
+    "text": "Talle meeldivad õunad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-la2hen-turule": {
+    "text": "Ma lähen turule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-olen-turul": {
+    "text": "Ma olen turul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-tulen-turult": {
+    "text": "Ma tulen turult.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-olen-ta2na-turul": {
+    "text": "Ma olen täna turul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-tulen-turult-koju": {
+    "text": "Ma tulen turult koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/p-mari": {
+    "text": "Tere, Liis! Täna on laupäev ja ma lähen kell kümme turule. Mul on vaja kilo juustu, leiba ja piima. Kilo juustu maksab turul kümme eurot. Leib maksab kaks eurot. Homme tuleb minu ema ja talle meeldivad turu õunad. Mulle ei meeldi pood, mulle meeldib turg. Turul on ka väike kohvik. Kas sa tahad tulla? Jaan ei saa tulla, sest ta on täna tööl. Me võime kohvikus kohvi juua. Ma ootan sind kell kümme turul. Kell kaksteist pean ma kodus olema.",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "turul/p-liis": {
+    "text": "Tere, Mari! Jah, ma tahan tulla. Ma olen kell kümme turul. Mul on ka vaja kilo kohvi. Ka mulle meeldivad turu õunad. Kas me saame kohvikus süüa? Kell kaksteist pean ma ka koju minema.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "turul/d-muuja-1": {
+    "text": "Tere! Mida te soovite?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "turul/d-sina-1": {
+    "text": "Tere! Mul on vaja kilo juustu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/d-muuja-2": {
+    "text": "Kilo maksab kaheksa eurot. Midagi veel?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "turul/d-sina-2": {
+    "text": "Jah, ma tahan ka leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/d-muuja-3": {
+    "text": "Juust ja leib on kümme eurot.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "turul/d-sina-3": {
+    "text": "Palun, kümme eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/c-stall": {
+    "text": "Tere! Mida te soovite? Tere! Mul on vaja kilo juustu. Kui palju see maksab? Kilo maksab kaheksa eurot. See juust on väga hea. Kas see on Eesti juust? Jah, see juust on Tartust. Kas leib on ka Tartust? Ei, leib on Tallinnast. Hea, üks kilo, palun. Midagi veel? Jah, ma tahan ka leiba ja piima. Leiba on, aga piima täna pole. Piima saate poest. Kahju. Ma pean poodi minema. Kas teile meeldivad õunad? Täna on meil ka õunad. Mulle meeldivad õunad, aga täna mul pole aega. Leib ja juust on kümme eurot. Palun, kümme eurot. Aitäh, head aega! Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere! Mida te soovite?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere! Mul on vaja kilo juustu.",
+          "Kui palju see maksab?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kilo maksab kaheksa eurot.",
+          "See juust on väga hea."
+        ],
+        "say": "Kilo maksab kaheksa eurot. [proudly] See juust on väga hea."
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas see on Eesti juust?"
+        ],
+        "say": "[curious] Kas see on Eesti juust?"
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, see juust on Tartust."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas leib on ka Tartust?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei, leib on Tallinnast."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hea, üks kilo, palun."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Midagi veel?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, ma tahan ka leiba ja piima."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Leiba on, aga piima täna pole.",
+          "Piima saate poest."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kahju.",
+          "Ma pean poodi minema."
+        ],
+        "say": "[sighs] Kahju. Ma pean poodi minema."
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas teile meeldivad õunad?",
+          "Täna on meil ka õunad."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mulle meeldivad õunad, aga täna mul pole aega."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Leib ja juust on kümme eurot."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Palun, kümme eurot.",
+          "Aitäh, head aega!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Head aega!"
+        ]
+      }
+    ]
+  },
+  "turul/leib-maksab-kaks-eurot": {
+    "text": "Leib maksab kaks eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

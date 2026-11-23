@@ -663,6 +663,9 @@ msgstr "Естонські особові займенники і «бути»"
 msgid "Estonian plural"
 msgstr "Множина в естонській мові"
 
+msgid "Estonian practice: shopping at the market"
+msgstr "Практика естонської: покупки на ринку"
+
 msgid "Estonian present tense"
 msgstr "Теперішній час в естонській мові"
 
@@ -741,6 +744,9 @@ msgstr "Безкоштовна розмовна практика естонсь�
 
 msgid "Free Estonian decks in Lymi"
 msgstr "Безкоштовні естонські колоди в Lymi"
+
+msgid "Free Estonian practice at the market: read a friend’s message and answer it, say what you need and what it costs (kilo juustu, kaks eurot), choose between the -da and -ma infinitive after tahan and pean, fix the mistakes learners make, buy cheese at a stall and follow a conversation heard twice. Every sentence is read aloud."
+msgstr "Безкоштовна практика естонської на ринку: прочитай повідомлення подруги й дай відповідь, скажи, що тобі потрібно і скільки це коштує (kilo juustu, kaks eurot), вибери інфінітив на -da чи на -ma після tahan і pean, виправ типові помилки, купи сир біля прилавка й зрозумій розмову, яку можна прослухати двічі. Кожне речення озвучене."
 
 msgid "Free Estonian practice for beginners: read opening hours and a message, follow a voice message with times and days, fill in a plan for Saturday and talk with a friend at a café. Every sentence is read aloud."
 msgstr "Безкоштовна практика естонської для початківців: прочитай години роботи й повідомлення, зрозумій голосове повідомлення, де йдеться про час і дні, заповни план на суботу й поговори з подругою в кав’ярні. Кожне речення озвучене."

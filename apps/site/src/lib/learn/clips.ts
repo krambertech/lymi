@@ -2939,6 +2939,165 @@ const PAST_NO_CLIPS: Record<string, Clip> = {
   "c-weekend": PAST_NO_TALK,
 };
 
+/*
+ * Practice: at the market, “Turul”. Words from lessons 1 to 25 only, plus “Mida te soovite?” and
+ * “Midagi veel?”, which its glossary explains.
+ */
+
+/** Mari's message to Liis, and Liis's answer with gaps. */
+export const MARKET_PASSAGES = {
+  mari: [
+    "Tere, Liis!",
+    "Täna on laupäev ja ma lähen kell kümme turule.",
+    "Mul on vaja kilo juustu, leiba ja piima.",
+    "Kilo juustu maksab turul kümme eurot.",
+    "Leib maksab kaks eurot.",
+    "Homme tuleb minu ema ja talle meeldivad turu õunad.",
+    "Mulle ei meeldi pood, mulle meeldib turg.",
+    "Turul on ka väike kohvik.",
+    "Kas sa tahad tulla?",
+    "Jaan ei saa tulla, sest ta on täna tööl.",
+    "Me võime kohvikus kohvi juua.",
+    "Ma ootan sind kell kümme turul.",
+    "Kell kaksteist pean ma kodus olema.",
+  ],
+  liis: [
+    "Tere, Mari!",
+    "Jah, ma tahan tulla.",
+    "Ma olen kell kümme turul.",
+    "Mul on ka vaja kilo kohvi.",
+    "Ka mulle meeldivad turu õunad.",
+    "Kas me saame kohvikus süüa?",
+    "Kell kaksteist pean ma ka koju minema.",
+  ],
+} as const;
+
+/** The leads of “Which form follows?”: what takes the -da infinitive, and what takes -ma. */
+export const MARKET_LEADS = [
+  { w: "tahan", bin: "da" },
+  { w: "võin", bin: "da" },
+  { w: "saan", bin: "da" },
+  { w: "mul on vaja", bin: "da" },
+  { w: "mulle meeldib", bin: "da" },
+  { w: "pean", bin: "ma" },
+  { w: "lähen", bin: "ma" },
+  { w: "hakkan", bin: "ma" },
+] as const;
+
+/** “Say it in Estonian”: what to write, as its clip says it. */
+export const MARKET_SAY = [
+  { id: "juustu", said: "Mul on vaja kilo juustu." },
+  { id: "maksab", said: "Kui palju see maksab?" },
+  { id: "ounad", said: "Mulle meeldivad õunad." },
+  { id: "turule", said: "Ma tahan turule minna." },
+  { id: "kodus", said: "Ma pean kell kaksteist kodus olema." },
+  { id: "leib", said: "Leib maksab kaks eurot." },
+] as const;
+
+/** “Fix the sentence”: one wrong word each, from rules the course has taught. */
+export const MARKET_FIX = [
+  { id: "juust", wrong: "Mul on vaja kilo juust.", right: "Mul on vaja kilo juustu." },
+  { id: "minna", wrong: "Ma pean turule minna.", right: "Ma pean turule minema." },
+  { id: "jooma", wrong: "Ma tahan kohvi jooma.", right: "Ma tahan kohvi juua." },
+  { id: "meeldib", wrong: "Mulle meeldib õunad.", right: "Mulle meeldivad õunad." },
+  { id: "euro", wrong: "Leib maksab kaks euro.", right: "Leib maksab kaks eurot." },
+  { id: "turul", wrong: "Ma lähen täna turul.", right: "Ma lähen täna turule." },
+] as const;
+
+/** At a stall: the seller's lines in the second voice, the learner's in the main one. */
+export const MARKET_DIALOGUE = {
+  "d-muuja-1": { text: "Tere! Mida te soovite?", voice: "second" },
+  "d-sina-1": "Tere! Mul on vaja kilo juustu.",
+  "d-muuja-2": { text: "Kilo maksab kaheksa eurot. Midagi veel?", voice: "second" },
+  "d-sina-2": "Jah, ma tahan ka leiba.",
+  "d-muuja-3": { text: "Juust ja leib on kümme eurot.", voice: "second" },
+  "d-sina-3": "Palun, kümme eurot.",
+} as const satisfies Record<string, Clip>;
+
+/** Mari buys cheese at a stall: Mari in the third voice, the seller in the fourth. */
+export const MARKET_TALK = {
+  turns: [
+    { voice: "fourth", text: "Tere! Mida te soovite?" },
+    { voice: "third", text: ["Tere! Mul on vaja kilo juustu.", "Kui palju see maksab?"] },
+    {
+      voice: "fourth",
+      text: ["Kilo maksab kaheksa eurot.", "See juust on väga hea."],
+      say: "Kilo maksab kaheksa eurot. [proudly] See juust on väga hea.",
+    },
+    { voice: "third", text: "Kas see on Eesti juust?", say: "[curious] Kas see on Eesti juust?" },
+    { voice: "fourth", text: "Jah, see juust on Tartust." },
+    { voice: "third", text: "Kas leib on ka Tartust?" },
+    { voice: "fourth", text: "Ei, leib on Tallinnast." },
+    { voice: "third", text: "Hea, üks kilo, palun." },
+    { voice: "fourth", text: "Midagi veel?" },
+    { voice: "third", text: "Jah, ma tahan ka leiba ja piima." },
+    { voice: "fourth", text: ["Leiba on, aga piima täna pole.", "Piima saate poest."] },
+    {
+      voice: "third",
+      text: ["Kahju.", "Ma pean poodi minema."],
+      say: "[sighs] Kahju. Ma pean poodi minema.",
+    },
+    { voice: "fourth", text: ["Kas teile meeldivad õunad?", "Täna on meil ka õunad."] },
+    { voice: "third", text: "Mulle meeldivad õunad, aga täna mul pole aega." },
+    { voice: "fourth", text: "Leib ja juust on kümme eurot." },
+    { voice: "third", text: ["Palun, kümme eurot.", "Aitäh, head aega!"] },
+    { voice: "fourth", text: "Head aega!" },
+  ],
+} as const satisfies Conversation;
+
+/** The drill's sentences and words, as its clips say them. */
+export const MARKET_DRILL = [
+  "kilo juustu",
+  "Mul on vaja kilo kohvi.",
+  "kolm eurot",
+  "Juust maksab kaheksa eurot.",
+  "Ma tahan klaas piima.",
+  "Ma tahan turule minna.",
+  "Ma pean kodus olema.",
+  "Mul on vaja poodi minna.",
+  "Ma tahan kohvi juua.",
+  "Ma pean koju minema.",
+  "Me saame kohvikus süüa.",
+  "Mulle meeldivad õunad.",
+  "Mulle meeldib turg.",
+  "Talle meeldib kohv.",
+  "Mulle meeldivad kassid.",
+  "Talle meeldivad õunad.",
+  "Ma lähen turule.",
+  "Ma olen turul.",
+  "Ma tulen turult.",
+  "Ma olen täna turul.",
+  "Ma tulen turult koju.",
+] as const;
+
+/** The words of the lesson with a card, each heard on its own. */
+export const MARKET_WORDS = [
+  "turg",
+  "turule",
+  "turul",
+  "turult",
+  "õunad",
+  "turu õunad",
+  "kilo juustu",
+  "maksab",
+  "Mida te soovite?",
+  "Midagi veel?",
+  "mul on vaja",
+  "kahju",
+] as const;
+
+const MARKET_CLIPS: Record<string, Clip> = {
+  ...words(MARKET_WORDS),
+  ...words(MARKET_LEADS.map(({ w }) => w)),
+  ...words(MARKET_SAY.map(({ said }) => said)),
+  ...words(MARKET_FIX.map(({ right }) => right)),
+  ...words(MARKET_DRILL),
+  "p-mari": { sentences: MARKET_PASSAGES.mari, voice: "third" },
+  "p-liis": { sentences: MARKET_PASSAGES.liis, voice: "second" },
+  ...MARKET_DIALOGUE,
+  "c-stall": MARKET_TALK,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -3096,6 +3255,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   },
   mitmus: MITMUS_CLIPS,
   osastav: OSASTAV_CLIPS,
+  turul: MARKET_CLIPS,
   lihtminevik: PAST_CLIPS,
   "mineviku-eitus": PAST_NO_CLIPS,
   kit: KIT_CLIPS,

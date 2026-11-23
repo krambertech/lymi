@@ -301,6 +301,9 @@ msgstr "Безкоштовний урок про партитив в естон�
 msgid "A free lesson on the Estonian past tense (lihtminevik): -si- on most verbs (elasin, lugesin, rääkisin), -i- on a few everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
 msgstr "Безкоштовний урок про минулий час в естонській (lihtminevik): -si- у більшості дієслів (elasin, lugesin, rääkisin), -i- у кількох щоденних (olin, läksin, sõin), закінчення, що показують, хто це зробив, і слова eile та eelmisel nädalal. Кожне речення озвучене."
 
+msgid "A free lesson on the Estonian plural cases: build the plural genitive from the partitive (majade, raamatute, inimeste), then add the endings you know: majades, inimestele, sõpradega. Every sentence is read aloud."
+msgstr "Безкоштовний урок про відмінки множини в естонській: утвори родовий множини від партитива (majade, raamatute, inimeste) і додай знайомі закінчення: majades, inimestele, sõpradega. Кожне речення озвучене."
+
 msgid "A free lesson on the Estonian plural partitive, the partitive for more than one: palju raamatuid, poes on õunu, mul ei ole lapsi; its endings -id, -sid and a changed last vowel (raamatuid, autosid, maju, koole); and how it differs from kaks raamatut and the plural raamatud. Every sentence is read aloud."
 msgstr "Безкоштовний урок про партитив множини в естонській, партитив для кількох: palju raamatuid, poes on õunu, mul ei ole lapsi; його закінчення -id, -sid і змінена остання голосна (raamatuid, autosid, maju, koole); і чим він відрізняється від kaks raamatut та множини raamatud. Кожне речення озвучене."
 
@@ -671,6 +674,9 @@ msgstr "Естонські особові займенники і «бути»"
 
 msgid "Estonian plural"
 msgstr "Множина в естонській мові"
+
+msgid "Estonian plural cases"
+msgstr "Відмінки множини в естонській мові"
 
 msgid "Estonian plural partitive"
 msgstr "Партитив множини в естонській мові"

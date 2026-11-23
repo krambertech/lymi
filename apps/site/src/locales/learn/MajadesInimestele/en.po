@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 12:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0>Õpetajat</0> ends in <1>-t</1>: <2>õpetajate</2>, <3>õpetajatele</3>."
+msgstr "<0>Õpetajat</0> ends in <1>-t</1>: <2>õpetajate</2>, <3>õpetajatele</3>."
+
+msgid "<0>Raamatut</0> ends in <1>-t</1>, so the plural genitive is <2>raamatute</2>: <3>raamatutes</3>."
+msgstr "<0>Raamatut</0> ends in <1>-t</1>, so the plural genitive is <2>raamatute</2>: <3>raamatutes</3>."
+
+msgid "22 minutes"
+msgstr "22 minutes"
+
+msgid "8 exercises"
+msgstr "8 exercises"
+
+msgid "A partitive in <0>-t</0> adds <1>-e</1>. Any other drops any <2>-d</2> and adds <3>-de</3>."
+msgstr "A partitive in <0>-t</0> adds <1>-e</1>. Any other drops any <2>-d</2> and adds <3>-de</3>."
+
+msgid "about many"
+msgstr "about many"
+
+msgid "Add any ending you know to the plural genitive: <0>-s</0>, <1>-st</1>, <2>-le</2>, <3>-l</3>, <4>-ga</4>. <5/> is to people; <6>sõpradega</6> is with friends. Pick a noun and compare the columns."
+msgstr "Add any ending you know to the plural genitive: <0>-s</0>, <1>-st</1>, <2>-le</2>, <3>-l</3>, <4>-ga</4>. <5/> is to people; <6>sõpradega</6> is with friends. Pick a noun and compare the columns."
+
+msgid "All eight, typed in full."
+msgstr "All eight, typed in full."
+
+msgid "All eight. You heard both the number and the case."
+msgstr "All eight. You heard both the number and the case."
+
+msgid "All seven, each plural on its genitive."
+msgstr "All seven, each plural on its genitive."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "bird"
+msgstr "bird"
+
+msgid "book"
+msgstr "book"
+
+msgid "Build on the plural genitive, not the plural nominative."
+msgstr "Build on the plural genitive, not the plural nominative."
+
+msgid "Building the plural genitive"
+msgstr "Building the plural genitive"
+
+msgid "café"
+msgstr "café"
+
+msgid "Compare the columns of the table once more, then try again."
+msgstr "Compare the columns of the table once more, then try again."
+
+msgid "Don’t build on the plural of lesson {plural}: it’s <0>inimestega</0>, not <1>inimesedega</1>."
+msgstr "Don’t build on the plural of lesson {plural}: it’s <0>inimestega</0>, not <1>inimesedega</1>."
+
+msgid "Drag a word into each gap, or tap one to fill the open gap. Two of the words belong nowhere."
+msgstr "Drag a word into each gap, or tap one to fill the open gap. Two of the words belong nowhere."
+
+msgid "Drop any <et>-d</et> from the partitive and add <et>-de</et>."
+msgstr "Drop any <et>-d</et> from the partitive and add <et>-de</et>."
+
+msgid "Each round gives a noun’s three forms, as a dictionary lists them. Type its plural genitive."
+msgstr "Each round gives a noun’s three forms, as a dictionary lists them. Type its plural genitive."
+
+msgid "Each sentence has one plural built on the wrong stem. Tap it, then type it right."
+msgstr "Each sentence has one plural built on the wrong stem. Tap it, then type it right."
+
+msgid "Endings on the plural genitive"
+msgstr "Endings on the plural genitive"
+
+msgid "Every case on one stem"
+msgstr "Every case on one stem"
+
+msgid "Every other plural case is the plural genitive with the singular’s ending: <0>majades, inimestele, sõpradega</0>."
+msgstr "Every other plural case is the plural genitive with the singular’s ending: <0>majades, inimestele, sõpradega</0>."
+
+msgid "Everyone is welcome."
+msgstr "Everyone is welcome."
+
+msgid "Fill the gaps"
+msgstr "Fill the gaps"
+
+msgid "Fix the plural"
+msgstr "Fix the plural"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "friend"
+msgstr "friend"
+
+msgid "Genitive"
+msgstr "Genitive"
+
+msgid "He or she writes about friends."
+msgstr "He or she writes about friends."
+
+msgid "He or she writes to a friend."
+msgstr "He or she writes to a friend."
+
+msgid "He or she writes to friends."
+msgstr "He or she writes to friends."
+
+msgid "Hear a sentence, then pick what it means. Listen for the plural genitive and for the ending after it."
+msgstr "Hear a sentence, then pick what it means. Listen for the plural genitive and for the ending after it."
+
+msgid "house"
+msgstr "house"
+
+msgid "I spoke only Estonian."
+msgstr "I spoke only Estonian."
+
+msgid "I wrote letters."
+msgstr "I wrote letters."
+
+msgid "I’ll bring cakes."
+msgstr "I’ll bring cakes."
+
+msgid "I’m going to the cinema with friends."
+msgstr "I’m going to the cinema with friends."
+
+msgid "I’m talking to people."
+msgstr "I’m talking to people."
+
+msgid "I’m talking with a person."
+msgstr "I’m talking with a person."
+
+msgid "I’m talking with people."
+msgstr "I’m talking with people."
+
+msgid "In"
+msgstr "In"
+
+msgid "In a sentence"
+msgstr "In a sentence"
+
+msgid "in houses"
+msgstr "in houses"
+
+msgid "In the singular, the endings of lesson {inside} go on the genitive: <0>maja, majas</0>. In the plural they go on the plural genitive: <1/>, of houses, and <2/>, in houses."
+msgstr "In the singular, the endings of lesson {inside} go on the genitive: <0>maja, majas</0>. In the plural they go on the plural genitive: <1/>, of houses, and <2/>, in houses."
+
+msgid "Inimeste, the plural genitive, with -le."
+msgstr "Inimeste, the plural genitive, with -le."
+
+msgid "Jaan"
+msgstr "Jaan"
+
+msgid "Jaan asks Mari about her weekend, and tells her about his."
+msgstr "Jaan asks Mari about her weekend, and tells her about his."
+
+msgid "Listen: Jaan and Mari"
+msgstr "Listen: Jaan and Mari"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Majade, the plural genitive, with -s."
+msgstr "Majade, the plural genitive, with -s."
+
+msgid "Many"
+msgstr "Many"
+
+msgid "Many: the plural genitive with the ending."
+msgstr "Many: the plural genitive with the ending."
+
+msgid "Mari"
+msgstr "Mari"
+
+msgid "Mari bought presents for her sisters."
+msgstr "Mari bought presents for her sisters."
+
+msgid "Mari spent the weekend in Tartu on her own."
+msgstr "Mari spent the weekend in Tartu on her own."
+
+msgid "Mari’s weekend in Tartu"
+msgstr "Mari’s weekend in Tartu"
+
+msgid "Match each singular form with its plural."
+msgstr "Match each singular form with its plural."
+
+msgid "Nearly. Check the plural genitive in the ones you got wrong."
+msgstr "Nearly. Check the plural genitive in the ones you got wrong."
+
+msgid "Nearly. Look at the partitive in the ones you got wrong."
+msgstr "Nearly. Look at the partitive in the ones you got wrong."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Nearly. Play the ones you got wrong once more."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Nearly. Read the reason under each one you got wrong."
+
+msgid "Not the plural nominative: <0>inimestega</0>, not <1>inimesedega</1>."
+msgstr "Not the plural nominative: <0>inimestega</0>, not <1>inimesedega</1>."
+
+msgid "Nouns"
+msgstr "Nouns"
+
+msgid "of books"
+msgstr "of books"
+
+msgid "of friends"
+msgstr "of friends"
+
+msgid "of houses"
+msgstr "of houses"
+
+msgid "of people"
+msgstr "of people"
+
+msgid "On, at"
+msgstr "On, at"
+
+msgid "One"
+msgstr "One"
+
+msgid "One and many"
+msgstr "One and many"
+
+msgid "One and many in six cases"
+msgstr "One and many in six cases"
+
+msgid "One book: the singular genitive with <et>-s</et>."
+msgstr "One book: the singular genitive with <et>-s</et>."
+
+msgid "One or many, heard"
+msgstr "One or many, heard"
+
+msgid "One or many?"
+msgstr "One or many?"
+
+msgid "One shop: the singular genitive with <et>-s</et>."
+msgstr "One shop: the singular genitive with <et>-s</et>."
+
+msgid "One: the singular stem with the ending."
+msgstr "One: the singular stem with the ending."
+
+msgid "Out of"
+msgstr "Out of"
+
+msgid "Partitive"
+msgstr "Partitive"
+
+msgid "Partitive and plural genitive of nine nouns"
+msgstr "Partitive and plural genitive of nine nouns"
+
+msgid "person"
+msgstr "person"
+
+msgid "Plural genitive"
+msgstr "Plural genitive"
+
+msgid "Put each plural genitive in the bin of its ending. Ask what the partitive ends in."
+msgstr "Put each plural genitive in the bin of its ending. Ask what the partitive ends in."
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "Saturday shopping"
+msgstr "Saturday shopping"
+
+msgid "school"
+msgstr "school"
+
+msgid "shop"
+msgstr "shop"
+
+msgid "Some words have a second, shorter plural, such as <0>majus</0> beside <1>majades</1>. The long one is always right, so this lesson uses it."
+msgstr "Some words have a second, shorter plural, such as <0>majus</0> beside <1>majades</1>. The long one is always right, so this lesson uses it."
+
+msgid "Take the partitive, drop any <0>-d</0>, and add <1>-de</1>."
+msgstr "Take the partitive, drop any <0>-d</0>, and add <1>-de</1>."
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap down the first table once more, then try again."
+msgstr "Tap down the first table once more, then try again."
+
+msgid "Tap down the table once more, then try again."
+msgstr "Tap down the table once more, then try again."
+
+msgid "teacher"
+msgstr "teacher"
+
+msgid "That Mari has learned Estonian for only two years"
+msgstr "That Mari has learned Estonian for only two years"
+
+msgid "That Mari is from Tartu"
+msgstr "That Mari is from Tartu"
+
+msgid "That she bought two books"
+msgstr "That she bought two books"
+
+msgid "The birds are sitting on the trees."
+msgstr "The birds are sitting on the trees."
+
+msgid "The children are coming from the schools."
+msgstr "The children are coming from the schools."
+
+msgid "The dog sleeps under the children’s beds."
+msgstr "The dog sleeps under the children’s beds."
+
+msgid "The ending goes on the plural genitive."
+msgstr "The ending goes on the plural genitive."
+
+msgid "The genitive, not the nominative"
+msgstr "The genitive, not the nominative"
+
+msgid "The partitive doesn’t end in <0>-t</0>: <1>sõpra, sõprade</1>."
+msgstr "The partitive doesn’t end in <0>-t</0>: <1>sõpra, sõprade</1>."
+
+msgid "The partitive ends in <0>-t</0>, so add <1>-e</1>."
+msgstr "The partitive ends in <0>-t</0>, so add <1>-e</1>."
+
+msgid "The partitive ends in <0>-t</0>, so it adds <1>-e</1>: <2>inimest, inimeste</2>."
+msgstr "The partitive ends in <0>-t</0>, so it adds <1>-e</1>: <2>inimest, inimeste</2>."
+
+msgid "The partitive ends in <et>-t</et>, so add <et>-e</et>."
+msgstr "The partitive ends in <et>-t</et>, so add <et>-e</et>."
+
+msgid "The partitive is <0>poodi</0>, so <1>poodide</1>, <2>poodides</2>."
+msgstr "The partitive is <0>poodi</0>, so <1>poodide</1>, <2>poodides</2>."
+
+msgid "The partitive of <0>laps</0> is <1>last</1>, so the plural genitive is <2>laste</2>: <3>lastele</3>."
+msgstr "The partitive of <0>laps</0> is <1>last</1>, so the plural genitive is <2>laste</2>: <3>lastele</3>."
+
+msgid "The partitive of <et>laps</et> is <et>last</et>, so <et>laste</et>, <et>lastele</et>."
+msgstr "The partitive of <et>laps</et> is <et>last</et>, so <et>laste</et>, <et>lastele</et>."
+
+msgid "The pictures are in one book."
+msgstr "The pictures are in one book."
+
+msgid "The pictures are in several books."
+msgstr "The pictures are in several books."
+
+msgid "The pictures are in the book."
+msgstr "The pictures are in the book."
+
+msgid "The pictures are on top of the books."
+msgstr "The pictures are on top of the books."
+
+msgid "The plural cases are one step away from the singular ones: build the plural genitive, then add the endings you already know."
+msgstr "The plural cases are one step away from the singular ones: build the plural genitive, then add the endings you already know."
+
+msgid "The plural forms are the plural genitive with the ending you already know."
+msgstr "The plural forms are the plural genitive with the ending you already know."
+
+msgid "The plural genitive"
+msgstr "The plural genitive"
+
+msgid "The plural genitive comes from the partitive <et>sõpra</et>: <et>sõpradele</et>."
+msgstr "The plural genitive comes from the partitive <et>sõpra</et>: <et>sõpradele</et>."
+
+msgid "The plural genitive comes from the partitive, the third of lesson {forms}’s three forms. If the partitive ends in <0>-t</0>, add <1>-e</1>: <2/>. If not, drop any <3>-d</3> and add <4>-de</4>: <5/>. Tap down both columns."
+msgstr "The plural genitive comes from the partitive, the third of lesson {forms}’s three forms. If the partitive ends in <0>-t</0>, add <1>-e</1>: <2/>. If not, drop any <3>-d</3> and add <4>-de</4>: <5/>. Tap down both columns."
+
+msgid "The plural genitive comes from the partitive. A partitive in <0>-t</0> adds <1>-e</1>: <2>raamatut, raamatute</2>. Any other drops any <3>-d</3> and adds <4>-de</4>: <5>maja, majade</5>; <6>puud, puude</6>."
+msgstr "The plural genitive comes from the partitive. A partitive in <0>-t</0> adds <1>-e</1>: <2>raamatut, raamatute</2>. Any other drops any <3>-d</3> and adds <4>-de</4>: <5>maja, majade</5>; <6>puud, puude</6>."
+
+msgid "The plural genitive is <0>inimeste</0>, so <1>inimestega</1>, not the plural nominative <2>inimesed</2>."
+msgstr "The plural genitive is <0>inimeste</0>, so <1>inimestega</1>, not the plural nominative <2>inimesed</2>."
+
+msgid "The plural genitive is <0>sõprade</0>, from <1>sõpra</1>: <2>sõpradega</2>."
+msgstr "The plural genitive is <0>sõprade</0>, from <1>sõpra</1>: <2>sõpradega</2>."
+
+msgid "The plural genitive is <et>sõprade</et>: <et>sõpradega</et>."
+msgstr "The plural genitive is <et>sõprade</et>: <et>sõpradega</et>."
+
+msgid "The plural genitive is built on the partitive <0>sõpra</0>: <1>sõprade</1>, <2>sõpradele</2>."
+msgstr "The plural genitive is built on the partitive <0>sõpra</0>: <1>sõprade</1>, <2>sõpradele</2>."
+
+msgid "The plural genitive of inimene."
+msgstr "The plural genitive of inimene."
+
+msgid "The plural genitive of maja."
+msgstr "The plural genitive of maja."
+
+msgid "The plural genitive of raamat."
+msgstr "The plural genitive of raamat."
+
+msgid "The plural genitive of sõber."
+msgstr "The plural genitive of sõber."
+
+msgid "There are pictures in the books."
+msgstr "There are pictures in the books."
+
+msgid "To"
+msgstr "To"
+
+msgid "To a market by the river"
+msgstr "To a market by the river"
+
+msgid "To museums and cafés"
+msgstr "To museums and cafés"
+
+msgid "to people"
+msgstr "to people"
+
+msgid "To the shops"
+msgstr "To the shops"
+
+msgid "tree"
+msgstr "tree"
+
+msgid "Two endings"
+msgstr "Two endings"
+
+msgid "Type the plural genitive"
+msgstr "Type the plural genitive"
+
+msgid "We come out of the shops."
+msgstr "We come out of the shops."
+
+msgid "We go round the shops."
+msgstr "We go round the shops."
+
+msgid "We go to one shop."
+msgstr "We go to one shop."
+
+msgid "We go to the shop."
+msgstr "We go to the shop."
+
+msgid "We go to the shops."
+msgstr "We go to the shops."
+
+msgid "We talked for hours."
+msgstr "We talked for hours."
+
+msgid "What did the shop assistant not believe?"
+msgstr "What did the shop assistant not believe?"
+
+msgid "What does it mean?"
+msgstr "What does it mean?"
+
+msgid "Where did they go on Saturday?"
+msgstr "Where did they go on Saturday?"
+
+msgid "Where did they stay the night? Write it in two words, as Mari says it."
+msgstr "Where did they stay the night? Write it in two words, as Mari says it."
+
+msgid "Where were the old photos? Write the first word as Jaan says it."
+msgstr "Where were the old photos? Write the first word as Jaan says it."
+
+msgid "Which ending?"
+msgstr "Which ending?"
+
+msgid "Who says it?"
+msgstr "Who says it?"
+
+msgid "With"
+msgstr "With"
+
+msgid "With <0>käima</0>, going and coming back, the place takes <1>-s</1>."
+msgstr "With <0>käima</0>, going and coming back, the place takes <1>-s</1>."
+
+msgid "Write each sentence in Estonian. Each one has a plural noun in a case."
+msgstr "Write each sentence in Estonian. Each one has a plural noun in a case."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"

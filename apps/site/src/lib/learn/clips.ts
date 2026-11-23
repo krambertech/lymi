@@ -3412,6 +3412,257 @@ const PLURAL_PART_CLIPS: Record<string, Clip> = {
   "c-market": PLURAL_PART_CONVERSATION,
 };
 
+export const PLURAL_CASE_STEMS = [
+  { word: "maja", part: "maja", gen: "majade" },
+  { word: "sõber", part: "sõpra", gen: "sõprade" },
+  { word: "lind", part: "lindu", gen: "lindude" },
+  { word: "kool", part: "kooli", gen: "koolide" },
+  { word: "puu", part: "puud", gen: "puude" },
+  { word: "raamat", part: "raamatut", gen: "raamatute" },
+  { word: "inimene", part: "inimest", gen: "inimeste" },
+  { word: "õpetaja", part: "õpetajat", gen: "õpetajate" },
+  { word: "kohvik", part: "kohvikut", gen: "kohvikute" },
+] as const;
+
+export const PLURAL_CASE_NOUNS = {
+  maja: {
+    one: ["maja", "majas", "majast", "majale", "majal", "majaga"],
+    many: ["majade", "majades", "majadest", "majadele", "majadel", "majadega"],
+  },
+  raamat: {
+    one: ["raamatu", "raamatus", "raamatust", "raamatule", "raamatul", "raamatuga"],
+    many: ["raamatute", "raamatutes", "raamatutest", "raamatutele", "raamatutel", "raamatutega"],
+  },
+  inimene: {
+    one: ["inimese", "inimeses", "inimesest", "inimesele", "inimesel", "inimesega"],
+    many: ["inimeste", "inimestes", "inimestest", "inimestele", "inimestel", "inimestega"],
+  },
+  sõber: {
+    one: ["sõbra", "sõbras", "sõbrast", "sõbrale", "sõbral", "sõbraga"],
+    many: ["sõprade", "sõprades", "sõpradest", "sõpradele", "sõpradel", "sõpradega"],
+  },
+} as const;
+
+export const PLURAL_CASE_HEARD = [
+  {
+    noun: "inimene",
+    one: "Ma räägin inimesega.",
+    many: "Ma räägin inimestega.",
+    other: "Ma räägin inimestele.",
+  },
+  {
+    noun: "sõber",
+    one: "Ta kirjutab sõbrale.",
+    many: "Ta kirjutab sõpradele.",
+    other: "Ta kirjutab sõpradest.",
+  },
+  {
+    noun: "raamat",
+    one: "Pildid on raamatus.",
+    many: "Pildid on raamatutes.",
+    other: "Pildid on raamatutel.",
+  },
+  {
+    noun: "pood",
+    one: "Me käime poes.",
+    many: "Me käime poodides.",
+    other: "Me tuleme poodidest.",
+  },
+] as const;
+
+export const PLURAL_CASE_FORM_QUIZ = [
+  { word: "maja", dict: "maja, maja, maja", answer: "majade" },
+  { word: "sõber", dict: "sõber, sõbra, sõpra", answer: "sõprade" },
+  { word: "lind", dict: "lind, linnu, lindu", answer: "lindude" },
+  { word: "puu", dict: "puu, puu, puud", answer: "puude" },
+  { word: "raamat", dict: "raamat, raamatu, raamatut", answer: "raamatute" },
+  { word: "inimene", dict: "inimene, inimese, inimest", answer: "inimeste" },
+  { word: "õpetaja", dict: "õpetaja, õpetaja, õpetajat", answer: "õpetajate" },
+  { word: "pood", dict: "pood, poe, poodi", answer: "poodide" },
+] as const;
+
+export const PLURAL_CASE_SORT = [
+  { w: "majade", bin: "de" },
+  { w: "sõprade", bin: "de" },
+  { w: "lindude", bin: "de" },
+  { w: "puude", bin: "de" },
+  { w: "koolide", bin: "de" },
+  { w: "raamatute", bin: "te" },
+  { w: "inimeste", bin: "te" },
+  { w: "õpetajate", bin: "te" },
+  { w: "kohvikute", bin: "te" },
+] as const;
+
+export const PLURAL_CASE_MATCH = [
+  { one: "majas", many: "majades" },
+  { one: "sõbrale", many: "sõpradele" },
+  { one: "raamatust", many: "raamatutest" },
+  { one: "inimesega", many: "inimestega" },
+  { one: "linnul", many: "lindudel" },
+  { one: "koolist", many: "koolidest" },
+] as const;
+
+export const PLURAL_CASE_TRANSLATE = [
+  "Ma räägin inimestega.",
+  "Ta kirjutab sõpradele.",
+  "Raamatutes on pilte.",
+  "Linnud istuvad puudel.",
+  "Me käime poodides.",
+  "Lapsed tulevad koolidest.",
+  "Ma lähen sõpradega kinno.",
+] as const;
+
+export const PLURAL_CASE_FIXES = [
+  { wrong: "Ma räägin inimesedega.", right: "Ma räägin inimestega." },
+  { wrong: "Ta kirjutab sõbradele.", right: "Ta kirjutab sõpradele." },
+  { wrong: "Raamatudes on pilte.", right: "Raamatutes on pilte." },
+  { wrong: "Me käime poodedes.", right: "Me käime poodides." },
+  { wrong: "Me kirjutame kirju lapsedele.", right: "Me kirjutame kirju lastele." },
+  { wrong: "Ma lähen sõbradega kinno.", right: "Ma lähen sõpradega kinno." },
+  { wrong: "Õpetajadele meeldib kohv.", right: "Õpetajatele meeldib kohv." },
+] as const;
+
+export const PLURAL_CASE_SHOPPING = [
+  "Laupäeval käivad Kati ja Mari poodides.",
+  "Nad otsivad kingitusi oma sõpradele.",
+  "Raamatupoodides on palju inimesi.",
+  "Mari räägib müüjatega eesti keeles.",
+  "Kingitused panevad nad kottidesse.",
+] as const;
+
+export const PLURAL_CASE_CONVERSATION: Conversation = {
+  turns: [
+    {
+      voice: "main",
+      text: ["Tere, Mari!", "Kuidas nädalavahetus läks?"],
+      say: "[cheerful] Tere, Mari! Kuidas nädalavahetus läks?",
+    },
+    {
+      voice: "second",
+      text: ["Väga hästi, aitäh!", "Ma olin kolm päeva Tartus koos sõpradega."],
+    },
+    { voice: "main", text: "Mida te seal tegite?" },
+    {
+      voice: "second",
+      text: [
+        "Laupäeval käisime muuseumides ja kohvikutes.",
+        "Tartu kohvikutes on väga head koogid.",
+      ],
+    },
+    { voice: "main", text: "Kas muuseumides oli palju inimesi?" },
+    {
+      voice: "second",
+      text: [
+        "Jah, väga palju.",
+        "Kõikides saalides olid lapsed ja nende vanemad.",
+        "Lapsed jooksid saalidest saalidesse.",
+      ],
+      say: "[laughs] Jah, väga palju. Kõikides saalides olid lapsed ja nende vanemad. Lapsed jooksid saalidest saalidesse.",
+    },
+    { voice: "main", text: "Kus te ööbisite?" },
+    {
+      voice: "second",
+      text: [
+        "Ühe sõbra juures.",
+        "Tal on vanalinnas korter.",
+        "Vanades majades on kõrged laed ja suured aknad.",
+        "Õhtul istusime köögis ja rääkisime tundide kaupa.",
+      ],
+    },
+    { voice: "main", text: "Ja pühapäeval?" },
+    {
+      voice: "second",
+      text: [
+        "Pühapäeval käisime poodides.",
+        "Ma ostsin kingitusi oma õdedele.",
+        "Neile meeldivad raamatud, nii et ma ostsin kaks raamatut.",
+      ],
+    },
+    { voice: "main", text: "Kas sa rääkisid poodides eesti keelt?" },
+    {
+      voice: "second",
+      text: [
+        "Muidugi!",
+        "Ma rääkisin müüjatega ainult eesti keeles.",
+        "Nad olid väga sõbralikud.",
+        "Ühes raamatupoes küsis müüja, kust ma pärit olen.",
+        "Ta ei uskunud, et ma õpin eesti keelt alles kaks aastat.",
+      ],
+    },
+    { voice: "main", text: ["Tubli!", "Mina olin terve nädalavahetuse kodus."] },
+    { voice: "second", text: "Mida sa tegid?", say: "[curious] Mida sa tegid?" },
+    {
+      voice: "main",
+      text: [
+        "Kõigepealt kirjutasin kirju oma vanematele ja vendadele.",
+        "Siis vaatasin vanu fotosid.",
+      ],
+    },
+    { voice: "second", text: ["Vanu fotosid?", "Kust sa need leidsid?"] },
+    {
+      voice: "main",
+      text: [
+        "Need olid kastides keldris.",
+        "Mõnedel fotodel on minu vanaisa ja vanaema.",
+        "Nad seisavad oma maja ees.",
+        "Mõnel pildil on ka meie vana koer.",
+        "Ta magab alati laste voodite all.",
+      ],
+    },
+    { voice: "second", text: ["Kui huvitav!", "Kas sa näitad neid mulle?"] },
+    {
+      voice: "main",
+      text: [
+        "Jah, muidugi.",
+        "Ma panen kõige ilusamad pildid albumitesse.",
+        "Tule homme minu juurde!",
+      ],
+    },
+    {
+      voice: "second",
+      text: ["Hea mõte!", "Ma toon Tartust kooke.", "Kas kell viis sobib?"],
+    },
+    { voice: "main", text: "Jah, kell viis sobib väga hästi." },
+    {
+      voice: "second",
+      text: ["Kas ma võin ka oma sõbrad kaasa võtta?", "Nad tahavad sinuga tuttavaks saada."],
+    },
+    {
+      voice: "main",
+      text: [
+        "Muidugi, kõik on oodatud.",
+        "Ma teen teed ja kohvi kõigile külalistele.",
+        "Kohtumiseni!",
+      ],
+    },
+  ],
+};
+
+export const PLURAL_CASE_WORDS = [
+  "kingitusi",
+  "müüjatega",
+  "kottidesse",
+  "raamatupoodides",
+  "majades",
+  "inimestele",
+] as const;
+
+const PLURAL_CASE_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...PLURAL_CASE_WORDS,
+    ...PLURAL_CASE_STEMS.flatMap(({ part, gen }) => [part, gen]),
+    ...Object.values(PLURAL_CASE_NOUNS).flatMap(({ one, many }) => [...one, ...many]),
+    ...PLURAL_CASE_HEARD.flatMap(({ one, many, other }) => [one, many, other]),
+    ...PLURAL_CASE_FORM_QUIZ.map(({ answer }) => answer),
+    ...PLURAL_CASE_SORT.map(({ w }) => w),
+    ...PLURAL_CASE_MATCH.flatMap(({ one, many }) => [one, many]),
+    ...PLURAL_CASE_TRANSLATE,
+    ...PLURAL_CASE_FIXES.map(({ right }) => right),
+  ]),
+  "p-shopping": { sentences: PLURAL_CASE_SHOPPING },
+  "c-weekend": PLURAL_CASE_CONVERSATION,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -3572,6 +3823,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "jalg-jala": GRADATION_CLIPS,
   "raamatut-voi-raamatu": OBJECT_CLIPS,
   "raamatuid-maju": PLURAL_PART_CLIPS,
+  "majades-inimestele": PLURAL_CASE_CLIPS,
   lihtminevik: PAST_CLIPS,
   kit: KIT_CLIPS,
 };

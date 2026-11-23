@@ -503,5 +503,5 @@ msgstr "Напиши каждое предложение по-эстонски. 
 msgid "Write it in Estonian"
 msgstr "Напиши по-эстонски"
 
-msgid "You can’t always tell from a word which way it goes, and some words have two forms. A dictionary lists the plural partitive, so learn it with the word. Where the stem changes, as lesson {gradation} explains, a changed vowel goes on the partitive’s stem: <0>sõber, sõpra, sõpru</0>."
-msgstr "По слову не всегда видно, какой способ ему подходит, а у некоторых слов две формы. Словарь даёт партитив множественного, так что учи его вместе со словом. Если основа меняется, как объясняет урок {gradation}, гласная меняется в основе партитива: <0>sõber, sõpra, sõpru</0>."
+msgid "You can’t always tell from a word which way it goes, and some words have two forms, both correct: <0>maju</0> and <1>majasid</1>. A dictionary lists the plural partitive, so learn it with the word. Where the stem changes, as lesson {gradation} explains, a changed vowel goes on the partitive’s stem: <2>sõber, sõpra, sõpru</2>."
+msgstr "По слову не всегда видно, какой способ ему подходит, а у некоторых слов две правильные формы: <0>maju</0> и <1>majasid</1>. Словарь даёт партитив множественного, так что учи его вместе со словом. Если основа меняется, как объясняет урок {gradation}, гласная меняется в основе партитива: <2>sõber, sõpra, sõpru</2>."

@@ -1,8 +1,9 @@
 import { msg } from "@lingui/core/macro";
+import { GRADATION_ANSWERS } from "../../../lib/learn/clips";
 import type { DrillBank, FormDrill, WrittenDrill } from "../../../lib/learn/drill";
 
-const WEAK = msg`<et>-s</et>, <et>-l</et> and the plural <et>-d</et> go on the genitive, so they take the weak form.`;
-const STRONG = msg`The partitive and the short “into” form keep the strong form.`;
+const WEAK = msg`<et>-s</et>, <et>-l</et> and the plural <et>-d</et> go on the genitive and keep its consonant: usually the weak one.`;
+const STRONG = msg`The partitive and the short “into” form usually keep the strong form.`;
 const GENITIVE = msg`The genitive is the weak form.`;
 const VERB = msg`The present of this verb is weak.`;
 
@@ -42,7 +43,7 @@ export const DRILLS: DrillBank = {
       id: "kati-in-room",
       rule: "weak",
       prompt: msg`Kati is in the room.`,
-      answers: ["Kati on toas."],
+      answers: GRADATION_ANSWERS["Kati on toas."],
       say: "Kati on toas.",
       explain: WEAK,
     }),
@@ -51,7 +52,7 @@ export const DRILLS: DrillBank = {
       id: "jaan-at-bank",
       rule: "weak",
       prompt: msg`Jaan is at the bank.`,
-      answers: ["Jaan on pangas."],
+      answers: GRADATION_ANSWERS["Jaan on pangas."],
       say: "Jaan on pangas.",
       explain: WEAK,
     }),
@@ -96,7 +97,7 @@ export const DRILLS: DrillBank = {
       id: "birds-in-park",
       rule: "weak",
       prompt: msg`The birds are in the park.`,
-      answers: ["Linnud on pargis."],
+      answers: GRADATION_ANSWERS["Linnud on pargis."],
       say: "Linnud on pargis.",
       explain: WEAK,
     }),

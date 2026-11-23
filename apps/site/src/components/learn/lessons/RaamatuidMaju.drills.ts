@@ -1,8 +1,8 @@
 import { msg } from "@lingui/core/macro";
-import { PLURAL_PART_ALT, PLURAL_PART_ANSWERS } from "../../../lib/learn/clips";
+import { PLURAL_PART_ALT, PLURAL_PART_ANSWERS, pluralPartVariants } from "../../../lib/learn/clips";
 import type { DrillBank, FormDrill } from "../../../lib/learn/drill";
 
-const MANY = msg`Some or many, not counted: the plural partitive.`;
+const MANY = msg`Some or many, not counted: usually the plural partitive.`;
 const NUMBER = msg`After a number from two up, the singular partitive.`;
 const THE = msg`The ones you mean: the plural nominative.`;
 const NO = msg`After <et>ei</et> or a verb such as <et>armastama</et>, a plural noun takes the plural partitive.`;
@@ -71,7 +71,7 @@ export const DRILLS: DrillBank = {
       id: "fix-many-books",
       rule: "many",
       wrong: "Mul on palju raamatut.",
-      answers: ["Mul on palju raamatuid."],
+      answers: pluralPartVariants("Mul on palju raamatuid."),
       say: "Mul on palju raamatuid.",
       explain: MANY,
     },
@@ -80,7 +80,7 @@ export const DRILLS: DrillBank = {
       id: "fix-many-apples",
       rule: "many",
       wrong: "Laual on palju õunad.",
-      answers: ["Laual on palju õunu.", "Laual on palju õunasid."],
+      answers: pluralPartVariants("Laual on palju õunu."),
       say: "Laual on palju õunu.",
       explain: MANY,
     },
@@ -125,7 +125,7 @@ export const DRILLS: DrillBank = {
       id: "fix-two-books",
       rule: "number",
       wrong: "Mul on kaks raamatuid.",
-      answers: ["Mul on kaks raamatut."],
+      answers: pluralPartVariants("Mul on kaks raamatut."),
       say: "Mul on kaks raamatut.",
       explain: NUMBER,
     },
@@ -134,7 +134,7 @@ export const DRILLS: DrillBank = {
       id: "fix-two-apples",
       rule: "number",
       wrong: "Ma ostsin kaks õunu.",
-      answers: ["Ma ostsin kaks õuna."],
+      answers: pluralPartVariants("Ma ostsin kaks õuna."),
       say: "Ma ostsin kaks õuna.",
       explain: NUMBER,
     },
@@ -196,7 +196,7 @@ export const DRILLS: DrillBank = {
       "palju …",
       "puid",
       "puid",
-      msg`A one-syllable word with a long vowel shortens it and takes <et>-id</et>: <et>puid</et>.`,
+      msg`A one-syllable word with a long vowel usually shortens it and takes <et>-id</et>: <et>puid</et>. Most of these also have <et>-sid</et>: <et>puusid</et>.`,
     ),
     form(
       "end-oun",
@@ -232,7 +232,7 @@ export const DRILLS: DrillBank = {
       id: "fix-no-children",
       rule: "no",
       wrong: "Mul ei ole lapsed.",
-      answers: ["Mul ei ole lapsi."],
+      answers: pluralPartVariants("Mul ei ole lapsi."),
       say: "Mul ei ole lapsi.",
       explain: NO,
     },
@@ -241,7 +241,7 @@ export const DRILLS: DrillBank = {
       id: "fix-love-birds",
       rule: "no",
       wrong: "Ma armastan lindud.",
-      answers: ["Ma armastan linde.", "Ma armastan lindusid."],
+      answers: pluralPartVariants("Ma armastan linde."),
       say: "Ma armastan linde.",
       explain: NO,
     },
@@ -250,7 +250,7 @@ export const DRILLS: DrillBank = {
       id: "fix-wait-friends",
       rule: "no",
       wrong: "Ma ootan sõbrad.",
-      answers: ["Ma ootan sõpru.", "Ma ootan sõprasid."],
+      answers: pluralPartVariants("Ma ootan sõpru."),
       say: "Ma ootan sõpru.",
       explain: NO,
     },

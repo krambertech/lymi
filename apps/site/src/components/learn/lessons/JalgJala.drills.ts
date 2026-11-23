@@ -4,7 +4,7 @@ import type { DrillBank, FormDrill, WrittenDrill } from "../../../lib/learn/dril
 
 const WEAK = msg`<et>-s</et>, <et>-l</et> and the plural <et>-d</et> go on the genitive and keep its consonant: usually the weak one.`;
 const STRONG = msg`The partitive and the short “into” form usually keep the strong form.`;
-const GENITIVE = msg`The genitive is the weak form.`;
+const GENITIVE = msg`The genitive is usually the weak form.`;
 const VERB = msg`The present of this verb is weak.`;
 
 const form = (

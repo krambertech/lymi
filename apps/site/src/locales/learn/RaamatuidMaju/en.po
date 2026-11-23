@@ -37,17 +37,17 @@ msgstr "a lot of friends"
 msgid "a lot, many"
 msgstr "a lot, many"
 
-msgid "A number from two up takes the singular partitive. Some or many takes the plural partitive."
-msgstr "A number from two up takes the singular partitive. Some or many takes the plural partitive."
+msgid "A number from two up takes the singular partitive. Some or many usually takes the plural partitive."
+msgstr "A number from two up takes the singular partitive. Some or many usually takes the plural partitive."
 
 msgid "A number, many or the ones you mean"
 msgstr "A number, many or the ones you mean"
 
-msgid "A one-syllable word with a long vowel shortens it and takes <0>-id</0>: <1>puu, puid</1>."
-msgstr "A one-syllable word with a long vowel shortens it and takes <0>-id</0>: <1>puu, puid</1>."
+msgid "A one-syllable word with a long vowel usually shortens it and takes <0>-id</0>: <1>puu, puid</1>. Most of these also have <2>-sid</2>: <3>puusid</3>."
+msgstr "A one-syllable word with a long vowel usually shortens it and takes <0>-id</0>: <1>puu, puid</1>. Most of these also have <2>-sid</2>: <3>puusid</3>."
 
-msgid "A one-syllable word with a long vowel shortens it and takes <et>-id</et>: <et>puid</et>."
-msgstr "A one-syllable word with a long vowel shortens it and takes <et>-id</et>: <et>puid</et>."
+msgid "A one-syllable word with a long vowel usually shortens it and takes <et>-id</et>: <et>puid</et>. Most of these also have <et>-sid</et>: <et>puusid</et>."
+msgstr "A one-syllable word with a long vowel usually shortens it and takes <et>-id</et>: <et>puid</et>. Most of these also have <et>-sid</et>: <et>puusid</et>."
 
 msgid "Adds <0>-id</0>: <1>raamatuid, puid</1>."
 msgstr "Adds <0>-id</0>: <1>raamatuid, puid</1>."
@@ -358,11 +358,11 @@ msgstr "Six more words, none of them in this lesson yet. Match each with its plu
 msgid "Some or many"
 msgstr "Some or many"
 
-msgid "Some or many things you don’t count take the plural partitive: <0>Mul on palju raamatuid. Poes on õunu.</0>"
-msgstr "Some or many things you don’t count take the plural partitive: <0>Mul on palju raamatuid. Poes on õunu.</0>"
+msgid "Some or many things you don’t count usually take the plural partitive: <0>Mul on palju raamatuid. Poes on õunu.</0> After <1>mõned</1>, some, the plural nominative: <2>mõned raamatud</2>."
+msgstr "Some or many things you don’t count usually take the plural partitive: <0>Mul on palju raamatuid. Poes on õunu.</0> After <1>mõned</1>, some, the plural nominative: <2>mõned raamatud</2>."
 
-msgid "Some or many, not counted: the plural partitive."
-msgstr "Some or many, not counted: the plural partitive."
+msgid "Some or many, not counted: usually the plural partitive."
+msgstr "Some or many, not counted: usually the plural partitive."
 
 msgid "Switch through the kinds in the table, then try again."
 msgstr "Switch through the kinds in the table, then try again."

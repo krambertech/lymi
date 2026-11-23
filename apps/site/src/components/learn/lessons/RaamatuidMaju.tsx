@@ -126,7 +126,7 @@ function ThreeTable() {
         highlight={{ column: 1 }}
         empty={{
           title: t`Tap a form`,
-          tip: t`A number from two up takes the singular partitive. Some or many takes the plural partitive.`,
+          tip: t`A number from two up takes the singular partitive. Some or many usually takes the plural partitive.`,
         }}
       />
     </Panel>
@@ -158,8 +158,9 @@ function KindTable() {
     ),
     long: (
       <Trans>
-        A one-syllable word with a long vowel shortens it and takes <b lang="et">-id</b>:{" "}
-        <b lang="et">puu, puid</b>.
+        A one-syllable word with a long vowel usually shortens it and takes <b lang="et">-id</b>:{" "}
+        <b lang="et">puu, puid</b>. Most of these also have <b lang="et">-sid</b>:{" "}
+        <b lang="et">puusid</b>.
       </Trans>
     ),
   };
@@ -209,6 +210,8 @@ export const gapRun = <T extends { pair: readonly [string, string]; options: rea
     item === pinned ? item : { ...item, options: shuffle(item.options) },
   );
 
+const BASES: Record<string, string> = { sõber: "sõber, sõbra, sõpra" };
+
 const PARTY_GAPS: PassageGap[] = [
   {
     id: "ounu",
@@ -218,7 +221,7 @@ const PARTY_GAPS: PassageGap[] = [
   },
   { id: "kulalisi", before: "", after: "tuleb palju.", answer: "Külalisi" },
   { id: "sobrad", before: "Kati", after: "toovad lilli.", answer: "sõbrad" },
-  { id: "kooke", before: "Lapsed söövad", after: ".", answer: "kooke" },
+  { id: "laule", before: "Lapsed laulavad", after: ".", answer: "laule" },
 ];
 
 function useContent() {
@@ -266,7 +269,7 @@ function useContent() {
       );
       const noun = kind && PLURAL_PART_KINDS[kind].find((each) => each.word === item.word);
       return {
-        base: noun ? `${noun.word}, ${noun.of}, ${noun.part}` : item.word,
+        base: noun ? `${noun.word}, ${noun.of}, ${noun.part}` : (BASES[item.word] ?? item.word),
         gloss: i18n._(NOUNS[item.word] as MessageDescriptor),
         cue: item.cue,
         cueLang: "et",
@@ -282,7 +285,7 @@ function useContent() {
               After <b lang="et">ei</b>, the plural partitive.
             </Trans>
           ) : (
-            <Trans>Some or many, not counted: the plural partitive.</Trans>
+            <Trans>Some or many, not counted: usually the plural partitive.</Trans>
           ),
       };
     });
@@ -490,8 +493,9 @@ export function RaamatuidMajuLesson() {
       words={["palju", "raamatuid", "maju", "autosid", "koole", "linde", "lilli"]}
       recap={[
         <Trans key="1">
-          Some or many things you don’t count take the plural partitive:{" "}
-          <b lang="et">Mul on palju raamatuid. Poes on õunu.</b>
+          Some or many things you don’t count usually take the plural partitive:{" "}
+          <b lang="et">Mul on palju raamatuid. Poes on õunu.</b> After <b lang="et">mõned</b>, some,
+          the plural nominative: <b lang="et">mõned raamatud</b>.
         </Trans>,
         <Trans key="2">
           After a number from two up, the singular partitive stays: <b lang="et">kaks raamatut</b>.

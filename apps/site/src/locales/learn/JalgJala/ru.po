@@ -142,8 +142,8 @@ msgstr "Здесь сильная форма в родительном: <0>mõte
 msgid "hill, mountain"
 msgstr "холм, гора"
 
-msgid "I go to the shop every day."
-msgstr "Я каждый день хожу в магазин."
+msgid "I go to the shop almost every day."
+msgstr "Я почти каждый день хожу в магазин."
 
 msgid "I read"
 msgstr "я читаю"
@@ -358,11 +358,11 @@ msgstr "Дети в парке."
 msgid "The consonant has a strong form and a weak one. Usually the nominative and the partitive have one, and the genitive of lesson {genitive} has the other: <0/>, <1/>, <2>jalga</2>. Not always: <3>sõber, sõbra, sõpra</3> puts the nominative with the genitive. Pick a kind of change and tap the forms."
 msgstr "У согласного есть сильная и слабая форма. Обычно именительный и партитив имеют одну, а родительный из урока {genitive} — другую: <0/>, <1/>, <2>jalga</2>. Не всегда: в <3>sõber, sõbra, sõpra</3> именительный идёт вместе с родительным. Выбери вид изменения и нажимай на формы."
 
-msgid "The genitive is the weak form."
-msgstr "Родительный — слабая форма."
-
 msgid "The genitive is usually the odd one out"
 msgstr "Родительный обычно выделяется"
+
+msgid "The genitive is usually the weak form."
+msgstr "Родительный — обычно слабая форма."
 
 msgid "The genitive of <0>{word}</0> ({means}) is <1>{said}</1>."
 msgstr "Родительный от <0>{word}</0> («{means}») — <1>{said}</1>."

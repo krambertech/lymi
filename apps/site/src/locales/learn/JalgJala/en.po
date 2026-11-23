@@ -142,8 +142,8 @@ msgstr "Here the genitive is the strong one: <0>mõte, mõtte</0>; <1>hammas, ha
 msgid "hill, mountain"
 msgstr "hill, mountain"
 
-msgid "I go to the shop every day."
-msgstr "I go to the shop every day."
+msgid "I go to the shop almost every day."
+msgstr "I go to the shop almost every day."
 
 msgid "I read"
 msgstr "I read"
@@ -358,11 +358,11 @@ msgstr "The children are in the park."
 msgid "The consonant has a strong form and a weak one. Usually the nominative and the partitive have one, and the genitive of lesson {genitive} has the other: <0/>, <1/>, <2>jalga</2>. Not always: <3>sõber, sõbra, sõpra</3> puts the nominative with the genitive. Pick a kind of change and tap the forms."
 msgstr "The consonant has a strong form and a weak one. Usually the nominative and the partitive have one, and the genitive of lesson {genitive} has the other: <0/>, <1/>, <2>jalga</2>. Not always: <3>sõber, sõbra, sõpra</3> puts the nominative with the genitive. Pick a kind of change and tap the forms."
 
-msgid "The genitive is the weak form."
-msgstr "The genitive is the weak form."
-
 msgid "The genitive is usually the odd one out"
 msgstr "The genitive is usually the odd one out"
+
+msgid "The genitive is usually the weak form."
+msgstr "The genitive is usually the weak form."
 
 msgid "The genitive of <0>{word}</0> ({means}) is <1>{said}</1>."
 msgstr "The genitive of <0>{word}</0> ({means}) is <1>{said}</1>."

@@ -37,17 +37,17 @@ msgstr "багато друзів"
 msgid "a lot, many"
 msgstr "багато"
 
-msgid "A number from two up takes the singular partitive. Some or many takes the plural partitive."
-msgstr "Після числа від двох — партитив однини. «Трохи» чи «багато» — партитив множини."
+msgid "A number from two up takes the singular partitive. Some or many usually takes the plural partitive."
+msgstr "Після числа від двох — партитив однини. «Трохи» чи «багато» — зазвичай партитив множини."
 
 msgid "A number, many or the ones you mean"
 msgstr "Число, багато чи конкретні"
 
-msgid "A one-syllable word with a long vowel shortens it and takes <0>-id</0>: <1>puu, puid</1>."
-msgstr "В односкладовому слові довга голосна скорочується і додається <0>-id</0>: <1>puu, puid</1>."
+msgid "A one-syllable word with a long vowel usually shortens it and takes <0>-id</0>: <1>puu, puid</1>. Most of these also have <2>-sid</2>: <3>puusid</3>."
+msgstr "В односкладовому слові довга голосна зазвичай скорочується і додається <0>-id</0>: <1>puu, puid</1>. Більшість таких слів має й форму на <2>-sid</2>: <3>puusid</3>."
 
-msgid "A one-syllable word with a long vowel shortens it and takes <et>-id</et>: <et>puid</et>."
-msgstr "В односкладовому слові довга голосна скорочується і додається <et>-id</et>: <et>puid</et>."
+msgid "A one-syllable word with a long vowel usually shortens it and takes <et>-id</et>: <et>puid</et>. Most of these also have <et>-sid</et>: <et>puusid</et>."
+msgstr "В односкладовому слові довга голосна зазвичай скорочується і додається <et>-id</et>: <et>puid</et>. Більшість таких слів має й форму на <et>-sid</et>: <et>puusid</et>."
 
 msgid "Adds <0>-id</0>: <1>raamatuid, puid</1>."
 msgstr "Додає <0>-id</0>: <1>raamatuid, puid</1>."
@@ -358,11 +358,11 @@ msgstr "Ще шість слів, яких у цьому уроці ще не б
 msgid "Some or many"
 msgstr "Трохи чи багато"
 
-msgid "Some or many things you don’t count take the plural partitive: <0>Mul on palju raamatuid. Poes on õunu.</0>"
-msgstr "Трохи чи багато речей без рахунку — партитив множини: <0>Mul on palju raamatuid. Poes on õunu.</0>"
+msgid "Some or many things you don’t count usually take the plural partitive: <0>Mul on palju raamatuid. Poes on õunu.</0> After <1>mõned</1>, some, the plural nominative: <2>mõned raamatud</2>."
+msgstr "Трохи чи багато речей без рахунку — зазвичай партитив множини: <0>Mul on palju raamatuid. Poes on õunu.</0> Після <1>mõned</1>, «деякі», — називний множини: <2>mõned raamatud</2>."
 
-msgid "Some or many, not counted: the plural partitive."
-msgstr "Трохи чи багато, без рахунку: партитив множини."
+msgid "Some or many, not counted: usually the plural partitive."
+msgstr "Трохи чи багато, без рахунку: зазвичай партитив множини."
 
 msgid "Switch through the kinds in the table, then try again."
 msgstr "Переглянь кожен вид у таблиці, потім спробуй знову."

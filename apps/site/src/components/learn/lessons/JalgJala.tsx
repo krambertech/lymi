@@ -495,7 +495,7 @@ function useContent() {
           { id: "jaan", label: t`Jaan` },
         ],
         statements: [
-          { id: "every-day", label: t`I go to the shop every day.`, answer: "kati", line: 12 },
+          { id: "every-day", label: t`I go to the shop almost every day.`, answer: "kati", line: 12 },
           { id: "often", label: t`Do you often go to the bank?`, answer: "jaan", line: 13 },
           { id: "run", label: t`I run in the park in the morning.`, answer: "kati", line: 18 },
           { id: "tired", label: t`My feet are tired.`, answer: "jaan", line: 30 },

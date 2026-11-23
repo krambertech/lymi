@@ -3925,7 +3925,7 @@ export const GRADATION_ANSWERS: Record<string, readonly [string, ...string[]]> =
     "Mul on jalad väsinud.",
     "Minul on jalad väsinud.",
   ],
-  "Linnud on pargis.": ["Linnud on pargis."],
+  "Linnud on pargis.": ["Linnud on pargis.", "Pargis on linnud."],
 };
 
 const GRADATION_CLIPS: Record<string, Clip> = {
@@ -3975,12 +3975,15 @@ export const PLURAL_PART_ALT: Record<string, string> = {
   õunu: "õunasid",
   koole: "koolisid",
   puid: "puusid",
+  maid: "maasid",
+  teid: "teesid",
+  öid: "öösid",
   sõpru: "sõprasid",
   linde: "lindusid",
   lilli: "lillesid",
 };
 
-export const pluralPartVariants = (sentence: string): string[] => {
+export const pluralPartVariants = (sentence: string): [string, ...string[]] => {
   const words = sentence.split(" ");
   const at = words.findIndex((word) => word.replace(/[.,!?]$/, "") in PLURAL_PART_ALT);
   if (at < 0) return [sentence];
@@ -4085,7 +4088,7 @@ export const PLURAL_PART_PARTY = [
   "Ta ostis poest õunu ja banaane.",
   "Külalisi tuleb palju.",
   "Kati sõbrad toovad lilli.",
-  "Lapsed söövad kooke.",
+  "Lapsed laulavad laule.",
 ] as const;
 
 export const PLURAL_PART_CONVERSATION: Conversation = {

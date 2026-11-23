@@ -142,8 +142,8 @@ msgstr "Тут сильна форма в родовому: <0>mõte, mõtte</0>
 msgid "hill, mountain"
 msgstr "пагорб, гора"
 
-msgid "I go to the shop every day."
-msgstr "Я щодня ходжу в магазин."
+msgid "I go to the shop almost every day."
+msgstr "Я майже щодня ходжу в магазин."
 
 msgid "I read"
 msgstr "я читаю"
@@ -358,11 +358,11 @@ msgstr "Діти в парку."
 msgid "The consonant has a strong form and a weak one. Usually the nominative and the partitive have one, and the genitive of lesson {genitive} has the other: <0/>, <1/>, <2>jalga</2>. Not always: <3>sõber, sõbra, sõpra</3> puts the nominative with the genitive. Pick a kind of change and tap the forms."
 msgstr "Приголосний має сильну і слабку форму. Зазвичай називний і партитив мають одну, а родовий з уроку {genitive} — іншу: <0/>, <1/>, <2>jalga</2>. Не завжди: у <3>sõber, sõbra, sõpra</3> називний іде разом із родовим. Вибери вид зміни й натискай форми."
 
-msgid "The genitive is the weak form."
-msgstr "Родовий — слабка форма."
-
 msgid "The genitive is usually the odd one out"
 msgstr "Родовий зазвичай вирізняється"
+
+msgid "The genitive is usually the weak form."
+msgstr "Родовий — зазвичай слабка форма."
 
 msgid "The genitive of <0>{word}</0> ({means}) is <1>{said}</1>."
 msgstr "Родовий від <0>{word}</0> («{means}») — <1>{said}</1>."

@@ -10983,11 +10983,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "jargarvud/mari-su2nnipa2ev-on-kaheteistku2mnendal-aprillil": {
-    "text": "Mari sünnipäev on kaheteistkümnendal aprillil.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "jargarvud/ta2na-on-kolmeku2mne-esimene-oktoober": {
     "text": "Täna on kolmekümne esimene oktoober.",
     "model": "eleven_v4",
@@ -11014,7 +11009,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "jargarvud/p-message": {
-    "text": "Tere! Minu sünnipäev on laupäeval, kahekümne kolmandal märtsil. Tule kell kuus. Minu korter on neljandal korrusel. Mari tuleb ka, kell seitse. Tema sünnipäev on kolmekümne esimesel märtsil. Kas sa tuled?",
+    "text": "Tere! Minu sünnipäev on laupäeval, kahekümne kolmandal märtsil. Tule kell kuus. Minu korter on neljandal korrusel. Peeter tuleb ka, kell seitse. Tema sünnipäev on kolmekümne esimesel märtsil. Kas sa tuled?",
     "model": "eleven_v4",
     "voice": "WtzwR2kNGVNuaTGaYLfK"
   },
@@ -12022,6 +12017,11 @@
   },
   "jargarvud/o1": {
     "text": "esimene",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/ema-su2nnipa2ev-on-kaheteistku2mnendal-aprillil": {
+    "text": "Ema sünnipäev on kaheteistkümnendal aprillil.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

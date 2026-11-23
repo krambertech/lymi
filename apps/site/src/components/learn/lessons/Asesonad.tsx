@@ -753,9 +753,8 @@ export function AsesonadLesson() {
           .
         </Trans>,
         <Trans key="5">
-          Each form has a question made the same way from <b lang="et">kes</b>:{" "}
-          <b lang="et">kellega?</b>, with whom; <b lang="et">kellele?</b>, to whom;{" "}
-          <b lang="et">keda?</b>, whom.
+          Each form has a question, a form of <b lang="et">kes</b>, who: <b lang="et">kellega?</b>,
+          with whom; <b lang="et">kellele?</b>, to whom; <b lang="et">keda?</b>, whom.
         </Trans>,
       ]}
       sections={[
@@ -855,23 +854,27 @@ export function AsesonadLesson() {
                     me; <Word w="mul" />, as in <span lang="et">mul on</span> from lesson {have};{" "}
                     <Word w="mult" />, from me. These are the endings <span lang="et">-le</span>,{" "}
                     <span lang="et">-l</span> and <span lang="et">-lt</span> from lesson {onto}, on
-                    a short stem, and the l doubles before <span lang="et">-le</span>:{" "}
-                    <span lang="et">mulle</span>.
+                    a short stem. After <span lang="et">mu</span>, <span lang="et">su</span> and{" "}
+                    <span lang="et">ta</span>, <span lang="et">-le</span> doubles its l:{" "}
+                    <span lang="et">mulle</span>, <span lang="et">sulle</span>,{" "}
+                    <span lang="et">talle</span>.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
                     The long forms <Word w="minule" />, <Word w="minul" /> and <Word w="minult" />{" "}
                     mean the same and stress the person: to me, not to you.{" "}
-                    <span lang="et">Meie</span> and <span lang="et">teie</span> have one form for
-                    each, written too: <span lang="et">meile</span>, <span lang="et">teile</span>.
+                    <span lang="et">Meie</span> and <span lang="et">teie</span> have only the short
+                    form, in speech and in writing: <span lang="et">meile</span>,{" "}
+                    <span lang="et">teile</span>.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Some verbs set the person’s ending. Estonian calls to someone, so{" "}
-                    <Word w="helistab" /> takes <span lang="et">-le</span>; it asks from someone, so{" "}
-                    <Word w="küsib" /> takes <span lang="et">-lt</span>. Tap a line to hear it.
+                    Some verbs set the person’s ending. In Estonian you phone to someone, so{" "}
+                    <Word w="helistab" /> takes <span lang="et">-le</span>, and you ask from
+                    someone, so <Word w="küsib" /> takes <span lang="et">-lt</span>. Tap a line to
+                    hear it.
                   </Trans>
                 </p>
               </Prose>

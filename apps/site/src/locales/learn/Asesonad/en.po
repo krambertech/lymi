@@ -118,8 +118,8 @@ msgstr "Do you have time?"
 msgid "Do you have time? (To a friend.)"
 msgstr "Do you have time? (To a friend.)"
 
-msgid "Each form has a question made the same way from <0>kes</0>: <1>kellega?</1>, with whom; <2>kellele?</2>, to whom; <3>keda?</3>, whom."
-msgstr "Each form has a question made the same way from <0>kes</0>: <1>kellega?</1>, with whom; <2>kellele?</2>, to whom; <3>keda?</3>, whom."
+msgid "Each form has a question, a form of <0>kes</0>, who: <1>kellega?</1>, with whom; <2>kellele?</2>, to whom; <3>keda?</3>, whom."
+msgstr "Each form has a question, a form of <0>kes</0>, who: <1>kellega?</1>, with whom; <2>kellele?</2>, to whom; <3>keda?</3>, whom."
 
 msgid "Each pronoun’s genitive, with -ga and with -ta"
 msgstr "Each pronoun’s genitive, with -ga and with -ta"
@@ -145,8 +145,8 @@ msgstr "Five mistakes to catch"
 msgid "Fix the sentence"
 msgstr "Fix the sentence"
 
-msgid "For to, has and from, the short form is the usual one: <0/>, to me; <1/>, as in <2>mul on</2> from lesson {have}; <3/>, from me. These are the endings <4>-le</4>, <5>-l</5> and <6>-lt</6> from lesson {onto}, on a short stem, and the l doubles before <7>-le</7>: <8>mulle</8>."
-msgstr "For to, has and from, the short form is the usual one: <0/>, to me; <1/>, as in <2>mul on</2> from lesson {have}; <3/>, from me. These are the endings <4>-le</4>, <5>-l</5> and <6>-lt</6> from lesson {onto}, on a short stem, and the l doubles before <7>-le</7>: <8>mulle</8>."
+msgid "For to, has and from, the short form is the usual one: <0/>, to me; <1/>, as in <2>mul on</2> from lesson {have}; <3/>, from me. These are the endings <4>-le</4>, <5>-l</5> and <6>-lt</6> from lesson {onto}, on a short stem. After <7>mu</7>, <8>su</8> and <9>ta</9>, <10>-le</10> doubles its l: <11>mulle</11>, <12>sulle</12>, <13>talle</13>."
+msgstr "For to, has and from, the short form is the usual one: <0/>, to me; <1/>, as in <2>mul on</2> from lesson {have}; <3/>, from me. These are the endings <4>-le</4>, <5>-l</5> and <6>-lt</6> from lesson {onto}, on a short stem. After <7>mu</7>, <8>su</8> and <9>ta</9>, <10>-le</10> doubles its l: <11>mulle</11>, <12>sulle</12>, <13>talle</13>."
 
 msgid "For to, has and from, the short forms are the usual ones: <0>mulle, mul, mult</0>; <1>talle, tal, talt</1>; <2>meile, meil, meilt</2>. The long <3>minule, minul, minult</3> stress the person."
 msgstr "For to, has and from, the short forms are the usual ones: <0>mulle, mul, mult</0>; <1>talle, tal, talt</1>; <2>meile, meil, meilt</2>. The long <3>minule, minul, minult</3> stress the person."
@@ -410,8 +410,8 @@ msgstr "Short"
 msgid "Short forms for to, has and from"
 msgstr "Short forms for to, has and from"
 
-msgid "Some verbs set the person’s ending. Estonian calls to someone, so <0/> takes <1>-le</1>; it asks from someone, so <2/> takes <3>-lt</3>. Tap a line to hear it."
-msgstr "Some verbs set the person’s ending. Estonian calls to someone, so <0/> takes <1>-le</1>; it asks from someone, so <2/> takes <3>-lt</3>. Tap a line to hear it."
+msgid "Some verbs set the person’s ending. In Estonian you phone to someone, so <0/> takes <1>-le</1>, and you ask from someone, so <2/> takes <3>-lt</3>. Tap a line to hear it."
+msgstr "Some verbs set the person’s ending. In Estonian you phone to someone, so <0/> takes <1>-le</1>, and you ask from someone, so <2/> takes <3>-lt</3>. Tap a line to hear it."
 
 msgid "Someone has"
 msgstr "Someone has"
@@ -492,8 +492,8 @@ msgstr "The long form of mulle. It stresses me: to me, not to someone else."
 msgid "The long form of mult. It stresses me: from me, not from someone else."
 msgstr "The long form of mult. It stresses me: from me, not from someone else."
 
-msgid "The long forms <0/>, <1/> and <2/> mean the same and stress the person: to me, not to you. <3>Meie</3> and <4>teie</4> have one form for each, written too: <5>meile</5>, <6>teile</6>."
-msgstr "The long forms <0/>, <1/> and <2/> mean the same and stress the person: to me, not to you. <3>Meie</3> and <4>teie</4> have one form for each, written too: <5>meile</5>, <6>teile</6>."
+msgid "The long forms <0/>, <1/> and <2/> mean the same and stress the person: to me, not to you. <3>Meie</3> and <4>teie</4> have only the short form, in speech and in writing: <5>meile</5>, <6>teile</6>."
+msgstr "The long forms <0/>, <1/> and <2/> mean the same and stress the person: to me, not to you. <3>Meie</3> and <4>teie</4> have only the short form, in speech and in writing: <5>meile</5>, <6>teile</6>."
 
 msgid "The partitive is a word of its own: <0>mind, sind, teda, meid, teid, neid</0>. <1>Ma ootan sind</1> is I’m waiting for you."
 msgstr "The partitive is a word of its own: <0>mind, sind, teda, meid, teid, neid</0>. <1>Ma ootan sind</1> is I’m waiting for you."

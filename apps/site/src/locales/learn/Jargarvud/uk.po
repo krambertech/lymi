@@ -46,17 +46,20 @@ msgstr "У <et>esimene</et> <et>-ne</et> змінюється на <et>-sel</et>
 msgid "<et>Mitmendal korrusel</et> means on which floor: <et>mitmes</et> with <et>-s</et> turned into <et>-ndal</et>."
 msgstr "<et>Mitmendal korrusel</et> означає «на якому поверсі»: у <et>mitmes</et> <et>-s</et> стає <et>-ndal</et>."
 
-msgid "10 exercises, 4 of them typed, and a conversation"
-msgstr "10 вправ, у 4 з них треба писати, і розмова"
-
 msgid "20 minutes"
 msgstr "20 хвилин"
+
+msgid "8 exercises, 4 of them typed, and a conversation"
+msgstr "8 вправ, у 4 з них треба писати, і розмова"
 
 msgid "A date is an ordinal and a month, and the month takes a small letter. The full stop after the numeral makes it an ordinal: <0>21. november</0>, said <1>kahekümne esimene november</1>."
 msgstr "Дата — це порядковий числівник і місяць, а місяць, як і українською, пишуть з малої літери. Крапка після цифри робить число порядковим: <0>21. november</0> читають як <1>kahekümne esimene november</1>."
 
 msgid "A date is an ordinal: <0>viies mai</0>, not the number <1>viis</1>."
 msgstr "Дата — це порядковий числівник: <0>viies mai</0>, а не кількісне <1>viis</1>."
+
+msgid "A date is an ordinal: <et>viies mai</et>, not the number <et>viis</et>."
+msgstr "Дата — це порядковий числівник: <et>viies mai</et>, а не кількісне <et>viis</et>."
 
 msgid "A number in a sentence can be said three ways. Without a full stop, a number says how many: <0>Mul on 3 kassi</0> is said <1>kolm kassi</1>, I have three cats. With a full stop it is an ordinal: <2>Täna on 5. mai</2> is said <3>viies mai</3>."
 msgstr "Число в реченні можна сказати трьома способами. Без крапки воно означає кількість: <0>Mul on 3 kassi</0> читають як <1>kolm kassi</1> — «у мене три коти». З крапкою це порядковий числівник: <2>Täna on 5. mai</2> читають як <3>viies mai</3>."
@@ -151,8 +154,8 @@ msgstr "грудень"
 msgid "Each sentence has a date in it, in its plain form or with <0>l</0>. Type the date you hear. You can type digits, 5.5 for the fifth of May, or the month in words, as in <1>5. mai</1> or 5 May."
 msgstr "У кожному реченні є дата — без закінчення або з <0>l</0>. Напиши дату, яку чуєш. Можна цифрами, 5.5 — п’яте травня, або з місяцем словом: <1>5. mai</1> чи 5 травня."
 
-msgid "Each sentence has one wrong word in its date or number. Tap it, then type it right."
-msgstr "У кожному реченні одне хибне слово в даті чи числі. Торкнися його, потім напиши правильно."
+msgid "Each sentence has one wrong word in a date, a number or a floor. Tap it, then type it right."
+msgstr "У кожному реченні одне хибне слово в даті, числі чи поверсі. Торкнися його, потім напиши правильно."
 
 msgid "eight"
 msgstr "вісім"
@@ -168,6 +171,9 @@ msgstr "одинадцятий"
 
 msgid "Eleventh to thirty-first"
 msgstr "Від одинадцятого до тридцять першого"
+
+msgid "Eleventh to thirty-first: <et>kahekümne esimene</et>"
+msgstr "Від одинадцятого до тридцять першого: <et>kahekümne esimene</et>"
 
 msgid "Estonia’s birthday, Independence Day, is on 24 February."
 msgstr "День народження Естонії, День незалежності, — 24 лютого."
@@ -221,7 +227,7 @@ msgid "From 11 to 19 the ordinal is one word: <et>kolmeteistkümnes</et>."
 msgstr "Від 11 до 19 порядковий числівник — одне слово: <et>kolmeteistkümnes</et>."
 
 msgid "From four on, an ordinal is built on the genitive, the form lesson {genitive} uses for “of”. Take <0/>, four. Its genitive is <1/>, and with <2>s</2> it becomes <3><4/>,</3> fourth. In the same way <5/> goes to <6/> and <7><8/>.</7>"
-msgstr "Починаючи з чотирьох, порядковий числівник будують на родовому відмінку — формі, що відповідає на «чий? чого?»; про неї розповідає урок {genitive}. Візьми <0/>, чотири. Родовий відмінок — <1/>, а з <2>s</2> виходить <3><4/>,</3> «четвертий». Так само <5/> дає <6/> і <7><8/>.</7>"
+msgstr "Починаючи з чотирьох, порядковий числівник будують на родовому відмінку — формі, що відповідає на «кого? чого?»; про неї розповідає урок {genitive}. Візьми <0/>, чотири. Родовий відмінок — <1/>, а з <2>s</2> виходить <3><4/>,</3> «четвертий». Так само <5/> дає <6/> і <7><8/>.</7>"
 
 msgid "From four on, an ordinal is the number’s genitive with <0>s</0>. A date is an ordinal and a month, and to say on which day, both words end in <1>l</1>: <2>viiendal mail</2>."
 msgstr "Починаючи з чотирьох, порядковий числівник — це родовий відмінок числа з <0>s</0>. Дата — це порядковий числівник і місяць, а щоб сказати, якого числа, обидва слова закінчуються на <1>l</1>: <2>viiendal mail</2>."
@@ -269,16 +275,13 @@ msgid "In a number of two words only the last is an ordinal, and the tens stay i
 msgstr "У числі з двох слів порядковим стає лише останнє, а десятки лишаються в родовому: <0>kahekümne esimene</0>."
 
 msgid "In a number of two words, only the last becomes an ordinal. The tens before it go into the genitive: <0><1/>,</0> twenty-first. Slide to a day, or tap − and +, to hear it."
-msgstr "Якщо в числі два слова, порядковим стає лише останнє. Десятки перед ним стають у родовий відмінок: <0><1/>,</0> «двадцять перший». Посунь повзунок до потрібного дня або натискай − і +, щоб почути його."
+msgstr "Якщо в числі два слова, порядковим стає лише останнє. Десятки перед ним ставлять у родовий відмінок: <0><1/>,</0> «двадцять перший». Посунь повзунок до потрібного дня або натискай − і +, щоб почути його."
 
 msgid "In a number of two words, only the last is an ordinal; the tens stay in the genitive: <et>kahekümne esimene</et>."
 msgstr "У числі з двох слів порядковим стає лише останнє, а десятки лишаються в родовому: <et>kahekümne esimene</et>."
 
-msgid "In lesson {days}, <0/>, Monday, sounds like <1/>, first, and <2>teisipäev</2>, Tuesday, like <3/>, second. Words like these are ordinals. They say which one in order, where the numbers from lesson {numbers} say how many."
-msgstr "В уроці {days} <0/>, понеділок, звучить схоже на <1/>, «перший», а <2>teisipäev</2>, вівторок, — на <3/>, «другий». Такі слова — порядкові числівники. Вони кажуть, котрий за порядком, а числа з уроку {numbers} — скільки."
-
-msgid "In May, or from one date to another, takes other endings; lesson {when} teaches them."
-msgstr "«У травні» чи «від одної дати до іншої» потребують інших закінчень — їх пояснює урок {when}."
+msgid "In lesson {days}, <0/>, Monday, the first day, sounds like <1/>, first, and <2>teisipäev</2>, Tuesday, the second day, like <3/>, second. Words like these are ordinals. They say which one in order, where the numbers from lesson {numbers} say how many."
+msgstr "В уроці {days} <0/>, понеділок, перший день тижня, звучить схоже на <1/>, «перший», а <2>teisipäev</2>, вівторок, другий день, — на <3/>, «другий». Такі слова — порядкові числівники. Вони кажуть, котрий за порядком, а числа з уроку {numbers} — скільки."
 
 msgid "Jaan"
 msgstr "Яан"
@@ -298,14 +301,14 @@ msgstr "липень"
 msgid "June"
 msgstr "червень"
 
-msgid "Kati’s birthday"
-msgstr "День народження Каті"
-
 msgid "Kati’s birthday is tomorrow."
 msgstr "У Каті завтра день народження."
 
 msgid "Kuu, month, and päev, day."
 msgstr "Kuu — місяць, päev — день."
+
+msgid "Liisa’s birthday"
+msgstr "День народження Ліізи"
 
 msgid "Listen: Mari and Jaan"
 msgstr "Послухай: Марі й Яан"
@@ -322,11 +325,8 @@ msgstr "березень"
 msgid "Mari"
 msgstr "Марі"
 
-msgid "Mari and Jaan talk about birthdays and where they live. Read the questions, then listen. As in the exam, the talk plays twice and doesn’t stop."
+msgid "Mari and Jaan talk about birthdays and where they live. Read the questions, then listen. As in the exam, the conversation plays twice and doesn’t stop."
 msgstr "Марі й Яан говорять про дні народження і про те, де вони живуть. Прочитай запитання, потім слухай. Як на іспиті, розмова звучить двічі й не зупиняється."
-
-msgid "Mari’s birthday is on 12 April."
-msgstr "День народження Марі — 12 квітня."
 
 msgid "Mari’s mother has her birthday on the same day as Mari."
 msgstr "У мами Марі день народження того самого дня, що й у Марі."
@@ -350,10 +350,13 @@ msgid "Most of them. Play the ones you missed once more."
 msgstr "Більшість. Переслухай ще раз ті, де були помилки."
 
 msgid "Most of them. Read why each one you missed is wrong."
-msgstr "Більшість. Прочитай пояснення до пропущених помилок."
+msgstr "Більшість. Прочитай пояснення до тих, що не вдалися."
 
 msgid "Most of them. Tap the numbers above once more."
 msgstr "Більшість. Ще раз торкнися чисел вище."
+
+msgid "Mum’s birthday is on 12 April."
+msgstr "У мами день народження дванадцятого квітня."
 
 msgid "My birthday is on 3 June."
 msgstr "Мій день народження — третього червня."
@@ -452,7 +455,7 @@ msgid "On a day or a floor, both words end in <et>-l</et>: <et>viiendal mail</et
 msgstr "Якого числа чи на якому поверсі — обидва слова закінчуються на <et>-l</et>: <et>viiendal mail</et>, <et>kolmandal korrusel</et>."
 
 msgid "On a day or a floor: <et>viiendal mail</et>"
-msgstr "Котрого дня, на якому поверсі: <et>viiendal mail</et>"
+msgstr "Якого числа чи на якому поверсі: <et>viiendal mail</et>"
 
 msgid "On a day or a floor: the ordinal ends in <0>l</0>, as the word after it does."
 msgstr "Якого числа чи на якому поверсі: порядковий числівник закінчується на <0>l</0>, як і слово після нього."
@@ -502,9 +505,6 @@ msgstr "Змінюється лише останнє слово, десятки 
 
 msgid "Only the last word is an ordinal. The tens stay in the genitive: <0>kahekümne</0>."
 msgstr "Порядковим стає лише останнє слово. Десятки лишаються в родовому: <0>kahekümne</0>."
-
-msgid "Ordinals of two words: <et>kahekümne esimene</et>"
-msgstr "Порядкові числівники з двох слів: <et>kahekümne esimene</et>"
 
 msgid "Ordinals without and with -l"
 msgstr "Порядкові числівники без -l і з -l"
@@ -622,7 +622,7 @@ msgid "The genitive with <0>s</0>."
 msgstr "Родовий відмінок з <0>s</0>."
 
 msgid "The genitive, the form for “of”: <0>{genitive}</0>."
-msgstr "Родовий відмінок, форма для «чий? чого?»: <0>{genitive}</0>."
+msgstr "Родовий відмінок, форма для «кого? чого?»: <0>{genitive}</0>."
 
 msgid "The month has <0>l</0>, so the ordinal takes it too: <1>viiendal mail</1>."
 msgstr "Місяць має <0>l</0>, тож порядковий числівник теж: <1>viiendal mail</1>."
@@ -666,11 +666,14 @@ msgstr "Щоб спитати дату, скажи <0/> <1/> означає «д
 msgid "To ask the date: <et>Mis kuupäev täna on?</et> or <et>Mitmes täna on?</et>"
 msgstr "Щоб спитати дату: <et>Mis kuupäev täna on?</et> чи <et>Mitmes täna on?</et>"
 
+msgid "To say in May, or from one date to another, Estonian uses other endings; lesson {when} teaches them."
+msgstr "Щоб сказати «у травні» чи «від однієї дати до іншої», естонська бере інші закінчення — їх пояснює урок {when}."
+
 msgid "To say on which day or floor, the month or <0>korrus</0> ends in <1>l</1>, and so does the ordinal: <2>5. mail</2> is said <3>viiendal mail</3>."
 msgstr "Щоб сказати, якого числа чи на якому поверсі, місяць або <0>korrus</0> закінчується на <1>l</1>, і порядковий числівник теж: <2>5. mail</2> читають як <3>viiendal mail</3>."
 
-msgid "To say on which day or on which floor, both words end in <0>l</0>. The ordinal’s <1>s</1> turns into <2>ndal</2>, and the month or <3>korrus</3> adds <4>l</4>, <5>il</5> or <6>el</6>: <7>viiendal mail</7>, <8>esimesel märtsil</8>, <9>kolmandal korrusel</9>."
-msgstr "Щоб сказати, якого числа чи на якому поверсі, обидва слова закінчуються на <0>l</0>. У порядковому числівнику <1>s</1> стає <2>ndal</2>, а місяць або <3>korrus</3> додає <4>l</4>, <5>il</5> чи <6>el</6>: <7>viiendal mail</7>, <8>esimesel märtsil</8>, <9>kolmandal korrusel</9>."
+msgid "To say on which day or on which floor, both words end in <0>l</0>. The ordinal’s <1>s</1> turns into <2>ndal</2>, or <3>ne</3> into <4>sel</4> for <5>esimene</5> and <6>teine</6>, and the month or <7>korrus</7> adds <8>l</8>, <9>il</9> or <10>el</10>: <11>viiendal mail</11>, <12>esimesel märtsil</12>, <13>kolmandal korrusel</13>."
+msgstr "Щоб сказати, якого числа чи на якому поверсі, обидва слова закінчуються на <0>l</0>. У порядковому числівнику <1>s</1> стає <2>ndal</2>, а в <5>esimene</5> і <6>teine</6> <3>ne</3> стає <4>sel</4>; місяць або <7>korrus</7> додає <8>l</8>, <9>il</9> чи <10>el</10>: <11>viiendal mail</11>, <12>esimesel märtsil</12>, <13>kolmandal korrusel</13>."
 
 msgid "To say on which day, both words end in <0>l</0>: <1><2/>,</1> on the fifth of May. In the ordinal, the final <3>s</3> turns into <4>ndal</4>: <5>viies</5>, <6/>; <7>kolmas</7>, <8><9/>.</8> <10>Esimene</10> and <11>teine</11> swap <12>ne</12> for <13>sel</13>: <14>esimesel, teisel</14>."
 msgstr "Щоб сказати, якого числа, обидва слова закінчуються на <0>l</0>: <1><2/>,</1> п’ятого травня. У порядковому числівнику кінцеве <3>s</3> стає <4>ndal</4>: <5>viies</5>, <6/>; <7>kolmas</7>, <8><9/>.</8> У <10>esimene</10> і <11>teine</11> <12>ne</12> змінюється на <13>sel</13>: <14>esimesel, teisel</14>."
@@ -747,17 +750,20 @@ msgstr "О котрій вони зустрічаються?"
 msgid "What’s the date today?"
 msgstr "Яке сьогодні число?"
 
-msgid "When is Kati’s birthday?"
-msgstr "Коли день народження Каті?"
-
-msgid "When is Mari coming?"
-msgstr "Коли прийде Марі?"
+msgid "When is Liisa’s birthday?"
+msgstr "Коли в Ліізи день народження?"
 
 msgid "When is Mari’s birthday?"
 msgstr "Коли день народження Марі?"
 
 msgid "When is Peeter coming to Tallinn?"
 msgstr "Коли Пеетер приїде до Таллінна?"
+
+msgid "When is Peeter coming?"
+msgstr "Коли прийде Пеетер?"
+
+msgid "When is Peeter’s birthday?"
+msgstr "Коли в Пеетера день народження?"
 
 msgid "When is your birthday?"
 msgstr "Коли твій день народження?"
@@ -771,8 +777,8 @@ msgstr "На якому поверсі ти живеш?"
 msgid "Which floor does Jaan live on? Write it as he says it."
 msgstr "На якому поверсі живе Яан? Напиши так, як він каже."
 
-msgid "Which floor is Kati’s flat on?"
-msgstr "На якому поверсі квартира Каті?"
+msgid "Which floor is Liisa’s flat on?"
+msgstr "На якому поверсі квартира Ліізи?"
 
 msgid "Which floor is the café on?"
 msgstr "На якому поверсі кав’ярня?"
@@ -807,5 +813,5 @@ msgstr "Почуєш її й побачиш, що змінюється."
 msgid "You’ll hear its ordinal and see where it comes from."
 msgstr "Почуєш порядковий числівник і побачиш, від чого він."
 
-msgid "Your friend Kati leaves you a voice message about her birthday. Listen, then answer."
-msgstr "Твоя подруга Каті залишила тобі голосове повідомлення про свій день народження. Послухай, тоді відповідай."
+msgid "Your friend Liisa leaves you a voice message about her birthday. Listen, then answer."
+msgstr "Твоя подруга Лііза залишає тобі голосове повідомлення про свій день народження. Послухай і дай відповідь."

@@ -13,7 +13,7 @@ export const DRILLS: DrillBank = {
       label: msg`Building an ordinal: <et>neljas</et>, <et>kolmas</et>`,
       section: "genitive",
     },
-    tens: { label: msg`Ordinals of two words: <et>kahekümne esimene</et>`, section: "bigger" },
+    tens: { label: msg`Eleventh to thirty-first: <et>kahekümne esimene</et>`, section: "bigger" },
     on: { label: msg`On a day or a floor: <et>viiendal mail</et>`, section: "on-a-date" },
     which: { label: msg`Five, fifth or on the fifth`, section: "which-form" },
   },
@@ -200,7 +200,7 @@ export const DRILLS: DrillBank = {
       wrong: "Täna on viis mai.",
       answers: ["Täna on viies mai."],
       say: "Täna on viies mai.",
-      explain: DATE,
+      explain: msg`A date is an ordinal: <et>viies mai</et>, not the number <et>viis</et>.`,
     },
     {
       kind: "form",

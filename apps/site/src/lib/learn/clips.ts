@@ -1891,7 +1891,7 @@ export const JARGARVUD_HEARD = [
   { said: "Homme on kolmeteistkümnes märts.", day: 13, month: 3 },
   { said: "Jaan tuleb esimesel septembril.", day: 1, month: 9 },
   { said: "Pood on suletud kahekümne viiendal detsembril.", day: 25, month: 12 },
-  { said: "Mari sünnipäev on kaheteistkümnendal aprillil.", day: 12, month: 4 },
+  { said: "Ema sünnipäev on kaheteistkümnendal aprillil.", day: 12, month: 4 },
   { said: "Täna on kolmekümne esimene oktoober.", day: 31, month: 10 },
   { said: "Eesti sünnipäev on kahekümne neljandal veebruaril.", day: 24, month: 2 },
   { said: "Ma lähen Tartusse kaheksandal juunil.", day: 8, month: 6 },
@@ -2041,7 +2041,7 @@ export const JARGARVUD_MESSAGE = [
   "Tere! Minu sünnipäev on laupäeval, kahekümne kolmandal märtsil.",
   "Tule kell kuus.",
   "Minu korter on neljandal korrusel.",
-  "Mari tuleb ka, kell seitse.",
+  "Peeter tuleb ka, kell seitse.",
   "Tema sünnipäev on kolmekümne esimesel märtsil.",
   "Kas sa tuled?",
 ] as const;

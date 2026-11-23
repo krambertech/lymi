@@ -200,6 +200,13 @@ function HowItsBuilt({ n }: { n: number }) {
       </Trans>
     );
   const number = numberWords(n);
+  if (stem.toLowerCase() === number)
+    return (
+      <Trans>
+        The genitive of <span lang="et">{number}</span> is the same word, so only <End>s</End> is
+        new.
+      </Trans>
+    );
   if (n <= 20 || ones === 0)
     return (
       <Trans>
@@ -365,7 +372,7 @@ const HEARD_MEANS: Record<(typeof JARGARVUD_HEARD)[number]["said"], MessageDescr
   "Homme on kolmeteistkümnes märts.": msg`Tomorrow is 13 March.`,
   "Jaan tuleb esimesel septembril.": msg`Jaan is coming on 1 September.`,
   "Pood on suletud kahekümne viiendal detsembril.": msg`The shop is closed on 25 December.`,
-  "Mari sünnipäev on kaheteistkümnendal aprillil.": msg`Mari’s birthday is on 12 April.`,
+  "Ema sünnipäev on kaheteistkümnendal aprillil.": msg`Mum’s birthday is on 12 April.`,
   "Täna on kolmekümne esimene oktoober.": msg`Today is 31 October.`,
   "Eesti sünnipäev on kahekümne neljandal veebruaril.": msg`Estonia’s birthday, Independence Day, is on 24 February.`,
   "Ma lähen Tartusse kaheksandal juunil.": msg`I’m going to Tartu on 8 June.`,
@@ -504,6 +511,11 @@ function useContent() {
               <span lang="et">Kolm</span> is the exception: <b lang="et">kolmas</b>, with{" "}
               <End>as</End>.
             </Trans>
+          ) : stem.toLowerCase() === number ? (
+            <Trans>
+              The genitive of <span lang="et">{number}</span> is the same word, so only <End>s</End>{" "}
+              is new.
+            </Trans>
           ) : (
             <Trans>
               <b lang="et">{stem}</b>, the genitive of <span lang="et">{number}</span>, with{" "}
@@ -585,7 +597,7 @@ function useContent() {
     const message: PassageQuestion[] = [
       {
         id: "kati",
-        ask: t`When is Kati’s birthday?`,
+        ask: t`When is Liisa’s birthday?`,
         options: [
           { id: "13-march", label: t`On 13 March` },
           { id: "13-may", label: t`On 13 May` },
@@ -596,7 +608,7 @@ function useContent() {
       },
       {
         id: "floor",
-        ask: t`Which floor is Kati’s flat on?`,
+        ask: t`Which floor is Liisa’s flat on?`,
         options: [
           { id: "fourth", label: t`The fourth` },
           { id: "fifth", label: t`The fifth` },
@@ -607,7 +619,7 @@ function useContent() {
       },
       {
         id: "mari",
-        ask: t`When is Mari coming?`,
+        ask: t`When is Peeter coming?`,
         options: [
           { id: "half-six", label: t`At half past six` },
           { id: "seven", label: t`At seven` },
@@ -618,7 +630,7 @@ function useContent() {
       },
       {
         id: "mari-birthday",
-        ask: t`When is Mari’s birthday?`,
+        ask: t`When is Peeter’s birthday?`,
         options: [
           { id: "13-may", label: t`On 13 May` },
           { id: "31-march", label: t`On 31 March` },
@@ -885,7 +897,7 @@ export function JargarvudLesson() {
       }
       facts={[
         <Trans key="m">20 minutes</Trans>,
-        <Trans key="q">10 exercises, 4 of them typed, and a conversation</Trans>,
+        <Trans key="q">8 exercises, 4 of them typed, and a conversation</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -921,9 +933,11 @@ export function JargarvudLesson() {
         </Trans>,
         <Trans key="4">
           To say on which day or on which floor, both words end in <End>l</End>. The ordinal’s{" "}
-          <End>s</End> turns into <End>ndal</End>, and the month or <b lang="et">korrus</b> adds{" "}
-          <End>l</End>, <End>il</End> or <End>el</End>: <b lang="et">viiendal mail</b>,{" "}
-          <b lang="et">esimesel märtsil</b>, <b lang="et">kolmandal korrusel</b>.
+          <End>s</End> turns into <End>ndal</End>, or <End>ne</End> into <End>sel</End> for{" "}
+          <b lang="et">esimene</b> and <b lang="et">teine</b>, and the month or{" "}
+          <b lang="et">korrus</b> adds <End>l</End>, <End>il</End> or <End>el</End>:{" "}
+          <b lang="et">viiendal mail</b>, <b lang="et">esimesel märtsil</b>,{" "}
+          <b lang="et">kolmandal korrusel</b>.
         </Trans>,
         <Trans key="5">
           <b lang="et">Mitu?</b> asks how many; <b lang="et">mitmes?</b> asks which one in order.
@@ -938,10 +952,10 @@ export function JargarvudLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    In lesson {days}, <Word w="esmaspäev" />, Monday, sounds like{" "}
-                    <Word w="esimene" />, first, and <b lang="et">teisipäev</b>, Tuesday, like{" "}
-                    <Word w="teine" />, second. Words like these are ordinals. They say which one in
-                    order, where the numbers from lesson {numbers} say how many.
+                    In lesson {days}, <Word w="esmaspäev" />, Monday, the first day, sounds like{" "}
+                    <Word w="esimene" />, first, and <b lang="et">teisipäev</b>, Tuesday, the second
+                    day, like <Word w="teine" />, second. Words like these are ordinals. They say
+                    which one in order, where the numbers from lesson {numbers} say how many.
                   </Trans>
                 </p>
                 <p>
@@ -1343,8 +1357,8 @@ export function JargarvudLesson() {
               {when && (
                 <Aside>
                   <Trans>
-                    In May, or from one date to another, takes other endings; lesson {when} teaches
-                    them.
+                    To say in May, or from one date to another, Estonian uses other endings; lesson{" "}
+                    {when} teaches them.
                   </Trans>
                 </Aside>
               )}
@@ -1396,8 +1410,8 @@ export function JargarvudLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each sentence has one wrong word in its date or number. Tap it, then type it
-                    right.
+                    Each sentence has one wrong word in a date, a number or a floor. Tap it, then
+                    type it right.
                   </Trans>
                 </p>
               </Prose>
@@ -1423,14 +1437,14 @@ export function JargarvudLesson() {
         },
         {
           id: "message",
-          title: t`Kati’s birthday`,
+          title: t`Liisa’s birthday`,
           quiz: true,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    Your friend Kati leaves you a voice message about her birthday. Listen, then
+                    Your friend Liisa leaves you a voice message about her birthday. Listen, then
                     answer.
                   </Trans>
                 </p>
@@ -1455,7 +1469,7 @@ export function JargarvudLesson() {
                 <p>
                   <Trans>
                     Mari and Jaan talk about birthdays and where they live. Read the questions, then
-                    listen. As in the exam, the talk plays twice and doesn’t stop.
+                    listen. As in the exam, the conversation plays twice and doesn’t stop.
                   </Trans>
                 </p>
               </Prose>

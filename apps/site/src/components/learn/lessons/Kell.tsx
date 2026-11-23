@@ -649,7 +649,7 @@ export function KellLesson() {
         ask: t`What time is it now?`,
         options: [
           { id: "230", label: "2:30" },
-          { id: "100", label: "1:00" },
+          { id: "330", label: "3:30" },
           { id: "130", label: "1:30" },
           { id: "200", label: "2:00" },
         ],
@@ -663,7 +663,7 @@ export function KellLesson() {
         options: [
           { id: "200", label: "2:00" },
           { id: "300", label: "3:00" },
-          { id: "345", label: "3:45" },
+          { id: "230", label: "2:30" },
           { id: "245", label: "2:45" },
         ],
         answer: "300",

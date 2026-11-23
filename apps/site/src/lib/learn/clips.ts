@@ -1203,9 +1203,15 @@ const HOUR_GENITIVES = [
 
 export const timeAnswers = (time: ClockTime): [string, ...string[]] => {
   const words = timeWords(time);
+  const hour = numberWords(time.hour);
+  const genitive = HOUR_GENITIVES[time.hour - 1];
   const past = [5, 10, 20].includes(time.minute)
-    ? [`${numberWords(time.minute)} minutit üle ${HOUR_GENITIVES[time.hour - 1]}`]
-    : [];
+    ? [`${numberWords(time.minute)} minutit üle ${genitive}`]
+    : time.minute === 15
+      ? [`viisteist minutit ${hour} läbi`, `viisteist minutit üle ${genitive}`]
+      : time.minute === 45
+        ? [`viieteist minuti pärast ${numberWords((time.hour % 12) + 1)}`]
+        : [];
   return [
     words,
     `kell on ${words}`,
@@ -1368,7 +1374,7 @@ export const TUTVUMINE_TRANSLATED = [
       "Tallinnas elame.",
     ],
   },
-  { kind: "place", answers: ["Nad on tööl.", "Nemad on tööl."] },
+  { kind: "place", answers: ["Nad on tööl.", "Nemad on tööl."], confusable: ["tool"] },
   {
     kind: "ask",
     answers: [
@@ -1409,7 +1415,7 @@ export const TUTVUMINE_TRANSLATED = [
 export const TUTVUMINE_FIXES = [
   { wrong: "Ma ei töötan kontoris.", said: "Ma ei tööta kontoris.", kind: "ei" },
   { wrong: "Ta elab Tartul.", said: "Ta elab Tartus.", kind: "place" },
-  { wrong: "Nad on töös.", said: "Nad on tööl.", kind: "place" },
+  { wrong: "Nad on töös.", said: "Nad on tööl.", kind: "place", confusable: ["tool"] },
   { wrong: "Kas sa räägib eesti keelt?", said: "Kas sa räägid eesti keelt?", kind: "ask" },
   { wrong: "Kus sa elab?", said: "Kus sa elad?", kind: "kus" },
   { wrong: "Mina on Andres.", said: "Mina olen Andres.", kind: "olema" },

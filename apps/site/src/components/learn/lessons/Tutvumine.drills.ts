@@ -47,17 +47,15 @@ const asked = ({ kind, reply, answers }: (typeof TUTVUMINE_ASKED)[number]): Sent
   explain: WHY[kind] as MessageDescriptor,
 });
 
-const translated = (
-  { kind, answers }: (typeof TUTVUMINE_TRANSLATED)[number],
-  i: number,
-): SentenceDrill => ({
+const translated = (each: (typeof TUTVUMINE_TRANSLATED)[number], i: number): SentenceDrill => ({
   kind: "translate",
-  id: `translate-${clipId(answers[0])}`,
-  rule: RULE[kind] as string,
+  id: `translate-${clipId(each.answers[0])}`,
+  rule: RULE[each.kind] as string,
   prompt: MEANS[i] as MessageDescriptor,
-  say: answers[0],
-  answers,
-  explain: WHY[kind] as MessageDescriptor,
+  say: each.answers[0],
+  answers: each.answers,
+  ...("confusable" in each ? { confusable: each.confusable } : {}),
+  explain: WHY[each.kind] as MessageDescriptor,
 });
 
 const FIX_MEANS: Record<string, MessageDescriptor> = {
@@ -69,23 +67,28 @@ const FIX_MEANS: Record<string, MessageDescriptor> = {
   "Ta elab Tartul.": msg`She lives in Tartu.`,
 };
 
-const fixed = ({ wrong, said, kind }: (typeof TUTVUMINE_FIXES)[number]): FixDrill => ({
-  kind: "fix",
-  id: `fix-${clipId(wrong)}`,
-  rule: RULE[kind] as string,
-  ...(FIX_MEANS[wrong] ? { prompt: FIX_MEANS[wrong] } : {}),
-  wrong,
-  say: said,
-  answers: [said],
-  explain: WHY[kind] as MessageDescriptor,
-});
+const fixed = (each: (typeof TUTVUMINE_FIXES)[number]): FixDrill => {
+  const { wrong, said, kind } = each;
+  return {
+    kind: "fix",
+    id: `fix-${clipId(wrong)}`,
+    rule: RULE[kind] as string,
+    ...(FIX_MEANS[wrong] ? { prompt: FIX_MEANS[wrong] } : {}),
+    wrong,
+    say: said,
+    answers: [said],
+    ...("confusable" in each ? { confusable: each.confusable } : {}),
+    explain: WHY[kind] as MessageDescriptor,
+  };
+};
 
-const written = (said: string, kind: string): SentenceDrill => ({
+const written = (said: string, kind: string, confusable?: readonly string[]): SentenceDrill => ({
   kind: "dictation",
   id: `write-${clipId(said)}`,
   rule: RULE[kind] as string,
   say: said,
   answers: [said],
+  ...(confusable ? { confusable } : {}),
   explain: WHY[kind] as MessageDescriptor,
 });
 
@@ -101,7 +104,7 @@ export const DRILLS: DrillBank = {
     ...TUTVUMINE_FIXES.map(fixed),
     written("Ma ei tööta kontoris.", "ei"),
     written("Ta elab Tartus.", "place"),
-    written("Nad on tööl.", "place"),
+    written("Nad on tööl.", "place", ["tool"]),
     written("Mina olen Andres.", "olema"),
     written("Kus sa elad?", "kus"),
     written("Kas sa räägid eesti keelt?", "ask"),

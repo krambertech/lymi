@@ -1659,6 +1659,8 @@ export const TUTVUMINE_TRANSLATED = [
       "Me ei tööta, vaid õpime.",
       "Meie ei tööta, vaid õpime.",
       "Me ei tööta, vaid me õpime.",
+      "Meie ei tööta, vaid me õpime.",
+      "Me ei tööta, vaid meie õpime.",
       "Meie ei tööta, vaid meie õpime.",
     ],
   },

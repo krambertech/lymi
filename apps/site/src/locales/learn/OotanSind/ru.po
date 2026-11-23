@@ -1,0 +1,540 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 16:34+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "<0>-ga</0>: with someone."
+msgstr "<0>-ga</0>: с кем-то."
+
+msgid "<0>-le</0>: to someone, telling them."
+msgstr "<0>-le</0>: кому-то, то есть рассказываешь."
+
+msgid "<0>-st</0>: about someone."
+msgstr "<0>-st</0>: о ком-то."
+
+msgid "<0>Aitama</0> usually takes the partitive: <1>sind</1>."
+msgstr "<0>Aitama</0> обычно берёт партитив, хотя по-русски «помогаю тебе»: <1>sind</1>."
+
+msgid "<0>Helistama</0> and <1>vastama</1> go to someone: <2>-le</2>."
+msgstr "<0>Helistama</0> и <1>vastama</1> спрашивают «кому?», как и по-русски: <2>-le</2>."
+
+msgid "<0>Hoolima</0> and <1>aru saama</1> take <2>-st</2>."
+msgstr "<0>Hoolima</0> и <1>aru saama</1> берут <2>-st</2>."
+
+msgid "<0>Hoolima</0> takes <1>-st</1>: <2>sinust</2>."
+msgstr "<0>Hoolima</0> берёт <1>-st</1>: <2>sinust</2>."
+
+msgid "<0>Kohtuma</0> and <1>abielluma</1> take <2>-ga</2>, with."
+msgstr "<0>Kohtuma</0> и <1>abielluma</1> берут <2>-ga</2>, «с кем-то»."
+
+msgid "<0>Kohtuma</0> takes <1>-ga</1>, not <2>-le</2>: <3>sinuga</3>."
+msgstr "<0>Kohtuma</0> берёт <1>-ga</1>, а не <2>-le</2>: <3>sinuga</3>."
+
+msgid "<0>Ootama, aitama, armastama</0> and <1>tänama</1> usually take the partitive: <2>ma tänan sind</2>."
+msgstr "<0>Ootama, aitama, armastama</0> и <1>tänama</1> обычно берут партитив: <2>ma tänan sind</2>."
+
+msgid "<0>Ootama</0> and <1>aitama</1> usually take the partitive."
+msgstr "<0>Ootama</0> и <1>aitama</1> обычно берут партитив."
+
+msgid "<0>Ootama</0> usually takes the partitive: <1>seda</1>."
+msgstr "<0>Ootama</0> обычно берёт партитив: <1>seda</1>."
+
+msgid "<0>Ootan sind</0>, <1>räägin sinust</1>, <2>helistan sulle</2>: many verbs ask for a set case, and a dictionary tells you which."
+msgstr "<0>Ootan sind</0>, <1>räägin sinust</1>, <2>helistan sulle</2>: многие глаголы требуют определённого падежа, и словарь подскажет какого."
+
+msgid "<0>Sellest</0> is about it. <1>Ootama</1> usually takes the partitive: <2>seda</2>."
+msgstr "<0>Sellest</0> — это «об этом». <1>Ootama</1> обычно берёт партитив: <2>seda</2>."
+
+msgid "<0>Sinust</0> is about you. You answer to someone: <1>sulle</1>."
+msgstr "<0>Sinust</0> — это «о тебе». А отвечают кому-то: <1>sulle</1>."
+
+msgid "<0>Tänama</0> takes the partitive: <1>sind</1>."
+msgstr "<0>Tänama</0> берёт партитив, как в «благодарю тебя»: <1>sind</1>."
+
+msgid "<et>-st</et>, <et>-le</et>, <et>-ga</et> or <et>-lt</et>"
+msgstr "<et>-st</et>, <et>-le</et>, <et>-ga</et> или <et>-lt</et>"
+
+msgid "<et>Aitama</et> usually takes the partitive: <et>sind</et>."
+msgstr "<et>Aitama</et> обычно берёт партитив, хотя по-русски «помогаю тебе»: <et>sind</et>."
+
+msgid "<et>Aru saama</et> asks <et>kellest?</et>: <et>sinust</et>."
+msgstr "<et>Aru saama</et> спрашивает <et>kellest?</et>, хотя по-русски «понимаю тебя»: <et>sinust</et>."
+
+msgid "<et>Helistama</et> asks <et>kellele?</et>: <et>emale</et>."
+msgstr "<et>Helistama</et> спрашивает <et>kellele?</et>: <et>emale</et>."
+
+msgid "<et>Helistama</et> asks <et>kellele?</et>: <et>sulle</et>."
+msgstr "<et>Helistama</et> спрашивает <et>kellele?</et>: <et>sulle</et>."
+
+msgid "<et>Hoolima</et> asks <et>kellest?</et>: <et>sõbrast</et>."
+msgstr "<et>Hoolima</et> спрашивает <et>kellest?</et>: <et>sõbrast</et>."
+
+msgid "<et>Hoolima</et> asks <et>kellest?</et>: <et>vennast</et>."
+msgstr "<et>Hoolima</et> спрашивает <et>kellest?</et>: <et>vennast</et>."
+
+msgid "<et>Hoolima</et> takes <et>-st</et>: <et>sinust</et>."
+msgstr "<et>Hoolima</et> берёт <et>-st</et>: <et>sinust</et>."
+
+msgid "<et>Kohtuma</et> asks <et>kellega?</et>: <et>Jaaniga</et>."
+msgstr "<et>Kohtuma</et> спрашивает <et>kellega?</et>: <et>Jaaniga</et>."
+
+msgid "<et>Ootama</et>, <et>aitama</et>, <et>armastama</et> and <et>tänama</et> usually take the partitive."
+msgstr "<et>Ootama</et>, <et>aitama</et>, <et>armastama</et> и <et>tänama</et> обычно берут партитив."
+
+msgid "<et>Rääkima</et>: <et>-st</et> about someone, <et>-le</et> telling someone, <et>-ga</et> with someone."
+msgstr "<et>Rääkima</et>: <et>-st</et> — о ком-то, <et>-le</et> — рассказывать кому-то, <et>-ga</et> — с кем-то."
+
+msgid "<et>Tänama</et> takes the partitive: <et>sind</et>."
+msgstr "<et>Tänama</et> берёт партитив, как в «благодарю тебя»: <et>sind</et>."
+
+msgid "<et>Unistama</et> asks <et>millest?</et>: <et>puhkusest</et>."
+msgstr "<et>Unistama</et> спрашивает <et>millest?</et>: <et>puhkusest</et>."
+
+msgid "<et>Vastama</et> asks <et>kellele?</et>: <et>õpetajale</et>."
+msgstr "<et>Vastama</et> спрашивает <et>kellele?</et>: <et>õpetajale</et>."
+
+msgid "22 minutes"
+msgstr "22 минуты"
+
+msgid "8 exercises"
+msgstr "8 упражнений"
+
+msgid "A colleague from work"
+msgstr "Коллега с работы"
+
+msgid "a name"
+msgstr "имя"
+
+msgid "A wedding in July"
+msgstr "Свадьба в июле"
+
+msgid "About whom"
+msgstr "О ком"
+
+msgid "about whom, from whom"
+msgstr "о ком, из кого"
+
+msgid "about you"
+msgstr "о тебе"
+
+msgid "About, to or with"
+msgstr "О ком-то, кому-то или с кем-то"
+
+msgid "All eight, typed in full."
+msgstr "Все восемь, написаны полностью."
+
+msgid "All seven, each with the case its verb needs."
+msgstr "Все семь, каждое с падежом, которого требует глагол."
+
+msgid "All six found and fixed."
+msgstr "Все шесть найдены и исправлены."
+
+msgid "All six: you heard the ending every time."
+msgstr "Все шесть: ты каждый раз слышал окончание."
+
+msgid "All ten: the verb told you every time."
+msgstr "Все десять: глагол каждый раз подсказывал форму."
+
+msgid "brother"
+msgstr "брат"
+
+msgid "Can I ask you something?"
+msgstr "Можно у тебя кое-что спросить?"
+
+msgid "Don’t tell Peeter!"
+msgstr "Не рассказывай Пеэтеру!"
+
+msgid "Each sentence has a gap for you or me. The verb decides its form. Pick it, then hear the sentence."
+msgstr "В каждом предложении есть пропуск для «ты» или «я». Форму определяет глагол. Выбери её, потом послушай предложение."
+
+msgid "Each sentence has one word in the wrong case. Tap it, then type it right."
+msgstr "В каждом предложении одно слово стоит не в том падеже. Нажми на него, потом напиши правильно."
+
+msgid "English and Estonian often disagree: you meet with someone, <0>kohtun sinuga</0>, phone to someone, <1>helistan sulle</1>, and ask from someone, <2>küsin sinult</2>."
+msgstr "Часто эстонский говорит так же, как русский: встречаешься с кем-то, <0>kohtun sinuga</0>, звонишь кому-то, <1>helistan sulle</1>, спрашиваешь у кого-то, <2>küsin sinult</2>. Но «помогаю тебе» по-эстонски — партитив."
+
+msgid "English meets someone; <0>kohtuma</0> meets with someone: <1>Jaaniga</1>."
+msgstr "Как и по-русски, с <0>kohtuma</0> встречаются с кем-то: <1>Jaaniga</1>."
+
+msgid "English meets someone; <et>kohtuma</et> meets with someone: <et>Jaaniga</et>."
+msgstr "Как и по-русски, с <et>kohtuma</et> встречаются с кем-то: <et>Jaaniga</et>."
+
+msgid "English puts most objects straight after the verb: I phone you, I meet you, I ask you. In Estonian, many verbs ask for a set case, and the question the verb answers names it: <0/>, <1/>, <2/>, <3/>, <4/>."
+msgstr "В русском глагол тоже требует своего падежа: «жду кого?», «звоню кому?», «встречаюсь с кем?». В эстонском так же, и какой это падеж, подсказывает вопрос к глаголу: <0/>, <1/>, <2/>, <3/>, <4/>. Иногда падеж не такой, как в русском."
+
+msgid "Fix the case"
+msgstr "Исправь падеж"
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
+
+msgid "friend"
+msgstr "друг, подруга"
+
+msgid "From someone is usually <0>-lt</0>: <1>küsin sinult</1>, <2>sain sinult</2>."
+msgstr "«От кого-то» — обычно <0>-lt</0>: <1>küsin sinult</1>, <2>sain sinult</2>."
+
+msgid "from whom"
+msgstr "от кого, у кого"
+
+msgid "From whom"
+msgstr "От кого"
+
+msgid "Her mother, about the party"
+msgstr "Мама, насчёт праздника"
+
+msgid "holiday"
+msgstr "отпуск"
+
+msgid "I can help you in the shop."
+msgstr "Я могу помочь тебе в магазине."
+
+msgid "I don’t understand you."
+msgstr "Я тебя не понимаю."
+
+msgid "I thank you for the help."
+msgstr "Я благодарю тебя за помощь."
+
+msgid "I, me"
+msgstr "я, меня"
+
+msgid "I’ll phone you on Friday."
+msgstr "Я позвоню тебе в пятницу."
+
+msgid "I’ll phone you tomorrow."
+msgstr "Я позвоню тебе завтра."
+
+msgid "I’ll write to him today."
+msgstr "Я напишу ему сегодня."
+
+msgid "I’m talking about you."
+msgstr "Я говорю о тебе."
+
+msgid "I’m talking with you."
+msgstr "Я говорю с тобой."
+
+msgid "I’m telling you."
+msgstr "Я рассказываю тебе."
+
+msgid "I’m waiting for you."
+msgstr "Я жду тебя."
+
+msgid "I’ve always dreamt of the piano."
+msgstr "Я всегда мечтал о пианино."
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan is talking about Peeter."
+msgstr "Яан говорит о Пеэтере."
+
+msgid "Jaan is talking with Peeter."
+msgstr "Яан говорит с Пеэтером."
+
+msgid "Jaan is telling Peeter."
+msgstr "Яан рассказывает Пеэтеру."
+
+msgid "Jaan remembers Liisa."
+msgstr "Яан помнит Лийсу."
+
+msgid "Kadri"
+msgstr "Кадри"
+
+msgid "Kadri calls you about meeting. Pick what you say back. A wrong reply says why, then you hear the right one."
+msgstr "Кадри звонит тебе, чтобы договориться о встрече. Выбери, что ответить. Неправильный ответ объяснит ошибку, а потом ты услышишь правильный."
+
+msgid "Kati, Mari’s friend"
+msgstr "Кати, подруга Мари"
+
+msgid "Kinds of verb"
+msgstr "Типы глаголов"
+
+msgid "Learn a verb with its question: <0>ootama keda?</0>, <1>rääkima kellest?</1>, <2>helistama kellele?</2>, <3>kohtuma kellega?</3>, <4>küsima kellelt?</4>"
+msgstr "Учи глагол вместе с его вопросом: <0>ootama keda?</0>, <1>rääkima kellest?</1>, <2>helistama kellele?</2>, <3>kohtuma kellega?</3>, <4>küsima kellelt?</4>"
+
+msgid "Lesson {object} showed that <0>ootama</0>, <1>aitama</1> and <2>armastama</2> take the partitive unless a small word such as <3>ära</3> gives them an end. A dictionary gives each verb’s question, so learn the two together."
+msgstr "Урок {object} показал, что <0>ootama</0>, <1>aitama</1> и <2>armastama</2> берут партитив, если короткое слово вроде <3>ära</3> не делает действие завершённым. Словарь даёт вопрос к каждому глаголу, так что учи их вместе."
+
+msgid "Liisa"
+msgstr "Лийса"
+
+msgid "Listen: Mari and Jaan"
+msgstr "Послушай: Мари и Яан"
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Mari"
+msgstr "Мари"
+
+msgid "Mari cares about her brother."
+msgstr "Мари заботится о своём брате."
+
+msgid "Mari has never met Liisa."
+msgstr "Мари никогда не встречалась с Лийсой."
+
+msgid "Mari is talking about her mother."
+msgstr "Мари говорит о маме."
+
+msgid "Mari is talking with her mother."
+msgstr "Мари говорит с мамой."
+
+msgid "Mari is telling her mother."
+msgstr "Мари рассказывает маме."
+
+msgid "Mari tells Jaan that her brother is getting married."
+msgstr "Мари рассказывает Яану, что её брат женится."
+
+msgid "Match each verb with the question it answers."
+msgstr "Соедини каждый глагол с вопросом, на который он отвечает."
+
+msgid "mother"
+msgstr "мама"
+
+msgid "Nearly. Ask each verb’s question again."
+msgstr "Почти. Ещё раз задай вопрос к каждому глаголу."
+
+msgid "Nearly. Check the ending in the ones you got wrong."
+msgstr "Почти. Проверь окончание там, где ошибка."
+
+msgid "Nearly. Look at the verb in the ones you got wrong."
+msgstr "Почти. Посмотри на глагол там, где ошибка."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Почти. Ещё раз послушай те, где ошибка."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Почти. Прочитай объяснение под каждой ошибкой."
+
+msgid "Now with names and nouns. Each round gives a word and a sentence with a gap. Type the form the verb needs."
+msgstr "Теперь с именами и существительными. В каждом раунде — слово и предложение с пропуском. Напиши форму, которую требует глагол."
+
+msgid "One verb can change its meaning with the case: <0>räägin sinust</0>, about you; <1>räägin sulle</1>, I tell you; <2>räägin sinuga</2>, with you. So can <3>laenama</3>: <4>laenan sinult</4>, I borrow from you; <5>laenan sulle</5>, I lend you."
+msgstr "От падежа может зависеть значение глагола: <0>räägin sinust</0> — «говорю о тебе»; <1>räägin sulle</1> — «рассказываю тебе»; <2>räägin sinuga</2> — «говорю с тобой». Так же с <3>laenama</3>, как с русским «одалживать»: <4>laenan sinult</4> — «одалживаю у тебя»; <5>laenan sulle</5> — «одалживаю тебе»."
+
+msgid "Peeter"
+msgstr "Пеэтер"
+
+msgid "Peeter, her brother"
+msgstr "Пеэтер, её брат"
+
+msgid "Pick a question and tap the sentences. The pronoun forms come from lesson {pronouns}."
+msgstr "Выбери вопрос и нажимай на предложения. Формы местоимений объясняет урок {pronouns}."
+
+msgid "Pick the case"
+msgstr "Выбери падеж"
+
+msgid "Plans with Kadri"
+msgstr "Планы с Кадри"
+
+msgid "Play the sentences you missed once more, then try again."
+msgstr "Ещё раз послушай предложения, где ошибся, а потом попробуй снова."
+
+msgid "Question"
+msgstr "Вопрос"
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Что запомнить» ниже, потом попробуй снова."
+
+msgid "sister"
+msgstr "сестра"
+
+msgid "Talk: meeting tomorrow"
+msgstr "Разговор: встреча завтра"
+
+msgid "Tap a form"
+msgstr "Коснись формы"
+
+msgid "Tap the sentences in the table once more, then try again."
+msgstr "Ещё раз послушай предложения в таблице, потом попробуй снова."
+
+msgid "teacher"
+msgstr "учитель, учительница"
+
+msgid "The -lt case: küsin sinult, I ask you."
+msgstr "Падеж на -lt: küsin sinult — я спрашиваю у тебя."
+
+msgid "The <0>-ga</0> case, with: <1>ma kohtun sinuga</1>. Question: <2>kellega?</2>"
+msgstr "Падеж на <0>-ga</0>, «с кем-то»: <1>ma kohtun sinuga</1>. Вопрос: <2>kellega?</2>"
+
+msgid "The <0>-le</0> case, to: <1>ma helistan sulle</1>. Question: <2>kellele?</2>"
+msgstr "Падеж на <0>-le</0>, «кому-то»: <1>ma helistan sulle</1>. Вопрос: <2>kellele?</2>"
+
+msgid "The <0>-lt</0> case, off or from someone: <1>ma küsin sinult</1>. Question: <2>kellelt?</2>"
+msgstr "Падеж на <0>-lt</0>, «от кого-то» или «у кого-то»: <1>ma küsin sinult</1>. Вопрос: <2>kellelt?</2>"
+
+msgid "The <0>-st</0> case, about or from: <1>ma räägin sinust</1>. Question: <2>kellest?</2>"
+msgstr "Падеж на <0>-st</0>, «о» или «из»: <1>ma räägin sinust</1>. Вопрос: <2>kellest?</2>"
+
+msgid "The partitive of kes: Keda sa ootad?"
+msgstr "Партитив от kes: Keda sa ootad?"
+
+#. placeholder {0}: item.said.replace(/\.$/, "")
+msgid "The verb decides the case: <0>{0}</0>."
+msgstr "Глагол определяет падеж: <0>{0}</0>."
+
+msgid "The wedding is in Tallinn."
+msgstr "Свадьба будет в Таллине."
+
+msgid "to answer"
+msgstr "отвечать"
+
+msgid "to ask"
+msgstr "спрашивать"
+
+msgid "To ask someone something, <et>küsima</et> asks <et>kellelt?</et>: <et>õelt</et>."
+msgstr "Когда что-то спрашиваешь у кого-то, <et>küsima</et> спрашивает <et>kellelt?</et>: <et>õelt</et>."
+
+msgid "to borrow, to lend"
+msgstr "одалживать, занимать"
+
+msgid "to care about"
+msgstr "заботиться, дорожить"
+
+msgid "to dream of"
+msgstr "мечтать"
+
+msgid "to get"
+msgstr "получать"
+
+msgid "to help"
+msgstr "помогать"
+
+msgid "to love"
+msgstr "любить"
+
+msgid "to marry"
+msgstr "жениться, выходить замуж"
+
+msgid "to meet"
+msgstr "встречаться"
+
+msgid "to phone"
+msgstr "звонить"
+
+msgid "to talk, to tell"
+msgstr "говорить, рассказывать"
+
+msgid "to tell, to say"
+msgstr "сказать, говорить"
+
+msgid "to thank"
+msgstr "благодарить"
+
+msgid "to understand"
+msgstr "понимать"
+
+msgid "to wait for"
+msgstr "ждать"
+
+msgid "to whom"
+msgstr "кому"
+
+msgid "To whom"
+msgstr "Кому"
+
+msgid "to write"
+msgstr "писать"
+
+msgid "Type the form"
+msgstr "Напиши форму"
+
+msgid "Usually the partitive: <0>ma ootan sind</0>. Question: <1>keda?</1>"
+msgstr "Обычно партитив: <0>ma ootan sind</0>. Вопрос: <1>keda?</1>"
+
+msgid "Verb"
+msgstr "Глагол"
+
+msgid "Verbs and the case they take"
+msgstr "Глаголы и их падежи"
+
+msgid "Verbs that ask for a case"
+msgstr "Глаголы, которые требуют падежа"
+
+msgid "Verbs that take the partitive"
+msgstr "Глаголы с партитивом"
+
+msgid "We met Jaan."
+msgstr "Мы встретились с Яаном."
+
+msgid "What did Mari and Liisa talk about all evening? Write it as Mari says it."
+msgstr "О чём Мари и Лийса говорили весь вечер? Напиши так, как говорит Мари."
+
+msgid "What does it mean?"
+msgstr "Что это значит?"
+
+msgid "Where will Mari and Jaan meet? Write it as Mari says it."
+msgstr "Где встретятся Мари и Яан? Напиши так, как говорит Мари."
+
+msgid "Which form of the pronoun?"
+msgstr "Какая форма местоимения?"
+
+msgid "Which question?"
+msgstr "Какой вопрос?"
+
+msgid "Who is Peeter marrying?"
+msgstr "На ком женится Пеэтер?"
+
+msgid "Who phoned Mari yesterday?"
+msgstr "Кто вчера позвонил Мари?"
+
+msgid "Who says it?"
+msgstr "Кто это говорит?"
+
+msgid "Who will Mari ask about the present?"
+msgstr "У кого Мари спросит о подарке?"
+
+msgid "whom"
+msgstr "кого"
+
+msgid "Whom"
+msgstr "Кого"
+
+msgid "With “you”"
+msgstr "С формой «ты»"
+
+msgid "With a person, <0>rääkima</0> takes three cases, each with its own meaning: about someone, telling someone, or talking with someone. Hear a sentence, then pick what it means."
+msgstr "После <0>rääkima</0> человек может стоять в трёх падежах, и у каждого своё значение: говорить о ком-то, рассказывать кому-то или говорить с кем-то. Послушай предложение и выбери, что оно значит."
+
+msgid "with whom"
+msgstr "с кем"
+
+msgid "With whom"
+msgstr "С кем"
+
+msgid "Write each sentence in Estonian. Ask the verb’s question first, then choose the form."
+msgstr "Напиши каждое предложение по-эстонски. Сначала задай вопрос к глаголу, потом выбери форму."
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"
+
+msgid "you"
+msgstr "ты"
+
+msgid "You answer to someone: <0>sulle</0>."
+msgstr "Отвечают кому-то, как и по-русски: <0>sulle</0>."
+
+msgid "You ask from someone: <0>sinult</0>."
+msgstr "Спрашивают у кого-то: <0>sinult</0>."
+
+msgid "You ask from someone: <et>sinult</et>."
+msgstr "Спрашивают у кого-то: <et>sinult</et>."
+
+msgid "You got Kadri’s letter, you’d gladly meet her, and you can’t wait to hear about her job."
+msgstr "Ты получил письмо от Кадри, охотно с ней встретишься и очень ждёшь рассказа о её работе."
+
+msgid "You meet with someone: <0>sinuga</0>."
+msgstr "Встречаются с кем-то, как и по-русски: <0>sinuga</0>."
+
+msgid "You meet with someone: <et>sinuga</et>."
+msgstr "Встречаются с кем-то, как и по-русски: <et>sinuga</et>."
+
+msgid "You phone to someone: <0>sulle</0>."
+msgstr "Звонят кому-то, как и по-русски: <0>sulle</0>."
+
+msgid "You phone to someone: <et>sulle</et>."
+msgstr "Звонят кому-то, как и по-русски: <et>sulle</et>."

@@ -1,0 +1,540 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 16:34+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0>-ga</0>: with someone."
+msgstr "<0>-ga</0>: with someone."
+
+msgid "<0>-le</0>: to someone, telling them."
+msgstr "<0>-le</0>: to someone, telling them."
+
+msgid "<0>-st</0>: about someone."
+msgstr "<0>-st</0>: about someone."
+
+msgid "<0>Aitama</0> usually takes the partitive: <1>sind</1>."
+msgstr "<0>Aitama</0> usually takes the partitive: <1>sind</1>."
+
+msgid "<0>Helistama</0> and <1>vastama</1> go to someone: <2>-le</2>."
+msgstr "<0>Helistama</0> and <1>vastama</1> go to someone: <2>-le</2>."
+
+msgid "<0>Hoolima</0> and <1>aru saama</1> take <2>-st</2>."
+msgstr "<0>Hoolima</0> and <1>aru saama</1> take <2>-st</2>."
+
+msgid "<0>Hoolima</0> takes <1>-st</1>: <2>sinust</2>."
+msgstr "<0>Hoolima</0> takes <1>-st</1>: <2>sinust</2>."
+
+msgid "<0>Kohtuma</0> and <1>abielluma</1> take <2>-ga</2>, with."
+msgstr "<0>Kohtuma</0> and <1>abielluma</1> take <2>-ga</2>, with."
+
+msgid "<0>Kohtuma</0> takes <1>-ga</1>, not <2>-le</2>: <3>sinuga</3>."
+msgstr "<0>Kohtuma</0> takes <1>-ga</1>, not <2>-le</2>: <3>sinuga</3>."
+
+msgid "<0>Ootama, aitama, armastama</0> and <1>tänama</1> usually take the partitive: <2>ma tänan sind</2>."
+msgstr "<0>Ootama, aitama, armastama</0> and <1>tänama</1> usually take the partitive: <2>ma tänan sind</2>."
+
+msgid "<0>Ootama</0> and <1>aitama</1> usually take the partitive."
+msgstr "<0>Ootama</0> and <1>aitama</1> usually take the partitive."
+
+msgid "<0>Ootama</0> usually takes the partitive: <1>seda</1>."
+msgstr "<0>Ootama</0> usually takes the partitive: <1>seda</1>."
+
+msgid "<0>Ootan sind</0>, <1>räägin sinust</1>, <2>helistan sulle</2>: many verbs ask for a set case, and a dictionary tells you which."
+msgstr "<0>Ootan sind</0>, <1>räägin sinust</1>, <2>helistan sulle</2>: many verbs ask for a set case, and a dictionary tells you which."
+
+msgid "<0>Sellest</0> is about it. <1>Ootama</1> usually takes the partitive: <2>seda</2>."
+msgstr "<0>Sellest</0> is about it. <1>Ootama</1> usually takes the partitive: <2>seda</2>."
+
+msgid "<0>Sinust</0> is about you. You answer to someone: <1>sulle</1>."
+msgstr "<0>Sinust</0> is about you. You answer to someone: <1>sulle</1>."
+
+msgid "<0>Tänama</0> takes the partitive: <1>sind</1>."
+msgstr "<0>Tänama</0> takes the partitive: <1>sind</1>."
+
+msgid "<et>-st</et>, <et>-le</et>, <et>-ga</et> or <et>-lt</et>"
+msgstr "<et>-st</et>, <et>-le</et>, <et>-ga</et> or <et>-lt</et>"
+
+msgid "<et>Aitama</et> usually takes the partitive: <et>sind</et>."
+msgstr "<et>Aitama</et> usually takes the partitive: <et>sind</et>."
+
+msgid "<et>Aru saama</et> asks <et>kellest?</et>: <et>sinust</et>."
+msgstr "<et>Aru saama</et> asks <et>kellest?</et>: <et>sinust</et>."
+
+msgid "<et>Helistama</et> asks <et>kellele?</et>: <et>emale</et>."
+msgstr "<et>Helistama</et> asks <et>kellele?</et>: <et>emale</et>."
+
+msgid "<et>Helistama</et> asks <et>kellele?</et>: <et>sulle</et>."
+msgstr "<et>Helistama</et> asks <et>kellele?</et>: <et>sulle</et>."
+
+msgid "<et>Hoolima</et> asks <et>kellest?</et>: <et>sõbrast</et>."
+msgstr "<et>Hoolima</et> asks <et>kellest?</et>: <et>sõbrast</et>."
+
+msgid "<et>Hoolima</et> asks <et>kellest?</et>: <et>vennast</et>."
+msgstr "<et>Hoolima</et> asks <et>kellest?</et>: <et>vennast</et>."
+
+msgid "<et>Hoolima</et> takes <et>-st</et>: <et>sinust</et>."
+msgstr "<et>Hoolima</et> takes <et>-st</et>: <et>sinust</et>."
+
+msgid "<et>Kohtuma</et> asks <et>kellega?</et>: <et>Jaaniga</et>."
+msgstr "<et>Kohtuma</et> asks <et>kellega?</et>: <et>Jaaniga</et>."
+
+msgid "<et>Ootama</et>, <et>aitama</et>, <et>armastama</et> and <et>tänama</et> usually take the partitive."
+msgstr "<et>Ootama</et>, <et>aitama</et>, <et>armastama</et> and <et>tänama</et> usually take the partitive."
+
+msgid "<et>Rääkima</et>: <et>-st</et> about someone, <et>-le</et> telling someone, <et>-ga</et> with someone."
+msgstr "<et>Rääkima</et>: <et>-st</et> about someone, <et>-le</et> telling someone, <et>-ga</et> with someone."
+
+msgid "<et>Tänama</et> takes the partitive: <et>sind</et>."
+msgstr "<et>Tänama</et> takes the partitive: <et>sind</et>."
+
+msgid "<et>Unistama</et> asks <et>millest?</et>: <et>puhkusest</et>."
+msgstr "<et>Unistama</et> asks <et>millest?</et>: <et>puhkusest</et>."
+
+msgid "<et>Vastama</et> asks <et>kellele?</et>: <et>õpetajale</et>."
+msgstr "<et>Vastama</et> asks <et>kellele?</et>: <et>õpetajale</et>."
+
+msgid "22 minutes"
+msgstr "22 minutes"
+
+msgid "8 exercises"
+msgstr "8 exercises"
+
+msgid "A colleague from work"
+msgstr "A colleague from work"
+
+msgid "a name"
+msgstr "a name"
+
+msgid "A wedding in July"
+msgstr "A wedding in July"
+
+msgid "About whom"
+msgstr "About whom"
+
+msgid "about whom, from whom"
+msgstr "about whom, from whom"
+
+msgid "about you"
+msgstr "about you"
+
+msgid "About, to or with"
+msgstr "About, to or with"
+
+msgid "All eight, typed in full."
+msgstr "All eight, typed in full."
+
+msgid "All seven, each with the case its verb needs."
+msgstr "All seven, each with the case its verb needs."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six: you heard the ending every time."
+msgstr "All six: you heard the ending every time."
+
+msgid "All ten: the verb told you every time."
+msgstr "All ten: the verb told you every time."
+
+msgid "brother"
+msgstr "brother"
+
+msgid "Can I ask you something?"
+msgstr "Can I ask you something?"
+
+msgid "Don’t tell Peeter!"
+msgstr "Don’t tell Peeter!"
+
+msgid "Each sentence has a gap for you or me. The verb decides its form. Pick it, then hear the sentence."
+msgstr "Each sentence has a gap for you or me. The verb decides its form. Pick it, then hear the sentence."
+
+msgid "Each sentence has one word in the wrong case. Tap it, then type it right."
+msgstr "Each sentence has one word in the wrong case. Tap it, then type it right."
+
+msgid "English and Estonian often disagree: you meet with someone, <0>kohtun sinuga</0>, phone to someone, <1>helistan sulle</1>, and ask from someone, <2>küsin sinult</2>."
+msgstr "English and Estonian often disagree: you meet with someone, <0>kohtun sinuga</0>, phone to someone, <1>helistan sulle</1>, and ask from someone, <2>küsin sinult</2>."
+
+msgid "English meets someone; <0>kohtuma</0> meets with someone: <1>Jaaniga</1>."
+msgstr "English meets someone; <0>kohtuma</0> meets with someone: <1>Jaaniga</1>."
+
+msgid "English meets someone; <et>kohtuma</et> meets with someone: <et>Jaaniga</et>."
+msgstr "English meets someone; <et>kohtuma</et> meets with someone: <et>Jaaniga</et>."
+
+msgid "English puts most objects straight after the verb: I phone you, I meet you, I ask you. In Estonian, many verbs ask for a set case, and the question the verb answers names it: <0/>, <1/>, <2/>, <3/>, <4/>."
+msgstr "English puts most objects straight after the verb: I phone you, I meet you, I ask you. In Estonian, many verbs ask for a set case, and the question the verb answers names it: <0/>, <1/>, <2/>, <3/>, <4/>."
+
+msgid "Fix the case"
+msgstr "Fix the case"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "friend"
+msgstr "friend"
+
+msgid "From someone is usually <0>-lt</0>: <1>küsin sinult</1>, <2>sain sinult</2>."
+msgstr "From someone is usually <0>-lt</0>: <1>küsin sinult</1>, <2>sain sinult</2>."
+
+msgid "from whom"
+msgstr "from whom"
+
+msgid "From whom"
+msgstr "From whom"
+
+msgid "Her mother, about the party"
+msgstr "Her mother, about the party"
+
+msgid "holiday"
+msgstr "holiday"
+
+msgid "I can help you in the shop."
+msgstr "I can help you in the shop."
+
+msgid "I don’t understand you."
+msgstr "I don’t understand you."
+
+msgid "I thank you for the help."
+msgstr "I thank you for the help."
+
+msgid "I, me"
+msgstr "I, me"
+
+msgid "I’ll phone you on Friday."
+msgstr "I’ll phone you on Friday."
+
+msgid "I’ll phone you tomorrow."
+msgstr "I’ll phone you tomorrow."
+
+msgid "I’ll write to him today."
+msgstr "I’ll write to him today."
+
+msgid "I’m talking about you."
+msgstr "I’m talking about you."
+
+msgid "I’m talking with you."
+msgstr "I’m talking with you."
+
+msgid "I’m telling you."
+msgstr "I’m telling you."
+
+msgid "I’m waiting for you."
+msgstr "I’m waiting for you."
+
+msgid "I’ve always dreamt of the piano."
+msgstr "I’ve always dreamt of the piano."
+
+msgid "Jaan"
+msgstr "Jaan"
+
+msgid "Jaan is talking about Peeter."
+msgstr "Jaan is talking about Peeter."
+
+msgid "Jaan is talking with Peeter."
+msgstr "Jaan is talking with Peeter."
+
+msgid "Jaan is telling Peeter."
+msgstr "Jaan is telling Peeter."
+
+msgid "Jaan remembers Liisa."
+msgstr "Jaan remembers Liisa."
+
+msgid "Kadri"
+msgstr "Kadri"
+
+msgid "Kadri calls you about meeting. Pick what you say back. A wrong reply says why, then you hear the right one."
+msgstr "Kadri calls you about meeting. Pick what you say back. A wrong reply says why, then you hear the right one."
+
+msgid "Kati, Mari’s friend"
+msgstr "Kati, Mari’s friend"
+
+msgid "Kinds of verb"
+msgstr "Kinds of verb"
+
+msgid "Learn a verb with its question: <0>ootama keda?</0>, <1>rääkima kellest?</1>, <2>helistama kellele?</2>, <3>kohtuma kellega?</3>, <4>küsima kellelt?</4>"
+msgstr "Learn a verb with its question: <0>ootama keda?</0>, <1>rääkima kellest?</1>, <2>helistama kellele?</2>, <3>kohtuma kellega?</3>, <4>küsima kellelt?</4>"
+
+msgid "Lesson {object} showed that <0>ootama</0>, <1>aitama</1> and <2>armastama</2> take the partitive unless a small word such as <3>ära</3> gives them an end. A dictionary gives each verb’s question, so learn the two together."
+msgstr "Lesson {object} showed that <0>ootama</0>, <1>aitama</1> and <2>armastama</2> take the partitive unless a small word such as <3>ära</3> gives them an end. A dictionary gives each verb’s question, so learn the two together."
+
+msgid "Liisa"
+msgstr "Liisa"
+
+msgid "Listen: Mari and Jaan"
+msgstr "Listen: Mari and Jaan"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Mari"
+msgstr "Mari"
+
+msgid "Mari cares about her brother."
+msgstr "Mari cares about her brother."
+
+msgid "Mari has never met Liisa."
+msgstr "Mari has never met Liisa."
+
+msgid "Mari is talking about her mother."
+msgstr "Mari is talking about her mother."
+
+msgid "Mari is talking with her mother."
+msgstr "Mari is talking with her mother."
+
+msgid "Mari is telling her mother."
+msgstr "Mari is telling her mother."
+
+msgid "Mari tells Jaan that her brother is getting married."
+msgstr "Mari tells Jaan that her brother is getting married."
+
+msgid "Match each verb with the question it answers."
+msgstr "Match each verb with the question it answers."
+
+msgid "mother"
+msgstr "mother"
+
+msgid "Nearly. Ask each verb’s question again."
+msgstr "Nearly. Ask each verb’s question again."
+
+msgid "Nearly. Check the ending in the ones you got wrong."
+msgstr "Nearly. Check the ending in the ones you got wrong."
+
+msgid "Nearly. Look at the verb in the ones you got wrong."
+msgstr "Nearly. Look at the verb in the ones you got wrong."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Nearly. Play the ones you got wrong once more."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Nearly. Read the reason under each one you got wrong."
+
+msgid "Now with names and nouns. Each round gives a word and a sentence with a gap. Type the form the verb needs."
+msgstr "Now with names and nouns. Each round gives a word and a sentence with a gap. Type the form the verb needs."
+
+msgid "One verb can change its meaning with the case: <0>räägin sinust</0>, about you; <1>räägin sulle</1>, I tell you; <2>räägin sinuga</2>, with you. So can <3>laenama</3>: <4>laenan sinult</4>, I borrow from you; <5>laenan sulle</5>, I lend you."
+msgstr "One verb can change its meaning with the case: <0>räägin sinust</0>, about you; <1>räägin sulle</1>, I tell you; <2>räägin sinuga</2>, with you. So can <3>laenama</3>: <4>laenan sinult</4>, I borrow from you; <5>laenan sulle</5>, I lend you."
+
+msgid "Peeter"
+msgstr "Peeter"
+
+msgid "Peeter, her brother"
+msgstr "Peeter, her brother"
+
+msgid "Pick a question and tap the sentences. The pronoun forms come from lesson {pronouns}."
+msgstr "Pick a question and tap the sentences. The pronoun forms come from lesson {pronouns}."
+
+msgid "Pick the case"
+msgstr "Pick the case"
+
+msgid "Plans with Kadri"
+msgstr "Plans with Kadri"
+
+msgid "Play the sentences you missed once more, then try again."
+msgstr "Play the sentences you missed once more, then try again."
+
+msgid "Question"
+msgstr "Question"
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "sister"
+msgstr "sister"
+
+msgid "Talk: meeting tomorrow"
+msgstr "Talk: meeting tomorrow"
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap the sentences in the table once more, then try again."
+msgstr "Tap the sentences in the table once more, then try again."
+
+msgid "teacher"
+msgstr "teacher"
+
+msgid "The -lt case: küsin sinult, I ask you."
+msgstr "The -lt case: küsin sinult, I ask you."
+
+msgid "The <0>-ga</0> case, with: <1>ma kohtun sinuga</1>. Question: <2>kellega?</2>"
+msgstr "The <0>-ga</0> case, with: <1>ma kohtun sinuga</1>. Question: <2>kellega?</2>"
+
+msgid "The <0>-le</0> case, to: <1>ma helistan sulle</1>. Question: <2>kellele?</2>"
+msgstr "The <0>-le</0> case, to: <1>ma helistan sulle</1>. Question: <2>kellele?</2>"
+
+msgid "The <0>-lt</0> case, off or from someone: <1>ma küsin sinult</1>. Question: <2>kellelt?</2>"
+msgstr "The <0>-lt</0> case, off or from someone: <1>ma küsin sinult</1>. Question: <2>kellelt?</2>"
+
+msgid "The <0>-st</0> case, about or from: <1>ma räägin sinust</1>. Question: <2>kellest?</2>"
+msgstr "The <0>-st</0> case, about or from: <1>ma räägin sinust</1>. Question: <2>kellest?</2>"
+
+msgid "The partitive of kes: Keda sa ootad?"
+msgstr "The partitive of kes: Keda sa ootad?"
+
+#. placeholder {0}: item.said.replace(/\.$/, "")
+msgid "The verb decides the case: <0>{0}</0>."
+msgstr "The verb decides the case: <0>{0}</0>."
+
+msgid "The wedding is in Tallinn."
+msgstr "The wedding is in Tallinn."
+
+msgid "to answer"
+msgstr "to answer"
+
+msgid "to ask"
+msgstr "to ask"
+
+msgid "To ask someone something, <et>küsima</et> asks <et>kellelt?</et>: <et>õelt</et>."
+msgstr "To ask someone something, <et>küsima</et> asks <et>kellelt?</et>: <et>õelt</et>."
+
+msgid "to borrow, to lend"
+msgstr "to borrow, to lend"
+
+msgid "to care about"
+msgstr "to care about"
+
+msgid "to dream of"
+msgstr "to dream of"
+
+msgid "to get"
+msgstr "to get"
+
+msgid "to help"
+msgstr "to help"
+
+msgid "to love"
+msgstr "to love"
+
+msgid "to marry"
+msgstr "to marry"
+
+msgid "to meet"
+msgstr "to meet"
+
+msgid "to phone"
+msgstr "to phone"
+
+msgid "to talk, to tell"
+msgstr "to talk, to tell"
+
+msgid "to tell, to say"
+msgstr "to tell, to say"
+
+msgid "to thank"
+msgstr "to thank"
+
+msgid "to understand"
+msgstr "to understand"
+
+msgid "to wait for"
+msgstr "to wait for"
+
+msgid "to whom"
+msgstr "to whom"
+
+msgid "To whom"
+msgstr "To whom"
+
+msgid "to write"
+msgstr "to write"
+
+msgid "Type the form"
+msgstr "Type the form"
+
+msgid "Usually the partitive: <0>ma ootan sind</0>. Question: <1>keda?</1>"
+msgstr "Usually the partitive: <0>ma ootan sind</0>. Question: <1>keda?</1>"
+
+msgid "Verb"
+msgstr "Verb"
+
+msgid "Verbs and the case they take"
+msgstr "Verbs and the case they take"
+
+msgid "Verbs that ask for a case"
+msgstr "Verbs that ask for a case"
+
+msgid "Verbs that take the partitive"
+msgstr "Verbs that take the partitive"
+
+msgid "We met Jaan."
+msgstr "We met Jaan."
+
+msgid "What did Mari and Liisa talk about all evening? Write it as Mari says it."
+msgstr "What did Mari and Liisa talk about all evening? Write it as Mari says it."
+
+msgid "What does it mean?"
+msgstr "What does it mean?"
+
+msgid "Where will Mari and Jaan meet? Write it as Mari says it."
+msgstr "Where will Mari and Jaan meet? Write it as Mari says it."
+
+msgid "Which form of the pronoun?"
+msgstr "Which form of the pronoun?"
+
+msgid "Which question?"
+msgstr "Which question?"
+
+msgid "Who is Peeter marrying?"
+msgstr "Who is Peeter marrying?"
+
+msgid "Who phoned Mari yesterday?"
+msgstr "Who phoned Mari yesterday?"
+
+msgid "Who says it?"
+msgstr "Who says it?"
+
+msgid "Who will Mari ask about the present?"
+msgstr "Who will Mari ask about the present?"
+
+msgid "whom"
+msgstr "whom"
+
+msgid "Whom"
+msgstr "Whom"
+
+msgid "With “you”"
+msgstr "With “you”"
+
+msgid "With a person, <0>rääkima</0> takes three cases, each with its own meaning: about someone, telling someone, or talking with someone. Hear a sentence, then pick what it means."
+msgstr "With a person, <0>rääkima</0> takes three cases, each with its own meaning: about someone, telling someone, or talking with someone. Hear a sentence, then pick what it means."
+
+msgid "with whom"
+msgstr "with whom"
+
+msgid "With whom"
+msgstr "With whom"
+
+msgid "Write each sentence in Estonian. Ask the verb’s question first, then choose the form."
+msgstr "Write each sentence in Estonian. Ask the verb’s question first, then choose the form."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "you"
+msgstr "you"
+
+msgid "You answer to someone: <0>sulle</0>."
+msgstr "You answer to someone: <0>sulle</0>."
+
+msgid "You ask from someone: <0>sinult</0>."
+msgstr "You ask from someone: <0>sinult</0>."
+
+msgid "You ask from someone: <et>sinult</et>."
+msgstr "You ask from someone: <et>sinult</et>."
+
+msgid "You got Kadri’s letter, you’d gladly meet her, and you can’t wait to hear about her job."
+msgstr "You got Kadri’s letter, you’d gladly meet her, and you can’t wait to hear about her job."
+
+msgid "You meet with someone: <0>sinuga</0>."
+msgstr "You meet with someone: <0>sinuga</0>."
+
+msgid "You meet with someone: <et>sinuga</et>."
+msgstr "You meet with someone: <et>sinuga</et>."
+
+msgid "You phone to someone: <0>sulle</0>."
+msgstr "You phone to someone: <0>sulle</0>."
+
+msgid "You phone to someone: <et>sulle</et>."
+msgstr "You phone to someone: <et>sulle</et>."

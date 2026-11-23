@@ -434,7 +434,7 @@ const NOUN_USES = [
     form: "partitive",
     label: msg`With words like “love”`,
     tip: msg`Also waiting for, learning and wishing.`,
-    taught: { et: "Ootan sind, räägin sinust" },
+    taught: { slug: "ootan-sind" },
     examples: [
       { et: "Ma armastan *sind*.", meaning: msg`I love you.` },
       { et: "Me ootame *bussi*.", meaning: msg`We’re waiting for the bus.` },

@@ -11335,7 +11335,7 @@
     "voice": "xd3ufyLcuKKZZXDZO9H7"
   },
   "tutvumine/d-kati": {
-    "text": "Tere! Kas sa oled Peeter? Jah, mina olen Peeter. Mina olen Liis. Kus sa elad? Ma elan Tartus, aga ma töötan Tallinnas. Kas sa räägid eesti keelt? Natuke. Ma õpin eesti keelt. Miks? Sest ma töötan koolis. Ma olen õpetaja. Mina ei tööta. Ma õpin Tartus. Ja kus sa elad? Ma elan Pärnus.",
+    "text": "Tere! Kas sa oled Peeter? Jah, mina olen Peeter. Mina olen Liis. Kus sa elad? Ma elan Tartus, aga ma töötan Tallinnas. Kas sa räägid eesti keelt? Natuke. Ma õpin eesti keelt. Mina ei tööta. Ma õpin Tartus. Ja kus sina elad? Ma elan Pärnus.",
     "model": "eleven_v4",
     "turns": [
       {
@@ -11380,19 +11380,6 @@
       {
         "voice": "WtzwR2kNGVNuaTGaYLfK",
         "sentences": [
-          "Miks?"
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Sest ma töötan koolis.",
-          "Ma olen õpetaja."
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
           "Mina ei tööta.",
           "Ma õpin Tartus."
         ]
@@ -11400,7 +11387,7 @@
       {
         "voice": "jGja51dd7gcoK0zkxeyg",
         "sentences": [
-          "Ja kus sa elad?"
+          "Ja kus sina elad?"
         ]
       },
       {

@@ -395,7 +395,6 @@ function Explain({ said }: { said: string }) {
   );
 }
 
-
 const COMMAND_VERB_MEANS: Record<string, MessageDescriptor> = {
   lugema: msg`to read`,
   rääkima: msg`to speak`,
@@ -707,8 +706,9 @@ export function KaskivLesson() {
                 </p>
                 <p>
                   <Trans>
-                    It’s usually the form that follows <span lang="et">ei</span> in lesson {negation}:{" "}
-                    <Word w="ma ei loe" />, I don’t read. Tap either side of a pair to hear it.
+                    It’s usually the form that follows <span lang="et">ei</span> in lesson{" "}
+                    {negation}: <Word w="ma ei loe" />, I don’t read. Tap either side of a pair to
+                    hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -750,9 +750,10 @@ export function KaskivLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The stem is usually the I form of the present without its <span lang="et">-n</span>.{" "}
-                    <Word w="Istun" /> gives <Word w="Istu!" /> <Word w="Tulen" /> gives{" "}
-                    <Word w="Tule siia!" /> <Word w="Siia" /> means here, to this place.
+                    The stem is usually the I form of the present without its{" "}
+                    <span lang="et">-n</span>. <Word w="Istun" /> gives <Word w="Istu!" />{" "}
+                    <Word w="Tulen" /> gives <Word w="Tule siia!" /> <Word w="Siia" /> means here,
+                    to this place.
                   </Trans>
                 </p>
                 <p>

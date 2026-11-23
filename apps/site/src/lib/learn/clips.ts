@@ -287,7 +287,6 @@ export const PAEVAD_SENTENCES = [
   ...WEEK.map((day) => `Homme on ${day}.`),
 ];
 
-/** What the days lesson and its drill accept for one of its sentences, written or translated. */
 export const dayAnswers = (said: string): [string, ...string[]] => [said];
 /** The negation lesson's present-tense verbs, each by its stem: the I form of the present without its -n. */
 export const NEGATION_VERBS = [
@@ -1546,7 +1545,6 @@ export const KASKIV_TURNED: readonly {
   { from: "Ära istu!", to: "Ärge istuge!", kind: "more", answers: ["Ärge istuge!"] },
 ];
 
-/** The verbs of “type the command”, each with the commands accepted for one person you'd call sa. */
 export const KASKIV_TYPED: readonly {
   verb: string;
   ma: string;
@@ -2039,7 +2037,6 @@ export const TALLINN_SORTED = [
   { w: "Kell on kolm.", bin: "kell" },
 ] as const;
 
-/** What a dictation in “A day in Tallinn” and its drill accepts: only the sentence heard. */
 export const dictated = (said: string): [string, ...string[]] => [said];
 
 export const TALLINN_HEARD = [

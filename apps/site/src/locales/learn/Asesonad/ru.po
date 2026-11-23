@@ -34,8 +34,8 @@ msgstr "7 упражнений, в 3 из них нужно писать, и т�
 msgid "A book for you: <0>-le</0> marks who gets it, <1>sulle</1>."
 msgstr "Книга для тебя: <0>-le</0> показывает, кто её получает, — <1>sulle</1>."
 
-msgid "A pronoun takes the case endings a noun does. Most go on its genitive, so <0>minuga</0> is with me. To, has and from have short forms such as <1>mulle</1>, and the partitive is its own word: <2>mind</2>, <3>sind</3>, <4>teda</4>."
-msgstr "У местоимения те же падежные окончания, что и у существительного. Большинство добавляется к родительному, так что <0>minuga</0> — «со мной». Для «кому», «у кого» и «от кого» есть короткие формы, например <1>mulle</1>, а партитив — отдельное слово: <2>mind</2>, <3>sind</3>, <4>teda</4>."
+msgid "A pronoun takes the case endings a noun does. Most go on its genitive, so <0>minuga</0> is with me. To, has and from usually take short forms such as <1>mulle</1>, and the partitive is its own word: <2>mind</2>, <3>sind</3>, <4>teda</4>."
+msgstr "У местоимения те же падежные окончания, что и у существительного. Большинство добавляется к родительному, так что <0>minuga</0> — «со мной». Для «кому», «у кого» и «от кого» обычно берут короткие формы, например <1>mulle</1>, а партитив — отдельное слово: <2>mind</2>, <3>sind</3>, <4>teda</4>."
 
 msgid "About someone is <0>-st</0>: <1>sinust</1>."
 msgstr "О ком-то — <0>-st</0>: <1>sinust</1>."
@@ -447,8 +447,8 @@ msgstr "Окончание <0>-le</0> — «кому». Обычно говор�
 msgid "The ending <0>-lt</0>, from. The short form is the usual one."
 msgstr "Окончание <0>-lt</0> — «от кого». Обычно говорят краткую форму."
 
-msgid "The ending <0>-st</0>, out of, also says who you talk about."
-msgstr "Окончание <0>-st</0> значит «из», а ещё показывает, о ком речь."
+msgid "The ending <0>-st</0>, out of, also says who you talk about. <1>Mina</1>, <2>sina</2> and <3>tema</3> have short forms here too, <4>must</4>, <5>sust</5> and <6>tast</6>, but they are rarer."
+msgstr "Окончание <0>-st</0>, «из», также говорит, о ком речь. У <1>Mina</1>, <2>sina</2> и <3>tema</3> здесь тоже есть краткие формы — <4>must</4>, <5>sust</5> и <6>tast</6>, — но они реже."
 
 msgid "The ending <0>-st</0>, out of, from lesson {into}, also says who you talk about: <1/> is I’m talking about you. Pick a pronoun, then tap a form to hear it."
 msgstr "Окончание <0>-st</0>, «из», из урока {into} также говорит, о ком речь: <1/> — «я говорю о тебе». Выбери местоимение и нажми на форму, чтобы послушать."
@@ -492,8 +492,8 @@ msgstr "Полная форма mulle. Подчёркивает: именно м
 msgid "The long form of mult. It stresses me: from me, not from someone else."
 msgstr "Полная форма mult. Подчёркивает: именно от меня, а не от кого-то другого."
 
-msgid "The long forms <0/>, <1/> and <2/> mean the same and stress the person: to me, not to you. <3>Meie</3> and <4>teie</4> have only the short form, in speech and in writing: <5>meile</5>, <6>teile</6>."
-msgstr "Полные формы <0/>, <1/> и <2/> значат то же самое, но подчёркивают человека: именно мне, а не тебе. У <3>meie</3> и <4>teie</4> только краткая форма, и в речи, и на письме: <5>meile</5>, <6>teile</6>."
+msgid "The long forms <0/>, <1/> and <2/> mean the same and stress the person: to me, not to you. For <3>meie</3> and <4>teie</4>, standard Estonian has only the short form: <5>meile</5>, <6>teile</6>."
+msgstr "Полные формы <0/>, <1/> и <2/> значат то же самое, но подчёркивают человека: именно мне, а не тебе. Для <3>meie</3> и <4>teie</4> в нормативном эстонском есть только краткая форма: <5>meile</5>, <6>teile</6>."
 
 msgid "The partitive is a word of its own: <0>mind, sind, teda, meid, teid, neid</0>. <1>Ma ootan sind</1> is I’m waiting for you."
 msgstr "Партитив — отдельное слово: <0>mind, sind, teda, meid, teid, neid</0>. <1>Ma ootan sind</1> — я жду тебя."

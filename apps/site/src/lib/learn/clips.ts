@@ -1710,7 +1710,7 @@ export const PRONOUN_TRANSLATE = [
   { id: "tule-minuga", answers: ["Tule minuga!", "Tulge minuga!"] },
   { id: "ootan-sind", answers: ["Ma ootan sind.", "Mina ootan sind.", "Ootan sind."] },
   { id: "helista-mulle", answers: ["Helista mulle!", "Helista minule!"] },
-  { id: "sul-on-aega", answers: ["Kas sul on aega?", "Kas sinul on aega?"] },
+  { id: "sul-on-aega", answers: ["Kas sul on aega?", "Kas sinul on aega?", "Sul on aega?"] },
   {
     id: "raagime-sinust",
     answers: ["Me räägime sinust.", "Meie räägime sinust.", "Räägime sinust."],

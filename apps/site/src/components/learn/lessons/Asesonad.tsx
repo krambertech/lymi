@@ -560,7 +560,10 @@ function CaseTable() {
       ask: "kellest?",
       tip: (
         <Trans>
-          The ending <span lang="et">-st</span>, out of, also says who you talk about.
+          The ending <span lang="et">-st</span>, out of, also says who you talk about.{" "}
+          <span lang="et">Mina</span>, <span lang="et">sina</span> and <span lang="et">tema</span>{" "}
+          have short forms here too, <span lang="et">must</span>, <span lang="et">sust</span> and{" "}
+          <span lang="et">tast</span>, but they are rarer.
         </Trans>
       ),
       cells: [cell(person.st, "st"), cell(person.shortSt, "st")],
@@ -706,8 +709,8 @@ export function AsesonadLesson() {
       sub={
         <Trans>
           A pronoun takes the case endings a noun does. Most go on its genitive, so{" "}
-          <span lang="et">minuga</span> is with me. To, has and from have short forms such as{" "}
-          <span lang="et">mulle</span>, and the partitive is its own word:{" "}
+          <span lang="et">minuga</span> is with me. To, has and from usually take short forms such
+          as <span lang="et">mulle</span>, and the partitive is its own word:{" "}
           <span lang="et">mind</span>, <span lang="et">sind</span>, <span lang="et">teda</span>.
         </Trans>
       }
@@ -863,9 +866,9 @@ export function AsesonadLesson() {
                 <p>
                   <Trans>
                     The long forms <Word w="minule" />, <Word w="minul" /> and <Word w="minult" />{" "}
-                    mean the same and stress the person: to me, not to you.{" "}
-                    <span lang="et">Meie</span> and <span lang="et">teie</span> have only the short
-                    form, in speech and in writing: <span lang="et">meile</span>,{" "}
+                    mean the same and stress the person: to me, not to you. For{" "}
+                    <span lang="et">meie</span> and <span lang="et">teie</span>, standard Estonian
+                    has only the short form: <span lang="et">meile</span>,{" "}
                     <span lang="et">teile</span>.
                   </Trans>
                 </p>

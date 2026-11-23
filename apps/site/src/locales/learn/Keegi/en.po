@@ -1,0 +1,500 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 13:50+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "-gi or -ki"
+msgstr "-gi or -ki"
+
+msgid "-gi or -ki?"
+msgstr "-gi or -ki?"
+
+msgid "(to) somewhere, anywhere"
+msgstr "(to) somewhere, anywhere"
+
+msgid "<0>-ki</0> after k, p, t, g, b, d, s, h, f, š, z or ž; <1>-gi</1> after anything else."
+msgstr "<0>-ki</0> after k, p, t, g, b, d, s, h, f, š, z or ž; <1>-gi</1> after anything else."
+
+msgid "<0>{base}</0> ends in {last}, so <1>-ki</1>: <2>{id}</2>."
+msgstr "<0>{base}</0> ends in {last}, so <1>-ki</1>: <2>{id}</2>."
+
+msgid "<0>{base}</0> ends in a vowel, so <1>-gi</1>: <2>{id}</2>."
+msgstr "<0>{base}</0> ends in a vowel, so <1>-gi</1>: <2>{id}</2>."
+
+msgid "<0>{base}</0> ends in l, so <1>-gi</1>: <2>{id}</2>."
+msgstr "<0>{base}</0> ends in l, so <1>-gi</1>: <2>{id}</2>."
+
+msgid "<0>Kellega</0> ends in a vowel, so <1>-gi</1>: <2>kellegagi</2>."
+msgstr "<0>Kellega</0> ends in a vowel, so <1>-gi</1>: <2>kellegagi</2>."
+
+msgid "<0>Kellele</0> ends in a vowel, so <1>-gi</1>: <2>kellelegi</2>."
+msgstr "<0>Kellele</0> ends in a vowel, so <1>-gi</1>: <2>kellelegi</2>."
+
+msgid "<0>Kellest</0> ends in t, so <1>-ki</1>: <2>kellestki</2>."
+msgstr "<0>Kellest</0> ends in t, so <1>-ki</1>: <2>kellestki</2>."
+
+msgid "<et>-gi</et> or <et>-ki</et>"
+msgstr "<et>-gi</et> or <et>-ki</et>"
+
+msgid "18 minutes"
+msgstr "18 minutes"
+
+msgid "6 exercises, 4 of them typed, and a conversation"
+msgstr "6 exercises, 4 of them typed, and a conversation"
+
+msgid "A question word with <0>-gi</0> or <1>-ki</1> means some: <2>keegi</2>, somebody; <3>midagi</3>, something; <4>kuhugi</4>, to somewhere."
+msgstr "A question word with <0>-gi</0> or <1>-ki</1> means some: <2>keegi</2>, somebody; <3>midagi</3>, something; <4>kuhugi</4>, to somewhere."
+
+msgid "A question word with <et>-gi</et> means some: <et>midagi</et>, something; <et>kuhugi</et>, to somewhere."
+msgstr "A question word with <et>-gi</et> means some: <et>midagi</et>, something; <et>kuhugi</et>, to somewhere."
+
+msgid "A week ago Kati left her phone in a shop."
+msgstr "A week ago Kati left her phone in a shop."
+
+msgid "about somebody"
+msgstr "about somebody"
+
+msgid "about something"
+msgstr "about something"
+
+msgid "about what"
+msgstr "about what"
+
+msgid "about whom"
+msgstr "about whom"
+
+msgid "Add <0>-gi</0> or <1>-ki</1> to a question word and it means some: <2>keegi</2>, somebody; <3>midagi</3>, something. With <4>ei</4>, the same words mean nobody and nothing."
+msgstr "Add <0>-gi</0> or <1>-ki</1> to a question word and it means some: <2>keegi</2>, somebody; <3>midagi</3>, something. With <4>ei</4>, the same words mean nobody and nothing."
+
+msgid "Add the ending"
+msgstr "Add the ending"
+
+msgid "After <et>ei ole</et>, <et>keegi</et> takes the partitive: <et>Kodus ei ole kedagi</et>."
+msgstr "After <et>ei ole</et>, <et>keegi</et> takes the partitive: <et>Kodus ei ole kedagi</et>."
+
+msgid "After a vowel or l, m, n, r, the ending is <et>-gi</et>: <et>kellelegi</et>, <et>millalgi</et>."
+msgstr "After a vowel or l, m, n, r, the ending is <et>-gi</et>: <et>kellelegi</et>, <et>millalgi</et>."
+
+msgid "After k, p, t, g, b, d, s, h, f, š, z or ž, the ending is <et>-ki</et>: <et>kellestki</et>."
+msgstr "After k, p, t, g, b, d, s, h, f, š, z or ž, the ending is <et>-ki</et>: <et>kellestki</et>."
+
+msgid "All eight, by the last sound."
+msgstr "All eight, by the last sound."
+
+msgid "All eight, each on its case."
+msgstr "All eight, each on its case."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six sentences."
+msgstr "All six sentences."
+
+msgid "All six: <0>ei</0> before the verb, the word unchanged."
+msgstr "All six: <0>ei</0> before the verb, the word unchanged."
+
+msgid "An answer on its own: Kes tuli? Mitte keegi."
+msgstr "An answer on its own: Kes tuli? Mitte keegi."
+
+msgid "Anywhere is <0>kuhugi</0>; <1>kuhu</1> alone asks where to."
+msgstr "Anywhere is <0>kuhugi</0>; <1>kuhu</1> alone asks where to."
+
+msgid "As an answer on its own, say <0/> or <1/>: <2>Kes tuli? Mitte keegi.</2>"
+msgstr "As an answer on its own, say <0/> or <1/>: <2>Kes tuli? Mitte keegi.</2>"
+
+msgid "At home"
+msgstr "At home"
+
+msgid "At the café"
+msgstr "At the café"
+
+msgid "At the shop"
+msgstr "At the shop"
+
+msgid "Come and visit some time!"
+msgstr "Come and visit some time!"
+
+msgid "Cook at home together"
+msgstr "Cook at home together"
+
+msgid "Do you ever go to Pärnu?"
+msgstr "Do you ever go to Pärnu?"
+
+msgid "Do you have something to write with?"
+msgstr "Do you have something to write with?"
+
+msgid "Do you want something to drink?"
+msgstr "Do you want something to drink?"
+
+msgid "Do you want something?"
+msgstr "Do you want something?"
+
+msgid "Does anybody have a pencil?"
+msgstr "Does anybody have a pencil?"
+
+msgid "Each sentence should say what the line above it says, and one word is wrong. Tap it, then type it right."
+msgstr "Each sentence should say what the line above it says, and one word is wrong. Tap it, then type it right."
+
+msgid "ever; after a no, never"
+msgstr "ever; after a no, never"
+
+msgid "ever; some day"
+msgstr "ever; some day"
+
+msgid "Every case of <0>kes</0> and <1>mis</1> takes <2>-gi</2> or <3>-ki</3> at the end: <4>kellelegi</4>, <5>kellegagi</5>, <6>millestki</6>."
+msgstr "Every case of <0>kes</0> and <1>mis</1> takes <2>-gi</2> or <3>-ki</3> at the end: <4>kellelegi</4>, <5>kellegagi</5>, <6>millestki</6>."
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "For nobody or nothing, put <0>ei</0> before the verb, as in lesson {negation}, and mostly keep the <1>-gi</1> word as it is: <2>Keegi tuleb</2>, somebody is coming; <3>Keegi ei tule</3>, nobody is coming."
+msgstr "For nobody or nothing, put <0>ei</0> before the verb, as in lesson {negation}, and mostly keep the <1>-gi</1> word as it is: <2>Keegi tuleb</2>, somebody is coming; <3>Keegi ei tule</3>, nobody is coming."
+
+msgid "For nobody or nothing, put <et>ei</et> before the verb: <et>Keegi ei tule</et>."
+msgstr "For nobody or nothing, put <et>ei</et> before the verb: <et>Keegi ei tule</et>."
+
+msgid "Go somewhere to eat"
+msgstr "Go somewhere to eat"
+
+msgid "Go to the shop"
+msgstr "Go to the shop"
+
+msgid "He or she doesn’t talk about anything."
+msgstr "He or she doesn’t talk about anything."
+
+msgid "He or she is going somewhere."
+msgstr "He or she is going somewhere."
+
+msgid "He or she isn’t going anywhere."
+msgstr "He or she isn’t going anywhere."
+
+msgid "He or she wants to become somebody."
+msgstr "He or she wants to become somebody."
+
+msgid "Her keys"
+msgstr "Her keys"
+
+msgid "Her phone"
+msgstr "Her phone"
+
+msgid "Her wallet"
+msgstr "Her wallet"
+
+msgid "I called somebody."
+msgstr "I called somebody."
+
+msgid "I can’t find my keys anywhere."
+msgstr "I can’t find my keys anywhere."
+
+msgid "I don’t see anybody."
+msgstr "I don’t see anybody."
+
+msgid "I got a letter from somebody."
+msgstr "I got a letter from somebody."
+
+msgid "I have nothing."
+msgstr "I have nothing."
+
+msgid "I have something."
+msgstr "I have something."
+
+msgid "I see somebody."
+msgstr "I see somebody."
+
+msgid "I want to go somewhere."
+msgstr "I want to go somewhere."
+
+msgid "I’m not talking to anybody."
+msgstr "I’m not talking to anybody."
+
+msgid "I’m talking to somebody."
+msgstr "I’m talking to somebody."
+
+msgid "I’m thinking about something."
+msgstr "I’m thinking about something."
+
+msgid "In a case: <et>kellelegi</et>, <et>kedagi</et>"
+msgstr "In a case: <et>kellelegi</et>, <et>kedagi</et>"
+
+msgid "In the kitchen"
+msgstr "In the kitchen"
+
+msgid "Kati"
+msgstr "Kati"
+
+msgid "Kati can’t find something and asks Peeter. <0>Ei näinud</0> is didn’t see; a later lesson builds that form."
+msgstr "Kati can’t find something and asks Peeter. <0>Ei näinud</0> is didn’t see; a later lesson builds that form."
+
+msgid "Kati is buying something."
+msgstr "Kati is buying something."
+
+msgid "Kati isn’t buying anything."
+msgstr "Kati isn’t buying anything."
+
+msgid "Kati’s friend"
+msgstr "Kati’s friend"
+
+msgid "Listen to the pairs above once more, then try again."
+msgstr "Listen to the pairs above once more, then try again."
+
+msgid "Listen: Kati and Peeter"
+msgstr "Listen: Kati and Peeter"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Mari took something."
+msgstr "Mari took something."
+
+msgid "Mari’s mother"
+msgstr "Mari’s mother"
+
+msgid "Most of them. Check the <0>-gi</0> word in the ones you missed."
+msgstr "Most of them. Check the <0>-gi</0> word in the ones you missed."
+
+msgid "Most of them. Check the verb’s form after <0>ei</0>."
+msgstr "Most of them. Check the verb’s form after <0>ei</0>."
+
+msgid "Most of them. Find the case first, then add the ending."
+msgstr "Most of them. Find the case first, then add the ending."
+
+msgid "Most of them. Listen for the last sound before the ending."
+msgstr "Most of them. Listen for the last sound before the ending."
+
+msgid "Most of them. Read the reason under each one you missed."
+msgstr "Most of them. Read the reason under each one you missed."
+
+msgid "My keys are somewhere here."
+msgstr "My keys are somewhere here."
+
+msgid "nobody"
+msgstr "nobody"
+
+msgid "Nobody"
+msgstr "Nobody"
+
+msgid "Nobody is at home."
+msgstr "Nobody is at home."
+
+msgid "Nobody is coming."
+msgstr "Nobody is coming."
+
+msgid "Nobody, nothing"
+msgstr "Nobody, nothing"
+
+msgid "Nobody, nothing: <et>keegi ei</et>"
+msgstr "Nobody, nothing: <et>keegi ei</et>"
+
+msgid "nothing"
+msgstr "nothing"
+
+msgid "Nothing is <0>ei … midagi</0>; <1>mida</1> alone asks what."
+msgstr "Nothing is <0>ei … midagi</0>; <1>mida</1> alone asks what."
+
+msgid "On its own, nobody is <et>mitte keegi</et>."
+msgstr "On its own, nobody is <et>mitte keegi</et>."
+
+msgid "On the table"
+msgstr "On the table"
+
+msgid "One exception: after <0>ei ole</0>, <1>keegi</1> takes the partitive, as <2>kassi</2> does in <3>Mul pole kassi</3> in lesson {partitive}."
+msgstr "One exception: after <0>ei ole</0>, <1>keegi</1> takes the partitive, as <2>kassi</2> does in <3>Mul pole kassi</3> in lesson {partitive}."
+
+msgid "Peeter"
+msgstr "Peeter"
+
+msgid "Peeter saw the keys."
+msgstr "Peeter saw the keys."
+
+msgid "Put <0>ei</0> before the verb; the <1>-gi</1> word stays as it is."
+msgstr "Put <0>ei</0> before the verb; the <1>-gi</1> word stays as it is."
+
+msgid "Put the question word in its case first, then add the ending: <0>kellele</0>, to whom, becomes <1>kellelegi</1>, to somebody; <2>kellega</2>, with whom, becomes <3>kellegagi</3>, with somebody. Only <4>keegi</4> itself is built differently. After t, the ending is <5>-ki</5>: <6>kellest</6>, about whom, becomes <7>kellestki</7>. The next section gives the other sounds that take <8>-ki</8>."
+msgstr "Put the question word in its case first, then add the ending: <0>kellele</0>, to whom, becomes <1>kellelegi</1>, to somebody; <2>kellega</2>, with whom, becomes <3>kellegagi</3>, with somebody. Only <4>keegi</4> itself is built differently. After t, the ending is <5>-ki</5>: <6>kellest</6>, about whom, becomes <7>kellestki</7>. The next section gives the other sounds that take <8>-ki</8>."
+
+msgid "Put the question word in its case, then add the ending: <et>kellele</et>, <et>kellelegi</et>."
+msgstr "Put the question word in its case, then add the ending: <et>kellele</et>, <et>kellelegi</et>."
+
+msgid "Read the rule above once more, then try again."
+msgstr "Read the rule above once more, then try again."
+
+msgid "Read What to remember at the end, then try again."
+msgstr "Read What to remember at the end, then try again."
+
+msgid "Rewrite each sentence with <0>ei</0>, so it says nobody or nothing."
+msgstr "Rewrite each sentence with <0>ei</0>, so it says nobody or nothing."
+
+msgid "She isn’t going anywhere."
+msgstr "She isn’t going anywhere."
+
+msgid "Six mistakes to catch"
+msgstr "Six mistakes to catch"
+
+msgid "some time"
+msgstr "some time"
+
+msgid "Some time is <et>millalgi</et>."
+msgstr "Some time is <et>millalgi</et>."
+
+msgid "somebody"
+msgstr "somebody"
+
+msgid "Somebody called."
+msgstr "Somebody called."
+
+msgid "somebody has"
+msgstr "somebody has"
+
+msgid "Somebody is <et>keegi</et>."
+msgstr "Somebody is <et>keegi</et>."
+
+msgid "Somebody is at home."
+msgstr "Somebody is at home."
+
+msgid "Somebody is coming."
+msgstr "Somebody is coming."
+
+msgid "somebody, anybody"
+msgstr "somebody, anybody"
+
+msgid "somebody, as the object"
+msgstr "somebody, as the object"
+
+msgid "Somebody, something"
+msgstr "Somebody, something"
+
+msgid "Somebody, something: <et>keegi</et>, <et>midagi</et>"
+msgstr "Somebody, something: <et>keegi</et>, <et>midagi</et>"
+
+msgid "something"
+msgstr "something"
+
+msgid "something, anything"
+msgstr "something, anything"
+
+msgid "somewhere"
+msgstr "somewhere"
+
+msgid "Somewhere is <et>kuskil</et>."
+msgstr "Somewhere is <et>kuskil</et>."
+
+msgid "somewhere, anywhere"
+msgstr "somewhere, anywhere"
+
+msgid "Take a question word and add <0>-gi</0>, and it means some: <1>mida</1>, what, becomes <2/>, something; <3>kuhu</3>, where to, becomes <4/>, to somewhere. <5>Kes</5>, who, is the odd one: <6/>, somebody."
+msgstr "Take a question word and add <0>-gi</0>, and it means some: <1>mida</1>, what, becomes <2/>, something; <3>kuhu</3>, where to, becomes <4/>, to somewhere. <5>Kes</5>, who, is the odd one: <6/>, somebody."
+
+msgid "Tap the lines above once more, then try again."
+msgstr "Tap the lines above once more, then try again."
+
+msgid "The last sound decides. After k, p, t, g, b, d, s, h, f, š, z or ž, the ending is <0>-ki</0>: <1>kellestki</1>, <2>kustki</2>, from somewhere. After anything else, a vowel or l, m, n, r, it is <3>-gi</3>: <4>kellelegi</4>, <5>millalgi</5>."
+msgstr "The last sound decides. After k, p, t, g, b, d, s, h, f, š, z or ž, the ending is <0>-ki</0>: <1>kellestki</1>, <2>kustki</2>, from somewhere. After anything else, a vowel or l, m, n, r, it is <3>-gi</3>: <4>kellelegi</4>, <5>millalgi</5>."
+
+msgid "The object is <0>kedagi</0>, built on <1>keda</1>."
+msgstr "The object is <0>kedagi</0>, built on <1>keda</1>."
+
+msgid "The object is <et>kedagi</et>, built on <et>keda</et>."
+msgstr "The object is <et>kedagi</et>, built on <et>keda</et>."
+
+msgid "This is somebody’s bag."
+msgstr "This is somebody’s bag."
+
+msgid "to somebody"
+msgstr "to somebody"
+
+msgid "To somebody, with somebody"
+msgstr "To somebody, with somebody"
+
+msgid "to somewhere"
+msgstr "to somewhere"
+
+msgid "to whom"
+msgstr "to whom"
+
+msgid "Two don’t follow the pattern, so learn them as words: <0/>, somewhere, and <1/>, ever. <2/>, when, does: <3/>, some time. Tap a line to hear it."
+msgstr "Two don’t follow the pattern, so learn them as words: <0/>, somewhere, and <1/>, ever. <2/>, when, does: <3/>, some time. Tap a line to hear it."
+
+msgid "Type the form that means what the cue says."
+msgstr "Type the form that means what the cue says."
+
+msgid "We talked about somebody."
+msgstr "We talked about somebody."
+
+msgid "what"
+msgstr "what"
+
+msgid "What can’t Kati find?"
+msgstr "What can’t Kati find?"
+
+msgid "What do you want? Nothing."
+msgstr "What do you want? Nothing."
+
+msgid "What does it mean?"
+msgstr "What does it mean?"
+
+msgid "What will they do in the evening?"
+msgstr "What will they do in the evening?"
+
+msgid "when"
+msgstr "when"
+
+msgid "Where are the keys?"
+msgstr "Where are the keys?"
+
+msgid "where from"
+msgstr "where from"
+
+msgid "where to"
+msgstr "where to"
+
+msgid "Where was Kati yesterday? Write one place as she says it."
+msgstr "Where was Kati yesterday? Write one place as she says it."
+
+msgid "Where were the keys yesterday?"
+msgstr "Where were the keys yesterday?"
+
+msgid "Who answered when Kati called Mari?"
+msgstr "Who answered when Kati called Mari?"
+
+msgid "Who came? Nobody."
+msgstr "Who came? Nobody."
+
+msgid "who has"
+msgstr "who has"
+
+msgid "whom"
+msgstr "whom"
+
+msgid "with <0>ei</0>"
+msgstr "with <0>ei</0>"
+
+msgid "With <0>ei</0>, they mean nobody, nothing, nowhere: <1>Keegi ei tule</1>. On its own: <2>mitte keegi</2>."
+msgstr "With <0>ei</0>, they mean nobody, nothing, nowhere: <1>Keegi ei tule</1>. On its own: <2>mitte keegi</2>."
+
+msgid "with ei"
+msgstr "with ei"
+
+msgid "With ei: never."
+msgstr "With ei: never."
+
+msgid "With ei: nobody."
+msgstr "With ei: nobody."
+
+msgid "With ei: nothing."
+msgstr "With ei: nothing."
+
+msgid "with somebody"
+msgstr "with somebody"
+
+msgid "with whom"
+msgstr "with whom"
+
+msgid "Write each sentence in Estonian."
+msgstr "Write each sentence in Estonian."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"

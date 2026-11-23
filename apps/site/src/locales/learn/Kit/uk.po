@@ -241,6 +241,9 @@ msgstr "Безкоштовний урок естонської про порів
 msgid "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про чотири відмінкові закінчення: -ga — «з» і «чим» (sõbraga, bussiga), -ta — «без» (piimata), -ni — «аж до» (kella viieni, Tartuni) і -na — «як», у ролі (arstina). Усі вони додаються до родового відмінка. Кожне речення озвучене."
 
+msgid "A free Estonian lesson on keegi, midagi, kuskil and kuhugi: question words with -gi or -ki for somebody and something, ei for nobody and nothing, mitte keegi on its own, and -gi or -ki on every case, as in kellelegi and kellestki, and which one to use. Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про keegi, midagi, kuskil і kuhugi: питальні слова з -gi чи -ki для «хтось» і «щось», ei для «ніхто» і «нічого», mitte keegi окремо, а також -gi чи -ki у кожному відмінку, як у kellelegi і kellestki, і яке з них коли. Кожне речення озвучене."
+
 msgid "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про meeldima, «подобатися»: mulle meeldib та інші особи, meeldivad, коли подобається кілька речей, meeldib з дієсловом, ei meeldi, питання з kas і kellele та почуття, як-от mul on külm. Кожне речення озвучене."
 
@@ -258,6 +261,9 @@ msgstr "Безкоштовний урок естонської про те, як
 
 msgid "A free Estonian lesson on word order: the verb usually in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про порядок слів: дієслово зазвичай на другому місці (täna lähen ma), питання на кшталт kus sa elad?, два дієслова з другим зазвичай у кінці і де стоїть ei. Кожне речення озвучене."
+
+msgid "A free Estonian lesson on the translative case: -ks on the genitive for what someone becomes (Ta sai arstiks, Ma jäin haigeks), -na against -ks, reedeks for by Friday and nädalaks for a week, and heaks arstiks, where both words take -ks. Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про транслатив: -ks до родового для того, ким хтось стає (Ta sai arstiks, Ma jäin haigeks), -na проти -ks, reedeks — «до п’ятниці» і nädalaks — «на тиждень», і heaks arstiks, де -ks отримують обидва слова. Кожне речення озвучене."
 
 msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud."
 msgstr "Безкоштовний урок естонської вимови: дев’ять голосних з õ, ä, ö та ü, наголос на першому складі й те, як подвоєна літера змінює слово. Кожне слово озвучено."
@@ -713,6 +719,9 @@ msgstr "Естонська вимова"
 
 msgid "Estonian reading and listening practice: a day in Tallinn"
 msgstr "Естонська мова: читання й аудіювання. День у Таллінні"
+
+msgid "Estonian somebody and nobody: -gi and -ki"
+msgstr "Естонські «хтось» і «ніхто»: -gi та -ki"
 
 msgid "Estonian time expressions: when things happen"
 msgstr "Як сказати «коли» естонською"
@@ -2036,6 +2045,9 @@ msgstr "Родовий відмінок в естонській мові: мій
 
 msgid "The Estonian partitive case: after numbers, amounts and negation"
 msgstr "Партитив в естонській мові: після чисел, слів кількості й у запереченні"
+
+msgid "The Estonian translative case: becoming, by and for"
+msgstr "Естонський транслатив: ставати, до і на"
 
 msgid "The form isn’t <0>{wrote}</0>."
 msgstr "Форма не <0>{wrote}</0>."

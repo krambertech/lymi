@@ -441,8 +441,8 @@ export function TutvumineLesson() {
       hint: t`yes or no`,
       rule: (
         <Trans>
-          <b lang="et">Kas</b> asks yes or no: the answer starts with <b lang="et">jah</b> or{" "}
-          <b lang="et">ei</b>.
+          <b lang="et">Kas</b> asks yes or no: the answer usually starts with <b lang="et">jah</b>{" "}
+          or <b lang="et">ei</b>.
         </Trans>
       ),
     },
@@ -638,7 +638,8 @@ export function TutvumineLesson() {
                 <p>
                   <Trans>
                     Now you ask. Pick the question that fits what Mari just said. Ask why with{" "}
-                    <Word w="miks" />, and the answer starts with <Word w="sest" />, because.
+                    <Word w="miks" />, and the answer usually starts with <Word w="sest" />,
+                    because.
                   </Trans>
                 </p>
                 <p>

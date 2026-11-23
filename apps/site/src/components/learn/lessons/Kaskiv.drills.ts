@@ -3,9 +3,8 @@ import { msg } from "@lingui/core/macro";
 import {
   clipId,
   commandTo,
-  KASKIV_FLIP,
-  KASKIV_MORE,
-  KASKIV_STEMS,
+  KASKIV_TURNED,
+  KASKIV_TYPED,
   notSentence,
 } from "../../../lib/learn/clips";
 import type { ChoiceDrill, DrillBank, FormDrill, SentenceDrill } from "../../../lib/learn/drill";
@@ -20,25 +19,19 @@ const MEANS: Record<string, MessageDescriptor> = {
   vaatama: msg`to look`,
 };
 
-const TYPED = [
-  ...KASKIV_STEMS.filter(({ verb }) => verb !== "lugema"),
-  { verb: "kuulama", ma: "kuulan", stem: "kuula" },
-  { verb: "vaatama", ma: "vaatan", stem: "vaata" },
-] as const;
-
-const STEM = msg`The command to one person is usually the ma form without its <et>-n</et>.`;
+const STEM = msg`The command to one person is usually the I form of the present without its <et>-n</et>.`;
 const DONT = msg`<et>Ära</et> before the stem tells one person not to do it.`;
 const ARGE = msg`<et>Ära</et> becomes <et>ärge</et>, and the verb takes its <et>-ge</et> or <et>-ke</et> form: <et>Ärge istuge!</et>`;
 const MORE = msg`To more than one, or politely, the command ends in <et>-ge</et> or <et>-ke</et>.`;
 
-const typed = ({ verb, ma, stem }: (typeof TYPED)[number]): FormDrill => ({
+const typed = ({ verb, ma, stem, answers }: (typeof KASKIV_TYPED)[number]): FormDrill => ({
   kind: "form",
   id: `command-${clipId(stem)}`,
   rule: "one",
   base: ma,
   gloss: MEANS[verb] as MessageDescriptor,
-  cue: msg`to one person`,
-  answers: [stem, `${stem}!`],
+  cue: msg`to one person you’d call sa`,
+  answers,
   say: commandTo(stem),
   explain: msg`<et>Ma ${ma}</et>, so the command is <et>${commandTo(stem)}</et>`,
 });
@@ -54,15 +47,15 @@ const dont = (stem: string): SentenceDrill => ({
   explain: DONT,
 });
 
-const more = ({ one, more: many }: (typeof KASKIV_MORE)[number]): SentenceDrill => ({
+const turned = ({ from, to, kind, answers }: (typeof KASKIV_TURNED)[number]): SentenceDrill => ({
   kind: "rewrite",
-  id: `more-${clipId(many)}`,
-  rule: "more",
-  from: one,
-  cue: msg`to more than one`,
-  say: many,
-  answers: [many],
-  explain: one.startsWith("Ära") ? ARGE : MORE,
+  id: `${kind}-${clipId(to)}`,
+  rule: kind,
+  from,
+  cue: kind === "dont" ? msg`don’t` : msg`to more than one`,
+  say: to,
+  answers,
+  explain: kind === "dont" ? DONT : from.startsWith("Ära") ? ARGE : MORE,
 });
 
 const HEARD: Record<
@@ -98,15 +91,15 @@ export const DRILLS: DrillBank = {
     more: { label: msg`To more than one`, section: "more" },
   },
   items: [
-    ...TYPED.map(typed),
-    ...KASKIV_FLIP.filter((stem) => stem !== "istu").map(dont),
+    ...KASKIV_TYPED.map(typed),
+    ...KASKIV_TURNED.map(turned),
+    dont("räägi"),
     heard("istu", false),
     heard("istu", true),
     heard("loe", false),
     heard("loe", true),
     heard("oota", false),
     heard("oota", true),
-    ...[1, 3, 4, 6].map((i) => more(KASKIV_MORE[i] as (typeof KASKIV_MORE)[number])),
     {
       kind: "dictation",
       id: "write-raagi-aeglasemalt",

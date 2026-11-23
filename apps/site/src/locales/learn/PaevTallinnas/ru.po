@@ -172,9 +172,6 @@ msgstr "часы; час (о времени)"
 msgid "closed"
 msgstr "закрыто"
 
-msgid "Coffee costs two euros."
-msgstr "Кофе стоит два евро."
-
 msgid "costs"
 msgstr "стоит"
 
@@ -249,6 +246,9 @@ msgstr "в городе"
 
 msgid "It costs twelve euros."
 msgstr "Это стоит двенадцать евро."
+
+msgid "It costs two euros."
+msgstr "Это стоит два евро."
 
 msgid "It’s Saturday, ten o’clock, and you don’t work on Sundays. Mari speaks first; pick what you say back."
 msgstr "Суббота, десять часов, а по воскресеньям ты не работаешь. Мари говорит первой; выбирай, что ответить."

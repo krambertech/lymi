@@ -172,9 +172,6 @@ msgstr "clock, watch; o’clock"
 msgid "closed"
 msgstr "closed"
 
-msgid "Coffee costs two euros."
-msgstr "Coffee costs two euros."
-
 msgid "costs"
 msgstr "costs"
 
@@ -249,6 +246,9 @@ msgstr "in town"
 
 msgid "It costs twelve euros."
 msgstr "It costs twelve euros."
+
+msgid "It costs two euros."
+msgstr "It costs two euros."
 
 msgid "It’s Saturday, ten o’clock, and you don’t work on Sundays. Mari speaks first; pick what you say back."
 msgstr "It’s Saturday, ten o’clock, and you don’t work on Sundays. Mari speaks first; pick what you say back."

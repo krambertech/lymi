@@ -4,7 +4,7 @@ import { clsx } from "clsx";
 import { Minus, Plus } from "lucide-react";
 import { type ReactNode, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { lessonBySlug } from "../../../lib/learn/catalogue";
-import { clipUrl, KELL_PASSAGE } from "../../../lib/learn/clips";
+import { clipUrl, KELL_PASSAGE, timeAnswers } from "../../../lib/learn/clips";
 import {
   type ClockTime,
   MINUTES,
@@ -597,7 +597,7 @@ export function KellLesson() {
       IN_WORDS.map((time) => ({
         base: timeDigits(time),
         cue: t`in words`,
-        answers: [timeWords(time), `kell on ${timeWords(time)}`],
+        answers: timeAnswers(time),
         src: timeSrc(time),
         said: timeSentence(time),
         pair: [kindOf(time), timeClip(time)] as const,

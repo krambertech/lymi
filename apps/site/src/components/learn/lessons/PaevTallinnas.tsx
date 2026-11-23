@@ -32,7 +32,7 @@ const src = (text: string) => clipUrl(SLUG, clipId(text));
 
 const TRANSLATED_MEANS: readonly MessageDescriptor[] = [
   msg`It’s ten o’clock.`,
-  msg`Coffee costs two euros.`,
+  msg`It costs two euros.`,
   msg`Today is Saturday.`,
   msg`I don’t work tomorrow.`,
   msg`I’m at the market at twelve.`,

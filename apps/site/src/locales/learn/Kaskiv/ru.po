@@ -54,6 +54,9 @@ msgstr "15 минут"
 msgid "4 quizzes, a sort, a conversation and a passage"
 msgstr "4 теста, сортировка, разговор и текст"
 
+msgid "a book"
+msgstr "книгу"
+
 msgid "A command to one person is the stem alone. To more than one, or politely, it ends in <0>-ge</0> or <1>-ke</1>. Sort the commands; tap one to hear it."
 msgstr "Команда одному человеку — это только основа. Нескольким людям или на «вы» она оканчивается на <0>-ge</0> или <1>-ke</1>. Рассортируй команды; нажми на команду, чтобы её услышать."
 
@@ -69,8 +72,8 @@ msgstr "Все. Каждая команда понята верно."
 msgid "All six commands right."
 msgstr "Все шесть команд верны."
 
-msgid "All six, each the ma form without its <0>-n</0>."
-msgstr "Все шесть: каждая — форма с ma без <0>-n</0>."
+msgid "All six, each the I form of the present without its <0>-n</0>."
+msgstr "Все шесть: каждая — форма первого лица единственного числа настоящего времени без <0>-n</0>."
 
 msgid "Ära istu tells her not to sit down."
 msgstr "Ära istu просит её не садиться."
@@ -143,8 +146,8 @@ msgstr "Каждая из этих шести повседневных кома�
 msgid "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 msgstr "Каждый ответ — это команда или короткая реплика. Выбирай тот, что подходит к словам Мари."
 
-msgid "Each round gives a verb and its ma form. Type the command to one person: usually the ma form without its <0>-n</0>."
-msgstr "В каждом раунде есть глагол и его форма с ma. Напиши команду одному человеку: обычно это форма с ma без <0>-n</0>."
+msgid "Each round gives a verb and its I form of the present. Type the command to one person you’d call sa: usually that form without its <0>-n</0>."
+msgstr "В каждом раунде есть глагол и его форма первого лица единственного числа настоящего времени. Напиши команду одному человеку, с которым ты на «ты»: обычно это та же форма без <0>-n</0>."
 
 msgid "Eat."
 msgstr "Ешь."
@@ -221,8 +224,8 @@ msgstr "Я не сажусь."
 msgid "I’m not waiting."
 msgstr "Я не жду."
 
-msgid "It’s the form that follows <0>ei</0> in lesson {negation}: <1/>, I don’t read. Tap either side of a pair to hear it."
-msgstr "Это та же форма, что идёт после <0>ei</0> в уроке {negation}: <1/>, я не читаю. Нажми на любую половину пары, чтобы услышать её."
+msgid "It’s usually the form that follows <0>ei</0> in lesson {negation}: <1/>, I don’t read. Tap either side of a pair to hear it."
+msgstr "Обычно это та же форма, что идёт после <0>ei</0> в уроке {negation}: <1/>, я не читаю. Нажми на любую половину пары, чтобы услышать её."
 
 msgid "Jaan"
 msgstr "Яан"
@@ -367,8 +370,8 @@ msgstr "Так ты говоришь Мари пить кофе. А она сп�
 msgid "The command to one person"
 msgstr "Команда одному человеку"
 
-msgid "The command to one person is usually the ma form without its <et>-n</et>."
-msgstr "Команда одному человеку — это обычно форма с ma без <et>-n</et>."
+msgid "The command to one person is usually the I form of the present without its <et>-n</et>."
+msgstr "Команда одному человеку — это обычно форма первого лица единственного числа настоящего времени без <et>-n</et>."
 
 msgid "The stem alone"
 msgstr "Только основа"
@@ -382,11 +385,11 @@ msgstr "Основа не меняется: <0>istu</0>, <1>ära istu</1>."
 msgid "The stem is the command"
 msgstr "Основа — это команда"
 
-msgid "The stem is usually the ma form without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It’s the form that follows <3>ei</3>."
-msgstr "Основа — это обычно форма с ma без <0>-n</0>: <1>istun</1>, <2>istu</2>. Та же форма идёт после <3>ei</3>."
+msgid "The stem is usually the I form of the present without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It’s usually the same form that follows <3>ei</3>."
+msgstr "Основа — это обычно форма первого лица единственного числа настоящего времени без <0>-n</0>: <1>istun</1>, <2>istu</2>. Обычно та же форма идёт после <3>ei</3>."
 
-msgid "The stem is usually the ma form without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
-msgstr "Основа — это обычно форма с ma без <0>-n</0>. Из <1/> получается <2/> Из <3/> получается <4/> <5/> значит «сюда»."
+msgid "The stem is usually the I form of the present without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
+msgstr "Основа — это обычно форма первого лица единственного числа настоящего времени без <0>-n</0>. Из <1/> получается <2/> Из <3/> получается <4/> <5/> значит «сюда»."
 
 msgid "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb’s three forms, shows where they come from."
 msgstr "Основа перед окончанием часто меняется: <0/> превращается в <1/> Пока запоминай эти формы целыми словами. Откуда они берутся, рассказывает урок {verbForms} о трёх формах глагола."
@@ -430,11 +433,11 @@ msgstr "Нескольким людям или на «вы»"
 msgid "To more than one, or politely, the command ends in <et>-ge</et> or <et>-ke</et>."
 msgstr "Нескольким людям или на «вы» команда оканчивается на <et>-ge</et> или <et>-ke</et>."
 
-msgid "to one person"
-msgstr "одному человеку"
-
 msgid "To one person"
 msgstr "Одному человеку"
+
+msgid "to one person you’d call sa"
+msgstr "одному человеку, с которым ты на «ты»"
 
 msgid "to read"
 msgstr "читать"
@@ -448,8 +451,8 @@ msgstr "садиться"
 msgid "to speak"
 msgstr "говорить"
 
-msgid "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the ma form from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
-msgstr "Чтобы сказать одному человеку, что делать, эстонский берёт основу глагола и ничего к ней не добавляет. Возьми форму с ma из урока {present} и убери <0>-n</0>. <1/> — это «я читаю», а <2/> просит одного человека читать."
+msgid "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Usually that’s the I form of the present from lesson {present} without its <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
+msgstr "Чтобы сказать одному человеку, что делать, эстонский берёт основу глагола и ничего к ней не добавляет. Обычно это форма первого лица единственного числа настоящего времени из урока {present} без <0>-n</0>. <1/> — это «я читаю», а <2/> просит одного человека читать."
 
 msgid "To tell one person what to do, say the verb’s stem: <0>Loe! Istu!</0>"
 msgstr "Чтобы сказать одному человеку, что делать, скажи основу глагола: <0>Loe! Istu!</0>"

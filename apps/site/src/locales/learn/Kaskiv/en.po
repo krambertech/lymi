@@ -54,6 +54,9 @@ msgstr "15 minutes"
 msgid "4 quizzes, a sort, a conversation and a passage"
 msgstr "4 quizzes, a sort, a conversation and a passage"
 
+msgid "a book"
+msgstr "a book"
+
 msgid "A command to one person is the stem alone. To more than one, or politely, it ends in <0>-ge</0> or <1>-ke</1>. Sort the commands; tap one to hear it."
 msgstr "A command to one person is the stem alone. To more than one, or politely, it ends in <0>-ge</0> or <1>-ke</1>. Sort the commands; tap one to hear it."
 
@@ -69,8 +72,8 @@ msgstr "All of them. You understood every command."
 msgid "All six commands right."
 msgstr "All six commands right."
 
-msgid "All six, each the ma form without its <0>-n</0>."
-msgstr "All six, each the ma form without its <0>-n</0>."
+msgid "All six, each the I form of the present without its <0>-n</0>."
+msgstr "All six, each the I form of the present without its <0>-n</0>."
 
 msgid "Ära istu tells her not to sit down."
 msgstr "Ära istu tells her not to sit down."
@@ -143,8 +146,8 @@ msgstr "Each of these six everyday commands starts with a verb’s stem. Tap one
 msgid "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 msgstr "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 
-msgid "Each round gives a verb and its ma form. Type the command to one person: usually the ma form without its <0>-n</0>."
-msgstr "Each round gives a verb and its ma form. Type the command to one person: usually the ma form without its <0>-n</0>."
+msgid "Each round gives a verb and its I form of the present. Type the command to one person you’d call sa: usually that form without its <0>-n</0>."
+msgstr "Each round gives a verb and its I form of the present. Type the command to one person you’d call sa: usually that form without its <0>-n</0>."
 
 msgid "Eat."
 msgstr "Eat."
@@ -221,8 +224,8 @@ msgstr "I’m not sitting down."
 msgid "I’m not waiting."
 msgstr "I’m not waiting."
 
-msgid "It’s the form that follows <0>ei</0> in lesson {negation}: <1/>, I don’t read. Tap either side of a pair to hear it."
-msgstr "It’s the form that follows <0>ei</0> in lesson {negation}: <1/>, I don’t read. Tap either side of a pair to hear it."
+msgid "It’s usually the form that follows <0>ei</0> in lesson {negation}: <1/>, I don’t read. Tap either side of a pair to hear it."
+msgstr "It’s usually the form that follows <0>ei</0> in lesson {negation}: <1/>, I don’t read. Tap either side of a pair to hear it."
 
 msgid "Jaan"
 msgstr "Jaan"
@@ -367,8 +370,8 @@ msgstr "That tells Mari to drink coffee. She asked what you’d like."
 msgid "The command to one person"
 msgstr "The command to one person"
 
-msgid "The command to one person is usually the ma form without its <et>-n</et>."
-msgstr "The command to one person is usually the ma form without its <et>-n</et>."
+msgid "The command to one person is usually the I form of the present without its <et>-n</et>."
+msgstr "The command to one person is usually the I form of the present without its <et>-n</et>."
 
 msgid "The stem alone"
 msgstr "The stem alone"
@@ -382,11 +385,11 @@ msgstr "The stem doesn’t change: <0>istu</0>, <1>ära istu</1>."
 msgid "The stem is the command"
 msgstr "The stem is the command"
 
-msgid "The stem is usually the ma form without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It’s the form that follows <3>ei</3>."
-msgstr "The stem is usually the ma form without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It’s the form that follows <3>ei</3>."
+msgid "The stem is usually the I form of the present without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It’s usually the same form that follows <3>ei</3>."
+msgstr "The stem is usually the I form of the present without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It’s usually the same form that follows <3>ei</3>."
 
-msgid "The stem is usually the ma form without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
-msgstr "The stem is usually the ma form without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
+msgid "The stem is usually the I form of the present without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
+msgstr "The stem is usually the I form of the present without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
 
 msgid "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb’s three forms, shows where they come from."
 msgstr "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb’s three forms, shows where they come from."
@@ -430,11 +433,11 @@ msgstr "To more than one, or polite"
 msgid "To more than one, or politely, the command ends in <et>-ge</et> or <et>-ke</et>."
 msgstr "To more than one, or politely, the command ends in <et>-ge</et> or <et>-ke</et>."
 
-msgid "to one person"
-msgstr "to one person"
-
 msgid "To one person"
 msgstr "To one person"
+
+msgid "to one person you’d call sa"
+msgstr "to one person you’d call sa"
 
 msgid "to read"
 msgstr "to read"
@@ -448,8 +451,8 @@ msgstr "to sit down"
 msgid "to speak"
 msgstr "to speak"
 
-msgid "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the ma form from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
-msgstr "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the ma form from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
+msgid "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Usually that’s the I form of the present from lesson {present} without its <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
+msgstr "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Usually that’s the I form of the present from lesson {present} without its <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
 
 msgid "To tell one person what to do, say the verb’s stem: <0>Loe! Istu!</0>"
 msgstr "To tell one person what to do, say the verb’s stem: <0>Loe! Istu!</0>"

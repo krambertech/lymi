@@ -172,9 +172,6 @@ msgstr "годинник; година"
 msgid "closed"
 msgstr "зачинено"
 
-msgid "Coffee costs two euros."
-msgstr "Кава коштує два євро."
-
 msgid "costs"
 msgstr "коштує"
 
@@ -249,6 +246,9 @@ msgstr "у місті"
 
 msgid "It costs twelve euros."
 msgstr "Це коштує дванадцять євро."
+
+msgid "It costs two euros."
+msgstr "Це коштує два євро."
 
 msgid "It’s Saturday, ten o’clock, and you don’t work on Sundays. Mari speaks first; pick what you say back."
 msgstr "Субота, десята година, а в неділю ти не працюєш. Марі говорить першою; вибирай, що відповісти."

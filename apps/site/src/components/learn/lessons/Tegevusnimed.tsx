@@ -65,7 +65,7 @@ const LEAD_MEANS: Record<Lead, MessageDescriptor> = {
   jään: msg`I stay`,
 };
 
-/** What each verb of the tahan-and-pean table means, by its -ma form. */
+/** What each verb of the tahan-and-pean table means, by its -ma infinitive. */
 const PAIR_MEANS: Record<Pair["ma"], MessageDescriptor> = {
   "luge|ma": msg`to read`,
   "söö|ma": msg`to eat`,
@@ -103,16 +103,16 @@ const GLOSSARY: Glossary = {
     show: "Mulle meeldib",
     note: msg`Mulle is to me. Learn it as a phrase for now.`,
   },
-  lugema: { en: msg`to read`, note: msg`The -ma form. Its -da form is lugeda.` },
-  lugeda: { en: msg`to read`, note: msg`The -da form of lugema.` },
+  lugema: { en: msg`to read`, note: msg`The -ma infinitive. Its -da infinitive is lugeda.` },
+  lugeda: { en: msg`to read`, note: msg`The -da infinitive of lugema.` },
   "ma tahan lugeda.": { en: msg`I want to read.`, show: "Ma tahan lugeda." },
   "ma pean lugema.": { en: msg`I have to read.`, show: "Ma pean lugema." },
   "nad tahavad lugeda.": { en: msg`They want to read.`, show: "Nad tahavad lugeda." },
   "nad peavad lugema.": { en: msg`They have to read.`, show: "Nad peavad lugema." },
-  õppima: { en: msg`to learn, to study`, note: msg`Its I form is õpin.` },
+  õppima: { en: msg`to learn, to study`, note: msg`Its present is õpin.` },
   "ma õpin lugema.": { en: msg`I’m learning to read.`, show: "Ma õpin lugema." },
-  teha: { en: msg`to do, to make`, note: msg`The -da form of tegema.` },
-  tegema: { en: msg`to do, to make`, note: msg`The -ma form. Its -da form is teha.` },
+  teha: { en: msg`to do, to make`, note: msg`The -da infinitive of tegema.` },
+  tegema: { en: msg`to do, to make`, note: msg`The -ma infinitive. Its -da infinitive is teha.` },
   "ma pean homme tööle minema.": {
     en: msg`I have to go to work tomorrow.`,
     show: "Ma pean homme tööle minema.",
@@ -132,11 +132,11 @@ function End({ children }: { children: ReactNode }) {
 function FollowsNote({ takes }: { takes: Takes }) {
   return takes === "da" ? (
     <Trans>
-      After <span lang="et">tahan</span>, the <End>-da</End> form.
+      After <span lang="et">tahan</span>, the <End>-da</End> infinitive.
     </Trans>
   ) : (
     <Trans>
-      After <span lang="et">pean</span>, the <End>-ma</End> form.
+      After <span lang="et">pean</span>, the <End>-ma</End> infinitive.
     </Trans>
   );
 }
@@ -188,14 +188,14 @@ function LeadTip({ lead }: { lead: InfinitiveLead }) {
     case "hakkan":
       return (
         <Trans>
-          Its <End>-ma</End> form is <span lang="et">hakkama</span>. Lesson {future} uses it for the
-          future.
+          Its <End>-ma</End> infinitive is <span lang="et">hakkama</span>. Lesson {future} uses it
+          for the future.
         </Trans>
       );
     default:
       return (
         <Trans>
-          Its <End>-ma</End> form is <span lang="et">{verb}</span>.
+          Its <End>-ma</End> infinitive is <span lang="et">{verb}</span>.
         </Trans>
       );
   }
@@ -281,11 +281,11 @@ export const BUILT = [
 function BuiltWhy({ lead }: { lead: Lead }) {
   return leadOf(lead).takes === "da" ? (
     <Trans>
-      After <span lang="et">{lead}</span>, the <End>-da</End> form, and it goes last.
+      After <span lang="et">{lead}</span>, the <End>-da</End> infinitive, and it goes last.
     </Trans>
   ) : (
     <Trans>
-      After <span lang="et">{lead}</span>, the <End>-ma</End> form, and it goes last.
+      After <span lang="et">{lead}</span>, the <End>-ma</End> infinitive, and it goes last.
     </Trans>
   );
 }
@@ -342,7 +342,7 @@ function MessageWhy({ id }: { id: (typeof MESSAGE_GAPS)[number]["id"] }) {
     case "tootama":
       return (
         <Trans>
-          After <span lang="et">pean</span>, the <End>-ma</End> form.
+          After <span lang="et">pean</span>, the <End>-ma</End> infinitive.
         </Trans>
       );
     case "lahen":
@@ -367,13 +367,13 @@ function MessageWhy({ id }: { id: (typeof MESSAGE_GAPS)[number]["id"] }) {
     case "lugeda":
       return (
         <Trans>
-          After <span lang="et">mulle meeldib</span>, the <End>-da</End> form.
+          After <span lang="et">mulle meeldib</span>, the <End>-da</End> infinitive.
         </Trans>
       );
     case "minema":
       return (
         <Trans>
-          After <span lang="et">pean</span>, the <End>-ma</End> form, even with words between.
+          After <span lang="et">pean</span>, the <End>-ma</End> infinitive, even with words between.
         </Trans>
       );
   }
@@ -421,7 +421,7 @@ export function TegevusnimedLesson() {
       rule: (
         <Trans>
           <span lang="et">Tahan, võin, saan, oskan, tohin, proovin, armastan</span> and{" "}
-          <span lang="et">mulle meeldib</span> take the <End>-da</End> form.
+          <span lang="et">mulle meeldib</span> take the <End>-da</End> infinitive.
         </Trans>
       ),
     },
@@ -431,7 +431,7 @@ export function TegevusnimedLesson() {
       rule: (
         <Trans>
           <span lang="et">Pean, hakkan, lähen, tule</span> and <span lang="et">jään</span> take the{" "}
-          <End>-ma</End> form.
+          <End>-ma</End> infinitive.
         </Trans>
       ),
     },
@@ -457,7 +457,7 @@ export function TegevusnimedLesson() {
         <Trans>
           <span lang="et">Ma tahan lugeda</span> is I want to read, and{" "}
           <span lang="et">Ma pean lugema</span> is I have to read. The first verb decides whether
-          the second takes its <End>-da</End> or its <End>-ma</End> form.
+          the second takes its <End>-da</End> or its <End>-ma</End> infinitive.
         </Trans>
       }
       facts={[
@@ -469,16 +469,16 @@ export function TegevusnimedLesson() {
       recap={[
         <Trans key="1">
           After <b lang="et">tahan</b>, <b lang="et">pean</b> and the other verbs in this lesson,
-          the second verb takes its <End>-da</End> or <End>-ma</End> form:{" "}
+          the second verb takes its <End>-da</End> or <End>-ma</End> infinitive:{" "}
           <b lang="et">Ma tahan lugeda. Ma pean lugema.</b>
         </Trans>,
         <Trans key="2">
-          The <End>-da</End> form follows{" "}
+          The <End>-da</End> infinitive follows{" "}
           <b lang="et">tahan, võin, saan, oskan, tohin, proovin, armastan</b> and{" "}
           <b lang="et">mulle meeldib</b>.
         </Trans>,
         <Trans key="3">
-          The <End>-ma</End> form follows <b lang="et">pean, hakkan, lähen, tule</b> and{" "}
+          The <End>-ma</End> infinitive follows <b lang="et">pean, hakkan, lähen, tule</b> and{" "}
           <b lang="et">jään</b>. <b lang="et">Õpin</b> takes it too when you learn to do something:{" "}
           <b lang="et">Ma õpin lugema.</b>
         </Trans>,
@@ -504,9 +504,9 @@ export function TegevusnimedLesson() {
                 </p>
                 <p>
                   <Trans>
-                    After <Word w="tahan" />, I want, comes the <End>-da</End> form:{" "}
+                    After <Word w="tahan" />, I want, comes the <End>-da</End> infinitive:{" "}
                     <Word w="Ma tahan lugeda." /> After <Word w="pean" />, I have to, comes the{" "}
-                    <End>-ma</End> form: <Word w="Ma pean lugema." />
+                    <End>-ma</End> infinitive: <Word w="Ma pean lugema." />
                   </Trans>
                 </p>
                 <p>
@@ -529,8 +529,8 @@ export function TegevusnimedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The eight verbs below take the <End>-da</End> form, <Word w="tahan" /> among
-                    them: <Word w="Ma tahan süüa." />{" "}
+                    The eight verbs below take the <End>-da</End> infinitive, <Word w="tahan" />{" "}
+                    among them: <Word w="Ma tahan süüa." />{" "}
                     <Word w="Ma oskan natuke eesti keelt rääkida." />
                   </Trans>
                 </p>
@@ -559,33 +559,35 @@ export function TegevusnimedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Pean" /> takes the <End>-ma</End> form, and so do <Word w="hakkan" />,{" "}
-                    <Word w="lähen" />, <Word w="tule" /> and <Word w="jään" />.
+                    <Word w="Pean" /> takes the <End>-ma</End> infinitive, and so do{" "}
+                    <Word w="hakkan" />, <Word w="lähen" />, <Word w="tule" /> and <Word w="jään" />
+                    .
                   </Trans>
                 </p>
                 <p>
                   <Trans>
                     <Word w="Ma pean minema." /> <Word w="Ma lähen kohvi jooma." /> Lesson {going}{" "}
-                    explains what the <End>-ma</End> form means after <span lang="et">lähen</span>.
-                    Tap a verb to hear it in a sentence.
+                    explains what the <End>-ma</End> infinitive means after{" "}
+                    <span lang="et">lähen</span>. Tap a verb to hear it in a sentence.
                   </Trans>
                 </p>
               </Prose>
               <LeadKeys takes="ma" label={t`Verbs of having to, starting and going`} />
               <Aside>
                 <Trans>
-                  <Word w="Õppima" />, to learn, takes the <End>-ma</End> form when you learn to do
-                  something: <Word w="Ma õpin lugema." />
+                  <Word w="Õppima" />, to learn, takes the <End>-ma</End> infinitive when you learn
+                  to do something: <Word w="Ma õpin lugema." />
                 </Trans>
               </Aside>
               <Aside>
                 <Trans>
                   To check a verb that isn’t here, look it up in <span lang="et">Sõnaveeb</span>, as
                   lesson {nounForms} shows. <Word w="Teha" /> and <Word w="tegema" /> are the{" "}
-                  <End>-da</End> and <End>-ma</End> forms of to do, and{" "}
+                  <End>-da</End> and <End>-ma</End> infinitives of to do, and{" "}
                   <span lang="et">Sõnaveeb</span> uses them to say which form a verb takes. Under{" "}
                   <span lang="et">Rektsioon</span>, <b lang="et">mida teha</b> means the{" "}
-                  <End>-da</End> form and <b lang="et">mida tegema</b> the <End>-ma</End> form.
+                  <End>-da</End> infinitive and <b lang="et">mida tegema</b> the <End>-ma</End>{" "}
+                  infinitive.
                 </Trans>
               </Aside>
             </>
@@ -671,9 +673,9 @@ export function TegevusnimedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Mari writes to her friend Jaan. In each gap, pick the <End>-ma</End> form, the{" "}
-                    <End>-da</End> form or the present. The verb before the gap decides; with no
-                    verb before it, the present fits.
+                    Mari writes to her friend Jaan. In each gap, pick the <End>-ma</End> infinitive,
+                    the <End>-da</End> infinitive or the present. The verb before the gap decides;
+                    with no verb before it, the present fits.
                   </Trans>
                 </p>
               </Prose>

@@ -122,7 +122,7 @@ export function KitExplorers({ Part }: { Part: (props: PartProps) => ReactNode }
     "sõi|n": t`past, for ma`,
     "söö|n": t`now, for ma`,
     "hakka|n": t`hakkama, now`,
-    "söö|ma": t`the -ma form`,
+    "söö|ma": t`the -ma infinitive`,
   };
   const points: TimelinePoint[] = KIT_TENSES.map((tense) => ({
     id: tense.id,
@@ -149,7 +149,10 @@ export function KitExplorers({ Part }: { Part: (props: PartProps) => ReactNode }
     toa: { label: t`of a room`, note: t`The b drops and the u becomes o.` },
     toas: { label: t`in a room`, note: t`Toa- plus -s: in a room.` },
     lugema: { label: t`to read` },
-    lugeda: { label: t`to read, da-form`, note: t`The m becomes d: -ma turns into -da.` },
+    lugeda: {
+      label: t`to read, the -da infinitive`,
+      note: t`The m becomes d: -ma turns into -da.`,
+    },
     loen: { label: t`I read`, note: t`The g drops and the u becomes o: loe-, plus -n for ma.` },
   };
   const chains: MorphChain[] = KIT_MORPHS.map((chain) => ({

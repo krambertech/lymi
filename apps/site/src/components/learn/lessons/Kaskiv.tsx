@@ -17,6 +17,7 @@ import {
   KASKIV_MORE,
   KASKIV_STEMS,
   KASKIV_TURNED,
+  KASKIV_TYPED,
   notSentence,
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
@@ -97,6 +98,7 @@ const GLOSSARY: Glossary = {
   tulen: { en: msg`I come`, note: msg`From tulema, to come.`, clip: false },
   minema: { en: msg`to go`, clip: false },
   sa: { en: msg`you, to one person`, clip: false },
+  raamatut: { en: msg`a book`, clip: false },
   te: { en: msg`you, to more than one; polite you`, clip: false },
 };
 
@@ -172,7 +174,7 @@ function FlipNote({ mode, title, tip }: { mode: string; title: ReactNode; tip: R
   );
 }
 
-/** The ma form with its -n lit, and the command it gives, each to tap. */
+/** The I form of the present with its -n lit, and the command it gives, each to tap. */
 function StemPair({ verb, ma, stem }: (typeof KASKIV_STEMS)[number]) {
   const { i18n } = useLingui();
   return (
@@ -393,16 +395,6 @@ function Explain({ said }: { said: string }) {
   );
 }
 
-const TYPED: readonly { verb: string; ma: string; stem: string; said: string }[] = [
-  ...KASKIV_STEMS.filter(({ verb }) => verb !== "lugema").map(({ verb, ma, stem }) => ({
-    verb,
-    ma,
-    stem,
-    said: commandTo(stem),
-  })),
-  { verb: "kuulama", ma: "kuulan", stem: "kuula", said: "Kuula!" },
-  { verb: "vaatama", ma: "vaatan", stem: "vaata", said: "Vaata!" },
-];
 
 const COMMAND_VERB_MEANS: Record<string, MessageDescriptor> = {
   lugema: msg`to read`,
@@ -538,16 +530,16 @@ export function KaskivLesson() {
 
   const typedItems = useMemo<(FormItem & { pair: readonly [string, string] })[]>(
     () =>
-      TYPED.map(({ verb, ma, stem, said }) => ({
+      KASKIV_TYPED.map(({ verb, ma, stem, answers }) => ({
         base: verb,
         gloss: (
           <Trans>
             {i18n._(COMMAND_VERB_MEANS[verb] as MessageDescriptor)}, <span lang="et">ma {ma}</span>
           </Trans>
         ),
-        cue: t`to one person`,
-        answers: [stem, `${stem}!`],
-        src: src(said),
+        cue: t`to one person you’d call sa`,
+        answers,
+        src: src(commandTo(stem)),
         pair: [`${verb.slice(0, -2)}` === stem ? "same" : "changed", verb] as const,
       })),
     [t, i18n],
@@ -587,13 +579,13 @@ export function KaskivLesson() {
 
   const turnedItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
     () =>
-      KASKIV_TURNED.map(({ from, to, kind }) => ({
+      KASKIV_TURNED.map(({ from, to, kind, answers }) => ({
         kind: "rewrite" as const,
         id: `turn-${clipId(to)}`,
         from,
         cue: kind === "dont" ? t`don’t` : t`to more than one`,
         src: src(to),
-        answers: [to],
+        answers,
         pair: [kind, to] as const,
       })),
     [t],
@@ -675,8 +667,9 @@ export function KaskivLesson() {
           To tell one person what to do, say the verb’s stem: <b lang="et">Loe! Istu!</b>
         </Trans>,
         <Trans key="2">
-          The stem is usually the ma form without its <b lang="et">-n</b>: <b lang="et">istun</b>,{" "}
-          <b lang="et">istu</b>. It’s the form that follows <b lang="et">ei</b>.
+          The stem is usually the I form of the present without its <b lang="et">-n</b>:{" "}
+          <b lang="et">istun</b>, <b lang="et">istu</b>. It’s usually the same form that follows{" "}
+          <b lang="et">ei</b>.
         </Trans>,
         <Trans key="3">
           To say don’t, put <b lang="et">ära</b> before the stem: <b lang="et">Ära istu!</b>
@@ -707,14 +700,14 @@ export function KaskivLesson() {
                 <p>
                   <Trans>
                     To tell one person what to do, Estonian uses the verb’s stem with nothing after
-                    it. Take the ma form from lesson {present} and drop the{" "}
+                    it. Usually that’s the I form of the present from lesson {present} without its{" "}
                     <span lang="et">-n</span>. <Word w="Ma loen" /> is I read, and <Word w="Loe!" />{" "}
                     tells one person to read.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    It’s the form that follows <span lang="et">ei</span> in lesson {negation}:{" "}
+                    It’s usually the form that follows <span lang="et">ei</span> in lesson {negation}:{" "}
                     <Word w="ma ei loe" />, I don’t read. Tap either side of a pair to hear it.
                   </Trans>
                 </p>
@@ -757,7 +750,7 @@ export function KaskivLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The stem is usually the ma form without its <span lang="et">-n</span>.{" "}
+                    The stem is usually the I form of the present without its <span lang="et">-n</span>.{" "}
                     <Word w="Istun" /> gives <Word w="Istu!" /> <Word w="Tulen" /> gives{" "}
                     <Word w="Tule siia!" /> <Word w="Siia" /> means here, to this place.
                   </Trans>
@@ -957,8 +950,8 @@ export function KaskivLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each round gives a verb and its ma form. Type the command to one person: usually
-                    the ma form without its <span lang="et">-n</span>.
+                    Each round gives a verb and its I form of the present. Type the command to one
+                    person you’d call sa: usually that form without its <span lang="et">-n</span>.
                   </Trans>
                 </p>
               </Prose>
@@ -970,7 +963,7 @@ export function KaskivLesson() {
                 verdict={(share) =>
                   share === 1 ? (
                     <Trans>
-                      All six, each the ma form without its <span lang="et">-n</span>.
+                      All six, each the I form of the present without its <span lang="et">-n</span>.
                     </Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Check the stem in the ones you missed.</Trans>

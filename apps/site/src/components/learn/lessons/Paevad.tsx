@@ -4,7 +4,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { LESSONS } from "../../../lib/learn/catalogue";
-import { clipId, clipUrl, PAEVAD_PASSAGE, WEEK } from "../../../lib/learn/clips";
+import { clipId, clipUrl, dayAnswers, PAEVAD_PASSAGE, WEEK } from "../../../lib/learn/clips";
 import { type Day, dayChoices, weekDay } from "../../../lib/learn/days";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffledRun } from "../../../lib/learn/quiz";
@@ -462,7 +462,7 @@ export function PaevadLesson() {
         kind: "dictation" as const,
         id: `write-${clipId(each)}`,
         src: src(`${each === "esmaspäev" ? "Homme" : "Täna"} on ${each}.`),
-        answers: [`${each === "esmaspäev" ? "Homme" : "Täna"} on ${each}.`],
+        answers: dayAnswers(`${each === "esmaspäev" ? "Homme" : "Täna"} on ${each}.`),
         pair: [each, each] as const,
       })),
     [],
@@ -475,7 +475,7 @@ export function PaevadLesson() {
         id: `translate-${clipId(said)}`,
         prompt: i18n._(prompt),
         src: src(said),
-        answers: [said],
+        answers: dayAnswers(said),
         pair: [said.split(" ")[0] as string, said] as const,
       })),
     [i18n],

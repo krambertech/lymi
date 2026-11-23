@@ -97,10 +97,10 @@ export const DRILLS: DrillBank = {
     ...KUSIMUSED_ASKED.map(heard),
     {
       kind: "dictation",
-      id: "write-kus-ta-on",
+      id: "write-kus-sa-tootad",
       rule: "word",
-      say: "Kus ta on?",
-      answers: ["Kus ta on?"],
+      say: "Kus sa töötad?",
+      answers: ["Kus sa töötad?"],
       explain: msg`<et>Kus</et>, where, not <et>kes</et>, who.`,
     },
     {

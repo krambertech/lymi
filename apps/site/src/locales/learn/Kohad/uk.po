@@ -308,7 +308,7 @@ msgid "Nearly. Play the ones you missed once more."
 msgstr "Майже. Переслухай ті, де були помилки."
 
 msgid "Now answer <0/> six ways: tap a place."
-msgstr "А тепер дай шість відповідей на <0/>: торкнись місця."
+msgstr "А тепер дай шість відповідей на <0/>: натисни місце."
 
 msgid "office"
 msgstr "офіс"
@@ -359,13 +359,13 @@ msgid "Tallinn, the capital"
 msgstr "Таллінн, столиця"
 
 msgid "Tap a place"
-msgstr "Торкнись місця"
+msgstr "Натисни місце"
 
 msgid "Tap a place to hear the answer."
-msgstr "Торкнись місця, щоб почути відповідь."
+msgstr "Натисни місце, щоб почути відповідь."
 
 msgid "Tap the places above once more, then try again."
-msgstr "Ще раз торкнись місць вище, а потім спробуй знову."
+msgstr "Ще раз понатискай місця вище, а потім спробуй знову."
 
 msgid "Tartu, a university town"
 msgstr "Тарту, університетське місто"

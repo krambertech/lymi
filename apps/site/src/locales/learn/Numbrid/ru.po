@@ -13,14 +13,14 @@ msgstr "-teist или -kümmend?"
 msgid "<0/> has a short <1>a</1> and a <2>k</2> before the <3>s</3>; <4/> has a long <5>uu</5>. <6/> starts with <7>ka</7>, <8/> with <9>ü</9>. The numbers built from them differ the same way. Listen, then pick."
 msgstr "<0/> произносится с коротким <1>a</1> и <2>k</2> перед <3>s</3>, <4/> — с долгим <5>uu</5>. <6/> начинается с <7>ka</7>, <8/> — с <9>ü</9>. Так же различаются и числа, составленные из них. Послушай и выбери."
 
-msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
-msgstr "<0/> — это сто, а <1/> — тысяча, и «один» перед ними не говорят. Сотни пишутся слитно, <2/>, а тысячи отдельно: <3/>."
+msgid "<0/> is a hundred and <1/> a thousand, usually with no “one” in front. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
+msgstr "<0/> — это сто, а <1/> — тысяча, и «один» перед ними обычно не говорят. Сотни пишутся слитно, <2/>, а тысячи отдельно: <3/>."
 
 msgid "<0/> is twelve and <1/> is twenty. Both start with kaks, so listen to how the word ends."
 msgstr "<0/> — двенадцать, а <1/> — двадцать. Оба начинаются с kaks, поэтому слушай, как заканчивается слово."
 
-msgid "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
-msgstr "Перед <0>sada</0> и <1>tuhat</1> «один» не говорят. Сотни пишутся слитно, тысячи отдельно."
+msgid "<0>Sada</0> and <1>tuhat</1> usually need no “one”. Hundreds join up; thousands stay separate."
+msgstr "Перед <0>sada</0> и <1>tuhat</1> «один» обычно не говорят. Сотни пишутся слитно, тысячи отдельно."
 
 msgid "<et>-teist</et> makes eleven to nineteen; <et>-kümmend</et> makes the tens."
 msgstr "<et>-teist</et> образует числа от одиннадцати до девятнадцати, <et>-kümmend</et> — десятки."
@@ -244,8 +244,8 @@ msgstr "Собираем вместе"
 msgid "Range"
 msgstr "Диапазон"
 
-msgid "Sada alone, with no “one” in front."
-msgstr "Только sada, без «один» перед ним."
+msgid "Sada, usually with no “one” in front."
+msgstr "Sada — обычно без «один» перед ним."
 
 msgid "seven"
 msgstr "семь"

@@ -4,6 +4,7 @@ import {
   answerTokens,
   answerWords,
   differing,
+  lettersOff,
   formsOf,
   type IsForm,
   markAnswer,
@@ -267,6 +268,11 @@ describe("the helpers", () => {
     expect(otherAnswers(markAnswer("me elame eestis", accepted), accepted)).toEqual([
       "Meie elame Eestis.",
     ]);
+  });
+
+  it("counts the letters a typed word is off by", () => {
+    expect(lettersOff(markAnswer("jalk", ["jalg"]))).toBe(1);
+    expect(lettersOff(markAnswer("talv", ["jalg"]))).toBe(2);
   });
 
   it("collects the forms in texts", () => {

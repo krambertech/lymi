@@ -146,7 +146,7 @@ msgid "He’s at home."
 msgstr "Він удома."
 
 msgid "He’s tired."
-msgstr "Він утомлений."
+msgstr "Він утомився."
 
 msgid "Hear a sentence and pick who it’s about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
 msgstr "Послухай речення й вибери, про кого воно. Де займенника немає, слухай кінець дієслова. З <0/> відрізнити <1/> від <2/> можна лише за займенником."
@@ -242,9 +242,6 @@ msgstr "Обери закінчення, яке пасує до займенни
 msgid "Play {word}"
 msgstr "Відтворити {word}"
 
-msgid "Play each sentence slower, then try again."
-msgstr "Послухай кожне речення повільніше, а тоді спробуй ще раз."
-
 msgid "Pronouns"
 msgstr "Займенники"
 
@@ -273,7 +270,7 @@ msgid "She’s at home."
 msgstr "Вона вдома."
 
 msgid "She’s tired."
-msgstr "Вона втомлена."
+msgstr "Вона втомилася."
 
 msgctxt "pronoun form"
 msgid "Short"
@@ -389,6 +386,9 @@ msgstr "втомлений"
 
 msgid "to be"
 msgstr "бути"
+
+msgid "Try again, and tap Slower before you write each sentence."
+msgstr "Спробуй ще раз і перед кожним реченням натисни «Повільніше»."
 
 msgid "Type the form"
 msgstr "Напиши форму"

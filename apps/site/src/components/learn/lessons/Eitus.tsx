@@ -74,7 +74,7 @@ const GLOSSARY: Glossary = {
   "ei ole": { en: msg`am not, is not, are not`, note: msg`The no of olema, to be.` },
   pole: { en: msg`am not, is not, are not`, note: msg`Ei ole in one word.` },
   olema: { en: msg`to be`, clip: false },
-  lugema: { en: msg`to read`, note: msg`Its ma form is loen.`, clip: false },
+  lugema: { en: msg`to read`, note: msg`Its I form in the present is loen.`, clip: false },
   kas: {
     en: msg`turns a sentence into a yes-or-no question`,
     clip: false,
@@ -215,7 +215,7 @@ function PersonFlip() {
   );
 }
 
-/** One verb as a pair: the ma form with its -n lit, and its no, each to tap. */
+/** One verb as a pair: the I form of the present with its -n lit, and its no, each to tap. */
 function StemPair({ stem, inf }: { stem: string; inf: string }) {
   const { t, i18n } = useLingui();
   const yes = verbSentence("ma", stem, false);
@@ -669,8 +669,8 @@ export function EitusLesson() {
           Put <b lang="et">ei</b> before the verb: <b lang="et">ma ei loe</b>, I don’t read.
         </Trans>,
         <Trans key="2">
-          After <b lang="et">ei</b> comes the ma form without its -n: <b lang="et">loen</b>,{" "}
-          <b lang="et">ei loe</b>.
+          After <b lang="et">ei</b> comes the I form of the present without its -n:{" "}
+          <b lang="et">loen</b>, <b lang="et">ei loe</b>.
         </Trans>,
         <Trans key="3">
           The no is the same for every person: <b lang="et">ma ei loe</b>,{" "}
@@ -724,8 +724,8 @@ export function EitusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    To find the form that follows ei, take the ma form from lesson {present} and
-                    drop the -n. <Word w="Loen" /> becomes <Word w="ei loe" />, and{" "}
+                    To find the form that follows ei, take the I form of the present from lesson{" "}
+                    {present} and drop the -n. <Word w="Loen" /> becomes <Word w="ei loe" />, and{" "}
                     <Word w="räägin" /> becomes <Word w="ei räägi" />. It works for every verb
                     below. Tap either side to hear it with ma.
                   </Trans>
@@ -741,8 +741,8 @@ export function EitusLesson() {
               <Aside>
                 <Trans>
                   In some verbs the stem changes: <Word w="lugema" />, but <Word w="loen" />. Start
-                  from the ma form, not the dictionary form, and the no follows: <Word w="ei loe" />
-                  .
+                  from the I form of the present, not the -ma infinitive, and the no follows:{" "}
+                  <Word w="ei loe" />.
                 </Trans>
               </Aside>
             </>

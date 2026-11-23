@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
-msgid "<0>Kas</0> asks yes or no: the answer starts with <1>jah</1> or <2>ei</2>."
-msgstr "<0>Kas</0> спрашивает «да или нет»: ответ начинается с <1>jah</1> или <2>ei</2>."
+msgid "<0>Kas</0> asks yes or no: the answer usually starts with <1>jah</1> or <2>ei</2>."
+msgstr "<0>Kas</0> спрашивает «да или нет»: ответ обычно начинается с <1>jah</1> или <2>ei</2>."
 
 msgid "<0>Kes</0> asks who, so a person answers it."
 msgstr "<0>Kes</0> спрашивает «кто», поэтому ответ — человек."
@@ -70,11 +70,11 @@ msgstr "много"
 msgid "A note from Kati"
 msgstr "Записка от Кати"
 
-msgid "A yes-or-no question starts with <et>kas</et>; the verb takes the ending for its person, as without <et>kas</et>."
-msgstr "Вопрос с ответом «да» или «нет» начинается с <et>kas</et>; окончание глагола, как и без <et>kas</et>, зависит от лица."
+msgid "A yes-or-no question usually starts with <et>kas</et>; the verb takes the ending for its person, as without <et>kas</et>."
+msgstr "Вопрос с ответом «да» или «нет» обычно начинается с <et>kas</et>; окончание глагола, как и без <et>kas</et>, зависит от лица."
 
-msgid "A yes-or-no question starts with <et>kas</et>."
-msgstr "Вопрос с ответом «да» или «нет» начинается с <et>kas</et>."
+msgid "A yes-or-no question usually starts with <et>kas</et>."
+msgstr "Вопрос с ответом «да» или «нет» обычно начинается с <et>kas</et>."
 
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "После <0>ei</0> у глагола <1>olema</1> нет окончания: <2>ei ole</2>."
@@ -205,8 +205,8 @@ msgstr "в кафе"
 msgid "In a café"
 msgstr "В кафе"
 
-msgid "In a town or a building, <et>-s</et>; at work, <et>-l</et>."
-msgstr "В городе или здании — <et>-s</et>; на работе — <et>-l</et>."
+msgid "In a town or a building, usually <et>-s</et>; at work, <et>-l</et>."
+msgstr "В городе или здании обычно <et>-s</et>; на работе — <et>-l</et>."
 
 msgid "In an office"
 msgstr "В офисе"
@@ -295,8 +295,8 @@ msgstr "Приятно познакомиться"
 msgid "not; no"
 msgstr "не; нет"
 
-msgid "Now you ask. Pick the question that fits what Mari just said. Ask why with <0/>, and the answer starts with <1/>, because."
-msgstr "Теперь спрашиваешь ты. Выбирай вопрос, который подходит к тому, что Мари только что сказала. «Почему» — это <0/>, а ответ начинается с <1/>, «потому что»."
+msgid "Now you ask. Pick the question that fits what Mari just said. Ask why with <0/>, and the answer usually starts with <1/>, because."
+msgstr "Теперь спрашиваешь ты. Выбирай вопрос, который подходит к тому, что Мари только что сказала. «Почему» — это <0/>, а ответ обычно начинается с <1/>, «потому что»."
 
 msgid "Pärnu takes <0>-s</0>: <1>Pärnus</1>."
 msgstr "Пярну получает <0>-s</0>: <1>Pärnus</1>."

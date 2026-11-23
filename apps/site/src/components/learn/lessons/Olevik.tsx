@@ -493,7 +493,7 @@ export function OlevikLesson() {
     () => [
       {
         id: "same",
-        label: t`Same stem as the -ma form`,
+        label: t`Same stem as the -ma infinitive`,
         lang: i18n.locale,
         rule: (
           <Trans>
@@ -507,7 +507,7 @@ export function OlevikLesson() {
         lang: i18n.locale,
         rule: (
           <Trans>
-            The stem differs from the -ma form: <span lang="et">lugema, loe-, loen</span>.
+            The stem differs from the -ma infinitive: <span lang="et">lugema, loe-, loen</span>.
           </Trans>
         ),
       },
@@ -545,7 +545,7 @@ export function OlevikLesson() {
         pair: [kind, wrong] as const,
         explain:
           kind === "stem" ? (
-            <Trans>The ending goes on the stem of the I form, not of the -ma form.</Trans>
+            <Trans>The ending goes on the stem of the I form, not of the -ma infinitive.</Trans>
           ) : (
             <Trans>The ending goes with the pronoun at the start of the sentence.</Trans>
           ),
@@ -645,8 +645,8 @@ export function OlevikLesson() {
       words={PRESENT_VERBS.map((each) => each.verb)}
       recap={[
         <Trans key="1">
-          A dictionary lists a verb in its -ma form: <b lang="et">elama</b>, to live. The endings go
-          on its stem, <b lang="et">ela-</b>.
+          A dictionary lists a verb in its -ma infinitive: <b lang="et">elama</b>, to live. The
+          endings go on its stem, <b lang="et">ela-</b>.
         </Trans>,
         <Trans key="2">
           Each pronoun has its ending:{" "}
@@ -708,9 +708,9 @@ export function OlevikLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    A dictionary lists a verb in its -ma form: <Word w="elama" />, to live. Take off
-                    -ma and you have the stem, <b lang="et">ela-</b>. The ending goes on the stem:{" "}
-                    <Word w="elan" />, I live.
+                    A dictionary lists a verb in its -ma infinitive: <Word w="elama" />, to live.
+                    Take off -ma and you have the stem, <b lang="et">ela-</b>. The ending goes on
+                    the stem: <Word w="elan" />, I live.
                   </Trans>
                 </p>
                 <p>
@@ -887,9 +887,9 @@ export function OlevikLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Some verbs keep the stem of the -ma form: <Word w="elama" />, <Word w="elan" />.
-                    In others the stem changes, and the -ma form doesn’t show it, so learn the I
-                    form: <Word w="lugema" />, <Word w="ma loen" />.
+                    Some verbs keep the stem of the -ma infinitive: <Word w="elama" />,{" "}
+                    <Word w="elan" />. In others the stem changes, and the -ma infinitive doesn’t
+                    show it, so learn the I form: <Word w="lugema" />, <Word w="ma loen" />.
                   </Trans>
                 </p>
                 <p>
@@ -914,8 +914,8 @@ export function OlevikLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each sentence has one wrong verb: a stem made from the -ma form, or an ending
-                    that belongs to another pronoun. Tap the wrong word, then type it right.
+                    Each sentence has one wrong verb: a stem made from the -ma infinitive, or an
+                    ending that belongs to another pronoun. Tap the wrong word, then type it right.
                   </Trans>
                 </p>
               </Prose>

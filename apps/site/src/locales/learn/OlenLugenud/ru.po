@@ -37,17 +37,14 @@ msgstr "22 минуты"
 msgid "7 exercises"
 msgstr "7 упражнений"
 
-msgid "A finished time is named, last month, so the simple past: <0>käisin</0>."
-msgstr "Назван завершённый период, прошлый месяц, поэтому простое прошедшее: <0>käisin</0>."
+msgid "A finished time is named, last month, so usually the simple past: <0>käisin</0>."
+msgstr "Назван завершённый период, прошлый месяц, поэтому обычно простое прошедшее: <0>käisin</0>."
 
-msgid "A finished time is named, so the simple past."
-msgstr "Назван завершённый период, поэтому простое прошедшее."
+msgid "A finished time is named, so usually the simple past."
+msgstr "Назван завершённый период, поэтому обычно простое прошедшее."
 
-msgid "A finished time is named, yesterday, so the simple past."
-msgstr "Назван завершённый период, вчера, поэтому простое прошедшее."
-
-msgid "After <0>ei</0>, <1>olema</1> is <2>ole</2> for every person."
-msgstr "После <0>ei</0> <1>olema</1> имеет форму <2>ole</2> для всех лиц."
+msgid "A finished time is named, yesterday, so usually the simple past."
+msgstr "Назван завершённый период, вчера, поэтому обычно простое прошедшее."
 
 msgid "After <0>ei</0>: <1>ei ole</1>."
 msgstr "После <0>ei</0>: <1>ei ole</1>."
@@ -88,17 +85,14 @@ msgstr "До этой поездки Кати плавала в море тол�
 msgid "Drop <0>-da</0> or <1>-a</1> from the <2>-da</2> infinitive and add <3>-nud</3>."
 msgstr "Убери <0>-da</0> или <1>-a</1> из инфинитива на <2>-da</2> и добавь <3>-nud</3>."
 
-msgid "Drop <et>-da</et> or <et>-a</et> from the <et>-da</et> infinitive and add <et>-nud</et>."
-msgstr "Убери <et>-da</et> или <et>-a</et> из инфинитива на <et>-da</et> и добавь <et>-nud</et>."
-
 msgid "Each round gives a sentence and a cue. Write the sentence in the perfect."
 msgstr "В каждом раунде — предложение и подсказка. Напиши предложение в перфекте."
 
 msgid "Each round gives a verb’s <0>-ma</0> and <1>-da</1> infinitives. Type its <2>-nud</2> form."
 msgstr "В каждом раунде — инфинитивы глагола на <0>-ma</0> и <1>-da</1>. Напиши его форму на <2>-nud</2>."
 
-msgid "Each row holds the <0>-da</0> infinitive and the <1>-nud</1> form. The first five are regular; the last five are irregular: learn their <2>-nud</2> form by heart."
-msgstr "В каждой строке инфинитив на <0>-da</0> и форма на <1>-nud</1>. Первые пять правильные; последние пять неправильные: их форму на <2>-nud</2> нужно выучить наизусть."
+msgid "Each row holds the <0>-da</0> infinitive and the <1>-nud</1> form. The first six follow the rule, and in <2>olla</2> one <3>l</3> goes. The last four are irregular: learn their <4>-nud</4> form by heart."
+msgstr "В каждой строке инфинитив на <0>-da</0> и форма на <1>-nud</1>. Первые шесть идут по правилу, а в <2>olla</2> пропадает одна <3>l</3>. Последние четыре неправильные: их форму на <4>-nud</4> нужно выучить наизусть."
 
 msgid "Each sentence has one wrong word: a <0>-nud</0> form, or a form of <1>olema</1>. Tap it, then type it right."
 msgstr "В каждом предложении одно неправильное слово: форма на <0>-nud</0> или форма <1>olema</1>. Нажми на него, потом напиши правильно."
@@ -202,8 +196,16 @@ msgstr "Я никогда об этом не слышал."
 msgid "I’ve taken a hundred photos."
 msgstr "Я сделала сто фото."
 
+#. placeholder {0}: verb.da
+#. placeholder {1}: verb.nud
+msgid "In a <0>-lla</0> verb, one <1>l</1> goes: <2>{0}, {1}</2>."
+msgstr "В глаголе на <0>-lla</0> пропадает одна <1>l</1>: <2>{0}, {1}</2>."
+
 msgid "In a sentence"
 msgstr "В предложении"
+
+msgid "In the present, after <0>ei</0>, <1>olema</1> is <2>ole</2> for every person."
+msgstr "В настоящем времени после <0>ei</0> <1>olema</1> имеет форму <2>ole</2> для всех лиц."
 
 msgid "In the present, after <et>ei</et>, <et>olema</et> is <et>ole</et> for every person."
 msgstr "В настоящем времени после <et>ei</et> глагол <et>olema</et> имеет форму <et>ole</et> для всех лиц."
@@ -217,8 +219,8 @@ msgstr "Неправильный: его форму на <0>-nud</0> нужно 
 msgid "Irregular: learn its <et>-nud</et> form by heart."
 msgstr "Неправильный: его форму на <et>-nud</et> нужно выучить наизусть."
 
-msgid "It comes from the <0>-da</0> infinitive of lesson {verbForms}: drop <1>-da</1> or <2>-a</2> and add <3>-nud</3>. <4>Lugeda</4> gives <5/>. Some verbs are irregular: <6>süüa</6> gives <7/>. Tap each form in the table to hear it."
-msgstr "Она образуется от инфинитива на <0>-da</0> из урока {verbForms}: отбрось <1>-da</1> или <2>-a</2> и добавь <3>-nud</3>. <4>Lugeda</4> даёт <5/>. Некоторые глаголы неправильные: <6>süüa</6> даёт <7/>. Нажми каждую форму в таблице, чтобы её услышать."
+msgid "It comes from the <0>-da</0> infinitive of lesson {verbForms}: usually you drop <1>-da</1> or <2>-a</2> and add <3>-nud</3>. <4>Lugeda</4> gives <5/>. In a <6>-lla</6> verb, one <7>l</7> goes: <8>olla, olnud; tulla, tulnud</8>. Some verbs are irregular: <9>süüa</9> gives <10/>, <11>hakata</11> gives <12>hakanud</12>. Tap each form in the table to hear it."
+msgstr "Она образуется от инфинитива на <0>-da</0> из урока {verbForms}: обычно отбрасываешь <1>-da</1> или <2>-a</2> и добавляешь <3>-nud</3>. <4>Lugeda</4> даёт <5/>. В глаголе на <6>-lla</6> пропадает одна <7>l</7>: <8>olla, olnud; tulla, tulnud</8>. Некоторые глаголы неправильные: <9>süüa</9> даёт <10/>, <11>hakata</11> даёт <12>hakanud</12>. Нажми каждую форму в таблице, чтобы её услышать."
 
 msgid "it’s done now"
 msgstr "уже сделано"
@@ -265,14 +267,14 @@ msgstr "Прошлым летом"
 msgid "Last week I read the book to the end."
 msgstr "На прошлой неделе я дочитал книгу."
 
-msgid "Last week is named, so the simple past."
-msgstr "Названа прошлая неделя, так что простое прошедшее."
+msgid "Last week is named, so usually the simple past."
+msgstr "Названа прошлая неделя, так что обычно простое прошедшее."
 
 msgid "Last winter"
 msgstr "Прошлой зимой"
 
-msgid "Lesson {past}’s simple past tells what happened at a finished time you name: <0/> The perfect reaches up to now, with no finished time named."
-msgstr "Простое прошедшее из урока {past} говорит, что случилось в названный завершённый период: <0/> Перфект доходит до настоящего, и завершённый период не назван."
+msgid "Lesson {past}’s simple past tells what happened, usually at a finished time you name: <0/> The perfect reaches up to now, usually with no finished time named."
+msgstr "Простое прошедшее из урока {past} говорит, что случилось, обычно в названный завершённый период: <0/> Перфект доходит до настоящего, и завершённый период обычно не назван."
 
 msgid "Lesson {pastNo} used a verb form ending in <0>-nud</0> to say no in the past: <1>ma ei lugenud</1>. The same form builds two more tenses in this lesson."
 msgstr "В уроке {pastNo} форма на <0>-nud</0> помогала отрицать в прошедшем: <1>ma ei lugenud</1>. В этом уроке она образует ещё два времени."
@@ -400,9 +402,6 @@ msgstr "Форма на -nud от sööma."
 msgid "The <0>-nud</0> form comes from <1>õppida</1>, so it keeps <2>pp</2>: <3>õppinud</3>."
 msgstr "Форма на <0>-nud</0> образуется от <1>õppida</1>, так что сохраняет <2>pp</2>: <3>õppinud</3>."
 
-msgid "The <0>-nud</0> form comes from the <1>-da</1> infinitive: <2>lugeda, lugenud</2>. Irregular verbs are learned by heart: <3>olnud, läinud, teinud, söönud, näinud</3>."
-msgstr "Форма на <0>-nud</0> образуется от инфинитива на <1>-da</1>: <2>lugeda, lugenud</2>. Неправильные глаголы учат наизусть: <3>olnud, läinud, teinud, söönud, näinud</3>."
-
 msgid "The <0>-nud</0> form of <1>minema</1> is <2>läinud</2>."
 msgstr "Форма на <0>-nud</0> от <1>minema</1> — <2>läinud</2>."
 
@@ -411,6 +410,9 @@ msgstr "Форма на <0>-nud</0> от <1>nägema</1> — <2>näinud</2>."
 
 msgid "The <0>-nud</0> form of <1>tegema</1> is <2>teinud</2>."
 msgstr "Форма на <0>-nud</0> от <1>tegema</1> — <2>teinud</2>."
+
+msgid "The <0>-nud</0> form usually comes from the <1>-da</1> infinitive: <2>lugeda, lugenud</2>; <3>olla, olnud</3>. Irregular verbs are learned by heart: <4>läinud, teinud, söönud, näinud</4>."
+msgstr "Форма на <0>-nud</0> обычно образуется от инфинитива на <1>-da</1>: <2>lugeda, lugenud</2>; <3>olla, olnud</3>. Неправильные глаголы учат наизусть: <4>läinud, teinud, söönud, näinud</4>."
 
 msgid "The <et>-nud</et> form"
 msgstr "Форма на <et>-nud</et>"
@@ -424,11 +426,11 @@ msgstr "Паром уже ушёл"
 msgid "The perfect and the pluperfect of lugema"
 msgstr "Перфект и плюсквамперфект глагола lugema"
 
-msgid "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form, for what has happened with no finished time named: <2>Ma olen Tartus käinud.</2>"
-msgstr "Перфект — это <0>olema</0> в настоящем времени плюс форма на <1>-nud</1>: для того, что случилось, когда завершённый период не назван: <2>Ma olen Tartus käinud.</2>"
+msgid "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form, usually for what has happened with no finished time named: <2>Ma olen Tartus käinud.</2>"
+msgstr "Перфект — это <0>olema</0> в настоящем времени плюс форма на <1>-nud</1>: обычно для того, что случилось, когда завершённый период не назван: <2>Ma olen Tartus käinud.</2>"
 
-msgid "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form: <2/> It says something has happened, with no finished time named: ever, already, or not yet."
-msgstr "Перфект — это <0>olema</0> в настоящем времени плюс форма на <1>-nud</1>: <2/> Он говорит, что что-то случилось, а завершённый период не назван: когда-нибудь, уже или ещё нет."
+msgid "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form: <2/> It says something has happened, usually with no finished time named: ever, already, or not yet."
+msgstr "Перфект — это <0>olema</0> в настоящем времени плюс форма на <1>-nud</1>: <2/> Он говорит, что что-то случилось, а завершённый период обычно не назван: когда-нибудь, уже или ещё нет."
 
 msgid "The perfect reaches up to now. The pluperfect is before another past."
 msgstr "Перфект доходит до настоящего. Плюсквамперфект — раньше другого прошлого."
@@ -502,6 +504,9 @@ msgstr "Напиши форму на -nud"
 msgid "up to now"
 msgstr "до сих пор"
 
+msgid "Usually: drop <et>-da</et> or <et>-a</et> from the <et>-da</et> infinitive and add <et>-nud</et>."
+msgstr "Обычно: убери <et>-da</et> или <et>-a</et> из инфинитива на <et>-da</et> и добавь <et>-nud</et>."
+
 msgid "was"
 msgstr "был"
 
@@ -511,8 +516,8 @@ msgstr "мы"
 msgid "What should Jaan eat there? Write it in one word."
 msgstr "Что Яану стоит там попробовать? Напиши одним словом."
 
-msgid "When a finished past time is named, such as <0>eile</0>, use the simple past: <1>Eile käisin ma Tartus.</1>"
-msgstr "Когда назван завершённый период в прошлом, например <0>eile</0>, бери простое прошедшее: <1>Eile käisin ma Tartus.</1>"
+msgid "When a finished past time is named, such as <0>eile</0>, usually use the simple past: <1>Eile käisin ma Tartus.</1>"
+msgstr "Когда назван завершённый период в прошлом, например <0>eile</0>, обычно бери простое прошедшее: <1>Eile käisin ma Tartus.</1>"
 
 msgid "When I got home, Mari had already eaten."
 msgstr "Когда я пришёл домой, Мари уже поела."

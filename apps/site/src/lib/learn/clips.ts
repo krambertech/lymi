@@ -4474,7 +4474,7 @@ export const PLURAL_CASE_CONVERSATION: Conversation = {
     },
     {
       voice: "second",
-      text: ["Hea mõte!", "Ma toon Tartust kooke.", "Kas kell viis sobib?"],
+      text: ["Hea mõte!", "Ma toon kooke.", "Kas kell viis sobib?"],
     },
     { voice: "main", text: "Jah, kell viis sobib väga hästi." },
     {
@@ -4509,8 +4509,23 @@ export const PLURAL_CASE_ANSWERS: Record<string, readonly [string, ...string[]]>
   ],
   "Ta kirjutab sõpradele.": ["Ta kirjutab sõpradele.", "Tema kirjutab sõpradele."],
   "Raamatutes on pilte.": ["Raamatutes on pilte."],
-  "Lindudel on puudes pesad.": ["Lindudel on puudes pesad.", "Lindudel on pesad puudes."],
-  "Me käime poodides.": ["Me käime poodides.", "Meie käime poodides.", "Käime poodides."],
+  "Lindudel on puudes pesad.": [
+    "Lindudel on puudes pesad.",
+    "Lindudel on pesad puudes.",
+    "Puudes on lindudel pesad.",
+    "Lindudel on puudes pesi.",
+    "Lindudel on puudes pesasid.",
+  ],
+  "Me käime poodides.": [
+    "Me käime poodides.",
+    "Meie käime poodides.",
+    "Käime poodides.",
+    "Me läheme poodidesse.",
+    "Meie läheme poodidesse.",
+    "Läheme poodidesse.",
+    "Me käime poodides ringi.",
+    "Käime poodides ringi.",
+  ],
   "Lapsed tulevad koolidest.": ["Lapsed tulevad koolidest.", "Koolidest tulevad lapsed."],
   "Ma lähen sõpradega kinno.": [
     "Ma lähen sõpradega kinno.",
@@ -4519,16 +4534,46 @@ export const PLURAL_CASE_ANSWERS: Record<string, readonly [string, ...string[]]>
     "Lähen sõpradega kinno.",
     "Lähen kinno sõpradega.",
     "Mina lähen kinno sõpradega.",
+    "Ma lähen koos sõpradega kinno.",
+    "Lähen koos sõpradega kinno.",
+    "Mina lähen koos sõpradega kinno.",
+    "Ma lähen kinno koos sõpradega.",
+    "Mina lähen kinno koos sõpradega.",
+    "Lähen kinno koos sõpradega.",
+    "Ma lähen sõpradega koos kinno.",
   ],
-  "Me tuleme poodidest.": ["Me tuleme poodidest.", "Meie tuleme poodidest.", "Tuleme poodidest."],
-  "Ta kirjutab sõpradest.": ["Ta kirjutab sõpradest.", "Tema kirjutab sõpradest."],
+  "Me tuleme poodidest.": [
+    "Me tuleme poodidest.",
+    "Meie tuleme poodidest.",
+    "Tuleme poodidest.",
+    "Me tuleme poodidest välja.",
+    "Meie tuleme poodidest välja.",
+    "Tuleme poodidest välja.",
+  ],
+  "Ta kirjutab sõpradest.": [
+    "Ta kirjutab sõpradest.",
+    "Tema kirjutab sõpradest.",
+    "Ta kirjutab sõprade kohta.",
+    "Tema kirjutab sõprade kohta.",
+  ],
   "Ma räägin inimestele.": [
     "Ma räägin inimestele.",
     "Mina räägin inimestele.",
     "Räägin inimestele.",
+    "Ma ütlen inimestele.",
+    "Ütlen inimestele.",
   ],
   "Pildid on raamatus.": ["Pildid on raamatus.", "Raamatus on pildid."],
-  "Me käime poes.": ["Me käime poes.", "Meie käime poes.", "Käime poes."],
+  "Me käime poes.": [
+    "Me käime poes.",
+    "Meie käime poes.",
+    "Käime poes.",
+    "Me läheme poodi.",
+    "Meie läheme poodi.",
+    "Läheme poodi.",
+    "Me läheme poesse.",
+    "Läheme poesse.",
+  ],
 };
 
 const PLURAL_CASE_CLIPS: Record<string, Clip> = {
@@ -4553,7 +4598,7 @@ export const PERFECT_NUD = [
   { ma: "õppima", da: "õppida", nud: "õppinud", regular: true },
   { ma: "käima", da: "käia", nud: "käinud", regular: true },
   { ma: "ostma", da: "osta", nud: "ostnud", regular: true },
-  { ma: "olema", da: "olla", nud: "olnud", regular: false },
+  { ma: "olema", da: "olla", nud: "olnud", regular: true },
   { ma: "minema", da: "minna", nud: "läinud", regular: false },
   { ma: "tegema", da: "teha", nud: "teinud", regular: false },
   { ma: "sööma", da: "süüa", nud: "söönud", regular: false },
@@ -4658,8 +4703,15 @@ export const PERFECT_FIXES = [
   },
 ] as const;
 
-export const PERFECT_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> =
-  Object.fromEntries(PERFECT_FIXES.map(({ right }) => [right, [right]]));
+export const PERFECT_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  ...Object.fromEntries(PERFECT_FIXES.map(({ right }) => [right, [right]])),
+  "Ma ei ole seda filmi näinud.": [
+    "Ma ei ole seda filmi näinud.",
+    "Ma ei olnud seda filmi näinud.",
+  ],
+  "Me oleme Tartus käinud.": ["Me oleme Tartus käinud.", "Me olime Tartus käinud."],
+  "Nad on piletid ostnud.": ["Nad on piletid ostnud.", "Nad olid piletid ostnud."],
+};
 
 export const PERFECT_DIALOGUE = {
   "d-mari-1": { text: "Tere! Kas sa oled Tartus käinud?", voice: "second" },
@@ -4811,11 +4863,26 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Eile käisin Tartus.",
     "Käisin eile Tartus.",
     "Mina käisin eile Tartus.",
+    "Ma läksin eile Tartusse.",
+    "Eile läksin ma Tartusse.",
+    "Läksin eile Tartusse.",
+    "Mina läksin eile Tartusse.",
+    "Eile läksin Tartusse.",
+    "Eile ma käisin Tartus.",
+    "Eile ma läksin Tartusse.",
+    "Ma käisin Tartus eile.",
   ],
   "Ma olen Tartus käinud.": [
     "Ma olen Tartus käinud.",
     "Olen Tartus käinud.",
     "Mina olen Tartus käinud.",
+    "Ma olen Tartus olnud.",
+    "Olen Tartus olnud.",
+    "Mina olen Tartus olnud.",
+    "Ma olen käinud Tartus.",
+    "Olen käinud Tartus.",
+    "Mina olen käinud Tartus.",
+    "Ma olen olnud Tartus.",
   ],
   "Ma ei ole veel söönud.": [
     "Ma ei ole veel söönud.",
@@ -4827,23 +4894,40 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Mina pole veel söönud.",
     "Ei ole söönud veel.",
     "Mina ei ole söönud veel.",
+    "Ma pole söönud veel.",
+    "Pole söönud veel.",
+    "Mina pole söönud veel.",
   ],
   "Kui ma koju jõudsin, oli Mari juba söönud.": [
     "Kui ma koju jõudsin, oli Mari juba söönud.",
     "Kui ma koju jõudsin, Mari oli juba söönud.",
     "Kui ma jõudsin koju, oli Mari juba söönud.",
+    "Kui ma jõudsin koju, Mari oli juba söönud.",
+    "Kui koju jõudsin, oli Mari juba söönud.",
+    "Mari oli juba söönud, kui ma koju jõudsin.",
   ],
   "Ta on eesti keelt kaks aastat õppinud.": [
     "Ta on eesti keelt kaks aastat õppinud.",
     "Ta on kaks aastat eesti keelt õppinud.",
     "Tema on eesti keelt kaks aastat õppinud.",
     "Ta õpib eesti keelt kaks aastat.",
+    "Ta õpib eesti keelt juba kaks aastat.",
+    "Ta on juba kaks aastat eesti keelt õppinud.",
+    "Ta on eesti keelt juba kaks aastat õppinud.",
+    "Tema õpib eesti keelt juba kaks aastat.",
+    "Ta õpib juba kaks aastat eesti keelt.",
+    "Tema on kaks aastat eesti keelt õppinud.",
+    "Ta on õppinud eesti keelt kaks aastat.",
   ],
   "Kas sa oled seda filmi näinud?": [
     "Kas sa oled seda filmi näinud?",
     "Kas sa oled seda filmi juba näinud?",
     "Kas te olete seda filmi näinud?",
     "Oled sa seda filmi näinud?",
+    "Kas oled seda filmi näinud?",
+    "Kas sina oled seda filmi näinud?",
+    "Olete te seda filmi näinud?",
+    "Kas sa oled näinud seda filmi?",
   ],
   "Eelmisel nädalal lugesin ma raamatu läbi.": [
     "Eelmisel nädalal lugesin ma raamatu läbi.",
@@ -4851,18 +4935,30 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Ma lugesin eelmisel nädalal raamatu läbi.",
     "Lugesin eelmisel nädalal raamatu läbi.",
     "Mina lugesin eelmisel nädalal raamatu läbi.",
+    "Eelmisel nädalal ma lugesin raamatu läbi.",
+    "Ma lugesin raamatu eelmisel nädalal läbi.",
   ],
   "Ma olen juba söönud.": ["Ma olen juba söönud.", "Olen juba söönud.", "Mina olen juba söönud."],
   "Ta on juba koju läinud.": [
     "Ta on juba koju läinud.",
     "Ta on koju juba läinud.",
     "Tema on juba koju läinud.",
+    "Tema on koju juba läinud.",
   ],
-  "Nad on piletid ostnud.": ["Nad on piletid ostnud.", "Nemad on piletid ostnud."],
+  "Nad on piletid ostnud.": [
+    "Nad on piletid ostnud.",
+    "Nemad on piletid ostnud.",
+    "Nad on piletid juba ostnud.",
+    "Nad on piletid ära ostnud.",
+  ],
   "Kui ma jaama jõudsin, oli rong juba läinud.": [
     "Kui ma jaama jõudsin, oli rong juba läinud.",
     "Kui ma jõudsin jaama, oli rong juba läinud.",
     "Kui ma jaama jõudsin, rong oli juba läinud.",
+    "Kui ma jaama jõudsin, oli rong juba ära läinud.",
+    "Kui ma jõudsin jaama, rong oli juba läinud.",
+    "Kui jaama jõudsin, oli rong juba läinud.",
+    "Rong oli juba läinud, kui ma jaama jõudsin.",
   ],
   "Ta pole seda filmi näinud.": [
     "Ta pole seda filmi näinud.",
@@ -4874,6 +4970,7 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Me oleme töö ära teinud.",
     "Oleme töö ära teinud.",
     "Meie oleme töö ära teinud.",
+    "Me oleme töö juba ära teinud.",
   ],
   "Ma ei ole seda filmi näinud.": [
     "Ma ei ole seda filmi näinud.",
@@ -4884,11 +4981,17 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Ei ole seda filmi näinud.",
     "Pole seda filmi näinud.",
     "Mina ei ole seda filmi näinud.",
+    "Ma pole seda filmi veel näinud.",
+    "Mina pole seda filmi näinud.",
+    "Ma ei ole kunagi seda filmi näinud.",
+    "Ma pole kunagi seda filmi näinud.",
+    "Ma ei ole veel seda filmi näinud.",
   ],
   "Sa oled raamatu läbi lugenud.": [
     "Sa oled raamatu läbi lugenud.",
     "Oled raamatu läbi lugenud.",
     "Sina oled raamatu läbi lugenud.",
+    "Sa oled raamatu juba läbi lugenud.",
   ],
 };
 
@@ -4941,7 +5044,7 @@ export const COND_FORM_QUIZ = [
 ] as const;
 
 export const COND_HEARD = [
-  { id: "minema", now: "Ma lähen kinno.", would: "Ma läheksin kinno.", past: "Ma läksin kinno." },
+  { id: "tulema", now: "Ma tulen koju.", would: "Ma tuleksin koju.", past: "Ma tulin koju." },
   { id: "olema", now: "Mul on aega.", would: "Mul oleks aega.", past: "Mul oli aega." },
   { id: "ostma", now: "Ta ostab auto.", would: "Ta ostaks auto.", past: "Ta ostis auto." },
   { id: "sooma", now: "Me sööme kooki.", would: "Me sööksime kooki.", past: "Me sõime kooki." },
@@ -4989,6 +5092,15 @@ export const COND_TRANSLATE = [
   "Kui oleks soe, ujuksime me meres.",
 ] as const;
 
+export const COND_SHORT: Record<string, string> = {
+  loeksid: "loeks",
+  oleksime: "oleks",
+  teeksid: "teeks",
+  tahaksin: "tahaks",
+  saaksite: "saaks",
+  sööksin: "sööks",
+};
+
 export const COND_FIXES = [
   { wrong: "Ma ei läheksin kinno.", right: "Ma ei läheks kinno." },
   { wrong: "Kas sa saaksin mind aidata?", right: "Kas sa saaksid mind aidata?" },
@@ -4999,9 +5111,12 @@ export const COND_FIXES = [
   { wrong: "Te loeksid seda raamatut.", right: "Te loeksite seda raamatut." },
 ] as const;
 
-export const COND_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = Object.fromEntries(
-  COND_FIXES.map(({ right }) => [right, [right]]),
-);
+export const COND_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  ...Object.fromEntries(COND_FIXES.map(({ right }) => [right, [right]])),
+  "Kas sa saaksid mind aidata?": ["Kas sa saaksid mind aidata?", "Kas sa saaks mind aidata?"],
+  "Me läheksime homme kinno.": ["Me läheksime homme kinno.", "Me läheks homme kinno."],
+  "Te loeksite seda raamatut.": ["Te loeksite seda raamatut.", "Te loeks seda raamatut."],
+};
 
 export const COND_DIALOGUE = {
   "d-teenindaja-1": { text: "Tere õhtust! Mida te sooviksite?", voice: "second" },
@@ -5118,6 +5233,20 @@ export const COND_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Tahaksin kohvi, palun.",
     "Mina tahaksin kohvi.",
     "Mina tahaksin kohvi, palun.",
+    "Ma sooviksin kohvi.",
+    "Ma sooviksin kohvi, palun.",
+    "Sooviksin kohvi.",
+    "Sooviksin kohvi, palun.",
+    "Ma võtaksin kohvi.",
+    "Ma võtaksin kohvi, palun.",
+    "Võtaksin kohvi.",
+    "Võtaksin kohvi, palun.",
+    "Ma tahaksin üht kohvi.",
+    "Ma tahaksin üht kohvi, palun.",
+    "Tahaksin üht kohvi, palun.",
+    "Ma võtaksin ühe kohvi, palun.",
+    "Ma tahaks kohvi.",
+    "Ma tahaks kohvi, palun.",
   ],
   "Kas sa saaksid mind aidata?": [
     "Kas sa saaksid mind aidata?",
@@ -5126,6 +5255,15 @@ export const COND_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Kas te võiksite mind aidata?",
     "Saaksid sa mind aidata?",
     "Kas sa saaksid mulle appi tulla?",
+    "Kas saaksid mind aidata?",
+    "Kas saaksite mind aidata?",
+    "Kas sina saaksid mind aidata?",
+    "Saaksite te mind aidata?",
+    "Võiksid sa mind aidata?",
+    "Kas te saaksite mulle appi tulla?",
+    "Kas sa aitaksid mind?",
+    "Kas te aitaksite mind?",
+    "Kas sa saaks mind aidata?",
   ],
   "Kui mul oleks aega, läheksin ma kinno.": [
     "Kui mul oleks aega, läheksin ma kinno.",
@@ -5133,14 +5271,29 @@ export const COND_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Kui mul oleks aega, läheksin kinno.",
     "Ma läheksin kinno, kui mul oleks aega.",
     "Läheksin kinno, kui mul oleks aega.",
+    "Kui mul oleks aega, siis läheksin ma kinno.",
+    "Kui mul oleks aega, siis ma läheksin kinno.",
+    "Kui mul oleks aega, siis läheksin kinno.",
+    "Kui mul aega oleks, läheksin ma kinno.",
+    "Kui mul aega oleks, läheksin kinno.",
+    "Kui mul aega oleks, ma läheksin kinno.",
+    "Ma läheksin kinno, kui mul aega oleks.",
   ],
   "Ma ei läheks.": ["Ma ei läheks.", "Mina ei läheks.", "Ei läheks."],
-  "Me elaksime Tartus.": ["Me elaksime Tartus.", "Meie elaksime Tartus.", "Elaksime Tartus."],
+  "Me elaksime Tartus.": [
+    "Me elaksime Tartus.",
+    "Meie elaksime Tartus.",
+    "Elaksime Tartus.",
+    "Me elaks Tartus.",
+  ],
   "Kas sa loeksid seda raamatut?": [
     "Kas sa loeksid seda raamatut?",
     "Kas te loeksite seda raamatut?",
     "Loeksid sa seda raamatut?",
     "Kas sina loeksid seda raamatut?",
+    "Kas loeksid seda raamatut?",
+    "Kas loeksite seda raamatut?",
+    "Loeksite te seda raamatut?",
   ],
   "Kui oleks soe, ujuksime me meres.": [
     "Kui oleks soe, ujuksime me meres.",
@@ -5149,14 +5302,34 @@ export const COND_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Kui ilm oleks soe, ujuksime me meres.",
     "Me ujuksime meres, kui oleks soe.",
     "Ujuksime meres, kui oleks soe.",
+    "Kui oleks soe, siis ujuksime me meres.",
+    "Kui oleks soe, siis me ujuksime meres.",
+    "Kui oleks soe, siis ujuksime meres.",
+    "Kui ilm oleks soe, siis ujuksime me meres.",
+    "Kui ilm oleks soe, me ujuksime meres.",
+    "Kui ilm oleks soe, ujuksime meres.",
+    "Me ujuksime meres, kui ilm oleks soe.",
+    "Kui ilm oleks soe, siis me ujuksime meres.",
+    "Kui soe oleks, ujuksime me meres.",
   ],
-  "Ma läheksin kinno.": ["Ma läheksin kinno.", "Läheksin kinno.", "Mina läheksin kinno."],
-  "Nad ostaksid maja.": ["Nad ostaksid maja.", "Nemad ostaksid maja."],
+  "Ma läheksin kinno.": [
+    "Ma läheksin kinno.",
+    "Läheksin kinno.",
+    "Mina läheksin kinno.",
+    "Ma läheks kinno.",
+  ],
+  "Nad ostaksid maja.": ["Nad ostaksid maja.", "Nemad ostaksid maja.", "Nad ostaks maja."],
   "Kas te võiksite seda korrata?": [
     "Kas te võiksite seda korrata?",
     "Kas sa võiksid seda korrata?",
     "Kas te saaksite seda korrata?",
     "Kas sa saaksid seda korrata?",
+    "Kas te võiksite seda palun korrata?",
+    "Kas te võiksite palun seda korrata?",
+    "Kas te võiksite seda korrata, palun?",
+    "Kas võiksite seda korrata?",
+    "Võiksite te seda korrata?",
+    "Kas te võiksite seda uuesti öelda?",
   ],
 };
 

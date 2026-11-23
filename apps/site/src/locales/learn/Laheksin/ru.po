@@ -10,8 +10,8 @@ msgstr ""
 msgid "<0/> means I would go. Take the <1>ma</1> form of the present from lesson {present}, <2>lähen</2>, drop its <3>-n</3>, and add <4>-ksin</4>. Every verb works this way. Tap each form in the table to hear it."
 msgstr "<0/> значит «я пошёл бы». Возьми форму настоящего времени для <1>ma</1> из урока {present}, <2>lähen</2>, отбрось <3>-n</3> и добавь <4>-ksin</4>. Так работает каждый глагол. Нажми каждую форму в таблице, чтобы её услышать."
 
-msgid "<0/> means if. When the if is imagined, English says “if I had”, then “I would”; Estonian puts both halves in the would form: <1/> For a real if, both stay in the present: <2>Kui mul on aega, lähen ma kinno.</2>"
-msgstr "<0/> значит «если» и «если бы». Когда условие воображаемое, в эстонском обе половины стоят в условной форме: <1/> Когда условие реальное, обе остаются в настоящем времени: <2>Kui mul on aega, lähen ma kinno.</2>"
+msgid "<0/> means if. When the if is imagined, English says “if I had”, then “I would”; Estonian puts both halves in the would form: <1/> For a real if, both usually stay in the present: <2>Kui mul on aega, lähen ma kinno.</2>"
+msgstr "<0/> значит «если» и «если бы». Когда условие воображаемое, в эстонском обе половины стоят в условной форме: <1/> Когда условие реальное, обе обычно остаются в настоящем времени: <2>Kui mul on aega, lähen ma kinno.</2>"
 
 msgid "<0>-ks</0> in the verb: would."
 msgstr "<0>-ks</0> в глаголе: условная форма, «бы»."
@@ -85,8 +85,8 @@ msgstr "Отбрось <0>-n</0> в <1>{0}</1> и добавь <2>-ks</2> с о�
 msgid "Drop the <0>-n</0> of the present and add <1>-ksin</1>."
 msgstr "Отбрось <0>-n</0> настоящего времени и добавь <1>-ksin</1>."
 
-msgid "Drop the <et>-n</et> of the present and add <et>-ks</et> with the person’s ending: <et>-in</et>, <et>-id</et>, none for <et>ta</et>, <et>-ime</et>, <et>-ite</et>, <et>-id</et>."
-msgstr "Отбрось <et>-n</et> настоящего времени и добавь <et>-ks</et> с окончанием лица: <et>-in</et>, <et>-id</et>, без окончания для <et>ta</et>, <et>-ime</et>, <et>-ite</et>, <et>-id</et>."
+msgid "Drop the <et>-n</et> of the present and add <et>-ks</et>, usually with the person’s ending: <et>-in</et>, <et>-id</et>, none for <et>ta</et>, <et>-ime</et>, <et>-ite</et>, <et>-id</et>."
+msgstr "Отбрось <et>-n</et> настоящего времени и добавь <et>-ks</et>, обычно с окончанием лица: <et>-in</et>, <et>-id</et>, без окончания для <et>ta</et>, <et>-ime</et>, <et>-ite</et>, <et>-id</et>."
 
 msgid "Each round gives a sentence and a cue. Write it with the would form."
 msgstr "В каждом раунде — предложение и подсказка. Напиши его в условной форме."
@@ -106,23 +106,23 @@ msgstr "Исправь предложение"
 msgid "Fix the would form"
 msgstr "Исправь условную форму"
 
-msgid "For <0>me</0>, the ending is <1>-me</1>: <2>läheksime</2>."
-msgstr "Для <0>me</0> окончание <1>-me</1>: <2>läheksime</2>."
+msgid "For <0>me</0>, the full ending is <1>-me</1>: <2>läheksime</2>."
+msgstr "Для <0>me</0> полное окончание <1>-me</1>: <2>läheksime</2>."
 
-msgid "For <0>sa</0>, the ending is <1>-d</1>: <2>saaksid</2>."
-msgstr "Для <0>sa</0> окончание <1>-d</1>: <2>saaksid</2>."
+msgid "For <0>sa</0>, the full ending is <1>-d</1>: <2>saaksid</2>."
+msgstr "Для <0>sa</0> полное окончание <1>-d</1>: <2>saaksid</2>."
 
-msgid "For <0>te</0>, the ending is <1>-te</1>: <2>loeksite</2>."
-msgstr "Для <0>te</0> окончание <1>-te</1>: <2>loeksite</2>."
+msgid "For <0>te</0>, the full ending is <1>-te</1>: <2>loeksite</2>."
+msgstr "Для <0>te</0> полное окончание <1>-te</1>: <2>loeksite</2>."
 
-msgid "For <et>me</et>, the ending is <et>-me</et>: <et>läheksime</et>."
-msgstr "Для <et>me</et> окончание <et>-me</et>: <et>läheksime</et>."
+msgid "For <et>me</et>, the full ending is <et>-me</et>: <et>läheksime</et>."
+msgstr "Для <et>me</et> полное окончание <et>-me</et>: <et>läheksime</et>."
 
-msgid "For <et>sa</et>, the ending is <et>-d</et>: <et>saaksid</et>."
-msgstr "Для <et>sa</et> окончание <et>-d</et>: <et>saaksid</et>."
+msgid "For <et>sa</et>, the full ending is <et>-d</et>: <et>saaksid</et>."
+msgstr "Для <et>sa</et> полное окончание <et>-d</et>: <et>saaksid</et>."
 
-msgid "For <et>te</et>, the ending is <et>-te</et>: <et>loeksite</et>."
-msgstr "Для <et>te</et> окончание <et>-te</et>: <et>loeksite</et>."
+msgid "For <et>te</et>, the full ending is <et>-te</et>: <et>loeksite</et>."
+msgstr "Для <et>te</et> полное окончание <et>-te</et>: <et>loeksite</et>."
 
 msgid "For the other persons, <0>-ks</0> takes <1>-id</1> for <2>sa</2> and <3>nad</3>, <4>-ime</4> for <5>me</5> and <6>-ite</6> for <7>te</7>. The form for <8>ta</8> stops at <9>-ks</9>: <10/>, would be."
 msgstr "Для других лиц к <0>-ks</0> добавляется <1>-id</1> для <2>sa</2> и <3>nad</3>, <4>-ime</4> для <5>me</5> и <6>-ite</6> для <7>te</7>. Форма для <8>ta</8> заканчивается на <9>-ks</9>: <10/> — был бы."
@@ -142,14 +142,20 @@ msgstr "Он или она покупает машину."
 msgid "He or she would buy the car."
 msgstr "Он или она купил бы машину."
 
-msgid "Hear a sentence, then pick what it means. Listen for <0>-ks</0>. Without it, a changed stem or <1>-s</1> means the past: <2>läksin, oli, ostis</2>."
-msgstr "Послушай предложение и выбери, что оно значит. Слушай, есть ли <0>-ks</0>. Без него изменённая основа или <1>-s</1> означают прошедшее время: <2>läksin, oli, ostis</2>."
+msgid "He or she would go home."
+msgstr "Он или она пошли бы домой."
+
+msgid "Hear a sentence, then pick what it means. Listen for <0>-ks</0>. Without it, a changed stem or <1>-s</1> means the past: <2>tulin, oli, ostis</2>."
+msgstr "Послушай предложение и выбери, что оно значит. Слушай, есть ли <0>-ks</0>. Без него изменённая основа или <1>-s</1> означают прошедшее время: <2>tulin, oli, ostis</2>."
 
 msgid "How many weeks would Jaan stay there? Write the number as he says it."
 msgstr "Сколько недель Яан был бы там? Напиши число так, как он его говорит."
 
 msgid "I"
 msgstr "я"
+
+msgid "I came home."
+msgstr "Я пришёл домой."
 
 msgid "I do"
 msgstr "я делаю"
@@ -163,17 +169,14 @@ msgstr "У меня было время."
 msgid "I have time."
 msgstr "У меня есть время."
 
-msgid "I went to the cinema."
-msgstr "Я пошёл в кино."
-
 msgid "I would"
 msgstr "я сделал бы"
 
+msgid "I would come home."
+msgstr "Я пришёл бы домой."
+
 msgid "I would go"
 msgstr "я пошёл бы"
-
-msgid "I would go to the cinema."
-msgstr "Я пошёл бы в кино."
 
 msgid "I would have time."
 msgstr "У меня было бы время."
@@ -186,6 +189,9 @@ msgstr "Я не покупал бы кофе каждый день."
 
 msgid "I wouldn’t go far."
 msgstr "Я не поехала бы далеко."
+
+msgid "I wouldn’t go to the cinema."
+msgstr "Я бы не пошёл в кино."
 
 msgid "I wouldn’t go."
 msgstr "Я не пошёл бы."
@@ -202,8 +208,8 @@ msgstr "Я хотел бы кофе."
 msgid "I’d love to come."
 msgstr "Я с удовольствием поехал бы."
 
-msgid "I’m going to the cinema."
-msgstr "Я иду в кино."
+msgid "I’m coming home."
+msgstr "Я иду домой."
 
 msgid "If I had time, I’d go to the cinema."
 msgstr "Если бы у меня было время, я пошёл бы в кино."
@@ -225,6 +231,9 @@ msgstr "если, если бы; когда; как, чем"
 
 msgid "In an imagined if sentence, both halves take it: <0>Kui mul oleks aega, läheksin ma kinno.</0>"
 msgstr "В предложении с воображаемым условием она в обеих половинах: <0>Kui mul oleks aega, läheksin ma kinno.</0>"
+
+msgid "In speech you’ll often hear the form for <0>ta</0> with <1>ma</1> too: <2>ma tahaks</2>, <3>ma läheks</3>. In careful writing, <4>tahaksin</4> and <5>läheksin</5> are more usual."
+msgstr "В разговоре часто услышишь форму для <0>ta</0> и с <1>ma</1>: <2>ma tahaks</2>, <3>ma läheks</3>. В аккуратном письме привычнее <4>tahaksin</4> и <5>läheksin</5>."
 
 msgid "Jaan"
 msgstr "Яан"
@@ -325,8 +334,8 @@ msgstr "Плавала бы в озере"
 msgid "Taha-, from tahan, plus -ksin."
 msgstr "Taha- от tahan, плюс -ksin."
 
-msgid "Take the present’s <0>ma</0> form without <1>-n</1> and add <2>-ks</2> with the person’s ending: <3>lähen, läheksin, läheksid, läheks</3>."
-msgstr "Возьми форму настоящего времени для <0>ma</0> без <1>-n</1> и добавь <2>-ks</2> с окончанием лица: <3>lähen, läheksin, läheksid, läheks</3>."
+msgid "Take the present’s <0>ma</0> form without <1>-n</1> and add <2>-ks</2>, usually with the person’s ending: <3>lähen, läheksin, läheksid, läheks</3>."
+msgstr "Возьми форму настоящего времени для <0>ma</0> без <1>-n</1> и добавь <2>-ks</2>, обычно с окончанием лица: <3>lähen, läheksin, läheksid, läheks</3>."
 
 msgid "Talk: at a café"
 msgstr "Разговор: в кафе"
@@ -361,8 +370,8 @@ msgstr "Настоящее время: без <0>-ks</0>."
 msgid "The simple past: no <0>-ks</0>."
 msgstr "Простое прошедшее: без <0>-ks</0>."
 
-msgid "The verb takes <0>-ks</0> and its person’s ending."
-msgstr "Глагол получает <0>-ks</0> и окончание своего лица."
+msgid "The verb takes <0>-ks</0> and usually its person’s ending."
+msgstr "Глагол получает <0>-ks</0> и обычно окончание своего лица."
 
 msgid "The would form"
 msgstr "Условная форма"
@@ -427,6 +436,9 @@ msgstr "Мы ели торт."
 msgid "We would eat cake."
 msgstr "Мы ели бы торт."
 
+msgid "We would go to the cinema tomorrow."
+msgstr "Мы пошли бы завтра в кино."
+
 msgid "We would live in Tartu."
 msgstr "Мы жили бы в Тарту."
 
@@ -483,6 +495,9 @@ msgstr "Ты заказываешь в кафе. Выбери, что ответ
 
 msgid "You want tea."
 msgstr "Ты хочешь чаю."
+
+msgid "You would read this book."
+msgstr "Вы прочитали бы эту книгу."
 
 msgid "you, to more than one; polite you"
 msgstr "вы — нескольким людям; вежливое вы"

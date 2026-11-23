@@ -10,6 +10,7 @@ import {
   COND_DIALOGUE,
   COND_FIXES,
   COND_FIX_ANSWERS,
+  COND_SHORT,
   COND_FORM_QUIZ,
   COND_HEARD,
   COND_IF,
@@ -59,6 +60,16 @@ const PERSONS: Record<string, MessageDescriptor> = {
   nad: msg`they`,
 };
 
+const FIX_PROMPTS: Record<string, MessageDescriptor> = {
+  "Ma ei läheks kinno.": msg`I wouldn’t go to the cinema.`,
+  "Kas sa saaksid mind aidata?": msg`Could you help me?`,
+  "Kui mul oleks aega, läheksin ma kinno.": msg`If I had time, I’d go to the cinema.`,
+  "Me läheksime homme kinno.": msg`We would go to the cinema tomorrow.`,
+  "Ta läheks koju.": msg`He or she would go home.`,
+  "Kui ma oleksin rikas, ostaksin maja.": msg`If I were rich, I’d buy a house.`,
+  "Te loeksite seda raamatut.": msg`You would read this book.`,
+};
+
 const MEANS: Record<string, MessageDescriptor> = {
   "Ma tahaksin kohvi.": msg`I’d like a coffee.`,
   "Kas sa saaksid mind aidata?": msg`Could you help me?`,
@@ -89,10 +100,10 @@ type Mood = "now" | "would" | "past";
 const MOODS: readonly Mood[] = ["now", "would", "past"];
 
 const HEARD_MEANS: Record<(typeof COND_HEARD)[number]["id"], Record<Mood, MessageDescriptor>> = {
-  minema: {
-    now: msg`I’m going to the cinema.`,
-    would: msg`I would go to the cinema.`,
-    past: msg`I went to the cinema.`,
+  tulema: {
+    now: msg`I’m coming home.`,
+    would: msg`I would come home.`,
+    past: msg`I came home.`,
   },
   olema: {
     now: msg`I have time.`,
@@ -205,7 +216,10 @@ function useContent() {
       gloss: i18n._(VERBS[item.ma] as MessageDescriptor),
       cue: `${item.person} …`,
       cueLang: "et",
-      answers: [item.answer],
+      answers: [
+        item.answer,
+        ...(COND_SHORT[item.answer] ? [COND_SHORT[item.answer] as string] : []),
+      ],
       src: src(item.said),
       said: item.said,
       explain: (
@@ -265,7 +279,7 @@ function useContent() {
           </Trans>
         ) : (
           <Trans>
-            The verb takes <b lang="et">-ks</b> and its person’s ending.
+            The verb takes <b lang="et">-ks</b> and usually its person’s ending.
           </Trans>
         ),
     }));
@@ -338,7 +352,7 @@ function useContent() {
       ),
       "Kas sa saaksid mind aidata?": (
         <Trans>
-          For <b lang="et">sa</b>, the ending is <b lang="et">-d</b>: <b lang="et">saaksid</b>.
+          For <b lang="et">sa</b>, the full ending is <b lang="et">-d</b>: <b lang="et">saaksid</b>.
         </Trans>
       ),
       "Kui mul oleks aega, läheksin ma kinno.": (
@@ -348,7 +362,8 @@ function useContent() {
       ),
       "Me läheksime homme kinno.": (
         <Trans>
-          For <b lang="et">me</b>, the ending is <b lang="et">-me</b>: <b lang="et">läheksime</b>.
+          For <b lang="et">me</b>, the full ending is <b lang="et">-me</b>:{" "}
+          <b lang="et">läheksime</b>.
         </Trans>
       ),
       "Ta läheks koju.": (
@@ -363,7 +378,8 @@ function useContent() {
       ),
       "Te loeksite seda raamatut.": (
         <Trans>
-          For <b lang="et">te</b>, the ending is <b lang="et">-te</b>: <b lang="et">loeksite</b>.
+          For <b lang="et">te</b>, the full ending is <b lang="et">-te</b>:{" "}
+          <b lang="et">loeksite</b>.
         </Trans>
       ),
     };
@@ -371,6 +387,9 @@ function useContent() {
       kind: "fix",
       id: `fix-${clipId(item.right)}`,
       wrong: item.wrong,
+      prompt: FIX_PROMPTS[item.right]
+        ? i18n._(FIX_PROMPTS[item.right] as MessageDescriptor)
+        : undefined,
       answers: COND_FIX_ANSWERS[item.right] ?? [item.right],
       src: src(item.right),
       explain: fixWhy[item.right],
@@ -548,7 +567,7 @@ export function LaheksinLesson() {
       recap={[
         <Trans key="1">
           Take the present’s <b lang="et">ma</b> form without <b lang="et">-n</b> and add{" "}
-          <b lang="et">-ks</b> with the person’s ending:{" "}
+          <b lang="et">-ks</b>, usually with the person’s ending:{" "}
           <b lang="et">lähen, läheksin, läheksid, läheks</b>.
         </Trans>,
         <Trans key="2">
@@ -690,7 +709,7 @@ export function LaheksinLesson() {
                   <Trans>
                     Hear a sentence, then pick what it means. Listen for <b lang="et">-ks</b>.
                     Without it, a changed stem or <b lang="et">-s</b> means the past:{" "}
-                    <b lang="et">läksin, oli, ostis</b>.
+                    <b lang="et">tulin, oli, ostis</b>.
                   </Trans>
                 </p>
               </Prose>
@@ -733,6 +752,14 @@ export function LaheksinLesson() {
                 </p>
               </Prose>
               <ListenRows items={rowsOf(COND_POLITE)} />
+              <Aside>
+                <Trans>
+                  In speech you’ll often hear the form for <b lang="et">ta</b> with{" "}
+                  <b lang="et">ma</b> too: <b lang="et">ma tahaks</b>, <b lang="et">ma läheks</b>.
+                  In careful writing, <b lang="et">tahaksin</b> and <b lang="et">läheksin</b> are
+                  more usual.
+                </Trans>
+              </Aside>
               <Prose>
                 <p>
                   <Trans>
@@ -771,8 +798,8 @@ export function LaheksinLesson() {
                   <Trans>
                     <Word w="Kui" /> means if. When the if is imagined, English says “if I had”,
                     then “I would”; Estonian puts both halves in the would form:{" "}
-                    <Word w="Kui mul oleks aega, läheksin ma kinno." /> For a real if, both stay in
-                    the present: <b lang="et">Kui mul on aega, lähen ma kinno.</b>
+                    <Word w="Kui mul oleks aega, läheksin ma kinno." /> For a real if, both usually
+                    stay in the present: <b lang="et">Kui mul on aega, lähen ma kinno.</b>
                   </Trans>
                 </p>
               </Prose>

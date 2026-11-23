@@ -293,13 +293,14 @@ function useContent() {
       {
         kind: "translate",
         id: "go-shops",
-        prompt: t`We go to the shops.`,
+        prompt: t`We go round the shops.`,
         src: src("Me käime poodides."),
         answers: PLURAL_CASE_ANSWERS["Me käime poodides."],
         pair: ["s", "go-shops"],
         explain: (
           <Trans>
-            With <b lang="et">käima</b>, going and coming back, the place takes <b lang="et">-s</b>.
+            With <b lang="et">käima</b>, going and coming back, the place usually takes{" "}
+            <b lang="et">-s</b>.
           </Trans>
         ),
       },
@@ -490,8 +491,8 @@ export function MajadesInimesteleLesson() {
         </Trans>,
         <Trans key="2">
           The plurals with <b lang="et">-s</b>, <b lang="et">-st</b>, <b lang="et">-sse</b>,{" "}
-          <b lang="et">-le</b>, <b lang="et">-l</b> and <b lang="et">-ga</b> are the plural genitive
-          plus that ending: <b lang="et">majades, inimestele, sõpradega</b>.
+          <b lang="et">-le</b>, <b lang="et">-l</b> and <b lang="et">-ga</b> can always be built as
+          the plural genitive plus that ending: <b lang="et">majades, inimestele, sõpradega</b>.
         </Trans>,
         <Trans key="3">
           Not the plural nominative: <b lang="et">inimestega</b>, not <b lang="et">inimesedega</b>.
@@ -580,8 +581,8 @@ export function MajadesInimesteleLesson() {
                     label: "-de",
                     rule: (
                       <Trans>
-                        The partitive doesn’t end in <b lang="et">-t</b>:{" "}
-                        <b lang="et">sõpra, sõprade</b>.
+                        The partitive doesn’t end in <b lang="et">-t</b>, so usually{" "}
+                        <b lang="et">-de</b>: <b lang="et">sõpra, sõprade</b>.
                       </Trans>
                     ),
                   },
@@ -590,8 +591,8 @@ export function MajadesInimesteleLesson() {
                     label: "-te",
                     rule: (
                       <Trans>
-                        The partitive ends in <b lang="et">-t</b>, so it adds <b lang="et">-e</b>:{" "}
-                        <b lang="et">inimest, inimeste</b>.
+                        The partitive ends in <b lang="et">-t</b>, so it usually adds{" "}
+                        <b lang="et">-e</b>: <b lang="et">inimest, inimeste</b>.
                       </Trans>
                     ),
                   },
@@ -603,7 +604,7 @@ export function MajadesInimesteleLesson() {
         },
         {
           id: "cases",
-          title: t`Every case on one stem`,
+          title: t`Six cases on one stem`,
           quiz: true,
           children: (
             <>

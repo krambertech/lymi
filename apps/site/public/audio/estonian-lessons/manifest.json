@@ -12870,7 +12870,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "majades-inimestele/c-weekend": {
-    "text": "Tere, Mari! Kuidas nädalavahetus läks? Väga hästi, aitäh! Ma olin kolm päeva Tartus koos sõpradega. Mida te seal tegite? Laupäeval käisime muuseumides ja kohvikutes. Tartu kohvikutes on väga head koogid. Kas muuseumides oli palju inimesi? Jah, väga palju. Kõikides saalides olid lapsed ja nende vanemad. Lapsed jooksid saalist saali. Kus te ööbisite? Ühe sõbra juures. Tal on vanalinnas korter. Vanades majades on kõrged laed ja suured aknad. Õhtul istusime köögis ja rääkisime tundide kaupa. Ja pühapäeval? Pühapäeval käisime poodides. Ma ostsin kingitusi oma õdedele. Neile meeldivad raamatud, nii et ma ostsin kaks raamatut. Kas sa rääkisid poodides eesti keelt? Muidugi! Ma rääkisin müüjatega ainult eesti keeles. Nad olid väga sõbralikud. Ühes raamatupoes küsis müüja, kust ma pärit olen. Ta ei uskunud, et ma õpin eesti keelt alles kaks aastat. Tubli! Mina olin terve nädalavahetuse kodus. Mida sa tegid? Kõigepealt kirjutasin kirju oma vanematele ja vendadele. Siis vaatasin vanu fotosid. Vanu fotosid? Kust sa need leidsid? Need olid kastides keldris. Mõnedel piltidel on minu vanaisa ja vanaema. Nad seisavad oma maja ees. Mõnel pildil on ka meie vana koer. Ta magab alati laste voodite all. Kui huvitav! Kas sa näitad neid mulle? Jah, muidugi. Ma panen kõige ilusamad pildid albumitesse. Tule homme minu juurde! Hea mõte! Ma toon Tartust kooke. Kas kell viis sobib? Jah, kell viis sobib väga hästi. Kas ma võin ka oma sõbrad kaasa võtta? Nad tahavad sinuga tuttavaks saada. Muidugi, kõik on oodatud. Ma teen teed ja kohvi kõikidele külalistele. Kohtumiseni!",
+    "text": "Tere, Mari! Kuidas nädalavahetus läks? Väga hästi, aitäh! Ma olin kolm päeva Tartus koos sõpradega. Mida te seal tegite? Laupäeval käisime muuseumides ja kohvikutes. Tartu kohvikutes on väga head koogid. Kas muuseumides oli palju inimesi? Jah, väga palju. Kõikides saalides olid lapsed ja nende vanemad. Lapsed jooksid saalist saali. Kus te ööbisite? Ühe sõbra juures. Tal on vanalinnas korter. Vanades majades on kõrged laed ja suured aknad. Õhtul istusime köögis ja rääkisime tundide kaupa. Ja pühapäeval? Pühapäeval käisime poodides. Ma ostsin kingitusi oma õdedele. Neile meeldivad raamatud, nii et ma ostsin kaks raamatut. Kas sa rääkisid poodides eesti keelt? Muidugi! Ma rääkisin müüjatega ainult eesti keeles. Nad olid väga sõbralikud. Ühes raamatupoes küsis müüja, kust ma pärit olen. Ta ei uskunud, et ma õpin eesti keelt alles kaks aastat. Tubli! Mina olin terve nädalavahetuse kodus. Mida sa tegid? Kõigepealt kirjutasin kirju oma vanematele ja vendadele. Siis vaatasin vanu fotosid. Vanu fotosid? Kust sa need leidsid? Need olid kastides keldris. Mõnedel piltidel on minu vanaisa ja vanaema. Nad seisavad oma maja ees. Mõnel pildil on ka meie vana koer. Ta magab alati laste voodite all. Kui huvitav! Kas sa näitad neid mulle? Jah, muidugi. Ma panen kõige ilusamad pildid albumitesse. Tule homme minu juurde! Hea mõte! Ma toon kooke. Kas kell viis sobib? Jah, kell viis sobib väga hästi. Kas ma võin ka oma sõbrad kaasa võtta? Nad tahavad sinuga tuttavaks saada. Muidugi, kõik on oodatud. Ma teen teed ja kohvi kõikidele külalistele. Kohtumiseni!",
     "model": "eleven_v4",
     "turns": [
       {
@@ -13018,7 +13018,7 @@
         "voice": "WtzwR2kNGVNuaTGaYLfK",
         "sentences": [
           "Hea mõte!",
-          "Ma toon Tartust kooke.",
+          "Ma toon kooke.",
           "Kas kell viis sobib?"
         ]
       },
@@ -13838,11 +13838,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "laheksin/ma-la2hen-kinno": {
-    "text": "Ma lähen kinno.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "laheksin/ma-la2heksin-kinno": {
     "text": "Ma läheksin kinno.",
     "model": "eleven_v4",
@@ -14237,11 +14232,6 @@
   },
   "laheksin/ma-ei-la2heks": {
     "text": "Ma ei läheks.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "laheksin/ma-la2ksin-kinno": {
-    "text": "Ma läksin kinno.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -18418,6 +18408,21 @@
   },
   "turul/kohv-maksab-kolm-eurot": {
     "text": "Kohv maksab kolm eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-tulen-koju": {
+    "text": "Ma tulen koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-tuleksin-koju": {
+    "text": "Ma tuleksin koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-tulin-koju": {
+    "text": "Ma tulin koju.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

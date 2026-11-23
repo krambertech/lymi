@@ -10,8 +10,8 @@ msgstr ""
 msgid "<0/> means I would go. Take the <1>ma</1> form of the present from lesson {present}, <2>lähen</2>, drop its <3>-n</3>, and add <4>-ksin</4>. Every verb works this way. Tap each form in the table to hear it."
 msgstr "<0/> means I would go. Take the <1>ma</1> form of the present from lesson {present}, <2>lähen</2>, drop its <3>-n</3>, and add <4>-ksin</4>. Every verb works this way. Tap each form in the table to hear it."
 
-msgid "<0/> means if. When the if is imagined, English says “if I had”, then “I would”; Estonian puts both halves in the would form: <1/> For a real if, both stay in the present: <2>Kui mul on aega, lähen ma kinno.</2>"
-msgstr "<0/> means if. When the if is imagined, English says “if I had”, then “I would”; Estonian puts both halves in the would form: <1/> For a real if, both stay in the present: <2>Kui mul on aega, lähen ma kinno.</2>"
+msgid "<0/> means if. When the if is imagined, English says “if I had”, then “I would”; Estonian puts both halves in the would form: <1/> For a real if, both usually stay in the present: <2>Kui mul on aega, lähen ma kinno.</2>"
+msgstr "<0/> means if. When the if is imagined, English says “if I had”, then “I would”; Estonian puts both halves in the would form: <1/> For a real if, both usually stay in the present: <2>Kui mul on aega, lähen ma kinno.</2>"
 
 msgid "<0>-ks</0> in the verb: would."
 msgstr "<0>-ks</0> in the verb: would."
@@ -85,8 +85,8 @@ msgstr "Drop the <0>-n</0> of <1>{0}</1> and add <2>-ks</2> with the ending for 
 msgid "Drop the <0>-n</0> of the present and add <1>-ksin</1>."
 msgstr "Drop the <0>-n</0> of the present and add <1>-ksin</1>."
 
-msgid "Drop the <et>-n</et> of the present and add <et>-ks</et> with the person’s ending: <et>-in</et>, <et>-id</et>, none for <et>ta</et>, <et>-ime</et>, <et>-ite</et>, <et>-id</et>."
-msgstr "Drop the <et>-n</et> of the present and add <et>-ks</et> with the person’s ending: <et>-in</et>, <et>-id</et>, none for <et>ta</et>, <et>-ime</et>, <et>-ite</et>, <et>-id</et>."
+msgid "Drop the <et>-n</et> of the present and add <et>-ks</et>, usually with the person’s ending: <et>-in</et>, <et>-id</et>, none for <et>ta</et>, <et>-ime</et>, <et>-ite</et>, <et>-id</et>."
+msgstr "Drop the <et>-n</et> of the present and add <et>-ks</et>, usually with the person’s ending: <et>-in</et>, <et>-id</et>, none for <et>ta</et>, <et>-ime</et>, <et>-ite</et>, <et>-id</et>."
 
 msgid "Each round gives a sentence and a cue. Write it with the would form."
 msgstr "Each round gives a sentence and a cue. Write it with the would form."
@@ -106,23 +106,23 @@ msgstr "Fix the sentence"
 msgid "Fix the would form"
 msgstr "Fix the would form"
 
-msgid "For <0>me</0>, the ending is <1>-me</1>: <2>läheksime</2>."
-msgstr "For <0>me</0>, the ending is <1>-me</1>: <2>läheksime</2>."
+msgid "For <0>me</0>, the full ending is <1>-me</1>: <2>läheksime</2>."
+msgstr "For <0>me</0>, the full ending is <1>-me</1>: <2>läheksime</2>."
 
-msgid "For <0>sa</0>, the ending is <1>-d</1>: <2>saaksid</2>."
-msgstr "For <0>sa</0>, the ending is <1>-d</1>: <2>saaksid</2>."
+msgid "For <0>sa</0>, the full ending is <1>-d</1>: <2>saaksid</2>."
+msgstr "For <0>sa</0>, the full ending is <1>-d</1>: <2>saaksid</2>."
 
-msgid "For <0>te</0>, the ending is <1>-te</1>: <2>loeksite</2>."
-msgstr "For <0>te</0>, the ending is <1>-te</1>: <2>loeksite</2>."
+msgid "For <0>te</0>, the full ending is <1>-te</1>: <2>loeksite</2>."
+msgstr "For <0>te</0>, the full ending is <1>-te</1>: <2>loeksite</2>."
 
-msgid "For <et>me</et>, the ending is <et>-me</et>: <et>läheksime</et>."
-msgstr "For <et>me</et>, the ending is <et>-me</et>: <et>läheksime</et>."
+msgid "For <et>me</et>, the full ending is <et>-me</et>: <et>läheksime</et>."
+msgstr "For <et>me</et>, the full ending is <et>-me</et>: <et>läheksime</et>."
 
-msgid "For <et>sa</et>, the ending is <et>-d</et>: <et>saaksid</et>."
-msgstr "For <et>sa</et>, the ending is <et>-d</et>: <et>saaksid</et>."
+msgid "For <et>sa</et>, the full ending is <et>-d</et>: <et>saaksid</et>."
+msgstr "For <et>sa</et>, the full ending is <et>-d</et>: <et>saaksid</et>."
 
-msgid "For <et>te</et>, the ending is <et>-te</et>: <et>loeksite</et>."
-msgstr "For <et>te</et>, the ending is <et>-te</et>: <et>loeksite</et>."
+msgid "For <et>te</et>, the full ending is <et>-te</et>: <et>loeksite</et>."
+msgstr "For <et>te</et>, the full ending is <et>-te</et>: <et>loeksite</et>."
 
 msgid "For the other persons, <0>-ks</0> takes <1>-id</1> for <2>sa</2> and <3>nad</3>, <4>-ime</4> for <5>me</5> and <6>-ite</6> for <7>te</7>. The form for <8>ta</8> stops at <9>-ks</9>: <10/>, would be."
 msgstr "For the other persons, <0>-ks</0> takes <1>-id</1> for <2>sa</2> and <3>nad</3>, <4>-ime</4> for <5>me</5> and <6>-ite</6> for <7>te</7>. The form for <8>ta</8> stops at <9>-ks</9>: <10/>, would be."
@@ -142,14 +142,20 @@ msgstr "He or she is buying the car."
 msgid "He or she would buy the car."
 msgstr "He or she would buy the car."
 
-msgid "Hear a sentence, then pick what it means. Listen for <0>-ks</0>. Without it, a changed stem or <1>-s</1> means the past: <2>läksin, oli, ostis</2>."
-msgstr "Hear a sentence, then pick what it means. Listen for <0>-ks</0>. Without it, a changed stem or <1>-s</1> means the past: <2>läksin, oli, ostis</2>."
+msgid "He or she would go home."
+msgstr "He or she would go home."
+
+msgid "Hear a sentence, then pick what it means. Listen for <0>-ks</0>. Without it, a changed stem or <1>-s</1> means the past: <2>tulin, oli, ostis</2>."
+msgstr "Hear a sentence, then pick what it means. Listen for <0>-ks</0>. Without it, a changed stem or <1>-s</1> means the past: <2>tulin, oli, ostis</2>."
 
 msgid "How many weeks would Jaan stay there? Write the number as he says it."
 msgstr "How many weeks would Jaan stay there? Write the number as he says it."
 
 msgid "I"
 msgstr "I"
+
+msgid "I came home."
+msgstr "I came home."
 
 msgid "I do"
 msgstr "I do"
@@ -163,17 +169,14 @@ msgstr "I had time."
 msgid "I have time."
 msgstr "I have time."
 
-msgid "I went to the cinema."
-msgstr "I went to the cinema."
-
 msgid "I would"
 msgstr "I would"
 
+msgid "I would come home."
+msgstr "I would come home."
+
 msgid "I would go"
 msgstr "I would go"
-
-msgid "I would go to the cinema."
-msgstr "I would go to the cinema."
 
 msgid "I would have time."
 msgstr "I would have time."
@@ -186,6 +189,9 @@ msgstr "I wouldn’t buy coffee every day."
 
 msgid "I wouldn’t go far."
 msgstr "I wouldn’t go far."
+
+msgid "I wouldn’t go to the cinema."
+msgstr "I wouldn’t go to the cinema."
 
 msgid "I wouldn’t go."
 msgstr "I wouldn’t go."
@@ -202,8 +208,8 @@ msgstr "I’d like a coffee."
 msgid "I’d love to come."
 msgstr "I’d love to come."
 
-msgid "I’m going to the cinema."
-msgstr "I’m going to the cinema."
+msgid "I’m coming home."
+msgstr "I’m coming home."
 
 msgid "If I had time, I’d go to the cinema."
 msgstr "If I had time, I’d go to the cinema."
@@ -225,6 +231,9 @@ msgstr "if; when; as, than"
 
 msgid "In an imagined if sentence, both halves take it: <0>Kui mul oleks aega, läheksin ma kinno.</0>"
 msgstr "In an imagined if sentence, both halves take it: <0>Kui mul oleks aega, läheksin ma kinno.</0>"
+
+msgid "In speech you’ll often hear the form for <0>ta</0> with <1>ma</1> too: <2>ma tahaks</2>, <3>ma läheks</3>. In careful writing, <4>tahaksin</4> and <5>läheksin</5> are more usual."
+msgstr "In speech you’ll often hear the form for <0>ta</0> with <1>ma</1> too: <2>ma tahaks</2>, <3>ma läheks</3>. In careful writing, <4>tahaksin</4> and <5>läheksin</5> are more usual."
 
 msgid "Jaan"
 msgstr "Jaan"
@@ -325,8 +334,8 @@ msgstr "Swim in the lake"
 msgid "Taha-, from tahan, plus -ksin."
 msgstr "Taha-, from tahan, plus -ksin."
 
-msgid "Take the present’s <0>ma</0> form without <1>-n</1> and add <2>-ks</2> with the person’s ending: <3>lähen, läheksin, läheksid, läheks</3>."
-msgstr "Take the present’s <0>ma</0> form without <1>-n</1> and add <2>-ks</2> with the person’s ending: <3>lähen, läheksin, läheksid, läheks</3>."
+msgid "Take the present’s <0>ma</0> form without <1>-n</1> and add <2>-ks</2>, usually with the person’s ending: <3>lähen, läheksin, läheksid, läheks</3>."
+msgstr "Take the present’s <0>ma</0> form without <1>-n</1> and add <2>-ks</2>, usually with the person’s ending: <3>lähen, läheksin, läheksid, läheks</3>."
 
 msgid "Talk: at a café"
 msgstr "Talk: at a café"
@@ -361,8 +370,8 @@ msgstr "The present: no <0>-ks</0>."
 msgid "The simple past: no <0>-ks</0>."
 msgstr "The simple past: no <0>-ks</0>."
 
-msgid "The verb takes <0>-ks</0> and its person’s ending."
-msgstr "The verb takes <0>-ks</0> and its person’s ending."
+msgid "The verb takes <0>-ks</0> and usually its person’s ending."
+msgstr "The verb takes <0>-ks</0> and usually its person’s ending."
 
 msgid "The would form"
 msgstr "The would form"
@@ -427,6 +436,9 @@ msgstr "We ate cake."
 msgid "We would eat cake."
 msgstr "We would eat cake."
 
+msgid "We would go to the cinema tomorrow."
+msgstr "We would go to the cinema tomorrow."
+
 msgid "We would live in Tartu."
 msgstr "We would live in Tartu."
 
@@ -483,6 +495,9 @@ msgstr "You order at a café. Pick what you say back. A wrong reply says why, th
 
 msgid "You want tea."
 msgstr "You want tea."
+
+msgid "You would read this book."
+msgstr "You would read this book."
 
 msgid "you, to more than one; polite you"
 msgstr "you, to more than one; polite you"

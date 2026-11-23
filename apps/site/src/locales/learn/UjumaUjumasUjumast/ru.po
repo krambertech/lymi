@@ -16,6 +16,9 @@ msgstr "<0/>, от <1/>, — это «хожу»: ты идёшь и возвр�
 msgid "<0/>, from <1/>, takes <2>-mast</2> when you come back from something: <3/> It takes <4>-ma</4> when you come to do something, as in the command <5/> Tap a verb to hear its sentence."
 msgstr "<0/>, от <1/>, требует <2>-mast</2>, когда ты откуда-то возвращаешься: <3/> А <4>-ma</4> — когда приходишь, чтобы что-то сделать, как в команде <5/> Коснись глагола, чтобы услышать его предложение."
 
+msgid "<0>Käin</0> says you go there and come back, so it takes the <1>-mas</1> form."
+msgstr "<0>Käin</0> значит, что ты ходишь туда и возвращаешься, поэтому после него — форма на <1>-mas</1>."
+
 msgid "<0>Kuhu?</0> {means}"
 msgstr "<0>Kuhu?</0> {means}"
 
@@ -31,20 +34,20 @@ msgstr "<0>Lähen ujuma</0> — это «я иду плавать», <1>olen uju
 msgid "<0>Tulema</0> again, as a command: come here to do it, so <1>-ma</1>."
 msgstr "Снова <0>tulema</0>, но как команда: приходи сюда, чтобы что-то сделать, поэтому <1>-ma</1>."
 
-msgid "<0>Tulema</0> takes <1>-mast</1> or <2>-ma</2>: <3>Ma tulen ujumast. Tule sööma!</3>"
-msgstr "После <0>tulema</0> бывает и <1>-mast</1>, и <2>-ma</2>: <3>Ma tulen ujumast. Tule sööma!</3>"
+msgid "20 minutes"
+msgstr "20 минут"
 
-msgid "12 minutes"
-msgstr "12 минут"
+msgid "5 exercises and a recording you can play twice"
+msgstr "5 упражнений и запись, которую можно прослушать дважды"
 
 msgid "A cat and a house"
 msgstr "Кот и дом"
 
+msgid "A long walk with a friend"
+msgstr "С долгой прогулки с подругой"
+
 msgid "A place and an activity answer the same three questions. To <0/> you can answer <1/>, to the shop, or <2/>, swimming."
 msgstr "Место и занятие отвечают на одни и те же три вопроса. На <0/> можно ответить <1/>, «в магазин», или <2/>, «плавать»."
-
-msgid "A quiz by ear, a sort and a voice message"
-msgstr "Упражнение на слух, сортировка и голосовое сообщение"
 
 msgid "Add <0>-s</0> and it says someone is in the middle of it, often out doing it: <1/> Add <2>-st</2> and it says what they’re coming back from: <3/>"
 msgstr "Добавь <0>-s</0>, и форма скажет, что человек как раз этим занят, часто не дома: <1/> Добавь <2>-st</2>, и она скажет, откуда человек возвращается: <3/>"
@@ -58,11 +61,20 @@ msgstr "После <0>läheb</0> инфинитив на <1>-ma</1> говори
 msgid "After <0>tulen</0>, only the ending tells you which way: <1>tulen sööma</1> is I’m coming to eat, and <2>tulen söömast</2> is I’m coming back from eating."
 msgstr "После <0>tulen</0> направление видно только по окончанию: <1>tulen sööma</1> — «прихожу поесть», а <2>tulen söömast</2> — «возвращаюсь после еды»."
 
+msgid "All six found and fixed."
+msgstr "Все шесть найдены и исправлены."
+
+msgid "All six written right."
+msgstr "Все шесть написаны правильно."
+
 msgid "All six. You heard every ending."
 msgstr "Все шесть: каждое окончание услышано верно."
 
 msgid "An activity has the same three, built on its <0>-ma</0> infinitive: <1/> <2/> <3/> She’s going swimming, she’s out swimming, and she’s on her way back."
 msgstr "У занятия те же три формы, и все они вырастают из инфинитива на <0>-ma</0>: <1/> <2/> <3/> Мари идёт плавать, она на плавании, и вот она уже возвращается."
+
+msgid "Are you coming back from swimming?"
+msgstr "Ты возвращаешься с плавания?"
 
 msgid "At home"
 msgstr "Дома"
@@ -76,11 +88,20 @@ msgstr "возвращается после кофе"
 msgid "back from eating"
 msgstr "возвращается после еды"
 
+msgid "Back from eating: Nad tulevad …"
+msgstr "Возвращаются с обеда: Nad tulevad …"
+
 msgid "back from swimming"
 msgstr "возвращается с плавания"
 
+msgid "Back from swimming: Ema tuleb …"
+msgstr "Возвращается с плавания: Ema tuleb …"
+
 msgid "Come and eat"
 msgstr "Прийти поесть"
+
+msgid "Come and eat! To one person."
+msgstr "Приходи есть! Одному человеку."
 
 msgctxt "tulema, come here"
 msgid "Come and eat."
@@ -93,11 +114,38 @@ msgstr "Возвращается"
 msgid "Coming back from his run"
 msgstr "Возвращается с пробежки"
 
+msgid "Coming back from it"
+msgstr "Возвращаюсь оттуда"
+
+msgid "Coming back from it: the -mast form, <et>tulen ujumast</et>."
+msgstr "Возвращаешься оттуда — форма на -mast: <et>tulen ujumast</et>."
+
+msgid "Coming back from it: the <0>-mast</0> form."
+msgstr "Возвращаешься оттуда — форма на <0>-mast</0>."
+
+msgid "Dad is coming back from his run."
+msgstr "Папа возвращается с пробежки."
+
 msgid "Each round plays one form on its own, with no sentence around it. Only its ending tells you which: <0>-ma</0>, <1>-mas</1> or <2>-mast</2>. Pick what it says."
 msgstr "В каждом раунде звучит одна форма, без предложения вокруг. Что она значит, подскажет только окончание: <0>-ma</0>, <1>-mas</1> или <2>-mast</2>. Выбери её значение."
 
+msgid "Each sentence has one form with the wrong ending. Tap it, then write the right one."
+msgstr "В каждом предложении одна форма с неправильным окончанием. Коснись её, а потом напиши правильную."
+
+msgid "Eating out"
+msgstr "Есть в кафе"
+
 msgid "every day"
 msgstr "каждый день"
+
+msgid "Find and fix the mistake"
+msgstr "Найди и исправь ошибку"
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
+
+msgid "For coming, <0>tulema</0> takes <1>-mast</1> or <2>-ma</2>: <3>Ma tulen ujumast. Tule sööma!</3>"
+msgstr "Когда речь о приходе, после <0>tulema</0> бывает и <1>-mast</1>, и <2>-ma</2>: <3>Ma tulen ujumast. Tule sööma!</3>"
 
 msgid "Four activities: going, out and coming back"
 msgstr "Четыре занятия: идёт, там, возвращается"
@@ -132,6 +180,9 @@ msgstr "От tulema, «приходить»."
 msgid "Go swimming with her mum"
 msgstr "Пойти поплавать с мамой"
 
+msgid "Go through the sections above once more, then try again."
+msgstr "Ещё раз просмотри разделы выше, а потом попробуй снова."
+
 msgctxt "setting off to do something"
 msgid "Going"
 msgstr "Идёт"
@@ -145,6 +196,9 @@ msgstr "идёт на пробежку"
 msgid "going off to eat"
 msgstr "идёт есть"
 
+msgid "Going or coming to do it, after <et>lähen</et> or <et>tule</et>: the -ma infinitive, <et>lähen ujuma, tule sööma</et>."
+msgstr "Идёшь или приходишь это делать, после <et>lähen</et> или <et>tule</et> — инфинитив на -ma: <et>lähen ujuma, tule sööma</et>."
+
 msgid "going swimming"
 msgstr "идёт плавать"
 
@@ -154,8 +208,11 @@ msgstr "Идёт, там или возвращается?"
 msgid "Going, out, coming back"
 msgstr "Идти, быть там, возвращаться"
 
+msgid "Having coffee"
+msgstr "Из кафе с подругой"
+
 msgid "I am"
-msgstr "я есть"
+msgstr "я нахожусь"
 
 msgid "I come, I’m coming"
 msgstr "я прихожу"
@@ -178,8 +235,14 @@ msgstr "Я иду плавать."
 msgid "I’m out swimming."
 msgstr "Я на плавании."
 
-msgid "In lesson {inOut}, a place has a form for each question: <0/> for <1>kuhu?</1>, where to, <2/> for <3>kus?</3>, where, and <4/> for <5>kust?</5>, where from."
+msgid "In front of the pool"
+msgstr "Перед бассейном"
+
+msgid "In lesson {inOut}, a place has a form for each question: <0/> for <1>kuhu?</1> (where to?), <2/> for <3>kus?</3> (where?) and <4/> for <5>kust?</5> (where from?)."
 msgstr "В уроке {inOut} у места есть форма для каждого вопроса: <0/> для <1>kuhu?</1> (куда?), <2/> для <3>kus?</3> (где?) и <4/> для <5>kust?</5> (откуда?)."
+
+msgid "In the café"
+msgstr "В кафе"
 
 msgid "in the house"
 msgstr "в доме"
@@ -196,8 +259,20 @@ msgstr "Форма настоящего времени — käin."
 msgid "Its present is tulen."
 msgstr "Форма настоящего времени — tulen."
 
+msgid "Jaan calls Mari. Listen for where each person is going, where they are and what they’re coming back from."
+msgstr "Яан звонит Мари. Послушай, кто куда идёт, кто где и кто откуда возвращается."
+
+msgid "Kati goes running every day."
+msgstr "Кати бегает каждый день."
+
+msgid "Kati is coming back from eating."
+msgstr "Кати возвращается после еды."
+
 msgid "Kati leaves Jaan a voice message about her family. Listen for where each of them is and what she asks Jaan to do."
 msgstr "Кати оставляет Яану голосовое сообщение о своей семье. Слушай, кто где и о чём она просит Яана."
+
+msgid "Kati will come to eat later."
+msgstr "Кати придёт поесть позже."
 
 msgid "Kuhu? From maja, a house."
 msgstr "Kuhu? От maja, «дом»."
@@ -223,11 +298,23 @@ msgstr "Kust? От pood, «магазин»."
 msgid "Kust? The -ma infinitive plus -st."
 msgstr "Kust? Инфинитив на -ma плюс -st."
 
+msgid "Listen: going swimming"
+msgstr "Послушай: идём плавать"
+
+msgid "Listen: Jaan calls Mari"
+msgstr "Послушай: Яан звонит Мари"
+
 msgid "Listen: Kati’s message"
-msgstr "Аудирование: сообщение Кати"
+msgstr "Послушай: сообщение Кати"
 
 msgid "Listening only, no microphone"
 msgstr "Только на слух, без микрофона"
+
+msgid "Mari and Jaan will go swimming together."
+msgstr "Мари и Яан пойдут плавать вместе."
+
+msgid "Mari is at the pool when Jaan calls."
+msgstr "Когда Яан звонит, Мари в бассейне."
 
 msgid "Mari is coming back from a run."
 msgstr "Мари возвращается с пробежки."
@@ -265,8 +352,20 @@ msgstr "Мари на пробежке."
 msgid "Mari is out swimming."
 msgstr "Мари на плавании."
 
+msgid "Most of them. Look again at the ones you missed."
+msgstr "Большинство. Ещё раз посмотри на те, где была ошибка."
+
+msgid "Most of them. Read the ones you missed once more."
+msgstr "Большинство. Ещё раз прочитай те, где была ошибка."
+
+msgid "Mum is out having coffee."
+msgstr "Мама сейчас где-то пьёт кофе."
+
 msgid "Nearly. Play the ones you missed and listen for the last sound: <0>a</0>, <1>s</1> or <2>t</2>."
 msgstr "Почти. Там, где была ошибка, послушай форму ещё раз и обрати внимание на последний звук: <0>a</0>, <1>s</1> или <2>t</2>."
+
+msgid "off eating"
+msgstr "ушёл поесть"
 
 msgid "On her way to swim"
 msgstr "Ещё только идёт плавать"
@@ -274,6 +373,15 @@ msgstr "Ещё только идёт плавать"
 msgctxt "away, doing something"
 msgid "Out"
 msgstr "Там"
+
+msgid "Out doing it"
+msgstr "Я там, делаю это"
+
+msgid "Out doing it, after <0>on</0>: the <1>-mas</1> form."
+msgstr "Ты там, делаешь это, после <0>on</0> — форма на <1>-mas</1>."
+
+msgid "Out doing it, after <et>olen</et> or <et>käin</et>: the -mas form, <et>olen ujumas</et>."
+msgstr "Ты там, делаешь это, после <et>olen</et> или <et>käin</et> — форма на -mas: <et>olen ujumas</et>."
 
 msgid "out eating"
 msgstr "сейчас ест"
@@ -302,11 +410,26 @@ msgstr "Места и занятия"
 msgid "Put each word under the question it answers. Tap a word to hear it, then tap its question."
 msgstr "Поставь каждое слово под вопрос, на который оно отвечает. Коснись слова, чтобы его услышать, а потом — его вопроса."
 
+msgid "Reading at home"
+msgstr "Читать дома"
+
+msgid "Running"
+msgstr "Бегать"
+
 msgid "Running in town"
 msgstr "Бегает в городе"
 
 msgid "Setting off for a run"
 msgstr "Выходит на пробежку"
+
+msgid "Setting off to do it"
+msgstr "Иду это делать"
+
+msgid "Setting off to do it, after a form of <0>minema</0>: the <1>-ma</1> infinitive."
+msgstr "Идёшь это делать, после формы <0>minema</0> — инфинитив на <1>-ma</1>."
+
+msgid "She’s going for a run."
+msgstr "Она идёт на пробежку."
 
 msgid "Tap a form"
 msgstr "Коснись формы"
@@ -318,7 +441,7 @@ msgid "Tap a word to hear its sentence and see the cat go in to eat, eat, and co
 msgstr "Коснись слова, чтобы услышать предложение и увидеть, как кот идёт в дом поесть, ест и выходит."
 
 msgid "Tap the forms in the table above once more, then try again."
-msgstr "Ещё раз нажми на формы в таблице выше, а потом попробуй снова."
+msgstr "Ещё раз коснись форм в таблице выше, а потом попробуй снова."
 
 msgid "The -ma infinitive. After lähen: going swimming."
 msgstr "Инфинитив на -ma. После lähen — «иду плавать»."
@@ -327,10 +450,10 @@ msgid "The cat is coming back from eating."
 msgstr "Кот возвращается после еды."
 
 msgid "The cat is going off to eat."
-msgstr "Кот идёт есть."
+msgstr "Кот идёт поесть."
 
 msgid "The cat is off eating."
-msgstr "Кот ушёл есть."
+msgstr "Кот как раз ест."
 
 msgid "The same goes for <0/>, with <1/> or <2/>, and for <3/>, with <4/> or <5/>."
 msgstr "Так же с <0/>: <1/> или <2/>, и с <3/>: <4/> или <5/>."
@@ -340,6 +463,9 @@ msgstr "Эти три формы отвечают на <0>kuhu?</0>, <1>kus?</1>
 
 msgid "The verb before the form"
 msgstr "Глагол перед формой"
+
+msgid "They go running every day."
+msgstr "Они каждый день ходят на пробежку."
 
 msgid "They’re the <0>-s</0> and <1>-st</1> of <2>majas</2> and <3>majast</3>. Asked <4/>, you can answer with the form alone: <5/> Tap a form to hear it in a sentence."
 msgstr "Это те же <0>-s</0> и <1>-st</1>, что в <2>majas</2> и <3>majast</3>. На вопрос <4/> можно ответить одной формой: <5/> Коснись формы, чтобы услышать её в предложении."
@@ -357,7 +483,7 @@ msgid "to go and come back; to go regularly"
 msgstr "ходить (туда и обратно); ходить регулярно"
 
 msgid "to run"
-msgstr "бежать"
+msgstr "бегать"
 
 msgid "to swim"
 msgstr "плавать"
@@ -371,11 +497,32 @@ msgstr "Глаголы перед формой"
 msgid "Wait for her dad at home"
 msgstr "Подождать папу дома"
 
+msgid "We’re coming back from eating."
+msgstr "Мы возвращаемся после еды."
+
+msgid "We’re going off to eat."
+msgstr "Мы идём поесть."
+
+msgid "What does Jaan do more often than swimming?"
+msgstr "Что Яан делает чаще, чем плавает?"
+
 msgid "What does Kati ask Jaan to do?"
 msgstr "О чём Кати просит Яана?"
 
 msgid "What is her dad doing at five?"
 msgstr "Что делает её папа в пять?"
+
+msgid "What is Jaan coming back from? Write the form in Estonian."
+msgstr "Откуда возвращается Яан? Напиши форму по-эстонски."
+
+msgid "What is Mari’s mum coming back from?"
+msgstr "Откуда возвращается мама Мари?"
+
+msgid "When do they meet? Write the time in Estonian."
+msgstr "Во сколько они встречаются? Напиши время по-эстонски."
+
+msgid "When does Kati come back from her run? Write the time in Estonian."
+msgstr "Когда Кати возвращается с пробежки? Напиши время по-эстонски."
 
 msgid "where"
 msgstr "где"
@@ -389,11 +536,14 @@ msgstr "Куда ты идёшь?"
 msgid "where from"
 msgstr "откуда"
 
-msgid "Where from: an activity in <0>-mast</0>, or a place in <1>-st</1> such as <2>poest</2>."
-msgstr "Откуда: занятие на <0>-mast</0> или место на <1>-st</1>, например <2>poest</2>."
+msgid "Where from: an activity in <0>-mast</0>, or a place, usually in <1>-st</1>, such as <2>poest</2>."
+msgstr "Откуда: занятие на <0>-mast</0> или место, обычно на <1>-st</1>, например <2>poest</2>."
 
 msgid "Where is everyone?"
 msgstr "Кто где?"
+
+msgid "Where is Kati? Write the form Mari uses, in Estonian."
+msgstr "Где Кати? Напиши по-эстонски форму, которую употребляет Мари."
 
 msgid "Where is Kati’s mum?"
 msgstr "Где мама Кати?"
@@ -413,8 +563,11 @@ msgstr "Куда, где и откуда"
 msgid "Where to: an activity in <0>-ma</0>, or a place such as <1>poodi</1>."
 msgstr "Куда: занятие на <0>-ma</0> или место, например <1>poodi</1>."
 
-msgid "Where: an activity in <0>-mas</0>, or a place in <1>-s</1> such as <2>poes</2>."
-msgstr "Где: занятие на <0>-mas</0> или место на <1>-s</1>, например <2>poes</2>."
+msgid "Where will Mari wait for Jaan?"
+msgstr "Где Мари будет ждать Яана?"
+
+msgid "Where: an activity in <0>-mas</0>, or a place, usually in <1>-s</1>, such as <2>poes</2>."
+msgstr "Где: занятие на <0>-mas</0> или место, обычно на <1>-s</1>, например <2>poes</2>."
 
 msgid "Which question does it answer?"
 msgstr "На какой вопрос отвечает?"
@@ -424,6 +577,15 @@ msgstr "С <0>-mas</0> человек как раз этим занят: <1>Mari
 
 msgid "With <0>-mast</0>, they’re coming back from it: <1>Mari tuleb ujumast.</1>"
 msgstr "С <0>-mast</0> человек возвращается оттуда: <1>Mari tuleb ujumast.</1>"
+
+msgid "Work"
+msgstr "С работы"
+
+msgid "Write each sentence in Estonian. Setting off to do it takes the <0>-ma</0> infinitive, out doing it the <1>-mas</1> form, and coming back from it the <2>-mast</2> form."
+msgstr "Напиши каждое предложение по-эстонски. Идти это делать — инфинитив на <0>-ma</0>, быть там и делать это — форма на <1>-mas</1>, возвращаться оттуда — форма на <2>-mast</2>."
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"
 
 msgid "You’ll hear it in a sentence about Mari."
 msgstr "Услышишь её в предложении про Мари."

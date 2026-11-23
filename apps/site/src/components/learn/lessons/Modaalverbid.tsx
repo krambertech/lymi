@@ -1,4 +1,4 @@
-import type { MessageDescriptor } from "@lingui/core";
+import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { ReactNode } from "react";
@@ -12,12 +12,15 @@ import {
   type HeardVerb,
   MODAL_DIALOGUE,
   MODAL_DUTIES,
+  MODAL_FIX,
   MODAL_HEARD_KINDS,
   MODAL_HEARD_VERBS,
   MODAL_NOT,
   MODAL_PERMISSION,
   MODAL_REASONS,
+  MODAL_SAY,
   MODAL_SKILLS,
+  MODAL_TALK,
   notSaid,
   type SkillLead,
   skillSentence,
@@ -25,11 +28,14 @@ import {
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Keys, Panel } from "../Explore";
+import { type FixItem, FixRound, fixRecall } from "../FixRound";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
 import { Match, type MatchPair } from "../Match";
 import { Paradigm, type ParadigmRow } from "../Paradigm";
+import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
 import { Word } from "../Word";
 
 const SLUG = "modaalverbid";
@@ -139,7 +145,7 @@ function SkillNote({ lead }: { lead: SkillLead }) {
     </Trans>
   ) : (
     <Trans>
-      <span lang="et">Saan</span>: nothing stops you, not time, place or health.
+      <span lang="et">Saan</span>: usually, nothing stops you, not time, place or health.
     </Trans>
   );
 }
@@ -223,7 +229,11 @@ function DutyNote({ lead }: { lead: DutyLead }) {
     case "tuleb":
       return <Trans>It has to be done, and no one is named.</Trans>;
     case "vaja":
-      return <Trans>I need to: there’s a need.</Trans>;
+      return (
+        <Trans>
+          I need to: the person goes in the <End>-l</End> form, as in <span lang="et">mul on</span>.
+        </Trans>
+      );
   }
 }
 
@@ -400,8 +410,167 @@ const dialogueLine = (id: keyof typeof MODAL_DIALOGUE) => {
   return typeof clip === "string" ? clip : clip.text;
 };
 
+const SAY_MEANS: Record<(typeof MODAL_SAY)[number]["id"], MessageDescriptor> = {
+  oskan: msg`I can speak Estonian.`,
+  "ei-saa": msg`I can’t come today.`,
+  void: msg`You may wait here.`,
+  "ei-tohi": msg`You mustn’t eat here.`,
+  pean: msg`I have to work tomorrow.`,
+  "ei-pea": msg`You don’t have to come tomorrow.`,
+};
+
+export function sayItems(i18n: I18n): SentenceItem[] {
+  return MODAL_SAY.map(({ id, said, also }) => ({
+    kind: "translate",
+    id: `say-${id}`,
+    prompt: i18n._(SAY_MEANS[id]),
+    src: src(said),
+    answers: [said, ...also],
+  }));
+}
+
+const FIX_MEANS: Record<(typeof MODAL_FIX)[number]["id"], MessageDescriptor> = {
+  saan: msg`I can come tomorrow.`,
+  oskab: msg`My brother knows Estonian.`,
+  tootama: msg`I have to work tomorrow.`,
+  minna: msg`I need to go.`,
+  ujuda: msg`You mustn’t swim here.`,
+  tulema: msg`You don’t have to come.`,
+};
+
+function FixWhy({ id }: { id: (typeof MODAL_FIX)[number]["id"] }) {
+  switch (id) {
+    case "saan":
+      return (
+        <Trans>
+          Nothing stops you, so <b lang="et">saan</b>, not <b lang="et">oskan</b>.
+        </Trans>
+      );
+    case "oskab":
+      return (
+        <Trans>
+          Knowing a language takes <b lang="et">oskama</b>: <b lang="et">oskab eesti keelt</b>.
+        </Trans>
+      );
+    case "tootama":
+      return (
+        <Trans>
+          After <b lang="et">pean</b>, the <End>-ma</End> infinitive: <b lang="et">töötama</b>.
+        </Trans>
+      );
+    case "minna":
+      return (
+        <Trans>
+          After <b lang="et">mul on vaja</b>, the <End>-da</End> infinitive: <b lang="et">minna</b>.
+        </Trans>
+      );
+    case "ujuda":
+      return (
+        <Trans>
+          After <b lang="et">ei tohi</b>, the <End>-da</End> infinitive: <b lang="et">ujuda</b>.
+        </Trans>
+      );
+    case "tulema":
+      return (
+        <Trans>
+          After <b lang="et">ei pea</b>, the <End>-ma</End> infinitive: <b lang="et">tulema</b>.
+        </Trans>
+      );
+  }
+}
+
+export function fixItems(i18n: I18n): FixItem[] {
+  return MODAL_FIX.map(({ id, wrong, right, also }) => ({
+    kind: "fix",
+    id: `fix-${id}`,
+    wrong,
+    prompt: i18n._(FIX_MEANS[id]),
+    answers: [right, ...also],
+    src: src(right),
+    explain: <FixWhy id={id} />,
+  }));
+}
+
+function useTalkQuestions(): PassageQuestion[] {
+  const { t } = useLingui();
+  return [
+    { kind: "truefalse", id: "today", ask: t`Mari can go swimming today.`, answer: false, line: 2 },
+    {
+      kind: "short",
+      id: "three",
+      ask: t`Where does Mari have to be at three? Write the place in Estonian, with its ending.`,
+      answers: ["tööl"],
+      line: 3,
+    },
+    {
+      id: "kati",
+      ask: t`What is the problem with Kati?`,
+      options: [
+        { id: "swim", label: t`She can’t swim` },
+        { id: "work", label: t`She has to work today` },
+        { id: "allowed", label: t`She isn’t allowed in the water` },
+      ],
+      answer: "swim",
+      line: 6,
+    },
+    {
+      kind: "short",
+      id: "wait",
+      ask: t`Where can Kati wait? Write the place in Estonian, with its ending.`,
+      answers: ["kohvikus"],
+      line: 8,
+    },
+    { kind: "truefalse", id: "eat", ask: t`You may eat in the water.`, answer: false, line: 10 },
+    {
+      kind: "short",
+      id: "ten",
+      ask: t`At what time are they going? Write it in Estonian.`,
+      answers: ["kell kümme", "kümme", "kell 10", "10", "10.00", "10:00"],
+      line: 14,
+    },
+    {
+      id: "home",
+      ask: t`Why does Jaan have to go home at twelve?`,
+      options: [
+        { id: "mum", label: t`His mum is visiting` },
+        { id: "work", label: t`He has to work` },
+        { id: "tired", label: t`He’s tired` },
+      ],
+      answer: "mum",
+      line: 18,
+    },
+    {
+      id: "who",
+      ask: t`Who else may come?`,
+      options: [
+        { id: "brother", label: t`Mari’s brother` },
+        { id: "mum", label: t`Jaan’s mum` },
+        { id: "friend", label: t`Kati’s best friend` },
+      ],
+      answer: "brother",
+      line: 20,
+    },
+    {
+      kind: "truefalse",
+      id: "swims",
+      ask: t`Mari’s brother swims very well.`,
+      answer: true,
+      line: 23,
+    },
+    { kind: "truefalse", id: "jaan", ask: t`Jaan swims very well.`, answer: false, line: 25 },
+    {
+      kind: "truefalse",
+      id: "together",
+      ask: t`Mari says they’ll swim together.`,
+      answer: true,
+      line: 27,
+    },
+  ];
+}
+
 export function ModaalverbidLesson() {
   const { t, i18n } = useLingui();
+  const talkQuestions = useTalkQuestions();
   const infinitives = lessonBySlug("tegevusnimed")?.n;
   const having = lessonBySlug("mul-on")?.n;
   const negation = lessonBySlug("eitus")?.n;
@@ -491,14 +660,15 @@ export function ModaalverbidLesson() {
       sub={
         <Trans>
           Where English says can, Estonian picks the verb by the reason.{" "}
-          <span lang="et">Oskan</span> is when you know how, <span lang="et">saan</span> when
-          nothing stops you, and <span lang="et">võin</span> when it’s allowed or you offer. Must is{" "}
-          <span lang="et">pean</span>, and mustn’t is <span lang="et">ei tohi</span>.
+          <span lang="et">Oskan</span> is when you know how, <span lang="et">saan</span> usually
+          when nothing stops you, and <span lang="et">võin</span> when it’s allowed or you offer.
+          Must is usually <span lang="et">pean</span>, and mustn’t is usually{" "}
+          <span lang="et">ei tohi</span>.
         </Trans>
       }
       facts={[
-        <Trans key="m">12 minutes</Trans>,
-        <Trans key="q">A quiz, pairs to match and a conversation</Trans>,
+        <Trans key="m">20 minutes</Trans>,
+        <Trans key="q">5 exercises and a recording you can play twice</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -518,7 +688,8 @@ export function ModaalverbidLesson() {
       recap={[
         <Trans key="1">
           <b lang="et">Oskan</b> is for what you learned: <b lang="et">Ma oskan ujuda.</b>{" "}
-          <b lang="et">Saan</b> says nothing stops you: <b lang="et">Ma saan homme tulla.</b>
+          <b lang="et">Saan</b> usually says nothing stops you:{" "}
+          <b lang="et">Ma saan homme tulla.</b>
         </Trans>,
         <Trans key="2">
           <b lang="et">Võin</b> and <b lang="et">tohin</b> both say it’s allowed;{" "}
@@ -528,8 +699,8 @@ export function ModaalverbidLesson() {
         </Trans>,
         <Trans key="3">
           <b lang="et">Pean</b> is I have to. <b lang="et">Tuleb</b> with the <End>-da</End>{" "}
-          infinitive says it has to be done, naming no one. <b lang="et">Mul on vaja</b> is I need
-          to.
+          infinitive says it has to be done; on its own it names no one.{" "}
+          <b lang="et">Mul on vaja</b> is I need to.
         </Trans>,
         <Trans key="4">
           <b lang="et">Ei pea</b> is don’t have to, and <b lang="et">ei tohi</b> is mustn’t:{" "}
@@ -546,7 +717,7 @@ export function ModaalverbidLesson() {
                 <p>
                   <Trans>
                     <Word w="Oskan" /> is for what you learned. To say you know how to swim:{" "}
-                    <Word w="Ma oskan ujuda." /> <Word w="Saan" /> says nothing stops you:{" "}
+                    <Word w="Ma oskan ujuda." /> <Word w="Saan" /> usually says nothing stops you:{" "}
                     <Word w="Ma saan homme tulla." />
                   </Trans>
                 </p>
@@ -629,9 +800,9 @@ export function ModaalverbidLesson() {
               <HaveTo />
               <Aside>
                 <Trans>
-                  With the <End>-ma</End> infinitive, <Word w="tuleb" /> still means comes:{" "}
-                  <Word w="Ta tuleb ujuma." /> Only with the <End>-da</End> infinitive does it mean
-                  has to: <Word w="Tuleb ujuda." />
+                  With the <End>-ma</End> infinitive, <Word w="tuleb" /> usually still means comes:{" "}
+                  <Word w="Ta tuleb ujuma." /> With the <End>-da</End> infinitive it means has to:{" "}
+                  <Word w="Tuleb ujuda." />
                 </Trans>
               </Aside>
             </>
@@ -656,9 +827,10 @@ export function ModaalverbidLesson() {
                 <p>
                   <Trans>
                     <Word w="Pean" /> is must, but <b lang="et">ei pea</b> is don’t have to:{" "}
-                    <Word w="Sa ei pea tulema." /> For mustn’t, Estonian switches to{" "}
+                    <Word w="Sa ei pea tulema." /> For mustn’t, Estonian usually switches to{" "}
                     <b lang="et">ei tohi</b>: <Word w="Sa ei tohi tulla." /> <Word w="Pole vaja" />,
-                    no need, also leaves it to you. Tap one to hear it said about swimming.
+                    no need, means the same as <b lang="et">ei pea</b>. Tap one to hear it said
+                    about swimming.
                   </Trans>
                 </p>
               </Prose>
@@ -672,11 +844,11 @@ export function ModaalverbidLesson() {
                 id="what-it-says"
                 title={<Trans>What does it say?</Trans>}
                 items={HEARD_ITEMS}
-                rounds={MODAL_HEARD_KINDS.length}
+                rounds={HEARD_ITEMS.length}
                 verdict={(share) =>
                   share === 1 ? (
                     <Trans>
-                      All four. By ear, you told apart “don’t know how”, “can’t”, “mustn’t” and
+                      All eight. By ear, you told apart “don’t know how”, “can’t”, “mustn’t” and
                       “don’t have to”.
                     </Trans>
                   ) : (
@@ -714,6 +886,74 @@ export function ModaalverbidLesson() {
           ),
         },
         {
+          id: "say-it",
+          title: t`Write it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write each sentence in Estonian. Pick the verb by the reason, then give the
+                    second verb the infinitive the first one takes.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="say-modals"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={sayItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six written right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Read the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "fix",
+          title: t`Fix the sentence`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each sentence has one wrong word: the wrong verb for its reason, or the wrong
+                    infinitive after it. Tap it, then write the right one.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="fix-modals"
+                title={<Trans>Find and fix the mistake</Trans>}
+                items={fixItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six found and fixed.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Look again at the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={fixRecall}
+                round={(props) => <FixRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
           id: "plans",
           title: t`Plans with Mari`,
           quiz: true,
@@ -736,6 +976,31 @@ export function ModaalverbidLesson() {
                 }
                 them={t`Mari`}
                 turns={dialogue}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listen: going swimming`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Jaan asks Mari to go swimming. Listen for who can, who may and who has to.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="swim-talk"
+                title={<Trans>Listen: Jaan calls Mari</Trans>}
+                clip="c-swim"
+                turns={MODAL_TALK.turns}
+                names={{ third: "Mari", fourth: "Jaan" }}
+                questions={talkQuestions}
+                plays={2}
               />
             </>
           ),

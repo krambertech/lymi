@@ -52,6 +52,9 @@ msgstr "автобусна зупинка"
 msgid "a cooker"
 msgstr "плита"
 
+msgid "A date takes <0>-l</0>, not <1>-s</1>: <2>esimesel detsembril</2>."
+msgstr "«Якого числа» — це <0>-l</0>, а не <1>-s</1>: <2>esimesel detsembril</2>."
+
 msgid "a flat"
 msgstr "квартира"
 
@@ -172,14 +175,14 @@ msgstr "З першого грудня"
 msgid "Going into usually takes <0>-sse</0>: <1>korterisse</1>."
 msgstr "«Усередину» зазвичай — це <0>-sse</0>: <1>korterisse</1>."
 
-msgid "Greet Mari, say who you are, ask to come and see the flat on a day you name, ask one question about the flat, and thank her."
-msgstr "Привітайся з Марі, скажи, хто ти, попроси дозволу прийти подивитися квартиру в названий тобою день, постав одне питання про квартиру й подякуй."
+msgid "Greet Mari, say who you are, ask to come and see the flat on a day you name, ask one question about the flat, thank her and sign your name."
+msgstr "Привітайся з Марі, скажи, хто ти, попроси дозволу прийти подивитися квартиру в названий тобою день, постав одне питання про квартиру, подякуй і підпишися."
 
 msgid "Greets Mari."
 msgstr "Вітається з Марі."
 
 msgid "His brother"
-msgstr "Свого брата"
+msgstr "Своєму братові"
 
 msgid "How many minutes is the small flat from the centre by bus? Write the number in Estonian."
 msgstr "Скільки хвилин автобусом від маленької квартири до центру? Напиши число естонською."
@@ -238,14 +241,11 @@ msgstr "Яан"
 msgid "Jaan comes to see the flat, and Mari, the owner, shows him round. If you pick a wrong reply, you see why, then hear the right one."
 msgstr "Яан приходить подивитися квартиру, і власниця Марі все йому показує. Якщо вибереш неправильну відповідь, побачиш чому, а потім почуєш правильну."
 
-msgid "Jaan has seen two flats, and his friend Liis calls him. Read the questions first. You can play the recording twice, as in the A2 exam."
-msgstr "Яан подивився дві квартири, і йому телефонує подруга Ліїс. Спершу прочитай питання. Запис можна прослухати двічі, як на іспиті A2."
-
 msgid "Jaan is looking for a <0/>, a flat, in Tartu. Read the advert, then answer the questions. Once you check your answers, tap a word to open its card."
 msgstr "Яан шукає <0/> — квартиру — у Тарту. Прочитай оголошення й дай відповіді на питання. Коли перевіриш відповіді, торкнися слова, щоб відкрити його картку."
 
-msgid "Jaan saw two flats today."
-msgstr "Сьогодні Яан подивився дві квартири."
+msgid "Jaan likes the view from the big flat’s balcony."
+msgstr "Яанові подобається вид із балкона великої квартири."
 
 msgid "Jaan writes to the owner"
 msgstr "Яан пише власниці"
@@ -286,6 +286,9 @@ msgstr "Марі"
 msgid "Mari Tamm writes"
 msgstr "Пише Марі Тамм"
 
+msgid "Mari’s flat went to someone else. Now Jaan has seen two more flats, and his friend Liis calls him. Read the questions first. You can play the recording twice, as in the A2 exam."
+msgstr "Квартиру Марі віддали комусь іншому. Тепер Яан подивився ще дві квартири, і йому телефонує подруга Ліїс. Спершу прочитай питання. Запис можна прослухати двічі, як на іспиті A2."
+
 msgid "Most of them. Read the ones you missed once more."
 msgstr "Більшість. Перечитай ті, що не вдалися."
 
@@ -298,6 +301,9 @@ msgstr "«В’їхати» — це <0>sisse kolima</0>, «виїхати» —
 msgid "Moving in is <0>sisse kolima</0>; <1>välja</1> would be moving out."
 msgstr "«В’їхати» — це <0>sisse kolima</0>; з <1>välja</1> вийшло б «виїхати»."
 
+msgid "need"
+msgstr "потребувати"
+
 msgid "None there: <et>ei ole lifti</et>"
 msgstr "Чогось немає: <et>ei ole lifti</et>"
 
@@ -306,9 +312,6 @@ msgstr "Зараз"
 
 msgid "Now write your own message to Mari, about 30 words. Then compare it with the model and tick what yours does."
 msgstr "Тепер напиши Марі власне повідомлення, приблизно на 30 слів. Потім порівняй його із взірцем і познач, що є у твоєму."
-
-msgid "On a date takes <0>-l</0>: <1>esimesel detsembril</1>."
-msgstr "Дата — це <0>-l</0>: <1>esimesel detsembril</1>."
 
 msgid "On a floor takes <0>-l</0>, and the number usually takes it too: <1>kolmandal korrusel</1>."
 msgstr "«На поверсі» — це <0>-l</0>, і числівник зазвичай теж його отримує: <1>kolmandal korrusel</1>."
@@ -345,6 +348,9 @@ msgstr "орендна плата"
 
 msgid "river"
 msgstr "річку"
+
+msgid "Sa ei vaja: you don’t need."
+msgstr "Sa ei vaja — тобі не треба."
 
 msgid "Says who you are."
 msgstr "Каже, хто ти."
@@ -395,7 +401,7 @@ msgid "The one in the city centre"
 msgstr "Та, що в центрі"
 
 msgid "The owner"
-msgstr "Власниці"
+msgstr "Власникові"
 
 msgid "The station"
 msgstr "Вокзал"
@@ -501,6 +507,9 @@ msgstr "Який інфінітив: <et>tahan kolida</et>, <et>tulen vaatama</e
 
 msgid "which of the two"
 msgstr "котрий із двох"
+
+msgid "white"
+msgstr "білі"
 
 msgid "Who will Jaan call tomorrow?"
 msgstr "Кому Яан подзвонить завтра?"

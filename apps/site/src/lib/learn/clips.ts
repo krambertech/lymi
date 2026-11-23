@@ -8935,7 +8935,7 @@ export const FLAT_PASSAGES = {
     "Mina olen Jaan ja ma nägin teie kuulutust.",
     "Korter meeldib mulle väga.",
     "Ma töötan Tartus õpetajana.",
-    "Mul ei ole kassi ega koera.",
+    "Mul ei ole kassi.",
     "Kas ma võin homme korterit vaatama tulla?",
     "Ma tahan sisse kolida esimesel detsembril.",
     "Kas köögis on ka pliit?",
@@ -9010,7 +9010,7 @@ export const FLAT_FIX = [
   {
     id: "kolmandal",
     wrong: "Korter on kolmas korrusel.",
-    answers: ["Korter on kolmandal korrusel."],
+    answers: ["Korter on kolmandal korrusel.", "Korter on 3. korrusel."],
   },
   { id: "lifti", wrong: "Majas ei ole lift.", answers: ["Majas ei ole lifti."] },
   { id: "kolida", wrong: "Ma tahan sisse kolima.", answers: ["Ma tahan sisse kolida."] },
@@ -9022,7 +9022,7 @@ export const FLAT_FIX = [
   {
     id: "esimesest",
     wrong: "Korter on vaba esimene detsembrist.",
-    answers: ["Korter on vaba esimesest detsembrist."],
+    answers: ["Korter on vaba esimesest detsembrist.", "Korter on vaba 1. detsembrist."],
   },
   { id: "korterisse", wrong: "Ma lähen korteris.", answers: ["Ma lähen korterisse."] },
 ] as const;
@@ -9041,9 +9041,10 @@ export const FLAT_DIALOGUE = {
 export const FLAT_MESSAGE = [
   "Tere, Mari!",
   "Mina olen Jaan.",
+  "Ma töötan Tartus õpetajana.",
   "Ma nägin teie kuulutust.",
   "Kas ma võin homme kell kuus korterit vaatama tulla?",
-  "Kas majas on lift?",
+  "Kas korter on vaikne?",
   "Aitäh!",
   "Jaan.",
 ] as const;

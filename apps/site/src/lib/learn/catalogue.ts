@@ -404,7 +404,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian practice: looking for a flat`,
         et: "Korter",
         minutes: 20,
-        blurb: msg`Free Estonian practice for finding a flat: read an advert, write to the owner, sort where from where to, fix the mistakes learners make, look round a flat, follow a 90-second call about two flats heard twice, and write your own message. Every sentence is read aloud.`,
+        blurb: msg`Free Estonian practice for finding a flat: read an advert, write to the owner, tell where (köögis) from where to (kööki), fix the mistakes learners make, look round a flat, follow a 90-second call about two flats heard twice, and write your own message. Every sentence is read aloud.`,
       },
     ],
   },

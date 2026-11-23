@@ -64,6 +64,8 @@ const GLOSSARY: Glossary = {
   omanikule: { en: msg`to the owner` },
   kasti: { en: msg`boxes`, note: msg`Kast, a box; after kaks or a higher number, kasti.` },
   voodi: { en: msg`a bed` },
+  vaja: { en: msg`need`, note: msg`Sa ei vaja: you don’t need.` },
+  valged: { en: msg`white` },
   appi: { en: msg`to someone’s aid, to help` },
 };
 
@@ -263,13 +265,6 @@ function useContent() {
 
     const talk: PassageQuestion[] = [
       {
-        id: "how-many",
-        kind: "truefalse",
-        ask: t`Jaan saw two flats today.`,
-        answer: true,
-        line: 3,
-      },
-      {
         id: "bigger",
         ask: t`Which flat is bigger?`,
         options: [
@@ -301,6 +296,13 @@ function useContent() {
         ],
         answer: "river",
         line: 14,
+      },
+      {
+        id: "view-likes",
+        kind: "truefalse",
+        ask: t`Jaan likes the view from the big flat’s balcony.`,
+        answer: true,
+        line: 15,
       },
       {
         id: "bus",
@@ -428,10 +430,10 @@ function useContent() {
         clip: "d-sina-4",
         replies: [
           {
-            line: "Esimene detsember.",
+            line: "Esimeses detsembris.",
             why: (
               <Trans>
-                On a date takes <Et>-l</Et>: <Et>esimesel detsembril</Et>.
+                A date takes <Et>-l</Et>, not <Et>-s</Et>: <Et>esimesel detsembril</Et>.
               </Trans>
             ),
           },
@@ -561,7 +563,7 @@ export function KorterLesson() {
                 title={<Trans>Fill the gaps: Jaan’s message</Trans>}
                 gaps={gaps}
                 mode="drag"
-                spare={["õpetajat", "kass", "vaadata", "välja", "kööki"]}
+                spare={["õpetajat", "kass", "vaadata", "sees", "kööki"]}
                 clip="p-reply"
               />
             </>
@@ -692,8 +694,9 @@ export function KorterLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Jaan has seen two flats, and his friend Liis calls him. Read the questions
-                    first. You can play the recording twice, as in the A2 exam.
+                    Mari’s flat went to someone else. Now Jaan has seen two more flats, and his
+                    friend Liis calls him. Read the questions first. You can play the recording
+                    twice, as in the A2 exam.
                   </Trans>
                 </p>
               </Prose>
@@ -729,7 +732,7 @@ export function KorterLesson() {
                 prompt={
                   <Trans>
                     Greet Mari, say who you are, ask to come and see the flat on a day you name, ask
-                    one question about the flat, and thank her.
+                    one question about the flat, thank her and sign your name.
                   </Trans>
                 }
                 model={FLAT_MESSAGE}

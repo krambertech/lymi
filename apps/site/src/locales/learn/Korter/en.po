@@ -52,6 +52,9 @@ msgstr "a bus stop"
 msgid "a cooker"
 msgstr "a cooker"
 
+msgid "A date takes <0>-l</0>, not <1>-s</1>: <2>esimesel detsembril</2>."
+msgstr "A date takes <0>-l</0>, not <1>-s</1>: <2>esimesel detsembril</2>."
+
 msgid "a flat"
 msgstr "a flat"
 
@@ -172,8 +175,8 @@ msgstr "From the first of December"
 msgid "Going into usually takes <0>-sse</0>: <1>korterisse</1>."
 msgstr "Going into usually takes <0>-sse</0>: <1>korterisse</1>."
 
-msgid "Greet Mari, say who you are, ask to come and see the flat on a day you name, ask one question about the flat, and thank her."
-msgstr "Greet Mari, say who you are, ask to come and see the flat on a day you name, ask one question about the flat, and thank her."
+msgid "Greet Mari, say who you are, ask to come and see the flat on a day you name, ask one question about the flat, thank her and sign your name."
+msgstr "Greet Mari, say who you are, ask to come and see the flat on a day you name, ask one question about the flat, thank her and sign your name."
 
 msgid "Greets Mari."
 msgstr "Greets Mari."
@@ -238,14 +241,11 @@ msgstr "Jaan"
 msgid "Jaan comes to see the flat, and Mari, the owner, shows him round. If you pick a wrong reply, you see why, then hear the right one."
 msgstr "Jaan comes to see the flat, and Mari, the owner, shows him round. If you pick a wrong reply, you see why, then hear the right one."
 
-msgid "Jaan has seen two flats, and his friend Liis calls him. Read the questions first. You can play the recording twice, as in the A2 exam."
-msgstr "Jaan has seen two flats, and his friend Liis calls him. Read the questions first. You can play the recording twice, as in the A2 exam."
-
 msgid "Jaan is looking for a <0/>, a flat, in Tartu. Read the advert, then answer the questions. Once you check your answers, tap a word to open its card."
 msgstr "Jaan is looking for a <0/>, a flat, in Tartu. Read the advert, then answer the questions. Once you check your answers, tap a word to open its card."
 
-msgid "Jaan saw two flats today."
-msgstr "Jaan saw two flats today."
+msgid "Jaan likes the view from the big flat’s balcony."
+msgstr "Jaan likes the view from the big flat’s balcony."
 
 msgid "Jaan writes to the owner"
 msgstr "Jaan writes to the owner"
@@ -286,6 +286,9 @@ msgstr "Mari"
 msgid "Mari Tamm writes"
 msgstr "Mari Tamm writes"
 
+msgid "Mari’s flat went to someone else. Now Jaan has seen two more flats, and his friend Liis calls him. Read the questions first. You can play the recording twice, as in the A2 exam."
+msgstr "Mari’s flat went to someone else. Now Jaan has seen two more flats, and his friend Liis calls him. Read the questions first. You can play the recording twice, as in the A2 exam."
+
 msgid "Most of them. Read the ones you missed once more."
 msgstr "Most of them. Read the ones you missed once more."
 
@@ -298,6 +301,9 @@ msgstr "Moving in is <0>sisse kolima</0>, moving out <1>välja kolima</1>."
 msgid "Moving in is <0>sisse kolima</0>; <1>välja</1> would be moving out."
 msgstr "Moving in is <0>sisse kolima</0>; <1>välja</1> would be moving out."
 
+msgid "need"
+msgstr "need"
+
 msgid "None there: <et>ei ole lifti</et>"
 msgstr "None there: <et>ei ole lifti</et>"
 
@@ -306,9 +312,6 @@ msgstr "Now"
 
 msgid "Now write your own message to Mari, about 30 words. Then compare it with the model and tick what yours does."
 msgstr "Now write your own message to Mari, about 30 words. Then compare it with the model and tick what yours does."
-
-msgid "On a date takes <0>-l</0>: <1>esimesel detsembril</1>."
-msgstr "On a date takes <0>-l</0>: <1>esimesel detsembril</1>."
 
 msgid "On a floor takes <0>-l</0>, and the number usually takes it too: <1>kolmandal korrusel</1>."
 msgstr "On a floor takes <0>-l</0>, and the number usually takes it too: <1>kolmandal korrusel</1>."
@@ -345,6 +348,9 @@ msgstr "rent"
 
 msgid "river"
 msgstr "river"
+
+msgid "Sa ei vaja: you don’t need."
+msgstr "Sa ei vaja: you don’t need."
 
 msgid "Says who you are."
 msgstr "Says who you are."
@@ -501,6 +507,9 @@ msgstr "Which infinitive: <et>tahan kolida</et>, <et>tulen vaatama</et>"
 
 msgid "which of the two"
 msgstr "which of the two"
+
+msgid "white"
+msgstr "white"
 
 msgid "Who will Jaan call tomorrow?"
 msgstr "Who will Jaan call tomorrow?"

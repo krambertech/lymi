@@ -5763,7 +5763,7 @@ msgid "Questions from teachers."
 msgstr "Вопросы преподавателей."
 
 msgid "Questions from the Estonian lessons you’ve drilled, each back on the day it’s due. They stay in your browser, with no account."
-msgstr ""
+msgstr "Вопросы из тренировок в уроках эстонского: каждый возвращается в свой день. Всё хранится в твоём браузере, без аккаунта."
 
 msgid "questions in the manual"
 msgstr "вопросов в пособии"
@@ -6019,7 +6019,7 @@ msgid "Review with no signal. It syncs when you’re back."
 msgstr "Повторяй без связи. Всё синхронизируется, когда она появится."
 
 msgid "Review your Estonian lessons · Lymi"
-msgstr ""
+msgstr "Повторение уроков эстонского · Lymi"
 
 msgid "Reviewed with Lymi"
 msgstr "С повторениями в Lymi"

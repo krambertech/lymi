@@ -55,8 +55,8 @@ describe("the lessons stay off every other page", () => {
   });
 
   it("keeps each drill bank beside the lesson it belongs to, as data without JSX", () => {
-    const banks = readdirSync(new URL("components/learn/lessons/", SRC)).filter((name) =>
-      name.includes(".drills."),
+    const banks = readdirSync(new URL("../../components/learn/lessons/", import.meta.url)).filter(
+      (name) => name.includes(".drills."),
     );
     const lessons = new Set(LESSON_SLUGS.map((slug) => `${lessonName(slug)}.drills.ts`));
     expect(banks.filter((name) => !lessons.has(name))).toEqual([]);

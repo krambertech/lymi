@@ -620,7 +620,7 @@ export function MulOnLesson() {
         </Trans>,
         <Trans key="3">
           The verb is <b lang="et">on</b> whoever has the thing, and in a yes sentence one thing you
-          can count stays in its first form: <b lang="et">Meil on maja.</b>
+          can count stays in its nominative: <b lang="et">Meil on maja.</b>
         </Trans>,
         <Trans key="4">
           Ask with <b lang="et">kas</b> or <b lang="et">kellel</b>, and answer with{" "}
@@ -738,7 +738,7 @@ export function MulOnLesson() {
                 </p>
                 <p>
                   <Trans>
-                    In a yes sentence, one thing you can count stays in its first form, the one
+                    In a yes sentence, one thing you can count stays in its nominative, the one
                     lesson {forms} lists first: <Word w="kass" />, <Word w="auto" />,{" "}
                     <Word w="maja" />. Time is an amount, not one thing, and takes another form:{" "}
                     <Word w="Kas sul on aega?" /> Lesson {partitive} teaches that form.

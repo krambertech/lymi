@@ -1,0 +1,566 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 09:49+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "<0>Eelmisel nädalal tulin</0> is last week I came. Kati asked when you’re coming."
+msgstr "<0>Eelmisel nädalal tulin</0> — «на прошлой неделе я приехал(а)». Кати спросила, когда ты приедешь."
+
+msgid "<0>Eile läksin</0> is yesterday I went. Kati asked about tomorrow."
+msgstr "<0>Eile läksin</0> — «вчера я поехал(а)». Кати спросила про завтра."
+
+msgid "<0>Hakka-</0> with <1>n</1> for I, and <2>elama</2>, to live, stays as it is."
+msgstr "<0>Hakka-</0> с <1>n</1> для «я», а <2>elama</2>, «жить», не меняется."
+
+msgid "<0>Hakkama</0> takes the person ending, as any verb does in the present. The second verb keeps its <1>ma</1> and usually goes last: <2>Me hakkame eesti keelt rääkima.</2> Tap a form to hear it in a sentence."
+msgstr "Личное окончание у <0>hakkama</0>, как у любого глагола в настоящем времени. Второй глагол сохраняет своё <1>ma</1> и обычно стоит в конце: <2>Me hakkame eesti keelt rääkima.</2> Нажми на форму, чтобы услышать её в предложении."
+
+msgid "<0>Hakkama</0> with the <1>ma</1> infinitive says that something will start and go on: <2>Ma hakkan Tartus elama.</2> Only <3>hakkama</3> takes the person ending."
+msgstr "<0>Hakkama</0> с инфинитивом на <1>ma</1> говорит, что что-то начнётся и будет продолжаться: <2>Ma hakkan Tartus elama.</2> Личное окончание есть только у <3>hakkama</3>."
+
+msgid "<0>Hakkan, pean, lähen</0> and <1>jään</1> take the <2>ma</2> infinitive."
+msgstr "После <0>hakkan, pean, lähen</0> и <1>jään</1> идёт инфинитив на <2>ma</2>."
+
+msgid "<0>Homme</0> is tomorrow, so the present: <1>lähen</1>."
+msgstr "<0>Homme</0> — это завтра, поэтому настоящее время: <1>lähen</1>."
+
+msgid "<0>Kavatsen, plaanin, tahan</0> and <1>oskan</1> take the <2>da</2> infinitive."
+msgstr "После <0>kavatsen, plaanin, tahan</0> и <1>oskan</1> идёт инфинитив на <2>da</2>."
+
+msgid "<0>Nad</0> takes <1>vad</1>: <2>nad hakkavad</2>."
+msgstr "С <0>nad</0> — окончание <1>vad</1>: <2>nad hakkavad</2>."
+
+msgid "<0>Saab olema</0> means will be. You’ll hear it, and the present usually says the same: <1>Homme on külm.</1>"
+msgstr "<0>Saab olema</0> значит «будет». Так тоже говорят, но обычно то же самое передаёт настоящее время: <1>Homme on külm.</1>"
+
+msgid "<0>Täna</0> is today. Kati asked about tomorrow."
+msgstr "<0>Täna</0> — это сегодня. Кати спросила про завтра."
+
+msgid "<0>Töötasin</0> is the past. The job in Tallinn hasn’t started yet."
+msgstr "<0>Töötasin</0> — прошедшее время. Работа в Таллине ещё не началась."
+
+msgid "<et>Hakkama</et> for what will start"
+msgstr "<et>Hakkama</et> для того, что начнётся"
+
+msgid "<et>Hakkama</et> takes the person ending, and the second verb its -ma infinitive."
+msgstr "Личное окончание у <et>hakkama</et>, а второй глагол стоит в инфинитиве на -ma."
+
+msgid "<et>Homme</et>, tomorrow: later."
+msgstr "<et>Homme</et>, «завтра»: в будущем."
+
+msgid "<et>Järgmisel nädalal</et>, next week: later."
+msgstr "<et>Järgmisel nädalal</et>, «на следующей неделе»: в будущем."
+
+msgid "<et>Kavatsen</et> and <et>plaanin</et> for plans"
+msgstr "<et>Kavatsen</et> и <et>plaanin</et> для планов"
+
+msgid "<et>Kavatsen</et> and <et>plaanin</et> take the -da infinitive."
+msgstr "После <et>kavatsen</et> и <et>plaanin</et> идёт инфинитив на -da."
+
+msgid "<et>Töötasin</et> is the past."
+msgstr "<et>Töötasin</et> — это прошедшее время."
+
+msgid "15 minutes"
+msgstr "15 минут"
+
+msgid "5 quizzes, a conversation and a recording you can play twice"
+msgstr "5 упражнений, разговор и запись, которую можно прослушать дважды"
+
+msgid "A time word with the present says what will happen."
+msgstr "Слово о времени вместе с настоящим временем говорит, что будет."
+
+msgid "After <0>{lead}</0>, the <1>ma</1> infinitive, and it goes last. The present, <2>{spare}</2>, stays out."
+msgstr "После <0>{lead}</0> — инфинитив на <1>ma</1>, в конце. Настоящее время, <2>{spare}</2>, лишнее."
+
+msgid "After <0>hakkama</0>, the second verb takes its <1>ma</1> infinitive and goes last. Try again."
+msgstr "После <0>hakkama</0> второй глагол стоит в инфинитиве на <1>ma</1> и в конце. Попробуй ещё раз."
+
+msgid "After <0>hakkan</0> comes the <1>ma</1> infinitive: <2>töötama</2>."
+msgstr "После <0>hakkan</0> идёт инфинитив на <1>ma</1>: <2>töötama</2>."
+
+msgid "After <0>hakkan</0>, the <1>ma</1> infinitive: <2>töötama</2>."
+msgstr "После <0>hakkan</0> — инфинитив на <1>ma</1>: <2>töötama</2>."
+
+msgid "After <0>kavatsen</0> comes the <1>da</1> infinitive: <2>tulla</2>."
+msgstr "После <0>kavatsen</0> идёт инфинитив на <1>da</1>: <2>tulla</2>."
+
+msgid "After <0>kavatsen</0>, the <1>da</1> infinitive: <2>minna</2>."
+msgstr "После <0>kavatsen</0> — инфинитив на <1>da</1>: <2>minna</2>."
+
+msgid "After <0>plaanib</0>, the <1>da</1> infinitive: <2>tulla</2>."
+msgstr "После <0>plaanib</0> — инфинитив на <1>da</1>: <2>tulla</2>."
+
+msgid "After <et>hakkama</et>, the -ma infinitive."
+msgstr "После <et>hakkama</et> — инфинитив на -ma."
+
+msgid "All seven. You told the past, now and later apart every time."
+msgstr "Все семь. Прошлое, настоящее и будущее — каждый раз верно."
+
+msgid "All six found and fixed."
+msgstr "Все шесть найдены и исправлены."
+
+msgid "All six, each with <0>hakkama</0> and the <1>ma</1> infinitive."
+msgstr "Все шесть, и в каждом <0>hakkama</0> и инфинитив на <1>ma</1>."
+
+msgid "All three. Each second verb took its <0>ma</0> infinitive and went last."
+msgstr "Все три. Второй глагол каждый раз в инфинитиве на <0>ma</0> и в конце."
+
+msgid "Also: Tomorrow I’ll go to Tartu."
+msgstr "Или: «Завтра я поеду в Тарту»."
+
+msgid "An Estonian verb has no future form. The present with a time word says what will happen, and <0>hakkama</0> with the <1>ma</1> infinitive says that something will start."
+msgstr "У эстонского глагола нет формы будущего времени. Настоящее время со словом о времени говорит, что будет, а <0>hakkama</0> с инфинитивом на <1>ma</1> — что что-то начнётся."
+
+msgid "An Estonian verb has no future form. The present with a time word says what will happen: <0>Homme lähen Tartusse.</0>"
+msgstr "У эстонского глагола нет формы будущего времени. О будущем говорит настоящее время со словом вроде «завтра»: <0>Homme lähen Tartusse.</0>"
+
+msgid "An Estonian verb has no future form. You use the present and add a time word, such as <0/>, tomorrow: <1><2/>.</1>"
+msgstr "У русского глагола есть будущее время: поеду, буду работать. У эстонского такой формы нет: берёшь настоящее время и добавляешь слово вроде <0/>, «завтра»: <1><2/>.</1>"
+
+msgid "Are you going to work at home?"
+msgstr "Ты будешь работать дома?"
+
+msgid "At eleven they’re going to have coffee at a café."
+msgstr "В одиннадцать они будут пить кофе в кафе."
+
+msgid "At home"
+msgstr "Дома"
+
+msgid "Build a sentence"
+msgstr "Составление предложений"
+
+msgid "Build each sentence from what it means. One tile is the present of the second verb and stays out."
+msgstr "Собери каждое предложение по переводу. Одна плитка — настоящее время второго глагола, она лишняя."
+
+msgid "Build the sentence"
+msgstr "Собери предложение"
+
+msgid "Each sentence has one wrong word: the wrong infinitive after the first verb, a wrong or misplaced person ending, or the past for tomorrow. Tap it, then write it right."
+msgstr "В каждом предложении одно неверное слово: не тот инфинитив после первого глагола, неверное или не на том месте личное окончание, или прошедшее время в предложении о завтрашнем дне. Нажми на него, а потом напиши правильно."
+
+msgid "Each sentence says what someone does now. Write that it will start: put <0>hakkama</0> in the person’s form, and the verb in its <1>ma</1> infinitive at the end."
+msgstr "В каждом предложении сказано, что кто-то делает сейчас. Напиши, что это начнётся: <0>hakkama</0> в форме нужного лица, а глагол — в инфинитиве на <1>ma</1> в конце."
+
+msgid "Find and fix the mistake"
+msgstr "Найди и исправь ошибку"
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
+
+msgid "For a plan, <0>kavatsen</0> and <1>plaanin</1> take the <2>da</2> infinitive: <3>Ma kavatsen Tallinnasse minna.</3>"
+msgstr "О плане говорят <0>kavatsen</0> или <1>plaanin</1>, и после них идёт инфинитив на <2>da</2>: <3>Ma kavatsen Tallinnasse minna.</3>"
+
+msgid "For a plan, say <0><1/>,</0> I intend, or <2><3/>,</2> I plan. Both take the <4>da</4> infinitive, as <5>tahan</5> does: <6/> <7/>"
+msgstr "О плане говорят <0><1/>,</0> «я собираюсь», или <2><3/>,</2> «я планирую». После обоих идёт инфинитив на <4>da</4>, как после <5>tahan</5>: <6/> <7/>"
+
+msgid "For he, she or it, <0>b</0>, here the rain. <1>Vihma</1> is the partitive of <2>vihm</2>, rain, and <3>sadama</3> is to fall, of rain or snow."
+msgstr "Для «он», «она» или «оно» — <0>b</0>, здесь это дождь. <1>Vihma</1> — партитив от <2>vihm</2>, «дождь», а <3>sadama</3> — «падать», о дожде или снеге."
+
+msgid "For they, <0>vad</0>; <1>mängima</1> is to play."
+msgstr "Для «они» — <0>vad</0>; <1>mängima</1> — «играть»."
+
+msgid "For we, <0>me</0>; <1>rääkima</1>, to speak, goes last."
+msgstr "Для «мы» — <0>me</0>; <1>rääkima</1>, «говорить», стоит в конце."
+
+msgid "For will be, you’ll also hear <0>saab</0> with the <1>ma</1> infinitive: <2><3/>.</2> It came into written Estonian on the German model. The Estonian Language Institute’s handbook advises the present wherever it does the job: <4><5/>.</4> Don’t mix up <6>saab olema</6> with <7>saan</7> and the <8>da</8> infinitive, I can, from lesson {infinitives}."
+msgstr "Для «будет» услышишь и <0>saab</0> с инфинитивом на <1>ma</1>: <2><3/>.</2> Эта конструкция пришла в письменный эстонский по немецкому образцу. Справочник Института эстонского языка (EKI) советует настоящее время везде, где его достаточно: <4><5/>.</4> Не путай <6>saab olema</6> с <7>saan</7> и инфинитивом на <8>da</8>, «я могу», из урока {infinitives}."
+
+msgid "For you, <0>d</0>; <1>töötama</1>, to work, keeps its <2>ma</2>."
+msgstr "Для «ты» — <0>d</0>; <1>töötama</1>, «работать», сохраняет своё <2>ma</2>."
+
+msgid "For you, to more than one or polite, <0>te</0>; <1>sööma</1> is to eat."
+msgstr "Для «вы», к нескольким людям или вежливо, — <0>te</0>; <1>sööma</1> — «есть»."
+
+msgid "From hakkama, with the -ma infinitive after it."
+msgstr "От hakkama, после него — инфинитив на -ma."
+
+msgid "From kavatsema, with the -da infinitive after it."
+msgstr "От kavatsema, после него — инфинитив на -da."
+
+msgid "From plaanima, with the -da infinitive after it."
+msgstr "От plaanima, после него — инфинитив на -da."
+
+msgid "Go back to the forms of <0>hakkama</0> above, then try again."
+msgstr "Вернись к формам <0>hakkama</0> выше, а потом попробуй снова."
+
+msgid "Go back to the sort above, then try again."
+msgstr "Вернись к сортировке выше, а потом попробуй снова."
+
+msgid "He or she is going to live in Tallinn."
+msgstr "Он или она будет жить в Таллине."
+
+msgid "He or she is studying Estonian."
+msgstr "Он или она учит эстонский."
+
+msgid "He or she lived in Tallinn."
+msgstr "Он жил или она жила в Таллине."
+
+msgid "He or she lives in Tallinn."
+msgstr "Он или она живёт в Таллине."
+
+msgid "He or she studied Estonian."
+msgstr "Он учил или она учила эстонский."
+
+msgid "Hear a sentence and pick when it happens. Listen for a time word, a past form, or a verb such as <0>hakkab</0> before a second one. With none of them, these sentences are about now."
+msgstr "Послушай предложение и выбери, когда это происходит. Слушай слово вроде «завтра», форму прошедшего времени или глагол вроде <0>hakkab</0> перед другим. Если ничего из этого нет, в этих предложениях речь о настоящем."
+
+msgid "I intend, I’m planning"
+msgstr "я собираюсь, я намерен(а)"
+
+msgid "I plan"
+msgstr "я планирую"
+
+msgid "I start; I’m going to"
+msgstr "я начинаю; я буду"
+
+msgid "I start: the present, for I"
+msgstr "я начинаю: настоящее время, для «я»"
+
+msgid "I worked at home."
+msgstr "Я работал(а) дома."
+
+msgid "I’m at work."
+msgstr "Я на работе."
+
+msgid "I’m going to live in Tartu."
+msgstr "Я буду жить в Тарту."
+
+msgid "I’m going to read a lot."
+msgstr "Я буду много читать."
+
+msgid "I’m planning to go to Tallinn next week."
+msgstr "На следующей неделе я собираюсь поехать в Таллин."
+
+msgid "I’m planning to go to Tallinn."
+msgstr "Я планирую поехать в Таллин."
+
+msgid "I’m working at home."
+msgstr "Я работаю дома."
+
+msgid "In lesson {infinitives} you met <0/>, I start, with the <1>ma</1> infinitive after it. <2/> also talks about the future, when the point is that something will start and go on: <3><4/>.</3>"
+msgstr "В уроке {infinitives} был <0/>, «я начинаю», с инфинитивом на <1>ma</1> после него. <2/> говорит и о будущем, когда важно, что что-то начнётся и будет продолжаться: <3><4/>.</3>"
+
+msgid "In Tallinn"
+msgstr "В Таллине"
+
+msgid "In Tartu"
+msgstr "В Тарту"
+
+msgid "In the past"
+msgstr "В прошлом"
+
+msgid "In two weeks"
+msgstr "Через две недели"
+
+msgid "It will be cold tomorrow."
+msgstr "Завтра будет холодно."
+
+msgid "Jaan is also going to live in Tallinn."
+msgstr "Яан тоже будет жить в Таллине."
+
+msgid "Jaan’s cat is staying in Tartu."
+msgstr "Кот Яана остаётся в Тарту."
+
+msgid "Järgmine nädal, next week, with the -l that says when."
+msgstr "Järgmine nädal, «следующая неделя», с -l, которое указывает на время."
+
+msgid "Kati"
+msgstr "Кати"
+
+msgid "Kati and Jaan talk about next week. Read the questions first. You can play the recording twice, as in the A2 exam."
+msgstr "Кати и Яан говорят о следующей неделе. Сначала прочитай вопросы. Запись можно прослушать дважды, как на экзамене A2."
+
+msgid "Kati is going to work in a shop."
+msgstr "Кати будет работать в магазине."
+
+msgid "last week"
+msgstr "на прошлой неделе"
+
+msgid "Later"
+msgstr "В будущем"
+
+msgid "Lesson {days} gave you <0/>, the day after tomorrow. Next week is <1/>, built like <2/>, last week, from lesson {past}. Tap a time on the line to hear a sentence and see its verb."
+msgstr "Из урока {days} ты знаешь <0/>, «послезавтра». «На следующей неделе» — это <1/>, по тому же образцу, что и <2/>, «на прошлой неделе», из урока {past}. Нажми на отметку на линии, чтобы услышать предложение и увидеть глагол."
+
+msgid "Listen: Kati and Jaan’s plans"
+msgstr "Послушай: планы Кати и Яана"
+
+msgid "Listen: plans for next week"
+msgstr "Послушай: планы на следующую неделю"
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Minna is the -da infinitive of minema, to go."
+msgstr "Minna — инфинитив на -da от minema, «идти»."
+
+msgid "Most of them. Check the ones you missed against the forms of <0>hakkama</0> above."
+msgstr "Большинство верно. Сверь те, где были ошибки, с формами <0>hakkama</0> выше."
+
+msgid "Most of them. Look again at the ones you missed."
+msgstr "Большинство верно. Ещё раз посмотри на те, где была ошибка."
+
+msgid "Most of them. Play the ones you missed once more."
+msgstr "Почти все. Переслушай ещё раз те, где были ошибки."
+
+msgid "next week"
+msgstr "на следующей неделе"
+
+msgid "Next week"
+msgstr "На следующей неделе"
+
+msgid "Next week I’m going to Tartu."
+msgstr "На следующей неделе я еду в Тарту."
+
+msgid "Next week I’m starting to study in Tartu."
+msgstr "На следующей неделе я начну учиться в Тарту."
+
+msgid "Next week we’re eating at home."
+msgstr "На следующей неделе мы будем есть дома."
+
+msgid "Next week we’re going to Tartu."
+msgstr "На следующей неделе мы едем в Тарту."
+
+msgid "Next week we’re starting to learn Estonian."
+msgstr "На следующей неделе мы начнём учить эстонский."
+
+msgid "Now"
+msgstr "Сейчас"
+
+msgid "On Monday"
+msgstr "В понедельник"
+
+msgid "On which day is Jaan planning to come to Tartu? Write it in Estonian."
+msgstr "В какой день Яан планирует приехать в Тарту? Напиши по-эстонски."
+
+msgid "Only <0>hakkama</0> takes the person ending; the second verb is the <1>ma</1> infinitive: <2>sööma</2>."
+msgstr "Личное окончание только у <0>hakkama</0>; второй глагол — инфинитив на <1>ma</1>: <2>sööma</2>."
+
+msgid "Past, now or later"
+msgstr "Прошлое, настоящее или будущее"
+
+msgid "Past, now or later?"
+msgstr "Прошлое, настоящее или будущее?"
+
+msgid "Saab, from saama, with the -ma infinitive of olema."
+msgstr "Saab, от saama, с инфинитивом на -ma от olema."
+
+msgid "Say that it will start"
+msgstr "Скажи, что это начнётся"
+
+msgid "Saying what you plan"
+msgstr "Как сказать о планах"
+
+msgid "So the first verb decides the second verb’s form, as in lesson {infinitives}: <0>hakkan</0> takes the <1>ma</1> infinitive, <2>kavatsen</2> and <3>plaanin</3> the <4>da</4> infinitive. Put each verb with the infinitive that follows it. Tap a verb to hear it."
+msgstr "Значит, форму второго глагола определяет первый, как в уроке {infinitives}: после <0>hakkan</0> — инфинитив на <1>ma</1>, после <2>kavatsen</2> и <3>plaanin</3> — на <4>da</4>. Разложи глаголы по тому, какой инфинитив идёт после них. Нажми на глагол, чтобы услышать его."
+
+msgid "Talk: plans with Kati"
+msgstr "Разговор: планы с Кати"
+
+msgid "Talking about plans"
+msgstr "Разговор о планах"
+
+msgid "Tap a form"
+msgstr "Нажми на форму"
+
+msgid "Tap a time"
+msgstr "Нажми на отметку"
+
+msgid "Tap the times on the line above once more, then try again."
+msgstr "Ещё раз послушай предложения на линии выше, а потом попробуй снова."
+
+msgid "Teha is the -da infinitive of tegema, to do."
+msgstr "Teha — инфинитив на -da от tegema, «делать»."
+
+msgid "The -ma or -da infinitive after the first verb"
+msgstr "Инфинитив на -ma или -da после первого глагола"
+
+msgid "The children are going to start playing."
+msgstr "Дети начнут играть."
+
+msgid "the day after tomorrow"
+msgstr "послезавтра"
+
+msgid "The day after tomorrow we’re having coffee."
+msgstr "Послезавтра мы пьём кофе."
+
+msgid "the future"
+msgstr "будущее"
+
+msgid "the past, for I"
+msgstr "прошедшее время, для «я»"
+
+msgid "The present for the future"
+msgstr "Настоящее время для будущего"
+
+msgid "The present with a time word"
+msgstr "Настоящее время со словом о времени"
+
+msgid "The present with a time word works for any future. <0/> adds the start: a new job, a new habit, rain. <1><2/>.</1>"
+msgstr "Настоящее время со словом вроде «завтра» подходит для любого будущего. <0/> добавляет значение начала: новая работа, новая привычка, дождь. <1><2/>.</1>"
+
+msgid "The present with no time word: now."
+msgstr "Настоящее время без слова о времени: сейчас."
+
+msgid "the present, for I"
+msgstr "настоящее время, для «я»"
+
+msgid "The verb is the one you’d use today: <0><1/>.</0> The time word alone moves the sentence to tomorrow. Once the talk is already about tomorrow, you can leave the time word out."
+msgstr "Глагол тот же, что и про сегодня: <0><1/>.</0> О завтрашнем дне говорит только слово «завтра». Когда уже говорят о завтрашнем дне, это слово можно опустить."
+
+msgid "The verb to start, for each person"
+msgstr "Глагол «начинать» для каждого лица"
+
+msgid "They were reading a book."
+msgstr "Они читали книгу."
+
+msgid "They’re going to start reading a book."
+msgstr "Они начнут читать книгу."
+
+msgid "They’re reading a book."
+msgstr "Они читают книгу."
+
+msgid "to come"
+msgstr "приходить"
+
+msgid "to go"
+msgstr "идти"
+
+msgid "To her mother in Tartu"
+msgstr "К маме в Тарту"
+
+msgid "to intend"
+msgstr "собираться, намереваться"
+
+msgid "to live"
+msgstr "жить"
+
+msgid "to plan"
+msgstr "планировать"
+
+msgid "to start"
+msgstr "начинать"
+
+msgid "To the market"
+msgstr "На рынок"
+
+msgid "To work in Tallinn"
+msgstr "На работу в Таллин"
+
+msgid "today"
+msgstr "сегодня"
+
+msgid "Today"
+msgstr "Сегодня"
+
+msgid "Today I’m going to Tartu."
+msgstr "Сегодня я еду в Тарту."
+
+msgid "tomorrow"
+msgstr "завтра"
+
+msgid "Tomorrow"
+msgstr "Завтра"
+
+msgid "Tomorrow he or she is studying Estonian."
+msgstr "Завтра он или она учит эстонский."
+
+msgid "Tomorrow I’ll be at work."
+msgstr "Завтра я буду на работе."
+
+msgid "Tomorrow I’m going to Tartu."
+msgstr "Завтра я еду в Тарту."
+
+msgid "Tomorrow I’m working at home."
+msgstr "Завтра я работаю дома."
+
+msgid "Tomorrow it’s going to rain."
+msgstr "Завтра пойдёт дождь."
+
+msgid "We drank coffee."
+msgstr "Мы пили кофе."
+
+msgid "We intend to study Estonian."
+msgstr "Мы намерены изучать эстонский."
+
+msgid "We’re drinking coffee."
+msgstr "Мы пьём кофе."
+
+msgid "We’re eating at home."
+msgstr "Мы едим дома."
+
+msgid "We’re going to speak Estonian."
+msgstr "Мы будем говорить по-эстонски."
+
+msgid "What are you planning to do tomorrow?"
+msgstr "Что ты планируешь делать завтра?"
+
+msgid "What time are they meeting? Write it in Estonian."
+msgstr "Во сколько они встречаются? Напиши по-эстонски."
+
+msgid "what will start: to study"
+msgstr "что начнётся: учиться"
+
+msgid "When are you going to eat?"
+msgstr "Когда вы будете есть?"
+
+msgid "When does Jaan start work in Tallinn?"
+msgstr "Когда Яан начинает работать в Таллине?"
+
+msgid "When something will start"
+msgstr "Когда что-то начнётся"
+
+msgid "Where does Jaan have to be on Sunday?"
+msgstr "Где Яан должен быть в воскресенье?"
+
+msgid "Where is Kati going on Saturday?"
+msgstr "Куда Кати идёт в субботу?"
+
+msgid "Which infinitive follows?"
+msgstr "Какой инфинитив идёт дальше?"
+
+msgid "with <0>hakkama</0>"
+msgstr "с <0>hakkama</0>"
+
+msgid "with <et>hakkama</et>"
+msgstr "с <et>hakkama</et>"
+
+msgid "Word for word: “I start to live in Tartu”."
+msgstr "Дословно: «я начинаю жить в Тарту»."
+
+msgid "Word for word: “tomorrow rain starts to fall”. Vihma is the partitive of vihm, rain; sadama is to fall, of rain or snow."
+msgstr "Дословно: «завтра дождь начинает падать». Vihma — партитив от vihm, «дождь»; sadama — «падать», о дожде или снеге."
+
+msgid "Write it with <0>hakkama</0>"
+msgstr "Напиши с <0>hakkama</0>"
+
+msgid "Yesterday"
+msgstr "Вчера"
+
+msgid "Yesterday I was at work."
+msgstr "Вчера я был(а) на работе."
+
+msgid "Yesterday I went to Tartu."
+msgstr "Вчера я поехал(а) в Тарту."
+
+msgid "Yesterday we ate at home."
+msgstr "Вчера мы ели дома."
+
+msgid "Yesterday, today, tomorrow and next week"
+msgstr "Вчера, сегодня, завтра и на следующей неделе"
+
+msgid "You live in Tartu. Tomorrow you go to Tallinn to start a new job, and you plan to come back next week. Kati speaks first; pick what you say back."
+msgstr "Ты живёшь в Тарту. Завтра ты едешь в Таллин, где начинаешь новую работу, а на следующей неделе планируешь вернуться. Кати говорит первой; выбирай, что ответить."
+
+msgid "You’ll hear a sentence and see how its verb is built."
+msgstr "Услышишь предложение и увидишь, как построен глагол."
+
+msgid "You’ll hear it in a sentence about the future."
+msgstr "Услышишь её в предложении о будущем."
+
+msgid "Your friend Kati asks about your plans. A wrong reply shows why it’s wrong, then you hear the right one."
+msgstr "Твоя подруга Кати спрашивает о твоих планах. После неверного ответа увидишь объяснение, а потом услышишь правильный."

@@ -50,8 +50,8 @@ msgstr "У словнику основа стоїть другою: <0>pood, poe
 msgid "A dictionary gives the stem second. Learn each noun as that pair: <0>pood, poe</0>."
 msgstr "У словнику основа стоїть другою. Вчи кожен іменник парою: <0>pood, poe</0>."
 
-msgid "A dictionary lists a third form too: <0>pood, poe, poodi</0>. Lesson {forms} teaches all three."
-msgstr "Словник подає і третю форму: <0>pood, poe, poodi</0>. Про всі три розповідає урок {forms}."
+msgid "A dictionary lists a third form too, the partitive: <0>pood, poe, poodi</0>. Lesson {forms} teaches all three."
+msgstr "Словник подає і партитив: <0>pood, poe, poodi</0>. Про всі три розповідає урок {forms}."
 
 msgid "A final vowel is no guarantee: <0>tuba</0> ends in one too, and its stem is <1>toa</1>. The dictionary pair settles it: <2>kodu, kodu</2> but <3>tuba, toa</3>."
 msgstr "Голосна в кінці нічого не гарантує: <0>tuba</0> теж на неї закінчується, а основа — <1>toa</1>. Вирішує пара зі словника: <2>kodu, kodu</2>, але <3>tuba, toa</3>."
@@ -324,8 +324,8 @@ msgstr "слово"
 msgid "The word"
 msgstr "Слово"
 
-msgid "The word doesn’t show which vowel it gains: <0/>, <1/>; <2/>, <3/>. The dictionary’s second form does."
-msgstr "Зі слова не видно, яку голосну воно отримає: <0/>, <1/>; <2/>, <3/>. Це показує друга форма в словнику."
+msgid "The word doesn’t show which vowel it gains: <0/>, <1/>; <2/>, <3/>. The dictionary’s genitive does."
+msgstr "Зі слова не видно, яку голосну воно отримає: <0/>, <1/>; <2/>, <3/>. Це показує родовий у словнику."
 
 msgid "The word, its stem or the stem with an ending"
 msgstr "Слово, його основа чи основа із закінченням"

@@ -41,6 +41,7 @@ const STRESSING: ReadonlySet<string> = new Set([
   "ainult",
   "isegi",
   "just",
+  "las",
 ]);
 
 const POINTING: ReadonlySet<string> = new Set(["see", "need"]);

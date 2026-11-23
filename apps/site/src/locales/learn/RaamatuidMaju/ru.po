@@ -98,7 +98,7 @@ msgid "All eight, typed in full."
 msgstr "Все восемь написаны полностью."
 
 msgid "All nine. You told a number from many and from the ones you mean."
-msgstr "Все девять. Ты отличил число от «много» и от конкретных вещей."
+msgstr "Все девять. Ты отличил (отличила) число от «много» и от конкретных вещей."
 
 msgid "All of them, done: the plural nominative."
 msgstr "Все, и действие завершено: именительный множественного."
@@ -235,8 +235,8 @@ msgstr "У меня только четыре стула."
 msgid "I’ll bring them tomorrow morning."
 msgstr "Я принесу их завтра утром."
 
-msgid "I’ll make you a cake."
-msgstr "Я испеку тебе торт."
+msgid "I’ll make you some cake."
+msgstr "Я испеку тебе пирога."
 
 msgid "In a sentence"
 msgstr "В предложении"
@@ -259,8 +259,8 @@ msgstr "Виды окончаний"
 msgid "land, country"
 msgstr "земля, страна"
 
-msgid "Lesson {partitive} used the partitive after a number: <0/>, two books. For some or many things you don’t count, Estonian uses the plural partitive: <1/>, a lot of books."
-msgstr "В уроке {partitive} партитив шёл после числа: <0/>, две книги. Когда речь о немногих или многих вещах без счёта, в эстонском используют партитив множественного: <1/>, много книг."
+msgid "Lesson {partitive} used the partitive after a number: <0/>, two books. For some or many things you don’t count, Estonian usually uses the plural partitive: <1/>, a lot of books."
+msgstr "В уроке {partitive} партитив шёл после числа: <0/>, две книги. Когда речь о немногих или многих вещах без счёта, в эстонском обычно используют партитив множественного: <1/>, много книг."
 
 msgid "Like a book"
 msgstr "Как «книга»"
@@ -503,5 +503,5 @@ msgstr "Напиши каждое предложение по-эстонски. 
 msgid "Write it in Estonian"
 msgstr "Напиши по-эстонски"
 
-msgid "You can’t always tell from a word which way it goes, and some words have two forms, both correct: <0>maju</0> and <1>majasid</1>. A dictionary lists the plural partitive, so learn it with the word. Where the stem changes, as lesson {gradation} explains, a changed vowel goes on the partitive’s stem: <2>sõber, sõpra, sõpru</2>."
-msgstr "По слову не всегда видно, какой способ ему подходит, а у некоторых слов две правильные формы: <0>maju</0> и <1>majasid</1>. Словарь даёт партитив множественного, так что учи его вместе со словом. Если основа меняется, как объясняет урок {gradation}, гласная меняется в основе партитива: <2>sõber, sõpra, sõpru</2>."
+msgid "You can’t always tell from a word which way it goes, and some words have two forms, both correct: <0>maju</0> and <1>majasid</1>. A dictionary lists the plural partitive, so learn it with the word. Where the stem changes, as lesson {gradation} explains, a changed vowel goes on the partitive’s stem: <2>sõber, sõpra, sõpru</2>. So does <3>-sid</3>: <4>sõprasid</4>, <5>tubasid</5>."
+msgstr "По слову не всегда видно, какой способ ему подходит, а у некоторых слов две правильные формы: <0>maju</0> и <1>majasid</1>. Словарь даёт партитив множественного, так что учи его вместе со словом. Если основа меняется, как объясняет урок {gradation}, гласная меняется в основе партитива: <2>sõber, sõpra, sõpru</2>. Так же и <3>-sid</3>: <4>sõprasid</4>, <5>tubasid</5>."

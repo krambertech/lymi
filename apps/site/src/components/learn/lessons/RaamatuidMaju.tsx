@@ -219,7 +219,7 @@ const PARTY_GAPS: PassageGap[] = [
     after: "ja banaane.",
     answer: "õunu",
   },
-  { id: "kulalisi", before: "", after: "tuleb palju.", answer: "Külalisi" },
+  { id: "kulalisi", before: "Õhtul tuleb palju", after: ".", answer: "külalisi" },
   { id: "sobrad", before: "Kati", after: "toovad lilli.", answer: "sõbrad" },
   { id: "laule", before: "Lapsed laulavad", after: ".", answer: "laule" },
 ];
@@ -452,7 +452,7 @@ function useContent() {
           { id: "guests", label: t`I have guests tomorrow.`, answer: "jaan", line: 13 },
           { id: "chairs", label: t`I only have four chairs.`, answer: "jaan", line: 22 },
           { id: "bring", label: t`I’ll bring them tomorrow morning.`, answer: "mari", line: 24 },
-          { id: "cake", label: t`I’ll make you a cake.`, answer: "jaan", line: 26 },
+          { id: "cake", label: t`I’ll make you some cake.`, answer: "jaan", line: 26 },
         ],
       },
     ];
@@ -524,8 +524,8 @@ export function RaamatuidMajuLesson() {
                 <p>
                   <Trans>
                     Lesson {partitive} used the partitive after a number: <Word w="kaks raamatut" />
-                    , two books. For some or many things you don’t count, Estonian uses the plural
-                    partitive: <Word w="palju raamatuid" />, a lot of books.
+                    , two books. For some or many things you don’t count, Estonian usually uses the
+                    plural partitive: <Word w="palju raamatuid" />, a lot of books.
                   </Trans>
                 </p>
                 <p>
@@ -596,7 +596,8 @@ export function RaamatuidMajuLesson() {
                   forms, both correct: <b lang="et">maju</b> and <b lang="et">majasid</b>. A
                   dictionary lists the plural partitive, so learn it with the word. Where the stem
                   changes, as lesson {gradation} explains, a changed vowel goes on the partitive’s
-                  stem: <b lang="et">sõber, sõpra, sõpru</b>.
+                  stem: <b lang="et">sõber, sõpra, sõpru</b>. So does <b lang="et">-sid</b>:{" "}
+                  <b lang="et">sõprasid</b>, <b lang="et">tubasid</b>.
                 </Trans>
               </Aside>
               <Prose>

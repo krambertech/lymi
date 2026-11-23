@@ -232,8 +232,8 @@ msgstr "Eat up the soup!"
 msgid "English says this with “some” and “a”, or with “was reading” and “read”. Estonian says it with the object’s case, so the ending carries the meaning."
 msgstr "English says this with “some” and “a”, or with “was reading” and “read”. Estonian says it with the object’s case, so the ending carries the meaning."
 
-msgid "Finding ends the looking: the genitive."
-msgstr "Finding ends the looking: the genitive."
+msgid "Finding ends the looking: usually the genitive."
+msgstr "Finding ends the looking: usually the genitive."
 
 msgid "Finding is different. <0/>, to find, ends the looking, so what you found usually takes the genitive."
 msgstr "Finding is different. <0/>, to find, ends the looking, so what you found usually takes the genitive."
@@ -658,8 +658,8 @@ msgstr "The present with the genitive says it will get done."
 msgid "The present with the genitive: it will get done."
 msgstr "The present with the genitive: it will get done."
 
-msgid "The present with the partitive: going on now."
-msgstr "The present with the partitive: going on now."
+msgid "The present with the partitive: usually going on now."
+msgstr "The present with the partitive: usually going on now."
 
 msgid "The same choice tells a finished action from one still going on. <0/> means you were reading, maybe not to the end. <1/> means you finished it."
 msgstr "The same choice tells a finished action from one still going on. <0/> means you were reading, maybe not to the end. <1/> means you finished it."

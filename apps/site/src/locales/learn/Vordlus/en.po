@@ -34,6 +34,12 @@ msgstr "A comparative takes the noun’s case like any adjective from lesson {ag
 msgid "Add <0>-m</0> to the genitive <1>{gen}</1>: <2>{answer}</2>."
 msgstr "Add <0>-m</0> to the genitive <1>{gen}</1>: <2>{answer}</2>."
 
+msgid "Add <0>-m</0> to the genitive <1>väikese</1>, and the e after k usually drops: <2>väiksem</2>."
+msgstr "Add <0>-m</0> to the genitive <1>väikese</1>, and the e after k usually drops: <2>väiksem</2>."
+
+msgid "Add <et>-m</et> to the genitive <et>väikese</et>, and the e after k usually drops: <et>väiksem</et>."
+msgstr "Add <et>-m</et> to the genitive <et>väikese</et>, and the e after k usually drops: <et>väiksem</et>."
+
 msgid "adjective"
 msgstr "adjective"
 
@@ -336,12 +342,6 @@ msgstr "Than: <et>kui</et> or <et>-st</et>"
 
 msgid "Than: two ways"
 msgstr "Than: two ways"
-
-msgid "The <0>-m</0> goes on the genitive <1>väikese</1>, which usually drops an e: <2>väiksem</2>."
-msgstr "The <0>-m</0> goes on the genitive <1>väikese</1>, which usually drops an e: <2>väiksem</2>."
-
-msgid "The <et>-m</et> goes on the genitive <et>väikese</et>, which usually drops an e: <et>väiksem</et>."
-msgstr "The <et>-m</et> goes on the genitive <et>väikese</et>, which usually drops an e: <et>väiksem</et>."
 
 msgid "the best"
 msgstr "the best"

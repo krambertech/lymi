@@ -8,7 +8,7 @@ const ST = msg`Without <et>kui</et>, the thing you compare with takes <et>-st</e
 const MOST = msg`For the biggest, put <et>kõige</et> before the comparative: <et>kõige suurem</et>.`;
 const SAME = msg`As big as is <et>sama suur kui</et>.`;
 const GOOD = msg`Good, better, best: <et>hea</et>, <et>parem</et>, <et>kõige parem</et> or <et>parim</et>.`;
-const SMALL = msg`The <et>-m</et> goes on the genitive <et>väikese</et>, which usually drops an e: <et>väiksem</et>.`;
+const SMALL = msg`Add <et>-m</et> to the genitive <et>väikese</et>, and the e after k usually drops: <et>väiksem</et>.`;
 const WITH_ST = msg`with -st, without kui`;
 
 export const DRILLS: DrillBank = {
@@ -280,7 +280,7 @@ export const DRILLS: DrillBank = {
     {
       kind: "translate",
       id: "own-parim",
-      rule: "own",
+      rule: "most",
       prompt: msg`Mari is my best friend.`,
       answers: [
         "Mari on minu parim sõber.",
@@ -303,7 +303,7 @@ export const DRILLS: DrillBank = {
     {
       kind: "dictation",
       id: "own-parim-sober",
-      rule: "own",
+      rule: "most",
       answers: ["Mari on minu parim sõber."],
       say: "Mari on minu parim sõber.",
       explain: GOOD,

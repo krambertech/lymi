@@ -141,7 +141,8 @@ function useContent() {
           with <span lang="et">-st</span>, without <span lang="et">kui</span>
         </Trans>
       ),
-      answers: [st],
+      answers:
+        st === "Minu tuba on sinu toast suurem." ? [st, "Minu tuba on sinu omast suurem."] : [st],
       src: src(st),
       explain: (
         <Trans>
@@ -172,8 +173,8 @@ function useContent() {
       ),
       "fix-vaiksem": (
         <Trans>
-          The <span lang="et">-m</span> goes on the genitive <span lang="et">väikese</span>, which
-          usually drops an e: <span lang="et">väiksem</span>.
+          Add <span lang="et">-m</span> to the genitive <span lang="et">väikese</span>, and the e
+          after k usually drops: <span lang="et">väiksem</span>.
         </Trans>
       ),
       "fix-koige": (
@@ -244,7 +245,7 @@ function useContent() {
         id: "coffee",
         kind: "short",
         ask: t`How much did a coffee cost in Tartu? Write the number as Mari says it.`,
-        answers: ["kaks", "kaks eurot", "2", "2 eurot", "2 €"],
+        answers: ["kaks", "kaks eurot", "2", "2 eurot", "2 €", "2€", "€2"],
         line: 11,
       },
       {
@@ -344,8 +345,8 @@ export function VordlusLesson() {
               </Trans>
             ) : kind === "drop" ? (
               <Trans>
-                The <span lang="et">-m</span> goes on the genitive <span lang="et">väikese</span>,
-                which usually drops an e: <span lang="et">väiksem</span>.
+                Add <span lang="et">-m</span> to the genitive <span lang="et">väikese</span>, and
+                the e after k usually drops: <span lang="et">väiksem</span>.
               </Trans>
             ) : kind === "three" ? (
               <Trans>

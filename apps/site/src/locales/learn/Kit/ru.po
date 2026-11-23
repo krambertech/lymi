@@ -649,7 +649,7 @@ msgid "Estonian -ma, -mas and -mast: going, being and coming back"
 msgstr "Эстонские формы на -ma, -mas и -mast: иду, там, возвращаюсь"
 
 msgid "Estonian adjectives: agreeing with the noun"
-msgstr "Эстонские прилагательные: согласование с существительным"
+msgstr "Эстонские прилагательные: согласование по падежу"
 
 msgid "Estonian comparatives and superlatives"
 msgstr "Эстонские степени сравнения прилагательных"

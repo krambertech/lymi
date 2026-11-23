@@ -34,6 +34,12 @@ msgstr "Сравнительная степень стоит в падеже с�
 msgid "Add <0>-m</0> to the genitive <1>{gen}</1>: <2>{answer}</2>."
 msgstr "Добавь <0>-m</0> к родительному <1>{gen}</1>: <2>{answer}</2>."
 
+msgid "Add <0>-m</0> to the genitive <1>väikese</1>, and the e after k usually drops: <2>väiksem</2>."
+msgstr "Добавь <0>-m</0> к родительному <1>väikese</1>, и e после k обычно выпадает: <2>väiksem</2>."
+
+msgid "Add <et>-m</et> to the genitive <et>väikese</et>, and the e after k usually drops: <et>väiksem</et>."
+msgstr "Добавь <et>-m</et> к родительному <et>väikese</et>, и e после k обычно выпадает: <et>väiksem</et>."
+
 msgid "adjective"
 msgstr "прилагательное"
 
@@ -336,12 +342,6 @@ msgstr "Чем: <et>kui</et> или <et>-st</et>"
 
 msgid "Than: two ways"
 msgstr "Чем: два способа"
-
-msgid "The <0>-m</0> goes on the genitive <1>väikese</1>, which usually drops an e: <2>väiksem</2>."
-msgstr "<0>-m</0> добавляется к родительному <1>väikese</1>, который обычно теряет e: <2>väiksem</2>."
-
-msgid "The <et>-m</et> goes on the genitive <et>väikese</et>, which usually drops an e: <et>väiksem</et>."
-msgstr "<et>-m</et> добавляется к родительному <et>väikese</et>, который обычно теряет e: <et>väiksem</et>."
 
 msgid "the best"
 msgstr "самый лучший"

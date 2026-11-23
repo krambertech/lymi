@@ -34,6 +34,12 @@ msgstr "Вищий ступінь стоїть у відмінку іменни�
 msgid "Add <0>-m</0> to the genitive <1>{gen}</1>: <2>{answer}</2>."
 msgstr "Додай <0>-m</0> до родового <1>{gen}</1>: <2>{answer}</2>."
 
+msgid "Add <0>-m</0> to the genitive <1>väikese</1>, and the e after k usually drops: <2>väiksem</2>."
+msgstr "Додай <0>-m</0> до родового <1>väikese</1>, і e після k зазвичай випадає: <2>väiksem</2>."
+
+msgid "Add <et>-m</et> to the genitive <et>väikese</et>, and the e after k usually drops: <et>väiksem</et>."
+msgstr "Додай <et>-m</et> до родового <et>väikese</et>, і e після k зазвичай випадає: <et>väiksem</et>."
+
 msgid "adjective"
 msgstr "прикметник"
 
@@ -336,12 +342,6 @@ msgstr "Ніж: <et>kui</et> або <et>-st</et>"
 
 msgid "Than: two ways"
 msgstr "Ніж: два способи"
-
-msgid "The <0>-m</0> goes on the genitive <1>väikese</1>, which usually drops an e: <2>väiksem</2>."
-msgstr "<0>-m</0> додається до родового <1>väikese</1>, який зазвичай утрачає e: <2>väiksem</2>."
-
-msgid "The <et>-m</et> goes on the genitive <et>väikese</et>, which usually drops an e: <et>väiksem</et>."
-msgstr "<et>-m</et> додається до родового <et>väikese</et>, який зазвичай утрачає e: <et>väiksem</et>."
 
 msgid "the best"
 msgstr "найкращий"

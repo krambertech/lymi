@@ -2852,7 +2852,7 @@ export const ADJ_WHICH = [
     way: "ga",
     base: "suur auto",
     answer: "suure autoga",
-    options: ["suure autoga", "suurega autoga", "suures autoga"],
+    options: ["suure autoga", "suur autoga", "suures autoga"],
     said: "Ma sõidan suure autoga.",
   },
   {
@@ -2860,7 +2860,7 @@ export const ADJ_WHICH = [
     way: "ga",
     base: "uus sõber",
     answer: "uue sõbraga",
-    options: ["uuega sõbraga", "uue sõbraga", "uues sõbraga"],
+    options: ["uus sõbraga", "uue sõbraga", "uues sõbraga"],
     said: "Mari tuleb uue sõbraga.",
   },
   {
@@ -2868,7 +2868,7 @@ export const ADJ_WHICH = [
     way: "ga",
     base: "soe piim",
     answer: "sooja piimaga",
-    options: ["soojas piimaga", "soojaga piimaga", "sooja piimaga"],
+    options: ["soojas piimaga", "soe piimaga", "sooja piimaga"],
     said: "Ma joon kohvi sooja piimaga.",
   },
   {
@@ -2876,7 +2876,7 @@ export const ADJ_WHICH = [
     way: "ga",
     base: "väike laps",
     answer: "väikese lapsena",
-    options: ["väikese lapsena", "väikesena lapsena", "väikeses lapsena"],
+    options: ["väikese lapsena", "väike lapsena", "väikeses lapsena"],
     said: "Väikese lapsena elasin ma Tartus.",
   },
   {
@@ -2884,7 +2884,7 @@ export const ADJ_WHICH = [
     way: "s",
     base: "suur auto",
     answer: "suures autos",
-    options: ["suure autos", "suures autos", "suurega autos"],
+    options: ["suure autos", "suures autos", "suur autos"],
     said: "Kass magab suures autos.",
   },
   {
@@ -2892,7 +2892,7 @@ export const ADJ_WHICH = [
     way: "s",
     base: "uus maja",
     answer: "uues majas",
-    options: ["uue majas", "uuega majas", "uues majas"],
+    options: ["uue majas", "uus majas", "uues majas"],
     said: "Mari elab uues majas.",
   },
   {
@@ -2900,7 +2900,7 @@ export const ADJ_WHICH = [
     way: "s",
     base: "soe tuba",
     answer: "soojas toas",
-    options: ["soojas toas", "sooja toas", "soojaga toas"],
+    options: ["soojas toas", "sooja toas", "soe toas"],
     said: "Me istume soojas toas.",
   },
   {
@@ -2908,7 +2908,7 @@ export const ADJ_WHICH = [
     way: "s",
     base: "väike pood",
     answer: "väikeses poes",
-    options: ["väikese poes", "väikeses poes", "väikesega poes"],
+    options: ["väikese poes", "väikeses poes", "väike poes"],
     said: "Jaan töötab väikeses poes.",
   },
 ] as const;
@@ -2960,7 +2960,10 @@ export const ADJ_TALK: Conversation = {
     { voice: "second", text: ["Vanas majas?", "Kas see on suur maja?"] },
     {
       voice: "main",
-      text: ["Ei, see on väike maja, aga väga ilus.", "Tal on kolm väikest tuba ja üks suur tuba."],
+      text: [
+        "Ei, see on väike maja, aga väga ilus.",
+        "Majas on kolm väikest tuba ja üks suur tuba.",
+      ],
     },
     { voice: "second", text: ["Ja kus ta töötab?"] },
     {

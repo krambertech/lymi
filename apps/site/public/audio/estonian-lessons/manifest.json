@@ -15473,7 +15473,7 @@
     "voice": "xd3ufyLcuKKZZXDZO9H7"
   },
   "omadussonad/c-talk": {
-    "text": "Tere, Jaan! Kus sa eile olid? Tere, Kati! Ma olin Tartus. Mu vend elab nüüd seal, ühes vanas majas. Vanas majas? Kas see on suur maja? Ei, see on väike maja, aga väga ilus. Tal on kolm väikest tuba ja üks suur tuba. Ja kus ta töötab? Ta töötab uues kohvikus. Kohvik on ilusas pargis, suure turu kõrval. Ta sõidab tööle vana autoga. Vana autoga? Kas see on hea auto? Jah, väga hea. See on vana, aga ilus auto. Mina sõidan tööle uue bussiga. Buss on soe ja hea. Ja mis sa õhtul teed? Ma loen uut raamatut. See on suur raamat, aga väga hea. Kas sa tahad ka lugeda? Jah! Mul on homme vaba päev. Hästi. Ma ootan sind homme väikeses kohvikus, kell kuus. Seal on hea kohv ja soe piim. Väikeses kohvikus? Kas see on sinu maja kõrval? Jah, minu maja kõrval. Nägemiseni! Hästi. Homme kell kuus väikeses kohvikus!",
+    "text": "Tere, Jaan! Kus sa eile olid? Tere, Kati! Ma olin Tartus. Mu vend elab nüüd seal, ühes vanas majas. Vanas majas? Kas see on suur maja? Ei, see on väike maja, aga väga ilus. Majas on kolm väikest tuba ja üks suur tuba. Ja kus ta töötab? Ta töötab uues kohvikus. Kohvik on ilusas pargis, suure turu kõrval. Ta sõidab tööle vana autoga. Vana autoga? Kas see on hea auto? Jah, väga hea. See on vana, aga ilus auto. Mina sõidan tööle uue bussiga. Buss on soe ja hea. Ja mis sa õhtul teed? Ma loen uut raamatut. See on suur raamat, aga väga hea. Kas sa tahad ka lugeda? Jah! Mul on homme vaba päev. Hästi. Ma ootan sind homme väikeses kohvikus, kell kuus. Seal on hea kohv ja soe piim. Väikeses kohvikus? Kas see on sinu maja kõrval? Jah, minu maja kõrval. Nägemiseni! Hästi. Homme kell kuus väikeses kohvikus!",
     "model": "eleven_v4",
     "turns": [
       {
@@ -15503,7 +15503,7 @@
         "voice": "jGja51dd7gcoK0zkxeyg",
         "sentences": [
           "Ei, see on väike maja, aga väga ilus.",
-          "Tal on kolm väikest tuba ja üks suur tuba."
+          "Majas on kolm väikest tuba ja üks suur tuba."
         ]
       },
       {

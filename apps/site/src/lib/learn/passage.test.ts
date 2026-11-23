@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  closingPunctuation,
   gapLine,
   glossPieces,
   nextReply,
@@ -146,5 +147,18 @@ describe("gapLine", () => {
   it("leaves no stray space at an empty side", () => {
     expect(gapLine("", "Kus", "sina elad?")).toBe("Kus sina elad?");
     expect(gapLine("Ma olen", "kodus", "")).toBe("Ma olen kodus");
+  });
+});
+
+describe("closingPunctuation", () => {
+  it("splits off the punctuation that closes onto the gap", () => {
+    expect(closingPunctuation(".")).toEqual([".", ""]);
+    expect(closingPunctuation("?» Ta läks.")).toEqual(["?»", " Ta läks."]);
+    expect(closingPunctuation(", kui saad.")).toEqual([",", " kui saad."]);
+  });
+
+  it("leaves text that starts with a word whole", () => {
+    expect(closingPunctuation("on kodus.")).toEqual(["", "on kodus."]);
+    expect(closingPunctuation("")).toEqual(["", ""]);
   });
 });

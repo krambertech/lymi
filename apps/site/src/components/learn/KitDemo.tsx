@@ -451,6 +451,7 @@ export function KitDemo() {
                 title={t`Write to Mari`}
                 prompt={t`Write Mari a few lines: greet her, say who you are, what you do and where you live.`}
                 model={["Tere, Mari!", "Mina olen Jaan.", "Ma olen arst.", "Ma elan Tartus."]}
+                signOff={["Jaan"]}
                 checks={[
                   { id: "greet", label: t`Greets Mari.` },
                   { id: "who", label: t`Says who you are.` },

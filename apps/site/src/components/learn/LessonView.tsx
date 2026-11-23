@@ -9,6 +9,7 @@ import { localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
 import { Drill } from "./Drill";
 import { drillSlugs } from "./drill-banks";
+import { Endings } from "./endings";
 import { LearnLayout } from "./LearnLayout";
 import { type Glossary, LessonContext, SectionContext, useLesson } from "./lesson-context";
 import { LessonWords } from "./LessonWords";
@@ -186,7 +187,9 @@ function Section({
         data-section={id}
         className="grid scroll-mt-14 gap-4.5 py-10 not-first:border-t not-first:border-edge max-sm:py-8"
       >
-        <h2 className="text-3xl font-semibold tracking-tight max-sm:text-[1.5625rem]">{title}</h2>
+        <h2 className="text-3xl font-semibold tracking-tight max-sm:text-[1.5625rem]">
+          <Endings>{title}</Endings>
+        </h2>
         {children}
         <span ref={end} aria-hidden="true" className="-mt-4.5 h-px" />
       </section>

@@ -10,9 +10,6 @@ msgstr ""
 msgid "<0>Ära</0> at the start of a command is don’t, as in lesson {commands}. After a verb of moving, it usually means away: <1/>, don’t go away."
 msgstr "<0>Ära</0> at the start of a command is don’t, as in lesson {commands}. After a verb of moving, it usually means away: <1/>, don’t go away."
 
-msgid "<0>Ära</0> at the start says don’t; after a verb of moving it usually means away: <1>Ära mine ära!</1>"
-msgstr "<0>Ära</0> at the start says don’t; after a verb of moving it usually means away: <1>Ära mine ära!</1>"
-
 msgid "<0>Minema</0> goes somewhere, so <1>välja</1>."
 msgstr "<0>Minema</0> goes somewhere, so <1>välja</1>."
 
@@ -22,29 +19,17 @@ msgstr "<0>Tõusma</0> says where to: <1>üles</1>, not <2>üleval</2>."
 msgid "<et>Ära</et> after a verb of moving usually means away, <et>tagasi</et> is back, <et>kaasa</et> is along."
 msgstr "<et>Ära</et> after a verb of moving usually means away, <et>tagasi</et> is back, <et>kaasa</et> is along."
 
-msgid "<et>Ära</et> at the start is don’t; after a verb of moving it usually means away."
-msgstr "<et>Ära</et> at the start is don’t; after a verb of moving it usually means away."
-
 msgid "18 minutes"
 msgstr "18 minutes"
 
 msgid "6 exercises, 3 of them typed, and a conversation"
 msgstr "6 exercises, 3 of them typed, and a conversation"
 
-msgid "A car"
-msgstr "A car"
-
 msgid "A cat and a house"
 msgstr "A cat and a house"
 
 msgid "A cat and a table"
 msgstr "A cat and a table"
-
-msgid "A flat"
-msgstr "A flat"
-
-msgid "A job in the centre"
-msgstr "A job in the centre"
 
 msgid "a lift"
 msgstr "a lift"
@@ -84,6 +69,12 @@ msgstr "At seven"
 
 msgid "At six"
 msgstr "At six"
+
+msgid "At the start of a command, <0>ära</0> says don’t; after a verb of moving it usually means away: <1>Ära mine ära!</1>"
+msgstr "At the start of a command, <0>ära</0> says don’t; after a verb of moving it usually means away: <1>Ära mine ära!</1>"
+
+msgid "At the start of a command, <et>ära</et> is don’t; after a verb of moving it usually means away."
+msgstr "At the start of a command, <et>ära</et> is don’t; after a verb of moving it usually means away."
 
 msgid "Away, back, along"
 msgstr "Away, back, along"
@@ -136,8 +127,8 @@ msgstr "Each sentence should say what the line above it says, and one word is wr
 msgid "early"
 msgstr "early"
 
-msgid "Estonian puts a small word after many verbs to say where to: <0/>, up; <1/>, down; <2/>, in; <3/>, out. <4>Hüppama</4> is to jump, so <5>Kass hüppab üles</5> is the cat jumps up."
-msgstr "Estonian puts a small word after many verbs to say where to: <0/>, up; <1/>, down; <2/>, in; <3/>, out. <4>Hüppama</4> is to jump, so <5>Kass hüppab üles</5> is the cat jumps up."
+msgid "Estonian puts a small word with many verbs, usually to say where to: <0/>, up; <1/>, down; <2/>, in; <3/>, out. <4>Hüppama</4> is to jump, so <5>Kass hüppab üles</5> is the cat jumps up."
+msgstr "Estonian puts a small word with many verbs, usually to say where to: <0/>, up; <1/>, down; <2/>, in; <3/>, out. <4>Hüppama</4> is to jump, so <5>Kass hüppab üles</5> is the cat jumps up."
 
 msgid "Five"
 msgstr "Five"
@@ -151,11 +142,11 @@ msgstr "Go out to eat"
 msgid "Go to Tartu"
 msgstr "Go to Tartu"
 
-msgid "Going somewhere takes one word, and being somewhere usually takes its partner: <0>Kass läheb välja</0>, the cat goes out; <1>Lapsed mängivad väljas</1>, the children are playing outside."
-msgstr "Going somewhere takes one word, and being somewhere usually takes its partner: <0>Kass läheb välja</0>, the cat goes out; <1>Lapsed mängivad väljas</1>, the children are playing outside."
+msgid "Going somewhere usually takes one word, and being somewhere its partner: <0>Kass läheb välja</0>, the cat goes out; <1>Lapsed mängivad väljas</1>, the children are playing outside."
+msgstr "Going somewhere usually takes one word, and being somewhere its partner: <0>Kass läheb välja</0>, the cat goes out; <1>Lapsed mängivad väljas</1>, the children are playing outside."
 
-msgid "Going somewhere: <et>välja</et>, <et>sisse</et>, <et>üles</et>, <et>alla</et>."
-msgstr "Going somewhere: <et>välja</et>, <et>sisse</et>, <et>üles</et>, <et>alla</et>."
+msgid "Going somewhere, usually: <et>välja</et>, <et>sisse</et>, <et>üles</et>, <et>alla</et>."
+msgstr "Going somewhere, usually: <et>välja</et>, <et>sisse</et>, <et>üles</et>, <et>alla</et>."
 
 msgid "He is somewhere, not going there: <0>all</0>."
 msgstr "He is somewhere, not going there: <0>all</0>."
@@ -289,6 +280,15 @@ msgstr "Move out of her old flat"
 msgid "Moving house"
 msgstr "Moving house"
 
+msgid "On the fifth floor"
+msgstr "On the fifth floor"
+
+msgid "On the first floor"
+msgstr "On the first floor"
+
+msgid "On the third floor"
+msgstr "On the third floor"
+
 msgid "One"
 msgstr "One"
 
@@ -370,8 +370,8 @@ msgstr "The small word usually says where to: <et>üles</et>, up; <et>alla</et>,
 msgid "They are somewhere, not going there: <0>väljas</0>."
 msgstr "They are somewhere, not going there: <0>väljas</0>."
 
-msgid "Three more often go with verbs of moving: <0/>, away; <1/>, back; <2/>, along. A dictionary lists the pair with the small word first: <3/>, to get up; <4>ära minema</4>, to leave. Tap a line to hear it."
-msgstr "Three more often go with verbs of moving: <0/>, away; <1/>, back; <2/>, along. A dictionary lists the pair with the small word first: <3/>, to get up; <4>ära minema</4>, to leave. Tap a line to hear it."
+msgid "Three more small words often go with verbs of moving: <0/>, away; <1/>, back; <2/>, along. A dictionary lists the pair with the small word first: <3/>, to move house, becomes <4>sisse kolima</4>, to move in. Tap a line to hear it."
+msgstr "Three more small words often go with verbs of moving: <0/>, away; <1/>, back; <2/>, along. A dictionary lists the pair with the small word first: <3/>, to move house, becomes <4>sisse kolima</4>, to move in. Tap a line to hear it."
 
 msgid "to come back"
 msgstr "to come back"
@@ -436,9 +436,6 @@ msgstr "We’re moving in on Friday."
 msgid "What does it mean?"
 msgstr "What does it mean?"
 
-msgid "What does Kati have that is new?"
-msgstr "What does Kati have that is new?"
-
 msgid "What does Kati have to do on Friday?"
 msgstr "What does Kati have to do on Friday?"
 
@@ -474,6 +471,9 @@ msgstr "Where to: <0>{answer}</0>."
 
 msgid "Where: <0>{answer}</0>."
 msgstr "Where: <0>{answer}</0>."
+
+msgid "Which floor is the new flat on?"
+msgstr "Which floor is the new flat on?"
 
 msgid "With a second verb, the small word usually goes just before it: <et>Ma pean vara üles tõusma</et>."
 msgstr "With a second verb, the small word usually goes just before it: <et>Ma pean vara üles tõusma</et>."

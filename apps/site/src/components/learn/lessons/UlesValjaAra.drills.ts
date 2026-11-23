@@ -14,7 +14,7 @@ const orderAnswers = (id: (typeof PV_ORDER)[number]["id"]) =>
 
 const DIRECTION = msg`The small word usually says where to: <et>üles</et>, up; <et>alla</et>, down; <et>sisse</et>, in; <et>välja</et>, out.`;
 const AWAY = msg`<et>Ära</et> after a verb of moving usually means away, <et>tagasi</et> is back, <et>kaasa</et> is along.`;
-const TO = msg`Going somewhere: <et>välja</et>, <et>sisse</et>, <et>üles</et>, <et>alla</et>.`;
+const TO = msg`Going somewhere, usually: <et>välja</et>, <et>sisse</et>, <et>üles</et>, <et>alla</et>.`;
 const AT = msg`Being somewhere, usually: <et>väljas</et>, <et>sees</et>, <et>üleval</et>, <et>all</et>.`;
 const LAST = msg`In a statement the small word usually goes last: <et>Ma tõusen kell seitse üles</et>.`;
 const BEFORE = msg`With a second verb, the small word usually goes just before it: <et>Ma pean vara üles tõusma</et>.`;
@@ -134,7 +134,7 @@ export const DRILLS: DrillBank = {
       rule: "away",
       answers: ["Ära mine ära!"],
       say: "Ära mine ära!",
-      explain: msg`<et>Ära</et> at the start is don’t; after a verb of moving it usually means away.`,
+      explain: msg`At the start of a command, <et>ära</et> is don’t; after a verb of moving it usually means away.`,
     },
     {
       kind: "build",

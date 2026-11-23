@@ -29,15 +29,26 @@ export interface FormItem {
   said?: ReactNode;
   /** A line after the answer, such as the rule. */
   explain?: ReactNode;
+  plain?: boolean;
 }
 
 /**
  * The word turning into its form, as `Morph` draws it: dropped letters struck, added ones
  * underlined. Inside the marked card the added letters stay in ink, not the stage's hue.
  */
-function Change({ base, form, src }: { base: string; form: string; src?: string | undefined }) {
+function Change({
+  base,
+  form,
+  src,
+  plain,
+}: {
+  base: string;
+  form: string;
+  src?: string | undefined;
+  plain?: boolean | undefined;
+}) {
   const { i18n } = useLingui();
-  const parts = morph(base, form);
+  const parts = morph(plain ? form : base, form);
   return (
     <p className="flex flex-wrap items-center gap-3">
       <span
@@ -47,9 +58,13 @@ function Change({ base, form, src }: { base: string; form: string; src?: string 
       >
         {/* The sentence is in the reader's language; only the forms in it are Estonian. */}
         <span lang={i18n.locale} className="sr-only">
-          <Trans>
-            <span lang="et">{base}</span> becomes <span lang="et">{form}</span>
-          </Trans>
+          {plain ? (
+            <span lang="et">{form}</span>
+          ) : (
+            <Trans>
+              <span lang="et">{base}</span> becomes <span lang="et">{form}</span>
+            </Trans>
+          )}
         </span>
         <span aria-hidden="true">
           <MorphLetters parts={parts} />
@@ -201,7 +216,7 @@ export function FormRound({ item, state, heard, answer, autoplay }: RoundProps<F
               )}
             </div>
           )}
-          <Change base={item.base} form={shown} src={item.src} />
+          <Change base={item.base} form={shown} src={item.src} plain={item.plain} />
           {item.said && (
             <div lang="et" className="text-xl text-ink-secondary">
               {item.said}

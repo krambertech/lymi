@@ -245,17 +245,6 @@ function useContent() {
 
     const talk: PassageQuestion[] = [
       {
-        id: "new",
-        ask: t`What does Kati have that is new?`,
-        options: [
-          { id: "flat", label: t`A flat` },
-          { id: "car", label: t`A car` },
-          { id: "job", label: t`A job in the centre` },
-        ],
-        answer: "flat",
-        line: 4,
-      },
-      {
         id: "when",
         kind: "short",
         ask: t`When does Kati move in? Write the day as she says it.`,
@@ -290,6 +279,17 @@ function useContent() {
         ],
         answer: "two",
         line: 13,
+      },
+      {
+        id: "floor",
+        ask: t`Which floor is the new flat on?`,
+        options: [
+          { id: "first", label: t`On the first floor` },
+          { id: "third", label: t`On the third floor` },
+          { id: "fifth", label: t`On the fifth floor` },
+        ],
+        answer: "third",
+        line: 16,
       },
       {
         id: "lift",
@@ -358,12 +358,13 @@ export function UlesValjaAraLesson() {
 
   const placeItems = useMemo<PlaceItem[]>(
     () =>
-      PV_PLACE.map(({ id, said, answer, other, base, to }) => ({
+      PV_PLACE.map(({ said, answer, other, base, to }) => ({
         base,
         cue: said.replace(answer, "…"),
         cueLang: "et",
         answers: [answer],
         options: [answer, other],
+        plain: true,
         src: src(said),
         pair: [to ? "to" : "at", base] as const,
         explain: to ? (
@@ -412,8 +413,8 @@ export function UlesValjaAraLesson() {
           before it: <b lang="et">Ma pean vara üles tõusma</b>.
         </Trans>,
         <Trans key="4">
-          <b lang="et">Ära</b> at the start says don’t; after a verb of moving it usually means
-          away: <b lang="et">Ära mine ära!</b>
+          At the start of a command, <b lang="et">ära</b> says don’t; after a verb of moving it
+          usually means away: <b lang="et">Ära mine ära!</b>
         </Trans>,
       ]}
       sections={[
@@ -425,9 +426,9 @@ export function UlesValjaAraLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Estonian puts a small word after many verbs to say where to: <Word w="üles" />,
-                    up; <Word w="alla" />, down; <Word w="sisse" />, in; <Word w="välja" />, out.{" "}
-                    <span lang="et">Hüppama</span> is to jump, so{" "}
+                    Estonian puts a small word with many verbs, usually to say where to:{" "}
+                    <Word w="üles" />, up; <Word w="alla" />, down; <Word w="sisse" />, in;{" "}
+                    <Word w="välja" />, out. <span lang="et">Hüppama</span> is to jump, so{" "}
                     <span lang="et">Kass hüppab üles</span> is the cat jumps up.
                   </Trans>
                 </p>
@@ -467,10 +468,10 @@ export function UlesValjaAraLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Three more often go with verbs of moving: <Word w="ära" />, away;{" "}
+                    Three more small words often go with verbs of moving: <Word w="ära" />, away;{" "}
                     <Word w="tagasi" />, back; <Word w="kaasa" />, along. A dictionary lists the
-                    pair with the small word first: <Word w="üles tõusma" />, to get up;{" "}
-                    <span lang="et">ära minema</span>, to leave. Tap a line to hear it.
+                    pair with the small word first: <Word w="kolima" />, to move house, becomes{" "}
+                    <span lang="et">sisse kolima</span>, to move in. Tap a line to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -499,7 +500,7 @@ export function UlesValjaAraLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Going somewhere takes one word, and being somewhere usually takes its partner:{" "}
+                    Going somewhere usually takes one word, and being somewhere its partner:{" "}
                     <span lang="et">Kass läheb välja</span>, the cat goes out;{" "}
                     <span lang="et">Lapsed mängivad väljas</span>, the children are playing outside.
                   </Trans>

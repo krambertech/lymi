@@ -1,0 +1,497 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 13:50+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "-gi or -ki"
+msgstr "-gi или -ki"
+
+msgid "-gi or -ki?"
+msgstr "-gi или -ki?"
+
+msgid "(to) somewhere, anywhere"
+msgstr "куда-то, куда-нибудь"
+
+msgid "<0>-ki</0> after k, p, t, g, b, d, s, h, f, š, z or ž; <1>-gi</1> after anything else."
+msgstr "<0>-ki</0> после k, p, t, g, b, d, s, h, f, š, z или ž; <1>-gi</1> после всего остального."
+
+msgid "<0>{Base}</0> ends in {last}, so <1>-ki</1>: <2>{id}</2>."
+msgstr "<0>{Base}</0> оканчивается на {last}, поэтому <1>-ki</1>: <2>{id}</2>."
+
+msgid "<0>{Base}</0> ends in a vowel, so <1>-gi</1>: <2>{id}</2>."
+msgstr "<0>{Base}</0> оканчивается на гласную, поэтому <1>-gi</1>: <2>{id}</2>."
+
+msgid "<0>{Base}</0> ends in l, so <1>-gi</1>: <2>{id}</2>."
+msgstr "<0>{Base}</0> оканчивается на l, поэтому <1>-gi</1>: <2>{id}</2>."
+
+msgid "<0>Kellega</0> ends in a vowel, so <1>-gi</1>: <2>kellegagi</2>."
+msgstr "<0>Kellega</0> оканчивается на гласную, поэтому <1>-gi</1>: <2>kellegagi</2>."
+
+msgid "<0>Kellele</0> ends in a vowel, so <1>-gi</1>: <2>kellelegi</2>."
+msgstr "<0>Kellele</0> оканчивается на гласную, поэтому <1>-gi</1>: <2>kellelegi</2>."
+
+msgid "<0>Kellest</0> ends in t, so <1>-ki</1>: <2>kellestki</2>."
+msgstr "<0>Kellest</0> оканчивается на t, поэтому <1>-ki</1>: <2>kellestki</2>."
+
+msgid "<et>-gi</et> or <et>-ki</et>"
+msgstr "<et>-gi</et> или <et>-ki</et>"
+
+msgid "18 minutes"
+msgstr "18 минут"
+
+msgid "6 exercises, 4 of them typed, and a conversation"
+msgstr "6 упражнений, в 4 из них нужно писать, и разговор"
+
+msgid "A week ago Kati left her phone in a shop."
+msgstr "Неделю назад Кати забыла телефон в магазине."
+
+msgid "about somebody"
+msgstr "о ком-то"
+
+msgid "about something"
+msgstr "о чём-то"
+
+msgid "about what"
+msgstr "о чём"
+
+msgid "about whom"
+msgstr "о ком"
+
+msgid "Add <0>-gi</0> or <1>-ki</1> to most question words and they mean some: <2>keegi</2>, somebody; <3>midagi</3>, something. With <4>ei</4>, they usually keep their form and mean nobody and nothing."
+msgstr "Добавь к большинству вопросительных слов <0>-gi</0> или <1>-ki</1> — и они будут значить «-то»: <2>keegi</2> — «кто-то»; <3>midagi</3> — «что-то». С <4>ei</4> они обычно не меняются и значат «никто» и «ничего»."
+
+msgid "Add the ending"
+msgstr "Добавь окончание"
+
+msgid "After a vowel or l, m, n, r, the ending is <et>-gi</et>: <et>kellelegi</et>, <et>millalgi</et>."
+msgstr "После гласной или l, m, n, r окончание <et>-gi</et>: <et>kellelegi</et>, <et>millalgi</et>."
+
+msgid "After k, p, t, g, b, d, s, h, f, š, z or ž, the ending is <et>-ki</et>: <et>kellestki</et>."
+msgstr "После k, p, t, g, b, d, s, h, f, š, z или ž окончание <et>-ki</et>: <et>kellestki</et>."
+
+msgid "All eight, by the last sound."
+msgstr "Все восемь — по последнему звуку."
+
+msgid "All eight, each on its case."
+msgstr "Все восемь, каждое от своего падежа."
+
+msgid "All six found and fixed."
+msgstr "Все шесть найдены и исправлены."
+
+msgid "All six sentences."
+msgstr "Все шесть предложений."
+
+msgid "All six: <0>ei</0> before the verb, the word usually unchanged."
+msgstr "Все шесть: <0>ei</0> перед глаголом, слово обычно без изменений."
+
+msgid "An answer on its own: Kes tuli? Mitte keegi."
+msgstr "Как отдельный ответ: Kes tuli? Mitte keegi."
+
+msgid "Anywhere is <0>kuhugi</0>; <1>kuhu</1> alone asks where to."
+msgstr "«Никуда» — это <0>kuhugi</0> с отрицанием; само <1>kuhu</1> спрашивает «куда»."
+
+msgid "As an answer on its own, say <0/> or <1/>: <2>Kes tuli? Mitte keegi.</2>"
+msgstr "Если это вся реплика, говори <0/> или <1/>: <2>Kes tuli? Mitte keegi.</2>"
+
+msgid "At home"
+msgstr "Дома"
+
+msgid "At the café"
+msgstr "В кафе"
+
+msgid "At the shop"
+msgstr "В магазине"
+
+msgid "Come and visit some time!"
+msgstr "Заходи как-нибудь в гости!"
+
+msgid "Cook at home together"
+msgstr "Готовить дома вместе"
+
+msgid "Do you ever go to Pärnu?"
+msgstr "Ты когда-нибудь бываешь в Пярну?"
+
+msgid "Do you have something to write with?"
+msgstr "У тебя есть чем писать?"
+
+msgid "Do you want something to drink?"
+msgstr "Хочешь что-нибудь выпить?"
+
+msgid "Do you want something?"
+msgstr "Ты что-нибудь хочешь?"
+
+msgid "Does anybody have a pencil?"
+msgstr "У кого-нибудь есть карандаш?"
+
+msgid "Each sentence should say what the line above it says, and one word is wrong. Tap it, then type it right."
+msgstr "Каждое предложение должно говорить то же, что строка над ним, но одно слово неправильное. Нажми на него, а потом напиши правильно."
+
+msgid "ever; never, when negated"
+msgstr "когда-нибудь; с отрицанием — никогда"
+
+msgid "ever; some day; once, in the past"
+msgstr "когда-нибудь; когда-то, однажды"
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
+
+msgid "For nobody or nothing, put <0>ei</0> before the verb, as in lesson {negation}, and mostly keep the <1>-gi</1> word as it is: <2>Keegi tuleb</2>, somebody is coming; <3>Keegi ei tule</3>, nobody is coming."
+msgstr "Чтобы сказать «никто» или «ничего», поставь <0>ei</0> перед глаголом, как в уроке {negation}, а слово с <1>-gi</1> обычно не меняй: <2>Keegi tuleb</2> — «кто-то придёт»; <3>Keegi ei tule</3> — «никто не придёт»."
+
+msgid "For nobody or nothing, usually put <et>ei</et> before the verb: <et>Keegi ei tule</et>."
+msgstr "Чтобы сказать «никто» или «ничего», обычно ставь <et>ei</et> перед глаголом: <et>Keegi ei tule</et>."
+
+msgid "from whom"
+msgstr "от кого"
+
+msgid "Go somewhere to eat"
+msgstr "Пойти куда-нибудь поесть"
+
+msgid "Go to the shop"
+msgstr "Пойти в магазин"
+
+msgid "He or she doesn’t talk about anything."
+msgstr "Он или она ни о чём не говорит."
+
+msgid "He or she is going somewhere."
+msgstr "Он или она куда-то идёт."
+
+msgid "He or she isn’t going anywhere."
+msgstr "Он или она никуда не идёт."
+
+msgid "He or she wants to become somebody."
+msgstr "Хочет кем-то стать."
+
+msgid "Her keys"
+msgstr "Ключи"
+
+msgid "Her phone"
+msgstr "Телефон"
+
+msgid "Her wallet"
+msgstr "Кошелёк"
+
+msgid "I called somebody."
+msgstr "Я кому-то позвонил."
+
+msgid "I don’t see anybody."
+msgstr "Я никого не вижу."
+
+msgid "I got a letter from somebody."
+msgstr "Я получил от кого-то письмо."
+
+msgid "I have nothing."
+msgstr "У меня ничего нет."
+
+msgid "I have something."
+msgstr "У меня что-то есть."
+
+msgid "I see somebody."
+msgstr "Я кого-то вижу."
+
+msgid "I want to go somewhere."
+msgstr "Я хочу куда-нибудь пойти."
+
+msgid "I’m not talking with anybody."
+msgstr "Я ни с кем не разговариваю."
+
+msgid "I’m talking with somebody."
+msgstr "Я с кем-то разговариваю."
+
+msgid "I’m thinking about something."
+msgstr "Я о чём-то думаю."
+
+msgid "In a case: <et>kellelegi</et>, <et>kedagi</et>"
+msgstr "В падеже: <et>kellelegi</et>, <et>kedagi</et>"
+
+msgid "In the kitchen"
+msgstr "На кухне"
+
+msgid "In writing, every case of <0>kes</0> and <1>mis</1> takes <2>-gi</2> or <3>-ki</3> at the end: <4>kellelegi</4>, <5>kellegagi</5>, <6>millestki</6>."
+msgstr "На письме к каждому падежу <0>kes</0> и <1>mis</1> в конце добавляется <2>-gi</2> или <3>-ki</3>: <4>kellelegi</4>, <5>kellegagi</5>, <6>millestki</6>."
+
+msgid "Kati"
+msgstr "Кати"
+
+msgid "Kati can’t find something and asks Peeter. <0>Ei näinud</0> is didn’t see; lesson {pastNo} builds that form."
+msgstr "Кати не может что-то найти и спрашивает Пеэтера. <0>Ei näinud</0> — «не видел»; эту форму объясняет урок {pastNo}."
+
+msgid "Kati is buying something."
+msgstr "Кати что-то покупает."
+
+msgid "Kati isn’t buying anything."
+msgstr "Кати ничего не покупает."
+
+msgid "Kati’s friend"
+msgstr "Подруга Кати"
+
+msgid "Listen to the pairs above once more, then try again."
+msgstr "Ещё раз послушай пары выше и попробуй снова."
+
+msgid "Listen: Kati and Peeter"
+msgstr "Послушай: Кати и Пеэтер"
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Mari took something."
+msgstr "Мари что-то взяла."
+
+msgid "Mari’s mother"
+msgstr "Мама Мари"
+
+msgid "Most of them. Check the <0>-gi</0> word in the ones you missed."
+msgstr "Большинство. Проверь слово с <0>-gi</0> в тех, что не получились."
+
+msgid "Most of them. Check the verb’s form after <0>ei</0>."
+msgstr "Большинство. Проверь форму глагола после <0>ei</0>."
+
+msgid "Most of them. Find the case first, then add the ending."
+msgstr "Большинство. Сначала найди падеж, потом добавь окончание."
+
+msgid "Most of them. Look at the last letter before the ending."
+msgstr "Большинство. Посмотри на последнюю букву перед окончанием."
+
+msgid "Most of them. Read the reason under each one you missed."
+msgstr "Большинство. Прочитай пояснения к тем, что не получились."
+
+msgid "Most question words with <0>-gi</0> or <1>-ki</1> mean some: <2>keegi</2>, somebody; <3>midagi</3>, something; <4>kuhugi</4>, to somewhere."
+msgstr "Большинство вопросительных слов с <0>-gi</0> или <1>-ki</1> значат «-то»: <2>keegi</2> — «кто-то»; <3>midagi</3> — «что-то»; <4>kuhugi</4> — «куда-то»."
+
+msgid "Most question words with <et>-gi</et> or <et>-ki</et> mean some: <et>midagi</et>, something; <et>kuhugi</et>, to somewhere."
+msgstr "Большинство вопросительных слов с <et>-gi</et> или <et>-ki</et> значат «-то»: <et>midagi</et> — «что-то»; <et>kuhugi</et> — «куда-то»."
+
+msgid "My keys are somewhere here."
+msgstr "Мои ключи где-то здесь."
+
+msgid "nobody"
+msgstr "никто"
+
+msgid "Nobody"
+msgstr "Никто"
+
+msgid "Nobody is at home."
+msgstr "Дома никого нет."
+
+msgid "Nobody is coming."
+msgstr "Никто не придёт."
+
+msgid "Nobody, nothing"
+msgstr "Никто, ничего"
+
+msgid "Nobody, nothing: <et>keegi ei</et>"
+msgstr "Никто, ничего: <et>keegi ei</et>"
+
+msgid "nothing"
+msgstr "ничего"
+
+msgid "Nothing is <0>ei … midagi</0>; <1>mida</1> alone asks what."
+msgstr "«Ничего» — это <0>ei … midagi</0>; само <1>mida</1> спрашивает «что»."
+
+msgid "On its own, nobody is <et>mitte keegi</et>."
+msgstr "Как отдельный ответ «никто» — это <et>mitte keegi</et>."
+
+msgid "On the table"
+msgstr "На столе"
+
+msgid "Peeter"
+msgstr "Пеэтер"
+
+msgid "Peeter saw the keys."
+msgstr "Пеэтер видел ключи."
+
+msgid "Put <0>ei</0> before the verb; the <1>-gi</1> word usually stays as it is."
+msgstr "Перед глаголом — <0>ei</0>, а слово с <1>-gi</1> обычно не меняется."
+
+msgid "Put the question word in its case first, then add the ending: <0>kellele</0>, to whom, becomes <1>kellelegi</1>, to somebody; <2>kellega</2>, with whom, becomes <3>kellegagi</3>, with somebody. Only <4>keegi</4> itself is built differently. After t, the ending is <5>-ki</5>: <6>kellest</6>, about whom, becomes <7>kellestki</7>. The next section gives the other sounds that take <8>-ki</8>."
+msgstr "Сначала поставь вопросительное слово в нужный падеж, потом добавь окончание: <0>kellele</0> — «кому» — становится <1>kellelegi</1> — «кому-то»; <2>kellega</2> — «с кем» — становится <3>kellegagi</3> — «с кем-то». Только само <4>keegi</4> образуется иначе. После t окончание <5>-ki</5>: <6>kellest</6> — «о ком» — становится <7>kellestki</7>. Другие звуки, после которых <8>-ki</8>, — в следующем разделе."
+
+msgid "Put the question word in its case, then add the ending: <et>kellele</et>, <et>kellelegi</et>."
+msgstr "Поставь вопросительное слово в падеж, потом добавь окончание: <et>kellele</et>, <et>kellelegi</et>."
+
+msgid "Read the rule above once more, then try again."
+msgstr "Ещё раз прочитай правило выше и попробуй снова."
+
+msgid "Read What to remember at the end, then try again."
+msgstr "Прочитай «Что запомнить» в конце и попробуй снова."
+
+msgid "Rewrite each sentence with <0>ei</0>, so it says nobody, nothing or nowhere."
+msgstr "Перепиши каждое предложение с <0>ei</0>, чтобы оно говорило «никто», «ничего» или «никуда»."
+
+msgid "She isn’t going anywhere."
+msgstr "Она никуда не идёт."
+
+msgid "Six mistakes to catch"
+msgstr "Шесть ошибок"
+
+msgid "some time"
+msgstr "в какое-то время, как-нибудь"
+
+msgid "Some time is <et>millalgi</et>."
+msgstr "«В какое-то время» — это <et>millalgi</et>."
+
+msgid "somebody"
+msgstr "кто-то"
+
+msgid "Somebody called."
+msgstr "Кто-то звонил."
+
+msgid "somebody has"
+msgstr "у кого-то есть"
+
+msgid "Somebody is <et>keegi</et>."
+msgstr "«Кто-то» — это <et>keegi</et>."
+
+msgid "Somebody is at home."
+msgstr "Дома кто-то есть."
+
+msgid "Somebody is coming."
+msgstr "Кто-то придёт."
+
+msgid "somebody, anybody"
+msgstr "кто-то, кто-нибудь"
+
+msgid "somebody, as the object"
+msgstr "кого-то (дополнение)"
+
+msgid "Somebody, something"
+msgstr "Кто-то, что-то"
+
+msgid "Somebody, something: <et>keegi</et>, <et>midagi</et>"
+msgstr "Кто-то, что-то: <et>keegi</et>, <et>midagi</et>"
+
+msgid "something"
+msgstr "что-то"
+
+msgid "something, anything"
+msgstr "что-то, что-нибудь"
+
+msgid "somewhere"
+msgstr "где-то"
+
+msgid "Somewhere is <et>kuskil</et>."
+msgstr "«Где-то» — это <et>kuskil</et>."
+
+msgid "somewhere, anywhere"
+msgstr "где-то, где-нибудь"
+
+msgid "Take most question words and add <0>-gi</0>, and they mean some: <1>mida</1>, what, becomes <2/>, something; <3>kuhu</3>, where to, becomes <4/>, to somewhere. <5>Kes</5>, who, is the odd one: <6/>, somebody."
+msgstr "Возьми почти любое вопросительное слово и добавь <0>-gi</0> — оно будет значить «-то»: <1>mida</1> — «что» — становится <2/> — «что-то»; <3>kuhu</3> — «куда» — становится <4/> — «куда-то». <5>Kes</5> — «кто» — особое: <6/> — «кто-то»."
+
+msgid "Tap the lines above once more, then try again."
+msgstr "Ещё раз нажми на строки выше и попробуй снова."
+
+msgid "The last sound decides. After k, p, t, g, b, d, s, h, f, š, z or ž, the ending is <0>-ki</0>: <1>kellestki</1>, <2>kustki</2>, from somewhere. After anything else, a vowel or l, m, n, r, it is <3>-gi</3>: <4>kellelegi</4>, <5>millalgi</5>."
+msgstr "Решает последний звук. После k, p, t, g, b, d, s, h, f, š, z или ž окончание <0>-ki</0>: <1>kellestki</1>, <2>kustki</2> — «откуда-то». После всего остального — гласной или l, m, n, r — <3>-gi</3>: <4>kellelegi</4>, <5>millalgi</5>."
+
+msgid "The main exception: when <0>ei ole</0> or <1>pole</1> says nobody is there, <2>keegi</2> usually takes the partitive, as <3>kassi</3> does in <4>Mul pole kassi</4> in lesson {partitive}: <5>Kodus ei ole kedagi</5>. For coming, both are heard: <6>Keegi ei tulnud</6> and <7>Kedagi ei tulnud</7>."
+msgstr "Главное исключение: когда <0>ei ole</0> или <1>pole</1> говорит, что где-то никого нет, <2>keegi</2> обычно стоит в партитиве, как <3>kassi</3> в <4>Mul pole kassi</4> из урока {partitive}: <5>Kodus ei ole kedagi</5>. Когда речь о приходе, говорят и так, и так: <6>Keegi ei tulnud</6> и <7>Kedagi ei tulnud</7>."
+
+msgid "The object is <0>kedagi</0>, built on <1>keda</1>."
+msgstr "Дополнение — <0>kedagi</0>, от <1>keda</1>."
+
+msgid "The object is <et>kedagi</et>, built on <et>keda</et>."
+msgstr "Дополнение — <et>kedagi</et>, от <et>keda</et>."
+
+msgid "This is somebody’s bag."
+msgstr "Это чья-то сумка."
+
+msgid "to somebody"
+msgstr "кому-то"
+
+msgid "To somebody, with somebody"
+msgstr "Кому-то, с кем-то"
+
+msgid "to somewhere"
+msgstr "куда-то"
+
+msgid "to whom"
+msgstr "кому"
+
+msgid "Two are built on words you haven’t met, so learn them as words: <0/>, somewhere, and <1/>, ever. <2/>, when, follows the pattern: <3/>, some time. Tap a line to hear it."
+msgstr "Два слова образованы от слов, которых ты ещё не знаешь, так что запомни их отдельно: <0/> — «где-то» и <1/> — «когда-нибудь». <2/> — «когда» — по образцу: <3/> — «в какое-то время». Нажми на строку, чтобы послушать."
+
+msgid "Type the form that means what the cue says."
+msgstr "Напиши форму, которая значит то, что в подсказке."
+
+msgid "We talked about somebody."
+msgstr "Мы говорили о ком-то."
+
+msgid "what"
+msgstr "что"
+
+msgid "What can’t Kati find?"
+msgstr "Что Кати не может найти?"
+
+msgid "What do you want? Nothing."
+msgstr "Что ты хочешь? Ничего."
+
+msgid "What does it mean?"
+msgstr "Что это значит?"
+
+msgid "What will they do in the evening?"
+msgstr "Что они будут делать вечером?"
+
+msgid "when"
+msgstr "когда"
+
+msgid "When <et>ei ole</et> says nobody is there, <et>keegi</et> usually takes the partitive: <et>Kodus ei ole kedagi</et>."
+msgstr "Когда <et>ei ole</et> говорит, что никого нет, <et>keegi</et> обычно стоит в партитиве: <et>Kodus ei ole kedagi</et>."
+
+msgid "Where are the keys?"
+msgstr "Где ключи?"
+
+msgid "where to"
+msgstr "куда"
+
+msgid "Where was Kati yesterday? Write one place as she says it."
+msgstr "Где Кати была вчера? Напиши одно место так, как она говорит."
+
+msgid "Where were the keys yesterday?"
+msgstr "Где ключи были вчера?"
+
+msgid "Who answered when Kati called Mari?"
+msgstr "Кто ответил, когда Кати звонила Мари?"
+
+msgid "Who came? Nobody."
+msgstr "Кто пришёл? Никто."
+
+msgid "who has"
+msgstr "у кого"
+
+msgid "whom"
+msgstr "кого"
+
+msgid "with <0>ei</0>"
+msgstr "с <0>ei</0>"
+
+msgid "With <0>ei</0>, they usually mean nobody, nothing, nowhere: <1>Keegi ei tule</1>; but <2>Kodus ei ole kedagi</2>. On its own: <3>mitte keegi</3>."
+msgstr "С <0>ei</0> они обычно значат «никто», «ничего», «никуда»: <1>Keegi ei tule</1>; но <2>Kodus ei ole kedagi</2>. Отдельно: <3>mitte keegi</3>."
+
+msgid "with ei"
+msgstr "с ei"
+
+msgid "With ei: never."
+msgstr "С ei: никогда."
+
+msgid "With ei: nobody."
+msgstr "С ei: никто."
+
+msgid "With ei: nothing."
+msgstr "С ei: ничего."
+
+msgid "with somebody"
+msgstr "с кем-то"
+
+msgid "with whom"
+msgstr "с кем"
+
+msgid "Write each sentence in Estonian."
+msgstr "Напиши каждое предложение по-эстонски."
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"

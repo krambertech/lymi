@@ -1,0 +1,479 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 13:42+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0>-ks</0> goes on the genitive <1>külma</1>: <2>külmaks</2>."
+msgstr "<0>-ks</0> goes on the genitive <1>külma</1>: <2>külmaks</2>."
+
+msgid "<0>-ks</0> on the genitive <1>{gen}</1>: <2>{answer}</2>."
+msgstr "<0>-ks</0> on the genitive <1>{gen}</1>: <2>{answer}</2>."
+
+msgid "<0>Homseks</0>, by tomorrow, comes from <1>homne</1>, tomorrow’s: its genitive is <2>homse</2>."
+msgstr "<0>Homseks</0>, by tomorrow, comes from <1>homne</1>, tomorrow’s: its genitive is <2>homse</2>."
+
+msgid "<0>Kingiks</0>, as a present, is the same ending: <1>Mul on emale kingiks raamat</1>."
+msgstr "<0>Kingiks</0>, as a present, is the same ending: <1>Mul on emale kingiks raamat</1>."
+
+msgid "<et>-ks</et> goes on the genitive <et>külma</et>: <et>külmaks</et>."
+msgstr "<et>-ks</et> goes on the genitive <et>külma</et>: <et>külmaks</et>."
+
+msgid "18 minutes"
+msgstr "18 minutes"
+
+msgid "6 exercises, 3 of them typed, and a conversation"
+msgstr "6 exercises, 3 of them typed, and a conversation"
+
+msgid "A book"
+msgstr "A book"
+
+msgid "a cook"
+msgstr "a cook"
+
+msgid "a doctor"
+msgstr "a doctor"
+
+msgid "a friend"
+msgstr "a friend"
+
+msgid "a good doctor"
+msgstr "a good doctor"
+
+msgid "A good doctor"
+msgstr "A good doctor"
+
+msgid "a new doctor"
+msgstr "a new doctor"
+
+msgid "A new job"
+msgstr "A new job"
+
+msgid "A planned week is <0>-ks</0>: <1>nädalaks</1>."
+msgstr "A planned week is <0>-ks</0>: <1>nädalaks</1>."
+
+msgid "a shop assistant"
+msgstr "a shop assistant"
+
+msgid "a teacher"
+msgstr "a teacher"
+
+msgid "a week"
+msgstr "a week"
+
+msgid "Add -ks"
+msgstr "Add -ks"
+
+msgid "Adding <et>-ks</et>: <et>arstiks</et>, <et>külmaks</et>"
+msgstr "Adding <et>-ks</et>: <et>arstiks</et>, <et>külmaks</et>"
+
+msgid "All eight, each on its genitive."
+msgstr "All eight, each on its genitive."
+
+msgid "All eight: as with <0>-na</0>, becomes with <1>-ks</1>."
+msgstr "All eight: as with <0>-na</0>, becomes with <1>-ks</1>."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six sentences."
+msgstr "All six sentences."
+
+msgid "An adjective takes <0>-ks</0> too: <1>heaks arstiks</1>. With <2>-na</2> it stays in the genitive: <3>uue arstina</3>."
+msgstr "An adjective takes <0>-ks</0> too: <1>heaks arstiks</1>. With <2>-na</2> it stays in the genitive: <3>uue arstina</3>."
+
+msgid "as a present"
+msgstr "as a present"
+
+msgid "As: <0>-na</0>, <1>{answer}</1>."
+msgstr "As: <0>-na</0>, <1>{answer}</1>."
+
+msgid "At a hospital"
+msgstr "At a hospital"
+
+msgid "At a school"
+msgstr "At a school"
+
+msgid "At the market"
+msgstr "At the market"
+
+msgid "Became is <0>saama</0> with <1>-ks</1>: <2>sai arstiks</2>."
+msgstr "Became is <0>saama</0> with <1>-ks</1>: <2>sai arstiks</2>."
+
+msgid "Become is usually <0>saama</0> with <1>-ks</1>: <2>Ta sai arstiks</2>. Also <3>haigeks jääma</3>, to fall ill, and <4>muutub külmaks</4>, turns cold."
+msgstr "Become is usually <0>saama</0> with <1>-ks</1>: <2>Ta sai arstiks</2>. Also <3>haigeks jääma</3>, to fall ill, and <4>muutub külmaks</4>, turns cold."
+
+msgid "Become is usually <et>saama</et> with <et>-ks</et>: <et>sai arstiks</et>."
+msgstr "Become is usually <et>saama</et> with <et>-ks</et>: <et>sai arstiks</et>."
+
+msgid "Become: -ks on the genitive"
+msgstr "Become: -ks on the genitive"
+
+msgid "Becomes: <0>-ks</0>, <1>{answer}</1>."
+msgstr "Becomes: <0>-ks</0>, <1>{answer}</1>."
+
+msgid "By and for: <et>reedeks</et>, <et>nädalaks</et>"
+msgstr "By and for: <et>reedeks</et>, <et>nädalaks</et>"
+
+msgid "by Friday"
+msgstr "by Friday"
+
+msgid "By Friday"
+msgstr "By Friday"
+
+msgid "By Friday is <0>-ks</0>: <1>reedeks</1>."
+msgstr "By Friday is <0>-ks</0>: <1>reedeks</1>."
+
+msgid "By Friday, for a week"
+msgstr "By Friday, for a week"
+
+msgid "by the evening"
+msgstr "by the evening"
+
+msgid "By the evening is <et>õhtuks</et>."
+msgstr "By the evening is <et>õhtuks</et>."
+
+msgid "by tomorrow"
+msgstr "by tomorrow"
+
+msgid "cold"
+msgstr "cold"
+
+msgid "dictionary form"
+msgstr "dictionary form"
+
+msgid "Each sentence should say what the line above it says, and one word is wrong. Tap it, then type it right."
+msgstr "Each sentence should say what the line above it says, and one word is wrong. Tap it, then type it right."
+
+msgid "Fall ill is <et>jääma</et> with <et>-ks</et>: <et>jäin haigeks</et>."
+msgstr "Fall ill is <et>jääma</et> with <et>-ks</et>: <et>jäin haigeks</et>."
+
+msgid "Fell ill is <0>jääma</0> with <1>-ks</1>: <2>jäin haigeks</2>."
+msgstr "Fell ill is <0>jääma</0> with <1>-ks</1>: <2>jäin haigeks</2>."
+
+msgid "Fill the gaps"
+msgstr "Fill the gaps"
+
+msgid "Fish"
+msgstr "Fish"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "Flowers"
+msgstr "Flowers"
+
+msgid "for a birthday"
+msgstr "for a birthday"
+
+msgid "For a birthday is <0>-ks</0>: <1>sünnipäevaks</1>."
+msgstr "For a birthday is <0>-ks</0>: <1>sünnipäevaks</1>."
+
+msgid "For a birthday is <et>-ks</et>: <et>sünnipäevaks</et>."
+msgstr "For a birthday is <et>-ks</et>: <et>sünnipäevaks</et>."
+
+msgid "For a planned time, <et>-ks</et> says by when or for how long: <et>reedeks</et>, by Friday; <et>nädalaks</et>, for a week."
+msgstr "For a planned time, <et>-ks</et> says by when or for how long: <et>reedeks</et>, by Friday; <et>nädalaks</et>, for a week."
+
+msgid "For a planned time, by when or for how long: <0>reedeks</0>, by Friday; <1>nädalaks</1>, for a week. With a meal or an occasion, <2>-ks</2> says what for: <3>sünnipäevaks</3>, for a birthday."
+msgstr "For a planned time, by when or for how long: <0>reedeks</0>, by Friday; <1>nädalaks</1>, for a week. With a meal or an occasion, <2>-ks</2> says what for: <3>sünnipäevaks</3>, for a birthday."
+
+msgid "for a week"
+msgstr "for a week"
+
+msgid "for breakfast"
+msgstr "for breakfast"
+
+msgid "Friday"
+msgstr "Friday"
+
+msgid "genitive"
+msgstr "genitive"
+
+msgid "Haigeks jääma: to fall ill."
+msgstr "Haigeks jääma: to fall ill."
+
+msgid "He or she became a doctor."
+msgstr "He or she became a doctor."
+
+msgid "He or she became a good doctor."
+msgstr "He or she became a good doctor."
+
+msgid "He or she started as the new doctor."
+msgstr "He or she started as the new doctor."
+
+msgid "He or she started at the hospital as a doctor."
+msgstr "He or she started at the hospital as a doctor."
+
+msgid "He or she works as a doctor."
+msgstr "He or she works as a doctor."
+
+msgid "He works as a doctor, so usually <0>-na</0>: <1>arstina</1>."
+msgstr "He works as a doctor, so usually <0>-na</0>: <1>arstina</1>."
+
+msgid "How long is Peeter’s sister coming home for? Write it as he says it."
+msgstr "How long is Peeter’s sister coming home for? Write it as he says it."
+
+msgid "I fell ill."
+msgstr "I fell ill."
+
+msgid "I want to become a doctor."
+msgstr "I want to become a doctor."
+
+msgid "I’ll be back by Friday."
+msgstr "I’ll be back by Friday."
+
+msgid "I’m going to Pärnu for a week."
+msgstr "I’m going to Pärnu for a week."
+
+msgid "I’m going to Tartu for a week."
+msgstr "I’m going to Tartu for a week."
+
+msgid "ill"
+msgstr "ill"
+
+msgid "into a doctor"
+msgstr "into a doctor"
+
+msgid "into a good doctor"
+msgstr "into a good doctor"
+
+msgid "Jaan became a teacher."
+msgstr "Jaan became a teacher."
+
+msgid "Kati writes to Mari. Pick the form for each gap: the words around it say which one."
+msgstr "Kati writes to Mari. Pick the form for each gap: the words around it say which one."
+
+msgid "Lesson {asLesson} gave you <0>-na</0> for “as”: <1/>. That says the role someone has. <2>-ks</2> says what someone becomes: <3/>. After <4>töötab</4> you may also hear <5>-ks</5>, but <6>-na</6> is the usual form."
+msgstr "Lesson {asLesson} gave you <0>-na</0> for “as”: <1/>. That says the role someone has. <2>-ks</2> says what someone becomes: <3/>. After <4>töötab</4> you may also hear <5>-ks</5>, but <6>-na</6> is the usual form."
+
+msgid "Liisa"
+msgstr "Liisa"
+
+msgid "Liisa has to stay at home for a couple of days."
+msgstr "Liisa has to stay at home for a couple of days."
+
+msgid "Liisa wanted to become a teacher."
+msgstr "Liisa wanted to become a teacher."
+
+msgid "Listen to the two lines above once more, then try again."
+msgstr "Listen to the two lines above once more, then try again."
+
+msgid "Listen: Peeter and Liisa"
+msgstr "Listen: Peeter and Liisa"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Mari wants to become a doctor."
+msgstr "Mari wants to become a doctor."
+
+msgid "Mari wants to become a teacher."
+msgstr "Mari wants to become a teacher."
+
+msgid "Most of them. Check the <0>-ks</0> word in the ones you missed."
+msgstr "Most of them. Check the <0>-ks</0> word in the ones you missed."
+
+msgid "Most of them. Find the genitive first, then add <0>-ks</0>."
+msgstr "Most of them. Find the genitive first, then add <0>-ks</0>."
+
+msgid "Most of them. Look at the verb before you pick."
+msgstr "Most of them. Look at the verb before you pick."
+
+msgid "Most of them. Read the reason under each one you missed."
+msgstr "Most of them. Read the reason under each one you missed."
+
+msgid "Now type each word with <0>-ks</0>, as the sentence needs it."
+msgstr "Now type each word with <0>-ks</0>, as the sentence needs it."
+
+msgid "On Sunday"
+msgstr "On Sunday"
+
+msgid "Other verbs take it too. <0/> with <1>haigeks</1> is to fall ill, and its past is built the same way: <2>ma jäin</2>. <3/> and <4>minema</4> with <5>-ks</5> mean to turn: <6>Ilm muutub külmaks</6>, <7>Tuba läheb soojaks</7>. Pick a word and tap its forms."
+msgstr "Other verbs take it too. <0/> with <1>haigeks</1> is to fall ill, and its past is built the same way: <2>ma jäin</2>. <3/> and <4>minema</4> with <5>-ks</5> mean to turn: <6>Ilm muutub külmaks</6>, <7>Tuba läheb soojaks</7>. Pick a word and tap its forms."
+
+msgid "Peeter"
+msgstr "Peeter"
+
+msgid "Peeter calls Liisa to ask how she is."
+msgstr "Peeter calls Liisa to ask how she is."
+
+msgid "Pick the form the sentence needs."
+msgstr "Pick the form the sentence needs."
+
+msgid "Read What to remember at the end, then try again."
+msgstr "Read What to remember at the end, then try again."
+
+msgid "She became a doctor."
+msgstr "She became a doctor."
+
+msgid "She became a good doctor."
+msgstr "She became a good doctor."
+
+msgid "She became a good teacher."
+msgstr "She became a good teacher."
+
+msgid "She fell ill"
+msgstr "She fell ill"
+
+msgid "She started a new job"
+msgstr "She started a new job"
+
+msgid "She went to Tartu"
+msgstr "She went to Tartu"
+
+msgid "She works as a doctor."
+msgstr "She works as a doctor."
+
+msgid "Six mistakes to catch"
+msgstr "Six mistakes to catch"
+
+msgid "started"
+msgstr "started"
+
+msgid "Ta sai arstiks: he or she became a doctor."
+msgstr "Ta sai arstiks: he or she became a doctor."
+
+msgid "Tap the words above once more, then try again."
+msgstr "Tap the words above once more, then try again."
+
+msgid "The adjective too: <et>heaks arstiks</et>"
+msgstr "The adjective too: <et>heaks arstiks</et>"
+
+msgid "The genitive of <et>kokk</et> is <et>koka</et>, so <et>kokaks</et>."
+msgstr "The genitive of <et>kokk</et> is <et>koka</et>, so <et>kokaks</et>."
+
+msgid "The genitive of <et>külm</et> is <et>külma</et>, so <et>külmaks</et>."
+msgstr "The genitive of <et>külm</et> is <et>külma</et>, so <et>külmaks</et>."
+
+msgid "The genitive of <et>sõber</et> is <et>sõbra</et>, so <et>sõbraks</et>."
+msgstr "The genitive of <et>sõber</et> is <et>sõbra</et>, so <et>sõbraks</et>."
+
+msgid "The genitive of <et>soe</et> is <et>sooja</et>, so <et>soojaks</et>."
+msgstr "The genitive of <et>soe</et> is <et>sooja</et>, so <et>soojaks</et>."
+
+msgid "The room is getting warm."
+msgstr "The room is getting warm."
+
+msgid "The translative is the genitive with <0>-ks</0>: <1>arst, arsti, arstiks</1>; <2>külm, külma, külmaks</2>."
+msgstr "The translative is the genitive with <0>-ks</0>: <1>arst, arsti, arstiks</1>; <2>külm, külma, külmaks</2>."
+
+msgid "The translative is the genitive with <et>-ks</et>: <et>arst</et>, <et>arsti</et>, <et>arstiks</et>."
+msgstr "The translative is the genitive with <et>-ks</et>: <et>arst</et>, <et>arsti</et>, <et>arstiks</et>."
+
+msgid "The weather is getting colder."
+msgstr "The weather is getting colder."
+
+msgid "The weather is turning cold."
+msgstr "The weather is turning cold."
+
+msgid "The weather turned very cold."
+msgstr "The weather turned very cold."
+
+msgid "To become a doctor is <0>saada arstiks</0>: the ending <1>-ks</1> on the genitive. It also says by and for: <2>reedeks</2>, by Friday; <3>nädalaks</3>, for a week."
+msgstr "To become a doctor is <0>saada arstiks</0>: the ending <1>-ks</1> on the genitive. It also says by and for: <2>reedeks</2>, by Friday; <3>nädalaks</3>, for a week."
+
+msgid "to become; to get; can"
+msgstr "to become; to get; can"
+
+msgid "to change, to turn"
+msgstr "to change, to turn"
+
+msgid "To say what someone or something becomes, take the genitive from lesson {forms} and add <0>-ks</0>: <1>arst</1>, <2>arsti</2>, <3/>. This case is the translative. Become is <4/> with it: <5>Ta sai arstiks</5>, he or she became a doctor. <6>Sai</6> is its past, built like <7>sõi</7> from <8>sööma</8> in lesson {past}: <9>ma sain, ta sai</9>."
+msgstr "To say what someone or something becomes, take the genitive from lesson {forms} and add <0>-ks</0>: <1>arst</1>, <2>arsti</2>, <3/>. This case is the translative. Become is <4/> with it: <5>Ta sai arstiks</5>, he or she became a doctor. <6>Sai</6> is its past, built like <7>sõi</7> from <8>sööma</8> in lesson {past}: <9>ma sain, ta sai</9>."
+
+msgid "to stay; to become (ill)"
+msgstr "to stay; to become (ill)"
+
+msgid "Today"
+msgstr "Today"
+
+msgid "translative"
+msgstr "translative"
+
+msgid "warm"
+msgstr "warm"
+
+msgid "weather"
+msgstr "weather"
+
+msgid "What do you eat for breakfast?"
+msgstr "What do you eat for breakfast?"
+
+msgid "What do you want for your birthday?"
+msgstr "What do you want for your birthday?"
+
+msgid "What does it mean?"
+msgstr "What does it mean?"
+
+msgid "What happened to Liisa yesterday?"
+msgstr "What happened to Liisa yesterday?"
+
+msgid "What is Peeter giving his mother?"
+msgstr "What is Peeter giving his mother?"
+
+msgid "When does Liisa say she will be well?"
+msgstr "When does Liisa say she will be well?"
+
+msgid "Where does Liisa work now?"
+msgstr "Where does Liisa work now?"
+
+msgid "Who became a doctor a year ago? Write it as Peeter says it."
+msgstr "Who became a doctor a year ago? Write it as Peeter says it."
+
+msgid "Will you be home by the evening?"
+msgstr "Will you be home by the evening?"
+
+msgid "With -ks it means become."
+msgstr "With -ks it means become."
+
+msgid "With <0>-ks</0>, an adjective usually takes the ending as well, as with <1>-s</1> in lesson {agree}: <2/>. With <3>-na</3>, only the noun takes the ending; the adjective stays in the genitive, as with <4>-ga</4>: <5>uue arstina</5>."
+msgstr "With <0>-ks</0>, an adjective usually takes the ending as well, as with <1>-s</1> in lesson {agree}: <2/>. With <3>-na</3>, only the noun takes the ending; the adjective stays in the genitive, as with <4>-ga</4>: <5>uue arstina</5>."
+
+msgid "With <0>-ks</0>, the adjective usually takes the ending as well: <1>heaks arstiks</1>."
+msgstr "With <0>-ks</0>, the adjective usually takes the ending as well: <1>heaks arstiks</1>."
+
+msgid "With <0>-ks</0>, the adjective usually takes the ending too: <1>heaks arstiks</1>."
+msgstr "With <0>-ks</0>, the adjective usually takes the ending too: <1>heaks arstiks</1>."
+
+msgid "With <et>-ks</et>, the adjective usually takes the ending as well: <et>heaks arstiks</et>."
+msgstr "With <et>-ks</et>, the adjective usually takes the ending as well: <et>heaks arstiks</et>."
+
+msgid "With <et>-na</et>, only the noun takes the ending; the adjective stays in the genitive, as with <et>-ga</et>: <et>uue arstina</et>."
+msgstr "With <et>-na</et>, only the noun takes the ending; the adjective stays in the genitive, as with <et>-ga</et>: <et>uue arstina</et>."
+
+msgid "With <et>-na</et>, only the noun takes the ending: <et>uue arstina</et>."
+msgstr "With <et>-na</et>, only the noun takes the ending: <et>uue arstina</et>."
+
+msgid "With a time, <0>-ks</0> says by when, or how long something is planned for: <1/>, by Friday; <2/>, for a week. With a meal or an occasion, it says what for: <3>hommikusöögiks</3>, for breakfast. A day can take either meaning: <4>reedeks tagasi</4>, back by Friday; <5>laupäevaks</5>, for Saturday. Tap a line to hear it."
+msgstr "With a time, <0>-ks</0> says by when, or how long something is planned for: <1/>, by Friday; <2/>, for a week. With a meal or an occasion, it says what for: <3>hommikusöögiks</3>, for breakfast. A day can take either meaning: <4>reedeks tagasi</4>, back by Friday; <5>laupäevaks</5>, for Saturday. Tap a line to hear it."
+
+msgid "Words"
+msgstr "Words"
+
+msgid "Works as is usually <0>-na</0>, becomes is <1>-ks</1>: <2>töötab arstina</2>, <3>sai arstiks</3>."
+msgstr "Works as is usually <0>-na</0>, becomes is <1>-ks</1>: <2>töötab arstina</2>, <3>sai arstiks</3>."
+
+msgid "Works as is usually <0>-na</0>: <1>töötab arstina</1>."
+msgstr "Works as is usually <0>-na</0>: <1>töötab arstina</1>."
+
+msgid "Works as is usually <et>-na</et>: <et>töötab arstina</et>."
+msgstr "Works as is usually <et>-na</et>: <et>töötab arstina</et>."
+
+msgid "Works as or becomes"
+msgstr "Works as or becomes"
+
+msgid "Works as or becomes: <et>arstina</et>, <et>arstiks</et>"
+msgstr "Works as or becomes: <et>arstina</et>, <et>arstiks</et>"
+
+msgid "Works as or becomes?"
+msgstr "Works as or becomes?"
+
+msgid "Write each sentence in Estonian."
+msgstr "Write each sentence in Estonian."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"

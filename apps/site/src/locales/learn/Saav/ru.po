@@ -1,0 +1,479 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 13:42+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "<0>-ks</0> goes on the genitive <1>külma</1>: <2>külmaks</2>."
+msgstr "<0>-ks</0> добавляется к родительному <1>külma</1>: <2>külmaks</2>."
+
+msgid "<0>-ks</0> on the genitive <1>{gen}</1>: <2>{answer}</2>."
+msgstr "<0>-ks</0> к родительному <1>{gen}</1>: <2>{answer}</2>."
+
+msgid "<0>Homseks</0>, by tomorrow, comes from <1>homne</1>, tomorrow’s: its genitive is <2>homse</2>."
+msgstr "<0>Homseks</0> — «к завтрашнему дню» — происходит от <1>homne</1>, «завтрашний»: его родительный — <2>homse</2>."
+
+msgid "<0>Kingiks</0>, as a present, is the same ending: <1>Mul on emale kingiks raamat</1>."
+msgstr "<0>Kingiks</0>, «в подарок», — то же окончание: <1>Mul on emale kingiks raamat</1>."
+
+msgid "<et>-ks</et> goes on the genitive <et>külma</et>: <et>külmaks</et>."
+msgstr "<et>-ks</et> добавляется к родительному <et>külma</et>: <et>külmaks</et>."
+
+msgid "18 minutes"
+msgstr "18 минут"
+
+msgid "6 exercises, 3 of them typed, and a conversation"
+msgstr "6 упражнений, в 3 из них нужно писать, и разговор"
+
+msgid "A book"
+msgstr "Книгу"
+
+msgid "a cook"
+msgstr "повар"
+
+msgid "a doctor"
+msgstr "врач"
+
+msgid "a friend"
+msgstr "друг"
+
+msgid "a good doctor"
+msgstr "хороший врач"
+
+msgid "A good doctor"
+msgstr "Хороший врач"
+
+msgid "a new doctor"
+msgstr "новый врач"
+
+msgid "A new job"
+msgstr "Новая работа"
+
+msgid "A planned week is <0>-ks</0>: <1>nädalaks</1>."
+msgstr "Запланированная неделя — это <0>-ks</0>: <1>nädalaks</1>."
+
+msgid "a shop assistant"
+msgstr "продавец"
+
+msgid "a teacher"
+msgstr "учитель"
+
+msgid "a week"
+msgstr "неделя"
+
+msgid "Add -ks"
+msgstr "Добавь -ks"
+
+msgid "Adding <et>-ks</et>: <et>arstiks</et>, <et>külmaks</et>"
+msgstr "Добавляем <et>-ks</et>: <et>arstiks</et>, <et>külmaks</et>"
+
+msgid "All eight, each on its genitive."
+msgstr "Все восемь, каждое от своего родительного."
+
+msgid "All eight: as with <0>-na</0>, becomes with <1>-ks</1>."
+msgstr "Все восемь: «как» — с <0>-na</0>, «становится» — с <1>-ks</1>."
+
+msgid "All six found and fixed."
+msgstr "Все шесть найдены и исправлены."
+
+msgid "All six sentences."
+msgstr "Все шесть предложений."
+
+msgid "An adjective takes <0>-ks</0> too: <1>heaks arstiks</1>. With <2>-na</2> it stays in the genitive: <3>uue arstina</3>."
+msgstr "Прилагательное тоже получает <0>-ks</0>: <1>heaks arstiks</1>. С <2>-na</2> оно остаётся в родительном: <3>uue arstina</3>."
+
+msgid "as a present"
+msgstr "в подарок"
+
+msgid "As: <0>-na</0>, <1>{answer}</1>."
+msgstr "«Как» — <0>-na</0>: <1>{answer}</1>."
+
+msgid "At a hospital"
+msgstr "В больнице"
+
+msgid "At a school"
+msgstr "В школе"
+
+msgid "At the market"
+msgstr "На рынке"
+
+msgid "Became is <0>saama</0> with <1>-ks</1>: <2>sai arstiks</2>."
+msgstr "«Стал» — это <0>saama</0> с <1>-ks</1>: <2>sai arstiks</2>."
+
+msgid "Become is usually <0>saama</0> with <1>-ks</1>: <2>Ta sai arstiks</2>. Also <3>haigeks jääma</3>, to fall ill, and <4>muutub külmaks</4>, turns cold."
+msgstr "«Стать» — это обычно <0>saama</0> с <1>-ks</1>: <2>Ta sai arstiks</2>. А ещё <3>haigeks jääma</3> — «заболеть», и <4>muutub külmaks</4> — «становится холодным»."
+
+msgid "Become is usually <et>saama</et> with <et>-ks</et>: <et>sai arstiks</et>."
+msgstr "«Стать» — это обычно <et>saama</et> с <et>-ks</et>: <et>sai arstiks</et>."
+
+msgid "Become: -ks on the genitive"
+msgstr "Стать: -ks к родительному"
+
+msgid "Becomes: <0>-ks</0>, <1>{answer}</1>."
+msgstr "«Становится» — <0>-ks</0>: <1>{answer}</1>."
+
+msgid "By and for: <et>reedeks</et>, <et>nädalaks</et>"
+msgstr "К и на: <et>reedeks</et>, <et>nädalaks</et>"
+
+msgid "by Friday"
+msgstr "к пятнице"
+
+msgid "By Friday"
+msgstr "К пятнице"
+
+msgid "By Friday is <0>-ks</0>: <1>reedeks</1>."
+msgstr "«К пятнице» — это <0>-ks</0>: <1>reedeks</1>."
+
+msgid "By Friday, for a week"
+msgstr "К пятнице, на неделю"
+
+msgid "by the evening"
+msgstr "к вечеру"
+
+msgid "By the evening is <et>õhtuks</et>."
+msgstr "«К вечеру» — это <et>õhtuks</et>."
+
+msgid "by tomorrow"
+msgstr "к завтрашнему дню"
+
+msgid "cold"
+msgstr "холодный"
+
+msgid "dictionary form"
+msgstr "словарная форма"
+
+msgid "Each sentence should say what the line above it says, and one word is wrong. Tap it, then type it right."
+msgstr "Каждое предложение должно говорить то же, что строка над ним, но одно слово неправильное. Нажми на него, а потом напиши правильно."
+
+msgid "Fall ill is <et>jääma</et> with <et>-ks</et>: <et>jäin haigeks</et>."
+msgstr "«Заболеть» — это <et>jääma</et> с <et>-ks</et>: <et>jäin haigeks</et>."
+
+msgid "Fell ill is <0>jääma</0> with <1>-ks</1>: <2>jäin haigeks</2>."
+msgstr "«Заболел» — это <0>jääma</0> с <1>-ks</1>: <2>jäin haigeks</2>."
+
+msgid "Fill the gaps"
+msgstr "Заполни пропуски"
+
+msgid "Fish"
+msgstr "Рыбу"
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
+
+msgid "Flowers"
+msgstr "Цветы"
+
+msgid "for a birthday"
+msgstr "на день рождения"
+
+msgid "For a birthday is <0>-ks</0>: <1>sünnipäevaks</1>."
+msgstr "«На день рождения» — это <0>-ks</0>: <1>sünnipäevaks</1>."
+
+msgid "For a birthday is <et>-ks</et>: <et>sünnipäevaks</et>."
+msgstr "«На день рождения» — это <et>-ks</et>: <et>sünnipäevaks</et>."
+
+msgid "For a planned time, <et>-ks</et> says by when or for how long: <et>reedeks</et>, by Friday; <et>nädalaks</et>, for a week."
+msgstr "О запланированном времени <et>-ks</et> говорит, к какому сроку или на сколько: <et>reedeks</et> — «к пятнице»; <et>nädalaks</et> — «на неделю»."
+
+msgid "For a planned time, by when or for how long: <0>reedeks</0>, by Friday; <1>nädalaks</1>, for a week. With a meal or an occasion, <2>-ks</2> says what for: <3>sünnipäevaks</3>, for a birthday."
+msgstr "О запланированном времени — к какому сроку или на сколько: <0>reedeks</0> — «к пятнице»; <1>nädalaks</1> — «на неделю». С приёмом пищи или событием <2>-ks</2> говорит «на что»: <3>sünnipäevaks</3> — «на день рождения»."
+
+msgid "for a week"
+msgstr "на неделю"
+
+msgid "for breakfast"
+msgstr "на завтрак"
+
+msgid "Friday"
+msgstr "пятница"
+
+msgid "genitive"
+msgstr "родительный"
+
+msgid "Haigeks jääma: to fall ill."
+msgstr "Haigeks jääma — «заболеть»."
+
+msgid "He or she became a doctor."
+msgstr "Стал или стала врачом."
+
+msgid "He or she became a good doctor."
+msgstr "Стал или стала хорошим врачом."
+
+msgid "He or she started as the new doctor."
+msgstr "Начал или начала работать новым врачом."
+
+msgid "He or she started at the hospital as a doctor."
+msgstr "Начал или начала работать в больнице врачом."
+
+msgid "He or she works as a doctor."
+msgstr "Работает врачом."
+
+msgid "He works as a doctor, so usually <0>-na</0>: <1>arstina</1>."
+msgstr "Он работает врачом, поэтому обычно <0>-na</0>: <1>arstina</1>."
+
+msgid "How long is Peeter’s sister coming home for? Write it as he says it."
+msgstr "На сколько сестра Пеэтера приедет домой? Напиши так, как он говорит."
+
+msgid "I fell ill."
+msgstr "Я заболел."
+
+msgid "I want to become a doctor."
+msgstr "Я хочу стать врачом."
+
+msgid "I’ll be back by Friday."
+msgstr "Я вернусь к пятнице."
+
+msgid "I’m going to Pärnu for a week."
+msgstr "Я еду в Пярну на неделю."
+
+msgid "I’m going to Tartu for a week."
+msgstr "Я еду в Тарту на неделю."
+
+msgid "ill"
+msgstr "больной"
+
+msgid "into a doctor"
+msgstr "врачом (стать)"
+
+msgid "into a good doctor"
+msgstr "хорошим врачом (стать)"
+
+msgid "Jaan became a teacher."
+msgstr "Яан стал учителем."
+
+msgid "Kati writes to Mari. Pick the form for each gap: the words around it say which one."
+msgstr "Кати пишет Мари. Выбери форму для каждого пропуска: слова вокруг подскажут, какую."
+
+msgid "Lesson {asLesson} gave you <0>-na</0> for “as”: <1/>. That says the role someone has. <2>-ks</2> says what someone becomes: <3/>. After <4>töötab</4> you may also hear <5>-ks</5>, but <6>-na</6> is the usual form."
+msgstr "В уроке {asLesson} было <0>-na</0> в значении «как»: <1/>. Оно говорит, в какой роли кто-то выступает. <2>-ks</2> говорит, кем кто-то становится: <3/>. После <4>töötab</4> можно услышать и <5>-ks</5>, но обычная форма — <6>-na</6>."
+
+msgid "Liisa"
+msgstr "Лийса"
+
+msgid "Liisa has to stay at home for a couple of days."
+msgstr "Лийса должна пару дней сидеть дома."
+
+msgid "Liisa wanted to become a teacher."
+msgstr "Лийса хотела стать учительницей."
+
+msgid "Listen to the two lines above once more, then try again."
+msgstr "Ещё раз послушай две строки выше и попробуй снова."
+
+msgid "Listen: Peeter and Liisa"
+msgstr "Послушай: Пеэтер и Лийса"
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Mari wants to become a doctor."
+msgstr "Мари хочет стать врачом."
+
+msgid "Mari wants to become a teacher."
+msgstr "Мари хочет стать учительницей."
+
+msgid "Most of them. Check the <0>-ks</0> word in the ones you missed."
+msgstr "Большинство. Проверь слово с <0>-ks</0> в тех, что не получились."
+
+msgid "Most of them. Find the genitive first, then add <0>-ks</0>."
+msgstr "Большинство. Сначала найди родительный, потом добавь <0>-ks</0>."
+
+msgid "Most of them. Look at the verb before you pick."
+msgstr "Большинство. Посмотри на глагол, прежде чем выбирать."
+
+msgid "Most of them. Read the reason under each one you missed."
+msgstr "Большинство. Прочитай пояснения к тем, что не получились."
+
+msgid "Now type each word with <0>-ks</0>, as the sentence needs it."
+msgstr "Теперь напиши каждое слово с <0>-ks</0>, как нужно в предложении."
+
+msgid "On Sunday"
+msgstr "В воскресенье"
+
+msgid "Other verbs take it too. <0/> with <1>haigeks</1> is to fall ill, and its past is built the same way: <2>ma jäin</2>. <3/> and <4>minema</4> with <5>-ks</5> mean to turn: <6>Ilm muutub külmaks</6>, <7>Tuba läheb soojaks</7>. Pick a word and tap its forms."
+msgstr "Транслатив требуют и другие глаголы. <0/> с <1>haigeks</1> — «заболеть», и прошедшее время у него образуется так же: <2>ma jäin</2>. <3/> и <4>minema</4> с <5>-ks</5> значат «становиться»: <6>Ilm muutub külmaks</6>, <7>Tuba läheb soojaks</7>. Выбери слово и нажми на его формы."
+
+msgid "Peeter"
+msgstr "Пеэтер"
+
+msgid "Peeter calls Liisa to ask how she is."
+msgstr "Пеэтер звонит Лийсе, чтобы спросить, как она."
+
+msgid "Pick the form the sentence needs."
+msgstr "Выбери форму, которая нужна предложению."
+
+msgid "Read What to remember at the end, then try again."
+msgstr "Прочитай «Что запомнить» в конце и попробуй снова."
+
+msgid "She became a doctor."
+msgstr "Она стала врачом."
+
+msgid "She became a good doctor."
+msgstr "Она стала хорошим врачом."
+
+msgid "She became a good teacher."
+msgstr "Она стала хорошей учительницей."
+
+msgid "She fell ill"
+msgstr "Она заболела"
+
+msgid "She started a new job"
+msgstr "Она начала новую работу"
+
+msgid "She went to Tartu"
+msgstr "Она поехала в Тарту"
+
+msgid "She works as a doctor."
+msgstr "Она работает врачом."
+
+msgid "Six mistakes to catch"
+msgstr "Шесть ошибок"
+
+msgid "started"
+msgstr "начал"
+
+msgid "Ta sai arstiks: he or she became a doctor."
+msgstr "Ta sai arstiks — «стал или стала врачом»."
+
+msgid "Tap the words above once more, then try again."
+msgstr "Ещё раз нажми на слова выше, а потом попробуй снова."
+
+msgid "The adjective too: <et>heaks arstiks</et>"
+msgstr "И прилагательное тоже: <et>heaks arstiks</et>"
+
+msgid "The genitive of <et>kokk</et> is <et>koka</et>, so <et>kokaks</et>."
+msgstr "Родительный от <et>kokk</et> — <et>koka</et>, так что <et>kokaks</et>."
+
+msgid "The genitive of <et>külm</et> is <et>külma</et>, so <et>külmaks</et>."
+msgstr "Родительный от <et>külm</et> — <et>külma</et>, так что <et>külmaks</et>."
+
+msgid "The genitive of <et>sõber</et> is <et>sõbra</et>, so <et>sõbraks</et>."
+msgstr "Родительный от <et>sõber</et> — <et>sõbra</et>, так что <et>sõbraks</et>."
+
+msgid "The genitive of <et>soe</et> is <et>sooja</et>, so <et>soojaks</et>."
+msgstr "Родительный от <et>soe</et> — <et>sooja</et>, так что <et>soojaks</et>."
+
+msgid "The room is getting warm."
+msgstr "В комнате становится тепло."
+
+msgid "The translative is the genitive with <0>-ks</0>: <1>arst, arsti, arstiks</1>; <2>külm, külma, külmaks</2>."
+msgstr "Транслатив — это родительный с <0>-ks</0>: <1>arst, arsti, arstiks</1>; <2>külm, külma, külmaks</2>."
+
+msgid "The translative is the genitive with <et>-ks</et>: <et>arst</et>, <et>arsti</et>, <et>arstiks</et>."
+msgstr "Транслатив — это родительный с <et>-ks</et>: <et>arst</et>, <et>arsti</et>, <et>arstiks</et>."
+
+msgid "The weather is getting colder."
+msgstr "Погода становится холоднее."
+
+msgid "The weather is turning cold."
+msgstr "Погода становится холодной."
+
+msgid "The weather turned very cold."
+msgstr "Стало очень холодно."
+
+msgid "To become a doctor is <0>saada arstiks</0>: the ending <1>-ks</1> on the genitive. It also says by and for: <2>reedeks</2>, by Friday; <3>nädalaks</3>, for a week."
+msgstr "«Стать врачом» — это <0>saada arstiks</0>: окончание <1>-ks</1> к родительному. Оно же говорит «к» и «на»: <2>reedeks</2> — «к пятнице»; <3>nädalaks</3> — «на неделю»."
+
+msgid "to become; to get; can"
+msgstr "становиться; получать; мочь"
+
+msgid "to change, to turn"
+msgstr "меняться, становиться"
+
+msgid "To say what someone or something becomes, take the genitive from lesson {forms} and add <0>-ks</0>: <1>arst</1>, <2>arsti</2>, <3/>. This case is the translative. Become is <4/> with it: <5>Ta sai arstiks</5>, he or she became a doctor. <6>Sai</6> is its past, built like <7>sõi</7> from <8>sööma</8> in lesson {past}: <9>ma sain, ta sai</9>."
+msgstr "Чтобы сказать, кем или чем кто-то становится, возьми родительный из урока {forms} и добавь <0>-ks</0>: <1>arst</1>, <2>arsti</2>, <3/>. Этот падеж — транслатив. «Стать» — это <4/> с ним: <5>Ta sai arstiks</5> — «стал или стала врачом». <6>Sai</6> — его прошедшее время, как <7>sõi</7> от <8>sööma</8> в уроке {past}: <9>ma sain, ta sai</9>."
+
+msgid "to stay; to become (ill)"
+msgstr "оставаться; становиться (больным)"
+
+msgid "Today"
+msgstr "Сегодня"
+
+msgid "translative"
+msgstr "транслатив"
+
+msgid "warm"
+msgstr "тёплый"
+
+msgid "weather"
+msgstr "погода"
+
+msgid "What do you eat for breakfast?"
+msgstr "Что ты ешь на завтрак?"
+
+msgid "What do you want for your birthday?"
+msgstr "Что ты хочешь на день рождения?"
+
+msgid "What does it mean?"
+msgstr "Что это значит?"
+
+msgid "What happened to Liisa yesterday?"
+msgstr "Что вчера случилось с Лийсой?"
+
+msgid "What is Peeter giving his mother?"
+msgstr "Что Пеэтер дарит маме?"
+
+msgid "When does Liisa say she will be well?"
+msgstr "Когда, по словам Лийсы, она поправится?"
+
+msgid "Where does Liisa work now?"
+msgstr "Где Лийса теперь работает?"
+
+msgid "Who became a doctor a year ago? Write it as Peeter says it."
+msgstr "Кто стал врачом год назад? Напиши так, как говорит Пеэтер."
+
+msgid "Will you be home by the evening?"
+msgstr "Ты будешь дома к вечеру?"
+
+msgid "With -ks it means become."
+msgstr "С -ks оно значит «становиться»."
+
+msgid "With <0>-ks</0>, an adjective usually takes the ending as well, as with <1>-s</1> in lesson {agree}: <2/>. With <3>-na</3>, only the noun takes the ending; the adjective stays in the genitive, as with <4>-ga</4>: <5>uue arstina</5>."
+msgstr "С <0>-ks</0> прилагательное обычно тоже получает окончание, как с <1>-s</1> в уроке {agree}: <2/>. С <3>-na</3> окончание получает только существительное, а прилагательное остаётся в родительном, как с <4>-ga</4>: <5>uue arstina</5>."
+
+msgid "With <0>-ks</0>, the adjective usually takes the ending as well: <1>heaks arstiks</1>."
+msgstr "С <0>-ks</0> прилагательное обычно тоже получает окончание: <1>heaks arstiks</1>."
+
+msgid "With <0>-ks</0>, the adjective usually takes the ending too: <1>heaks arstiks</1>."
+msgstr "С <0>-ks</0> прилагательное обычно тоже получает окончание: <1>heaks arstiks</1>."
+
+msgid "With <et>-ks</et>, the adjective usually takes the ending as well: <et>heaks arstiks</et>."
+msgstr "С <et>-ks</et> прилагательное обычно тоже получает окончание: <et>heaks arstiks</et>."
+
+msgid "With <et>-na</et>, only the noun takes the ending; the adjective stays in the genitive, as with <et>-ga</et>: <et>uue arstina</et>."
+msgstr "С <et>-na</et> окончание получает только существительное, а прилагательное остаётся в родительном, как с <et>-ga</et>: <et>uue arstina</et>."
+
+msgid "With <et>-na</et>, only the noun takes the ending: <et>uue arstina</et>."
+msgstr "С <et>-na</et> окончание получает только существительное: <et>uue arstina</et>."
+
+msgid "With a time, <0>-ks</0> says by when, or how long something is planned for: <1/>, by Friday; <2/>, for a week. With a meal or an occasion, it says what for: <3>hommikusöögiks</3>, for breakfast. A day can take either meaning: <4>reedeks tagasi</4>, back by Friday; <5>laupäevaks</5>, for Saturday. Tap a line to hear it."
+msgstr "Когда речь о времени, <0>-ks</0> говорит «к какому сроку» или на сколько что-то задумано: <1/> — «к пятнице»; <2/> — «на неделю». С приёмом пищи или событием — «на что»: <3>hommikusöögiks</3> — «на завтрак». День может иметь оба значения: <4>reedeks tagasi</4> — «вернусь к пятнице»; <5>laupäevaks</5> — «на субботу». Нажми на строку, чтобы послушать."
+
+msgid "Words"
+msgstr "Слова"
+
+msgid "Works as is usually <0>-na</0>, becomes is <1>-ks</1>: <2>töötab arstina</2>, <3>sai arstiks</3>."
+msgstr "«Работает как» — это обычно <0>-na</0>, «становится» — <1>-ks</1>: <2>töötab arstina</2>, <3>sai arstiks</3>."
+
+msgid "Works as is usually <0>-na</0>: <1>töötab arstina</1>."
+msgstr "«Работает как» — это обычно <0>-na</0>: <1>töötab arstina</1>."
+
+msgid "Works as is usually <et>-na</et>: <et>töötab arstina</et>."
+msgstr "«Работает как» — это обычно <et>-na</et>: <et>töötab arstina</et>."
+
+msgid "Works as or becomes"
+msgstr "Кем работает, кем становится"
+
+msgid "Works as or becomes: <et>arstina</et>, <et>arstiks</et>"
+msgstr "Кем работает, кем становится: <et>arstina</et>, <et>arstiks</et>"
+
+msgid "Works as or becomes?"
+msgstr "Кем работает, а кем становится?"
+
+msgid "Write each sentence in Estonian."
+msgstr "Напиши каждое предложение по-эстонски."
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"

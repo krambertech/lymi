@@ -5011,6 +5011,747 @@ const CMP_CLIPS: Record<string, Clip> = {
   "c-talk": CMP_TALK,
 };
 
+export const TRA_CHAINS = [
+  { id: "arst", steps: ["arst", "arsti", "arstiks"] },
+  { id: "opetaja", steps: ["õpetaja", "õpetaja", "õpetajaks"] },
+  { id: "haige", steps: ["haige", "haige", "haigeks"] },
+  { id: "kulm", steps: ["külm", "külma", "külmaks"] },
+  { id: "soe", steps: ["soe", "sooja", "soojaks"] },
+  { id: "nadal", steps: ["nädal", "nädala", "nädalaks"] },
+] as const;
+
+export const TRA_BECOME = [
+  "Mari tahab saada arstiks.",
+  "Jaan sai õpetajaks.",
+  "Ma jäin haigeks.",
+  "Ilm muutub külmaks.",
+  "Tuba läheb soojaks.",
+] as const;
+
+export const TRA_MAKE = [
+  {
+    id: "arstiks",
+    kind: "plain",
+    base: "arst",
+    gen: "arsti",
+    cue: "Ta sai …",
+    said: "Ta sai arstiks.",
+  },
+  {
+    id: "nadalaks",
+    kind: "plain",
+    base: "nädal",
+    gen: "nädala",
+    cue: "Ma lähen … Pärnusse.",
+    said: "Ma lähen nädalaks Pärnusse.",
+  },
+  {
+    id: "opetajaks",
+    kind: "same",
+    base: "õpetaja",
+    gen: "õpetaja",
+    cue: "Mari tahab saada …",
+    said: "Mari tahab saada õpetajaks.",
+  },
+  {
+    id: "haigeks",
+    kind: "same",
+    base: "haige",
+    gen: "haige",
+    cue: "Ma jäin …",
+    said: "Ma jäin haigeks.",
+  },
+  {
+    id: "reedeks",
+    kind: "same",
+    base: "reede",
+    gen: "reede",
+    cue: "Ma tulen … tagasi.",
+    said: "Ma tulen reedeks tagasi.",
+  },
+  {
+    id: "kulmaks",
+    kind: "change",
+    base: "külm",
+    gen: "külma",
+    cue: "Ilm muutub …",
+    said: "Ilm muutub külmaks.",
+  },
+  {
+    id: "soojaks",
+    kind: "change",
+    base: "soe",
+    gen: "sooja",
+    cue: "Tuba läheb …",
+    said: "Tuba läheb soojaks.",
+  },
+  {
+    id: "sobraks",
+    kind: "change",
+    base: "sõber",
+    gen: "sõbra",
+    cue: "Mari sai mu …",
+    said: "Mari sai mu sõbraks.",
+  },
+] as const;
+
+export const TRA_NA_KS = [
+  {
+    id: "arstina",
+    noun: "arst",
+    base: "arst",
+    way: "na",
+    cue: "Ta alustas haiglas …",
+    answer: "arstina",
+    said: "Ta alustas haiglas arstina.",
+  },
+  {
+    id: "arstiks",
+    noun: "arst",
+    base: "arst",
+    way: "ks",
+    cue: "Ta sai …",
+    answer: "arstiks",
+    said: "Ta sai arstiks.",
+  },
+  {
+    id: "opetajana",
+    noun: "opetaja",
+    base: "õpetaja",
+    way: "na",
+    cue: "Mari alustas koolis …",
+    answer: "õpetajana",
+    said: "Mari alustas koolis õpetajana.",
+  },
+  {
+    id: "opetajaks",
+    noun: "opetaja",
+    base: "õpetaja",
+    way: "ks",
+    cue: "Mari tahab saada …",
+    answer: "õpetajaks",
+    said: "Mari tahab saada õpetajaks.",
+  },
+  {
+    id: "kokana",
+    noun: "kokk",
+    base: "kokk",
+    way: "na",
+    cue: "Jaan alustas restoranis …",
+    answer: "kokana",
+    said: "Jaan alustas restoranis kokana.",
+  },
+  {
+    id: "kokaks",
+    noun: "kokk",
+    base: "kokk",
+    way: "ks",
+    cue: "Jaan tahab saada …",
+    answer: "kokaks",
+    said: "Jaan tahab saada kokaks.",
+  },
+  {
+    id: "muujana",
+    noun: "muuja",
+    base: "müüja",
+    way: "na",
+    cue: "Kati alustas poes …",
+    answer: "müüjana",
+    said: "Kati alustas poes müüjana.",
+  },
+  {
+    id: "muujaks",
+    noun: "muuja",
+    base: "müüja",
+    way: "ks",
+    cue: "Kati sai poes …",
+    answer: "müüjaks",
+    said: "Kati sai poes müüjaks.",
+  },
+] as const;
+
+export const TRA_FOR = [
+  "Ma tulen reedeks tagasi.",
+  "Ma lähen nädalaks Pärnusse.",
+  "Mida sa hommikusöögiks sööd?",
+  "Mida sa sünnipäevaks tahad?",
+  "Kas sa oled õhtuks kodus?",
+] as const;
+
+export const TRA_AGREE = [
+  "Ta sai heaks arstiks.",
+  "Ta alustas uue arstina.",
+  "Ilm muutus väga külmaks.",
+] as const;
+
+export const TRA_MESSAGE = [
+  "Tere, Mari!",
+  "Mu vend sai heaks arstiks.",
+  "Ta töötab nüüd Pärnus arstina.",
+  "Ma lähen nädalaks Pärnusse.",
+  "Ma tulen reedeks tagasi.",
+  "Mida sa sünnipäevaks tahad?",
+] as const;
+
+export const TRA_TRANSLATE = [
+  {
+    id: "saada-arstiks",
+    answers: withPronouns([
+      "Ma tahan saada arstiks.",
+      "Mina tahan saada arstiks.",
+      "Tahan saada arstiks.",
+      "Ma tahan arstiks saada.",
+      "Tahan arstiks saada.",
+      "Mina tahan arstiks saada.",
+    ]),
+  },
+  {
+    id: "kulmaks",
+    answers: withPronouns([
+      "Ilm muutub külmaks.",
+      "Ilm läheb külmaks.",
+      "Ilm on muutumas külmaks.",
+      "Läheb külmaks.",
+    ]),
+  },
+  {
+    id: "reedeks",
+    answers: withPronouns([
+      "Ma tulen reedeks tagasi.",
+      "Mina tulen reedeks tagasi.",
+      "Tulen reedeks tagasi.",
+      "Ma olen reedeks tagasi.",
+      "Olen reedeks tagasi.",
+      "Reedeks olen ma tagasi.",
+      "Reedeks tulen ma tagasi.",
+      "Reedeks olen tagasi.",
+      "Reedeks tulen tagasi.",
+      "Reedeks olen mina tagasi.",
+      "Reedeks tulen mina tagasi.",
+      "Mina olen reedeks tagasi.",
+      "Ma tulen tagasi reedeks.",
+      "Tulen tagasi reedeks.",
+      "Ma olen tagasi reedeks.",
+      "Olen tagasi reedeks.",
+      "Mina tulen tagasi reedeks.",
+      "Mina olen tagasi reedeks.",
+    ]),
+  },
+  {
+    id: "nadalaks",
+    answers: withPronouns([
+      "Ma lähen nädalaks Tartusse.",
+      "Ma lähen Tartusse nädalaks.",
+      "Lähen nädalaks Tartusse.",
+      "Mina lähen nädalaks Tartusse.",
+      "Ma sõidan nädalaks Tartusse.",
+      "Nädalaks lähen ma Tartusse.",
+      "Lähen Tartusse nädalaks.",
+      "Ma sõidan Tartusse nädalaks.",
+      "Sõidan nädalaks Tartusse.",
+      "Mina lähen Tartusse nädalaks.",
+      "Ma lähen nädalaks Tartu.",
+      "Lähen nädalaks Tartu.",
+      "Ma lähen Tartu nädalaks.",
+      "Nädalaks lähen Tartusse.",
+      "Ma sõidan nädalaks Tartu.",
+      "Sõidan Tartusse nädalaks.",
+      "Lähen Tartu nädalaks.",
+      "Nädalaks sõidan ma Tartusse.",
+      "Sõidan nädalaks Tartu.",
+      "Ma sõidan Tartu nädalaks.",
+      "Sõidan Tartu nädalaks.",
+      "Nädalaks lähen ma Tartu.",
+      "Nädalaks sõidan ma Tartu.",
+      "Mina lähen nädalaks Tartu.",
+      "Mina lähen Tartu nädalaks.",
+      "Mina sõidan nädalaks Tartusse.",
+      "Mina sõidan Tartusse nädalaks.",
+      "Mina sõidan nädalaks Tartu.",
+      "Mina sõidan Tartu nädalaks.",
+      "Nädalaks sõidan Tartusse.",
+      "Nädalaks lähen Tartu.",
+      "Nädalaks sõidan Tartu.",
+      "Nädalaks lähen mina Tartusse.",
+      "Ma lähen üheks nädalaks Tartusse.",
+      "Ma lähen Tartusse üheks nädalaks.",
+    ]),
+  },
+  {
+    id: "sunnipaevaks",
+    answers: withPronouns([
+      "Mida sa sünnipäevaks tahad?",
+      "Mida sa tahad sünnipäevaks?",
+      "Mida sa oma sünnipäevaks tahad?",
+      "Mida sa tahad oma sünnipäevaks?",
+      "Mis sa sünnipäevaks tahad?",
+      "Mis sa tahad sünnipäevaks?",
+      "Mis sa oma sünnipäevaks tahad?",
+      "Mis sa tahad oma sünnipäevaks?",
+      "Mida sa sünnipäevaks soovid?",
+      "Mida sa soovid sünnipäevaks?",
+      "Mida sa oma sünnipäevaks soovid?",
+      "Mida sa soovid oma sünnipäevaks?",
+      "Mis sa sünnipäevaks soovid?",
+      "Mis sa soovid sünnipäevaks?",
+      "Mis sa oma sünnipäevaks soovid?",
+      "Mis sa soovid oma sünnipäevaks?",
+      "Mida te sünnipäevaks tahate?",
+      "Mida te tahate sünnipäevaks?",
+      "Mida te oma sünnipäevaks tahate?",
+      "Mida te tahate oma sünnipäevaks?",
+      "Mis te sünnipäevaks tahate?",
+      "Mis te tahate sünnipäevaks?",
+      "Mis te oma sünnipäevaks tahate?",
+      "Mis te tahate oma sünnipäevaks?",
+      "Mida te sünnipäevaks soovite?",
+      "Mida te soovite sünnipäevaks?",
+      "Mida te oma sünnipäevaks soovite?",
+      "Mida te soovite oma sünnipäevaks?",
+      "Mis te sünnipäevaks soovite?",
+      "Mis te soovite sünnipäevaks?",
+      "Mis te oma sünnipäevaks soovite?",
+      "Mis te soovite oma sünnipäevaks?",
+      "Mida sa endale sünnipäevaks tahad?",
+      "Mida te endale sünnipäevaks tahate?",
+    ]),
+  },
+  {
+    id: "heaks-opetajaks",
+    answers: withPronouns([
+      "Ta sai heaks õpetajaks.",
+      "Tema sai heaks õpetajaks.",
+      "Temast sai hea õpetaja.",
+      "Tast sai hea õpetaja.",
+    ]),
+  },
+] as const;
+
+export const TRA_FIX = [
+  { id: "fix-arstiks", wrong: "Ta sai arstina.", answers: ["Ta sai arstiks."] },
+  {
+    id: "fix-arstina",
+    wrong: "Ta töötab arst.",
+    answers: ["Ta töötab arstina.", "Ta töötab arstiks."],
+  },
+  { id: "fix-haigeks", wrong: "Ma jäin haige.", answers: ["Ma jäin haigeks."] },
+  { id: "fix-heaks", wrong: "Ta sai hea arstiks.", answers: ["Ta sai heaks arstiks."] },
+  { id: "fix-reedeks", wrong: "Ma tulen reede tagasi.", answers: ["Ma tulen reedeks tagasi."] },
+  { id: "fix-kulmaks", wrong: "Ilm muutub külmeks.", answers: ["Ilm muutub külmaks."] },
+] as const;
+
+export const TRA_TALK: Conversation = {
+  turns: [
+    {
+      voice: "main",
+      text: ["Tere, Liisa!", "Kuidas läheb?"],
+      say: "[cheerful] Tere, Liisa! Kuidas läheb?",
+    },
+    {
+      voice: "second",
+      text: ["Tere, Peeter!", "Mitte väga hästi.", "Ma jäin eile haigeks."],
+      say: "[tired] Tere, Peeter! Mitte väga hästi. Ma jäin eile haigeks.",
+    },
+    { voice: "main", text: ["Oi!", "Kas sa oled homseks terve?"] },
+    {
+      voice: "second",
+      text: [
+        "Ma ei tea.",
+        "Mul on palavik ja kurk on haige.",
+        "Ma pean paariks päevaks koju jääma.",
+      ],
+    },
+    { voice: "main", text: ["Kahju.", "Aga kuidas su uus töö on?"] },
+    { voice: "second", text: ["Hea.", "Ma töötan nüüd koolis õpetajana."] },
+    { voice: "main", text: ["Õpetajana?", "Sa tahtsid ju saada arstiks!"] },
+    {
+      voice: "second",
+      text: [
+        "Jah, aga õpetaja töö meeldib mulle väga.",
+        "Ma õpetan eesti keelt.",
+        "Lapsed on väga toredad.",
+        "Ja sinu õde?",
+      ],
+    },
+    {
+      voice: "main",
+      text: [
+        "Minu õde sai aasta tagasi arstiks.",
+        "Ta töötab nüüd Tartus.",
+        "Ta on väga hea arst.",
+      ],
+    },
+    { voice: "second", text: ["Tore!", "Mis plaanid sul laupäevaks on?"] },
+    {
+      voice: "main",
+      text: [
+        "Mu emal on laupäeval sünnipäev.",
+        "Õde tuleb ka nädalaks koju.",
+        "Mul on emale kingiks raamat.",
+        "Ja õhtusöögiks teen ma kala.",
+      ],
+    },
+    {
+      voice: "second",
+      text: ["Kala!", "Hea mõte!", "Ja ilm muutub ka soojaks."],
+      say: "[laughs] Kala! Hea mõte! Ja ilm muutub ka soojaks.",
+    },
+    {
+      voice: "main",
+      text: ["Jah.", "Tule laupäeval ka!", "Aga praegu jää koju ja saa terveks!"],
+    },
+    {
+      voice: "second",
+      text: ["Aitäh!", "Ma olen reedeks kindlasti terve."],
+    },
+    { voice: "main", text: ["Head paranemist, Liisa!", "Nägemist!"] },
+  ],
+};
+
+export const TRA_WORDS = [
+  "arstiks",
+  "saama",
+  "jääma",
+  "muutuma",
+  "reedeks",
+  "nädalaks",
+  "heaks arstiks",
+  "kingiks",
+  "ilm",
+  ...TRA_CHAINS.flatMap(({ steps }) => steps),
+] as const;
+
+export const TRA_DRILL = [
+  "Jaan töötab restoranis kokana.",
+  "Kati töötab poes müüjana.",
+  "Ma tahan saada arstiks.",
+  "Tuba läheb külmaks.",
+  "Ma olen õhtuks kodus.",
+  "Ta sai heaks õpetajaks.",
+] as const;
+
+const TRA_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...new Set([
+      ...TRA_WORDS,
+      ...TRA_BECOME,
+      ...TRA_MAKE.map(({ said }) => said),
+      ...TRA_NA_KS.map(({ said }) => said),
+      ...TRA_FOR,
+      ...TRA_AGREE,
+      ...TRA_TRANSLATE.map(({ answers }) => answers[0]),
+      ...TRA_FIX.map(({ answers }) => answers[0]),
+      ...TRA_DRILL,
+      "hommikusöögiks",
+      "sünnipäevaks",
+      "õhtuks",
+      "homseks",
+    ]),
+  ]),
+  "p-message": { sentences: TRA_MESSAGE, voice: "third" },
+  "c-talk": TRA_TALK,
+};
+export const GI_SOME = [
+  "Keegi helistas.",
+  "Kas sa tahad midagi?",
+  "Mu võtmed on kuskil siin.",
+  "Ma tahan kuhugi minna.",
+  "Kas sa käid kunagi Pärnus?",
+  "Tule millalgi külla!",
+] as const;
+
+export const GI_NOT = [
+  {
+    pos: "Keegi tuleb.",
+    neg: "Keegi ei tule.",
+    also: ["Mitte keegi ei tule.", "Kedagi ei tule.", "Ei tule kedagi.", "Mitte kedagi ei tule."],
+  },
+  {
+    pos: "Ma näen kedagi.",
+    neg: "Ma ei näe kedagi.",
+    also: ["Ma ei näe mitte kedagi.", "Ma kedagi ei näe.", "Ei näe kedagi."],
+  },
+  {
+    pos: "Mul on midagi.",
+    neg: "Mul ei ole midagi.",
+    also: [
+      "Mul pole midagi.",
+      "Mul ei ole mitte midagi.",
+      "Mul pole mitte midagi.",
+      "Mul midagi ei ole.",
+      "Mul midagi pole.",
+    ],
+  },
+  {
+    pos: "Ta läheb kuhugi.",
+    neg: "Ta ei lähe kuhugi.",
+    also: [
+      "Ta ei lähe mitte kuhugi.",
+      "Ta ei lähe kuskile.",
+      "Ta kuhugi ei lähe.",
+      "Ta ei lähe mitte kuskile.",
+      "Ta kuskile ei lähe.",
+    ],
+  },
+  {
+    pos: "Kati ostab midagi.",
+    neg: "Kati ei osta midagi.",
+    also: ["Kati ei osta mitte midagi.", "Kati midagi ei osta."],
+  },
+  {
+    pos: "Ma räägin kellegagi.",
+    neg: "Ma ei räägi kellegagi.",
+    also: ["Ma ei räägi mitte kellegagi.", "Ma kellegagi ei räägi.", "Ei räägi kellegagi."],
+  },
+] as const;
+
+export const GI_MITTE = ["Kes tuli? Mitte keegi.", "Mida sa tahad? Mitte midagi."] as const;
+
+export const GI_EXCEPT = ["Kodus on keegi.", "Kodus ei ole kedagi."] as const;
+
+export const GI_MAKE = [
+  { id: "kellelegi", kind: "gi", base: "kellele", said: "Ma helistasin kellelegi." },
+  { id: "kellelgi", kind: "gi", base: "kellel", said: "Kas kellelgi on pliiats?" },
+  { id: "kellegagi", kind: "gi", base: "kellega", said: "Ma ei räägi kellegagi." },
+  { id: "kedagi", kind: "gi", base: "keda", said: "Ma ei näe kedagi." },
+  { id: "midagi", kind: "gi", base: "mida", said: "Kas sa tahad midagi?" },
+  { id: "kuhugi", kind: "gi", base: "kuhu", said: "Ma tahan kuhugi minna." },
+  { id: "kellestki", kind: "ki", base: "kellest", said: "Me rääkisime kellestki." },
+  { id: "millestki", kind: "ki", base: "millest", said: "Ta ei räägi millestki." },
+] as const;
+
+export const GI_WHICH = [
+  {
+    id: "millelegi",
+    kind: "gi",
+    base: "millele",
+    cue: "Ma mõtlen …",
+    said: "Ma mõtlen millelegi.",
+  },
+  {
+    id: "millegagi",
+    kind: "gi",
+    base: "millega",
+    cue: "Kas sul on … kirjutada?",
+    said: "Kas sul on millegagi kirjutada?",
+  },
+  {
+    id: "millalgi",
+    kind: "gi",
+    base: "millal",
+    cue: "Tule … külla!",
+    said: "Tule millalgi külla!",
+  },
+  { id: "kellegi", kind: "gi", base: "kelle", cue: "See on … kott.", said: "See on kellegi kott." },
+  {
+    id: "kelleltki",
+    kind: "ki",
+    base: "kellelt",
+    cue: "Ma sain … kirja.",
+    said: "Ma sain kelleltki kirja.",
+  },
+  {
+    id: "kellestki",
+    kind: "ki",
+    base: "kellest",
+    cue: "Me rääkisime …",
+    said: "Me rääkisime kellestki.",
+  },
+  {
+    id: "millestki",
+    kind: "ki",
+    base: "millest",
+    cue: "Ta ei räägi …",
+    said: "Ta ei räägi millestki.",
+  },
+  {
+    id: "kellekski",
+    kind: "ki",
+    base: "kelleks",
+    cue: "Ta tahab … saada.",
+    said: "Ta tahab kellekski saada.",
+  },
+] as const;
+
+export const GI_TRANSLATE = [
+  { id: "helistas", answers: ["Keegi helistas."] },
+  {
+    id: "kedagi",
+    answers: withPronouns([
+      "Ma ei näe kedagi.",
+      "Mina ei näe kedagi.",
+      "Ei näe kedagi.",
+      "Ma kedagi ei näe.",
+      "Mina kedagi ei näe.",
+      "Mina ei näe mitte kedagi.",
+      "Ma ei näe mitte kedagi.",
+    ]),
+  },
+  {
+    id: "midagi",
+    answers: withPronouns([
+      "Mul ei ole midagi.",
+      "Mul pole midagi.",
+      "Minul ei ole midagi.",
+      "Minul pole midagi.",
+      "Mul ei ole mitte midagi.",
+      "Mul pole mitte midagi.",
+      "Mul midagi ei ole.",
+      "Mul midagi pole.",
+      "Minul midagi ei ole.",
+      "Minul midagi pole.",
+      "Minul ei ole mitte midagi.",
+      "Minul pole mitte midagi.",
+    ]),
+  },
+  {
+    id: "tahad",
+    answers: withPronouns([
+      "Kas sa tahad midagi?",
+      "Kas sa midagi tahad?",
+      "Kas te midagi tahate?",
+      "Kas sina midagi tahad?",
+      "Kas sina tahad midagi?",
+      "Kas te tahate midagi?",
+      "Kas tahad midagi?",
+      "Tahad sa midagi?",
+      "Kas tahate midagi?",
+      "Tahate te midagi?",
+      "Kas sa soovid midagi?",
+      "Kas te soovite midagi?",
+      "Kas sa midagi soovid?",
+      "Kas te midagi soovite?",
+    ]),
+  },
+  {
+    id: "kuhugi",
+    answers: withPronouns([
+      "Ta ei lähe kuhugi.",
+      "Tema ei lähe kuhugi.",
+      "Ta ei lähe kuskile.",
+      "Tema ei lähe kuskile.",
+      "Ta ei lähe mitte kuhugi.",
+      "Tema ei lähe mitte kuhugi.",
+      "Ta kuhugi ei lähe.",
+      "Tema kuhugi ei lähe.",
+      "Ta kuskile ei lähe.",
+      "Tema kuskile ei lähe.",
+      "Ta ei lähe mitte kuskile.",
+      "Tema ei lähe mitte kuskile.",
+    ]),
+  },
+  {
+    id: "keegi",
+    answers: [
+      "Keegi ei tule.",
+      "Mitte keegi ei tule.",
+      "Kedagi ei tule.",
+      "Ei tule kedagi.",
+      "Mitte kedagi ei tule.",
+    ],
+  },
+] as const;
+
+export const GI_FIX = [
+  { id: "fix-kedagi", wrong: "Ma ei näe keegi.", answers: ["Ma ei näe kedagi."] },
+  {
+    id: "fix-kellelegi",
+    wrong: "Ma helistasin kellelegki.",
+    answers: ["Ma helistasin kellelegi."],
+  },
+  { id: "fix-kellestki", wrong: "Me rääkisime kellestgi.", answers: ["Me rääkisime kellestki."] },
+  { id: "fix-midagi", wrong: "Mul ei ole mida.", answers: ["Mul ei ole midagi."] },
+  {
+    id: "fix-kuhugi",
+    wrong: "Ta ei lähe kuhu.",
+    answers: ["Ta ei lähe kuhugi.", "Ta ei lähe kuskile."],
+  },
+  { id: "fix-kellegagi", wrong: "Ma ei räägi kellegaki.", answers: ["Ma ei räägi kellegagi."] },
+] as const;
+
+export const GI_TALK: Conversation = {
+  turns: [
+    {
+      voice: "second",
+      text: ["Peeter, kas mu võtmed on kuskil siin?"],
+      say: "[worried] Peeter, kas mu võtmed on kuskil siin?",
+    },
+    { voice: "main", text: ["Ei, ma ei näinud neid kuskil.", "Kus nad eile olid?"] },
+    {
+      voice: "second",
+      text: ["Eile olid nad laual.", "Aga nüüd ei ole seal midagi.", "Ma otsisin terve hommiku."],
+    },
+    { voice: "main", text: ["Kas keegi käis eile siin?"] },
+    { voice: "second", text: ["Jah, Mari käis.", "Aga ta ei võtnud midagi."] },
+    { voice: "main", text: ["Kas sa helistasid talle?"] },
+    { voice: "second", text: ["Helistasin, aga keegi ei vastanud."] },
+    { voice: "main", text: ["Võib-olla ta magab.", "Hmm.", "Kas sa läksid eile kuhugi?"] },
+    {
+      voice: "second",
+      text: ["Ma käisin poes ja kohvikus.", "Kohvikus jõin ma kohvi ja lugesin raamatut."],
+    },
+    { voice: "main", text: ["Võib-olla jäid võtmed kohvikusse."] },
+    {
+      voice: "second",
+      text: ["Ei, ma ei unusta kunagi midagi!"],
+      say: "[annoyed] Ei, ma ei unusta kunagi midagi!",
+    },
+    {
+      voice: "main",
+      text: ["Kunagi?", "Nädal tagasi jäi sul telefon poodi."],
+      say: "[laughs] Kunagi? Nädal tagasi jäi sul telefon poodi.",
+    },
+    { voice: "second", text: ["Jah, see on tõsi.", "Hästi, ma helistan kohvikusse."] },
+    { voice: "main", text: ["Noh?", "Kas keegi vastas?"] },
+    {
+      voice: "second",
+      text: ["Jah!", "Kohvikus on laual võtmed.", "Need on minu võtmed!"],
+      say: "[relieved] Jah! Kohvikus on laual võtmed. Need on minu võtmed!",
+    },
+    { voice: "main", text: ["Näed!", "Kas ma tulen sinuga?"] },
+    { voice: "second", text: ["Ei, aitäh.", "Aga õhtul võime kuhugi sööma minna."] },
+    { voice: "main", text: ["Hea mõte!", "Kuhu?"] },
+    { voice: "second", text: ["Mulle on ükskõik.", "Kuhugi kohvikusse."] },
+    { voice: "main", text: ["Kohvik on hea mõte.", "Siis näeme kell seitse!"] },
+  ],
+};
+
+export const GI_WORDS = [
+  "keegi",
+  "midagi",
+  "kuskil",
+  "kuhugi",
+  "kunagi",
+  "millalgi",
+  "millal",
+  "mitte keegi",
+  "mitte midagi",
+] as const;
+
+export const GI_DRILL = [
+  "Kas sa tahad midagi juua?",
+  "Ma ei tea midagi.",
+  "Kas kellelgi on aega?",
+] as const;
+
+const GI_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...new Set([
+      ...GI_WORDS,
+      ...GI_SOME,
+      ...GI_NOT.flatMap(({ pos, neg }) => [pos, neg]),
+      ...GI_MITTE,
+      ...GI_EXCEPT,
+      ...GI_MAKE.map(({ said }) => said),
+      ...GI_WHICH.map(({ said }) => said),
+      ...GI_TRANSLATE.map(({ answers }) => answers[0]),
+      ...GI_FIX.map(({ answers }) => answers[0]),
+      ...GI_DRILL,
+    ]),
+  ]),
+  "c-talk": GI_TALK,
+};
+
 /** A noun's three forms in a dictionary's order: first, second, third. */
 export type NounForms = readonly [string, string, string];
 
@@ -11814,6 +12555,8 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   sonajarg: ORDER_CLIPS,
   omadussonad: ADJ_CLIPS,
   vordlus: CMP_CLIPS,
+  saav: TRA_CLIPS,
+  keegi: GI_CLIPS,
   "mul-on": {
     ...words([
       ...MUL_ON_WORDS,

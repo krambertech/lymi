@@ -244,6 +244,9 @@ msgstr "Бесплатный урок эстонского о склонении
 msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о личных местоимениях: mina, sina, tema и другие в полной и краткой форме, и глагол olema, «быть». Каждое предложение озвучено."
 
+msgid "A free Estonian lesson on saying when: hommikul and suvel with -l, mais with -s, hommikuti for every morning, nädala pärast and nädal tagasi, pärast tööd, and from and until with -st and -ni. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о том, как сказать «когда»: hommikul и suvel с -l, mais с -s, hommikuti — «по утрам», nädala pärast и nädal tagasi, pärast tööd, а также «с» и «до» с -st и -ni. Каждое предложение озвучено."
+
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud."
 msgstr "Бесплатный урок эстонского о том, как сказать, который час: целые часы, pool, veerand и kolmveerand, которые называют следующий час, и минуты до и после. Каждый пример озвучен."
 
@@ -695,6 +698,9 @@ msgstr "Эстонское произношение"
 
 msgid "Estonian reading and listening practice: a day in Tallinn"
 msgstr "Эстонский язык: чтение и аудирование. День в Таллине"
+
+msgid "Estonian time expressions: when things happen"
+msgstr "Как сказать «когда» по-эстонски"
 
 msgid "Every word has a group. Check when you’re ready."
 msgstr "Все слова в группах. Можно проверять."

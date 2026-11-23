@@ -3,7 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
-import { LESSONS } from "../../../lib/learn/catalogue";
+import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import { clipId, clipUrl, WEEK } from "../../../lib/learn/clips";
 import { type Day, dayChoices, weekDay } from "../../../lib/learn/days";
 import { playSound, usePlaying } from "../../../lib/learn/player";
@@ -332,7 +332,7 @@ function RelativeDay(props: { word: string; day: Day | null; meaning: string; li
 export function PaevadLesson() {
   const { t, i18n } = useLingui();
   const numbers = LESSONS.find((lesson) => lesson.slug === "numbrid")?.n;
-  const when = LESSONS.find((lesson) => lesson.et === "Esmaspäeval, aasta pärast")?.n;
+  const when = lessonBySlug("millal")?.n;
   const meaning = (word: Day) => i18n._(MEANINGS[word]);
 
   // What the first half of each day's name means, in the order of the week.

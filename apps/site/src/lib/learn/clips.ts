@@ -2138,6 +2138,291 @@ const JARGARVUD_CLIPS: Record<string, Clip> = {
   "c-talk": JARGARVUD_TALK,
 };
 
+export const WHEN_L = [
+  { base: "hommik", form: "hommikul", said: "Ma joon hommikul kohvi." },
+  { base: "päev", form: "päeval", said: "Jaan töötab päeval." },
+  { base: "õhtu", form: "õhtul", said: "Me oleme õhtul kodus." },
+  { base: "öö", form: "öösel", said: "Kass magab öösel." },
+  { base: "kevad", form: "kevadel", said: "Mari tuleb kevadel." },
+  { base: "suvi", form: "suvel", said: "Me ujume suvel jões." },
+  { base: "sügis", form: "sügisel", said: "Kati läheb sügisel kooli." },
+  { base: "talv", form: "talvel", said: "Ta elab talvel Tartus." },
+] as const;
+
+export const WHEN_S = [
+  { base: "jaanuar", form: "jaanuaris", said: "Ma olen jaanuaris Tallinnas." },
+  { base: "mai", form: "mais", said: "Mari sünnipäev on mais." },
+  { base: "juuli", form: "juulis", said: "Me oleme juulis Pärnus." },
+  { base: "detsember", form: "detsembris", said: "Jaan tuleb detsembris." },
+] as const;
+
+export const WHEN_COMBINED = [
+  "Me läheme laupäeva õhtul kohvikusse.",
+  "Ma töötan esmaspäeva hommikul.",
+] as const;
+
+export const WHEN_EVERY = [
+  "Ma joon hommikuti kohvi.",
+  "Jaan töötab õhtuti.",
+  "Me ujume laupäeviti.",
+] as const;
+
+export const WHEN_SORT = [
+  { w: "mai", bin: "s" },
+  { w: "november", bin: "s" },
+  { w: "juuli", bin: "s" },
+  { w: "märts", bin: "s" },
+  { w: "suvi", bin: "l" },
+  { w: "talv", bin: "l" },
+  { w: "hommik", bin: "l" },
+  { w: "õhtu", bin: "l" },
+  { w: "esmaspäev", bin: "l" },
+  { w: "kevad", bin: "l" },
+] as const;
+
+export const WHEN_SPANS = [
+  { id: "paev", one: "päev", ago: "päev tagasi", in: "päeva pärast" },
+  { id: "nadal", one: "nädal", ago: "nädal tagasi", in: "nädala pärast" },
+  { id: "aasta", one: "aasta", ago: "aasta tagasi", in: "aasta pärast" },
+  { id: "kaks-paeva", one: "kaks päeva", ago: "kaks päeva tagasi", in: "kahe päeva pärast" },
+  {
+    id: "kolm-nadalat",
+    one: "kolm nädalat",
+    ago: "kolm nädalat tagasi",
+    in: "kolme nädala pärast",
+  },
+] as const;
+
+export const WHEN_SPAN_SAID = [
+  "Ma tulen nädala pärast.",
+  "Ma olin Tartus nädal tagasi.",
+  "Mari tuleb kahe päeva pärast.",
+  "Jaan helistas kaks päeva tagasi.",
+  "Me läheme Pärnusse aasta pärast.",
+  "Kati elas siin aasta tagasi.",
+] as const;
+
+export const WHEN_AROUND = [
+  "Ma tulen pärast tööd.",
+  "Ma joon enne tööd kohvi.",
+  "Mari läheb pärast kooli koju.",
+  "Helista mulle enne kella viit!",
+] as const;
+
+export const WHEN_HEARD = [
+  { said: "Ma tulen nädala pärast.", kind: "in" },
+  { said: "Ma olin Tartus nädal tagasi.", kind: "ago" },
+  { said: "Ma tulen pärast tööd.", kind: "after" },
+  { said: "Mari tuleb kahe päeva pärast.", kind: "in" },
+  { said: "Jaan helistas kaks päeva tagasi.", kind: "ago" },
+  { said: "Mari läheb pärast kooli koju.", kind: "after" },
+] as const;
+
+export const WHEN_FROM = [
+  "Pood on avatud esmaspäevast reedeni.",
+  "Ma töötan kella kaheksast kella viieni.",
+  "Me oleme Pärnus juunist augustini.",
+] as const;
+
+export const WHEN_SHOP = [
+  "Tere!",
+  "Meie pood on avatud esmaspäevast reedeni.",
+  "Me töötame kella üheksast kella kuueni.",
+  "Laupäeval oleme avatud kella kümnest kella kolmeni.",
+  "Pühapäeval on pood suletud.",
+  "Juulis on pood suletud.",
+] as const;
+
+export const WHEN_TRANSLATE = [
+  {
+    id: "hommikul",
+    answers: [
+      "Ma töötan hommikul.",
+      "Mina töötan hommikul.",
+      "Hommikul töötan ma.",
+      "Hommikul ma töötan.",
+    ],
+  },
+  {
+    id: "juulis",
+    answers: [
+      "Me oleme juulis Pärnus.",
+      "Meie oleme juulis Pärnus.",
+      "Juulis oleme me Pärnus.",
+      "Juulis me oleme Pärnus.",
+      "Oleme juulis Pärnus.",
+    ],
+  },
+  {
+    id: "nadala-parast",
+    answers: [
+      "Ma tulen nädala pärast.",
+      "Mina tulen nädala pärast.",
+      "Nädala pärast tulen ma.",
+      "Tulen nädala pärast.",
+    ],
+  },
+  {
+    id: "kaks-paeva-tagasi",
+    answers: ["Jaan oli siin kaks päeva tagasi.", "Kaks päeva tagasi oli Jaan siin."],
+  },
+  {
+    id: "parast-tood",
+    answers: [
+      "Ma lähen pärast tööd koju.",
+      "Pärast tööd lähen ma koju.",
+      "Pärast tööd ma lähen koju.",
+      "Pärast tööd lähen koju.",
+    ],
+  },
+  { id: "esmaspaevast", answers: ["Pood on avatud esmaspäevast reedeni."] },
+] as const;
+
+export const WHEN_FIX = [
+  { id: "fix-nadala", wrong: "Ma tulen nädal pärast.", answers: ["Ma tulen nädala pärast."] },
+  {
+    id: "fix-nadal",
+    wrong: "Ma olin Tartus nädala tagasi.",
+    answers: ["Ma olin Tartus nädal tagasi."],
+  },
+  { id: "fix-suvel", wrong: "Me ujume suvis jões.", answers: ["Me ujume suvel jões."] },
+  { id: "fix-mais", wrong: "Mari sünnipäev on mail.", answers: ["Mari sünnipäev on mais."] },
+  { id: "fix-tood", wrong: "Ma tulen pärast töö.", answers: ["Ma tulen pärast tööd."] },
+  {
+    id: "fix-kaheksast",
+    wrong: "Ma töötan kella kaheksa kella viieni.",
+    answers: ["Ma töötan kella kaheksast kella viieni."],
+  },
+] as const;
+
+export const WHEN_TALK: Conversation = {
+  turns: [
+    {
+      voice: "second",
+      text: ["Tere, Jaan!", "Kas sa oled juba Tallinnas?"],
+      say: "[cheerful] Tere, Jaan! Kas sa oled juba Tallinnas?",
+    },
+    {
+      voice: "main",
+      text: [
+        "Tere, Kati!",
+        "Ei, ma olen veel Tartus.",
+        "Ma tulen Tallinna nädala pärast, esmaspäeval.",
+      ],
+    },
+    { voice: "second", text: ["Esmaspäeval?", "Millal sa olid viimati Tallinnas?"] },
+    { voice: "main", text: ["Kolm nädalat tagasi.", "Aga esmaspäeval töötan ma terve päeva."] },
+    { voice: "second", text: "Kas sa töötad ka õhtul?" },
+    {
+      voice: "main",
+      text: ["Ei, ma töötan kella kaheksast kella neljani.", "Pärast tööd on mul aega."],
+    },
+    {
+      voice: "second",
+      text: ["Väga hea!", "Me läheme esmaspäeva õhtul Mariga kohvikusse.", "Tule ka!"],
+      say: "[pleased] Väga hea! Me läheme esmaspäeva õhtul Mariga kohvikusse. Tule ka!",
+    },
+    { voice: "main", text: ["Jah, ma tulen.", "Kas Mari elab nüüd Tallinnas?"] },
+    {
+      voice: "second",
+      text: [
+        "Jah, ta tuli Tallinna kaks päeva tagasi.",
+        "Suvel elas ta Pärnus.",
+        "Nüüd töötab ta kella üheksast kella viieni.",
+      ],
+    },
+    { voice: "main", text: "Ja laupäeval?" },
+    { voice: "second", text: "Laupäeval ta ei tööta." },
+    { voice: "main", text: ["Mina olen juulis Pärnus.", "Ma ei tööta juulis."] },
+    { voice: "second", text: ["Mina ei tööta augustis.", "Augustis lähen ma Saaremaale."] },
+    { voice: "main", text: ["Augustis?", "Kas terve kuu?"] },
+    { voice: "second", text: "Ei, kaks nädalat." },
+    { voice: "main", text: ["Tore!", "Ja talvel?"], say: "[curious] Tore! Ja talvel?" },
+    {
+      voice: "second",
+      text: ["Talvel töötan ma palju, hommikuti ja õhtuti.", "Aga jaanuaris on mul aega."],
+      say: "[sighs] Talvel töötan ma palju, hommikuti ja õhtuti. Aga jaanuaris on mul aega.",
+    },
+    { voice: "main", text: ["Hästi.", "Ma helistan sulle pühapäeval."] },
+    { voice: "second", text: ["Hästi, pühapäevani!", "Ja esmaspäeval kell seitse kohvikus!"] },
+  ],
+};
+
+export const WHEN_WORDS = [
+  "esmaspäeval",
+  "laupäeva õhtul",
+  "hommikul",
+  "päeval",
+  "õhtul",
+  "öösel",
+  "kevadel",
+  "suvel",
+  "sügisel",
+  "talvel",
+  "hommik",
+  "päev",
+  "õhtu",
+  "öö",
+  "kevad",
+  "suvi",
+  "sügis",
+  "talv",
+  "jaanuar",
+  "mai",
+  "juuli",
+  "detsember",
+  "november",
+  "märts",
+  "esmaspäev",
+  "jaanuaris",
+  "mais",
+  "juulis",
+  "detsembris",
+  "hommikuti",
+  "õhtuti",
+  "laupäeviti",
+  "tagasi",
+  "pärast",
+  "enne",
+  "millal?",
+  "nädal tagasi",
+  "nädala pärast",
+  "pärast tööd",
+  "enne tööd",
+  "kella kaheksast",
+  "kella viieni",
+  "esmaspäevast reedeni",
+  ...WHEN_SPANS.flatMap((span) => [span.ago, span.in]),
+] as const;
+
+export const WHEN_DRILL = [
+  "Me läheme Pärnusse aasta pärast.",
+  "Jaan tuleb kolme nädala pärast.",
+  "Ma olin Tallinnas kolm nädalat tagasi.",
+  "Ma ujun suvel.",
+  "Ma töötan õhtuti.",
+] as const;
+
+const WHEN_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...new Set([
+      ...WHEN_WORDS,
+      ...WHEN_L.map(({ said }) => said),
+      ...WHEN_S.map(({ said }) => said),
+      ...WHEN_COMBINED,
+      ...WHEN_EVERY,
+      ...WHEN_SPAN_SAID,
+      ...WHEN_AROUND,
+      ...WHEN_FROM,
+      ...WHEN_TRANSLATE.map(({ answers }) => answers[0]),
+      ...WHEN_FIX.map(({ answers }) => answers[0]),
+      ...WHEN_DRILL,
+    ]),
+  ]),
+  "p-shop": { sentences: WHEN_SHOP, voice: "third" },
+  "c-talk": WHEN_TALK,
+};
+
 /** A noun's three forms in a dictionary's order: first, second, third. */
 export type NounForms = readonly [string, string, string];
 
@@ -4148,6 +4433,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "sobraga-rahata": SOBRAGA_CLIPS,
   asesonad: PRONOUN_CLIPS,
   jargarvud: JARGARVUD_CLIPS,
+  millal: WHEN_CLIPS,
   "mul-on": {
     ...words([
       ...MUL_ON_WORDS,

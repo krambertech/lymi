@@ -14272,5 +14272,592 @@
     "text": "Homme õpib ta eesti keelt.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/hommikul": {
+    "text": "hommikul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/pa2eval": {
+    "text": "päeval",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/o3htul": {
+    "text": "õhtul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/o2o2sel": {
+    "text": "öösel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/kevadel": {
+    "text": "kevadel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/suvel": {
+    "text": "suvel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/su2gisel": {
+    "text": "sügisel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/talvel": {
+    "text": "talvel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/hommik": {
+    "text": "hommik",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/pa2ev": {
+    "text": "päev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/o3htu": {
+    "text": "õhtu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/o2o2": {
+    "text": "öö",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/kevad": {
+    "text": "kevad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/suvi": {
+    "text": "suvi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/su2gis": {
+    "text": "sügis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/talv": {
+    "text": "talv",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/jaanuar": {
+    "text": "jaanuar",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/mai": {
+    "text": "mai",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/juuli": {
+    "text": "juuli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/detsember": {
+    "text": "detsember",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/november": {
+    "text": "november",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/ma2rts": {
+    "text": "märts",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/esmaspa2ev": {
+    "text": "esmaspäev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/jaanuaris": {
+    "text": "jaanuaris",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/mais": {
+    "text": "mais",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/juulis": {
+    "text": "juulis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/detsembris": {
+    "text": "detsembris",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/hommikuti": {
+    "text": "hommikuti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/o3htuti": {
+    "text": "õhtuti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/laupa2eviti": {
+    "text": "laupäeviti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/tagasi": {
+    "text": "tagasi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/pa2rast": {
+    "text": "pärast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/enne": {
+    "text": "enne",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/millal": {
+    "text": "millal?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/na2dala-pa2rast": {
+    "text": "nädala pärast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/pa2rast-to2o2d": {
+    "text": "pärast tööd",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/enne-to2o2d": {
+    "text": "enne tööd",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/kella-kaheksast": {
+    "text": "kella kaheksast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/kella-viieni": {
+    "text": "kella viieni",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/esmaspa2evast-reedeni": {
+    "text": "esmaspäevast reedeni",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/pa2ev-tagasi": {
+    "text": "päev tagasi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/pa2eva-pa2rast": {
+    "text": "päeva pärast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/aasta-tagasi": {
+    "text": "aasta tagasi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/aasta-pa2rast": {
+    "text": "aasta pärast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/kaks-pa2eva-tagasi": {
+    "text": "kaks päeva tagasi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/kahe-pa2eva-pa2rast": {
+    "text": "kahe päeva pärast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/kolm-na2dalat-tagasi": {
+    "text": "kolm nädalat tagasi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/kolme-na2dala-pa2rast": {
+    "text": "kolme nädala pärast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/ma-joon-hommikul-kohvi": {
+    "text": "Ma joon hommikul kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/jaan-to2o2tab-pa2eval": {
+    "text": "Jaan töötab päeval.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/me-oleme-o3htul-kodus": {
+    "text": "Me oleme õhtul kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/kass-magab-o2o2sel": {
+    "text": "Kass magab öösel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/mari-tuleb-kevadel": {
+    "text": "Mari tuleb kevadel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/me-ujume-suvel-jo3es": {
+    "text": "Me ujume suvel jões.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/kati-la2heb-su2gisel-kooli": {
+    "text": "Kati läheb sügisel kooli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/ta-elab-talvel-tartus": {
+    "text": "Ta elab talvel Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/ma-olen-jaanuaris-tallinnas": {
+    "text": "Ma olen jaanuaris Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/mari-su2nnipa2ev-on-mais": {
+    "text": "Mari sünnipäev on mais.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/me-oleme-juulis-pa2rnus": {
+    "text": "Me oleme juulis Pärnus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/jaan-tuleb-detsembris": {
+    "text": "Jaan tuleb detsembris.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/me-la2heme-laupa2eva-o3htul-kohvikusse": {
+    "text": "Me läheme laupäeva õhtul kohvikusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/ma-to2o2tan-esmaspa2eva-hommikul": {
+    "text": "Ma töötan esmaspäeva hommikul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/jaan-to2o2tab-o3htuti": {
+    "text": "Jaan töötab õhtuti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/me-ujume-laupa2eviti": {
+    "text": "Me ujume laupäeviti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/ma-tulen-na2dala-pa2rast": {
+    "text": "Ma tulen nädala pärast.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/ma-olin-tartus-na2dal-tagasi": {
+    "text": "Ma olin Tartus nädal tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/mari-tuleb-kahe-pa2eva-pa2rast": {
+    "text": "Mari tuleb kahe päeva pärast.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/jaan-helistas-kaks-pa2eva-tagasi": {
+    "text": "Jaan helistas kaks päeva tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/me-la2heme-pa2rnusse-aasta-pa2rast": {
+    "text": "Me läheme Pärnusse aasta pärast.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/kati-elas-siin-aasta-tagasi": {
+    "text": "Kati elas siin aasta tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/ma-tulen-pa2rast-to2o2d": {
+    "text": "Ma tulen pärast tööd.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/ma-joon-enne-to2o2d-kohvi": {
+    "text": "Ma joon enne tööd kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/mari-la2heb-pa2rast-kooli-koju": {
+    "text": "Mari läheb pärast kooli koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/helista-mulle-enne-kella-viit": {
+    "text": "Helista mulle enne kella viit!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/pood-on-avatud-esmaspa2evast-reedeni": {
+    "text": "Pood on avatud esmaspäevast reedeni.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/ma-to2o2tan-kella-kaheksast-kella-viieni": {
+    "text": "Ma töötan kella kaheksast kella viieni.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/me-oleme-pa2rnus-juunist-augustini": {
+    "text": "Me oleme Pärnus juunist augustini.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/ma-to2o2tan-hommikul": {
+    "text": "Ma töötan hommikul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/jaan-oli-siin-kaks-pa2eva-tagasi": {
+    "text": "Jaan oli siin kaks päeva tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/ma-la2hen-pa2rast-to2o2d-koju": {
+    "text": "Ma lähen pärast tööd koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/jaan-tuleb-kolme-na2dala-pa2rast": {
+    "text": "Jaan tuleb kolme nädala pärast.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/ma-olin-tallinnas-kolm-na2dalat-tagasi": {
+    "text": "Ma olin Tallinnas kolm nädalat tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/ma-ujun-suvel": {
+    "text": "Ma ujun suvel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/ma-to2o2tan-o3htuti": {
+    "text": "Ma töötan õhtuti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/p-shop": {
+    "text": "Tere! Meie pood on avatud esmaspäevast reedeni. Me töötame kella üheksast kella kuueni. Laupäeval oleme avatud kella kümnest kella kolmeni. Pühapäeval on pood suletud. Juulis on pood suletud.",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "millal/c-talk": {
+    "text": "Tere, Jaan! Kas sa oled juba Tallinnas? Tere, Kati! Ei, ma olen veel Tartus. Ma tulen Tallinna nädala pärast, esmaspäeval. Esmaspäeval? Millal sa olid viimati Tallinnas? Kolm nädalat tagasi. Aga esmaspäeval töötan ma terve päeva. Kas sa töötad ka õhtul? Ei, ma töötan kella kaheksast kella neljani. Pärast tööd on mul aega. Väga hea! Me läheme esmaspäeva õhtul Mariga kohvikusse. Tule ka! Jah, ma tulen. Kas Mari elab nüüd Tallinnas? Jah, ta tuli Tallinna kaks päeva tagasi. Suvel elas ta Pärnus. Nüüd töötab ta kella üheksast kella viieni. Ja laupäeval? Laupäeval ta ei tööta. Mina olen juulis Pärnus. Ma ei tööta juulis. Mina ei tööta augustis. Augustis lähen ma Saaremaale. Augustis? Kas terve kuu? Ei, kaks nädalat. Tore! Ja talvel? Talvel töötan ma palju, hommikuti ja õhtuti. Aga jaanuaris on mul aega. Hästi. Ma helistan sulle pühapäeval. Hästi, pühapäevani! Ja esmaspäeval kell seitse kohvikus!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Kas sa oled juba Tallinnas?"
+        ],
+        "say": "[cheerful] Tere, Jaan! Kas sa oled juba Tallinnas?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Kati!",
+          "Ei, ma olen veel Tartus.",
+          "Ma tulen Tallinna nädala pärast, esmaspäeval."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Esmaspäeval?",
+          "Millal sa olid viimati Tallinnas?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kolm nädalat tagasi.",
+          "Aga esmaspäeval töötan ma terve päeva."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sa töötad ka õhtul?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, ma töötan kella kaheksast kella neljani.",
+          "Pärast tööd on mul aega."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Väga hea!",
+          "Me läheme esmaspäeva õhtul Mariga kohvikusse.",
+          "Tule ka!"
+        ],
+        "say": "[pleased] Väga hea! Me läheme esmaspäeva õhtul Mariga kohvikusse. Tule ka!"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, ma tulen.",
+          "Kas Mari elab nüüd Tallinnas?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, ta tuli Tallinna kaks päeva tagasi.",
+          "Suvel elas ta Pärnus.",
+          "Nüüd töötab ta kella üheksast kella viieni."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja laupäeval?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Laupäeval ta ei tööta."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mina olen juulis Pärnus.",
+          "Ma ei tööta juulis."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mina ei tööta augustis.",
+          "Augustis lähen ma Saaremaale."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Augustis?",
+          "Kas terve kuu?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, kaks nädalat."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tore!",
+          "Ja talvel?"
+        ],
+        "say": "[curious] Tore! Ja talvel?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Talvel töötan ma palju, hommikuti ja õhtuti.",
+          "Aga jaanuaris on mul aega."
+        ],
+        "say": "[sighs] Talvel töötan ma palju, hommikuti ja õhtuti. Aga jaanuaris on mul aega."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hästi.",
+          "Ma helistan sulle pühapäeval."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Hästi, pühapäevani!",
+          "Ja esmaspäeval kell seitse kohvikus!"
+        ]
+      }
+    ]
+  },
+  "millal/na2dal-tagasi": {
+    "text": "nädal tagasi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/ma-joon-hommikuti-kohvi": {
+    "text": "Ma joon hommikuti kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/esmaspa2eval": {
+    "text": "esmaspäeval",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "millal/laupa2eva-o3htul": {
+    "text": "laupäeva õhtul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

@@ -2,7 +2,7 @@ import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type ReactNode, useMemo, useState } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -502,7 +502,7 @@ export function SobragaRahataLesson() {
   const threeForms = lessonBySlug("pohivormid")?.n;
   const genitive = lessonBySlug("omastav")?.n;
   const past = lessonBySlug("lihtminevik")?.n;
-  const times = LESSONS.find((lesson) => lesson.et === "Esmaspäeval, aasta pärast")?.n;
+  const times = lessonBySlug("millal")?.n;
   const into = lessonBySlug("majas-majja-majast")?.n;
 
   const heardItems = useMemo<HeardItem[]>(() => {

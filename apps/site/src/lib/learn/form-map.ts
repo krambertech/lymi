@@ -447,7 +447,7 @@ const NOUN_USES = [
     form: "partitive",
     label: msg`After words like “before”`,
     tip: msg`Often, when such a word stands before the noun.`,
-    taught: { et: "Esmaspäeval, aasta pärast" },
+    taught: { slug: "millal" },
     examples: [
       { et: "Pese enne *sööki* käed!", meaning: msg`Wash your hands before eating!` },
       { et: "Pärast *tööd* lähen ma koju.", meaning: msg`After work I go home.` },

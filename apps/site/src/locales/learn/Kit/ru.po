@@ -250,8 +250,8 @@ msgstr "Бесплатный урок эстонского о том, как с�
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud."
 msgstr "Бесплатный урок эстонского о том, как сказать, который час: целые часы, pool, veerand и kolmveerand, которые называют следующий час, и минуты до и после. Каждый пример озвучен."
 
-msgid "A free Estonian lesson on word order: the verb in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud."
-msgstr "Бесплатный урок эстонского о порядке слов: глагол на втором месте (täna lähen ma), вопросы вроде kus sa elad?, два глагола со вторым обычно в конце и где стоит ei. Каждое предложение озвучено."
+msgid "A free Estonian lesson on word order: the verb usually in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о порядке слов: глагол обычно на втором месте (täna lähen ma), вопросы вроде kus sa elad?, два глагола со вторым обычно в конце и где стоит ei. Каждое предложение озвучено."
 
 msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud."
 msgstr "Бесплатный урок эстонского произношения: девять гласных с õ, ä, ö и ü, ударение на первом слоге и то, как удвоенная буква меняет слово. Каждое слово озвучено."
@@ -705,8 +705,8 @@ msgstr "Эстонский язык: чтение и аудирование. Д�
 msgid "Estonian time expressions: when things happen"
 msgstr "Как сказать «когда» по-эстонски"
 
-msgid "Estonian word order: the verb comes second"
-msgstr "Порядок слов в эстонском: глагол второй"
+msgid "Estonian word order: the verb usually comes second"
+msgstr "Порядок слов в эстонском: глагол обычно второй"
 
 msgid "Every word has a group. Check when you’re ready."
 msgstr "Все слова в группах. Можно проверять."
@@ -2407,8 +2407,8 @@ msgstr "Как меняется слово"
 msgid "Word meanings open once you have answered."
 msgstr "Значения слов откроются, когда ответишь."
 
-msgid "Word order: the verb comes second"
-msgstr "Порядок слов: глагол на втором месте"
+msgid "Word order: the verb usually comes second"
+msgstr "Порядок слов: глагол обычно на втором месте"
 
 msgid "Word pairs"
 msgstr "Пары слов"

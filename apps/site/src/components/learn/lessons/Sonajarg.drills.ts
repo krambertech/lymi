@@ -1,9 +1,14 @@
 import { msg } from "@lingui/core/macro";
-import { ORDER_TRANSLATE } from "../../../lib/learn/clips";
+import { ORDER_MEANING, ORDER_REWRITE, ORDER_TRANSLATE } from "../../../lib/learn/clips";
 import type { DrillBank } from "../../../lib/learn/drill";
+import { withPronouns } from "../../../lib/learn/pronouns";
 
 const orderAnswers = (id: (typeof ORDER_TRANSLATE)[number]["id"]) =>
   (ORDER_TRANSLATE.find((item) => item.id === id) as (typeof ORDER_TRANSLATE)[number]).answers;
+const rewriteAnswers = (id: string) =>
+  (ORDER_REWRITE.find((item) => item.id === id) as (typeof ORDER_REWRITE)[number]).answers;
+const builtAnswers = (id: (typeof ORDER_MEANING)[number]["id"]) =>
+  (ORDER_MEANING.find((item) => item.id === id) as (typeof ORDER_MEANING)[number]).answers;
 
 const SECOND = msg`The verb usually comes second; when a time or place starts the sentence, the person usually follows the verb: <et>Täna lähen ma</et>.`;
 const QUESTION = msg`In a question, the short pronoun comes right after the question word: <et>Kus sa elad?</et>`;
@@ -13,7 +18,7 @@ const START = msg`Start with the time word`;
 
 export const DRILLS: DrillBank = {
   rules: {
-    front: { label: msg`The verb second: <et>Täna lähen ma</et>`, section: "second" },
+    front: { label: msg`The verb usually second: <et>Täna lähen ma</et>`, section: "second" },
     question: { label: msg`Questions: <et>Kus sa elad?</et>`, section: "questions" },
     two: { label: msg`Two verbs: <et>pean … minema</et>`, section: "two-verbs" },
     no: { label: msg`With <et>ei</et>: <et>Täna ma ei tööta</et>`, section: "no" },
@@ -25,7 +30,7 @@ export const DRILLS: DrillBank = {
       rule: "front",
       from: "Ma lähen täna Tartusse.",
       cue: START,
-      answers: ["Täna lähen ma Tartusse.", "Täna lähen Tartusse.", "Täna ma lähen Tartusse."],
+      answers: rewriteAnswers("start-tana"),
       say: "Täna lähen ma Tartusse.",
       explain: SECOND,
     },
@@ -35,7 +40,7 @@ export const DRILLS: DrillBank = {
       rule: "front",
       from: "Mari joob hommikul kohvi.",
       cue: START,
-      answers: ["Hommikul joob Mari kohvi.", "Hommikul Mari joob kohvi."],
+      answers: rewriteAnswers("start-hommikul"),
       say: "Hommikul joob Mari kohvi.",
       explain: SECOND,
     },
@@ -45,7 +50,7 @@ export const DRILLS: DrillBank = {
       rule: "front",
       from: "Jaan töötab laupäeval.",
       cue: START,
-      answers: ["Laupäeval töötab Jaan.", "Laupäeval Jaan töötab."],
+      answers: rewriteAnswers("start-laupaeval"),
       say: "Laupäeval töötab Jaan.",
       explain: SECOND,
     },
@@ -55,7 +60,7 @@ export const DRILLS: DrillBank = {
       rule: "front",
       from: "Me oleme õhtul kodus.",
       cue: START,
-      answers: ["Õhtul oleme me kodus.", "Õhtul oleme kodus.", "Õhtul me oleme kodus."],
+      answers: rewriteAnswers("start-ohtul"),
       say: "Õhtul oleme me kodus.",
       explain: SECOND,
     },
@@ -124,7 +129,7 @@ export const DRILLS: DrillBank = {
       id: "question-ask-kus",
       rule: "question",
       reply: "Ma elan Tartus.",
-      answers: ["Kus sa elad?", "Kus sina elad?", "Kus te elate?", "Kus teie elate?"],
+      answers: withPronouns(["Kus sa elad?", "Kus te elate?"]),
       say: "Kus sa elad?",
       explain: QUESTION,
     },
@@ -143,13 +148,7 @@ export const DRILLS: DrillBank = {
       rule: "two",
       from: "Ma pean homme tööle minema.",
       cue: START,
-      answers: [
-        "Homme pean ma tööle minema.",
-        "Homme pean tööle minema.",
-        "Homme pean ma minema tööle.",
-        "Homme ma pean tööle minema.",
-        "Homme pean minema tööle.",
-      ],
+      answers: rewriteAnswers("start-homme"),
       say: "Homme pean ma tööle minema.",
       explain: TWO,
     },
@@ -183,12 +182,7 @@ export const DRILLS: DrillBank = {
       id: "two-ujuma",
       rule: "two",
       prompt: msg`On Saturday we’re going swimming.`,
-      answers: [
-        "Laupäeval läheme me ujuma.",
-        "Laupäeval läheme ujuma.",
-        "Me läheme laupäeval ujuma.",
-        "Laupäeval me läheme ujuma.",
-      ],
+      answers: builtAnswers("laupaeval-ujuma"),
       say: "Laupäeval läheme me ujuma.",
       explain: TWO,
     },
@@ -223,7 +217,7 @@ export const DRILLS: DrillBank = {
       id: "no-tomorrow",
       rule: "no",
       prompt: msg`Tomorrow we’re not coming.`,
-      answers: ["Homme me ei tule.", "Me ei tule homme.", "Homme ei tule me."],
+      answers: builtAnswers("homme-ei-tule"),
       say: "Homme me ei tule.",
       explain: NO,
     },
@@ -241,7 +235,7 @@ export const DRILLS: DrillBank = {
       rule: "no",
       from: "Ma ei tööta täna.",
       cue: START,
-      answers: ["Täna ma ei tööta.", "Täna ei tööta ma."],
+      answers: withPronouns(["Täna ma ei tööta.", "Täna ei tööta ma."]),
       say: "Täna ma ei tööta.",
       explain: NO,
     },

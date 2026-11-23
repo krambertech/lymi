@@ -1,6 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import { WHEN_TRANSLATE } from "../../../lib/learn/clips";
 import type { DrillBank } from "../../../lib/learn/drill";
+import { withPronouns } from "../../../lib/learn/pronouns";
 
 const whenAnswers = (id: (typeof WHEN_TRANSLATE)[number]["id"]) =>
   (WHEN_TRANSLATE.find((item) => item.id === id) as (typeof WHEN_TRANSLATE)[number]).answers;
@@ -129,15 +130,16 @@ export const DRILLS: DrillBank = {
       id: "span-three-weeks-ago",
       rule: "span",
       prompt: msg`I was in Tallinn three weeks ago.`,
-      answers: [
+      answers: withPronouns([
         "Ma olin Tallinnas kolm nädalat tagasi.",
-        "Mina olin Tallinnas kolm nädalat tagasi.",
         "Kolm nädalat tagasi olin ma Tallinnas.",
+        "Kolm nädalat tagasi ma olin Tallinnas.",
         "Ma olin kolm nädalat tagasi Tallinnas.",
         "Ma olin Tallinnas kolme nädala eest.",
         "Kolme nädala eest olin ma Tallinnas.",
+        "Kolme nädala eest ma olin Tallinnas.",
         "Ma olin kolme nädala eest Tallinnas.",
-      ],
+      ]),
       say: "Ma olin Tallinnas kolm nädalat tagasi.",
       explain: AGO,
     },
@@ -184,12 +186,12 @@ export const DRILLS: DrillBank = {
       id: "around-before-work",
       rule: "around",
       prompt: msg`I drink coffee before work.`,
-      answers: [
+      answers: withPronouns([
         "Ma joon enne tööd kohvi.",
         "Ma joon kohvi enne tööd.",
         "Enne tööd joon ma kohvi.",
         "Enne tööd ma joon kohvi.",
-      ],
+      ]),
       say: "Ma joon enne tööd kohvi.",
       explain: AROUND,
     },
@@ -244,11 +246,14 @@ export const DRILLS: DrillBank = {
       id: "from-june-august",
       rule: "from",
       prompt: msg`I work from eight to five.`,
-      answers: [
+      answers: withPronouns([
         "Ma töötan kella kaheksast kella viieni.",
-        "Mina töötan kella kaheksast kella viieni.",
-        "Töötan kella kaheksast kella viieni.",
-      ],
+        "Kella kaheksast kella viieni töötan ma.",
+        "Kella kaheksast kella viieni ma töötan.",
+        "Ma töötan kaheksast viieni.",
+        "Kaheksast viieni töötan ma.",
+        "Kaheksast viieni ma töötan.",
+      ]),
       say: "Ma töötan kella kaheksast kella viieni.",
       explain: FROM,
     },

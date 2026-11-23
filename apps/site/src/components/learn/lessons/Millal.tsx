@@ -625,9 +625,11 @@ export function MillalLesson() {
                     <span lang="et">-ti</span> on the genitive: <span lang="et">hommiku</span>, so{" "}
                     <Word w="hommikuti" />, in the mornings; <Word w="õhtuti" />, in the evenings.
                     At night is <span lang="et">öösiti</span>. Days ending in{" "}
-                    <span lang="et">päev</span> and the seasons take <span lang="et">-iti</span>:{" "}
-                    <span lang="et">laupäeviti</span>, on Saturdays; <span lang="et">suviti</span>,{" "}
-                    <span lang="et">talviti</span>, in summer, in winter. Tap a line to hear it.
+                    <span lang="et">päev</span> take <span lang="et">-iti</span>:{" "}
+                    <span lang="et">laupäeviti</span>, on Saturdays. Summer and winter take{" "}
+                    <span lang="et">-iti</span> too: <span lang="et">suviti</span>,{" "}
+                    <span lang="et">talviti</span>; autumn is <span lang="et">sügiseti</span>. Tap a
+                    line to hear it.
                   </Trans>
                 </p>
               </Prose>

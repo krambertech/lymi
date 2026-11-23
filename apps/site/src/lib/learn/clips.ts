@@ -2,6 +2,7 @@ import { numberWords } from "./estonian-numbers";
 import { MONTHS, ordinalOn, ordinalWords } from "./estonian-ordinals";
 import { ALL_TIMES, timeClip, timeSentence } from "./estonian-time";
 import { KIT_EXPLORE_TEXTS } from "./kit-explore";
+import { withPronouns } from "./pronouns";
 
 /**
  * Every sound a lesson plays, by lesson and clip id, with the Estonian it says. Read by
@@ -2243,55 +2244,46 @@ export const WHEN_SHOP = [
 export const WHEN_TRANSLATE = [
   {
     id: "hommikul",
-    answers: [
-      "Ma töötan hommikul.",
-      "Mina töötan hommikul.",
-      "Hommikul töötan ma.",
-      "Hommikul ma töötan.",
-      "Töötan hommikul.",
-    ],
+    answers: withPronouns(["Ma töötan hommikul.", "Hommikul töötan ma.", "Hommikul ma töötan."]),
   },
   {
     id: "juulis",
-    answers: [
+    answers: withPronouns([
       "Me oleme juulis Pärnus.",
-      "Meie oleme juulis Pärnus.",
       "Juulis oleme me Pärnus.",
       "Juulis me oleme Pärnus.",
-      "Oleme juulis Pärnus.",
       "Me oleme Pärnus juulis.",
-    ],
+    ]),
   },
   {
     id: "nadala-parast",
-    answers: [
+    answers: withPronouns([
       "Ma tulen nädala pärast.",
-      "Mina tulen nädala pärast.",
       "Nädala pärast tulen ma.",
       "Nädala pärast ma tulen.",
-      "Tulen nädala pärast.",
-    ],
+    ]),
   },
   {
     id: "kaks-paeva-tagasi",
     answers: [
       "Jaan oli siin kaks päeva tagasi.",
       "Kaks päeva tagasi oli Jaan siin.",
+      "Kaks päeva tagasi Jaan oli siin.",
       "Jaan oli kaks päeva tagasi siin.",
       "Jaan oli siin kahe päeva eest.",
       "Kahe päeva eest oli Jaan siin.",
+      "Kahe päeva eest Jaan oli siin.",
       "Jaan oli kahe päeva eest siin.",
     ],
   },
   {
     id: "parast-tood",
-    answers: [
+    answers: withPronouns([
       "Ma lähen pärast tööd koju.",
       "Pärast tööd lähen ma koju.",
       "Pärast tööd ma lähen koju.",
-      "Pärast tööd lähen koju.",
       "Ma lähen koju pärast tööd.",
-    ],
+    ]),
   },
   {
     id: "esmaspaevast",
@@ -2299,6 +2291,7 @@ export const WHEN_TRANSLATE = [
       "Pood on avatud esmaspäevast reedeni.",
       "Pood on esmaspäevast reedeni avatud.",
       "Esmaspäevast reedeni on pood avatud.",
+      "Esmaspäevast reedeni pood on avatud.",
     ],
   },
 ] as const;
@@ -2504,43 +2497,55 @@ export const ORDER_HEARD = [
 ] as const;
 
 export const ORDER_MEANING = [
-  { id: "kus-elad", answers: ["Kus sa elad?"] },
+  { id: "kus-elad", answers: withPronouns(["Kus sa elad?"]) },
   {
     id: "tana-tootan",
-    answers: ["Täna töötan ma kodus.", "Ma töötan täna kodus.", "Täna ma töötan kodus."],
+    answers: withPronouns([
+      "Täna töötan ma kodus.",
+      "Ma töötan täna kodus.",
+      "Täna ma töötan kodus.",
+      "Ma töötan kodus täna.",
+    ]),
   },
-  { id: "mida-teed", answers: ["Mida sa täna teed?", "Mida sa teed täna?"] },
+  { id: "mida-teed", answers: withPronouns(["Mida sa täna teed?", "Mida sa teed täna?"]) },
   {
     id: "homme-pean",
-    answers: [
+    answers: withPronouns([
       "Homme pean ma tööle minema.",
-      "Ma pean homme tööle minema.",
       "Homme pean ma minema tööle.",
-      "Homme pean minema tööle.",
       "Homme ma pean tööle minema.",
-    ],
+      "Homme ma pean minema tööle.",
+      "Ma pean homme tööle minema.",
+      "Ma pean homme minema tööle.",
+    ]),
   },
   {
     id: "ohtul-tahan",
-    answers: [
+    answers: withPronouns([
       "Õhtul tahan ma raamatut lugeda.",
-      "Ma tahan õhtul raamatut lugeda.",
       "Õhtul tahan ma lugeda raamatut.",
       "Õhtul ma tahan raamatut lugeda.",
-    ],
+      "Õhtul ma tahan lugeda raamatut.",
+      "Ma tahan õhtul raamatut lugeda.",
+      "Ma tahan õhtul lugeda raamatut.",
+    ]),
   },
-  { id: "homme-ei-tule", answers: ["Homme me ei tule.", "Me ei tule homme.", "Homme ei tule me."] },
+  {
+    id: "homme-ei-tule",
+    answers: withPronouns(["Homme me ei tule.", "Homme ei tule me.", "Me ei tule homme."]),
+  },
   {
     id: "ohtul-ei-ole",
-    answers: ["Õhtul ta ei ole kodus.", "Ta ei ole õhtul kodus.", "Õhtul ei ole ta kodus."],
+    answers: ["Õhtul ta ei ole kodus.", "Õhtul ei ole ta kodus.", "Ta ei ole õhtul kodus."],
   },
   {
     id: "laupaeval-ujuma",
-    answers: [
+    answers: withPronouns([
       "Laupäeval läheme me ujuma.",
-      "Me läheme laupäeval ujuma.",
       "Laupäeval me läheme ujuma.",
-    ],
+      "Me läheme laupäeval ujuma.",
+      "Me läheme ujuma laupäeval.",
+    ]),
   },
 ] as const;
 
@@ -2549,59 +2554,60 @@ const ORDER_REWRITE_MORE: Record<string, readonly string[]> = {
   hommikul: ["Hommikul Mari joob kohvi."],
   laupaeval: ["Laupäeval Jaan töötab."],
   ohtul: ["Õhtul me oleme kodus."],
-  homme: ["Homme pean ma minema tööle.", "Homme ma pean tööle minema.", "Homme pean minema tööle."],
+  homme: [
+    "Homme pean ma minema tööle.",
+    "Homme ma pean tööle minema.",
+    "Homme ma pean minema tööle.",
+  ],
 };
 
 export const ORDER_REWRITE = ORDER_PAIRS.map(({ id, plain, front, first }) => ({
   id: `start-${id}`,
   from: plain,
   first,
-  answers: [
-    ...(front.includes(" ma ") || front.includes(" me ")
-      ? [front, front.replace(/ (ma|me) /, " ")]
-      : [front]),
-    ...(ORDER_REWRITE_MORE[id] ?? []),
-  ],
+  answers: withPronouns([front, ...(ORDER_REWRITE_MORE[id] ?? [])]),
 }));
 
 export const ORDER_TRANSLATE = [
   {
     id: "tana-tartusse",
-    answers: [
+    answers: withPronouns([
       "Täna lähen ma Tartusse.",
-      "Täna lähen Tartusse.",
-      "Ma lähen täna Tartusse.",
-      "Mina lähen täna Tartusse.",
       "Täna ma lähen Tartusse.",
-    ],
+      "Ma lähen täna Tartusse.",
+      "Ma lähen Tartusse täna.",
+    ]),
   },
-  { id: "kus-elad", answers: ["Kus sa elad?", "Kus sina elad?"] },
+  { id: "kus-elad", answers: withPronouns(["Kus sa elad?"]) },
   {
     id: "homme-tootama",
-    answers: [
+    answers: withPronouns([
       "Homme pean ma töötama.",
-      "Homme pean töötama.",
-      "Ma pean homme töötama.",
       "Homme ma pean töötama.",
-    ],
+      "Ma pean homme töötama.",
+    ]),
   },
-  { id: "tana-ei-too", answers: ["Täna me ei tööta.", "Me ei tööta täna.", "Täna ei tööta me."] },
+  {
+    id: "tana-ei-too",
+    answers: withPronouns(["Täna me ei tööta.", "Täna ei tööta me.", "Me ei tööta täna."]),
+  },
   {
     id: "hommikul-joob",
     answers: [
       "Hommikul joob Mari kohvi.",
-      "Mari joob hommikul kohvi.",
       "Hommikul Mari joob kohvi.",
+      "Mari joob hommikul kohvi.",
+      "Mari joob kohvi hommikul.",
     ],
   },
   {
     id: "laupaeval-teed",
-    answers: [
+    answers: withPronouns([
       "Mida sa laupäeval teed?",
       "Mida sa teed laupäeval?",
       "Mis sa laupäeval teed?",
       "Mis sa teed laupäeval?",
-    ],
+    ]),
   },
 ] as const;
 

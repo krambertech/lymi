@@ -211,8 +211,8 @@ msgstr "Вона питає про суботу, а <0>ei</0> стоїть пр�
 msgid "She asks about Sunday, and <0>ei</0> goes right before the verb."
 msgstr "Вона питає про неділю, а <0>ei</0> стоїть просто перед дієсловом."
 
-msgid "She asks about the evening, and the verb comes second."
-msgstr "Вона питає про вечір, а дієслово стоїть другим."
+msgid "She asks about the evening, and the verb usually comes second."
+msgstr "Вона питає про вечір, а дієслово зазвичай стоїть другим."
 
 msgid "She asks about tomorrow, and <0>minema</0> sits in second place, where <1>pean</1> belongs."
 msgstr "Вона питає про завтра, а <0>minema</0> стоїть на другому місці, де має бути <1>pean</1>."
@@ -238,8 +238,8 @@ msgstr "Розмова: плани"
 msgid "The first"
 msgstr "На першому"
 
-msgid "The first word is not the person, so the verb comes second and the person after it."
-msgstr "Перше слово — не підмет, тож дієслово стоїть другим, а підмет після нього."
+msgid "The first word is not the person, so the verb usually comes second and the person after it."
+msgstr "Перше слово — не підмет, тож дієслово зазвичай стоїть другим, а підмет після нього."
 
 msgid "The person"
 msgstr "Підмет"
@@ -259,20 +259,20 @@ msgstr "На третьому"
 msgid "The time or place"
 msgstr "Час чи місце"
 
-msgid "The time or place comes first, the verb stays second, and the person moves after it."
-msgstr "Час чи місце йде першим, дієслово лишається другим, а підмет переходить за нього."
+msgid "The time or place comes first, the verb usually stays second, and the person moves after it."
+msgstr "Час чи місце йде першим, дієслово зазвичай лишається другим, а підмет переходить за нього."
 
-msgid "The verb comes second"
-msgstr "Дієслово на другому місці"
+msgid "The verb usually comes second"
+msgstr "Дієслово зазвичай на другому місці"
 
-msgid "The verb comes second, not last."
-msgstr "Дієслово стоїть другим, а не в кінці."
-
-msgid "The verb second: <et>Täna lähen ma</et>"
-msgstr "Дієслово друге: <et>Täna lähen ma</et>"
+msgid "The verb usually comes second, not last."
+msgstr "Дієслово зазвичай стоїть другим, а не в кінці."
 
 msgid "The verb usually comes second; when a time or place starts the sentence, the person usually follows the verb: <et>Täna lähen ma</et>."
 msgstr "Дієслово зазвичай стоїть другим; коли речення починається з часу чи місця, підмет зазвичай іде за дієсловом: <et>Täna lähen ma</et>."
+
+msgid "The verb usually second: <et>Täna lähen ma</et>"
+msgstr "Дієслово зазвичай друге: <et>Täna lähen ma</et>"
 
 msgid "today I’m going"
 msgstr "сьогодні я йду"

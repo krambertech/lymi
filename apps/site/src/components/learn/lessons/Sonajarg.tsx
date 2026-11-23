@@ -113,7 +113,8 @@ function FrontSwitch() {
       <p aria-live="polite" className="text-md text-ink-secondary">
         {front ? (
           <Trans>
-            The time or place comes first, the verb stays second, and the person moves after it.
+            The time or place comes first, the verb usually stays second, and the person moves after
+            it.
           </Trans>
         ) : (
           <Trans>The person comes first and the verb second.</Trans>
@@ -128,7 +129,7 @@ function useContent() {
   return useMemo(() => {
     const secondWhy = (
       <Trans>
-        The first word is not the person, so the verb comes second and the person after it.
+        The first word is not the person, so the verb usually comes second and the person after it.
       </Trans>
     );
     const rewrite: SentenceItem[] = ORDER_REWRITE.map(({ id, from, first, answers }) => ({
@@ -242,11 +243,14 @@ function useContent() {
         who: "you",
         clip: "d-sina-2",
         replies: [
-          { line: "Õhtul kodus ma olen.", why: <Trans>The verb comes second, not last.</Trans> },
+          {
+            line: "Õhtul kodus ma olen.",
+            why: <Trans>The verb usually comes second, not last.</Trans>,
+          },
           { line: ORDER_DIALOGUE["d-sina-2"], right: true },
           {
             line: "Hommikul kodus ma olen.",
-            why: <Trans>She asks about the evening, and the verb comes second.</Trans>,
+            why: <Trans>She asks about the evening, and the verb usually comes second.</Trans>,
           },
         ],
       },
@@ -445,7 +449,7 @@ export function SonajargLesson() {
       sections={[
         {
           id: "second",
-          title: t`The verb comes second`,
+          title: t`The verb usually comes second`,
           quiz: true,
           children: (
             <>

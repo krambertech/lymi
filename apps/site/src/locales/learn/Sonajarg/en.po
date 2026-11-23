@@ -211,8 +211,8 @@ msgstr "She asks about Saturday, and <0>ei</0> goes right before the verb."
 msgid "She asks about Sunday, and <0>ei</0> goes right before the verb."
 msgstr "She asks about Sunday, and <0>ei</0> goes right before the verb."
 
-msgid "She asks about the evening, and the verb comes second."
-msgstr "She asks about the evening, and the verb comes second."
+msgid "She asks about the evening, and the verb usually comes second."
+msgstr "She asks about the evening, and the verb usually comes second."
 
 msgid "She asks about tomorrow, and <0>minema</0> sits in second place, where <1>pean</1> belongs."
 msgstr "She asks about tomorrow, and <0>minema</0> sits in second place, where <1>pean</1> belongs."
@@ -238,8 +238,8 @@ msgstr "Talk: plans"
 msgid "The first"
 msgstr "The first"
 
-msgid "The first word is not the person, so the verb comes second and the person after it."
-msgstr "The first word is not the person, so the verb comes second and the person after it."
+msgid "The first word is not the person, so the verb usually comes second and the person after it."
+msgstr "The first word is not the person, so the verb usually comes second and the person after it."
 
 msgid "The person"
 msgstr "The person"
@@ -259,20 +259,20 @@ msgstr "The third"
 msgid "The time or place"
 msgstr "The time or place"
 
-msgid "The time or place comes first, the verb stays second, and the person moves after it."
-msgstr "The time or place comes first, the verb stays second, and the person moves after it."
+msgid "The time or place comes first, the verb usually stays second, and the person moves after it."
+msgstr "The time or place comes first, the verb usually stays second, and the person moves after it."
 
-msgid "The verb comes second"
-msgstr "The verb comes second"
+msgid "The verb usually comes second"
+msgstr "The verb usually comes second"
 
-msgid "The verb comes second, not last."
-msgstr "The verb comes second, not last."
-
-msgid "The verb second: <et>Täna lähen ma</et>"
-msgstr "The verb second: <et>Täna lähen ma</et>"
+msgid "The verb usually comes second, not last."
+msgstr "The verb usually comes second, not last."
 
 msgid "The verb usually comes second; when a time or place starts the sentence, the person usually follows the verb: <et>Täna lähen ma</et>."
 msgstr "The verb usually comes second; when a time or place starts the sentence, the person usually follows the verb: <et>Täna lähen ma</et>."
+
+msgid "The verb usually second: <et>Täna lähen ma</et>"
+msgstr "The verb usually second: <et>Täna lähen ma</et>"
 
 msgid "today I’m going"
 msgstr "today I’m going"

@@ -172,8 +172,8 @@ msgstr "Исправь предложение"
 msgid "For a month"
 msgstr "На месяц"
 
-msgid "For something that happens again and again, usually put <0>-ti</0> on the genitive: <1>hommiku</1>, so <2/>, in the mornings; <3/>, in the evenings. At night is <4>öösiti</4>. Days ending in <5>päev</5> and the seasons take <6>-iti</6>: <7>laupäeviti</7>, on Saturdays; <8>suviti</8>, <9>talviti</9>, in summer, in winter. Tap a line to hear it."
-msgstr "Для того, что повторяется, <0>-ti</0> обычно добавляют к родительному: <1>hommiku</1>, так что <2/> — «по утрам»; <3/> — «по вечерам». «По ночам» — это <4>öösiti</4>. Дни на <5>päev</5> и времена года получают <6>-iti</6>: <7>laupäeviti</7> — «по субботам»; <8>suviti</8>, <9>talviti</9> — «каждое лето», «каждую зиму». Нажми на строку, чтобы послушать."
+msgid "For something that happens again and again, usually put <0>-ti</0> on the genitive: <1>hommiku</1>, so <2/>, in the mornings; <3/>, in the evenings. At night is <4>öösiti</4>. Days ending in <5>päev</5> take <6>-iti</6>: <7>laupäeviti</7>, on Saturdays. Summer and winter take <8>-iti</8> too: <9>suviti</9>, <10>talviti</10>; autumn is <11>sügiseti</11>. Tap a line to hear it."
+msgstr "Для того, что повторяется, <0>-ti</0> обычно добавляют к родительному: <1>hommiku</1>, так что <2/> — «по утрам»; <3/> — «по вечерам». «По ночам» — это <4>öösiti</4>. Дни на <5>päev</5> получают <6>-iti</6>: <7>laupäeviti</7> — «по субботам». Лето и зима тоже получают <8>-iti</8>: <9>suviti</9>, <10>talviti</10>; а «каждую осень» — это <11>sügiseti</11>. Нажми на строку, чтобы послушать."
 
 msgid "For two days"
 msgstr "На два дня"

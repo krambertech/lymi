@@ -211,8 +211,8 @@ msgstr "Она спрашивает о субботе, а <0>ei</0> стоит �
 msgid "She asks about Sunday, and <0>ei</0> goes right before the verb."
 msgstr "Она спрашивает о воскресенье, а <0>ei</0> стоит прямо перед глаголом."
 
-msgid "She asks about the evening, and the verb comes second."
-msgstr "Она спрашивает о вечере, а глагол стоит вторым."
+msgid "She asks about the evening, and the verb usually comes second."
+msgstr "Она спрашивает о вечере, а глагол обычно стоит вторым."
 
 msgid "She asks about tomorrow, and <0>minema</0> sits in second place, where <1>pean</1> belongs."
 msgstr "Она спрашивает о завтра, а <0>minema</0> стоит на втором месте, где должно быть <1>pean</1>."
@@ -238,8 +238,8 @@ msgstr "Разговор: планы"
 msgid "The first"
 msgstr "На первом"
 
-msgid "The first word is not the person, so the verb comes second and the person after it."
-msgstr "Первое слово — не подлежащее, так что глагол стоит вторым, а подлежащее после него."
+msgid "The first word is not the person, so the verb usually comes second and the person after it."
+msgstr "Первое слово — не подлежащее, так что глагол обычно стоит вторым, а подлежащее после него."
 
 msgid "The person"
 msgstr "Подлежащее"
@@ -259,20 +259,20 @@ msgstr "На третьем"
 msgid "The time or place"
 msgstr "Время или место"
 
-msgid "The time or place comes first, the verb stays second, and the person moves after it."
-msgstr "Время или место идёт первым, глагол остаётся вторым, а подлежащее переходит за него."
+msgid "The time or place comes first, the verb usually stays second, and the person moves after it."
+msgstr "Время или место идёт первым, глагол обычно остаётся вторым, а подлежащее переходит за него."
 
-msgid "The verb comes second"
-msgstr "Глагол на втором месте"
+msgid "The verb usually comes second"
+msgstr "Глагол обычно на втором месте"
 
-msgid "The verb comes second, not last."
-msgstr "Глагол стоит вторым, а не в конце."
-
-msgid "The verb second: <et>Täna lähen ma</et>"
-msgstr "Глагол второй: <et>Täna lähen ma</et>"
+msgid "The verb usually comes second, not last."
+msgstr "Глагол обычно стоит вторым, а не в конце."
 
 msgid "The verb usually comes second; when a time or place starts the sentence, the person usually follows the verb: <et>Täna lähen ma</et>."
 msgstr "Глагол обычно стоит вторым; когда предложение начинается со времени или места, подлежащее обычно идёт за глаголом: <et>Täna lähen ma</et>."
+
+msgid "The verb usually second: <et>Täna lähen ma</et>"
+msgstr "Глагол обычно второй: <et>Täna lähen ma</et>"
 
 msgid "today I’m going"
 msgstr "сегодня я иду"

@@ -1,0 +1,467 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 12:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0>Õpetajat</0> ends in <1>-t</1>: <2>õpetajate</2>, <3>õpetajatele</3>."
+msgstr "<0>Õpetajat</0> закінчується на <1>-t</1>: <2>õpetajate</2>, <3>õpetajatele</3>."
+
+msgid "<0>Raamatut</0> ends in <1>-t</1>, so the plural genitive is <2>raamatute</2>: <3>raamatutes</3>."
+msgstr "<0>Raamatut</0> закінчується на <1>-t</1>, тож родовий множини — <2>raamatute</2>: <3>raamatutes</3>."
+
+msgid "22 minutes"
+msgstr "22 хвилини"
+
+msgid "8 exercises"
+msgstr "8 вправ"
+
+msgid "Add any ending you know to the plural genitive: <0>-s</0>, <1>-st</1>, <2>-sse</2>, <3>-le</3>, <4>-l</4>, <5>-ga</5>. <6/> is to people; <7>sõpradega</7> is with friends. Pick a noun and compare the columns."
+msgstr "До родового множини додавай знайоме закінчення: <0>-s</0>, <1>-st</1>, <2>-sse</2>, <3>-le</3>, <4>-l</4>, <5>-ga</5>. <6/> — «людям», <7>sõpradega</7> — «з друзями». Вибери іменник і порівняй стовпці."
+
+msgid "All eight, typed in full."
+msgstr "Усі вісім, написані повністю."
+
+msgid "All eight. You heard both the number and the case."
+msgstr "Усі вісім: правильно і число, і відмінок."
+
+msgid "All seven, each plural on its genitive."
+msgstr "Усі сім, і кожна множина — від родового."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "bird"
+msgstr "птах"
+
+msgid "book"
+msgstr "книжка"
+
+msgid "Build on the plural genitive, not the plural nominative."
+msgstr "Утворюй від родового множини, а не від називного множини."
+
+msgid "Building the plural genitive"
+msgstr "Як утворити родовий множини"
+
+msgid "café"
+msgstr "кав’ярня"
+
+msgid "Compare the columns of the table once more, then try again."
+msgstr "Ще раз порівняй стовпці таблиці, потім спробуй знову."
+
+msgid "Don’t build on the plural nominative from lesson {plural}: it’s <0>inimestega</0>, not <1>inimesedega</1>."
+msgstr "Не утворюй від називного множини з уроку {plural}: правильно <0>inimestega</0>, а не <1>inimesedega</1>."
+
+msgid "Drag a word into each gap, or tap one to fill the open gap. Two of the words belong nowhere."
+msgstr "Перетягни слово в кожен пропуск або натисни на нього, щоб заповнити відкритий пропуск. Два слова зайві."
+
+msgid "Drop any <et>-d</et> from the partitive and add <et>-de</et>."
+msgstr "Прибери з партитива <et>-d</et>, якщо він є, і додай <et>-de</et>."
+
+msgid "Each round gives a noun’s three forms, as a dictionary lists them. Type its plural genitive."
+msgstr "У кожному раунді — три форми іменника, як у словнику. Напиши його родовий множини."
+
+msgid "Each sentence has one plural built on the wrong stem. Tap it, then type it right."
+msgstr "У кожному реченні одна форма множини утворена не від тієї основи. Натисни на неї, потім напиши правильно."
+
+msgid "Endings on the plural genitive"
+msgstr "Закінчення після родового множини"
+
+msgid "Everyone is welcome."
+msgstr "Усім раді."
+
+msgid "Fill the gaps"
+msgstr "Заповни пропуски"
+
+msgid "Fix the plural"
+msgstr "Виправ множину"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "friend"
+msgstr "друг"
+
+msgid "Genitive"
+msgstr "Родовий"
+
+msgid "He or she writes about friends."
+msgstr "Він чи вона пише про друзів."
+
+msgid "He or she writes to a friend."
+msgstr "Він чи вона пише другові."
+
+msgid "He or she writes to friends."
+msgstr "Він чи вона пише друзям."
+
+msgid "Hear a sentence, then pick what it means. Listen for the plural genitive and for the ending after it."
+msgstr "Послухай речення й вибери, що воно означає. Слухай родовий множини і закінчення після нього."
+
+msgid "house"
+msgstr "будинок"
+
+msgid "I spoke only Estonian."
+msgstr "Я говорила лише естонською."
+
+msgid "I wrote letters."
+msgstr "Я писав листи."
+
+msgid "I’ll bring cakes."
+msgstr "Я принесу тістечка."
+
+msgid "I’m going to the cinema with friends."
+msgstr "Я йду в кіно з друзями."
+
+msgid "I’m talking with a person."
+msgstr "Я розмовляю з людиною."
+
+msgid "I’m talking with people."
+msgstr "Я розмовляю з людьми."
+
+msgid "I’m telling people."
+msgstr "Я розповідаю людям."
+
+msgid "In"
+msgstr "У"
+
+msgid "In a sentence"
+msgstr "У реченні"
+
+msgid "in houses"
+msgstr "у будинках"
+
+msgid "In most nouns the plural genitive comes from the partitive. A partitive in <0>-t</0> adds <1>-e</1>: <2>raamatut, raamatute</2>. Any other drops any <3>-d</3> and adds <4>-de</4>: <5>maja, majade</5>; <6>puud, puude</6>."
+msgstr "У більшості іменників родовий множини утворюється від партитива. Якщо партитив на <0>-t</0>, додай <1>-e</1>: <2>raamatut, raamatute</2>. Інакше прибери <3>-d</3>, якщо він є, і додай <4>-de</4>: <5>maja, majade</5>; <6>puud, puude</6>."
+
+msgid "In most nouns, a partitive in <0>-t</0> adds <1>-e</1>. Any other drops any <2>-d</2> and adds <3>-de</3>."
+msgstr "У більшості іменників: якщо партитив на <0>-t</0>, додай <1>-e</1>. Інакше прибери <2>-d</2>, якщо він є, і додай <3>-de</3>."
+
+msgid "In the singular, the endings of lesson {inside} go on the genitive: <0>maja, majas</0>. In the plural they go on the plural genitive: <1/>, of houses, and <2/>, in houses."
+msgstr "В однині закінчення з уроку {inside} додаються до родового: <0>maja, majas</0>. У множині — до родового множини: <1/>, «будинків», і <2/>, «у будинках»."
+
+msgid "Inimeste, the plural genitive, with -le."
+msgstr "Inimeste, родовий множини, з -le."
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan asks Mari about her weekend, and tells her about his."
+msgstr "Яан питає Марі про її вихідні й розповідає про свої."
+
+msgid "Listen: Jaan and Mari"
+msgstr "Послухай: Яан і Марі"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Majade, the plural genitive, with -s."
+msgstr "Majade, родовий множини, з -s."
+
+msgid "make it plural"
+msgstr "у множині"
+
+msgid "Many"
+msgstr "Багато"
+
+msgid "Many: the plural genitive with the ending."
+msgstr "Багато: родовий множини із закінченням."
+
+msgid "Mari"
+msgstr "Марі"
+
+msgid "Mari bought presents for her sisters."
+msgstr "Марі купила подарунки сестрам."
+
+msgid "Mari spent the weekend in Tartu on her own."
+msgstr "Марі провела вихідні в Тарту сама."
+
+msgid "Mari’s weekend in Tartu"
+msgstr "Вихідні Марі в Тарту"
+
+msgid "Match each singular form with its plural."
+msgstr "З’єднай кожну форму однини з її множиною."
+
+msgid "Most plural cases are one step away from the singular ones: build the plural genitive, then add the ending you already know."
+msgstr "Більшість відмінків множини — лише на крок далі від однини: утвори родовий множини й додай знайоме закінчення."
+
+msgid "Nearly. Check the plural genitive in the ones you got wrong."
+msgstr "Майже. Перевір родовий множини там, де є помилка."
+
+msgid "Nearly. Look at the partitive in the ones you got wrong."
+msgstr "Майже. Подивися на партитив там, де є помилка."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Майже. Ще раз послухай ті, де є помилка."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Майже. Прочитай пояснення під кожною помилкою."
+
+msgid "Not the plural nominative: <0>inimestega</0>, not <1>inimesedega</1>."
+msgstr "Не від називного множини: <0>inimestega</0>, а не <1>inimesedega</1>."
+
+msgid "Nouns"
+msgstr "Іменники"
+
+msgid "of books"
+msgstr "книжок"
+
+msgid "of friends"
+msgstr "друзів"
+
+msgid "of houses"
+msgstr "будинків"
+
+msgid "of people"
+msgstr "людей"
+
+msgid "On, at"
+msgstr "На, біля"
+
+msgid "One"
+msgstr "Один"
+
+msgid "One and many"
+msgstr "Один і багато"
+
+msgid "One and many in six cases"
+msgstr "Один і багато в шести відмінках"
+
+msgid "One book: the singular genitive with <et>-s</et>."
+msgstr "Одна книжка: родовий однини з <et>-s</et>."
+
+msgid "One or many, by ear"
+msgstr "Один чи багато на слух"
+
+msgid "One or many, heard"
+msgstr "Один чи багато на слух"
+
+msgid "One shop: the singular genitive with <et>-s</et>."
+msgstr "Один магазин: родовий однини з <et>-s</et>."
+
+msgid "One: the singular genitive with the ending."
+msgstr "Один: родовий однини із закінченням."
+
+msgid "Out of"
+msgstr "Звідки"
+
+msgid "Partitive"
+msgstr "Партитив"
+
+msgid "Partitive and plural genitive of nine nouns"
+msgstr "Партитив і родовий множини дев’яти іменників"
+
+msgid "person"
+msgstr "людина"
+
+msgid "Plural genitive"
+msgstr "Родовий множини"
+
+msgid "Put each plural genitive in the bin of its ending. Ask what the partitive ends in."
+msgstr "Розклади форми родового множини за закінченнями. Подумай, на що закінчується партитив."
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Що запам’ятати» нижче, потім спробуй знову."
+
+msgid "Saturday shopping"
+msgstr "Суботні покупки"
+
+msgid "school"
+msgstr "школа"
+
+msgid "shop"
+msgstr "магазин"
+
+msgid "Six cases on one stem"
+msgstr "Шість відмінків на одній основі"
+
+msgid "Some words have a second, shorter plural, such as <0>majus</0> beside <1>majades</1>. The long one is always right, so this lesson uses it."
+msgstr "Деякі слова мають ще й коротшу множину, як-от <0>majus</0> поруч із <1>majades</1>. Довга форма завжди правильна, тому в уроці вона."
+
+msgid "Take the partitive, drop any <0>-d</0>, and add <1>-de</1>."
+msgstr "Візьми партитив, прибери <0>-d</0>, якщо він є, і додай <1>-de</1>."
+
+msgid "Tap a form"
+msgstr "Натисни на форму"
+
+msgid "Tap each form in the first table once more, then try again."
+msgstr "Ще раз натисни кожну форму в першій таблиці, а тоді спробуй знову."
+
+msgid "Tap each form in the table once more, then try again."
+msgstr "Ще раз натисни кожну форму в таблиці, а тоді спробуй знову."
+
+msgid "teacher"
+msgstr "вчитель"
+
+msgid "That Mari has been learning Estonian for only two years"
+msgstr "Що Марі вчить естонську лише два роки"
+
+msgid "That Mari is from Tartu"
+msgstr "Що Марі з Тарту"
+
+msgid "That she bought two books"
+msgstr "Що вона купила дві книжки"
+
+msgid "The birds have nests in the trees."
+msgstr "У птахів на деревах гнізда."
+
+msgid "The children are coming from the schools."
+msgstr "Діти йдуть зі шкіл."
+
+msgid "The dog sleeps under the children’s beds."
+msgstr "Пес спить під дитячими ліжками."
+
+msgid "The ending goes on the plural genitive."
+msgstr "Закінчення додається до родового множини."
+
+msgid "The partitive doesn’t end in <0>-t</0>, so usually <1>-de</1>: <2>sõpra, sõprade</2>."
+msgstr "Партитив не закінчується на <0>-t</0>, тож зазвичай <1>-de</1>: <2>sõpra, sõprade</2>."
+
+msgid "The partitive ends in <0>-t</0>, so add <1>-e</1>."
+msgstr "Партитив закінчується на <0>-t</0>, тож додай <1>-e</1>."
+
+msgid "The partitive ends in <0>-t</0>, so it usually adds <1>-e</1>: <2>inimest, inimeste</2>."
+msgstr "Партитив закінчується на <0>-t</0>, тож зазвичай додає <1>-e</1>: <2>inimest, inimeste</2>."
+
+msgid "The partitive ends in <et>-t</et>, so add <et>-e</et>."
+msgstr "Партитив закінчується на <et>-t</et>, тож додай <et>-e</et>."
+
+msgid "The partitive is <0>poodi</0>, so <1>poodide</1>, <2>poodides</2>."
+msgstr "Партитив — <0>poodi</0>, тож <1>poodide</1>, <2>poodides</2>."
+
+msgid "The partitive of <0>laps</0> is <1>last</1>, so the plural genitive is <2>laste</2>: <3>lastele</3>."
+msgstr "Партитив від <0>laps</0> — <1>last</1>, тож родовий множини — <2>laste</2>: <3>lastele</3>."
+
+msgid "The partitive of <et>laps</et> is <et>last</et>, so <et>laste</et>, <et>lastele</et>."
+msgstr "Партитив від <et>laps</et> — <et>last</et>, тож <et>laste</et>, <et>lastele</et>."
+
+msgid "The pictures are in one book."
+msgstr "Малюнки в одній книжці."
+
+msgid "The pictures are in several books."
+msgstr "Малюнки в кількох книжках."
+
+msgid "The pictures are in the book."
+msgstr "Малюнки в книжці."
+
+msgid "The pictures are on top of the books."
+msgstr "Малюнки лежать на книжках."
+
+msgid "The plural forms are the plural genitive with the ending you already know."
+msgstr "Форми множини — це родовий множини зі знайомим закінченням."
+
+msgid "The plural genitive"
+msgstr "Родовий множини"
+
+msgid "The plural genitive comes from the partitive <et>sõpra</et>: <et>sõpradele</et>."
+msgstr "Родовий множини утворюється від партитива <et>sõpra</et>: <et>sõpradele</et>."
+
+msgid "The plural genitive is <0>inimeste</0>, so <1>inimestega</1>, not the plural nominative <2>inimesed</2>."
+msgstr "Родовий множини — <0>inimeste</0>, тож <1>inimestega</1>. Від називного множини <2>inimesed</2> не утворюють."
+
+msgid "The plural genitive is <0>sõprade</0>, from <1>sõpra</1>: <2>sõpradega</2>."
+msgstr "Родовий множини — <0>sõprade</0>, від <1>sõpra</1>: <2>sõpradega</2>."
+
+msgid "The plural genitive is <et>sõprade</et>: <et>sõpradega</et>."
+msgstr "Родовий множини — <et>sõprade</et>: <et>sõpradega</et>."
+
+msgid "The plural genitive is built on the partitive <0>sõpra</0>: <1>sõprade</1>, <2>sõpradele</2>."
+msgstr "Родовий множини утворюється від партитива <0>sõpra</0>: <1>sõprade</1>, <2>sõpradele</2>."
+
+msgid "The plural genitive of inimene."
+msgstr "Родовий множини від inimene."
+
+msgid "The plural genitive of maja."
+msgstr "Родовий множини від maja."
+
+msgid "The plural genitive of raamat."
+msgstr "Родовий множини від raamat."
+
+msgid "The plural genitive of sõber."
+msgstr "Родовий множини від sõber."
+
+msgid "The plural genitive usually comes from the partitive, the third of lesson {forms}’s three forms. If the partitive ends in <0>-t</0>, add <1>-e</1>: <2/>. If not, drop any <3>-d</3> and add <4>-de</4>: <5/>. Tap each form in both columns to hear it."
+msgstr "Родовий множини зазвичай утворюється від партитива, третьої з трьох форм з уроку {forms}. Якщо партитив закінчується на <0>-t</0>, додай <1>-e</1>: <2/>. Якщо ні, прибери <3>-d</3>, якщо він є, і додай <4>-de</4>: <5/>. Натисни кожну форму в обох стовпцях, щоб її почути."
+
+msgid "The plurals with <0>-s</0>, <1>-st</1>, <2>-sse</2>, <3>-le</3>, <4>-l</4> and <5>-ga</5> can always be built as the plural genitive plus that ending: <6>majades, inimestele, sõpradega</6>."
+msgstr "Форми множини з <0>-s</0>, <1>-st</1>, <2>-sse</2>, <3>-le</3>, <4>-l</4> і <5>-ga</5> завжди можна утворити як родовий множини плюс це закінчення: <6>majades, inimestele, sõpradega</6>."
+
+msgid "The right stem for the plural"
+msgstr "Правильна основа для множини"
+
+msgid "There are pictures in the books."
+msgstr "У книжках є малюнки."
+
+msgid "To"
+msgstr "Кому, куди"
+
+msgid "To a market by the river"
+msgstr "На ринок біля річки"
+
+msgid "To museums and cafés"
+msgstr "У музеї та кав’ярні"
+
+msgid "to people"
+msgstr "людям"
+
+msgid "To the shops"
+msgstr "По магазинах"
+
+msgid "tree"
+msgstr "дерево"
+
+msgid "Two endings"
+msgstr "Два закінчення"
+
+msgid "Type the plural genitive"
+msgstr "Напиши родовий множини"
+
+msgid "We come out of the shops."
+msgstr "Ми виходимо з магазинів."
+
+msgid "We go round the shops."
+msgstr "Ми ходимо по магазинах."
+
+msgid "We go to one shop."
+msgstr "Ми ходимо в один магазин."
+
+msgid "We go to the shop."
+msgstr "Ми ходимо в магазин."
+
+msgid "We talked for hours."
+msgstr "Ми годинами розмовляли."
+
+msgid "What did the shop assistant not believe?"
+msgstr "У що не повірив продавець?"
+
+msgid "What does it mean?"
+msgstr "Що це означає?"
+
+msgid "What were the old photos kept in? Write the word as Jaan says it."
+msgstr "У чому лежали старі фото? Напиши слово так, як каже Яан."
+
+msgid "Where did they go on Saturday?"
+msgstr "Куди вони ходили в суботу?"
+
+msgid "Where did they stay the night? Write the last two words Mari says."
+msgstr "Де вони ночували? Напиши два останні слова, які каже Марі."
+
+msgid "Which ending?"
+msgstr "Яке закінчення?"
+
+msgid "Who says it?"
+msgstr "Хто це каже?"
+
+msgid "With"
+msgstr "З"
+
+msgid "With <0>käima</0>, going and coming back, the place usually takes <1>-s</1>."
+msgstr "Після <0>käima</0> («сходити й повернутися») місце зазвичай має закінчення <1>-s</1>."
+
+msgid "Write each sentence in Estonian. Each one has a plural noun in a case."
+msgstr "Напиши кожне речення естонською. У кожному є іменник у множині в якомусь відмінку."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"

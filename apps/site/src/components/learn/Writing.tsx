@@ -25,6 +25,7 @@ export function Writing({ id, title, prompt, model, src, checks }: WritingProps)
   const section = useContext(SectionContext);
   const promptId = useId();
   const field = useRef<HTMLTextAreaElement>(null);
+  const compared = useRef<HTMLDivElement>(null);
   const [value, setValue] = useState("");
   const [empty, setEmpty] = useState(false);
   const [step, setStep] = useState<Step>("writing");
@@ -60,8 +61,12 @@ export function Writing({ id, title, prompt, model, src, checks }: WritingProps)
           onSubmit={(event) => {
             event.preventDefault();
             setEmpty(!written);
-            if (written) setStep("checking");
-            else field.current?.focus();
+            if (!written) {
+              field.current?.focus();
+              return;
+            }
+            setStep("checking");
+            requestAnimationFrame(() => compared.current?.focus({ preventScroll: true }));
           }}
         >
           <textarea
@@ -93,7 +98,7 @@ export function Writing({ id, title, prompt, model, src, checks }: WritingProps)
         </form>
       ) : (
         <div className="grid w-full grid-cols-1 gap-4">
-          <div className="grid gap-1.5">
+          <div ref={compared} tabIndex={-1} className="grid gap-1.5 outline-none">
             <p className="text-sm text-ink-muted">
               <Trans>You wrote</Trans>
             </p>

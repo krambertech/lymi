@@ -2,7 +2,7 @@ import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type ReactNode, useMemo, useState } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -488,7 +488,7 @@ export function PoodPoeLesson() {
   const places = lessonBySlug("kohad")?.n;
   const present = lessonBySlug("olevik")?.n;
   const forms = lessonBySlug("pohivormid")?.n;
-  const gradation = LESSONS.find((lesson) => lesson.et === "Jalg, jala")?.n;
+  const gradation = lessonBySlug("jalg-jala")?.n;
 
   const heardItems = useMemo<HeardItem[]>(
     () =>

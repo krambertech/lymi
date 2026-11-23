@@ -16274,5 +16274,5903 @@
         ]
       }
     ]
+  },
+  "raamatut-voi-raamatu/la2bi": {
+    "text": "läbi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/pilet": {
+    "text": "pilet",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/koogi": {
+    "text": "koogi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/supp": {
+    "text": "supp",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/otsima": {
+    "text": "otsima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/leidma": {
+    "text": "leidma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/aitama": {
+    "text": "aitama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/armastama": {
+    "text": "armastama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ootama": {
+    "text": "ootama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ostsin-leiba": {
+    "text": "Ma ostsin leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ostsin-leiva": {
+    "text": "Ma ostsin leiva.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-lugesin-raamatut": {
+    "text": "Ma lugesin raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-lugesin-raamatu-la2bi": {
+    "text": "Ma lugesin raamatu läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-so3in-koogi-a2ra": {
+    "text": "Ma sõin koogi ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-tegin-to2o2d": {
+    "text": "Ma tegin tööd.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-tegin-to2o2-a2ra": {
+    "text": "Ma tegin töö ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-jo3in-vee-a2ra": {
+    "text": "Ma jõin vee ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-loen-raamatut": {
+    "text": "Ma loen raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-loen-raamatu-la2bi": {
+    "text": "Ma loen raamatu läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-so2o2n-suppi": {
+    "text": "Ma söön suppi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-so2o2n-supi-a2ra": {
+    "text": "Ma söön supi ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-teen-to2o2d": {
+    "text": "Ma teen tööd.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-teen-to2o2-a2ra": {
+    "text": "Ma teen töö ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ei-osta-piletit": {
+    "text": "Ma ei osta piletit.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ei-ostnud-piletit": {
+    "text": "Ma ei ostnud piletit.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ei-ostnud-leiba": {
+    "text": "Ma ei ostnud leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ta-ei-lugenud-raamatut": {
+    "text": "Ta ei lugenud raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ootan-so3pra": {
+    "text": "Ma ootan sõpra.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-aitan-last": {
+    "text": "Ma aitan last.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-otsin-vo3tit": {
+    "text": "Ma otsin võtit.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-otsisin-vo3tit": {
+    "text": "Ma otsisin võtit.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-leidsin-vo3tme": {
+    "text": "Ma leidsin võtme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ostsin-u2he-pileti": {
+    "text": "Ma ostsin ühe pileti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/me-ei-so2o2nud-kooki": {
+    "text": "Me ei söönud kooki.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/me-so3ime-koogi-a2ra": {
+    "text": "Me sõime koogi ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ei-teinud-to2o2d": {
+    "text": "Ma ei teinud tööd.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ta-tegi-to2o2-a2ra": {
+    "text": "Ta tegi töö ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ostsin-pileti": {
+    "text": "Ma ostsin pileti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/osta-pilet": {
+    "text": "Osta pilet!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/a2ra-osta-piletit": {
+    "text": "Ära osta piletit!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/loe-raamat-la2bi": {
+    "text": "Loe raamat läbi!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/a2ra-loe-raamatut": {
+    "text": "Ära loe raamatut!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-so3in-supi-a2ra": {
+    "text": "Ma sõin supi ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/so2o2-supp-a2ra": {
+    "text": "Söö supp ära!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/a2ra-so2o2-suppi": {
+    "text": "Ära söö suppi!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/joo-vesi-a2ra": {
+    "text": "Joo vesi ära!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/a2ra-joo-vett": {
+    "text": "Ära joo vett!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ostsin-piletid": {
+    "text": "Ma ostsin piletid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/osta-piletid": {
+    "text": "Osta piletid!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/so2o2-kook-a2ra": {
+    "text": "Söö kook ära!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/a2ra-osta-leiba": {
+    "text": "Ära osta leiba!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ostsin-u2he-leiva": {
+    "text": "Ma ostsin ühe leiva.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/p-voice": {
+    "text": "Tere, see on Liisa! Ma käisin poes ja ostsin leiba ja juustu. Ma ostsin ka ühe suure koogi. Piima ma ei ostnud. Aga ma ei leia oma võtit. Kas sa aitad mind?",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "raamatut-voi-raamatu/d-teenindaja-1": {
+    "text": "Tere! Mida te soovite?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "raamatut-voi-raamatu/d-teenindaja-2": {
+    "text": "Kas te soovite ka teed?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "raamatut-voi-raamatu/d-sina-2": {
+    "text": "Ei, aitäh. Ma ei taha teed.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/d-teenindaja-3": {
+    "text": "Kas te otsite midagi?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "raamatut-voi-raamatu/d-sina-3": {
+    "text": "Jah, ma otsin oma võtit.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/d-teenindaja-4": {
+    "text": "Palun, teie kook. Kas te sööte selle kohe ära?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "raamatut-voi-raamatu/d-sina-4": {
+    "text": "Jah, ma söön koogi kohe ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/a2ra": {
+    "text": "ära",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/kook": {
+    "text": "kook",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/vo3ti": {
+    "text": "võti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-so3in-kooki": {
+    "text": "Ma sõin kooki.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-jo3in-vett": {
+    "text": "Ma jõin vett.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/jaan-armastab-marit": {
+    "text": "Jaan armastab Marit.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/tee-to2o2-a2ra": {
+    "text": "Tee töö ära!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/d-sina-1": {
+    "text": "Ma võtan ühe koogi, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/liis-ostis-leiva": {
+    "text": "Liis ostis leiva.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/liis-ostab-leiva": {
+    "text": "Liis ostab leiva.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/c-book-key-cake": {
+    "text": "Tere, Jaan! Kas sa lugesid selle raamatu, mille ma sulle andsin, juba läbi? Tere, Mari! Ma lugesin eile õhtul sinu raamatut, kuni jäin diivanil magama. Nii et sa ei lugenud seda veel läbi? Ei, aga täna õhtul loen ma selle kindlasti läbi. Miks sa nii väsinud olid, kas sul oli palju tööd? Jah, ma tegin terve päeva tööd, sest kolleeg oli haige. Ja õhtul otsisin ma pool tundi oma võtit. Kas sa leidsid lõpuks oma võtme? Jah, see oli köögis laua peal, kuhu ma selle hommikul panin. Ja kas sa said õhtul ka midagi süüa? Ma sõin supi ära, mille ema mulle eile tõi. Ja siis jõin ma veel kaks tassi teed. Mina käisin pärast tööd poes ja ostsin leiba, juustu ja koogi. Kas sa ostsid ka piima, mida me hommikuks vajame? Ei, piima ma ei ostnud, sest kodus on veel pool pakki. Aga kas sa sõid koogi juba ära? Ei, ma ei söönud kooki, see on täna õhtuks. Ma ootan kella seitsmeks sõbrannat ja me sööme koogi koos ära. Kas see sõbranna on Kati, kellega sa koos töötasid? Jah, ma ootan Katit, aga ta tuleb võib-olla natuke hiljem. Kas ma võin ka tulla, kui ma raamatu enne läbi loen? Muidugi, aga too siis raamat kaasa ja räägi, kuidas lõpp sulle meeldis. Hästi, ma toon raamatu kaasa ja ostan teel ühe pudeli mahla. Ära osta mahla, meil on kodus mahla küllalt. Osta parem lilli, Kati armastab lilli. Hea mõte, ma ostan lilled turult, kus need on odavamad. Tore, siis näeme kell seitse, ja ära unusta võtit! Ei unusta, ma panen võtme kohe taskusse. Kui sa raamatu läbi loed, anna see pärast ka Katile. Hea küll, aga enne pean ma selle ise lõpuni lugema. Siis loe kiiresti, sest Kati läheb järgmisel nädalal puhkusele. Hästi, ma loen täna õhtul kohe pärast sööki.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Kas sa lugesid selle raamatu, mille ma sulle andsin, juba läbi?"
+        ],
+        "say": "[cheerful] Tere, Jaan! Kas sa lugesid selle raamatu, mille ma sulle andsin, juba läbi?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Mari!",
+          "Ma lugesin eile õhtul sinu raamatut, kuni jäin diivanil magama."
+        ],
+        "say": "[laughs] Tere, Mari! Ma lugesin eile õhtul sinu raamatut, kuni jäin diivanil magama."
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Nii et sa ei lugenud seda veel läbi?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, aga täna õhtul loen ma selle kindlasti läbi."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Miks sa nii väsinud olid, kas sul oli palju tööd?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, ma tegin terve päeva tööd, sest kolleeg oli haige.",
+          "Ja õhtul otsisin ma pool tundi oma võtit."
+        ],
+        "say": "[sighs] Jah, ma tegin terve päeva tööd, sest kolleeg oli haige. Ja õhtul otsisin ma pool tundi oma võtit."
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sa leidsid lõpuks oma võtme?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, see oli köögis laua peal, kuhu ma selle hommikul panin."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja kas sa said õhtul ka midagi süüa?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma sõin supi ära, mille ema mulle eile tõi.",
+          "Ja siis jõin ma veel kaks tassi teed."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mina käisin pärast tööd poes ja ostsin leiba, juustu ja koogi."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas sa ostsid ka piima, mida me hommikuks vajame?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, piima ma ei ostnud, sest kodus on veel pool pakki."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aga kas sa sõid koogi juba ära?"
+        ],
+        "say": "[curious] Aga kas sa sõid koogi juba ära?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, ma ei söönud kooki, see on täna õhtuks.",
+          "Ma ootan kella seitsmeks sõbrannat ja me sööme koogi koos ära."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas see sõbranna on Kati, kellega sa koos töötasid?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, ma ootan Katit, aga ta tuleb võib-olla natuke hiljem."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas ma võin ka tulla, kui ma raamatu enne läbi loen?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Muidugi, aga too siis raamat kaasa ja räägi, kuidas lõpp sulle meeldis."
+        ],
+        "say": "[laughs] Muidugi, aga too siis raamat kaasa ja räägi, kuidas lõpp sulle meeldis."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hästi, ma toon raamatu kaasa ja ostan teel ühe pudeli mahla."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ära osta mahla, meil on kodus mahla küllalt.",
+          "Osta parem lilli, Kati armastab lilli."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hea mõte, ma ostan lilled turult, kus need on odavamad."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tore, siis näeme kell seitse, ja ära unusta võtit!"
+        ],
+        "say": "[laughs] Tore, siis näeme kell seitse, ja ära unusta võtit!"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei unusta, ma panen võtme kohe taskusse."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kui sa raamatu läbi loed, anna see pärast ka Katile."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hea küll, aga enne pean ma selle ise lõpuni lugema."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Siis loe kiiresti, sest Kati läheb järgmisel nädalal puhkusele."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hästi, ma loen täna õhtul kohe pärast sööki."
+        ]
+      }
+    ]
+  },
+  "raamatut-voi-raamatu/liis-ostis-leiba": {
+    "text": "Liis ostis leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/jalg": {
+    "text": "jalg",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/jala": {
+    "text": "jala",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/tuba": {
+    "text": "tuba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/toa": {
+    "text": "toa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kapp": {
+    "text": "kapp",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kapi": {
+    "text": "kapi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/pank": {
+    "text": "pank",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/panga": {
+    "text": "panga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/lind": {
+    "text": "lind",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/linnu": {
+    "text": "linnu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/mo3te": {
+    "text": "mõte",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/mo3tte": {
+    "text": "mõtte",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/poodi": {
+    "text": "poodi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/lugema": {
+    "text": "lugema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/loen": {
+    "text": "loen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kappi": {
+    "text": "kappi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kott": {
+    "text": "kott",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/koti": {
+    "text": "koti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kotti": {
+    "text": "kotti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/tu2kk": {
+    "text": "tükk",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/tu2ki": {
+    "text": "tüki",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/tu2kki": {
+    "text": "tükki",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/panka": {
+    "text": "panka",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/park": {
+    "text": "park",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/pargi": {
+    "text": "pargi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/parki": {
+    "text": "parki",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/lamp": {
+    "text": "lamp",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/lambi": {
+    "text": "lambi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/lampi": {
+    "text": "lampi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/jalga": {
+    "text": "jalga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/pood": {
+    "text": "pood",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/poe": {
+    "text": "poe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ma2gi": {
+    "text": "mägi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ma2e": {
+    "text": "mäe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ma2ge": {
+    "text": "mäge",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/lindu": {
+    "text": "lindu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/rand": {
+    "text": "rand",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ranna": {
+    "text": "ranna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/randa": {
+    "text": "randa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kuld": {
+    "text": "kuld",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kulla": {
+    "text": "kulla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kulda": {
+    "text": "kulda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/mo3tet": {
+    "text": "mõtet",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/hammas": {
+    "text": "hammas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/hamba": {
+    "text": "hamba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/hammast": {
+    "text": "hammast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/rikas": {
+    "text": "rikas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/rikka": {
+    "text": "rikka",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/rikast": {
+    "text": "rikast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/aed": {
+    "text": "aed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/aia": {
+    "text": "aia",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/lugu": {
+    "text": "lugu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/loo": {
+    "text": "loo",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/nurk": {
+    "text": "nurk",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/nurga": {
+    "text": "nurga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/tund": {
+    "text": "tund",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/tunni": {
+    "text": "tunni",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/sokk": {
+    "text": "sokk",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/soki": {
+    "text": "soki",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/sild": {
+    "text": "sild",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/silla": {
+    "text": "silla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/jalal": {
+    "text": "jalal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/jalad": {
+    "text": "jalad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kapis": {
+    "text": "kapis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kapid": {
+    "text": "kapid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/pangas": {
+    "text": "pangas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/pangad": {
+    "text": "pangad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/linnul": {
+    "text": "linnul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/linnud": {
+    "text": "linnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/poes": {
+    "text": "poes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/pargis": {
+    "text": "pargis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kati-on-toas": {
+    "text": "Kati on toas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ema-on-poes": {
+    "text": "Ema on poes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kott-on-kapis": {
+    "text": "Kott on kapis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/jaan-on-pangas": {
+    "text": "Jaan on pangas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/me-oleme-rannas": {
+    "text": "Me oleme rannas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/maja-on-ma2el": {
+    "text": "Maja on mäel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/mu-jalad-on-va2sinud": {
+    "text": "Mu jalad on väsinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/lugeda": {
+    "text": "lugeda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ra2a2kima": {
+    "text": "rääkima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ra2a2kida": {
+    "text": "rääkida",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ra2a2gin": {
+    "text": "räägin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/o3ppima": {
+    "text": "õppima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/o3ppida": {
+    "text": "õppida",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/o3pin": {
+    "text": "õpin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ootama": {
+    "text": "ootama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ootan": {
+    "text": "ootan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/vaatama": {
+    "text": "vaatama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/vaadata": {
+    "text": "vaadata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/vaatan": {
+    "text": "vaatan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/hakkama": {
+    "text": "hakkama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/hakata": {
+    "text": "hakata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/hakkan": {
+    "text": "hakkan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kass-on-kapis": {
+    "text": "Kass on kapis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/me-oleme-pangas": {
+    "text": "Me oleme pangas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ma-loen-raamatut": {
+    "text": "Ma loen raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ma-o3pin-eesti-keelt": {
+    "text": "Ma õpin eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ta-ra2a2gib-eesti-keelt": {
+    "text": "Ta räägib eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ma-la2hen-poodi": {
+    "text": "Ma lähen poodi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/mul-pole-kappi": {
+    "text": "Mul pole kappi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ma-na2en-lindu": {
+    "text": "Ma näen lindu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/me-la2heme-parki": {
+    "text": "Me läheme parki.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/siin-pole-panka": {
+    "text": "Siin pole panka.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/p-room": {
+    "text": "Kati tuba on väike. Kati toas on laud ja kapp. Raamatud on kapi peal. Õhtul läheb ta poodi. Ta tuleb poest koju kell viis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/lapsed-on-pargis": {
+    "text": "Lapsed on pargis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/linnud-on-pargis": {
+    "text": "Linnud on pargis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/oodata": {
+    "text": "oodata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/palju": {
+    "text": "palju",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/su2nnipa2ev": {
+    "text": "sünnipäev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ku2lalisi": {
+    "text": "külalisi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/lilli": {
+    "text": "lilli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kooke": {
+    "text": "kooke",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/banaane": {
+    "text": "banaane",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/linde": {
+    "text": "linde",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/raamat": {
+    "text": "raamat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/raamatut": {
+    "text": "raamatut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/raamatuid": {
+    "text": "raamatuid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o3pik": {
+    "text": "õpik",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o3pikut": {
+    "text": "õpikut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o3pikuid": {
+    "text": "õpikuid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kohvik": {
+    "text": "kohvik",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kohvikut": {
+    "text": "kohvikut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kohvikuid": {
+    "text": "kohvikuid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/auto": {
+    "text": "auto",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/autot": {
+    "text": "autot",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/autosid": {
+    "text": "autosid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kino": {
+    "text": "kino",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kinosid": {
+    "text": "kinosid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ema": {
+    "text": "ema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/emasid": {
+    "text": "emasid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/maja": {
+    "text": "maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/maju": {
+    "text": "maju",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o3un": {
+    "text": "õun",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o3una": {
+    "text": "õuna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o3unu": {
+    "text": "õunu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kool": {
+    "text": "kool",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kooli": {
+    "text": "kooli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/koole": {
+    "text": "koole",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/laps": {
+    "text": "laps",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/last": {
+    "text": "last",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/lapsi": {
+    "text": "lapsi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/maa": {
+    "text": "maa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/maad": {
+    "text": "maad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/maid": {
+    "text": "maid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/puu": {
+    "text": "puu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/puud": {
+    "text": "puud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/puid": {
+    "text": "puid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/tee": {
+    "text": "tee",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/teed": {
+    "text": "teed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/teid": {
+    "text": "teid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kaks-raamatut": {
+    "text": "kaks raamatut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/palju-raamatuid": {
+    "text": "palju raamatuid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/raamatud": {
+    "text": "raamatud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kaks-o3una": {
+    "text": "kaks õuna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/palju-o3unu": {
+    "text": "palju õunu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o3unad": {
+    "text": "õunad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kaks-so3pra": {
+    "text": "kaks sõpra",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/palju-so3pru": {
+    "text": "palju sõpru",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/so3brad": {
+    "text": "sõbrad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kaks-last": {
+    "text": "kaks last",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/palju-lapsi": {
+    "text": "palju lapsi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/lapsed": {
+    "text": "lapsed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/mul-on-palju-raamatuid": {
+    "text": "Mul on palju raamatuid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/poes-on-o3unu": {
+    "text": "Poes on õunu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/mul-ei-ole-autosid": {
+    "text": "Mul ei ole autosid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ma-armastan-linde": {
+    "text": "Ma armastan linde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ma-ostsin-o3unu": {
+    "text": "Ma ostsin õunu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ma-ostsin-o3unad": {
+    "text": "Ma ostsin õunad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/mul-on-kaks-raamatut": {
+    "text": "Mul on kaks raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kus-mu-raamatud-on": {
+    "text": "Kus mu raamatud on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/neil-on-kaks-last": {
+    "text": "Neil on kaks last.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/neil-on-palju-lapsi": {
+    "text": "Neil on palju lapsi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kus-lapsed-on": {
+    "text": "Kus lapsed on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/tal-on-kaks-so3pra": {
+    "text": "Tal on kaks sõpra.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/tal-on-palju-so3pru": {
+    "text": "Tal on palju sõpru.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kus-ta-so3brad-on": {
+    "text": "Kus ta sõbrad on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ta2naval-on-palju-autosid": {
+    "text": "Tänaval on palju autosid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/siin-on-vanu-maju": {
+    "text": "Siin on vanu maju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/tallinnas-on-palju-koole": {
+    "text": "Tallinnas on palju koole.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/pargis-on-palju-puid": {
+    "text": "Pargis on palju puid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/mul-on-palju-so3pru": {
+    "text": "Mul on palju sõpru.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/neil-ei-ole-lapsi": {
+    "text": "Neil ei ole lapsi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kass": {
+    "text": "kass",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kasse": {
+    "text": "kasse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/pood": {
+    "text": "pood",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/poode": {
+    "text": "poode",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ta2di": {
+    "text": "tädi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ta2disid": {
+    "text": "tädisid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/tomat": {
+    "text": "tomat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/tomateid": {
+    "text": "tomateid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o2o2": {
+    "text": "öö",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o2id": {
+    "text": "öid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/so3na": {
+    "text": "sõna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/so3nu": {
+    "text": "sõnu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/mul-ei-ole-lapsi": {
+    "text": "Mul ei ole lapsi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/laual-on-palju-o3unu": {
+    "text": "Laual on palju õunu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ma-ootan-so3pru": {
+    "text": "Ma ootan sõpru.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ma-ostsin-kaks-o3una": {
+    "text": "Ma ostsin kaks õuna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/mul-on-kaks-last": {
+    "text": "Mul on kaks last.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/lapsed-on-kodus": {
+    "text": "Lapsed on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/tal-ei-ole-autosid": {
+    "text": "Tal ei ole autosid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ma-armastan-lilli": {
+    "text": "Ma armastan lilli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/mul-on-kaks-so3pra": {
+    "text": "Mul on kaks sõpra.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/p-party": {
+    "text": "Täna on Kati sünnipäev. Ta ostis poest õunu ja banaane. Õhtul tuleb palju külalisi. Kati sõbrad toovad lilli. Lapsed laulavad laule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/c-market": {
+    "text": "Tere, Mari! Kas sa käisid täna hommikul turul? Jah, käisin, ja ostsin õunu, porgandeid ja kaks kilo kartuleid. Kas turul oli ka tomateid, mida sa eile otsisid? Ei, tomateid täna ei olnud, sest müüja oli haige. Kahju, ma tahtsin teha tomatisalatit. Ma võin homme uuesti minna, kui sul neid väga vaja on. Aga seal oli palju lilli, punaseid ja kollaseid. Kas sa ostsid ka lilli või ainult köögivilju? Jah, ma ostsin viis roosi, need on emale. Kas su emal on sünnipäev, et sa talle lilli viid? Ei, ta lihtsalt armastab lilli ja ootab mind täna külla. Tal on aias palju roose, aga praegu nad veel ei õitse. Mul tulevad homme külalised ja ma pean veel poodi minema. Mul on vaja veel leiba, juustu ja mahla. Mitu külalist sul tuleb, kas palju? Kuus inimest: minu sõbrad ja nende lapsed. Kuus inimest, see on palju, mida sa neile teed? Ma teen suppi ja ostan kondiitrist kooke, sest lapsed armastavad kooke. Milliseid kooke sa ostad? Mõned õunakoogid ja mõned kohupiimakoogid. Kas sul on piisavalt toole, et kõik saaksid istuda? Ei, mul on ainult neli tooli ja üks diivan. Kas sa saad mulle kaks tooli laenata? Muidugi, ma toon need homme hommikul autoga. Mul on köögis kuus tooli, aga me kasutame ainult kahte. Aitäh, sa oled tõeline sõber, ma teen sulle kooki. Kas sul on ka piisavalt taldrikuid ja tasse? Jah, neid on mul palju, sest ema andis mulle oma vanad nõud. Ja kas sa vajad veel midagi, näiteks klaase või lusikaid? Ei, klaase ja lusikaid on mul küll, aga mul pole vaase. Siis toon ma ka ühe vaasi, sest külalised toovad sageli lilli. Suurepärane, tule homme kell kuus ja too oma lapsed ka!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Mari!",
+          "Kas sa käisid täna hommikul turul?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, käisin, ja ostsin õunu, porgandeid ja kaks kilo kartuleid."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas turul oli ka tomateid, mida sa eile otsisid?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, tomateid täna ei olnud, sest müüja oli haige."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kahju, ma tahtsin teha tomatisalatit."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ma võin homme uuesti minna, kui sul neid väga vaja on.",
+          "Aga seal oli palju lilli, punaseid ja kollaseid."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas sa ostsid ka lilli või ainult köögivilju?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, ma ostsin viis roosi, need on emale."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas su emal on sünnipäev, et sa talle lilli viid?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, ta lihtsalt armastab lilli ja ootab mind täna külla.",
+          "Tal on aias palju roose, aga praegu nad veel ei õitse."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mul tulevad homme külalised ja ma pean veel poodi minema.",
+          "Mul on vaja veel leiba, juustu ja mahla."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mitu külalist sul tuleb, kas palju?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kuus inimest: minu sõbrad ja nende lapsed."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kuus inimest, see on palju, mida sa neile teed?"
+        ],
+        "say": "[surprised] Kuus inimest, see on palju, mida sa neile teed?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma teen suppi ja ostan kondiitrist kooke, sest lapsed armastavad kooke."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Milliseid kooke sa ostad?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mõned õunakoogid ja mõned kohupiimakoogid."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sul on piisavalt toole, et kõik saaksid istuda?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, mul on ainult neli tooli ja üks diivan.",
+          "Kas sa saad mulle kaks tooli laenata?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Muidugi, ma toon need homme hommikul autoga.",
+          "Mul on köögis kuus tooli, aga me kasutame ainult kahte."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh, sa oled tõeline sõber, ma teen sulle kooki."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sul on ka piisavalt taldrikuid ja tasse?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, neid on mul palju, sest ema andis mulle oma vanad nõud."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja kas sa vajad veel midagi, näiteks klaase või lusikaid?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, klaase ja lusikaid on mul küll, aga mul pole vaase."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Siis toon ma ka ühe vaasi, sest külalised toovad sageli lilli."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Suurepärane, tule homme kell kuus ja too oma lapsed ka!"
+        ],
+        "say": "[cheerful] Suurepärane, tule homme kell kuus ja too oma lapsed ka!"
+      }
+    ]
+  },
+  "jalg-jala/c-new-flat": {
+    "text": "Tere, Jaan! Tule sisse, see on minu uus korter, kuhu ma eile kolisin. Tere, Kati! Korter on ilus, aga kas su tuba on ka suur? Ei, tuba on väike, aga see on hele ja soe. Toas on ainult laud, voodi ja kapp, mille ma turult ostsin. Kus su raamatud on, kas sa tõid need kõik kaasa? Jah, raamatud on kapis ja kapi peal on lamp. Ja kus su suur kott on, mida sa eile kandsid? Kott on toas laua all, sest mul pole veel riiulit. Kas siin lähedal on pood, kus saab leiba osta? Jah, pood on kohe nurga taga, maja kõrval. Ma käin poes peaaegu iga päev, sest see on nii lähedal. Ja pank, kas sa käid tihti pangas? Pank on pargi kõrval, aga pangas ma ei käi. Ma maksan kõik arved telefoniga, see on lihtsam. Mis pargis on, kas seal on midagi huvitavat? Pargis on suured vanad puud ja palju linde. Hommikul ma jooksen pargis, enne kui tööle lähen. Ja rand, kas rand on ka siit lähedal? Ei, rand on kaugel, bussiga umbes pool tundi. Rannas käin ma ainult laupäeval, kui mul on aega. Kas sa käid ka talvel rannas? Talvel käin ma rannas ainult jalutamas, siis on seal vaikne. Kus su ema praegu elab, kas ikka Tartus? Jah, ema elab Tartus, ühe väikese mäe peal. Maja juures on suur aed, kus kasvavad õunapuud. Ma käin seal kord kuus ja aitan tal aias töötada. Kas sinu õde elab ka Tartus? Ei, õde elab Pärnus, mere ääres. Mu jalad on väsinud, sest ma tulin jala. Kas ma võin natuke istuda? Muidugi, istu siia diivanile, see on mugav. Ma teen meile teed ja toon küpsiseid. Aitäh, sul on siin väga hubane, ma tulen jälle. Tule järgmisel nädalal jälle, siis on mul juba uus riiul.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Tule sisse, see on minu uus korter, kuhu ma eile kolisin."
+        ],
+        "say": "[cheerful] Tere, Jaan! Tule sisse, see on minu uus korter, kuhu ma eile kolisin."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Kati!",
+          "Korter on ilus, aga kas su tuba on ka suur?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, tuba on väike, aga see on hele ja soe.",
+          "Toas on ainult laud, voodi ja kapp, mille ma turult ostsin."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kus su raamatud on, kas sa tõid need kõik kaasa?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, raamatud on kapis ja kapi peal on lamp."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja kus su suur kott on, mida sa eile kandsid?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kott on toas laua all, sest mul pole veel riiulit."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas siin lähedal on pood, kus saab leiba osta?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, pood on kohe nurga taga, maja kõrval.",
+          "Ma käin poes peaaegu iga päev, sest see on nii lähedal."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja pank, kas sa käid tihti pangas?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Pank on pargi kõrval, aga pangas ma ei käi.",
+          "Ma maksan kõik arved telefoniga, see on lihtsam."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mis pargis on, kas seal on midagi huvitavat?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Pargis on suured vanad puud ja palju linde.",
+          "Hommikul ma jooksen pargis, enne kui tööle lähen."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja rand, kas rand on ka siit lähedal?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, rand on kaugel, bussiga umbes pool tundi.",
+          "Rannas käin ma ainult laupäeval, kui mul on aega."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas sa käid ka talvel rannas?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Talvel käin ma rannas ainult jalutamas, siis on seal vaikne."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kus su ema praegu elab, kas ikka Tartus?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, ema elab Tartus, ühe väikese mäe peal.",
+          "Maja juures on suur aed, kus kasvavad õunapuud.",
+          "Ma käin seal kord kuus ja aitan tal aias töötada."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas sinu õde elab ka Tartus?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, õde elab Pärnus, mere ääres."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mu jalad on väsinud, sest ma tulin jala.",
+          "Kas ma võin natuke istuda?"
+        ],
+        "say": "[laughs] Mu jalad on väsinud, sest ma tulin jala. Kas ma võin natuke istuda?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Muidugi, istu siia diivanile, see on mugav.",
+          "Ma teen meile teed ja toon küpsiseid."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh, sul on siin väga hubane, ma tulen jälle."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tule järgmisel nädalal jälle, siis on mul juba uus riiul."
+        ]
+      }
+    ]
+  },
+  "majades-inimestele/kingitusi": {
+    "text": "kingitusi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/mu2u2jatega": {
+    "text": "müüjatega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/kottidesse": {
+    "text": "kottidesse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/raamatupoodides": {
+    "text": "raamatupoodides",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/majades": {
+    "text": "majades",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/inimestele": {
+    "text": "inimestele",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/maja": {
+    "text": "maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/majade": {
+    "text": "majade",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/so3pra": {
+    "text": "sõpra",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/so3prade": {
+    "text": "sõprade",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/lindu": {
+    "text": "lindu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/lindude": {
+    "text": "lindude",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/kooli": {
+    "text": "kooli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/koolide": {
+    "text": "koolide",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/puud": {
+    "text": "puud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/puude": {
+    "text": "puude",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/raamatut": {
+    "text": "raamatut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/raamatute": {
+    "text": "raamatute",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/inimest": {
+    "text": "inimest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/inimeste": {
+    "text": "inimeste",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/o3petajat": {
+    "text": "õpetajat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/o3petajate": {
+    "text": "õpetajate",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/kohvikut": {
+    "text": "kohvikut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/kohvikute": {
+    "text": "kohvikute",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/majas": {
+    "text": "majas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/majast": {
+    "text": "majast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/majale": {
+    "text": "majale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/majal": {
+    "text": "majal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/majaga": {
+    "text": "majaga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/majadest": {
+    "text": "majadest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/majadele": {
+    "text": "majadele",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/majadel": {
+    "text": "majadel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/majadega": {
+    "text": "majadega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/raamatu": {
+    "text": "raamatu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/raamatus": {
+    "text": "raamatus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/raamatust": {
+    "text": "raamatust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/raamatule": {
+    "text": "raamatule",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/raamatul": {
+    "text": "raamatul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/raamatuga": {
+    "text": "raamatuga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/raamatutes": {
+    "text": "raamatutes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/raamatutest": {
+    "text": "raamatutest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/raamatutele": {
+    "text": "raamatutele",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/raamatutel": {
+    "text": "raamatutel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/raamatutega": {
+    "text": "raamatutega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/inimese": {
+    "text": "inimese",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/inimeses": {
+    "text": "inimeses",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/inimesest": {
+    "text": "inimesest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/inimesele": {
+    "text": "inimesele",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/inimesel": {
+    "text": "inimesel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/inimesega": {
+    "text": "inimesega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/inimestes": {
+    "text": "inimestes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/inimestest": {
+    "text": "inimestest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/inimestel": {
+    "text": "inimestel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/inimestega": {
+    "text": "inimestega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/so3bra": {
+    "text": "sõbra",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/so3bras": {
+    "text": "sõbras",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/so3brast": {
+    "text": "sõbrast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/so3brale": {
+    "text": "sõbrale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/so3bral": {
+    "text": "sõbral",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/so3braga": {
+    "text": "sõbraga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/so3prades": {
+    "text": "sõprades",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/so3pradest": {
+    "text": "sõpradest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/so3pradele": {
+    "text": "sõpradele",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/so3pradel": {
+    "text": "sõpradel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/so3pradega": {
+    "text": "sõpradega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/ma-ra2a2gin-inimesega": {
+    "text": "Ma räägin inimesega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/ma-ra2a2gin-inimestega": {
+    "text": "Ma räägin inimestega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/ma-ra2a2gin-inimestele": {
+    "text": "Ma räägin inimestele.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/ta-kirjutab-so3brale": {
+    "text": "Ta kirjutab sõbrale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/ta-kirjutab-so3pradele": {
+    "text": "Ta kirjutab sõpradele.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/ta-kirjutab-so3pradest": {
+    "text": "Ta kirjutab sõpradest.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/pildid-on-raamatus": {
+    "text": "Pildid on raamatus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/pildid-on-raamatutes": {
+    "text": "Pildid on raamatutes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/me-ka2ime-poes": {
+    "text": "Me käime poes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/poodide": {
+    "text": "poodide",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/linnul": {
+    "text": "linnul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/lindudel": {
+    "text": "lindudel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/koolist": {
+    "text": "koolist",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/koolidest": {
+    "text": "koolidest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/raamatutes-on-pilte": {
+    "text": "Raamatutes on pilte.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/lapsed-tulevad-koolidest": {
+    "text": "Lapsed tulevad koolidest.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/ma-la2hen-so3pradega-kinno": {
+    "text": "Ma lähen sõpradega kinno.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/o3petajatele-meeldib-kohv": {
+    "text": "Õpetajatele meeldib kohv.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/p-shopping": {
+    "text": "Laupäeval käivad Kati ja Mari poodides. Nad otsivad kingitusi oma sõpradele. Raamatupoodides on palju inimesi. Mari räägib müüjatega eesti keeles. Kingitused panevad nad kottidesse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/c-weekend": {
+    "text": "Tere, Mari! Kuidas nädalavahetus läks? Väga hästi, aitäh! Ma olin kolm päeva Tartus koos sõpradega. Mida te seal tegite? Laupäeval käisime muuseumides ja kohvikutes. Tartu kohvikutes on väga head koogid. Kas muuseumides oli palju inimesi? Jah, väga palju. Kõikides saalides olid lapsed ja nende vanemad. Lapsed jooksid saalist saali. Kus te ööbisite? Ühe sõbra juures. Tal on vanalinnas korter. Vanades majades on kõrged laed ja suured aknad. Õhtul istusime köögis ja rääkisime tundide kaupa. Ja pühapäeval? Pühapäeval käisime poodides. Ma ostsin kingitusi oma õdedele. Neile meeldivad raamatud, nii et ma ostsin kaks raamatut. Kas sa rääkisid poodides eesti keelt? Muidugi! Ma rääkisin müüjatega ainult eesti keeles. Nad olid väga sõbralikud. Ühes raamatupoes küsis müüja, kust ma pärit olen. Ta ei uskunud, et ma õpin eesti keelt alles kaks aastat. Tubli! Mina olin terve nädalavahetuse kodus. Mida sa tegid? Kõigepealt kirjutasin kirju oma vanematele ja vendadele. Siis vaatasin vanu fotosid. Vanu fotosid? Kust sa need leidsid? Need olid kastides keldris. Mõnedel piltidel on minu vanaisa ja vanaema. Nad seisavad oma maja ees. Mõnel pildil on ka meie vana koer. Ta magab alati laste voodite all. Kui huvitav! Kas sa näitad neid mulle? Jah, muidugi. Ma panen kõige ilusamad pildid albumitesse. Tule homme minu juurde! Hea mõte! Ma toon kooke. Kas kell viis sobib? Jah, kell viis sobib väga hästi. Kas ma võin ka oma sõbrad kaasa võtta? Nad tahavad sinuga tuttavaks saada. Muidugi, kõik on oodatud. Ma teen teed ja kohvi kõikidele külalistele. Kohtumiseni!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Mari!",
+          "Kuidas nädalavahetus läks?"
+        ],
+        "say": "[cheerful] Tere, Mari! Kuidas nädalavahetus läks?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Väga hästi, aitäh!",
+          "Ma olin kolm päeva Tartus koos sõpradega."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mida te seal tegite?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Laupäeval käisime muuseumides ja kohvikutes.",
+          "Tartu kohvikutes on väga head koogid."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas muuseumides oli palju inimesi?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, väga palju.",
+          "Kõikides saalides olid lapsed ja nende vanemad.",
+          "Lapsed jooksid saalist saali."
+        ],
+        "say": "[laughs] Jah, väga palju. Kõikides saalides olid lapsed ja nende vanemad. Lapsed jooksid saalist saali."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kus te ööbisite?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ühe sõbra juures.",
+          "Tal on vanalinnas korter.",
+          "Vanades majades on kõrged laed ja suured aknad.",
+          "Õhtul istusime köögis ja rääkisime tundide kaupa."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja pühapäeval?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Pühapäeval käisime poodides.",
+          "Ma ostsin kingitusi oma õdedele.",
+          "Neile meeldivad raamatud, nii et ma ostsin kaks raamatut."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas sa rääkisid poodides eesti keelt?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Muidugi!",
+          "Ma rääkisin müüjatega ainult eesti keeles.",
+          "Nad olid väga sõbralikud.",
+          "Ühes raamatupoes küsis müüja, kust ma pärit olen.",
+          "Ta ei uskunud, et ma õpin eesti keelt alles kaks aastat."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tubli!",
+          "Mina olin terve nädalavahetuse kodus."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mida sa tegid?"
+        ],
+        "say": "[curious] Mida sa tegid?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kõigepealt kirjutasin kirju oma vanematele ja vendadele.",
+          "Siis vaatasin vanu fotosid."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Vanu fotosid?",
+          "Kust sa need leidsid?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Need olid kastides keldris.",
+          "Mõnedel piltidel on minu vanaisa ja vanaema.",
+          "Nad seisavad oma maja ees.",
+          "Mõnel pildil on ka meie vana koer.",
+          "Ta magab alati laste voodite all."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kui huvitav!",
+          "Kas sa näitad neid mulle?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, muidugi.",
+          "Ma panen kõige ilusamad pildid albumitesse.",
+          "Tule homme minu juurde!"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Hea mõte!",
+          "Ma toon kooke.",
+          "Kas kell viis sobib?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, kell viis sobib väga hästi."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas ma võin ka oma sõbrad kaasa võtta?",
+          "Nad tahavad sinuga tuttavaks saada."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Muidugi, kõik on oodatud.",
+          "Ma teen teed ja kohvi kõikidele külalistele.",
+          "Kohtumiseni!"
+        ]
+      }
+    ]
+  },
+  "majades-inimestele/pildid-on-raamatutel": {
+    "text": "Pildid on raamatutel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/me-ka2ime-poodides": {
+    "text": "Me käime poodides.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/me-tuleme-poodidest": {
+    "text": "Me tuleme poodidest.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/me-kirjutame-kirju-lastele": {
+    "text": "Me kirjutame kirju lastele.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/lindudel-on-puudes-pesad": {
+    "text": "Lindudel on puudes pesad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/juba": {
+    "text": "juba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/veel": {
+    "text": "veel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/kunagi": {
+    "text": "kunagi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/jo3udma": {
+    "text": "jõudma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/lugenud": {
+    "text": "lugenud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/so2o2nud": {
+    "text": "söönud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/olen": {
+    "text": "olen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/olin": {
+    "text": "olin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/elada": {
+    "text": "elada",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/elanud": {
+    "text": "elanud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/lugeda": {
+    "text": "lugeda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/o3ppida": {
+    "text": "õppida",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/o3ppinud": {
+    "text": "õppinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ka2ia": {
+    "text": "käia",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ka2inud": {
+    "text": "käinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/osta": {
+    "text": "osta",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ostnud": {
+    "text": "ostnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/olla": {
+    "text": "olla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/olnud": {
+    "text": "olnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/minna": {
+    "text": "minna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/la2inud": {
+    "text": "läinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/teha": {
+    "text": "teha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/teinud": {
+    "text": "teinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/su2u2a": {
+    "text": "süüa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/na2ha": {
+    "text": "näha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/na2inud": {
+    "text": "näinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/kui-ma-koju-jo3udsin-oli-mari-juba-so2o2nud": {
+    "text": "Kui ma koju jõudsin, oli Mari juba söönud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/eile-so3in-ma-kodus": {
+    "text": "Eile sõin ma kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-olen-juba-so2o2nud": {
+    "text": "Ma olen juba söönud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-so2o2n": {
+    "text": "Ma söön.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-olen-lugenud": {
+    "text": "Ma olen lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-olin-lugenud": {
+    "text": "Ma olin lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/sa-oled-lugenud": {
+    "text": "Sa oled lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/sa-olid-lugenud": {
+    "text": "Sa olid lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ta-on-lugenud": {
+    "text": "Ta on lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ta-oli-lugenud": {
+    "text": "Ta oli lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/me-oleme-lugenud": {
+    "text": "Me oleme lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/me-olime-lugenud": {
+    "text": "Me olime lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/te-olete-lugenud": {
+    "text": "Te olete lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/te-olite-lugenud": {
+    "text": "Te olite lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/nad-on-lugenud": {
+    "text": "Nad on lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/nad-olid-lugenud": {
+    "text": "Nad olid lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-olen-tartus-ka2inud": {
+    "text": "Ma olen Tartus käinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-ei-ole-veel-so2o2nud": {
+    "text": "Ma ei ole veel söönud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ta-pole-seda-filmi-na2inud": {
+    "text": "Ta pole seda filmi näinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/eile-ka2isin-ma-tartus": {
+    "text": "Eile käisin ma Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/kui-ma-jaama-jo3udsin-oli-rong-juba-la2inud": {
+    "text": "Kui ma jaama jõudsin, oli rong juba läinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/mari-ka2is-tallinnas": {
+    "text": "Mari käis Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/mari-on-tallinnas-ka2inud": {
+    "text": "Mari on Tallinnas käinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/mari-oli-tallinnas-ka2inud": {
+    "text": "Mari oli Tallinnas käinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/jaan-so3i-lo3unat": {
+    "text": "Jaan sõi lõunat.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/jaan-on-lo3unat-so2o2nud": {
+    "text": "Jaan on lõunat söönud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/jaan-oli-lo3unat-so2o2nud": {
+    "text": "Jaan oli lõunat söönud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/kati-luges-selle-raamatu-la2bi": {
+    "text": "Kati luges selle raamatu läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/kati-on-selle-raamatu-la2bi-lugenud": {
+    "text": "Kati on selle raamatu läbi lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/kati-oli-selle-raamatu-la2bi-lugenud": {
+    "text": "Kati oli selle raamatu läbi lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/liis-na2gi-seda-filmi": {
+    "text": "Liis nägi seda filmi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/liis-on-seda-filmi-na2inud": {
+    "text": "Liis on seda filmi näinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/liis-oli-seda-filmi-na2inud": {
+    "text": "Liis oli seda filmi näinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ta-on-juba-koju-la2inud": {
+    "text": "Ta on juba koju läinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/me-oleme-to2o2-a2ra-teinud": {
+    "text": "Me oleme töö ära teinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-ei-ole-seda-filmi-na2inud": {
+    "text": "Ma ei ole seda filmi näinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/nad-on-piletid-ostnud": {
+    "text": "Nad on piletid ostnud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/sa-oled-raamatu-la2bi-lugenud": {
+    "text": "Sa oled raamatu läbi lugenud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-ka2isin-eile-tartus": {
+    "text": "Ma käisin eile Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ta-on-eesti-keelt-kaks-aastat-o3ppinud": {
+    "text": "Ta on eesti keelt kaks aastat õppinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/kas-sa-oled-seda-filmi-na2inud": {
+    "text": "Kas sa oled seda filmi näinud?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/eelmisel-na2dalal-lugesin-ma-raamatu-la2bi": {
+    "text": "Eelmisel nädalal lugesin ma raamatu läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/ma-olen-eesti-keelt-kaks-aastat-o3ppinud": {
+    "text": "Ma olen eesti keelt kaks aastat õppinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/me-oleme-tartus-ka2inud": {
+    "text": "Me oleme Tartus käinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/d-mari-1": {
+    "text": "Tere! Kas sa oled Tartus käinud?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "olen-lugenud/d-sina-1": {
+    "text": "Jah, olen. Ma käisin seal eelmisel kuul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/d-mari-2": {
+    "text": "Kas sa oled juba söönud?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "olen-lugenud/d-sina-2": {
+    "text": "Ei, ma ei ole veel midagi söönud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/d-mari-3": {
+    "text": "Kas sa olid enne kursust eesti keelt õppinud?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "olen-lugenud/d-sina-3": {
+    "text": "Jah, ma olin natuke õppinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olen-lugenud/d-mari-4": {
+    "text": "Tubli! Lähme siis koos sööma.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "olen-lugenud/c-saaremaa": {
+    "text": "Tere, Jaan! Kas sa oled kunagi Saaremaal käinud? Ei, ma ei ole seal kunagi käinud. Aga mu vend on seal mitu korda käinud. Mina käisin eelmisel suvel Saaremaal. See oli väga ilus reis. Mida sa seal tegid? Ma sõitsin rattaga ja ujusin meres. Varem olin ma ainult Pärnus meres ujunud. Kas Saaremaa meri on külm? Natuke. Aga ma olen ka külmemas vees ujunud. Sa oled julge! Kuidas sa sinna sõitsid? Ma sõitsin bussiga ja siis praamiga. Aga kui ma sadamasse jõudsin, oli praam juba läinud. Oh ei! Mida sa siis tegid? Ma ootasin kaks tundi järgmist praami. Ma lugesin raamatu läbi ja jõin kolm tassi kohvi. Kas sa olid varem praamiga sõitnud? Ei, see oli esimene kord. Ma olin varem ainult laevaga Soome sõitnud. Kas sa oled Kuressaare lossi näinud? Jah, olen. Ma käisin seal teisel päeval. Ma polnud varem nii vana lossi näinud. Ma tahan ka sinna minna. Mida sa soovitad? Kas sa oled kunagi suitsukala söönud? Ei ole. Kas see on hea? Väga hea! Ma sõin seda iga päev. Ja sa pead kindlasti Kaali kraatrit vaatamas käima. Kraatrit? Ma pole sellest kunagi kuulnud. See on väga vana auk maas. Sinna kukkus kunagi meteoriit. Huvitav! Kas sa oled reisist pilte teinud? Jah, ma olen sada pilti teinud. Ma saadan need sulle õhtul. Aitäh! Kus sa seal ööbisid? Väikeses külalistemajas. Perenaine oli seal kolmkümmend aastat elanud. Ma annan sulle tema numbri. Suur aitäh! Kas sa oled oma vennaga juba rääkinud? Ta võib sulle ka midagi soovitada. Ei, ma pole temaga veel rääkinud. Ma helistan talle homme. Aga ma olen nüüd otsustanud. Suvel lähen ma Saaremaale. Tore! Ja too mulle suitsukala!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Kas sa oled kunagi Saaremaal käinud?"
+        ],
+        "say": "[cheerful] Tere, Jaan! Kas sa oled kunagi Saaremaal käinud?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, ma ei ole seal kunagi käinud.",
+          "Aga mu vend on seal mitu korda käinud."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mina käisin eelmisel suvel Saaremaal.",
+          "See oli väga ilus reis."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mida sa seal tegid?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ma sõitsin rattaga ja ujusin meres.",
+          "Varem olin ma ainult Pärnus meres ujunud."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas Saaremaa meri on külm?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Natuke.",
+          "Aga ma olen ka külmemas vees ujunud."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Sa oled julge!",
+          "Kuidas sa sinna sõitsid?"
+        ],
+        "say": "[laughs] Sa oled julge! Kuidas sa sinna sõitsid?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ma sõitsin bussiga ja siis praamiga.",
+          "Aga kui ma sadamasse jõudsin, oli praam juba läinud."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Oh ei!",
+          "Mida sa siis tegid?"
+        ],
+        "say": "[surprised] Oh ei! Mida sa siis tegid?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ma ootasin kaks tundi järgmist praami.",
+          "Ma lugesin raamatu läbi ja jõin kolm tassi kohvi."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas sa olid varem praamiga sõitnud?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, see oli esimene kord.",
+          "Ma olin varem ainult laevaga Soome sõitnud."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas sa oled Kuressaare lossi näinud?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, olen.",
+          "Ma käisin seal teisel päeval.",
+          "Ma polnud varem nii vana lossi näinud."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma tahan ka sinna minna.",
+          "Mida sa soovitad?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sa oled kunagi suitsukala söönud?"
+        ],
+        "say": "[curious] Kas sa oled kunagi suitsukala söönud?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei ole.",
+          "Kas see on hea?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Väga hea!",
+          "Ma sõin seda iga päev.",
+          "Ja sa pead kindlasti Kaali kraatrit vaatamas käima."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kraatrit?",
+          "Ma pole sellest kunagi kuulnud."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "See on väga vana auk maas.",
+          "Sinna kukkus kunagi meteoriit."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Huvitav!",
+          "Kas sa oled reisist pilte teinud?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, ma olen sada pilti teinud.",
+          "Ma saadan need sulle õhtul."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh!",
+          "Kus sa seal ööbisid?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Väikeses külalistemajas.",
+          "Perenaine oli seal kolmkümmend aastat elanud.",
+          "Ma annan sulle tema numbri."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Suur aitäh!"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sa oled oma vennaga juba rääkinud?",
+          "Ta võib sulle ka midagi soovitada."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, ma pole temaga veel rääkinud.",
+          "Ma helistan talle homme.",
+          "Aga ma olen nüüd otsustanud.",
+          "Suvel lähen ma Saaremaale."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tore!",
+          "Ja too mulle suitsukala!"
+        ],
+        "say": "[laughs] Tore! Ja too mulle suitsukala!"
+      }
+    ]
+  },
+  "laheksin/kui": {
+    "text": "kui",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/hea-meelega": {
+    "text": "hea meelega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/la2heksin": {
+    "text": "läheksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/tahaksin": {
+    "text": "tahaksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/oleks": {
+    "text": "oleks",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/loen": {
+    "text": "loen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/loeksin": {
+    "text": "loeksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/la2hen": {
+    "text": "lähen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/olen": {
+    "text": "olen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/oleksin": {
+    "text": "oleksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/teen": {
+    "text": "teen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/teeksin": {
+    "text": "teeksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/tahan": {
+    "text": "tahan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/saan": {
+    "text": "saan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/saaksin": {
+    "text": "saaksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/vo3in": {
+    "text": "võin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/vo3iksin": {
+    "text": "võiksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/so2o2n": {
+    "text": "söön",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/so2o2ksin": {
+    "text": "sööksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/elan": {
+    "text": "elan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/elaksin": {
+    "text": "elaksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-la2heksin": {
+    "text": "Ma läheksin.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/sa-la2heksid": {
+    "text": "Sa läheksid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ta-la2heks": {
+    "text": "Ta läheks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/me-la2heksime": {
+    "text": "Me läheksime.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/te-la2heksite": {
+    "text": "Te läheksite.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/nad-la2heksid": {
+    "text": "Nad läheksid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/sa-loeksid": {
+    "text": "Sa loeksid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/me-oleksime": {
+    "text": "Me oleksime.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/nad-teeksid": {
+    "text": "Nad teeksid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-tahaksin": {
+    "text": "Ma tahaksin.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/te-saaksite": {
+    "text": "Te saaksite.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-so2o2ksin": {
+    "text": "Ma sööksin.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ta-elaks": {
+    "text": "Ta elaks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-la2heksin-kinno": {
+    "text": "Ma läheksin kinno.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/mul-on-aega": {
+    "text": "Mul on aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/mul-oleks-aega": {
+    "text": "Mul oleks aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/mul-oli-aega": {
+    "text": "Mul oli aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ta-ostab-auto": {
+    "text": "Ta ostab auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ta-ostaks-auto": {
+    "text": "Ta ostaks auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ta-ostis-auto": {
+    "text": "Ta ostis auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/me-so2o2me-kooki": {
+    "text": "Me sööme kooki.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/me-so2o2ksime-kooki": {
+    "text": "Me sööksime kooki.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/me-so3ime-kooki": {
+    "text": "Me sõime kooki.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/teeksid": {
+    "text": "teeksid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/on": {
+    "text": "on",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/teeb": {
+    "text": "teeb",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-tahaksin-kohvi": {
+    "text": "Ma tahaksin kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/kas-sa-saaksid-mind-aidata": {
+    "text": "Kas sa saaksid mind aidata?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/kas-te-vo3iksite-seda-korrata": {
+    "text": "Kas te võiksite seda korrata?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/kui-mul-oleks-aega-la2heksin-ma-kinno": {
+    "text": "Kui mul oleks aega, läheksin ma kinno.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/kui-ilm-oleks-ilus-so3idaksime-mere-a2a2rde": {
+    "text": "Kui ilm oleks ilus, sõidaksime mere äärde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/kui-ma-oleksin-rikas-ostaksin-maja": {
+    "text": "Kui ma oleksin rikas, ostaksin maja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/nad-ostaksid-maja": {
+    "text": "Nad ostaksid maja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/me-elaksime-tartus": {
+    "text": "Me elaksime Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/kas-sa-loeksid-seda-raamatut": {
+    "text": "Kas sa loeksid seda raamatut?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/kui-oleks-soe-ujuksime-me-meres": {
+    "text": "Kui oleks soe, ujuksime me meres.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-ei-la2heks-kinno": {
+    "text": "Ma ei läheks kinno.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/me-la2heksime-homme-kinno": {
+    "text": "Me läheksime homme kinno.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ta-la2heks-koju": {
+    "text": "Ta läheks koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/te-loeksite-seda-raamatut": {
+    "text": "Te loeksite seda raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/d-teenindaja-1": {
+    "text": "Tere õhtust! Mida te sooviksite?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "laheksin/d-sina-1": {
+    "text": "Ma tahaksin üht teed, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/d-teenindaja-2": {
+    "text": "Kas te sooviksite ka midagi süüa?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "laheksin/d-sina-2": {
+    "text": "Jah, ma võtaksin ühe võileiva.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/d-teenindaja-3": {
+    "text": "Kas te istuksite akna all või terrassil?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "laheksin/d-sina-3": {
+    "text": "Ma istuksin hea meelega terrassil.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/d-teenindaja-4": {
+    "text": "Hästi. Ma toon teie tee kohe.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "laheksin/c-holiday": {
+    "text": "Jaan, mida sa teeksid, kui sul oleks terve kuu puhkust? Hea küsimus! Ma sõidaksin kindlasti Jaapanisse. Jaapanisse? Miks just sinna? Ma tahaksin näha vanu templeid ja süüa päris jaapani toitu. Ja ma õpiksin natuke jaapani keelt. Kui kaua sa seal oleksid? Ma oleksin seal kolm nädalat. Viimasel nädalal sõidaksin ma mägedesse. Jaapani keel on väga raske. Kas sa suudaksid seda õppida? Natuke kindlasti. Aga ma ei räägiks seda kunagi nii hästi kui eesti keelt. Sa räägid eesti keelt juba päris hästi. Aitäh! Aga sina? Mida sina teeksid? Mina ei sõidaks kuhugi kaugele. Ma elaksin terve kuu maal, vanaema juures. Maal? Kas sul ei oleks igav? Ei, mitte üldse. Ma loeksin raamatuid, käiksin metsas ja ujuksin järves. Hommikuti magaksin ma kaua. See kõlab hästi. Aga kui ilm oleks halb? Siis ma istuksin köögis ja küpsetaksin vanaemaga kooke. Me räägiksime tundide kaupa. Kui mul oleks vanaema maal, teeksin ma sama. Minu vanavanemad elavad Tallinnas. Siis sa võiksid tulla minuga kaasa. Vanaemale meeldivad külalised. Tõesti? Ma tuleksin hea meelega! Kas ma saaksin aias aidata? Muidugi. Aias on alati tööd. Sa võiksid kartuleid kaevata. Ma oleksin parem kokk kui aednik. Ma võiksin iga päev süüa teha. Suurepärane! Siis sööksime me iga päev head toitu. Aga Jaapan jääb minu unistuseks. Võib-olla saaksime järgmisel aastal koos Jaapanisse sõita. See oleks väga tore! Aga enne peaksime natuke raha koguma. Lennupiletid on kallid. Õige. Ma ei ostaks enam iga päev kohvikust kohvi. See oleks sinu jaoks väga raske!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jaan, mida sa teeksid, kui sul oleks terve kuu puhkust?"
+        ],
+        "say": "[curious] Jaan, mida sa teeksid, kui sul oleks terve kuu puhkust?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hea küsimus!",
+          "Ma sõidaksin kindlasti Jaapanisse."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jaapanisse?",
+          "Miks just sinna?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma tahaksin näha vanu templeid ja süüa päris jaapani toitu.",
+          "Ja ma õpiksin natuke jaapani keelt."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kui kaua sa seal oleksid?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma oleksin seal kolm nädalat.",
+          "Viimasel nädalal sõidaksin ma mägedesse."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jaapani keel on väga raske.",
+          "Kas sa suudaksid seda õppida?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Natuke kindlasti.",
+          "Aga ma ei räägiks seda kunagi nii hästi kui eesti keelt."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Sa räägid eesti keelt juba päris hästi."
+        ],
+        "say": "[laughs] Sa räägid eesti keelt juba päris hästi."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh!",
+          "Aga sina?",
+          "Mida sina teeksid?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mina ei sõidaks kuhugi kaugele.",
+          "Ma elaksin terve kuu maal, vanaema juures."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Maal?",
+          "Kas sul ei oleks igav?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, mitte üldse.",
+          "Ma loeksin raamatuid, käiksin metsas ja ujuksin järves.",
+          "Hommikuti magaksin ma kaua."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "See kõlab hästi.",
+          "Aga kui ilm oleks halb?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Siis ma istuksin köögis ja küpsetaksin vanaemaga kooke.",
+          "Me räägiksime tundide kaupa."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kui mul oleks vanaema maal, teeksin ma sama.",
+          "Minu vanavanemad elavad Tallinnas."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Siis sa võiksid tulla minuga kaasa.",
+          "Vanaemale meeldivad külalised."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tõesti?",
+          "Ma tuleksin hea meelega!",
+          "Kas ma saaksin aias aidata?"
+        ],
+        "say": "[surprised] Tõesti? Ma tuleksin hea meelega! Kas ma saaksin aias aidata?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Muidugi.",
+          "Aias on alati tööd.",
+          "Sa võiksid kartuleid kaevata."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma oleksin parem kokk kui aednik.",
+          "Ma võiksin iga päev süüa teha."
+        ],
+        "say": "[laughs] Ma oleksin parem kokk kui aednik. Ma võiksin iga päev süüa teha."
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Suurepärane!",
+          "Siis sööksime me iga päev head toitu."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aga Jaapan jääb minu unistuseks."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Võib-olla saaksime järgmisel aastal koos Jaapanisse sõita."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "See oleks väga tore!"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Aga enne peaksime natuke raha koguma.",
+          "Lennupiletid on kallid."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Õige.",
+          "Ma ei ostaks enam iga päev kohvikust kohvi."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "See oleks sinu jaoks väga raske!"
+        ],
+        "say": "[laughs] See oleks sinu jaoks väga raske!"
+      }
+    ]
+  },
+  "laheksin/sa-ei-la2heks": {
+    "text": "Sa ei läheks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ta-ei-la2heks": {
+    "text": "Ta ei läheks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/me-ei-la2heks": {
+    "text": "Me ei läheks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/te-ei-la2heks": {
+    "text": "Te ei läheks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/nad-ei-la2heks": {
+    "text": "Nad ei läheks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-ei-la2heks": {
+    "text": "Ma ei läheks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/las": {
+    "text": "las",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/koos": {
+    "text": "koos",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/kahekesi": {
+    "text": "kahekesi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/o3ues": {
+    "text": "õues",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/vaatan": {
+    "text": "vaatan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/me-vaatame": {
+    "text": "me vaatame",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/vaatame": {
+    "text": "Vaatame!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/teen": {
+    "text": "teen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/me-teeme": {
+    "text": "me teeme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/teeme": {
+    "text": "Teeme!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/loen": {
+    "text": "loen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/me-loeme": {
+    "text": "me loeme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/loeme": {
+    "text": "Loeme!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/so3idan": {
+    "text": "sõidan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/me-so3idame": {
+    "text": "me sõidame",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/so3idame": {
+    "text": "Sõidame!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/o3pin": {
+    "text": "õpin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/me-o3pime": {
+    "text": "me õpime",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/o3pime": {
+    "text": "Õpime!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/ostan": {
+    "text": "ostan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/me-ostame": {
+    "text": "me ostame",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/ostame": {
+    "text": "Ostame!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/joon": {
+    "text": "joon",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/me-joome": {
+    "text": "me joome",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/joome": {
+    "text": "Joome!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/la2hen": {
+    "text": "lähen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/me-la2heme": {
+    "text": "me läheme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/la2hme": {
+    "text": "Lähme!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/las-ta-magab": {
+    "text": "Las ta magab.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/las-lapsed-ma2ngivad-o3ues": {
+    "text": "Las lapsed mängivad õues.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/las-ma-aitan-sind": {
+    "text": "Las ma aitan sind.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/las-mari-otsustab": {
+    "text": "Las Mari otsustab.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/la2hme-ujuma": {
+    "text": "Lähme ujuma!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/la2hme-so2o2ma": {
+    "text": "Lähme sööma!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/la2hme-koju": {
+    "text": "Lähme koju!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/las-ta-la2heb-koju": {
+    "text": "Las ta läheb koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/las-nad-la2hevad-koju": {
+    "text": "Las nad lähevad koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/kati-la2hme-koju": {
+    "text": "Kati, lähme koju!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/las-ta-so2o2b-kodus": {
+    "text": "Las ta sööb kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/las-nad-so2o2vad-kodus": {
+    "text": "Las nad söövad kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/kati-so2o2me-midagi": {
+    "text": "Kati, sööme midagi!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/las-ta-ma2ngib-o3ues": {
+    "text": "Las ta mängib õues.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/tule-ma2ngime-koos": {
+    "text": "Tule, mängime koos!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/me-la2heme-kinno": {
+    "text": "Me läheme kinno.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/mine-kinno": {
+    "text": "Mine kinno!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/las-ta-la2heb-kinno": {
+    "text": "Las ta läheb kinno.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/so2o2me-pitsat": {
+    "text": "Sööme pitsat!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/me-so2o2me-pitsat": {
+    "text": "Me sööme pitsat.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/so2o2-pitsat": {
+    "text": "Söö pitsat!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/las-ta-so2o2b-pitsat": {
+    "text": "Las ta sööb pitsat.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/vaatame-filmi": {
+    "text": "Vaatame filmi!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/me-vaatame-filmi": {
+    "text": "Me vaatame filmi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/vaata-filmi": {
+    "text": "Vaata filmi!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/las-ta-vaatab-filmi": {
+    "text": "Las ta vaatab filmi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/ma2ngime-o3ues": {
+    "text": "Mängime õues!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/me-ma2ngime-o3ues": {
+    "text": "Me mängime õues.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/ma2ngi-o3ues": {
+    "text": "Mängi õues!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/las-nad-ma2ngivad-o3ues": {
+    "text": "Las nad mängivad õues.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/so2o2me-koos": {
+    "text": "Sööme koos!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/las-ta-otsustab": {
+    "text": "Las ta otsustab.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/ostame-koogi": {
+    "text": "Ostame koogi!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/vaatame-ta2na-o3htul-filmi": {
+    "text": "Vaatame täna õhtul filmi!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/las-ta-tuleb": {
+    "text": "Las ta tuleb.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/me-so2o2me-koos": {
+    "text": "Me sööme koos.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/d-kati-1": {
+    "text": "Mida me laupäeval teeme?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "lahme-las/d-kati-2": {
+    "text": "Hea mõte! Aga Jaan tahab ka tulla.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "lahme-las/d-sina-2": {
+    "text": "Las ta tuleb!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/d-kati-3": {
+    "text": "Ja pärast filmi?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "lahme-las/d-sina-3": {
+    "text": "Sööme pitsat!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/c-weekend": {
+    "text": "Jaan, mu õde Liisa tuleb laupäeval Tartust külla. Mida me temaga teeme? Hea küsimus. Kas ta on varem Tallinnas käinud? Ainult üks kord, lapsena. Siis lähme hommikul vanalinna. Jalutame natuke ja vaatame Raekoja platsi. Hea mõte. Aga Liisale ei meeldi kaua kõndida. Siis võtame trammi. Või sõidame rattaga, see on lõbusam. Ei, las ta puhkab. Ta sõidab ju kolm tundi bussiga. Õige. Kus me lõunat sööme? Lähme sellesse väikesesse kohvikusse mere ääres. Seal on väga hea kalasupp. Aga Liisa ei söö kala. Ah jaa, ma unustasin. Siis las ta valib ise. Jah, las ta otsustab. Ja pärastlõunal? Lähme Kumusse! Liisale meeldib kunst. Kumu on ju kaugel. Ei ole, bussiga on see ainult kümme minutit. Mina tahaksin pigem jalgpalli vaadata. Vaata siis kodus jalgpalli! Meie läheme kahekesi. Ei, ei, ma tulen ka. Aga mida me õhtul teeme? Teeme kodus süüa ja kutsume sõbrad külla. Kutsume ka Peetri ja Kati. Las nad toovad koogi. Hea küll. Ja mina teen salatit. Ja las ma teen pitsa! Sina? Pitsa? Jah! Ma olen seda juba kaks korda teinud. Hästi, tee siis! Aga ärme kutsu liiga palju inimesi. Korter on väike. Hea küll, ainult neli-viis inimest. Ja pühapäeval? Pühapäeval magame kaua. Siis viime Liisa bussijaama. Tema buss läheb kell kolm. Enne seda lähme randa, kui ilm on ilus. Ujume ka? Mais? Vesi on veel liiga külm! Aga võtame teki kaasa ja istume liival. Hea küll, siis jalutame ainult. Kirjutame Liisale kohe. Las ta vastab õhtul. Lähme nüüd sööma, ma olen näljane!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jaan, mu õde Liisa tuleb laupäeval Tartust külla.",
+          "Mida me temaga teeme?"
+        ],
+        "say": "[cheerful] Jaan, mu õde Liisa tuleb laupäeval Tartust külla. Mida me temaga teeme?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hea küsimus.",
+          "Kas ta on varem Tallinnas käinud?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ainult üks kord, lapsena."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Siis lähme hommikul vanalinna.",
+          "Jalutame natuke ja vaatame Raekoja platsi."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Hea mõte.",
+          "Aga Liisale ei meeldi kaua kõndida."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Siis võtame trammi.",
+          "Või sõidame rattaga, see on lõbusam."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, las ta puhkab.",
+          "Ta sõidab ju kolm tundi bussiga."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Õige.",
+          "Kus me lõunat sööme?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Lähme sellesse väikesesse kohvikusse mere ääres.",
+          "Seal on väga hea kalasupp."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aga Liisa ei söö kala."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ah jaa, ma unustasin.",
+          "Siis las ta valib ise."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, las ta otsustab.",
+          "Ja pärastlõunal?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Lähme Kumusse!",
+          "Liisale meeldib kunst."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kumu on ju kaugel."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei ole, bussiga on see ainult kümme minutit."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mina tahaksin pigem jalgpalli vaadata."
+        ],
+        "say": "[laughs] Mina tahaksin pigem jalgpalli vaadata."
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Vaata siis kodus jalgpalli!",
+          "Meie läheme kahekesi."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, ei, ma tulen ka.",
+          "Aga mida me õhtul teeme?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Teeme kodus süüa ja kutsume sõbrad külla."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kutsume ka Peetri ja Kati.",
+          "Las nad toovad koogi."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Hea küll.",
+          "Ja mina teen salatit."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja las ma teen pitsa!"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Sina?",
+          "Pitsa?"
+        ],
+        "say": "[surprised] Sina? Pitsa?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah!",
+          "Ma olen seda juba kaks korda teinud."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Hästi, tee siis!",
+          "Aga ärme kutsu liiga palju inimesi.",
+          "Korter on väike."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hea küll, ainult neli-viis inimest.",
+          "Ja pühapäeval?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Pühapäeval magame kaua.",
+          "Siis viime Liisa bussijaama.",
+          "Tema buss läheb kell kolm."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Enne seda lähme randa, kui ilm on ilus.",
+          "Ujume ka?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mais?",
+          "Vesi on veel liiga külm!",
+          "Aga võtame teki kaasa ja istume liival."
+        ],
+        "say": "[laughs] Mais? Vesi on veel liiga külm! Aga võtame teki kaasa ja istume liival."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hea küll, siis jalutame ainult.",
+          "Kirjutame Liisale kohe."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Las ta vastab õhtul.",
+          "Lähme nüüd sööma, ma olen näljane!"
+        ]
+      }
+    ]
+  },
+  "raagitakse/vanasti": {
+    "text": "vanasti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/jaanipa2ev": {
+    "text": "jaanipäev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/lo3ke": {
+    "text": "lõke",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/pu2ha": {
+    "text": "püha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/komme": {
+    "text": "komme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/ra2a2gitud": {
+    "text": "räägitud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/ra2a2gitakse": {
+    "text": "räägitakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/ra2a2giti": {
+    "text": "räägiti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/loetud": {
+    "text": "loetud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/loetakse": {
+    "text": "loetakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/loeti": {
+    "text": "loeti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/elatud": {
+    "text": "elatud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/elatakse": {
+    "text": "elatakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/elati": {
+    "text": "elati",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/oodatud": {
+    "text": "oodatud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/oodatakse": {
+    "text": "oodatakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/oodati": {
+    "text": "oodati",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/ehitatud": {
+    "text": "ehitatud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/ehitatakse": {
+    "text": "ehitatakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/ehitati": {
+    "text": "ehitati",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/kuuldud": {
+    "text": "kuuldud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/kuuldakse": {
+    "text": "kuuldakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/kuuldi": {
+    "text": "kuuldi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/lauldud": {
+    "text": "lauldud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/lauldakse": {
+    "text": "lauldakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/lauldi": {
+    "text": "lauldi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/saadud": {
+    "text": "saadud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/saadakse": {
+    "text": "saadakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/saadi": {
+    "text": "saadi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/tehtud": {
+    "text": "tehtud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/tehakse": {
+    "text": "tehakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/tehti": {
+    "text": "tehti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/na2htud": {
+    "text": "nähtud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/na2hakse": {
+    "text": "nähakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/na2hti": {
+    "text": "nähti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/so2o2dud": {
+    "text": "söödud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/su2u2akse": {
+    "text": "süüakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/so2o2di": {
+    "text": "söödi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/joodud": {
+    "text": "joodud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/juuakse": {
+    "text": "juuakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/joodi": {
+    "text": "joodi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/mindud": {
+    "text": "mindud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/minnakse": {
+    "text": "minnakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/mindi": {
+    "text": "mindi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/tuldud": {
+    "text": "tuldud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/tullakse": {
+    "text": "tullakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/tuldi": {
+    "text": "tuldi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/pandud": {
+    "text": "pandud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/pannakse": {
+    "text": "pannakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/pandi": {
+    "text": "pandi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/mu2u2dud": {
+    "text": "müüdud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/mu2u2akse": {
+    "text": "müüakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/mu2u2di": {
+    "text": "müüdi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/eestis-ra2a2gitakse-eesti-keelt": {
+    "text": "Eestis räägitakse eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/poes-mu2u2akse-leiba": {
+    "text": "Poes müüakse leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/pood-avatakse-kell-u2heksa": {
+    "text": "Pood avatakse kell üheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/see-maja-ehitati-1920-aastal": {
+    "text": "See maja ehitati 1920. aastal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/mari-ra2a2gib-eesti-keelt": {
+    "text": "Mari räägib eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/nu2u2d-ra2a2gitakse-siin-eesti-keelt": {
+    "text": "Nüüd räägitakse siin eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/vanasti-ra2a2giti-siin-saksa-keelt": {
+    "text": "Vanasti räägiti siin saksa keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/jaan-ehitab-maja": {
+    "text": "Jaan ehitab maja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/siia-ehitatakse-ja2rgmisel-aastal-uus-kool": {
+    "text": "Siia ehitatakse järgmisel aastal uus kool.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/kati-avab-akna": {
+    "text": "Kati avab akna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/pood-avatakse-iga-pa2ev-kell-u2heksa": {
+    "text": "Pood avatakse iga päev kell üheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/uus-pood-avati-eile": {
+    "text": "Uus pood avati eile.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/siin-suitsetatakse": {
+    "text": "Siin suitsetatakse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/siin-suitsetati": {
+    "text": "Siin suitsetati.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/siin-ei-suitsetata": {
+    "text": "Siin ei suitsetata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/siin-ra2a2gitakse-eesti-keelt": {
+    "text": "Siin räägitakse eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/siin-ra2a2giti-eesti-keelt": {
+    "text": "Siin räägiti eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/siin-ei-ra2a2gita-eesti-keelt": {
+    "text": "Siin ei räägita eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/siin-tehakse-remonti": {
+    "text": "Siin tehakse remonti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/siin-tehti-remonti": {
+    "text": "Siin tehti remonti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/siin-ei-tehta-remonti": {
+    "text": "Siin ei tehta remonti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/siin-su2u2akse-kala": {
+    "text": "Siin süüakse kala.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/siin-so2o2di-kala": {
+    "text": "Siin söödi kala.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/siin-ei-so2o2da-kala": {
+    "text": "Siin ei sööda kala.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/pu2hapa2eval-ei-to2o2tata": {
+    "text": "Pühapäeval ei töötata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/eile-ei-ra2a2gitud-sellest": {
+    "text": "Eile ei räägitud sellest.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/poes-ei-mu2u2da-leiba": {
+    "text": "Poes ei müüda leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/seal-ei-so2o2da-liha": {
+    "text": "Seal ei sööda liha.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/vanasti-ei-tantsitud-palju": {
+    "text": "Vanasti ei tantsitud palju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/siin-mu2u2akse-leiba": {
+    "text": "Siin müüakse leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/jaanipa2eval-tehakse-lo3ke": {
+    "text": "Jaanipäeval tehakse lõke.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/eile-ra2a2giti-sellest": {
+    "text": "Eile räägiti sellest.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/uus-kool-ehitatakse-ja2rgmisel-aastal": {
+    "text": "Uus kool ehitatakse järgmisel aastal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/talvel-minnakse-sauna": {
+    "text": "Talvel minnakse sauna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/siin-ei-ra2a2gitud-saksa-keelt": {
+    "text": "Siin ei räägitud saksa keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raagitakse/c-midsummer": {
+    "text": "Jaan, mida jaanipäeval Eestis tehakse? Oh, see on suur püha. Jaanilaupäeval sõidetakse maale. Linnad on siis peaaegu tühjad. Ja mida maal tehakse? Tehakse suur lõke. Üle lõkke hüpatakse, see toob õnne. Kas lõkke ümber ka tantsitakse? Jah, tantsitakse ja lauldakse vanu laule. Kõik laulavad kaasa. Mida süüakse? Süüakse grillitud liha ja kartulisalatit. Juuakse õlut ja kalja. Kas kalja tehakse ise? Maal tehakse kodus, linnas ostetakse poest. Kas magama ka minnakse? Ei minda! Jaaniööl ei maga keegi. Vanasti otsiti metsast sõnajalaõit. Mis see on? Seda lille tegelikult ei ole olemas. Aga öeldi, et kes selle leiab, saab rikkaks. Kas seda otsitakse ka praegu? Mõnikord otsitakse, aga rohkem nalja pärast. Kas jaanipäeval töötatakse? Ei, siis ei töötata. Kahekümne kolmas ja kahekümne neljas juuni on puhkepäevad. Ja mida linnas tehakse, kui kõik on maal? Linnas peetakse ka pidusid, näiteks Tallinna vabaõhumuuseumis. Kus sina eelmisel aastal jaani pidasid? Me olime vanaema juures Saaremaal. Seal tehti mere ääres suur lõke. Ja hommikul mindi ujuma. Hommikul vara? Vesi oli ju külm! Jah, aga nii tehakse meie peres igal aastal. Kas teie peres lauldi ka? Jah, vanaisa mängis lõõtsa ja kõik laulsid kaasa. Mulle meeldib see komme. Kas mind ka kutsutakse? Muidugi! Sel aastal peetakse pidu minu suvilas. Seal on saun ka. Kas sauna minnakse enne lõket? Jah, kõigepealt minnakse sauna ja siis süüakse. Mida ma pean kaasa võtma? Võta kaasa soojad riided ja hea tuju. Toitu tuuakse nii palju, et kõigile jätkub. Aitäh, ma tulen hea meelega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jaan, mida jaanipäeval Eestis tehakse?"
+        ],
+        "say": "[curious] Jaan, mida jaanipäeval Eestis tehakse?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Oh, see on suur püha.",
+          "Jaanilaupäeval sõidetakse maale.",
+          "Linnad on siis peaaegu tühjad."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja mida maal tehakse?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tehakse suur lõke.",
+          "Üle lõkke hüpatakse, see toob õnne."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas lõkke ümber ka tantsitakse?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, tantsitakse ja lauldakse vanu laule.",
+          "Kõik laulavad kaasa."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mida süüakse?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Süüakse grillitud liha ja kartulisalatit.",
+          "Juuakse õlut ja kalja."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas kalja tehakse ise?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Maal tehakse kodus, linnas ostetakse poest."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas magama ka minnakse?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei minda!",
+          "Jaaniööl ei maga keegi.",
+          "Vanasti otsiti metsast sõnajalaõit."
+        ],
+        "say": "[laughs] Ei minda! Jaaniööl ei maga keegi. Vanasti otsiti metsast sõnajalaõit."
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mis see on?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Seda lille tegelikult ei ole olemas.",
+          "Aga öeldi, et kes selle leiab, saab rikkaks."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas seda otsitakse ka praegu?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mõnikord otsitakse, aga rohkem nalja pärast."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas jaanipäeval töötatakse?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, siis ei töötata.",
+          "Kahekümne kolmas ja kahekümne neljas juuni on puhkepäevad."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja mida linnas tehakse, kui kõik on maal?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Linnas peetakse ka pidusid, näiteks Tallinna vabaõhumuuseumis."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kus sina eelmisel aastal jaani pidasid?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Me olime vanaema juures Saaremaal.",
+          "Seal tehti mere ääres suur lõke.",
+          "Ja hommikul mindi ujuma."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Hommikul vara?",
+          "Vesi oli ju külm!"
+        ],
+        "say": "[surprised] Hommikul vara? Vesi oli ju külm!"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, aga nii tehakse meie peres igal aastal."
+        ],
+        "say": "[laughs] Jah, aga nii tehakse meie peres igal aastal."
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas teie peres lauldi ka?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, vanaisa mängis lõõtsa ja kõik laulsid kaasa."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mulle meeldib see komme.",
+          "Kas mind ka kutsutakse?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Muidugi!",
+          "Sel aastal peetakse pidu minu suvilas.",
+          "Seal on saun ka."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sauna minnakse enne lõket?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, kõigepealt minnakse sauna ja siis süüakse."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mida ma pean kaasa võtma?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Võta kaasa soojad riided ja hea tuju.",
+          "Toitu tuuakse nii palju, et kõigile jätkub."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Aitäh, ma tulen hea meelega!"
+        ],
+        "say": "[cheerful] Aitäh, ma tulen hea meelega!"
+      }
+    ]
+  },
+  "raamatut-voi-raamatu/liis-ostab-leiba": {
+    "text": "Liis ostab leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/mari-kirjutas-raamatut": {
+    "text": "Mari kirjutas raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/mari-kirjutas-raamatu": {
+    "text": "Mari kirjutas raamatu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/mari-kirjutab-raamatut": {
+    "text": "Mari kirjutab raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/mari-kirjutab-raamatu": {
+    "text": "Mari kirjutab raamatu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/jaan-parandas-auto": {
+    "text": "Jaan parandas auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/jaan-parandab-autot": {
+    "text": "Jaan parandab autot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/jaan-parandab-auto": {
+    "text": "Jaan parandab auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/isa-ehitas-suvilat": {
+    "text": "Isa ehitas suvilat.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/isa-ehitas-suvila": {
+    "text": "Isa ehitas suvila.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/isa-ehitab-suvilat": {
+    "text": "Isa ehitab suvilat.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/isa-ehitab-suvila": {
+    "text": "Isa ehitab suvila.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/jaan-parandas-autot": {
+    "text": "Jaan parandas autot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/kati-tegi-salatit": {
+    "text": "Kati tegi salatit.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/kati-tegi-salati": {
+    "text": "Kati tegi salati.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/kati-teeb-salatit": {
+    "text": "Kati teeb salatit.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/kati-teeb-salati": {
+    "text": "Kati teeb salati.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lahme-las/la2hme-kinno": {
+    "text": "Lähme kinno!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-tulen-koju": {
+    "text": "Ma tulen koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-tuleksin-koju": {
+    "text": "Ma tuleksin koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-tulin-koju": {
+    "text": "Ma tulin koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/miisu": {
+    "text": "Miisu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/kast": {
+    "text": "kast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/kasti": {
+    "text": "kasti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/kass": {
+    "text": "kass",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/kus": {
+    "text": "kus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/kuhu": {
+    "text": "kuhu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/kust": {
+    "text": "kust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/va2lja": {
+    "text": "välja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/juures": {
+    "text": "juures",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/juurde": {
+    "text": "juurde",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/juurest": {
+    "text": "juurest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/laud": {
+    "text": "laud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/laua": {
+    "text": "laua",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/laual": {
+    "text": "laual",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/kastis": {
+    "text": "kastis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/peal": {
+    "text": "peal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/peale": {
+    "text": "peale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/pealt": {
+    "text": "pealt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/all": {
+    "text": "all",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/alla": {
+    "text": "alla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/alt": {
+    "text": "alt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/taga": {
+    "text": "taga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/taha": {
+    "text": "taha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/tagant": {
+    "text": "tagant",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/ees": {
+    "text": "ees",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/ette": {
+    "text": "ette",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/eest": {
+    "text": "eest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/ko3rval": {
+    "text": "kõrval",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/ko3rvale": {
+    "text": "kõrvale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/ko3rvalt": {
+    "text": "kõrvalt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/sees": {
+    "text": "sees",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/sisse": {
+    "text": "sisse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/seest": {
+    "text": "seest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-peal-kuhu": {
+    "text": "Kass hüppab kasti peale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-all-kus": {
+    "text": "Kass on kasti all.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-all-kuhu": {
+    "text": "Kass läheb kasti alla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-all-kust": {
+    "text": "Kass tuleb kasti alt välja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-taga-kus": {
+    "text": "Kass on kasti taga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-taga-kuhu": {
+    "text": "Kass läheb kasti taha.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-ees-kus": {
+    "text": "Kass on kasti ees.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-ees-kuhu": {
+    "text": "Kass läheb kasti ette.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-ees-kust": {
+    "text": "Kass tuleb kasti eest ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-korval-kus": {
+    "text": "Kass on kasti kõrval.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-korval-kuhu": {
+    "text": "Kass läheb kasti kõrvale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-sees-kus": {
+    "text": "Kass on kasti sees.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-sees-kuhu": {
+    "text": "Kass läheb kasti sisse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/e-laua-peal": {
+    "text": "Raamat on laua peal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/e-laua-all": {
+    "text": "Kass on laua all.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/e-maja-taga": {
+    "text": "Auto on maja taga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/e-poe-ees": {
+    "text": "Ma ootan poe ees.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/e-kooli-korval": {
+    "text": "Kohvik on kooli kõrval.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/e-raamatu-sees": {
+    "text": "Raha on raamatu sees.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/e-laual": {
+    "text": "Raamat on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/e-kastis": {
+    "text": "Kass on kastis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/j-juures": {
+    "text": "Ma olen ema juures.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/j-juurde": {
+    "text": "Ma lähen ema juurde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/j-juurest": {
+    "text": "Ma tulen ema juurest.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/kass-on-laua-all": {
+    "text": "Kass on laua all.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/auto-on-maja-taga": {
+    "text": "Auto on maja taga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/ma-ootan-poe-ees": {
+    "text": "Ma ootan poe ees.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/kohvik-on-kooli-ko3rval": {
+    "text": "Kohvik on kooli kõrval.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/kass-la2heb-kasti-sisse": {
+    "text": "Kass läheb kasti sisse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/ma-la2hen-ema-juurde": {
+    "text": "Ma lähen ema juurde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/raamat-on-laua-peal": {
+    "text": "Raamat on laua peal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/kass-hu2ppab-kasti-peale": {
+    "text": "Kass hüppab kasti peale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/kass-tuleb-kasti-seest-va2lja": {
+    "text": "Kass tuleb kasti seest välja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/ma-olen-ema-juures": {
+    "text": "Ma olen ema juures.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/p-miisu": {
+    "text": "Kus on Miisu? Miisu ei ole laua peal. Ta ei ole ka laua all. Ta tuleb kasti seest välja! Ta hüppab põrandalt laua peale. Ta hüppab laua pealt maha. Ta tuleb minu kõrvale istuma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/c-book": {
+    "text": "Mari, kus on minu raamat? Kas see on laua peal? Ei, laua peal on kohv. Vaata laua alla! Laua all on Miisu. Ja kasti sees? Kasti sees on raha. Kelle raha see on? See on minu raha! Oota! Raamat on minu juures. Aitäh! Ma tulen sinu juurde. Ma olen maja ees.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mari, kus on minu raamat?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas see on laua peal?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei, laua peal on kohv."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Vaata laua alla!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Laua all on Miisu."
+        ],
+        "say": "[laughs] Laua all on Miisu."
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ja kasti sees?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kasti sees on raha."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kelle raha see on?"
+        ],
+        "say": "[curious] Kelle raha see on?"
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "See on minu raha!"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Oota!",
+          "Raamat on minu juures."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Aitäh!",
+          "Ma tulen sinu juurde."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ma olen maja ees."
+        ]
+      }
+    ]
+  },
+  "peal-all-taga/a2ra": {
+    "text": "ära",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/maha": {
+    "text": "maha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/po3randalt": {
+    "text": "põrandalt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-peal-kus": {
+    "text": "Kass on kasti peal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-peal-kust": {
+    "text": "Kass tuleb kasti pealt maha.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-sees-kust": {
+    "text": "Kass tuleb kasti seest välja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-taga-kust": {
+    "text": "Kass tuleb kasti tagant välja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/s-korval-kust": {
+    "text": "Kass tuleb kasti kõrvalt ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "peal-all-taga/istuma": {
+    "text": "istuma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/lugege-palun": {
+    "text": "Lugege, palun!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ma-ootan-kohvikus": {
+    "text": "Ma ootan kohvikus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/oodake-palun": {
+    "text": "Oodake, palun!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ma-tahan-su2u2a": {
+    "text": "Ma tahan süüa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/me-teeme-to2o2d": {
+    "text": "Me teeme tööd.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ma-loen-raamatut": {
+    "text": "Ma loen raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ma-teen-to2o2d": {
+    "text": "Ma teen tööd.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/kuulake-palun": {
+    "text": "Kuulake, palun!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ma-tahan-tulla": {
+    "text": "Ma tahan tulla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/tulge-siia": {
+    "text": "Tulge siia!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ma-tahan-kohvi-juua": {
+    "text": "Ma tahan kohvi juua.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/me-ra2a2gime-eesti-keelt": {
+    "text": "Me räägime eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/vaadake-palun": {
+    "text": "Vaadake, palun!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/nad-elavad-tartus": {
+    "text": "Nad elavad Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ma-tahan-eesti-keelt-o3ppida": {
+    "text": "Ma tahan eesti keelt õppida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-tahan-kohvi-juua": {
+    "text": "Ma tahan kohvi juua.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-pean-koju-minema": {
+    "text": "Ma pean koju minema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/mulle-meeldib-lugeda": {
+    "text": "Mulle meeldib lugeda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-tahan-linna-minna": {
+    "text": "Ma tahan linna minna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-pean-homme-tulema": {
+    "text": "Ma pean homme tulema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-oskan-eesti-keelt-ra2a2kida": {
+    "text": "Ma oskan eesti keelt rääkida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-hakkan-homme-o3ppima": {
+    "text": "Ma hakkan homme õppima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-tahan-vett-juua": {
+    "text": "Ma tahan vett juua.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/kas-sa-saad-ta2na-tulla": {
+    "text": "Kas sa saad täna tulla?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-oskan-su2u2a-teha": {
+    "text": "Ma oskan süüa teha.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/mulle-meeldib-kodus-olla": {
+    "text": "Mulle meeldib kodus olla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/nad-peavad-homme-to2o2le-minema": {
+    "text": "Nad peavad homme tööle minema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ta-la2heb-so2o2ma": {
+    "text": "Ta läheb sööma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-hakkan-o3htul-su2u2a-tegema": {
+    "text": "Ma hakkan õhtul süüa tegema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-pean-kell-seitse-kodus-olema": {
+    "text": "Ma pean kell seitse kodus olema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/me-peame-kell-viis-to2o2l-olema": {
+    "text": "Me peame kell viis tööl olema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-vo3in-sind-kohvikus-oodata": {
+    "text": "Ma võin sind kohvikus oodata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/c-cafe": {
+    "text": "Tere, Mari! Mida sa teed? Tere, Jaan! Ma loen raamatut. Mu sõber Kati tuleb ka. Kas Kati tuleb täna? Jah, ta tuleb kell kolm. Istu, palun! Aitäh. Mida sa loed? Ma loen eesti raamatut. Ma õpin eesti keelt. Kas sa räägid kodus eesti keelt? Natuke. Mu mees räägib soome keelt. Ma tahan ka eesti keelt õppida. Tule meie kooli! Me loeme ja räägime palju. Hästi! Kas õpetaja on hea? Jah, väga hea. Vaata, Kati tuleb! Kati, tule siia! Istu, palun! Tere, Kati! Mida te täna teete? Me loeme koos eesti raamatut. Tule ka homme, Jaan! Hästi, ma tulen. Head aega! Head aega, Jaan!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Mari!",
+          "Mida sa teed?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Jaan!",
+          "Ma loen raamatut.",
+          "Mu sõber Kati tuleb ka."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas Kati tuleb täna?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, ta tuleb kell kolm.",
+          "Istu, palun!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Aitäh.",
+          "Mida sa loed?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ma loen eesti raamatut.",
+          "Ma õpin eesti keelt."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas sa räägid kodus eesti keelt?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Natuke.",
+          "Mu mees räägib soome keelt."
+        ],
+        "say": "[laughs] Natuke. Mu mees räägib soome keelt."
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma tahan ka eesti keelt õppida."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tule meie kooli!",
+          "Me loeme ja räägime palju."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hästi!",
+          "Kas õpetaja on hea?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, väga hea."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Vaata, Kati tuleb!"
+        ],
+        "say": "[excited] Vaata, Kati tuleb!"
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kati, tule siia!",
+          "Istu, palun!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Kati!",
+          "Mida te täna teete?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Me loeme koos eesti raamatut.",
+          "Tule ka homme, Jaan!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hästi, ma tulen.",
+          "Head aega!"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Head aega, Jaan!"
+        ]
+      }
+    ]
+  },
+  "tegevusnimed/c-plans": {
+    "text": "Tere, Jaan! Mida sa täna teed? Täna ma pean tööle minema. Aga kell viis ma tulen koju. Kas sa tahad kohvikusse tulla? Jah, ma tahan kohvi juua. Aga ma pean kell seitse kodus olema. Hästi. Mulle meeldib kohvikus lugeda. Ma võin sind kohvikus oodata. Kas Kati saab ka tulla? Ei, Kati hakkab täna eesti keelt õppima. Kas sa oskad süüa teha? Natuke. Täna ma proovin süüa teha. Hästi! Ma tulen homme sööma! Tule! Aga sa pead kell kuus tulema. Ma hakkan kell viis süüa tegema. Hästi. Kas Kati võib ka tulla? Jah, muidugi. Kati armastab süüa. Väga hea. Nüüd ma pean tööle minema. Homme näeme! Head aega! Head aega, Jaan!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Jaan!",
+          "Mida sa täna teed?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Täna ma pean tööle minema.",
+          "Aga kell viis ma tulen koju."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas sa tahad kohvikusse tulla?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, ma tahan kohvi juua.",
+          "Aga ma pean kell seitse kodus olema."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hästi.",
+          "Mulle meeldib kohvikus lugeda.",
+          "Ma võin sind kohvikus oodata."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas Kati saab ka tulla?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, Kati hakkab täna eesti keelt õppima."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas sa oskad süüa teha?"
+        ],
+        "say": "[curious] Kas sa oskad süüa teha?"
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Natuke.",
+          "Täna ma proovin süüa teha."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hästi!",
+          "Ma tulen homme sööma!"
+        ],
+        "say": "[laughs] Hästi! Ma tulen homme sööma!"
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tule!",
+          "Aga sa pead kell kuus tulema.",
+          "Ma hakkan kell viis süüa tegema."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hästi.",
+          "Kas Kati võib ka tulla?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, muidugi.",
+          "Kati armastab süüa."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Väga hea.",
+          "Nüüd ma pean tööle minema.",
+          "Homme näeme!",
+          "Head aega!"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Head aega, Jaan!"
+        ]
+      }
+    ]
   }
 }

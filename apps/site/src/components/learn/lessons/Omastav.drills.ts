@@ -76,7 +76,11 @@ const FIX_WHY: Record<(typeof OMASTAV_FIX)[number]["id"], MessageDescriptor> = {
 };
 
 const WHO_SAID = [
-  { said: "Mina elan Tartus.", also: ["Ma elan Tartus."], means: msg`I live in Tartu.` },
+  {
+    said: "Mina elan Tartus.",
+    also: ["Ma elan Tartus.", "Elan Tartus."],
+    means: msg`I live in Tartu.`,
+  },
   {
     said: "Minu nimi on Mari.",
     also: ["Mu nimi on Mari."],

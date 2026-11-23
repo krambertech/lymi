@@ -224,7 +224,7 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
         {detail && (
           <div
             key={picked ? `${picked.row}-${picked.column}` : "empty"}
-            className="learn-swap flex min-h-16 items-center gap-4"
+            className="learn-swap flex min-h-16 flex-wrap items-center gap-x-4 gap-y-2"
           >
             <span
               lang="et"
@@ -239,7 +239,7 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
                 <span className="text-(--form)">?</span>
               )}
             </span>
-            <span className="grid min-w-0 gap-0.5">
+            <span className="grid min-w-40 flex-1 basis-40 gap-0.5">
               <span className="text-xl font-medium">{detail.title}</span>
               {detail.tip && <span className="text-md text-ink-secondary">{detail.tip}</span>}
             </span>

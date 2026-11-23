@@ -1,4 +1,4 @@
-import type { MessageDescriptor } from "@lingui/core";
+import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Fragment, type ReactNode, useMemo, useState } from "react";
@@ -10,17 +10,25 @@ import {
   type NounForms,
   nounEntry,
   POHIVORMID_DIALOGUE,
+  POHIVORMID_FIX,
+  POHIVORMID_SAY,
+  POHIVORMID_SORT,
+  POHIVORMID_TALK,
   POHIVORMID_TYPED,
 } from "../../../lib/learn/clips";
 import { eachPairFirst } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, type KeyItem, Keys, Panel } from "../Explore";
+import { type FixItem, FixRound, fixRecall } from "../FixRound";
 import { type FormItem, FormRound, formRecall } from "../FormRound";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
 import { Match, type MatchPair } from "../Match";
 import { Paradigm } from "../Paradigm";
+import { Listening, type PassageQuestion } from "../Passage";
 import { Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
+import { Sort, type SortBin, type SortItem } from "../Sort";
 import { PlayButton } from "../Sound";
 import { Word } from "../Word";
 
@@ -116,7 +124,58 @@ const GLOSSARY: Glossary = {
   ),
   põhivormid: { en: msg`the main forms: a word’s nominative, genitive and partitive` },
   koolis: { en: msg`at school, in a school` },
+  majas: { en: msg`in the house` },
+  toas: { en: msg`in the room` },
+  laual: { en: msg`on the table` },
+  linnas: { en: msg`in town` },
+  kodus: { en: msg`at home` },
+  "mis on sõna raamat põhivormid?": { en: msg`What are the main forms of the word raamat?` },
+  "väga hea!": { en: msg`Very good!` },
+  "ja sõna laps?": { en: msg`And the word laps?` },
+  "ja sõna maja?": { en: msg`And the word maja?` },
+  "ja sõna töö?": { en: msg`And the word töö?` },
 };
+
+const SAY_MEANS: Record<(typeof POHIVORMID_SAY)[number]["id"], MessageDescriptor> = {
+  koolis: msg`The child is at school.`,
+  majas: msg`The man is in the house.`,
+  toas: msg`The woman is in the room.`,
+  laual: msg`The book is on the table.`,
+  linnas: msg`We’re in town.`,
+  kodus: msg`The car is at home.`,
+};
+
+export const sortItems = (): SortItem[] =>
+  POHIVORMID_SORT.map(({ w, bin }) => ({ w, bin, src: wordSrc(w) }));
+
+const SAY_FIRST: Record<(typeof POHIVORMID_SAY)[number]["id"], First> = {
+  koolis: "kool",
+  majas: "maja",
+  toas: "tuba",
+  laual: "laud",
+  linnas: "linn",
+  kodus: "kodu",
+};
+
+function OnGenitive({ forms }: { forms: NounForms }) {
+  return (
+    <Trans>
+      <b lang="et">{forms[1]}</b> is the genitive of <b lang="et">{forms[0]}</b>, and the ending
+      goes on it.
+    </Trans>
+  );
+}
+
+export function sayItems(i18n: I18n): SentenceItem[] {
+  return POHIVORMID_SAY.map(({ id, said, also }) => ({
+    kind: "translate",
+    id: `say-${id}`,
+    prompt: i18n._(SAY_MEANS[id]),
+    src: wordSrc(said),
+    answers: [said, ...also],
+    explain: <OnGenitive forms={formsOf(SAY_FIRST[id])} />,
+  }));
+}
 
 /** The letters a form shares with the nominative, then `|` before the rest, which Paradigm lights. */
 function litFrom(first: string, form: string): string {
@@ -232,9 +291,58 @@ function EntryCard() {
 
 type ThirdItem = FormItem & { pair: readonly [string, string] };
 
+function useClassQuestions(): PassageQuestion[] {
+  const { t } = useLingui();
+  return [
+    {
+      kind: "short",
+      id: "first",
+      ask: t`Which word does Mari ask about first? Write it in Estonian.`,
+      answers: ["raamat"],
+      line: 1,
+    },
+    {
+      kind: "truefalse",
+      id: "all-right",
+      ask: t`Jaan gets every word right the first time.`,
+      answer: false,
+      line: 5,
+    },
+    {
+      kind: "short",
+      id: "wrong",
+      ask: t`Which word does Jaan get wrong? Write it in Estonian.`,
+      answers: ["laps"],
+      line: 5,
+    },
+    {
+      kind: "short",
+      id: "after",
+      ask: t`What is the first word Mari says after his mistake? Write it in Estonian.`,
+      answers: ["ei"],
+      line: 6,
+    },
+    {
+      kind: "truefalse",
+      id: "four",
+      ask: t`Mari asks Jaan about four words.`,
+      answer: false,
+      line: 9,
+    },
+    {
+      kind: "truefalse",
+      id: "end",
+      ask: t`At the end, Mari praises Jaan.`,
+      answer: true,
+      line: 11,
+    },
+  ];
+}
+
 export function PohivormidLesson() {
   const { t, i18n } = useLingui();
   const stems = lessonBySlug("pood-poe")?.n;
+  const classQuestions = useClassQuestions();
   const genitive = lessonBySlug("omastav")?.n;
   const partitive = lessonBySlug("osastav")?.n;
 
@@ -302,7 +410,7 @@ export function PohivormidLesson() {
     ),
     töö: (
       <Trans>
-        One syllable ending in a long vowel: the genitive is the same, the partitive adds{" "}
+        A one-syllable word ending in a long vowel: the genitive is the same, the partitive adds{" "}
         <b lang="et">-d</b>.
       </Trans>
     ),
@@ -354,7 +462,7 @@ export function PohivormidLesson() {
       ),
       long: (
         <Trans>
-          One syllable ending in a long vowel takes <b lang="et">-d</b>.
+          A one-syllable word ending in a long vowel takes <b lang="et">-d</b>.
         </Trans>
       ),
     };
@@ -369,6 +477,52 @@ export function PohivormidLesson() {
       pair: [pattern, forms[0]] as const,
     }));
   }, [i18n, t]);
+
+  const fixItems: FixItem[] = POHIVORMID_FIX.map(({ first, wrong }) => {
+    const forms = formsOf(first);
+    return {
+      kind: "fix",
+      id: `fix-${first}`,
+      wrong,
+      answers: [nounEntry(forms)],
+      src: entrySrc(forms),
+      explain: notes[first],
+    };
+  });
+
+  const bins: SortBin[] = [
+    {
+      id: "genitive",
+      label: t`Genitive`,
+      lang: i18n.locale,
+      hint: (
+        <Trans>
+          as in <b lang="et">poe</b>
+        </Trans>
+      ),
+      rule: (
+        <Trans>
+          The genitive comes second in a dictionary, and <b lang="et">-s</b> and <b lang="et">-l</b>{" "}
+          go on it: <b lang="et">pood, poe, poodi</b>.
+        </Trans>
+      ),
+    },
+    {
+      id: "partitive",
+      label: t`Partitive`,
+      lang: i18n.locale,
+      hint: (
+        <Trans>
+          as in <b lang="et">poodi</b>
+        </Trans>
+      ),
+      rule: (
+        <Trans>
+          The partitive comes last in a dictionary: <b lang="et">pood, poe, poodi</b>.
+        </Trans>
+      ),
+    },
+  ];
 
   const dialogue: DialogueTurn[] = [
     { who: "them", clip: "d-mari-1", line: line("d-mari-1") },
@@ -478,8 +632,8 @@ export function PohivormidLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">12 minutes</Trans>,
-        <Trans key="q">2 quizzes and a conversation</Trans>,
+        <Trans key="m">20 minutes</Trans>,
+        <Trans key="q">7 exercises</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -797,6 +951,105 @@ export function PohivormidLesson() {
           ),
         },
         {
+          id: "tell",
+          title: t`Telling the genitive from the partitive`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each word below is the genitive or the partitive of a noun from this lesson. Put
+                    each in its group. Tap a word to hear it.
+                  </Trans>
+                </p>
+              </Prose>
+              <Sort
+                id="genitive-or-partitive"
+                title={<Trans>Genitive or partitive?</Trans>}
+                bins={bins}
+                items={sortItems()}
+              />
+            </>
+          ),
+        },
+        {
+          id: "say-it",
+          title: t`Write it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    The genitive is the form{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -s
+                    </b>{" "}
+                    and{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -l
+                    </b>{" "}
+                    go on: <b lang="et">linn, linna</b> gives <Word w="linnas" />, in town. Write
+                    each sentence in Estonian.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="say-genitive"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={sayItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six written right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Read the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Tap through the words above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "fix",
+          title: t`Fix the forms`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each line gives a noun’s three forms, and one of them is wrong. Tap it, then
+                    write the right form.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="fix-forms"
+                title={<Trans>Find and fix the wrong form</Trans>}
+                items={fixItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six found and fixed.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Look again at the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Tap through the words above once more, then try again.</Trans>
+                  )
+                }
+                recall={fixRecall}
+                round={(props) => <FixRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
           id: "class",
           title: t`Practice: the forms in class`,
           quiz: true,
@@ -822,6 +1075,34 @@ export function PohivormidLesson() {
                 }
                 them={t`Mari`}
                 turns={dialogue}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listen: Jaan in class`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Mari is Jaan’s teacher. In class she asks him for the forms of a few words. Read
+                    the questions, then listen.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="jaan-class"
+                title={<Trans>Listen: Mari asks Jaan</Trans>}
+                clip="c-class"
+                turns={POHIVORMID_TALK.turns}
+                names={{
+                  second: "Mari",
+                  fourth: "Jaan",
+                }}
+                questions={classQuestions}
               />
             </>
           ),

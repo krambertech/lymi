@@ -1,4 +1,4 @@
-import type { MessageDescriptor } from "@lingui/core";
+import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
@@ -11,9 +11,13 @@ import {
   clipUrl,
   type GenitiveKind,
   OMASTAV_DIALOGUE,
+  OMASTAV_FIX,
   OMASTAV_FORMS,
   OMASTAV_PHRASES,
   OMASTAV_PRONOUNS,
+  OMASTAV_SAY,
+  OMASTAV_SORT,
+  OMASTAV_TALK,
   OMASTAV_WHOSE,
   ownedBook,
   phraseOf,
@@ -22,12 +26,16 @@ import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, Panel } from "../Explore";
+import { type FixItem, FixRound, fixRecall } from "../FixRound";
 import { type FormItem, FormRound, formRecall } from "../FormRound";
 import { GapPassage, type GapItem as PassageGap } from "../GapPassage";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
 import { Paradigm, type ParadigmRow } from "../Paradigm";
+import { Listening, type PassageQuestion } from "../Passage";
 import { Answer, Feedback, Quiz, type RoundProps } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
+import { Sort, type SortBin, type SortItem } from "../Sort";
 import { Listen, PlayMark } from "../Sound";
 import { Word } from "../Word";
 
@@ -613,6 +621,147 @@ export const KATI_GAPS: readonly PassageGap[] = [
   },
 ];
 
+const SAY_MEANS: Record<(typeof OMASTAV_SAY)[number]["id"], MessageDescriptor> = {
+  jaani: msg`This is Jaan’s book.`,
+  kelle: msg`Whose coffee is this?`,
+  vend: msg`My brother lives in Tallinn.`,
+  nende: msg`Their cat is at home.`,
+  mari: msg`Mari’s café is in Tartu.`,
+  opetaja: msg`Our teacher’s name is Kati.`,
+};
+
+export const sortItems = (): SortItem[] =>
+  OMASTAV_SORT.map(({ w, bin }) => ({ w, bin, src: src(w) }));
+
+export function sayItems(i18n: I18n): SentenceItem[] {
+  return OMASTAV_SAY.map(({ id, said, also }) => ({
+    kind: "translate",
+    id: `say-${id}`,
+    prompt: i18n._(SAY_MEANS[id]),
+    src: src(said),
+    answers: [said, ...also],
+  }));
+}
+
+function FixWhy({ id }: { id: (typeof OMASTAV_FIX)[number]["id"] }) {
+  switch (id) {
+    case "minu":
+      return (
+        <Trans>
+          The name belongs to the speaker, so my: <b lang="et">minu</b>.
+        </Trans>
+      );
+    case "mina":
+      return (
+        <Trans>
+          The speaker does the living, so I: <b lang="et">mina</b>.
+        </Trans>
+      );
+    case "nende":
+      return (
+        <Trans>
+          The cat is theirs, so their: <b lang="et">nende</b>.
+        </Trans>
+      );
+    case "jaani":
+      return (
+        <Trans>
+          The owner goes first in the genitive: <b lang="et">Jaani kass</b>.
+        </Trans>
+      );
+    case "poe":
+      return (
+        <Trans>
+          The shop owns the door, so the genitive: <b lang="et">pood, poe</b>,{" "}
+          <b lang="et">poe uks</b>.
+        </Trans>
+      );
+    case "tallinnas":
+      return (
+        <Trans>
+          To say in Tallinn, put <b lang="et">-s</b> on the genitive: <b lang="et">Tallinnas</b>.
+        </Trans>
+      );
+  }
+}
+
+const FIX_MEANS: Record<(typeof OMASTAV_FIX)[number]["id"], MessageDescriptor> = {
+  minu: msg`My name is Kati.`,
+  mina: msg`I live in Tartu.`,
+  nende: msg`Their cat is in Pärnu.`,
+  jaani: msg`Jaan’s cat is at home.`,
+  poe: msg`This is the shop’s door.`,
+  tallinnas: msg`I live in Tallinn.`,
+};
+
+export function fixItems(i18n: I18n): FixItem[] {
+  return OMASTAV_FIX.map(({ id, wrong, right, also }) => ({
+    kind: "fix",
+    id: `fix-${id}`,
+    wrong,
+    prompt: i18n._(FIX_MEANS[id]),
+    answers: [right, ...also],
+    src: src(right),
+    explain: <FixWhy id={id} />,
+  }));
+}
+
+function useTalkQuestions(): PassageQuestion[] {
+  const { t } = useLingui();
+  return [
+    {
+      id: "who",
+      ask: t`Who is in the picture?`,
+      options: [
+        { id: "brother", label: t`Jaan’s brother` },
+        { id: "mother", label: t`Jaan’s mother` },
+        { id: "mari", label: t`Mari’s brother` },
+      ],
+      answer: "brother",
+      line: 3,
+    },
+    {
+      kind: "short",
+      id: "martin-lives",
+      ask: t`Where does Martin live? Write the place in Estonian, with its ending.`,
+      answers: ["Tartus"],
+      line: 4,
+    },
+    {
+      kind: "truefalse",
+      id: "cat-jaan",
+      ask: t`The cat is Jaan’s.`,
+      answer: false,
+      line: 6,
+    },
+    {
+      kind: "short",
+      id: "cat-name",
+      ask: t`What is the cat’s name?`,
+      answers: ["Miisu"],
+      line: 7,
+    },
+    {
+      id: "house",
+      ask: t`Whose house is it?`,
+      options: [
+        { id: "mother", label: t`Jaan’s mother’s` },
+        { id: "brothers", label: t`Jaan and Martin’s` },
+        { id: "mari", label: t`Mari’s` },
+      ],
+      answer: "mother",
+      line: 9,
+    },
+    {
+      kind: "truefalse",
+      id: "car",
+      ask: t`The car is Jaan’s.`,
+      answer: true,
+      line: 12,
+    },
+  ];
+}
+
 const dialogueLine = (id: keyof typeof OMASTAV_DIALOGUE) => {
   const clip = OMASTAV_DIALOGUE[id];
   return typeof clip === "string" ? clip : clip.text;
@@ -624,6 +773,40 @@ export function OmastavLesson() {
   const places = lessonBySlug("kohad")?.n;
   const time = lessonBySlug("kell")?.n;
   const stems = lessonBySlug("pood-poe")?.n;
+  const talkQuestions = useTalkQuestions();
+  const bins: SortBin[] = [
+    {
+      id: "whose",
+      label: t`Whose`,
+      lang: i18n.locale,
+      hint: (
+        <Trans>
+          the genitive, as in <b lang="et">kooli</b>
+        </Trans>
+      ),
+      rule: (
+        <Trans>
+          The genitive says whose and goes before a noun: <b lang="et">kooli uks</b>.
+        </Trans>
+      ),
+    },
+    {
+      id: "where",
+      label: t`Where`,
+      lang: i18n.locale,
+      hint: (
+        <Trans>
+          with <b lang="et">-s</b> or <b lang="et">-l</b>, as in <b lang="et">koolis</b>
+        </Trans>
+      ),
+      rule: (
+        <Trans>
+          <b lang="et">-s</b> or <b lang="et">-l</b> on the genitive says where:{" "}
+          <b lang="et">koolis</b>.
+        </Trans>
+      ),
+    },
+  ];
 
   const whoseItems = useMemo<WhoseItem[]>(
     () =>
@@ -783,8 +966,8 @@ export function OmastavLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">12 minutes</Trans>,
-        <Trans key="q">2 quizzes, a text and a conversation</Trans>,
+        <Trans key="m">20 minutes</Trans>,
+        <Trans key="q">8 exercises</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -1076,6 +1259,107 @@ export function OmastavLesson() {
           ),
         },
         {
+          id: "whose-or-where",
+          title: t`Whose or where?`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    The genitive alone says whose: <Word w="kooli uks" />. With{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -s
+                    </b>{" "}
+                    or{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -l
+                    </b>{" "}
+                    it says where: <Word w="koolis" />. Put each word in its group. Tap a word to
+                    hear it.
+                  </Trans>
+                </p>
+              </Prose>
+              <Sort
+                id="whose-or-where"
+                title={<Trans>Whose or where?</Trans>}
+                bins={bins}
+                items={sortItems()}
+              />
+            </>
+          ),
+        },
+        {
+          id: "say-it",
+          title: t`Write it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write each sentence in Estonian. Put the owner first, in the genitive.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="say-whose"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={sayItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six written right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Read the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Read “The owner comes first” once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "fix",
+          title: t`Fix the sentence`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each sentence has one word in the wrong form: who and whose mixed up, an owner
+                    without the genitive, or a place without its ending. Tap it, then write the
+                    right form.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="fix-whose"
+                title={<Trans>Find and fix the mistake</Trans>}
+                items={fixItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six found and fixed.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Look again at the ones you missed.</Trans>
+                  ) : (
+                    <Trans>
+                      Read “Who or whose?” and “The owner comes first” once more, then try again.
+                    </Trans>
+                  )
+                }
+                recall={fixRecall}
+                round={(props) => <FixRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
           id: "at-home",
           title: t`Saying whose at home`,
           quiz: true,
@@ -1099,6 +1383,30 @@ export function OmastavLesson() {
                 }
                 them={t`Mari`}
                 turns={dialogue}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listen: whose is it?`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Mari looks at a picture on Jaan’s phone. Read the questions, then listen.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="jaan-picture"
+                title={<Trans>Listen: Jaan’s picture</Trans>}
+                clip="c-photo"
+                turns={OMASTAV_TALK.turns}
+                names={{ third: "Mari", fourth: "Jaan" }}
+                questions={talkQuestions}
               />
             </>
           ),

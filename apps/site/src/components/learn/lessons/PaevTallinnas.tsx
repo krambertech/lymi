@@ -315,11 +315,11 @@ function useContent() {
       id: "meet",
       ask: t`When does Jaan come to the market?`,
       options: [
-        { id: "ten", label: t`At ten` },
-        { id: "twelve", label: t`At twelve` },
-        { id: "eleven", label: t`At eleven` },
+        { id: "1130", label: t`At 11:30` },
+        { id: "1200", label: t`At 12:00` },
+        { id: "1230", label: t`At 12:30` },
       ],
-      answer: "twelve",
+      answer: "1200",
       line: 7,
     },
     {

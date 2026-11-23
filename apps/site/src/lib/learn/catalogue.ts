@@ -124,7 +124,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Days of the week in Estonian`,
         et: "Esmaspäev, teisipäev",
         minutes: 15,
-        blurb: msg`A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud.`,
+        blurb: msg`A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, täna, homme and eile, and saying and writing what day it is. Every sentence is read aloud.`,
       },
       {
         slug: "kaskiv",

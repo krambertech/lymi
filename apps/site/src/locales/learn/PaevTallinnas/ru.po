@@ -11,7 +11,7 @@ msgid "<0>Eurot</0> or <1>maksab</1> makes the number a price."
 msgstr "С <0>eurot</0> или <1>maksab</1> число становится ценой."
 
 msgid "<0>Kell on</0> before the number makes it a time."
-msgstr "<0>Kell on</0> перед числом делает его временем."
+msgstr "<0>Kell on</0> перед числом означает время."
 
 msgid "<et>Avatud</et> is open and <et>suletud</et> closed, as on a door."
 msgstr "<et>Avatud</et> — открыто, <et>suletud</et> — закрыто, как на двери."
@@ -23,7 +23,7 @@ msgid "<et>Eurot</et> or <et>maksab</et> makes the number a price."
 msgstr "С <et>eurot</et> или <et>maksab</et> число становится ценой."
 
 msgid "<et>Kell on</et> before the number makes it a time."
-msgstr "<et>Kell on</et> перед числом делает его временем."
+msgstr "<et>Kell on</et> перед числом означает время."
 
 msgid "€13"
 msgstr "13 €"
@@ -103,6 +103,12 @@ msgstr "В 11:00"
 msgid "At 11:30"
 msgstr "В 11:30"
 
+msgid "At 12:00"
+msgstr "В 12:00"
+
+msgid "At 12:30"
+msgstr "В 12:30"
+
 msgid "At 16:00"
 msgstr "В 16:00"
 
@@ -111,9 +117,6 @@ msgstr "В 18:00"
 
 msgid "At 9:00"
 msgstr "В 9:00"
-
-msgid "At eleven"
-msgstr "В одиннадцать"
 
 msgid "at home"
 msgstr "дома"

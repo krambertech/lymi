@@ -284,8 +284,8 @@ msgstr "Безкоштовний урок естонської про те, як
 msgid "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
 msgstr "Безкоштовний урок про естонські форми на -ma, -mas і -mast: lähen ujuma (іду плавати), olen ujumas (на плаванні) і tulen ujumast (повертаюся з плавання). Вони відповідають на kuhu?, kus? і kust?, як і назви місць. А ще — коли казати lähen, käin чи tulen. Кожне речення озвучене."
 
-msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
-msgstr "Безкоштовний урок про дні тижня естонською: сім назв, чотири з числами всередині, однолітерні позначення в годинах роботи, а ще täna, homme і eile. Кожне слово озвучене."
+msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, täna, homme and eile, and saying and writing what day it is. Every sentence is read aloud."
+msgstr "Безкоштовний урок про дні тижня естонською: сім назв, чотири з числами всередині, однолітерні позначення в годинах роботи, täna, homme і eile, а ще як сказати й написати, який сьогодні день. Кожне речення озвучене."
 
 msgid "A free lesson on the Estonian genitive case: minu, sinu, tema, meie, teie and nende for my, your, his or her, our and their, the owner before the noun (Mari raamat), kelle for whose, and the genitive as the form that takes -s and -l (kooli, koolis). Every sentence is read aloud."
 msgstr "Безкоштовний урок про родовий відмінок в естонській мові: minu, sinu, tema, meie, teie і nende — мій, твій, його чи її, наш, ваш, їхній; власник перед іменником (Mari raamat); kelle — чий; і родовий як форма, до якої додаються -s та -l (kooli, koolis). Кожне речення озвучене."

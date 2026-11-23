@@ -284,8 +284,8 @@ msgstr "Бесплатный урок эстонского о том, как с�
 msgid "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
 msgstr "Бесплатный урок об эстонских формах на -ma, -mas и -mast: lähen ujuma (иду плавать), olen ujumas (на плавании) и tulen ujumast (возвращаюсь с плавания). Они отвечают на kuhu?, kus? и kust?, как и названия мест. А ещё — когда говорить lähen, käin или tulen. Каждое предложение озвучено."
 
-msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
-msgstr "Бесплатный урок о днях недели на эстонском: семь названий, четыре с числами внутри, однобуквенные обозначения в часах работы, а ещё täna, homme и eile. Каждое слово озвучено."
+msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, täna, homme and eile, and saying and writing what day it is. Every sentence is read aloud."
+msgstr "Бесплатный урок о днях недели на эстонском: семь названий, четыре с числами внутри, однобуквенные обозначения в часах работы, täna, homme и eile, а ещё как сказать и написать, какой сегодня день. Каждое предложение озвучено."
 
 msgid "A free lesson on the Estonian genitive case: minu, sinu, tema, meie, teie and nende for my, your, his or her, our and their, the owner before the noun (Mari raamat), kelle for whose, and the genitive as the form that takes -s and -l (kooli, koolis). Every sentence is read aloud."
 msgstr "Бесплатный урок о родительном падеже в эстонском языке: minu, sinu, tema, meie, teie и nende — мой, твой, его или её, наш, ваш, их; владелец перед существительным (Mari raamat); kelle — чей; и родительный как форма, к которой добавляются -s и -l (kooli, koolis). Каждое предложение озвучено."

@@ -146,7 +146,7 @@ msgid "Fix the sentence"
 msgstr "Виправ речення"
 
 msgid "For nobody or nothing, put <0>ei</0> before the verb, as in lesson {negation}, and mostly keep the <1>-gi</1> word as it is: <2>Keegi tuleb</2>, somebody is coming; <3>Keegi ei tule</3>, nobody is coming."
-msgstr "Щоб сказати «ніхто» чи «нічого», постав <0>ei</0> перед дієсловом, як в уроці {negation}, а слово з <1>-gi</1> здебільшого не змінюй: <2>Keegi tuleb</2> — «хтось іде»; <3>Keegi ei tule</3> — «ніхто не йде»."
+msgstr "Щоб сказати «ніхто» чи «нічого», постав <0>ei</0> перед дієсловом, як в уроці {negation}, а слово з <1>-gi</1> здебільшого не змінюй: <2>Keegi tuleb</2> — «хтось прийде»; <3>Keegi ei tule</3> — «ніхто не прийде»."
 
 msgid "For nobody or nothing, put <et>ei</et> before the verb: <et>Keegi ei tule</et>."
 msgstr "Щоб сказати «ніхто» чи «нічого», постав <et>ei</et> перед дієсловом: <et>Keegi ei tule</et>."
@@ -278,7 +278,7 @@ msgid "Nobody is at home."
 msgstr "Удома нікого немає."
 
 msgid "Nobody is coming."
-msgstr "Ніхто не йде."
+msgstr "Ніхто не прийде."
 
 msgid "Nobody, nothing"
 msgstr "Ніхто, нічого"
@@ -353,7 +353,7 @@ msgid "Somebody is at home."
 msgstr "Удома хтось є."
 
 msgid "Somebody is coming."
-msgstr "Хтось іде."
+msgstr "Хтось прийде."
 
 msgid "somebody, anybody"
 msgstr "хтось, хто-небудь"

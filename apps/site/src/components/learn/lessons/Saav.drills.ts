@@ -1,6 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import { TRA_FIX, TRA_TRANSLATE } from "../../../lib/learn/clips";
 import type { DrillBank } from "../../../lib/learn/drill";
+import { withPronouns } from "../../../lib/learn/pronouns";
 
 const translateAnswers = (id: (typeof TRA_TRANSLATE)[number]["id"]) =>
   (TRA_TRANSLATE.find((item) => item.id === id) as (typeof TRA_TRANSLATE)[number]).answers;
@@ -73,7 +74,7 @@ export const DRILLS: DrillBank = {
       id: "build-soojaks",
       rule: "build",
       prompt: msg`The room is getting warm.`,
-      answers: ["Tuba läheb soojaks.", "Tuba muutub soojaks.", "Toas läheb soojaks."],
+      answers: withPronouns(["Tuba läheb soojaks.", "Tuba muutub soojaks.", "Toas läheb soojaks."]),
       say: "Tuba läheb soojaks.",
       explain: msg`The genitive of <et>soe</et> is <et>sooja</et>, so <et>soojaks</et>.`,
     },
@@ -153,7 +154,7 @@ export const DRILLS: DrillBank = {
       id: "naks-opetajaks",
       rule: "naks",
       prompt: msg`Mari wants to become a teacher.`,
-      answers: ["Mari tahab saada õpetajaks.", "Mari tahab õpetajaks saada."],
+      answers: withPronouns(["Mari tahab saada õpetajaks.", "Mari tahab õpetajaks saada."]),
       say: "Mari tahab saada õpetajaks.",
       explain: BECOME,
     },
@@ -179,7 +180,7 @@ export const DRILLS: DrillBank = {
       id: "time-nadalaks",
       rule: "time",
       prompt: msg`I’m going to Pärnu for a week.`,
-      answers: [
+      answers: withPronouns([
         "Ma lähen nädalaks Pärnusse.",
         "Ma lähen Pärnusse nädalaks.",
         "Nädalaks lähen ma Pärnusse.",
@@ -213,7 +214,7 @@ export const DRILLS: DrillBank = {
         "Nädalaks lähen Pärnu.",
         "Nädalaks sõidan Pärnu.",
         "Nädalaks lähen mina Pärnusse.",
-      ],
+      ]),
       say: "Ma lähen nädalaks Pärnusse.",
       explain: TIME,
     },
@@ -222,7 +223,7 @@ export const DRILLS: DrillBank = {
       id: "time-ohtuks",
       rule: "time",
       prompt: msg`Will you be home by the evening?`,
-      answers: [
+      answers: withPronouns([
         "Kas sa oled õhtuks kodus?",
         "Kas sa oled kodus õhtuks?",
         "Kas sina oled õhtuks kodus?",
@@ -235,7 +236,7 @@ export const DRILLS: DrillBank = {
         "Kas sina õhtuks kodus oled?",
         "Kas sina õhtuks oled kodus?",
         "Oled sina õhtuks kodus?",
-      ],
+      ]),
       say: "Kas sa oled õhtuks kodus?",
       explain: msg`By the evening is <et>õhtuks</et>.`,
     },

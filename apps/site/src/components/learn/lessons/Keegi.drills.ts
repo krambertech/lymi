@@ -1,6 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import { GI_FIX, GI_NOT, GI_TRANSLATE } from "../../../lib/learn/clips";
 import type { DrillBank } from "../../../lib/learn/drill";
+import { withPronouns } from "../../../lib/learn/pronouns";
 
 const translateAnswers = (id: (typeof GI_TRANSLATE)[number]["id"]) =>
   (GI_TRANSLATE.find((item) => item.id === id) as (typeof GI_TRANSLATE)[number]).answers;
@@ -8,7 +9,7 @@ const fixAnswers = (id: (typeof GI_FIX)[number]["id"]) =>
   (GI_FIX.find((item) => item.id === id) as (typeof GI_FIX)[number]).answers;
 const notAnswers = (pos: (typeof GI_NOT)[number]["pos"]) => {
   const item = GI_NOT.find((each) => each.pos === pos) as (typeof GI_NOT)[number];
-  return [item.neg, ...item.also] as const;
+  return withPronouns([item.neg, ...item.also]);
 };
 
 const SOME = msg`A question word with <et>-gi</et> means some: <et>midagi</et>, something; <et>kuhugi</et>, to somewhere.`;
@@ -39,7 +40,7 @@ export const DRILLS: DrillBank = {
       id: "some-juua",
       rule: "some",
       prompt: msg`Do you want something to drink?`,
-      answers: [
+      answers: withPronouns([
         "Kas sa tahad midagi juua?",
         "Kas sa midagi juua tahad?",
         "Kas te midagi juua tahate?",
@@ -50,7 +51,7 @@ export const DRILLS: DrillBank = {
         "Tahad sa midagi juua?",
         "Kas tahate midagi juua?",
         "Tahate te midagi juua?",
-      ],
+      ]),
       say: "Kas sa tahad midagi juua?",
       explain: SOME,
     },
@@ -59,7 +60,7 @@ export const DRILLS: DrillBank = {
       id: "some-kuhugi",
       rule: "some",
       prompt: msg`I want to go somewhere.`,
-      answers: [
+      answers: withPronouns([
         "Ma tahan kuhugi minna.",
         "Ma tahan minna kuhugi.",
         "Tahan kuhugi minna.",
@@ -72,7 +73,7 @@ export const DRILLS: DrillBank = {
         "Mina tahan minna kuskile.",
         "Tahan kuskile minna.",
         "Tahan minna kuskile.",
-      ],
+      ]),
       say: "Ma tahan kuhugi minna.",
       explain: SOME,
     },
@@ -219,7 +220,7 @@ export const DRILLS: DrillBank = {
       id: "cases-kellegagi",
       rule: "cases",
       prompt: msg`I’m not talking with anybody.`,
-      answers: [
+      answers: withPronouns([
         "Ma ei räägi kellegagi.",
         "Mina ei räägi kellegagi.",
         "Ei räägi kellegagi.",
@@ -227,7 +228,7 @@ export const DRILLS: DrillBank = {
         "Ma kellegagi ei räägi.",
         "Mina kellegagi ei räägi.",
         "Mina ei räägi mitte kellegagi.",
-      ],
+      ]),
       say: "Ma ei räägi kellegagi.",
       explain: CASE,
     },

@@ -3523,27 +3523,27 @@ export const TRA_MESSAGE = [
 export const TRA_TRANSLATE = [
   {
     id: "saada-arstiks",
-    answers: [
+    answers: withPronouns([
       "Ma tahan saada arstiks.",
       "Mina tahan saada arstiks.",
       "Tahan saada arstiks.",
       "Ma tahan arstiks saada.",
       "Tahan arstiks saada.",
       "Mina tahan arstiks saada.",
-    ],
+    ]),
   },
   {
     id: "kulmaks",
-    answers: [
+    answers: withPronouns([
       "Ilm muutub külmaks.",
       "Ilm läheb külmaks.",
       "Ilm on muutumas külmaks.",
       "Läheb külmaks.",
-    ],
+    ]),
   },
   {
     id: "reedeks",
-    answers: [
+    answers: withPronouns([
       "Ma tulen reedeks tagasi.",
       "Mina tulen reedeks tagasi.",
       "Tulen reedeks tagasi.",
@@ -3562,11 +3562,11 @@ export const TRA_TRANSLATE = [
       "Olen tagasi reedeks.",
       "Mina tulen tagasi reedeks.",
       "Mina olen tagasi reedeks.",
-    ],
+    ]),
   },
   {
     id: "nadalaks",
-    answers: [
+    answers: withPronouns([
       "Ma lähen nädalaks Tartusse.",
       "Ma lähen Tartusse nädalaks.",
       "Lähen nädalaks Tartusse.",
@@ -3600,11 +3600,11 @@ export const TRA_TRANSLATE = [
       "Nädalaks lähen Tartu.",
       "Nädalaks sõidan Tartu.",
       "Nädalaks lähen mina Tartusse.",
-    ],
+    ]),
   },
   {
     id: "sunnipaevaks",
-    answers: [
+    answers: withPronouns([
       "Mida sa sünnipäevaks tahad?",
       "Mis sa sünnipäevaks tahad?",
       "Mida sa tahad sünnipäevaks?",
@@ -3625,16 +3625,16 @@ export const TRA_TRANSLATE = [
       "Mis te sünnipäevaks tahate?",
       "Mida te tahate sünnipäevaks?",
       "Mida te oma sünnipäevaks tahate?",
-    ],
+    ]),
   },
   {
     id: "heaks-opetajaks",
-    answers: [
+    answers: withPronouns([
       "Ta sai heaks õpetajaks.",
       "Tema sai heaks õpetajaks.",
       "Temast sai hea õpetaja.",
       "Tast sai hea õpetaja.",
-    ],
+    ]),
   },
 ] as const;
 
@@ -3884,7 +3884,7 @@ export const GI_TRANSLATE = [
   { id: "helistas", answers: ["Keegi helistas."] },
   {
     id: "kedagi",
-    answers: [
+    answers: withPronouns([
       "Ma ei näe kedagi.",
       "Mina ei näe kedagi.",
       "Ei näe kedagi.",
@@ -3892,11 +3892,11 @@ export const GI_TRANSLATE = [
       "Mina kedagi ei näe.",
       "Mina ei näe mitte kedagi.",
       "Ma ei näe mitte kedagi.",
-    ],
+    ]),
   },
   {
     id: "midagi",
-    answers: [
+    answers: withPronouns([
       "Mul ei ole midagi.",
       "Mul pole midagi.",
       "Minul ei ole midagi.",
@@ -3909,11 +3909,11 @@ export const GI_TRANSLATE = [
       "Minul midagi pole.",
       "Minul ei ole mitte midagi.",
       "Minul pole mitte midagi.",
-    ],
+    ]),
   },
   {
     id: "tahad",
-    answers: [
+    answers: withPronouns([
       "Kas sa tahad midagi?",
       "Kas sa midagi tahad?",
       "Kas te midagi tahate?",
@@ -3924,11 +3924,11 @@ export const GI_TRANSLATE = [
       "Tahad sa midagi?",
       "Kas tahate midagi?",
       "Tahate te midagi?",
-    ],
+    ]),
   },
   {
     id: "kuhugi",
-    answers: [
+    answers: withPronouns([
       "Ta ei lähe kuhugi.",
       "Tema ei lähe kuhugi.",
       "Ta ei lähe kuskile.",
@@ -3941,7 +3941,7 @@ export const GI_TRANSLATE = [
       "Tema kuskile ei lähe.",
       "Ta ei lähe mitte kuskile.",
       "Tema ei lähe mitte kuskile.",
-    ],
+    ]),
   },
   { id: "keegi", answers: ["Keegi ei tule.", "Mitte keegi ei tule.", "Kedagi ei tule."] },
 ] as const;

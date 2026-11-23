@@ -146,7 +146,7 @@ msgid "Fix the sentence"
 msgstr "Исправь предложение"
 
 msgid "For nobody or nothing, put <0>ei</0> before the verb, as in lesson {negation}, and mostly keep the <1>-gi</1> word as it is: <2>Keegi tuleb</2>, somebody is coming; <3>Keegi ei tule</3>, nobody is coming."
-msgstr "Чтобы сказать «никто» или «ничего», поставь <0>ei</0> перед глаголом, как в уроке {negation}, а слово с <1>-gi</1> обычно не меняй: <2>Keegi tuleb</2> — «кто-то идёт»; <3>Keegi ei tule</3> — «никто не идёт»."
+msgstr "Чтобы сказать «никто» или «ничего», поставь <0>ei</0> перед глаголом, как в уроке {negation}, а слово с <1>-gi</1> обычно не меняй: <2>Keegi tuleb</2> — «кто-то придёт»; <3>Keegi ei tule</3> — «никто не придёт»."
 
 msgid "For nobody or nothing, put <et>ei</et> before the verb: <et>Keegi ei tule</et>."
 msgstr "Чтобы сказать «никто» или «ничего», поставь <et>ei</et> перед глаголом: <et>Keegi ei tule</et>."
@@ -278,7 +278,7 @@ msgid "Nobody is at home."
 msgstr "Дома никого нет."
 
 msgid "Nobody is coming."
-msgstr "Никто не идёт."
+msgstr "Никто не придёт."
 
 msgid "Nobody, nothing"
 msgstr "Никто, ничего"
@@ -353,7 +353,7 @@ msgid "Somebody is at home."
 msgstr "Дома кто-то есть."
 
 msgid "Somebody is coming."
-msgstr "Кто-то идёт."
+msgstr "Кто-то придёт."
 
 msgid "somebody, anybody"
 msgstr "кто-то, кто-нибудь"

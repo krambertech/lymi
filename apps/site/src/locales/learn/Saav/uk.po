@@ -425,7 +425,7 @@ msgid "Who became a doctor a year ago? Write it as Peeter says it."
 msgstr "Хто став лікарем рік тому? Напиши так, як каже Пеетер."
 
 msgid "Will you be home by the evening?"
-msgstr "Ти до вечора вже будеш удома?"
+msgstr "Ти будеш удома до вечора?"
 
 msgid "With -ks it means become."
 msgstr "З -ks воно означає «ставати»."

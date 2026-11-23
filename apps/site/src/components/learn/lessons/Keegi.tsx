@@ -2,7 +2,7 @@ import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type ReactNode, useMemo } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   GI_EXCEPT,
   GI_FIX,
@@ -17,6 +17,7 @@ import {
   clipId,
   clipUrl,
 } from "../../../lib/learn/clips";
+import { withPronouns } from "../../../lib/learn/pronouns";
 import type { PassageQuestion } from "../../../lib/learn/questions";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { ListenRows } from "../Explore";
@@ -144,7 +145,7 @@ function useContent() {
           with <span lang="et">ei</span>
         </Trans>
       ),
-      answers: [neg, ...also],
+      answers: withPronouns([neg, ...also]),
       src: src(neg),
       explain: (
         <Trans>
@@ -311,7 +312,7 @@ export function KeegiLesson() {
   const { t, i18n } = useLingui();
   const content = useContent();
   const partitive = lessonBySlug("osastav")?.n;
-  const pastNo = LESSONS.find((lesson) => lesson.et === "Ma ei läinud")?.n;
+  const pastNo = lessonBySlug("mineviku-eitus")?.n;
   const negation = lessonBySlug("eitus")?.n;
 
   const rows = (list: readonly string[]) =>

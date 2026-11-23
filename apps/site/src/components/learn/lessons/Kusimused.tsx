@@ -536,7 +536,7 @@ export function KusimusedLesson() {
         options: [
           { id: "from", label: t`Where he is from` },
           { id: "name", label: t`His name` },
-          { id: "lives", label: t`Where he lives and works` },
+          { id: "lives", label: t`Where he lives` },
         ],
         answer: "name",
         line: 1,
@@ -760,10 +760,7 @@ export function KusimusedLesson() {
             <>
               <Prose>
                 <p>
-                  <Trans>
-                    Match each question word with what it asks about. Tap a word, then what it asks
-                    about.
-                  </Trans>
+                  <Trans>Match each question word with what it asks about.</Trans>
                 </p>
               </Prose>
               <Match

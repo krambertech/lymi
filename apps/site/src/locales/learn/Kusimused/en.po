@@ -307,8 +307,8 @@ msgstr "Listening: Kati meets Jaan"
 msgid "Ma olen pärit… is I’m from…"
 msgstr "Ma olen pärit… is I’m from…"
 
-msgid "Match each question word with what it asks about. Tap a word, then what it asks about."
-msgstr "Match each question word with what it asks about. Tap a word, then what it asks about."
+msgid "Match each question word with what it asks about."
+msgstr "Match each question word with what it asks about."
 
 msgid "Match the question words"
 msgstr "Match the question words"
@@ -485,8 +485,8 @@ msgstr "where from"
 msgid "Where he is from"
 msgstr "Where he is from"
 
-msgid "Where he lives and works"
-msgstr "Where he lives and works"
+msgid "Where he lives"
+msgstr "Where he lives"
 
 msgid "Where is he?"
 msgstr "Where is he?"

@@ -177,7 +177,7 @@ export const DRILLS: DrillBank = {
     ei: { label: msg`<et>Ei</et> and the verb without its ending`, section: "stem" },
     olema: { label: msg`<et>Ei ole</et> and <et>pole</et>`, section: "ole" },
     answer: { label: msg`Answering no`, section: "answers" },
-    yesno: { label: msg`Yes or no`, section: "yes-or-no" },
+    yesno: { label: msg`Yes or no`, section: "ei" },
   },
   items: [
     typed("loe", "sa"),

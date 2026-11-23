@@ -167,7 +167,7 @@ msgid "For fun"
 msgstr "Для удовольствия"
 
 msgid "For his family"
-msgstr "Ради семьи"
+msgstr "Из-за семьи"
 
 msgid "For work"
 msgstr "Из-за работы"
@@ -191,7 +191,7 @@ msgid "Hear a question, then pick the answer that fits. A kas question takes yes
 msgstr "Послушай вопрос и выбери ответ, который подходит. На kas отвечают «да», «нет» или «не знаю», а на вопросительное слово — тем, о чём оно спрашивает: местом на kus, временем на millal."
 
 msgid "His name"
-msgstr "Как его зовут"
+msgstr "Его имя"
 
 msgid "how"
 msgstr "как"
@@ -307,8 +307,8 @@ msgstr "На слух: Кати знакомится с Яаном"
 msgid "Ma olen pärit… is I’m from…"
 msgstr "Ma olen pärit… значит «я родом из…»."
 
-msgid "Match each question word with what it asks about. Tap a word, then what it asks about."
-msgstr "Соедини каждое вопросительное слово с тем, о чём оно спрашивает. Нажми слово, а потом то, о чём оно спрашивает."
+msgid "Match each question word with what it asks about."
+msgstr "Соедини каждое вопросительное слово с тем, о чём оно спрашивает."
 
 msgid "Match the question words"
 msgstr "Соедини вопросительные слова"
@@ -485,8 +485,8 @@ msgstr "откуда"
 msgid "Where he is from"
 msgstr "Откуда он родом"
 
-msgid "Where he lives and works"
-msgstr "Где он живёт и работает"
+msgid "Where he lives"
+msgstr "Где он живёт"
 
 msgid "Where is he?"
 msgstr "Где он?"

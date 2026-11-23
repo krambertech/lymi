@@ -170,7 +170,7 @@ msgid "For his family"
 msgstr "Через родину"
 
 msgid "For work"
-msgstr "Заради роботи"
+msgstr "Через роботу"
 
 msgid "from, by birth"
 msgstr "родом з"
@@ -307,8 +307,8 @@ msgstr "На слух: Каті знайомиться з Яаном"
 msgid "Ma olen pärit… is I’m from…"
 msgstr "Ma olen pärit… означає «я родом з…»."
 
-msgid "Match each question word with what it asks about. Tap a word, then what it asks about."
-msgstr "З’єднай кожне питальне слово з тим, про що воно питає. Натисни слово, а тоді те, про що воно питає."
+msgid "Match each question word with what it asks about."
+msgstr "З’єднай кожне питальне слово з тим, про що воно питає."
 
 msgid "Match the question words"
 msgstr "З’єднай питальні слова"
@@ -485,8 +485,8 @@ msgstr "звідки"
 msgid "Where he is from"
 msgstr "Звідки він родом"
 
-msgid "Where he lives and works"
-msgstr "Де він живе й працює"
+msgid "Where he lives"
+msgstr "Де він живе"
 
 msgid "Where is he?"
 msgstr "Де він?"

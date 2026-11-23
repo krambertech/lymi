@@ -146,8 +146,8 @@ msgstr "Each of these six everyday commands starts with a verb’s stem. Tap one
 msgid "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 msgstr "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 
-msgid "Each round gives a verb and its I form of the present. Type the command to one person you’d call sa: usually that form without its <0>-n</0>."
-msgstr "Each round gives a verb and its I form of the present. Type the command to one person you’d call sa: usually that form without its <0>-n</0>."
+msgid "Each round gives a verb and its I form of the present. Type the command to one person you’d call <0>sa</0>: usually that form without its <1>-n</1>."
+msgstr "Each round gives a verb and its I form of the present. Type the command to one person you’d call <0>sa</0>: usually that form without its <1>-n</1>."
 
 msgid "Eat."
 msgstr "Eat."

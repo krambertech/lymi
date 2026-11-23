@@ -85,7 +85,7 @@ const translated = (
 export const DRILLS: DrillBank = {
   rules: {
     which: { label: msg`Time, price or day`, section: "which" },
-    kell: { label: msg`Telling the time`, section: "voice" },
+    kell: { label: msg`Times with <et>kell</et>`, section: "voice" },
     hind: { label: msg`Saying a price`, section: "saturday" },
     paev: { label: msg`Days and signs`, section: "sign" },
     ei: { label: msg`Saying no with <et>ei</et>`, section: "cafe" },

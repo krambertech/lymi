@@ -400,9 +400,6 @@ msgstr "Sunday"
 msgid "Talk: coffee with Mari"
 msgstr "Talk: coffee with Mari"
 
-msgid "Telling the time"
-msgstr "Telling the time"
-
 msgid "ten"
 msgstr "ten"
 
@@ -426,6 +423,9 @@ msgstr "Time, price or day"
 
 msgid "Time, price or day?"
 msgstr "Time, price or day?"
+
+msgid "Times with <et>kell</et>"
+msgstr "Times with <et>kell</et>"
 
 msgid "to be"
 msgstr "to be"

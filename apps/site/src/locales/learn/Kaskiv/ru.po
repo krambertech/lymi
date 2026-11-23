@@ -146,8 +146,8 @@ msgstr "Каждая из этих шести повседневных кома�
 msgid "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 msgstr "Каждый ответ — это команда или короткая реплика. Выбирай тот, что подходит к словам Мари."
 
-msgid "Each round gives a verb and its I form of the present. Type the command to one person you’d call sa: usually that form without its <0>-n</0>."
-msgstr "В каждом раунде есть глагол и его форма первого лица единственного числа настоящего времени. Напиши команду одному человеку, с которым ты на «ты»: обычно это та же форма без <0>-n</0>."
+msgid "Each round gives a verb and its I form of the present. Type the command to one person you’d call <0>sa</0>: usually that form without its <1>-n</1>."
+msgstr "В каждом раунде есть глагол и его форма первого лица единственного числа настоящего времени. Напиши команду одному человеку, к которому обращаешься на <0>sa</0>, «ты»: обычно это та же форма без <1>-n</1>."
 
 msgid "Eat."
 msgstr "Ешь."

@@ -146,8 +146,8 @@ msgstr "Кожен із цих шести щоденних наказів поч
 msgid "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 msgstr "Кожна відповідь — це наказ або коротка репліка. Обирай ту, що пасує до слів Марі."
 
-msgid "Each round gives a verb and its I form of the present. Type the command to one person you’d call sa: usually that form without its <0>-n</0>."
-msgstr "У кожному раунді є дієслово і його форма першої особи однини теперішнього часу. Напиши наказ одній людині, з якою ти на «ти»: зазвичай це та сама форма без <0>-n</0>."
+msgid "Each round gives a verb and its I form of the present. Type the command to one person you’d call <0>sa</0>: usually that form without its <1>-n</1>."
+msgstr "У кожному раунді є дієслово і його форма першої особи однини теперішнього часу. Напиши наказ одній людині, до якої звертаєшся на <0>sa</0>, «ти»: зазвичай це та сама форма без <1>-n</1>."
 
 msgid "Eat."
 msgstr "Їж."

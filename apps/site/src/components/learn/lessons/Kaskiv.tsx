@@ -952,7 +952,8 @@ export function KaskivLesson() {
                 <p>
                   <Trans>
                     Each round gives a verb and its I form of the present. Type the command to one
-                    person you’d call sa: usually that form without its <span lang="et">-n</span>.
+                    person you’d call <span lang="et">sa</span>: usually that form without its{" "}
+                    <span lang="et">-n</span>.
                   </Trans>
                 </p>
               </Prose>

@@ -400,9 +400,6 @@ msgstr "Воскресенье"
 msgid "Talk: coffee with Mari"
 msgstr "Разговор: кофе с Мари"
 
-msgid "Telling the time"
-msgstr "Который час"
-
 msgid "ten"
 msgstr "десять"
 
@@ -426,6 +423,9 @@ msgstr "Время, цена или день"
 
 msgid "Time, price or day?"
 msgstr "Время, цена или день?"
+
+msgid "Times with <et>kell</et>"
+msgstr "Время с <et>kell</et>"
 
 msgid "to be"
 msgstr "быть"

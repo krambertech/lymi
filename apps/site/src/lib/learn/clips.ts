@@ -3842,7 +3842,7 @@ export const GRADATION_CONVERSATION: Conversation = {
       voice: "second",
       text: [
         "Jah, ema elab Tartus, ühe väikese mäe peal.",
-        "Tema majas on suur aed, kus kasvavad õunapuud.",
+        "Maja juures on suur aed, kus kasvavad õunapuud.",
         "Ma käin seal kord kuus ja aitan tal aias töötada.",
       ],
     },
@@ -3892,6 +3892,28 @@ export const GRADATION_DRILL = [
   "aia",
 ] as const;
 
+export const GRADATION_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Kati on toas.": ["Kati on toas."],
+  "Jaan on pangas.": ["Jaan on pangas."],
+  "Lapsed on pargis.": ["Lapsed on pargis.", "Pargis on lapsed."],
+  "Me oleme rannas.": [
+    "Me oleme rannas.",
+    "Meie oleme rannas.",
+    "Oleme rannas.",
+    "Me oleme rannal.",
+    "Meie oleme rannal.",
+    "Oleme rannal.",
+  ],
+  "Kott on kapis.": ["Kott on kapis."],
+  "Mu jalad on väsinud.": [
+    "Mu jalad on väsinud.",
+    "Minu jalad on väsinud.",
+    "Mul on jalad väsinud.",
+    "Minul on jalad väsinud.",
+  ],
+  "Linnud on pargis.": ["Linnud on pargis."],
+};
+
 const GRADATION_CLIPS: Record<string, Clip> = {
   ...words([
     ...GRADATION_WORDS,
@@ -3918,7 +3940,7 @@ export const PLURAL_PART_KINDS = {
   ],
   sid: [
     { word: "auto", of: "auto", part: "autot", many: "autosid" },
-    { word: "kino", of: "kino", part: "kinot", many: "kinosid" },
+    { word: "kino", of: "kino", part: "kino", many: "kinosid" },
     { word: "ema", of: "ema", part: "ema", many: "emasid" },
   ],
   vowel: [
@@ -3933,6 +3955,27 @@ export const PLURAL_PART_KINDS = {
     { word: "tee", of: "tee", part: "teed", many: "teid" },
   ],
 } as const;
+
+export const PLURAL_PART_ALT: Record<string, string> = {
+  maju: "majasid",
+  õunu: "õunasid",
+  koole: "koolisid",
+  puid: "puusid",
+  sõpru: "sõprasid",
+  linde: "lindusid",
+  lilli: "lillesid",
+};
+
+export const pluralPartVariants = (sentence: string): string[] => {
+  const words = sentence.split(" ");
+  const at = words.findIndex((word) => word.replace(/[.,!?]$/, "") in PLURAL_PART_ALT);
+  if (at < 0) return [sentence];
+  const word = words[at] as string;
+  const bare = word.replace(/[.,!?]$/, "");
+  const swapped = [...words];
+  swapped[at] = word.replace(bare, PLURAL_PART_ALT[bare] as string);
+  return [sentence, swapped.join(" ")];
+};
 
 export const PLURAL_PART_THREE = [
   { word: "raamat", two: "kaks raamatut", many: "palju raamatuid", the: "raamatud" },
@@ -4120,6 +4163,49 @@ export const PLURAL_PART_DRILL = [
   "Ma armastan lilli.",
   "Mul on kaks sõpra.",
 ] as const;
+
+export const PLURAL_PART_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Mul on palju raamatuid.": ["Mul on palju raamatuid.", "Minul on palju raamatuid."],
+  "Mul on kaks last.": ["Mul on kaks last.", "Minul on kaks last."],
+  "Lapsed on kodus.": ["Lapsed on kodus."],
+  "Poes on õunu.": ["Poes on õunu.", "Poes on õunasid."],
+  "Ma ostsin õunad.": ["Ma ostsin õunad.", "Mina ostsin õunad.", "Ostsin õunad."],
+  "Mul ei ole autosid.": [
+    "Mul ei ole autosid.",
+    "Mul pole autosid.",
+    "Minul ei ole autosid.",
+    "Minul pole autosid.",
+  ],
+  "Ma armastan linde.": [
+    "Ma armastan linde.",
+    "Ma armastan lindusid.",
+    "Mina armastan linde.",
+    "Mina armastan lindusid.",
+    "Armastan linde.",
+    "Armastan lindusid.",
+  ],
+  "Mul on palju sõpru.": [
+    "Mul on palju sõpru.",
+    "Mul on palju sõprasid.",
+    "Minul on palju sõpru.",
+    "Minul on palju sõprasid.",
+  ],
+  "Mul on kaks sõpra.": ["Mul on kaks sõpra.", "Minul on kaks sõpra."],
+  "Tal ei ole autosid.": [
+    "Tal ei ole autosid.",
+    "Tal pole autosid.",
+    "Temal ei ole autosid.",
+    "Temal pole autosid.",
+  ],
+  "Ma armastan lilli.": [
+    "Ma armastan lilli.",
+    "Ma armastan lillesid.",
+    "Mina armastan lilli.",
+    "Mina armastan lillesid.",
+    "Armastan lilli.",
+    "Armastan lillesid.",
+  ],
+};
 
 const PLURAL_PART_CLIPS: Record<string, Clip> = {
   ...words([

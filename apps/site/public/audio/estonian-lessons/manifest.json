@@ -11719,11 +11719,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "raamatuid-maju/kinot": {
-    "text": "kinot",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "raamatuid-maju/kinosid": {
     "text": "kinosid",
     "model": "eleven_v4",
@@ -12282,175 +12277,6 @@
           "Suurepärane, tule homme kell kuus ja too oma lapsed ka!"
         ],
         "say": "[cheerful] Suurepärane, tule homme kell kuus ja too oma lapsed ka!"
-      }
-    ]
-  },
-  "jalg-jala/c-new-flat": {
-    "text": "Tere, Jaan! Tule sisse, see on minu uus korter, kuhu ma eile kolisin. Tere, Kati! Korter on ilus, aga kas su tuba on ka suur? Ei, tuba on väike, aga see on hele ja soe. Toas on ainult laud, voodi ja kapp, mille ma turult ostsin. Kus su raamatud on, kas sa tõid need kõik kaasa? Jah, raamatud on kapis ja kapi peal on lamp. Ja kus su suur kott on, mida sa eile kandsid? Kott on toas laua all, sest mul pole veel riiulit. Kas siin lähedal on pood, kus saab leiba osta? Jah, pood on kohe nurga taga, maja kõrval. Ma käin poes peaaegu iga päev, sest see on nii lähedal. Ja pank, kas sa käid tihti pangas? Pank on pargi kõrval, aga pangas ma ei käi. Ma maksan kõik arved telefoniga, see on lihtsam. Mis pargis on, kas seal on midagi huvitavat? Pargis on suured vanad puud ja palju linde. Hommikul ma jooksen pargis, enne kui tööle lähen. Ja rand, kas rand on ka siit lähedal? Ei, rand on kaugel, bussiga umbes pool tundi. Rannas käin ma ainult laupäeval, kui mul on aega. Kas sa käid ka talvel rannas? Talvel käin ma rannas ainult jalutamas, siis on seal vaikne. Kus su ema praegu elab, kas ikka Tartus? Jah, ema elab Tartus, ühe väikese mäe peal. Tema majas on suur aed, kus kasvavad õunapuud. Ma käin seal kord kuus ja aitan tal aias töötada. Kas sinu õde elab ka Tartus? Ei, õde elab Pärnus, mere ääres. Mu jalad on väsinud, sest ma tulin jala. Kas ma võin natuke istuda? Muidugi, istu siia diivanile, see on mugav. Ma teen meile teed ja toon küpsiseid. Aitäh, sul on siin väga hubane, ma tulen jälle. Tule järgmisel nädalal jälle, siis on mul juba uus riiul.",
-    "model": "eleven_v4",
-    "turns": [
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Tere, Jaan!",
-          "Tule sisse, see on minu uus korter, kuhu ma eile kolisin."
-        ],
-        "say": "[cheerful] Tere, Jaan! Tule sisse, see on minu uus korter, kuhu ma eile kolisin."
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Tere, Kati!",
-          "Korter on ilus, aga kas su tuba on ka suur?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Ei, tuba on väike, aga see on hele ja soe.",
-          "Toas on ainult laud, voodi ja kapp, mille ma turult ostsin."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Kus su raamatud on, kas sa tõid need kõik kaasa?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Jah, raamatud on kapis ja kapi peal on lamp."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Ja kus su suur kott on, mida sa eile kandsid?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Kott on toas laua all, sest mul pole veel riiulit."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Kas siin lähedal on pood, kus saab leiba osta?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Jah, pood on kohe nurga taga, maja kõrval.",
-          "Ma käin poes peaaegu iga päev, sest see on nii lähedal."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Ja pank, kas sa käid tihti pangas?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Pank on pargi kõrval, aga pangas ma ei käi.",
-          "Ma maksan kõik arved telefoniga, see on lihtsam."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Mis pargis on, kas seal on midagi huvitavat?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Pargis on suured vanad puud ja palju linde.",
-          "Hommikul ma jooksen pargis, enne kui tööle lähen."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Ja rand, kas rand on ka siit lähedal?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Ei, rand on kaugel, bussiga umbes pool tundi.",
-          "Rannas käin ma ainult laupäeval, kui mul on aega."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Kas sa käid ka talvel rannas?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Talvel käin ma rannas ainult jalutamas, siis on seal vaikne."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Kus su ema praegu elab, kas ikka Tartus?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Jah, ema elab Tartus, ühe väikese mäe peal.",
-          "Tema majas on suur aed, kus kasvavad õunapuud.",
-          "Ma käin seal kord kuus ja aitan tal aias töötada."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Kas sinu õde elab ka Tartus?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Ei, õde elab Pärnus, mere ääres."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Mu jalad on väsinud, sest ma tulin jala.",
-          "Kas ma võin natuke istuda?"
-        ],
-        "say": "[laughs] Mu jalad on väsinud, sest ma tulin jala. Kas ma võin natuke istuda?"
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Muidugi, istu siia diivanile, see on mugav.",
-          "Ma teen meile teed ja toon küpsiseid."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Aitäh, sul on siin väga hubane, ma tulen jälle."
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Tule järgmisel nädalal jälle, siis on mul juba uus riiul."
-        ]
       }
     ]
   },
@@ -14020,5 +13846,174 @@
     "text": "Kati teeb salati.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/c-new-flat": {
+    "text": "Tere, Jaan! Tule sisse, see on minu uus korter, kuhu ma eile kolisin. Tere, Kati! Korter on ilus, aga kas su tuba on ka suur? Ei, tuba on väike, aga see on hele ja soe. Toas on ainult laud, voodi ja kapp, mille ma turult ostsin. Kus su raamatud on, kas sa tõid need kõik kaasa? Jah, raamatud on kapis ja kapi peal on lamp. Ja kus su suur kott on, mida sa eile kandsid? Kott on toas laua all, sest mul pole veel riiulit. Kas siin lähedal on pood, kus saab leiba osta? Jah, pood on kohe nurga taga, maja kõrval. Ma käin poes peaaegu iga päev, sest see on nii lähedal. Ja pank, kas sa käid tihti pangas? Pank on pargi kõrval, aga pangas ma ei käi. Ma maksan kõik arved telefoniga, see on lihtsam. Mis pargis on, kas seal on midagi huvitavat? Pargis on suured vanad puud ja palju linde. Hommikul ma jooksen pargis, enne kui tööle lähen. Ja rand, kas rand on ka siit lähedal? Ei, rand on kaugel, bussiga umbes pool tundi. Rannas käin ma ainult laupäeval, kui mul on aega. Kas sa käid ka talvel rannas? Talvel käin ma rannas ainult jalutamas, siis on seal vaikne. Kus su ema praegu elab, kas ikka Tartus? Jah, ema elab Tartus, ühe väikese mäe peal. Maja juures on suur aed, kus kasvavad õunapuud. Ma käin seal kord kuus ja aitan tal aias töötada. Kas sinu õde elab ka Tartus? Ei, õde elab Pärnus, mere ääres. Mu jalad on väsinud, sest ma tulin jala. Kas ma võin natuke istuda? Muidugi, istu siia diivanile, see on mugav. Ma teen meile teed ja toon küpsiseid. Aitäh, sul on siin väga hubane, ma tulen jälle. Tule järgmisel nädalal jälle, siis on mul juba uus riiul.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Tule sisse, see on minu uus korter, kuhu ma eile kolisin."
+        ],
+        "say": "[cheerful] Tere, Jaan! Tule sisse, see on minu uus korter, kuhu ma eile kolisin."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Kati!",
+          "Korter on ilus, aga kas su tuba on ka suur?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, tuba on väike, aga see on hele ja soe.",
+          "Toas on ainult laud, voodi ja kapp, mille ma turult ostsin."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kus su raamatud on, kas sa tõid need kõik kaasa?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, raamatud on kapis ja kapi peal on lamp."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja kus su suur kott on, mida sa eile kandsid?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kott on toas laua all, sest mul pole veel riiulit."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas siin lähedal on pood, kus saab leiba osta?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, pood on kohe nurga taga, maja kõrval.",
+          "Ma käin poes peaaegu iga päev, sest see on nii lähedal."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja pank, kas sa käid tihti pangas?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Pank on pargi kõrval, aga pangas ma ei käi.",
+          "Ma maksan kõik arved telefoniga, see on lihtsam."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mis pargis on, kas seal on midagi huvitavat?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Pargis on suured vanad puud ja palju linde.",
+          "Hommikul ma jooksen pargis, enne kui tööle lähen."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja rand, kas rand on ka siit lähedal?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, rand on kaugel, bussiga umbes pool tundi.",
+          "Rannas käin ma ainult laupäeval, kui mul on aega."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas sa käid ka talvel rannas?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Talvel käin ma rannas ainult jalutamas, siis on seal vaikne."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kus su ema praegu elab, kas ikka Tartus?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, ema elab Tartus, ühe väikese mäe peal.",
+          "Maja juures on suur aed, kus kasvavad õunapuud.",
+          "Ma käin seal kord kuus ja aitan tal aias töötada."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas sinu õde elab ka Tartus?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, õde elab Pärnus, mere ääres."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mu jalad on väsinud, sest ma tulin jala.",
+          "Kas ma võin natuke istuda?"
+        ],
+        "say": "[laughs] Mu jalad on väsinud, sest ma tulin jala. Kas ma võin natuke istuda?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Muidugi, istu siia diivanile, see on mugav.",
+          "Ma teen meile teed ja toon küpsiseid."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh, sul on siin väga hubane, ma tulen jälle."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tule järgmisel nädalal jälle, siis on mul juba uus riiul."
+        ]
+      }
+    ]
   }
 }

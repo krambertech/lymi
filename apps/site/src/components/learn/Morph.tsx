@@ -124,7 +124,7 @@ function MorphChainView({ chain }: { chain: MorphChain }) {
       </div>
       <ol className="m-0 flex list-none flex-wrap items-center gap-x-1.5 gap-y-2 p-0">
         {chain.steps.map((each, i) => (
-          <Fragment key={`${i}:${each.word}`}>
+          <Fragment key={`${each.label}:${each.word}`}>
             {i > 0 && (
               <li aria-hidden="true" className="text-ink-muted">
                 <ArrowRight className="size-4 rtl:-scale-x-100" />

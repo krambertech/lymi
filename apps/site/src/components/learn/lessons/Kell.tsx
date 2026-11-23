@@ -659,9 +659,10 @@ export function KellLesson() {
         id: "coffee",
         ask: t`When do they drink coffee?`,
         options: [
-          { id: "245", label: "2:45" },
+          { id: "415", label: "4:15" },
+          { id: "345", label: "3:45" },
           { id: "315", label: "3:15" },
-          { id: "430", label: "4:30" },
+          { id: "445", label: "4:45" },
         ],
         answer: "315",
         line: 4,
@@ -670,9 +671,10 @@ export function KellLesson() {
         id: "bus",
         ask: t`When do they wait for the bus?`,
         options: [
-          { id: "515", label: "5:15" },
-          { id: "330", label: "3:30" },
           { id: "445", label: "4:45" },
+          { id: "545", label: "5:45" },
+          { id: "415", label: "4:15" },
+          { id: "515", label: "5:15" },
         ],
         answer: "445",
         line: 5,
@@ -1086,10 +1088,10 @@ export function KellLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a time and write the whole sentence. Before <span lang="et">läbi</span>,
-                    say <span lang="et">viis</span>, <span lang="et">kümme</span> or{" "}
-                    <span lang="et">kakskümmend minutit</span>; before <span lang="et">pärast</span>
-                    , <span lang="et">viie</span>, <span lang="et">kümne</span> or{" "}
+                    Hear a time and write the whole sentence. With <span lang="et">läbi</span>, the
+                    minutes are <span lang="et">viis</span>, <span lang="et">kümme</span> or{" "}
+                    <span lang="et">kakskümmend minutit</span>; with <span lang="et">pärast</span>,{" "}
+                    <span lang="et">viie</span>, <span lang="et">kümne</span> or{" "}
                     <span lang="et">kahekümne minuti</span>.
                   </Trans>
                 </p>
@@ -1103,9 +1105,11 @@ export function KellLesson() {
                   share === 1 ? (
                     <Trans>All six, every word in its place.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Nearly. Play the ones you missed slower.</Trans>
+                    <Trans>
+                      Nearly. Hear the ones you missed below, then try again with Slower.
+                    </Trans>
                   ) : (
-                    <Trans>Play each sentence slower, then try again.</Trans>
+                    <Trans>Try again, and tap Slower before you write each sentence.</Trans>
                   )
                 }
                 recall={sentenceRecall}

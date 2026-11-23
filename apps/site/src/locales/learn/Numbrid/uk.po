@@ -11,7 +11,7 @@ msgid "-teist or -kümmend?"
 msgstr "-teist чи -kümmend?"
 
 msgid "<0/> has a short a and a k before the s; <1/> has a long uu. <2/> starts with ka, <3/> with ü. The numbers built from them differ the same way. Listen, then pick."
-msgstr "У <0/> коротке a і k перед s, у <1/> — довге uu. <2/> починається з ka, <3/> — з ü. Так само різняться й числа, складені з них. Послухай і вибери."
+msgstr "<0/> вимовляється з коротким a і k перед s, <1/> — з довгим uu. <2/> починається з ka, <3/> — з ü. Так само різняться й числа, складені з них. Послухай і вибери."
 
 msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 msgstr "<0/> — це сто, а <1/> — тисяча, і «один» перед ними не кажуть. Сотні пишуться разом, <2/>, а тисячі окремо: <3/>."
@@ -30,6 +30,15 @@ msgstr "<et>-teist</et> чи <et>-kümmend</et>"
 
 msgid "<et>Kaks</et> has a short a and a k; <et>kuus</et> a long uu. <et>Kaheksa</et> starts with ka, <et>üheksa</et> with ü."
 msgstr "У <et>kaks</et> коротке a і k, у <et>kuus</et> — довге uu. <et>Kaheksa</et> починається з ka, <et>üheksa</et> — з ü."
+
+msgid "€12.50"
+msgstr "12,50 €"
+
+msgid "€2.15"
+msgstr "2,15 €"
+
+msgid "€2.50"
+msgstr "2,50 €"
 
 msgid "0 to 10"
 msgstr "0–10"

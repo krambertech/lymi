@@ -125,8 +125,8 @@ msgstr "Пів шляху до {next}."
 msgid "Halves and quarters"
 msgstr "Половини й чверті"
 
-msgid "Hear a time and write the whole sentence. Before <0>läbi</0>, say <1>viis</1>, <2>kümme</2> or <3>kakskümmend minutit</3>; before <4>pärast</4>, <5>viie</5>, <6>kümne</6> or <7>kahekümne minuti</7>."
-msgstr "Послухай час і напиши все речення. Перед <0>läbi</0> кажуть <1>viis</1>, <2>kümme</2> чи <3>kakskümmend minutit</3>, а перед <4>pärast</4> — <5>viie</5>, <6>kümne</6> чи <7>kahekümne minuti</7>."
+msgid "Hear a time and write the whole sentence. With <0>läbi</0>, the minutes are <1>viis</1>, <2>kümme</2> or <3>kakskümmend minutit</3>; with <4>pärast</4>, <5>viie</5>, <6>kümne</6> or <7>kahekümne minuti</7>."
+msgstr "Послухай час і напиши все речення. Із <0>läbi</0> хвилини — це <1>viis</1>, <2>kümme</2> чи <3>kakskümmend minutit</3>, а з <4>pärast</4> — <5>viie</5>, <6>kümne</6> чи <7>kahekümne minuti</7>."
 
 msgid "Here the number changes shape: <0>viis</0> becomes <1>viie</1>, <2>kümme</2> becomes <3>kümne</3>, <4>kakskümmend</4> becomes <5>kahekümne</5>. Learn these three as set phrases for now. Lesson {genitive} explains the form."
 msgstr "Тут число змінює форму: <0>viis</0> стає <1>viie</1>, <2>kümme</2> — <3>kümne</3>, <4>kakskümmend</4> — <5>kahekümne</5>. Поки що запам’ятай ці три як готові фрази. Цю форму пояснює урок {genitive}."
@@ -229,17 +229,17 @@ msgstr "Майже всі. Переслухай ще раз ті, де були 
 msgid "Nearly. Check which hour each one names."
 msgstr "Майже. Перевір, яку годину називає кожна відповідь."
 
-msgid "Nearly. Play the ones you missed once more."
-msgstr "Майже. Ще раз послухай ті, де була помилка."
+msgid "Nearly. Hear the ones you missed below, then try again with Slower."
+msgstr "Майже. Послухай нижче ті, де була помилка, а тоді спробуй ще раз із кнопкою «Повільніше»."
 
-msgid "Nearly. Play the ones you missed slower."
-msgstr "Майже. Послухай повільніше ті, де була помилка."
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Майже. Переслухай ті, де були помилки."
 
 msgid "On the hour"
 msgstr "Повні години"
 
 msgid "On the hour, say the hour alone: <et>kell on kolm</et>."
-msgstr "Рівно о годині кажуть саму годину: <et>kell on kolm</et>."
+msgstr "Для повної години кажуть лише її число: <et>kell on kolm</et>."
 
 msgid "On the hour: the number alone."
 msgstr "Рівно: лише число години."
@@ -254,9 +254,6 @@ msgstr "Відтворити {0}, {1}"
 
 msgid "Play {digits}"
 msgstr "Відтворити {digits}"
-
-msgid "Play each sentence slower, then try again."
-msgstr "Послухай кожне речення повільніше, а тоді спробуй ще раз."
 
 msgid "Pool names the coming hour, so the hour you hear is one ahead. Listen for the hour, then step back half an hour."
 msgstr "Почуй годину й відступи на пів години назад, як у «пів на четверту»."
@@ -305,6 +302,9 @@ msgstr "Час"
 
 msgid "To ask the time, say <0/> Word for word, it’s “what clock is?” The answer starts with <1/> too: <2/>, it’s three o’clock."
 msgstr "Щоб спитати, котра година, скажи <0/> Дослівно — «що годинник є?» Відповідь теж починається з <1/>: <2/>, третя година."
+
+msgid "Try again, and tap Slower before you write each sentence."
+msgstr "Спробуй ще раз і перед кожним реченням натисни «Повільніше»."
 
 msgid "Turn the clock"
 msgstr "Покрути годинник"

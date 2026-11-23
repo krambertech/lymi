@@ -37,8 +37,8 @@ msgstr "<0>Sinu</0> — це «твоє»: виходить «Твоє ім’я
 msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> — це «привіт», а Марі вже йде."
 
-msgid "<et>Kus</et> asks where; with <et>sa</et> the verb takes -d: <et>Kus sa õpid?</et>"
-msgstr "<et>Kus</et> питає «де»; із <et>sa</et> дієслово має -d: <et>Kus sa õpid?</et>"
+msgid "<et>Kus</et> asks where; with <et>sa</et> the verb takes <et>-d</et>: <et>Kus sa õpid?</et>"
+msgstr "<et>Kus</et> питає «де»; із <et>sa</et> дієслово має <et>-d</et>: <et>Kus sa õpid?</et>"
 
 msgid "<et>Mina</et> takes <et>olen</et>: <et>Mina olen Andres</et>."
 msgstr "З <et>mina</et> — <et>olen</et>: <et>Mina olen Andres</et>."
@@ -232,8 +232,8 @@ msgstr "Лііс"
 msgid "Liis and Peeter meet and ask each other where they live and what they do."
 msgstr "Лііс і Пеетер знайомляться й питають одне одного, де вони живуть і чим займаються."
 
-msgid "Liis studies in Tartu."
-msgstr "Лііс навчається в Тарту."
+msgid "Liis works in Tartu."
+msgstr "Лііс працює в Тарту."
 
 msgid "Listen: Jaan and Kati"
 msgstr "Слухання: Яан і Каті"
@@ -295,8 +295,8 @@ msgstr "Пярну має <0>-s</0>: <1>Pärnus</1>."
 msgid "Peeter"
 msgstr "Пеетер"
 
-msgid "Peeter speaks Estonian well."
-msgstr "Пеетер добре говорить естонською."
+msgid "Peeter speaks a little Estonian."
+msgstr "Пеетер трохи говорить естонською."
 
 msgid "Places with <et>-s</et> and <et>-l</et>"
 msgstr "Місця з <et>-s</et> і <et>-l</et>"
@@ -356,7 +356,7 @@ msgid "This time Mari’s lines are sound only. Tap a line to hear it again, or 
 msgstr "Цього разу репліки Марі тільки звучать. Натисни на репліку, щоб почути її ще раз, або на «Показати репліку: Марі», щоб її прочитати."
 
 msgid "turns a sentence into a yes-or-no question"
-msgstr "робить з речення питання «так чи ні»"
+msgstr "робить із речення питання «так чи ні»"
 
 msgid "Verb forms: after <et>ei</et>, and <et>olema</et>"
 msgstr "Дієслово після <et>ei</et> і форми <et>olema</et>"

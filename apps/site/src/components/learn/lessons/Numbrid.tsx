@@ -351,9 +351,9 @@ export function NumbridLesson() {
         id: "coffee",
         ask: t`What does the coffee cost?`,
         options: [
-          { id: "250", label: "€2.50" },
-          { id: "215", label: "€2.15" },
-          { id: "1250", label: "€12.50" },
+          { id: "250", label: t`€2.50` },
+          { id: "215", label: t`€2.15` },
+          { id: "1250", label: t`€12.50` },
         ],
         answer: "250",
         line: 5,

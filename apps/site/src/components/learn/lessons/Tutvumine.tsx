@@ -488,8 +488,8 @@ export function TutvumineLesson() {
     {
       id: "estonian",
       kind: "truefalse",
-      ask: t`Peeter speaks Estonian well.`,
-      answer: false,
+      ask: t`Peeter speaks a little Estonian.`,
+      answer: true,
       line: 7,
     },
     {
@@ -506,9 +506,9 @@ export function TutvumineLesson() {
     {
       id: "liis-studies",
       kind: "truefalse",
-      ask: t`Liis studies in Tartu.`,
-      answer: true,
-      line: 13,
+      ask: t`Liis works in Tartu.`,
+      answer: false,
+      line: 12,
     },
     {
       id: "liis-lives",

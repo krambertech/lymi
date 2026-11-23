@@ -37,8 +37,8 @@ msgstr "<0>Sinu</0> — это «твоё»: получается «Твоё и�
 msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> — это «привет», а Мари уже уходит."
 
-msgid "<et>Kus</et> asks where; with <et>sa</et> the verb takes -d: <et>Kus sa õpid?</et>"
-msgstr "<et>Kus</et> спрашивает «где»; с <et>sa</et> у глагола -d: <et>Kus sa õpid?</et>"
+msgid "<et>Kus</et> asks where; with <et>sa</et> the verb takes <et>-d</et>: <et>Kus sa õpid?</et>"
+msgstr "<et>Kus</et> спрашивает «где»; с <et>sa</et> у глагола <et>-d</et>: <et>Kus sa õpid?</et>"
 
 msgid "<et>Mina</et> takes <et>olen</et>: <et>Mina olen Andres</et>."
 msgstr "С <et>mina</et> — <et>olen</et>: <et>Mina olen Andres</et>."
@@ -232,8 +232,8 @@ msgstr "Лийс"
 msgid "Liis and Peeter meet and ask each other where they live and what they do."
 msgstr "Лийс и Пеэтер знакомятся и спрашивают друг друга, где они живут и чем занимаются."
 
-msgid "Liis studies in Tartu."
-msgstr "Лийс учится в Тарту."
+msgid "Liis works in Tartu."
+msgstr "Лийс работает в Тарту."
 
 msgid "Listen: Jaan and Kati"
 msgstr "Аудирование: Яан и Кати"
@@ -295,8 +295,8 @@ msgstr "Пярну получает <0>-s</0>: <1>Pärnus</1>."
 msgid "Peeter"
 msgstr "Пеэтер"
 
-msgid "Peeter speaks Estonian well."
-msgstr "Пеэтер хорошо говорит по-эстонски."
+msgid "Peeter speaks a little Estonian."
+msgstr "Пеэтер немного говорит по-эстонски."
 
 msgid "Places with <et>-s</et> and <et>-l</et>"
 msgstr "Места с <et>-s</et> и <et>-l</et>"

@@ -37,8 +37,8 @@ msgstr "<0>Sinu</0> is your: this says “Your name is Andres.”"
 msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> is hello, and Mari is leaving."
 
-msgid "<et>Kus</et> asks where; with <et>sa</et> the verb takes -d: <et>Kus sa õpid?</et>"
-msgstr "<et>Kus</et> asks where; with <et>sa</et> the verb takes -d: <et>Kus sa õpid?</et>"
+msgid "<et>Kus</et> asks where; with <et>sa</et> the verb takes <et>-d</et>: <et>Kus sa õpid?</et>"
+msgstr "<et>Kus</et> asks where; with <et>sa</et> the verb takes <et>-d</et>: <et>Kus sa õpid?</et>"
 
 msgid "<et>Mina</et> takes <et>olen</et>: <et>Mina olen Andres</et>."
 msgstr "<et>Mina</et> takes <et>olen</et>: <et>Mina olen Andres</et>."
@@ -232,8 +232,8 @@ msgstr "Liis"
 msgid "Liis and Peeter meet and ask each other where they live and what they do."
 msgstr "Liis and Peeter meet and ask each other where they live and what they do."
 
-msgid "Liis studies in Tartu."
-msgstr "Liis studies in Tartu."
+msgid "Liis works in Tartu."
+msgstr "Liis works in Tartu."
 
 msgid "Listen: Jaan and Kati"
 msgstr "Listen: Jaan and Kati"
@@ -295,8 +295,8 @@ msgstr "Pärnu takes <0>-s</0>: <1>Pärnus</1>."
 msgid "Peeter"
 msgstr "Peeter"
 
-msgid "Peeter speaks Estonian well."
-msgstr "Peeter speaks Estonian well."
+msgid "Peeter speaks a little Estonian."
+msgstr "Peeter speaks a little Estonian."
 
 msgid "Places with <et>-s</et> and <et>-l</et>"
 msgstr "Places with <et>-s</et> and <et>-l</et>"

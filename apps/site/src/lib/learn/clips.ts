@@ -3556,6 +3556,9 @@ export const TRA_TRANSLATE = [
       "Mina olen reedeks tagasi.",
       "Ma tulen tagasi reedeks.",
       "Tulen tagasi reedeks.",
+      "Ma olen tagasi reedeks.",
+      "Olen tagasi reedeks.",
+      "Mina tulen tagasi reedeks.",
     ],
   },
   {
@@ -3574,6 +3577,8 @@ export const TRA_TRANSLATE = [
       "Ma lähen nädalaks Tartu.",
       "Lähen nädalaks Tartu.",
       "Ma lähen Tartu nädalaks.",
+      "Nädalaks lähen Tartusse.",
+      "Ma sõidan nädalaks Tartu.",
     ],
   },
   {
@@ -3587,6 +3592,7 @@ export const TRA_TRANSLATE = [
       "Mida sa oma sünnipäevaks tahad?",
       "Mis sa oma sünnipäevaks tahad?",
       "Mida sa tahad oma sünnipäevaks?",
+      "Mis sa tahad oma sünnipäevaks?",
     ],
   },
   {
@@ -3728,7 +3734,7 @@ export const GI_SOME = [
 ] as const;
 
 export const GI_NOT = [
-  { pos: "Keegi tuleb.", neg: "Keegi ei tule.", also: ["Mitte keegi ei tule."] },
+  { pos: "Keegi tuleb.", neg: "Keegi ei tule.", also: ["Mitte keegi ei tule.", "Kedagi ei tule."] },
   {
     pos: "Ma näen kedagi.",
     neg: "Ma ei näe kedagi.",
@@ -3867,7 +3873,7 @@ export const GI_TRANSLATE = [
       "Tema ei lähe mitte kuhugi.",
     ],
   },
-  { id: "keegi", answers: ["Keegi ei tule.", "Mitte keegi ei tule."] },
+  { id: "keegi", answers: ["Keegi ei tule.", "Mitte keegi ei tule.", "Kedagi ei tule."] },
 ] as const;
 
 export const GI_FIX = [

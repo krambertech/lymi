@@ -13,6 +13,9 @@ msgstr "<0>-ks</0> додається до родового <1>külma</1>: <2>k�
 msgid "<0>-ks</0> on the genitive <1>{gen}</1>: <2>{answer}</2>."
 msgstr "<0>-ks</0> до родового <1>{gen}</1>: <2>{answer}</2>."
 
+msgid "<0>Homseks</0>, by tomorrow, comes from <1>homne</1>, tomorrow’s: its genitive is <2>homse</2>."
+msgstr "<0>Homseks</0> — «до завтра» — походить від <1>homne</1>, «завтрашній»: його родовий — <2>homse</2>."
+
 msgid "<0>Kingiks</0>, as a present, is the same ending: <1>Mul on emale kingiks raamat</1>."
 msgstr "<0>Kingiks</0>, «у подарунок», — те саме закінчення: <1>Mul on emale kingiks raamat</1>."
 

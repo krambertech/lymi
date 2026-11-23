@@ -1,5 +1,15 @@
 import { msg } from "@lingui/core/macro";
+import { GI_FIX, GI_NOT, GI_TRANSLATE } from "../../../lib/learn/clips";
 import type { DrillBank } from "../../../lib/learn/drill";
+
+const translateAnswers = (id: (typeof GI_TRANSLATE)[number]["id"]) =>
+  (GI_TRANSLATE.find((item) => item.id === id) as (typeof GI_TRANSLATE)[number]).answers;
+const fixAnswers = (id: (typeof GI_FIX)[number]["id"]) =>
+  (GI_FIX.find((item) => item.id === id) as (typeof GI_FIX)[number]).answers;
+const notAnswers = (pos: (typeof GI_NOT)[number]["pos"]) => {
+  const item = GI_NOT.find((each) => each.pos === pos) as (typeof GI_NOT)[number];
+  return [item.neg, ...item.also] as const;
+};
 
 const SOME = msg`A question word with <et>-gi</et> means some: <et>midagi</et>, something; <et>kuhugi</et>, to somewhere.`;
 const NOT = msg`For nobody or nothing, put <et>ei</et> before the verb: <et>Keegi ei tule</et>.`;
@@ -119,7 +129,7 @@ export const DRILLS: DrillBank = {
       rule: "not",
       from: "Kati ostab midagi.",
       cue: WITH_EI,
-      answers: ["Kati ei osta midagi.", "Kati ei osta mitte midagi."],
+      answers: notAnswers("Kati ostab midagi."),
       say: "Kati ei osta midagi.",
       explain: NOT,
     },
@@ -128,7 +138,7 @@ export const DRILLS: DrillBank = {
       id: "not-tule",
       rule: "not",
       prompt: msg`Nobody is coming.`,
-      answers: ["Keegi ei tule.", "Mitte keegi ei tule."],
+      answers: translateAnswers("keegi"),
       say: "Keegi ei tule.",
       explain: NOT,
     },
@@ -137,14 +147,7 @@ export const DRILLS: DrillBank = {
       id: "not-midagi",
       rule: "not",
       prompt: msg`I have nothing.`,
-      answers: [
-        "Mul ei ole midagi.",
-        "Mul pole midagi.",
-        "Minul ei ole midagi.",
-        "Minul pole midagi.",
-        "Mul ei ole mitte midagi.",
-        "Mul pole mitte midagi.",
-      ],
+      answers: translateAnswers("midagi"),
       say: "Mul ei ole midagi.",
       explain: NOT,
     },
@@ -162,7 +165,7 @@ export const DRILLS: DrillBank = {
       rule: "not",
       from: "Ma näen kedagi.",
       cue: WITH_EI,
-      answers: ["Ma ei näe kedagi.", "Ma ei näe mitte kedagi."],
+      answers: notAnswers("Ma näen kedagi."),
       say: "Ma ei näe kedagi.",
       explain: NOT,
     },
@@ -229,7 +232,7 @@ export const DRILLS: DrillBank = {
       rule: "cases",
       wrong: "Ma ei näe keegi.",
       prompt: msg`I don’t see anybody.`,
-      answers: ["Ma ei näe kedagi."],
+      answers: fixAnswers("fix-kedagi"),
       say: "Ma ei näe kedagi.",
       explain: msg`The object is <et>kedagi</et>, built on <et>keda</et>.`,
     },
@@ -270,7 +273,7 @@ export const DRILLS: DrillBank = {
       rule: "giki",
       wrong: "Me rääkisime kellestgi.",
       prompt: msg`We talked about somebody.`,
-      answers: ["Me rääkisime kellestki."],
+      answers: fixAnswers("fix-kellestki"),
       say: "Me rääkisime kellestki.",
       explain: KI,
     },
@@ -280,7 +283,7 @@ export const DRILLS: DrillBank = {
       rule: "giki",
       wrong: "Ma helistasin kellelegki.",
       prompt: msg`I called somebody.`,
-      answers: ["Ma helistasin kellelegi."],
+      answers: fixAnswers("fix-kellelegi"),
       say: "Ma helistasin kellelegi.",
       explain: GI,
     },
@@ -301,7 +304,7 @@ export const DRILLS: DrillBank = {
       rule: "giki",
       wrong: "Ma ei räägi kellegaki.",
       prompt: msg`I’m not talking to anybody.`,
-      answers: ["Ma ei räägi kellegagi."],
+      answers: fixAnswers("fix-kellegagi"),
       say: "Ma ei räägi kellegagi.",
       explain: GI,
     },

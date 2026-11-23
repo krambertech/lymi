@@ -612,6 +612,13 @@ export function SaavLesson() {
                   <span lang="et">Mul on emale kingiks raamat</span>.
                 </Trans>
               </Aside>
+              <Aside>
+                <Trans>
+                  <span lang="et">Homseks</span>, by tomorrow, comes from{" "}
+                  <span lang="et">homne</span>, tomorrow’s: its genitive is{" "}
+                  <span lang="et">homse</span>.
+                </Trans>
+              </Aside>
             </>
           ),
         },

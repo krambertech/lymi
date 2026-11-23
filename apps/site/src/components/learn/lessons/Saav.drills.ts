@@ -1,5 +1,11 @@
 import { msg } from "@lingui/core/macro";
+import { TRA_FIX, TRA_TRANSLATE } from "../../../lib/learn/clips";
 import type { DrillBank } from "../../../lib/learn/drill";
+
+const translateAnswers = (id: (typeof TRA_TRANSLATE)[number]["id"]) =>
+  (TRA_TRANSLATE.find((item) => item.id === id) as (typeof TRA_TRANSLATE)[number]).answers;
+const fixAnswers = (id: (typeof TRA_FIX)[number]["id"]) =>
+  (TRA_FIX.find((item) => item.id === id) as (typeof TRA_FIX)[number]).answers;
 
 const BUILD = msg`The translative is the genitive with <et>-ks</et>: <et>arst</et>, <et>arsti</et>, <et>arstiks</et>.`;
 const BECOME = msg`Become is <et>saama</et> with <et>-ks</et>: <et>sai arstiks</et>.`;
@@ -76,7 +82,7 @@ export const DRILLS: DrillBank = {
       id: "build-fix-kulmaks",
       rule: "build",
       wrong: "Ilm muutub külmeks.",
-      answers: ["Ilm muutub külmaks."],
+      answers: fixAnswers("fix-kulmaks"),
       say: "Ilm muutub külmaks.",
       explain: msg`<et>-ks</et> goes on the genitive <et>külma</et>: <et>külmaks</et>.`,
     },
@@ -128,7 +134,7 @@ export const DRILLS: DrillBank = {
       rule: "naks",
       wrong: "Ta sai arstina.",
       prompt: msg`She became a doctor.`,
-      answers: ["Ta sai arstiks."],
+      answers: fixAnswers("fix-arstiks"),
       say: "Ta sai arstiks.",
       explain: BECOME,
     },
@@ -138,7 +144,7 @@ export const DRILLS: DrillBank = {
       rule: "naks",
       wrong: "Ta töötab arst.",
       prompt: msg`She works as a doctor.`,
-      answers: ["Ta töötab arstina.", "Ta töötab arstiks."],
+      answers: fixAnswers("fix-arstina"),
       say: "Ta töötab arstina.",
       explain: AS,
     },
@@ -226,7 +232,7 @@ export const DRILLS: DrillBank = {
       rule: "time",
       wrong: "Ma tulen reede tagasi.",
       prompt: msg`I’ll be back by Friday.`,
-      answers: ["Ma tulen reedeks tagasi."],
+      answers: fixAnswers("fix-reedeks"),
       say: "Ma tulen reedeks tagasi.",
       explain: TIME,
     },
@@ -256,7 +262,7 @@ export const DRILLS: DrillBank = {
       rule: "agree",
       wrong: "Ta sai hea arstiks.",
       prompt: msg`She became a good doctor.`,
-      answers: ["Ta sai heaks arstiks."],
+      answers: fixAnswers("fix-heaks"),
       say: "Ta sai heaks arstiks.",
       explain: BOTH,
     },
@@ -265,7 +271,7 @@ export const DRILLS: DrillBank = {
       id: "agree-translate",
       rule: "agree",
       prompt: msg`She became a good teacher.`,
-      answers: ["Ta sai heaks õpetajaks.", "Tema sai heaks õpetajaks.", "Temast sai hea õpetaja."],
+      answers: translateAnswers("heaks-opetajaks"),
       say: "Ta sai heaks õpetajaks.",
       explain: BOTH,
     },

@@ -1184,7 +1184,10 @@ export const TUTVUMINE_TALK: Conversation = {
   ],
 };
 
-export const numberAnswers = (n: number): [string, ...string[]] => [numberWords(n)];
+export const numberAnswers = (n: number): [string, ...string[]] => {
+  const words = numberWords(n);
+  return n === 100 ? [words, "ükssada"] : n === 1000 ? [words, "üks tuhat"] : [words];
+};
 
 const HOUR_GENITIVES = [
   "ühe",
@@ -1205,18 +1208,26 @@ export const timeAnswers = (time: ClockTime): [string, ...string[]] => {
   const words = timeWords(time);
   const hour = numberWords(time.hour);
   const genitive = HOUR_GENITIVES[time.hour - 1];
+  const next = numberWords((time.hour % 12) + 1);
+  const read =
+    time.minute === 0
+      ? []
+      : [`${hour} ${time.minute < 10 ? "null " : ""}${numberWords(time.minute)}`];
   const past = [5, 10, 20].includes(time.minute)
-    ? [`${numberWords(time.minute)} minutit üle ${genitive}`]
+    ? [
+        `${numberWords(time.minute)} minutit üle ${genitive}`,
+        `${numberWords(time.minute)} minutit ${next} peal`,
+      ]
     : time.minute === 15
       ? [`viisteist minutit ${hour} läbi`, `viisteist minutit üle ${genitive}`]
       : time.minute === 45
-        ? [`viieteist minuti pärast ${numberWords((time.hour % 12) + 1)}`]
+        ? [`viieteist minuti pärast ${next}`]
         : [];
   return [
     words,
     `kell on ${words}`,
     `kell ${words}`,
-    ...past.flatMap((each) => [each, `kell on ${each}`, `kell ${each}`]),
+    ...[...past, ...read].flatMap((each) => [each, `kell on ${each}`, `kell ${each}`]),
   ];
 };
 
@@ -1416,8 +1427,8 @@ export const TUTVUMINE_FIXES = [
   { wrong: "Ma ei töötan kontoris.", said: "Ma ei tööta kontoris.", kind: "ei" },
   { wrong: "Ta elab Tartul.", said: "Ta elab Tartus.", kind: "place" },
   { wrong: "Nad on töös.", said: "Nad on tööl.", kind: "place", confusable: ["tool"] },
-  { wrong: "Kas sa räägib eesti keelt?", said: "Kas sa räägid eesti keelt?", kind: "ask" },
-  { wrong: "Kus sa elab?", said: "Kus sa elad?", kind: "kus" },
+  { wrong: "Kas ta räägid eesti keelt?", said: "Kas ta räägib eesti keelt?", kind: "ask" },
+  { wrong: "Kus Mari elad?", said: "Kus Mari elab?", kind: "kus" },
   { wrong: "Mina on Andres.", said: "Mina olen Andres.", kind: "olema" },
 ] as const;
 
@@ -1469,6 +1480,18 @@ export const KELL_PASSAGE = [
   "Me joome kohvi kell veerand viis.",
   "Me ootame bussi kell kolmveerand kuus.",
 ] as const;
+
+export const KELL_HEARD: readonly ClockTime[] = [
+  { hour: 6, minute: 0 },
+  { hour: 10, minute: 0 },
+  { hour: 3, minute: 15 },
+  { hour: 5, minute: 45 },
+  { hour: 1, minute: 45 },
+  { hour: 8, minute: 10 },
+  { hour: 4, minute: 20 },
+  { hour: 7, minute: 50 },
+  { hour: 2, minute: 40 },
+];
 
 export const KELL_DRILLED: readonly ClockTime[] = [
   { hour: 4, minute: 0 },
@@ -4374,7 +4397,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   kell: {
     ...words(KELL_WORDS),
     ...Object.fromEntries(ALL_TIMES.map((time) => [timeClip(time), timeSentence(time)])),
-    ...words(KELL_DRILLED.map(timeSentence)),
+    ...words([...KELL_DRILLED, ...KELL_HEARD].map(timeSentence)),
     "p-mari": { sentences: KELL_PASSAGE, voice: "third" },
   },
   paevad: {
@@ -4394,6 +4417,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...words(TUTVUMINE_ASKED.map(({ answers }) => answers[0])),
     ...words(TUTVUMINE_TRANSLATED.map(({ answers }) => answers[0])),
     ...words(TUTVUMINE_FIXES.map(({ said }) => said)),
+    ...words(["Kus te elate?", "Kas te räägite eesti keelt?"]),
   },
   kaskiv: {
     ...words([

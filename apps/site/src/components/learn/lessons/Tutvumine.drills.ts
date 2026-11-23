@@ -59,8 +59,8 @@ const translated = (each: (typeof TUTVUMINE_TRANSLATED)[number], i: number): Sen
 });
 
 const FIX_MEANS: Record<string, MessageDescriptor> = {
-  "Kas sa räägib eesti keelt?": msg`Do you speak Estonian?`,
-  "Kus sa elab?": msg`Where do you live?`,
+  "Kas ta räägid eesti keelt?": msg`Does he or she speak Estonian?`,
+  "Kus Mari elad?": msg`Where does Mari live?`,
   "Mina on Andres.": msg`I’m Andres.`,
   "Ma ei töötan kontoris.": msg`I don’t work at the office.`,
   "Nad on töös.": msg`They’re at work.`,
@@ -106,7 +106,7 @@ export const DRILLS: DrillBank = {
     written("Ta elab Tartus.", "place"),
     written("Nad on tööl.", "place", ["tool"]),
     written("Mina olen Andres.", "olema"),
-    written("Kus sa elad?", "kus"),
-    written("Kas sa räägid eesti keelt?", "ask"),
+    written("Kus te elate?", "kus"),
+    written("Kas te räägite eesti keelt?", "ask"),
   ],
 };

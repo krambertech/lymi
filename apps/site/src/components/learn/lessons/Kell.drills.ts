@@ -1,6 +1,6 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import { KELL_DRILLED, timeAnswers } from "../../../lib/learn/clips";
+import { KELL_DRILLED, KELL_HEARD, timeAnswers } from "../../../lib/learn/clips";
 import type { ChoiceDrill, DrillBank, FormDrill, SentenceDrill } from "../../../lib/learn/drill";
 import {
   type ClockTime,
@@ -87,5 +87,5 @@ export const DRILLS: DrillBank = {
     past: { label: msg`Minutes past: <et>läbi</et>`, section: "past" },
     to: { label: msg`Minutes to: <et>pärast</et>`, section: "to" },
   },
-  items: [...KELL_DRILLED.map(typed), ...KELL_DRILLED.map(written), ...KELL_DRILLED.map(heard)],
+  items: [...KELL_DRILLED.map(typed), ...KELL_DRILLED.map(written), ...KELL_HEARD.map(heard)],
 };

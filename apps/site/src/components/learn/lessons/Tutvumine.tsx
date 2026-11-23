@@ -595,8 +595,8 @@ export function TutvumineLesson() {
           <b lang="et">Ma ei tööta. Ei, ma ei ole.</b>
         </Trans>,
         <Trans key="4">
-          Ask a yes-or-no question with <b lang="et">kas</b>, and any other with a question word:{" "}
-          <b lang="et">Kas sa räägid eesti keelt? Kus sa töötad? Miks?</b>
+          A yes-or-no question usually starts with <b lang="et">kas</b>, and any other with a
+          question word: <b lang="et">Kas sa räägid eesti keelt? Kus sa töötad? Miks?</b>
         </Trans>,
         <Trans key="5">
           Answer, then ask back: <b lang="et">Hästi, aitäh. Aga sul?</b>

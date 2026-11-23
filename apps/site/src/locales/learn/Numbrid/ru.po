@@ -34,8 +34,8 @@ msgstr "В <et>kaks</et> короткое <et>a</et> и <et>k</et> перед <e
 msgid "<et>Kaks</et> or <et>kuus</et> in a sentence"
 msgstr "<et>Kaks</et> или <et>kuus</et> в предложении"
 
-msgid "<et>Tuhat</et> alone, with no “one” in front."
-msgstr "Только <et>tuhat</et>, без «один» перед ним."
+msgid "<et>Tuhat</et>, usually with no “one” in front."
+msgstr "<et>Tuhat</et> — обычно без «один» перед ним."
 
 msgid "€2.15"
 msgstr "2,15 €"

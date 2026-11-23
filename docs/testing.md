@@ -122,6 +122,7 @@ Which change to the code turns the test red?
 - Before you add a case, search property, conformance and simulation tests, the other layers, and the shared package's test for a re-exported module. Extend the test that covers the behavior. A reducer test owns the rule and a component test owns the wiring, so one flow has both ([CODING_STANDARDS.md](../CODING_STANDARDS.md#give-a-flow-one-state)).
 - A contract that live clients still call keeps its test: a supported phone release ([ADR 0032](adr/0032-the-phone-ships-over-the-air-and-the-api-keeps-every-supported-release-working.md)), a public link or a redirect.
 - Reach code through its public API, and inject a dependency where a test must replace one. Production code has no export, flag or type that only tests read. Two kinds are exempt: a reset that stands in for a restart, such as `resetWriteCache`, when a test proves what survives that restart, and check logic whose only runner is a test, such as the enrichment gate in `enrichment/recorded-run.ts`. The test that calls it names the restart or the check.
+- A test whose result depends on the learner's day or the hour holds the clock with `holdNoon` from `apps/web/src/server/services/test-clock.ts`. One that graded "a minute ago" failed in the minute after midnight UTC.
 - Pin exact wording, such as a prompt hash, only where something reads its version. `enrichment/prompt.test.ts` goes red until `ENRICHMENT_PROMPT_VERSION` rises, and `enrichment/recorded-run.ts` records that version.
 - A change that removes code removes the tests that only guarded it.
 

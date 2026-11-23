@@ -1,5 +1,6 @@
 import { DeckOut, QueueOut, StreakOut } from "@lymi/core";
-import { beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { holdNoon } from "../services/test-clock";
 import { json, type Session, type TestApp, testApp } from "../test-app";
 
 /**
@@ -64,11 +65,16 @@ async function seed(name: string, daysAgo: number[]) {
 let rested: Session;
 
 beforeAll(async () => {
+  holdNoon();
   app = await testApp();
   learner = await seed("learner", [8, 7, 6, 5, 4, 3, 2, 1, 0]);
   // Yesterday missed inside a run: a rest day.
   rested = await seed("rested", [8, 7, 6, 5, 4, 3, 2, 0]);
 }, 60_000);
+
+afterAll(() => {
+  vi.useRealTimers();
+});
 
 describe("the streak", () => {
   it("counts every day, not only the seven the history window shows", async () => {

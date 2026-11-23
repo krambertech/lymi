@@ -10,9 +10,6 @@ msgstr ""
 msgid "<0>Armastama</0> takes the partitive, so many birds are <1>linde</1>."
 msgstr "<0>Armastama</0> takes the partitive, so many birds are <1>linde</1>."
 
-msgid "<0>Ootama</0> takes the partitive, so many friends are <1>sõpru</1>."
-msgstr "<0>Ootama</0> takes the partitive, so many friends are <1>sõpru</1>."
-
 msgid "20 minutes"
 msgstr "20 minutes"
 
@@ -37,8 +34,8 @@ msgstr "a lot of friends"
 msgid "a lot, many"
 msgstr "a lot, many"
 
-msgid "A number from two up takes the singular partitive. Some or many usually takes the plural partitive."
-msgstr "A number from two up takes the singular partitive. Some or many usually takes the plural partitive."
+msgid "A number from two up usually takes the singular partitive. Some or many usually takes the plural partitive."
+msgstr "A number from two up usually takes the singular partitive. Some or many usually takes the plural partitive."
 
 msgid "A number, many or the ones you mean"
 msgstr "A number, many or the ones you mean"
@@ -61,32 +58,32 @@ msgstr "Adds <et>-id</et>: <et>raamatuid</et>."
 msgid "Adds <et>-sid</et>: <et>autosid</et>."
 msgstr "Adds <et>-sid</et>: <et>autosid</et>."
 
-msgid "After <0>ei</0> and after verbs such as <1>armastama</1>, the plural partitive too: <2>Mul ei ole autosid. Ma armastan linde.</2>"
-msgstr "After <0>ei</0> and after verbs such as <1>armastama</1>, the plural partitive too: <2>Mul ei ole autosid. Ma armastan linde.</2>"
+msgid "After <0>ei</0> and after verbs such as <1>armastama</1>, usually the plural partitive too: <2>Mul ei ole autosid. Ma armastan linde.</2>"
+msgstr "After <0>ei</0> and after verbs such as <1>armastama</1>, usually the plural partitive too: <2>Mul ei ole autosid. Ma armastan linde.</2>"
 
-msgid "After <0>ei</0>, a plural noun takes the plural partitive."
-msgstr "After <0>ei</0>, a plural noun takes the plural partitive."
+msgid "After <0>ei</0>, a plural noun usually takes the plural partitive."
+msgstr "After <0>ei</0>, a plural noun usually takes the plural partitive."
 
 msgid "After <0>ei</0>, the plural partitive."
 msgstr "After <0>ei</0>, the plural partitive."
 
-msgid "After <0>palju</0>, many, the plural partitive."
-msgstr "After <0>palju</0>, many, the plural partitive."
+msgid "After <0>palju</0>, a noun you can count takes the plural partitive."
+msgstr "After <0>palju</0>, a noun you can count takes the plural partitive."
 
-msgid "After <0>palju</0>, the plural partitive."
-msgstr "After <0>palju</0>, the plural partitive."
+msgid "After <0>palju</0>, many, a noun you can count takes the plural partitive."
+msgstr "After <0>palju</0>, many, a noun you can count takes the plural partitive."
 
 msgid "After <et>ei</et> and partitive verbs"
 msgstr "After <et>ei</et> and partitive verbs"
 
-msgid "After <et>ei</et> or a verb such as <et>armastama</et>, a plural noun takes the plural partitive."
-msgstr "After <et>ei</et> or a verb such as <et>armastama</et>, a plural noun takes the plural partitive."
+msgid "After <et>ei</et> or a verb such as <et>armastama</et>, a plural noun usually takes the plural partitive."
+msgstr "After <et>ei</et> or a verb such as <et>armastama</et>, a plural noun usually takes the plural partitive."
 
 msgid "After a number"
 msgstr "After a number"
 
-msgid "After a number from two up, the singular partitive stays: <0>kaks raamatut</0>. The ones you mean take the plural nominative: <1>raamatud</1>."
-msgstr "After a number from two up, the singular partitive stays: <0>kaks raamatut</0>. The ones you mean take the plural nominative: <1>raamatud</1>."
+msgid "After a number from two up, the singular partitive usually stays: <0>kaks raamatut</0>. The ones you mean usually take the plural nominative: <1>raamatud</1>."
+msgstr "After a number from two up, the singular partitive usually stays: <0>kaks raamatut</0>. The ones you mean usually take the plural nominative: <1>raamatud</1>."
 
 msgid "After a number from two up, the singular partitive."
 msgstr "After a number from two up, the singular partitive."
@@ -316,6 +313,9 @@ msgstr "Nearly. Switch through the kinds in the table for the ones you missed."
 msgid "Nominative"
 msgstr "Nominative"
 
+msgid "On its own, <0>ootama</0> takes the partitive, so many friends are <1>sõpru</1>."
+msgstr "On its own, <0>ootama</0> takes the partitive, so many friends are <1>sõpru</1>."
+
 msgid "Pick the form each sentence needs, then hear it."
 msgstr "Pick the form each sentence needs, then hear it."
 
@@ -400,8 +400,8 @@ msgstr "the friends"
 msgid "The ones you mean"
 msgstr "The ones you mean"
 
-msgid "The ones you mean take the plural nominative, which lesson {plural} teaches: <0/>, the books. Tap across each row."
-msgstr "The ones you mean take the plural nominative, which lesson {plural} teaches: <0/>, the books. Tap across each row."
+msgid "The ones you mean usually take the plural nominative, which lesson {plural} teaches: <0/>, the books. Tap across each row."
+msgstr "The ones you mean usually take the plural nominative, which lesson {plural} teaches: <0/>, the books. Tap across each row."
 
 msgid "The ones you mean, the subject: the plural nominative."
 msgstr "The ones you mean, the subject: the plural nominative."
@@ -409,14 +409,11 @@ msgstr "The ones you mean, the subject: the plural nominative."
 msgid "The ones you mean: the plural nominative."
 msgstr "The ones you mean: the plural nominative."
 
-msgid "The partitive for more than one: some or many things you don’t count, after <0>ei</0>, and after verbs that take the partitive. How it differs from <1>kaks raamatut</1> and <2>raamatud</2>, and how to build it."
-msgstr "The partitive for more than one: some or many things you don’t count, after <0>ei</0>, and after verbs that take the partitive. How it differs from <1>kaks raamatut</1> and <2>raamatud</2>, and how to build it."
+msgid "The partitive for more than one, usually for some or many things you don’t count, after <0>ei</0>, and after verbs that take the partitive. How it differs from <1>kaks raamatut</1> and <2>raamatud</2>, and how to build it."
+msgstr "The partitive for more than one, usually for some or many things you don’t count, after <0>ei</0>, and after verbs that take the partitive. How it differs from <1>kaks raamatut</1> and <2>raamatud</2>, and how to build it."
 
 msgid "The plural partitive ends in <0>-id</0> (<1>raamatuid</1>), <2>-sid</2> (<3>autosid</3>) or a changed last vowel (<4>maju, koole</4>). Learn it with each word."
 msgstr "The plural partitive ends in <0>-id</0> (<1>raamatuid</1>), <2>-sid</2> (<3>autosid</3>) or a changed last vowel (<4>maju, koole</4>). Learn it with each word."
-
-msgid "The plural partitive for some or many"
-msgstr "The plural partitive for some or many"
 
 msgid "The plural partitive is built on the genitive or the partitive, in one of three ways: <0>-id</0>, <1>-sid</1>, or a changed last vowel. Pick a kind and tap the forms."
 msgstr "The plural partitive is built on the genitive or the partitive, in one of three ways: <0>-id</0>, <1>-sid</1>, or a changed last vowel. Pick a kind and tap the forms."
@@ -484,6 +481,9 @@ msgstr "Two, many or the ones you mean?"
 
 msgid "Type the form"
 msgstr "Type the form"
+
+msgid "Usually the plural partitive: some or many"
+msgstr "Usually the plural partitive: some or many"
 
 msgid "What did Mari buy two kilos of?"
 msgstr "What did Mari buy two kilos of?"

@@ -3805,6 +3805,9 @@ export const GRADATION_FIXES = [
   { wrong: "Ta rääkib eesti keelt.", right: "Ta räägib eesti keelt.", word: "rääkib" },
 ] as const;
 
+export const GRADATION_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> =
+  Object.fromEntries(GRADATION_FIXES.map(({ right }) => [right, [right]]));
+
 export const GRADATION_ROOM = [
   "Kati tuba on väike.",
   "Kati toas on laud ja kapp.",
@@ -3933,9 +3936,10 @@ export const GRADATION_ANSWERS: Record<string, readonly [string, ...string[]]> =
     "Meie oleme rannal.",
     "Oleme rannal.",
   ],
-  "Kott on kapis.": ["Kott on kapis."],
+  "Kott on kapis.": ["Kott on kapis.", "Kott on kapi sees."],
   "Mu jalad on väsinud.": [
     "Mu jalad on väsinud.",
+    "Jalad on väsinud.",
     "Minu jalad on väsinud.",
     "Mul on jalad väsinud.",
     "Minul on jalad väsinud.",

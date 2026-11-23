@@ -5,7 +5,7 @@ import type { DrillBank, FormDrill } from "../../../lib/learn/drill";
 const MANY = msg`Some or many, not counted: usually the plural partitive.`;
 const NUMBER = msg`After a number from two up, the singular partitive.`;
 const THE = msg`The ones you mean: the plural nominative.`;
-const NO = msg`After <et>ei</et> or a verb such as <et>armastama</et>, a plural noun takes the plural partitive.`;
+const NO = msg`After <et>ei</et> or a verb such as <et>armastama</et>, a plural noun usually takes the plural partitive.`;
 
 const form = (
   id: string,
@@ -30,7 +30,7 @@ const form = (
 
 export const DRILLS: DrillBank = {
   rules: {
-    many: { label: msg`The plural partitive for some or many`, section: "some-many" },
+    many: { label: msg`Usually the plural partitive: some or many`, section: "some-many" },
     number: { label: msg`A number, many or the ones you mean`, section: "some-many" },
     endings: {
       label: msg`The endings <et>-id</et>, <et>-sid</et> and a changed vowel`,

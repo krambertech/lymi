@@ -343,7 +343,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian consonant gradation`,
         et: "Jalg, jala",
         minutes: 20,
-        blurb: msg`A free lesson on consonant gradation in Estonian: why jalg becomes jala and tuba becomes toa, which forms take the strong or the weak stem, the four ways a consonant weakens (kapp, kapi; pank, panga; pood, poe; lind, linnu), words that go the other way (mõte, mõtte), and the same change in verbs (lugema, loen). Every sentence is read aloud.`,
+        blurb: msg`A free lesson on consonant gradation in Estonian: why jalg becomes jala and tuba becomes toa, which forms take the strong or the weak stem, the four usual ways a consonant weakens (kapp, kapi; pank, panga; pood, poe; lind, linnu), words that go the other way (mõte, mõtte), and the same change in verbs (lugema, loen). Every sentence is read aloud.`,
       },
       {
         slug: "raamatut-voi-raamatu",

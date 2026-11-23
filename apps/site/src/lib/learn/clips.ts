@@ -4957,6 +4957,10 @@ export const COND_FIXES = [
   { wrong: "Te loeksid seda raamatut.", right: "Te loeksite seda raamatut." },
 ] as const;
 
+export const COND_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = Object.fromEntries(
+  COND_FIXES.map(({ right }) => [right, [right]]),
+);
+
 export const COND_DIALOGUE = {
   "d-teenindaja-1": { text: "Tere õhtust! Mida te sooviksite?", voice: "second" },
   "d-sina-1": "Ma tahaksin üht teed, palun.",

@@ -1,5 +1,5 @@
 import { msg } from "@lingui/core/macro";
-import { COND_ANSWERS } from "../../../lib/learn/clips";
+import { COND_ANSWERS, COND_FIX_ANSWERS } from "../../../lib/learn/clips";
 import type { DrillBank, FormDrill } from "../../../lib/learn/drill";
 
 const BUILD = msg`Drop the <et>-n</et> of the present and add <et>-ks</et> with the person’s ending: <et>-in</et>, <et>-id</et>, none for <et>ta</et>, <et>-ime</et>, <et>-ite</et>, <et>-id</et>.`;
@@ -159,7 +159,7 @@ export const DRILLS: DrillBank = {
       id: "fix-oleks",
       rule: "if",
       wrong: "Kui mul on aega, läheksin ma kinno.",
-      answers: ["Kui mul oleks aega, läheksin ma kinno."],
+      answers: COND_FIX_ANSWERS["Kui mul oleks aega, läheksin ma kinno."],
       say: "Kui mul oleks aega, läheksin ma kinno.",
       explain: IF,
     },
@@ -168,7 +168,7 @@ export const DRILLS: DrillBank = {
       id: "fix-ostaksin",
       rule: "if",
       wrong: "Kui ma oleksin rikas, ostan maja.",
-      answers: ["Kui ma oleksin rikas, ostaksin maja."],
+      answers: COND_FIX_ANSWERS["Kui ma oleksin rikas, ostaksin maja."],
       say: "Kui ma oleksin rikas, ostaksin maja.",
       explain: IF,
     },
@@ -178,7 +178,7 @@ export const DRILLS: DrillBank = {
       id: "fix-ei-laheks",
       rule: "ending",
       wrong: "Ma ei läheksin kinno.",
-      answers: ["Ma ei läheks kinno."],
+      answers: COND_FIX_ANSWERS["Ma ei läheks kinno."],
       say: "Ma ei läheks kinno.",
       explain: NO,
     },
@@ -197,7 +197,7 @@ export const DRILLS: DrillBank = {
       id: "fix-saaksid",
       rule: "ending",
       wrong: "Kas sa saaksin mind aidata?",
-      answers: ["Kas sa saaksid mind aidata?"],
+      answers: COND_FIX_ANSWERS["Kas sa saaksid mind aidata?"],
       say: "Kas sa saaksid mind aidata?",
       explain: msg`For <et>sa</et>, the ending is <et>-d</et>: <et>saaksid</et>.`,
     },
@@ -206,7 +206,7 @@ export const DRILLS: DrillBank = {
       id: "fix-laheksime",
       rule: "ending",
       wrong: "Me läheksid homme kinno.",
-      answers: ["Me läheksime homme kinno."],
+      answers: COND_FIX_ANSWERS["Me läheksime homme kinno."],
       say: "Me läheksime homme kinno.",
       explain: msg`For <et>me</et>, the ending is <et>-me</et>: <et>läheksime</et>.`,
     },
@@ -215,7 +215,7 @@ export const DRILLS: DrillBank = {
       id: "fix-laheks",
       rule: "ending",
       wrong: "Ta läheksin koju.",
-      answers: ["Ta läheks koju."],
+      answers: COND_FIX_ANSWERS["Ta läheks koju."],
       say: "Ta läheks koju.",
       explain: msg`The form for <et>ta</et> has no ending: <et>läheks</et>.`,
     },
@@ -224,7 +224,7 @@ export const DRILLS: DrillBank = {
       id: "fix-loeksite",
       rule: "ending",
       wrong: "Te loeksid seda raamatut.",
-      answers: ["Te loeksite seda raamatut."],
+      answers: COND_FIX_ANSWERS["Te loeksite seda raamatut."],
       say: "Te loeksite seda raamatut.",
       explain: msg`For <et>te</et>, the ending is <et>-te</et>: <et>loeksite</et>.`,
     },

@@ -2708,6 +2708,226 @@ const OSASTAV_CLIPS: Record<string, Clip> = {
   "p-jaan": { sentences: OSASTAV_PASSAGES.jaan },
 };
 
+export const OBJECT_PAIRS = [
+  { id: "leib", part: "Ma ostsin leiba.", whole: "Ma ostsin leiva." },
+  { id: "raamat", part: "Ma lugesin raamatut.", whole: "Ma lugesin raamatu läbi." },
+  { id: "kook", part: "Ma sõin kooki.", whole: "Ma sõin koogi ära." },
+  { id: "too", part: "Ma tegin tööd.", whole: "Ma tegin töö ära." },
+  { id: "vesi", part: "Ma jõin vett.", whole: "Ma jõin vee ära." },
+] as const;
+
+export const OBJECT_NOW = [
+  { id: "raamat", part: "Ma loen raamatut.", whole: "Ma loen raamatu läbi." },
+  { id: "supp", part: "Ma söön suppi.", whole: "Ma söön supi ära." },
+  { id: "too", part: "Ma teen tööd.", whole: "Ma teen töö ära." },
+] as const;
+
+export const OBJECT_HEARD = [
+  {
+    noun: "raamat",
+    part: "Mari luges raamatut.",
+    whole: "Mari luges raamatu läbi.",
+    will: "Mari loeb raamatu läbi.",
+  },
+  {
+    noun: "supp",
+    part: "Jaan sõi suppi.",
+    whole: "Jaan sõi supi ära.",
+    will: "Jaan sööb supi ära.",
+  },
+  { noun: "too", part: "Kati tegi tööd.", whole: "Kati tegi töö ära.", will: "Kati teeb töö ära." },
+  {
+    noun: "leib",
+    part: "Liis sõi leiba.",
+    whole: "Liis sõi leiva ära.",
+    will: "Liis sööb leiva ära.",
+  },
+] as const;
+
+export const OBJECT_NO = [
+  "Ma ei osta piletit.",
+  "Ma ei ostnud piletit.",
+  "Ma ei ostnud leiba.",
+  "Ta ei lugenud raamatut.",
+] as const;
+
+export const OBJECT_VERBS = [
+  "Ma ootan sõpra.",
+  "Ma aitan last.",
+  "Jaan armastab Marit.",
+  "Ma otsin võtit.",
+] as const;
+
+export const OBJECT_FOUND = { looked: "Ma otsisin võtit.", found: "Ma leidsin võtme." } as const;
+
+export const OBJECT_FORM_QUIZ = [
+  { noun: "pilet", cue: "Ma ei ostnud …", said: "Ma ei ostnud piletit.", answer: "piletit" },
+  { noun: "pilet", cue: "Ma ostsin ühe …", said: "Ma ostsin ühe pileti.", answer: "pileti" },
+  { noun: "sõber", cue: "Ma ootan …", said: "Ma ootan sõpra.", answer: "sõpra" },
+  { noun: "võti", cue: "Ma otsin …", said: "Ma otsin võtit.", answer: "võtit" },
+  { noun: "võti", cue: "Ma leidsin …", said: "Ma leidsin võtme.", answer: "võtme" },
+  { noun: "laps", cue: "Ma aitan …", said: "Ma aitan last.", answer: "last" },
+  { noun: "kook", cue: "Me ei söönud …", said: "Me ei söönud kooki.", answer: "kooki" },
+  { noun: "kook", cue: "Me sõime … ära", said: "Me sõime koogi ära.", answer: "koogi" },
+  { noun: "töö", cue: "Ma ei teinud …", said: "Ma ei teinud tööd.", answer: "tööd" },
+  { noun: "töö", cue: "Ta tegi … ära", said: "Ta tegi töö ära.", answer: "töö" },
+] as const;
+
+export const OBJECT_COMMANDS = [
+  { id: "pilet", done: "Ma ostsin pileti.", go: "Osta pilet!", not: "Ära osta piletit!" },
+  {
+    id: "raamat",
+    done: "Ma lugesin raamatu läbi.",
+    go: "Loe raamat läbi!",
+    not: "Ära loe raamatut!",
+  },
+  { id: "supp", done: "Ma sõin supi ära.", go: "Söö supp ära!", not: "Ära söö suppi!" },
+  { id: "vesi", done: "Ma jõin vee ära.", go: "Joo vesi ära!", not: "Ära joo vett!" },
+] as const;
+
+export const OBJECT_MANY = ["Ma ostsin piletid.", "Osta piletid!"] as const;
+
+export const OBJECT_REWRITE = [
+  { from: "Ma ostsin pileti.", to: "Osta pilet!", not: false },
+  { from: "Ma lugesin raamatu läbi.", to: "Loe raamat läbi!", not: false },
+  { from: "Ma sõin koogi ära.", to: "Söö kook ära!", not: false },
+  { from: "Ma tegin töö ära.", to: "Tee töö ära!", not: false },
+  { from: "Ma jõin vee ära.", to: "Ära joo vett!", not: true },
+  { from: "Ma ostsin leiva.", to: "Ära osta leiba!", not: true },
+  { from: "Ma sõin supi ära.", to: "Ära söö suppi!", not: true },
+] as const;
+
+export const OBJECT_VOICE = [
+  "Tere, see on Liisa!",
+  "Ma käisin poes ja ostsin leiba ja juustu.",
+  "Ma ostsin ka ühe suure koogi.",
+  "Piima ma ei ostnud.",
+  "Aga ma ei leia oma võtit.",
+  "Kas sa aitad mind?",
+] as const;
+
+export const OBJECT_FIXES = [
+  { wrong: "Ma ei ostnud pileti.", right: "Ma ei ostnud piletit." },
+  { wrong: "Ma ootan sõbra.", right: "Ma ootan sõpra." },
+  { wrong: "Ma otsin võtme.", right: "Ma otsin võtit." },
+  { wrong: "Ma lugesin raamatut läbi.", right: "Ma lugesin raamatu läbi." },
+  { wrong: "Ma ostsin ühe leiba.", right: "Ma ostsin ühe leiva." },
+  { wrong: "Ma sõin kooki ära.", right: "Ma sõin koogi ära." },
+  { wrong: "Osta pileti!", right: "Osta pilet!" },
+] as const;
+
+export const OBJECT_DIALOGUE = {
+  "d-teenindaja-1": { text: "Tere! Mida te soovite?", voice: "second" },
+  "d-sina-1": "Ma võtan ühe koogi, palun.",
+  "d-teenindaja-2": { text: "Kas te soovite ka teed?", voice: "second" },
+  "d-sina-2": "Ei, aitäh. Ma ei taha teed.",
+  "d-teenindaja-3": { text: "Kas te otsite midagi?", voice: "second" },
+  "d-sina-3": "Jah, ma otsin oma võtit.",
+  "d-teenindaja-4": { text: "Palun, teie kook. Kas te sööte selle kohe ära?", voice: "second" },
+  "d-sina-4": "Jah, ma söön koogi kohe ära.",
+} as const satisfies Record<string, Clip>;
+
+export const OBJECT_CONVERSATION: Conversation = {
+  turns: [
+    {
+      voice: "second",
+      text: ["Tere, Jaan!", "Kuidas läheb?"],
+      say: "[cheerful] Tere, Jaan! Kuidas läheb?",
+    },
+    { voice: "main", text: ["Tere!", "Hästi, aitäh."] },
+    { voice: "second", text: "Kas sa lugesid minu raamatu läbi?" },
+    {
+      voice: "main",
+      text: ["Ei, veel mitte.", "Ma lugesin eile raamatut ainult tund aega."],
+      say: "[sighs] Ei, veel mitte. Ma lugesin eile raamatut ainult tund aega.",
+    },
+    { voice: "second", text: ["Ainult tund?", "Kas sul oli palju tööd?"] },
+    {
+      voice: "main",
+      text: ["Jah, ma tegin terve päeva tööd.", "Õhtul otsisin ma kaua oma võtit."],
+    },
+    {
+      voice: "second",
+      text: "Ja kas sa leidsid võtme?",
+      say: "[curious] Ja kas sa leidsid võtme?",
+    },
+    {
+      voice: "main",
+      text: ["Jah, lõpuks leidsin ma selle laualt.", "Aga siis olin ma väsinud."],
+      say: "[laughs] Jah, lõpuks leidsin ma selle laualt. Aga siis olin ma väsinud.",
+    },
+    { voice: "second", text: "Kas sa sõid midagi?" },
+    { voice: "main", text: "Jah, ma sõin supi ära ja jõin teed." },
+    {
+      voice: "second",
+      text: ["Mina käisin eile poes.", "Ma ostsin leiba, juustu ja ühe koogi."],
+    },
+    { voice: "main", text: ["Kas sa ostsid ka piima?", "Ja kas sa sõid koogi ära?"] },
+    {
+      voice: "second",
+      text: [
+        "Piima ma ei ostnud, kodus on veel piima.",
+        "Ja ei, ma ei söönud kooki.",
+        "Täna õhtul ootan ma sõpra ja me sööme koogi koos ära.",
+      ],
+    },
+    { voice: "main", text: "Kas see sõber on Kati?" },
+    { voice: "second", text: "Jah, ma ootan Katit kell seitse." },
+    { voice: "main", text: "Kas ma võin ka tulla?" },
+    {
+      voice: "second",
+      text: ["Muidugi!", "Aga loe enne raamat läbi!"],
+      say: "[laughs] Muidugi! Aga loe enne raamat läbi!",
+    },
+    { voice: "main", text: "Hästi, ma loen täna õhtul raamatu läbi." },
+    { voice: "second", text: ["Tore.", "Homme räägime.", "Head õhtut!"] },
+  ],
+};
+
+export const OBJECT_WORDS = [
+  "läbi",
+  "ära",
+  "pilet",
+  "kook",
+  "koogi",
+  "võti",
+  "supp",
+  "otsima",
+  "leidma",
+  "aitama",
+  "armastama",
+  "ootama",
+] as const;
+
+export const OBJECT_DRILL = [
+  "Ma ei ostnud leiba.",
+  "Ma ostsin ühe leiva.",
+  "Ära osta leiba!",
+  "Loe raamat läbi!",
+] as const;
+
+const OBJECT_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...OBJECT_WORDS,
+    ...OBJECT_PAIRS.flatMap(({ part, whole }) => [part, whole]),
+    ...OBJECT_NOW.flatMap(({ part, whole }) => [part, whole]),
+    ...OBJECT_HEARD.flatMap(({ part, whole, will }) => [part, whole, will]),
+    ...OBJECT_NO,
+    ...OBJECT_VERBS,
+    OBJECT_FOUND.looked,
+    OBJECT_FOUND.found,
+    ...OBJECT_FORM_QUIZ.map(({ said }) => said),
+    ...OBJECT_COMMANDS.flatMap(({ done, go, not }) => [done, go, not]),
+    ...OBJECT_MANY,
+    ...OBJECT_REWRITE.map(({ to }) => to),
+    ...OBJECT_FIXES.map(({ right }) => right),
+    ...OBJECT_DRILL,
+  ]),
+  "p-voice": { sentences: OBJECT_VOICE, voice: "third" },
+  ...OBJECT_DIALOGUE,
+  "c-book-key-cake": OBJECT_CONVERSATION,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -2865,6 +3085,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   },
   mitmus: MITMUS_CLIPS,
   osastav: OSASTAV_CLIPS,
+  "raamatut-voi-raamatu": OBJECT_CLIPS,
   lihtminevik: PAST_CLIPS,
   kit: KIT_CLIPS,
 };

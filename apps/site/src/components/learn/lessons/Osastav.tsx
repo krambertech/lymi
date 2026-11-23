@@ -2,7 +2,7 @@ import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useMemo } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -486,7 +486,7 @@ export function OsastavLesson() {
   const present = lessonBySlug("olevik")?.n;
   const forms = lessonBySlug("pohivormid")?.n;
   const have = lessonBySlug("mul-on")?.n;
-  const object = LESSONS.find((lesson) => lesson.et === "Raamatut või raamatu")?.n;
+  const object = lessonBySlug("raamatut-voi-raamatu")?.n;
 
   const countItems = useMemo<CountItem[]>(
     () =>

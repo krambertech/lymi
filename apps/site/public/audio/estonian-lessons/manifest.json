@@ -10542,5 +10542,543 @@
       "kit/d-mari-4",
       "kit/d-sina-4"
     ]
+  },
+  "raamatut-voi-raamatu/la2bi": {
+    "text": "läbi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/pilet": {
+    "text": "pilet",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/koogi": {
+    "text": "koogi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/supp": {
+    "text": "supp",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/otsima": {
+    "text": "otsima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/leidma": {
+    "text": "leidma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/aitama": {
+    "text": "aitama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/armastama": {
+    "text": "armastama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ootama": {
+    "text": "ootama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ostsin-leiba": {
+    "text": "Ma ostsin leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ostsin-leiva": {
+    "text": "Ma ostsin leiva.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-lugesin-raamatut": {
+    "text": "Ma lugesin raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-lugesin-raamatu-la2bi": {
+    "text": "Ma lugesin raamatu läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-so3in-koogi-a2ra": {
+    "text": "Ma sõin koogi ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-tegin-to2o2d": {
+    "text": "Ma tegin tööd.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-tegin-to2o2-a2ra": {
+    "text": "Ma tegin töö ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-jo3in-vee-a2ra": {
+    "text": "Ma jõin vee ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-loen-raamatut": {
+    "text": "Ma loen raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-loen-raamatu-la2bi": {
+    "text": "Ma loen raamatu läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-so2o2n-suppi": {
+    "text": "Ma söön suppi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-so2o2n-supi-a2ra": {
+    "text": "Ma söön supi ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-teen-to2o2d": {
+    "text": "Ma teen tööd.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-teen-to2o2-a2ra": {
+    "text": "Ma teen töö ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/mari-luges-raamatut": {
+    "text": "Mari luges raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/mari-luges-raamatu-la2bi": {
+    "text": "Mari luges raamatu läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/mari-loeb-raamatu-la2bi": {
+    "text": "Mari loeb raamatu läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/jaan-so3i-suppi": {
+    "text": "Jaan sõi suppi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/jaan-so3i-supi-a2ra": {
+    "text": "Jaan sõi supi ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/jaan-so2o2b-supi-a2ra": {
+    "text": "Jaan sööb supi ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/kati-tegi-to2o2d": {
+    "text": "Kati tegi tööd.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/kati-tegi-to2o2-a2ra": {
+    "text": "Kati tegi töö ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/kati-teeb-to2o2-a2ra": {
+    "text": "Kati teeb töö ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ei-osta-piletit": {
+    "text": "Ma ei osta piletit.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ei-ostnud-piletit": {
+    "text": "Ma ei ostnud piletit.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ei-ostnud-leiba": {
+    "text": "Ma ei ostnud leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ta-ei-lugenud-raamatut": {
+    "text": "Ta ei lugenud raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ootan-so3pra": {
+    "text": "Ma ootan sõpra.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-aitan-last": {
+    "text": "Ma aitan last.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-otsin-vo3tit": {
+    "text": "Ma otsin võtit.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-otsisin-vo3tit": {
+    "text": "Ma otsisin võtit.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-leidsin-vo3tme": {
+    "text": "Ma leidsin võtme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ostsin-u2he-pileti": {
+    "text": "Ma ostsin ühe pileti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/me-ei-so2o2nud-kooki": {
+    "text": "Me ei söönud kooki.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/me-so3ime-koogi-a2ra": {
+    "text": "Me sõime koogi ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ei-teinud-to2o2d": {
+    "text": "Ma ei teinud tööd.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ta-tegi-to2o2-a2ra": {
+    "text": "Ta tegi töö ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ostsin-pileti": {
+    "text": "Ma ostsin pileti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/osta-pilet": {
+    "text": "Osta pilet!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/a2ra-osta-piletit": {
+    "text": "Ära osta piletit!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/loe-raamat-la2bi": {
+    "text": "Loe raamat läbi!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/a2ra-loe-raamatut": {
+    "text": "Ära loe raamatut!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-so3in-supi-a2ra": {
+    "text": "Ma sõin supi ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/so2o2-supp-a2ra": {
+    "text": "Söö supp ära!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/a2ra-so2o2-suppi": {
+    "text": "Ära söö suppi!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/joo-vesi-a2ra": {
+    "text": "Joo vesi ära!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/a2ra-joo-vett": {
+    "text": "Ära joo vett!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ostsin-piletid": {
+    "text": "Ma ostsin piletid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/osta-piletid": {
+    "text": "Osta piletid!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/so2o2-kook-a2ra": {
+    "text": "Söö kook ära!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/a2ra-osta-leiba": {
+    "text": "Ära osta leiba!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-ostsin-u2he-leiva": {
+    "text": "Ma ostsin ühe leiva.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/p-voice": {
+    "text": "Tere, see on Liisa! Ma käisin poes ja ostsin leiba ja juustu. Ma ostsin ka ühe suure koogi. Piima ma ei ostnud. Aga ma ei leia oma võtit. Kas sa aitad mind?",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "raamatut-voi-raamatu/d-teenindaja-1": {
+    "text": "Tere! Mida te soovite?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "raamatut-voi-raamatu/d-teenindaja-2": {
+    "text": "Kas te soovite ka teed?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "raamatut-voi-raamatu/d-sina-2": {
+    "text": "Ei, aitäh. Ma ei taha teed.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/d-teenindaja-3": {
+    "text": "Kas te otsite midagi?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "raamatut-voi-raamatu/d-sina-3": {
+    "text": "Jah, ma otsin oma võtit.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/d-teenindaja-4": {
+    "text": "Palun, teie kook. Kas te sööte selle kohe ära?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "raamatut-voi-raamatu/d-sina-4": {
+    "text": "Jah, ma söön koogi kohe ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/c-book-key-cake": {
+    "text": "Tere, Jaan! Kuidas läheb? Tere! Hästi, aitäh. Kas sa lugesid minu raamatu läbi? Ei, veel mitte. Ma lugesin eile raamatut ainult tund aega. Ainult tund? Kas sul oli palju tööd? Jah, ma tegin terve päeva tööd. Õhtul otsisin ma kaua oma võtit. Ja kas sa leidsid võtme? Jah, lõpuks leidsin ma selle laualt. Aga siis olin ma väsinud. Kas sa sõid midagi? Jah, ma sõin supi ära ja jõin teed. Mina käisin eile poes. Ma ostsin leiba, juustu ja ühe koogi. Kas sa ostsid ka piima? Ja kas sa sõid koogi ära? Piima ma ei ostnud, kodus on veel piima. Ja ei, ma ei söönud kooki. Täna õhtul ootan ma sõpra ja me sööme koogi koos ära. Kas see sõber on Kati? Jah, ma ootan Katit kell seitse. Kas ma võin ka tulla? Muidugi! Aga loe enne raamat läbi! Hästi, ma loen täna õhtul raamatu läbi. Tore. Homme räägime. Head õhtut!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Kuidas läheb?"
+        ],
+        "say": "[cheerful] Tere, Jaan! Kuidas läheb?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere!",
+          "Hästi, aitäh."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sa lugesid minu raamatu läbi?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, veel mitte.",
+          "Ma lugesin eile raamatut ainult tund aega."
+        ],
+        "say": "[sighs] Ei, veel mitte. Ma lugesin eile raamatut ainult tund aega."
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ainult tund?",
+          "Kas sul oli palju tööd?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, ma tegin terve päeva tööd.",
+          "Õhtul otsisin ma kaua oma võtit."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja kas sa leidsid võtme?"
+        ],
+        "say": "[curious] Ja kas sa leidsid võtme?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, lõpuks leidsin ma selle laualt.",
+          "Aga siis olin ma väsinud."
+        ],
+        "say": "[laughs] Jah, lõpuks leidsin ma selle laualt. Aga siis olin ma väsinud."
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sa sõid midagi?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, ma sõin supi ära ja jõin teed."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mina käisin eile poes.",
+          "Ma ostsin leiba, juustu ja ühe koogi."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas sa ostsid ka piima?",
+          "Ja kas sa sõid koogi ära?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Piima ma ei ostnud, kodus on veel piima.",
+          "Ja ei, ma ei söönud kooki.",
+          "Täna õhtul ootan ma sõpra ja me sööme koogi koos ära."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas see sõber on Kati?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, ma ootan Katit kell seitse."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas ma võin ka tulla?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Muidugi!",
+          "Aga loe enne raamat läbi!"
+        ],
+        "say": "[laughs] Muidugi! Aga loe enne raamat läbi!"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hästi, ma loen täna õhtul raamatu läbi."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tore.",
+          "Homme räägime.",
+          "Head õhtut!"
+        ]
+      }
+    ]
+  },
+  "raamatut-voi-raamatu/a2ra": {
+    "text": "ära",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/kook": {
+    "text": "kook",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/vo3ti": {
+    "text": "võti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-so3in-kooki": {
+    "text": "Ma sõin kooki.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/ma-jo3in-vett": {
+    "text": "Ma jõin vett.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/jaan-armastab-marit": {
+    "text": "Jaan armastab Marit.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/tee-to2o2-a2ra": {
+    "text": "Tee töö ära!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/d-sina-1": {
+    "text": "Ma võtan ühe koogi, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/liis-so3i-leiba": {
+    "text": "Liis sõi leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/liis-so3i-leiva-a2ra": {
+    "text": "Liis sõi leiva ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/liis-so2o2b-leiva-a2ra": {
+    "text": "Liis sööb leiva ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

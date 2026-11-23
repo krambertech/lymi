@@ -52,7 +52,7 @@ const WHO: readonly { id: keyof typeof PRONOUN_SENTENCES; who: Short; why: Messa
   {
     id: "s-olete-tublid",
     who: "te",
-    why: msg`<et>Olete</et> can only be you are, to more than one, or polite you.`,
+    why: msg`<et>Olete</et> can only be you are, to more than one, or polite you are.`,
   },
   { id: "s-nad-kodus", who: "nad", why: msg`<et>On</et> with <et>nad</et>: they are.` },
 ];
@@ -128,7 +128,7 @@ export const DRILLS: DrillBank = {
       rule: "who",
       say: PRONOUN_SENTENCES["s-te-opetajad"],
       answers: [PRONOUN_SENTENCES["s-te-opetajad"]],
-      explain: msg`<et>Te olete</et>: you are, to more than one; <et>õpetajad</et> is plural.`,
+      explain: msg`<et>Te olete</et>: you are, to more than one; <et>õpetajad</et> is more than one teacher.`,
     },
     dropped("olen-kodus", "Ma olen kodus.", PRONOUN_SENTENCES["s-olen-kodus"]),
     dropped("oleme-valmis", "Me oleme valmis.", PRONOUN_SENTENCES["s-oleme-valmis"]),

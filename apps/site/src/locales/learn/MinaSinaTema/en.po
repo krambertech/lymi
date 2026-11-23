@@ -48,8 +48,8 @@ msgstr "<et>Oleme</et> can only be we are."
 msgid "<et>Olen</et> can only be I am."
 msgstr "<et>Olen</et> can only be I am."
 
-msgid "<et>Olete</et> can only be you are, to more than one, or polite you."
-msgstr "<et>Olete</et> can only be you are, to more than one, or polite you."
+msgid "<et>Olete</et> can only be you are, to more than one, or polite you are."
+msgstr "<et>Olete</et> can only be you are, to more than one, or polite you are."
 
 msgid "<et>On</et> has no ending, so <et>ta</et> stays."
 msgstr "<et>On</et> has no ending, so <et>ta</et> stays."
@@ -60,8 +60,8 @@ msgstr "<et>On</et> with <et>nad</et>: they are."
 msgid "<et>On</et> with <et>ta</et>: he or she is."
 msgstr "<et>On</et> with <et>ta</et>: he or she is."
 
-msgid "<et>Te olete</et>: you are, to more than one; <et>õpetajad</et> is plural."
-msgstr "<et>Te olete</et>: you are, to more than one; <et>õpetajad</et> is plural."
+msgid "<et>Te olete</et>: you are, to more than one; <et>õpetajad</et> is more than one teacher."
+msgstr "<et>Te olete</et>: you are, to more than one; <et>õpetajad</et> is more than one teacher."
 
 msgid "15 minutes"
 msgstr "15 minutes"

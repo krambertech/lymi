@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { formText, type MorphPart, morph, splitForm, timelinePlaces } from "./forms";
+import {
+  formText,
+  type MorphPart,
+  morph,
+  splitForm,
+  type TurnPart,
+  timelinePlaces,
+  turn,
+} from "./forms";
 
 /** A morph written compactly: kept letters bare, [dropped], {added}. */
 const show = (parts: MorphPart[]) =>
@@ -75,5 +83,33 @@ describe("timelinePlaces", () => {
 
   it("centres a single point", () => {
     expect(timelinePlaces([0])).toEqual([50]);
+  });
+});
+
+describe("turn", () => {
+  const lit = (parts: TurnPart[]) =>
+    parts
+      .map((part) =>
+        part.kind === "dropped" ? `[${part.text}]` : part.lit ? `<${part.text}>` : part.text,
+      )
+      .join("");
+
+  it("lights the ending of the form it arrives at, whether kept or added", () => {
+    expect(lit(turn("raamatu|s", "toa|s"))).toBe("[raama]t[u]oa<s>");
+    expect(lit(turn("luge|sin", "sõi|n"))).toBe("[luge]sõi<n>");
+  });
+
+  it("leaves the new form when its dropped letters are gone", () => {
+    for (const [from, to] of [
+      ["lugema|s", "sööma|s"],
+      ["ei luge|nud", "ei läi|nud"],
+      ["tuba", "sõpra"],
+    ] as const)
+      expect(
+        turn(from, to)
+          .filter((part) => part.kind !== "dropped")
+          .map((part) => part.text)
+          .join(""),
+      ).toBe(formText(to));
   });
 });

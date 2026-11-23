@@ -1,6 +1,7 @@
 import type { I18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { type ComponentType, use } from "react";
+import { lessonName } from "../../lib/learn/catalogue";
 import { learnI18n } from "../../lib/learn/i18n";
 import { reportLoadFailure } from "../../lib/learn/load-failure";
 import { Queries } from "../islands/Queries";
@@ -18,9 +19,6 @@ interface Load {
 }
 
 const pages = new Map<string, Load>();
-
-export const lessonName = (slug: string) =>
-  slug.replace(/(^|-)(\w)/g, (_, _dash, letter: string) => letter.toUpperCase());
 
 async function lessonPage(slug: string, locale: string): Promise<Page> {
   const name = lessonName(slug);
@@ -42,7 +40,29 @@ const kitPage = async (locale: string): Promise<Page> => {
   return { i18n, View: KitDemo };
 };
 
-export type LearnTarget = { kind: "lesson"; slug: string } | { kind: "hub" } | { kind: "kit" };
+const reviewPage = async (locale: string): Promise<Page> => {
+  const [{ ReviewView }, i18n] = await Promise.all([import("./ReviewView"), learnI18n(locale)]);
+  return { i18n, View: ReviewView };
+};
+
+export type LearnTarget =
+  | { kind: "lesson"; slug: string }
+  | { kind: "hub" }
+  | { kind: "review" }
+  | { kind: "kit" };
+
+function load(target: LearnTarget, locale: string): Promise<Page> {
+  switch (target.kind) {
+    case "lesson":
+      return lessonPage(target.slug, locale);
+    case "hub":
+      return hubPage(locale);
+    case "review":
+      return reviewPage(locale);
+    case "kit":
+      return kitPage(locale);
+  }
+}
 
 const noop = () => {};
 
@@ -55,17 +75,12 @@ function open(target: LearnTarget, locale: string): Load {
   const key = `${locale}/${target.kind}/${target.kind === "lesson" ? target.slug : ""}`;
   const known = pages.get(key);
   if (known) return known;
-  const page =
-    target.kind === "lesson"
-      ? lessonPage(target.slug, locale)
-      : target.kind === "hub"
-        ? hubPage(locale)
-        : kitPage(locale);
+  const page = load(target, locale);
   const shown = page.catch(keepServerHtml);
   page.then((value) => Object.assign(shown, { status: "fulfilled", value }), noop);
-  const load = { page, shown };
-  pages.set(key, load);
-  return load;
+  const opened = { page, shown };
+  pages.set(key, opened);
+  return opened;
 }
 
 export async function prepareLearnPage(target: LearnTarget, locale: string): Promise<void> {

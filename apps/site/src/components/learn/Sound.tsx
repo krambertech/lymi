@@ -1,8 +1,8 @@
-import { useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import { Play } from "lucide-react";
+import { Play, Turtle } from "lucide-react";
 import type { ReactNode } from "react";
-import { playSound, usePlaying } from "../../lib/learn/player";
+import { playSlowly, playSound, slowKey, usePlaying } from "../../lib/learn/player";
 
 /** Three bars that move while a sound plays. */
 export function Playing({ className }: { className?: string | undefined }) {
@@ -90,6 +90,30 @@ export function Listen({ src, onPlay, children }: ListenProps) {
         {playing ? <Playing /> : <Play aria-hidden="true" className="size-4 fill-current" />}
       </span>
       {children ?? t`Listen`}
+    </button>
+  );
+}
+
+interface ListenSlowlyProps {
+  src: string;
+  onPlay?: (() => void) | undefined;
+}
+
+export function ListenSlowly({ src, onPlay }: ListenSlowlyProps) {
+  const playing = usePlaying(slowKey(src));
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        onPlay?.();
+        void playSlowly(src);
+      }}
+      className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-full px-3.5 text-md font-medium text-(--form) transition-[background-color,scale] duration-150 active:scale-[0.97] hoverable:hover:bg-(--form-soft)"
+    >
+      <span className="grid w-5 place-items-center">
+        {playing ? <Playing /> : <Turtle aria-hidden="true" className="size-5" />}
+      </span>
+      <Trans>Slower</Trans>
     </button>
   );
 }

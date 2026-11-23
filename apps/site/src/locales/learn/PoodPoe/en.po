@@ -24,11 +24,25 @@ msgstr "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>po
 msgid "<0>{0}, {1}</0>: the ending goes on <1>{2}</1>."
 msgstr "<0>{0}, {1}</0>: the ending goes on <1>{2}</1>."
 
+#. placeholder {0}: noun.where
+#. placeholder {1}: noun.word
+#. placeholder {2}: noun.stem
+msgid "<et>{0}</et> is from <et>{1}, {2}</et>."
+msgstr "<et>{0}</et> is from <et>{1}, {2}</et>."
+
+msgid "<et>{word}, {stem}</et>: the ending goes on <et>{stem}</et>."
+msgstr "<et>{word}, {stem}</et>: the ending goes on <et>{stem}</et>."
+
 msgid "10 minutes"
 msgstr "10 minutes"
 
 msgid "2 quizzes and a passage"
 msgstr "2 quizzes and a passage"
+
+#. placeholder {0}: noun.word
+#. placeholder {1}: noun.stem
+msgid "A dictionary gives the pair: <et>{0}, {1}</et>."
+msgstr "A dictionary gives the pair: <et>{0}, {1}</et>."
 
 msgid "A dictionary gives the stem second: <0>pood, poe</0>. Learn a noun as that pair and you can put <1>-s</1> or <2>-l</2> on it. A stem changes a letter inside, gains a vowel at the end, or stays the same as the word. The next sections take one each."
 msgstr "A dictionary gives the stem second: <0>pood, poe</0>. Learn a noun as that pair and you can put <1>-s</1> or <2>-l</2> on it. A stem changes a letter inside, gains a vowel at the end, or stays the same as the word. The next sections take one each."
@@ -233,6 +247,15 @@ msgstr "Some gain a vowel at the end, and the vowel can’t be guessed: <0>kool,
 
 msgid "Some stay as they are: <0>kodu, kodus</0>."
 msgstr "Some stay as they are: <0>kodu, kodus</0>."
+
+msgid "Stems like the word itself"
+msgstr "Stems like the word itself"
+
+msgid "Stems that gain a vowel"
+msgstr "Stems that gain a vowel"
+
+msgid "Stems where a letter inside changes"
+msgstr "Stems where a letter inside changes"
 
 msgid "Switch through the six nouns above once more, then try again."
 msgstr "Switch through the six nouns above once more, then try again."

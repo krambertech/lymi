@@ -2,9 +2,17 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { ArrowRight, Check } from "lucide-react";
 import type { CSSProperties } from "react";
-import { LESSONS, lessonPath, type PlacedLesson, STAGES } from "../../lib/learn/catalogue";
+import {
+  LESSONS,
+  lessonPath,
+  type PlacedLesson,
+  reviewPath,
+  STAGES,
+} from "../../lib/learn/catalogue";
 import { type Progress, useProgress } from "../../lib/learn/progress";
+import { dueIds, localDay, useReview } from "../../lib/learn/review";
 import { buttonClass } from "../Button";
+import { drillSlugs } from "./drill-banks";
 import { LearnLayout } from "./LearnLayout";
 
 type Status = "done" | "started" | "ready" | "soon";
@@ -69,9 +77,12 @@ function Resume() {
     >
       {next ? (
         <>
-          <span className="text-sm text-ink-muted">
-            {begun ? <Trans>Pick up where you left off</Trans> : <Trans>Start here</Trans>}
-          </span>
+          <div className="flex items-start justify-between gap-4 text-sm">
+            <span className="text-ink-muted">
+              {begun ? <Trans>Pick up where you left off</Trans> : <Trans>Start here</Trans>}
+            </span>
+            <ToReview />
+          </div>
           <p className="text-2xl/tight font-semibold tracking-tight">
             {i18n._(next.name)}
             <span className="mt-0.5 block text-md font-normal tracking-normal text-ink-secondary">
@@ -92,9 +103,12 @@ function Resume() {
         </>
       ) : (
         <>
-          <span className="text-sm text-ink-muted">
-            <Trans>You’ve finished every lesson so far</Trans>
-          </span>
+          <div className="flex items-start justify-between gap-4 text-sm">
+            <span className="text-ink-muted">
+              <Trans>You’ve finished every lesson so far</Trans>
+            </span>
+            <ToReview />
+          </div>
           <p className="text-2xl/tight font-semibold tracking-tight">
             <Trans>More are on the way.</Trans>
           </p>
@@ -114,6 +128,21 @@ function Resume() {
         </span>
       </p>
     </div>
+  );
+}
+
+function ToReview() {
+  const { i18n } = useLingui();
+  const review = useReview();
+  const count = dueIds(review, localDay(), drillSlugs).length;
+  if (count === 0) return null;
+  return (
+    <a
+      href={reviewPath(i18n.locale)}
+      className="relative font-medium whitespace-nowrap text-(--form) underline underline-offset-2 before:absolute before:-inset-x-2 before:-inset-y-3"
+    >
+      <Plural value={count} one="# to review" other="# to review" />
+    </a>
   );
 }
 

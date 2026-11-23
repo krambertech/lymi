@@ -7,6 +7,8 @@ import { Dialogue, type DialogueTurn } from "./Dialogue";
 import { type FormItem, FormRound, formRecall } from "./FormRound";
 import { type GapItem, GapPassage } from "./GapPassage";
 import { KitExplorers } from "./KitExplorers";
+import { KitListening } from "./KitListening";
+import { KitSentences } from "./KitSentences";
 import { LearnLayout } from "./LearnLayout";
 import { type Glossary, LessonContext } from "./lesson-context";
 import { Match, type MatchPair } from "./Match";
@@ -329,8 +331,9 @@ export function KitDemo() {
               <p className="max-w-[52ch] text-lg text-ink-secondary">
                 <Trans>
                   The lesson kit’s parts for practice after a rule is taught: listening, a passage
-                  with gaps, reading, a dialogue, sorting, matching, building a sentence and making
-                  a form. docs/design/estonian-lessons.md says when to use each.
+                  with gaps, reading, a dialogue, sorting, matching, building a sentence, making a
+                  form, writing a sentence and fixing one. docs/design/estonian-lessons.md says when
+                  to use each.
                 </Trans>
               </p>
               <nav aria-label={t`Language`} className="flex gap-1.5">
@@ -368,6 +371,7 @@ export function KitDemo() {
                 questions={content.listening}
               />
             </Part>
+            <KitListening Part={Part} />
             <Part
               id="gaps-pick"
               title={t`Gaps, one at a time`}
@@ -481,6 +485,7 @@ export function KitDemo() {
             >
               <Match id="kit-match" title={t`What does it mean?`} pairs={content.pairs} />
             </Part>
+            <KitSentences Part={Part} />
             <KitExplorers Part={Part} />
           </div>
         </LearnLayout>

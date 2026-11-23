@@ -24,11 +24,25 @@ msgstr "<0>-s</0> і <1>-l</1> додаємо до основи іменника
 msgid "<0>{0}, {1}</0>: the ending goes on <1>{2}</1>."
 msgstr "<0>{0}, {1}</0>: закінчення додаємо до <1>{2}</1>."
 
+#. placeholder {0}: noun.where
+#. placeholder {1}: noun.word
+#. placeholder {2}: noun.stem
+msgid "<et>{0}</et> is from <et>{1}, {2}</et>."
+msgstr "<et>{0}</et> — від <et>{1}, {2}</et>."
+
+msgid "<et>{word}, {stem}</et>: the ending goes on <et>{stem}</et>."
+msgstr "<et>{word}, {stem}</et>: закінчення додаємо до <et>{stem}</et>."
+
 msgid "10 minutes"
 msgstr "10 хвилин"
 
 msgid "2 quizzes and a passage"
 msgstr "2 тести й текст"
+
+#. placeholder {0}: noun.word
+#. placeholder {1}: noun.stem
+msgid "A dictionary gives the pair: <et>{0}, {1}</et>."
+msgstr "У словнику стоїть пара: <et>{0}, {1}</et>."
 
 msgid "A dictionary gives the stem second: <0>pood, poe</0>. Learn a noun as that pair and you can put <1>-s</1> or <2>-l</2> on it. A stem changes a letter inside, gains a vowel at the end, or stays the same as the word. The next sections take one each."
 msgstr "У словнику основа стоїть другою: <0>pood, poe</0>. Запам’ятовуй іменник саме такою парою — тоді до нього можна додати <1>-s</1> чи <2>-l</2>. Основа або змінює літеру всередині, або отримує голосну в кінці, або збігається зі словом. Далі про кожен випадок окремо."
@@ -233,6 +247,15 @@ msgstr "Деякі отримують голосну в кінці, і її не
 
 msgid "Some stay as they are: <0>kodu, kodus</0>."
 msgstr "Деякі не змінюються: <0>kodu, kodus</0>."
+
+msgid "Stems like the word itself"
+msgstr "Основа збігається зі словом"
+
+msgid "Stems that gain a vowel"
+msgstr "Основа отримує голосну"
+
+msgid "Stems where a letter inside changes"
+msgstr "Основа, де змінюється літера всередині"
 
 msgid "Switch through the six nouns above once more, then try again."
 msgstr "Ще раз пройди кроки для шести іменників вище, а потім спробуй знову."

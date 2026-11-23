@@ -145,10 +145,17 @@ interface ChipsProps<V extends string | number> {
   items: readonly { label: ReactNode; value: V; lang?: string }[];
   value: V | null;
   onPick: (value: V) => void;
+  size?: "sm" | "lg";
 }
 
 /** Pick one of a few. The chosen chip fills with the stage's hue. */
-export function Chips<V extends string | number>({ label, items, value, onPick }: ChipsProps<V>) {
+export function Chips<V extends string | number>({
+  label,
+  items,
+  value,
+  onPick,
+  size = "sm",
+}: ChipsProps<V>) {
   return (
     <fieldset className="m-0 flex min-w-0 flex-wrap gap-1.5 border-0 p-0">
       <legend className="sr-only">{label}</legend>
@@ -160,7 +167,8 @@ export function Chips<V extends string | number>({ label, items, value, onPick }
           aria-pressed={value === item.value}
           onClick={() => onPick(item.value)}
           className={clsx(
-            "cursor-pointer rounded-full px-3 py-1.5 text-sm font-medium tabular-nums transition-colors duration-150",
+            "cursor-pointer rounded-full font-medium tabular-nums transition-colors duration-150",
+            size === "lg" ? "min-h-11 px-4 text-md" : "px-3 py-1.5 text-sm",
             value === item.value
               ? "bg-(--form) text-plate"
               : "bg-plate text-ink ring-1 ring-edge-strong hoverable:hover:bg-plate-hover",

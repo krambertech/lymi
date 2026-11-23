@@ -358,6 +358,9 @@ export const LESSONS: readonly PlacedLesson[] = STAGES.flatMap((stage) => stage.
 /** The slugs of the lessons that are built, which `/estonian/learn/[lesson]` renders. */
 export const LESSON_SLUGS = LESSONS.flatMap((lesson) => (lesson.slug ? [lesson.slug] : []));
 
+export const lessonName = (slug: string) =>
+  slug.replace(/(^|-)(\w)/g, (_, _dash, letter: string) => letter.toUpperCase());
+
 export function lessonBySlug(slug: string): (PlacedLesson & BuiltLesson) | undefined {
   return LESSONS.find((lesson): lesson is PlacedLesson & BuiltLesson => lesson.slug === slug);
 }
@@ -365,6 +368,8 @@ export function lessonBySlug(slug: string): (PlacedLesson & BuiltLesson) | undef
 export function lessonPath(slug: string, locale: Locale | string): string {
   return `${localizedPath("learn", locale)}/${slug}`;
 }
+
+export const reviewPath = (locale: Locale | string) => localizedPath("learnReview", locale);
 
 /** The built lesson before this one. */
 export function previousLesson(slug: string): (PlacedLesson & BuiltLesson) | undefined {

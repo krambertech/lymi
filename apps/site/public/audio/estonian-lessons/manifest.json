@@ -10488,5 +10488,59 @@
     "text": "Tere, Jaan! Ma olen kodus. Ema ei ole kodus, ta on ujumas. Ta käib iga päev ujumas. Isa tuleb kell viis jooksmast. Ma lähen kell kuus sööma. Tule ka sööma!",
     "model": "eleven_v4",
     "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kit/c-jaan-mari": {
+    "text": "Tere! Mina olen Jaan. Ma elan Tartus. Ma olen arst. Mari on minu sõber. Ta ei ole arst, ta on õpetaja. Me räägime eesti keelt. Tere! Minu nimi on Mari. Ma olen õpetaja. Ma elan Tallinnas. Ma loen palju. Minu vend Peeter ei loe. Ta kuulab muusikat. Kas sina loed palju? Ma loen raamatut. Tore! Head aega! Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere! Mina olen Jaan.",
+          "Ma elan Tartus.",
+          "Ma olen arst.",
+          "Mari on minu sõber.",
+          "Ta ei ole arst, ta on õpetaja.",
+          "Me räägime eesti keelt."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere! Minu nimi on Mari.",
+          "Ma olen õpetaja.",
+          "Ma elan Tallinnas.",
+          "Ma loen palju.",
+          "Minu vend Peeter ei loe.",
+          "Ta kuulab muusikat.",
+          "Kas sina loed palju?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma loen raamatut."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tore! Head aega!"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Head aega!"
+        ]
+      }
+    ],
+    "clips": [
+      "kit/p-jaan",
+      "kit/p-mari",
+      "olevik/s-loen-raamatut",
+      "kit/d-mari-4",
+      "kit/d-sina-4"
+    ]
   }
 }

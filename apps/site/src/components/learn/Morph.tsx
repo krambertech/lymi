@@ -2,7 +2,7 @@ import { Trans } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { ArrowRight } from "lucide-react";
 import { Fragment, type ReactNode, useState } from "react";
-import { morph } from "../../lib/learn/forms";
+import { type MorphPart, morph } from "../../lib/learn/forms";
 import { playSound, usePlaying } from "../../lib/learn/player";
 import { Chips } from "./Explore";
 import { PlayButton } from "./Sound";
@@ -63,6 +63,19 @@ export function Morph({ label, chains }: MorphProps) {
   );
 }
 
+export function MorphLetters({ parts }: { parts: readonly (MorphPart & { lit?: boolean })[] }) {
+  return parts.map((part, i) => (
+    <span
+      // oxlint-disable-next-line react/no-array-index-key -- a word's parts never reorder
+      key={i}
+      data-kind={part.kind}
+      className={part.lit ? "text-(--form)" : undefined}
+    >
+      {part.kind === "kept" ? part.text : <span>{part.text}</span>}
+    </span>
+  ));
+}
+
 function MorphChainView({ chain }: { chain: MorphChain }) {
   // The chain opens on its first change, so the word shows what it does before any press.
   const [at, setAt] = useState(Math.min(1, chain.steps.length - 1));
@@ -94,19 +107,7 @@ function MorphChainView({ chain }: { chain: MorphChain }) {
               )}
             </span>
             <span aria-hidden="true" lang="et">
-              {parts.map((part, i) =>
-                part.kind === "added" ? (
-                  // oxlint-disable-next-line react/no-array-index-key -- a word's parts never reorder
-                  <span key={i} data-kind="added">
-                    <span>{part.text}</span>
-                  </span>
-                ) : (
-                  // oxlint-disable-next-line react/no-array-index-key -- a word's parts never reorder
-                  <span key={i} data-kind={part.kind}>
-                    {part.text}
-                  </span>
-                ),
-              )}
+              <MorphLetters parts={parts} />
             </span>
           </p>
           <PlayButton

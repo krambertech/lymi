@@ -1,8 +1,7 @@
 import { readdirSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { leakedLessonChunks } from "../../../lesson-isolation.mjs";
-import { lessonName } from "../../components/learn/learn-page";
-import { LESSON_SLUGS } from "./catalogue";
+import { LESSON_SLUGS, lessonName } from "./catalogue";
 
 const chunk = (
   fileName: string,
@@ -53,5 +52,13 @@ describe("the lessons stay off every other page", () => {
       .filter((name) => name.endsWith(".tsx"))
       .map((name) => name.slice(0, -".tsx".length));
     expect(names.sort()).toEqual(LESSON_SLUGS.map(lessonName).sort());
+  });
+
+  it("keeps each drill bank beside the lesson it belongs to, as data without JSX", () => {
+    const banks = readdirSync(new URL("../../components/learn/lessons/", import.meta.url)).filter(
+      (name) => name.includes(".drills."),
+    );
+    const lessons = new Set(LESSON_SLUGS.map((slug) => `${lessonName(slug)}.drills.ts`));
+    expect(banks.filter((name) => !lessons.has(name))).toEqual([]);
   });
 });

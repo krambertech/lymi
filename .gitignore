@@ -21,3 +21,5 @@ apps/web/src/client/routeTree.gen.ts
 .speech-evaluation
 
 apps/web/dist-design
+
+.lesson-audio

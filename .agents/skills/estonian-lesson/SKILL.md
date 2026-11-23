@@ -48,6 +48,7 @@ One file in `components/learn/lessons/` with a `SLUG` constant, its glossary, it
 - Write every line to [the copy rules](references/copy.md) as you go; step 5 checks them.
 - Write every quiz to [the quiz rules](references/checklists.md#quizzes). Reviews flagged a giveaway or a skipped item in six of the first seven lesson PRs.
 - End with What to remember in three to five rules, then the words.
+- Write the lesson's drill bank, `<File>.drills.ts`, to [the bank checklist](references/checklists.md#drill-banks). `LessonView` adds the drill, and later lessons' warm-ups and the review page pick it up.
 - Fix a kit part in its own file in `components/learn`, never in a copy inside the lesson, and name the fix in the PR and the notes: every lesson uses it.
 - Each `Quiz` gets a fixed `id` of lowercase letters, digits and hyphens, unique in the lesson: it is the `quiz` property of `learn_quiz_finished`.
 
@@ -69,7 +70,7 @@ List every clip in `clips.ts`: the lesson's shared data as exports, and an entry
 env PATH="$HOME/.nvm/versions/node/v$(cat .nvmrc)/bin:$PATH" ELEVENLABS_API_KEY="$(sed -n 's/^ELEVENLABS_API_KEY=//p' "$(git rev-parse --path-format=absolute --git-common-dir)/../apps/web/.dev.vars")" pnpm --filter @lymi/site lesson:audio
 ```
 
-Run it from the repository root, where `.nvmrc` names the Node it needs. The key goes from the main checkout's `apps/web/.dev.vars` into the command's environment only; never print it, echo it or write it to a file. The script records only new or changed clips, so a re-run is free. Done when it reports what you added and `pnpm --filter @lymi/site test` passes, since `clips.test.ts` checks the manifest against `CLIPS` and every mp3, and the lesson checks in `src/lib/learn/checks/` hold the lesson to the review rules the checklists mark **(checked)**. Each failure names the file, the rule and the fix; never add a new lesson to `known-issues.ts`.
+Run it with `--dry-run` first, which needs no key and lists what would be sent and how many characters. Run it from the repository root, where `.nvmrc` names the Node it needs. The key goes from the main checkout's `apps/web/.dev.vars` into the command's environment only; never print it, echo it or write it to a file. The script records only new or changed clips, so a re-run is free. Done when it reports what you added and `pnpm --filter @lymi/site test` passes, since `clips.test.ts` checks the manifest against `CLIPS` and every mp3, and the lesson checks in `src/lib/learn/checks/` hold the lesson to the review rules the checklists mark **(checked)**. Each failure names the file, the rule and the fix; never add a new lesson to `known-issues.ts`.
 
 ## 7. Translate
 

@@ -1,6 +1,7 @@
 import { CLIPS, clipText } from "../clips";
 import { type Element, isElement } from "./html";
 import type { Rendered } from "./lessons";
+import { writtenItems, writtenTexts } from "./sentences";
 
 /**
  * Every Estonian word form the course shows or says, checked once in Sõnaveeb (ÕS 2025). The value
@@ -55,7 +56,14 @@ export function lessonForms(page: Rendered): Map<string, string> {
       for (const word of (props.spare as string[] | undefined) ?? [])
         add(word, `gaps "${String(props.id)}" spare`);
     }
-    if (part === "Quiz")
+    if (part === "Listening" || part === "Reading")
+      for (const question of props.questions as { kind?: string; answers?: string[] }[])
+        if (question.kind === "short")
+          for (const answer of question.answers ?? [])
+            add(answer, `short answer in "${String(props.id)}"`);
+    if (part === "Quiz") {
+      for (const { item } of writtenItems([{ part, props }]))
+        for (const text of writtenTexts(item)) add(text, `quiz "${String(props.id)}"`);
       for (const item of props.items as {
         options?: unknown[];
         before?: string;
@@ -67,12 +75,14 @@ export function lessonForms(page: Rendered): Map<string, string> {
           if (typeof option === "string")
             add(`${item.before}${option}${item.after ?? ""}`, `quiz "${String(props.id)}"`);
       }
+    }
   }
   // Each outermost Estonian element as one text, so a word split across spans stays whole.
   const outermost = (element: Element, inEstonian: boolean) => {
     // Hidden from screen readers, as text-run checks treat it: Morph's struck-through letters
     // (ol·ema·in) are a picture of a change, not a word, and its words are in its sr-only line.
     if (element.attrs["aria-hidden"] === "true") return;
+    if (element.attrs["data-fix"] !== undefined) return;
     if (element.lang === "et" && !inEstonian) {
       add(estonianText(element), 'text in lang="et"');
       return;

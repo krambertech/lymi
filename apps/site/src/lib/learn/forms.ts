@@ -67,6 +67,24 @@ export function morph(from: string, to: string): MorphPart[] {
   return parts;
 }
 
+export interface TurnPart extends MorphPart {
+  lit: boolean;
+}
+
+export function turn(from: string, to: string): TurnPart[] {
+  const stem = splitForm(to).stem.length;
+  let at = 0;
+  return morph(formText(from), formText(to)).flatMap(({ text, kind }): TurnPart[] => {
+    if (kind === "dropped") return [{ text, kind, lit: false }];
+    const cut = Math.max(0, Math.min(text.length, stem - at));
+    at += text.length;
+    return [
+      { text: text.slice(0, cut), kind, lit: false },
+      { text: text.slice(cut), kind, lit: true },
+    ].filter((part) => part.text !== "");
+  });
+}
+
 /**
  * Where each point of a timeline sits along it, from 0 to 100, with room at both ends: the
  * earliest point near the start, the latest near the end, the rest in proportion.

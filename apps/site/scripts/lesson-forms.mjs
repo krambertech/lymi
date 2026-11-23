@@ -5,8 +5,8 @@
  *
  *   pnpm --filter @lymi/site lesson:forms
  *
- * The lesson checks (`src/lib/learn/checks/lesson-checks.test.ts`) list every form a lesson shows
- * or says that the file doesn't hold yet. This script asks Sõnaveeb's EKI dictionary, which carries
+ * The lesson checks (`src/lib/learn/checks/lesson-checks.test.ts`) and the form map's test list every
+ * form a lesson or the map shows or says that the file doesn't hold yet. This script asks Sõnaveeb's EKI dictionary, which carries
  * ÕS 2025, about each one: a headword, or "a form of <headword>", is added with that headword. A
  * form Sõnaveeb doesn't know is printed for a person to fix or to add by hand with its source.
  */
@@ -27,6 +27,7 @@ const run = spawnSync(
     "vitest",
     "run",
     "src/lib/learn/checks/lesson-checks.test.ts",
+    "src/lib/learn/form-map.test.ts",
     "-t",
     "uses only Estonian forms",
   ],
@@ -42,7 +43,24 @@ try {
   }
 }
 rmSync(dir, { recursive: true, force: true });
+
+function writeNearForms() {
+  const wrote = spawnSync(
+    "pnpm",
+    ["exec", "vitest", "run", "src/lib/learn/near-forms.test.ts", "-u"],
+    {
+      cwd: site,
+      env: { ...process.env, CI: "" },
+      stdio: "ignore",
+    },
+  );
+  if (wrote.status === 0) return;
+  console.error("near-forms.json wasn't written. Run the near-forms test to see why.");
+  process.exit(1);
+}
+
 if (missing.length === 0) {
+  writeNearForms();
   console.log("Every Estonian form in the lessons is already checked.");
   process.exit(0);
 }
@@ -101,6 +119,7 @@ const sorted = Object.fromEntries(
   Object.entries(list).sort(([a], [b]) => a.localeCompare(b, "et")),
 );
 writeFileSync(listPath, `${JSON.stringify(sorted, null, 2)}\n`);
+writeNearForms();
 console.log(`Added ${added} form${added === 1 ? "" : "s"} Sõnaveeb confirms.`);
 if (unknown.length) {
   console.log(

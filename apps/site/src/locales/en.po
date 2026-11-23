@@ -5761,6 +5761,9 @@ msgstr "Questions from medical students."
 msgid "Questions from teachers."
 msgstr "Questions from teachers."
 
+msgid "Questions from the Estonian lessons you’ve drilled, each back on the day it’s due. They stay in your browser, with no account."
+msgstr "Questions from the Estonian lessons you’ve drilled, each back on the day it’s due. They stay in your browser, with no account."
+
 msgid "questions in the manual"
 msgstr "questions in the manual"
 
@@ -6013,6 +6016,9 @@ msgstr "Review schedule"
 
 msgid "Review with no signal. It syncs when you’re back."
 msgstr "Review with no signal. It syncs when you’re back."
+
+msgid "Review your Estonian lessons · Lymi"
+msgstr "Review your Estonian lessons · Lymi"
 
 msgid "Reviewed with Lymi"
 msgstr "Reviewed with Lymi"

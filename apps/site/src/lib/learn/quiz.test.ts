@@ -33,7 +33,12 @@ describe("quizReducer", () => {
     expect(state).toMatchObject({ status: "asking", round: 1, heard: true });
     state = quizReducer(state, { type: "answered", picked: "b", right: false });
     state = quizReducer(state, { type: "next" });
-    expect(state).toEqual({ status: "finished", rounds: 2, results: [true, false] });
+    expect(state).toEqual({
+      status: "finished",
+      rounds: 2,
+      results: [true, false],
+      slips: [],
+    });
     expect(rightCount(state)).toBe(1);
   });
 
@@ -41,8 +46,37 @@ describe("quizReducer", () => {
     const fresh = startQuiz(3);
     expect(quizReducer(fresh, { type: "next" })).toBe(fresh);
     expect(
-      quizReducer({ status: "finished", rounds: 3, results: [true] }, { type: "restarted" }),
+      quizReducer(
+        { status: "finished", rounds: 3, results: [true], slips: [0] },
+        { type: "restarted" },
+      ),
     ).toEqual(fresh);
+  });
+});
+
+describe("a round right but for a spelling slip", () => {
+  const answered = (right: boolean) =>
+    quizReducer(quizReducer(startQuiz(2), { type: "heard" }), {
+      type: "answered",
+      picked: "a",
+      right,
+      slip: true,
+    });
+
+  it("counts as right and stays marked to the score", () => {
+    let state = answered(true);
+    expect(state).toMatchObject({ right: true, results: [true], slips: [0] });
+    state = quizReducer(state, { type: "next" });
+    expect(state).toMatchObject({ status: "asking", slips: [0] });
+    state = quizReducer(state, { type: "answered", picked: "b", right: true });
+    state = quizReducer(state, { type: "next" });
+    expect(state).toMatchObject({ status: "finished", slips: [0] });
+    expect(rightCount(state)).toBe(2);
+    expect(quizReducer(state, { type: "restarted" })).toMatchObject({ slips: [] });
+  });
+
+  it("is no slip when the round was wrong", () => {
+    expect(answered(false)).toMatchObject({ right: false, slips: [] });
   });
 });
 

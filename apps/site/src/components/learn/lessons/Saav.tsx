@@ -410,7 +410,7 @@ export function SaavLesson() {
         explain:
           way === "na" ? (
             <Trans>
-              Works as: <span lang="et">-na</span>, <span lang="et">{answer}</span>.
+              As: <span lang="et">-na</span>, <span lang="et">{answer}</span>.
             </Trans>
           ) : (
             <Trans>
@@ -463,7 +463,7 @@ export function SaavLesson() {
         </Trans>,
         <Trans key="4">
           By and for a time: <b lang="et">reedeks</b>, by Friday; <b lang="et">nädalaks</b>, for a
-          week. With a meal or an occasion, <b lang="et">-ks</b> says what for:{" "}
+          week. With a meal, a day or an occasion, <b lang="et">-ks</b> says what for:{" "}
           <b lang="et">sünnipäevaks</b>, for a birthday.
         </Trans>,
         <Trans key="5">
@@ -568,7 +568,7 @@ export function SaavLesson() {
                 verdict={(share) =>
                   share === 1 ? (
                     <Trans>
-                      All eight: works as with <span lang="et">-na</span>, becomes with{" "}
+                      All eight: as with <span lang="et">-na</span>, becomes with{" "}
                       <span lang="et">-ks</span>.
                     </Trans>
                   ) : share >= 0.6 ? (
@@ -595,7 +595,7 @@ export function SaavLesson() {
                   <Trans>
                     With a time, <span lang="et">-ks</span> says by when, or how long something is
                     planned for: <Word w="reedeks" />, by Friday; <Word w="nädalaks" />, for a week.
-                    With a meal or an occasion, it says what for:{" "}
+                    With a meal, a day or an occasion, it says what for:{" "}
                     <span lang="et">hommikusöögiks</span>, for breakfast. Tap a line to hear it.
                   </Trans>
                 </p>

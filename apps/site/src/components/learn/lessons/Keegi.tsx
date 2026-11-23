@@ -112,7 +112,7 @@ const GLOSSARY: Glossary = {
   midagi: { en: msg`something, anything`, note: msg`With ei: nothing.` },
   kuskil: { en: msg`somewhere, anywhere` },
   kuhugi: { en: msg`(to) somewhere, anywhere` },
-  kunagi: { en: msg`ever; some day`, note: msg`With ei: never.` },
+  kunagi: { en: msg`ever; some day; once, in the past`, note: msg`With ei: never.` },
   millalgi: { en: msg`some time` },
   millal: { en: msg`when` },
   "mitte keegi": { en: msg`nobody`, note: msg`An answer on its own: Kes tuli? Mitte keegi.` },
@@ -454,9 +454,10 @@ export function KeegiLesson() {
                 </p>
                 <p>
                   <Trans>
-                    Two don’t follow the pattern, so learn them as words: <Word w="kuskil" />,
-                    somewhere, and <Word w="kunagi" />, ever. <Word w="Millal" />, when, does:{" "}
-                    <Word w="millalgi" />, some time. Tap a line to hear it.
+                    Two are built on words you haven’t met, so learn them as words:{" "}
+                    <Word w="kuskil" />, somewhere, and <Word w="kunagi" />, ever.{" "}
+                    <Word w="Millal" />, when, follows the pattern: <Word w="millalgi" />, some
+                    time. Tap a line to hear it.
                   </Trans>
                 </p>
               </Prose>

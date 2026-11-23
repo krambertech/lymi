@@ -3597,7 +3597,11 @@ export const TRA_TRANSLATE = [
 
 export const TRA_FIX = [
   { id: "fix-arstiks", wrong: "Ta sai arstina.", answers: ["Ta sai arstiks."] },
-  { id: "fix-arstina", wrong: "Ta töötab arst.", answers: ["Ta töötab arstina."] },
+  {
+    id: "fix-arstina",
+    wrong: "Ta töötab arst.",
+    answers: ["Ta töötab arstina.", "Ta töötab arstiks."],
+  },
   { id: "fix-haigeks", wrong: "Ma jäin haige.", answers: ["Ma jäin haigeks."] },
   { id: "fix-heaks", wrong: "Ta sai hea arstiks.", answers: ["Ta sai heaks arstiks."] },
   { id: "fix-reedeks", wrong: "Ma tulen reede tagasi.", answers: ["Ma tulen reedeks tagasi."] },

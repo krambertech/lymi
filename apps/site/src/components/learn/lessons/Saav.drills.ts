@@ -138,7 +138,7 @@ export const DRILLS: DrillBank = {
       rule: "naks",
       wrong: "Ta töötab arst.",
       prompt: msg`She works as a doctor.`,
-      answers: ["Ta töötab arstina."],
+      answers: ["Ta töötab arstina.", "Ta töötab arstiks."],
       say: "Ta töötab arstina.",
       explain: AS,
     },

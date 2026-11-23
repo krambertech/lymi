@@ -9,10 +9,10 @@ const fixAnswers = (id: (typeof TRA_FIX)[number]["id"]) =>
   (TRA_FIX.find((item) => item.id === id) as (typeof TRA_FIX)[number]).answers;
 
 const BUILD = msg`The translative is the genitive with <et>-ks</et>: <et>arst</et>, <et>arsti</et>, <et>arstiks</et>.`;
-const BECOME = msg`Become is <et>saama</et> with <et>-ks</et>: <et>sai arstiks</et>.`;
-const AS = msg`Works as is <et>-na</et>: <et>töötab arstina</et>.`;
-const TIME = msg`By or for a time is <et>-ks</et>: <et>reedeks</et>, by Friday; <et>nädalaks</et>, for a week.`;
-const BOTH = msg`With <et>-ks</et>, the adjective takes the ending as well: <et>heaks arstiks</et>.`;
+const BECOME = msg`Become is usually <et>saama</et> with <et>-ks</et>: <et>sai arstiks</et>.`;
+const AS = msg`Works as is usually <et>-na</et>: <et>töötab arstina</et>.`;
+const TIME = msg`For a planned time, <et>-ks</et> says by when or for how long: <et>reedeks</et>, by Friday; <et>nädalaks</et>, for a week.`;
+const BOTH = msg`With <et>-ks</et>, the adjective usually takes the ending as well: <et>heaks arstiks</et>.`;
 
 export const DRILLS: DrillBank = {
   rules: {
@@ -25,7 +25,7 @@ export const DRILLS: DrillBank = {
       section: "na-or-ks",
     },
     time: { label: msg`By and for: <et>reedeks</et>, <et>nädalaks</et>`, section: "by-and-for" },
-    agree: { label: msg`Both words: <et>heaks arstiks</et>`, section: "both-words" },
+    agree: { label: msg`The adjective too: <et>heaks arstiks</et>`, section: "both-words" },
   },
   items: [
     {
@@ -74,7 +74,12 @@ export const DRILLS: DrillBank = {
       id: "build-soojaks",
       rule: "build",
       prompt: msg`The room is getting warm.`,
-      answers: withPronouns(["Tuba läheb soojaks.", "Tuba muutub soojaks.", "Toas läheb soojaks."]),
+      answers: withPronouns([
+        "Tuba läheb soojaks.",
+        "Tuba muutub soojaks.",
+        "Toas läheb soojaks.",
+        "Tuba on muutumas soojaks.",
+      ]),
       say: "Tuba läheb soojaks.",
       explain: msg`The genitive of <et>soe</et> is <et>sooja</et>, so <et>soojaks</et>.`,
     },
@@ -214,6 +219,8 @@ export const DRILLS: DrillBank = {
         "Nädalaks lähen Pärnu.",
         "Nädalaks sõidan Pärnu.",
         "Nädalaks lähen mina Pärnusse.",
+        "Ma lähen üheks nädalaks Pärnusse.",
+        "Ma lähen Pärnusse üheks nädalaks.",
       ]),
       say: "Ma lähen nädalaks Pärnusse.",
       explain: TIME,
@@ -236,6 +243,12 @@ export const DRILLS: DrillBank = {
         "Kas sina õhtuks kodus oled?",
         "Kas sina õhtuks oled kodus?",
         "Oled sina õhtuks kodus?",
+        "Oled sa kodus õhtuks?",
+        "Kas te olete kodus õhtuks?",
+        "Olete te õhtuks kodus?",
+        "Olete te kodus õhtuks?",
+        "Kas te õhtuks kodus olete?",
+        "Kas te õhtuks olete kodus?",
       ]),
       say: "Kas sa oled õhtuks kodus?",
       explain: msg`By the evening is <et>õhtuks</et>.`,

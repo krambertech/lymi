@@ -52,6 +52,9 @@ msgstr "новый врач"
 msgid "A new job"
 msgstr "Новая работа"
 
+msgid "A planned week is <0>-ks</0>: <1>nädalaks</1>."
+msgstr "Запланированная неделя — это <0>-ks</0>: <1>nädalaks</1>."
+
 msgid "a shop assistant"
 msgstr "продавец"
 
@@ -100,23 +103,17 @@ msgstr "На рынке"
 msgid "Became is <0>saama</0> with <1>-ks</1>: <2>sai arstiks</2>."
 msgstr "«Стал» — это <0>saama</0> с <1>-ks</1>: <2>sai arstiks</2>."
 
-msgid "Become is <0>saama</0> with <1>-ks</1>: <2>Ta sai arstiks</2>. Also <3>haigeks jääma</3>, to fall ill, and <4>muutub külmaks</4>, turns cold."
-msgstr "«Стать» — это <0>saama</0> с <1>-ks</1>: <2>Ta sai arstiks</2>. А ещё <3>haigeks jääma</3> — «заболеть», и <4>muutub külmaks</4> — «становится холодным»."
+msgid "Become is usually <0>saama</0> with <1>-ks</1>: <2>Ta sai arstiks</2>. Also <3>haigeks jääma</3>, to fall ill, and <4>muutub külmaks</4>, turns cold."
+msgstr "«Стать» — это обычно <0>saama</0> с <1>-ks</1>: <2>Ta sai arstiks</2>. А ещё <3>haigeks jääma</3> — «заболеть», и <4>muutub külmaks</4> — «становится холодным»."
 
-msgid "Become is <et>saama</et> with <et>-ks</et>: <et>sai arstiks</et>."
-msgstr "«Стать» — это <et>saama</et> с <et>-ks</et>: <et>sai arstiks</et>."
+msgid "Become is usually <et>saama</et> with <et>-ks</et>: <et>sai arstiks</et>."
+msgstr "«Стать» — это обычно <et>saama</et> с <et>-ks</et>: <et>sai arstiks</et>."
 
 msgid "Become: -ks on the genitive"
 msgstr "Стать: -ks к родительному"
 
 msgid "Becomes: <0>-ks</0>, <1>{answer}</1>."
 msgstr "«Становится» — <0>-ks</0>: <1>{answer}</1>."
-
-msgid "Both words: <et>heaks arstiks</et>"
-msgstr "Оба слова: <et>heaks arstiks</et>"
-
-msgid "By and for a time: <0>reedeks</0>, by Friday; <1>nädalaks</1>, for a week. With a meal or an occasion, <2>-ks</2> says what for: <3>sünnipäevaks</3>, for a birthday."
-msgstr "«К» и «на» какое-то время: <0>reedeks</0> — «к пятнице»; <1>nädalaks</1> — «на неделю». С приёмом пищи или событием <2>-ks</2> говорит «на что»: <3>sünnipäevaks</3> — «на день рождения»."
 
 msgid "By and for: <et>reedeks</et>, <et>nädalaks</et>"
 msgstr "К и на: <et>reedeks</et>, <et>nädalaks</et>"
@@ -132,9 +129,6 @@ msgstr "«К пятнице» — это <0>-ks</0>: <1>reedeks</1>."
 
 msgid "By Friday, for a week"
 msgstr "К пятнице, на неделю"
-
-msgid "By or for a time is <et>-ks</et>: <et>reedeks</et>, by Friday; <et>nädalaks</et>, for a week."
-msgstr "«К» или «на» какое-то время — это <et>-ks</et>: <et>reedeks</et> — «к пятнице»; <et>nädalaks</et> — «на неделю»."
 
 msgid "by the evening"
 msgstr "к вечеру"
@@ -181,11 +175,14 @@ msgstr "«На день рождения» — это <0>-ks</0>: <1>sünnipäev
 msgid "For a birthday is <et>-ks</et>: <et>sünnipäevaks</et>."
 msgstr "«На день рождения» — это <et>-ks</et>: <et>sünnipäevaks</et>."
 
+msgid "For a planned time, <et>-ks</et> says by when or for how long: <et>reedeks</et>, by Friday; <et>nädalaks</et>, for a week."
+msgstr "О запланированном времени <et>-ks</et> говорит, к какому сроку или на сколько: <et>reedeks</et> — «к пятнице»; <et>nädalaks</et> — «на неделю»."
+
+msgid "For a planned time, by when or for how long: <0>reedeks</0>, by Friday; <1>nädalaks</1>, for a week. With a meal or an occasion, <2>-ks</2> says what for: <3>sünnipäevaks</3>, for a birthday."
+msgstr "О запланированном времени — к какому сроку или на сколько: <0>reedeks</0> — «к пятнице»; <1>nädalaks</1> — «на неделю». С приёмом пищи или событием <2>-ks</2> говорит «на что»: <3>sünnipäevaks</3> — «на день рождения»."
+
 msgid "for a week"
 msgstr "на неделю"
-
-msgid "For a week is <0>-ks</0>: <1>nädalaks</1>."
-msgstr "«На неделю» — это <0>-ks</0>: <1>nädalaks</1>."
 
 msgid "for breakfast"
 msgstr "на завтрак"
@@ -214,8 +211,8 @@ msgstr "Начал или начала работать в больнице вр
 msgid "He or she works as a doctor."
 msgstr "Работает врачом."
 
-msgid "He works as a doctor, so <0>-na</0>: <1>arstina</1>."
-msgstr "Он работает врачом, поэтому <0>-na</0>: <1>arstina</1>."
+msgid "He works as a doctor, so usually <0>-na</0>: <1>arstina</1>."
+msgstr "Он работает врачом, поэтому обычно <0>-na</0>: <1>arstina</1>."
 
 msgid "How long is Peeter’s sister coming home for? Write it as he says it."
 msgstr "На сколько сестра Пеэтера приедет домой? Напиши так, как он говорит."
@@ -343,6 +340,9 @@ msgstr "Ta sai arstiks — «стал или стала врачом»."
 msgid "Tap the words above once more, then try again."
 msgstr "Ещё раз нажми на слова выше, а потом попробуй снова."
 
+msgid "The adjective too: <et>heaks arstiks</et>"
+msgstr "И прилагательное тоже: <et>heaks arstiks</et>"
+
 msgid "The genitive of <et>kokk</et> is <et>koka</et>, so <et>kokaks</et>."
 msgstr "Родительный от <et>kokk</et> — <et>koka</et>, так что <et>kokaks</et>."
 
@@ -430,17 +430,17 @@ msgstr "Ты будешь дома к вечеру?"
 msgid "With -ks it means become."
 msgstr "С -ks оно значит «становиться»."
 
-msgid "With <0>-ks</0>, an adjective takes the ending as well, as with <1>-s</1> in lesson {agree}: <2/>. With <3>-na</3>, only the noun takes the ending; the adjective stays in the genitive, as with <4>-ga</4>: <5>uue arstina</5>."
-msgstr "С <0>-ks</0> прилагательное тоже получает окончание, как с <1>-s</1> в уроке {agree}: <2/>. С <3>-na</3> окончание получает только существительное, а прилагательное остаётся в родительном, как с <4>-ga</4>: <5>uue arstina</5>."
+msgid "With <0>-ks</0>, an adjective usually takes the ending as well, as with <1>-s</1> in lesson {agree}: <2/>. With <3>-na</3>, only the noun takes the ending; the adjective stays in the genitive, as with <4>-ga</4>: <5>uue arstina</5>."
+msgstr "С <0>-ks</0> прилагательное обычно тоже получает окончание, как с <1>-s</1> в уроке {agree}: <2/>. С <3>-na</3> окончание получает только существительное, а прилагательное остаётся в родительном, как с <4>-ga</4>: <5>uue arstina</5>."
 
-msgid "With <0>-ks</0>, both words take the ending: <1>heaks arstiks</1>."
-msgstr "С <0>-ks</0> окончание получают оба слова: <1>heaks arstiks</1>."
+msgid "With <0>-ks</0>, the adjective usually takes the ending as well: <1>heaks arstiks</1>."
+msgstr "С <0>-ks</0> прилагательное обычно тоже получает окончание: <1>heaks arstiks</1>."
 
-msgid "With <0>-ks</0>, the adjective takes the ending as well: <1>heaks arstiks</1>."
-msgstr "С <0>-ks</0> прилагательное тоже получает окончание: <1>heaks arstiks</1>."
+msgid "With <0>-ks</0>, the adjective usually takes the ending too: <1>heaks arstiks</1>."
+msgstr "С <0>-ks</0> прилагательное обычно тоже получает окончание: <1>heaks arstiks</1>."
 
-msgid "With <et>-ks</et>, the adjective takes the ending as well: <et>heaks arstiks</et>."
-msgstr "С <et>-ks</et> прилагательное тоже получает окончание: <et>heaks arstiks</et>."
+msgid "With <et>-ks</et>, the adjective usually takes the ending as well: <et>heaks arstiks</et>."
+msgstr "С <et>-ks</et> прилагательное обычно тоже получает окончание: <et>heaks arstiks</et>."
 
 msgid "With <et>-na</et>, only the noun takes the ending; the adjective stays in the genitive, as with <et>-ga</et>: <et>uue arstina</et>."
 msgstr "С <et>-na</et> окончание получает только существительное, а прилагательное остаётся в родительном, как с <et>-ga</et>: <et>uue arstina</et>."
@@ -454,14 +454,14 @@ msgstr "Когда речь о времени, <0>-ks</0> говорит «к к
 msgid "Words"
 msgstr "Слова"
 
-msgid "Works as is <0>-na</0>, becomes is <1>-ks</1>: <2>töötab arstina</2>, <3>sai arstiks</3>."
-msgstr "«Работает как» — это <0>-na</0>, «становится» — <1>-ks</1>: <2>töötab arstina</2>, <3>sai arstiks</3>."
+msgid "Works as is usually <0>-na</0>, becomes is <1>-ks</1>: <2>töötab arstina</2>, <3>sai arstiks</3>."
+msgstr "«Работает как» — это обычно <0>-na</0>, «становится» — <1>-ks</1>: <2>töötab arstina</2>, <3>sai arstiks</3>."
 
-msgid "Works as is <0>-na</0>: <1>töötab arstina</1>."
-msgstr "«Работает как» — это <0>-na</0>: <1>töötab arstina</1>."
+msgid "Works as is usually <0>-na</0>: <1>töötab arstina</1>."
+msgstr "«Работает как» — это обычно <0>-na</0>: <1>töötab arstina</1>."
 
-msgid "Works as is <et>-na</et>: <et>töötab arstina</et>."
-msgstr "«Работает как» — это <et>-na</et>: <et>töötab arstina</et>."
+msgid "Works as is usually <et>-na</et>: <et>töötab arstina</et>."
+msgstr "«Работает как» — это обычно <et>-na</et>: <et>töötab arstina</et>."
 
 msgid "Works as or becomes"
 msgstr "Кем работает, кем становится"

@@ -161,18 +161,19 @@ function useContent() {
     const why: Record<string, ReactNode> = {
       heaks: (
         <Trans>
-          With <span lang="et">-ks</span>, both words take the ending:{" "}
+          With <span lang="et">-ks</span>, the adjective usually takes the ending too:{" "}
           <span lang="et">heaks arstiks</span>.
         </Trans>
       ),
       arstina: (
         <Trans>
-          He works as a doctor, so <span lang="et">-na</span>: <span lang="et">arstina</span>.
+          He works as a doctor, so usually <span lang="et">-na</span>:{" "}
+          <span lang="et">arstina</span>.
         </Trans>
       ),
       nadalaks: (
         <Trans>
-          For a week is <span lang="et">-ks</span>: <span lang="et">nädalaks</span>.
+          A planned week is <span lang="et">-ks</span>: <span lang="et">nädalaks</span>.
         </Trans>
       ),
       reedeks: (
@@ -205,7 +206,7 @@ function useContent() {
       ),
       "fix-arstina": (
         <Trans>
-          Works as is <span lang="et">-na</span>: <span lang="et">töötab arstina</span>.
+          Works as is usually <span lang="et">-na</span>: <span lang="et">töötab arstina</span>.
         </Trans>
       ),
       "fix-haigeks": (
@@ -216,7 +217,7 @@ function useContent() {
       ),
       "fix-heaks": (
         <Trans>
-          With <span lang="et">-ks</span>, the adjective takes the ending as well:{" "}
+          With <span lang="et">-ks</span>, the adjective usually takes the ending as well:{" "}
           <span lang="et">heaks arstiks</span>.
         </Trans>
       ),
@@ -455,18 +456,18 @@ export function SaavLesson() {
           <b lang="et">arst, arsti, arstiks</b>; <b lang="et">külm, külma, külmaks</b>.
         </Trans>,
         <Trans key="2">
-          Become is <b lang="et">saama</b> with <b lang="et">-ks</b>:{" "}
+          Become is usually <b lang="et">saama</b> with <b lang="et">-ks</b>:{" "}
           <b lang="et">Ta sai arstiks</b>. Also <b lang="et">haigeks jääma</b>, to fall ill, and{" "}
           <b lang="et">muutub külmaks</b>, turns cold.
         </Trans>,
         <Trans key="3">
-          Works as is <b lang="et">-na</b>, becomes is <b lang="et">-ks</b>:{" "}
+          Works as is usually <b lang="et">-na</b>, becomes is <b lang="et">-ks</b>:{" "}
           <b lang="et">töötab arstina</b>, <b lang="et">sai arstiks</b>.
         </Trans>,
         <Trans key="4">
-          By and for a time: <b lang="et">reedeks</b>, by Friday; <b lang="et">nädalaks</b>, for a
-          week. With a meal or an occasion, <b lang="et">-ks</b> says what for:{" "}
-          <b lang="et">sünnipäevaks</b>, for a birthday.
+          For a planned time, by when or for how long: <b lang="et">reedeks</b>, by Friday;{" "}
+          <b lang="et">nädalaks</b>, for a week. With a meal or an occasion, <b lang="et">-ks</b>{" "}
+          says what for: <b lang="et">sünnipäevaks</b>, for a birthday.
         </Trans>,
         <Trans key="5">
           An adjective takes <b lang="et">-ks</b> too: <b lang="et">heaks arstiks</b>. With{" "}
@@ -635,10 +636,10 @@ export function SaavLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    With <span lang="et">-ks</span>, an adjective takes the ending as well, as with{" "}
-                    <span lang="et">-s</span> in lesson {agree}: <Word w="heaks arstiks" />. With{" "}
-                    <span lang="et">-na</span>, only the noun takes the ending; the adjective stays
-                    in the genitive, as with <span lang="et">-ga</span>:{" "}
+                    With <span lang="et">-ks</span>, an adjective usually takes the ending as well,
+                    as with <span lang="et">-s</span> in lesson {agree}: <Word w="heaks arstiks" />.
+                    With <span lang="et">-na</span>, only the noun takes the ending; the adjective
+                    stays in the genitive, as with <span lang="et">-ga</span>:{" "}
                     <span lang="et">uue arstina</span>.
                   </Trans>
                 </p>

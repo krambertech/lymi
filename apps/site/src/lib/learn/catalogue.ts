@@ -373,7 +373,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`The Estonian translative case: becoming, by and for`,
         et: "Arstiks",
         minutes: 18,
-        blurb: msg`A free Estonian lesson on the translative case: -ks on the genitive for what someone becomes (Ta sai arstiks, Ma jäin haigeks), -na against -ks, reedeks for by Friday and nädalaks for a week, and heaks arstiks, where both words take -ks. Every sentence is read aloud.`,
+        blurb: msg`A free Estonian lesson on the translative case: -ks on the genitive for what someone becomes (Ta sai arstiks, Ma jäin haigeks), -na against -ks, reedeks for by Friday and nädalaks for a week, and heaks arstiks, where the adjective takes -ks too. Every sentence is read aloud.`,
       },
       {
         slug: "keegi",

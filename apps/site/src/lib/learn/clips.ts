@@ -3600,31 +3600,47 @@ export const TRA_TRANSLATE = [
       "Nädalaks lähen Tartu.",
       "Nädalaks sõidan Tartu.",
       "Nädalaks lähen mina Tartusse.",
+      "Ma lähen üheks nädalaks Tartusse.",
+      "Ma lähen Tartusse üheks nädalaks.",
     ]),
   },
   {
     id: "sunnipaevaks",
     answers: withPronouns([
       "Mida sa sünnipäevaks tahad?",
-      "Mis sa sünnipäevaks tahad?",
       "Mida sa tahad sünnipäevaks?",
-      "Mida sina sünnipäevaks tahad?",
-      "Mis sa tahad sünnipäevaks?",
       "Mida sa oma sünnipäevaks tahad?",
-      "Mis sa oma sünnipäevaks tahad?",
       "Mida sa tahad oma sünnipäevaks?",
+      "Mis sa sünnipäevaks tahad?",
+      "Mis sa tahad sünnipäevaks?",
+      "Mis sa oma sünnipäevaks tahad?",
       "Mis sa tahad oma sünnipäevaks?",
-      "Mida sina tahad sünnipäevaks?",
-      "Mis sina sünnipäevaks tahad?",
-      "Mis sina tahad sünnipäevaks?",
-      "Mida sina oma sünnipäevaks tahad?",
-      "Mis sina oma sünnipäevaks tahad?",
-      "Mida sina tahad oma sünnipäevaks?",
-      "Mis sina tahad oma sünnipäevaks?",
+      "Mida sa sünnipäevaks soovid?",
+      "Mida sa soovid sünnipäevaks?",
+      "Mida sa oma sünnipäevaks soovid?",
+      "Mida sa soovid oma sünnipäevaks?",
+      "Mis sa sünnipäevaks soovid?",
+      "Mis sa soovid sünnipäevaks?",
+      "Mis sa oma sünnipäevaks soovid?",
+      "Mis sa soovid oma sünnipäevaks?",
       "Mida te sünnipäevaks tahate?",
-      "Mis te sünnipäevaks tahate?",
       "Mida te tahate sünnipäevaks?",
       "Mida te oma sünnipäevaks tahate?",
+      "Mida te tahate oma sünnipäevaks?",
+      "Mis te sünnipäevaks tahate?",
+      "Mis te tahate sünnipäevaks?",
+      "Mis te oma sünnipäevaks tahate?",
+      "Mis te tahate oma sünnipäevaks?",
+      "Mida te sünnipäevaks soovite?",
+      "Mida te soovite sünnipäevaks?",
+      "Mida te oma sünnipäevaks soovite?",
+      "Mida te soovite oma sünnipäevaks?",
+      "Mis te sünnipäevaks soovite?",
+      "Mis te soovite sünnipäevaks?",
+      "Mis te oma sünnipäevaks soovite?",
+      "Mis te soovite oma sünnipäevaks?",
+      "Mida sa endale sünnipäevaks tahad?",
+      "Mida te endale sünnipäevaks tahate?",
     ]),
   },
   {
@@ -3772,11 +3788,15 @@ export const GI_SOME = [
 ] as const;
 
 export const GI_NOT = [
-  { pos: "Keegi tuleb.", neg: "Keegi ei tule.", also: ["Mitte keegi ei tule.", "Kedagi ei tule."] },
+  {
+    pos: "Keegi tuleb.",
+    neg: "Keegi ei tule.",
+    also: ["Mitte keegi ei tule.", "Kedagi ei tule.", "Ei tule kedagi.", "Mitte kedagi ei tule."],
+  },
   {
     pos: "Ma näen kedagi.",
     neg: "Ma ei näe kedagi.",
-    also: ["Ma ei näe mitte kedagi.", "Ma kedagi ei näe."],
+    also: ["Ma ei näe mitte kedagi.", "Ma kedagi ei näe.", "Ei näe kedagi."],
   },
   {
     pos: "Mul on midagi.",
@@ -3808,7 +3828,7 @@ export const GI_NOT = [
   {
     pos: "Ma räägin kellegagi.",
     neg: "Ma ei räägi kellegagi.",
-    also: ["Ma ei räägi mitte kellegagi.", "Ma kellegagi ei räägi."],
+    also: ["Ma ei räägi mitte kellegagi.", "Ma kellegagi ei räägi.", "Ei räägi kellegagi."],
   },
 ] as const;
 
@@ -3924,6 +3944,10 @@ export const GI_TRANSLATE = [
       "Tahad sa midagi?",
       "Kas tahate midagi?",
       "Tahate te midagi?",
+      "Kas sa soovid midagi?",
+      "Kas te soovite midagi?",
+      "Kas sa midagi soovid?",
+      "Kas te midagi soovite?",
     ]),
   },
   {
@@ -3943,7 +3967,16 @@ export const GI_TRANSLATE = [
       "Tema ei lähe mitte kuskile.",
     ]),
   },
-  { id: "keegi", answers: ["Keegi ei tule.", "Mitte keegi ei tule.", "Kedagi ei tule."] },
+  {
+    id: "keegi",
+    answers: [
+      "Keegi ei tule.",
+      "Mitte keegi ei tule.",
+      "Kedagi ei tule.",
+      "Ei tule kedagi.",
+      "Mitte kedagi ei tule.",
+    ],
+  },
 ] as const;
 
 export const GI_FIX = [

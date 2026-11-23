@@ -12,8 +12,8 @@ const notAnswers = (pos: (typeof GI_NOT)[number]["pos"]) => {
   return withPronouns([item.neg, ...item.also]);
 };
 
-const SOME = msg`A question word with <et>-gi</et> means some: <et>midagi</et>, something; <et>kuhugi</et>, to somewhere.`;
-const NOT = msg`For nobody or nothing, put <et>ei</et> before the verb: <et>Keegi ei tule</et>.`;
+const SOME = msg`Most question words with <et>-gi</et> or <et>-ki</et> mean some: <et>midagi</et>, something; <et>kuhugi</et>, to somewhere.`;
+const NOT = msg`For nobody or nothing, usually put <et>ei</et> before the verb: <et>Keegi ei tule</et>.`;
 const CASE = msg`Put the question word in its case, then add the ending: <et>kellele</et>, <et>kellelegi</et>.`;
 const KI = msg`After k, p, t, g, b, d, s, h, f, š, z or ž, the ending is <et>-ki</et>: <et>kellestki</et>.`;
 const GI = msg`After a vowel or l, m, n, r, the ending is <et>-gi</et>: <et>kellelegi</et>, <et>millalgi</et>.`;
@@ -51,6 +51,8 @@ export const DRILLS: DrillBank = {
         "Tahad sa midagi juua?",
         "Kas tahate midagi juua?",
         "Tahate te midagi juua?",
+        "Kas sa soovid midagi juua?",
+        "Kas te soovite midagi juua?",
       ]),
       say: "Kas sa tahad midagi juua?",
       explain: SOME,
@@ -115,6 +117,10 @@ export const DRILLS: DrillBank = {
         "Kodus pole kedagi.",
         "Kodus ei ole mitte kedagi.",
         "Kodus pole mitte kedagi.",
+        "Kedagi ei ole kodus.",
+        "Kedagi pole kodus.",
+        "Mitte kedagi ei ole kodus.",
+        "Mitte kedagi pole kodus.",
       ],
       say: "Kodus ei ole kedagi.",
       explain: msg`When <et>ei ole</et> says nobody is there, <et>keegi</et> takes the partitive: <et>Kodus ei ole kedagi</et>.`,
@@ -228,6 +234,7 @@ export const DRILLS: DrillBank = {
         "Ma kellegagi ei räägi.",
         "Mina kellegagi ei räägi.",
         "Mina ei räägi mitte kellegagi.",
+        "Ei räägi mitte kellegagi.",
       ]),
       say: "Ma ei räägi kellegagi.",
       explain: CASE,

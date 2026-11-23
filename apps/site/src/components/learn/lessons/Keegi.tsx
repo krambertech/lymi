@@ -149,8 +149,8 @@ function useContent() {
       src: src(neg),
       explain: (
         <Trans>
-          Put <span lang="et">ei</span> before the verb; the <span lang="et">-gi</span> word stays
-          as it is.
+          Put <span lang="et">ei</span> before the verb; the <span lang="et">-gi</span> word usually
+          stays as it is.
         </Trans>
       ),
     }));
@@ -399,7 +399,8 @@ export function KeegiLesson() {
         <Trans>
           Add <span lang="et">-gi</span> or <span lang="et">-ki</span> to most question words and
           they mean some: <span lang="et">keegi</span>, somebody; <span lang="et">midagi</span>,
-          something. With <span lang="et">ei</span>, the same words mean nobody and nothing.
+          something. With <span lang="et">ei</span>, they usually keep their form and mean nobody
+          and nothing.
         </Trans>
       }
       facts={[
@@ -424,13 +425,14 @@ export function KeegiLesson() {
           <b lang="et">kuhugi</b>, to somewhere.
         </Trans>,
         <Trans key="2">
-          With <b lang="et">ei</b>, they mean nobody, nothing, nowhere:{" "}
-          <b lang="et">Keegi ei tule</b>. On its own: <b lang="et">mitte keegi</b>.
+          With <b lang="et">ei</b>, they usually mean nobody, nothing, nowhere:{" "}
+          <b lang="et">Keegi ei tule</b>; but <b lang="et">Kodus ei ole kedagi</b>. On its own:{" "}
+          <b lang="et">mitte keegi</b>.
         </Trans>,
         <Trans key="3">
-          Every case of <b lang="et">kes</b> and <b lang="et">mis</b> takes <b lang="et">-gi</b> or{" "}
-          <b lang="et">-ki</b> at the end: <b lang="et">kellelegi</b>, <b lang="et">kellegagi</b>,{" "}
-          <b lang="et">millestki</b>.
+          In writing, every case of <b lang="et">kes</b> and <b lang="et">mis</b> takes{" "}
+          <b lang="et">-gi</b> or <b lang="et">-ki</b> at the end: <b lang="et">kellelegi</b>,{" "}
+          <b lang="et">kellegagi</b>, <b lang="et">millestki</b>.
         </Trans>,
         <Trans key="4">
           <b lang="et">-ki</b> after k, p, t, g, b, d, s, h, f, š, z or ž; <b lang="et">-gi</b>{" "}
@@ -498,10 +500,10 @@ export function KeegiLesson() {
               <ListenRows items={rows(GI_MITTE)} />
               <Aside>
                 <Trans>
-                  One exception: when <span lang="et">ei ole</span> says nobody is there,{" "}
-                  <span lang="et">keegi</span> takes the partitive, as <span lang="et">kassi</span>{" "}
-                  does in <span lang="et">Mul pole kassi</span> in lesson {partitive}:{" "}
-                  <span lang="et">Kodus ei ole kedagi</span>.
+                  The main exception: when a sentence says nobody is there or nobody comes,{" "}
+                  <span lang="et">keegi</span> usually takes the partitive, as{" "}
+                  <span lang="et">kassi</span> does in <span lang="et">Mul pole kassi</span> in
+                  lesson {partitive}: <span lang="et">Kodus ei ole kedagi</span>.
                 </Trans>
               </Aside>
               <ListenRows items={rows(GI_EXCEPT)} />
@@ -521,7 +523,8 @@ export function KeegiLesson() {
                 verdict={(share) =>
                   share === 1 ? (
                     <Trans>
-                      All six: <span lang="et">ei</span> before the verb, the word unchanged.
+                      All six: <span lang="et">ei</span> before the verb, the word usually
+                      unchanged.
                     </Trans>
                   ) : share >= 0.6 ? (
                     <Trans>

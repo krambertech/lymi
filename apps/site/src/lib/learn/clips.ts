@@ -1145,6 +1145,73 @@ export const MUL_ON_DIALOGUE = {
   "d-sina-4": "Ei, mul pole homme aega.",
 } as const satisfies Record<string, Clip>;
 
+export const MUL_ON_SORT = [
+  { w: "minu", bin: "whose" },
+  { w: "sinu", bin: "whose" },
+  { w: "tema", bin: "whose" },
+  { w: "meie", bin: "whose" },
+  { w: "nende", bin: "whose" },
+  { w: "mul", bin: "has" },
+  { w: "sul", bin: "has" },
+  { w: "tal", bin: "has" },
+  { w: "meil", bin: "has" },
+  { w: "neil", bin: "has" },
+] as const;
+
+export const MUL_ON_SAY = [
+  { id: "kass", said: "Mul on kass.", also: ["Minul on kass."] },
+  { id: "auto", said: "Kas sul on auto?", also: ["Kas sinul on auto?", "Kas teil on auto?"] },
+  { id: "maril", said: "Maril on küsimus.", also: [] },
+  { id: "aega", said: "Meil pole aega.", also: ["Meil ei ole aega."] },
+  { id: "kellel", said: "Kellel on koer?", also: [] },
+  {
+    id: "abi",
+    said: "Mul on vaja abi.",
+    also: ["Minul on vaja abi.", "Mul on abi vaja.", "Ma vajan abi.", "Mina vajan abi."],
+  },
+] as const;
+
+export const MUL_ON_FIX = [
+  {
+    id: "mul",
+    rule: "owner",
+    wrong: "Ma on kass.",
+    right: "Mul on kass.",
+    also: ["Minul on kass."],
+  },
+  {
+    id: "sul",
+    rule: "owner",
+    wrong: "Kas sa on aega?",
+    right: "Kas sul on aega?",
+    also: ["Kas sinul on aega?", "Kas teil on aega?"],
+  },
+  { id: "jaanil", rule: "names", wrong: "Jaan on auto.", right: "Jaanil on auto.", also: [] },
+  { id: "emal", rule: "names", wrong: "Ema on küsimus.", right: "Emal on küsimus.", also: [] },
+  { id: "on", rule: "owner", wrong: "Meil oleme maja.", right: "Meil on maja.", also: [] },
+  {
+    id: "ole",
+    rule: "no",
+    wrong: "Mul ei on aega.",
+    right: "Mul ei ole aega.",
+    also: [],
+  },
+] as const;
+
+export const MUL_ON_TALK = {
+  turns: [
+    { voice: "third", text: ["Tere, Jaan!", "Kas sul on täna aega?"] },
+    { voice: "fourth", text: ["Jah, on.", "Miks?"], say: "Jah, on. [curious] Miks?" },
+    { voice: "third", text: ["Mul on vaja abi.", "Kas sul on auto?"] },
+    { voice: "fourth", text: ["Ei ole.", "Aga minu isal on auto."] },
+    { voice: "third", text: "Kas sinu isal on täna aega?" },
+    { voice: "fourth", text: ["Ei, isal pole aega.", "Ta on tööl."] },
+    { voice: "third", text: ["Aga Kati?", "Kas Katil on auto?"] },
+    { voice: "fourth", text: ["Jah, Katil on auto.", "Ja tal on aega."] },
+    { voice: "third", text: ["Väga hea!", "Aitäh!"], say: "[relieved] Väga hea! Aitäh!" },
+  ],
+} as const satisfies Conversation;
+
 /** Words the lesson on “to have” says on their own. */
 export const MUL_ON_WORDS = [
   ...MUL_ON_OWNERS.flatMap(({ owner, long }) => [owner, long]),
@@ -3158,6 +3225,98 @@ export const OMASTAV_WORDS = [
   "kümne minuti pärast",
 ] as const;
 
+export const OMASTAV_SORT = [
+  { w: "raamatu", bin: "whose" },
+  { w: "Tallinna", bin: "whose" },
+  { w: "turu", bin: "whose" },
+  { w: "kohviku", bin: "whose" },
+  { w: "jõe", bin: "whose" },
+  { w: "poes", bin: "where" },
+  { w: "toas", bin: "where" },
+  { w: "laual", bin: "where" },
+  { w: "Tartus", bin: "where" },
+  { w: "haiglas", bin: "where" },
+] as const;
+
+export const OMASTAV_SAY = [
+  { id: "jaani", said: "See on Jaani raamat.", also: [] },
+  { id: "kelle", said: "Kelle kohv see on?", also: ["Kelle kohv on see?"] },
+  { id: "vend", said: "Minu vend elab Tallinnas.", also: ["Mu vend elab Tallinnas."] },
+  { id: "nende", said: "Nende kass on kodus.", also: [] },
+  { id: "mari", said: "Mari kohvik on Tartus.", also: [] },
+  { id: "opetaja", said: "Meie õpetaja nimi on Kati.", also: ["Me õpetaja nimi on Kati."] },
+] as const;
+
+export const OMASTAV_SAID_ALSO: Record<(typeof OMASTAV_WHOSE)[number]["said"], readonly string[]> =
+  {
+    "See on minu raamat.": ["See on mu raamat."],
+    "Mu nimi on Kati.": ["Minu nimi on Kati."],
+    "See on sinu kohv.": ["See on su kohv."],
+    "Kas see on su kass?": ["Kas see on sinu kass?"],
+    "Tema raamat on laual.": ["Ta raamat on laual."],
+    "Tema vend töötab haiglas.": ["Ta vend töötab haiglas."],
+    "Meie kool on Tartus.": ["Me kool on Tartus."],
+    "Meie ema on õpetaja.": ["Me ema on õpetaja."],
+    "Kas see on teie kohvik?": ["Kas see on te kohvik?"],
+    "Teie kass on kodus.": ["Te kass on kodus."],
+    "Nende kontor on Tallinnas.": [],
+    "See on nende pilt.": [],
+  };
+
+export const OMASTAV_FIX = [
+  {
+    id: "minu",
+    rule: "who",
+    wrong: "Mina nimi on Kati.",
+    right: "Minu nimi on Kati.",
+    also: ["Mu nimi on Kati."],
+  },
+  {
+    id: "mina",
+    rule: "who",
+    wrong: "Minu elan Tartus.",
+    right: "Mina elan Tartus.",
+    also: ["Ma elan Tartus."],
+  },
+  {
+    id: "nende",
+    rule: "who",
+    wrong: "Nemad kass on Pärnus.",
+    right: "Nende kass on Pärnus.",
+    also: [],
+  },
+  {
+    id: "jaani",
+    rule: "owner",
+    wrong: "Jaan kass on kodus.",
+    right: "Jaani kass on kodus.",
+    also: [],
+  },
+  { id: "poe", rule: "owner", wrong: "See on pood uks.", right: "See on poe uks.", also: [] },
+  {
+    id: "tallinnas",
+    rule: "place",
+    wrong: "Ma elan Tallinna.",
+    right: "Ma elan Tallinnas.",
+    also: [],
+  },
+] as const;
+
+export const OMASTAV_TALK = {
+  turns: [
+    { voice: "third", text: "Jaan, kelle pilt see on?" },
+    { voice: "fourth", text: "See on minu pilt." },
+    { voice: "third", text: "Kes see on?", say: "[curious] Kes see on?" },
+    { voice: "fourth", text: ["See on minu vend Martin.", "Ta elab Tartus."] },
+    { voice: "third", text: "Ja kelle kass see on?" },
+    { voice: "fourth", text: ["See on Martini kass.", "Kassi nimi on Miisu."] },
+    { voice: "third", text: "Kas see on teie maja?" },
+    { voice: "fourth", text: ["Ei, see on minu ema maja.", "Ta elab Pärnus."] },
+    { voice: "third", text: "Ja kelle auto see on?" },
+    { voice: "fourth", text: "See on minu auto!", say: "[laughs] See on minu auto!" },
+  ],
+} as const satisfies Conversation;
+
 const OMASTAV_CLIPS: Record<string, Clip> = {
   ...words([
     ...OMASTAV_PRONOUNS.flatMap((each) => [
@@ -3172,8 +3331,11 @@ const OMASTAV_CLIPS: Record<string, Clip> = {
     ...OMASTAV_SENTENCES,
     ...OMASTAV_WORDS,
   ]),
+  ...words(OMASTAV_SAY.map(({ said }) => said)),
+  ...words(OMASTAV_FIX.map(({ right }) => right)),
   "p-kati": { sentences: OMASTAV_PASSAGE, voice: "second" },
   ...OMASTAV_DIALOGUE,
+  "c-photo": OMASTAV_TALK,
 };
 
 /**
@@ -4292,8 +4454,14 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
       ...MUL_ON_SWITCH.flatMap(({ am, have }) => [am, have]),
       ...MUL_ON_AM_HAVE.flatMap(({ am, have }) => [am, have]),
       ...MUL_ON_NAMES.map(({ said }) => said),
+      ...MUL_ON_SORT.map(({ w }) => w),
+      ...MUL_ON_SAY.map(({ said }) => said),
+      ...MUL_ON_FIX.map(({ right }) => right),
+      "Mul pole aega.",
+      "Ei, mul pole homme aega.",
     ]),
     ...MUL_ON_LINES,
+    "c-car": MUL_ON_TALK,
     "p-mari": { sentences: MUL_ON_PASSAGE },
     ...MUL_ON_DIALOGUE,
   },

@@ -37,6 +37,9 @@ msgstr "<0>Pärnu</0>, by the sea"
 msgid "<0>Söö</0> tells one person to eat. To eat together: <1>sööme</1>."
 msgstr "<0>Söö</0> tells one person to eat. To eat together: <1>sööme</1>."
 
+msgid "<0>Tartu</0>, inland"
+msgstr "<0>Tartu</0>, inland"
+
 msgid "<0>Tule ka</0> tells Kati to come. About Jaan: <1>las ta tuleb</1>."
 msgstr "<0>Tule ka</0> tells Kati to come. About Jaan: <1>las ta tuleb</1>."
 
@@ -46,8 +49,8 @@ msgstr "<et>Lähme</et> with the <et>-ma</et> infinitive: go and do it."
 msgid "<et>Las</et> with the present"
 msgstr "<et>Las</et> with the present"
 
-msgid "<et>Las</et>, the person, and the present: <et>las ta tuleb</et>."
-msgstr "<et>Las</et>, the person, and the present: <et>las ta tuleb</et>."
+msgid "<et>Las</et>, the person, and usually the present: <et>las ta tuleb</et>."
+msgstr "<et>Las</et>, the person, and usually the present: <et>las ta tuleb</et>."
 
 msgid "<et>Me läheme</et>: a statement, we are going."
 msgstr "<et>Me läheme</et>: a statement, we are going."
@@ -73,17 +76,17 @@ msgstr "A bare <et>-ma</et> infinitive is a curt order, like <et>Magama!</et>, t
 msgid "A weekend with Liisa"
 msgstr "A weekend with Liisa"
 
-msgid "After <0>las</0>, the present form: <1>magab</1>."
-msgstr "After <0>las</0>, the present form: <1>magab</1>."
+msgid "After <0>las</0>, usually the present form: <1>magab</1>."
+msgstr "After <0>las</0>, usually the present form: <1>magab</1>."
 
-msgid "After <0>las</0>, the present form: <1>tuleb</1>."
-msgstr "After <0>las</0>, the present form: <1>tuleb</1>."
+msgid "After <0>las</0>, usually the present form: <1>tuleb</1>."
+msgstr "After <0>las</0>, usually the present form: <1>tuleb</1>."
 
-msgid "After <et>las</et>, the present form: <et>magab</et>."
-msgstr "After <et>las</et>, the present form: <et>magab</et>."
+msgid "After <et>las</et>, usually the present form: <et>magab</et>."
+msgstr "After <et>las</et>, usually the present form: <et>magab</et>."
 
-msgid "After <et>las</et>, the present form: <et>tuleb</et>."
-msgstr "After <et>las</et>, the present form: <et>tuleb</et>."
+msgid "After <et>las</et>, usually the present form: <et>tuleb</et>."
+msgstr "After <et>las</et>, usually the present form: <et>tuleb</et>."
 
 msgid "All eight, typed in full."
 msgstr "All eight, typed in full."
@@ -259,6 +262,9 @@ msgstr "Let’s take the tram."
 msgid "Let’s watch a film tonight!"
 msgstr "Let’s watch a film tonight!"
 
+msgid "Let’s watch a film!"
+msgstr "Let’s watch a film!"
+
 msgid "Let’s watch a film."
 msgstr "Let’s watch a film."
 
@@ -389,8 +395,8 @@ msgstr "to go"
 msgid "to learn"
 msgstr "to learn"
 
-msgid "To let someone do something, or to say you don’t mind, put <0/> before the person and the present: <1>las ta tuleb</1>, let him come. With <2>ma</2>, it offers to do something yourself: <3>las ma aitan</3>, let me help."
-msgstr "To let someone do something, or to say you don’t mind, put <0/> before the person and the present: <1>las ta tuleb</1>, let him come. With <2>ma</2>, it offers to do something yourself: <3>las ma aitan</3>, let me help."
+msgid "To let someone do something, or to say you don’t mind, put <0/> before the person and the present: <1>las ta tuleb</1>, let him come. With <2>ma</2>, it offers to do something yourself: <3>las ma aitan</3>, let me help. In writing you’ll also see a form in <4>-gu</4>: <5>las ta tulgu</5>."
+msgstr "To let someone do something, or to say you don’t mind, put <0/> before the person and the present: <1>las ta tuleb</1>, let him come. With <2>ma</2>, it offers to do something yourself: <3>las ma aitan</3>, let me help. In writing you’ll also see a form in <4>-gu</4>: <5>las ta tulgu</5>."
 
 msgid "to one person"
 msgstr "to one person"

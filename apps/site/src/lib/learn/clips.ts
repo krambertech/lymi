@@ -5440,13 +5440,15 @@ export const LETS_FIXES = [
   { wrong: "Ostame kook!", right: "Ostame koogi!" },
 ] as const;
 
-export const LETS_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = Object.fromEntries(
-  LETS_FIXES.map(({ right }) => [right, [right]]),
-);
+export const LETS_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  ...Object.fromEntries(LETS_FIXES.map(({ right }) => [right, [right]])),
+  "Las ta tuleb.": ["Las ta tuleb.", "Las ta tulgu."],
+  "Las nad mängivad õues.": ["Las nad mängivad õues.", "Las nad mängigu õues."],
+  "Las ta magab.": ["Las ta magab.", "Las ta magagu."],
+};
 
 export const LETS_DIALOGUE = {
   "d-kati-1": { text: "Mida me laupäeval teeme?", voice: "second" },
-  "d-sina-1": "Lähme kinno!",
   "d-kati-2": { text: "Hea mõte! Aga Jaan tahab ka tulla.", voice: "second" },
   "d-sina-2": "Las ta tuleb!",
   "d-kati-3": { text: "Ja pärast filmi?", voice: "second" },
@@ -5558,22 +5560,49 @@ export const LETS_WORDS = ["las", "koos", "kahekesi", "õues"] as const;
 
 export const LETS_ANSWERS: Record<string, readonly [string, ...string[]]> = {
   "Lähme ujuma!": ["Lähme ujuma!", "Läheme ujuma!"],
-  "Las nad mängivad õues.": ["Las nad mängivad õues.", "Las nad mängivad väljas."],
-  "Las ma aitan sind.": ["Las ma aitan sind.", "Las mina aitan sind."],
+  "Las nad mängivad õues.": [
+    "Las nad mängivad õues.",
+    "Las nad mängivad väljas.",
+    "Las nad õues mängivad.",
+    "Las nemad mängivad õues.",
+    "Las nad mängigu õues.",
+    "Las nad õues mängigu.",
+  ],
+  "Las ma aitan sind.": [
+    "Las ma aitan sind.",
+    "Las mina aitan sind.",
+    "Las ma aitan teid.",
+    "Las mina aitan teid.",
+  ],
   "Sööme koos!": ["Sööme koos!", "Sööme üheskoos!"],
-  "Las ta otsustab.": ["Las ta otsustab.", "Las tema otsustab.", "Las ta ise otsustab."],
+  "Las ta otsustab.": [
+    "Las ta otsustab.",
+    "Las tema otsustab.",
+    "Las ta ise otsustab.",
+    "Las ta otsustab ise.",
+    "Las tema ise otsustab.",
+    "Las ta otsustagu.",
+    "Las ta ise otsustagu.",
+  ],
   "Ostame koogi!": ["Ostame koogi!", "Ostame ühe koogi!"],
   "Vaatame täna õhtul filmi!": [
     "Vaatame täna õhtul filmi!",
     "Vaatame õhtul filmi!",
     "Täna õhtul vaatame filmi!",
+    "Vaatame filmi täna õhtul!",
   ],
   "Lähme kinno!": ["Lähme kinno!", "Läheme kinno!"],
   "Sööme pitsat!": ["Sööme pitsat!"],
   "Vaatame filmi!": ["Vaatame filmi!"],
   "Mängime õues!": ["Mängime õues!"],
-  "Las ta magab.": ["Las ta magab."],
-  "Las lapsed mängivad õues.": ["Las lapsed mängivad õues.", "Las lapsed mängivad väljas."],
+  "Las ta magab.": ["Las ta magab.", "Las ta magagu."],
+  "Las lapsed mängivad õues.": [
+    "Las lapsed mängivad õues.",
+    "Las lapsed mängivad väljas.",
+    "Las lapsed õues mängivad.",
+    "Las lapsed mängigu õues.",
+    "Las lapsed õues mängigu.",
+  ],
   "Mine kinno!": ["Mine kinno!"],
   lähme: ["lähme", "läheme"],
 };
@@ -5737,8 +5766,14 @@ export const IMPERSONAL_FIXES = [
   { wrong: "Siin ei räägiti saksa keelt.", right: "Siin ei räägitud saksa keelt." },
 ] as const;
 
-export const IMPERSONAL_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> =
-  Object.fromEntries(IMPERSONAL_FIXES.map(({ right }) => [right, [right]]));
+export const IMPERSONAL_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  ...Object.fromEntries(IMPERSONAL_FIXES.map(({ right }) => [right, [right]])),
+  "Siin ei räägitud saksa keelt.": [
+    "Siin ei räägitud saksa keelt.",
+    "Siin ei räägita saksa keelt.",
+  ],
+  "Siin ei suitsetata.": ["Siin ei suitsetata.", "Siin ei suitsetatud."],
+};
 
 export const IMPERSONAL_CONVERSATION: Conversation = {
   turns: [
@@ -5851,11 +5886,14 @@ export const IMPERSONAL_ANSWERS: Record<string, readonly [string, ...string[]]> 
     "Pood avatakse kell 9.",
     "Kell üheksa avatakse pood.",
     "Pood tehakse lahti kell üheksa.",
+    "Kell 9 avatakse pood.",
+    "Pood tehakse kell üheksa lahti.",
   ],
   "See maja ehitati 1920. aastal.": [
     "See maja ehitati 1920. aastal.",
     "See maja ehitati aastal 1920.",
     "1920. aastal ehitati see maja.",
+    "See maja on ehitatud 1920. aastal.",
   ],
   "Siin ei suitsetata.": ["Siin ei suitsetata.", "Siin ei tohi suitsetada."],
   "Siin müüakse leiba.": ["Siin müüakse leiba.", "Leiba müüakse siin."],
@@ -5865,9 +5903,15 @@ export const IMPERSONAL_ANSWERS: Record<string, readonly [string, ...string[]]> 
     "Lõke tehakse jaanipäeval.",
   ],
   "Pühapäeval ei töötata.": ["Pühapäeval ei töötata.", "Pühapäeviti ei töötata."],
-  "Eile ei räägitud sellest.": ["Eile ei räägitud sellest."],
-  "Poes ei müüda leiba.": ["Poes ei müüda leiba."],
-  "Siin ei tehta remonti.": ["Siin ei tehta remonti."],
+  "Eile ei räägitud sellest.": [
+    "Eile ei räägitud sellest.",
+    "Eile sellest ei räägitud.",
+    "Sellest ei räägitud eile.",
+  ],
+  "Poes ei müüda leiba.": ["Poes ei müüda leiba.", "Poes leiba ei müüda.", "Leiba poes ei müüda."],
+  "Siin ei tehta remonti.": ["Siin ei tehta remonti.", "Siin remonti ei tehta."],
+  "Seal ei sööda liha.": ["Seal ei sööda liha.", "Seal liha ei sööda."],
+  "Vanasti ei tantsitud palju.": ["Vanasti ei tantsitud palju.", "Vanasti palju ei tantsitud."],
 };
 
 const IMPERSONAL_CLIPS: Record<string, Clip> = {

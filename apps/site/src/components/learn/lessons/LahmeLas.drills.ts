@@ -3,7 +3,7 @@ import { LETS_ANSWERS, LETS_FIX_ANSWERS } from "../../../lib/learn/clips";
 import type { DrillBank, FormDrill } from "../../../lib/learn/drill";
 
 const LETS = msg`Let’s: the present’s <et>me</et> form without <et>me</et>. Only <et>minema</et> gets shorter: <et>lähme</et>.`;
-const LAS = msg`<et>Las</et>, the person, and the present: <et>las ta tuleb</et>.`;
+const LAS = msg`<et>Las</et>, the person, and usually the present: <et>las ta tuleb</et>.`;
 const WHICH = msg`Together: let’s. One person: the command form. Someone else, or you offering: <et>las</et>.`;
 
 const form = (
@@ -168,7 +168,7 @@ export const DRILLS: DrillBank = {
       wrong: "Las ta tulla.",
       answers: LETS_FIX_ANSWERS["Las ta tuleb."],
       say: "Las ta tuleb.",
-      explain: msg`After <et>las</et>, the present form: <et>tuleb</et>.`,
+      explain: msg`After <et>las</et>, usually the present form: <et>tuleb</et>.`,
     },
     {
       kind: "fix",
@@ -210,6 +210,7 @@ export const DRILLS: DrillBank = {
       id: "fix-vaatame",
       rule: "lets",
       wrong: "Vaatama filmi!",
+      prompt: msg`Let’s watch a film!`,
       answers: LETS_FIX_ANSWERS["Vaatame filmi!"],
       say: "Vaatame filmi!",
       explain: msg`A bare <et>-ma</et> infinitive is a curt order, like <et>Magama!</et>, to bed! To suggest doing it together: <et>vaatame</et>.`,
@@ -221,7 +222,7 @@ export const DRILLS: DrillBank = {
       wrong: "Las ta magama.",
       answers: LETS_FIX_ANSWERS["Las ta magab."],
       say: "Las ta magab.",
-      explain: msg`After <et>las</et>, the present form: <et>magab</et>.`,
+      explain: msg`After <et>las</et>, usually the present form: <et>magab</et>.`,
     },
     {
       kind: "rewrite",

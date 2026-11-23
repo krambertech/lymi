@@ -340,7 +340,7 @@ msgid "Someone opens it, but nobody is named: <0>avatakse</0>."
 msgstr "Хтось його відчиняє, але нікого не названо: <0>avatakse</0>."
 
 msgid "Sometimes it doesn’t matter who does something. <0/> means people speak, or is spoken: no person is named. Estonian uses this form far more than English uses “is done”."
-msgstr "Іноді неважливо, хто щось робить. <0/> означає «говорять»: особу не названо. Естонська вживає цю форму набагато частіше, ніж українська — безособові речення."
+msgstr "Іноді неважливо, хто щось робить. <0/> означає «говорять»: особу не названо."
 
 msgid "Tap a form"
 msgstr "Натисни на форму"

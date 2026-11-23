@@ -47,6 +47,11 @@ const VERBS: Record<string, MessageDescriptor> = {
   mängima: msg`to play`,
 };
 
+const FIX_PROMPTS: Record<string, MessageDescriptor> = {
+  "Vaatame filmi!": msg`Let’s watch a film!`,
+  "Ostame koogi!": msg`Let’s buy a cake!`,
+};
+
 const MEANS: Record<string, MessageDescriptor> = {
   "Las ta magab.": msg`Let him or her sleep.`,
   "Las lapsed mängivad õues.": msg`Let the children play outside.`,
@@ -313,7 +318,7 @@ function useContent() {
     const fixWhy: Record<string, ReactNode> = {
       "Las ta tuleb.": (
         <Trans>
-          After <b lang="et">las</b>, the present form: <b lang="et">tuleb</b>.
+          After <b lang="et">las</b>, usually the present form: <b lang="et">tuleb</b>.
         </Trans>
       ),
       "Las nad mängivad õues.": (
@@ -335,7 +340,7 @@ function useContent() {
       ),
       "Las ta magab.": (
         <Trans>
-          After <b lang="et">las</b>, the present form: <b lang="et">magab</b>.
+          After <b lang="et">las</b>, usually the present form: <b lang="et">magab</b>.
         </Trans>
       ),
       "Me sööme koos.": (
@@ -353,6 +358,9 @@ function useContent() {
       kind: "fix",
       id: `fix-${clipId(item.right)}`,
       wrong: item.wrong,
+      prompt: FIX_PROMPTS[item.right]
+        ? i18n._(FIX_PROMPTS[item.right] as MessageDescriptor)
+        : undefined,
       answers: LETS_FIX_ANSWERS[item.right] ?? [item.right],
       src: src(item.right),
       explain: fixWhy[item.right],
@@ -366,9 +374,9 @@ function useContent() {
       { who: "them", clip: "d-kati-1", line: line("d-kati-1") },
       {
         who: "you",
-        clip: "d-sina-1",
+        clip: clipId("Lähme kinno!"),
         replies: [
-          { line: line("d-sina-1"), right: true },
+          { line: "Lähme kinno!", right: true },
           {
             line: "Mine kinno!",
             why: (
@@ -408,7 +416,7 @@ function useContent() {
             line: "Las ta tulla!",
             why: (
               <Trans>
-                After <b lang="et">las</b>, the present form: <b lang="et">tuleb</b>.
+                After <b lang="et">las</b>, usually the present form: <b lang="et">tuleb</b>.
               </Trans>
             ),
           },
@@ -449,7 +457,14 @@ function useContent() {
         id: "from",
         ask: t`Where is Liisa coming from?`,
         options: [
-          { id: "tartu", label: <span lang="et">Tartu</span> },
+          {
+            id: "tartu",
+            label: (
+              <Trans>
+                <span lang="et">Tartu</span>, inland
+              </Trans>
+            ),
+          },
           {
             id: "parnu",
             label: (
@@ -675,7 +690,8 @@ export function LahmeLasLesson() {
                     To let someone do something, or to say you don’t mind, put <Word w="las" />{" "}
                     before the person and the present: <b lang="et">las ta tuleb</b>, let him come.
                     With <b lang="et">ma</b>, it offers to do something yourself:{" "}
-                    <b lang="et">las ma aitan</b>, let me help.
+                    <b lang="et">las ma aitan</b>, let me help. In writing you’ll also see a form in{" "}
+                    <b lang="et">-gu</b>: <b lang="et">las ta tulgu</b>.
                   </Trans>
                 </p>
               </Prose>

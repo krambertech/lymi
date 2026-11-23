@@ -37,6 +37,9 @@ msgstr "<0>Pärnu</0>, біля моря"
 msgid "<0>Söö</0> tells one person to eat. To eat together: <1>sööme</1>."
 msgstr "<0>Söö</0> каже їсти одній людині. Щоб поїсти разом: <1>sööme</1>."
 
+msgid "<0>Tartu</0>, inland"
+msgstr "<0>Tartu</0>, на півдні"
+
 msgid "<0>Tule ka</0> tells Kati to come. About Jaan: <1>las ta tuleb</1>."
 msgstr "<0>Tule ka</0> кличе прийти Каті. Про Яана: <1>las ta tuleb</1>."
 
@@ -46,8 +49,8 @@ msgstr "<et>Lähme</et> з інфінітивом на <et>-ma</et>: ходім�
 msgid "<et>Las</et> with the present"
 msgstr "<et>Las</et> з теперішнім часом"
 
-msgid "<et>Las</et>, the person, and the present: <et>las ta tuleb</et>."
-msgstr "<et>Las</et>, особа і теперішній час: <et>las ta tuleb</et>."
+msgid "<et>Las</et>, the person, and usually the present: <et>las ta tuleb</et>."
+msgstr "<et>Las</et>, особа і зазвичай теперішній час: <et>las ta tuleb</et>."
 
 msgid "<et>Me läheme</et>: a statement, we are going."
 msgstr "<et>Me läheme</et>: твердження, ми йдемо."
@@ -73,17 +76,17 @@ msgstr "Голий інфінітив на <et>-ma</et> — це різкий н
 msgid "A weekend with Liisa"
 msgstr "Вихідні з Лійсою"
 
-msgid "After <0>las</0>, the present form: <1>magab</1>."
-msgstr "Після <0>las</0> — форма теперішнього часу: <1>magab</1>."
+msgid "After <0>las</0>, usually the present form: <1>magab</1>."
+msgstr "Після <0>las</0> — зазвичай форма теперішнього часу: <1>magab</1>."
 
-msgid "After <0>las</0>, the present form: <1>tuleb</1>."
-msgstr "Після <0>las</0> — форма теперішнього часу: <1>tuleb</1>."
+msgid "After <0>las</0>, usually the present form: <1>tuleb</1>."
+msgstr "Після <0>las</0> — зазвичай форма теперішнього часу: <1>tuleb</1>."
 
-msgid "After <et>las</et>, the present form: <et>magab</et>."
-msgstr "Після <et>las</et> — форма теперішнього часу: <et>magab</et>."
+msgid "After <et>las</et>, usually the present form: <et>magab</et>."
+msgstr "Після <et>las</et> — зазвичай форма теперішнього часу: <et>magab</et>."
 
-msgid "After <et>las</et>, the present form: <et>tuleb</et>."
-msgstr "Після <et>las</et> — форма теперішнього часу: <et>tuleb</et>."
+msgid "After <et>las</et>, usually the present form: <et>tuleb</et>."
+msgstr "Після <et>las</et> — зазвичай форма теперішнього часу: <et>tuleb</et>."
 
 msgid "All eight, typed in full."
 msgstr "Усі вісім, повністю написані."
@@ -259,6 +262,9 @@ msgstr "Поїдьмо трамваєм."
 msgid "Let’s watch a film tonight!"
 msgstr "Подивімося сьогодні ввечері фільм!"
 
+msgid "Let’s watch a film!"
+msgstr "Подивімося фільм!"
+
 msgid "Let’s watch a film."
 msgstr "Подивімося фільм."
 
@@ -389,8 +395,8 @@ msgstr "іти, їхати"
 msgid "to learn"
 msgstr "вчити"
 
-msgid "To let someone do something, or to say you don’t mind, put <0/> before the person and the present: <1>las ta tuleb</1>, let him come. With <2>ma</2>, it offers to do something yourself: <3>las ma aitan</3>, let me help."
-msgstr "Щоб дозволити комусь щось зробити або сказати, що ти не проти, постав <0/> перед особою і теперішнім часом: <1>las ta tuleb</1>, нехай він прийде. З <2>ma</2> це пропозиція зробити самому: <3>las ma aitan</3>, дай я допоможу."
+msgid "To let someone do something, or to say you don’t mind, put <0/> before the person and the present: <1>las ta tuleb</1>, let him come. With <2>ma</2>, it offers to do something yourself: <3>las ma aitan</3>, let me help. In writing you’ll also see a form in <4>-gu</4>: <5>las ta tulgu</5>."
+msgstr "Щоб дозволити комусь щось зробити або сказати, що ти не проти, постав <0/> перед особою і теперішнім часом: <1>las ta tuleb</1>, нехай він прийде. З <2>ma</2> це пропозиція зробити самому: <3>las ma aitan</3>, дай я допоможу. На письмі трапляється й форма на <4>-gu</4>: <5>las ta tulgu</5>."
 
 msgid "to one person"
 msgstr "одній людині"

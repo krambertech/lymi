@@ -388,8 +388,8 @@ msgstr "Ещё раз нажми на строки выше и попробуй 
 msgid "The last sound decides. After k, p, t, g, b, d, s, h, f, š, z or ž, the ending is <0>-ki</0>: <1>kellestki</1>, <2>kustki</2>, from somewhere. After anything else, a vowel or l, m, n, r, it is <3>-gi</3>: <4>kellelegi</4>, <5>millalgi</5>."
 msgstr "Решает последний звук. После k, p, t, g, b, d, s, h, f, š, z или ž окончание <0>-ki</0>: <1>kellestki</1>, <2>kustki</2> — «откуда-то». После всего остального — гласной или l, m, n, r — <3>-gi</3>: <4>kellelegi</4>, <5>millalgi</5>."
 
-msgid "The main exception: when a sentence says nobody is there or nobody comes, <0>keegi</0> usually takes the partitive, as <1>kassi</1> does in <2>Mul pole kassi</2> in lesson {partitive}: <3>Kodus ei ole kedagi</3>."
-msgstr "Главное исключение: когда предложение говорит, что где-то никого нет или никто не приходит, <0>keegi</0> обычно стоит в партитиве, как <1>kassi</1> в <2>Mul pole kassi</2> из урока {partitive}: <3>Kodus ei ole kedagi</3>."
+msgid "The main exception: when <0>ei ole</0> or <1>pole</1> says nobody is there, <2>keegi</2> usually takes the partitive, as <3>kassi</3> does in <4>Mul pole kassi</4> in lesson {partitive}: <5>Kodus ei ole kedagi</5>. For coming, both are heard: <6>Keegi ei tulnud</6> and <7>Kedagi ei tulnud</7>."
+msgstr "Главное исключение: когда <0>ei ole</0> или <1>pole</1> говорит, что где-то никого нет, <2>keegi</2> обычно стоит в партитиве, как <3>kassi</3> в <4>Mul pole kassi</4> из урока {partitive}: <5>Kodus ei ole kedagi</5>. Когда речь о приходе, говорят и так, и так: <6>Keegi ei tulnud</6> и <7>Kedagi ei tulnud</7>."
 
 msgid "The object is <0>kedagi</0>, built on <1>keda</1>."
 msgstr "Дополнение — <0>kedagi</0>, от <1>keda</1>."
@@ -439,8 +439,8 @@ msgstr "Что они будут делать вечером?"
 msgid "when"
 msgstr "когда"
 
-msgid "When <et>ei ole</et> says nobody is there, <et>keegi</et> takes the partitive: <et>Kodus ei ole kedagi</et>."
-msgstr "Когда <et>ei ole</et> говорит, что никого нет, <et>keegi</et> стоит в партитиве: <et>Kodus ei ole kedagi</et>."
+msgid "When <et>ei ole</et> says nobody is there, <et>keegi</et> usually takes the partitive: <et>Kodus ei ole kedagi</et>."
+msgstr "Когда <et>ei ole</et> говорит, что никого нет, <et>keegi</et> обычно стоит в партитиве: <et>Kodus ei ole kedagi</et>."
 
 msgid "Where are the keys?"
 msgstr "Где ключи?"

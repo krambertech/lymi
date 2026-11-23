@@ -248,6 +248,9 @@ msgstr "Бесплатный урок эстонского о сравнении
 msgid "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о четырёх падежных окончаниях: -ga — «с» и «на чём» (sõbraga, bussiga), -ta — «без» (piimata), -ni — «до самого» (kella viieni, Tartuni) и -na — «как», в роли (arstina). Все они добавляются к родительному падежу. Каждое предложение озвучено."
 
+msgid "A free Estonian lesson on keegi, midagi, kuskil and kuhugi: question words with -gi or -ki for somebody and something, ei for nobody and nothing, mitte keegi on its own, and -gi or -ki on every case, as in kellelegi and kellestki, and which one to use. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о keegi, midagi, kuskil и kuhugi: вопросительные слова с -gi или -ki для «кто-то» и «что-то», ei для «никто» и «ничего», mitte keegi отдельно, а также -gi или -ki в каждом падеже, как в kellelegi и kellestki, и когда какое из них нужно. Каждое предложение озвучено."
+
 msgid "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о meeldima, «нравиться»: mulle meeldib и другие лица, meeldivad, когда нравится несколько вещей, meeldib с глаголом, ei meeldi, вопросы с kas и kellele и чувства, например mul on külm. Каждое предложение озвучено."
 
@@ -262,6 +265,9 @@ msgstr "Бесплатный урок эстонского о том, как с�
 
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, minutes past and to, and writing the time in words. Every time is read aloud."
 msgstr "Бесплатный урок эстонского о том, как сказать, который час: целые часы, pool, veerand и kolmveerand, которые называют следующий час, минуты до и после, а также как написать время словами. Каждый пример озвучен."
+
+msgid "A free Estonian lesson on the translative case: -ks on the genitive for what someone becomes (Ta sai arstiks, Ma jäin haigeks), -na against -ks, reedeks for by Friday and nädalaks for a week, and heaks arstiks, where the adjective takes -ks too. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о транслативе: -ks к родительному для того, кем кто-то становится (Ta sai arstiks, Ma jäin haigeks), -na против -ks, reedeks — «к пятнице» и nädalaks — «на неделю», и heaks arstiks, где -ks получает и прилагательное. Каждое предложение озвучено."
 
 msgid "A free Estonian lesson on word order: the verb usually in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о порядке слов: глагол обычно на втором месте (täna lähen ma), вопросы вроде kus sa elad?, два глагола со вторым обычно в конце и где стоит ei. Каждое предложение озвучено."
@@ -781,6 +787,9 @@ msgstr "Эстонское произношение"
 
 msgid "Estonian reading and listening practice: a day in Tallinn"
 msgstr "Эстонский язык: чтение и аудирование. День в Таллине"
+
+msgid "Estonian somebody and nobody: -gi and -ki"
+msgstr "Эстонские «кто-то» и «никто»: -gi и -ki"
 
 msgid "Estonian time expressions: when things happen"
 msgstr "Как сказать «когда» по-эстонски"
@@ -2135,6 +2144,9 @@ msgstr "Родительный падеж в эстонском языке: мо
 msgid "The Estonian partitive case: after numbers, amounts and negation"
 msgstr "Партитив в эстонском языке: после чисел, слов количества и в отрицании"
 
+msgid "The Estonian translative case: becoming, by and for"
+msgstr "Эстонский транслатив: становиться, к и на"
+
 msgid "The form isn’t <0>{wrote}</0>."
 msgstr "Форма не <0>{wrote}</0>."
 
@@ -2669,30 +2681,3 @@ msgstr "Твоё предложение"
 
 msgid "Your text"
 msgstr "Твой текст"
-
-msgid "A free Estonian lesson on keegi, midagi, kuskil and kuhugi: question words with -gi or -ki for somebody and something, ei for nobody and nothing, mitte keegi on its own, and -gi or -ki on every case, as in kellelegi and kellestki, and which one to use. Every sentence is read aloud."
-msgstr "Бесплатный урок эстонского о keegi, midagi, kuskil и kuhugi: вопросительные слова с -gi или -ki для «кто-то» и «что-то», ei для «никто» и «ничего», mitte keegi отдельно, а также -gi или -ki в каждом падеже, как в kellelegi и kellestki, и когда какое из них нужно. Каждое предложение озвучено."
-
-msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud."
-msgstr "Бесплатный урок эстонского о том, как сказать, который час: целые часы, pool, veerand и kolmveerand, которые называют следующий час, и минуты до и после. Каждый пример озвучен."
-
-msgid "A free Estonian lesson on the translative case: -ks on the genitive for what someone becomes (Ta sai arstiks, Ma jäin haigeks), -na against -ks, reedeks for by Friday and nädalaks for a week, and heaks arstiks, where the adjective takes -ks too. Every sentence is read aloud."
-msgstr "Бесплатный урок эстонского о транслативе: -ks к родительному для того, кем кто-то становится (Ta sai arstiks, Ma jäin haigeks), -na против -ks, reedeks — «к пятнице» и nädalaks — «на неделю», и heaks arstiks, где -ks получает и прилагательное. Каждое предложение озвучено."
-
-msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud."
-msgstr "Бесплатный урок эстонского произношения: девять гласных с õ, ä, ö и ü, ударение на первом слоге и то, как удвоенная буква меняет слово. Каждое слово озвучено."
-
-msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud."
-msgstr "Бесплатный урок об эстонских числах: от нуля до десяти, -teist и -kümmend, сотни и тысячи, а также числа в ценах, возрасте и номерах телефонов. Каждое число озвучено."
-
-msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
-msgstr "Бесплатный урок эстонского о том, как сказать, где ты: -s значит «в» (Tallinnas, koolis), -l — «на» (laual, tööl), какие места получают какое окончание и как ответить на kus, «где». Каждое предложение озвучено."
-
-msgid "Estonian somebody and nobody: -gi and -ki"
-msgstr "Эстонские «кто-то» и «никто»: -gi и -ki"
-
-msgid "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
-msgstr "Бесплатная разговорная практика эстонского для начинающих: скажи, как тебя зовут, откуда ты, где живёшь и работаешь, отвечай на вопросы «да или нет» и задавай свои. Каждый разговор и каждый текст озвучены."
-
-msgid "The Estonian translative case: becoming, by and for"
-msgstr "Эстонский транслатив: становиться, к и на"

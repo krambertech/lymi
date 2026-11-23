@@ -500,10 +500,13 @@ export function KeegiLesson() {
               <ListenRows items={rows(GI_MITTE)} />
               <Aside>
                 <Trans>
-                  The main exception: when a sentence says nobody is there or nobody comes,{" "}
-                  <span lang="et">keegi</span> usually takes the partitive, as{" "}
-                  <span lang="et">kassi</span> does in <span lang="et">Mul pole kassi</span> in
-                  lesson {partitive}: <span lang="et">Kodus ei ole kedagi</span>.
+                  The main exception: when <span lang="et">ei ole</span> or{" "}
+                  <span lang="et">pole</span> says nobody is there, <span lang="et">keegi</span>{" "}
+                  usually takes the partitive, as <span lang="et">kassi</span> does in{" "}
+                  <span lang="et">Mul pole kassi</span> in lesson {partitive}:{" "}
+                  <span lang="et">Kodus ei ole kedagi</span>. For coming, both are heard:{" "}
+                  <span lang="et">Keegi ei tulnud</span> and <span lang="et">Kedagi ei tulnud</span>
+                  .
                 </Trans>
               </Aside>
               <ListenRows items={rows(GI_EXCEPT)} />

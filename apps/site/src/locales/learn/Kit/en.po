@@ -248,6 +248,9 @@ msgstr "A free Estonian lesson on comparing: suurem and uuem built on the geniti
 msgid "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive. Every sentence is read aloud."
 msgstr "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive. Every sentence is read aloud."
 
+msgid "A free Estonian lesson on keegi, midagi, kuskil and kuhugi: question words with -gi or -ki for somebody and something, ei for nobody and nothing, mitte keegi on its own, and -gi or -ki on every case, as in kellelegi and kellestki, and which one to use. Every sentence is read aloud."
+msgstr "A free Estonian lesson on keegi, midagi, kuskil and kuhugi: question words with -gi or -ki for somebody and something, ei for nobody and nothing, mitte keegi on its own, and -gi or -ki on every case, as in kellelegi and kellestki, and which one to use. Every sentence is read aloud."
+
 msgid "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
 msgstr "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
 
@@ -262,6 +265,9 @@ msgstr "A free Estonian lesson on saying when: hommikul and suvel with -l, mais 
 
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, minutes past and to, and writing the time in words. Every time is read aloud."
 msgstr "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, minutes past and to, and writing the time in words. Every time is read aloud."
+
+msgid "A free Estonian lesson on the translative case: -ks on the genitive for what someone becomes (Ta sai arstiks, Ma jäin haigeks), -na against -ks, reedeks for by Friday and nädalaks for a week, and heaks arstiks, where the adjective takes -ks too. Every sentence is read aloud."
+msgstr "A free Estonian lesson on the translative case: -ks on the genitive for what someone becomes (Ta sai arstiks, Ma jäin haigeks), -na against -ks, reedeks for by Friday and nädalaks for a week, and heaks arstiks, where the adjective takes -ks too. Every sentence is read aloud."
 
 msgid "A free Estonian lesson on word order: the verb usually in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud."
 msgstr "A free Estonian lesson on word order: the verb usually in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud."
@@ -781,6 +787,9 @@ msgstr "Estonian pronunciation"
 
 msgid "Estonian reading and listening practice: a day in Tallinn"
 msgstr "Estonian reading and listening practice: a day in Tallinn"
+
+msgid "Estonian somebody and nobody: -gi and -ki"
+msgstr "Estonian somebody and nobody: -gi and -ki"
 
 msgid "Estonian time expressions: when things happen"
 msgstr "Estonian time expressions: when things happen"
@@ -2135,6 +2144,9 @@ msgstr "The Estonian genitive case: my, your and whose"
 msgid "The Estonian partitive case: after numbers, amounts and negation"
 msgstr "The Estonian partitive case: after numbers, amounts and negation"
 
+msgid "The Estonian translative case: becoming, by and for"
+msgstr "The Estonian translative case: becoming, by and for"
+
 msgid "The form isn’t <0>{wrote}</0>."
 msgstr "The form isn’t <0>{wrote}</0>."
 
@@ -2669,30 +2681,3 @@ msgstr "Your sentence"
 
 msgid "Your text"
 msgstr "Your text"
-
-msgid "A free Estonian lesson on keegi, midagi, kuskil and kuhugi: question words with -gi or -ki for somebody and something, ei for nobody and nothing, mitte keegi on its own, and -gi or -ki on every case, as in kellelegi and kellestki, and which one to use. Every sentence is read aloud."
-msgstr "A free Estonian lesson on keegi, midagi, kuskil and kuhugi: question words with -gi or -ki for somebody and something, ei for nobody and nothing, mitte keegi on its own, and -gi or -ki on every case, as in kellelegi and kellestki, and which one to use. Every sentence is read aloud."
-
-msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud."
-msgstr "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud."
-
-msgid "A free Estonian lesson on the translative case: -ks on the genitive for what someone becomes (Ta sai arstiks, Ma jäin haigeks), -na against -ks, reedeks for by Friday and nädalaks for a week, and heaks arstiks, where the adjective takes -ks too. Every sentence is read aloud."
-msgstr "A free Estonian lesson on the translative case: -ks on the genitive for what someone becomes (Ta sai arstiks, Ma jäin haigeks), -na against -ks, reedeks for by Friday and nädalaks for a week, and heaks arstiks, where the adjective takes -ks too. Every sentence is read aloud."
-
-msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud."
-msgstr "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud."
-
-msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud."
-msgstr "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud."
-
-msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
-msgstr "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
-
-msgid "Estonian somebody and nobody: -gi and -ki"
-msgstr "Estonian somebody and nobody: -gi and -ki"
-
-msgid "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
-msgstr "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
-
-msgid "The Estonian translative case: becoming, by and for"
-msgstr "The Estonian translative case: becoming, by and for"

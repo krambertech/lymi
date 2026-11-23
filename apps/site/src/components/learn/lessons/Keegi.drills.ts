@@ -123,7 +123,7 @@ export const DRILLS: DrillBank = {
         "Mitte kedagi pole kodus.",
       ],
       say: "Kodus ei ole kedagi.",
-      explain: msg`When <et>ei ole</et> says nobody is there, <et>keegi</et> takes the partitive: <et>Kodus ei ole kedagi</et>.`,
+      explain: msg`When <et>ei ole</et> says nobody is there, <et>keegi</et> usually takes the partitive: <et>Kodus ei ole kedagi</et>.`,
     },
     {
       kind: "dictation",

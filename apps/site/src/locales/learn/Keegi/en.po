@@ -388,8 +388,8 @@ msgstr "Tap the lines above once more, then try again."
 msgid "The last sound decides. After k, p, t, g, b, d, s, h, f, š, z or ž, the ending is <0>-ki</0>: <1>kellestki</1>, <2>kustki</2>, from somewhere. After anything else, a vowel or l, m, n, r, it is <3>-gi</3>: <4>kellelegi</4>, <5>millalgi</5>."
 msgstr "The last sound decides. After k, p, t, g, b, d, s, h, f, š, z or ž, the ending is <0>-ki</0>: <1>kellestki</1>, <2>kustki</2>, from somewhere. After anything else, a vowel or l, m, n, r, it is <3>-gi</3>: <4>kellelegi</4>, <5>millalgi</5>."
 
-msgid "The main exception: when a sentence says nobody is there or nobody comes, <0>keegi</0> usually takes the partitive, as <1>kassi</1> does in <2>Mul pole kassi</2> in lesson {partitive}: <3>Kodus ei ole kedagi</3>."
-msgstr "The main exception: when a sentence says nobody is there or nobody comes, <0>keegi</0> usually takes the partitive, as <1>kassi</1> does in <2>Mul pole kassi</2> in lesson {partitive}: <3>Kodus ei ole kedagi</3>."
+msgid "The main exception: when <0>ei ole</0> or <1>pole</1> says nobody is there, <2>keegi</2> usually takes the partitive, as <3>kassi</3> does in <4>Mul pole kassi</4> in lesson {partitive}: <5>Kodus ei ole kedagi</5>. For coming, both are heard: <6>Keegi ei tulnud</6> and <7>Kedagi ei tulnud</7>."
+msgstr "The main exception: when <0>ei ole</0> or <1>pole</1> says nobody is there, <2>keegi</2> usually takes the partitive, as <3>kassi</3> does in <4>Mul pole kassi</4> in lesson {partitive}: <5>Kodus ei ole kedagi</5>. For coming, both are heard: <6>Keegi ei tulnud</6> and <7>Kedagi ei tulnud</7>."
 
 msgid "The object is <0>kedagi</0>, built on <1>keda</1>."
 msgstr "The object is <0>kedagi</0>, built on <1>keda</1>."
@@ -439,8 +439,8 @@ msgstr "What will they do in the evening?"
 msgid "when"
 msgstr "when"
 
-msgid "When <et>ei ole</et> says nobody is there, <et>keegi</et> takes the partitive: <et>Kodus ei ole kedagi</et>."
-msgstr "When <et>ei ole</et> says nobody is there, <et>keegi</et> takes the partitive: <et>Kodus ei ole kedagi</et>."
+msgid "When <et>ei ole</et> says nobody is there, <et>keegi</et> usually takes the partitive: <et>Kodus ei ole kedagi</et>."
+msgstr "When <et>ei ole</et> says nobody is there, <et>keegi</et> usually takes the partitive: <et>Kodus ei ole kedagi</et>."
 
 msgid "Where are the keys?"
 msgstr "Where are the keys?"

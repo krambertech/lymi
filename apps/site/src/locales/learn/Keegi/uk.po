@@ -388,8 +388,8 @@ msgstr "Ще раз торкнися рядків вище й спробуй з�
 msgid "The last sound decides. After k, p, t, g, b, d, s, h, f, š, z or ž, the ending is <0>-ki</0>: <1>kellestki</1>, <2>kustki</2>, from somewhere. After anything else, a vowel or l, m, n, r, it is <3>-gi</3>: <4>kellelegi</4>, <5>millalgi</5>."
 msgstr "Вирішує останній звук. Після k, p, t, g, b, d, s, h, f, š, z або ž закінчення <0>-ki</0>: <1>kellestki</1>, <2>kustki</2> — «звідкись». Після всього іншого — голосної чи l, m, n, r — <3>-gi</3>: <4>kellelegi</4>, <5>millalgi</5>."
 
-msgid "The main exception: when a sentence says nobody is there or nobody comes, <0>keegi</0> usually takes the partitive, as <1>kassi</1> does in <2>Mul pole kassi</2> in lesson {partitive}: <3>Kodus ei ole kedagi</3>."
-msgstr "Головний виняток: коли речення каже, що десь нікого немає або ніхто не приходить, <0>keegi</0> зазвичай стоїть у партитиві, як <1>kassi</1> в <2>Mul pole kassi</2> з уроку {partitive}: <3>Kodus ei ole kedagi</3>."
+msgid "The main exception: when <0>ei ole</0> or <1>pole</1> says nobody is there, <2>keegi</2> usually takes the partitive, as <3>kassi</3> does in <4>Mul pole kassi</4> in lesson {partitive}: <5>Kodus ei ole kedagi</5>. For coming, both are heard: <6>Keegi ei tulnud</6> and <7>Kedagi ei tulnud</7>."
+msgstr "Головний виняток: коли <0>ei ole</0> чи <1>pole</1> каже, що десь нікого немає, <2>keegi</2> зазвичай стоїть у партитиві, як <3>kassi</3> в <4>Mul pole kassi</4> з уроку {partitive}: <5>Kodus ei ole kedagi</5>. Коли йдеться про прихід, кажуть і так, і так: <6>Keegi ei tulnud</6> і <7>Kedagi ei tulnud</7>."
 
 msgid "The object is <0>kedagi</0>, built on <1>keda</1>."
 msgstr "Додаток — <0>kedagi</0>, від <1>keda</1>."
@@ -439,8 +439,8 @@ msgstr "Що вони робитимуть увечері?"
 msgid "when"
 msgstr "коли"
 
-msgid "When <et>ei ole</et> says nobody is there, <et>keegi</et> takes the partitive: <et>Kodus ei ole kedagi</et>."
-msgstr "Коли <et>ei ole</et> каже, що нікого немає, <et>keegi</et> стоїть у партитиві: <et>Kodus ei ole kedagi</et>."
+msgid "When <et>ei ole</et> says nobody is there, <et>keegi</et> usually takes the partitive: <et>Kodus ei ole kedagi</et>."
+msgstr "Коли <et>ei ole</et> каже, що нікого немає, <et>keegi</et> зазвичай стоїть у партитиві: <et>Kodus ei ole kedagi</et>."
 
 msgid "Where are the keys?"
 msgstr "Де ключі?"

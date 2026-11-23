@@ -218,8 +218,8 @@ msgstr "Відтворити {text}"
 msgid "Rewrite the sentence"
 msgstr "Перепиши речення"
 
-msgid "Rewrite the sentence for the pronoun shown. The verb takes that pronoun’s ending, and the rest stays: <0>Ma elan Tallinnas</0> with <1>nad</1> is <2/>."
-msgstr "Перепиши речення для вказаного займенника. Дієслово отримує закінчення цього займенника, а решта не змінюється: <0>Ma elan Tallinnas</0> із <1>nad</1> — це <2/>."
+msgid "Rewrite the sentence for the pronoun shown. The verb takes that pronoun’s ending, and the rest stays: <0>Ma armastan sind</0> with <1>nad</1> is <2/>."
+msgstr "Перепиши речення для вказаного займенника. Дієслово отримує закінчення цього займенника, а решта не змінюється: <0>Ma armastan sind</0> із <1>nad</1> — це <2/>."
 
 msgid "Same stem as the -ma form"
 msgstr "Основа як у формі на -ma"
@@ -312,8 +312,8 @@ msgstr "Вони їдять удома."
 msgid "they live"
 msgstr "вони живуть"
 
-msgid "They live in Tallinn."
-msgstr "Вони живуть у Таллінні."
+msgid "They love you."
+msgstr "Вони тебе люблять."
 
 msgid "they read"
 msgstr "вони читають"

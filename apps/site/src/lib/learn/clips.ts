@@ -2884,7 +2884,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...PRESENT_SENTENCES,
     ...words(PRESENT_TURNED.map(({ said }) => said)),
     ...words(PRESENT_FIXES.map(({ said }) => said)),
-    ...words(["loevad"]),
+    ...words(["loevad", "Nad armastavad sind."]),
     "p-jaan": { sentences: PRESENT_PASSAGE },
   },
   kell: {

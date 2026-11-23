@@ -221,8 +221,8 @@ msgstr "Почти. Ещё раз понажимай окончания выше
 msgid "No ending. Ta on and nad on: he or she is, they are."
 msgstr "Без окончания. Ta on и nad on: «он или она есть», «они есть»."
 
-msgid "Now type the form of <0/> for each pronoun. A long pronoun takes the same verb: <1/>, <2/>."
-msgstr "Теперь напиши форму <0/> для каждого местоимения. С полным местоимением глагол тот же: <1/>, <2/>."
+msgid "Now type the form of <0/> for each pronoun. A long pronoun takes the same form as its short one."
+msgstr "Теперь напиши форму <0/> для каждого местоимения. У полного местоимения та же форма, что и у краткого."
 
 msgid "Olema, to be"
 msgstr "Olema, быть"

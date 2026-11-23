@@ -223,7 +223,7 @@ export const SENTENCES: readonly Sentence[] = [
 ];
 
 export const TYPED: readonly { verb: Verb["verb"]; ending: Ending }[] = [
-  { verb: "lugema", ending: "n" },
+  { verb: "tegema", ending: "n" },
   { verb: "elama", ending: "n" },
   { verb: "õppima", ending: "d" },
   { verb: "ootama", ending: "d" },
@@ -259,7 +259,7 @@ const GLOSSARY: Glossary = {
   ),
   olema: { en: msg`to be` },
   loevad: { en: msg`they read`, note: msg`From lugema: stem loe-, as in ma loen.` },
-  "nad elavad tallinnas": { en: msg`They live in Tallinn.`, show: "Nad elavad Tallinnas." },
+  "nad armastavad sind": { en: msg`They love you.`, show: "Nad armastavad sind." },
   olen: { en: msg`I am` },
   oled: { en: msg`you are` },
   oleme: { en: msg`we are` },
@@ -950,8 +950,8 @@ export function OlevikLesson() {
                 <p>
                   <Trans>
                     Rewrite the sentence for the pronoun shown. The verb takes that pronoun’s
-                    ending, and the rest stays: <b lang="et">Ma elan Tallinnas</b> with{" "}
-                    <span lang="et">nad</span> is <Word w="Nad elavad Tallinnas" />.
+                    ending, and the rest stays: <b lang="et">Ma armastan sind</b> with{" "}
+                    <span lang="et">nad</span> is <Word w="Nad armastavad sind" />.
                   </Trans>
                 </p>
               </Prose>

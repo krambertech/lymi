@@ -952,7 +952,7 @@ export function MinaSinaTemaLesson() {
                 <p>
                   <Trans>
                     Now type the form of <Word w="olema" /> for each pronoun. A long pronoun takes
-                    the same verb: <Word w="mina olen" />, <Word w="ma olen" />.
+                    the same form as its short one.
                   </Trans>
                 </p>
               </Prose>

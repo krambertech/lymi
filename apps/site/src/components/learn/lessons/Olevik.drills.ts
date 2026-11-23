@@ -120,7 +120,7 @@ export const DRILLS: DrillBank = {
     typed("stem", "rääkima", "vad"),
     typed("stem", "õppima", "me"),
     typed("stem", "tegema", "d"),
-    typed("stem", "lugema", "n"),
+    typed("stem", "tegema", "n"),
     heard("rääkima", "b", ["d", "vad", "me"]),
     heard("rääkima", "vad", ["b", "te", "me"]),
     heard("elama", "d", ["n", "te", "b"]),

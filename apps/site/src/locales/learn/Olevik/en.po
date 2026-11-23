@@ -218,8 +218,8 @@ msgstr "Play {text}"
 msgid "Rewrite the sentence"
 msgstr "Rewrite the sentence"
 
-msgid "Rewrite the sentence for the pronoun shown. The verb takes that pronoun’s ending, and the rest stays: <0>Ma elan Tallinnas</0> with <1>nad</1> is <2/>."
-msgstr "Rewrite the sentence for the pronoun shown. The verb takes that pronoun’s ending, and the rest stays: <0>Ma elan Tallinnas</0> with <1>nad</1> is <2/>."
+msgid "Rewrite the sentence for the pronoun shown. The verb takes that pronoun’s ending, and the rest stays: <0>Ma armastan sind</0> with <1>nad</1> is <2/>."
+msgstr "Rewrite the sentence for the pronoun shown. The verb takes that pronoun’s ending, and the rest stays: <0>Ma armastan sind</0> with <1>nad</1> is <2/>."
 
 msgid "Same stem as the -ma form"
 msgstr "Same stem as the -ma form"
@@ -312,8 +312,8 @@ msgstr "They eat at home."
 msgid "they live"
 msgstr "they live"
 
-msgid "They live in Tallinn."
-msgstr "They live in Tallinn."
+msgid "They love you."
+msgstr "They love you."
 
 msgid "they read"
 msgstr "they read"

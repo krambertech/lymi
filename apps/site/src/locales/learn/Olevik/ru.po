@@ -218,8 +218,8 @@ msgstr "Воспроизвести {text}"
 msgid "Rewrite the sentence"
 msgstr "Перепиши предложение"
 
-msgid "Rewrite the sentence for the pronoun shown. The verb takes that pronoun’s ending, and the rest stays: <0>Ma elan Tallinnas</0> with <1>nad</1> is <2/>."
-msgstr "Перепиши предложение для указанного местоимения. Глагол получает окончание этого местоимения, остальное не меняется: <0>Ma elan Tallinnas</0> с <1>nad</1> — это <2/>."
+msgid "Rewrite the sentence for the pronoun shown. The verb takes that pronoun’s ending, and the rest stays: <0>Ma armastan sind</0> with <1>nad</1> is <2/>."
+msgstr "Перепиши предложение для указанного местоимения. Глагол получает окончание этого местоимения, остальное не меняется: <0>Ma armastan sind</0> с <1>nad</1> — это <2/>."
 
 msgid "Same stem as the -ma form"
 msgstr "Основа как в форме на -ma"
@@ -312,8 +312,8 @@ msgstr "Они едят дома."
 msgid "they live"
 msgstr "они живут"
 
-msgid "They live in Tallinn."
-msgstr "Они живут в Таллине."
+msgid "They love you."
+msgstr "Они тебя любят."
 
 msgid "they read"
 msgstr "они читают"

@@ -46,8 +46,8 @@ msgstr "All six, each place with its ending."
 msgid "All six, each with the right ending."
 msgstr "All six, each with the right ending."
 
-msgid "All six, every word in place."
-msgstr "All six, every word in place."
+msgid "All six, every word right."
+msgstr "All six, every word right."
 
 msgid "Answering where with a place"
 msgstr "Answering where with a place"
@@ -90,6 +90,9 @@ msgstr "At work"
 
 msgid "café"
 msgstr "café"
+
+msgid "Dad"
+msgstr "Dad"
 
 msgid "Each name took -s, and the -s says in. Tallinn took an extra a before it."
 msgstr "Each name took -s, and the -s says in. Tallinn took an extra a before it."
@@ -253,9 +256,6 @@ msgstr "Jaan"
 msgid "Jaan lives in Pärnu."
 msgstr "Jaan lives in Pärnu."
 
-msgid "Kati’s mum"
-msgstr "Kati’s mum"
-
 msgid "Lasnamäe, a district of Tallinn"
 msgstr "Lasnamäe, a district of Tallinn"
 
@@ -283,11 +283,11 @@ msgstr "Mari leaves Kati a voice message about where everyone is today. Listen f
 msgid "Mari works in a hospital."
 msgstr "Mari works in a hospital."
 
-msgid "Mari’s mum"
-msgstr "Mari’s mum"
-
 msgid "market"
 msgstr "market"
+
+msgid "Mum"
+msgstr "Mum"
 
 msgid "Mum is at the market."
 msgstr "Mum is at the market."
@@ -454,14 +454,14 @@ msgstr "Where is Jaan?"
 msgid "Which place?"
 msgstr "Which place?"
 
-msgid "Who is at the market?"
-msgstr "Who is at the market?"
+msgid "Who is in Tartu?"
+msgstr "Who is in Tartu?"
 
 msgid "work"
 msgstr "work"
 
-msgid "Write each sentence in Estonian. The place takes <0>-s</0> for in, and <1>-l</1> for on, at work and at the market."
-msgstr "Write each sentence in Estonian. The place takes <0>-s</0> for in, and <1>-l</1> for on, at work and at the market."
+msgid "Write each sentence in Estonian. The place takes <0>-s</0> for in a town, a country or a building, and <1>-l</1> for on something and for the places this lesson listed with it."
+msgstr "Write each sentence in Estonian. The place takes <0>-s</0> for in a town, a country or a building, and <1>-l</1> for on something and for the places this lesson listed with it."
 
 msgid "Write it in Estonian"
 msgstr "Write it in Estonian"

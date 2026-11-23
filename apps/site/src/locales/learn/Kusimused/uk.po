@@ -53,7 +53,7 @@ msgid "a place"
 msgstr "місце"
 
 msgid "A question answered with yes or no starts with <0/>. A question that wants a place, a person or a thing starts with its question word instead, never with both. Write each question in Estonian."
-msgstr "Запитання, на яке відповідають «так» чи «ні», починається з <0/>. Запитання про місце, людину чи річ починається натомість із питального слова, і ніколи з обох одразу. Напиши кожне запитання естонською."
+msgstr "Запитання, на яке відповідають «так» чи «ні», починається з <0/>. Запитання про місце, людину чи річ починається з питального слова. Обидва слова разом не вживають. Напиши кожне запитання естонською."
 
 msgid "A question word goes first, and the part you ask about drops out: <0>Kus sa elad?</0>"
 msgstr "Питальне слово стоїть першим, а те, про що питаєш, зникає: <0>Kus sa elad?</0>"
@@ -93,6 +93,9 @@ msgstr "Відповідай <0>jah</0> або <1>ei</1>. Якщо в питан
 
 msgid "Are they working today?"
 msgstr "Вони сьогодні працюють?"
+
+msgid "Ask the question"
+msgstr "Запитай"
 
 msgid "ask with kas"
 msgstr "запитай із kas"
@@ -136,8 +139,8 @@ msgstr "Ти живеш у Таллінні?"
 msgid "Do you speak Estonian?"
 msgstr "Ти говориш естонською?"
 
-msgid "Each round gives an answer. Write the question it answers: start with the question word, then the verb in the form for the person you ask."
-msgstr "У кожному раунді є відповідь. Напиши запитання до неї: почни з питального слова, а дієслово постав у форму для того, кого питаєш."
+msgid "Each round gives an answer. Write the question it answers: start with the question word, and give the verb the ending for the person you ask."
+msgstr "У кожному раунді є відповідь. Напиши запитання до неї: почни з питального слова, а дієслову дай закінчення для того, кого питаєш."
 
 msgid "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
 msgstr "Українською так само: «Ти живеш у Таллінні» стає «Чи ти живеш у Таллінні?». Kas працює як «чи», а всі інші слова лишаються на місці. Спробуй на п’яти реченнях."
@@ -154,11 +157,8 @@ msgstr "З Фінляндії"
 msgid "Five sentences. Switch to Question and watch what changes."
 msgstr "П’ять речень. Перемкни на «Питання» й подивись, що зміниться."
 
-msgid "For his friends"
-msgstr "Заради друзів"
-
-msgid "For his studies"
-msgstr "Для навчання"
+msgid "For fun."
+msgstr "Для задоволення."
 
 msgid "from, by birth"
 msgstr "родом з"
@@ -166,8 +166,14 @@ msgstr "родом з"
 msgid "Go back to the <0>kas</0> switch at the top, then try again."
 msgstr "Повернися до перемикача з <0>kas</0> на початку уроку, а тоді спробуй ще раз."
 
+msgid "Great Britain"
+msgstr "З Великої Британії"
+
 msgid "He or she is at home."
 msgstr "Він чи вона вдома."
+
+msgid "He studies."
+msgstr "Він навчається."
 
 msgid "He works in Tartu."
 msgstr "Він працює в Тарту."
@@ -198,9 +204,6 @@ msgstr "Як ти вчиш естонську?"
 
 msgid "How does he or she speak Estonian?"
 msgstr "Як він чи вона говорить естонською?"
-
-msgid "how much"
-msgstr "скільки"
 
 msgid "How much coffee do you drink?"
 msgstr "Скільки кави ти п’єш?"
@@ -298,8 +301,8 @@ msgstr "На слух: Каті знайомиться з Яаном"
 msgid "Ma olen pärit… is I’m from…"
 msgstr "Ma olen pärit… означає «я родом з…»."
 
-msgid "Match each question word with what it asks about. Tap a word, then its meaning."
-msgstr "З’єднай кожне питальне слово з тим, про що воно питає. Натисни слово, а тоді його значення."
+msgid "Match each question word with what it asks about. Tap a word, then what it asks about."
+msgstr "З’єднай кожне питальне слово з тим, про що воно питає. Натисни слово, а тоді те, про що воно питає."
 
 msgid "Match the question words"
 msgstr "З’єднай питальні слова"
@@ -359,8 +362,8 @@ msgstr "Питальні слова"
 msgid "Short for sinu."
 msgstr "Скорочено від sinu."
 
-msgid "Start with <et>{word}</et>, then the verb for the person you ask."
-msgstr "Почни з <et>{word}</et>, а дієслово постав у форму для того, кого питаєш."
+msgid "Start with <et>{word}</et>, and give the verb the ending for the person you ask."
+msgstr "Почни з <et>{word}</et>, а дієслову дай закінчення для того, кого питаєш."
 
 msgid "Statement"
 msgstr "Твердження"
@@ -409,9 +412,6 @@ msgstr "Завтра."
 
 msgid "turns a sentence into a yes-or-no question"
 msgstr "робить із речення питання «так чи ні»"
-
-msgid "Ukraine"
-msgstr "З України"
 
 msgid "well, fine"
 msgstr "добре"
@@ -464,14 +464,17 @@ msgstr "Де ви живете?"
 msgid "Where do you live?"
 msgstr "Де ти живеш?"
 
+msgid "Where do you work?"
+msgstr "Де ти працюєш?"
+
 msgid "Where does he or she work?"
 msgstr "Де він чи вона працює?"
 
 msgid "where from"
 msgstr "звідки"
 
-msgid "Where he is from and why"
-msgstr "Звідки він і чому"
+msgid "Where he is from"
+msgstr "Звідки він родом"
 
 msgid "Where he lives and works"
 msgstr "Де він живе й працює"
@@ -523,6 +526,9 @@ msgstr "Напиши естонською"
 
 msgid "Write the question"
 msgstr "Напиши запитання"
+
+msgid "Write the question it answers"
+msgstr "Напиши запитання до відповіді"
 
 msgid "Write the question you hear"
 msgstr "Напиши запитання, яке чуєш"

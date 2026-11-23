@@ -450,7 +450,7 @@ export function KohadLesson() {
 
   const writtenItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
     () =>
-      KOHAD_WRITTEN.slice(4).map((sentence) => ({
+      KOHAD_WRITTEN.slice(6).map((sentence) => ({
         kind: "dictation" as const,
         id: `write-${clipId(sentence)}`,
         src: wordSrc(sentence),
@@ -521,15 +521,15 @@ export function KohadLesson() {
         line: 3,
       },
       {
-        id: "market",
-        ask: t`Who is at the market?`,
+        id: "tartu",
+        ask: t`Who is in Tartu?`,
         options: [
-          { id: "kati", label: t`Kati’s mum` },
-          { id: "mum", label: t`Mari’s mum` },
+          { id: "mum", label: t`Mum` },
+          { id: "dad", label: t`Dad` },
           { id: "jaan", label: t`Jaan` },
         ],
-        answer: "mum",
-        line: 4,
+        answer: "dad",
+        line: 5,
       },
     ],
     [t],
@@ -913,7 +913,7 @@ export function KohadLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All six, every word in place.</Trans>
+                    <Trans>All six, every word right.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Play the ones you missed slower.</Trans>
                   ) : (
@@ -977,11 +977,11 @@ export function KohadLesson() {
                     <b lang="et" className="whitespace-nowrap">
                       -s
                     </b>{" "}
-                    for in, and{" "}
+                    for in a town, a country or a building, and{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -l
                     </b>{" "}
-                    for on, at work and at the market.
+                    for on something and for the places this lesson listed with it.
                   </Trans>
                 </p>
               </Prose>

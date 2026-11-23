@@ -13,7 +13,7 @@ const ABOUT: Record<Word, MessageDescriptor> = {
   millal: msg`when`,
   miks: msg`why`,
   kuidas: msg`how`,
-  "kui palju": msg`how much`,
+  "kui palju": msg`how much, how many`,
 };
 
 const WORDS = KUSIMUSED_ASKED.map(({ word }) => word);
@@ -43,12 +43,12 @@ const asked = ({ word, reply, answers }: Asked): SentenceDrill => ({
   reply,
   say: answers[0],
   answers,
-  explain: msg`Start with <et>${word}</et>, then the verb for the person you ask.`,
+  explain: msg`Start with <et>${word}</et>, and give the verb the ending for the person you ask.`,
 });
 
 const MEANS: readonly MessageDescriptor[] = [
   msg`Do you live in Tallinn?`,
-  msg`Where do you live?`,
+  msg`Where do you work?`,
   msg`Do you speak Estonian?`,
   msg`Who speaks Estonian?`,
   msg`Is he at home?`,

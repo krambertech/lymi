@@ -94,6 +94,9 @@ msgstr "Answer <0>jah</0> or <1>ei</1>. When the question has olema, the no is <
 msgid "Are they working today?"
 msgstr "Are they working today?"
 
+msgid "Ask the question"
+msgstr "Ask the question"
+
 msgid "ask with kas"
 msgstr "ask with kas"
 
@@ -136,8 +139,8 @@ msgstr "Do you live in Tallinn?"
 msgid "Do you speak Estonian?"
 msgstr "Do you speak Estonian?"
 
-msgid "Each round gives an answer. Write the question it answers: start with the question word, then the verb in the form for the person you ask."
-msgstr "Each round gives an answer. Write the question it answers: start with the question word, then the verb in the form for the person you ask."
+msgid "Each round gives an answer. Write the question it answers: start with the question word, and give the verb the ending for the person you ask."
+msgstr "Each round gives an answer. Write the question it answers: start with the question word, and give the verb the ending for the person you ask."
 
 msgid "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
 msgstr "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
@@ -154,11 +157,8 @@ msgstr "Finland"
 msgid "Five sentences. Switch to Question and watch what changes."
 msgstr "Five sentences. Switch to Question and watch what changes."
 
-msgid "For his friends"
-msgstr "For his friends"
-
-msgid "For his studies"
-msgstr "For his studies"
+msgid "For fun."
+msgstr "For fun."
 
 msgid "from, by birth"
 msgstr "from, by birth"
@@ -166,8 +166,14 @@ msgstr "from, by birth"
 msgid "Go back to the <0>kas</0> switch at the top, then try again."
 msgstr "Go back to the <0>kas</0> switch at the top, then try again."
 
+msgid "Great Britain"
+msgstr "Great Britain"
+
 msgid "He or she is at home."
 msgstr "He or she is at home."
+
+msgid "He studies."
+msgstr "He studies."
 
 msgid "He works in Tartu."
 msgstr "He works in Tartu."
@@ -198,9 +204,6 @@ msgstr "How are you learning Estonian?"
 
 msgid "How does he or she speak Estonian?"
 msgstr "How does he or she speak Estonian?"
-
-msgid "how much"
-msgstr "how much"
 
 msgid "How much coffee do you drink?"
 msgstr "How much coffee do you drink?"
@@ -298,8 +301,8 @@ msgstr "Listening: Kati meets Jaan"
 msgid "Ma olen pärit… is I’m from…"
 msgstr "Ma olen pärit… is I’m from…"
 
-msgid "Match each question word with what it asks about. Tap a word, then its meaning."
-msgstr "Match each question word with what it asks about. Tap a word, then its meaning."
+msgid "Match each question word with what it asks about. Tap a word, then what it asks about."
+msgstr "Match each question word with what it asks about. Tap a word, then what it asks about."
 
 msgid "Match the question words"
 msgstr "Match the question words"
@@ -359,8 +362,8 @@ msgstr "Question words"
 msgid "Short for sinu."
 msgstr "Short for sinu."
 
-msgid "Start with <et>{word}</et>, then the verb for the person you ask."
-msgstr "Start with <et>{word}</et>, then the verb for the person you ask."
+msgid "Start with <et>{word}</et>, and give the verb the ending for the person you ask."
+msgstr "Start with <et>{word}</et>, and give the verb the ending for the person you ask."
 
 msgid "Statement"
 msgstr "Statement"
@@ -409,9 +412,6 @@ msgstr "Tomorrow."
 
 msgid "turns a sentence into a yes-or-no question"
 msgstr "turns a sentence into a yes-or-no question"
-
-msgid "Ukraine"
-msgstr "Ukraine"
 
 msgid "well, fine"
 msgstr "well, fine"
@@ -464,14 +464,17 @@ msgstr "Where do you all live?"
 msgid "Where do you live?"
 msgstr "Where do you live?"
 
+msgid "Where do you work?"
+msgstr "Where do you work?"
+
 msgid "Where does he or she work?"
 msgstr "Where does he or she work?"
 
 msgid "where from"
 msgstr "where from"
 
-msgid "Where he is from and why"
-msgstr "Where he is from and why"
+msgid "Where he is from"
+msgstr "Where he is from"
 
 msgid "Where he lives and works"
 msgstr "Where he lives and works"
@@ -523,6 +526,9 @@ msgstr "Write it in Estonian"
 
 msgid "Write the question"
 msgstr "Write the question"
+
+msgid "Write the question it answers"
+msgstr "Write the question it answers"
 
 msgid "Write the question you hear"
 msgstr "Write the question you hear"

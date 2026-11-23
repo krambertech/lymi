@@ -44,7 +44,7 @@ const turned = ({ yes, no }: (typeof NEGATION_TURNED)[number]): SentenceDrill =>
   id: `no-${clipId(no)}`,
   rule: "ei",
   from: yes,
-  cue: msg`say no`,
+  cue: msg`make it no`,
   say: no,
   answers: [no],
   explain: NO_ENDING,
@@ -67,23 +67,38 @@ const olema = (row: (typeof OLEMA_ROWS)[number]): SentenceDrill => {
     id: `ole-${clipId(no)}`,
     rule: "olema",
     from: olemaSentence(row, "yes"),
-    cue: msg`say no`,
+    cue: msg`make it no`,
     say: no,
     answers: [no, olemaSentence(row, "pole")],
     explain: OLE,
   };
 };
 
-const answered = ({ ask, answer }: (typeof NO_ANSWERS)[number]): SentenceDrill => ({
-  kind: "rewrite",
-  id: `answer-${clipId(ask)}`,
-  rule: "answer",
-  from: ask,
-  cue: msg`answer no`,
-  say: answer,
-  answers: answer === "Ei ole." ? [answer, "Pole."] : [answer],
-  explain: msg`<et>Ei</et>, then the verb from the question without its ending.`,
-});
+const ANSWERER: Record<string, string> = { sa: "ma", te: "me", ta: "ta", nad: "nad" };
+
+const answered = ({ ask, answer }: (typeof NO_ANSWERS)[number]): SentenceDrill => {
+  const [, asked = "", ...rest] = ask.replace(/\?$/, "").split(" ");
+  const who = ANSWERER[asked] ?? "ma";
+  const verb = answer.replace(/^Ei /, "").replace(/\.$/, "");
+  const tail = rest.slice(1).join(" ");
+  const full = (form: string) => [
+    `Ei, ${who} ${form}.`,
+    ...(tail ? [`Ei, ${who} ${form} ${tail}.`] : []),
+  ];
+  return {
+    kind: "rewrite",
+    id: `answer-${clipId(ask)}`,
+    rule: "answer",
+    from: ask,
+    cue: msg`answer no`,
+    say: answer,
+    answers:
+      verb === "ole"
+        ? [answer, "Pole.", ...full("ei ole"), ...full("pole")]
+        : [answer, ...full(`ei ${verb}`)],
+    explain: msg`<et>Ei</et>, then the verb from the question without its ending.`,
+  };
+};
 
 const YES_NO: readonly {
   id: string;
@@ -103,7 +118,7 @@ const YES_NO: readonly {
   },
   {
     id: "no-loete",
-    prompt: msg`You all don’t read.`,
+    prompt: msg`None of you read.`,
     stem: "loe",
     person: "te",
     no: true,

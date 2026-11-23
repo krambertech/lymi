@@ -422,13 +422,25 @@ export const KUSIMUSED_ASKED = [
   { word: "mis", reply: "See on raamat.", answers: ["Mis see on?"] },
   {
     word: "kus",
-    reply: "Ma elan Tallinnas.",
-    answers: ["Kus sa elad?", "Kus te elate?", "Kus sina elad?", "Kus teie elate?", "Kus elad?"],
+    reply: "Ma töötan Tartus.",
+    answers: [
+      "Kus sa töötad?",
+      "Kus te töötate?",
+      "Kus sina töötad?",
+      "Kus teie töötate?",
+      "Kus töötad?",
+    ],
   },
   {
     word: "millal",
     reply: "Ma töötan homme.",
-    answers: ["Millal sa töötad?", "Millal te töötate?", "Millal sina töötad?"],
+    answers: [
+      "Millal sa töötad?",
+      "Millal te töötate?",
+      "Millal sina töötad?",
+      "Millal teie töötate?",
+      "Millal töötad?",
+    ],
   },
   {
     word: "miks",
@@ -438,6 +450,8 @@ export const KUSIMUSED_ASKED = [
       "Miks sa õpid eesti keelt?",
       "Miks te eesti keelt õpite?",
       "Miks te õpite eesti keelt?",
+      "Miks sina eesti keelt õpid?",
+      "Miks sina õpid eesti keelt?",
     ],
   },
   {
@@ -448,21 +462,43 @@ export const KUSIMUSED_ASKED = [
       "Kuidas sa räägid eesti keelt?",
       "Kuidas te eesti keelt räägite?",
       "Kuidas te räägite eesti keelt?",
+      "Kuidas sina eesti keelt räägid?",
+      "Kuidas sina räägid eesti keelt?",
     ],
   },
   {
     word: "kui palju",
     reply: "Ma joon palju kohvi.",
-    answers: ["Kui palju kohvi sa jood?", "Kui palju sa kohvi jood?", "Kui palju sa jood kohvi?"],
+    answers: [
+      "Kui palju kohvi sa jood?",
+      "Kui palju sa kohvi jood?",
+      "Kui palju sa jood kohvi?",
+      "Kui palju kohvi te joote?",
+      "Kui palju kohvi sina jood?",
+    ],
   },
 ] as const;
 
 export const KUSIMUSED_TRANSLATED = [
   {
     kind: "kas",
-    answers: ["Kas sa elad Tallinnas?", "Kas te elate Tallinnas?", "Kas sina elad Tallinnas?"],
+    answers: [
+      "Kas sa elad Tallinnas?",
+      "Kas te elate Tallinnas?",
+      "Kas sina elad Tallinnas?",
+      "Kas teie elate Tallinnas?",
+    ],
   },
-  { kind: "word", answers: ["Kus sa elad?", "Kus te elate?", "Kus sina elad?", "Kus elad?"] },
+  {
+    kind: "word",
+    answers: [
+      "Kus sa töötad?",
+      "Kus te töötate?",
+      "Kus sina töötad?",
+      "Kus teie töötate?",
+      "Kus töötad?",
+    ],
+  },
   {
     kind: "kas",
     answers: [
@@ -474,7 +510,15 @@ export const KUSIMUSED_TRANSLATED = [
   { kind: "word", answers: ["Kes räägib eesti keelt?"] },
   { kind: "kas", answers: ["Kas ta on kodus?", "Kas tema on kodus?"] },
   { kind: "word", answers: ["Kus ta on?", "Kus tema on?"] },
-  { kind: "kas", answers: ["Kas sa jood kohvi?", "Kas te joote kohvi?", "Kas sina jood kohvi?"] },
+  {
+    kind: "kas",
+    answers: [
+      "Kas sa jood kohvi?",
+      "Kas te joote kohvi?",
+      "Kas sina jood kohvi?",
+      "Kas teie joote kohvi?",
+    ],
+  },
   { kind: "word", answers: ["Mis sa loed?", "Mida sa loed?", "Mis te loete?", "Mida te loete?"] },
 ] as const;
 
@@ -483,7 +527,7 @@ export const KUSIMUSED_TALK: Conversation = {
     { voice: "second", text: ["Tere!", "Mis su nimi on?"] },
     { voice: "main", text: ["Minu nimi on Jaan.", "Aga sinu?"] },
     { voice: "second", text: ["Kati.", "Kust sa pärit oled?"] },
-    { voice: "main", text: "Ma olen pärit Ukrainast." },
+    { voice: "main", text: "Ma olen pärit Soomest." },
     { voice: "second", text: "Kas sa elad Tallinnas?" },
     { voice: "main", text: "Ei, ma elan Tartus." },
     { voice: "second", text: "Miks sa eesti keelt õpid?" },
@@ -790,11 +834,17 @@ export const KOHAD_TYPED = [
 export const KOHAD_ASKED = [
   {
     reply: "Ma töötan haiglas.",
-    answers: ["Kus sa töötad?", "Kus te töötate?", "Kus sina töötad?"],
+    answers: ["Kus sa töötad?", "Kus te töötate?", "Kus sina töötad?", "Kus teie töötate?"],
   },
-  { reply: "Ma elan Tartus.", answers: ["Kus sa elad?", "Kus te elate?", "Kus sina elad?"] },
+  {
+    reply: "Ma elan Tartus.",
+    answers: ["Kus sa elad?", "Kus te elate?", "Kus sina elad?", "Kus teie elate?"],
+  },
   { reply: "Ta on kodus.", answers: ["Kus ta on?", "Kus tema on?"] },
-  { reply: "Mari töötab koolis.", answers: ["Kus Mari töötab?"] },
+  {
+    reply: "Mari töötab koolis.",
+    answers: ["Kus Mari töötab?", "Kus ta töötab?", "Kus tema töötab?"],
+  },
   { reply: "Me elame Saaremaal.", answers: ["Kus te elate?", "Kus teie elate?"] },
   { reply: "Nad on turul.", answers: ["Kus nad on?", "Kus nemad on?"] },
 ] as const;
@@ -810,6 +860,8 @@ export const KOHAD_WRITTEN = [
   "Jaan elab Pärnus.",
   "Pilt on seinal.",
   "Nad õpivad Tartus.",
+  "Me oleme Saaremaal.",
+  "Ta töötab kontoris.",
 ] as const;
 
 export const KOHAD_MESSAGE = [

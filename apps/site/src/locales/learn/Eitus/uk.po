@@ -136,8 +136,8 @@ msgstr "не працюю, не працює тощо"
 msgid "Each person has its own: -n, -d, -b, -me, -te, -vad."
 msgstr "У кожної особи своє: -n, -d, -b, -me, -te, -vad."
 
-msgid "Each round gives a verb as it is said with a pronoun. Type the form that follows <0>ei</0>: take off the ending, as <1>elavad</1> becomes <2>ei ela</2>."
-msgstr "У кожному раунді є дієслово в тій формі, як воно звучить із займенником. Напиши форму, що йде після <0>ei</0>: відкинь закінчення, як <1>elavad</1> стає <2>ei ela</2>."
+msgid "Each round shows a verb with its ending, such as <0>elavad</0>. Type the form that follows <1>ei</1>: drop the ending, so <2>elavad</2> becomes <3>ei ela</3>."
+msgstr "У кожному раунді є дієслово із закінченням, як-от <0>elavad</0>. Напиши форму, що йде після <1>ei</1>: відкинь закінчення, і <2>elavad</2> стає <3>ei ela</3>."
 
 msgid "Ei before the verb"
 msgstr "Ei перед дієсловом"
@@ -259,6 +259,9 @@ msgstr "Лише слухання, без мікрофона"
 msgid "Listening: Mari’s questions"
 msgstr "На слух: запитання Марі"
 
+msgid "make it no"
+msgstr "зроби заперечення"
+
 msgid "Make it no"
 msgstr "Із «так» у «ні»"
 
@@ -298,11 +301,11 @@ msgstr "Ні, не читаю."
 msgid "No."
 msgstr "Ні."
 
+msgid "None of you read."
+msgstr "Ніхто з вас не читає."
+
 msgid "not; no"
 msgstr "не; ні"
-
-msgid "Now the meaning decides. Write each sentence in Estonian: a yes keeps the verb’s ending, and a no takes <0>ei</0> and drops it."
-msgstr "Тепер усе вирішує зміст. Напиши кожне речення естонською: у ствердженні дієслово зберігає закінчення, а в запереченні з’являється <0>ei</0>, і закінчення відпадає."
 
 msgid "Olema gives <0>ei ole</0>, or in one word, <1>pole</1>."
 msgstr "Від olema буде <0>ei ole</0>, або одним словом <1>pole</1>."
@@ -319,8 +322,8 @@ msgstr "Речення, яке варто запам’ятати вже сьо�
 msgid "Peeter is at home."
 msgstr "Пеетер удома."
 
-msgid "Peeter is at work."
-msgstr "Пеетер на роботі."
+msgid "Peeter is working."
+msgstr "Пеетер працює."
 
 #. placeholder {0}: bare(no)
 #. placeholder {0}: bare(yes)
@@ -336,17 +339,11 @@ msgstr "Відтворити {said}"
 msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
 msgstr "Став <0>ei</0> перед дієсловом: <1>ma ei loe</1>, я не читаю."
 
-msgid "Rewrite each sentence as a no. Put <0>ei</0> before the verb and drop its ending; the rest stays. <1>Ta töötab kodus</1> becomes <2>Ta ei tööta kodus</2>."
-msgstr "Перепиши кожне речення як заперечення. Постав <0>ei</0> перед дієсловом і відкинь закінчення, решта не змінюється. <1>Ta töötab kodus</1> стає <2>Ta ei tööta kodus</2>."
+msgid "Rewrite each sentence as a no. Put <0>ei</0> before the verb and drop its ending. In these sentences the rest stays the same: <1>Mari armastab kohvi</1> becomes <2>Mari ei armasta kohvi</2>."
+msgstr "Перепиши кожне речення як заперечення. Постав <0>ei</0> перед дієсловом і відкинь закінчення. У цих реченнях решта не змінюється: <1>Mari armastab kohvi</1> стає <2>Mari ei armasta kohvi</2>."
 
 msgid "Rewrite the sentence"
 msgstr "Перепиши речення"
-
-msgid "Say it with no"
-msgstr "Скажи це із запереченням"
-
-msgid "say no"
-msgstr "заперечення"
 
 msgid "Say no"
 msgstr "Відповідай «ні»"
@@ -426,6 +423,9 @@ msgstr "чекати"
 msgid "to work"
 msgstr "працювати"
 
+msgid "Turn it into a no"
+msgstr "Перетвори на заперечення"
+
 msgid "turns a sentence into a yes-or-no question"
 msgstr "робить із речення питання «так чи ні»"
 
@@ -450,6 +450,9 @@ msgstr "Що п’є Яан?"
 msgid "What does Jaan say about himself?"
 msgstr "Що Яан каже про себе?"
 
+msgid "Write each sentence in Estonian: a yes keeps the verb’s ending, and a no takes <0>ei</0> and drops it."
+msgstr "Напиши кожне речення естонською: у ствердженні дієслово зберігає закінчення, а в запереченні з’являється <0>ei</0>, і закінчення відпадає."
+
 msgid "Write it in Estonian"
 msgstr "Напиши естонською"
 
@@ -461,9 +464,6 @@ msgstr "У «так» шість закінчень, які треба вивч�
 
 msgid "Yes or no"
 msgstr "Так чи ні"
-
-msgid "You all don’t read."
-msgstr "Ви не читаєте."
 
 msgid "You all read."
 msgstr "Ви читаєте."

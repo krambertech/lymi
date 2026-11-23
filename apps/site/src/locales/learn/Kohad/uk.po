@@ -17,10 +17,10 @@ msgid "<0/> is the town; <1/> is in Tallinn. Estonian says in with an ending, no
 msgstr "<0/> — це місто, а <1/> — у Таллінні. В естонській «в» — не окреме слово, а закінчення: до кінця назви додають <2>-s</2>. «Я живу в Таллінні» — це <3/>"
 
 msgid "<et>-l</et>, on or at"
-msgstr "<et>-l</et>, «на» або «біля»"
+msgstr "<et>-l</et>, «на»"
 
 msgid "<et>-s</et>, in"
-msgstr "<et>-s</et>, «у»"
+msgstr "<et>-s</et>, «в»"
 
 msgid "15 minutes"
 msgstr "15 хвилин"
@@ -46,8 +46,8 @@ msgstr "Усі шість, кожне місце зі своїм закінче�
 msgid "All six, each with the right ending."
 msgstr "Усі шість, кожне з правильним закінченням."
 
-msgid "All six, every word in place."
-msgstr "Усі шість, кожне слово на місці."
+msgid "All six, every word right."
+msgstr "Усі шість, кожне слово правильно."
 
 msgid "Answering where with a place"
 msgstr "Як відповісти, де"
@@ -91,11 +91,14 @@ msgstr "На роботі"
 msgid "café"
 msgstr "кав’ярня"
 
+msgid "Dad"
+msgstr "Тато"
+
 msgid "Each name took -s, and the -s says in. Tallinn took an extra a before it."
 msgstr "До кожної назви додалося -s, і це -s означає «в». До Tallinn перед ним додалося ще й a."
 
 msgid "Each round gives a place and asks <0/>, where. Type the place with <1>-s</1> or <2>-l</2>. Each of these takes its ending with no other change."
-msgstr "У кожному раунді є місце й запитання <0/>, «де». Напиши місце із <1>-s</1> або <2>-l</2>. Усі ці слова просто додають закінчення, більше нічого не змінюється."
+msgstr "У кожному раунді є місце й запитання <0/>, «де». Напиши місце із <1>-s</1> або <2>-l</2>. Ці слова лише додають закінчення, і більше нічого не змінюється."
 
 msgid "Each round gives an answer. Write the question it answers, starting with <0/>. Leave out the place: that is what you ask about."
 msgstr "У кожному раунді є відповідь. Напиши запитання до неї, почавши з <0/>. Місця не називай: саме про нього ти й питаєш."
@@ -253,9 +256,6 @@ msgstr "Яан"
 msgid "Jaan lives in Pärnu."
 msgstr "Яан живе в Пярну."
 
-msgid "Kati’s mum"
-msgstr "Мама Каті"
-
 msgid "Lasnamäe, a district of Tallinn"
 msgstr "Ласнамяе, район Таллінна"
 
@@ -283,11 +283,11 @@ msgstr "Марі надсилає Каті голосове повідомлен
 msgid "Mari works in a hospital."
 msgstr "Марі працює в лікарні."
 
-msgid "Mari’s mum"
-msgstr "Мама Марі"
-
 msgid "market"
 msgstr "ринок"
+
+msgid "Mum"
+msgstr "Мама"
 
 msgid "Mum is at the market."
 msgstr "Мама на ринку."
@@ -454,14 +454,14 @@ msgstr "Де Яан?"
 msgid "Which place?"
 msgstr "Яке місце?"
 
-msgid "Who is at the market?"
-msgstr "Хто на ринку?"
+msgid "Who is in Tartu?"
+msgstr "Хто в Тарту?"
 
 msgid "work"
 msgstr "робота"
 
-msgid "Write each sentence in Estonian. The place takes <0>-s</0> for in, and <1>-l</1> for on, at work and at the market."
-msgstr "Напиши кожне речення естонською. Місце бере <0>-s</0> у значенні «в», а <1>-l</1> — у значенні «на», зокрема «на роботі» й «на ринку»."
+msgid "Write each sentence in Estonian. The place takes <0>-s</0> for in a town, a country or a building, and <1>-l</1> for on something and for the places this lesson listed with it."
+msgstr "Напиши кожне речення естонською. Місце бере <0>-s</0>, коли йдеться про місто, країну чи будівлю, і <1>-l</1>, коли щось на чомусь, а також із тими місцями, які урок назвав разом із ним."
 
 msgid "Write it in Estonian"
 msgstr "Напиши естонською"

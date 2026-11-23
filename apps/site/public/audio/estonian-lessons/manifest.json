@@ -10987,11 +10987,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "kusimused/kus-sa-elad": {
-    "text": "Kus sa elad?",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "kusimused/millal-sa-to2o2tad": {
     "text": "Millal sa töötad?",
     "model": "eleven_v4",
@@ -11048,7 +11043,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "kusimused/d-kati": {
-    "text": "Tere! Mis su nimi on? Minu nimi on Jaan. Aga sinu? Kati. Kust sa pärit oled? Ma olen pärit Ukrainast. Kas sa elad Tallinnas? Ei, ma elan Tartus. Miks sa eesti keelt õpid? Sest ma töötan Tartus.",
+    "text": "Tere! Mis su nimi on? Minu nimi on Jaan. Aga sinu? Kati. Kust sa pärit oled? Ma olen pärit Soomest. Kas sa elad Tallinnas? Ei, ma elan Tartus. Miks sa eesti keelt õpid? Sest ma töötan Tartus.",
     "model": "eleven_v4",
     "turns": [
       {
@@ -11075,7 +11070,7 @@
       {
         "voice": "jGja51dd7gcoK0zkxeyg",
         "sentences": [
-          "Ma olen pärit Ukrainast."
+          "Ma olen pärit Soomest."
         ]
       },
       {
@@ -11188,5 +11183,20 @@
     "text": "Tere, Kati! Ma olen täna tööl. Ma töötan haiglas. Jaan on kodus. Ema on turul. Isa on Tartus. Kus sina oled?",
     "model": "eleven_v4",
     "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "kusimused/kus-sa-to2o2tad": {
+    "text": "Kus sa töötad?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohad/me-oleme-saaremaal": {
+    "text": "Me oleme Saaremaal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohad/ta-to2o2tab-kontoris": {
+    "text": "Ta töötab kontoris.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

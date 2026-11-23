@@ -136,8 +136,8 @@ msgstr "don’t work, doesn’t work"
 msgid "Each person has its own: -n, -d, -b, -me, -te, -vad."
 msgstr "Each person has its own: -n, -d, -b, -me, -te, -vad."
 
-msgid "Each round gives a verb as it is said with a pronoun. Type the form that follows <0>ei</0>: take off the ending, as <1>elavad</1> becomes <2>ei ela</2>."
-msgstr "Each round gives a verb as it is said with a pronoun. Type the form that follows <0>ei</0>: take off the ending, as <1>elavad</1> becomes <2>ei ela</2>."
+msgid "Each round shows a verb with its ending, such as <0>elavad</0>. Type the form that follows <1>ei</1>: drop the ending, so <2>elavad</2> becomes <3>ei ela</3>."
+msgstr "Each round shows a verb with its ending, such as <0>elavad</0>. Type the form that follows <1>ei</1>: drop the ending, so <2>elavad</2> becomes <3>ei ela</3>."
 
 msgid "Ei before the verb"
 msgstr "Ei before the verb"
@@ -259,6 +259,9 @@ msgstr "Listening only, no microphone"
 msgid "Listening: Mari’s questions"
 msgstr "Listening: Mari’s questions"
 
+msgid "make it no"
+msgstr "make it no"
+
 msgid "Make it no"
 msgstr "Make it no"
 
@@ -298,11 +301,11 @@ msgstr "No, I’m not."
 msgid "No."
 msgstr "No."
 
+msgid "None of you read."
+msgstr "None of you read."
+
 msgid "not; no"
 msgstr "not; no"
-
-msgid "Now the meaning decides. Write each sentence in Estonian: a yes keeps the verb’s ending, and a no takes <0>ei</0> and drops it."
-msgstr "Now the meaning decides. Write each sentence in Estonian: a yes keeps the verb’s ending, and a no takes <0>ei</0> and drops it."
 
 msgid "Olema gives <0>ei ole</0>, or in one word, <1>pole</1>."
 msgstr "Olema gives <0>ei ole</0>, or in one word, <1>pole</1>."
@@ -319,8 +322,8 @@ msgstr "One sentence to keep from today: <0/>."
 msgid "Peeter is at home."
 msgstr "Peeter is at home."
 
-msgid "Peeter is at work."
-msgstr "Peeter is at work."
+msgid "Peeter is working."
+msgstr "Peeter is working."
 
 #. placeholder {0}: bare(no)
 #. placeholder {0}: bare(yes)
@@ -336,17 +339,11 @@ msgstr "Play {said}"
 msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
 msgstr "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
 
-msgid "Rewrite each sentence as a no. Put <0>ei</0> before the verb and drop its ending; the rest stays. <1>Ta töötab kodus</1> becomes <2>Ta ei tööta kodus</2>."
-msgstr "Rewrite each sentence as a no. Put <0>ei</0> before the verb and drop its ending; the rest stays. <1>Ta töötab kodus</1> becomes <2>Ta ei tööta kodus</2>."
+msgid "Rewrite each sentence as a no. Put <0>ei</0> before the verb and drop its ending. In these sentences the rest stays the same: <1>Mari armastab kohvi</1> becomes <2>Mari ei armasta kohvi</2>."
+msgstr "Rewrite each sentence as a no. Put <0>ei</0> before the verb and drop its ending. In these sentences the rest stays the same: <1>Mari armastab kohvi</1> becomes <2>Mari ei armasta kohvi</2>."
 
 msgid "Rewrite the sentence"
 msgstr "Rewrite the sentence"
-
-msgid "Say it with no"
-msgstr "Say it with no"
-
-msgid "say no"
-msgstr "say no"
 
 msgid "Say no"
 msgstr "Say no"
@@ -426,6 +423,9 @@ msgstr "to wait"
 msgid "to work"
 msgstr "to work"
 
+msgid "Turn it into a no"
+msgstr "Turn it into a no"
+
 msgid "turns a sentence into a yes-or-no question"
 msgstr "turns a sentence into a yes-or-no question"
 
@@ -450,6 +450,9 @@ msgstr "What does Jaan drink?"
 msgid "What does Jaan say about himself?"
 msgstr "What does Jaan say about himself?"
 
+msgid "Write each sentence in Estonian: a yes keeps the verb’s ending, and a no takes <0>ei</0> and drops it."
+msgstr "Write each sentence in Estonian: a yes keeps the verb’s ending, and a no takes <0>ei</0> and drops it."
+
 msgid "Write it in Estonian"
 msgstr "Write it in Estonian"
 
@@ -461,9 +464,6 @@ msgstr "Yes has six endings to learn, and no has none. That makes the no the eas
 
 msgid "Yes or no"
 msgstr "Yes or no"
-
-msgid "You all don’t read."
-msgstr "You all don’t read."
 
 msgid "You all read."
 msgstr "You all read."

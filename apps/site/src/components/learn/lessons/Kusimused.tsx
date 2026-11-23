@@ -168,7 +168,7 @@ const KAS: readonly { s: Id; q: Id; rest: string }[] = [
 
 const TRANSLATED_MEANS: readonly MessageDescriptor[] = [
   msg`Do you live in Tallinn?`,
-  msg`Where do you live?`,
+  msg`Where do you work?`,
   msg`Do you speak Estonian?`,
   msg`Who speaks Estonian?`,
   msg`Is he at home?`,
@@ -534,9 +534,9 @@ export function KusimusedLesson() {
         id: "first",
         ask: t`What does Kati ask first?`,
         options: [
-          { id: "lives", label: t`Where he lives and works` },
+          { id: "from", label: t`Where he is from` },
           { id: "name", label: t`His name` },
-          { id: "from", label: t`Where he is from and why` },
+          { id: "lives", label: t`Where he lives and works` },
         ],
         answer: "name",
         line: 1,
@@ -547,9 +547,9 @@ export function KusimusedLesson() {
         options: [
           { id: "estonia", label: t`Estonia` },
           { id: "finland", label: t`Finland` },
-          { id: "ukraine", label: t`Ukraine` },
+          { id: "britain", label: t`Great Britain` },
         ],
-        answer: "ukraine",
+        answer: "finland",
         line: 6,
       },
       {
@@ -563,9 +563,9 @@ export function KusimusedLesson() {
         id: "why",
         ask: t`Why is Jaan learning Estonian?`,
         options: [
-          { id: "friends", label: t`For his friends` },
+          { id: "fun", label: t`For fun.` },
           { id: "work", label: t`He works in Tartu.` },
-          { id: "school", label: t`For his studies` },
+          { id: "school", label: t`He studies.` },
         ],
         answer: "work",
         line: 10,
@@ -768,7 +768,8 @@ export function KusimusedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Match each question word with what it asks about. Tap a word, then its meaning.
+                    Match each question word with what it asks about. Tap a word, then what it asks
+                    about.
                   </Trans>
                 </p>
               </Prose>
@@ -886,7 +887,7 @@ export function KusimusedLesson() {
         },
         {
           id: "ask",
-          title: t`Write the question`,
+          title: t`Ask the question`,
           quiz: true,
           children: (
             <>
@@ -894,13 +895,13 @@ export function KusimusedLesson() {
                 <p>
                   <Trans>
                     Each round gives an answer. Write the question it answers: start with the
-                    question word, then the verb in the form for the person you ask.
+                    question word, and give the verb the ending for the person you ask.
                   </Trans>
                 </p>
               </Prose>
               <Quiz
                 id="ask-question"
-                title={<Trans>Write the question</Trans>}
+                title={<Trans>Write the question it answers</Trans>}
                 items={askedItems}
                 rounds={7}
                 verdict={(share) =>

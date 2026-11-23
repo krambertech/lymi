@@ -136,8 +136,8 @@ msgstr "не работаю, не работает и т. д."
 msgid "Each person has its own: -n, -d, -b, -me, -te, -vad."
 msgstr "У каждого лица своё: -n, -d, -b, -me, -te, -vad."
 
-msgid "Each round gives a verb as it is said with a pronoun. Type the form that follows <0>ei</0>: take off the ending, as <1>elavad</1> becomes <2>ei ela</2>."
-msgstr "В каждом раунде есть глагол в той форме, в какой он звучит с местоимением. Напиши форму, которая идёт после <0>ei</0>: отбрось окончание, как <1>elavad</1> становится <2>ei ela</2>."
+msgid "Each round shows a verb with its ending, such as <0>elavad</0>. Type the form that follows <1>ei</1>: drop the ending, so <2>elavad</2> becomes <3>ei ela</3>."
+msgstr "В каждом раунде есть глагол с окончанием, например <0>elavad</0>. Напиши форму, которая идёт после <1>ei</1>: отбрось окончание, и <2>elavad</2> становится <3>ei ela</3>."
 
 msgid "Ei before the verb"
 msgstr "Ei перед глаголом"
@@ -259,6 +259,9 @@ msgstr "Только на слух, без микрофона"
 msgid "Listening: Mari’s questions"
 msgstr "На слух: вопросы Мари"
 
+msgid "make it no"
+msgstr "сделай отрицание"
+
 msgid "Make it no"
 msgstr "Из «да» в «нет»"
 
@@ -298,11 +301,11 @@ msgstr "Нет, не читаю."
 msgid "No."
 msgstr "Нет."
 
+msgid "None of you read."
+msgstr "Никто из вас не читает."
+
 msgid "not; no"
 msgstr "не; нет"
-
-msgid "Now the meaning decides. Write each sentence in Estonian: a yes keeps the verb’s ending, and a no takes <0>ei</0> and drops it."
-msgstr "Теперь всё решает смысл. Напиши каждое предложение по-эстонски: в утверждении глагол сохраняет окончание, а в отрицании появляется <0>ei</0>, и окончание отпадает."
 
 msgid "Olema gives <0>ei ole</0>, or in one word, <1>pole</1>."
 msgstr "У olema будет <0>ei ole</0>, или одним словом <1>pole</1>."
@@ -319,8 +322,8 @@ msgstr "Предложение, которое стоит запомнить у�
 msgid "Peeter is at home."
 msgstr "Пеэтер дома."
 
-msgid "Peeter is at work."
-msgstr "Пеэтер на работе."
+msgid "Peeter is working."
+msgstr "Пеэтер работает."
 
 #. placeholder {0}: bare(no)
 #. placeholder {0}: bare(yes)
@@ -336,17 +339,11 @@ msgstr "Воспроизвести {said}"
 msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
 msgstr "Ставь <0>ei</0> перед глаголом: <1>ma ei loe</1>, я не читаю."
 
-msgid "Rewrite each sentence as a no. Put <0>ei</0> before the verb and drop its ending; the rest stays. <1>Ta töötab kodus</1> becomes <2>Ta ei tööta kodus</2>."
-msgstr "Перепиши каждое предложение как отрицание. Поставь <0>ei</0> перед глаголом и отбрось окончание, остальное не меняется. <1>Ta töötab kodus</1> становится <2>Ta ei tööta kodus</2>."
+msgid "Rewrite each sentence as a no. Put <0>ei</0> before the verb and drop its ending. In these sentences the rest stays the same: <1>Mari armastab kohvi</1> becomes <2>Mari ei armasta kohvi</2>."
+msgstr "Перепиши каждое предложение как отрицание. Поставь <0>ei</0> перед глаголом и отбрось окончание. В этих предложениях остальное не меняется: <1>Mari armastab kohvi</1> становится <2>Mari ei armasta kohvi</2>."
 
 msgid "Rewrite the sentence"
 msgstr "Перепиши предложение"
-
-msgid "Say it with no"
-msgstr "Скажи это с отрицанием"
-
-msgid "say no"
-msgstr "отрицание"
 
 msgid "Say no"
 msgstr "Ответь «нет»"
@@ -426,6 +423,9 @@ msgstr "ждать"
 msgid "to work"
 msgstr "работать"
 
+msgid "Turn it into a no"
+msgstr "Преврати в отрицание"
+
 msgid "turns a sentence into a yes-or-no question"
 msgstr "делает из предложения вопрос «да или нет»"
 
@@ -450,6 +450,9 @@ msgstr "Что пьёт Яан?"
 msgid "What does Jaan say about himself?"
 msgstr "Что Яан говорит о себе?"
 
+msgid "Write each sentence in Estonian: a yes keeps the verb’s ending, and a no takes <0>ei</0> and drops it."
+msgstr "Напиши каждое предложение по-эстонски: в утверждении глагол сохраняет окончание, а в отрицании появляется <0>ei</0>, и окончание отпадает."
+
 msgid "Write it in Estonian"
 msgstr "Напиши по-эстонски"
 
@@ -461,9 +464,6 @@ msgstr "У «да» шесть окончаний, которые надо вы�
 
 msgid "Yes or no"
 msgstr "Да или нет"
-
-msgid "You all don’t read."
-msgstr "Вы не читаете."
 
 msgid "You all read."
 msgstr "Вы читаете."

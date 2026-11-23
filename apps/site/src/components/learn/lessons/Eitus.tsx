@@ -517,7 +517,7 @@ export function EitusLesson() {
         kind: "rewrite" as const,
         id: `no-${clipId(no)}`,
         from: yes,
-        cue: t`say no`,
+        cue: t`make it no`,
         src: src(no),
         answers: [no],
         pair: [person, no] as const,
@@ -614,7 +614,7 @@ export function EitusLesson() {
       {
         id: "working",
         kind: "truefalse",
-        ask: t`Peeter is at work.`,
+        ask: t`Peeter is working.`,
         answer: true,
         line: 8,
       },
@@ -779,9 +779,9 @@ export function EitusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each round gives a verb as it is said with a pronoun. Type the form that follows{" "}
-                    <span lang="et">ei</span>: take off the ending, as <b lang="et">elavad</b>{" "}
-                    becomes <b lang="et">ei ela</b>.
+                    Each round shows a verb with its ending, such as <b lang="et">elavad</b>. Type
+                    the form that follows <span lang="et">ei</span>: drop the ending, so{" "}
+                    <b lang="et">elavad</b> becomes <b lang="et">ei ela</b>.
                   </Trans>
                 </p>
               </Prose>
@@ -917,7 +917,7 @@ export function EitusLesson() {
         },
         {
           id: "rewrite",
-          title: t`Say it with no`,
+          title: t`Turn it into a no`,
           quiz: true,
           children: (
             <>
@@ -925,8 +925,9 @@ export function EitusLesson() {
                 <p>
                   <Trans>
                     Rewrite each sentence as a no. Put <span lang="et">ei</span> before the verb and
-                    drop its ending; the rest stays. <b lang="et">Ta töötab kodus</b> becomes{" "}
-                    <b lang="et">Ta ei tööta kodus</b>.
+                    drop its ending. In these sentences the rest stays the same:{" "}
+                    <b lang="et">Mari armastab kohvi</b> becomes{" "}
+                    <b lang="et">Mari ei armasta kohvi</b>.
                   </Trans>
                 </p>
               </Prose>
@@ -1000,8 +1001,8 @@ export function EitusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Now the meaning decides. Write each sentence in Estonian: a yes keeps the verb’s
-                    ending, and a no takes <span lang="et">ei</span> and drops it.
+                    Write each sentence in Estonian: a yes keeps the verb’s ending, and a no takes{" "}
+                    <span lang="et">ei</span> and drops it.
                   </Trans>
                 </p>
               </Prose>

@@ -331,7 +331,7 @@ msgid "The ending for te: you, to more than one; polite you."
 msgstr "Окончание для te: «вы» нескольким людям и вежливое «Вы»."
 
 msgid "The ending says who, so the pronoun can go."
-msgstr "Окончание говорит, кто, поэтому местоимение можно опустить."
+msgstr "Окончание говорит, кто это, поэтому местоимение можно опустить."
 
 msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 msgstr "Окончание говорит, кто это, поэтому местоимение можно опустить: <0>Olen Mari.</0>"

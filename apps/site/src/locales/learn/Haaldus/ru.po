@@ -170,7 +170,7 @@ msgid "Into town"
 msgstr "В город"
 
 msgid "It was <et>{word}</et>; <et>{other}</et> is another word."
-msgstr "Это было <et>{word}</et>; <et>{other}</et> — другое слово."
+msgstr "Прозвучало <et>{word}</et>; <et>{other}</et> — другое слово."
 
 msgid "Jaan"
 msgstr "Яан"
@@ -328,7 +328,7 @@ msgid "Said twice: <0/> {0}"
 msgstr "Дважды: <0/> {0}"
 
 msgid "Same word, vowel or length?"
-msgstr "То же слово, гласная или долгота?"
+msgstr "Одно и то же слово, гласная или долгота?"
 
 msgid "Say e with rounded lips, as in German “schön”."
 msgstr "Скажи «э», округлив губы, как в немецком «schön»."

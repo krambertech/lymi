@@ -215,6 +215,9 @@ msgstr "Pick the ending that goes with the pronoun, then hear the sentence."
 msgid "Play {text}"
 msgstr "Play {text}"
 
+msgid "Reading a book"
+msgstr "Reading a book"
+
 msgid "Rewrite the sentence"
 msgstr "Rewrite the sentence"
 
@@ -401,9 +404,6 @@ msgstr "with {to}"
 
 msgid "With <et>{pronoun}</et>, the ending is <et>-{ending}</et>."
 msgstr "With <et>{pronoun}</et>, the ending is <et>-{ending}</et>."
-
-msgid "Working from home"
-msgstr "Working from home"
 
 msgid "you are"
 msgstr "you are"

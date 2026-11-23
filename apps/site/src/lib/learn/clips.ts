@@ -2878,6 +2878,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...words(PRONOUN_BUILT.map(({ said }) => said)),
     ...words(PRONOUN_DRILLED.map((id) => PRONOUN_SENTENCES[id])),
     ...words(PRONOUN_HEARD.map(({ said }) => said)),
+    ...words(["kodus", "valmis", "väsinud", "õpetaja"]),
     "p-liis": { sentences: PRONOUN_PASSAGE, voice: "second" },
   },
   olevik: {

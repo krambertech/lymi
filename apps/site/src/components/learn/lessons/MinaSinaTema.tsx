@@ -741,6 +741,10 @@ export function MinaSinaTemaLesson() {
         "on",
         "oleme",
         "olete",
+        "kodus",
+        "valmis",
+        "väsinud",
+        "õpetaja",
       ]}
       recap={[
         <Trans key="1">

@@ -170,7 +170,7 @@ msgid "Into town"
 msgstr "У місто"
 
 msgid "It was <et>{word}</et>; <et>{other}</et> is another word."
-msgstr "Це було <et>{word}</et>; <et>{other}</et> — інше слово."
+msgstr "Прозвучало <et>{word}</et>; <et>{other}</et> — інше слово."
 
 msgid "Jaan"
 msgstr "Яан"

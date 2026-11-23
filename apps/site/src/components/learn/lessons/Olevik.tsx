@@ -601,7 +601,7 @@ export function OlevikLesson() {
         options: [
           { id: "bus", label: t`Waiting for the bus` },
           { id: "estonian", label: t`Learning Estonian` },
-          { id: "work", label: t`Working from home` },
+          { id: "book", label: t`Reading a book` },
         ],
         answer: "estonian",
         line: 2,

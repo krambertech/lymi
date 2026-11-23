@@ -215,6 +215,9 @@ msgstr "Выбери окончание, которое подходит к ме
 msgid "Play {text}"
 msgstr "Воспроизвести {text}"
 
+msgid "Reading a book"
+msgstr "Читает книгу"
+
 msgid "Rewrite the sentence"
 msgstr "Перепиши предложение"
 
@@ -401,9 +404,6 @@ msgstr "с {to}"
 
 msgid "With <et>{pronoun}</et>, the ending is <et>-{ending}</et>."
 msgstr "С <et>{pronoun}</et> — окончание <et>-{ending}</et>."
-
-msgid "Working from home"
-msgstr "Работает из дома"
 
 msgid "you are"
 msgstr "ты есть"

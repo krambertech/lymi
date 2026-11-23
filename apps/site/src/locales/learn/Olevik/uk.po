@@ -215,6 +215,9 @@ msgstr "Обери закінчення, яке пасує до займенни
 msgid "Play {text}"
 msgstr "Відтворити {text}"
 
+msgid "Reading a book"
+msgstr "Читає книжку"
+
 msgid "Rewrite the sentence"
 msgstr "Перепиши речення"
 
@@ -397,13 +400,10 @@ msgid "Which verbs change their stem"
 msgstr "Які дієслова змінюють основу"
 
 msgid "with {to}"
-msgstr "із {to}"
+msgstr "з {to}"
 
 msgid "With <et>{pronoun}</et>, the ending is <et>-{ending}</et>."
 msgstr "З <et>{pronoun}</et> — закінчення <et>-{ending}</et>."
-
-msgid "Working from home"
-msgstr "Працює вдома"
 
 msgid "you are"
 msgstr "ти є"

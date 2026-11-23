@@ -376,6 +376,9 @@ msgstr "Більшість правильно. Ще раз поглянь на �
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Більшість правильно. Переслухай ще раз ті, де були помилки."
 
+msgid "Most verbs build the <0>nud</0> form on the <1>da</1> infinitive from lesson {verbForms}. Take off <2>da</2> and add <3>nud</3>: <4/>, <5/>; <6/>, <7><8/>.</7>"
+msgstr "Більшість дієслів утворює форму на <0>nud</0> від інфінітива на <1>da</1> з уроку {verbForms}. Відкинь <2>da</2> і додай <3>nud</3>: <4/>, <5/>; <6/>, <7><8/>.</7>"
+
 msgid "Mul pole aega, in the past."
 msgstr "Mul pole aega в минулому."
 
@@ -525,9 +528,6 @@ msgstr "Інфінітив на <0>da</0> з уроку {verbForms}."
 
 msgid "The <0>nud</0> form comes back in lesson {haveRead}, where <1>olen lugenud</1> means I have read."
 msgstr "Форма на <0>nud</0> повернеться в уроці {haveRead}: там <1>olen lugenud</1> означає «я вже прочитав (прочитала)»."
-
-msgid "The <0>nud</0> form is built on the <1>da</1> infinitive from lesson {verbForms}. Take off <2>da</2> and add <3>nud</3>: <4/>, <5/>; <6/>, <7><8/>.</7>"
-msgstr "Форма на <0>nud</0> утворюється від інфінітива на <1>da</1> з уроку {verbForms}. Відкинь <2>da</2> і додай <3>nud</3>: <4/>, <5/>; <6/>, <7><8/>.</7>"
 
 msgid "The <et>-nud</et> form from the -da infinitive"
 msgstr "Форма на <et>-nud</et> від інфінітива на -da"

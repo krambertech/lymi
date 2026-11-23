@@ -888,9 +888,9 @@ export function MinevikuEitusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The <End>nud</End> form is built on the <End>da</End> infinitive from lesson{" "}
-                    {verbForms}. Take off <End>da</End> and add <End>nud</End>: <Word w="elada" />,{" "}
-                    <Word w="elanud" />; <Word w="lugeda" />,{" "}
+                    Most verbs build the <End>nud</End> form on the <End>da</End> infinitive from
+                    lesson {verbForms}. Take off <End>da</End> and add <End>nud</End>:{" "}
+                    <Word w="elada" />, <Word w="elanud" />; <Word w="lugeda" />,{" "}
                     <Nowrap>
                       <Word w="lugenud" />.
                     </Nowrap>

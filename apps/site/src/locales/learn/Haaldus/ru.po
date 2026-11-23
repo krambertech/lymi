@@ -300,7 +300,7 @@ msgid "One vowel changes: <0/> {0} · <1/> {1}"
 msgstr "Меняется одна гласная: <0/> {0} · <1/> {1}"
 
 msgid "One word for both."
-msgstr "Одно слово с обоими значениями."
+msgstr "Одно слово для обоих значений."
 
 msgid "Pick a pair. Both words are drawn on one time scale, so the longer one takes more room."
 msgstr "Выбери пару. Оба слова показаны на одной шкале времени, поэтому более долгое занимает больше места."

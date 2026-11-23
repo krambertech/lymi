@@ -1,0 +1,482 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 13:44+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0/> became <1/> before <2/>. That’s the genitive, the form lesson {genitive} taught for whose: <3>kasti</3>, the box’s. Each place word takes it: <4/> becomes <5>laua all</5>."
+msgstr "<0/> перед <2/> стало <1/>. Це родовий відмінок з уроку {genitive}, форма «чий»: <3>kasti</3> — «коробки». Його вимагає кожне слово місця: <4/> стає <5>laua all</5>."
+
+msgid "<0>Laua peal</0> and <1>laual</1> both mean on the table, and <2>kasti sees</2> and <3>kastis</3> both mean in the box."
+msgstr "<0>Laua peal</0> і <1>laual</1> обидва означають «на столі», а <2>kasti sees</2> і <3>kastis</3> — «у коробці»."
+
+msgid "22 minutes"
+msgstr "22 хвилини"
+
+msgid "8 exercises"
+msgstr "8 вправ"
+
+msgid "A cat and a box"
+msgstr "Кіт і коробка"
+
+msgid "All eight typed right."
+msgstr "Усі вісім введено правильно."
+
+msgid "All five places right."
+msgstr "Усі п’ять місць вибрано правильно."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All six written right."
+msgstr "Усі шість написано правильно."
+
+msgid "at someone’s place, by"
+msgstr "у когось, біля"
+
+msgid "away"
+msgstr "геть"
+
+msgid "behind"
+msgstr "за"
+
+msgctxt "taha, moving behind"
+msgid "behind"
+msgstr "за (куди)"
+
+msgid "Being at someone’s place answers <0>kus</0>: <1>juures</1>."
+msgstr "Бути в когось — це відповідь на <0>kus</0>: <1>juures</1>."
+
+msgid "box"
+msgstr "коробка"
+
+msgctxt "kass, the cat on the table"
+msgid "cat"
+msgstr "кіт"
+
+msgid "Coming out answers <0>kust</0>: <1>seest</1>."
+msgstr "Вийти звідкись — це відповідь на <0>kust</0>: <1>seest</1>."
+
+msgid "down, off"
+msgstr "донизу, з чогось"
+
+msgid "Each place word has a form for <et>kus</et>, <et>kuhu</et> and <et>kust</et>: <et>taga, taha, tagant</et>."
+msgstr "Кожне слово місця має форму для <et>kus</et>, <et>kuhu</et> і <et>kust</et>: <et>taga, taha, tagant</et>."
+
+msgid "Each round gives a place word and a question. Type the form that answers it, then hear it in a sentence about the cat."
+msgstr "У кожному раунді — слово місця й питання. Введи форму, що на нього відповідає, а потім послухай її в реченні про кота."
+
+msgid "Each sentence has one word in the wrong form: the thing, or the place word. Tap it, then write the right form."
+msgstr "У кожному реченні одне слово в неправильній формі: предмет або слово місця. Торкнися його, а потім напиши правильну форму."
+
+msgid "Each word has a form for <0>kus</0>, <1>kuhu</1> and <2>kust</2>: <3>peal, peale, pealt</3>; <4>taga, taha, tagant</4>; <5>sees, sisse, seest</5>."
+msgstr "Кожне слово має форму для <0>kus</0>, <1>kuhu</1> і <2>kust</2>: <3>peal, peale, pealt</3>; <4>taga, taha, tagant</4>; <5>sees, sisse, seest</5>."
+
+msgid "Ema juures: at Mum’s."
+msgstr "Ema juures — у мами."
+
+msgid "English does this with ago: a week ago. The six place words in this lesson work the same way. Tap a word to move the cat and hear the sentence."
+msgstr "Українською так поводиться «тому»: «тиждень тому», а не «тому тиждень». В естонській так само, після предмета, стоять шість слів місця з цього уроку. Торкнися слова, щоб кіт перейшов туди, і послухай речення."
+
+msgid "English puts on or under before the thing. Estonian puts its word after it: <0/> Word for word: “cat is box’s on top”."
+msgstr "Українською «на» чи «під» стоять перед предметом. Естонська ставить своє слово після нього: <0/> Дослівно: «кіт є коробки на»."
+
+msgid "Estonian says on, under and behind with a word after the thing: <0>kasti peal</0>, on the box. The thing takes its genitive, and the place word has a form for each of <1>kus</1>, <2>kuhu</2> and <3>kust</3>."
+msgstr "«На», «під» і «за» естонською — це слова після предмета: <0>kasti peal</0> — на коробці. Предмет стоїть у родовому відмінку, а слово місця має форму для <1>kus</1>, <2>kuhu</2> і <3>kust</3>."
+
+msgid "Fill the gaps"
+msgstr "Заповни пропуски"
+
+msgid "Find and fix the mistake"
+msgstr "Знайди й виправ помилку"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "For a person’s place, Estonian says <0/>: <1/> It has three forms too: <2/> <3/>"
+msgstr "Щоб сказати «у когось», естонська бере <0/>: <1/> У нього теж три форми: <2/> <3/>"
+
+msgid "from behind"
+msgstr "з-за"
+
+msgid "from beside"
+msgstr "від (з місця поруч)"
+
+msgid "from in front of"
+msgstr "з-перед"
+
+msgid "from someone’s place"
+msgstr "від когось"
+
+msgid "from the floor"
+msgstr "з підлоги"
+
+msgid "from under"
+msgstr "з-під"
+
+msgid "Go through the sections above once more, then try again."
+msgstr "Ще раз переглянь розділи вище, а потім спробуй знову."
+
+msgid "Hear a sentence and tap where the cat is."
+msgstr "Послухай речення й торкнися місця, де кіт."
+
+msgid "I’m at Mum’s."
+msgstr "Я в мами."
+
+msgid "I’m coming from Mum’s."
+msgstr "Я йду від мами."
+
+msgid "I’m going to Mum’s."
+msgstr "Я йду до мами."
+
+msgid "I’m waiting in front of the shop."
+msgstr "Я чекаю перед магазином."
+
+msgid "in front of"
+msgstr "перед"
+
+msgctxt "ette, moving in front"
+msgid "in front of"
+msgstr "перед (куди)"
+
+msgid "in the box"
+msgstr "у коробці"
+
+msgid "In the box"
+msgstr "У коробці"
+
+msgid "inside"
+msgstr "всередині"
+
+msgid "into"
+msgstr "у, всередину (куди)"
+
+msgid "Jaan can’t find his book. Read the questions, then listen."
+msgstr "Яан не може знайти свою книжку. Прочитай запитання, а потім послухай."
+
+msgid "Jaan is coming over to Mari."
+msgstr "Яан іде до Марі."
+
+msgid "Jumping onto it answers <0>kuhu</0>: <1>peale</1>."
+msgstr "Стрибнути на щось — це відповідь на <0>kuhu</0>: <1>peale</1>."
+
+msgid "Kasti is its genitive: kasti peal, on the box."
+msgstr "Kasti — родовий відмінок: kasti peal, на коробці."
+
+msgid "Lesson {onto} gave <0>laud</0> three forms: <1>laual</1>, <2>lauale</2>, <3>laualt</3>. These words have three too, one for <4/>, one for <5/> and one for <6/>. <7/> and <8/> take the same <9>-l</9>, <10>-le</10> and <11>-lt</11>."
+msgstr "В уроці {onto} у <0>laud</0> було три форми: <1>laual</1>, <2>lauale</2>, <3>laualt</3>. У цих слів теж по три: для <4/>, для <5/> і для <6/>. <7/> і <8/> беруть ті самі <9>-l</9>, <10>-le</10> і <11>-lt</11>."
+
+msgid "Listen: a lost book"
+msgstr "Послухай: загублена книжка"
+
+msgid "Listen: Jaan looks for his book"
+msgstr "Послухай: Яан шукає книжку"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Looking for Miisu"
+msgstr "Шукаємо Мійсу"
+
+msgid "Making the form"
+msgstr "Як утворити форму"
+
+msgid "Mari has it"
+msgstr "Вона в Марі"
+
+msgid "Mari is looking for her cat, <0/>. Pick the form for each gap: is Miisu somewhere, going somewhere or coming from somewhere?"
+msgstr "Марі шукає свою кішку <0/>. Вибери форму для кожного пропуску: Мійсу десь є, кудись рухається чи звідкись?"
+
+msgid "Meaning"
+msgstr "Значення"
+
+msgid "Miisu"
+msgstr "Мійсу"
+
+msgid "Miisu, a cat’s name"
+msgstr "Мійсу, ім’я кішки"
+
+msgid "Most of them. Look again at the ones you missed."
+msgstr "Майже всі. Ще раз поглянь на ті, де була помилка."
+
+msgid "Most of them. Read the ones you missed once more."
+msgstr "Майже всі. Ще раз прочитай ті, де була помилка."
+
+msgid "next to"
+msgstr "поруч"
+
+msgctxt "kõrvale, moving next to"
+msgid "next to"
+msgstr "поруч (куди)"
+
+msgid "of the box"
+msgstr "коробки"
+
+msgid "of the table"
+msgstr "стола"
+
+msgctxt "pealt"
+msgid "off, from on top of"
+msgstr "з (звідки)"
+
+msgid "on the table"
+msgstr "на столі"
+
+msgid "On the table"
+msgstr "На столі"
+
+msgid "on, on top of"
+msgstr "на, зверху"
+
+msgid "On, under, behind"
+msgstr "На, під, за"
+
+msgid "onto"
+msgstr "на (куди)"
+
+msgid "out"
+msgstr "назовні"
+
+msgid "out of"
+msgstr "з, зсередини"
+
+msgid "Put each form under the question it answers."
+msgstr "Розклади форми за питаннями, на які вони відповідають."
+
+msgid "Six place words, each with a form for kus, kuhu and kust"
+msgstr "Шість слів місця, кожне з формою для kus, kuhu і kust"
+
+msgid "Sort the forms"
+msgstr "Розклади форми"
+
+msgid "table"
+msgstr "стіл"
+
+msgid "Tap a form"
+msgstr "Торкнися форми"
+
+msgid "Tap the words above the box once more, then try again."
+msgstr "Ще раз торкнися слів над коробкою, а тоді спробуй знову."
+
+msgid "Tap through the table of forms above once more, then try again."
+msgstr "Ще раз пройдися по таблиці форм вище, а потім спробуй знову."
+
+msgid "The <0>-l</0> and <1>-s</1> endings go on the genitive too: <2>laua</2> gives <3>laual</3>, <4>kasti</4> gives <5>kastis</5>. These two say the same about a book on a table: <6/> <7/> And <8>kastis</8> means the same as <9>kasti sees</9>: <10/>"
+msgstr "Закінчення <0>-l</0> і <1>-s</1> теж додаються до родового: <2>laua</2> дає <3>laual</3>, <4>kasti</4> — <5>kastis</5>. Ці два речення кажуть про книжку на столі те саме: <6/> <7/> А <8>kastis</8> означає те саме, що <9>kasti sees</9>: <10/>"
+
+msgid "The book"
+msgstr "Книжка"
+
+msgid "The book is on the table."
+msgstr "Книжка на столі."
+
+msgid "The café is next to the school."
+msgstr "Кав’ярня поруч зі школою."
+
+msgid "The car is behind the house."
+msgstr "Машина за будинком."
+
+msgid "The cat comes down off the box."
+msgstr "Кіт злазить з коробки."
+
+msgid "The cat comes out from behind the box."
+msgstr "Кіт виходить з-за коробки."
+
+msgid "The cat comes out from under the box."
+msgstr "Кіт вилазить з-під коробки."
+
+msgid "The cat comes out of the box."
+msgstr "Кіт вилазить з коробки."
+
+msgid "The cat goes behind the box."
+msgstr "Кіт іде за коробку."
+
+msgid "The cat goes in front of the box."
+msgstr "Кіт стає перед коробкою."
+
+msgid "The cat goes into the box."
+msgstr "Кіт залазить у коробку."
+
+msgid "The cat goes next to the box."
+msgstr "Кіт іде до коробки й стає поруч."
+
+msgid "The cat goes under the box."
+msgstr "Кіт залазить під коробку."
+
+msgid "The cat is behind the box."
+msgstr "Кіт за коробкою."
+
+msgid "The cat is in front of the box."
+msgstr "Кіт перед коробкою."
+
+msgid "The cat is in the box."
+msgstr "Кіт у коробці."
+
+msgid "The cat is next to the box."
+msgstr "Кіт біля коробки."
+
+msgid "The cat is on the box."
+msgstr "Кіт на коробці."
+
+msgid "The cat is under the box."
+msgstr "Кіт під коробкою."
+
+msgid "The cat is under the table."
+msgstr "Кіт під столом."
+
+msgid "The cat jumps onto the box."
+msgstr "Кіт стрибає на коробку."
+
+msgid "The cat moves away from beside the box."
+msgstr "Кіт відходить від коробки."
+
+msgid "The cat moves away from in front of the box."
+msgstr "Кіт іде з-перед коробки."
+
+msgid "The genitive before a place word"
+msgstr "Родовий перед словом місця"
+
+msgid "The genitive of kast, box."
+msgstr "Родовий відмінок від kast, коробка."
+
+msgid "The genitive of laud, table."
+msgstr "Родовий відмінок від laud, стіл."
+
+msgid "The money"
+msgstr "Гроші"
+
+msgid "The money is inside the book."
+msgstr "Гроші всередині книжки."
+
+msgid "The other four change more, so learn each as three: <0>all, alla, alt</0>; <1>taga, taha, tagant</1>; <2>ees, ette, eest</2>; <3>sees, sisse, seest</3>. Tap a form to hear its sentence."
+msgstr "Інші чотири змінюються сильніше, тож запам’ятовуй кожне трійкою: <0>all, alla, alt</0>; <1>taga, taha, tagant</1>; <2>ees, ette, eest</2>; <3>sees, sisse, seest</3>. Торкнися форми, щоб почути речення з нею."
+
+msgid "The thing before a place word is in the genitive: <0>laua peal</0>."
+msgstr "Предмет перед словом місця стоїть у родовому: <0>laua peal</0>."
+
+msgid "The thing before a place word is in the genitive: <0>pood, poe</0>, <1>poe ees</1>."
+msgstr "Предмет перед словом місця стоїть у родовому: <0>pood, poe</0>, <1>poe ees</1>."
+
+msgid "The thing before a place word is in the genitive: <et>laua peal, poe ees</et>."
+msgstr "Предмет перед словом місця стоїть у родовому: <et>laua peal, poe ees</et>."
+
+msgid "The thing before them is in the genitive: <0>laud</0> becomes <1>laua all</1>, <2>pood</2> becomes <3>poe ees</3>."
+msgstr "Предмет перед ними стоїть у родовому відмінку, як після «біля» чи «навколо»: <0>laud</0> стає <1>laua all</1>, <2>pood</2> — <3>poe ees</3>."
+
+msgid "The words for on, under, behind, in front of, next to and inside come after the thing: <0>kasti peal, laua all, maja taga</0>."
+msgstr "Естонські слова для «на», «під», «за», «перед», «поруч» і «всередині» стоять після предмета: <0>kasti peal, laua all, maja taga</0>."
+
+msgid "to sit"
+msgstr "сидіти"
+
+msgid "to someone’s place"
+msgstr "до когось"
+
+msgid "Type the form"
+msgstr "Введи форму"
+
+msgid "under"
+msgstr "під"
+
+msgctxt "alla, moving under"
+msgid "under"
+msgstr "під (куди)"
+
+msgid "What is in the box? Write it in Estonian."
+msgstr "Що в коробці? Напиши естонською."
+
+msgid "What is under the table?"
+msgstr "Що під столом?"
+
+msgid "where"
+msgstr "де"
+
+msgid "where from"
+msgstr "звідки"
+
+msgid "Where from?"
+msgstr "Звідки?"
+
+msgid "Where is Jaan’s book?"
+msgstr "Де книжка Яана?"
+
+msgid "Where is the cat?"
+msgstr "Де кіт?"
+
+msgid "Where is the coffee? Write it in Estonian."
+msgstr "Де кава? Напиши естонською."
+
+msgid "Where it comes from"
+msgstr "Звідки воно йде"
+
+msgid "Where it goes"
+msgstr "Куди воно йде"
+
+msgid "Where it is"
+msgstr "Де воно"
+
+#. placeholder {0}: gap.answer
+msgid "Where Miisu comes from, so the <0>kust</0> form: <1>{0}</1>."
+msgstr "Ідеться про те, звідки Мійсу рухається, тож форма для <0>kust</0>: <1>{0}</1>."
+
+#. placeholder {0}: gap.answer
+msgid "Where Miisu goes, so the <0>kuhu</0> form: <1>{0}</1>."
+msgstr "Ідеться про те, куди Мійсу йде, тож форма для <0>kuhu</0>: <1>{0}</1>."
+
+#. placeholder {0}: gap.answer
+msgid "Where Miisu is, so the <0>kus</0> form: <1>{0}</1>."
+msgstr "Ідеться про те, де Мійсу, тож форма для <0>kus</0>: <1>{0}</1>."
+
+msgid "Where something comes from: <0>pealt, alt, tagant, eest, kõrvalt, seest</0>."
+msgstr "Звідки щось рухається: <0>pealt, alt, tagant, eest, kõrvalt, seest</0>."
+
+msgid "Where something goes: <0>peale, alla, taha, ette, kõrvale, sisse</0>."
+msgstr "Куди щось рухається: <0>peale, alla, taha, ette, kõrvale, sisse</0>."
+
+msgid "Where something is: <0>peal, all, taga, ees, kõrval, sees</0>."
+msgstr "Де щось є: <0>peal, all, taga, ees, kõrval, sees</0>."
+
+msgid "Where the car is answers <0>kus</0>: <1>taga</1>."
+msgstr "Де стоїть машина — це відповідь на <0>kus</0>: <1>taga</1>."
+
+msgid "Where the cat is"
+msgstr "Де кіт"
+
+msgid "where to"
+msgstr "куди"
+
+msgid "Where to and where from"
+msgstr "Куди і звідки"
+
+msgid "Where to?"
+msgstr "Куди?"
+
+msgid "Where, where to and where from"
+msgstr "Де, куди й звідки"
+
+msgid "Where?"
+msgstr "Де?"
+
+msgid "Which question a form answers"
+msgstr "На яке питання відповідає форма"
+
+msgid "Which word means what?"
+msgstr "Яке слово що означає?"
+
+msgid "Word"
+msgstr "Слово"
+
+msgid "Write each sentence in Estonian. Put the thing in the genitive, then the place word."
+msgstr "Напиши кожне речення естонською. Спершу предмет у родовому, потім слово місця."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "You know these genitives already: <0>poe</0> from <1>pood</1>, <2>kooli</2> from <3>kool</3>. <4>Maja</4> stays <5>maja</5>. Tap a sentence to hear it."
+msgstr "Ці родові ти вже знаєш: <0>poe</0> від <1>pood</1>, <2>kooli</2> від <3>kool</3>. <4>Maja</4> лишається <5>maja</5>. Торкнися речення, щоб його почути."
+
+msgid "You’ll hear it in a sentence about the cat."
+msgstr "Почуєш її в реченні про кота."

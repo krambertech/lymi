@@ -158,11 +158,11 @@ msgstr "Monday"
 msgid "Most of them. Listen to how the ones you missed start."
 msgstr "Most of them. Listen to how the ones you missed start."
 
-msgid "Nearly. Check <0>täna</0> and <1>homme</1> in the ones you missed."
-msgstr "Nearly. Check <0>täna</0> and <1>homme</1> in the ones you missed."
-
 msgid "Nearly. Hear the ones you missed below, then try again with Slower."
 msgstr "Nearly. Hear the ones you missed below, then try again with Slower."
+
+msgid "Nearly. In the ones you missed, check <0>täna</0> or <1>homme</1> and the day’s name."
+msgstr "Nearly. In the ones you missed, check <0>täna</0> or <1>homme</1> and the day’s name."
 
 msgid "On a door or a sign."
 msgstr "On a door or a sign."

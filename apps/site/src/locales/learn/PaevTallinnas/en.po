@@ -265,8 +265,8 @@ msgstr "Jaan works tomorrow."
 msgid "Jaan, another friend, leaves you a voice message. Listen for where he is and when."
 msgstr "Jaan, another friend, leaves you a voice message. Listen for where he is and when."
 
-msgid "Kell on kümme: it’s ten. Kell kümme: at ten."
-msgstr "Kell on kümme: it’s ten. Kell kümme: at ten."
+msgid "Kell on kolm: it’s three. Kell kolm: at three."
+msgstr "Kell on kolm: it’s three. Kell kolm: at three."
 
 msgid "Listen: a plan for tomorrow"
 msgstr "Listen: a plan for tomorrow"
@@ -304,8 +304,8 @@ msgstr "Mari’s message ended with a question: <0>Kas sa oled homme linnas?</0>
 msgid "Nearly. Hear the ones you missed below, then try again with Slower."
 msgstr "Nearly. Hear the ones you missed below, then try again with Slower."
 
-msgid "Nearly. In the ones you missed, check <0>kell</0> for a time and <1>maksab … eurot</1> for a price."
-msgstr "Nearly. In the ones you missed, check <0>kell</0> for a time and <1>maksab … eurot</1> for a price."
+msgid "Nearly. In the ones you missed, check <0>kell</0> for a time, <1>maksab … eurot</1> for a price, and <2>ei</2> before the verb."
+msgstr "Nearly. In the ones you missed, check <0>kell</0> for a time, <1>maksab … eurot</1> for a price, and <2>ei</2> before the verb."
 
 msgid "No, it’s closed"
 msgstr "No, it’s closed"
@@ -313,8 +313,8 @@ msgstr "No, it’s closed"
 msgid "no; not"
 msgstr "no; not"
 
-msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number. <2>Mari ja mina</2>, Mari and I, is the same as <3>me</3>, we."
-msgstr "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number. <2>Mari ja mina</2>, Mari and I, is the same as <3>me</3>, we."
+msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number. After <2>Mari ja mina</2>, Mari and I, the verb takes the same form as after <3>me</3>, we."
+msgstr "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number. After <2>Mari ja mina</2>, Mari and I, the verb takes the same form as after <3>me</3>, we."
 
 msgid "On a door or a sign."
 msgstr "On a door or a sign."

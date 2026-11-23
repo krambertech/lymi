@@ -57,7 +57,10 @@ const GLOSSARY: Glossary = {
     en: msg`on Sunday`,
     note: msg`Pühapäev with the ending that says when, as in esmaspäeval.`,
   },
-  kell: { en: msg`clock, watch; o’clock`, note: msg`Kell on kümme: it’s ten. Kell kümme: at ten.` },
+  kell: {
+    en: msg`clock, watch; o’clock`,
+    note: msg`Kell on kolm: it’s three. Kell kolm: at three.`,
+  },
   kümme: { en: msg`ten` },
   kaksteist: { en: msg`twelve` },
   üksteist: { en: msg`eleven` },
@@ -647,8 +650,9 @@ export function PaevTallinnasLesson() {
                     <Trans>All six, every sentence right.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>
-                      Nearly. In the ones you missed, check <span lang="et">kell</span> for a time
-                      and <span lang="et">maksab … eurot</span> for a price.
+                      Nearly. In the ones you missed, check <span lang="et">kell</span> for a time,{" "}
+                      <span lang="et">maksab … eurot</span> for a price, and{" "}
+                      <span lang="et">ei</span> before the verb.
                     </Trans>
                   ) : (
                     <Trans>Read Mari’s message once more, then try again.</Trans>
@@ -672,8 +676,8 @@ export function PaevTallinnasLesson() {
                   <Trans>
                     Now it’s Saturday, and this is your plan. Put a word in each gap: a form of{" "}
                     <Word w="olema" />, a verb with the right ending, <Word w="ei" />, or the form a
-                    word takes after a number. <span lang="et">Mari ja mina</span>, Mari and I, is
-                    the same as <span lang="et">me</span>, we.
+                    word takes after a number. After <b lang="et">Mari ja mina</b>, Mari and I, the
+                    verb takes the same form as after <b lang="et">me</b>, we.
                   </Trans>
                 </p>
               </Prose>

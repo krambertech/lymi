@@ -176,7 +176,7 @@ msgid "costs"
 msgstr "коштує"
 
 msgid "Days and signs"
-msgstr "Дні й вивіски"
+msgstr "Дні й таблички"
 
 msgid "eleven"
 msgstr "одинадцять"
@@ -265,8 +265,8 @@ msgstr "Яан завтра працює."
 msgid "Jaan, another friend, leaves you a voice message. Listen for where he is and when."
 msgstr "Яан, ще один друг, надсилає тобі голосове повідомлення. Слухай, де він буде і коли."
 
-msgid "Kell on kümme: it’s ten. Kell kümme: at ten."
-msgstr "Kell on kümme: зараз десята. Kell kümme: о десятій."
+msgid "Kell on kolm: it’s three. Kell kolm: at three."
+msgstr "Kell on kolm: зараз третя. Kell kolm: о третій."
 
 msgid "Listen: a plan for tomorrow"
 msgstr "Слухання: план на завтра"
@@ -304,8 +304,8 @@ msgstr "Повідомлення Марі закінчилося питання�
 msgid "Nearly. Hear the ones you missed below, then try again with Slower."
 msgstr "Майже. Послухай нижче ті, де була помилка, а тоді спробуй ще раз із кнопкою «Повільніше»."
 
-msgid "Nearly. In the ones you missed, check <0>kell</0> for a time and <1>maksab … eurot</1> for a price."
-msgstr "Майже. Там, де була помилка, перевір <0>kell</0> у часі та <1>maksab … eurot</1> у ціні."
+msgid "Nearly. In the ones you missed, check <0>kell</0> for a time, <1>maksab … eurot</1> for a price, and <2>ei</2> before the verb."
+msgstr "Майже. Там, де була помилка, перевір <0>kell</0>, якщо це час, <1>maksab … eurot</1>, якщо ціна, і <2>ei</2> перед дієсловом."
 
 msgid "No, it’s closed"
 msgstr "Ні, зачинено"
@@ -313,8 +313,8 @@ msgstr "Ні, зачинено"
 msgid "no; not"
 msgstr "ні; не"
 
-msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number. <2>Mari ja mina</2>, Mari and I, is the same as <3>me</3>, we."
-msgstr "Тепер субота, і ось твій план. Встав у кожен пропуск слово: форму <0/>, дієслово з потрібним закінченням, <1/> або форму слова після числа. <2>Mari ja mina</2>, «Марі і я», — це те саме, що <3>me</3>, «ми»."
+msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number. After <2>Mari ja mina</2>, Mari and I, the verb takes the same form as after <3>me</3>, we."
+msgstr "Тепер субота, і ось твій план. Встав у кожен пропуск слово: форму <0/>, дієслово з потрібним закінченням, <1/> або форму слова після числа. Після <2>Mari ja mina</2>, «Марі і я», дієслово має ту саму форму, що й після <3>me</3>, «ми»."
 
 msgid "On a door or a sign."
 msgstr "На дверях або на табличці."

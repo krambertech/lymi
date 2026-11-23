@@ -158,11 +158,11 @@ msgstr "Понеділок"
 msgid "Most of them. Listen to how the ones you missed start."
 msgstr "Майже всі. Послухай, як починаються дні, де були помилки."
 
-msgid "Nearly. Check <0>täna</0> and <1>homme</1> in the ones you missed."
-msgstr "Майже. Там, де була помилка, перевір <0>täna</0> і <1>homme</1>."
-
 msgid "Nearly. Hear the ones you missed below, then try again with Slower."
 msgstr "Майже. Послухай нижче ті, де була помилка, а тоді спробуй ще раз із кнопкою «Повільніше»."
+
+msgid "Nearly. In the ones you missed, check <0>täna</0> or <1>homme</1> and the day’s name."
+msgstr "Майже. Там, де була помилка, перевір <0>täna</0> чи <1>homme</1> і назву дня."
 
 msgid "On a door or a sign."
 msgstr "На дверях або на табличці."

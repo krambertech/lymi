@@ -817,8 +817,8 @@ export function PaevadLesson() {
                     <Trans>All eight, each day and each word right.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>
-                      Nearly. Check <span lang="et">täna</span> and <span lang="et">homme</span> in
-                      the ones you missed.
+                      Nearly. In the ones you missed, check <span lang="et">täna</span> or{" "}
+                      <span lang="et">homme</span> and the day’s name.
                     </Trans>
                   ) : (
                     <Trans>

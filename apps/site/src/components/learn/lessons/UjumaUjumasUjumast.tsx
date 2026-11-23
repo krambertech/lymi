@@ -115,9 +115,9 @@ const GLOSSARY: Glossary = {
   poodi: { en: msg`to the shop`, note: msg`Kuhu? From pood, a shop.` },
   poes: { en: msg`in the shop`, note: msg`Kus? From pood, a shop.` },
   poest: { en: msg`from the shop`, note: msg`Kust? From pood, a shop.` },
-  ujuma: { en: msg`to swim`, note: msg`The -ma form. After lähen: going swimming.` },
-  ujumas: { en: msg`out swimming`, note: msg`Kus? The -ma form plus -s.` },
-  ujumast: { en: msg`back from swimming`, note: msg`Kust? The -ma form plus -st.` },
+  ujuma: { en: msg`to swim`, note: msg`The -ma infinitive. After lähen: going swimming.` },
+  ujumas: { en: msg`out swimming`, note: msg`Kus? The -ma infinitive plus -s.` },
+  ujumast: { en: msg`back from swimming`, note: msg`Kust? The -ma infinitive plus -st.` },
   "jooksmas.": { en: msg`Out running.`, show: "Jooksmas." },
   "kus mari on?": { en: msg`Where is Mari?`, show: "Kus Mari on?" },
   "kuhu sa lähed?": { en: msg`Where are you going?`, show: "Kuhu sa lähed?" },
@@ -128,9 +128,9 @@ const GLOSSARY: Glossary = {
     en: msg`I go and come back; I go regularly`,
     note: msg`From käima.`,
   },
-  käima: { en: msg`to go and come back; to go regularly`, note: msg`Its I form is käin.` },
+  käima: { en: msg`to go and come back; to go regularly`, note: msg`Its present is käin.` },
   tulen: { en: msg`I come, I’m coming`, note: msg`From tulema, to come.` },
-  tulema: { en: msg`to come`, note: msg`Its I form is tulen.` },
+  tulema: { en: msg`to come`, note: msg`Its present is tulen.` },
   "iga päev": { en: msg`every day` },
 };
 
@@ -443,8 +443,8 @@ export function UjumaUjumasUjumastLesson() {
       words={["ujuma", "ujumas", "ujumast", "käima", "tulema", "iga päev", "kust sa tuled?"]}
       recap={[
         <Trans key="1">
-          After <b lang="et">läheb</b>, the <End>-ma</End> form says what someone is off to do:{" "}
-          <b lang="et">Mari läheb ujuma.</b>
+          After <b lang="et">läheb</b>, the <End>-ma</End> infinitive says what someone is off to
+          do: <b lang="et">Mari läheb ujuma.</b>
         </Trans>,
         <Trans key="2">
           With <End>-mas</End>, they’re in the middle of it: <b lang="et">Mari on ujumas.</b>{" "}
@@ -478,7 +478,7 @@ export function UjumaUjumasUjumastLesson() {
                 </p>
                 <p>
                   <Trans>
-                    An activity has the same three, built on its <End>-ma</End> form:{" "}
+                    An activity has the same three, built on its <End>-ma</End> infinitive:{" "}
                     <Word w="Mari läheb ujuma." /> <Word w="Mari on ujumas." />{" "}
                     <Word w="Mari tuleb ujumast." /> She’s going swimming, she’s out swimming, and
                     she’s on her way back.
@@ -503,8 +503,8 @@ export function UjumaUjumasUjumastLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    After <span lang="et">läheb</span>, the <End>-ma</End> form says what someone is
-                    off to do: <Word w="Mari läheb jooksma." /> You met it after{" "}
+                    After <span lang="et">läheb</span>, the <End>-ma</End> infinitive says what
+                    someone is off to do: <Word w="Mari läheb jooksma." /> You met it after{" "}
                     <span lang="et">lähen</span> in lesson {infinitives}.
                   </Trans>
                 </p>

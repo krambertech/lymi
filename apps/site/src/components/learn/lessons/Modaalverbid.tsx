@@ -98,11 +98,11 @@ const GLOSSARY: Glossary = {
   },
   tuleb: {
     en: msg`has to be done; comes`,
-    note: msg`From tulema, to come. Before a -da form it means has to.`,
+    note: msg`From tulema, to come. Before a -da infinitive it means has to.`,
   },
   vaja: { en: msg`needed`, note: msg`Mul on vaja is I need.` },
   "mul on vaja": { en: msg`I need` },
-  ujuma: { en: msg`to swim`, note: msg`Its -da form is ujuda.` },
+  ujuma: { en: msg`to swim`, note: msg`Its -da infinitive is ujuda.` },
   siin: { en: msg`here`, note: msg`Where something is. For where it goes, say siia.` },
   "ei tohi": { en: msg`mustn’t, not allowed to` },
   "ei pea": { en: msg`don’t have to` },
@@ -274,7 +274,7 @@ function NotTip({ lead }: { lead: (typeof MODAL_NOT)[number]["lead"] }) {
       return (
         <Trans>
           Like <span lang="et">mul on vaja</span>: the person in the <End>-l</End> form, then the{" "}
-          <End>-da</End> form. It means the same as <span lang="et">ei pea</span>.
+          <End>-da</End> infinitive. It means the same as <span lang="et">ei pea</span>.
         </Trans>
       );
   }
@@ -527,8 +527,9 @@ export function ModaalverbidLesson() {
           <b lang="et">Siin ei tohi süüa.</b>
         </Trans>,
         <Trans key="3">
-          <b lang="et">Pean</b> is I have to. <b lang="et">Tuleb</b> with the <End>-da</End> form
-          says it has to be done, naming no one. <b lang="et">Mul on vaja</b> is I need to.
+          <b lang="et">Pean</b> is I have to. <b lang="et">Tuleb</b> with the <End>-da</End>{" "}
+          infinitive says it has to be done, naming no one. <b lang="et">Mul on vaja</b> is I need
+          to.
         </Trans>,
         <Trans key="4">
           <b lang="et">Ei pea</b> is don’t have to, and <b lang="et">ei tohi</b> is mustn’t:{" "}
@@ -551,7 +552,7 @@ export function ModaalverbidLesson() {
                 </p>
                 <p>
                   <Trans>
-                    English says I can for both. Both take the <End>-da</End> form, as lesson{" "}
+                    English says I can for both. Both take the <End>-da</End> infinitive, as lesson{" "}
                     {infinitives} showed. Tap a form to hear its sentence.
                   </Trans>
                 </p>
@@ -606,20 +607,21 @@ export function ModaalverbidLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Pean" /> is I have to, and it takes the <End>-ma</End> form from lesson{" "}
-                    {infinitives}: <Word w="Ma pean minema." />
+                    <Word w="Pean" /> is I have to, and it takes the <End>-ma</End> infinitive from
+                    lesson {infinitives}: <Word w="Ma pean minema." />
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    <Word w="Tuleb" /> with the <End>-da</End> form says something has to be done,
-                    without naming who: <Word w="Tuleb oodata." /> Put a person in the <End>-l</End>{" "}
-                    form from lesson {having} to make it theirs: <Word w="Mul tuleb oodata." />
+                    <Word w="Tuleb" /> with the <End>-da</End> infinitive says something has to be
+                    done, without naming who: <Word w="Tuleb oodata." /> Put a person in the{" "}
+                    <End>-l</End> form from lesson {having} to make it theirs:{" "}
+                    <Word w="Mul tuleb oodata." />
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    <Word w="Mul on vaja" />, I need, takes the <End>-da</End> form of a verb:{" "}
+                    <Word w="Mul on vaja" />, I need, takes the <End>-da</End> infinitive of a verb:{" "}
                     <Word w="Mul on vaja minna." /> Tap a form to hear its sentence.
                   </Trans>
                 </p>
@@ -627,9 +629,9 @@ export function ModaalverbidLesson() {
               <HaveTo />
               <Aside>
                 <Trans>
-                  With the <End>-ma</End> form, <Word w="tuleb" /> still means comes:{" "}
-                  <Word w="Ta tuleb ujuma." /> Only with the <End>-da</End> form does it mean has
-                  to: <Word w="Tuleb ujuda." />
+                  With the <End>-ma</End> infinitive, <Word w="tuleb" /> still means comes:{" "}
+                  <Word w="Ta tuleb ujuma." /> Only with the <End>-da</End> infinitive does it mean
+                  has to: <Word w="Tuleb ujuda." />
                 </Trans>
               </Aside>
             </>

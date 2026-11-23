@@ -107,6 +107,10 @@ msgstr "{plays, plural, one {Сначала прочитай вопросы. З�
 msgid "{position} of {count}"
 msgstr "{position} из {count}"
 
+#. placeholder {0}: checks.length
+msgid "{right} of {0} ticked"
+msgstr "Отмечено {right} из {0}"
+
 msgid "{right} of {total}"
 msgstr "{right} из {total}"
 
@@ -340,6 +344,9 @@ msgstr "Разговор подлиннее"
 msgid "a lot, much"
 msgstr "много"
 
+msgid "A model answer"
+msgstr "Образец"
+
 msgid "A noun’s cases on the tray: tap a form to hear it, its ending lit. Question words can head the rows, and one row or column can be tinted. On a phone the rows stack."
 msgstr "Падежи существительного на подложке: коснись формы, чтобы её услышать, окончание подсвечено. Строки могут начинаться с вопросительных слов, а одну строку или столбец можно выделить. На телефоне строки становятся списком."
 
@@ -369,6 +376,9 @@ msgstr "магазин"
 
 msgid "A short text to read and hear, every question at once; its words open their cards once checked."
 msgstr "Короткий текст, чтобы прочитать и послушать, и все вопросы сразу; карточки слов открываются после проверки."
+
+msgid "A short text written in a field with the Estonian letters, then shown above a model answer and a checklist the learner ticks; nothing is marked for them."
+msgstr "Короткий текст, написанный в поле с эстонскими буквами, а потом показанный над образцом и списком, где ученик сам ставит отметки; никто не проверяет за него."
 
 msgid "a town"
 msgstr "город"
@@ -609,6 +619,10 @@ msgstr "Не ждите!"
 msgid "Done"
 msgstr "Пройдено"
 
+msgctxt "button that ends the checklist"
+msgid "Done"
+msgstr "Готово"
+
 msgid "Drag each word to its gap, or tap it."
 msgstr "Перетащи каждое слово в его пропуск или нажми на него."
 
@@ -835,6 +849,9 @@ msgstr "К уроку"
 
 msgid "Going, being, coming back: -ma, -mas, -mast"
 msgstr "Идти, быть там, возвращаться: -ma, -mas, -mast"
+
+msgid "Greets Mari."
+msgstr "Есть приветствие."
 
 msgid "hakkama, now"
 msgstr "hakkama, сейчас"
@@ -1587,6 +1604,9 @@ msgstr "Воспроизвести с этой реплики, {name}"
 msgid "Play from here"
 msgstr "Воспроизвести отсюда"
 
+msgid "Play the model answer"
+msgstr "Послушать образец"
+
 msgid "Play what {name} said"
 msgstr "Воспроизвести реплику: {name}"
 
@@ -1742,6 +1762,15 @@ msgstr "Отрицание в прошлом"
 msgid "Saying where: -s and -l"
 msgstr "Как сказать, где: окончания -s и -l"
 
+msgid "Says what you do."
+msgstr "Сказано, чем ты занимаешься."
+
+msgid "Says where you live."
+msgstr "Сказано, где ты живёшь."
+
+msgid "Says who you are."
+msgstr "Сказано, кто ты."
+
 msgid "Scene"
 msgstr "Сцена"
 
@@ -1783,6 +1812,9 @@ msgstr "Она учительница"
 
 msgid "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
 msgstr "Короткие бесплатные уроки от первых звуков до B1. Нажми на любое слово, чтобы его услышать, и пробуй каждое правило прямо по ходу чтения."
+
+msgid "Show the model"
+msgstr "Показать образец"
 
 msgid "Show what {name} said"
 msgstr "Показать реплику: {name}"
@@ -2163,6 +2195,9 @@ msgstr "Это кофе Мартина."
 msgid "Through, over, along"
 msgstr "Сквозь, через, вдоль"
 
+msgid "Tick what your text does."
+msgstr "Отметь, что есть в твоём тексте."
+
 msgid "Time expressions: when things happen"
 msgstr "Выражения времени: когда что происходит"
 
@@ -2440,11 +2475,20 @@ msgstr "Другие слова"
 msgid "work"
 msgstr "работа"
 
+msgid "Write it again"
+msgstr "Написать ещё раз"
+
 msgid "Write it in Estonian"
 msgstr "Напиши по-эстонски"
 
 msgid "Write it in Estonian."
 msgstr "Напиши по-эстонски."
+
+msgid "Write Mari a few lines: greet her, say who you are, what you do and where you live."
+msgstr "Напиши Мари несколько строк: поздоровайся, скажи, кто ты, чем занимаешься и где живёшь."
+
+msgid "Write something first, then compare."
+msgstr "Сначала напиши что-нибудь, а потом сравни."
 
 msgid "Write the question"
 msgstr "Напиши вопрос"
@@ -2458,8 +2502,14 @@ msgstr "Напиши предложение, которое слышишь."
 msgid "Write the word you hear."
 msgstr "Напиши слово, которое слышишь."
 
+msgid "Write to Mari"
+msgstr "Напиши Мари"
+
 msgid "Write what you hear"
 msgstr "Напиши, что слышишь"
+
+msgid "Writing"
+msgstr "Письмо"
 
 msgid "Yes, she is"
 msgstr "Да"
@@ -2484,6 +2534,9 @@ msgstr "Неверное слово найдено."
 
 msgid "You live in Tartu."
 msgstr "Ты живёшь в Тарту."
+
+msgid "You wrote"
+msgstr "Твой текст"
 
 msgid "You wrote <0>{typed}</0>. It’s <1>{right}</1>."
 msgstr "У тебя <0>{typed}</0>, а нужно <1>{right}</1>."
@@ -2523,3 +2576,6 @@ msgstr "Твой ответ"
 
 msgid "Your sentence"
 msgstr "Твоё предложение"
+
+msgid "Your text"
+msgstr "Твой текст"

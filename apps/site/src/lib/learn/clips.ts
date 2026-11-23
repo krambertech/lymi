@@ -594,6 +594,63 @@ export const OUTER_SENTENCES = {
   "p-kusin-isalt": "Ma küsin isalt.",
 } as const;
 
+export const OUTER_TYPED = [
+  { place: "laud", way: "kuhu" },
+  { place: "töö", way: "kust" },
+  { place: "turg", way: "kus" },
+  { place: "Saaremaa", way: "kuhu" },
+  { place: "laud", way: "kust" },
+  { place: "töö", way: "kuhu" },
+  { place: "turg", way: "kust" },
+  { place: "Saaremaa", way: "kus" },
+] as const satisfies readonly {
+  place: (typeof OUTER_PLACES)[number]["place"];
+  way: "kus" | "kuhu" | "kust";
+}[];
+
+export const OUTER_SAY = [
+  { id: "toole", said: "Ma lähen tööle.", also: ["Lähen tööle.", "Mina lähen tööle."] },
+  { id: "turult", said: "Ma tulen turult.", also: ["Tulen turult.", "Mina tulen turult."] },
+  { id: "lauale", said: "Kass hüppab lauale.", also: ["Kass hüppab laua peale."] },
+  { id: "emale", said: "Ma helistan emale.", also: ["Helistan emale.", "Mina helistan emale."] },
+  { id: "isalt", said: "Ma küsin isalt.", also: ["Küsin isalt.", "Mina küsin isalt."] },
+  {
+    id: "saaremaal",
+    said: "Me elame Saaremaal.",
+    also: ["Meie elame Saaremaal.", "Elame Saaremaal."],
+  },
+] as const;
+
+export const OUTER_FIX = [
+  { id: "toole", wrong: "Ma lähen tööl.", right: "Ma lähen tööle.", also: [] },
+  { id: "turult", wrong: "Ma tulen turul.", right: "Ma tulen turult.", also: [] },
+  { id: "laual", wrong: "Kass on lauale.", right: "Kass on laual.", also: [] },
+  { id: "emale", wrong: "Ma helistan emal.", right: "Ma helistan emale.", also: [] },
+  { id: "emalt", wrong: "Ma küsin emal.", right: "Ma küsin emalt.", also: [] },
+  { id: "turule", wrong: "Ma lähen turusse.", right: "Ma lähen turule.", also: [] },
+] as const;
+
+export const OUTER_TALK = {
+  turns: [
+    { voice: "fourth", text: ["Tere, Mari!", "Kus sa oled?"] },
+    { voice: "third", text: "Ma olen turul." },
+    { voice: "fourth", text: "Kas sa lähed täna tööle?" },
+    { voice: "third", text: ["Ei, täna on laupäev.", "Ma lähen turult koju."] },
+    { voice: "fourth", text: "Kas sa helistad emale?" },
+    { voice: "third", text: ["Jah, ma helistan emale.", "Aga sina?"] },
+    {
+      voice: "fourth",
+      text: "Ma lähen homme Saaremaale.",
+      say: "[happy] Ma lähen homme Saaremaale.",
+    },
+    { voice: "third", text: "Kas su ema elab Saaremaal?" },
+    {
+      voice: "fourth",
+      text: ["Jah, ema elab Saaremaal.", "Ma tulen esmaspäeval Saaremaalt tagasi.", "Head aega!"],
+    },
+  ],
+} as const satisfies Conversation;
+
 /** The gap passage: a Saturday with Mari, every gap filled. */
 export const OUTER_PASSAGE = [
   "Täna on laupäev ja Mari ei lähe tööle.",
@@ -968,6 +1025,76 @@ export const STEM_PASSAGE = [
   "Kohv on laual.",
 ] as const;
 
+export const STEM_SORT = [
+  { word: "jõgi", bin: "inside" },
+  { word: "turg", bin: "inside" },
+  { word: "aken", bin: "inside" },
+  { word: "uks", bin: "vowel" },
+  { word: "sein", bin: "vowel" },
+  { word: "kohvik", bin: "vowel" },
+  { word: "haigla", bin: "same" },
+  { word: "töö", bin: "same" },
+  { word: "Soome", bin: "same" },
+] as const satisfies readonly { word: (typeof STEM_WORDS)[number]["word"]; bin: StemKind }[];
+
+export const STEM_SAID_ALSO: Record<(typeof STEM_WORDS)[number]["said"], readonly string[]> = {
+  "Ema on poes.": [],
+  "Ta on toas.": ["Tema on toas."],
+  "Me ujume jões.": ["Meie ujume jões.", "Ujume jões."],
+  "Raamat on laual.": ["Raamat on laua peal."],
+  "Nad on turul.": ["Nemad on turul."],
+  "Kohv on aknal.": ["Kohv on akna peal."],
+  "Ta õpib koolis.": ["Tema õpib koolis."],
+  "Pilt on raamatus.": [],
+  "Jaan on uksel.": ["Jaan on ukse juures."],
+  "Ma elan Tallinnas.": ["Mina elan Tallinnas.", "Elan Tallinnas."],
+  "Pilt on seinal.": ["Pilt on seina peal."],
+  "Me oleme kohvikus.": ["Meie oleme kohvikus.", "Oleme kohvikus."],
+  "Ta töötab kodus.": ["Tema töötab kodus."],
+  "Mari töötab haiglas.": [],
+  "Nad õpivad Tartus.": ["Nemad õpivad Tartus."],
+  "Ma olen tööl.": ["Mina olen tööl.", "Olen tööl."],
+  "Jaan elab Pärnus.": [],
+  "Ma elan Soomes.": ["Mina elan Soomes.", "Elan Soomes."],
+};
+
+export const STEM_SAY = [
+  "Ema on poes.",
+  "Raamat on laual.",
+  "Nad on turul.",
+  "Me oleme kohvikus.",
+  "Ma elan Tallinnas.",
+  "Mari töötab haiglas.",
+] as const satisfies readonly (typeof STEM_WORDS)[number]["said"][];
+
+export const STEM_FIX = [
+  { word: "pood", wrong: "Ema on poodis." },
+  { word: "turg", wrong: "Nad on turgul." },
+  { word: "tuba", wrong: "Ta on tubas." },
+  { word: "aken", wrong: "Kohv on akenal." },
+  { word: "kool", wrong: "Ta õpib kools." },
+  { word: "raamat", wrong: "Pilt on raamats." },
+] as const satisfies readonly { word: (typeof STEM_WORDS)[number]["word"]; wrong: string }[];
+
+export const STEM_TALK = {
+  turns: [
+    { voice: "fourth", text: ["Tere, Mari!", "Kus sa oled?"] },
+    { voice: "third", text: ["Tere, Jaan!", "Ma olen poes.", "Aga sina?"] },
+    { voice: "fourth", text: ["Ma olen kodus.", "Ma olen toas ja loen."] },
+    { voice: "third", text: "Kus Kati on?", say: "[curious] Kus Kati on?" },
+    { voice: "fourth", text: ["Kati on koolis.", "Ema on turul."] },
+    { voice: "third", text: "Ja isa?" },
+    { voice: "fourth", text: ["Isa on tööl.", "Ta töötab täna Tartus."] },
+    { voice: "third", text: "Kas minu raamat on laual?" },
+    {
+      voice: "fourth",
+      text: "Ei, raamat on aknal.",
+      say: "[laughs] Ei, raamat on aknal.",
+    },
+    { voice: "third", text: ["Aitäh!", "Head aega!"] },
+  ],
+} as const satisfies Conversation;
+
 /**
  * The owners of the lesson on “to have”: each short pronoun, its -l form, the long -l form said
  * for stress, and a sentence. Checked in ÕS 2025 on Sõnaveeb (EKI morphology): mul, minul; sul,
@@ -1074,6 +1201,79 @@ export const MUL_ON_DIALOGUE = {
   "d-liis-4": { text: "Aitäh! Kas sul on homme aega?", voice: "second" },
   "d-sina-4": "Ei, mul pole homme aega.",
 } as const satisfies Record<string, Clip>;
+
+export const MUL_ON_SORT = [
+  { w: "minu", bin: "whose" },
+  { w: "sinu", bin: "whose" },
+  { w: "tema", bin: "whose" },
+  { w: "meie", bin: "whose" },
+  { w: "nende", bin: "whose" },
+  { w: "mul", bin: "has" },
+  { w: "sul", bin: "has" },
+  { w: "tal", bin: "has" },
+  { w: "meil", bin: "has" },
+  { w: "neil", bin: "has" },
+] as const;
+
+export const MUL_ON_SAY = [
+  { id: "kass", said: "Mul on kass.", also: ["Minul on kass."] },
+  { id: "auto", said: "Kas sul on auto?", also: ["Kas sinul on auto?", "Kas teil on auto?"] },
+  { id: "maril", said: "Maril on küsimus.", also: [] },
+  { id: "aega", said: "Meil pole aega.", also: ["Meil ei ole aega."] },
+  { id: "kellel", said: "Kellel on koer?", also: [] },
+  {
+    id: "abi",
+    said: "Mul on vaja abi.",
+    also: [
+      "Minul on vaja abi.",
+      "Mul on abi vaja.",
+      "Ma vajan abi.",
+      "Mina vajan abi.",
+      "Vajan abi.",
+    ],
+  },
+] as const;
+
+export const MUL_ON_FIX = [
+  {
+    id: "mul",
+    rule: "owner",
+    wrong: "Ma on kass.",
+    right: "Mul on kass.",
+    also: ["Minul on kass."],
+  },
+  {
+    id: "sul",
+    rule: "owner",
+    wrong: "Kas sa on aega?",
+    right: "Kas sul on aega?",
+    also: ["Kas sinul on aega?", "Kas teil on aega?"],
+  },
+  { id: "jaanil", rule: "names", wrong: "Jaan on auto.", right: "Jaanil on auto.", also: [] },
+  { id: "emal", rule: "names", wrong: "Ema on küsimus.", right: "Emal on küsimus.", also: [] },
+  { id: "on", rule: "owner", wrong: "Meil oleme maja.", right: "Meil on maja.", also: [] },
+  {
+    id: "ole",
+    rule: "no",
+    wrong: "Mul ei on aega.",
+    right: "Mul ei ole aega.",
+    also: [],
+  },
+] as const;
+
+export const MUL_ON_TALK = {
+  turns: [
+    { voice: "third", text: ["Tere, Jaan!", "Kas sul on täna aega?"] },
+    { voice: "fourth", text: ["Jah, on.", "Miks?"], say: "Jah, on. [curious] Miks?" },
+    { voice: "third", text: ["Mul on vaja abi.", "Kas sul on auto?"] },
+    { voice: "fourth", text: ["Ei ole.", "Aga minu isal on auto."] },
+    { voice: "third", text: "Kas sinu isal on täna aega?" },
+    { voice: "fourth", text: ["Ei, isal pole aega.", "Ta on tööl."] },
+    { voice: "third", text: ["Aga Kati?", "Kas Katil on auto?"] },
+    { voice: "fourth", text: ["Jah, Katil on auto.", "Ja tal on aega."] },
+    { voice: "third", text: ["Väga hea!", "Aitäh!"], say: "[relieved] Väga hea! Aitäh!" },
+  ],
+} as const satisfies Conversation;
 
 /** Words the lesson on “to have” says on their own. */
 export const MUL_ON_WORDS = [
@@ -2169,8 +2369,8 @@ export const NOUN_FORMS = [
 ] as const satisfies readonly NounForms[];
 
 /**
- * Lesson 14's “type the third form” quiz: words whose ending gives the third form away, by
- * pattern. Each shows its first form; the learner types the third.
+ * Lesson 14's “type the partitive” quiz: words whose ending gives the partitive away, by
+ * pattern. Each shows its nominative; the learner types the partitive.
  */
 export const POHIVORMID_TYPED = [
   { forms: ["inimene", "inimese", "inimest"], pattern: "ne" },
@@ -2197,15 +2397,82 @@ export const POHIVORMID_DIALOGUE = {
   "d-sina-4": "Vastus, vastuse, vastust.",
 } as const satisfies Record<string, Clip>;
 
+export const POHIVORMID_SORT = [
+  { w: "toa", bin: "genitive" },
+  { w: "turu", bin: "genitive" },
+  { w: "lapse", bin: "genitive" },
+  { w: "naise", bin: "genitive" },
+  { w: "mehe", bin: "genitive" },
+  { w: "lauda", bin: "partitive" },
+  { w: "raamatut", bin: "partitive" },
+  { w: "küsimust", bin: "partitive" },
+  { w: "ust", bin: "partitive" },
+  { w: "autot", bin: "partitive" },
+] as const;
+
+export const POHIVORMID_SAY = [
+  { id: "koolis", said: "Laps on koolis.", also: [] },
+  { id: "majas", said: "Mees on majas.", also: [] },
+  { id: "toas", said: "Naine on toas.", also: [] },
+  { id: "laual", said: "Raamat on laual.", also: ["Raamat on laua peal."] },
+  { id: "linnas", said: "Me oleme linnas.", also: ["Meie oleme linnas.", "Oleme linnas."] },
+  { id: "kodus", said: "Auto on kodus.", also: [] },
+] as const;
+
+export const POHIVORMID_FIX = [
+  { first: "pood", wrong: "pood, pood, poodi" },
+  { first: "laps", wrong: "laps, lapse, lapse" },
+  { first: "raamat", wrong: "raamat, raamatu, raamatu" },
+  { first: "tuba", wrong: "tuba, tuba, tuba" },
+  { first: "naine", wrong: "naine, naine, naist" },
+  { first: "mees", wrong: "mees, mees, meest" },
+] as const;
+
+export const POHIVORMID_DRILL = [
+  { first: "linn", said: "Mees on linnas.", also: [] },
+  { first: "pood", said: "Naine on poes.", also: [] },
+  { first: "auto", said: "Laps on autos.", also: [] },
+  { first: "uks", said: "Mees on uksel.", also: ["Mees on ukse juures."] },
+  { first: "turg", said: "Laps on turul.", also: [] },
+  { first: "töö", said: "Naine on tööl.", also: [] },
+] as const;
+
+export const POHIVORMID_HEARD = [
+  { form: "poe", first: "pood", slot: "genitive" },
+  { form: "poodi", first: "pood", slot: "partitive" },
+  { form: "laua", first: "laud", slot: "genitive" },
+  { form: "lauda", first: "laud", slot: "partitive" },
+  { form: "mehe", first: "mees", slot: "genitive" },
+  { form: "meest", first: "mees", slot: "partitive" },
+] as const;
+
+export const POHIVORMID_TALK = {
+  turns: [
+    { voice: "second", text: ["Tere, Jaan!", "Mis on sõna raamat põhivormid?"] },
+    { voice: "fourth", text: "Raamat, raamatu, raamatut." },
+    { voice: "second", text: ["Väga hea!", "Ja sõna laps?"] },
+    { voice: "fourth", text: "Laps, lapse, lapse." },
+    { voice: "second", text: "Ei, laps, lapse, last.", say: "[gently] Ei, laps, lapse, last." },
+    { voice: "fourth", text: ["Last.", "Aitäh!"] },
+    { voice: "second", text: "Ja sõna maja?" },
+    { voice: "fourth", text: "Maja, maja, maja." },
+    { voice: "second", text: "Väga hea, Jaan!", say: "[warmly] Väga hea, Jaan!" },
+  ],
+} as const satisfies Conversation;
+
 const POHIVORMID_CLIPS: Record<string, Clip> = {
   ...words([
     "põhivormid",
     "koolis",
+    "linnas",
     ...new Set([...NOUN_FORMS, ...POHIVORMID_TYPED.map(({ forms }) => forms)].flat()),
   ]),
   ...words(NOUN_FORMS.map(nounEntry)),
   ...words(POHIVORMID_TYPED.map(({ forms }) => nounEntry(forms))),
   ...POHIVORMID_DIALOGUE,
+  ...words(POHIVORMID_SAY.map(({ said }) => said)),
+  ...words(POHIVORMID_DRILL.map(({ said }) => said)),
+  "c-class": POHIVORMID_TALK,
 };
 
 /*
@@ -2864,6 +3131,61 @@ export const MITMUS_WORDS = [
   "Ema ja isa töötavad.",
 ] as const;
 
+export const MITMUS_SORT = [
+  { one: "maja", many: "majad", bin: "same" },
+  { one: "auto", many: "autod", bin: "same" },
+  { one: "kass", many: "kassid", bin: "same" },
+  { one: "linn", many: "linnad", bin: "same" },
+  { one: "uks", many: "uksed", bin: "same" },
+  { one: "pood", many: "poed", bin: "changed" },
+  { one: "tuba", many: "toad", bin: "changed" },
+  { one: "jõgi", many: "jõed", bin: "changed" },
+  { one: "mees", many: "mehed", bin: "changed" },
+  { one: "sõber", many: "sõbrad", bin: "changed" },
+] as const;
+
+export const MITMUS_SAY = [
+  { id: "lapsed", said: "Lapsed loevad.", also: [] },
+  { id: "kassid", said: "Kassid on kodus.", also: [] },
+  { id: "toad", said: "Toad on suured.", also: [] },
+  {
+    id: "tootavad",
+    said: "Ema ja isa töötavad Tallinnas.",
+    also: ["Isa ja ema töötavad Tallinnas."],
+  },
+  { id: "sobrad", said: "Sõbrad ootavad.", also: [] },
+  {
+    id: "uued",
+    said: "Uued raamatud on laual.",
+    also: ["Laual on uued raamatud.", "Uued raamatud on laua peal."],
+  },
+] as const;
+
+export const MITMUS_FIX = [
+  { id: "loevad", wrong: "Lapsed loeb.", right: "Lapsed loevad." },
+  { id: "poed", wrong: "Poodid on suured.", right: "Poed on suured." },
+  { id: "tootavad", wrong: "Ema ja isa töötab.", right: "Ema ja isa töötavad." },
+  { id: "joovad", wrong: "Naised joob kohvi.", right: "Naised joovad kohvi." },
+  { id: "suured", wrong: "Majad on suur.", right: "Majad on suured." },
+  { id: "sobrad", wrong: "Sõberid ootavad.", right: "Sõbrad ootavad." },
+] as const;
+
+export const MITMUS_TALK = {
+  turns: [
+    { voice: "fourth", text: "Mari, kus su lapsed on?" },
+    { voice: "third", text: ["Lapsed on koolis.", "Nad õpivad."] },
+    { voice: "fourth", text: "Ja su kassid?" },
+    { voice: "third", text: "Kassid magavad kodus.", say: "[laughs] Kassid magavad kodus." },
+    { voice: "fourth", text: "Kus su sõbrad elavad?" },
+    { voice: "third", text: ["Sõbrad elavad Tallinnas.", "Nad töötavad haiglas."] },
+    { voice: "fourth", text: "Kas Tallinna poed on suured?" },
+    { voice: "third", text: "Jah, poed on suured ja ilusad." },
+    { voice: "fourth", text: "Ja Tartu poed?" },
+    { voice: "third", text: "Tartu poed on väikesed." },
+    { voice: "fourth", text: ["Aitäh!", "Head aega!"] },
+  ],
+} as const satisfies Conversation;
+
 const MITMUS_CLIPS: Record<string, Clip> = {
   ...words([
     ...[...MITMUS_SAME, ...MITMUS_CHANGED].flatMap((noun) => [
@@ -2876,7 +3198,10 @@ const MITMUS_CLIPS: Record<string, Clip> = {
     ...MITMUS_ADJECTIVES.flatMap(({ one, many }) => [one, many]),
     ...MITMUS_WORDS,
   ]),
+  ...words(MITMUS_SAY.map(({ said }) => said)),
+  ...words(MITMUS_FIX.map(({ right }) => right)),
   "p-home": { sentences: MITMUS_PASSAGE },
+  "c-friends": MITMUS_TALK,
 };
 
 /**
@@ -3021,6 +3346,98 @@ export const OMASTAV_WORDS = [
   "kümne minuti pärast",
 ] as const;
 
+export const OMASTAV_SORT = [
+  { w: "raamatu", bin: "whose" },
+  { w: "Tallinna", bin: "whose" },
+  { w: "turu", bin: "whose" },
+  { w: "kohviku", bin: "whose" },
+  { w: "jõe", bin: "whose" },
+  { w: "poes", bin: "where" },
+  { w: "toas", bin: "where" },
+  { w: "laual", bin: "where" },
+  { w: "Tartus", bin: "where" },
+  { w: "haiglas", bin: "where" },
+] as const;
+
+export const OMASTAV_SAY = [
+  { id: "jaani", said: "See on Jaani raamat.", also: [] },
+  { id: "kelle", said: "Kelle kohv see on?", also: ["Kelle kohv on see?"] },
+  { id: "vend", said: "Minu vend elab Tallinnas.", also: ["Mu vend elab Tallinnas."] },
+  { id: "nende", said: "Nende kass on kodus.", also: [] },
+  { id: "mari", said: "Mari kohvik on Tartus.", also: [] },
+  { id: "opetaja", said: "Meie õpetaja nimi on Kati.", also: ["Me õpetaja nimi on Kati."] },
+] as const;
+
+export const OMASTAV_SAID_ALSO: Record<(typeof OMASTAV_WHOSE)[number]["said"], readonly string[]> =
+  {
+    "See on minu raamat.": ["See on mu raamat."],
+    "Mu nimi on Kati.": ["Minu nimi on Kati."],
+    "See on sinu kohv.": ["See on su kohv."],
+    "Kas see on su kass?": ["Kas see on sinu kass?"],
+    "Tema raamat on laual.": ["Ta raamat on laual."],
+    "Tema vend töötab haiglas.": ["Ta vend töötab haiglas."],
+    "Meie kool on Tartus.": ["Me kool on Tartus."],
+    "Meie ema on õpetaja.": ["Me ema on õpetaja."],
+    "Kas see on teie kohvik?": ["Kas see on te kohvik?"],
+    "Teie kass on kodus.": ["Te kass on kodus."],
+    "Nende kontor on Tallinnas.": [],
+    "See on nende pilt.": [],
+  };
+
+export const OMASTAV_FIX = [
+  {
+    id: "minu",
+    rule: "who",
+    wrong: "Mina nimi on Kati.",
+    right: "Minu nimi on Kati.",
+    also: ["Mu nimi on Kati."],
+  },
+  {
+    id: "mina",
+    rule: "who",
+    wrong: "Minu elan Tartus.",
+    right: "Mina elan Tartus.",
+    also: ["Ma elan Tartus."],
+  },
+  {
+    id: "nende",
+    rule: "who",
+    wrong: "Nemad kass on Pärnus.",
+    right: "Nende kass on Pärnus.",
+    also: [],
+  },
+  {
+    id: "jaani",
+    rule: "owner",
+    wrong: "Jaan kass on kodus.",
+    right: "Jaani kass on kodus.",
+    also: [],
+  },
+  { id: "poe", rule: "owner", wrong: "See on pood uks.", right: "See on poe uks.", also: [] },
+  {
+    id: "tallinnas",
+    rule: "place",
+    wrong: "Ma elan Tallinna.",
+    right: "Ma elan Tallinnas.",
+    also: [],
+  },
+] as const;
+
+export const OMASTAV_TALK = {
+  turns: [
+    { voice: "third", text: "Jaan, kelle pilt see on?" },
+    { voice: "fourth", text: "See on minu pilt." },
+    { voice: "third", text: "Kes see on?", say: "[curious] Kes see on?" },
+    { voice: "fourth", text: ["See on minu vend Martin.", "Ta elab Tartus."] },
+    { voice: "third", text: "Ja kelle kass see on?" },
+    { voice: "fourth", text: ["See on Martini kass.", "Kassi nimi on Miisu."] },
+    { voice: "third", text: "Kas see on teie maja?" },
+    { voice: "fourth", text: ["Ei, see on minu ema maja.", "Ta elab Pärnus."] },
+    { voice: "third", text: "Ja kelle auto see on?" },
+    { voice: "fourth", text: "See on minu auto!", say: "[laughs] See on minu auto!" },
+  ],
+} as const satisfies Conversation;
+
 const OMASTAV_CLIPS: Record<string, Clip> = {
   ...words([
     ...OMASTAV_PRONOUNS.flatMap((each) => [
@@ -3035,8 +3452,11 @@ const OMASTAV_CLIPS: Record<string, Clip> = {
     ...OMASTAV_SENTENCES,
     ...OMASTAV_WORDS,
   ]),
+  ...words(OMASTAV_SAY.map(({ said }) => said)),
+  ...words(OMASTAV_FIX.map(({ right }) => right)),
   "p-kati": { sentences: OMASTAV_PASSAGE, voice: "second" },
   ...OMASTAV_DIALOGUE,
+  "c-photo": OMASTAV_TALK,
 };
 
 /**
@@ -3082,6 +3502,96 @@ export const INNER_PLACES = [
   { place: "maja", kus: "majas", kuhu: "majja", long: "majasse", kust: "majast" },
   { place: "kodu", kus: "kodus", kuhu: "koju", kust: "kodust" },
 ] as const;
+
+export const INNER_TYPED: readonly {
+  place: (typeof INNER_PLACES)[number]["place"];
+  way: "kus" | "kuhu" | "kust";
+  also: readonly string[];
+}[] = [
+  { place: "Tallinn", way: "kuhu", also: ["Tallinna"] },
+  { place: "haigla", way: "kust", also: [] },
+  { place: "kontor", way: "kus", also: [] },
+  { place: "kohvik", way: "kuhu", also: [] },
+  { place: "Pärnu", way: "kust", also: [] },
+  { place: "maja", way: "kuhu", also: [] },
+  { place: "kodu", way: "kuhu", also: ["kodusse"] },
+  { place: "pood", way: "kust", also: [] },
+];
+
+export const INNER_SAY = [
+  { id: "tartusse", said: "Ma lähen Tartusse.", also: ["Lähen Tartusse.", "Mina lähen Tartusse."] },
+  {
+    id: "parit",
+    said: "Kust sa pärit oled?",
+    also: [
+      "Kust sa oled pärit?",
+      "Kust te pärit olete?",
+      "Kust te olete pärit?",
+      "Kust teie olete pärit?",
+      "Kust teie pärit olete?",
+      "Kust sina pärit oled?",
+      "Kust sina oled pärit?",
+      "Kust oled pärit?",
+      "Kust olete pärit?",
+      "Kust sa oled?",
+      "Kust te olete?",
+      "Kust teie olete?",
+      "Kust sina oled?",
+      "Kust oled?",
+      "Kust olete?",
+    ],
+  },
+  { id: "poest", said: "Ma tulen poest.", also: ["Tulen poest.", "Mina tulen poest."] },
+  { id: "majja", said: "Kass läheb majja.", also: ["Kass läheb majasse."] },
+  {
+    id: "linna",
+    said: "Me läheme linna.",
+    also: [
+      "Me läheme linnasse.",
+      "Meie läheme linna.",
+      "Läheme linna.",
+      "Läheme linnasse.",
+      "Meie läheme linnasse.",
+    ],
+  },
+  {
+    id: "eestist",
+    said: "Ma olen pärit Eestist.",
+    also: [
+      "Ma olen Eestist pärit.",
+      "Olen pärit Eestist.",
+      "Mina olen pärit Eestist.",
+      "Ma olen Eestist.",
+      "Olen Eestist pärit.",
+      "Mina olen Eestist pärit.",
+      "Olen Eestist.",
+      "Mina olen Eestist.",
+    ],
+  },
+] as const;
+
+export const INNER_FIX = [
+  { id: "tartusse", wrong: "Ma lähen Tartus.", right: "Ma lähen Tartusse.", also: [] },
+  { id: "poest", wrong: "Ma tulen poes.", right: "Ma tulen poest.", also: [] },
+  { id: "soomest", wrong: "Ma olen pärit Soomes.", right: "Ma olen pärit Soomest.", also: [] },
+  { id: "majas", wrong: "Kass on majja.", right: "Kass on majas.", also: [] },
+  { id: "koju", wrong: "Me läheme kodus.", right: "Me läheme koju.", also: ["Me läheme kodusse."] },
+  { id: "kodus", wrong: "Ma olen kodust.", right: "Ma olen kodus.", also: [] },
+] as const;
+
+export const INNER_TALK = {
+  turns: [
+    { voice: "third", text: ["Tere, Jaan!", "Kust sa tuled?"] },
+    { voice: "fourth", text: "Ma tulen haiglast.", say: "[tired] Ma tulen haiglast." },
+    { voice: "third", text: "Kuhu sa lähed?" },
+    { voice: "fourth", text: ["Ma lähen koju.", "Aga sina?"] },
+    { voice: "third", text: "Ma lähen poodi ja kohvikusse." },
+    { voice: "fourth", text: "Kas sa oled homme Tallinnas?" },
+    { voice: "third", text: ["Ei, homme lähen Tartusse.", "Mu ema elab Tartus."] },
+    { voice: "fourth", text: "Kas sa oled pärit Tartust?" },
+    { voice: "third", text: ["Ei, ma olen pärit Pärnust.", "Head aega!"] },
+  ],
+} as const satisfies Conversation;
 
 /** The sentences of the lesson on in, into and out of. */
 export const INNER_SENTENCES = {
@@ -3310,6 +3820,56 @@ export const OSASTAV_WORDS = [
   "Ma loen raamatut.",
 ] as const;
 
+export const OSASTAV_SAY = [
+  { id: "kassi", said: "Mul on kaks kassi.", also: ["Minul on kaks kassi.", "Mul on 2 kassi."] },
+  {
+    id: "tass",
+    said: "Tass kohvi, palun.",
+    also: ["Üks tass kohvi, palun.", "Palun tass kohvi.", "Palun üks tass kohvi."],
+  },
+  { id: "leiba", said: "Laual pole leiba.", also: ["Laual ei ole leiba."] },
+  {
+    id: "last",
+    said: "Mitu last sul on?",
+    also: [
+      "Mitu last sinul on?",
+      "Mitu last teil on?",
+      "Kui mitu last sul on?",
+      "Mitu last on sul?",
+      "Mitu last on teil?",
+    ],
+  },
+  { id: "vett", said: "Ta joob vett.", also: ["Tema joob vett."] },
+  { id: "eurot", said: "Leib maksab kolm eurot.", also: ["Leib maksab 3 eurot."] },
+] as const;
+
+export const OSASTAV_FIX = [
+  { id: "kassi", wrong: "Mul on kaks kass.", right: "Mul on kaks kassi." },
+  { id: "kohvi", wrong: "Ma joon kohv.", right: "Ma joon kohvi." },
+  { id: "leiba", wrong: "Laual pole leib.", right: "Laual pole leiba." },
+  { id: "tass", wrong: "Tass kohv, palun.", right: "Tass kohvi, palun." },
+  { id: "kass", wrong: "Meil on üks kassi.", right: "Meil on üks kass." },
+  { id: "last", wrong: "Mitu laps sul on?", right: "Mitu last sul on?" },
+] as const;
+
+export const OSASTAV_TALK = {
+  turns: [
+    { voice: "third", text: "Jaan, kas meil on piima?" },
+    { voice: "fourth", text: ["Ei, meil pole piima.", "Aga meil on vett."] },
+    { voice: "third", text: "Kas meil on leiba?" },
+    { voice: "fourth", text: ["Meil pole leiba.", "Meil on natuke juustu."] },
+    { voice: "third", text: ["Hästi.", "Ma lähen poodi."] },
+    { voice: "fourth", text: "Mul on vaja kohvi.", say: "[hopeful] Mul on vaja kohvi." },
+    { voice: "third", text: "Kui palju?" },
+    { voice: "fourth", text: "Kilo kohvi." },
+    { voice: "third", text: "Ja leiba?" },
+    { voice: "fourth", text: "Jah, üks leib." },
+    { voice: "third", text: "Kas sul on raha?" },
+    { voice: "fourth", text: "Mul on kümme eurot." },
+    { voice: "third", text: ["Aitäh!", "Head aega!"] },
+  ],
+} as const satisfies Conversation;
+
 const OSASTAV_CLIPS: Record<string, Clip> = {
   ...words([
     ...OSASTAV_COUNT.numbers.flatMap((number) =>
@@ -3324,8 +3884,11 @@ const OSASTAV_CLIPS: Record<string, Clip> = {
     ...OSASTAV_FOOD_QUIZ.map(({ said }) => said),
     ...OSASTAV_WORDS,
   ]),
+  ...words(OSASTAV_SAY.map(({ said }) => said)),
+  ...words(OSASTAV_FIX.map(({ right }) => right)),
   "p-market": { sentences: OSASTAV_PASSAGES.market },
   "p-jaan": { sentences: OSASTAV_PASSAGES.jaan },
+  "c-shopping": OSASTAV_TALK,
 };
 
 export const PAST_NO_PERSONS = ["ma", "sa", "ta", "me", "te", "nad"] as const;
@@ -4144,6 +4707,9 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ]),
     ...OUTER_SENTENCES,
     "p-saturday": { sentences: OUTER_PASSAGE },
+    ...words(OUTER_SAY.map(({ said }) => said)),
+    ...words(OUTER_FIX.map(({ right }) => right)),
+    "c-call": OUTER_TALK,
   },
   "sobraga-rahata": SOBRAGA_CLIPS,
   asesonad: PRONOUN_CLIPS,
@@ -4155,8 +4721,14 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
       ...MUL_ON_SWITCH.flatMap(({ am, have }) => [am, have]),
       ...MUL_ON_AM_HAVE.flatMap(({ am, have }) => [am, have]),
       ...MUL_ON_NAMES.map(({ said }) => said),
+      ...MUL_ON_SORT.map(({ w }) => w),
+      ...MUL_ON_SAY.map(({ said }) => said),
+      ...MUL_ON_FIX.map(({ right }) => right),
+      "Mul pole aega.",
+      "Ei, mul pole homme aega.",
     ]),
     ...MUL_ON_LINES,
+    "c-car": MUL_ON_TALK,
     "p-mari": { sentences: MUL_ON_PASSAGE },
     ...MUL_ON_DIALOGUE,
   },
@@ -4166,6 +4738,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
       "ujume",
     ]),
     "p-saturday": { sentences: STEM_PASSAGE },
+    "c-call": STEM_TALK,
   },
   pohivormid: POHIVORMID_CLIPS,
   omastav: OMASTAV_CLIPS,
@@ -4173,6 +4746,9 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...words(INNER_WORDS),
     ...INNER_SENTENCES,
     ...INNER_DIALOGUE,
+    ...words(INNER_SAY.map(({ said }) => said)),
+    ...words(INNER_FIX.map(({ right }) => right)),
+    "c-street": INNER_TALK,
   },
   meeldima: MEELDIMA_CLIPS,
   "verbi-pohivormid": {

@@ -8,23 +8,31 @@ import {
   clipUrl,
   MUL_ON_AM_HAVE,
   MUL_ON_DIALOGUE,
+  MUL_ON_FIX,
   MUL_ON_HEARD,
   MUL_ON_LINES,
   MUL_ON_NAMES,
   MUL_ON_OWNERS,
+  MUL_ON_SAY,
+  MUL_ON_SORT,
   MUL_ON_SWITCH,
+  MUL_ON_TALK,
   type MulOnOwner,
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, ListenRows, Panel } from "../Explore";
+import { type FixItem, FixRound, fixRecall } from "../FixRound";
 import { type GapItem, GapPassage } from "../GapPassage";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
 import { Morph, type MorphChain } from "../Morph";
 import { Paradigm, type ParadigmRow } from "../Paradigm";
+import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
+import { Sort, type SortBin, type SortItem } from "../Sort";
 import { Playing } from "../Sound";
 import { Word } from "../Word";
 
@@ -147,6 +155,7 @@ const GLOSSARY: Glossary = {
   teil: { en: msg`at you, to more than one; polite`, note: msg`Teil on: you have.` },
   neil: { en: msg`at them`, note: msg`Neil on: they have.` },
   minul: { en: msg`at me, for emphasis`, note: msg`The long form of mul.` },
+  minu: { en: msg`my`, note: msg`The genitive of mina.` },
   sinul: { en: msg`at you, for emphasis`, note: msg`The long form of sul.` },
   temal: { en: msg`at him or her, for emphasis`, note: msg`The long form of tal.` },
   nendel: { en: msg`at them, for emphasis`, note: msg`The long form of neil.` },
@@ -406,6 +415,135 @@ const line = (id: DialogueId): string => {
   return typeof clip === "string" ? clip : clip.text;
 };
 
+const SAY_MEANS: Record<(typeof MUL_ON_SAY)[number]["id"], MessageDescriptor> = {
+  kass: msg`I have a cat.`,
+  auto: msg`Do you have a car?`,
+  maril: msg`Mari has a question.`,
+  aega: msg`We don’t have time.`,
+  kellel: msg`Who has a dog?`,
+  abi: msg`I need help.`,
+};
+
+export const sortItems = (): SortItem[] =>
+  MUL_ON_SORT.map(({ w, bin }) => ({ w, bin, src: src(w) }));
+
+export function sayItems(i18n: I18n): SentenceItem[] {
+  return MUL_ON_SAY.map(({ id, said, also }) => ({
+    kind: "translate",
+    id: `say-${id}`,
+    prompt: i18n._(SAY_MEANS[id]),
+    src: src(said),
+    answers: [said, ...also],
+  }));
+}
+
+function FixWhy({ id }: { id: (typeof MUL_ON_FIX)[number]["id"] }) {
+  switch (id) {
+    case "mul":
+      return (
+        <Trans>
+          I have is <b lang="et">mul on</b>: the owner takes <b lang="et">-l</b>.
+        </Trans>
+      );
+    case "sul":
+      return (
+        <Trans>
+          Do you have is <b lang="et">kas sul on</b>: the owner takes <b lang="et">-l</b>.
+        </Trans>
+      );
+    case "jaanil":
+      return (
+        <Trans>
+          A name takes <b lang="et">-l</b> on its genitive: <b lang="et">Jaan, Jaani, Jaanil</b>.
+        </Trans>
+      );
+    case "emal":
+      return (
+        <Trans>
+          A noun takes <b lang="et">-l</b> on its genitive: <b lang="et">ema, emal</b>.
+        </Trans>
+      );
+    case "on":
+      return (
+        <Trans>
+          The verb is <b lang="et">on</b> whoever has it: <b lang="et">meil on</b>.
+        </Trans>
+      );
+    case "ole":
+      return (
+        <Trans>
+          After <b lang="et">ei</b>, <b lang="et">on</b> becomes <b lang="et">ole</b>:{" "}
+          <b lang="et">mul ei ole</b>, or <b lang="et">mul pole</b>.
+        </Trans>
+      );
+  }
+}
+
+const FIX_MEANS: Record<(typeof MUL_ON_FIX)[number]["id"], MessageDescriptor> = {
+  mul: msg`I have a cat.`,
+  sul: msg`Do you have time?`,
+  jaanil: msg`Jaan has a car.`,
+  emal: msg`Mum has a question.`,
+  on: msg`We have a house.`,
+  ole: msg`I don’t have time.`,
+};
+
+export function fixItems(i18n: I18n): FixItem[] {
+  return MUL_ON_FIX.map(({ id, wrong, right, also }) => ({
+    kind: "fix",
+    id: `fix-${id}`,
+    wrong,
+    prompt: i18n._(FIX_MEANS[id]),
+    answers: [right, ...also],
+    src: src(right),
+    explain: <FixWhy id={id} />,
+  }));
+}
+
+function useTalkQuestions(): PassageQuestion[] {
+  const { t } = useLingui();
+  return [
+    { kind: "truefalse", id: "jaan-time", ask: t`Jaan has time today.`, answer: true, line: 2 },
+    {
+      id: "need",
+      ask: t`What does Mari need?`,
+      options: [
+        { id: "money", label: t`Money` },
+        { id: "help", label: t`Help` },
+        { id: "teacher", label: t`A teacher` },
+      ],
+      answer: "help",
+      line: 4,
+    },
+    { kind: "truefalse", id: "jaan-car", ask: t`Jaan has a car.`, answer: false, line: 6 },
+    {
+      kind: "truefalse",
+      id: "dad-time",
+      ask: t`Jaan’s dad has time today.`,
+      answer: false,
+      line: 9,
+    },
+    {
+      kind: "short",
+      id: "dad-where",
+      ask: t`Where is Jaan’s dad? Write the place in Estonian, with its ending.`,
+      answers: ["tööl"],
+      line: 10,
+    },
+    {
+      id: "who-helps",
+      ask: t`Who has a car and time today?`,
+      options: [
+        { id: "dad", label: t`Jaan’s dad` },
+        { id: "jaan", label: t`Jaan` },
+        { id: "kati", label: t`Kati` },
+      ],
+      answer: "kati",
+      line: 14,
+    },
+  ];
+}
+
 export function MulOnLesson() {
   const { t, i18n } = useLingui();
   const pronouns = lessonBySlug("mina-sina-tema")?.n;
@@ -415,6 +553,39 @@ export function MulOnLesson() {
   const genitive = lessonBySlug("omastav")?.n;
   const partitive = lessonBySlug("osastav")?.n;
   const gaps = useGaps();
+  const talkQuestions = useTalkQuestions();
+  const bins: SortBin[] = [
+    {
+      id: "whose",
+      label: t`Whose`,
+      lang: i18n.locale,
+      hint: (
+        <Trans>
+          the genitive, as in <b lang="et">minu</b>
+        </Trans>
+      ),
+      rule: (
+        <Trans>
+          The genitive says whose, before a noun: <b lang="et">minu kass</b>, my cat.
+        </Trans>
+      ),
+    },
+    {
+      id: "has",
+      label: t`Who has`,
+      lang: i18n.locale,
+      hint: (
+        <Trans>
+          with <b lang="et">-l</b>, as in <b lang="et">mul</b>
+        </Trans>
+      ),
+      rule: (
+        <Trans>
+          The <b lang="et">-l</b> form says who has it: <b lang="et">mul on kass</b>, I have a cat.
+        </Trans>
+      ),
+    },
+  ];
 
   // The -l form plays in a sentence; the long form plays on its own.
   const ownerRows: ParadigmRow[] = MUL_ON_OWNERS.map(({ pronoun, owner, long, said }) => ({
@@ -582,8 +753,8 @@ export function MulOnLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">12 minutes</Trans>,
-        <Trans key="q">2 quizzes, a note to fill in and a conversation</Trans>,
+        <Trans key="m">20 minutes</Trans>,
+        <Trans key="q">8 exercises</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -906,6 +1077,99 @@ export function MulOnLesson() {
           ),
         },
         {
+          id: "whose-or-has",
+          title: t`My cat or I have a cat`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    <Word w="Minu" /> is my, from lesson {genitive}. <Word w="Mul" /> is “at me”,
+                    and says who has it. Put each word in its group. Tap a word to hear it.
+                  </Trans>
+                </p>
+              </Prose>
+              <Sort
+                id="whose-or-has"
+                title={<Trans>Whose or who has?</Trans>}
+                bins={bins}
+                items={sortItems()}
+              />
+            </>
+          ),
+        },
+        {
+          id: "say-it",
+          title: t`Write it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write each sentence in Estonian. The owner takes{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -l
+                    </b>
+                    , and the verb is <b lang="et">on</b>, or <b lang="et">pole</b> for no.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="say-have"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={sayItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six written right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Read the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "fix",
+          title: t`Fix the sentence`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each sentence has one word in the wrong form. Tap it, then write the right form.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="fix-have"
+                title={<Trans>Find and fix the mistake</Trans>}
+                items={fixItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six found and fixed.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Look again at the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={fixRecall}
+                round={(props) => <FixRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
           id: "maris-note",
           title: t`Mari’s note`,
           quiz: true,
@@ -951,6 +1215,28 @@ export function MulOnLesson() {
                 }
                 them={t`Liis`}
                 turns={dialogue}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listen: who has a car?`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>Mari calls Jaan. Read the questions, then listen.</Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="who-has-car"
+                title={<Trans>Listen: Mari calls Jaan</Trans>}
+                clip="c-car"
+                turns={MUL_ON_TALK.turns}
+                names={{ third: "Mari", fourth: "Jaan" }}
+                questions={talkQuestions}
               />
             </>
           ),

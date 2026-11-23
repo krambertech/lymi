@@ -322,9 +322,9 @@ export function NumbridLesson() {
         id: "flat",
         ask: t`What is his flat number?`,
         options: [
-          { id: "18", label: "18" },
           { id: "19", label: "19" },
           { id: "80", label: "80" },
+          { id: "18", label: "18" },
         ],
         answer: "18",
         line: 2,
@@ -351,8 +351,8 @@ export function NumbridLesson() {
         id: "coffee",
         ask: t`What does the coffee cost?`,
         options: [
-          { id: "250", label: t`€2.50` },
           { id: "650", label: t`€6.50` },
+          { id: "250", label: t`€2.50` },
           { id: "215", label: t`€2.15` },
         ],
         answer: "250",

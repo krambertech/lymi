@@ -26,6 +26,7 @@ import {
   strategyScore,
 } from "./giveaways";
 import { sentenceProblems } from "./sentences";
+import { unlistedVariants } from "./variants";
 
 const BANKS = import.meta.glob<{ DRILLS: DrillBank }>(
   "../../../components/learn/lessons/*.drills.ts",
@@ -236,6 +237,18 @@ describe.each(banks)("drill bank $slug", ({ slug, file, bank }) => {
         : [],
     );
     expectNone(problems, "Written sentences can be marked fairly (checklists.md#quizzes)");
+  });
+
+  it("accepts every always-right variant of its typed answers", () => {
+    expectNone(
+      unlistedVariants(
+        slug,
+        "drills",
+        bank.items.flatMap((item) => ("answers" in item && item.kind !== "form" ? [item] : [])),
+        () => file,
+      ),
+      "Always-right variants are accepted (checklists.md#quizzes)",
+    );
   });
 
   it("keeps a gap’s sentence short enough for a phone", () => {

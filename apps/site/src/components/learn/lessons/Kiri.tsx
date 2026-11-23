@@ -528,8 +528,8 @@ export function KiriLesson() {
           Say when, on which days: <b lang="et">Ma olen kodus esmaspäeval pärast kella viit.</b>
         </Trans>,
         <Trans key="4">
-          End with thanks and a sign-off: <b lang="et">Aitäh ette! Lugupidamisega,</b> and your
-          name.
+          End with thanks and a sign-off: <b lang="et">Aitäh ette!</b> Then{" "}
+          <b lang="et">Lugupidamisega</b> with no comma, and your name on the next line.
         </Trans>,
       ]}
       sections={[

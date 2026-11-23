@@ -256,8 +256,8 @@ msgstr "Kinds of verb"
 msgid "Learn a verb with its question: <0>ootama keda?</0>, <1>rääkima kellest?</1>, <2>helistama kellele?</2>, <3>kohtuma kellega?</3>, <4>küsima kellelt?</4>"
 msgstr "Learn a verb with its question: <0>ootama keda?</0>, <1>rääkima kellest?</1>, <2>helistama kellele?</2>, <3>kohtuma kellega?</3>, <4>küsima kellelt?</4>"
 
-msgid "Lesson {object} showed that <0>ootama</0>, <1>aitama</1> and <2>armastama</2> take the partitive unless a small word such as <3>ära</3> gives them an end. A dictionary gives each verb’s question, so learn the two together."
-msgstr "Lesson {object} showed that <0>ootama</0>, <1>aitama</1> and <2>armastama</2> take the partitive unless a small word such as <3>ära</3> gives them an end. A dictionary gives each verb’s question, so learn the two together."
+msgid "Lesson {object} showed that on their own, <0>ootama</0>, <1>aitama</1> and <2>armastama</2> take the partitive. With <3>ära</3>, <4>ootama</4> can take the genitive: <5>ootan su ära</5>. A dictionary gives each verb’s question, so learn the two together."
+msgstr "Lesson {object} showed that on their own, <0>ootama</0>, <1>aitama</1> and <2>armastama</2> take the partitive. With <3>ära</3>, <4>ootama</4> can take the genitive: <5>ootan su ära</5>. A dictionary gives each verb’s question, so learn the two together."
 
 msgid "Liisa"
 msgstr "Liisa"

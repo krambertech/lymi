@@ -100,8 +100,8 @@ msgstr "В каждой строке из письма одно слово ст�
 msgid "Each verb after <0>ma</0> or <1>te</1> has its ending: <2>olen</2>, <3>saaksite</3>."
 msgstr "У каждого глагола после <0>ma</0> или <1>te</1> своё окончание: <2>olen</2>, <3>saaksite</3>."
 
-msgid "End with thanks and a sign-off: <0>Aitäh ette! Lugupidamisega,</0> and your name."
-msgstr "Закончи благодарностью и подписью: <0>Aitäh ette! Lugupidamisega,</0> и своё имя."
+msgid "End with thanks and a sign-off: <0>Aitäh ette!</0> Then <1>Lugupidamisega</1> with no comma, and your name on the next line."
+msgstr "Закончи благодарностью и подписью: <0>Aitäh ette!</0> Дальше <1>Lugupidamisega</1> без запятой и своё имя с новой строки."
 
 msgid "Estonian can say it in the present, with <0>juba</0>: already."
 msgstr "Как и по-русски, здесь можно сказать в настоящем времени с <0>juba</0>, «уже»: вода капает уже три дня."
@@ -320,7 +320,7 @@ msgid "That sounds like an order. Ask with the would form: <0>saaksite</0>."
 msgstr "Это звучит как приказ. Попроси в условной форме: <0>saaksite</0>."
 
 msgid "That’s too cold, sorry."
-msgstr "Это слишком холодно, извините."
+msgstr "Это и правда слишком холодно, извините."
 
 msgid "The <0>-nud</0> form of <1>minema</1> is <2>läinud</2>."
 msgstr "Форма на <0>-nud</0> от <1>minema</1> — <2>läinud</2>."

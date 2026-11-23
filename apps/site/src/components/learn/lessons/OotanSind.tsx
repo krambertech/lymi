@@ -266,7 +266,9 @@ function useContent() {
         cue: `${gap.before} …${/^[.!?]$/.test(gap.after) ? gap.after : ` ${gap.after}`}`,
         cueLang: "et",
         src: src(said),
-        options: GOVERNMENT_OPTIONS[gap.answer],
+        options: GOVERNMENT_OPTIONS[gap.answer].filter(
+          (form) => !("fits" in gap && (gap.fits as readonly string[]).includes(form)),
+        ),
         answers: [gap.answer],
         pair: [kind, gap.id] as const,
         explain: whys[kind],
@@ -672,10 +674,11 @@ export function OotanSindLesson() {
               <KindTable />
               <Aside>
                 <Trans>
-                  Lesson {object} showed that <b lang="et">ootama</b>, <b lang="et">aitama</b> and{" "}
-                  <b lang="et">armastama</b> take the partitive unless a small word such as{" "}
-                  <b lang="et">ära</b> gives them an end. A dictionary gives each verb’s question,
-                  so learn the two together.
+                  Lesson {object} showed that on their own, <b lang="et">ootama</b>,{" "}
+                  <b lang="et">aitama</b> and <b lang="et">armastama</b> take the partitive. With{" "}
+                  <b lang="et">ära</b>, <b lang="et">ootama</b> can take the genitive:{" "}
+                  <b lang="et">ootan su ära</b>. A dictionary gives each verb’s question, so learn
+                  the two together.
                 </Trans>
               </Aside>
               <Prose>

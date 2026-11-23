@@ -256,8 +256,8 @@ msgstr "Типи дієслів"
 msgid "Learn a verb with its question: <0>ootama keda?</0>, <1>rääkima kellest?</1>, <2>helistama kellele?</2>, <3>kohtuma kellega?</3>, <4>küsima kellelt?</4>"
 msgstr "Вчи дієслово разом із його питанням: <0>ootama keda?</0>, <1>rääkima kellest?</1>, <2>helistama kellele?</2>, <3>kohtuma kellega?</3>, <4>küsima kellelt?</4>"
 
-msgid "Lesson {object} showed that <0>ootama</0>, <1>aitama</1> and <2>armastama</2> take the partitive unless a small word such as <3>ära</3> gives them an end. A dictionary gives each verb’s question, so learn the two together."
-msgstr "Урок {object} показав, що <0>ootama</0>, <1>aitama</1> і <2>armastama</2> беруть партитив, якщо коротке слово на кшталт <3>ära</3> не робить дію завершеною. Словник подає питання до кожного дієслова, тож вивчай їх разом."
+msgid "Lesson {object} showed that on their own, <0>ootama</0>, <1>aitama</1> and <2>armastama</2> take the partitive. With <3>ära</3>, <4>ootama</4> can take the genitive: <5>ootan su ära</5>. A dictionary gives each verb’s question, so learn the two together."
+msgstr "Урок {object} показав, що самі по собі <0>ootama</0>, <1>aitama</1> і <2>armastama</2> беруть партитив. З <3>ära</3> дієслово <4>ootama</4> може взяти генітив: <5>ootan su ära</5>. Словник подає питання до кожного дієслова, тож вивчай їх разом."
 
 msgid "Liisa"
 msgstr "Лійса"
@@ -368,7 +368,7 @@ msgid "The <0>-lt</0> case, off or from someone: <1>ma küsin sinult</1>. Questi
 msgstr "Відмінок на <0>-lt</0>, «від когось» чи «у когось»: <1>ma küsin sinult</1>. Питання: <2>kellelt?</2>"
 
 msgid "The <0>-st</0> case, about or from: <1>ma räägin sinust</1>. Question: <2>kellest?</2>"
-msgstr "Відмінок на <0>-st</0>, «про» чи «з»: <1>ma räägin sinust</1>. Питання: <2>kellest?</2>"
+msgstr "Відмінок на <0>-st</0>, «про» чи «від»: <1>ma räägin sinust</1>. Питання: <2>kellest?</2>"
 
 msgid "The partitive of kes: Keda sa ootad?"
 msgstr "Партитив від kes: Keda sa ootad?"

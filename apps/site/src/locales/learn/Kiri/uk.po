@@ -100,8 +100,8 @@ msgstr "У кожному рядку з листа одне слово стої�
 msgid "Each verb after <0>ma</0> or <1>te</1> has its ending: <2>olen</2>, <3>saaksite</3>."
 msgstr "Кожне дієслово після <0>ma</0> чи <1>te</1> має своє закінчення: <2>olen</2>, <3>saaksite</3>."
 
-msgid "End with thanks and a sign-off: <0>Aitäh ette! Lugupidamisega,</0> and your name."
-msgstr "Закінчи подякою і підписом: <0>Aitäh ette! Lugupidamisega,</0> і своє ім’я."
+msgid "End with thanks and a sign-off: <0>Aitäh ette!</0> Then <1>Lugupidamisega</1> with no comma, and your name on the next line."
+msgstr "Закінчи подякою і підписом: <0>Aitäh ette!</0> Далі <1>Lugupidamisega</1> без коми і своє ім’я з нового рядка."
 
 msgid "Estonian can say it in the present, with <0>juba</0>: already."
 msgstr "Як і українською, тут можна сказати в теперішньому часі з <0>juba</0>, «вже»: вода капає вже три дні."

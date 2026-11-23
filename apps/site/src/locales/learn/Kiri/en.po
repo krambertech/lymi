@@ -100,8 +100,8 @@ msgstr "Each line from a message has one word in the wrong form. Tap it, then ty
 msgid "Each verb after <0>ma</0> or <1>te</1> has its ending: <2>olen</2>, <3>saaksite</3>."
 msgstr "Each verb after <0>ma</0> or <1>te</1> has its ending: <2>olen</2>, <3>saaksite</3>."
 
-msgid "End with thanks and a sign-off: <0>Aitäh ette! Lugupidamisega,</0> and your name."
-msgstr "End with thanks and a sign-off: <0>Aitäh ette! Lugupidamisega,</0> and your name."
+msgid "End with thanks and a sign-off: <0>Aitäh ette!</0> Then <1>Lugupidamisega</1> with no comma, and your name on the next line."
+msgstr "End with thanks and a sign-off: <0>Aitäh ette!</0> Then <1>Lugupidamisega</1> with no comma, and your name on the next line."
 
 msgid "Estonian can say it in the present, with <0>juba</0>: already."
 msgstr "Estonian can say it in the present, with <0>juba</0>: already."

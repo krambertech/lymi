@@ -104,6 +104,10 @@ msgstr "{plays, plural, one {Сначала прочитай вопросы. З�
 msgid "{position} of {count}"
 msgstr "{position} из {count}"
 
+#. placeholder {0}: checks.length
+msgid "{right} of {0} ticked"
+msgstr "Отмечено {right} из {0}"
+
 msgid "{right} of {total}"
 msgstr "{right} из {total}"
 
@@ -324,6 +328,9 @@ msgstr "Разговор подлиннее"
 
 msgid "a lot, much"
 msgstr "много"
+
+msgid "A model answer"
+msgstr "Образец"
 
 msgid "A noun’s cases on the tray: tap a form to hear it, its ending lit. Question words can head the rows, and one row or column can be tinted. On a phone the rows stack."
 msgstr "Падежи существительного на подложке: коснись формы, чтобы её услышать, окончание подсвечено. Строки могут начинаться с вопросительных слов, а одну строку или столбец можно выделить. На телефоне строки становятся списком."
@@ -1548,6 +1555,9 @@ msgstr "Воспроизвести с этой реплики, {name}"
 msgid "Play from here"
 msgstr "Воспроизвести отсюда"
 
+msgid "Play the model answer"
+msgstr "Послушать образец"
+
 msgid "Play what {name} said"
 msgstr "Воспроизвести реплику: {name}"
 
@@ -1744,6 +1754,9 @@ msgstr "Она учительница"
 
 msgid "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
 msgstr "Короткие бесплатные уроки от первых звуков до B1. Нажми на любое слово, чтобы его услышать, и пробуй каждое правило прямо по ходу чтения."
+
+msgid "Show the model"
+msgstr "Показать образец"
 
 msgid "Show what {name} said"
 msgstr "Показать реплику: {name}"
@@ -2121,6 +2134,9 @@ msgstr "Это кофе Мартина."
 msgid "Through, over, along"
 msgstr "Сквозь, через, вдоль"
 
+msgid "Tick what your message does."
+msgstr "Отметь, что есть в твоём сообщении."
+
 msgid "Time expressions: when things happen"
 msgstr "Выражения времени: когда что происходит"
 
@@ -2398,6 +2414,9 @@ msgstr "Другие слова"
 msgid "work"
 msgstr "работа"
 
+msgid "Write it again"
+msgstr "Написать ещё раз"
+
 msgid "Write it in Estonian"
 msgstr "Напиши по-эстонски"
 
@@ -2443,6 +2462,9 @@ msgstr "Неверное слово найдено."
 msgid "You live in Tartu."
 msgstr "Ты живёшь в Тарту."
 
+msgid "You wrote"
+msgstr "Твой текст"
+
 msgid "You wrote <0>{typed}</0>. It’s <1>{right}</1>."
 msgstr "У тебя <0>{typed}</0>, а нужно <1>{right}</1>."
 
@@ -2475,6 +2497,9 @@ msgstr "твой ответ"
 
 msgid "Your answer"
 msgstr "Твой ответ"
+
+msgid "Your message"
+msgstr "Твоё сообщение"
 
 msgid "Your reply"
 msgstr "Твой ответ"

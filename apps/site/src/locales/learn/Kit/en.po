@@ -104,6 +104,10 @@ msgstr "{plays, plural, one {Read the questions first. You can play the recordin
 msgid "{position} of {count}"
 msgstr "{position} of {count}"
 
+#. placeholder {0}: checks.length
+msgid "{right} of {0} ticked"
+msgstr "{right} of {0} ticked"
+
 msgid "{right} of {total}"
 msgstr "{right} of {total}"
 
@@ -324,6 +328,9 @@ msgstr "A longer conversation"
 
 msgid "a lot, much"
 msgstr "a lot, much"
+
+msgid "A model answer"
+msgstr "A model answer"
 
 msgid "A noun’s cases on the tray: tap a form to hear it, its ending lit. Question words can head the rows, and one row or column can be tinted. On a phone the rows stack."
 msgstr "A noun’s cases on the tray: tap a form to hear it, its ending lit. Question words can head the rows, and one row or column can be tinted. On a phone the rows stack."
@@ -1548,6 +1555,9 @@ msgstr "Play from {name}’s turn"
 msgid "Play from here"
 msgstr "Play from here"
 
+msgid "Play the model answer"
+msgstr "Play the model answer"
+
 msgid "Play what {name} said"
 msgstr "Play what {name} said"
 
@@ -1744,6 +1754,9 @@ msgstr "She’s a teacher"
 
 msgid "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
 msgstr "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
+
+msgid "Show the model"
+msgstr "Show the model"
 
 msgid "Show what {name} said"
 msgstr "Show what {name} said"
@@ -2121,6 +2134,9 @@ msgstr "This is Martin’s coffee."
 msgid "Through, over, along"
 msgstr "Through, over, along"
 
+msgid "Tick what your message does."
+msgstr "Tick what your message does."
+
 msgid "Time expressions: when things happen"
 msgstr "Time expressions: when things happen"
 
@@ -2398,6 +2414,9 @@ msgstr "Words that differ"
 msgid "work"
 msgstr "work"
 
+msgid "Write it again"
+msgstr "Write it again"
+
 msgid "Write it in Estonian"
 msgstr "Write it in Estonian"
 
@@ -2443,6 +2462,9 @@ msgstr "You found the wrong word."
 msgid "You live in Tartu."
 msgstr "You live in Tartu."
 
+msgid "You wrote"
+msgstr "You wrote"
+
 msgid "You wrote <0>{typed}</0>. It’s <1>{right}</1>."
 msgstr "You wrote <0>{typed}</0>. It’s <1>{right}</1>."
 
@@ -2475,6 +2497,9 @@ msgstr "your answer"
 
 msgid "Your answer"
 msgstr "Your answer"
+
+msgid "Your message"
+msgstr "Your message"
 
 msgid "Your reply"
 msgstr "Your reply"

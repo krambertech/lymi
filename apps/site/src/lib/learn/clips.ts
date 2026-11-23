@@ -3452,6 +3452,9 @@ export const OBJECT_FIXES = [
   { wrong: "Osta pileti!", right: "Osta pilet!" },
 ] as const;
 
+export const OBJECT_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> =
+  Object.fromEntries(OBJECT_FIXES.map(({ right }) => [right, [right]]));
+
 export const OBJECT_DIALOGUE = {
   "d-teenindaja-1": { text: "Tere! Mida te soovite?", voice: "second" },
   "d-sina-1": "Ma võtan ühe koogi, palun.",
@@ -3605,7 +3608,14 @@ export const OBJECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Mina ei ostnud piletit.",
     "Ei ostnud piletit.",
   ],
-  "Ma ootan sõpra.": ["Ma ootan sõpra.", "Mina ootan sõpra.", "Ootan sõpra."],
+  "Ma ootan sõpra.": [
+    "Ma ootan sõpra.",
+    "Mina ootan sõpra.",
+    "Ootan sõpra.",
+    "Ma ootan sõbrannat.",
+    "Mina ootan sõbrannat.",
+    "Ootan sõbrannat.",
+  ],
   "Ma otsin võtit.": [
     "Ma otsin võtit.",
     "Ma otsin oma võtit.",
@@ -3622,8 +3632,20 @@ export const OBJECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Leidsin võtme.",
     "Leidsin oma võtme.",
   ],
-  "Söö supp ära!": ["Söö supp ära!", "Sööge supp ära!"],
-  "Ma jõin vett.": ["Ma jõin vett.", "Mina jõin vett.", "Jõin vett."],
+  "Söö supp ära!": [
+    "Söö supp ära!",
+    "Sööge supp ära!",
+    "Söö kogu supp ära!",
+    "Sööge kogu supp ära!",
+  ],
+  "Ma jõin vett.": [
+    "Ma jõin vett.",
+    "Mina jõin vett.",
+    "Jõin vett.",
+    "Ma jõin natuke vett.",
+    "Mina jõin natuke vett.",
+    "Jõin natuke vett.",
+  ],
   "Ma jõin vee ära.": [
     "Ma jõin vee ära.",
     "Mina jõin vee ära.",
@@ -3637,6 +3659,8 @@ export const OBJECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Söön supi ära.",
     "Mina söön supi ära.",
     "Ma söön kogu supi ära.",
+    "Söön kogu supi ära.",
+    "Mina söön kogu supi ära.",
   ],
   "Ma ei teinud tööd.": [
     "Ma ei teinud tööd.",
@@ -3654,7 +3678,12 @@ export const OBJECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Ärge jooge vett ära!",
   ],
   "Ära osta leiba!": ["Ära osta leiba!", "Ärge ostke leiba!"],
-  "Loe raamat läbi!": ["Loe raamat läbi!", "Lugege raamat läbi!"],
+  "Loe raamat läbi!": [
+    "Loe raamat läbi!",
+    "Lugege raamat läbi!",
+    "Loe raamat lõpuni!",
+    "Lugege raamat lõpuni!",
+  ],
   "Ära söö suppi!": [
     "Ära söö suppi!",
     "Ära söö suppi ära!",
@@ -3775,6 +3804,9 @@ export const GRADATION_FIXES = [
   { wrong: "Ma õppin eesti keelt.", right: "Ma õpin eesti keelt.", word: "õppin" },
   { wrong: "Ta rääkib eesti keelt.", right: "Ta räägib eesti keelt.", word: "rääkib" },
 ] as const;
+
+export const GRADATION_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> =
+  Object.fromEntries(GRADATION_FIXES.map(({ right }) => [right, [right]]));
 
 export const GRADATION_ROOM = [
   "Kati tuba on väike.",
@@ -3904,14 +3936,15 @@ export const GRADATION_ANSWERS: Record<string, readonly [string, ...string[]]> =
     "Meie oleme rannal.",
     "Oleme rannal.",
   ],
-  "Kott on kapis.": ["Kott on kapis."],
+  "Kott on kapis.": ["Kott on kapis.", "Kott on kapi sees."],
   "Mu jalad on väsinud.": [
     "Mu jalad on väsinud.",
+    "Jalad on väsinud.",
     "Minu jalad on väsinud.",
     "Mul on jalad väsinud.",
     "Minul on jalad väsinud.",
   ],
-  "Linnud on pargis.": ["Linnud on pargis."],
+  "Linnud on pargis.": ["Linnud on pargis.", "Pargis on linnud."],
 };
 
 const GRADATION_CLIPS: Record<string, Clip> = {
@@ -3961,12 +3994,15 @@ export const PLURAL_PART_ALT: Record<string, string> = {
   õunu: "õunasid",
   koole: "koolisid",
   puid: "puusid",
+  maid: "maasid",
+  teid: "teesid",
+  öid: "öösid",
   sõpru: "sõprasid",
   linde: "lindusid",
   lilli: "lillesid",
 };
 
-export const pluralPartVariants = (sentence: string): string[] => {
+export const pluralPartVariants = (sentence: string): [string, ...string[]] => {
   const words = sentence.split(" ");
   const at = words.findIndex((word) => word.replace(/[.,!?]$/, "") in PLURAL_PART_ALT);
   if (at < 0) return [sentence];
@@ -4071,7 +4107,7 @@ export const PLURAL_PART_PARTY = [
   "Ta ostis poest õunu ja banaane.",
   "Külalisi tuleb palju.",
   "Kati sõbrad toovad lilli.",
-  "Lapsed söövad kooke.",
+  "Lapsed laulavad laule.",
 ] as const;
 
 export const PLURAL_PART_CONVERSATION: Conversation = {
@@ -4872,6 +4908,358 @@ const PERFECT_CLIPS: Record<string, Clip> = {
   "c-saaremaa": PERFECT_CONVERSATION,
 };
 
+export const PAST_NO_PERSONS = ["ma", "sa", "ta", "me", "te", "nad"] as const;
+
+export const PAST_NO_TABLE = [
+  {
+    verb: "lugema",
+    stem: "luge",
+    yes: ["sin", "sid", "s", "sime", "site", "sid"],
+    nud: "luge|nud",
+  },
+  { verb: "olema", stem: "ol", yes: ["in", "id", "i", "ime", "ite", "id"], nud: "ol|nud" },
+  { verb: "minema", stem: "läks", yes: ["in", "id", "", "ime", "ite", "id"], nud: "läi|nud" },
+] as const;
+
+export const pastYesSaid = (pronoun: string, stem: string, ending: string) =>
+  presentWithPronoun(pronoun, stem, ending);
+
+export const pastNoSaid = (pronoun: string, nud: string) =>
+  `${capital(pronoun)} ei ${nud.replace("|", "")}`;
+
+export const PAST_NO_TIMELINE = [
+  {
+    id: "last-week",
+    et: "eelmisel nädalal",
+    at: -2,
+    sentence: "Eelmisel nädalal ma ei olnud Tallinnas.",
+    build: "ol|nud",
+  },
+  { id: "yesterday", et: "eile", at: -1, sentence: "Eile ma ei töötanud.", build: "tööta|nud" },
+  { id: "today", et: "täna", at: 0, sentence: "Täna ma ei tööta.", build: "tööta" },
+] as const;
+
+export const nudForm = (verb: VerbForms) => `${verb.da[0]}nud`;
+
+export const NUD_BUILT = VERB_FORMS.filter((verb) => ["da", "ta", "la"].includes(verb.pattern));
+
+export const NUD_SHOWN = ["elama", "lugema", "töötama", "ootama", "olema"] as const;
+
+export const NUD_WHOLE = [
+  { verb: "minema", da: "minna", nud: "läinud", said: "Ma ei läinud tööle." },
+  { verb: "tegema", da: "teha", nud: "teinud", said: "Ma ei teinud tööd." },
+  { verb: "nägema", da: "näha", nud: "näinud", said: "Ma ei näinud kassi." },
+  { verb: "sööma", da: "süüa", nud: "söönud", said: "Ma ei söönud kodus." },
+  { verb: "jooma", da: "juua", nud: "joonud", said: "Ma ei joonud kohvi." },
+] as const;
+
+export const PAST_NO_WHEN = [
+  { verb: "olema", now: "Ta pole kodus.", past: "Ta polnud kodus." },
+  { verb: "tulema", now: "Mari ei tule koju.", past: "Mari ei tulnud koju." },
+  { verb: "minema", now: "Ta ei lähe tööle.", past: "Ta ei läinud tööle." },
+  { verb: "sööma", now: "Me ei söö leiba.", past: "Me ei söönud leiba." },
+  { verb: "jooma", now: "Sa ei joo vett.", past: "Sa ei joonud vett." },
+  { verb: "lugema", now: "Te ei loe raamatut.", past: "Te ei lugenud raamatut." },
+  { verb: "elama", now: "Nad ei ela Tartus.", past: "Nad ei elanud Tartus." },
+] as const;
+
+export const PAST_NO_SORT = [
+  { w: "ei loe", bin: "now" },
+  { w: "ei joo", bin: "now" },
+  { w: "pole", bin: "now" },
+  { w: "elasin", bin: "yes" },
+  { w: "läksin", bin: "yes" },
+  { w: "olin", bin: "yes" },
+  { w: "ei teinud", bin: "no" },
+  { w: "ei joonud", bin: "no" },
+  { w: "polnud", bin: "no" },
+] as const;
+
+export const PAST_NO_REWRITE = [
+  { id: "tool", from: "Ma läksin eile tööle.", to: "Ma ei läinud eile tööle." },
+  { id: "kodus", from: "Ta oli kodus.", to: "Ta ei olnud kodus." },
+  { id: "kohvikus", from: "Me sõime kohvikus.", to: "Me ei söönud kohvikus." },
+  { id: "raamatut", from: "Nad lugesid raamatut.", to: "Nad ei lugenud raamatut." },
+  { id: "bussi", from: "Sa ootasid bussi.", to: "Sa ei oodanud bussi." },
+  { id: "koju", from: "Te tulite koju.", to: "Te ei tulnud koju." },
+] as const;
+
+export const PAST_NO_FIX = [
+  { id: "laksin", wrong: "Ma ei läksin poodi.", right: "Ma ei läinud poodi." },
+  { id: "oli", wrong: "Ta ei oli tööl.", right: "Ta ei olnud tööl." },
+  { id: "kaisime", wrong: "Me ei käisime turul.", right: "Me ei käinud turul." },
+  { id: "tootanud", wrong: "Eile ma ei tööta.", right: "Eile ma ei töötanud." },
+  { id: "soonud", wrong: "Sa ei söö eile kodus.", right: "Sa ei söönud eile kodus." },
+  { id: "lugesite", wrong: "Te ei lugesite raamatut.", right: "Te ei lugenud raamatut." },
+] as const;
+
+export const PAST_NO_DIALOGUE = {
+  "d-mari-1": { text: "Tere! Kas sa käisid eile poes?", voice: "second" },
+  "d-sina-1": "Ei, ma ei käinud.",
+  "d-mari-2": { text: "Miks sa ei käinud?", voice: "second" },
+  "d-sina-2": "Mul polnud aega.",
+  "d-mari-3": { text: "Mida sa siis tegid?", voice: "second" },
+  "d-sina-3": "Ma töötasin kodus.",
+  "d-mari-4": { text: "Kas Jaan oli kodus?", voice: "second" },
+  "d-sina-4": "Ei, ta ei olnud.",
+} as const satisfies Record<string, Clip>;
+
+export const PAST_NO_TALK = {
+  turns: [
+    {
+      voice: "third",
+      text: "Tere, Jaan! Mida sa laupäeval tegid?",
+      say: "[cheerful] Tere, Jaan! Mida sa laupäeval tegid?",
+    },
+    {
+      voice: "main",
+      text: ["Laupäeval olin ma kodus.", "Ma ei läinud tööle ja ma ei käinud poes."],
+    },
+    { voice: "third", text: "Miks sa poes ei käinud?", say: "[curious] Miks sa poes ei käinud?" },
+    {
+      voice: "main",
+      text: ["Mul polnud aega.", "Minu ema tuli Tartust ja me rääkisime palju."],
+    },
+    { voice: "third", text: "Kas te sõite kohvikus?" },
+    { voice: "main", text: ["Ei, me ei söönud kohvikus.", "Me sõime kodus.", "Ja sina?"] },
+    {
+      voice: "third",
+      text: ["Mina ei olnud laupäeval kodus.", "Ma käisin Tallinnas ja jõin seal kohvi."],
+    },
+    { voice: "main", text: "Ja pühapäeval?" },
+    {
+      voice: "third",
+      text: ["Pühapäeval olin kodus ja lugesin raamatut.", "Ma ei tahtnud linna minna."],
+      say: "[laughs] Pühapäeval olin kodus ja lugesin raamatut. Ma ei tahtnud linna minna.",
+    },
+    { voice: "main", text: "Kas sa poes käisid?" },
+    { voice: "third", text: ["Ei, ma ei käinud.", "Ma lähen täna."] },
+    { voice: "main", text: ["Mina ka.", "Mul pole kodus leiba."] },
+    { voice: "third", text: "Kas läheme koos kell kuus?" },
+    { voice: "main", text: ["Jah!", "Kell kuus olen poe ees."] },
+    { voice: "third", text: "Tore! Head aega!", say: "[cheerful] Tore! Head aega!" },
+  ],
+} as const satisfies Conversation;
+
+export const PAST_NO_DRILL = [
+  "Ma ei elanud Tartus.",
+  "Ta ei rääkinud eesti keelt.",
+  "Me ei õppinud eile.",
+  "Nad ei kuulanud.",
+  "Ta ei läinud koju.",
+  "Me ei teinud tööd.",
+  "Sa ei näinud kassi.",
+  "Nad ei söönud leiba.",
+  "Ma ei joonud vett.",
+  "Te ei käinud poes.",
+  "Ma ei tahtnud tulla.",
+  "Nad ei olnud kodus.",
+  "Sa ei töötanud eile.",
+  "Me ei oodanud.",
+  "Ta ei tulnud tööle.",
+  "Ta luges raamatut.",
+  "Ta ei loe raamatut.",
+  "Ta ei lugenud raamatut.",
+] as const;
+
+export const PAST_NO_WORDS = [
+  "ei",
+  "eile",
+  "täna",
+  "töötasin",
+  "ma ei töötanud",
+  "lugesin",
+  "ma ei lugenud",
+  "nad ei lugenud",
+  "ei olnud",
+  "polnud",
+  "Ma polnud kodus.",
+  "ei lugenud",
+  "ei läinud",
+  "ei teinud",
+  "ei näinud",
+  "ei söönud",
+  "ei joonud",
+  "ei käinud",
+  "ei tahtnud",
+  "tahtma",
+  "tahta",
+  "tahtnud",
+  "Ma ei tahtnud.",
+  "käinud",
+  "Kas sa käisid poes?",
+  "mul polnud aega",
+] as const;
+
+const PAST_NO_CLIPS: Record<string, Clip> = {
+  ...words(PAST_NO_WORDS),
+  ...words(
+    PAST_NO_TABLE.flatMap(({ stem, yes, nud }) =>
+      PAST_NO_PERSONS.flatMap((pronoun, i) => [
+        pastYesSaid(pronoun, stem, yes[i] ?? ""),
+        pastNoSaid(pronoun, nud),
+      ]),
+    ),
+  ),
+  ...words(PAST_NO_TIMELINE.map(({ sentence }) => sentence)),
+  ...words(NUD_BUILT.flatMap((verb) => [verb.ma, daForm(verb), nudForm(verb)])),
+  ...words(NUD_WHOLE.flatMap(({ verb, da, nud, said }) => [verb, da, nud, said])),
+  ...words(PAST_NO_WHEN.flatMap(({ now, past }) => [now, past])),
+  ...words(PAST_NO_SORT.map(({ w }) => w)),
+  ...words(PAST_NO_REWRITE.map(({ to }) => to)),
+  ...words(PAST_NO_FIX.map(({ right }) => right)),
+  ...words(PAST_NO_DRILL),
+  ...PAST_NO_DIALOGUE,
+  "c-weekend": PAST_NO_TALK,
+};
+
+export const MARKET_PASSAGES = {
+  mari: [
+    "Tere, Liis!",
+    "Täna on laupäev ja ma lähen kell kümme turule.",
+    "Mul on vaja kilo juustu, leiba ja piima.",
+    "Kilo juustu maksab poes kümme eurot.",
+    "Leib maksab kaks eurot.",
+    "Homme tuleb minu ema meile ja talle meeldivad turu õunad.",
+    "Mulle ei meeldi pood, mulle meeldib turg.",
+    "Turul on ka väike kohvik.",
+    "Kas sa tahad tulla?",
+    "Jaan ei saa tulla, sest ta on täna tööl.",
+    "Me võime kohvikus kohvi juua.",
+    "Ma ootan sind kell kümme turul.",
+    "Kell kaksteist pean ma kodus olema.",
+  ],
+  liis: [
+    "Tere, Mari!",
+    "Jah, ma tahan tulla.",
+    "Ma olen kell kümme turul.",
+    "Mul on ka vaja kilo kohvi.",
+    "Ka mulle meeldivad turu õunad.",
+    "Kas me saame kohvikus süüa?",
+    "Kell kaksteist pean ma ka koju minema.",
+  ],
+} as const;
+
+export const MARKET_LEADS = [
+  { w: "tahan", bin: "da" },
+  { w: "võin", bin: "da" },
+  { w: "saan", bin: "da" },
+  { w: "mul on vaja", bin: "da" },
+  { w: "mulle meeldib", bin: "da" },
+  { w: "pean", bin: "ma" },
+  { w: "lähen", bin: "ma" },
+  { w: "hakkan", bin: "ma" },
+] as const;
+
+export const MARKET_SAY = [
+  { id: "juustu", said: "Mul on vaja kilo juustu." },
+  { id: "maksab", said: "Kui palju see maksab?" },
+  { id: "ounad", said: "Mulle meeldivad õunad." },
+  { id: "turule", said: "Ma tahan turule minna." },
+  { id: "kodus", said: "Ma pean kell kaksteist kodus olema." },
+  { id: "leib", said: "Leib maksab kaks eurot." },
+] as const;
+
+export const MARKET_FIX = [
+  { id: "juust", wrong: "Mul on vaja kilo juust.", right: "Mul on vaja kilo juustu." },
+  { id: "minna", wrong: "Ma pean turule minna.", right: "Ma pean turule minema." },
+  { id: "jooma", wrong: "Ma tahan kohvi jooma.", right: "Ma tahan kohvi juua." },
+  { id: "meeldib", wrong: "Mulle meeldib õunad.", right: "Mulle meeldivad õunad." },
+  { id: "euro", wrong: "Leib maksab kaks euro.", right: "Leib maksab kaks eurot." },
+  { id: "turul", wrong: "Ma lähen täna turul.", right: "Ma lähen täna turule." },
+  { id: "turult", wrong: "Ma tulen turul koju.", right: "Ma tulen turult koju." },
+] as const;
+
+export const MARKET_DIALOGUE = {
+  "d-muuja-1": { text: "Tere! Mida te soovite?", voice: "second" },
+  "d-sina-1": "Tere! Mul on vaja kilo juustu.",
+  "d-muuja-2": { text: "Kilo maksab kaheksa eurot. Midagi veel?", voice: "second" },
+  "d-sina-2": "Jah, ma tahan ka leiba.",
+  "d-muuja-3": { text: "Juust ja leib on kümme eurot.", voice: "second" },
+  "d-sina-3": "Palun, kümme eurot.",
+} as const satisfies Record<string, Clip>;
+
+export const MARKET_TALK = {
+  turns: [
+    { voice: "fourth", text: "Tere! Mida te soovite?" },
+    { voice: "third", text: ["Tere! Mul on vaja kilo juustu.", "Kui palju see maksab?"] },
+    {
+      voice: "fourth",
+      text: ["Kilo maksab kaheksa eurot.", "See juust on väga hea."],
+      say: "Kilo maksab kaheksa eurot. [proudly] See juust on väga hea.",
+    },
+    { voice: "third", text: "Kas see on Eesti juust?", say: "[curious] Kas see on Eesti juust?" },
+    { voice: "fourth", text: "Jah, see juust on Tartust." },
+    { voice: "third", text: "Kas leib on ka Tartust?" },
+    { voice: "fourth", text: "Ei, leib on Tallinnast." },
+    { voice: "third", text: "Hästi, üks kilo, palun." },
+    { voice: "fourth", text: "Midagi veel?" },
+    { voice: "third", text: "Jah, ma tahan ka leiba ja piima." },
+    { voice: "fourth", text: ["Leiba on, aga piima täna pole.", "Piima saate poest."] },
+    {
+      voice: "third",
+      text: ["Kahju.", "Ma pean poodi minema."],
+      say: "[sighs] Kahju. Ma pean poodi minema.",
+    },
+    { voice: "fourth", text: ["Kas teile meeldib kohv?", "Meil on ka kohvi."] },
+    { voice: "third", text: "Mulle meeldib kohv, aga täna ma kohvi ei taha." },
+    { voice: "fourth", text: "Leib ja juust on kümme eurot." },
+    { voice: "third", text: ["Palun, kümme eurot.", "Aitäh, head aega!"] },
+    { voice: "fourth", text: "Head aega!" },
+  ],
+} as const satisfies Conversation;
+
+export const MARKET_DRILL = [
+  "kilo juustu",
+  "Mul on vaja kilo kohvi.",
+  "kolm eurot",
+  "Juust maksab kaheksa eurot.",
+  "Kohv maksab kolm eurot.",
+  "Ma tahan turule minna.",
+  "Ma pean kodus olema.",
+  "Mul on vaja poodi minna.",
+  "Ma tahan kohvi juua.",
+  "Ma pean koju minema.",
+  "Me saame kohvikus süüa.",
+  "Mulle meeldivad õunad.",
+  "Mulle meeldib turg.",
+  "Talle meeldib kohv.",
+  "Mulle meeldivad kassid.",
+  "Talle meeldivad õunad.",
+  "Ma lähen turule.",
+  "Ma olen turul.",
+  "Ma tulen turult.",
+  "Ma olen täna turul.",
+  "Ma tulen turult koju.",
+] as const;
+
+export const MARKET_WORDS = [
+  "turg",
+  "turule",
+  "turul",
+  "turult",
+  "õunad",
+  "turu õunad",
+  "kilo juustu",
+  "maksab",
+  "Mida te soovite?",
+  "Midagi veel?",
+  "mul on vaja",
+  "kahju",
+] as const;
+
+const MARKET_CLIPS: Record<string, Clip> = {
+  ...words(MARKET_WORDS),
+  ...words(MARKET_LEADS.map(({ w }) => w)),
+  ...words(MARKET_SAY.map(({ said }) => said)),
+  ...words(MARKET_FIX.map(({ right }) => right)),
+  ...words(MARKET_DRILL),
+  "p-mari": { sentences: MARKET_PASSAGES.mari, voice: "third" },
+  "p-liis": { sentences: MARKET_PASSAGES.liis, voice: "second" },
+  ...MARKET_DIALOGUE,
+  "c-stall": MARKET_TALK,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -5036,6 +5424,8 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "raamatuid-maju": PLURAL_PART_CLIPS,
   "majades-inimestele": PLURAL_CASE_CLIPS,
   "olen-lugenud": PERFECT_CLIPS,
+  turul: MARKET_CLIPS,
   lihtminevik: PAST_CLIPS,
+  "mineviku-eitus": PAST_NO_CLIPS,
   kit: KIT_CLIPS,
 };

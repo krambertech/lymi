@@ -10,9 +10,6 @@ msgstr ""
 msgid "<0>Armastama</0> takes the partitive, so many birds are <1>linde</1>."
 msgstr "После <0>armastama</0> идёт партитив, поэтому «птиц» — <1>linde</1>."
 
-msgid "<0>Ootama</0> takes the partitive, so many friends are <1>sõpru</1>."
-msgstr "После <0>ootama</0> идёт партитив, поэтому «друзей» — <1>sõpru</1>."
-
 msgid "20 minutes"
 msgstr "20 минут"
 
@@ -37,17 +34,17 @@ msgstr "много друзей"
 msgid "a lot, many"
 msgstr "много"
 
-msgid "A number from two up takes the singular partitive. Some or many takes the plural partitive."
-msgstr "После числа от двух — партитив единственного. «Немного» или «много» — партитив множественного."
+msgid "A number from two up usually takes the singular partitive. Some or many usually takes the plural partitive."
+msgstr "После числа от двух — обычно партитив единственного. «Немного» или «много» — обычно партитив множественного."
 
 msgid "A number, many or the ones you mean"
 msgstr "Число, много или конкретные"
 
-msgid "A one-syllable word with a long vowel shortens it and takes <0>-id</0>: <1>puu, puid</1>."
-msgstr "В односложном слове долгая гласная сокращается и добавляется <0>-id</0>: <1>puu, puid</1>."
+msgid "A one-syllable word with a long vowel usually shortens it and takes <0>-id</0>: <1>puu, puid</1>. Most of these also have <2>-sid</2>: <3>puusid</3>."
+msgstr "В односложном слове долгая гласная обычно сокращается и добавляется <0>-id</0>: <1>puu, puid</1>. У большинства таких слов есть и форма на <2>-sid</2>: <3>puusid</3>."
 
-msgid "A one-syllable word with a long vowel shortens it and takes <et>-id</et>: <et>puid</et>."
-msgstr "В односложном слове долгая гласная сокращается и добавляется <et>-id</et>: <et>puid</et>."
+msgid "A one-syllable word with a long vowel usually shortens it and takes <et>-id</et>: <et>puid</et>. Most of these also have <et>-sid</et>: <et>puusid</et>."
+msgstr "В односложном слове долгая гласная обычно сокращается и добавляется <et>-id</et>: <et>puid</et>. У большинства таких слов есть и форма на <et>-sid</et>: <et>puusid</et>."
 
 msgid "Adds <0>-id</0>: <1>raamatuid, puid</1>."
 msgstr "Добавляет <0>-id</0>: <1>raamatuid, puid</1>."
@@ -61,32 +58,32 @@ msgstr "Добавляет <et>-id</et>: <et>raamatuid</et>."
 msgid "Adds <et>-sid</et>: <et>autosid</et>."
 msgstr "Добавляет <et>-sid</et>: <et>autosid</et>."
 
-msgid "After <0>ei</0> and after verbs such as <1>armastama</1>, the plural partitive too: <2>Mul ei ole autosid. Ma armastan linde.</2>"
-msgstr "После <0>ei</0> и после глаголов вроде <1>armastama</1> — тоже партитив множественного: <2>Mul ei ole autosid. Ma armastan linde.</2>"
+msgid "After <0>ei</0> and after verbs such as <1>armastama</1>, usually the plural partitive too: <2>Mul ei ole autosid. Ma armastan linde.</2>"
+msgstr "После <0>ei</0> и после глаголов вроде <1>armastama</1> — тоже обычно партитив множественного: <2>Mul ei ole autosid. Ma armastan linde.</2>"
 
-msgid "After <0>ei</0>, a plural noun takes the plural partitive."
-msgstr "После <0>ei</0> существительное во множественном числе стоит в партитиве множественного."
+msgid "After <0>ei</0>, a plural noun usually takes the plural partitive."
+msgstr "После <0>ei</0> существительное во множественном числе обычно стоит в партитиве множественного."
 
 msgid "After <0>ei</0>, the plural partitive."
 msgstr "После <0>ei</0> — партитив множественного."
 
-msgid "After <0>palju</0>, many, the plural partitive."
-msgstr "После <0>palju</0>, «много», — партитив множественного."
+msgid "After <0>palju</0>, a noun you can count takes the plural partitive."
+msgstr "После <0>palju</0> существительное, которое можно посчитать, стоит в партитиве множественного."
 
-msgid "After <0>palju</0>, the plural partitive."
-msgstr "После <0>palju</0> — партитив множественного."
+msgid "After <0>palju</0>, many, a noun you can count takes the plural partitive."
+msgstr "После <0>palju</0>, «много», существительное, которое можно посчитать, стоит в партитиве множественного."
 
 msgid "After <et>ei</et> and partitive verbs"
 msgstr "После <et>ei</et> и глаголов, которые требуют партитива"
 
-msgid "After <et>ei</et> or a verb such as <et>armastama</et>, a plural noun takes the plural partitive."
-msgstr "После <et>ei</et> или глагола вроде <et>armastama</et> существительное во множественном числе стоит в партитиве множественного."
+msgid "After <et>ei</et> or a verb such as <et>armastama</et>, a plural noun usually takes the plural partitive."
+msgstr "После <et>ei</et> или глагола вроде <et>armastama</et> существительное во множественном числе обычно стоит в партитиве множественного."
 
 msgid "After a number"
 msgstr "После числа"
 
-msgid "After a number from two up, the singular partitive stays: <0>kaks raamatut</0>. The ones you mean take the plural nominative: <1>raamatud</1>."
-msgstr "После числа от двух остаётся партитив единственного: <0>kaks raamatut</0>. Конкретные вещи — именительный множественного: <1>raamatud</1>."
+msgid "After a number from two up, the singular partitive usually stays: <0>kaks raamatut</0>. The ones you mean usually take the plural nominative: <1>raamatud</1>."
+msgstr "После числа от двух обычно остаётся партитив единственного: <0>kaks raamatut</0>. Конкретные вещи — обычно именительный множественного: <1>raamatud</1>."
 
 msgid "After a number from two up, the singular partitive."
 msgstr "После числа от двух — партитив единственного."
@@ -316,6 +313,9 @@ msgstr "Почти. Там, где ошибся, просмотри виды в 
 msgid "Nominative"
 msgstr "Именительный"
 
+msgid "On its own, <0>ootama</0> takes the partitive, so many friends are <1>sõpru</1>."
+msgstr "Сам по себе <0>ootama</0> требует партитива, поэтому «друзей» — <1>sõpru</1>."
+
 msgid "Pick the form each sentence needs, then hear it."
 msgstr "Выбери форму, которая нужна в каждом предложении, потом послушай его."
 
@@ -358,11 +358,11 @@ msgstr "Ещё шесть слов, которых в этом уроке ещё
 msgid "Some or many"
 msgstr "Немного или много"
 
-msgid "Some or many things you don’t count take the plural partitive: <0>Mul on palju raamatuid. Poes on õunu.</0>"
-msgstr "Немного или много вещей без счёта — партитив множественного: <0>Mul on palju raamatuid. Poes on õunu.</0>"
+msgid "Some or many things you don’t count usually take the plural partitive: <0>Mul on palju raamatuid. Poes on õunu.</0> After <1>mõned</1>, some, the plural nominative: <2>mõned raamatud</2>."
+msgstr "Немного или много вещей без счёта — обычно партитив множественного: <0>Mul on palju raamatuid. Poes on õunu.</0> После <1>mõned</1>, «некоторые», — именительный множественного: <2>mõned raamatud</2>."
 
-msgid "Some or many, not counted: the plural partitive."
-msgstr "Немного или много, без счёта: партитив множественного."
+msgid "Some or many, not counted: usually the plural partitive."
+msgstr "Немного или много, без счёта: обычно партитив множественного."
 
 msgid "Switch through the kinds in the table, then try again."
 msgstr "Просмотри каждый вид в таблице, потом попробуй снова."
@@ -400,8 +400,8 @@ msgstr "эти друзья"
 msgid "The ones you mean"
 msgstr "Конкретные"
 
-msgid "The ones you mean take the plural nominative, which lesson {plural} teaches: <0/>, the books. Tap across each row."
-msgstr "Конкретные вещи стоят в именительном множественного, об этом — в уроке {plural}: <0/>, эти книги. Пройдись по каждой строке."
+msgid "The ones you mean usually take the plural nominative, which lesson {plural} teaches: <0/>, the books. Tap across each row."
+msgstr "Конкретные вещи обычно стоят в именительном множественного, об этом — в уроке {plural}: <0/>, эти книги. Пройдись по каждой строке."
 
 msgid "The ones you mean, the subject: the plural nominative."
 msgstr "Конкретные, и это подлежащее: именительный множественного."
@@ -409,14 +409,11 @@ msgstr "Конкретные, и это подлежащее: именитель
 msgid "The ones you mean: the plural nominative."
 msgstr "Конкретные: именительный множественного."
 
-msgid "The partitive for more than one: some or many things you don’t count, after <0>ei</0>, and after verbs that take the partitive. How it differs from <1>kaks raamatut</1> and <2>raamatud</2>, and how to build it."
-msgstr "Партитив для нескольких: немного или много вещей без счёта, после <0>ei</0> и после глаголов, которые требуют партитива. Чем он отличается от <1>kaks raamatut</1> и <2>raamatud</2> и как его образовать."
+msgid "The partitive for more than one, usually for some or many things you don’t count, after <0>ei</0>, and after verbs that take the partitive. How it differs from <1>kaks raamatut</1> and <2>raamatud</2>, and how to build it."
+msgstr "Партитив для нескольких: обычно для «немного» или «много» вещей без счёта, после <0>ei</0> и после глаголов, которые требуют партитива. Чем он отличается от <1>kaks raamatut</1> и <2>raamatud</2> и как его образовать."
 
 msgid "The plural partitive ends in <0>-id</0> (<1>raamatuid</1>), <2>-sid</2> (<3>autosid</3>) or a changed last vowel (<4>maju, koole</4>). Learn it with each word."
 msgstr "Партитив множественного оканчивается на <0>-id</0> (<1>raamatuid</1>), <2>-sid</2> (<3>autosid</3>) или изменённую последнюю гласную (<4>maju, koole</4>). Учи его с каждым словом."
-
-msgid "The plural partitive for some or many"
-msgstr "Партитив множественного для «немного» или «много»"
 
 msgid "The plural partitive is built on the genitive or the partitive, in one of three ways: <0>-id</0>, <1>-sid</1>, or a changed last vowel. Pick a kind and tap the forms."
 msgstr "Партитив множественного образуется от родительного или партитива одним из трёх способов: <0>-id</0>, <1>-sid</1> или смена последней гласной. Выбери вид и нажимай на формы."
@@ -484,6 +481,9 @@ msgstr "Два, много или конкретные?"
 
 msgid "Type the form"
 msgstr "Напиши форму"
+
+msgid "Usually the plural partitive: some or many"
+msgstr "Обычно партитив множественного: «немного» или «много»"
 
 msgid "What did Mari buy two kilos of?"
 msgstr "Чего Мари купила два килограмма?"

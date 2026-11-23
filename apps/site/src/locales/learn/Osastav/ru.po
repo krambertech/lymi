@@ -8,20 +8,20 @@ msgstr ""
 "Language: ru\n"
 
 #. placeholder {0}: means(row.no, i18n)
-msgid "{0} The sentence starts with the cat, so <0>kass</0> keeps its first form, even with <1>pole</1>."
-msgstr "{0} Предложение начинается с кошки, поэтому <0>kass</0> остаётся в первой форме, хотя в предложении есть <1>pole</1>."
+msgid "{0} The sentence starts with the cat, so <0>kass</0> keeps its nominative, even with <1>pole</1>."
+msgstr "{0} Предложение начинается с кошки, поэтому <0>kass</0> остаётся в именительном, хотя в предложении есть <1>pole</1>."
 
-msgid "<0/> asks how many, and the noun after it takes its third form too. For a price, ask with <1>kui palju</1>, how much, from lesson {questions}."
-msgstr "<0/> спрашивает «сколько» о том, что можно посчитать, и существительное после него тоже стоит в третьей форме. Цену спрашивают через <1>kui palju</1> из урока {questions}."
+msgid "<0/> asks how many, and the noun after it takes its partitive too. For a price, ask with <1>kui palju</1>, how much, from lesson {questions}."
+msgstr "<0/> спрашивает «сколько» о том, что можно посчитать, и существительное после него тоже стоит в партитиве. Цену спрашивают через <1>kui palju</1> из урока {questions}."
 
-msgid "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its third form: <2/> (Lesson {have} teaches <3>Mul on</3>.)"
-msgstr "<0/> У меня есть кошка. Чтобы сказать, что кошки нет, возьми <1/> из урока {negation}, а кошка перейдёт в третью форму: <2/> (О <3>Mul on</3> — в уроке {have}.)"
+msgid "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its partitive: <2/> (Lesson {have} teaches <3>Mul on</3>.)"
+msgstr "<0/> У меня есть кошка. Чтобы сказать, что кошки нет, возьми <1/> из урока {negation}, а кошка перейдёт в партитив: <2/> (О <3>Mul on</3> — в уроке {have}.)"
 
-msgid "<0/> is a cup of coffee. The amount comes first, and what it measures follows in its third form: <1/> becomes <2/>."
-msgstr "<0/> — чашка кофе. Сначала идёт слово количества, а за ним то, что меряют, в третьей форме: <1/> становится <2/>. По-русски так же: «стакан воды», а не «стакан вода»."
+msgid "<0/> is a cup of coffee. The amount comes first, and what it measures follows in its partitive: <1/> becomes <2/>."
+msgstr "<0/> — чашка кофе. Сначала идёт слово количества, а за ним то, что меряют, в партитиве: <1/> становится <2/>. По-русски так же: «стакан воды», а не «стакан вода»."
 
-msgid "<0/> is one cat; <1/> is two cats. After a number from two up, a noun takes its third form, the partitive, and stays singular: <2/> has no plural ending."
-msgstr "<0/> — одна кошка, <1/> — две кошки. После числа от двух и больше существительное стоит в третьей форме, партитиве, и остаётся в единственном числе: у <2/> нет окончания множественного числа."
+msgid "<0/> is one cat; <1/> is two cats. After a number from two up, a noun takes the partitive and stays singular: <2/> has no plural ending."
+msgstr "<0/> — одна кошка, <1/> — две кошки. После числа от двух и больше существительное стоит в партитиве и остаётся в единственном числе: у <2/> нет окончания множественного числа."
 
 msgid "<0/>, a lot, <1/>, a little, and <2/>, not much, work the same way. The same rule is behind <3>Kui palju kohvi sa jood?</3> from lesson {questions}."
 msgstr "<0/> (много), <1/> (немного) и <2/> (мало) работают так же. То же правило стоит за <3>Kui palju kohvi sa jood?</3> из урока {questions}."
@@ -31,20 +31,20 @@ msgid "<0>{text}</0>, {0}"
 msgstr "<0>{text}</0>, {0}"
 
 #. placeholder {0}: means(text, i18n)
-msgid "<0>{text}</0>, {0}; its third form is <1>maja</1> too, so it looks the same."
-msgstr "<0>{text}</0>, {0}; третья форма тоже <1>maja</1>, поэтому слово не меняется."
+msgid "<0>{text}</0>, {0}; its partitive is <1>maja</1> too, so it looks the same."
+msgstr "<0>{text}</0>, {0}; партитив тоже <1>maja</1>, поэтому слово не меняется."
 
-msgid "<et>Sul on auto</et>: with <et>on</et>, the first form."
-msgstr "<et>Sul on auto</et>: с <et>on</et> — первая форма."
+msgid "<et>Sul on auto</et>: with <et>on</et>, the nominative."
+msgstr "<et>Sul on auto</et>: с <et>on</et> — именительный."
 
-msgid "<et>Sul pole autot</et>: with <et>pole</et>, the third form."
-msgstr "<et>Sul pole autot</et>: с <et>pole</et> — третья форма."
+msgid "<et>Sul pole autot</et>: with <et>pole</et>, the partitive."
+msgstr "<et>Sul pole autot</et>: с <et>pole</et> — партитив."
 
-msgid "<et>Tal on laps</et>: with <et>on</et>, the first form."
-msgstr "<et>Tal on laps</et>: с <et>on</et> — первая форма."
+msgid "<et>Tal on laps</et>: with <et>on</et>, the nominative."
+msgstr "<et>Tal on laps</et>: с <et>on</et> — именительный."
 
-msgid "<et>Tal pole last</et>: with <et>pole</et>, the third form."
-msgstr "<et>Tal pole last</et>: с <et>pole</et> — третья форма."
+msgid "<et>Tal pole last</et>: with <et>pole</et>, the partitive."
+msgstr "<et>Tal pole last</et>: с <et>pole</et> — партитив."
 
 msgid "€10"
 msgstr "10 €"
@@ -97,53 +97,53 @@ msgstr "Голосовое сообщение с рынка"
 msgid "Aeg, aja, aega."
 msgstr "Aeg, aja, aega."
 
-msgid "After <0>pole</0>, what isn’t there takes the third form."
-msgstr "После <0>pole</0> то, чего нет, стоит в третьей форме."
+msgid "After <0>pole</0>, what isn’t there takes the partitive."
+msgstr "После <0>pole</0> то, чего нет, стоит в партитиве."
 
-msgid "After <0>pole</0>, what someone hasn’t got, or what there is none of in a place, takes the third form: <1>Mul pole kassi, Laual pole leiba</1>. When the sentence starts with the thing, it keeps its first: <2>Kass pole laual</2>."
-msgstr "После <0>pole</0> то, чего у кого-то нет или чего нет в каком-то месте, стоит в третьей форме: <1>Mul pole kassi, Laual pole leiba</1>. Если предложение начинается с самого предмета, он остаётся в первой: <2>Kass pole laual</2>."
+msgid "After <0>pole</0>, what someone hasn’t got, or what there is none of in a place, takes the partitive: <1>Mul pole kassi, Laual pole leiba</1>. When the sentence starts with the thing, it keeps its nominative: <2>Kass pole laual</2>."
+msgstr "После <0>pole</0> то, чего у кого-то нет или чего нет в каком-то месте, стоит в партитиве: <1>Mul pole kassi, Laual pole leiba</1>. Если предложение начинается с самого предмета, он остаётся в именительном: <2>Kass pole laual</2>."
 
-msgid "After <0>pole</0>, what there is none of in a place takes the third form: <1>pole leiba</1>."
-msgstr "После <0>pole</0> то, чего нет в каком-то месте, стоит в третьей форме: <1>pole leiba</1>."
+msgid "After <0>pole</0>, what there is none of in a place takes the partitive: <1>pole leiba</1>."
+msgstr "После <0>pole</0> то, чего нет в каком-то месте, стоит в партитиве: <1>pole leiba</1>."
 
-msgid "After <0>üks</0> on its own, a noun keeps its first form. From two up, it takes its third."
-msgstr "Если перед существительным только <0>üks</0>, оно остаётся в первой форме. От двух — стоит в третьей."
+msgid "After <0>üks</0> on its own, a noun keeps its nominative. From two up, it takes the partitive."
+msgstr "Если перед существительным только <0>üks</0>, оно остаётся в именительном. От двух — стоит в партитиве."
 
-msgid "After <0>üks</0> on its own, the first form: <1>üks kass</1>."
-msgstr "Только <0>üks</0> — значит, первая форма: <1>üks kass</1>."
+msgid "After <0>üks</0> on its own, the nominative: <1>üks kass</1>."
+msgstr "Только <0>üks</0> — значит, именительный: <1>üks kass</1>."
 
-msgid "After <0>üks</0> on its own, the first form: <1>üks leib</1>."
-msgstr "Только <0>üks</0> — значит, первая форма: <1>üks leib</1>."
+msgid "After <0>üks</0> on its own, the nominative: <1>üks leib</1>."
+msgstr "Только <0>üks</0> — значит, именительный: <1>üks leib</1>."
 
-msgid "After <et>pole</et> or <et>ei ole</et>, what isn’t there takes the third form."
-msgstr "После <et>pole</et> или <et>ei ole</et> то, чего нет, стоит в третьей форме."
+msgid "After <et>pole</et> or <et>ei ole</et>, what isn’t there takes the partitive."
+msgstr "После <et>pole</et> или <et>ei ole</et> то, чего нет, стоит в партитиве."
 
-msgid "After <et>üks</et> on its own, the first form."
-msgstr "Только <et>üks</et> — значит, первая форма."
+msgid "After <et>üks</et> on its own, the nominative."
+msgstr "Только <et>üks</et> — значит, именительный."
 
 msgid "After a number from two up"
 msgstr "После числа от двух"
 
-msgid "After a number from two up, a noun takes its third form and stays singular: <0>kaks kassi, viis eurot</0>. After <1>üks</1> on its own, it keeps its first: <2>üks kass</2>."
-msgstr "После числа от двух существительное стоит в третьей форме и остаётся в единственном числе: <0>kaks kassi, viis eurot</0>. Если перед ним только <1>üks</1>, оно остаётся в первой: <2>üks kass</2>."
+msgid "After a number from two up, a noun takes its partitive and stays singular: <0>kaks kassi, viis eurot</0>. After <1>üks</1> on its own, it keeps its nominative: <2>üks kass</2>."
+msgstr "После числа от двух существительное стоит в партитиве и остаётся в единственном числе: <0>kaks kassi, viis eurot</0>. Если перед ним только <1>üks</1>, оно остаётся в именительном: <2>üks kass</2>."
 
-msgid "After a number from two up, or <et>mitu</et>, the third form."
-msgstr "После числа от двух или <et>mitu</et> — третья форма."
+msgid "After a number from two up, or <et>mitu</et>, the partitive."
+msgstr "После числа от двух или <et>mitu</et> — партитив."
 
-msgid "After a number from two up, the third form: <0>seitse eurot</0>."
-msgstr "После числа от двух — третья форма: <0>seitse eurot</0>."
+msgid "After a number from two up, the partitive: <0>seitse eurot</0>."
+msgstr "После числа от двух — партитив: <0>seitse eurot</0>."
 
 msgid "After an amount"
 msgstr "После слов количества"
 
-msgid "After an amount, the third form: <0>kilo juustu</0>."
-msgstr "После слова количества — третья форма: <0>kilo juustu</0>."
+msgid "After an amount, the partitive: <0>kilo juustu</0>."
+msgstr "После слова количества — партитив: <0>kilo juustu</0>."
 
-msgid "After an amount, the third form."
-msgstr "После слова количества — третья форма."
+msgid "After an amount, the partitive."
+msgstr "После слова количества — партитив."
 
-msgid "After an amount, what it measures takes the third form: <0>tass kohvi, palju raha</0>."
-msgstr "После слова количества то, что меряют, стоит в третьей форме: <0>tass kohvi, palju raha</0>."
+msgid "After an amount, what it measures takes the partitive: <0>tass kohvi, palju raha</0>."
+msgstr "После слова количества то, что меряют, стоит в партитиве: <0>tass kohvi, palju raha</0>."
 
 msgid "All four. You told a gap after <0>pole</0> from a gap at the start."
 msgstr "Все четыре: ты различаешь пропуск после <0>pole</0> и пропуск в начале."
@@ -160,11 +160,11 @@ msgstr "Все шесть: после каждого числа верная ф�
 msgid "Amounts"
 msgstr "Слова количества"
 
-msgid "An answer with <0>üks</0> keeps the first form: <1/>"
-msgstr "В ответе с <0>üks</0> остаётся первая форма: <1/>"
+msgid "An answer with <0>üks</0> keeps the nominative: <1/>"
+msgstr "В ответе с <0>üks</0> остаётся именительный: <1/>"
 
-msgid "Ask how many with <0>mitu</0> and the third form: <1>Mitu last sul on?</1>"
-msgstr "Чтобы спросить «сколько», говори <0>mitu</0> и ставь существительное в третью форму: <1>Mitu last sul on?</1>"
+msgid "Ask how many with <0>mitu</0> and the partitive: <1>Mitu last sul on?</1>"
+msgstr "Чтобы спросить «сколько», говори <0>mitu</0> и ставь существительное в партитив: <1>Mitu last sul on?</1>"
 
 msgid "Asking how many"
 msgstr "Как спросить «сколько»"
@@ -316,8 +316,8 @@ msgstr "Есть ли у тебя деньги"
 msgid "If you want coffee"
 msgstr "Хочешь ли ты кофе"
 
-msgid "In a café you’ll also hear <0/> That’s one coffee, counted, so it keeps its first form. Lesson {object} explains why the third form appears here too: <1/>"
-msgstr "В кафе услышишь и <0/> Это один кофе, его считают, поэтому он остаётся в первой форме. Почему третья форма стоит и здесь, объясняет урок {object}: <1/>"
+msgid "In a café you’ll also hear <0/> That’s one coffee, counted, so it keeps its nominative. Lesson {object} explains why the partitive appears here too: <1/>"
+msgstr "В кафе услышишь и <0/> Это один кофе, его считают, поэтому он остаётся в именительном. Почему партитив стоит и здесь, объясняет урок {object}: <1/>"
 
 msgid "Is there"
 msgstr "Есть"
@@ -364,8 +364,8 @@ msgstr "мало"
 msgid "Maja, maja, maja: all three forms look alike."
 msgstr "Maja, maja, maja: все три формы одинаковые."
 
-msgid "Mari goes to the market on Saturday. Pick the first or third form for each gap. The third follows a number from two up, an amount or <0>pole</0>, and marks food or drink someone eats, drinks or wants."
-msgstr "В субботу Мари идёт на рынок. Выбери для каждого пропуска первую или третью форму. Третья стоит после числа от двух, после слова количества и после <0>pole</0>, а также для того, что едят, пьют или хотят."
+msgid "Mari goes to the market on Saturday. Pick the nominative or partitive for each gap. The partitive follows a number from two up, an amount or <0>pole</0>, and marks food or drink someone eats, drinks or wants."
+msgstr "В субботу Мари идёт на рынок. Выбери для каждого пропуска именительный или партитив. Партитив стоит после числа от двух, после слова количества и после <0>pole</0>, а также для того, что едят, пьют или хотят."
 
 msgid "Mari’s Saturday"
 msgstr "Суббота Мари"
@@ -391,14 +391,14 @@ msgstr "Почти. Ещё раз послушай предложения выш
 msgid "Nearly. Tap the amounts above for the ones you missed."
 msgstr "Почти. Нажми выше на слова количества из раундов, где была ошибка."
 
-msgid "Nobody eats, drinks or wants it here: the sentence starts with it, so the first form."
-msgstr "Здесь это никто не ест, не пьёт и не хочет: предложение начинается с самого предмета, поэтому первая форма."
+msgid "Nobody eats, drinks or wants it here: the sentence starts with it, so the nominative."
+msgstr "Здесь это никто не ест, не пьёт и не хочет: предложение начинается с самого предмета, поэтому именительный."
 
 msgid "not much time"
 msgstr "мало времени"
 
-msgid "Now make the form yourself. Each round shows the word as a dictionary gives it and the amount before it. Type its third form."
-msgstr "Теперь образуй форму. В каждом раунде — слово, как его даёт словарь, и слово количества перед ним. Набери третью форму."
+msgid "Now make the form yourself. Each round shows the word as a dictionary gives it and the amount before it. Type its partitive."
+msgstr "Теперь образуй форму. В каждом раунде — слово, как его даёт словарь, и слово количества перед ним. Набери партитив."
 
 msgid "One"
 msgstr "Один"
@@ -448,17 +448,17 @@ msgstr "Предложения о том, что что-то есть, и о т�
 msgid "She drinks some coffee, not a counted cup: <0>joob kohvi</0>."
 msgstr "Здесь кофе не считают чашками: <0>joob kohvi</0>."
 
-msgid "Since lesson {present} you’ve said <0/> You drink some coffee, not a counted cup, so <1>kohvi</1> is in its third form. Anything you eat, drink or want some of works the same way. Tap a sentence to hear it."
-msgstr "Ещё с урока {present} ты говоришь <0/> Ты пьёшь кофе, не считая чашек, поэтому <1>kohvi</1> стоит в третьей форме. Так же со всем, что ешь, пьёшь или хочешь, не считая. По-русски похоже: «хочу молока». Нажми на предложение, чтобы его услышать."
+msgid "Since lesson {present} you’ve said <0/> You drink some coffee, not a counted cup, so <1>kohvi</1> is in the partitive. Anything you eat, drink or want some of works the same way. Tap a sentence to hear it."
+msgstr "Ещё с урока {present} ты говоришь <0/> Ты пьёшь кофе, не считая чашек, поэтому <1>kohvi</1> стоит в партитиве. Так же со всем, что ешь, пьёшь или хочешь, не считая. По-русски похоже: «хочу молока». Нажми на предложение, чтобы его услышать."
 
 msgid "Six nouns after one, two and five"
 msgstr "Шесть существительных после одного, двух и пяти"
 
-msgid "Some third forms change more than an ending: <0/> becomes <1/>, and <2/> becomes <3/>. So learn each noun with its third form, as the dictionary lists it."
-msgstr "Некоторые третьи формы меняют больше, чем окончание: <0/> становится <1/>, а <2/> — <3/>. Так что учи каждое существительное вместе с третьей формой, как даёт словарь."
+msgid "Some partitives change more than an ending: <0/> becomes <1/>, and <2/> becomes <3/>. So learn each noun with its partitive, as the dictionary lists it."
+msgstr "У некоторых слов партитив меняет больше, чем окончание: <0/> становится <1/>, а <2/> — <3/>. Так что учи каждое существительное вместе с партитивом, как даёт словарь."
 
-msgid "Someone eats, drinks or wants some of it, uncounted, so the third form."
-msgstr "Это едят, пьют или хотят, не считая, поэтому третья форма."
+msgid "Someone eats, drinks or wants some of it, uncounted, so the partitive."
+msgstr "Это едят, пьют или хотят, не считая, поэтому партитив."
 
 msgid "table"
 msgstr "стол"
@@ -517,41 +517,41 @@ msgstr "Партитив после слова количества"
 msgid "The partitive for food and drink"
 msgstr "Партитив с едой и напитками"
 
-msgid "The sentence starts with it, so it keeps its first form."
-msgstr "Предложение начинается с этого предмета, поэтому он остаётся в первой форме."
+msgid "The partitive is the last of the three a dictionary gives, as lesson {forms} shows: <0>raamat, raamatu, raamatut</0>. You’ve heard it in prices since lesson {numbers}: <1/>. Tap a form to hear it with its number."
+msgstr "Партитив — последняя из трёх форм, которые даёт словарь, как показывает урок {forms}: <0>raamat, raamatu, raamatut</0>. Ты слышишь его в ценах ещё с урока {numbers}: <1/>. Нажми на форму, чтобы услышать её с числом."
+
+msgid "The partitive of aeg."
+msgstr "Партитив слова aeg."
+
+msgid "The partitive of juust."
+msgstr "Партитив слова juust."
+
+msgid "The partitive of kass."
+msgstr "Партитив слова kass."
+
+msgid "The partitive of kohv."
+msgstr "Партитив слова kohv."
+
+msgid "The partitive of laps."
+msgstr "Партитив слова laps."
+
+msgid "The partitive of leib."
+msgstr "Партитив слова leib."
+
+msgid "The partitive of piim."
+msgstr "Партитив слова piim."
+
+msgid "The partitive of vesi."
+msgstr "Партитив слова vesi."
+
+msgid "The sentence starts with it, so it keeps its nominative."
+msgstr "Предложение начинается с этого предмета, поэтому он остаётся в именительном."
 
 msgid "The short form of ei ole."
 msgstr "Краткая форма ei ole."
 
 msgid "The table isn’t in the room."
 msgstr "Стола нет в комнате."
-
-msgid "The third form is the last of the three a dictionary gives, as lesson {forms} shows: <0>raamat, raamatu, raamatut</0>. You’ve heard it in prices since lesson {numbers}: <1/>. Tap a form to hear it with its number."
-msgstr "Третья форма — последняя из трёх, которые даёт словарь, как показывает урок {forms}: <0>raamat, raamatu, raamatut</0>. Ты слышишь её в ценах ещё с урока {numbers}: <1/>. Нажми на форму, чтобы услышать её с числом."
-
-msgid "The third form of aeg."
-msgstr "Третья форма слова aeg."
-
-msgid "The third form of juust."
-msgstr "Третья форма слова juust."
-
-msgid "The third form of kass, the partitive."
-msgstr "Третья форма слова kass, партитив."
-
-msgid "The third form of kohv."
-msgstr "Третья форма слова kohv."
-
-msgid "The third form of laps."
-msgstr "Третья форма слова laps."
-
-msgid "The third form of leib."
-msgstr "Третья форма слова leib."
-
-msgid "The third form of piim."
-msgstr "Третья форма слова piim."
-
-msgid "The third form of vesi."
-msgstr "Третья форма слова vesi."
 
 msgid "There’s a table in the room."
 msgstr "В комнате есть стол."
@@ -634,17 +634,17 @@ msgstr "У нас одна кошка."
 msgid "What does Jaan ask you?"
 msgstr "О чём тебя спрашивает Яан?"
 
-msgid "What is there keeps its first form: <0>Turul on kohvik</0>."
-msgstr "То, что есть, остаётся в первой форме: <0>Turul on kohvik</0>."
+msgid "What is there keeps its nominative: <0>Turul on kohvik</0>."
+msgstr "То, что есть, остаётся в именительном: <0>Turul on kohvik</0>."
 
 msgid "What isn’t there today?"
 msgstr "Чего сегодня нет?"
 
-msgid "What you eat, drink or want, when you don’t count it, takes the third form too: <0>Ma joon kohvi</0>."
-msgstr "То, что едят, пьют или хотят, не считая, тоже стоит в третьей форме: <0>Ma joon kohvi</0>."
+msgid "What you eat, drink or want, when you don’t count it, takes the partitive too: <0>Ma joon kohvi</0>."
+msgstr "То, что едят, пьют или хотят, не считая, тоже стоит в партитиве: <0>Ma joon kohvi</0>."
 
-msgid "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, after <0>pole</0>, and for some of the food and drink someone eats, drinks or wants."
-msgstr "Когда в эстонском существительное стоит в третьей форме, партитиве: после числа от двух, после слова количества, после <0>pole</0> и для еды и напитков, которые едят, пьют или хотят, не считая."
+msgid "When Estonian uses a noun’s partitive: after a number from two up, after an amount, after <0>pole</0>, and for some of the food and drink someone eats, drinks or wants."
+msgstr "Когда в эстонском существительное стоит в партитиве: после числа от двух, после слова количества, после <0>pole</0> и для еды и напитков, которые едят, пьют или хотят, не считая."
 
 msgid "Where you are"
 msgstr "Где ты"
@@ -655,8 +655,8 @@ msgstr "Какая форма заполняет пропуск?"
 msgid "Which form follows the number?"
 msgstr "Какая форма идёт после числа?"
 
-msgid "You can also say <0/> It means the same: <1>pole</1> is the short form of <2>ei ole</2>. A sentence that starts with the thing keeps its first form: <3/>"
-msgstr "Можно сказать и <0/> Это то же самое: <1>pole</1> — краткая форма <2>ei ole</2>. Если предложение начинается с самого предмета, он остаётся в первой форме, хотя по-русски говорим «кошки нет на столе»: <3/>"
+msgid "You can also say <0/> It means the same: <1>pole</1> is the short form of <2>ei ole</2>. A sentence that starts with the thing keeps its nominative: <3/>"
+msgstr "Можно сказать и <0/> Это то же самое: <1>pole</1> — краткая форма <2>ei ole</2>. Если предложение начинается с самого предмета, он остаётся в именительном, хотя по-русски говорим «кошки нет на столе»: <3/>"
 
 msgid "You don’t have a car."
 msgstr "У тебя нет машины."

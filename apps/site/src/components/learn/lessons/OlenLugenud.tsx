@@ -2,7 +2,7 @@ import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type ReactNode, useMemo } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -591,7 +591,7 @@ export function OlenLugenudLesson() {
   const { t, i18n } = useLingui();
   const content = useContent();
   const past = lessonBySlug("lihtminevik")?.n;
-  const pastNo = LESSONS.find((lesson) => lesson.et === "Ma ei läinud")?.n;
+  const pastNo = lessonBySlug("mineviku-eitus")?.n;
   const verbForms = lessonBySlug("verbi-pohivormid")?.n;
   const object = lessonBySlug("raamatut-voi-raamatu")?.n;
   const names = { second: t`Kati`, main: t`Jaan` };

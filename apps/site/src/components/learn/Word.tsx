@@ -222,9 +222,14 @@ export function Word({ w }: WordProps) {
   const playing = usePlaying(src ?? "");
   const id = useId();
   const expanded = cards?.open?.anchor.dataset.word === id;
+  const open = (anchor: HTMLElement, keyboard: boolean) => {
+    cards?.openNow(w, anchor, keyboard);
+    if (src) void playSound(src);
+  };
   return (
-    <button
-      type="button"
+    <span
+      role="button"
+      tabIndex={0}
       lang="et"
       data-word={id}
       aria-haspopup="dialog"
@@ -238,12 +243,14 @@ export function Word({ w }: WordProps) {
       onPointerLeave={(event) => {
         if (event.pointerType === "mouse") cards?.closeSoon();
       }}
-      onClick={(event) => {
-        cards?.openNow(w, event.currentTarget, event.detail === 0);
-        if (src) void playSound(src);
+      onClick={(event) => open(event.currentTarget, event.detail === 0)}
+      onKeyDown={(event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        open(event.currentTarget, true);
       }}
     >
       {w}
-    </button>
+    </span>
   );
 }

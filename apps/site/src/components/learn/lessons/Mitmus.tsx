@@ -93,10 +93,10 @@ const GLOSSARY: Glossary = {
   ...Object.fromEntries(
     Object.entries(MEANS).map(([said, en]) => [said.toLowerCase(), { en, show: said }]),
   ),
-  kassi: { en: msg`the second form of kass`, note: msg`Kass, kassi: a vowel appears at the end.` },
-  poe: { en: msg`the second form of pood`, note: msg`As in poes, in the shop.` },
+  kassi: { en: msg`the genitive of kass`, note: msg`Kass, kassi: a vowel appears at the end.` },
+  poe: { en: msg`the genitive of pood`, note: msg`As in poes, in the shop.` },
   suur: { en: msg`big` },
-  suure: { en: msg`the second form of suur` },
+  suure: { en: msg`the genitive of suur` },
   suured: { en: msg`big, of more than one` },
   nad: { en: msg`they` },
   on: { en: msg`is, are`, note: msg`The same for ta and nad.`, clip: false },
@@ -239,7 +239,7 @@ function OneManyFlip({
   );
 }
 
-/** The nouns of “Type the plural”, keyed by how the second form differs from the first. */
+/** The nouns of “Type the plural”, keyed by how the genitive differs from the first. */
 export const TYPED: readonly (PluralNoun & { pair: readonly [string, string] })[] = [
   ...(["linn", "kool", "kass", "raamat", "laps", "uks"] as const).map((one) => ({
     ...(NOUNS.find((noun) => noun.one === one) as PluralNoun),
@@ -453,11 +453,11 @@ export function MitmusLesson() {
     id: one,
     steps: [
       { word: one, label: i18n._(NOUN_MEANS[one][0]), src: src(one) },
-      { word: second, label: t`second form`, note: stemNotes[one], src: src(second) },
+      { word: second, label: t`genitive`, note: stemNotes[one], src: src(second) },
       {
         word: many,
         label: i18n._(NOUN_MEANS[one][1]),
-        note: t`The second form plus -d.`,
+        note: t`The genitive plus -d.`,
         src: src(many),
       },
     ],
@@ -512,7 +512,7 @@ export function MitmusLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          To say more than one, add <span lang="et">-d</span> to a noun’s second form:{" "}
+          To say more than one, add <span lang="et">-d</span> to a noun’s genitive:{" "}
           <span lang="et">kass, kassi</span> gives <span lang="et">kassid</span>, cats. An adjective
           takes <span lang="et">-d</span> too, and the verb takes the form of{" "}
           <span lang="et">nad</span>: <span lang="et">Suured kassid söövad.</span> The big cats are
@@ -540,11 +540,11 @@ export function MitmusLesson() {
       ]}
       recap={[
         <Trans key="1">
-          The plural is the second form plus {ending("-d")}: <b lang="et">kass, kassi → kassid</b>;{" "}
+          The plural is the genitive plus {ending("-d")}: <b lang="et">kass, kassi → kassid</b>;{" "}
           <b lang="et">maja, maja → majad</b>.
         </Trans>,
         <Trans key="2">
-          The plural keeps the stem change of the second form:{" "}
+          The plural keeps the stem change of the genitive:{" "}
           <b lang="et">pood, poe → poed; tuba, toa → toad</b>.
         </Trans>,
         <Trans key="3">
@@ -563,21 +563,21 @@ export function MitmusLesson() {
       sections={[
         {
           id: "plural-d",
-          title: t`The second form and -d`,
+          title: t`The genitive and -d`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    A dictionary gives a noun in three forms, as lesson {forms} shows. The second
-                    form is the genitive from lesson {genitive}. To say more than one, add{" "}
+                    A dictionary gives a noun in three forms, as lesson {forms} shows. The second of
+                    them is the genitive from lesson {genitive}. To say more than one, add{" "}
                     {ending("-d")} to it: <Word w="kass" />, <Word w="kassi" />, so{" "}
                     <Word w="kassid" />, cats.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    When the second form is the same as the first, only the {ending("-d")} is new:{" "}
+                    When the genitive is the same as the nominative, only the {ending("-d")} is new:{" "}
                     <Word w="maja" /> gives <Word w="majad" />. Switch between One and Many, and tap
                     a word to hear it.
                   </Trans>
@@ -587,13 +587,13 @@ export function MitmusLesson() {
                 rows={nounRows}
                 notes={{
                   one: {
-                    title: <Trans>The first form</Trans>,
+                    title: <Trans>The nominative</Trans>,
                     tip: <Trans>The form a dictionary lists first.</Trans>,
                   },
                   many: {
                     title: (
                       <Trans>
-                        The second form and <span lang="et">-d</span>
+                        The genitive and <span lang="et">-d</span>
                       </Trans>
                     ),
                     tip: (
@@ -624,13 +624,13 @@ export function MitmusLesson() {
                 <p>
                   <Trans>
                     Lesson {stems} showed nouns whose stem changes before an ending:{" "}
-                    <Word w="pood" /> becomes <Word w="poe" />. The plural is built on that second
-                    form, so the change shows again: <Word w="poed" />, shops.
+                    <Word w="pood" /> becomes <Word w="poe" />. The plural is built on the genitive,
+                    so the change shows again: <Word w="poed" />, shops.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Add the {ending("-d")} to the second form, <b lang="et">poe</b>, not to{" "}
+                    Add the {ending("-d")} to the genitive, <b lang="et">poe</b>, not to{" "}
                     <b lang="et">pood</b>: <b lang="et">poed</b>. Pick a word, then tap each form to
                     see what changes.
                   </Trans>
@@ -651,8 +651,8 @@ export function MitmusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a noun’s first and second forms, then type its plural. Build it on the
-                    second form.
+                    Hear a noun’s nominative and genitive, then type its plural. Build it on the
+                    genitive.
                   </Trans>
                 </p>
               </Prose>
@@ -665,7 +665,7 @@ export function MitmusLesson() {
                   share === 1 ? (
                     <Trans>All six plurals right.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Nearly. For the ones you missed, start from the second form.</Trans>
+                    <Trans>Nearly. For the ones you missed, start from the genitive.</Trans>
                   ) : (
                     <Trans>Tap the rows above once more, then try again.</Trans>
                   )
@@ -803,7 +803,7 @@ export function MitmusLesson() {
                 notes={{
                   one: {
                     title: t({ message: "One", context: "plural" }),
-                    tip: <Trans>Adjective and noun in the first form.</Trans>,
+                    tip: <Trans>Adjective and noun in the nominative.</Trans>,
                   },
                   many: {
                     title: (
@@ -813,7 +813,7 @@ export function MitmusLesson() {
                     ),
                     tip: (
                       <Trans>
-                        Each word is its second form plus <span lang="et">-d</span>.
+                        Each word is its genitive plus <span lang="et">-d</span>.
                       </Trans>
                     ),
                   },

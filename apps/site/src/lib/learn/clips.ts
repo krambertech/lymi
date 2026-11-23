@@ -2285,7 +2285,7 @@ export const WHEN_FIX = [
     wrong: "Ma olin Tartus nädala tagasi.",
     answers: ["Ma olin Tartus nädal tagasi."],
   },
-  { id: "fix-suvel", wrong: "Me ujume suvis jões.", answers: ["Me ujume suvel jões."] },
+  { id: "fix-suvel", wrong: "Me ujume suves jões.", answers: ["Me ujume suvel jões."] },
   { id: "fix-mais", wrong: "Mari sünnipäev on mail.", answers: ["Mari sünnipäev on mais."] },
   { id: "fix-tood", wrong: "Ma tulen pärast töö.", answers: ["Ma tulen pärast tööd."] },
   {
@@ -2533,7 +2533,7 @@ export const ORDER_DIALOGUE = {
   "d-liisa-3": { text: "Kas sa tuled laupäeval ujuma?", voice: "second" },
   "d-sina-3": "Ei, laupäeval ma ei tule.",
   "d-liisa-4": { text: "Aga pühapäeval?", voice: "second" },
-  "d-sina-4": "Pühapäeval tulen ma.",
+  "d-sina-4": "Pühapäeval tulen.",
 } as const satisfies Record<string, Clip>;
 
 export const ORDER_TALK: Conversation = {

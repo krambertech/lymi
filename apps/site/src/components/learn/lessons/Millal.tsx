@@ -74,7 +74,7 @@ const GLOSSARY: Glossary = {
   millal: { en: msg`when`, show: "Millal?" },
   hommikul: { en: msg`in the morning`, note: msg`From hommik, morning.` },
   õhtul: { en: msg`in the evening`, note: msg`From õhtu, evening.` },
-  öösel: { en: msg`at night`, note: msg`From öö, night: an s comes in before -el.` },
+  öösel: { en: msg`at night`, note: msg`From öö, night: it takes -sel, not -l.` },
   suvel: { en: msg`in summer`, note: msg`From suvi, summer.` },
   talvel: { en: msg`in winter`, note: msg`From talv, winter.` },
   esmaspäeval: { en: msg`on Monday` },
@@ -249,7 +249,7 @@ function useContent() {
       ),
       esmaspaevast: (
         <Trans>
-          From and to: <span lang="et">-st</span> and <span lang="et">-ni</span>.
+          From and until: <span lang="et">-st</span> and <span lang="et">-ni</span>.
         </Trans>
       ),
     };
@@ -345,7 +345,7 @@ function useContent() {
       {
         id: "cafe",
         kind: "truefalse",
-        ask: t`On Monday evening they are going to a café with Mari.`,
+        ask: t`Kati is going to a café with Mari on Monday evening.`,
         answer: true,
         line: 13,
       },
@@ -512,7 +512,7 @@ export function MillalLesson() {
       }
       facts={[
         <Trans key="m">18 minutes</Trans>,
-        <Trans key="q">7 exercises, 3 of them typed, and a conversation</Trans>,
+        <Trans key="q">6 exercises, 3 of them typed, and a conversation</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -541,9 +541,9 @@ export function MillalLesson() {
           <b lang="et">hommikuti</b>, with <b lang="et">-ti</b>.
         </Trans>,
         <Trans key="3">
-          In a time: the genitive before <b lang="et">pärast</b>, <b lang="et">nädala pärast</b>.
-          Ago: the time as it is counted before <b lang="et">tagasi</b>,{" "}
-          <b lang="et">kaks päeva tagasi</b>.
+          In a week, in two days: the genitive before <b lang="et">pärast</b>,{" "}
+          <b lang="et">nädala pärast</b>. Ago: the time as it is counted before{" "}
+          <b lang="et">tagasi</b>, <b lang="et">kaks päeva tagasi</b>.
         </Trans>,
         <Trans key="4">
           Before or after something: <b lang="et">enne</b> or <b lang="et">pärast</b> before its
@@ -590,9 +590,9 @@ export function MillalLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    A month takes <span lang="et">-s</span>, the ending for in from lesson {places}:{" "}
-                    <Word w="mais" />, in May; <Word w="juulis" />, in July. The months keep their
-                    small letter.
+                    A month takes <span lang="et">-s</span>, the ending for “in” from lesson{" "}
+                    {places}: <Word w="mais" />, in May; <Word w="juulis" />, in July. The months
+                    keep their small letter.
                   </Trans>
                 </p>
                 <p>
@@ -621,10 +621,10 @@ export function MillalLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    For something that happens again and again, put <span lang="et">-ti</span> on
-                    the word: <Word w="hommikuti" />, in the mornings; <Word w="õhtuti" />, in the
-                    evenings; <span lang="et">laupäeviti</span>, on Saturdays. Tap a line to hear
-                    it.
+                    For something that happens again and again, use <span lang="et">-ti</span>:{" "}
+                    <Word w="hommikuti" />, in the mornings; <Word w="õhtuti" />, in the evenings.
+                    Days take <span lang="et">-iti</span>: <span lang="et">laupäeviti</span>, on
+                    Saturdays. Tap a line to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -738,7 +738,9 @@ export function MillalLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All six: in, ago and after, each by its words.</Trans>
+                    <Trans>
+                      All six: in, ago and after, told apart by where pärast stands and by tagasi.
+                    </Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Listen for where pärast stands and for tagasi.</Trans>
                   ) : (
@@ -794,7 +796,7 @@ export function MillalLesson() {
         },
         {
           id: "write",
-          title: t`Write when`,
+          title: t`Write the time`,
           quiz: true,
           children: (
             <>
@@ -835,7 +837,7 @@ export function MillalLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each sentence has one wrong word in its time. Tap it, then type it right.
+                    In each sentence, one word that says when is wrong. Tap it, then type it right.
                   </Trans>
                 </p>
               </Prose>

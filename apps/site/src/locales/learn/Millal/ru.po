@@ -22,8 +22,8 @@ msgstr "<0>Pärast</0> перед существительным требует 
 msgid "18 minutes"
 msgstr "18 минут"
 
-msgid "7 exercises, 3 of them typed, and a conversation"
-msgstr "7 упражнений, в 3 из них нужно писать, и разговор"
+msgid "6 exercises, 3 of them typed, and a conversation"
+msgstr "6 упражнений, в 3 из них нужно писать, и разговор"
 
 msgid "a day ago"
 msgstr "день назад"
@@ -40,8 +40,8 @@ msgstr "День, часть дня или время года получает 
 msgid "A day, a part of the day or a season takes <et>-l</et>: <et>hommikul</et>, <et>suvel</et>."
 msgstr "День, часть дня или время года получает <et>-l</et>: <et>hommikul</et>, <et>suvel</et>."
 
-msgid "A month takes <0>-s</0>, the ending for in from lesson {places}: <1/>, in May; <2/>, in July. The months keep their small letter."
-msgstr "Месяц получает <0>-s</0>, окончание «в» из урока {places}: <1/> — «в мае», <2/> — «в июле». Месяцы пишут со строчной буквы."
+msgid "A month takes <0>-s</0>, the ending for “in” from lesson {places}: <1/>, in May; <2/>, in July. The months keep their small letter."
+msgstr "Месяц получает <0>-s</0>, окончание со значением «в» из урока {places}: <1/> — «в мае», <2/> — «в июле». Месяцы пишут со строчной буквы."
 
 msgid "A month takes <0>-s</0>: <1>juulis</1>."
 msgstr "Месяц получает <0>-s</0>: <1>juulis</1>."
@@ -118,8 +118,8 @@ msgstr "Все шесть найдены и исправлены."
 msgid "All six sentences, every time word in its form."
 msgstr "Все шесть предложений, каждое слово времени в своей форме."
 
-msgid "All six: in, ago and after, each by its words."
-msgstr "Все шесть: через, назад и после — каждое по своим словам."
+msgid "All six: in, ago and after, told apart by where pärast stands and by tagasi."
+msgstr "Все шесть: «через», «назад» и «после» — различены по месту pärast и по tagasi."
 
 msgid "at night"
 msgstr "ночью"
@@ -127,8 +127,8 @@ msgstr "ночью"
 msgid "Before and after: <et>enne tööd</et>, <et>pärast tööd</et>"
 msgstr "До и после: <et>enne tööd</et>, <et>pärast tööd</et>"
 
-msgid "Before five: <et>enne</et>, then the partitive <et>kella viit</et>."
-msgstr "До пяти: <et>enne</et>, потом партитив <et>kella viit</et>."
+msgid "Before five: <et>enne</et>, then <et>kella</et> and five in the partitive, <et>viit</et>."
+msgstr "До пяти: <et>enne</et>, потом <et>kella</et> и пять в партитиве, <et>viit</et>."
 
 msgid "Before or after something: <0>enne</0> or <1>pärast</1> before its partitive, <2>pärast tööd</2>."
 msgstr "До или после чего-то: <0>enne</0> или <1>pärast</1> перед партитивом, <2>pärast tööd</2>."
@@ -151,9 +151,6 @@ msgstr "день"
 msgid "Days, parts of the day and seasons take <0>-l</0>: <1>suvel</1>, in summer."
 msgstr "Дни, части дня и времена года получают <0>-l</0>: <1>suvel</1> — «летом»."
 
-msgid "Each sentence has one wrong word in its time. Tap it, then type it right."
-msgstr "В каждом предложении одно ошибочное слово во времени. Нажми на него, потом напиши правильно."
-
 msgid "evening"
 msgstr "вечер"
 
@@ -172,8 +169,8 @@ msgstr "Исправь предложение"
 msgid "For a month"
 msgstr "На месяц"
 
-msgid "For something that happens again and again, put <0>-ti</0> on the word: <1/>, in the mornings; <2/>, in the evenings; <3>laupäeviti</3>, on Saturdays. Tap a line to hear it."
-msgstr "Для того, что повторяется, добавь к слову <0>-ti</0>: <1/> — «по утрам», <2/> — «по вечерам», <3>laupäeviti</3> — «по субботам». Нажми на строку, чтобы послушать."
+msgid "For something that happens again and again, use <0>-ti</0>: <1/>, in the mornings; <2/>, in the evenings. Days take <3>-iti</3>: <4>laupäeviti</4>, on Saturdays. Tap a line to hear it."
+msgstr "Для того, что повторяется, есть <0>-ti</0>: <1/> — «по утрам», <2/> — «по вечерам». Дни недели получают <3>-iti</3>: <4>laupäeviti</4> — «по субботам». Нажми на строку, чтобы послушать."
 
 msgid "For two days"
 msgstr "На два дня"
@@ -184,11 +181,11 @@ msgstr "На две недели"
 msgid "Friday"
 msgstr "Пятница"
 
-msgid "From and to: <0>-st</0> and <1>-ni</1>."
-msgstr "С и до: <0>-st</0> и <1>-ni</1>."
-
 msgid "From and until: <0>-st</0> and <1>-ni</1>, <2>kella kaheksast kella viieni</2>."
 msgstr "С и до: <0>-st</0> и <1>-ni</1>, <2>kella kaheksast kella viieni</2>."
+
+msgid "From and until: <0>-st</0> and <1>-ni</1>."
+msgstr "С и до: <0>-st</0> и <1>-ni</1>."
 
 msgid "From and until: <et>-st</et>, <et>-ni</et>"
 msgstr "С и до: <et>-st</et>, <et>-ni</et>"
@@ -235,8 +232,8 @@ msgstr "От õhtu — вечер."
 msgid "From one day to another: <0>-st</0>, then <1>-ni</1>."
 msgstr "С одного дня до другого: <0>-st</0>, потом <1>-ni</1>."
 
-msgid "From öö, night: an s comes in before -el."
-msgstr "От öö — ночь: перед -el появляется s."
+msgid "From öö, night: it takes -sel, not -l."
+msgstr "От öö — ночь: здесь -sel, а не -l."
 
 msgid "From suvi, summer."
 msgstr "От suvi — лето."
@@ -245,7 +242,7 @@ msgid "From talv, winter."
 msgstr "От talv — зима."
 
 msgid "From ten: <0>-st</0> on <1>kümne</1>, the genitive of <2>kümme</2>."
-msgstr "С десяти: <0>-st</0> к <1>kümne</1>, родительному от <2>kümme</2>."
+msgstr "С десяти: <0>-st</0> добавляется к <1>kümne</1>, родительному от <2>kümme</2>."
 
 msgid "Go back through the lines above, then try again."
 msgstr "Ещё раз просмотри строки выше и попробуй снова."
@@ -254,7 +251,7 @@ msgid "Hear a sentence and pick when it happens."
 msgstr "Послушай предложение и выбери, когда это происходит."
 
 msgid "How long is Kati going to Saaremaa?"
-msgstr "Надолго Кати едет на Сааремаа?"
+msgstr "На сколько Кати едет на Сааремаа?"
 
 msgid "I drink coffee before work."
 msgstr "Я пью кофе до работы."
@@ -304,12 +301,6 @@ msgstr "В месяце: -s"
 msgid "In a month: <0>-s</0>."
 msgstr "В месяце: <0>-s</0>."
 
-msgid "In a time: the genitive before <0>pärast</0>, <1>nädala pärast</1>. Ago: the time as it is counted before <2>tagasi</2>, <3>kaks päeva tagasi</3>."
-msgstr "«Через»: родительный перед <0>pärast</0>, <1>nädala pärast</1>. «Назад»: время так, как его считают, перед <2>tagasi</2>, <3>kaks päeva tagasi</3>."
-
-msgid "In a time: the genitive, then <et>pärast</et>: <et>nädala pärast</et>, <et>kahe päeva pärast</et>."
-msgstr "«Через»: родительный, потом <et>pärast</et>: <et>nädala pärast</et>, <et>kahe päeva pärast</et>."
-
 msgid "in a week"
 msgstr "через неделю"
 
@@ -322,6 +313,12 @@ msgstr "«Через неделю» — <0/>: родительный из уро
 msgid "In a week, a week ago"
 msgstr "Через неделю, неделю назад"
 
+msgid "In a week, in two days: the genitive before <0>pärast</0>, <1>nädala pärast</1>. Ago: the time as it is counted before <2>tagasi</2>, <3>kaks päeva tagasi</3>."
+msgstr "«Через неделю», «через два дня»: родительный перед <0>pärast</0>, <1>nädala pärast</1>. «Назад»: время так, как его считают, перед <2>tagasi</2>, <3>kaks päeva tagasi</3>."
+
+msgid "In a week, in two days: the genitive, then <et>pärast</et>: <et>nädala pärast</et>, <et>kahe päeva pärast</et>."
+msgstr "«Через неделю», «через два дня»: родительный, потом <et>pärast</et>: <et>nädala pärast</et>, <et>kahe päeva pärast</et>."
+
 msgid "In a week: the genitive <0>nädala</0> before <1>pärast</1>."
 msgstr "Через неделю: родительный <0>nädala</0> перед <1>pärast</1>."
 
@@ -330,6 +327,9 @@ msgstr "Через неделю: родительный перед <0>pärast</0
 
 msgid "in a year"
 msgstr "через год"
+
+msgid "In each sentence, one word that says when is wrong. Tap it, then type it right."
+msgstr "В каждом предложении одно слово, которое говорит «когда», с ошибкой. Нажми на него, потом напиши правильно."
 
 msgid "in July"
 msgstr "в июле"
@@ -418,6 +418,9 @@ msgstr "Кати"
 msgid "Kati and Jaan plan when to meet, and talk about their year."
 msgstr "Кати и Яан договариваются, когда встретиться, и говорят о своём годе."
 
+msgid "Kati is going to a café with Mari on Monday evening."
+msgstr "В понедельник вечером Кати идёт с Мари в кафе."
+
 msgid "Kati lived here a year ago."
 msgstr "Кати жила здесь год назад."
 
@@ -475,9 +478,6 @@ msgstr "В какой день: <0>-l</0>."
 msgid "on Monday"
 msgstr "в понедельник"
 
-msgid "On Monday evening they are going to a café with Mari."
-msgstr "В понедельник вечером они пойдут с Мари в кафе."
-
 msgid "on Saturday evening"
 msgstr "в субботу вечером"
 
@@ -503,7 +503,7 @@ msgid "summer"
 msgstr "лето"
 
 msgid "Tap a form"
-msgstr "Коснись формы"
+msgstr "Нажми на форму"
 
 msgid "Tap the forms in the table once more, then try again."
 msgstr "Ещё раз послушай формы в таблице, а потом попробуй снова."
@@ -545,7 +545,7 @@ msgid "until five o’clock"
 msgstr "до пяти часов"
 
 msgid "Until six: <0>-ni</0> on <1>kuue</1>, the genitive of <2>kuus</2>."
-msgstr "До шести: <0>-ni</0> к <1>kuue</1>, родительному от <2>kuus</2>."
+msgstr "До шести: <0>-ni</0> добавляется к <1>kuue</1>, родительному от <2>kuus</2>."
 
 msgid "We swim in the river in summer."
 msgstr "Летом мы плаваем в реке."
@@ -596,7 +596,7 @@ msgid "With a number the difference shows most. Two days ago is <0/>, the partit
 msgstr "С числом разница заметнее всего. «Два дня назад» — <0/>, партитив после числа, как в уроке {partitive}; «через два дня» — <1/>, оба слова в родительном. Нажми на форму, чтобы послушать."
 
 msgid "With the clock from lesson {clock}, the hour takes them, and <0>kella</0> comes before it: <1/>, <2/>. Tap a line to hear it."
-msgstr "С часами из урока {clock} их получает час, а перед ним стоит <0>kella</0>: <1/>, <2/>. Нажми на строку, чтобы послушать."
+msgstr "Во времени по часам из урока {clock} окончание получает число, а перед ним стоит <0>kella</0>: <1/>, <2/>. Нажми на строку, чтобы послушать."
 
 msgid "Write each sentence in Estonian. The time word can go after the verb, as in the lines above."
 msgstr "Напиши каждое предложение по-эстонски. Слово времени может стоять после глагола, как в строках выше."
@@ -604,8 +604,8 @@ msgstr "Напиши каждое предложение по-эстонски. 
 msgid "Write it in Estonian"
 msgstr "Напиши по-эстонски"
 
-msgid "Write when"
-msgstr "Напиши, когда"
+msgid "Write the time"
+msgstr "Напиши время"
 
 msgid "year"
 msgstr "год"

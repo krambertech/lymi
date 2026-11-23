@@ -22,8 +22,8 @@ msgstr "<0>Pärast</0> перед іменником вимагає партит
 msgid "18 minutes"
 msgstr "18 хвилин"
 
-msgid "7 exercises, 3 of them typed, and a conversation"
-msgstr "7 вправ, у 3 з них треба писати, і розмова"
+msgid "6 exercises, 3 of them typed, and a conversation"
+msgstr "6 вправ, у 3 з них треба писати, і розмова"
 
 msgid "a day ago"
 msgstr "день тому"
@@ -40,8 +40,8 @@ msgstr "День, частина дня чи пора року отримує <0
 msgid "A day, a part of the day or a season takes <et>-l</et>: <et>hommikul</et>, <et>suvel</et>."
 msgstr "День, частина дня чи пора року отримує <et>-l</et>: <et>hommikul</et>, <et>suvel</et>."
 
-msgid "A month takes <0>-s</0>, the ending for in from lesson {places}: <1/>, in May; <2/>, in July. The months keep their small letter."
-msgstr "Місяць отримує <0>-s</0>, закінчення «в» з уроку {places}: <1/> — «у травні», <2/> — «у липні». Місяці пишуть з малої літери."
+msgid "A month takes <0>-s</0>, the ending for “in” from lesson {places}: <1/>, in May; <2/>, in July. The months keep their small letter."
+msgstr "Місяць отримує <0>-s</0>, закінчення зі значенням «в» з уроку {places}: <1/> — «у травні», <2/> — «у липні». Місяці пишуть з малої літери."
 
 msgid "A month takes <0>-s</0>: <1>juulis</1>."
 msgstr "Місяць отримує <0>-s</0>: <1>juulis</1>."
@@ -118,8 +118,8 @@ msgstr "Усі шість знайдено й виправлено."
 msgid "All six sentences, every time word in its form."
 msgstr "Усі шість речень, кожне слово часу у своїй формі."
 
-msgid "All six: in, ago and after, each by its words."
-msgstr "Усі шість: через, тому і після — кожне за своїми словами."
+msgid "All six: in, ago and after, told apart by where pärast stands and by tagasi."
+msgstr "Усі шість: «через», «тому» і «після» — розрізнено за місцем pärast і за tagasi."
 
 msgid "at night"
 msgstr "уночі"
@@ -127,8 +127,8 @@ msgstr "уночі"
 msgid "Before and after: <et>enne tööd</et>, <et>pärast tööd</et>"
 msgstr "До і після: <et>enne tööd</et>, <et>pärast tööd</et>"
 
-msgid "Before five: <et>enne</et>, then the partitive <et>kella viit</et>."
-msgstr "До п’ятої: <et>enne</et>, потім партитив <et>kella viit</et>."
+msgid "Before five: <et>enne</et>, then <et>kella</et> and five in the partitive, <et>viit</et>."
+msgstr "До п’ятої: <et>enne</et>, потім <et>kella</et> і п’ять у партитиві, <et>viit</et>."
 
 msgid "Before or after something: <0>enne</0> or <1>pärast</1> before its partitive, <2>pärast tööd</2>."
 msgstr "До чи після чогось: <0>enne</0> чи <1>pärast</1> перед партитивом, <2>pärast tööd</2>."
@@ -151,9 +151,6 @@ msgstr "день"
 msgid "Days, parts of the day and seasons take <0>-l</0>: <1>suvel</1>, in summer."
 msgstr "Дні, частини дня і пори року отримують <0>-l</0>: <1>suvel</1> — «влітку»."
 
-msgid "Each sentence has one wrong word in its time. Tap it, then type it right."
-msgstr "У кожному реченні одне хибне слово в часі. Торкнися його, потім напиши правильно."
-
 msgid "evening"
 msgstr "вечір"
 
@@ -172,8 +169,8 @@ msgstr "Виправ речення"
 msgid "For a month"
 msgstr "На місяць"
 
-msgid "For something that happens again and again, put <0>-ti</0> on the word: <1/>, in the mornings; <2/>, in the evenings; <3>laupäeviti</3>, on Saturdays. Tap a line to hear it."
-msgstr "Для того, що повторюється, додай до слова <0>-ti</0>: <1/> — «щоранку», <2/> — «щовечора», <3>laupäeviti</3> — «щосуботи». Торкнися рядка, щоб послухати."
+msgid "For something that happens again and again, use <0>-ti</0>: <1/>, in the mornings; <2/>, in the evenings. Days take <3>-iti</3>: <4>laupäeviti</4>, on Saturdays. Tap a line to hear it."
+msgstr "Для того, що повторюється, є <0>-ti</0>: <1/> — «щоранку», <2/> — «щовечора». Дні тижня мають <3>-iti</3>: <4>laupäeviti</4> — «щосуботи». Торкнися рядка, щоб послухати."
 
 msgid "For two days"
 msgstr "На два дні"
@@ -184,11 +181,11 @@ msgstr "На два тижні"
 msgid "Friday"
 msgstr "П’ятниця"
 
-msgid "From and to: <0>-st</0> and <1>-ni</1>."
-msgstr "Від і до: <0>-st</0> і <1>-ni</1>."
-
 msgid "From and until: <0>-st</0> and <1>-ni</1>, <2>kella kaheksast kella viieni</2>."
 msgstr "Від і до: <0>-st</0> і <1>-ni</1>, <2>kella kaheksast kella viieni</2>."
+
+msgid "From and until: <0>-st</0> and <1>-ni</1>."
+msgstr "Від і до: <0>-st</0> і <1>-ni</1>."
 
 msgid "From and until: <et>-st</et>, <et>-ni</et>"
 msgstr "Від і до: <et>-st</et>, <et>-ni</et>"
@@ -235,8 +232,8 @@ msgstr "Від õhtu — вечір."
 msgid "From one day to another: <0>-st</0>, then <1>-ni</1>."
 msgstr "Від одного дня до іншого: <0>-st</0>, потім <1>-ni</1>."
 
-msgid "From öö, night: an s comes in before -el."
-msgstr "Від öö — ніч: перед -el з’являється s."
+msgid "From öö, night: it takes -sel, not -l."
+msgstr "Від öö — ніч: тут -sel, а не -l."
 
 msgid "From suvi, summer."
 msgstr "Від suvi — літо."
@@ -245,7 +242,7 @@ msgid "From talv, winter."
 msgstr "Від talv — зима."
 
 msgid "From ten: <0>-st</0> on <1>kümne</1>, the genitive of <2>kümme</2>."
-msgstr "З десятої: <0>-st</0> до <1>kümne</1>, родового від <2>kümme</2>."
+msgstr "З десятої: <0>-st</0> додається до <1>kümne</1>, родового від <2>kümme</2>."
 
 msgid "Go back through the lines above, then try again."
 msgstr "Ще раз переглянь рядки вище й спробуй знову."
@@ -254,7 +251,7 @@ msgid "Hear a sentence and pick when it happens."
 msgstr "Послухай речення й обери, коли це відбувається."
 
 msgid "How long is Kati going to Saaremaa?"
-msgstr "Надовго Каті їде на Сааремаа?"
+msgstr "На скільки часу Каті їде на Сааремаа?"
 
 msgid "I drink coffee before work."
 msgstr "Я п’ю каву до роботи."
@@ -304,12 +301,6 @@ msgstr "У місяці: -s"
 msgid "In a month: <0>-s</0>."
 msgstr "У місяці: <0>-s</0>."
 
-msgid "In a time: the genitive before <0>pärast</0>, <1>nädala pärast</1>. Ago: the time as it is counted before <2>tagasi</2>, <3>kaks päeva tagasi</3>."
-msgstr "«Через»: родовий перед <0>pärast</0>, <1>nädala pärast</1>. «Тому»: час так, як його лічать, перед <2>tagasi</2>, <3>kaks päeva tagasi</3>."
-
-msgid "In a time: the genitive, then <et>pärast</et>: <et>nädala pärast</et>, <et>kahe päeva pärast</et>."
-msgstr "«Через»: родовий, потім <et>pärast</et>: <et>nädala pärast</et>, <et>kahe päeva pärast</et>."
-
 msgid "in a week"
 msgstr "через тиждень"
 
@@ -322,6 +313,12 @@ msgstr "«Через тиждень» — <0/>: родовий з уроку {ge
 msgid "In a week, a week ago"
 msgstr "Через тиждень, тиждень тому"
 
+msgid "In a week, in two days: the genitive before <0>pärast</0>, <1>nädala pärast</1>. Ago: the time as it is counted before <2>tagasi</2>, <3>kaks päeva tagasi</3>."
+msgstr "«Через тиждень», «через два дні»: родовий перед <0>pärast</0>, <1>nädala pärast</1>. «Тому»: час так, як його лічать, перед <2>tagasi</2>, <3>kaks päeva tagasi</3>."
+
+msgid "In a week, in two days: the genitive, then <et>pärast</et>: <et>nädala pärast</et>, <et>kahe päeva pärast</et>."
+msgstr "«Через тиждень», «через два дні»: родовий, потім <et>pärast</et>: <et>nädala pärast</et>, <et>kahe päeva pärast</et>."
+
 msgid "In a week: the genitive <0>nädala</0> before <1>pärast</1>."
 msgstr "Через тиждень: родовий <0>nädala</0> перед <1>pärast</1>."
 
@@ -330,6 +327,9 @@ msgstr "Через тиждень: родовий перед <0>pärast</0>, <1>
 
 msgid "in a year"
 msgstr "через рік"
+
+msgid "In each sentence, one word that says when is wrong. Tap it, then type it right."
+msgstr "У кожному реченні одне слово, що каже «коли», хибне. Торкнися його, потім напиши правильно."
 
 msgid "in July"
 msgstr "у липні"
@@ -418,6 +418,9 @@ msgstr "Каті"
 msgid "Kati and Jaan plan when to meet, and talk about their year."
 msgstr "Каті й Яан домовляються, коли зустрітися, і говорять про свій рік."
 
+msgid "Kati is going to a café with Mari on Monday evening."
+msgstr "У понеділок увечері Каті йде з Марі в кав’ярню."
+
 msgid "Kati lived here a year ago."
 msgstr "Каті жила тут рік тому."
 
@@ -440,7 +443,7 @@ msgid "Mari is coming in two days."
 msgstr "Марі приїде через два дні."
 
 msgid "Mari works on Saturdays."
-msgstr "Марі працює в суботу."
+msgstr "Марі працює по суботах."
 
 msgid "Mari’s birthday is in May."
 msgstr "У Марі день народження в травні."
@@ -474,9 +477,6 @@ msgstr "У який день: <0>-l</0>."
 
 msgid "on Monday"
 msgstr "у понеділок"
-
-msgid "On Monday evening they are going to a café with Mari."
-msgstr "У понеділок увечері вони підуть із Марі в кав’ярню."
 
 msgid "on Saturday evening"
 msgstr "у суботу ввечері"
@@ -545,7 +545,7 @@ msgid "until five o’clock"
 msgstr "до п’ятої години"
 
 msgid "Until six: <0>-ni</0> on <1>kuue</1>, the genitive of <2>kuus</2>."
-msgstr "До шостої: <0>-ni</0> до <1>kuue</1>, родового від <2>kuus</2>."
+msgstr "До шостої: <0>-ni</0> додається до <1>kuue</1>, родового від <2>kuus</2>."
 
 msgid "We swim in the river in summer."
 msgstr "Улітку ми плаваємо в річці."
@@ -596,7 +596,7 @@ msgid "With a number the difference shows most. Two days ago is <0/>, the partit
 msgstr "З числом різниця найпомітніша. «Два дні тому» — <0/>, партитив після числа, як в уроці {partitive}; «через два дні» — <1/>, обидва слова в родовому. Торкнися форми, щоб послухати."
 
 msgid "With the clock from lesson {clock}, the hour takes them, and <0>kella</0> comes before it: <1/>, <2/>. Tap a line to hear it."
-msgstr "З годинником з уроку {clock} їх отримує година, а перед нею стоїть <0>kella</0>: <1/>, <2/>. Торкнися рядка, щоб послухати."
+msgstr "З годинами з уроку {clock} закінчення отримує число години, а перед ним стоїть <0>kella</0>: <1/>, <2/>. Торкнися рядка, щоб послухати."
 
 msgid "Write each sentence in Estonian. The time word can go after the verb, as in the lines above."
 msgstr "Напиши кожне речення естонською. Слово часу може стояти після дієслова, як у рядках вище."
@@ -604,8 +604,8 @@ msgstr "Напиши кожне речення естонською. Слово 
 msgid "Write it in Estonian"
 msgstr "Напиши естонською"
 
-msgid "Write when"
-msgstr "Напиши, коли"
+msgid "Write the time"
+msgstr "Напиши час"
 
 msgid "year"
 msgstr "рік"

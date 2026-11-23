@@ -3,7 +3,7 @@ import type { DrillBank } from "../../../lib/learn/drill";
 
 const SECOND = msg`The verb comes second; when a time or place starts the sentence, the person follows the verb: <et>Täna lähen ma</et>.`;
 const QUESTION = msg`In a question, the short pronoun comes right after the question word: <et>Kus sa elad?</et>`;
-const TWO = msg`With two verbs, the first is second and the other goes last: <et>Homme pean ma tööle minema.</et>`;
+const TWO = msg`With two verbs, the first takes second place and the other goes last: <et>Homme pean ma tööle minema.</et>`;
 const NO = msg`With <et>ei</et>, the person usually stays before it: <et>Täna ma ei tööta.</et>`;
 const START = msg`Start with the time word`;
 

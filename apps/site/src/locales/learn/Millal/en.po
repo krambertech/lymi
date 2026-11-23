@@ -22,8 +22,8 @@ msgstr "<0>Pärast</0> before a noun takes the partitive: <1>pärast tööd</1>.
 msgid "18 minutes"
 msgstr "18 minutes"
 
-msgid "7 exercises, 3 of them typed, and a conversation"
-msgstr "7 exercises, 3 of them typed, and a conversation"
+msgid "6 exercises, 3 of them typed, and a conversation"
+msgstr "6 exercises, 3 of them typed, and a conversation"
 
 msgid "a day ago"
 msgstr "a day ago"
@@ -40,8 +40,8 @@ msgstr "A day, a part of the day or a season takes <0>-l</0>: <1>esmaspäeval, h
 msgid "A day, a part of the day or a season takes <et>-l</et>: <et>hommikul</et>, <et>suvel</et>."
 msgstr "A day, a part of the day or a season takes <et>-l</et>: <et>hommikul</et>, <et>suvel</et>."
 
-msgid "A month takes <0>-s</0>, the ending for in from lesson {places}: <1/>, in May; <2/>, in July. The months keep their small letter."
-msgstr "A month takes <0>-s</0>, the ending for in from lesson {places}: <1/>, in May; <2/>, in July. The months keep their small letter."
+msgid "A month takes <0>-s</0>, the ending for “in” from lesson {places}: <1/>, in May; <2/>, in July. The months keep their small letter."
+msgstr "A month takes <0>-s</0>, the ending for “in” from lesson {places}: <1/>, in May; <2/>, in July. The months keep their small letter."
 
 msgid "A month takes <0>-s</0>: <1>juulis</1>."
 msgstr "A month takes <0>-s</0>: <1>juulis</1>."
@@ -118,8 +118,8 @@ msgstr "All six found and fixed."
 msgid "All six sentences, every time word in its form."
 msgstr "All six sentences, every time word in its form."
 
-msgid "All six: in, ago and after, each by its words."
-msgstr "All six: in, ago and after, each by its words."
+msgid "All six: in, ago and after, told apart by where pärast stands and by tagasi."
+msgstr "All six: in, ago and after, told apart by where pärast stands and by tagasi."
 
 msgid "at night"
 msgstr "at night"
@@ -127,8 +127,8 @@ msgstr "at night"
 msgid "Before and after: <et>enne tööd</et>, <et>pärast tööd</et>"
 msgstr "Before and after: <et>enne tööd</et>, <et>pärast tööd</et>"
 
-msgid "Before five: <et>enne</et>, then the partitive <et>kella viit</et>."
-msgstr "Before five: <et>enne</et>, then the partitive <et>kella viit</et>."
+msgid "Before five: <et>enne</et>, then <et>kella</et> and five in the partitive, <et>viit</et>."
+msgstr "Before five: <et>enne</et>, then <et>kella</et> and five in the partitive, <et>viit</et>."
 
 msgid "Before or after something: <0>enne</0> or <1>pärast</1> before its partitive, <2>pärast tööd</2>."
 msgstr "Before or after something: <0>enne</0> or <1>pärast</1> before its partitive, <2>pärast tööd</2>."
@@ -151,9 +151,6 @@ msgstr "day"
 msgid "Days, parts of the day and seasons take <0>-l</0>: <1>suvel</1>, in summer."
 msgstr "Days, parts of the day and seasons take <0>-l</0>: <1>suvel</1>, in summer."
 
-msgid "Each sentence has one wrong word in its time. Tap it, then type it right."
-msgstr "Each sentence has one wrong word in its time. Tap it, then type it right."
-
 msgid "evening"
 msgstr "evening"
 
@@ -172,8 +169,8 @@ msgstr "Fix the sentence"
 msgid "For a month"
 msgstr "For a month"
 
-msgid "For something that happens again and again, put <0>-ti</0> on the word: <1/>, in the mornings; <2/>, in the evenings; <3>laupäeviti</3>, on Saturdays. Tap a line to hear it."
-msgstr "For something that happens again and again, put <0>-ti</0> on the word: <1/>, in the mornings; <2/>, in the evenings; <3>laupäeviti</3>, on Saturdays. Tap a line to hear it."
+msgid "For something that happens again and again, use <0>-ti</0>: <1/>, in the mornings; <2/>, in the evenings. Days take <3>-iti</3>: <4>laupäeviti</4>, on Saturdays. Tap a line to hear it."
+msgstr "For something that happens again and again, use <0>-ti</0>: <1/>, in the mornings; <2/>, in the evenings. Days take <3>-iti</3>: <4>laupäeviti</4>, on Saturdays. Tap a line to hear it."
 
 msgid "For two days"
 msgstr "For two days"
@@ -184,11 +181,11 @@ msgstr "For two weeks"
 msgid "Friday"
 msgstr "Friday"
 
-msgid "From and to: <0>-st</0> and <1>-ni</1>."
-msgstr "From and to: <0>-st</0> and <1>-ni</1>."
-
 msgid "From and until: <0>-st</0> and <1>-ni</1>, <2>kella kaheksast kella viieni</2>."
 msgstr "From and until: <0>-st</0> and <1>-ni</1>, <2>kella kaheksast kella viieni</2>."
+
+msgid "From and until: <0>-st</0> and <1>-ni</1>."
+msgstr "From and until: <0>-st</0> and <1>-ni</1>."
 
 msgid "From and until: <et>-st</et>, <et>-ni</et>"
 msgstr "From and until: <et>-st</et>, <et>-ni</et>"
@@ -235,8 +232,8 @@ msgstr "From õhtu, evening."
 msgid "From one day to another: <0>-st</0>, then <1>-ni</1>."
 msgstr "From one day to another: <0>-st</0>, then <1>-ni</1>."
 
-msgid "From öö, night: an s comes in before -el."
-msgstr "From öö, night: an s comes in before -el."
+msgid "From öö, night: it takes -sel, not -l."
+msgstr "From öö, night: it takes -sel, not -l."
 
 msgid "From suvi, summer."
 msgstr "From suvi, summer."
@@ -304,12 +301,6 @@ msgstr "In a month: -s"
 msgid "In a month: <0>-s</0>."
 msgstr "In a month: <0>-s</0>."
 
-msgid "In a time: the genitive before <0>pärast</0>, <1>nädala pärast</1>. Ago: the time as it is counted before <2>tagasi</2>, <3>kaks päeva tagasi</3>."
-msgstr "In a time: the genitive before <0>pärast</0>, <1>nädala pärast</1>. Ago: the time as it is counted before <2>tagasi</2>, <3>kaks päeva tagasi</3>."
-
-msgid "In a time: the genitive, then <et>pärast</et>: <et>nädala pärast</et>, <et>kahe päeva pärast</et>."
-msgstr "In a time: the genitive, then <et>pärast</et>: <et>nädala pärast</et>, <et>kahe päeva pärast</et>."
-
 msgid "in a week"
 msgstr "in a week"
 
@@ -322,6 +313,12 @@ msgstr "In a week is <0/>: the genitive from lesson {genitive}, then <1>pärast<
 msgid "In a week, a week ago"
 msgstr "In a week, a week ago"
 
+msgid "In a week, in two days: the genitive before <0>pärast</0>, <1>nädala pärast</1>. Ago: the time as it is counted before <2>tagasi</2>, <3>kaks päeva tagasi</3>."
+msgstr "In a week, in two days: the genitive before <0>pärast</0>, <1>nädala pärast</1>. Ago: the time as it is counted before <2>tagasi</2>, <3>kaks päeva tagasi</3>."
+
+msgid "In a week, in two days: the genitive, then <et>pärast</et>: <et>nädala pärast</et>, <et>kahe päeva pärast</et>."
+msgstr "In a week, in two days: the genitive, then <et>pärast</et>: <et>nädala pärast</et>, <et>kahe päeva pärast</et>."
+
 msgid "In a week: the genitive <0>nädala</0> before <1>pärast</1>."
 msgstr "In a week: the genitive <0>nädala</0> before <1>pärast</1>."
 
@@ -330,6 +327,9 @@ msgstr "In a week: the genitive before <0>pärast</0>, <1>nädala pärast</1>."
 
 msgid "in a year"
 msgstr "in a year"
+
+msgid "In each sentence, one word that says when is wrong. Tap it, then type it right."
+msgstr "In each sentence, one word that says when is wrong. Tap it, then type it right."
 
 msgid "in July"
 msgstr "in July"
@@ -418,6 +418,9 @@ msgstr "Kati"
 msgid "Kati and Jaan plan when to meet, and talk about their year."
 msgstr "Kati and Jaan plan when to meet, and talk about their year."
 
+msgid "Kati is going to a café with Mari on Monday evening."
+msgstr "Kati is going to a café with Mari on Monday evening."
+
 msgid "Kati lived here a year ago."
 msgstr "Kati lived here a year ago."
 
@@ -474,9 +477,6 @@ msgstr "On a day: <0>-l</0>."
 
 msgid "on Monday"
 msgstr "on Monday"
-
-msgid "On Monday evening they are going to a café with Mari."
-msgstr "On Monday evening they are going to a café with Mari."
 
 msgid "on Saturday evening"
 msgstr "on Saturday evening"
@@ -604,8 +604,8 @@ msgstr "Write each sentence in Estonian. The time word can go after the verb, as
 msgid "Write it in Estonian"
 msgstr "Write it in Estonian"
 
-msgid "Write when"
-msgstr "Write when"
+msgid "Write the time"
+msgstr "Write the time"
 
 msgid "year"
 msgstr "year"

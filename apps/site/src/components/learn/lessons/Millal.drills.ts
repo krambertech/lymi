@@ -3,7 +3,7 @@ import type { DrillBank } from "../../../lib/learn/drill";
 
 const L = msg`A day, a part of the day or a season takes <et>-l</et>: <et>hommikul</et>, <et>suvel</et>.`;
 const S = msg`A month takes <et>-s</et>: <et>mais</et>, <et>juulis</et>.`;
-const IN = msg`In a time: the genitive, then <et>pärast</et>: <et>nädala pärast</et>, <et>kahe päeva pärast</et>.`;
+const IN = msg`In a week, in two days: the genitive, then <et>pärast</et>: <et>nädala pärast</et>, <et>kahe päeva pärast</et>.`;
 const AGO = msg`Ago: the time as it is counted, then <et>tagasi</et>: <et>nädal tagasi</et>, <et>kaks päeva tagasi</et>.`;
 const AROUND = msg`Before or after something: <et>enne</et> or <et>pärast</et>, then its partitive: <et>pärast tööd</et>.`;
 const FROM = msg`From is <et>-st</et> and until is <et>-ni</et>, on the genitive: <et>kella kaheksast kella viieni</et>.`;
@@ -37,7 +37,7 @@ export const DRILLS: DrillBank = {
       kind: "fix",
       id: "when-fix-suvel",
       rule: "when",
-      wrong: "Me ujume suvis jões.",
+      wrong: "Me ujume suves jões.",
       answers: ["Me ujume suvel jões."],
       say: "Me ujume suvel jões.",
       explain: L,
@@ -184,7 +184,7 @@ export const DRILLS: DrillBank = {
       rule: "around",
       answers: ["Helista mulle enne kella viit!"],
       say: "Helista mulle enne kella viit!",
-      explain: msg`Before five: <et>enne</et>, then the partitive <et>kella viit</et>.`,
+      explain: msg`Before five: <et>enne</et>, then <et>kella</et> and five in the partitive, <et>viit</et>.`,
     },
     {
       kind: "translate",

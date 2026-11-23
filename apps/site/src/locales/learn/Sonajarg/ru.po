@@ -7,35 +7,38 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
+msgid "<0>Ei</0> goes right before the verb, so the person comes before <1>ei</1>: <2>laupäeval ma ei tule</2>."
+msgstr "<0>Ei</0> стоит прямо перед глаголом, так что подлежащее идёт перед <1>ei</1>: <2>laupäeval ma ei tule</2>."
+
 msgid "<0>Ei</0> goes right before the verb."
 msgstr "<0>Ei</0> стоит прямо перед глаголом."
 
-msgid "<0>Läheme</0> is second, and <1>ujuma</1> goes last."
-msgstr "<0>Läheme</0> стоит вторым, а <1>ujuma</1> — в конце."
+msgid "<0>Läheme</0> takes second place, and <1>ujuma</1> goes last."
+msgstr "<0>Läheme</0> стоит на втором месте, а <1>ujuma</1> — в конце."
 
-msgid "<0>Ma lähen täna Tartusse</0> is I’m going to Tartu today. Start it with today instead, and the verb stays in second place while the person moves after it: <1/> <2>Tartusse</2>."
-msgstr "<0>Ma lähen täna Tartusse</0> — «я сегодня еду в Тарту». Начни предложение с «сегодня», и глагол останется на втором месте, а лицо перейдёт за него: <1/> <2>Tartusse</2>."
+msgid "<0>Ma lähen täna Tartusse</0> is I’m going to Tartu today. Start it with <1>täna</1> instead, and the verb stays in second place while the person moves after it: <2/> <3>Tartusse</3>."
+msgstr "<0>Ma lähen täna Tartusse</0> — «я сегодня еду в Тарту». Начни предложение с <1>täna</1>, и глагол останется на втором месте, а подлежащее — тот, кто действует, — перейдёт за него: <2/> <3>Tartusse</3>."
 
-msgid "<0>Pean</0> is second, and the second verb, <1>minema</1>, goes last."
-msgstr "<0>Pean</0> стоит вторым, а второй глагол, <1>minema</1>, — в конце."
+msgid "<0>Pean</0> takes second place, and the other verb, <1>minema</1>, goes last."
+msgstr "<0>Pean</0> стоит на втором месте, а другой глагол, <1>minema</1>, — в конце."
 
-msgid "<0>Tahan</0> is second, and <1>lugeda</1> goes last."
-msgstr "<0>Tahan</0> стоит вторым, а <1>lugeda</1> — в конце."
+msgid "<0>Tahan</0> takes second place, and <1>lugeda</1> goes last."
+msgstr "<0>Tahan</0> стоит на втором месте, а <1>lugeda</1> — в конце."
 
 msgid "16 minutes"
 msgstr "16 минут"
 
-msgid "6 exercises, 2 of them typed, and a conversation"
-msgstr "6 упражнений, в 2 из них нужно писать, и разговор"
+msgid "5 exercises, 2 of them typed, and a conversation"
+msgstr "5 упражнений, в 2 из них нужно писать, и разговор"
 
-msgid "A question works differently. After a question word from lesson {questions}, the short pronoun comes first and the verb after it: <0/>, where do you live? A question with <1>kas</1> keeps the order of a statement."
-msgstr "В вопросе иначе. После вопросительного слова из урока {questions} сначала идёт короткое местоимение, а за ним глагол: <0/> — «где ты живёшь?». Вопрос с <1>kas</1> сохраняет порядок обычного предложения."
+msgid "A question works differently. After a question word from lesson {questions}, the short pronoun, such as <0>sa</0> or <1>te</1>, comes next and the verb after it: <2/>, where do you live? A question with <3>kas</3> puts <4>kas</4> in front of a plain statement: <5>Kas sa tuled homme?</5>"
+msgstr "В вопросе иначе. После вопросительного слова из урока {questions} идёт короткое местоимение, например <0>sa</0> или <1>te</1>, а за ним глагол: <2/> — «где ты живёшь?». Вопрос с <3>kas</3> просто ставит <4>kas</4> перед обычным предложением: <5>Kas sa tuled homme?</5>"
 
 msgid "After work Peeter goes to the shop."
 msgstr "После работы Пеэтер идёт в магазин."
 
-msgid "All eight, each in the order you heard."
-msgstr "Все восемь, каждое в услышанном порядке."
+msgid "All eight, each with the verb in its place."
+msgstr "Все восемь, в каждом глагол на своём месте."
 
 msgid "All eight, questions and statements each in their order."
 msgstr "Все восемь — и вопросы, и утверждения в своём порядке."
@@ -44,16 +47,25 @@ msgid "All six sentences, each in its order."
 msgstr "Все шесть предложений, каждое в своём порядке."
 
 msgid "All six: the verb second, the person after it."
-msgstr "Все шесть: глагол второй, лицо после него."
+msgstr "Все шесть: глагол второй, подлежащее после него."
 
 msgid "Are you coming tomorrow?"
 msgstr "Ты придёшь завтра?"
+
+msgid "At eleven"
+msgstr "В одиннадцать"
+
+msgid "At nine"
+msgstr "В девять"
+
+msgid "At twelve"
+msgstr "В двенадцать"
 
 msgid "Build each sentence from what it means. Some are questions and some are statements, so check which order each needs."
 msgstr "Составь каждое предложение по его значению. Среди них есть вопросы и утверждения, так что проверь, какой порядок нужен каждому."
 
 msgid "Build the sentence"
-msgstr "Собери предложение"
+msgstr "Составь предложение"
 
 msgid "Build what you hear"
 msgstr "Составь то, что слышишь"
@@ -92,19 +104,13 @@ msgid "In a question, the short pronoun comes right after the question word: <et
 msgstr "В вопросе короткое местоимение стоит сразу после вопросительного слова: <et>Kus sa elad?</et>"
 
 msgid "In a statement the verb usually comes second. Start with a time or a place, and the person follows the verb: <0>Täna lähen ma Tartusse.</0>"
-msgstr "В утвердительном предложении глагол обычно стоит вторым. Начни со времени или места — и лицо пойдёт за глаголом: <0>Täna lähen ma Tartusse.</0>"
+msgstr "В утвердительном предложении глагол обычно стоит вторым. Начни со времени или места — и подлежащее пойдёт за глаголом: <0>Täna lähen ma Tartusse.</0>"
 
 msgid "In an Estonian statement the verb usually comes second. Start with a time or a place, and the person moves after the verb: <0>Täna lähen ma Tartusse</0>, today I’m going to Tartu."
-msgstr "В эстонском утвердительном предложении глагол обычно стоит вторым. Начни со времени или места — и лицо перейдёт за глагол: <0>Täna lähen ma Tartusse</0> — «сегодня я еду в Тарту»."
-
-msgid "In speech you will also hear <0>Täna ma lähen</0>. When you write, keep the verb second: <1>Täna lähen ma</1>."
-msgstr "В разговоре услышишь и <0>Täna ma lähen</0>. Когда пишешь, ставь глагол вторым: <1>Täna lähen ma</1>."
+msgstr "В эстонском утвердительном предложении глагол обычно стоит вторым. Начни со времени или места — и подлежащее перейдёт за глагол: <0>Täna lähen ma Tartusse</0> — «сегодня я еду в Тарту»."
 
 msgid "In Tartu lives Kati."
 msgstr "В Тарту живёт Кати."
-
-msgid "In the evening he isn’t at home."
-msgstr "Вечером его нет дома."
 
 msgid "In the evening he or she isn’t at home."
 msgstr "Вечером его или её нет дома."
@@ -113,7 +119,7 @@ msgid "In the evening I want to read a book."
 msgstr "Вечером я хочу почитать книгу."
 
 msgid "In the evening we’re at home."
-msgstr "Вечером мы дома."
+msgstr "Мы дома вечером."
 
 msgid "In the morning Mari drinks coffee."
 msgstr "Утром Мари пьёт кофе."
@@ -146,7 +152,7 @@ msgid "Mari drinks coffee in the morning."
 msgstr "Мари пьёт кофе утром."
 
 msgid "Most of them. Check that the verb comes right after the first word."
-msgstr "Большинство. Проверь, чтобы глагол стоял сразу после первого слова."
+msgstr "Большинство. Проверь, стоит ли глагол сразу после первого слова."
 
 msgid "Most of them. Check where the verb is in the ones you missed."
 msgstr "Большинство. В тех, что не получились, проверь, где стоит глагол."
@@ -157,20 +163,11 @@ msgstr "Теперь послушай и составь предложение, 
 msgid "Now rewrite each sentence so that it starts with the word given."
 msgstr "Теперь перепиши каждое предложение так, чтобы оно начиналось со слова из подсказки."
 
-msgid "On Monday morning"
-msgstr "В понедельник утром"
-
 msgid "On Saturday Jaan works."
 msgstr "В субботу Яан работает."
 
-msgid "On Saturday morning"
-msgstr "В субботу утром"
-
 msgid "On Saturday we’re going swimming."
 msgstr "В субботу мы идём плавать."
-
-msgid "On Sunday evening"
-msgstr "В воскресенье вечером"
 
 msgid "Peeter"
 msgstr "Пеэтер"
@@ -202,8 +199,8 @@ msgstr "Суббота и воскресенье"
 msgid "Saying no"
 msgstr "Отрицание"
 
-msgid "She asks about Saturday, and the person comes before <0>ei</0>."
-msgstr "Она спрашивает о субботе, а лицо стоит перед <0>ei</0>."
+msgid "She asks about Saturday, and <0>ei</0> goes right before the verb."
+msgstr "Она спрашивает о субботе, а <0>ei</0> стоит прямо перед глаголом."
 
 msgid "She asks about Sunday, and <0>ei</0> goes right before the verb."
 msgstr "Она спрашивает о воскресенье, а <0>ei</0> стоит прямо перед глаголом."
@@ -212,10 +209,10 @@ msgid "She asks about the evening, and the verb comes second."
 msgstr "Она спрашивает о вечере, а глагол стоит вторым."
 
 msgid "She asks about tomorrow, and the second verb goes last."
-msgstr "Она спрашивает о завтра, а второй глагол идёт в конец."
+msgstr "Она спрашивает про завтрашний день, а второй глагол идёт в конец."
 
 msgid "So a statement says <0>Täna lähen ma</0>, and a question says <1>Millal sa lähed?</1> Tap a line to hear it."
-msgstr "Так что утверждение говорит <0>Täna lähen ma</0>, а вопрос — <1>Millal sa lähed?</1> Нажми на строку, чтобы послушать."
+msgstr "Так что в утверждении — <0>Täna lähen ma</0>, а в вопросе — <1>Millal sa lähed?</1> Нажми на строку, чтобы послушать."
 
 msgid "Start with <0>{first}</0>"
 msgstr "Начни с <0>{first}</0>"
@@ -224,10 +221,10 @@ msgid "Start with another word"
 msgstr "Начни с другого слова"
 
 msgid "Start with the time word"
-msgstr "Начни со слова времени"
+msgstr "Начни со слова, которое называет время"
 
 msgid "Switch between the two starts above once more, then try again."
-msgstr "Ещё раз переключи два начала выше и попробуй снова."
+msgstr "Ещё раз попереключай выше, с чего начинается предложение, и попробуй снова."
 
 msgid "Talk: plans"
 msgstr "Разговор: планы"
@@ -236,16 +233,13 @@ msgid "The first"
 msgstr "На первом"
 
 msgid "The first word is not the person, so the verb comes second and the person after it."
-msgstr "Первое слово — не лицо, так что глагол стоит вторым, а лицо после него."
+msgstr "Первое слово — не подлежащее, так что глагол стоит вторым, а подлежащее после него."
 
 msgid "The person"
-msgstr "Лицо"
-
-msgid "The person comes before <0>ei</0>."
-msgstr "Лицо стоит перед <0>ei</0>."
+msgstr "Подлежащее"
 
 msgid "The person comes first and the verb second."
-msgstr "Лицо идёт первым, глагол — вторым."
+msgstr "Подлежащее идёт первым, глагол — вторым."
 
 msgid "The same goes for a place, or a time word from lesson {when}: <0>Tartus elab Kati</0>, <1>Hommikul joob Mari kohvi</1>. Switch between the two starts, and tap a line to hear it."
 msgstr "То же с местом или словом времени из урока {when}: <0>Tartus elab Kati</0>, <1>Hommikul joob Mari kohvi</1>. Переключай два начала и нажми на строку, чтобы послушать."
@@ -263,7 +257,7 @@ msgid "The time or place"
 msgstr "Время или место"
 
 msgid "The time or place comes first, the verb stays second, and the person moves after it."
-msgstr "Время или место идёт первым, глагол остаётся вторым, а лицо переходит за него."
+msgstr "Время или место идёт первым, глагол остаётся вторым, а подлежащее переходит за него."
 
 msgid "The verb comes second"
 msgstr "Глагол на втором месте"
@@ -272,7 +266,7 @@ msgid "The verb comes second, not last."
 msgstr "Глагол стоит вторым, а не в конце."
 
 msgid "The verb comes second; when a time or place starts the sentence, the person follows the verb: <et>Täna lähen ma</et>."
-msgstr "Глагол стоит вторым; когда предложение начинается со времени или места, лицо идёт за глаголом: <et>Täna lähen ma</et>."
+msgstr "Глагол стоит вторым; когда предложение начинается со времени или места, подлежащее идёт за глаголом: <et>Täna lähen ma</et>."
 
 msgid "The verb second: <et>Täna lähen ma</et>"
 msgstr "Глагол второй: <et>Täna lähen ma</et>"
@@ -326,7 +320,7 @@ msgid "Until when does Peeter work?"
 msgstr "До скольких работает Пеэтер?"
 
 msgid "We’re at home in the evening."
-msgstr "Вечером мы дома."
+msgstr "Мы дома вечером."
 
 msgid "What are you doing on Saturday? (To a friend.)"
 msgstr "Что ты делаешь в субботу? (Другу.)"
@@ -346,14 +340,14 @@ msgstr "Что это за экзамен? Напиши так, как гово�
 msgid "What the sentence starts with"
 msgstr "С чего начинается предложение"
 
+msgid "What time is Liisa’s exam?"
+msgstr "Во сколько у Лийсы экзамен?"
+
 msgid "What time should Peeter come? Write the number as Liisa says it."
 msgstr "Во сколько должен прийти Пеэтер? Напиши число так, как говорит Лийса."
 
 msgid "When are you coming?"
-msgstr "Когда ты приедешь?"
-
-msgid "When is Liisa’s exam?"
-msgstr "Когда у Лийсы экзамен?"
+msgstr "Когда ты придёшь?"
 
 msgid "where do you live?"
 msgstr "где ты живёшь?"
@@ -368,22 +362,22 @@ msgid "Which floor does Liisa live on?"
 msgstr "На каком этаже живёт Лийса?"
 
 msgid "Who are you talking with?"
-msgstr "С кем ты разговариваешь?"
+msgstr "С кем вы разговариваете?"
 
 msgid "With <0>ei</0> from lesson {negation}, the person usually stays before it: <1/>, today I’m not working. Tap a line to hear it."
-msgstr "С <0>ei</0> из урока {negation} лицо обычно остаётся перед ним: <1/> — «сегодня я не работаю». Нажми на строку, чтобы послушать."
+msgstr "С <0>ei</0> из урока {negation} подлежащее обычно остаётся перед ним: <1/> — «сегодня я не работаю». Нажми на строку, чтобы послушать."
 
 msgid "With <0>ei</0>, the person usually stays before it: <1>Homme me ei tule.</1>"
-msgstr "С <0>ei</0> лицо обычно остаётся перед ним: <1>Homme me ei tule.</1>"
+msgstr "С <0>ei</0> подлежащее обычно остаётся перед ним: <1>Homme me ei tule.</1>"
 
 msgid "With <0>ei</0>, the person usually stays before it: <1>Õhtul ta ei ole kodus.</1>"
-msgstr "С <0>ei</0> лицо обычно остаётся перед ним: <1>Õhtul ta ei ole kodus.</1>"
+msgstr "С <0>ei</0> подлежащее обычно остаётся перед ним: <1>Õhtul ta ei ole kodus.</1>"
 
 msgid "With <0>ei</0>, the person usually stays before it: <1>Täna ma ei tööta.</1>"
-msgstr "С <0>ei</0> лицо обычно остаётся перед ним: <1>Täna ma ei tööta.</1>"
+msgstr "С <0>ei</0> подлежащее обычно остаётся перед ним: <1>Täna ma ei tööta.</1>"
 
 msgid "With <et>ei</et>, the person usually stays before it: <et>Täna ma ei tööta.</et>"
-msgstr "С <et>ei</et> лицо обычно остаётся перед ним: <et>Täna ma ei tööta.</et>"
+msgstr "С <et>ei</et> подлежащее обычно остаётся перед ним: <et>Täna ma ei tööta.</et>"
 
 msgid "With <et>ei</et>: <et>Täna ma ei tööta</et>"
 msgstr "С <et>ei</et>: <et>Täna ma ei tööta</et>"
@@ -391,11 +385,14 @@ msgstr "С <et>ei</et>: <et>Täna ma ei tööta</et>"
 msgid "With two verbs, as in lesson {infinitives}, the first one takes second place, and the other goes to the end: <0/>, tomorrow I have to go to work. Tap a line to hear it."
 msgstr "С двумя глаголами, как в уроке {infinitives}, первый встаёт на второе место, а другой идёт в конец: <0/> — «завтра мне нужно на работу». Нажми на строку, чтобы послушать."
 
-msgid "With two verbs, the first is second and the other goes last: <0>Homme pean ma tööle minema.</0>"
-msgstr "С двумя глаголами первый стоит вторым, а другой — в конце: <0>Homme pean ma tööle minema.</0>"
+msgid "With two verbs, the first takes second place and the other goes last: <0>Homme pean ma tööle minema.</0>"
+msgstr "С двумя глаголами первый встаёт на второе место, а другой — в конец: <0>Homme pean ma tööle minema.</0>"
 
-msgid "With two verbs, the first is second and the other goes last: <et>Homme pean ma tööle minema.</et>"
-msgstr "С двумя глаголами первый стоит вторым, а другой — в конце: <et>Homme pean ma tööle minema.</et>"
+msgid "With two verbs, the first takes second place and the other goes last: <et>Homme pean ma tööle minema.</et>"
+msgstr "С двумя глаголами первый встаёт на второе место, а другой — в конец: <et>Homme pean ma tööle minema.</et>"
+
+msgid "Without <0>ei</0>, you will also hear <1>Täna ma lähen</1> in speech. When you write, keep the verb second: <2>Täna lähen ma</2>."
+msgstr "Без <0>ei</0> в разговоре услышишь и <1>Täna ma lähen</1>. Когда пишешь, ставь глагол вторым: <2>Täna lähen ma</2>."
 
 msgid "Write each sentence in Estonian. Start with the word the English starts with."
 msgstr "Напиши каждое предложение по-эстонски. Начни с того слова, с которого начинается задание."
@@ -406,5 +403,5 @@ msgstr "Напиши по-эстонски"
 msgid "Write it in order"
 msgstr "Напиши в правильном порядке"
 
-msgid "You work tomorrow, you’re at home in the evening, you can’t come on Saturday, and you can on Sunday."
-msgstr "Завтра ты работаешь, вечером ты дома, в субботу прийти не можешь, а в воскресенье можешь."
+msgid "You work tomorrow, you’re at home in the evening, you’re not coming on Saturday, and you are on Sunday."
+msgstr "Завтра ты работаешь, вечером ты дома, в субботу не придёшь, а в воскресенье придёшь."

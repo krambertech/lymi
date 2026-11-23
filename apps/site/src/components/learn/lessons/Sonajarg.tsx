@@ -74,7 +74,7 @@ const MEANING_PROMPTS: Record<(typeof ORDER_MEANING)[number]["id"], MessageDescr
   "homme-pean": msg`Tomorrow I have to go to work.`,
   "ohtul-tahan": msg`In the evening I want to read a book.`,
   "homme-ei-tule": msg`Tomorrow we’re not coming.`,
-  "ohtul-ei-ole": msg`In the evening he isn’t at home.`,
+  "ohtul-ei-ole": msg`In the evening he or she isn’t at home.`,
   "laupaeval-ujuma": msg`On Saturday we’re going swimming.`,
 };
 
@@ -160,13 +160,14 @@ function useContent() {
       ),
       "homme-pean": (
         <Trans>
-          <span lang="et">Pean</span> is second, and the second verb, <span lang="et">minema</span>,
-          goes last.
+          <span lang="et">Pean</span> takes second place, and the other verb,{" "}
+          <span lang="et">minema</span>, goes last.
         </Trans>
       ),
       "ohtul-tahan": (
         <Trans>
-          <span lang="et">Tahan</span> is second, and <span lang="et">lugeda</span> goes last.
+          <span lang="et">Tahan</span> takes second place, and <span lang="et">lugeda</span> goes
+          last.
         </Trans>
       ),
       "homme-ei-tule": (
@@ -183,7 +184,8 @@ function useContent() {
       ),
       "laupaeval-ujuma": (
         <Trans>
-          <span lang="et">Läheme</span> is second, and <span lang="et">ujuma</span> goes last.
+          <span lang="et">Läheme</span> takes second place, and <span lang="et">ujuma</span> goes
+          last.
         </Trans>
       ),
     };
@@ -247,7 +249,7 @@ function useContent() {
             line: "Ei, pühapäeval ei ma tule.",
             why: (
               <Trans>
-                She asks about Saturday, and the person comes before <span lang="et">ei</span>.
+                She asks about Saturday, and <span lang="et">ei</span> goes right before the verb.
               </Trans>
             ),
           },
@@ -255,7 +257,8 @@ function useContent() {
             line: "Ei, laupäeval ei ma tule.",
             why: (
               <Trans>
-                The person comes before <span lang="et">ei</span>.
+                <span lang="et">Ei</span> goes right before the verb, so the person comes before{" "}
+                <span lang="et">ei</span>: <span lang="et">laupäeval ma ei tule</span>.
               </Trans>
             ),
           },
@@ -269,7 +272,7 @@ function useContent() {
         replies: [
           { line: ORDER_DIALOGUE["d-sina-4"], right: true },
           {
-            line: "Pühapäeval tulen ma ei.",
+            line: "Pühapäeval tulen ei.",
             why: (
               <Trans>
                 <span lang="et">Ei</span> goes right before the verb.
@@ -277,7 +280,7 @@ function useContent() {
             ),
           },
           {
-            line: "Laupäeval tulen ma ei.",
+            line: "Laupäeval tulen ei.",
             why: (
               <Trans>
                 She asks about Sunday, and <span lang="et">ei</span> goes right before the verb.
@@ -356,13 +359,13 @@ function useContent() {
       },
       {
         id: "exam-time",
-        ask: t`When is Liisa’s exam?`,
+        ask: t`What time is Liisa’s exam?`,
         options: [
-          { id: "sunday-evening", label: t`On Sunday evening` },
-          { id: "saturday-morning", label: t`On Saturday morning` },
-          { id: "monday-morning", label: t`On Monday morning` },
+          { id: "eleven", label: t`At eleven` },
+          { id: "nine", label: t`At nine` },
+          { id: "twelve", label: t`At twelve` },
         ],
-        answer: "monday-morning",
+        answer: "nine",
         line: 28,
       },
       {
@@ -406,7 +409,7 @@ export function SonajargLesson() {
       }
       facts={[
         <Trans key="m">16 minutes</Trans>,
-        <Trans key="q">6 exercises, 2 of them typed, and a conversation</Trans>,
+        <Trans key="q">5 exercises, 2 of them typed, and a conversation</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={["täna lähen ma", "kus sa elad?", "homme pean ma tööle minema", "täna ma ei tööta"]}
@@ -420,7 +423,7 @@ export function SonajargLesson() {
           <b lang="et">Kus sa elad? Mida sa täna teed?</b>
         </Trans>,
         <Trans key="3">
-          With two verbs, the first is second and the other goes last:{" "}
+          With two verbs, the first takes second place and the other goes last:{" "}
           <b lang="et">Homme pean ma tööle minema.</b>
         </Trans>,
         <Trans key="4">
@@ -439,8 +442,9 @@ export function SonajargLesson() {
                 <p>
                   <Trans>
                     <span lang="et">Ma lähen täna Tartusse</span> is I’m going to Tartu today. Start
-                    it with today instead, and the verb stays in second place while the person moves
-                    after it: <Word w="Täna lähen ma" /> <span lang="et">Tartusse</span>.
+                    it with <span lang="et">täna</span> instead, and the verb stays in second place
+                    while the person moves after it: <Word w="Täna lähen ma" />{" "}
+                    <span lang="et">Tartusse</span>.
                   </Trans>
                 </p>
                 <p>
@@ -490,9 +494,10 @@ export function SonajargLesson() {
                 <p>
                   <Trans>
                     A question works differently. After a question word from lesson {questions}, the
-                    short pronoun comes first and the verb after it: <Word w="Kus sa elad?" />,
-                    where do you live? A question with <span lang="et">kas</span> keeps the order of
-                    a statement.
+                    short pronoun, such as <span lang="et">sa</span> or <span lang="et">te</span>,
+                    comes next and the verb after it: <Word w="Kus sa elad?" />, where do you live?
+                    A question with <span lang="et">kas</span> puts <span lang="et">kas</span> in
+                    front of a plain statement: <span lang="et">Kas sa tuled homme?</span>
                   </Trans>
                 </p>
                 <p>
@@ -564,8 +569,9 @@ export function SonajargLesson() {
               <ListenRows items={rows(ORDER_NO)} />
               <Aside>
                 <Trans>
-                  In speech you will also hear <span lang="et">Täna ma lähen</span>. When you write,
-                  keep the verb second: <span lang="et">Täna lähen ma</span>.
+                  Without <span lang="et">ei</span>, you will also hear{" "}
+                  <span lang="et">Täna ma lähen</span> in speech. When you write, keep the verb
+                  second: <span lang="et">Täna lähen ma</span>.
                 </Trans>
               </Aside>
               <Prose>
@@ -579,7 +585,7 @@ export function SonajargLesson() {
                 items={content.heard}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All eight, each in the order you heard.</Trans>
+                    <Trans>All eight, each with the verb in its place.</Trans>
                   ) : (
                     <Trans>Play the ones you missed and listen for where the verb is.</Trans>
                   )
@@ -639,8 +645,8 @@ export function SonajargLesson() {
                 title={<Trans>Talk: plans</Trans>}
                 part={
                   <Trans>
-                    You work tomorrow, you’re at home in the evening, you can’t come on Saturday,
-                    and you can on Sunday.
+                    You work tomorrow, you’re at home in the evening, you’re not coming on Saturday,
+                    and you are on Sunday.
                   </Trans>
                 }
                 them={t`Liisa`}

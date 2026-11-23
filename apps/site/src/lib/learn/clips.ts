@@ -1208,6 +1208,133 @@ export const OUTER_PASSAGE = [
   "Isa tuleb ka poest koju.",
 ] as const;
 
+export const PLACE_WORDS = [
+  { id: "peal", kus: "peal", kuhu: "peale", kust: "pealt" },
+  { id: "all", kus: "all", kuhu: "alla", kust: "alt" },
+  { id: "taga", kus: "taga", kuhu: "taha", kust: "tagant" },
+  { id: "ees", kus: "ees", kuhu: "ette", kust: "eest" },
+  { id: "korval", kus: "kõrval", kuhu: "kõrvale", kust: "kõrvalt" },
+  { id: "sees", kus: "sees", kuhu: "sisse", kust: "seest" },
+] as const;
+
+export type PlaceWordId = (typeof PLACE_WORDS)[number]["id"];
+export type PlaceDirection = "kus" | "kuhu" | "kust";
+
+export const placeWordSentence = (
+  word: (typeof PLACE_WORDS)[number],
+  direction: PlaceDirection,
+): string => {
+  if (direction === "kus") return `Kass on kasti ${word.kus}.`;
+  if (direction === "kust")
+    return ["all", "taga", "sees"].includes(word.id)
+      ? `Kass tuleb kasti ${word.kust} välja.`
+      : word.id === "peal"
+        ? `Kass tuleb kasti ${word.kust} maha.`
+        : `Kass tuleb kasti ${word.kust} ära.`;
+  return word.id === "peal" ? `Kass hüppab kasti ${word.kuhu}.` : `Kass läheb kasti ${word.kuhu}.`;
+};
+
+export const PLACE_WORD_SENTENCES = {
+  "e-laua-peal": "Raamat on laua peal.",
+  "e-laua-all": "Kass on laua all.",
+  "e-maja-taga": "Auto on maja taga.",
+  "e-poe-ees": "Ma ootan poe ees.",
+  "e-kooli-korval": "Kohvik on kooli kõrval.",
+  "e-raamatu-sees": "Raha on raamatu sees.",
+  "e-laual": "Raamat on laual.",
+  "e-kastis": "Kass on kastis.",
+  "j-juures": "Ma olen ema juures.",
+  "j-juurde": "Ma lähen ema juurde.",
+  "j-juurest": "Ma tulen ema juurest.",
+} as const;
+
+export const PLACE_WORD_PASSAGE = [
+  "Kus on Miisu?",
+  "Miisu ei ole laua peal.",
+  "Ta ei ole ka laua all.",
+  "Ta tuleb kasti seest välja!",
+  "Ta hüppab põrandalt laua peale.",
+  "Ta hüppab laua pealt maha.",
+  "Ta tuleb minu kõrvale istuma.",
+] as const;
+
+export const PLACE_WORD_TYPED = [
+  { id: "taga", way: "kuhu" },
+  { id: "ees", way: "kust" },
+  { id: "sees", way: "kuhu" },
+  { id: "all", way: "kuhu" },
+  { id: "peal", way: "kust" },
+  { id: "korval", way: "kuhu" },
+  { id: "sees", way: "kust" },
+  { id: "taga", way: "kust" },
+] as const satisfies readonly { id: PlaceWordId; way: PlaceDirection }[];
+
+export const PLACE_WORD_SAY = [
+  { id: "all", said: "Kass on laua all.", also: ["Laua all on kass."] },
+  { id: "taga", said: "Auto on maja taga.", also: ["Maja taga on auto."] },
+  { id: "ees", said: "Ma ootan poe ees.", also: ["Ootan poe ees.", "Mina ootan poe ees."] },
+  { id: "korval", said: "Kohvik on kooli kõrval.", also: ["Kooli kõrval on kohvik."] },
+  {
+    id: "sisse",
+    said: "Kass läheb kasti sisse.",
+    also: ["Kass läheb kasti.", "Kass läheb kastisse."],
+  },
+  {
+    id: "juurde",
+    said: "Ma lähen ema juurde.",
+    also: ["Lähen ema juurde.", "Mina lähen ema juurde."],
+  },
+] as const;
+
+export const PLACE_WORD_FIX = [
+  { id: "laua", wrong: "Raamat on laud peal.", right: "Raamat on laua peal." },
+  { id: "peale", wrong: "Kass hüppab kasti peal.", right: "Kass hüppab kasti peale." },
+  { id: "seest", wrong: "Kass tuleb kasti sees välja.", right: "Kass tuleb kasti seest välja." },
+  { id: "taga", wrong: "Auto on maja taha.", right: "Auto on maja taga." },
+  { id: "poe", wrong: "Ma ootan pood ees.", right: "Ma ootan poe ees." },
+  { id: "juures", wrong: "Ma olen ema juurde.", right: "Ma olen ema juures." },
+] as const;
+
+export const PLACE_WORD_TALK = {
+  turns: [
+    { voice: "fourth", text: "Mari, kus on minu raamat?" },
+    { voice: "third", text: "Kas see on laua peal?" },
+    { voice: "fourth", text: "Ei, laua peal on kohv." },
+    { voice: "third", text: "Vaata laua alla!" },
+    { voice: "fourth", text: "Laua all on Miisu.", say: "[laughs] Laua all on Miisu." },
+    { voice: "third", text: "Ja kasti sees?" },
+    { voice: "fourth", text: "Kasti sees on raha." },
+    { voice: "third", text: "Kelle raha see on?", say: "[curious] Kelle raha see on?" },
+    { voice: "fourth", text: "See on minu raha!" },
+    { voice: "third", text: ["Oota!", "Raamat on minu juures."] },
+    { voice: "fourth", text: ["Aitäh!", "Ma tulen sinu juurde."] },
+    { voice: "third", text: "Ma olen maja ees." },
+  ],
+} as const satisfies Conversation;
+
+export const PLACE_WORD_WORDS = [
+  "Miisu",
+  "kast",
+  "kasti",
+  "kass",
+  "kus",
+  "kuhu",
+  "kust",
+  "välja",
+  "ära",
+  "maha",
+  "põrandalt",
+  "istuma",
+  "juures",
+  "juurde",
+  "juurest",
+  "laud",
+  "laua",
+  "laual",
+  "kastis",
+  ...PLACE_WORDS.flatMap(({ kus, kuhu, kust }) => [kus, kuhu, kust]),
+];
+
 /** Words the lesson glosses on their own, beyond the places' forms. */
 export const OUTER_WORDS = [
   "kus",
@@ -8051,6 +8178,22 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...words(OUTER_SAY.map(({ said }) => said)),
     ...words(OUTER_FIX.map(({ right }) => right)),
     "c-call": OUTER_TALK,
+  },
+  "peal-all-taga": {
+    ...words(PLACE_WORD_WORDS),
+    ...Object.fromEntries(
+      PLACE_WORDS.flatMap((word) =>
+        (["kus", "kuhu", "kust"] as const).map((direction) => [
+          `s-${word.id}-${direction}`,
+          placeWordSentence(word, direction),
+        ]),
+      ),
+    ),
+    ...PLACE_WORD_SENTENCES,
+    ...words(PLACE_WORD_SAY.map(({ said }) => said)),
+    ...words(PLACE_WORD_FIX.map(({ right }) => right)),
+    "p-miisu": { sentences: PLACE_WORD_PASSAGE },
+    "c-book": PLACE_WORD_TALK,
   },
   "sobraga-rahata": SOBRAGA_CLIPS,
   asesonad: PRONOUN_CLIPS,

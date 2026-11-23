@@ -14,7 +14,7 @@ msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, an
 msgstr "<0/> — це сто, а <1/> — «надішли». Подвоєна літера — це довший звук, і з ним виходить інше слово. З приголосними так само: <2/> — курка, а <3/> — «неси» (до однієї людини)."
 
 msgid "<et>Linna</et>, into town, has a double n; <et>lina</et> is linen."
-msgstr "<et>Linna</et>, «до міста», пишеться з подвійним n; <et>lina</et> — це льон."
+msgstr "<et>Linna</et>, «у місто», пишеться з подвійним n; <et>lina</et> — це льон."
 
 msgid "15 minutes"
 msgstr "15 хвилин"
@@ -167,7 +167,7 @@ msgid "into town"
 msgstr "у місто"
 
 msgid "Into town"
-msgstr "До міста"
+msgstr "У місто"
 
 msgid "It was <et>{word}</et>; <et>{other}</et> is another word."
 msgstr "Це було <et>{word}</et>; <et>{other}</et> — інше слово."

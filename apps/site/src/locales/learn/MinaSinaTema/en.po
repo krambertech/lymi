@@ -151,8 +151,8 @@ msgstr "He’s tired."
 msgid "Hear a sentence and pick who it’s about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
 msgstr "Hear a sentence and pick who it’s about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
 
-msgid "Hear a sentence from “Who is it about?” and write it. Some have no pronoun, so write only what you hear."
-msgstr "Hear a sentence from “Who is it about?” and write it. Some have no pronoun, so write only what you hear."
+msgid "Hear a sentence and write it. Some have no pronoun, so write only what you hear."
+msgstr "Hear a sentence and write it. Some have no pronoun, so write only what you hear."
 
 msgid "I"
 msgstr "I"

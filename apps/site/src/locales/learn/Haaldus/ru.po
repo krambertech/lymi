@@ -182,7 +182,7 @@ msgid "Jaan, a man’s name"
 msgstr "Яан, мужское имя"
 
 msgid "Jaan’s mother asks him for something. Three words are new: the name <0/>, <1/>, “and”, and <2/>, “yes”. Listen for the vowels and the long sounds, as in the pairs above."
-msgstr "Мама о чём-то просит Яана. Новых слов три: имя <0/>, а ещё <1/> — «и» и <2/> — «да». Слушай гласные и долгие звуки, как в парах выше."
+msgstr "Мама о чём-то просит Яана. Новых слов три: имя <0/>, <1/> («и») и <2/> («да»). Слушай гласные и долгие звуки, как в парах выше."
 
 msgid "junk"
 msgstr "хлам"

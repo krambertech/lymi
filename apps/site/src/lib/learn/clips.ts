@@ -497,8 +497,22 @@ export const PRONOUN_DRILLED = [
   "s-nad-kodus",
   "s-ta-vasinud",
   "s-te-opetajad",
-  "c-olen-mari",
 ] as const satisfies readonly (keyof typeof PRONOUN_SENTENCES)[];
+
+export const PRONOUN_HEARD = [
+  { said: "Olen kodus.", who: "ma" },
+  { said: "Ma olen valmis.", who: "ma" },
+  { said: "Sa oled kodus.", who: "sa" },
+  { said: "Sa oled õpetaja.", who: "sa" },
+  { said: "Ta on õpetaja.", who: "ta" },
+  { said: "Ta on väsinud.", who: "ta" },
+  { said: "Oleme valmis.", who: "me" },
+  { said: "Me oleme kodus.", who: "me" },
+  { said: "Te olete õpetajad.", who: "te" },
+  { said: "Te olete väsinud.", who: "te" },
+  { said: "Nad on kodus.", who: "nad" },
+  { said: "Nad on väsinud.", who: "nad" },
+] as const;
 
 export const PRONOUN_PASSAGE = [
   "Tere! Mina olen Liis.",
@@ -2863,6 +2877,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...PRONOUN_SENTENCES,
     ...words(PRONOUN_BUILT.map(({ said }) => said)),
     ...words(PRONOUN_DRILLED.map((id) => PRONOUN_SENTENCES[id])),
+    ...words(PRONOUN_HEARD.map(({ said }) => said)),
     "p-liis": { sentences: PRONOUN_PASSAGE, voice: "second" },
   },
   olevik: {

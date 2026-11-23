@@ -20,10 +20,10 @@ msgid "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> 
 msgstr "<0/> означає «бути». Його закінчення залежить від особи: <1/> — «я є», <2/> — «ти є». Натисни закінчення."
 
 msgid "<0>Olen, oled, oleme, olete</0>: the ending says who."
-msgstr "<0>Olen, oled, oleme, olete</0>: закінчення вже каже, хто."
+msgstr "<0>Olen, oled, oleme, olete</0>: закінчення вже показує, хто це."
 
 msgid "<0>On</0> has no ending, so only <1>ta</1> or <2>nad</2> says who."
-msgstr "<0>On</0> не має закінчення, тож хто — каже лише <1>ta</1> чи <2>nad</2>."
+msgstr "<0>On</0> не має закінчення, тож про кого мова, показує лише <1>ta</1> чи <2>nad</2>."
 
 msgid "<0>On</0> is both he or she is and they are. Only the pronoun tells them apart."
 msgstr "<0>On</0> — і «він чи вона є», і «вони є». Розрізнити їх можна лише за займенником."
@@ -151,8 +151,8 @@ msgstr "Він утомлений."
 msgid "Hear a sentence and pick who it’s about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
 msgstr "Послухай речення й вибери, про кого воно. Де займенника немає, слухай кінець дієслова. З <0/> відрізнити <1/> від <2/> можна лише за займенником."
 
-msgid "Hear a sentence from “Who is it about?” and write it. Some have no pronoun, so write only what you hear."
-msgstr "Послухай речення з вправи «Про кого це?» і напиши його. У деяких немає займенника, тож пиши лише те, що чуєш."
+msgid "Hear a sentence and write it. Some have no pronoun, so write only what you hear."
+msgstr "Послухай речення й напиши його. У деяких немає займенника, тож пиши лише те, що чуєш."
 
 msgid "I"
 msgstr "я"

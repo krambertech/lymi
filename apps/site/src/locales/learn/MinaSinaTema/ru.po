@@ -20,10 +20,10 @@ msgid "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> 
 msgstr "<0/> значит «быть». Его окончание меняется по лицам: <1/> — «я есть», <2/> — «ты есть». Нажми на окончание."
 
 msgid "<0>Olen, oled, oleme, olete</0>: the ending says who."
-msgstr "<0>Olen, oled, oleme, olete</0>: окончание уже говорит, кто."
+msgstr "<0>Olen, oled, oleme, olete</0>: окончание уже показывает, кто это."
 
 msgid "<0>On</0> has no ending, so only <1>ta</1> or <2>nad</2> says who."
-msgstr "У <0>on</0> нет окончания, поэтому кто — говорит только <1>ta</1> или <2>nad</2>."
+msgstr "У <0>on</0> нет окончания, поэтому о ком речь, показывает только <1>ta</1> или <2>nad</2>."
 
 msgid "<0>On</0> is both he or she is and they are. Only the pronoun tells them apart."
 msgstr "<0>On</0> — и «он или она есть», и «они есть». Различить их можно только по местоимению."
@@ -151,8 +151,8 @@ msgstr "Он устал."
 msgid "Hear a sentence and pick who it’s about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
 msgstr "Послушай предложение и выбери, о ком оно. Где местоимения нет, слушай конец глагола. С <0/> отличить <1/> от <2/> можно только по местоимению."
 
-msgid "Hear a sentence from “Who is it about?” and write it. Some have no pronoun, so write only what you hear."
-msgstr "Послушай предложение из упражнения «О ком это?» и напиши его. В некоторых нет местоимения, так что пиши только то, что слышишь."
+msgid "Hear a sentence and write it. Some have no pronoun, so write only what you hear."
+msgstr "Послушай предложение и напиши его. В некоторых нет местоимения, так что пиши только то, что слышишь."
 
 msgid "I"
 msgstr "я"

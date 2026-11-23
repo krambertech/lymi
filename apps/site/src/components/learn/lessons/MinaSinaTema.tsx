@@ -9,6 +9,7 @@ import {
   clipId,
   clipUrl,
   PRONOUN_BUILT,
+  PRONOUN_HEARD,
   PRONOUN_PASSAGE,
   PRONOUN_SENTENCES,
   PRONOUNS,
@@ -169,21 +170,6 @@ const WHO: readonly { id: keyof typeof PRONOUN_SENTENCES; who: Short; en: Messag
   { id: "s-te-opetajad", who: "te", en: msg`You’re teachers.` },
   { id: "s-nad-kodus", who: "nad", en: msg`They’re at home.` },
   { id: "s-nad-vasinud", who: "nad", en: msg`They’re tired.` },
-];
-
-const HEARD: readonly { id: keyof typeof PRONOUN_SENTENCES; who: Short }[] = [
-  { id: "s-olen-kodus", who: "ma" },
-  { id: "s-ma-valmis", who: "ma" },
-  { id: "s-oled-tubli", who: "sa" },
-  { id: "s-sa-sober", who: "sa" },
-  { id: "s-ta-opetaja", who: "ta" },
-  { id: "s-ta-vasinud", who: "ta" },
-  { id: "s-oleme-valmis", who: "me" },
-  { id: "s-me-sobrad", who: "me" },
-  { id: "s-olete-tublid", who: "te" },
-  { id: "s-te-opetajad", who: "te" },
-  { id: "s-nad-kodus", who: "nad" },
-  { id: "s-nad-vasinud", who: "nad" },
 ];
 
 const KEEP_OR_DROP: readonly (keyof typeof PRONOUN_SENTENCES)[] = [
@@ -662,12 +648,12 @@ export function MinaSinaTemaLesson() {
 
   const writtenItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
     () =>
-      HEARD.map(({ id, who }) => ({
+      PRONOUN_HEARD.map(({ said, who }) => ({
         kind: "dictation" as const,
-        id: `write-${id.slice(2)}`,
-        src: sentenceSrc(id),
-        answers: [PRONOUN_SENTENCES[id]],
-        pair: [who, id] as const,
+        id: `write-${clipId(said)}`,
+        src: wordSrc(said),
+        answers: [said],
+        pair: [who, said] as const,
       })),
     [],
   );
@@ -1015,8 +1001,7 @@ export function MinaSinaTemaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a sentence from “Who is it about?” and write it. Some have no pronoun, so
-                    write only what you hear.
+                    Hear a sentence and write it. Some have no pronoun, so write only what you hear.
                   </Trans>
                 </p>
               </Prose>

@@ -133,15 +133,7 @@ export const DRILLS: DrillBank = {
     dropped("olen-kodus", "Ma olen kodus.", PRONOUN_SENTENCES["s-olen-kodus"]),
     dropped("oleme-valmis", "Me oleme valmis.", PRONOUN_SENTENCES["s-oleme-valmis"]),
     dropped("oled-tubli", "Sa oled väga tubli.", PRONOUN_SENTENCES["s-oled-tubli"]),
-    dropped("olen-mari", "Ma olen Mari.", PRONOUN_SENTENCES["c-olen-mari"]),
-    {
-      kind: "dictation",
-      id: "hear-olete-tublid",
-      rule: "drop",
-      say: PRONOUN_SENTENCES["s-olete-tublid"],
-      answers: [PRONOUN_SENTENCES["s-olete-tublid"]],
-      explain: DROP,
-    },
+    dropped("olete-tublid", "Te olete väga tublid.", PRONOUN_SENTENCES["s-olete-tublid"]),
     ...PRONOUN_BUILT.map((_, index) => index)
       .slice(6)
       .map(built),

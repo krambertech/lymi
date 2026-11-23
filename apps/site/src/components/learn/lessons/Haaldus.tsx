@@ -1,12 +1,22 @@
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import type { ReactNode } from "react";
 import { useCallback, useMemo } from "react";
-import { clipId, clipUrl } from "../../../lib/learn/clips";
-import { eachPairFirst } from "../../../lib/learn/quiz";
+import {
+  type ApartKind,
+  apartSaid,
+  clipId,
+  clipUrl,
+  HAALDUS_APART,
+  HAALDUS_TALK,
+} from "../../../lib/learn/clips";
+import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Compare, Keys, ListenRows, Panel } from "../Explore";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
+import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, type GapItem, GapRound, Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
 import { Word } from "../Word";
 
 const SLUG = "haaldus";
@@ -29,8 +39,8 @@ const GLOSSARY: Glossary = {
   },
   kõrv: { en: msg`ear` },
   korv: { en: msg`basket` },
-  säng: { en: msg`bed` },
-  sang: { en: msg`handle, as on a bucket` },
+  jälg: { en: msg`a footprint, a track` },
+  jalg: { en: msg`a leg; a foot`, note: msg`One word for both.` },
   tüli: { en: msg`a quarrel` },
   tuli: { en: msg`fire`, note: msg`Also “came”: ta tuli, he or she came.` },
   sada: { en: msg`a hundred` },
@@ -64,13 +74,15 @@ const GLOSSARY: Glossary = {
   aitäh: { en: msg`thank you` },
   jah: { en: msg`yes` },
   eesti: { en: msg`Estonia; Estonian`, show: "Eesti" },
+  jaan: { en: msg`Jaan, a man’s name`, show: "Jaan" },
+  ja: { en: msg`and` },
 };
 
 /** Words that differ in one vowel. */
 const VOWEL_PAIRS = [
   ["kõrv", "korv"],
   ["üks", "uks"],
-  ["säng", "sang"],
+  ["jälg", "jalg"],
   ["tüli", "tuli"],
 ] as const;
 
@@ -90,6 +102,17 @@ const firstDifference = (short: string, long: string) => {
   while (short[i] === long[i]) i++;
   return i;
 };
+
+const APART_KINDS: readonly ApartKind[] = ["same", "vowel", "length"];
+
+type ApartItem = ChoiceItem & { pair: readonly [string, string]; said: string };
+
+export const apartRun = (items: readonly ApartItem[], pinned?: ApartItem): ApartItem[] =>
+  eachPairFirst(items, pinned).map((item) =>
+    item === pinned ? item : { ...item, options: shuffle(item.options) },
+  );
+
+type WrittenItem = SentenceItem & { pair: readonly [string, string] };
 
 /** The first syllable lit, the rest dimmed. */
 function Syllables({ parts }: { parts: readonly string[] }) {
@@ -185,19 +208,140 @@ export function HaaldusLesson() {
     [meaning],
   );
 
+  const written = useCallback(
+    (pairs: readonly (readonly [string, string])[], prefix: string): WrittenItem[] =>
+      pairs.flatMap((pair) =>
+        pair.map((word, j) => {
+          const other = pair[1 - j] as string;
+          return {
+            kind: "dictation" as const,
+            word: true,
+            id: `${prefix}-${clipId(word)}`,
+            src: src(word),
+            answers: [word],
+            pair: [pair[0], word] as const,
+            explain: (
+              <>
+                <Word w={word} /> {meaning(word)} · <Word w={other} /> {meaning(other)}
+              </>
+            ),
+          };
+        }),
+      ),
+    [meaning],
+  );
+  const vowelWriting = useMemo(() => written(VOWEL_PAIRS, "write"), [written]);
+  const lengthWriting = useMemo(() => written(LENGTH_PAIRS, "type"), [written]);
+
+  const apartItems = useMemo<ApartItem[]>(() => {
+    const labels: Record<ApartKind, string> = {
+      same: t`The same word twice`,
+      vowel: t`A different vowel`,
+      length: t`A different length`,
+    };
+    const why: Record<ApartKind, (first: string, second: string) => ReactNode> = {
+      same: (first) => (
+        <Trans>
+          Said twice: <Word w={first} /> {meaning(first)}
+        </Trans>
+      ),
+      vowel: (first, second) => (
+        <Trans>
+          One vowel changes: <Word w={first} /> {meaning(first)} · <Word w={second} />{" "}
+          {meaning(second)}
+        </Trans>
+      ),
+      length: (first, second) => (
+        <Trans>
+          One sound is held longer: <Word w={first} /> {meaning(first)} · <Word w={second} />{" "}
+          {meaning(second)}
+        </Trans>
+      ),
+    };
+    return HAALDUS_APART.map((each, i) => {
+      const said = apartSaid(each);
+      const turn = i % 3;
+      const kinds = [...APART_KINDS.slice(turn), ...APART_KINDS.slice(0, turn)];
+      return {
+        src: src(said),
+        said,
+        answer: each.kind,
+        pair: [each.kind, said] as const,
+        options: kinds.map((kind) => ({
+          id: kind,
+          label: <span lang={i18n.locale}>{labels[kind]}</span>,
+        })),
+        explain: why[each.kind](each.first, each.second),
+      };
+    });
+  }, [t, i18n, meaning]);
+
+  const talkQuestions = useMemo<PassageQuestion[]>(
+    () => [
+      {
+        id: "come",
+        ask: t`Where does his mother ask him to come?`,
+        options: [
+          { id: "school", label: t`To school` },
+          { id: "home", label: t`Back home` },
+          { id: "town", label: t`Into town` },
+        ],
+        answer: "town",
+        line: 2,
+      },
+      {
+        id: "carry",
+        ask: t`What should he carry?`,
+        options: [
+          { id: "basket", label: t`A basket` },
+          { id: "ear", label: t`An ear` },
+          { id: "sheet", label: t`A bedsheet` },
+        ],
+        answer: "basket",
+        line: 3,
+      },
+      {
+        id: "home",
+        kind: "truefalse",
+        ask: t`He should carry it home.`,
+        answer: false,
+        line: 3,
+      },
+      {
+        id: "yes",
+        kind: "truefalse",
+        ask: t`Jaan says he will.`,
+        answer: true,
+        line: 4,
+      },
+      {
+        id: "apple",
+        ask: t`What else should he take?`,
+        options: [
+          { id: "pear", label: t`A pear` },
+          { id: "one", label: t`One apple` },
+          { id: "tea", label: t`Tea` },
+        ],
+        answer: "one",
+        line: 5,
+      },
+    ],
+    [t],
+  );
+
   return (
     <LessonView
       slug={SLUG}
       glossary={GLOSSARY}
       sub={
         <Trans>
-          How Estonian sounds: nine vowels, letters that always sound the same, and length that
-          changes the word.
+          How Estonian sounds: nine vowels, letters that almost always sound the same, and length
+          that changes the word.
         </Trans>
       }
       facts={[
-        <Trans key="m">10 minutes</Trans>,
-        <Trans key="q">2 quizzes</Trans>,
+        <Trans key="m">15 minutes</Trans>,
+        <Trans key="q">5 quizzes and a conversation</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -211,7 +355,7 @@ export function HaaldusLesson() {
         "öö",
         "üks",
         "kõrv",
-        "säng",
+        "jälg",
         "kool",
         "kass",
         "maa",
@@ -219,33 +363,36 @@ export function HaaldusLesson() {
         "tee",
         "vana",
         "raamatukogu",
+        "korv",
+        "kooli",
+        "linna",
       ]}
       recap={[
-        <Trans key="1">Say every letter the way it’s written.</Trans>,
-        <Trans key="2">Stress the first syllable.</Trans>,
+        <Trans key="1">Say every letter, and usually the way it’s written.</Trans>,
+        <Trans key="2">Usually stress the first syllable.</Trans>,
         <Trans key="3">
           The letters <b lang="et">õ ä ö ü</b> are vowels of their own, and English has no sound
           like <b lang="et">õ</b>.
         </Trans>,
-        <Trans key="4">A double letter is longer, and it makes a different word.</Trans>,
+        <Trans key="4">A double letter is longer, and it can make a different word.</Trans>,
       ]}
       sections={[
         {
           id: "spelled",
-          title: t`Read it as it’s written`,
+          title: t`Usually read as written`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    Estonian is spelled the way it sounds. You say every letter, and each one keeps
-                    its sound wherever it stands. Once you know the letters, you can read a new word
-                    aloud.
+                    Estonian is spelled almost the way it sounds. You say every letter, and each one
+                    usually keeps its sound wherever it stands. Once you know the letters, you can
+                    read most new words aloud.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Stress falls on the <b>first syllable</b>. Tap a word to hear it.
+                    Stress usually falls on the <b>first syllable</b>. Tap a word to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -359,6 +506,41 @@ export function HaaldusLesson() {
           ),
         },
         {
+          id: "write-vowels",
+          title: t`Write the word you hear`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Now write the word. Use the keys under the field to type õ, ä, ö and ü. Here a
+                    vowel without its marks makes another word, so it counts as wrong.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="write-vowels"
+                title={<Trans>Write the word</Trans>}
+                items={vowelWriting}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All of them, with every vowel right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Play the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Tap õ, ä and ü in the vowels above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
           id: "length",
           title: t`Short and long`,
           children: (
@@ -367,9 +549,9 @@ export function HaaldusLesson() {
                 <p>
                   <Trans>
                     <Word w="Sada" /> is a hundred; <Word w="saada" /> means send. A double letter
-                    is a longer sound, and it makes a different word. Consonants work the same way:{" "}
-                    <Word w="kana" /> is a hen, and <Word w="kanna" /> tells one person to carry
-                    something.
+                    is a longer sound, and it can make a different word. Consonants work the same
+                    way: <Word w="kana" /> is a hen, and <Word w="kanna" /> tells one person to
+                    carry something.
                   </Trans>
                 </p>
                 <p>
@@ -435,6 +617,109 @@ export function HaaldusLesson() {
                 recall={(item) => ({ label: item.word, src: item.src })}
                 order={eachPairFirst}
                 round={(props) => <GapRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "write-length",
+          title: t`Write one letter or two`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write the whole word this time. In these words, a long sound is written with two
+                    letters: <Word w="kas" />, <Word w="kass" />.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="write-length"
+                title={<Trans>Write the word</Trans>}
+                items={lengthWriting}
+                rounds={7}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All of them, every long sound with two letters.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Play the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Pick each pair above again and hear which word is longer.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "apart",
+          title: t`Vowel or length?`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Vowels and length both change the word. <Word w="Kõrv" /> and <Word w="korv" />{" "}
+                    differ in a vowel; <Word w="lina" /> and <Word w="linna" /> in how long a sound
+                    is held.
+                  </Trans>
+                </p>
+                <p>
+                  <Trans>
+                    Each round plays two words. Pick whether they are the same word, or how they
+                    differ.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="vowel-or-length"
+                title={<Trans>Same word, vowel or length?</Trans>}
+                items={apartItems}
+                rounds={9}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All of them. You told vowels from length every time.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Play the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Go back to the vowels and the pairs above, then try again.</Trans>
+                  )
+                }
+                recall={(item) => ({ label: item.said, src: item.src })}
+                order={apartRun}
+                round={(props) => <ChoiceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listening: Jaan and his mother`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Jaan’s mother asks him for something. Three words are new: the name{" "}
+                    <Word w="Jaan" />, <Word w="ja" />, “and”, and <Word w="jah" />, “yes”. Listen
+                    for the vowels and the long sounds, as in the pairs above.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="jaan-and-mother"
+                title={<Trans>Listen: Jaan and his mother</Trans>}
+                clip="d-ema"
+                turns={HAALDUS_TALK.turns}
+                names={{ third: t`Mother`, main: t`Jaan` }}
+                questions={talkQuestions}
               />
             </>
           ),

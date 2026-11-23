@@ -50,7 +50,7 @@ interface Written extends Asked {
 
 export type SentenceDrill = Written &
   (
-    | { kind: "dictation" }
+    | { kind: "dictation"; word?: boolean }
     | { kind: "translate"; prompt: MessageDescriptor }
     | { kind: "rewrite"; from: string; cue: MessageDescriptor }
     | { kind: "ask"; reply: string }

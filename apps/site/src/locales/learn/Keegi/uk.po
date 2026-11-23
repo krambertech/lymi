@@ -293,7 +293,7 @@ msgid "Nothing is <0>ei … midagi</0>; <1>mida</1> alone asks what."
 msgstr "«Нічого» — це <0>ei … midagi</0>; саме <1>mida</1> питає «що»."
 
 msgid "On its own, nobody is <et>mitte keegi</et>."
-msgstr "Одним словом «ніхто» — це <et>mitte keegi</et>."
+msgstr "Як окрема відповідь «ніхто» — це <et>mitte keegi</et>."
 
 msgid "On the table"
 msgstr "На столі"

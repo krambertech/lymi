@@ -222,6 +222,7 @@ export const DRILLS: DrillBank = {
         "Mina ei räägi kellegagi.",
         "Ei räägi kellegagi.",
         "Ma ei räägi mitte kellegagi.",
+        "Ma kellegagi ei räägi.",
       ],
       say: "Ma ei räägi kellegagi.",
       explain: CASE,

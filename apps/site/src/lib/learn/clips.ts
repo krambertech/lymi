@@ -3579,6 +3579,10 @@ export const TRA_TRANSLATE = [
       "Ma lähen Tartu nädalaks.",
       "Nädalaks lähen Tartusse.",
       "Ma sõidan nädalaks Tartu.",
+      "Sõidan Tartusse nädalaks.",
+      "Lähen Tartu nädalaks.",
+      "Nädalaks sõidan ma Tartusse.",
+      "Sõidan nädalaks Tartu.",
     ],
   },
   {
@@ -3748,13 +3752,17 @@ export const GI_NOT = [
   {
     pos: "Ta läheb kuhugi.",
     neg: "Ta ei lähe kuhugi.",
-    also: ["Ta ei lähe mitte kuhugi.", "Ta ei lähe kuskile."],
+    also: ["Ta ei lähe mitte kuhugi.", "Ta ei lähe kuskile.", "Ta kuhugi ei lähe."],
   },
-  { pos: "Kati ostab midagi.", neg: "Kati ei osta midagi.", also: ["Kati ei osta mitte midagi."] },
+  {
+    pos: "Kati ostab midagi.",
+    neg: "Kati ei osta midagi.",
+    also: ["Kati ei osta mitte midagi.", "Kati midagi ei osta."],
+  },
   {
     pos: "Ma räägin kellegagi.",
     neg: "Ma ei räägi kellegagi.",
-    also: ["Ma ei räägi mitte kellegagi."],
+    also: ["Ma ei räägi mitte kellegagi.", "Ma kellegagi ei räägi."],
   },
 ] as const;
 
@@ -3871,6 +3879,8 @@ export const GI_TRANSLATE = [
       "Tema ei lähe kuskile.",
       "Ta ei lähe mitte kuhugi.",
       "Tema ei lähe mitte kuhugi.",
+      "Ta kuhugi ei lähe.",
+      "Tema kuhugi ei lähe.",
     ],
   },
   { id: "keegi", answers: ["Keegi ei tule.", "Mitte keegi ei tule.", "Kedagi ei tule."] },

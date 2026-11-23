@@ -1,12 +1,12 @@
 import { msg } from "@lingui/core/macro";
 import type { DrillBank } from "../../../lib/learn/drill";
 
-const ON_GENITIVE = msg`<et>-ga</et> and <et>-ta</et> go on the genitive: <et>minu</et>, <et>minuga</et>.`;
-const TO = msg`To someone is the short form with <et>-le</et>: <et>mulle</et>, <et>talle</et>, <et>teile</et>.`;
+const ON_GENITIVE = msg`The endings <et>-ga</et> and <et>-ta</et> go on the genitive: <et>minu</et>, <et>minuga</et>.`;
+const TO = msg`To someone takes <et>-le</et>: <et>mulle</et>, <et>talle</et>, <et>meile</et>.`;
 const HAS = msg`Who has takes <et>-l</et> with <et>on</et>: <et>mul on</et>, <et>neil on</et>.`;
 const FROM = msg`You ask from someone, so <et>küsima</et> takes <et>-lt</et>: <et>mult</et>, <et>meilt</et>.`;
 const PARTITIVE = msg`After <et>ootama</et> or <et>armastama</et>, the person takes the partitive: <et>mind</et>, <et>sind</et>, <et>meid</et>.`;
-const WHOSE = msg`Whose takes the genitive, the form for my and your: <et>minu</et>, <et>tema</et>.`;
+const WHOSE = msg`Whose takes the genitive, the form that means my, your, his or her: <et>minu</et>, <et>sinu</et>, <et>tema</et>.`;
 
 export const DRILLS: DrillBank = {
   rules: {
@@ -20,7 +20,7 @@ export const DRILLS: DrillBank = {
       section: "partitive",
     },
     which: {
-      label: msg`My, has or me: <et>minu</et>, <et>mul</et>, <et>mind</et>`,
+      label: msg`My, I have or me: <et>minu</et>, <et>mul</et>, <et>mind</et>`,
       section: "which-form",
     },
   },
@@ -49,7 +49,7 @@ export const DRILLS: DrillBank = {
       rule: "with",
       answers: ["Kas sa tuled meiega?"],
       say: "Kas sa tuled meiega?",
-      explain: msg`With us: <et>-ga</et> on <et>meie</et>.`,
+      explain: msg`With us: <et>meie</et> plus <et>-ga</et>.`,
     },
     {
       kind: "form",
@@ -71,7 +71,7 @@ export const DRILLS: DrillBank = {
       cue: msg`without you`,
       answers: ["sinuta"],
       say: "Ma ei tule sinuta.",
-      explain: msg`<et>-ta</et> on the genitive <et>sinu</et>: <et>sinuta</et>.`,
+      explain: msg`The genitive <et>sinu</et> plus <et>-ta</et>: <et>sinuta</et>.`,
     },
     {
       kind: "fix",
@@ -80,7 +80,7 @@ export const DRILLS: DrillBank = {
       wrong: "Tule minaga!",
       answers: ["Tule minuga!"],
       say: "Tule minuga!",
-      explain: msg`<et>-ga</et> goes on the genitive <et>minu</et>, not on <et>mina</et>.`,
+      explain: msg`The ending <et>-ga</et> goes on the genitive <et>minu</et>, not on <et>mina</et>.`,
     },
 
     {
@@ -175,7 +175,7 @@ export const DRILLS: DrillBank = {
       kind: "translate",
       id: "part-oota-mind",
       rule: "partitive",
-      prompt: msg`Wait for me! (To a friend.)`,
+      prompt: msg`Wait for me. (To a friend.)`,
       answers: ["Oota mind!"],
       say: "Oota mind!",
       explain: PARTITIVE,

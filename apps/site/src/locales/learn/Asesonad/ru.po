@@ -7,39 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
-msgid "-ga on nende, the genitive of nemad."
-msgstr "nende, родительный от nemad, плюс -ga."
-
-msgid "<0/> is my, the genitive from lesson {genitive}. Put an ending from lesson {withLesson} on it, and you have with me and without me: <1/>, <2/>."
-msgstr "<0/> значит «мой», это родительный падеж из урока {genitive}. Добавь к нему окончание из урока {withLesson}, и получится «со мной» и «без меня»: <1/>, <2/>."
-
-#. placeholder {0}: person.genitive
-msgid "<0>-{ending}</0> on the genitive <1>{0}</1>."
-msgstr "<0>-{ending}</0> добавляется к родительному <1>{0}</1>."
-
-msgid "<0>-ga</0> and <1>-ta</1> go on the genitive: <2>minuga</2>, with me; <3>sinuta</3>, without you; <4>nendega</4>, with them."
-msgstr "<0>-ga</0> и <1>-ta</1> добавляются к родительному падежу: <2>minuga</2> — со мной, <3>sinuta</3> — без тебя, <4>nendega</4> — с ними."
-
-msgid "<0>-ga</0> goes on the genitive <1>minu</1>, not on <2>mina</2>."
-msgstr "<0>-ga</0> добавляется к родительному <1>minu</1>, а не к <2>mina</2>."
-
-msgid "<0>-ga</0> on the genitive."
-msgstr "Родительный падеж плюс <0>-ga</0>."
-
-msgid "<0>-l</0>, as in <1>mul on</1>. Speech uses the short form."
-msgstr "<0>-l</0>, как в <1>mul on</1>. В речи звучит краткая форма."
-
-msgid "<0>-le</0>, to. Speech uses the short form."
-msgstr "<0>-le</0>, кому. В речи звучит краткая форма."
-
-msgid "<0>-lt</0>, from. Speech uses the short form."
-msgstr "<0>-lt</0>, от кого. В речи звучит краткая форма."
-
-msgid "<0>-st</0>, out of, also says who you talk about."
-msgstr "<0>-st</0> — «из», а ещё «о ком» говорят."
-
-msgid "<0>-ta</0> on the genitive."
-msgstr "Родительный падеж плюс <0>-ta</0>."
+msgid "<0/> is my, the genitive from lesson {genitive}. Put <1>-ga</1> or <2>-ta</2> from lesson {withLesson} on it: <3/>, with me; <4/>, without me."
+msgstr "<0/> — это «мой», родительный падеж из урока {genitive}. Добавь к нему <1>-ga</1> или <2>-ta</2> из урока {withLesson}: <3/> — «со мной», <4/> — «без меня»."
 
 msgid "<0>Helista</0>, call, takes the person with <1>-le</1>: <2>mulle</2>, to me."
 msgstr "<0>Helista</0>, позвони, требует <1>-le</1>: <2>mulle</2>, мне."
@@ -53,26 +22,20 @@ msgstr "<0>Minu on kass</0> — ошибка. <1>Minu</1> — это «мой»,
 msgid "<0>Ootama</0> takes the partitive, <1>sind</1>. <2>Sinu</2> is your."
 msgstr "После <0>ootama</0> — партитив, <1>sind</1>. <2>Sinu</2> — это «твой»."
 
-msgid "<et>-ga</et> and <et>-ta</et> go on the genitive: <et>minu</et>, <et>minuga</et>."
-msgstr "<et>-ga</et> и <et>-ta</et> добавляются к родительному: <et>minu</et>, <et>minuga</et>."
-
-msgid "<et>-ga</et> goes on the genitive <et>minu</et>, not on <et>mina</et>."
-msgstr "<et>-ga</et> добавляется к родительному <et>minu</et>, а не к <et>mina</et>."
-
-msgid "<et>-ta</et> on the genitive <et>sinu</et>: <et>sinuta</et>."
-msgstr "<et>-ta</et> к родительному <et>sinu</et>: <et>sinuta</et>."
-
 msgid "<et>Ootama</et> takes the partitive <et>sind</et>. <et>Sinu</et> is your."
 msgstr "После <et>ootama</et> — партитив <et>sind</et>. <et>Sinu</et> — это «твой»."
 
 msgid "18 minutes"
 msgstr "18 минут"
 
-msgid "8 exercises, 3 of them typed, and a phone call"
-msgstr "8 упражнений, в 3 из них нужно писать, и телефонный разговор"
+msgid "7 exercises, 3 of them typed, and a phone call"
+msgstr "7 упражнений, в 3 из них нужно писать, и телефонный разговор"
+
+msgid "A book for you: <0>-le</0> marks who gets it, <1>sulle</1>."
+msgstr "Книга для тебя: <0>-le</0> показывает, кто её получает, — <1>sulle</1>."
 
 msgid "A pronoun takes the case endings a noun does. Most go on its genitive, so <0>minuga</0> is with me. To, has and from have short forms such as <1>mulle</1>, and the partitive is its own word: <2>mind</2>, <3>sind</3>, <4>teda</4>."
-msgstr "Местоимение берёт те же падежные окончания, что и существительное. Большинство добавляется к родительному, так что <0>minuga</0> — «со мной». Для «кому», «у кого» и «от кого» есть короткие формы, например <1>mulle</1>, а партитив — отдельное слово: <2>mind</2>, <3>sind</3>, <4>teda</4>."
+msgstr "У местоимения те же падежные окончания, что и у существительного. Большинство добавляется к родительному, так что <0>minuga</0> — «со мной». Для «кому», «у кого» и «от кого» есть короткие формы, например <1>mulle</1>, а партитив — отдельное слово: <2>mind</2>, <3>sind</3>, <4>teda</4>."
 
 msgid "About someone is <0>-st</0>: <1>sinust</1>."
 msgstr "О ком-то — <0>-st</0>: <1>sinust</1>."
@@ -92,7 +55,7 @@ msgstr "После <0>ootan</0> — партитив: <1>sind</1>."
 msgid "After <et>ootama</et> or <et>armastama</et>, the person takes the partitive: <et>mind</et>, <et>sind</et>, <et>meid</et>."
 msgstr "После <et>ootama</et> или <et>armastama</et> человек стоит в партитиве: <et>mind</et>, <et>sind</et>, <et>meid</et>."
 
-msgid "After a verb such as <0/>, I’m waiting, or <1/>, I love, the person takes the partitive from lesson {partitive}. <2/> is I love you. A pronoun’s partitive doesn’t grow from the genitive, so learn the six as they are."
+msgid "After a verb such as <0/>, I’m waiting, or <1/>, I love, the person takes the partitive from lesson {partitive}. <2/> is I love you. A pronoun’s partitive isn’t built on the genitive, so learn the six as they are."
 msgstr "После глагола вроде <0/>, «жду», или <1/>, «люблю», человек стоит в партитиве из урока {partitive}. <2/> — «я тебя люблю». Партитив местоимения не образуется от родительного, так что запомни эти шесть слов как есть."
 
 msgid "All five found and fixed."
@@ -146,8 +109,8 @@ msgstr "звонит"
 msgid "Come with me."
 msgstr "Пойдём со мной."
 
-msgid "Coming with someone: <0>-ga</0> on <1>minu</1>."
-msgstr "Идти с кем-то: <1>minu</1> плюс <0>-ga</0>."
+msgid "Coming with someone: <0>minu</0> plus <1>-ga</1>."
+msgstr "Идти с кем-то: <0>minu</0> плюс <1>-ga</1>."
 
 msgid "Do you have time?"
 msgstr "У тебя есть время?"
@@ -155,23 +118,20 @@ msgstr "У тебя есть время?"
 msgid "Do you have time? (To a friend.)"
 msgstr "У тебя есть время? (Другу.)"
 
-msgid "Each form answers the same form of <0>kes</0>: <1>kellega?</1>, <2>kellele?</2>, <3>keda?</3>"
-msgstr "Каждая форма отвечает на вопрос с той же формой <0>kes</0>: <1>kellega?</1>, <2>kellele?</2>, <3>keda?</3>"
+msgid "Each form has a question made the same way from <0>kes</0>: <1>kellega?</1>, with whom; <2>kellele?</2>, to whom; <3>keda?</3>, whom."
+msgstr "У каждой формы есть вопрос, образованный так же от <0>kes</0>: <1>kellega?</1> — «с кем?», <2>kellele?</2> — «кому?», <3>keda?</3> — «кого?»."
 
 msgid "Each pronoun’s genitive, with -ga and with -ta"
 msgstr "Родительный падеж каждого местоимения, с -ga и с -ta"
 
 msgid "Each pronoun’s short forms for to, has and from"
-msgstr "Короткие формы каждого местоимения: кому, у кого, от кого"
+msgstr "Краткие формы каждого местоимения: кому, у кого, от кого"
 
-msgid "Each sentence has one wrong pronoun, as learners often write it. Tap the wrong word, then type it right."
-msgstr "В каждом предложении одно местоимение неправильное — так его часто пишут те, кто учит язык. Нажми на ошибочное слово, потом напиши его правильно."
+msgid "Each sentence has one pronoun in the wrong form. Tap the wrong word, then type it right."
+msgstr "В каждом предложении одно местоимение стоит в неправильной форме. Нажми на ошибочное слово, потом напиши его правильно."
 
 msgid "Estonian"
 msgstr "Эстонский язык"
-
-msgid "Every form of a pronoun"
-msgstr "Все формы местоимения"
 
 msgid "Every pronoun works this way: <0/>, without you; <1/>, with him or her. For they, the genitive is <2/>, so with them is <3/>. Tap a line to hear it."
 msgstr "Так работает каждое местоимение: <0/> — без тебя, <1/> — с ним или с ней. Родительный падеж от «они» — <2/>, поэтому «с ними» — <3/>. Нажми на строку, чтобы её услышать."
@@ -185,14 +145,11 @@ msgstr "Пять ошибок"
 msgid "Fix the sentence"
 msgstr "Исправь предложение"
 
-msgid "For to, has and from, speech uses a short form: <0/>, to me; <1/>, as in <2>mul on</2> from lesson {have}; <3/>, from me. These are the endings <4>-le</4>, <5>-l</5> and <6>-lt</6> from lesson {onto}, on a short stem."
-msgstr "Для «кому», «у кого» и «от кого» в речи берут короткую форму: <0/> — «мне»; <1/>, как в <2>mul on</2> из урока {have}; <3/> — «от меня». Это окончания <4>-le</4>, <5>-l</5> и <6>-lt</6> из урока {onto}, только на короткой основе."
+msgid "For to, has and from, the short form is the usual one: <0/>, to me; <1/>, as in <2>mul on</2> from lesson {have}; <3/>, from me. These are the endings <4>-le</4>, <5>-l</5> and <6>-lt</6> from lesson {onto}, on a short stem, and the l doubles before <7>-le</7>: <8>mulle</8>."
+msgstr "Для «кому», «у кого» и «от кого» обычно говорят краткую форму: <0/> — «мне»; <1/>, как в <2>mul on</2> из урока {have}; <3/> — «от меня». Это окончания <4>-le</4>, <5>-l</5> и <6>-lt</6> из урока {onto} на короткой основе, а перед <7>-le</7> l удваивается: <8>mulle</8>."
 
-msgid "For to, has and from, speech uses the short forms: <0>mulle, mul, mult</0>; <1>talle, tal, talt</1>; <2>meile, meil, meilt</2>. The long <3>minule, minul, minult</3> put weight on the person."
-msgstr "Для «кому», «у кого» и «от кого» в речи берут короткие формы: <0>mulle, mul, mult</0>; <1>talle, tal, talt</1>; <2>meile, meil, meilt</2>. Полные <3>minule, minul, minult</3> делают упор на человеке."
-
-msgid "For you, the one it goes to: <0>sulle</0>."
-msgstr "Книга тебе, для тебя: <0>sulle</0>."
+msgid "For to, has and from, the short forms are the usual ones: <0>mulle, mul, mult</0>; <1>talle, tal, talt</1>; <2>meile, meil, meilt</2>. The long <3>minule, minul, minult</3> stress the person."
+msgstr "Для «кому», «у кого» и «от кого» обычно говорят краткие формы: <0>mulle, mul, mult</0>; <1>talle, tal, talt</1>; <2>meile, meil, meilt</2>. Полные <3>minule, minul, minult</3> подчёркивают человека."
 
 #. placeholder {0}: person.id
 msgid "Forms of {0}"
@@ -204,8 +161,8 @@ msgstr "От кого"
 msgid "From armastama, to love."
 msgstr "От armastama — любить."
 
-msgid "From helistama, to call. The person takes -le."
-msgstr "От helistama — звонить. Человек получает -le."
+msgid "From helistama, to call. The person called takes -le."
+msgstr "От helistama — звонить. Тот, кому звонят, стоит с -le."
 
 msgid "From küsima, to ask. The person asked takes -lt."
 msgstr "От küsima — спрашивать. Того, кого спрашивают, ставят с -lt."
@@ -213,8 +170,8 @@ msgstr "От küsima — спрашивать. Того, кого спрашив
 msgid "from me"
 msgstr "от меня"
 
-msgid "From ootama, to wait. The person takes the partitive."
-msgstr "От ootama — ждать. Человек стоит в партитиве."
+msgid "From ootama, to wait. The person waited for takes the partitive."
+msgstr "От ootama — ждать. Тот, кого ждут, стоит в партитиве."
 
 msgid "From someone"
 msgstr "От кого-то"
@@ -224,12 +181,6 @@ msgstr "от кого"
 
 msgid "from whom?"
 msgstr "от кого?"
-
-msgid "Go back to “My, has or me” above, then try again."
-msgstr "Вернись к разделу «Мой, у меня или меня» выше и попробуй ещё раз."
-
-msgid "Has"
-msgstr "Есть"
 
 msgid "Having is <0>-l</0> with <1>on</1>: <2>sul on</2>."
 msgstr "«У кого-то есть» — это <0>-l</0> вместе с <1>on</1>: <2>sul on</2>."
@@ -276,8 +227,8 @@ msgstr "Я тебя люблю."
 msgid "I love you. (To one person.)"
 msgstr "Я тебя люблю. (Одному человеку.)"
 
-msgid "I’ll ask you. To more than one, or polite."
-msgstr "Я спрошу вас. Нескольким людям или вежливо."
+msgid "I’ll ask you, to more than one; polite you."
+msgstr "Я спрошу вас — нескольких людей или вежливо."
 
 msgid "I’m not coming without you."
 msgstr "Я не пойду без тебя."
@@ -321,11 +272,11 @@ msgstr "Яан спрашивает у них."
 msgid "Jaan is asking us."
 msgstr "Яан спрашивает у нас."
 
+msgid "Jaan is asking you, to more than one; polite you."
+msgstr "Яан спрашивает вас — нескольких людей или вежливо."
+
 msgid "Jaan is asking you."
 msgstr "Яан спрашивает у тебя."
-
-msgid "Jaan is asking you. To more than one, or polite."
-msgstr "Яан спрашивает у вас. Нескольким людям или вежливо."
 
 msgid "Jaan is calling him or her."
 msgstr "Яан звонит ему или ей."
@@ -339,11 +290,11 @@ msgstr "Яан звонит им."
 msgid "Jaan is calling us."
 msgstr "Яан звонит нам."
 
+msgid "Jaan is calling you, to more than one; polite you."
+msgstr "Яан звонит вам — нескольким людям или вежливо."
+
 msgid "Jaan is calling you."
 msgstr "Яан звонит тебе."
-
-msgid "Jaan is calling you. To more than one, or polite."
-msgstr "Яан звонит вам. Нескольким людям или вежливо."
 
 msgid "Jaan is coming by bus."
 msgstr "Яан приедет на автобусе."
@@ -388,7 +339,7 @@ msgid "Most of them. Check the form the verb asks for in the ones you missed."
 msgstr "Большинство. В тех, что не получились, проверь, какой формы требует глагол."
 
 msgid "Most of them. Read why each one you missed is wrong."
-msgstr "Большинство. Прочитай, почему каждая пропущенная ошибка — ошибка."
+msgstr "Большинство. Прочитай пояснения к тем, что не получились."
 
 msgid "my"
 msgstr "мой"
@@ -399,13 +350,13 @@ msgstr "«Мой» — это родительный, «у меня есть» �
 msgid "My name: the genitive <0>minu</0>, as in <1>minu raamat</1>."
 msgstr "«Моё имя» — родительный <0>minu</0>, как в <1>minu raamat</1>."
 
-msgid "My, has or me"
+msgid "My, I have or me"
 msgstr "Мой, у меня или меня"
 
-msgid "My, has or me: <et>minu</et>, <et>mul</et>, <et>mind</et>"
+msgid "My, I have or me: <et>minu</et>, <et>mul</et>, <et>mind</et>"
 msgstr "Мой, у меня или меня: <et>minu</et>, <et>mul</et>, <et>mind</et>"
 
-msgid "My, has or me?"
+msgid "My, I have or me?"
 msgstr "Мой, у меня или меня?"
 
 msgid "Nearly. Ask whose, who has or whom before you pick."
@@ -414,17 +365,23 @@ msgstr "Почти. Прежде чем выбрать, спроси: чей, у
 msgid "Nearly. Find the genitive first, then add <0>-ga</0> or <1>-ta</1>."
 msgstr "Почти. Сначала найди родительный падеж, потом добавь <0>-ga</0> или <1>-ta</1>."
 
-msgid "Nearly. Play the ones you missed and listen to the last sound."
-msgstr "Почти. Переслушай те, где была ошибка, и обрати внимание на последний звук."
+msgid "Nearly. Play the ones you missed and listen to how the pronoun ends."
+msgstr "Почти. Послушай ещё раз те, что не получились, и обрати внимание, как заканчивается местоимение."
 
-msgid "Now hear a line and pick what the pronoun says. The ending tells you: <0>-le</0>, <1>-l</1> or <2>-lt</2>."
-msgstr "Теперь послушай строку и выбери, что значит местоимение. Подскажет окончание: <0>-le</0>, <1>-l</1> или <2>-lt</2>."
+msgid "Nende, the genitive of nemad, plus -ga."
+msgstr "Nende, родительный от nemad, плюс -ga."
+
+msgid "Now hear a line and pick what the pronoun means: to someone, someone has, or from someone. The ending tells you: <0>-le</0>, <1>-l</1> or <2>-lt</2>."
+msgstr "Теперь послушай строку и выбери, что значит местоимение: кому-то, у кого-то есть или от кого-то. Подскажет окончание: <0>-le</0>, <1>-l</1> или <2>-lt</2>."
 
 msgid "Now type the form: put <0>-ga</0> or <1>-ta</1> on the pronoun’s genitive."
 msgstr "Теперь напиши форму: добавь <0>-ga</0> или <1>-ta</1> к родительному падежу местоимения."
 
 msgid "Now write each sentence in Estonian. Each one needs a different form, so ask with whom, to whom, who has, from whom, about whom or whom first."
 msgstr "Теперь напиши каждое предложение по-эстонски. Каждому нужна другая форма, так что сначала спроси: с кем, кому, у кого, от кого, о ком или кого?"
+
+msgid "One pronoun in nine forms"
+msgstr "Одно местоимение в девяти формах"
 
 msgid "Peeter"
 msgstr "Пеэтер"
@@ -441,6 +398,9 @@ msgstr "Выбери форму, которая нужна предложени�
 msgid "Pronoun"
 msgstr "Местоимение"
 
+msgid "Read the reason under each one you missed, then try again."
+msgstr "Прочитай пояснения к тем, что не получились, и попробуй ещё раз."
+
 msgid "Read the three sentences above once more, then try again."
 msgstr "Ещё раз прочитай три предложения выше и попробуй снова."
 
@@ -448,10 +408,10 @@ msgid "Short"
 msgstr "Краткая"
 
 msgid "Short forms for to, has and from"
-msgstr "Короткие формы: кому, у кого, от кого"
+msgstr "Краткие формы: кому, у кого, от кого"
 
-msgid "Some verbs bring their ending. You call to someone, so <0/> takes <1>-le</1>; you ask from someone, so <2/> takes <3>-lt</3>. Tap a line to hear it."
-msgstr "Некоторые глаголы приносят своё окончание. Звонят кому-то, поэтому <0/> берёт <1>-le</1>; спрашивают у кого-то, поэтому <2/> берёт <3>-lt</3>. Нажми на строку, чтобы послушать."
+msgid "Some verbs set the person’s ending. Estonian calls to someone, so <0/> takes <1>-le</1>; it asks from someone, so <2/> takes <3>-lt</3>. Tap a line to hear it."
+msgstr "Некоторые глаголы сами задают окончание: звонят кому-то, поэтому <0/> требует <1>-le</1>; спрашивают у кого-то, поэтому <2/> требует <3>-lt</3>. Нажми на строку, чтобы послушать."
 
 msgid "Someone has"
 msgstr "У кого-то есть"
@@ -460,7 +420,7 @@ msgid "Tallinn"
 msgstr "Таллин"
 
 msgid "Tap a form"
-msgstr "Коснись формы"
+msgstr "Нажми на форму"
 
 msgid "Tap a form to hear it."
 msgstr "Нажми на форму, чтобы её услышать."
@@ -471,11 +431,42 @@ msgstr "Ещё раз послушай формы в таблице, а пото
 msgid "Tartu"
 msgstr "Тарту"
 
+#. placeholder {0}: person.genitive
+msgid "The ending <0>-{ending}</0> goes on the genitive <1>{0}</1>."
+msgstr "Окончание <0>-{ending}</0> добавляется к родительному <1>{0}</1>."
+
+msgid "The ending <0>-ga</0> goes on the genitive <1>minu</1>, not on <2>mina</2>."
+msgstr "Окончание <0>-ga</0> добавляется к родительному <1>minu</1>, а не к <2>mina</2>."
+
+msgid "The ending <0>-l</0>, as in <1>mul on</1>. The short form is the usual one."
+msgstr "Окончание <0>-l</0>, как в <1>mul on</1>. Обычно говорят краткую форму."
+
+msgid "The ending <0>-le</0>, to. The short form is the usual one."
+msgstr "Окончание <0>-le</0> — «кому». Обычно говорят краткую форму."
+
+msgid "The ending <0>-lt</0>, from. The short form is the usual one."
+msgstr "Окончание <0>-lt</0> — «от кого». Обычно говорят краткую форму."
+
+msgid "The ending <0>-st</0>, out of, also says who you talk about."
+msgstr "Окончание <0>-st</0> значит «из», а ещё показывает, о ком речь."
+
 msgid "The ending <0>-st</0>, out of, from lesson {into}, also says who you talk about: <1/> is I’m talking about you. Pick a pronoun, then tap a form to hear it."
 msgstr "Окончание <0>-st</0>, «из», из урока {into} также говорит, о ком речь: <1/> — «я говорю о тебе». Выбери местоимение и нажми на форму, чтобы послушать."
 
+msgid "The ending <et>-ga</et> goes on the genitive <et>minu</et>, not on <et>mina</et>."
+msgstr "Окончание <et>-ga</et> добавляется к родительному <et>minu</et>, а не к <et>mina</et>."
+
+msgid "The endings <0>-ga</0> and <1>-ta</1> go on the genitive: <2>minuga</2>, with me; <3>sinuta</3>, without you; <4>nendega</4>, with them."
+msgstr "Окончания <0>-ga</0> и <1>-ta</1> добавляются к родительному: <2>minuga</2> — «со мной», <3>sinuta</3> — «без тебя», <4>nendega</4> — «с ними»."
+
+msgid "The endings <et>-ga</et> and <et>-ta</et> go on the genitive: <et>minu</et>, <et>minuga</et>."
+msgstr "Окончания <et>-ga</et> и <et>-ta</et> добавляются к родительному: <et>minu</et>, <et>minuga</et>."
+
 msgid "The form a dictionary lists first."
 msgstr "Форма, которая в словаре стоит первой."
+
+msgid "The genitive <et>sinu</et> plus <et>-ta</et>: <et>sinuta</et>."
+msgstr "Родительный <et>sinu</et> плюс <et>-ta</et>: <et>sinuta</et>."
 
 msgid "The genitive of <et>nemad</et> is <et>nende</et>, so with them is <et>nendega</et>."
 msgstr "Родительный от <et>nemad</et> — <et>nende</et>, так что «с ними» — <et>nendega</et>."
@@ -486,17 +477,23 @@ msgstr "Родительный от mina. Коротко: mu."
 msgid "The genitive of nemad."
 msgstr "Родительный от nemad."
 
-msgid "The genitive. -ga and -ta go on it."
-msgstr "Родительный падеж. К нему добавляются -ga и -ta."
+msgid "The genitive plus <0>-ga</0>."
+msgstr "Родительный плюс <0>-ga</0>."
 
-msgid "The long form of mulle. It puts weight on me."
-msgstr "Полная форма mulle. Подчёркивает, что именно мне."
+msgid "The genitive plus <0>-ta</0>."
+msgstr "Родительный плюс <0>-ta</0>."
 
-msgid "The long form of mult. It puts weight on me."
-msgstr "Полная форма mult. Подчёркивает, что именно от меня."
+msgid "The genitive. The endings -ga and -ta go on it."
+msgstr "Родительный падеж. К нему добавляются окончания -ga и -ta."
 
-msgid "The long forms <0/>, <1/> and <2/> mean the same and put weight on the person. For we and you, speech has only the short <3>meile</3> and <4>teile</4>."
-msgstr "Полные формы <0/>, <1/> и <2/> значат то же самое, но делают упор на человеке. Для «мы» и «вы» в речи есть только короткие <3>meile</3> и <4>teile</4>."
+msgid "The long form of mulle. It stresses me: to me, not to someone else."
+msgstr "Полная форма mulle. Подчёркивает: именно мне, а не кому-то другому."
+
+msgid "The long form of mult. It stresses me: from me, not from someone else."
+msgstr "Полная форма mult. Подчёркивает: именно от меня, а не от кого-то другого."
+
+msgid "The long forms <0/>, <1/> and <2/> mean the same and stress the person: to me, not to you. <3>Meie</3> and <4>teie</4> have one form for each, written too: <5>meile</5>, <6>teile</6>."
+msgstr "Полные формы <0/>, <1/> и <2/> значат то же самое, но подчёркивают человека: именно мне, а не тебе. У <3>meie</3> и <4>teie</4> для каждого окончания одна форма, и на письме тоже: <5>meile</5>, <6>teile</6>."
 
 msgid "The partitive is a word of its own: <0>mind, sind, teda, meid, teid, neid</0>. <1>Ma ootan sind</1> is I’m waiting for you."
 msgstr "Партитив — отдельное слово: <0>mind, sind, teda, meid, teid, neid</0>. <1>Ma ootan sind</1> — я жду тебя."
@@ -525,8 +522,8 @@ msgstr "Партитив от teie."
 msgid "The partitive of tema."
 msgstr "Партитив от tema."
 
-msgid "The partitive, after a verb such as <0>ootama</0>: a short word of its own."
-msgstr "Партитив, например после <0>ootama</0>. Это отдельное короткое слово."
+msgid "The partitive, used after a verb such as <0>ootama</0>. It isn’t built on the genitive."
+msgstr "Партитив, после глагола вроде <0>ootama</0>. Он не образуется от родительного."
 
 msgid "The partitive: me, you, him or her"
 msgstr "Партитив: меня, тебя, его или её"
@@ -573,7 +570,7 @@ msgstr "Это моя кошка."
 msgid "This is their car."
 msgstr "Это их машина."
 
-msgid "Three forms of one pronoun look alike and say different things. <0/> is this is my cat. <1/> is I have a cat. <2/> is Jaan is waiting for me."
+msgid "Three forms of one pronoun look alike and say different things. <0/> means this is my cat. <1/> means I have a cat. <2/> means Jaan is waiting for me."
 msgstr "Три формы одного местоимения похожи, но говорят разное. <0/> — «это моя кошка». <1/> — «у меня есть кошка». <2/> — «Яан ждёт меня»."
 
 msgid "To"
@@ -588,8 +585,8 @@ msgstr "мне, для меня"
 msgid "To someone"
 msgstr "Кому-то"
 
-msgid "To someone is the short form with <et>-le</et>: <et>mulle</et>, <et>talle</et>, <et>teile</et>."
-msgstr "«Кому-то» — короткая форма с <et>-le</et>: <et>mulle</et>, <et>talle</et>, <et>teile</et>."
+msgid "To someone takes <et>-le</et>: <et>mulle</et>, <et>talle</et>, <et>meile</et>."
+msgstr "«Кому-то» — с <et>-le</et>: <et>mulle</et>, <et>talle</et>, <et>meile</et>."
 
 msgid "To Tartu"
 msgstr "В Тарту"
@@ -612,11 +609,11 @@ msgstr "Кому, у кого или от кого?"
 msgid "us"
 msgstr "нас"
 
-msgid "Wait for me! (To a friend.)"
-msgstr "Подожди меня! (Другу.)"
-
 msgid "Wait for me."
 msgstr "Подожди меня."
+
+msgid "Wait for me. (To a friend.)"
+msgstr "Подожди меня. (Другу.)"
 
 msgid "we"
 msgstr "мы"
@@ -630,11 +627,11 @@ msgstr "У нас есть время."
 msgid "We’re talking about you. (To a friend.)"
 msgstr "Мы говорим о тебе. (Другу.)"
 
-msgid "We’re waiting for you. To more than one, or polite."
-msgstr "Мы ждём вас. Нескольким людям или вежливо."
+msgid "We’re waiting for you, to more than one; polite you."
+msgstr "Мы ждём вас — нескольких людей или вежливо."
 
 msgid "What has Jaan got for Peeter? Write it as Jaan says it."
-msgstr "Что Яан приготовил для Пеэтера? Напиши так, как говорит Яан."
+msgstr "Что у Яана есть для Пеэтера? Напиши так, как говорит Яан."
 
 msgid "What is the book about?"
 msgstr "О чём книга?"
@@ -653,6 +650,9 @@ msgstr "кто"
 
 msgid "who has"
 msgstr "у кого"
+
+msgid "Who has"
+msgstr "У кого"
 
 msgid "Who has takes <et>-l</et> with <et>on</et>: <et>mul on</et>, <et>neil on</et>."
 msgstr "«У кого есть» — <et>-l</et> вместе с <et>on</et>: <et>mul on</et>, <et>neil on</et>."
@@ -693,11 +693,11 @@ msgstr "чей"
 msgid "Whose"
 msgstr "Чей"
 
-msgid "Whose takes the genitive, the form for my and your: <et>minu</et>, <et>tema</et>."
-msgstr "«Чей» — это родительный, форма для «мой» и «твой»: <et>minu</et>, <et>tema</et>."
+msgid "Whose takes the genitive, the form that means my, your, his or her: <et>minu</et>, <et>sinu</et>, <et>tema</et>."
+msgstr "«Чей» — это родительный, форма, которая значит «мой», «твой», «его» или «её»: <et>minu</et>, <et>sinu</et>, <et>tema</et>."
 
-msgid "Whose: the genitive, the same form as my or your."
-msgstr "Чей: родительный, та же форма, что «мой» или «твой»."
+msgid "Whose: the genitive, the form that means my, your, his or her."
+msgstr "Чей: родительный, форма, которая значит «мой», «твой», «его» или «её»."
 
 msgctxt "with or without"
 msgid "With"
@@ -715,14 +715,14 @@ msgstr "со мной"
 msgid "With me, without you"
 msgstr "Со мной, без тебя"
 
-msgid "With me: <0>-ga</0> on the genitive <1>minu</1>."
-msgstr "Со мной: <0>-ga</0> к родительному <1>minu</1>."
+msgid "With me: the genitive <0>minu</0> plus <1>-ga</1>."
+msgstr "Со мной: родительный <0>minu</0> плюс <1>-ga</1>."
 
-msgid "With on: minul on aega, I have time. The long form of mul; it puts weight on me."
+msgid "With on: minul on aega, I have time. The long form of mul; it stresses me."
 msgstr "С on: minul on aega — у меня есть время. Полная форма mul, подчёркивает, что именно у меня."
 
 msgid "With on: mul on aega, I have time. The short form of minul."
-msgstr "С on: mul on aega — у меня есть время. Короткая форма minul."
+msgstr "С on: mul on aega — у меня есть время. Краткая форма minul."
 
 msgid "With or without"
 msgstr "С или без"
@@ -733,11 +733,11 @@ msgstr "с ними"
 msgid "with us"
 msgstr "с нами"
 
-msgid "With us: <0>-ga</0> on <1>meie</1>."
-msgstr "С нами: <1>meie</1> плюс <0>-ga</0>."
+msgid "With us: <0>meie</0> plus <1>-ga</1>."
+msgstr "С нами: <0>meie</0> плюс <1>-ga</1>."
 
-msgid "With us: <et>-ga</et> on <et>meie</et>."
-msgstr "С нами: <et>-ga</et> к <et>meie</et>."
+msgid "With us: <et>meie</et> plus <et>-ga</et>."
+msgstr "С нами: <et>meie</et> плюс <et>-ga</et>."
 
 msgid "with whom"
 msgstr "с кем"
@@ -748,8 +748,8 @@ msgstr "с кем?"
 msgid "with you"
 msgstr "с тобой"
 
-msgid "with you, to more than one; polite"
-msgstr "с вами"
+msgid "with you, to more than one; polite you"
+msgstr "с вами — несколькими людьми или вежливо"
 
 msgctxt "with or without"
 msgid "Without"
@@ -773,8 +773,8 @@ msgstr "без кого"
 msgid "without you"
 msgstr "без тебя"
 
-msgid "without you, to more than one; polite"
-msgstr "без вас"
+msgid "without you, to more than one; polite you"
+msgstr "без вас — нескольких людей или вежливо"
 
 msgid "Write it in Estonian"
 msgstr "Напиши по-эстонски"
@@ -795,11 +795,11 @@ msgstr "Спрашивают у кого-то: <0>-lt</0>, <1>temalt</1> или 
 msgid "You call to someone: <0>mulle</0>, the short form with <1>-le</1>."
 msgstr "Звонят кому-то: <0>mulle</0>, короткая форма с <1>-le</1>."
 
+msgid "You have time, to more than one; polite you."
+msgstr "У вас есть время — несколько людей или вежливо."
+
 msgid "You have time."
 msgstr "У тебя есть время."
-
-msgid "You have time. To more than one, or polite."
-msgstr "У вас есть время. Нескольким людям или вежливо."
 
 msgid "you, one person"
 msgstr "тебя"

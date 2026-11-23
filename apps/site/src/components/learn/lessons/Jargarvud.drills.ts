@@ -4,8 +4,8 @@ import type { DrillBank } from "../../../lib/learn/drill";
 const GENITIVE_S = msg`From four on, an ordinal is the number’s genitive with <et>-s</et>: <et>kuue</et>, <et>kuues</et>.`;
 const THIRD = msg`Third is <et>kolmas</et>, with an a, though the genitive of three is <et>kolme</et>.`;
 const TENS = msg`In a number of two words, only the last is an ordinal; the tens stay in the genitive: <et>kahekümne esimene</et>.`;
-const ON = msg`On a day or a floor, both words take <et>-l</et>: <et>viiendal mail</et>, <et>kolmandal korrusel</et>.`;
-const DATE = msg`A date after <et>on</et> is an ordinal and the month, as they are: <et>viies mai</et>.`;
+const ON = msg`On a day or a floor, both words end in <et>-l</et>: <et>viiendal mail</et>, <et>kolmandal korrusel</et>.`;
+const DATE = msg`After <et>on</et>, is, the date has no ending: <et>viies mai</et>.`;
 
 export const DRILLS: DrillBank = {
   rules: {
@@ -190,7 +190,7 @@ export const DRILLS: DrillBank = {
         "Mitmendal korrusel teie elate?",
       ],
       say: "Mitmendal korrusel sa elad?",
-      explain: msg`On which floor is <et>mitmendal korrusel</et>: <et>mitmes</et> with <et>-l</et>.`,
+      explain: msg`<et>Mitmendal korrusel</et> means on which floor: <et>mitmes</et> with <et>-s</et> turned into <et>-ndal</et>.`,
     },
 
     {

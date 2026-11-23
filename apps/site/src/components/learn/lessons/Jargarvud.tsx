@@ -127,7 +127,10 @@ const GLOSSARY: Glossary = {
   kahekümne: { en: msg`of twenty`, note: msg`The genitive of kakskümmend.` },
   mitu: { en: msg`how many?` },
   mitmes: { en: msg`which one in order?` },
-  mitmendal: { en: msg`on which one?`, note: msg`Mitmes with -l, as in kolmandal.` },
+  mitmendal: {
+    en: msg`on which one?`,
+    note: msg`Mitmes with its -s turned into -ndal, as in kolmandal.`,
+  },
   esmaspäev: { en: msg`Monday`, note: msg`The first day of the week.` },
   kuupäev: { en: msg`date`, note: msg`Kuu, month, and päev, day.` },
   "mis kuupäev täna on?": {
@@ -371,7 +374,7 @@ const HEARD_MEANS: Record<(typeof JARGARVUD_HEARD)[number]["said"], MessageDescr
 
 const DATE_MEANS: Record<(typeof JARGARVUD_DATES)[number], MessageDescriptor> = {
   "Mis kuupäev täna on?": msg`What’s the date today?`,
-  "Mitmes täna on?": msg`The same question, word for word “which one is it today?”`,
+  "Mitmes täna on?": msg`The same question. Word for word: “which one is it today?”`,
   "Täna on kahekümne esimene november.": msg`Today is 21 November.`,
   "Homme on kahekümne teine november.": msg`Tomorrow is 22 November.`,
   "Täna on esimene jaanuar.": msg`Today is 1 January.`,
@@ -472,7 +475,8 @@ function useContent() {
               </Trans>
             ) : genitive === number ? (
               <Trans>
-                <b lang="et">{number}</b> is its own genitive, so only <End>s</End> is new.
+                The genitive of <b lang="et">{number}</b> is the same word, so only <End>s</End> is
+                new.
               </Trans>
             ) : (
               <Trans>
@@ -529,16 +533,14 @@ function useContent() {
         label: `${n}.`,
         tip:
           n > 20 ? (
-            <Trans>
-              Only the last word changes; <b lang="et">kahekümne</b> stays as it is.
-            </Trans>
+            <Trans>Only the last word changes; the tens stay as they are.</Trans>
           ) : special ? (
             <Trans>
-              <End>ne</End> turns into <End>sel</End>.
+              The final <End>ne</End> turns into <End>sel</End>.
             </Trans>
           ) : (
             <Trans>
-              <End>s</End> turns into <End>ndal</End>.
+              The final <End>s</End> turns into <End>ndal</End>.
             </Trans>
           ),
         cells: [
@@ -630,18 +632,18 @@ function useContent() {
     const whichWhy = {
       count: (
         <Trans>
-          No full stop: a plain number that says how many, as after <b lang="et">mitu?</b>
+          No full stop: a plain number that answers <b lang="et">mitu?</b>, how many.
         </Trans>
       ),
       which: (
         <Trans>
-          The full stop makes it an ordinal, and after <b lang="et">on</b> the date keeps its plain
-          form.
+          The full stop makes it an ordinal, and after <b lang="et">on</b>, is, the date has no
+          ending.
         </Trans>
       ),
       on: (
         <Trans>
-          On a day or a floor: the ordinal takes <End>l</End>, as the word after it does.
+          On a day or a floor: the ordinal ends in <End>l</End>, as the word after it does.
         </Trans>
       ),
     };
@@ -669,7 +671,7 @@ function useContent() {
     const translateWhy: Record<(typeof JARGARVUD_TRANSLATE)[number]["id"], ReactNode> = {
       "teine-mai": (
         <Trans>
-          A date after <b lang="et">on</b>: the ordinal and the month as they are.
+          After <b lang="et">on</b>, is, the date has no ending.
         </Trans>
       ),
       kumnes: (
@@ -680,17 +682,18 @@ function useContent() {
       ),
       "kolmandal-juunil": (
         <Trans>
-          On a date, both words take <End>l</End>: <b lang="et">kolmandal juunil</b>.
+          On a date, both words end in <End>l</End>: <b lang="et">kolmandal juunil</b>.
         </Trans>
       ),
       "neljandal-korrusel": (
         <Trans>
-          On a floor, both words take <End>l</End>: <b lang="et">neljandal korrusel</b>.
+          On a floor, both words end in <End>l</End>: <b lang="et">neljandal korrusel</b>.
         </Trans>
       ),
       "esimesel-martsil": (
         <Trans>
-          <b lang="et">Esimene</b> swaps <End>ne</End> for <End>sel</End>: <b lang="et">esimesel</b>
+          <b lang="et">Esimene</b> swaps <End>ne</End> for <End>sel</End>, and{" "}
+          <b lang="et">märts</b> becomes <b lang="et">märtsil</b>: <b lang="et">esimesel märtsil</b>
           .
         </Trans>
       ),
@@ -876,12 +879,13 @@ export function JargarvudLesson() {
       sub={
         <Trans>
           From four on, an ordinal is the number’s genitive with <End>s</End>. A date is an ordinal
-          and a month, and to say on which day, both take <End>l</End>.
+          and a month, and to say on which day, both words end in <End>l</End>:{" "}
+          <span lang="et">viiendal mail</span>.
         </Trans>
       }
       facts={[
         <Trans key="m">20 minutes</Trans>,
-        <Trans key="q">11 exercises, 4 of them typed, and a conversation</Trans>,
+        <Trans key="q">10 exercises, 4 of them typed, and a conversation</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -902,12 +906,12 @@ export function JargarvudLesson() {
       ]}
       recap={[
         <Trans key="1">
-          <b lang="et">Esimene</b>, <b lang="et">teine</b> and <b lang="et">kolmas</b> are words of
-          their own. From four on, an ordinal is the number’s genitive with <End>s</End>:{" "}
-          <b lang="et">neli, nelja, neljas</b>.
+          <b lang="et">Esimene</b> and <b lang="et">teine</b> are words of their own, and{" "}
+          <b lang="et">kolmas</b> is <b lang="et">kolm</b> with <End>as</End>. From four on, an
+          ordinal is the number’s genitive with <End>s</End>: <b lang="et">neli, nelja, neljas</b>.
         </Trans>,
         <Trans key="2">
-          In a number of two words only the last is an ordinal, and the tens go into the genitive:{" "}
+          In a number of two words only the last is an ordinal, and the tens stay in the genitive:{" "}
           <b lang="et">kahekümne esimene</b>.
         </Trans>,
         <Trans key="3">
@@ -916,9 +920,10 @@ export function JargarvudLesson() {
           <b lang="et">kahekümne esimene november</b>.
         </Trans>,
         <Trans key="4">
-          To say on which day or on which floor, both words take <End>l</End>, and the ordinal’s{" "}
-          <End>s</End> turns into <End>ndal</End>: <b lang="et">viiendal mail</b>,{" "}
-          <b lang="et">kolmandal korrusel</b>.
+          To say on which day or on which floor, both words end in <End>l</End>. The ordinal’s{" "}
+          <End>s</End> turns into <End>ndal</End>, and the month or <b lang="et">korrus</b> adds{" "}
+          <End>l</End>, <End>il</End> or <End>el</End>: <b lang="et">viiendal mail</b>,{" "}
+          <b lang="et">esimesel märtsil</b>, <b lang="et">kolmandal korrusel</b>.
         </Trans>,
         <Trans key="5">
           <b lang="et">Mitu?</b> asks how many; <b lang="et">mitmes?</b> asks which one in order.
@@ -933,9 +938,9 @@ export function JargarvudLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    In lesson {days} you met <Word w="esimene" /> and <Word w="teine" />:{" "}
-                    <Word w="esmaspäev" />, the first day of the week, sounds like{" "}
-                    <b lang="et">esimene</b>. Words like these are ordinals. They say which one in
+                    In lesson {days}, <Word w="esmaspäev" />, Monday, sounds like{" "}
+                    <Word w="esimene" />, first, and <b lang="et">teisipäev</b>, Tuesday, like{" "}
+                    <Word w="teine" />, second. Words like these are ordinals. They say which one in
                     order, where the numbers from lesson {numbers} say how many.
                   </Trans>
                 </p>
@@ -984,9 +989,9 @@ export function JargarvudLesson() {
                 </p>
                 <p>
                   <Trans>
-                    <Word w="Kolm" /> is the exception. Its genitive is <Word w="kolme" />, but
-                    third is <Word w="kolmas" />, with an a. Pick a number and tap its forms to see
-                    what changes.
+                    Three is built differently. <Word w="Kolm" /> has the genitive{" "}
+                    <Word w="kolme" />, but third is <Word w="kolmas" />, with an a. Pick a number
+                    and tap its forms to see what changes.
                   </Trans>
                 </p>
               </Prose>
@@ -1055,8 +1060,8 @@ export function JargarvudLesson() {
                 <p>
                   <Trans>
                     <b lang="et">Neljas</b>, <b lang="et">neljateistkümnes</b> and{" "}
-                    <b lang="et">kahekümne neljas</b> all have <b lang="et">nelja</b> in them.
-                    Listen for <End>teistkümnes</End>, <b lang="et">kahekümne</b> or{" "}
+                    <b lang="et">kahekümne neljas</b> all start from <b lang="et">nelja</b>. Listen
+                    for <End>teistkümnes</End>, <b lang="et">kahekümne</b> or{" "}
                     <b lang="et">kolmekümne</b>, then pick the day.
                   </Trans>
                 </p>
@@ -1128,8 +1133,8 @@ export function JargarvudLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    To ask the date, say <Word w="Mis kuupäev täna on?" /> <Word w="Kuupäev" /> is a
-                    date. The answer is an ordinal and a month:{" "}
+                    To ask the date, say <Word w="Mis kuupäev täna on?" /> <Word w="Kuupäev" />{" "}
+                    means date. The answer is an ordinal and a month:{" "}
                     <Nowrap>
                       <Word w="Täna on kahekümne esimene november" />.
                     </Nowrap>
@@ -1184,13 +1189,13 @@ export function JargarvudLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    To say on which day, put <End>l</End> on both words:{" "}
+                    To say on which day, both words end in <End>l</End>:{" "}
                     <Nowrap>
                       <Word w="viiendal mail" />,
                     </Nowrap>{" "}
-                    on the fifth of May. <b lang="et">Mail</b> is <b lang="et">mai</b> with{" "}
-                    <End>l</End>. In the ordinal, the final <End>s</End> turns into <End>ndal</End>:{" "}
-                    <b lang="et">viies</b>, <Word w="viiendal" />; <b lang="et">kolmas</b>,{" "}
+                    on the fifth of May. In the ordinal, the final <End>s</End> turns into{" "}
+                    <End>ndal</End>: <b lang="et">viies</b>, <Word w="viiendal" />;{" "}
+                    <b lang="et">kolmas</b>,{" "}
                     <Nowrap>
                       <Word w="kolmandal" />.
                     </Nowrap>{" "}
@@ -1200,7 +1205,8 @@ export function JargarvudLesson() {
                 </p>
                 <p>
                   <Trans>
-                    The same <End>l</End> says on which floor:{" "}
+                    The same <End>l</End> says on which floor, and <b lang="et">korrus</b> becomes{" "}
+                    <b lang="et">korrusel</b>:{" "}
                     <Nowrap>
                       <Word w="Ma elan kolmandal korrusel" />.
                     </Nowrap>{" "}
@@ -1209,9 +1215,18 @@ export function JargarvudLesson() {
                   </Trans>
                 </p>
               </Prose>
+              <Aside>
+                <Trans>
+                  <b lang="et">Mai</b>, <b lang="et">juuni</b> and <b lang="et">juuli</b> end in a
+                  vowel and add <End>l</End>: <b lang="et">mail</b>. The other months add{" "}
+                  <End>il</End>: <b lang="et">märtsil</b>, <b lang="et">aprillil</b>. September to
+                  December drop their e first: <b lang="et">septembril</b>,{" "}
+                  <b lang="et">novembril</b>.
+                </Trans>
+              </Aside>
               <Panel>
                 <Paradigm
-                  label={t`Ordinals, and with -l`}
+                  label={t`Ordinals without and with -l`}
                   columns={[t`Which one`, t`On which one`]}
                   rows={content.onRows}
                   highlight={{ column: 1 }}
@@ -1250,14 +1265,15 @@ export function JargarvudLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    A number in a sentence can be said three ways. Without a full stop it counts:{" "}
-                    <b lang="et">Mul on kolm kassi</b>, I have three cats. With a full stop it is an
+                    A number in a sentence can be said three ways. Without a full stop, a number
+                    says how many: <b lang="et">Mul on 3 kassi</b> is said{" "}
+                    <b lang="et">kolm kassi</b>, I have three cats. With a full stop it is an
                     ordinal: <b lang="et">Täna on 5. mai</b> is said <b lang="et">viies mai</b>.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    To say on which day or floor, the month or <b lang="et">korrus</b> takes{" "}
+                    To say on which day or floor, the month or <b lang="et">korrus</b> ends in{" "}
                     <End>l</End>, and so does the ordinal: <b lang="et">5. mail</b> is said{" "}
                     <b lang="et">viiendal mail</b>.
                   </Trans>
@@ -1302,8 +1318,8 @@ export function JargarvudLesson() {
                 <p>
                   <Trans>
                     Each sentence has a date in it, in its plain form or with <End>l</End>. Type the
-                    date you hear. Digits count, 5.5 for the fifth of May, and so do words, as in{" "}
-                    <b lang="et">5. mai</b> or 5 May.
+                    date you hear. You can type digits, 5.5 for the fifth of May, or the month in
+                    words, as in <b lang="et">5. mai</b> or 5 May.
                   </Trans>
                 </p>
               </Prose>
@@ -1327,8 +1343,8 @@ export function JargarvudLesson() {
               {when && (
                 <Aside>
                   <Trans>
-                    Saying in a month, or from one date to another, takes other endings, which
-                    lesson {when} teaches.
+                    In May, or from one date to another, takes other endings; lesson {when} teaches
+                    them.
                   </Trans>
                 </Aside>
               )}
@@ -1356,10 +1372,10 @@ export function JargarvudLesson() {
                 rounds={content.sentences.length}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All six sentences, every ordinal in its form.</Trans>
+                    <Trans>All six sentences, every ordinal in the right form.</Trans>
                   ) : share >= 0.6 ? (
                     <Trans>
-                      Most of them. Check where on a day needs <End>l</End>.
+                      Most of them. Check which sentences say on which day: those need <End>l</End>.
                     </Trans>
                   ) : (
                     <Trans>Read “On the fifth of May” above once more, then try again.</Trans>
@@ -1380,8 +1396,8 @@ export function JargarvudLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each sentence has one wrong word in its date or number, as learners often write
-                    it. Tap the wrong word, then type it right.
+                    Each sentence has one wrong word in its date or number. Tap it, then type it
+                    right.
                   </Trans>
                 </p>
               </Prose>

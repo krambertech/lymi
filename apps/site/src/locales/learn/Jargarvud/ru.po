@@ -10,29 +10,26 @@ msgstr ""
 msgid "<0/> asks which one in order, and its answer is an ordinal. <1/>, from lesson {partitive}, asks how many, and its answer is a plain number. <2>Mitmes</2> is built like <3>neljas</3>: <4>mitu, mitme, mitmes</4>."
 msgstr "<0/> спрашивает «который по счёту?», и ответ на него — порядковое числительное. <1/> из урока {partitive} спрашивает «сколько?», и ответ — обычное число. <2>Mitmes</2> образовано так же, как <3>neljas</3>: <4>mitu, mitme, mitmes</4>."
 
-msgid "<0/> is the exception. Its genitive is <1/>, but third is <2/>, with an a. Pick a number and tap its forms to see what changes."
-msgstr "Исключение — <0/>. Его родительный падеж — <1/>, но «третий» — это <2/>, с a. Выбери число и нажимай на его формы, чтобы увидеть, что меняется."
-
-msgid "<0>{number}</0> is its own genitive, so only <1>s</1> is new."
-msgstr "<0>{number}</0> в родительном падеже не меняется, так что новое здесь только <1>s</1>."
-
 msgid "<0>{stem}</0>, the genitive of <1>{number}</1>, with <2>s</2>."
-msgstr "<0>{stem}</0> — родительный падеж от <1>{number}</1> — плюс <2>s</2>."
+msgstr "<0>{stem}</0> — родительный падеж от <1>{number}</1> — с <2>s</2>."
 
 msgid "<0>{stem}</0>, the genitive of <1>{tensWord}</1>, then <2>{last}</2>."
 msgstr "<0>{stem}</0> — родительный падеж от <1>{tensWord}</1>, а затем <2>{last}</2>."
 
-msgid "<0>Esimene</0> swaps <1>ne</1> for <2>sel</2>: <3>esimesel</3>."
-msgstr "У <0>esimene</0> <1>ne</1> меняется на <2>sel</2>: <3>esimesel</3>."
+msgid "<0>Esimene</0> and <1>teine</1> are words of their own, and <2>kolmas</2> is <3>kolm</3> with <4>as</4>. From four on, an ordinal is the number’s genitive with <5>s</5>: <6>neli, nelja, neljas</6>."
+msgstr "<0>Esimene</0> и <1>teine</1> — отдельные слова, а <2>kolmas</2> — это <3>kolm</3> с <4>as</4>. Начиная с четырёх, порядковое числительное — это родительный падеж числа с <5>s</5>: <6>neli, nelja, neljas</6>."
 
-msgid "<0>Esimene</0>, <1>teine</1> and <2>kolmas</2> are words of their own. From four on, an ordinal is the number’s genitive with <3>s</3>: <4>neli, nelja, neljas</4>."
-msgstr "<0>Esimene</0>, <1>teine</1> и <2>kolmas</2> — отдельные слова. Начиная с четырёх, порядковое числительное — это родительный падеж числа плюс <3>s</3>: <4>neli, nelja, neljas</4>."
+msgid "<0>Esimene</0> swaps <1>ne</1> for <2>sel</2>, and <3>märts</3> becomes <4>märtsil</4>: <5>esimesel märtsil</5>."
+msgstr "У <0>esimene</0> <1>ne</1> меняется на <2>sel</2>, а <3>märts</3> становится <4>märtsil</4>: <5>esimesel märtsil</5>."
 
 msgid "<0>Kolm</0> is the exception: <1>kolmas</1>, with <2>as</2>."
-msgstr "<0>Kolm</0> — исключение: <1>kolmas</1>, плюс <2>as</2>."
+msgstr "<0>Kolm</0> — исключение: <1>kolmas</1>, с окончанием <2>as</2>."
 
 msgid "<0>Kolm</0> with <1>as</1>."
-msgstr "<0>Kolm</0> плюс <1>as</1>."
+msgstr "<0>Kolm</0> с <1>as</1>."
+
+msgid "<0>Mai</0>, <1>juuni</1> and <2>juuli</2> end in a vowel and add <3>l</3>: <4>mail</4>. The other months add <5>il</5>: <6>märtsil</6>, <7>aprillil</7>. September to December drop their e first: <8>septembril</8>, <9>novembril</9>."
+msgstr "<0>Mai</0>, <1>juuni</1> и <2>juuli</2> оканчиваются на гласную и добавляют <3>l</3>: <4>mail</4>. Остальные месяцы добавляют <5>il</5>: <6>märtsil</6>, <7>aprillil</7>. С сентября по декабрь сначала выпадает e: <8>septembril</8>, <9>novembril</9>."
 
 msgid "<0>Mitmes täna on?</0> asks the same."
 msgstr "<0>Mitmes täna on?</0> спрашивает то же самое."
@@ -40,29 +37,20 @@ msgstr "<0>Mitmes täna on?</0> спрашивает то же самое."
 msgid "<0>Mitu?</0> asks how many; <1>mitmes?</1> asks which one in order."
 msgstr "<0>Mitu?</0> спрашивает «сколько?», а <1>mitmes?</1> — «который по счёту?»."
 
-msgid "<0>ne</0> turns into <1>sel</1>."
-msgstr "<0>ne</0> превращается в <1>sel</1>."
-
-msgid "<0>Neljas</0>, <1>neljateistkümnes</1> and <2>kahekümne neljas</2> all have <3>nelja</3> in them. Listen for <4>teistkümnes</4>, <5>kahekümne</5> or <6>kolmekümne</6>, then pick the day."
-msgstr "В <0>neljas</0>, <1>neljateistkümnes</1> и <2>kahekümne neljas</2> есть <3>nelja</3>. Слушай, есть ли <4>teistkümnes</4>, <5>kahekümne</5> или <6>kolmekümne</6>, и выбирай число."
-
-msgid "<0>s</0> turns into <1>ndal</1>."
-msgstr "<0>s</0> превращается в <1>ndal</1>."
+msgid "<0>Neljas</0>, <1>neljateistkümnes</1> and <2>kahekümne neljas</2> all start from <3>nelja</3>. Listen for <4>teistkümnes</4>, <5>kahekümne</5> or <6>kolmekümne</6>, then pick the day."
+msgstr "<0>Neljas</0>, <1>neljateistkümnes</1> и <2>kahekümne neljas</2> — все от <3>nelja</3>. Слушай, что идёт вместе с ним: <4>teistkümnes</4>, <5>kahekümne</5> или <6>kolmekümne</6>, потом выбери день."
 
 msgid "<et>Esimene</et> swaps <et>-ne</et> for <et>-sel</et>: <et>esimesel</et>."
 msgstr "У <et>esimene</et> <et>-ne</et> меняется на <et>-sel</et>: <et>esimesel</et>."
 
-msgid "11 exercises, 4 of them typed, and a conversation"
-msgstr "11 упражнений, в 4 из них нужно писать, и разговор"
+msgid "<et>Mitmendal korrusel</et> means on which floor: <et>mitmes</et> with <et>-s</et> turned into <et>-ndal</et>."
+msgstr "<et>Mitmendal korrusel</et> значит «на каком этаже»: у <et>mitmes</et> <et>-s</et> становится <et>-ndal</et>."
+
+msgid "10 exercises, 4 of them typed, and a conversation"
+msgstr "10 упражнений, в 4 из них нужно писать, и разговор"
 
 msgid "20 minutes"
 msgstr "20 минут"
-
-msgid "A date after <0>on</0>: the ordinal and the month as they are."
-msgstr "Дата после <0>on</0>: порядковое числительное и месяц без изменений."
-
-msgid "A date after <et>on</et> is an ordinal and the month, as they are: <et>viies mai</et>."
-msgstr "Дата после <et>on</et> — порядковое числительное и месяц без изменений: <et>viies mai</et>."
 
 msgid "A date is an ordinal and a month, and the month takes a small letter. The full stop after the numeral makes it an ordinal: <0>21. november</0>, said <1>kahekümne esimene november</1>."
 msgstr "Дата — это порядковое числительное и месяц, а месяц, как и по-русски, пишут со строчной буквы. Точка после цифры делает число порядковым: <0>21. november</0> читается как <1>kahekümne esimene november</1>."
@@ -70,8 +58,8 @@ msgstr "Дата — это порядковое числительное и м�
 msgid "A date is an ordinal: <0>viies mai</0>, not the number <1>viis</1>."
 msgstr "Дата — это порядковое числительное: <0>viies mai</0>, а не количественное <1>viis</1>."
 
-msgid "A number in a sentence can be said three ways. Without a full stop it counts: <0>Mul on kolm kassi</0>, I have three cats. With a full stop it is an ordinal: <1>Täna on 5. mai</1> is said <2>viies mai</2>."
-msgstr "Число в предложении можно сказать тремя способами. Без точки оно считает: <0>Mul on kolm kassi</0> — «у меня три кошки». С точкой это порядковое числительное: <1>Täna on 5. mai</1> читают как <2>viies mai</2>."
+msgid "A number in a sentence can be said three ways. Without a full stop, a number says how many: <0>Mul on 3 kassi</0> is said <1>kolm kassi</1>, I have three cats. With a full stop it is an ordinal: <2>Täna on 5. mai</2> is said <3>viies mai</3>."
+msgstr "Число в предложении можно сказать тремя способами. Без точки это количество: <0>Mul on 3 kassi</0> читают как <1>kolm kassi</1> — «у меня три кошки». С точкой это порядковое числительное: <2>Täna on 5. mai</2> читают как <3>viies mai</3>."
 
 msgid "A word of its own, not built from <0>kaks</0>. It also means “other”."
 msgstr "Отдельное слово, не от <0>kaks</0>. Ещё значит «другой»."
@@ -85,6 +73,12 @@ msgstr "Отдельное слово."
 msgid "After <0>aastal</0>, the year is a plain number: <1/>, in 2026, is said <2>aastal kaks tuhat kakskümmend kuus</2>. Before <3>aastal</3> it takes a full stop and is an ordinal: <4>2026. aastal</4>, said <5>kahe tuhande kahekümne kuuendal aastal</5>."
 msgstr "После <0>aastal</0> год — обычное число, а не порядковое, как в русском «двадцать шестом»: <1/>, в 2026 году, произносится <2>aastal kaks tuhat kakskümmend kuus</2>. Перед <3>aastal</3> год пишут с точкой, и он порядковый: <4>2026. aastal</4> читается как <5>kahe tuhande kahekümne kuuendal aastal</5>."
 
+msgid "After <0>on</0>, is, the date has no ending."
+msgstr "После <0>on</0>, «есть», дата без окончания."
+
+msgid "After <et>on</et>, is, the date has no ending: <et>viies mai</et>."
+msgstr "После <et>on</et>, «есть», дата без окончания: <et>viies mai</et>."
+
 msgid "All of them: how many, which one and on which one."
 msgstr "Все: сколько, который и какого числа."
 
@@ -97,8 +91,8 @@ msgstr "Все шесть найдены и исправлены."
 msgid "All six ordinals."
 msgstr "Все шесть порядковых числительных."
 
-msgid "All six sentences, every ordinal in its form."
-msgstr "Все шесть предложений, каждое порядковое числительное в своей форме."
+msgid "All six sentences, every ordinal in the right form."
+msgstr "Все шесть предложений, каждое порядковое числительное в правильной форме."
 
 msgid "All six, by ear."
 msgstr "Все шесть, на слух."
@@ -154,11 +148,11 @@ msgstr "Число месяца"
 msgid "December"
 msgstr "декабрь"
 
-msgid "Each sentence has a date in it, in its plain form or with <0>l</0>. Type the date you hear. Digits count, 5.5 for the fifth of May, and so do words, as in <1>5. mai</1> or 5 May."
-msgstr "В каждом предложении есть дата — в обычной форме или с <0>l</0>. Введи дату, которую слышишь. Можно цифрами, 5.5 для пятого мая, а можно словами: <1>5. mai</1> или 5 мая."
+msgid "Each sentence has a date in it, in its plain form or with <0>l</0>. Type the date you hear. You can type digits, 5.5 for the fifth of May, or the month in words, as in <1>5. mai</1> or 5 May."
+msgstr "В каждом предложении есть дата — без окончания или с <0>l</0>. Напиши дату, которую слышишь. Можно цифрами, 5.5 — пятое мая, или с месяцем словом: <1>5. mai</1> или 5 мая."
 
-msgid "Each sentence has one wrong word in its date or number, as learners often write it. Tap the wrong word, then type it right."
-msgstr "В каждом предложении одно слово в дате или числе неправильное — так его часто пишут те, кто учит язык. Нажми на ошибочное слово, потом напиши его правильно."
+msgid "Each sentence has one wrong word in its date or number. Tap it, then type it right."
+msgstr "В каждом предложении одно ошибочное слово в дате или числе. Нажми на него, потом напиши правильно."
 
 msgid "eight"
 msgstr "восемь"
@@ -229,8 +223,8 @@ msgstr "От 11 до 19 порядковое числительное — одн
 msgid "From four on, an ordinal is built on the genitive, the form lesson {genitive} uses for “of”. Take <0/>, four. Its genitive is <1/>, and with <2>s</2> it becomes <3><4/>,</3> fourth. In the same way <5/> goes to <6/> and <7><8/>.</7>"
 msgstr "Начиная с четырёх, порядковое числительное строится на родительном падеже — форме, которая отвечает на «чей? чего?»; о нём — в уроке {genitive}. Возьми <0/>, четыре. Родительный падеж — <1/>, а плюс <2>s</2> получается <3><4/>,</3> «четвёртый». Так же <5/> даёт <6/> и <7><8/>.</7>"
 
-msgid "From four on, an ordinal is the number’s genitive with <0>s</0>. A date is an ordinal and a month, and to say on which day, both take <1>l</1>."
-msgstr "Начиная с четырёх, порядковое числительное — это родительный падеж числа плюс <0>s</0>. Дата — порядковое числительное и месяц, а чтобы сказать «какого числа», оба слова получают <1>l</1>."
+msgid "From four on, an ordinal is the number’s genitive with <0>s</0>. A date is an ordinal and a month, and to say on which day, both words end in <1>l</1>: <2>viiendal mail</2>."
+msgstr "Начиная с четырёх, порядковое числительное — это родительный падеж числа с <0>s</0>. Дата — это порядковое числительное и месяц, а чтобы сказать, какого числа, оба слова оканчиваются на <1>l</1>: <2>viiendal mail</2>."
 
 msgid "From four on, an ordinal is the number’s genitive with <et>-s</et>: <et>kuue</et>, <et>kuues</et>."
 msgstr "Начиная с четырёх, порядковое числительное — это родительный падеж числа с <et>-s</et>: <et>kuue</et>, <et>kuues</et>."
@@ -271,8 +265,8 @@ msgstr "8 июня я еду в Тарту."
 msgid "in 2026"
 msgstr "в 2026 году"
 
-msgid "In a number of two words only the last is an ordinal, and the tens go into the genitive: <0>kahekümne esimene</0>."
-msgstr "Если в числе два слова, порядковым становится только последнее, а десятки ставят в родительный падеж: <0>kahekümne esimene</0>."
+msgid "In a number of two words only the last is an ordinal, and the tens stay in the genitive: <0>kahekümne esimene</0>."
+msgstr "В числе из двух слов порядковым становится только последнее, а десятки остаются в родительном: <0>kahekümne esimene</0>."
 
 msgid "In a number of two words, only the last becomes an ordinal. The tens before it go into the genitive: <0><1/>,</0> twenty-first. Slide to a day, or tap − and +, to hear it."
 msgstr "Если в числе два слова, порядковым становится только последнее. Десятки перед ним ставят в родительный падеж: <0><1/>,</0> «двадцать первый». Сдвинь ползунок на нужный день или нажимай − и +, чтобы его услышать."
@@ -280,8 +274,11 @@ msgstr "Если в числе два слова, порядковым стан�
 msgid "In a number of two words, only the last is an ordinal; the tens stay in the genitive: <et>kahekümne esimene</et>."
 msgstr "В числе из двух слов порядковым становится только последнее, а десятки остаются в родительном: <et>kahekümne esimene</et>."
 
-msgid "In lesson {days} you met <0/> and <1/>: <2/>, the first day of the week, sounds like <3>esimene</3>. Words like these are ordinals. They say which one in order, where the numbers from lesson {numbers} say how many."
-msgstr "Слова <0/> и <1/> уже встречались в уроке {days}: <2/>, первый день недели, звучит похоже на <3>esimene</3>. Такие слова — порядковые числительные. Они отвечают на вопрос «который по счёту?», а числа из урока {numbers} — на «сколько?»."
+msgid "In lesson {days}, <0/>, Monday, sounds like <1/>, first, and <2>teisipäev</2>, Tuesday, like <3/>, second. Words like these are ordinals. They say which one in order, where the numbers from lesson {numbers} say how many."
+msgstr "В уроке {days} <0/>, понедельник, звучит похоже на <1/>, «первый», а <2>teisipäev</2>, вторник, — на <3/>, «второй». Такие слова — порядковые числительные. Они говорят, который по порядку, а числа из урока {numbers} — сколько."
+
+msgid "In May, or from one date to another, takes other endings; lesson {when} teaches them."
+msgstr "«В мае» или «с одной даты до другой» требуют других окончаний — их объясняет урок {when}."
 
 msgid "Jaan"
 msgstr "Яан"
@@ -314,7 +311,7 @@ msgid "Listen: Mari and Jaan"
 msgstr "Послушай: Мари и Яан"
 
 msgid "Listen: when and where?"
-msgstr "Аудирование: когда и где?"
+msgstr "Послушай: когда и где?"
 
 msgid "Listening only, no microphone"
 msgstr "Только на слух, без микрофона"
@@ -340,23 +337,23 @@ msgstr "Соедини каждое слово с его значением."
 msgid "May"
 msgstr "май"
 
-msgid "Mitmes with -l, as in kolmandal."
-msgstr "Mitmes с -l, как в kolmandal."
+msgid "Mitmes with its -s turned into -ndal, as in kolmandal."
+msgstr "Mitmes, в котором -s становится -ndal, как в kolmandal."
 
 msgid "Monday"
-msgstr "Понедельник"
+msgstr "понедельник"
 
-msgid "Most of them. Check where on a day needs <0>l</0>."
-msgstr "Большинство. Проверь, где «какого числа» требует <0>l</0>."
+msgid "Most of them. Check which sentences say on which day: those need <0>l</0>."
+msgstr "Большинство. Проверь, какие предложения говорят «какого числа», — там нужно <0>l</0>."
 
 msgid "Most of them. Play the ones you missed once more."
-msgstr "Почти все. Переслушай ещё раз те, где были ошибки."
+msgstr "Большинство. Переслушай ещё раз те, где были ошибки."
 
 msgid "Most of them. Read why each one you missed is wrong."
-msgstr "Большинство. Прочитай, почему каждая пропущенная ошибка — ошибка."
+msgstr "Большинство. Прочитай объяснения к пропущенным ошибкам."
 
 msgid "Most of them. Tap the numbers above once more."
-msgstr "Почти все. Ещё раз нажми на числа выше."
+msgstr "Большинство. Ещё раз нажми на числа выше."
 
 msgid "My birthday is on 3 June."
 msgstr "Мой день рождения — третьего июня."
@@ -376,8 +373,8 @@ msgstr "девять"
 msgid "ninth"
 msgstr "девятый"
 
-msgid "No full stop: a plain number that says how many, as after <0>mitu?</0>"
-msgstr "Без точки: обычное число, которое говорит «сколько», как после <0>mitu?</0>"
+msgid "No full stop: a plain number that answers <0>mitu?</0>, how many."
+msgstr "Без точки: обычное число, которое отвечает на <0>mitu?</0>, «сколько?»."
 
 msgid "No full stop: a plain number that says how many."
 msgstr "Без точки: обычное число, которое говорит «сколько»."
@@ -448,20 +445,20 @@ msgstr "30 мая"
 msgid "On 31 March"
 msgstr "31 марта"
 
-msgid "On a date, both words take <0>l</0>: <1>kolmandal juunil</1>."
-msgstr "Когда говоришь, какого числа, оба слова получают <0>l</0>: <1>kolmandal juunil</1>."
+msgid "On a date, both words end in <0>l</0>: <1>kolmandal juunil</1>."
+msgstr "Какого числа — оба слова оканчиваются на <0>l</0>: <1>kolmandal juunil</1>."
 
-msgid "On a day or a floor, both words take <et>-l</et>: <et>viiendal mail</et>, <et>kolmandal korrusel</et>."
-msgstr "Какого числа или на каком этаже — оба слова получают <et>-l</et>: <et>viiendal mail</et>, <et>kolmandal korrusel</et>."
+msgid "On a day or a floor, both words end in <et>-l</et>: <et>viiendal mail</et>, <et>kolmandal korrusel</et>."
+msgstr "Какого числа или на каком этаже — оба слова оканчиваются на <et>-l</et>: <et>viiendal mail</et>, <et>kolmandal korrusel</et>."
 
 msgid "On a day or a floor: <et>viiendal mail</et>"
 msgstr "Какого числа, на каком этаже: <et>viiendal mail</et>"
 
-msgid "On a day or a floor: the ordinal takes <0>l</0>, as the word after it does."
-msgstr "Какого числа или на каком этаже: порядковое числительное получает <0>l</0>, как и слово после него."
+msgid "On a day or a floor: the ordinal ends in <0>l</0>, as the word after it does."
+msgstr "Какого числа или на каком этаже: порядковое числительное оканчивается на <0>l</0>, как и слово после него."
 
-msgid "On a floor, both words take <0>l</0>: <1>neljandal korrusel</1>."
-msgstr "На каком этаже — оба слова получают <0>l</0>: <1>neljandal korrusel</1>."
+msgid "On a floor, both words end in <0>l</0>: <1>neljandal korrusel</1>."
+msgstr "На каком этаже — оба слова оканчиваются на <0>l</0>: <1>neljandal korrusel</1>."
 
 msgid "On Saturday they are going to a café with Kati."
 msgstr "В субботу они пойдут с Кати в кафе."
@@ -488,9 +485,6 @@ msgctxt "date"
 msgid "on the third"
 msgstr "третьего числа"
 
-msgid "On which floor is <et>mitmendal korrusel</et>: <et>mitmes</et> with <et>-l</et>."
-msgstr "«На каком этаже» — <et>mitmendal korrusel</et>: <et>mitmes</et> с <et>-l</et>."
-
 msgid "On which one"
 msgstr "Какого, на каком"
 
@@ -503,8 +497,8 @@ msgstr "На единицу меньше"
 msgid "One more"
 msgstr "На единицу больше"
 
-msgid "Only the last word changes; <0>kahekümne</0> stays as it is."
-msgstr "Меняется только последнее слово, а <0>kahekümne</0> остаётся как есть."
+msgid "Only the last word changes; the tens stay as they are."
+msgstr "Меняется только последнее слово, десятки остаются как есть."
 
 msgid "Only the last word is an ordinal. The tens stay in the genitive: <0>kahekümne</0>."
 msgstr "Порядковым становится только последнее слово. Десятки остаются в родительном: <0>kahekümne</0>."
@@ -512,8 +506,8 @@ msgstr "Порядковым становится только последне�
 msgid "Ordinals of two words: <et>kahekümne esimene</et>"
 msgstr "Порядковые числительные из двух слов: <et>kahekümne esimene</et>"
 
-msgid "Ordinals, and with -l"
-msgstr "Порядковые числительные и они же с -l"
+msgid "Ordinals without and with -l"
+msgstr "Порядковые числительные без -l и с -l"
 
 msgid "Pick how to say the number in each sentence."
 msgstr "Выбери, как сказать число в каждом предложении."
@@ -527,9 +521,6 @@ msgstr "Послушай каждое предложение дважды, пр�
 
 msgid "Read “On the fifth of May” above once more, then try again."
 msgstr "Ещё раз прочитай раздел «Пятого мая» выше и попробуй снова."
-
-msgid "Saying in a month, or from one date to another, takes other endings, which lesson {when} teaches."
-msgstr "«В каком месяце» или «с какого числа по какое» — это уже другие окончания, о них рассказывает урок {when}."
 
 msgid "second"
 msgstr "второй"
@@ -559,7 +550,7 @@ msgid "Sünd, birth, and päev, day."
 msgstr "Sünd — рождение, päev — день."
 
 msgid "Tap a form"
-msgstr "Коснись формы"
+msgstr "Нажми на форму"
 
 msgid "Tap a month to hear it. Its number is its place in the year."
 msgstr "Нажми на месяц, чтобы его услышать. Число — его номер в году."
@@ -588,17 +579,26 @@ msgstr "На одиннадцатом"
 msgid "The fifth"
 msgstr "На пятом"
 
+msgid "The final <0>ne</0> turns into <1>sel</1>."
+msgstr "Конечное <0>ne</0> становится <1>sel</1>."
+
+msgid "The final <0>s</0> turns into <1>ndal</1>."
+msgstr "Конечное <0>s</0> становится <1>ndal</1>."
+
 msgid "The first day of the week."
 msgstr "Первый день недели."
 
 msgid "The fourth"
 msgstr "На четвёртом"
 
-msgid "The full stop makes it an ordinal, and after <0>on</0> the date keeps its plain form."
-msgstr "Точка делает число порядковым, а после <0>on</0> дата остаётся в основной форме."
+msgid "The full stop makes it an ordinal, and after <0>on</0>, is, the date has no ending."
+msgstr "Точка делает число порядковым, а после <0>on</0>, «есть», дата без окончания."
 
 msgid "the genitive"
 msgstr "родительный падеж"
+
+msgid "The genitive of <0>{number}</0> is the same word, so only <1>s</1> is new."
+msgstr "Родительный от <0>{number}</0> — то же слово, так что новое только <1>s</1>."
 
 msgid "The genitive of <et>seitse</et> is <et>seitsme</et>, so seventh is <et>seitsmes</et>."
 msgstr "Родительный от <et>seitse</et> — <et>seitsme</et>, так что «седьмой» — <et>seitsmes</et>."
@@ -619,10 +619,10 @@ msgid "The genitive of üksteist."
 msgstr "Родительный падеж от üksteist."
 
 msgid "The genitive with <0>s</0>."
-msgstr "Родительный падеж плюс <0>s</0>."
+msgstr "Родительный падеж с <0>s</0>."
 
 msgid "The genitive, the form for “of”: <0>{genitive}</0>."
-msgstr "Родительный падеж, форма на «чей? чего?»: <0>{genitive}</0>."
+msgstr "Родительный падеж, форма, которая отвечает на «чей? чего?»: <0>{genitive}</0>."
 
 msgid "The month has <0>l</0>, so the ordinal takes it too: <1>viiendal mail</1>."
 msgstr "У месяца есть <0>l</0>, значит, и у порядкового числительного: <1>viiendal mail</1>."
@@ -630,11 +630,11 @@ msgstr "У месяца есть <0>l</0>, значит, и у порядков�
 msgid "The months"
 msgstr "Месяцы"
 
-msgid "The same <0>l</0> says on which floor: <1><2/>.</1> To ask, use <3/>: <4/> <5/> is a floor, and <6/> a birthday."
-msgstr "То же <0>l</0> нужно и для этажа: <1><2/>.</1> Чтобы спросить, используй <3/>: <4/> <5/> — это этаж, а <6/> — день рождения."
+msgid "The same <0>l</0> says on which floor, and <1>korrus</1> becomes <2>korrusel</2>: <3><4/>.</3> To ask, use <5/>: <6/> <7/> is a floor, and <8/> a birthday."
+msgstr "То же <0>l</0> говорит, на каком этаже, а <1>korrus</1> становится <2>korrusel</2>: <3><4/>.</3> Чтобы спросить, говори <5/>: <6/> <7/> — это этаж, а <8/> — день рождения."
 
-msgid "The same question, word for word “which one is it today?”"
-msgstr "Тот же вопрос, дословно «которое сегодня?»"
+msgid "The same question. Word for word: “which one is it today?”"
+msgstr "Тот же вопрос. Дословно: «которое сегодня?»"
 
 msgid "The second"
 msgstr "На втором"
@@ -657,20 +657,23 @@ msgstr "«Третий» — <et>kolmas</et>, с a, хотя родительн�
 msgid "three"
 msgstr "три"
 
-msgid "To ask the date, say <0/> <1/> is a date. The answer is an ordinal and a month: <2><3/>.</2>"
-msgstr "Чтобы спросить дату, скажи <0/> <1/> — это дата. Ответ — порядковое числительное и месяц: <2><3/>.</2>"
+msgid "Three is built differently. <0/> has the genitive <1/>, but third is <2/>, with an a. Pick a number and tap its forms to see what changes."
+msgstr "Три образуется иначе. Родительный от <0/> — <1/>, но «третий» — <2/>, с a. Выбери число и нажми на его формы, чтобы увидеть, что меняется."
+
+msgid "To ask the date, say <0/> <1/> means date. The answer is an ordinal and a month: <2><3/>.</2>"
+msgstr "Чтобы спросить дату, скажи <0/> <1/> значит «дата». Ответ — порядковое числительное и месяц: <2><3/>.</2>"
 
 msgid "To ask the date: <et>Mis kuupäev täna on?</et> or <et>Mitmes täna on?</et>"
 msgstr "Чтобы спросить дату: <et>Mis kuupäev täna on?</et> или <et>Mitmes täna on?</et>"
 
-msgid "To say on which day or floor, the month or <0>korrus</0> takes <1>l</1>, and so does the ordinal: <2>5. mail</2> is said <3>viiendal mail</3>."
-msgstr "Чтобы сказать, какого числа или на каком этаже, месяц или <0>korrus</0> получает <1>l</1>, и порядковое числительное тоже: <2>5. mail</2> читают как <3>viiendal mail</3>."
+msgid "To say on which day or floor, the month or <0>korrus</0> ends in <1>l</1>, and so does the ordinal: <2>5. mail</2> is said <3>viiendal mail</3>."
+msgstr "Чтобы сказать, какого числа или на каком этаже, месяц или <0>korrus</0> оканчивается на <1>l</1>, и порядковое числительное тоже: <2>5. mail</2> читают как <3>viiendal mail</3>."
 
-msgid "To say on which day or on which floor, both words take <0>l</0>, and the ordinal’s <1>s</1> turns into <2>ndal</2>: <3>viiendal mail</3>, <4>kolmandal korrusel</4>."
-msgstr "Чтобы сказать «какого числа» или «на каком этаже», оба слова получают <0>l</0>, а <1>s</1> порядкового числительного превращается в <2>ndal</2>: <3>viiendal mail</3>, <4>kolmandal korrusel</4>."
+msgid "To say on which day or on which floor, both words end in <0>l</0>. The ordinal’s <1>s</1> turns into <2>ndal</2>, and the month or <3>korrus</3> adds <4>l</4>, <5>il</5> or <6>el</6>: <7>viiendal mail</7>, <8>esimesel märtsil</8>, <9>kolmandal korrusel</9>."
+msgstr "Чтобы сказать, какого числа или на каком этаже, оба слова оканчиваются на <0>l</0>. В порядковом числительном <1>s</1> становится <2>ndal</2>, а месяц или <3>korrus</3> добавляет <4>l</4>, <5>il</5> или <6>el</6>: <7>viiendal mail</7>, <8>esimesel märtsil</8>, <9>kolmandal korrusel</9>."
 
-msgid "To say on which day, put <0>l</0> on both words: <1><2/>,</1> on the fifth of May. <3>Mail</3> is <4>mai</4> with <5>l</5>. In the ordinal, the final <6>s</6> turns into <7>ndal</7>: <8>viies</8>, <9/>; <10>kolmas</10>, <11><12/>.</11> <13>Esimene</13> and <14>teine</14> swap <15>ne</15> for <16>sel</16>: <17>esimesel, teisel</17>."
-msgstr "Чтобы сказать «какого числа», добавь <0>l</0> к обоим словам: <1><2/>,</1> пятого мая. <3>Mail</3> — это <4>mai</4> плюс <5>l</5>. В порядковом числительном конечное <6>s</6> превращается в <7>ndal</7>: <8>viies</8>, <9/>; <10>kolmas</10>, <11><12/>.</11> У <13>esimene</13> и <14>teine</14> <15>ne</15> меняется на <16>sel</16>: <17>esimesel, teisel</17>."
+msgid "To say on which day, both words end in <0>l</0>: <1><2/>,</1> on the fifth of May. In the ordinal, the final <3>s</3> turns into <4>ndal</4>: <5>viies</5>, <6/>; <7>kolmas</7>, <8><9/>.</8> <10>Esimene</10> and <11>teine</11> swap <12>ne</12> for <13>sel</13>: <14>esimesel, teisel</14>."
+msgstr "Чтобы сказать, какого числа, оба слова оканчиваются на <0>l</0>: <1><2/>,</1> пятого мая. В порядковом числительном конечное <3>s</3> становится <4>ndal</4>: <5>viies</5>, <6/>; <7>kolmas</7>, <8><9/>.</8> У <10>esimene</10> и <11>teine</11> <12>ne</12> меняется на <13>sel</13>: <14>esimesel, teisel</14>."
 
 msgid "Today is 1 January."
 msgstr "Сегодня 1 января."
@@ -802,7 +805,7 @@ msgid "You’ll hear it and see what changes."
 msgstr "Услышишь её и увидишь, что меняется."
 
 msgid "You’ll hear its ordinal and see where it comes from."
-msgstr "Услышишь порядковое числительное и увидишь, от чего оно."
+msgstr "Услышишь порядковое числительное и увидишь, из какого слова оно образовано."
 
 msgid "Your friend Kati leaves you a voice message about her birthday. Listen, then answer."
 msgstr "Твоя подруга Кати оставила тебе голосовое сообщение о своём дне рождения. Послушай, потом ответь."

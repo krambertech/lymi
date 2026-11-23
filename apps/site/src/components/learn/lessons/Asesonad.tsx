@@ -49,28 +49,28 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Kas sa lähed nendega?": msg`Are you going with them?`,
   "Helista mulle!": msg`Call me.`,
   "Mul on aega.": msg`I have time.`,
-  "Ma küsin teilt.": msg`I’ll ask you. To more than one, or polite.`,
+  "Ma küsin teilt.": msg`I’ll ask you, to more than one; polite you.`,
   "Jaan helistab mulle.": msg`Jaan is calling me.`,
   "Jaan helistab sulle.": msg`Jaan is calling you.`,
   "Jaan helistab talle.": msg`Jaan is calling him or her.`,
   "Jaan helistab meile.": msg`Jaan is calling us.`,
-  "Jaan helistab teile.": msg`Jaan is calling you. To more than one, or polite.`,
+  "Jaan helistab teile.": msg`Jaan is calling you, to more than one; polite you.`,
   "Jaan helistab neile.": msg`Jaan is calling them.`,
   "Sul on aega.": msg`You have time.`,
   "Tal on aega.": msg`He or she has time.`,
   "Meil on aega.": msg`We have time.`,
-  "Teil on aega.": msg`You have time. To more than one, or polite.`,
+  "Teil on aega.": msg`You have time, to more than one; polite you.`,
   "Neil on aega.": msg`They have time.`,
   "Jaan küsib mult.": msg`Jaan is asking me.`,
   "Jaan küsib sult.": msg`Jaan is asking you.`,
   "Jaan küsib talt.": msg`Jaan is asking him or her.`,
   "Jaan küsib meilt.": msg`Jaan is asking us.`,
-  "Jaan küsib teilt.": msg`Jaan is asking you. To more than one, or polite.`,
+  "Jaan küsib teilt.": msg`Jaan is asking you, to more than one; polite you.`,
   "Jaan küsib neilt.": msg`Jaan is asking them.`,
   "Ma armastan sind.": msg`I love you.`,
   "Oota mind!": msg`Wait for me.`,
   "Ma ootan teda.": msg`I’m waiting for him or her.`,
-  "Me ootame teid.": msg`We’re waiting for you. To more than one, or polite.`,
+  "Me ootame teid.": msg`We’re waiting for you, to more than one; polite you.`,
   "Nad ootavad meid.": msg`They’re waiting for us.`,
   "Kas sa ootad neid?": msg`Are you waiting for them?`,
   "See on minu kass.": msg`This is my cat.`,
@@ -92,22 +92,31 @@ const GLOSSARY: Glossary = {
   sinuta: { en: msg`without you` },
   temaga: { en: msg`with him or her` },
   nende: { en: msg`their`, note: msg`The genitive of nemad.` },
-  nendega: { en: msg`with them`, note: msg`-ga on nende, the genitive of nemad.` },
+  nendega: { en: msg`with them`, note: msg`Nende, the genitive of nemad, plus -ga.` },
   mulle: { en: msg`to me, for me`, note: msg`The short form of minule.` },
-  minule: { en: msg`to me, for me`, note: msg`The long form of mulle. It puts weight on me.` },
+  minule: {
+    en: msg`to me, for me`,
+    note: msg`The long form of mulle. It stresses me: to me, not to someone else.`,
+  },
   mul: { en: msg`I have`, note: msg`With on: mul on aega, I have time. The short form of minul.` },
   minul: {
     en: msg`I have`,
-    note: msg`With on: minul on aega, I have time. The long form of mul; it puts weight on me.`,
+    note: msg`With on: minul on aega, I have time. The long form of mul; it stresses me.`,
   },
   mult: { en: msg`from me`, note: msg`The short form of minult.` },
-  minult: { en: msg`from me`, note: msg`The long form of mult. It puts weight on me.` },
+  minult: {
+    en: msg`from me`,
+    note: msg`The long form of mult. It stresses me: from me, not from someone else.`,
+  },
   helistab: {
     en: msg`calls, is calling`,
-    note: msg`From helistama, to call. The person takes -le.`,
+    note: msg`From helistama, to call. The person called takes -le.`,
   },
   küsib: { en: msg`asks, is asking`, note: msg`From küsima, to ask. The person asked takes -lt.` },
-  ootan: { en: msg`I’m waiting`, note: msg`From ootama, to wait. The person takes the partitive.` },
+  ootan: {
+    en: msg`I’m waiting`,
+    note: msg`From ootama, to wait. The person waited for takes the partitive.`,
+  },
   armastan: { en: msg`I love`, note: msg`From armastama, to love.` },
   "ma armastan sind": { en: msg`I love you.`, show: "Ma armastan sind" },
   mind: { en: msg`me`, note: msg`The partitive of mina.` },
@@ -149,8 +158,8 @@ const WITH_MEANS: Record<PronounId, { ga: MessageDescriptor; ta: MessageDescript
   tema: { ga: msg`with him or her`, ta: msg`without him or her` },
   meie: { ga: msg`with us`, ta: msg`without us` },
   teie: {
-    ga: msg`with you, to more than one; polite`,
-    ta: msg`without you, to more than one; polite`,
+    ga: msg`with you, to more than one; polite you`,
+    ta: msg`without you, to more than one; polite you`,
   },
   nemad: { ga: msg`with them`, ta: msg`without them` },
 };
@@ -270,12 +279,12 @@ function useContent() {
   const why: Record<string, ReactNode> = {
     minuga: (
       <Trans>
-        Coming with someone: <span lang="et">-ga</span> on <span lang="et">minu</span>.
+        Coming with someone: <span lang="et">minu</span> plus <span lang="et">-ga</span>.
       </Trans>
     ),
     meiega: (
       <Trans>
-        With us: <span lang="et">-ga</span> on <span lang="et">meie</span>.
+        With us: <span lang="et">meie</span> plus <span lang="et">-ga</span>.
       </Trans>
     ),
     sind: (
@@ -285,7 +294,7 @@ function useContent() {
     ),
     sulle: (
       <Trans>
-        For you, the one it goes to: <span lang="et">sulle</span>.
+        A book for you: <span lang="et">-le</span> marks who gets it, <span lang="et">sulle</span>.
       </Trans>
     ),
     mulle: (
@@ -307,7 +316,7 @@ function useContent() {
   const translateWhy: Record<string, ReactNode> = {
     "tule-minuga": (
       <Trans>
-        With me: <span lang="et">-ga</span> on the genitive <span lang="et">minu</span>.
+        With me: the genitive <span lang="et">minu</span> plus <span lang="et">-ga</span>.
       </Trans>
     ),
     "ootan-sind": (
@@ -344,8 +353,8 @@ function useContent() {
   const fixWhy: Record<string, ReactNode> = {
     "fix-minuga": (
       <Trans>
-        <span lang="et">-ga</span> goes on the genitive <span lang="et">minu</span>, not on{" "}
-        <span lang="et">mina</span>.
+        The ending <span lang="et">-ga</span> goes on the genitive <span lang="et">minu</span>, not
+        on <span lang="et">mina</span>.
       </Trans>
     ),
     "fix-sind": (
@@ -474,7 +483,7 @@ function CaseTable() {
       id: "kelle",
       label: t`whose`,
       ask: "kelle?",
-      tip: t`The genitive. -ga and -ta go on it.`,
+      tip: t`The genitive. The endings -ga and -ta go on it.`,
       cells: [cell(person.genitive, ""), cell(person.shortGenitive, "")],
     },
     {
@@ -483,8 +492,8 @@ function CaseTable() {
       ask: "keda?",
       tip: (
         <Trans>
-          The partitive, after a verb such as <span lang="et">ootama</span>: a short word of its
-          own.
+          The partitive, used after a verb such as <span lang="et">ootama</span>. It isn’t built on
+          the genitive.
         </Trans>
       ),
       cells: [cell(person.partitive, ""), null],
@@ -495,7 +504,7 @@ function CaseTable() {
       ask: "kellega?",
       tip: (
         <Trans>
-          <span lang="et">-ga</span> on the genitive.
+          The genitive plus <span lang="et">-ga</span>.
         </Trans>
       ),
       cells: [cell(pronounWith(person.genitive, "ga"), "ga"), null],
@@ -506,7 +515,7 @@ function CaseTable() {
       ask: "kelleta?",
       tip: (
         <Trans>
-          <span lang="et">-ta</span> on the genitive.
+          The genitive plus <span lang="et">-ta</span>.
         </Trans>
       ),
       cells: [cell(pronounWith(person.genitive, "ta"), "ta"), null],
@@ -517,7 +526,7 @@ function CaseTable() {
       ask: "kellele?",
       tip: (
         <Trans>
-          <span lang="et">-le</span>, to. Speech uses the short form.
+          The ending <span lang="et">-le</span>, to. The short form is the usual one.
         </Trans>
       ),
       cells: [cell(person.le, "le"), cell(person.shortLe, "le")],
@@ -528,8 +537,8 @@ function CaseTable() {
       ask: "kellel?",
       tip: (
         <Trans>
-          <span lang="et">-l</span>, as in <span lang="et">mul on</span>. Speech uses the short
-          form.
+          The ending <span lang="et">-l</span>, as in <span lang="et">mul on</span>. The short form
+          is the usual one.
         </Trans>
       ),
       cells: [cell(person.l, "l"), cell(person.shortL, "l")],
@@ -540,7 +549,7 @@ function CaseTable() {
       ask: "kellelt?",
       tip: (
         <Trans>
-          <span lang="et">-lt</span>, from. Speech uses the short form.
+          The ending <span lang="et">-lt</span>, from. The short form is the usual one.
         </Trans>
       ),
       cells: [cell(person.lt, "lt"), cell(person.shortLt, "lt")],
@@ -551,7 +560,7 @@ function CaseTable() {
       ask: "kellest?",
       tip: (
         <Trans>
-          <span lang="et">-st</span>, out of, also says who you talk about.
+          The ending <span lang="et">-st</span>, out of, also says who you talk about.
         </Trans>
       ),
       cells: [cell(person.st, "st"), cell(person.shortSt, "st")],
@@ -630,7 +639,7 @@ export function AsesonadLesson() {
         pair,
         explain: (
           <Trans>
-            <span lang="et">-{ending}</span> on the genitive{" "}
+            The ending <span lang="et">-{ending}</span> goes on the genitive{" "}
             <span lang="et">{person.genitive}</span>.
           </Trans>
         ),
@@ -640,7 +649,7 @@ export function AsesonadLesson() {
 
   const whichItems = useMemo<WhichItem[]>(() => {
     const explain = {
-      genitive: <Trans>Whose: the genitive, the same form as my or your.</Trans>,
+      genitive: <Trans>Whose: the genitive, the form that means my, your, his or her.</Trans>,
       l: (
         <Trans>
           Who has: <span lang="et">-l</span> with <span lang="et">on</span>.
@@ -704,7 +713,7 @@ export function AsesonadLesson() {
       }
       facts={[
         <Trans key="m">18 minutes</Trans>,
-        <Trans key="q">8 exercises, 3 of them typed, and a phone call</Trans>,
+        <Trans key="q">7 exercises, 3 of them typed, and a phone call</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -724,13 +733,15 @@ export function AsesonadLesson() {
       ]}
       recap={[
         <Trans key="1">
-          <b lang="et">-ga</b> and <b lang="et">-ta</b> go on the genitive: <b lang="et">minuga</b>,
-          with me; <b lang="et">sinuta</b>, without you; <b lang="et">nendega</b>, with them.
+          The endings <b lang="et">-ga</b> and <b lang="et">-ta</b> go on the genitive:{" "}
+          <b lang="et">minuga</b>, with me; <b lang="et">sinuta</b>, without you;{" "}
+          <b lang="et">nendega</b>, with them.
         </Trans>,
         <Trans key="2">
-          For to, has and from, speech uses the short forms: <b lang="et">mulle, mul, mult</b>;{" "}
-          <b lang="et">talle, tal, talt</b>; <b lang="et">meile, meil, meilt</b>. The long{" "}
-          <b lang="et">minule, minul, minult</b> put weight on the person.
+          For to, has and from, the short forms are the usual ones:{" "}
+          <b lang="et">mulle, mul, mult</b>; <b lang="et">talle, tal, talt</b>;{" "}
+          <b lang="et">meile, meil, meilt</b>. The long <b lang="et">minule, minul, minult</b>{" "}
+          stress the person.
         </Trans>,
         <Trans key="3">
           The partitive is a word of its own: <b lang="et">mind, sind, teda, meid, teid, neid</b>.{" "}
@@ -742,8 +753,9 @@ export function AsesonadLesson() {
           .
         </Trans>,
         <Trans key="5">
-          Each form answers the same form of <b lang="et">kes</b>: <b lang="et">kellega?</b>,{" "}
-          <b lang="et">kellele?</b>, <b lang="et">keda?</b>
+          Each form has a question made the same way from <b lang="et">kes</b>:{" "}
+          <b lang="et">kellega?</b>, with whom; <b lang="et">kellele?</b>, to whom;{" "}
+          <b lang="et">keda?</b>, whom.
         </Trans>,
       ]}
       sections={[
@@ -756,9 +768,10 @@ export function AsesonadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Minu" /> is my, the genitive from lesson {genitive}. Put an ending from
-                    lesson {withLesson} on it, and you have with me and without me:{" "}
-                    <Word w="minuga" />, <Word w="minuta" />.
+                    <Word w="Minu" /> is my, the genitive from lesson {genitive}. Put{" "}
+                    <span lang="et">-ga</span> or <span lang="et">-ta</span> from lesson{" "}
+                    {withLesson} on it: <Word w="minuga" />, with me; <Word w="minuta" />, without
+                    me.
                   </Trans>
                 </p>
                 <p>
@@ -838,25 +851,27 @@ export function AsesonadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    For to, has and from, speech uses a short form: <Word w="mulle" />, to me;{" "}
-                    <Word w="mul" />, as in <span lang="et">mul on</span> from lesson {have};{" "}
+                    For to, has and from, the short form is the usual one: <Word w="mulle" />, to
+                    me; <Word w="mul" />, as in <span lang="et">mul on</span> from lesson {have};{" "}
                     <Word w="mult" />, from me. These are the endings <span lang="et">-le</span>,{" "}
                     <span lang="et">-l</span> and <span lang="et">-lt</span> from lesson {onto}, on
-                    a short stem.
+                    a short stem, and the l doubles before <span lang="et">-le</span>:{" "}
+                    <span lang="et">mulle</span>.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
                     The long forms <Word w="minule" />, <Word w="minul" /> and <Word w="minult" />{" "}
-                    mean the same and put weight on the person. For we and you, speech has only the
-                    short <span lang="et">meile</span> and <span lang="et">teile</span>.
+                    mean the same and stress the person: to me, not to you.{" "}
+                    <span lang="et">Meie</span> and <span lang="et">teie</span> have one form for
+                    each, written too: <span lang="et">meile</span>, <span lang="et">teile</span>.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Some verbs bring their ending. You call to someone, so <Word w="helistab" />{" "}
-                    takes <span lang="et">-le</span>; you ask from someone, so <Word w="küsib" />{" "}
-                    takes <span lang="et">-lt</span>. Tap a line to hear it.
+                    Some verbs set the person’s ending. Estonian calls to someone, so{" "}
+                    <Word w="helistab" /> takes <span lang="et">-le</span>; it asks from someone, so{" "}
+                    <Word w="küsib" /> takes <span lang="et">-lt</span>. Tap a line to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -864,7 +879,7 @@ export function AsesonadLesson() {
               <Panel>
                 <Paradigm
                   label={t`Each pronoun’s short forms for to, has and from`}
-                  columns={[t`To`, t`Has`, t`From`]}
+                  columns={[t`To`, t`Who has`, t`From`]}
                   rows={PRONOUN_CASES.map((person) => ({
                     id: person.id,
                     label: i18n._(PERSON_NAMES[person.id]),
@@ -884,9 +899,9 @@ export function AsesonadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Now hear a line and pick what the pronoun says. The ending tells you:{" "}
-                    <span lang="et">-le</span>, <span lang="et">-l</span> or{" "}
-                    <span lang="et">-lt</span>.
+                    Now hear a line and pick what the pronoun means: to someone, someone has, or
+                    from someone. The ending tells you: <span lang="et">-le</span>,{" "}
+                    <span lang="et">-l</span> or <span lang="et">-lt</span>.
                   </Trans>
                 </p>
               </Prose>
@@ -899,7 +914,9 @@ export function AsesonadLesson() {
                   share === 1 ? (
                     <Trans>All of them. You heard each ending.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Nearly. Play the ones you missed and listen to the last sound.</Trans>
+                    <Trans>
+                      Nearly. Play the ones you missed and listen to how the pronoun ends.
+                    </Trans>
                   ) : (
                     <Trans>Tap the forms in the table once more, then try again.</Trans>
                   )
@@ -922,8 +939,8 @@ export function AsesonadLesson() {
                   <Trans>
                     After a verb such as <Word w="ootan" />, I’m waiting, or <Word w="armastan" />,
                     I love, the person takes the partitive from lesson {partitive}.{" "}
-                    <Word w="Ma armastan sind" /> is I love you. A pronoun’s partitive doesn’t grow
-                    from the genitive, so learn the six as they are.
+                    <Word w="Ma armastan sind" /> is I love you. A pronoun’s partitive isn’t built
+                    on the genitive, so learn the six as they are.
                   </Trans>
                 </p>
                 <p>
@@ -946,7 +963,7 @@ export function AsesonadLesson() {
         },
         {
           id: "which-form",
-          title: t`My, has or me`,
+          title: t`My, I have or me`,
           quiz: true,
           children: (
             <>
@@ -954,8 +971,8 @@ export function AsesonadLesson() {
                 <p>
                   <Trans>
                     Three forms of one pronoun look alike and say different things.{" "}
-                    <Word w="See on minu kass" /> is this is my cat. <Word w="Mul on kass" /> is I
-                    have a cat. <Word w="Jaan ootab mind" /> is Jaan is waiting for me.
+                    <Word w="See on minu kass" /> means this is my cat. <Word w="Mul on kass" />{" "}
+                    means I have a cat. <Word w="Jaan ootab mind" /> means Jaan is waiting for me.
                   </Trans>
                 </p>
                 <p>
@@ -980,7 +997,7 @@ export function AsesonadLesson() {
               </Prose>
               <Quiz
                 id="minu-mul-mind"
-                title={<Trans>My, has or me?</Trans>}
+                title={<Trans>My, I have or me?</Trans>}
                 items={whichItems}
                 rounds={6}
                 verdict={(share) =>
@@ -1001,7 +1018,7 @@ export function AsesonadLesson() {
         },
         {
           id: "every-case",
-          title: t`Every form of a pronoun`,
+          title: t`One pronoun in nine forms`,
           quiz: true,
           children: (
             <>
@@ -1062,8 +1079,8 @@ export function AsesonadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each sentence has one wrong pronoun, as learners often write it. Tap the wrong
-                    word, then type it right.
+                    Each sentence has one pronoun in the wrong form. Tap the wrong word, then type
+                    it right.
                   </Trans>
                 </p>
               </Prose>
@@ -1078,7 +1095,7 @@ export function AsesonadLesson() {
                   ) : share >= 0.6 ? (
                     <Trans>Most of them. Read why each one you missed is wrong.</Trans>
                   ) : (
-                    <Trans>Go back to “My, has or me” above, then try again.</Trans>
+                    <Trans>Read the reason under each one you missed, then try again.</Trans>
                   )
                 }
                 recall={fixRecall}

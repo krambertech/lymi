@@ -660,9 +660,9 @@ export function KellLesson() {
         id: "home",
         ask: t`When is Mari at home?`,
         options: [
+          { id: "245", label: "2:45" },
           { id: "300", label: "3:00" },
-          { id: "230", label: "2:30" },
-          { id: "330", label: "3:30" },
+          { id: "100", label: "1:00" },
         ],
         answer: "300",
         line: 3,
@@ -683,10 +683,10 @@ export function KellLesson() {
         id: "bus",
         ask: t`When do they wait for the bus?`,
         options: [
-          { id: "515", label: "5:15" },
+          { id: "615", label: "6:15" },
           { id: "545", label: "5:45" },
+          { id: "500", label: "5:00" },
           { id: "645", label: "6:45" },
-          { id: "530", label: "5:30" },
         ],
         answer: "545",
         line: 5,
@@ -1100,11 +1100,12 @@ export function KellLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a time and write the whole sentence. With <span lang="et">läbi</span>, the
-                    minutes are <span lang="et">viis</span>, <span lang="et">kümme</span> or{" "}
-                    <span lang="et">kakskümmend minutit</span>; with <span lang="et">pärast</span>,{" "}
-                    <span lang="et">viie</span>, <span lang="et">kümne</span> or{" "}
-                    <span lang="et">kahekümne minuti</span>.
+                    Hear a time and write the whole sentence. With <span lang="et">läbi</span>, say{" "}
+                    <span lang="et">viis</span>, <span lang="et">kümme</span> or{" "}
+                    <span lang="et">kakskümmend</span>, then <span lang="et">minutit</span>; with{" "}
+                    <span lang="et">pärast</span>, <span lang="et">viie</span>,{" "}
+                    <span lang="et">kümne</span> or <span lang="et">kahekümne</span>, then{" "}
+                    <span lang="et">minuti</span>.
                   </Trans>
                 </p>
               </Prose>

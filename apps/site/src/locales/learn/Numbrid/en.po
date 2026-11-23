@@ -10,8 +10,8 @@ msgstr ""
 msgid "-teist or -kümmend?"
 msgstr "-teist or -kümmend?"
 
-msgid "<0/> has a short a and a k before the s; <1/> has a long uu. <2/> starts with ka, <3/> with ü. The numbers built from them differ the same way. Listen, then pick."
-msgstr "<0/> has a short a and a k before the s; <1/> has a long uu. <2/> starts with ka, <3/> with ü. The numbers built from them differ the same way. Listen, then pick."
+msgid "<0/> has a short <1>a</1> and a <2>k</2> before the <3>s</3>; <4/> has a long <5>uu</5>. <6/> starts with <7>ka</7>, <8/> with <9>ü</9>. The numbers built from them differ the same way. Listen, then pick."
+msgstr "<0/> has a short <1>a</1> and a <2>k</2> before the <3>s</3>; <4/> has a long <5>uu</5>. <6/> starts with <7>ka</7>, <8/> with <9>ü</9>. The numbers built from them differ the same way. Listen, then pick."
 
 msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 msgstr "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
@@ -28,8 +28,8 @@ msgstr "<et>-teist</et> makes eleven to nineteen; <et>-kümmend</et> makes the t
 msgid "<et>-teist</et> or <et>-kümmend</et>"
 msgstr "<et>-teist</et> or <et>-kümmend</et>"
 
-msgid "<et>Kaks</et> has a short a and a k before the s; <et>kuus</et> a long uu. <et>Kaheksa</et> starts with ka, <et>üheksa</et> with ü."
-msgstr "<et>Kaks</et> has a short a and a k before the s; <et>kuus</et> a long uu. <et>Kaheksa</et> starts with ka, <et>üheksa</et> with ü."
+msgid "<et>Kaks</et> has a short <et>a</et> and a <et>k</et> before the <et>s</et>; <et>kuus</et> a long <et>uu</et>. <et>Kaheksa</et> starts with <et>ka</et>, <et>üheksa</et> with <et>ü</et>."
+msgstr "<et>Kaks</et> has a short <et>a</et> and a <et>k</et> before the <et>s</et>; <et>kuus</et> a long <et>uu</et>. <et>Kaheksa</et> starts with <et>ka</et>, <et>üheksa</et> with <et>ü</et>."
 
 msgid "<et>Kaks</et> or <et>kuus</et> in a sentence"
 msgstr "<et>Kaks</et> or <et>kuus</et> in a sentence"

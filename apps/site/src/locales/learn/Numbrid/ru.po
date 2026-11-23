@@ -10,8 +10,8 @@ msgstr ""
 msgid "-teist or -kümmend?"
 msgstr "-teist или -kümmend?"
 
-msgid "<0/> has a short a and a k before the s; <1/> has a long uu. <2/> starts with ka, <3/> with ü. The numbers built from them differ the same way. Listen, then pick."
-msgstr "<0/> произносится с коротким a и k перед s, <1/> — с долгим uu. <2/> начинается с ka, <3/> — с ü. Так же различаются и числа, составленные из них. Послушай и выбери."
+msgid "<0/> has a short <1>a</1> and a <2>k</2> before the <3>s</3>; <4/> has a long <5>uu</5>. <6/> starts with <7>ka</7>, <8/> with <9>ü</9>. The numbers built from them differ the same way. Listen, then pick."
+msgstr "<0/> произносится с коротким <1>a</1> и <2>k</2> перед <3>s</3>, <4/> — с долгим <5>uu</5>. <6/> начинается с <7>ka</7>, <8/> — с <9>ü</9>. Так же различаются и числа, составленные из них. Послушай и выбери."
 
 msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 msgstr "<0/> — это сто, а <1/> — тысяча, и «один» перед ними не говорят. Сотни пишутся слитно, <2/>, а тысячи отдельно: <3/>."
@@ -28,8 +28,8 @@ msgstr "<et>-teist</et> образует числа от одиннадцати 
 msgid "<et>-teist</et> or <et>-kümmend</et>"
 msgstr "<et>-teist</et> или <et>-kümmend</et>"
 
-msgid "<et>Kaks</et> has a short a and a k before the s; <et>kuus</et> a long uu. <et>Kaheksa</et> starts with ka, <et>üheksa</et> with ü."
-msgstr "В <et>kaks</et> короткое a и k перед s, в <et>kuus</et> — долгое uu. <et>Kaheksa</et> начинается с ka, <et>üheksa</et> — с ü."
+msgid "<et>Kaks</et> has a short <et>a</et> and a <et>k</et> before the <et>s</et>; <et>kuus</et> a long <et>uu</et>. <et>Kaheksa</et> starts with <et>ka</et>, <et>üheksa</et> with <et>ü</et>."
+msgstr "В <et>kaks</et> короткое <et>a</et> и <et>k</et> перед <et>s</et>, в <et>kuus</et> — долгое <et>uu</et>. <et>Kaheksa</et> начинается с <et>ka</et>, <et>üheksa</et> — с <et>ü</et>."
 
 msgid "<et>Kaks</et> or <et>kuus</et> in a sentence"
 msgstr "<et>Kaks</et> или <et>kuus</et> в предложении"

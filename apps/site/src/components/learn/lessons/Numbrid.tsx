@@ -322,7 +322,7 @@ export function NumbridLesson() {
         id: "flat",
         ask: t`What is his flat number?`,
         options: [
-          { id: "80", label: "80" },
+          { id: "90", label: "90" },
           { id: "19", label: "19" },
           { id: "18", label: "18" },
         ],
@@ -335,7 +335,7 @@ export function NumbridLesson() {
         options: [
           { id: "56209", label: "5 6 2 0 9" },
           { id: "52609", label: "5 2 6 0 9" },
-          { id: "56208", label: "5 6 2 0 8" },
+          { id: "52608", label: "5 2 6 0 8" },
         ],
         answer: "56209",
         line: 3,
@@ -681,9 +681,11 @@ export function NumbridLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Kaks" /> has a short a and a k before the s; <Word w="kuus" /> has a
-                    long uu. <Word w="Kaheksa" /> starts with ka, <Word w="üheksa" /> with ü. The
-                    numbers built from them differ the same way. Listen, then pick.
+                    <Word w="Kaks" /> has a short <b lang="et">a</b> and a <b lang="et">k</b> before
+                    the <b lang="et">s</b>; <Word w="kuus" /> has a long <b lang="et">uu</b>.{" "}
+                    <Word w="Kaheksa" /> starts with <b lang="et">ka</b>, <Word w="üheksa" /> with{" "}
+                    <b lang="et">ü</b>. The numbers built from them differ the same way. Listen,
+                    then pick.
                   </Trans>
                 </p>
               </Prose>

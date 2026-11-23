@@ -45,7 +45,7 @@ const heard = (n: number, other: number, rule: string, explain: MessageDescripto
   };
 };
 
-const ALIKE = msg`<et>Kaks</et> has a short a and a k before the s; <et>kuus</et> a long uu. <et>Kaheksa</et> starts with ka, <et>üheksa</et> with ü.`;
+const ALIKE = msg`<et>Kaks</et> has a short <et>a</et> and a <et>k</et> before the <et>s</et>; <et>kuus</et> a long <et>uu</et>. <et>Kaheksa</et> starts with <et>ka</et>, <et>üheksa</et> with <et>ü</et>.`;
 
 const heardIn = (id: string, said: string, answer: string, wrong: string): ChoiceDrill => ({
   kind: "choice",

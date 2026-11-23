@@ -122,8 +122,8 @@ msgstr "Половина: pool"
 msgid "Halfway to {next}."
 msgstr "Пів шляху до {next}."
 
-msgid "Hear a time and write the whole sentence. With <0>läbi</0>, the minutes are <1>viis</1>, <2>kümme</2> or <3>kakskümmend minutit</3>; with <4>pärast</4>, <5>viie</5>, <6>kümne</6> or <7>kahekümne minuti</7>."
-msgstr "Послухай час і напиши все речення. Із <0>läbi</0> хвилини — це <1>viis</1>, <2>kümme</2> чи <3>kakskümmend minutit</3>, а з <4>pärast</4> — <5>viie</5>, <6>kümne</6> чи <7>kahekümne minuti</7>."
+msgid "Hear a time and write the whole sentence. With <0>läbi</0>, say <1>viis</1>, <2>kümme</2> or <3>kakskümmend</3>, then <4>minutit</4>; with <5>pärast</5>, <6>viie</6>, <7>kümne</7> or <8>kahekümne</8>, then <9>minuti</9>."
+msgstr "Послухай час і напиши все речення. Із <0>läbi</0> кажи <1>viis</1>, <2>kümme</2> чи <3>kakskümmend</3>, а тоді <4>minutit</4>; із <5>pärast</5> — <6>viie</6>, <7>kümne</7> чи <8>kahekümne</8>, а тоді <9>minuti</9>."
 
 msgid "Here the number changes shape: <0>viis</0> becomes <1>viie</1>, <2>kümme</2> becomes <3>kümne</3>, <4>kakskümmend</4> becomes <5>kahekümne</5>. Learn these three as set phrases for now. Lesson {genitive} explains the form."
 msgstr "Тут число змінює форму: <0>viis</0> стає <1>viie</1>, <2>kümme</2> — <3>kümne</3>, <4>kakskümmend</4> — <5>kahekümne</5>. Поки що запам’ятай ці три як готові фрази. Цю форму пояснює урок {genitive}."

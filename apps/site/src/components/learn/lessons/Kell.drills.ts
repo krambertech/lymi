@@ -44,6 +44,8 @@ const written = (time: ClockTime): SentenceDrill => ({
   explain: WHY[ruleOf(time)] as MessageDescriptor,
 });
 
+const at = (hour: number, minute: Minute): ClockTime => ({ hour, minute });
+
 const OTHERS = [
   [-1, 2],
   [2, 3],
@@ -66,9 +68,12 @@ const heard = (time: ClockTime, i: number): ChoiceDrill => {
     say: timeSentence(time),
     answer: option(time),
     slip: option(slip),
-    wrong: (OTHERS[i % 3] as readonly number[]).map((by) =>
-      option({ hour: hourBy(hour, by), minute }),
-    ),
+    wrong:
+      hour === 11 && minute !== 0
+        ? (minute === 15 ? [at(11, 45), at(12, 45)] : [at(12, 5), at(12, 40)]).map(option)
+        : (OTHERS[i % 3] as readonly number[]).map((by) =>
+            option({ hour: hourBy(hour, by), minute }),
+          ),
     explain: WHY[ruleOf(time)] as MessageDescriptor,
   };
 };

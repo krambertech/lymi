@@ -308,7 +308,7 @@ const I_FORMS: Record<IVerb["verb"], { ma: MessageDescriptor; ta: MessageDescrip
   jooma: { ma: msg`I drank`, ta: msg`he or she drank` },
 };
 
-/** What changes on the way from the -ma form to the I form of each -i- verb. */
+/** What changes on the way from the -ma infinitive to the I form of each -i- verb. */
 const I_CHANGES: Record<IVerb["verb"], ReactNode> = {
   olema: (
     <Trans>
@@ -604,7 +604,7 @@ function useContent() {
         ),
         rule: (
           <Trans>
-            Most verbs: <End>si-</End> on the stem of the <End>ma</End> form.
+            Most verbs: <End>si-</End> on the stem of the <End>-ma</End> infinitive.
           </Trans>
         ),
       },
@@ -668,8 +668,8 @@ export function LihtminevikLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Most verbs put <End>si-</End> on the stem of the <End>ma</End> form; a few everyday verbs
-          take <End>i-</End>. An ending for each person says who did it.
+          Most verbs put <End>si-</End> on the stem of the <End>-ma</End> infinitive; a few everyday
+          verbs take <End>i-</End>. An ending for each person says who did it.
         </Trans>
       }
       facts={[
@@ -695,7 +695,7 @@ export function LihtminevikLesson() {
       ]}
       recap={[
         <Trans key="1">
-          Most verbs put <End>si-</End> on the stem of the <End>ma</End> form:{" "}
+          Most verbs put <End>si-</End> on the stem of the <End>-ma</End> infinitive:{" "}
           <b lang="et">elama, elasin</b>; <b lang="et">lugema, lugesin</b>.
         </Trans>,
         <Trans key="2">
@@ -704,7 +704,7 @@ export function LihtminevikLesson() {
           does: <b lang="et">ta elas, nad elasid</b>.
         </Trans>,
         <Trans key="3">
-          A few everyday verbs take <End>i-</End> on the stem of the <End>ma</End> form:{" "}
+          A few everyday verbs take <End>i-</End> on the stem of the <End>-ma</End> infinitive:{" "}
           <b lang="et">olin, tulin, tegin, nägin</b>. Three change the stem:{" "}
           <b lang="et">läksin, sõin, jõin</b>. <Et>Ta</Et> ends in <End>i</End>, as in{" "}
           <b lang="et">ta oli</b>, except <b lang="et">ta läks</b>.
@@ -770,17 +770,18 @@ export function LihtminevikLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Most verbs build the past on the <End>ma</End> form. Take off <End>ma</End> and
-                    add <End>sin</End> for I: <Word w="elama" />, <Word w="elasin" />.
+                    Most verbs build the past on the <End>-ma</End> infinitive. Take off{" "}
+                    <End>ma</End> and add <End>sin</End> for I: <Word w="elama" />,{" "}
+                    <Word w="elasin" />.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    The past keeps the stem of the <End>ma</End> form where the present changes it.
-                    You say <Word w="loen" /> now but <Word w="lugesin" /> in the past, because the
-                    past comes from <Word w="lugema" />. In the same way, <Word w="räägin" /> is now
-                    and <Word w="rääkisin" /> the past. Lesson {verbForms} puts the <End>ma</End>{" "}
-                    form beside the I form.
+                    The past keeps the stem of the <End>-ma</End> infinitive where the present
+                    changes it. You say <Word w="loen" /> now but <Word w="lugesin" /> in the past,
+                    because the past comes from <Word w="lugema" />. In the same way,{" "}
+                    <Word w="räägin" /> is now and <Word w="rääkisin" /> the past. Lesson{" "}
+                    {verbForms} puts the <End>-ma</End> infinitive beside the present.
                   </Trans>
                 </p>
                 <p>

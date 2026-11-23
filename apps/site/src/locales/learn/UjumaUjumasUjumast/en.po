@@ -49,11 +49,11 @@ msgstr "A quiz by ear, a sort and a voice message"
 msgid "Add <0>-s</0> and it says someone is in the middle of it, often out doing it: <1/> Add <2>-st</2> and it says what they’re coming back from: <3/>"
 msgstr "Add <0>-s</0> and it says someone is in the middle of it, often out doing it: <1/> Add <2>-st</2> and it says what they’re coming back from: <3/>"
 
-msgid "After <0>läheb</0>, the <1>-ma</1> form says what someone is off to do: <2/> You met it after <3>lähen</3> in lesson {infinitives}."
-msgstr "After <0>läheb</0>, the <1>-ma</1> form says what someone is off to do: <2/> You met it after <3>lähen</3> in lesson {infinitives}."
+msgid "After <0>läheb</0>, the <1>-ma</1> infinitive says what someone is off to do: <2/> You met it after <3>lähen</3> in lesson {infinitives}."
+msgstr "After <0>läheb</0>, the <1>-ma</1> infinitive says what someone is off to do: <2/> You met it after <3>lähen</3> in lesson {infinitives}."
 
-msgid "After <0>läheb</0>, the <1>-ma</1> form says what someone is off to do: <2>Mari läheb ujuma.</2>"
-msgstr "After <0>läheb</0>, the <1>-ma</1> form says what someone is off to do: <2>Mari läheb ujuma.</2>"
+msgid "After <0>läheb</0>, the <1>-ma</1> infinitive says what someone is off to do: <2>Mari läheb ujuma.</2>"
+msgstr "After <0>läheb</0>, the <1>-ma</1> infinitive says what someone is off to do: <2>Mari läheb ujuma.</2>"
 
 msgid "After <0>tulen</0>, only the ending tells you which way: <1>tulen sööma</1> is I’m coming to eat, and <2>tulen söömast</2> is I’m coming back from eating."
 msgstr "After <0>tulen</0>, only the ending tells you which way: <1>tulen sööma</1> is I’m coming to eat, and <2>tulen söömast</2> is I’m coming back from eating."
@@ -61,8 +61,8 @@ msgstr "After <0>tulen</0>, only the ending tells you which way: <1>tulen sööm
 msgid "All six. You heard every ending."
 msgstr "All six. You heard every ending."
 
-msgid "An activity has the same three, built on its <0>-ma</0> form: <1/> <2/> <3/> She’s going swimming, she’s out swimming, and she’s on her way back."
-msgstr "An activity has the same three, built on its <0>-ma</0> form: <1/> <2/> <3/> She’s going swimming, she’s out swimming, and she’s on her way back."
+msgid "An activity has the same three, built on its <0>-ma</0> infinitive: <1/> <2/> <3/> She’s going swimming, she’s out swimming, and she’s on her way back."
+msgstr "An activity has the same three, built on its <0>-ma</0> infinitive: <1/> <2/> <3/> She’s going swimming, she’s out swimming, and she’s on her way back."
 
 msgid "At home"
 msgstr "At home"
@@ -190,11 +190,11 @@ msgstr "in the shop"
 msgid "into the house"
 msgstr "into the house"
 
-msgid "Its I form is käin."
-msgstr "Its I form is käin."
+msgid "Its present is käin."
+msgstr "Its present is käin."
 
-msgid "Its I form is tulen."
-msgstr "Its I form is tulen."
+msgid "Its present is tulen."
+msgstr "Its present is tulen."
 
 msgid "Kati leaves Jaan a voice message about her family. Listen for where each of them is and what she asks Jaan to do."
 msgstr "Kati leaves Jaan a voice message about her family. Listen for where each of them is and what she asks Jaan to do."
@@ -211,8 +211,8 @@ msgstr "Kus? From maja, a house."
 msgid "Kus? From pood, a shop."
 msgstr "Kus? From pood, a shop."
 
-msgid "Kus? The -ma form plus -s."
-msgstr "Kus? The -ma form plus -s."
+msgid "Kus? The -ma infinitive plus -s."
+msgstr "Kus? The -ma infinitive plus -s."
 
 msgid "Kust? From maja, a house."
 msgstr "Kust? From maja, a house."
@@ -220,8 +220,8 @@ msgstr "Kust? From maja, a house."
 msgid "Kust? From pood, a shop."
 msgstr "Kust? From pood, a shop."
 
-msgid "Kust? The -ma form plus -st."
-msgstr "Kust? The -ma form plus -st."
+msgid "Kust? The -ma infinitive plus -st."
+msgstr "Kust? The -ma infinitive plus -st."
 
 msgid "Listen: Kati’s message"
 msgstr "Listen: Kati’s message"
@@ -320,8 +320,8 @@ msgstr "Tap a word to hear its sentence and see the cat go in to eat, eat, and c
 msgid "Tap the forms in the table above once more, then try again."
 msgstr "Tap the forms in the table above once more, then try again."
 
-msgid "The -ma form. After lähen: going swimming."
-msgstr "The -ma form. After lähen: going swimming."
+msgid "The -ma infinitive. After lähen: going swimming."
+msgstr "The -ma infinitive. After lähen: going swimming."
 
 msgid "The cat is coming back from eating."
 msgstr "The cat is coming back from eating."

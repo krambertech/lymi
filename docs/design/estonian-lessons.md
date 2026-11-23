@@ -27,13 +27,13 @@ Each stage has a hue (`hue` in the catalogue). A lesson sets it as `--h` on `.le
 
 ## Loading
 
-The lessons cost every other page nothing. Only the hub, a lesson's page and the kit page import lesson code, and each loads its own part: `LearnPage` in `components/learn/learn-page.tsx` imports the lesson whose file is its slug in PascalCase (`mina-sina-tema` is `MinaSinaTema.tsx`), with its catalog in the reader's language. The page's frontmatter calls `prepareLearnPage` first, so the lesson is ready before the server renders it.
+The lessons cost every other page nothing. Their stylesheet, `learn.css`, is imported by `learn-page.tsx`, so only the hub, the review page, a lesson and the kit page load it. Only the hub, a lesson's page and the kit page import lesson code, and each loads its own part: `LearnPage` in `components/learn/learn-page.tsx` imports the lesson whose file is its slug in PascalCase (`mina-sina-tema` is `MinaSinaTema.tsx`), with its catalog in the reader's language. The page's frontmatter calls `prepareLearnPage` first, so the lesson is ready before the server renders it.
 
 When a lesson's code or catalog can't load, such as just after a deploy replaced it, the page keeps the article the server rendered and `LearnReload` offers to reload it. Its two lines live in the site's catalog, because the lesson's own may be what failed.
 
 A drill bank is a module of its own, `<File>.drills.ts` beside the lesson. No page loads one until the learner presses Start, Warm-up or Review, and then it loads only the banks and catalogs of the lessons asked about, through `drill-banks.ts`. The hub counts what is due from the visitor's stored answers without loading any.
 
-Each lesson has its own Lingui catalogs in `apps/site/src/locales/learn/<File>/`, the kit, hub and course names share `locales/learn/Kit/`, and the site's own catalogs hold no lesson text. `apps/site/lingui.config.ts` finds a new lesson by its file, and a lesson's drill bank shares its catalog. `lesson-isolation.mjs` fails the site's build when a page outside the lessons would load a module or catalog of theirs, and `pnpm i18n:check` fails when a lesson's line is in the site's catalog.
+Each lesson has its own Lingui catalogs in `apps/site/src/locales/learn/<File>/`, the kit, hub and course names share `locales/learn/Kit/`, and the site's own catalogs hold no lesson text. `apps/site/lingui.config.ts` finds a new lesson by its file, and a lesson's drill bank shares its catalog. `lesson-isolation.mjs` fails the site's build when a page outside the lessons would load a module or catalog of theirs, at once or on demand, and `pnpm i18n:check` fails when a lesson's line is in the site's catalog.
 
 ## Components
 

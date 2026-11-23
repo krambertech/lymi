@@ -5,6 +5,7 @@ import { lessonName } from "../../lib/learn/catalogue";
 import { learnI18n } from "../../lib/learn/i18n";
 import { reportLoadFailure } from "../../lib/learn/load-failure";
 import { Queries } from "../islands/Queries";
+import "./learn.css";
 
 const LESSONS = import.meta.glob<Record<string, ComponentType>>("./lessons/*.tsx");
 

@@ -43,6 +43,7 @@ export const DRILLS: DrillBank = {
         "Kas sa tahad midagi juua?",
         "Kas sa midagi juua tahad?",
         "Kas te midagi juua tahate?",
+        "Kas sina midagi juua tahad?",
         "Kas sina tahad midagi juua?",
         "Kas te tahate midagi juua?",
         "Kas tahad midagi juua?",

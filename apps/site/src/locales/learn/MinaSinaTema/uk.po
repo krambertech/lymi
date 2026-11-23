@@ -173,10 +173,10 @@ msgid "I’m ready."
 msgstr "Я готовий (готова)."
 
 msgid "Liis and Peeter are friends."
-msgstr "Лііс і Пеетер — друзі."
+msgstr "Ліїс і Пеетер — друзі."
 
 msgid "Liis says who she is, who Peeter is, and where Mari and Jaan are. Listen for the pronoun and the form of <0/>."
-msgstr "Лііс розповідає, хто вона, хто Пеетер і де Марі та Яан. Слухай займенник і форму <0/>."
+msgstr "Ліїс розповідає, хто вона, хто Пеетер і де Марі та Яан. Слухай займенник і форму <0/>."
 
 msgid "Listen first."
 msgstr "Спершу прослухай."
@@ -185,13 +185,13 @@ msgid "Listen to the end of the verb. Try the table above, then come back."
 msgstr "Слухай кінець дієслова. Пограйся зі столом вище й повертайся."
 
 msgid "Listen: Liis introduces people"
-msgstr "Слухання: Лііс розповідає, хто є хто"
+msgstr "Слухання: Ліїс розповідає, хто є хто"
 
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"
 
 msgid "Listening: Liis introduces people"
-msgstr "На слух: Лііс розповідає, хто є хто"
+msgstr "На слух: Ліїс розповідає, хто є хто"
 
 msgctxt "pronoun form"
 msgid "Long"
@@ -409,10 +409,10 @@ msgid "We’re ready."
 msgstr "Ми готові."
 
 msgid "What does Liis say about herself?"
-msgstr "Що Лііс каже про себе?"
+msgstr "Що Ліїс каже про себе?"
 
 msgid "What does Liis say about Peeter?"
-msgstr "Що Лііс каже про Пеетера?"
+msgstr "Що Ліїс каже про Пеетера?"
 
 msgid "When the pronoun can go"
 msgstr "Коли займенник можна опустити"

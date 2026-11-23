@@ -8,19 +8,27 @@ import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
+  OUTER_FIX,
   OUTER_INNER_PLACES,
   OUTER_PLACES,
+  OUTER_SAY,
   OUTER_SENTENCES,
+  OUTER_TALK,
+  OUTER_TYPED,
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { shuffle, twoCycles } from "../../../lib/learn/quiz";
 import { Panel } from "../Explore";
+import { type FixItem, FixRound, fixRecall } from "../FixRound";
+import { type FormItem, FormRound, formRecall } from "../FormRound";
 import { type GapItem, GapPassage } from "../GapPassage";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
 import { Paradigm, type ParadigmRow } from "../Paradigm";
+import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
 import { Scene } from "../Scene";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
 import { Sort } from "../Sort";
 import { PlayMark } from "../Sound";
 import { Word } from "../Word";
@@ -312,6 +320,155 @@ function useSaturday(): GapItem[] {
   ];
 }
 
+const placeOf = (name: Place["place"]) => OUTER_PLACES.find((each) => each.place === name) as Place;
+
+export function typedItems(i18n: I18n): FormItem[] {
+  return OUTER_TYPED.map(({ place, way }) => {
+    const form = placeOf(place)[way];
+    return {
+      base: place,
+      gloss: i18n._(FORM_MEANS[place] as MessageDescriptor),
+      cue: `${way}?`,
+      cueLang: "et",
+      answers: [form],
+      src: wordSrc(form),
+      explain: i18n._(FORM_MEANS[form] as MessageDescriptor),
+    };
+  });
+}
+
+const SAY_MEANS: Record<(typeof OUTER_SAY)[number]["id"], MessageDescriptor> = {
+  toole: msg`I’m going to work.`,
+  turult: msg`I’m coming from the market.`,
+  lauale: msg`The cat jumps onto the table.`,
+  emale: msg`I’m calling Mum.`,
+  isalt: msg`I’ll ask Dad.`,
+  saaremaal: msg`We live on Saaremaa.`,
+};
+
+export function sayItems(i18n: I18n): SentenceItem[] {
+  return OUTER_SAY.map(({ id, said: text, also }) => ({
+    kind: "translate",
+    id: `say-${id}`,
+    prompt: i18n._(SAY_MEANS[id]),
+    src: wordSrc(text),
+    answers: [text, ...also],
+  }));
+}
+
+function FixWhy({ id }: { id: (typeof OUTER_FIX)[number]["id"] }) {
+  switch (id) {
+    case "toole":
+      return (
+        <Trans>
+          Going there answers <b lang="et">kuhu</b>: <b lang="et">tööle</b>.
+        </Trans>
+      );
+    case "turult":
+      return (
+        <Trans>
+          Coming from there answers <b lang="et">kust</b>: <b lang="et">turult</b>.
+        </Trans>
+      );
+    case "laual":
+      return (
+        <Trans>
+          Being there answers <b lang="et">kus</b>: <b lang="et">laual</b>.
+        </Trans>
+      );
+    case "emale":
+      return (
+        <Trans>
+          You call someone with <b lang="et">-le</b>: <b lang="et">helistan emale</b>.
+        </Trans>
+      );
+    case "emalt":
+      return (
+        <Trans>
+          You ask someone with <b lang="et">-lt</b>: <b lang="et">küsin emalt</b>.
+        </Trans>
+      );
+    case "turule":
+      return (
+        <Trans>
+          <b lang="et">Turg</b> takes <b lang="et">-le</b>, not <b lang="et">-sse</b>:{" "}
+          <b lang="et">turule</b>.
+        </Trans>
+      );
+  }
+}
+
+const FIX_MEANS: Record<(typeof OUTER_FIX)[number]["id"], MessageDescriptor> = {
+  toole: msg`I’m going to work.`,
+  turult: msg`I’m coming from the market.`,
+  laual: msg`The cat is on the table.`,
+  emale: msg`I’m calling Mum.`,
+  emalt: msg`I’m asking Mum.`,
+  turule: msg`I’m going to the market.`,
+};
+
+export function fixItems(i18n: I18n): FixItem[] {
+  return OUTER_FIX.map(({ id, wrong, right, also }) => ({
+    kind: "fix",
+    id: `fix-${id}`,
+    wrong,
+    prompt: i18n._(FIX_MEANS[id]),
+    answers: [right, ...also],
+    src: wordSrc(right),
+    explain: <FixWhy id={id} />,
+  }));
+}
+
+function useTalkQuestions(): PassageQuestion[] {
+  const { t } = useLingui();
+  return [
+    {
+      kind: "short",
+      id: "where",
+      ask: t`Where is Mari? Write the place in Estonian, with its ending.`,
+      answers: ["turul"],
+      line: 2,
+    },
+    { kind: "truefalse", id: "work", ask: t`Mari goes to work today.`, answer: false, line: 4 },
+    {
+      id: "after",
+      ask: t`Where is Mari going from the market?`,
+      options: [
+        { id: "work", label: t`To work` },
+        { id: "home", label: t`Home` },
+        { id: "saaremaa", label: t`To Saaremaa` },
+      ],
+      answer: "home",
+      line: 5,
+    },
+    {
+      kind: "truefalse",
+      id: "call",
+      ask: t`Mari is going to call her mum.`,
+      answer: true,
+      line: 7,
+    },
+    {
+      id: "tomorrow",
+      ask: t`Where is Jaan going tomorrow?`,
+      options: [
+        { id: "market", label: t`To the market` },
+        { id: "saaremaa", label: t`To Saaremaa` },
+        { id: "work", label: t`To work` },
+      ],
+      answer: "saaremaa",
+      line: 9,
+    },
+    {
+      kind: "truefalse",
+      id: "mum",
+      ask: t`Jaan’s mum lives on Saaremaa.`,
+      answer: true,
+      line: 11,
+    },
+  ];
+}
+
 export function LaualLaualeLaualtLesson() {
   const { t, i18n } = useLingui();
   const places = lessonBySlug("kohad")?.n;
@@ -320,6 +477,7 @@ export function LaualLaualeLaualtLesson() {
   const have = lessonBySlug("mul-on")?.n;
   const pronouns = lessonBySlug("asesonad")?.n;
   const saturday = useSaturday();
+  const talkQuestions = useTalkQuestions();
 
   const means: Record<Direction, string> = {
     kus: t({ message: "on, at", context: "a place's form that answers kus" }),
@@ -416,8 +574,8 @@ export function LaualLaualeLaualtLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">10 minutes</Trans>,
-        <Trans key="q">2 quizzes and a story to fill in</Trans>,
+        <Trans key="m">20 minutes</Trans>,
+        <Trans key="q">7 exercises</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -708,6 +866,41 @@ export function LaualLaualeLaualtLesson() {
           ),
         },
         {
+          id: "make-form",
+          title: t`Making the form`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each round gives a place and a question. Type the form that answers it:{" "}
+                    <b lang="et">kus</b> takes <b lang="et">-l</b>, <b lang="et">kuhu</b> takes{" "}
+                    <b lang="et">-le</b>, and <b lang="et">kust</b> takes <b lang="et">-lt</b>.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="type-place"
+                title={<Trans>Type the form</Trans>}
+                items={typedItems(i18n)}
+                rounds={8}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All eight typed right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Read the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={formRecall}
+                round={(props) => <FormRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
           id: "le-or-sse",
           title: t`-le or -sse`,
           quiz: true,
@@ -856,6 +1049,74 @@ export function LaualLaualeLaualtLesson() {
           ),
         },
         {
+          id: "say-it",
+          title: t`Write it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write each sentence in Estonian. For a place, ask yourself first: where, where
+                    to or where from? For a person, think of the verb.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="say-place"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={sayItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six written right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Read the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "fix",
+          title: t`Fix the sentence`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each sentence has one place or person in the wrong form. Tap it, then write the
+                    right form.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="fix-place"
+                title={<Trans>Find and fix the mistake</Trans>}
+                items={fixItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six found and fixed.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Look again at the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={fixRecall}
+                round={(props) => <FixRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
           id: "saturday",
           title: t`Mari’s Saturday`,
           quiz: true,
@@ -882,6 +1143,28 @@ export function LaualLaualeLaualtLesson() {
                 gaps={saturday}
                 mode="pick"
                 clip="p-saturday"
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listen: Jaan calls Mari`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>Jaan calls Mari on Saturday. Read the questions, then listen.</Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="jaan-calls"
+                title={<Trans>Listen: a call on Saturday</Trans>}
+                clip="c-call"
+                turns={OUTER_TALK.turns}
+                names={{ third: "Mari", fourth: "Jaan" }}
+                questions={talkQuestions}
               />
             </>
           ),

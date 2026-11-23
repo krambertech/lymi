@@ -33,11 +33,11 @@ msgstr "<et>{0}</et> — від <et>{1}, {2}</et>."
 msgid "<et>{word}, {stem}</et>: the ending goes on <et>{stem}</et>."
 msgstr "<et>{word}, {stem}</et>: закінчення додаємо до <et>{stem}</et>."
 
-msgid "10 minutes"
-msgstr "10 хвилин"
+msgid "18 minutes"
+msgstr "18 хвилин"
 
-msgid "2 quizzes and a passage"
-msgstr "2 тести й текст"
+msgid "7 exercises"
+msgstr "7 вправ"
 
 #. placeholder {0}: noun.word
 #. placeholder {1}: noun.stem
@@ -56,14 +56,23 @@ msgstr "Словник подає і партитив: <0>pood, poe, poodi</0>. 
 msgid "A final vowel is no guarantee: <0>tuba</0> ends in one too, and its stem is <1>toa</1>. The dictionary pair settles it: <2>kodu, kodu</2> but <3>tuba, toa</3>."
 msgstr "Голосна в кінці нічого не гарантує: <0>tuba</0> теж на неї закінчується, а основа — <1>toa</1>. Вирішує пара зі словника: <2>kodu, kodu</2>, але <3>tuba, toa</3>."
 
+msgid "A letter drops or changes"
+msgstr "Літера випадає або змінюється"
+
 msgid "A letter drops or changes inside: <0>pood, poe</0>; <1>tuba, toa</1>."
 msgstr "Усередині літера випадає або змінюється: <0>pood, poe</0>; <1>tuba, toa</1>."
 
 msgid "A letter inside drops or changes"
 msgstr "Літера всередині випадає або змінюється"
 
+msgid "A letter inside drops or changes: <0>tuba, toa, toas</0>."
+msgstr "Літера всередині випадає або змінюється: <0>tuba, toa, toas</0>."
+
 msgid "A shop is <0>pood</0>, but in the shop is <1>poes</1>. <2>-s</2> and <3>-l</3> go on the noun’s stem, and the stem can differ from the word."
 msgstr "Магазин — <0>pood</0>, а в магазині — <1>poes</1>. <2>-s</2> і <3>-l</3> додаємо до основи іменника, а основа може відрізнятися від слова."
+
+msgid "A vowel added"
+msgstr "Додається голосна"
 
 msgid "A vowel at the end"
 msgstr "Голосна в кінці"
@@ -74,8 +83,26 @@ msgstr "Усі. За кожною формою тобі вдалося знай�
 msgid "All of them. You put every ending on the stem."
 msgstr "Усі. Кожне закінчення додано до основи."
 
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All six written right."
+msgstr "Усі шість написано правильно."
+
+msgid "And you?"
+msgstr "А ти?"
+
+msgid "as in <0>kodu, kodu</0>"
+msgstr "як у <0>kodu, kodu</0>"
+
+msgid "as in <0>tuba, toa</0>"
+msgstr "як у <0>tuba, toa</0>"
+
 msgid "at home"
 msgstr "вдома"
+
+msgid "At home"
+msgstr "Вдома"
 
 msgid "at school, in a school"
 msgstr "у школі"
@@ -83,11 +110,23 @@ msgstr "у школі"
 msgid "at the door"
 msgstr "біля дверей"
 
+msgid "At the door"
+msgstr "Біля дверей"
+
+msgid "At the hospital"
+msgstr "У лікарні"
+
 msgid "at the market"
 msgstr "на ринку"
 
+msgid "At the shop"
+msgstr "У магазині"
+
 msgid "at work"
 msgstr "на роботі"
+
+msgid "At work"
+msgstr "На роботі"
 
 msgid "book"
 msgstr "книжка"
@@ -98,17 +137,32 @@ msgstr "кав’ярня"
 msgid "door"
 msgstr "двері"
 
+msgid "Each noun is shown with its <0>-s</0> or <1>-l</1> form. Take the ending off and compare what’s left with the word. A letter dropped or changed: the first group, even if a vowel also comes at the end, as in <2>pood, poe</2>. Every letter kept and a vowel added: the second. Nothing changed: the third."
+msgstr "Кожен іменник показано з його формою на <0>-s</0> або <1>-l</1>. Відкинь закінчення й порівняй те, що лишилося, зі словом. Літера випала або змінилася — перша група, навіть коли в кінці ще й з’явилася голосна, як у <2>pood, poe</2>. Усі літери на місці й додалася голосна — друга. Нічого не змінилося — третя."
+
 msgid "Each round shows a noun as a dictionary gives it, with its stem, and a meaning such as “in the shop”. Pick the form that says it, then hear it in a sentence. The nouns come from all three sections."
 msgstr "У кожному раунді — іменник, як його подає словник, разом з основою, і значення, яке треба передати, наприклад «у магазині». Обери форму з цим значенням, а потім послухай її в реченні. Іменники — з усіх трьох розділів."
+
+msgid "Each sentence builds the form from the word, not its stem. Tap the wrong word, then write the right form."
+msgstr "У кожному реченні форму утворено від слова, а не від основи. Торкнися неправильного слова, а потім напиши правильну форму."
 
 msgid "Each word gains a vowel at the end: <0>kooli, ukse, raamatu</0>."
 msgstr "Кожне слово отримує голосну в кінці: <0>kooli, ukse, raamatu</0>."
 
+msgid "every letter kept, as in <0>kool, kooli</0>"
+msgstr "усі літери на місці, як у <0>kool, kooli</0>"
+
 msgid "Fill the gaps"
 msgstr "Заповни пропуски"
 
+msgid "Find and fix the mistake"
+msgstr "Знайди й виправ помилку"
+
 msgid "Finland"
 msgstr "Фінляндія"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
 
 msgid "From ujuma, to swim."
 msgstr "Від ujuma, плавати."
@@ -121,6 +175,9 @@ msgstr "Він або вона вчиться в школі."
 
 msgid "He or she works at home."
 msgstr "Він або вона працює вдома."
+
+msgid "He’s working in Tartu today."
+msgstr "Сьогодні він працює в Тарту."
 
 msgid "Hear a sentence and pick the word as a dictionary lists it. You hear <0>toas</0>, and you look up <1>tuba</1>."
 msgstr "Послухай речення й обери слово так, як його подає словник. Чуєш <0>toas</0> — шукаєш <1>tuba</1>."
@@ -142,6 +199,9 @@ msgstr "Я живу в Таллінні."
 
 msgid "I’m at work."
 msgstr "Я на роботі."
+
+msgid "I’m in my room, reading."
+msgstr "Я в кімнаті, читаю."
 
 msgid "In <0>pood, poe</0> the <1>d</1> drops, the long <2>oo</2> turns short, and an <3>e</3> ends the stem. In <4/>, room, the <5>b</5> drops and the <6>u</6> turns into <7>o</7>: the stem is <8/>, and in the room is <9/>."
 msgstr "Як у «день — дня», усередині випадає літера: у <0>pood, poe</0> зникає <1>d</1>, довге <2>oo</2> стає коротким, а в кінці основи з’являється <3>e</3>. У <4/>, кімната, випадає <5>b</5>, а <6>u</6> стає <7>o</7>: основа — <8/>, а в кімнаті — <9/>."
@@ -167,8 +227,14 @@ msgstr "У деяких іменниках літера всередині ви�
 msgid "in Tallinn"
 msgstr "у Таллінні"
 
+msgid "In Tallinn"
+msgstr "У Таллінні"
+
 msgid "in Tartu"
 msgstr "у Тарту"
+
+msgid "In Tartu"
+msgstr "У Тарту"
 
 msgid "in the book"
 msgstr "у книзі"
@@ -182,14 +248,29 @@ msgstr "у кімнаті"
 msgid "in the shop"
 msgstr "у магазині"
 
+msgid "Is my book on the table?"
+msgstr "Моя книжка на столі?"
+
 msgid "It’s Saturday, and the passage says where everyone is. Pick the right form for each gap. When every gap is filled, hear the whole passage."
 msgstr "Субота, і текст розповідає, хто де. Обери правильну форму для кожного пропуску. Коли всі пропуски заповнено, послухай увесь текст."
+
+msgid "Jaan calls Mari on Monday and they say where everyone is. Read the questions, then listen."
+msgstr "У понеділок Яан дзвонить Марі, і вони розповідають, хто де. Прочитай запитання, а потім послухай."
+
+msgid "Jaan is at home."
+msgstr "Яан удома."
 
 msgid "Jaan is at the door."
 msgstr "Яан біля дверей."
 
 msgid "Jaan lives in Pärnu."
 msgstr "Яан живе в Пярну."
+
+msgid "Listen: Jaan calls Mari"
+msgstr "Послухай: Яан дзвонить Марі"
+
+msgid "Listen: where is everyone?"
+msgstr "Послухай: хто де?"
 
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"
@@ -206,11 +287,23 @@ msgstr "Марі працює в лікарні."
 msgid "market"
 msgstr "ринок"
 
+msgid "Most of them. Look again at the ones you missed."
+msgstr "Майже всі. Ще раз поглянь на ті, де була помилка."
+
+msgid "Most of them. Read the ones you missed once more."
+msgstr "Майже всі. Ще раз прочитай ті, де була помилка."
+
 msgid "Mum is at the shop."
 msgstr "Мама в магазині."
 
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Майже. Переслухай ті, де були помилки."
+
+msgid "No change"
+msgstr "Без змін"
+
+msgid "No, the book is on the windowsill."
+msgstr "Ні, книжка на підвіконні."
 
 msgid "Nouns that stay the same"
 msgstr "Іменники без змін"
@@ -218,11 +311,17 @@ msgstr "Іменники без змін"
 msgid "on the table"
 msgstr "на столі"
 
+msgid "On the table in the room"
+msgstr "На столі в кімнаті"
+
 msgid "on the wall"
 msgstr "на стіні"
 
 msgid "on the windowsill"
 msgstr "на підвіконні"
+
+msgid "On the windowsill"
+msgstr "На підвіконні"
 
 msgid "Other nouns keep every letter and gain a vowel at the end. <0/>, school, has the stem <1/>, so at school is <2/>. That’s also where the <3>a</3> in <4/>, from lesson {places}, comes from."
 msgstr "Інші іменники зберігають усі літери й отримують голосну в кінці. <0/>, школа, має основу <1/>, тож у школі — <2/>. Звідси ж і <3>a</3> в <4/> з уроку {places}."
@@ -254,8 +353,8 @@ msgstr "Основа збігається зі словом"
 msgid "Stems that gain a vowel"
 msgstr "Основа отримує голосну"
 
-msgid "Stems where a letter inside changes"
-msgstr "Основа, де змінюється літера всередині"
+msgid "Stems where a letter inside drops or changes"
+msgstr "Основа, де літера всередині випадає або змінюється"
 
 msgid "Switch through the six nouns above once more, then try again."
 msgstr "Ще раз пройди кроки для шести іменників вище, а потім спробуй знову."
@@ -311,6 +410,12 @@ msgstr "основа"
 msgid "The stem"
 msgstr "Основа"
 
+msgid "The stem gains a vowel at the end: <0>kool, kooli, koolis</0>."
+msgstr "Основа отримує голосну в кінці: <0>kool, kooli, koolis</0>."
+
+msgid "The stem is the word itself: <0>kodu, kodus</0>."
+msgstr "Основа — саме слово: <0>kodu, kodus</0>."
+
 msgid "The stem is the word itself."
 msgstr "Основа — саме слово."
 
@@ -324,8 +429,8 @@ msgstr "слово"
 msgid "The word"
 msgstr "Слово"
 
-msgid "The word doesn’t show which vowel it gains: <0/>, <1/>; <2/>, <3/>. The dictionary’s genitive does."
-msgstr "Зі слова не видно, яку голосну воно отримає: <0/>, <1/>; <2/>, <3/>. Це показує родовий у словнику."
+msgid "The word doesn’t show which vowel it gains: <0/>, <1/>; <2/>, <3/>. The dictionary pair does."
+msgstr "Зі слова не видно, яку голосну воно отримає: <0/>, <1/>; <2/>, <3/>. Це показує пара зі словника."
 
 msgid "The word, its stem or the stem with an ending"
 msgstr "Слово, його основа чи основа із закінченням"
@@ -348,8 +453,32 @@ msgstr "Ми плаваємо в річці."
 msgid "We’re in a café."
 msgstr "Ми в кав’ярні."
 
+msgid "Where are you?"
+msgstr "Де ти?"
+
+msgid "Where is Dad working today?"
+msgstr "Де сьогодні працює тато?"
+
+msgid "Where is Kati?"
+msgstr "Де Каті?"
+
+msgid "Where is Kati? Write the place in Estonian, with its ending."
+msgstr "Де Каті? Напиши місце естонською, із закінченням."
+
+msgid "Where is Mari?"
+msgstr "Де Марі?"
+
+msgid "Where is Mari’s book?"
+msgstr "Де книжка Марі?"
+
 msgid "Which form?"
 msgstr "Яка форма?"
+
+msgid "Which kind of stem"
+msgstr "Як змінюється основа"
+
+msgid "Which kind of stem?"
+msgstr "Як змінюється основа?"
 
 msgid "Which letters change follows rules of its own, and lesson {gradation} teaches them. For now, take the stem from the dictionary."
 msgstr "Які літери змінюються, визначають окремі правила; про них розповідає урок {gradation}. А поки що бери основу зі словника."
@@ -371,6 +500,12 @@ msgstr "Слова"
 
 msgid "work"
 msgstr "робота"
+
+msgid "Write each sentence in Estonian. Put <0>-s</0> or <1>-l</1> on the stem, not on the word."
+msgstr "Напиши кожне речення естонською. Додавай <0>-s</0> або <1>-l</1> до основи, а не до слова."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
 
 msgid "You have met two of these already: <0/>, on the table, is from <1/>, and <2/>, at the market, is from <3/>. Switch through the three steps for six nouns."
 msgstr "Два такі слова ти вже знаєш: <0/>, на столі, — від <1/>, а <2/>, на ринку, — від <3/>. Пройди всі три кроки для шести іменників."

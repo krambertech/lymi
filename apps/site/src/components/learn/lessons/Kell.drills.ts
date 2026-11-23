@@ -46,13 +46,7 @@ const written = (time: ClockTime): SentenceDrill => ({
 
 const at = (hour: number, minute: Minute): ClockTime => ({ hour, minute });
 
-const OTHERS = [
-  [-1, 2],
-  [2, 3],
-  [-2, -1],
-] as const;
-
-const heard = (time: ClockTime, i: number): ChoiceDrill => {
+const heard = (time: ClockTime): ChoiceDrill => {
   const { hour, minute } = time;
   const option = (each: ClockTime) => ({ id: timeClip(each), label: { et: timeDigits(each) } });
   const slip =
@@ -70,8 +64,8 @@ const heard = (time: ClockTime, i: number): ChoiceDrill => {
     slip: option(slip),
     wrong:
       hour === 11 && minute !== 0
-        ? (minute === 15 ? [at(11, 45), at(12, 45)] : [at(12, 5), at(12, 40)]).map(option)
-        : (OTHERS[i % 3] as readonly number[]).map((by) =>
+        ? (minute === 15 ? [at(10, 45), at(11, 45)] : [at(10, 55), at(12, 5)]).map(option)
+        : (slip.hour === hourBy(hour, -1) ? [1, -2] : [-1, 2]).map((by) =>
             option({ hour: hourBy(hour, by), minute }),
           ),
     explain: WHY[ruleOf(time)] as MessageDescriptor,

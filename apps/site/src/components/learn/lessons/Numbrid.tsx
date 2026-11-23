@@ -335,7 +335,7 @@ export function NumbridLesson() {
         options: [
           { id: "56209", label: "5 6 2 0 9" },
           { id: "52609", label: "5 2 6 0 9" },
-          { id: "52608", label: "5 2 6 0 8" },
+          { id: "56609", label: "5 6 6 0 9" },
         ],
         answer: "56209",
         line: 3,

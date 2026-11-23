@@ -368,8 +368,8 @@ msgstr "Вопросительные слова"
 msgid "Short for sinu."
 msgstr "Сокращение от sinu."
 
-msgid "Start with <et>{word}</et>; when the answer says <et>ma</et>, ask with <et>sa</et>."
-msgstr "Начни с <et>{word}</et>; если в ответе <et>ma</et>, в вопросе ставь <et>sa</et>."
+msgid "Start with the question word for what you ask about, and leave that part out; when the answer says <et>ma</et>, ask with <et>sa</et>."
+msgstr "Начни с вопросительного слова к тому, о чём спрашиваешь, и пропусти эту часть; если в ответе <et>ma</et>, в вопросе ставь <et>sa</et>."
 
 msgid "Statement"
 msgstr "Утверждение"

@@ -98,11 +98,19 @@ const answered = ({ ask, answer }: (typeof NO_ANSWERS)[number]): SentenceDrill =
     say: answer,
     answers:
       verb === "ole"
-        ? [answer, "Pole.", "Ei.", ...full("ei ole"), ...full("pole")]
+        ? [
+            answer,
+            "Pole.",
+            "Ei.",
+            ...full("ei ole"),
+            ...full("pole"),
+            ...(tail ? [`Ei ole ${tail}.`, `Pole ${tail}.`] : []),
+          ]
         : [
             answer,
             "Ei.",
             ...full(`ei ${verb}`),
+            ...(tail ? [`Ei ${verb} ${tail}.`] : []),
             ...(asked === "te"
               ? [`Ei, ma ei ${verb}.`, `Ma ei ${verb}.`, `Ei, mina ei ${verb}.`, `Mina ei ${verb}.`]
               : []),

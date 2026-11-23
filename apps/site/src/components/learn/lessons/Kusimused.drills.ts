@@ -43,7 +43,7 @@ const asked = ({ word, reply, answers }: Asked): SentenceDrill => ({
   reply,
   say: answers[0],
   answers,
-  explain: msg`Start with <et>${word}</et>; when the answer says <et>ma</et>, ask with <et>sa</et>.`,
+  explain: msg`Start with the question word for what you ask about, and leave that part out; when the answer says <et>ma</et>, ask with <et>sa</et>.`,
 });
 
 const MEANS: readonly MessageDescriptor[] = [

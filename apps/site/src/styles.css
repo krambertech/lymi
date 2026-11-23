@@ -3,8 +3,6 @@
 @import "@lymi/design/tokens.css";
 /* The deck tray, shared with the product. */
 @import "@lymi/design/tray.css";
-/* The Estonian lessons, docs/design/estonian-lessons.md. */
-@import "./components/learn/learn.css";
 
 /*
  * Onest from @fontsource-variable/onest, its Cyrillic file with stress anchors from @lymi/design;

@@ -461,7 +461,7 @@ const pairRun = <T extends { pair: readonly [string, string] }>(items: readonly 
   eachPairFirst(items, pinned);
 
 export function MajadesInimesteleLesson() {
-  const { t, i18n } = useLingui();
+  const { t } = useLingui();
   const content = useContent();
   const plural = lessonBySlug("mitmus")?.n;
   const forms = lessonBySlug("pohivormid")?.n;

@@ -12,16 +12,13 @@ import { Grabber } from "./grabber";
 import type { SheetFrameProps } from "./sheet-frame";
 import { afterWindowFocus } from "./window-focus";
 
-/** Android's sheet: Material's modal bottom sheet in the room's colours, mounted only while shown and slid away before it goes. */
 export function SheetFrame({ open, onOpenChange, onDismiss, expands, children }: SheetFrameProps) {
   const p = usePalette();
   const room = useRoom();
   const { width } = useWindowDimensions();
   const ref = useRef<ModalBottomSheetRef>(null);
   const [shown, setShown] = useState(open);
-  // A new sheet each time it reopens while still sliding away, since a hidden sheet does not rise again.
   const [mount, setMount] = useState(0);
-  // A slide the app started and a swipe can both end the sheet; only the first one counts.
   const live = useRef(open);
   const left = useRef(false);
   const closing = useRef(0);
@@ -51,8 +48,6 @@ export function SheetFrame({ open, onOpenChange, onDismiss, expands, children }:
     live.current = true;
     setShown(true);
   }, [open]);
-  // What a row chose runs once the screen's window has focus back from the sheet's, or a field it
-  // focuses gets no keyboard.
   // oxlint-disable react-hooks/exhaustive-deps -- it answers the sheet going, not a new onDismiss.
   useEffect(() => {
     if (shown || !left.current) return;
@@ -73,11 +68,9 @@ export function SheetFrame({ open, onOpenChange, onDismiss, expands, children }:
         skipPartiallyExpanded={!expands}
         containerColor={p.sheet}
         scrimColor={p.scrim}
-        // Material's handle takes its own 48 dp row above the sheet's padding; Lymi's floats over it, as iOS's does.
         showDragHandle={false}
       >
         <RNHostView matchContents={!expands}>
-          {/* Sized to what it holds, or filling the sheet so a long one scrolls to its end. */}
           <View style={expands ? { flexGrow: 1, height: 0 } : { width }}>
             {children}
             <Grabber />

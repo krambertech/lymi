@@ -71,14 +71,13 @@ jobs:
   quality:
     needs: plan
     runs-on: ubuntu-latest
-    # A full run reaches ten minutes on a slow runner; the limit is for hangs, not slowness.
-    timeout-minutes: 15
+    # A full run reaches fourteen minutes on a slow runner; the limit is for hangs, not slowness.
+    timeout-minutes: 20
     permissions:
       contents: read
     outputs:
       dependencies_outcome: ${{ steps.dependencies.outcome }}
       check_outcome: ${{ steps.check.outcome }}
-      models_outcome: ${{ steps.models.outcome }}
       i18n_outcome: ${{ steps.i18n.outcome }}
       migrations_outcome: ${{ steps.migrations.outcome }}
       build_outcome: ${{ steps.build.outcome }}
@@ -110,10 +109,6 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: pnpm check
-
-      - name: Model-check flows that can lose data
-        id: models
-        run: pnpm check:models --run
 
       - name: Check interface strings are extracted
         id: i18n
@@ -174,6 +169,27 @@ jobs:
         id: deploy_site
         if: needs.plan.outputs.run_deploy_check == 'true'
         run: pnpm --filter @lymi/site run deploy:check
+
+  models:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Model-check flows that can lose data
+        run: pnpm check:models --run
 
   browser_e2e:
     name: browser E2E (${{ needs.plan.outputs.coverage }}) ${{ matrix.shard }}/${{ needs.plan.outputs.shards }}
@@ -294,7 +310,7 @@ jobs:
         run: node scripts/flaky-issues.mjs
 
   check:
-    needs: [plan, quality, browser_e2e, flaky_issues]
+    needs: [plan, quality, models, browser_e2e, flaky_issues]
     if: ${{ always() }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -336,11 +352,11 @@ jobs:
           RUN_E2E: ${{ needs.plan.outputs.run_e2e }}
           PLAN_RESULT: ${{ needs.plan.result }}
           QUALITY_RESULT: ${{ needs.quality.result }}
+          MODELS_RESULT: ${{ needs.models.result }}
           BROWSER_RESULT: ${{ needs.browser_e2e.result }}
           TITLE_OUTCOME: ${{ needs.plan.outputs.title_outcome }}
           DEPENDENCIES_OUTCOME: ${{ needs.quality.outputs.dependencies_outcome }}
           CHECK_OUTCOME: ${{ needs.quality.outputs.check_outcome }}
-          MODELS_OUTCOME: ${{ needs.quality.outputs.models_outcome }}
           I18N_OUTCOME: ${{ needs.quality.outputs.i18n_outcome }}
           MIGRATIONS_OUTCOME: ${{ needs.quality.outputs.migrations_outcome }}
           BUILD_OUTCOME: ${{ needs.quality.outputs.build_outcome }}

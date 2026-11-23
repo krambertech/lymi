@@ -21,6 +21,8 @@ export const LessonTermOut = z.object({
   heading: z.string().nullable(),
   /** The text the model read the term from. */
   seen: z.string(),
+  example: z.string().nullable(),
+  at: z.number().nullable(),
   /** How likely the term is worth its own card, or null when no decision model ran. */
   keep: z.number().nullable(),
   ticked: z.boolean(),
@@ -56,6 +58,11 @@ export const LessonReadOut = z
 /** Smart add reads a learner may start in one of their own days. A read that fails is not counted. */
 export const LESSON_READS_PER_DAY = 5;
 
+export const LESSON_READ_WORDS = 15_000;
+
+export const LINK_REFUSALS = ["robots", "tdm", "drm", "youtube"] as const;
+export type LinkRefusal = (typeof LINK_REFUSALS)[number];
+
 export const LessonAccessOut = z
   .object({
     allowed: z.boolean(),
@@ -83,6 +90,7 @@ export const LessonEventOut = z
       /** True when Lymi chose it from the lesson, false when the learner opened Smart add from it. */
       guessed: z.boolean(),
     }),
+    z.object({ type: z.literal("source"), title: z.string(), url: z.string() }),
     z.object({ type: z.literal("term"), term: LessonTermOut }),
     z.object({ type: z.literal("questions"), questions: z.array(LessonQuestionOut) }),
     z.object({ type: z.literal("done"), pages: z.number().int(), usage: LessonUsageOut }),

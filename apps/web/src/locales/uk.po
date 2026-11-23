@@ -333,9 +333,17 @@ msgstr "{0, plural, one {Імпортувати # картку} few {Імпор�
 msgid "{0, plural, one {Imported # card} other {Imported # cards}}"
 msgstr "{0, plural, one {Імпортовано # картку} few {Імпортовано # картки} many {Імпортовано # карток} other {Імпортовано # картки}}"
 
+#. placeholder {0}: longRead.words
+msgid "{0, plural, one {It’s about # word long, and one lesson covers up to 15,000.} other {It’s about # words long, and one lesson covers up to 15,000.}}"
+msgstr "{0, plural, one {У ній близько # слова, а один урок охоплює до 15 000.} few {У ній близько # слів, а один урок охоплює до 15 000.} many {У ній близько # слів, а один урок охоплює до 15 000.} other {У ній близько # слова, а один урок охоплює до 15 000.}}"
+
 #. placeholder {0}: consistency.longestRun
 msgid "{0, plural, one {Longest stretch: # day in a row.} other {Longest stretch: # days in a row.}}"
 msgstr "{0, plural, one {Найбільше днів поспіль: #.} few {Найбільше днів поспіль: #.} many {Найбільше днів поспіль: #.} other {Найбільше днів поспіль: #.}}"
+
+#. placeholder {0}: longRead.reads
+msgid "{0, plural, one {Read as # lesson} other {Read as # lessons}}"
+msgstr "{0, plural, one {Прочитати як # урок} few {Прочитати як # уроки} many {Прочитати як # уроків} other {Прочитати як # уроку}}"
 
 #. placeholder {0}: preview?.added ?? 0
 msgid "{0, plural, one {Ready to import # card} other {Ready to import # cards}}"
@@ -369,6 +377,10 @@ msgstr "{0, plural, =1 {Наступний розділ відкриється, 
 msgid "{0, plural, one {The next section opens when you know {needed} of # card.} other {The next section opens when you know {needed} of # cards.}}"
 msgstr "{0, plural, one {Наступний розділ відкриється, коли ти засвоїш {needed} з # картки.} few {Наступний розділ відкриється, коли ти засвоїш {needed} з # карток.} many {Наступний розділ відкриється, коли ти засвоїш {needed} з # карток.} other {Наступний розділ відкриється, коли ти засвоїш {needed} з # картки.}}"
 
+#. placeholder {0}: longRead.reads
+msgid "{0, plural, one {This article counts as # lesson} other {This article counts as # lessons}}"
+msgstr "{0, plural, one {Ця стаття рахується як # урок} few {Ця стаття рахується як # уроки} many {Ця стаття рахується як # уроків} other {Ця стаття рахується як # уроку}}"
+
 #. placeholder {0}: busiest.count
 msgid "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
 msgstr "{0, plural, one {Сьогодні найзавантаженіший день: # картка.} few {Сьогодні найзавантаженіший день: # картки.} many {Сьогодні найзавантаженіший день: # карток.} other {Сьогодні найзавантаженіший день: # картки.}}"
@@ -380,6 +392,10 @@ msgstr "{0, plural, one {Оновити # картку} few {Оновити # к
 #. placeholder {0}: unplaced.length
 msgid "{0, plural, one {What language is this deck in?} other {What language are these decks in?}}"
 msgstr "{0, plural, one {Якою мовою ця колода?} few {Якою мовою ці колоди?} many {Якою мовою ці колоди?} other {Якою мовою ці колоди?}}"
+
+#. placeholder {0}: longRead.left
+msgid "{0, plural, one {You have # lesson left today.} other {You have # lessons left today.}}"
+msgstr "{0, plural, one {На сьогодні в тебе лишився # урок.} few {На сьогодні в тебе лишилося # уроки.} many {На сьогодні в тебе лишилося # уроків.} other {На сьогодні в тебе лишилося # уроку.}}"
 
 #. placeholder {0}: current.total
 msgid "{0, plural, one {You know {known} of # card in {currentName}, the last section.} other {You know {known} of # cards in {currentName}, the last section.}}"
@@ -481,6 +497,10 @@ msgstr "Завантажено {0}% файлу. Вибери той самий �
 
 msgid "{added, plural, one {# card was added before the import stopped.} other {# cards were added before the import stopped.}}"
 msgstr "{added, plural, one {До зупинки імпорту додано # картку.} few {До зупинки імпорту додано # картки.} many {До зупинки імпорту додано # карток.} other {До зупинки імпорту додано # картки.}}"
+
+#. placeholder {0}: isolate(deck?.name ?? "")
+msgid "{added, plural, one {Added # card} other {Added # cards}} to {0}. Lymi is filling in the rest."
+msgstr "{added, plural, one {Додано # картку} few {Додано # картки} many {Додано # карток} other {Додано # картки}} до «{0}». Lymi допише решту."
 
 #. placeholder {0}: isolate(deck?.name ?? "")
 msgid "{added, plural, one {Added # card} other {Added # cards}} to {0}. Lymi is writing their examples."
@@ -849,6 +869,9 @@ msgstr "{saved, plural, one {# картку позначено важливою}
 msgid "{saved, plural, one {Removed the important mark from # card} other {Removed the important mark from # cards}}"
 msgstr "{saved, plural, one {Знято позначку «важлива» з # картки} few {Знято позначку «важлива» з # карток} many {Знято позначку «важлива» з # карток} other {Знято позначку «важлива» з # картки}}"
 
+msgid "{service} doesn’t let apps read what it plays. Paste the text instead."
+msgstr "{service} не дозволяє застосункам читати те, що там грає. Встав текст."
+
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
 
@@ -1036,8 +1059,8 @@ msgstr "Додай колоду «{name}» у Lymi"
 msgid "Add a card"
 msgstr "Додати картку"
 
-msgid "Add a photo or PDF of the lesson, or paste its text."
-msgstr "Додай фото чи PDF уроку або встав його текст."
+msgid "Add a photo or PDF of the lesson, paste its text or a link."
+msgstr "Додай фото або PDF уроку, встав його текст або посилання."
 
 msgid "Add a picture"
 msgstr "Додати зображення"
@@ -1072,6 +1095,9 @@ msgstr "Додавай картки через API"
 msgid "Add hint"
 msgstr "Додати підказку"
 
+msgid "Add link"
+msgstr "Додати посилання"
+
 msgid "Add Lymi as a remote MCP server with OAuth. Lymi doesn’t let apps register themselves, so an app that can’t identify itself with a client ID document won’t connect."
 msgstr "Додай Lymi як віддалений MCP-сервер з OAuth. Lymi не дозволяє застосункам реєструватися самим, тож застосунок, який не може назватися через документ client ID, не підключиться."
 
@@ -1093,8 +1119,8 @@ msgstr "Додати ще картки"
 msgid "Add now"
 msgstr "Додати зараз"
 
-msgid "Add photos, PDFs or text from your lesson. Then choose which terms to add as cards."
-msgstr "Додай фото, PDF або текст уроку. Потім вибери терміни для карток."
+msgid "Add photos, PDFs or text from your lesson, or a link to an article. Then choose which terms to add as cards."
+msgstr "Додай фото, PDF або текст уроку чи посилання на статтю. Потім обери, які терміни стануть картками."
 
 msgid "Add picture"
 msgstr "Додати зображення"
@@ -1277,6 +1303,9 @@ msgstr "Застосунок"
 msgid "an app with no address"
 msgstr "застосунок без адреси"
 
+msgid "An article on the web"
+msgstr "Статтю з інтернету"
+
 msgid "An assistant turns a lesson, a PDF or a chat into cards. Readwise and Yomitan add words as you read."
 msgstr "Асистент перетворює урок, PDF чи чат на картки. Readwise і Yomitan додають слова, поки ти читаєш."
 
@@ -1448,6 +1477,9 @@ msgstr "Архівування ховає картку або колоду, не
 
 msgid "Arrange sections"
 msgstr "Упорядкувати розділи"
+
+msgid "Article link"
+msgstr "Посилання на статтю"
 
 msgid "Arts"
 msgstr "Мистецтво"
@@ -2468,6 +2500,9 @@ msgstr "Кожен блок — день із повтореннями."
 msgid "Each card is asked both ways, each way on its own schedule."
 msgstr "Кожну картку питають в обидва боки, кожен бік за своїм розкладом."
 
+msgid "Each card keeps its sentence and a link to the article. Lymi writes the rest."
+msgstr "Кожна картка зберігає своє речення й посилання на статтю. Решту допише Lymi."
+
 msgid "Each person who reviews these decks keeps their own copy, with their progress and without your name. To take a deck away from them, archive it first. Archived decks go with your account."
 msgstr "Кожен, хто повторює ці колоди, отримає власну копію зі своїм прогресом, але без твого імені. Щоб забрати колоду в інших, спершу архівуй її. Архівовані колоди видаляться разом з акаунтом."
 
@@ -3391,6 +3426,9 @@ msgctxt "daily goal"
 msgid "Light"
 msgstr "Легко"
 
+msgid "Link"
+msgstr "Посилання"
+
 msgid "Link to a picture"
 msgstr "Посилання на зображення"
 
@@ -3469,6 +3507,9 @@ msgstr "Lymi знову потрібен твій токен Readwise"
 
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Мову кожної колоди взято з {app}, її назви або карток. Вона потрібна, щоб знаходити картки, які в тебе вже є, і читати терміни вголос."
+
+msgid "Lymi reads the article’s text and gives each card the sentence it came from."
+msgstr "Lymi прочитає текст статті й дасть кожній картці речення, з якого вона взята."
 
 msgid "Lymi revokes Yomitan’s key, so Yomitan can no longer add cards or find duplicates. Cards it added stay."
 msgstr "Lymi відкличе ключ Yomitan, тож Yomitan більше не зможе додавати картки чи шукати дублікати. Додані ним картки залишаться."
@@ -4196,6 +4237,9 @@ msgstr "Встав урок або додай його фото, а тоді в�
 msgid "Paste a link"
 msgstr "Вставити посилання"
 
+msgid "Paste a link to a public web page. It starts with https://."
+msgstr "Встав посилання на відкриту вебсторінку. Воно починається з https://."
+
 msgid "Paste a set you made in Quizlet. Terms and definitions come across; pictures, audio and progress don’t, so every card starts as new."
 msgstr "Встав набір, який ти створив у Quizlet. Терміни й визначення перенесуться. Зображення, аудіо та прогрес не переносяться, тож кожна картка почнеться як нова."
 
@@ -4210,6 +4254,9 @@ msgstr "Встав нотатки або транскрипт"
 
 msgid "Paste the client ID, leave the secret empty and choose <0>None / PKCE only</0>."
 msgstr "Встав client ID, залиш секрет порожнім і вибери <0>None / PKCE only</0>."
+
+msgid "Paste the transcript"
+msgstr "Вставити транскрипт"
 
 msgid "Paste your set’s text or choose a .txt file first."
 msgstr "Спершу встав текст набору або вибери файл .txt."
@@ -4423,6 +4470,9 @@ msgstr "Читання"
 msgid "Reading page {0} of {1}"
 msgstr "Читаю сторінку {0} з {1}"
 
+msgid "Reading the article"
+msgstr "Читаю статтю"
+
 msgid "Reading the pages"
 msgstr "Читаю сторінки"
 
@@ -4537,6 +4587,9 @@ msgstr "Вилучити з колоди"
 
 msgid "Remove member"
 msgstr "Вилучити учасника"
+
+msgid "Remove the link"
+msgstr "Прибрати посилання"
 
 msgid "Remove the text"
 msgstr "Прибрати текст"
@@ -5045,6 +5098,9 @@ msgstr "Пропустити підказки"
 msgid "Smart add"
 msgstr "Розумне додавання"
 
+msgid "Smart add couldn’t read this page. Paste its text instead."
+msgstr "Розумне додавання не змогло прочитати цю сторінку. Встав її текст."
+
 msgid "So you know which key to revoke later."
 msgstr "Щоб потім знати, який ключ відкликати."
 
@@ -5442,6 +5498,9 @@ msgstr "Вони з {decks} колод. Ось одна з колоди «{deck}
 msgid "They’re from {decks} decks. Try to remember this one from {deck}."
 msgstr "Вони з {decks} колод. Спробуй згадати цю з колоди «{deck}»."
 
+msgid "This article is too long for Smart add. Paste the part you want to learn from."
+msgstr "Ця стаття задовга для Розумного додавання. Встав частину, з якої хочеш учитися."
+
 msgid "This browser can’t show reminders."
 msgstr "Цей браузер не показує нагадувань."
 
@@ -5556,11 +5615,17 @@ msgstr "У цьому посиланні немає застосунку, яки
 msgid "This Mac"
 msgstr "Цей Mac"
 
+msgid "This service"
+msgstr "Цей сервіс"
+
 msgid "This shelf has no page"
 msgstr "У цієї полиці немає сторінки"
 
 msgid "This sign-in link has expired. Start again from Lymi for Mac."
 msgstr "Посилання для входу застаріло. Почніть знову в Lymi для Mac."
+
+msgid "This site doesn’t allow apps to read it. Paste the text instead."
+msgstr "Цей сайт не дозволяє застосункам читати його. Встав текст."
 
 msgid "This takes a few seconds for most files. Nothing is added to your decks yet."
 msgstr "Для більшості файлів це займає кілька секунд. У колоди поки нічого не додано."
@@ -5700,6 +5765,9 @@ msgstr "Спробуй ще раз зі стабільнішим з’єднан
 
 msgid "Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Спробуй ще раз або напиши на <0>hello@lymi.app</0>."
+
+msgid "Try another article, or paste the part you want to learn from."
+msgstr "Спробуй іншу статтю або встав частину, з якої хочеш учитися."
 
 msgid "Try to remember the word for this."
 msgstr "Спробуй згадати слово."
@@ -6216,6 +6284,13 @@ msgstr "Дні поспіль почнуть рахуватися, коли до
 
 msgid "Your week"
 msgstr "Твій тиждень"
+
+msgid "YouTube doesn’t let apps read its captions. Paste the video’s transcript instead."
+msgstr "YouTube не дозволяє застосункам читати субтитри. Встав транскрипт відео."
+
+#. placeholder {0}: refusal.title
+msgid "YouTube doesn’t let apps read the captions of “{0}”. Paste its transcript instead."
+msgstr "YouTube не дозволяє застосункам читати субтитри відео «{0}». Встав його транскрипт."
 
 msgid "Zoom"
 msgstr "Масштаб"

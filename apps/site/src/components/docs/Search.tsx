@@ -18,6 +18,10 @@ const TERMS: Record<string, string[]> = {
     "transcript",
     "tutor",
     "daily limit",
+    "link",
+    "article",
+    "LymiBot",
+    "robots.txt",
   ],
   "/docs/decks": [
     "share",

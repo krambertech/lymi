@@ -2379,8 +2379,8 @@ msgstr "Готово. В «Биологии» есть раздел для ка�
 msgid "Download for Mac"
 msgstr "Скачать для Mac"
 
-msgid "Download Lymi"
-msgstr "Скачать Lymi"
+msgid "Download Lymi for iPhone, Android and Mac"
+msgstr "Скачать Lymi для iPhone, Android и Mac"
 
 msgid "Download on the App Store"
 msgstr "Загрузите в App Store"
@@ -2895,14 +2895,23 @@ msgstr "Колоды флеш-карточек, готовые к изучени
 msgid "Flashcards for anatomy, pharmacology, microbiology and lab values. Bring your Anki decks with their review history, turn lecture notes into cards, and review a few minutes a day. Free."
 msgstr "Карточки по анатомии, фармакологии, микробиологии и лабораторным нормам. Перенеси колоды из Anki вместе с историей повторений, преврати конспекты лекций в карточки и повторяй несколько минут в день. Бесплатно."
 
+msgid "Flashcards for certification exams · Lymi"
+msgstr "Флеш-карточки для сертификационных экзаменов · Lymi"
+
 msgid "Flashcards for cloud, security, finance and project management certifications. Turn your study guide into cards with your AI assistant and review a few minutes a day. Free."
 msgstr "Карточки для сертификаций по облачным технологиям, безопасности, финансам и управлению проектами. Преврати учебное пособие в карточки с помощью AI-ассистента и повторяй несколько минут в день. Бесплатно."
 
 msgid "Flashcards for concepts, facts and vocabulary. Learn with spaced repetition."
 msgstr "Карточки для понятий, фактов и лексики. Учись с интервальными повторениями."
 
+msgid "Flashcards for language learning · Lymi"
+msgstr "Флеш-карточки для изучения языков · Lymi"
+
 msgid "Flashcards for medical school."
 msgstr "Флеш-карточки для учёбы в медицинском."
+
+msgid "Flashcards for medical students · Lymi"
+msgstr "Флеш-карточки для студентов-медиков · Lymi"
 
 msgid "Flashcards for the AI era."
 msgstr "Карточки для эпохи AI."
@@ -4520,9 +4529,6 @@ msgstr "Lymi для {name}"
 msgid "Lymi for Android"
 msgstr "Lymi для Android"
 
-msgid "Lymi for certification prep · Flashcards with spaced repetition"
-msgstr "Lymi для подготовки к сертификации · Карточки с интервальным повторением"
-
 msgid "Lymi for iPhone"
 msgstr "Lymi для iPhone"
 
@@ -4532,14 +4538,8 @@ msgstr "Lymi для iPhone пока нет в App Store в странах ЕС. 
 msgid "Lymi for language learning"
 msgstr "Lymi для изучения языков"
 
-msgid "Lymi for language learning · Keep the words from every lesson"
-msgstr "Lymi для изучения языков · Запоминай слова с каждого урока"
-
 msgid "Lymi for Mac"
 msgstr "Lymi для Mac"
-
-msgid "Lymi for medical students · Flashcards with spaced repetition"
-msgstr "Lymi для студентов-медиков · Карточки с интервальным повторением"
 
 msgid "Lymi for teachers"
 msgstr "Lymi для преподавателей"

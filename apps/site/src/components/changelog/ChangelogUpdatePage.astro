@@ -5,6 +5,8 @@ import { type ChangelogUpdate as Update, changelogDate, changelogUpdates } from 
 import { changelogUpdatePath, changelogUpdatePaths } from "../../lib/changelog-paths";
 import { pageI18n } from "../../lib/i18n";
 import { type Locale, localizedPath } from "../../lib/routes";
+import { jsonForScript } from "../../lib/deck-page";
+import { changelogPost } from "../../lib/structured-data";
 import { buttonClass } from "../Button";
 import SiteHeader from "../islands/SiteHeader";
 import { PageFooter } from "../PageFooter";
@@ -31,6 +33,10 @@ const update = updates[index] as Update;
 const newer = updates[index - 1];
 const older = updates[index + 1];
 const listPath = localizedPath("changelog", locale);
+const structuredData = changelogPost(
+  { slug, title: update.entry.data.title, summary: update.entry.data.summary, date: update.date },
+  locale,
+);
 ---
 
 <BaseLayout
@@ -39,6 +45,7 @@ const listPath = localizedPath("changelog", locale);
   canonicalPath={changelogUpdatePath(slug, locale)}
   alternatePaths={changelogUpdatePaths(slug)}
 >
+  <script slot="head" is:inline type="application/ld+json" set:html={jsonForScript(structuredData)} />
   <link
     slot="head"
     rel="alternate"

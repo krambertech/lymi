@@ -42,7 +42,7 @@ test("Find terms on an empty lesson stays pressable and says what is missing", a
   await userEvent.click(findTerms());
   await expect
     .element(page.getByRole("alert"))
-    .toHaveTextContent("Add a photo or PDF of the lesson, or paste its text.");
+    .toHaveTextContent("Add a photo or PDF of the lesson, paste its text or a link.");
 });
 
 test("at the daily limit Find terms stays focusable and points at the notice", async () => {
@@ -164,4 +164,22 @@ test("Stop in the beat after the scan finishes stays on the lesson", async () =>
   }
   await expect.element(findTerms()).toBeVisible();
   expect(page.getByRole("button", { name: "Stop" }).query()).toBeNull();
+});
+
+test("Enter adds the link, but not while an input method is confirming a word", async () => {
+  await open();
+  await userEvent.click(page.getByRole("button", { name: /^Link/ }));
+  const field = page.getByRole("textbox", { name: "Article link" });
+  await userEvent.fill(field, "https://news.example.org/a");
+  const enter = (init: KeyboardEventInit) =>
+    field
+      .element()
+      .dispatchEvent(
+        new KeyboardEvent("keydown", { key: "Enter", bubbles: true, cancelable: true, ...init }),
+      );
+  enter({ isComposing: true });
+  await expect.element(field).toBeVisible();
+  enter({});
+  await expect.element(page.getByText("news.example.org/a")).toBeVisible();
+  expect(field.query()).toBeNull();
 });

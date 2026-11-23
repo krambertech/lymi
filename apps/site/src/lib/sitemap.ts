@@ -1,5 +1,5 @@
 import { offersDeck, readableIn } from "@lymi/core/catalog";
-import { changelogSlugs, changelogUpdatePath } from "./changelog-paths";
+import { changelogDates, changelogSlugs, changelogUpdatePath } from "./changelog-paths";
 import { deckPath } from "./deck-page";
 import { explorePath } from "./explore";
 import { LESSON_SLUGS, lessonPath } from "./learn/catalogue";
@@ -67,11 +67,22 @@ function localized(
  * the English-only ones.
  */
 export function pagesSitemap(prelaunch: readonly LocalizedPage[] = prelaunchPages): string {
+  const newestUpdate = [...changelogDates.values()].reduce<Date | undefined>(
+    (max, date) => (!max || date > max ? date : max),
+    undefined,
+  );
   return urlset([
     ...(Object.keys(localizedPages) as LocalizedPage[])
       .filter((page) => !isRuntimePage(page) && !prelaunch.includes(page))
-      .flatMap((page) => localized((locale) => localizedPath(page, locale))),
-    ...changelogSlugs.flatMap((slug) => localized((locale) => changelogUpdatePath(slug, locale))),
+      .flatMap((page) =>
+        localized(
+          (locale) => localizedPath(page, locale),
+          page === "changelog" ? newestUpdate : undefined,
+        ),
+      ),
+    ...changelogSlugs.flatMap((slug) =>
+      localized((locale) => changelogUpdatePath(slug, locale), changelogDates.get(slug)),
+    ),
     ...(prelaunch.includes("learn")
       ? []
       : LESSON_SLUGS.flatMap((slug) => localized((locale) => lessonPath(slug, locale)))),

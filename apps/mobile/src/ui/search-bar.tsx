@@ -6,10 +6,8 @@ import { inputCap } from "../theme/type";
 import { GlassButton, GlassSurface } from "./glass";
 import { Icon } from "./primitives";
 
-/** Long enough to skip the letters of a word being typed, short enough to feel live. */
 const SETTLE = 250;
 
-/** The text as typed, and the trimmed text once typing settles, which is what a query should ask. */
 export function useSearchText(initial = "") {
   const [text, setText] = useState(initial);
   const [query, setQuery] = useState(initial.trim());
@@ -20,7 +18,6 @@ export function useSearchText(initial = "") {
   return { text, setText, query };
 }
 
-/** Android's stand-in for iOS's `clearButtonMode`, which it lacks: an ✕ at the field's end while it holds text. */
 export function ClearText({ value, onClear }: { value: string; onClear: () => void }) {
   const { t } = useLingui();
   const p = usePalette();
@@ -38,13 +35,6 @@ export function ClearText({ value, onClear }: { value: string; onClear: () => vo
   );
 }
 
-/**
- * Search sits at the foot of the screen and rides on the keyboard, as iOS 26's own search does: a
- * glass field, then a round glass close. Put it last inside a KeyboardRoom, under the results.
- * Every search on the phone uses it, so they read as one; a control that narrows the results, such
- * as a filter, goes in `after`, between the field and close. A tap away from an empty field closes
- * the search, as it does on the web.
- */
 export function SearchBar({
   value,
   onChange,
@@ -54,15 +44,12 @@ export function SearchBar({
 }: {
   value: string;
   onChange: (text: string) => void;
-  /** What is searched, as "Search all cards". It is the field's name for VoiceOver too. */
   placeholder: string;
   onCancel: () => void;
-  /** Glass controls beside the field, before close. */
   after?: ReactNode;
 }) {
   const { t } = useLingui();
   const p = usePalette();
-  // Closing blurs the field as the screen leaves, which must not close it a second time.
   const closed = useRef(false);
   const close = () => {
     if (closed.current) return;
@@ -97,7 +84,6 @@ export function SearchBar({
           placeholder={placeholder}
           placeholderTextColor={p["ink-muted"]}
           accessibilityLabel={placeholder}
-          // What is searched is mostly in the language being learned, which the dictionary gets wrong.
           autoCapitalize="none"
           autoCorrect={false}
           spellCheck={false}

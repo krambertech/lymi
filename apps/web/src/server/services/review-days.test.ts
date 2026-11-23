@@ -18,6 +18,7 @@ import {
 } from "./review-days";
 import { getSettings, updateSettings } from "./settings";
 import { insights } from "./stats";
+import { holdNoon } from "./test-clock";
 import { learner, testDb } from "./test-db";
 import { batchRacedBy, insertRacedBy, racedBy } from "./test-race";
 
@@ -26,10 +27,12 @@ let dispose: () => Promise<void>;
 let people = 0;
 
 beforeAll(async () => {
+  holdNoon();
   ({ db, dispose } = await testDb());
 }, 60_000);
 
 afterAll(async () => {
+  vi.useRealTimers();
   await dispose();
 });
 

@@ -40,7 +40,7 @@ export interface DocPage {
   to: DocPath;
   /** Sidebar label. Short. */
   nav: string;
-  /** Page heading and browser title. */
+  /** Page heading; the browser title is in the page file. */
   title: string;
   /** One sentence: what this page answers. Used on the overview and in search. */
   blurb: string;

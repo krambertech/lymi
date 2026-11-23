@@ -311,6 +311,10 @@ msgstr "{0, plural, one {in # month} other {in # months}}"
 msgid "{0, plural, one {In # month} other {In # months}}"
 msgstr "{0, plural, one {In # month} other {In # months}}"
 
+#. placeholder {0}: longRead.words
+msgid "{0, plural, one {It’s about # word long, and one lesson covers up to 15,000.} other {It’s about # words long, and one lesson covers up to 15,000.}}"
+msgstr "{0, plural, one {It’s about # word long, and one lesson covers up to 15,000.} other {It’s about # words long, and one lesson covers up to 15,000.}}"
+
 #. placeholder {0}: consistency.longestRun
 msgid "{0, plural, one {Longest stretch: # day in a row.} other {Longest stretch: # days in a row.}}"
 msgstr "{0, plural, one {Longest stretch: # day in a row.} other {Longest stretch: # days in a row.}}"
@@ -318,6 +322,10 @@ msgstr "{0, plural, one {Longest stretch: # day in a row.} other {Longest stretc
 #. placeholder {0}: done.length
 msgid "{0, plural, one {Marked # card important} other {Marked # cards important}}"
 msgstr "{0, plural, one {Marked # card important} other {Marked # cards important}}"
+
+#. placeholder {0}: longRead.reads
+msgid "{0, plural, one {Read as # lesson} other {Read as # lessons}}"
+msgstr "{0, plural, one {Read as # lesson} other {Read as # lessons}}"
 
 #. placeholder {0}: data?.added ?? 0
 msgid "{0, plural, one {Ready to import # card} other {Ready to import # cards}}"
@@ -343,6 +351,10 @@ msgstr "{0, plural, one {Show # older entry} other {Show # older entries}}"
 msgid "{0, plural, one {Start section} other {Start # sections}}"
 msgstr "{0, plural, one {Start section} other {Start # sections}}"
 
+#. placeholder {0}: longRead.reads
+msgid "{0, plural, one {This article counts as # lesson} other {This article counts as # lessons}}"
+msgstr "{0, plural, one {This article counts as # lesson} other {This article counts as # lessons}}"
+
 #. placeholder {0}: busiest.count
 msgid "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
 msgstr "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
@@ -354,6 +366,10 @@ msgstr "{0, plural, one {Update # card} other {Update # cards}}"
 #. placeholder {0}: unplaced.length
 msgid "{0, plural, one {What language is this deck in?} other {What language are these decks in?}}"
 msgstr "{0, plural, one {What language is this deck in?} other {What language are these decks in?}}"
+
+#. placeholder {0}: longRead.left
+msgid "{0, plural, one {You have # lesson left today.} other {You have # lessons left today.}}"
+msgstr "{0, plural, one {You have # lesson left today.} other {You have # lessons left today.}}"
 
 #. placeholder {0}: summary.decks.length
 #. placeholder {1}: chosenDecks.length
@@ -759,6 +775,9 @@ msgstr "{sent, plural, one {Couldn’t change the tags on # card.} other {Couldn
 msgid "{seriesName}, {0, plural, one {# deck} other {# decks}}"
 msgstr "{seriesName}, {0, plural, one {# deck} other {# decks}}"
 
+msgid "{service} doesn’t let apps read what it plays. Paste the text instead."
+msgstr "{service} doesn’t let apps read what it plays. Paste the text instead."
+
 msgid "{streak, plural, one {# day in a row} other {# days in a row}}"
 msgstr "{streak, plural, one {# day in a row} other {# days in a row}}"
 
@@ -995,8 +1014,8 @@ msgstr "Add Lymi’s address and client ID under <0>mcpServers</0> in <1>~/.gemi
 msgid "Add more"
 msgstr "Add more"
 
-msgid "Add the lesson in any form, or several at once. You choose which terms become cards."
-msgstr "Add the lesson in any form, or several at once. You choose which terms become cards."
+msgid "Add the lesson in any form, or a link to an article. You choose which terms become cards."
+msgstr "Add the lesson in any form, or a link to an article. You choose which terms become cards."
 
 msgid "Add to"
 msgstr "Add to"
@@ -1131,6 +1150,9 @@ msgstr "An .ofc file, up to 1 GB."
 
 msgid "An app"
 msgstr "An app"
+
+msgid "An article on the web"
+msgstr "An article on the web"
 
 msgid "An assistant turns a lesson, a PDF or a chat into cards. Readwise and Yomitan add words as you read."
 msgstr "An assistant turns a lesson, a PDF or a chat into cards. Readwise and Yomitan add words as you read."
@@ -1299,6 +1321,9 @@ msgstr "Archives every card this import added, and each deck it made that has no
 msgctxt "language"
 msgid "Armenian"
 msgstr "Armenian"
+
+msgid "Article link"
+msgstr "Article link"
 
 msgid "Arts"
 msgstr "Arts"
@@ -2289,6 +2314,9 @@ msgstr "Edit hint"
 msgid "Edit term"
 msgstr "Edit term"
 
+msgid "Edit the link"
+msgstr "Edit the link"
+
 msgid "Edit the text"
 msgstr "Edit the text"
 
@@ -3099,6 +3127,9 @@ msgctxt "daily goal"
 msgid "Light"
 msgstr "Light"
 
+msgid "Link"
+msgstr "Link"
+
 msgid "Listen to terms and examples read aloud."
 msgstr "Listen to terms and examples read aloud."
 
@@ -3181,6 +3212,9 @@ msgstr "Lymi needs your Readwise token again"
 
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
+
+msgid "Lymi reads the article’s text and gives each card the sentence it came from."
+msgstr "Lymi reads the article’s text and gives each card the sentence it came from."
 
 msgid "Lymi revokes Yomitan’s key, so Yomitan can no longer add cards or find duplicates. Cards it added stay."
 msgstr "Lymi revokes Yomitan’s key, so Yomitan can no longer add cards or find duplicates. Cards it added stay."
@@ -3604,6 +3638,9 @@ msgstr "Nothing left in {scopeName}"
 msgid "Nothing left in this deck"
 msgstr "Nothing left in this deck"
 
+msgid "Nothing new in this article"
+msgstr "Nothing new in this article"
+
 msgid "Nothing new in this lesson"
 msgstr "Nothing new in this lesson"
 
@@ -3721,6 +3758,9 @@ msgstr "Open You"
 msgid "Opens after {beforeName}."
 msgstr "Opens after {beforeName}."
 
+msgid "Opens the page"
+msgstr "Opens the page"
+
 msgid "Optional. Anything that helps us understand."
 msgstr "Optional. Anything that helps us understand."
 
@@ -3769,6 +3809,9 @@ msgstr "Past reviews show in Insights on the days you did them. They don’t cou
 msgid "Paste"
 msgstr "Paste"
 
+msgid "Paste a link to a public web page. It starts with https://."
+msgstr "Paste a link to a public web page. It starts with https://."
+
 msgid "Paste a set you made in Quizlet. Terms and definitions come across; pictures, audio and progress don’t, so every card starts as new."
 msgstr "Paste a set you made in Quizlet. Terms and definitions come across; pictures, audio and progress don’t, so every card starts as new."
 
@@ -3786,6 +3829,9 @@ msgstr "Paste notes or a transcript"
 
 msgid "Paste the client ID, leave the secret empty and choose <0>None / PKCE only</0>."
 msgstr "Paste the client ID, leave the secret empty and choose <0>None / PKCE only</0>."
+
+msgid "Paste the transcript"
+msgstr "Paste the transcript"
 
 msgid "PDF"
 msgstr "PDF"
@@ -3938,6 +3984,9 @@ msgstr "Reading"
 msgid "Reading page {0} of {1}"
 msgstr "Reading page {0} of {1}"
 
+msgid "Reading the article"
+msgstr "Reading the article"
+
 msgid "Reading the pages"
 msgstr "Reading the pages"
 
@@ -4029,6 +4078,9 @@ msgstr "Remove member"
 
 msgid "Remove photo"
 msgstr "Remove photo"
+
+msgid "Remove the link"
+msgstr "Remove the link"
 
 msgid "Remove the text"
 msgstr "Remove the text"
@@ -4486,6 +4538,9 @@ msgstr "Slovenian"
 msgid "Smart add"
 msgstr "Smart add"
 
+msgid "Smart add couldn’t read this page. Paste its text instead."
+msgstr "Smart add couldn’t read this page. Paste its text instead."
+
 msgid "Smart add finds terms in your photos, PDFs and notes."
 msgstr "Smart add finds terms in your photos, PDFs and notes."
 
@@ -4782,6 +4837,9 @@ msgstr "They lose this deck and can’t rejoin, by link or invitation. Their rev
 msgid "They’re already in this deck."
 msgstr "They’re already in this deck."
 
+msgid "This article is too long for Smart add. Paste the part you want to learn from."
+msgstr "This article is too long for Smart add. Paste the part you want to learn from."
+
 msgid "This card isn’t in this deck"
 msgstr "This card isn’t in this deck"
 
@@ -4899,11 +4957,17 @@ msgstr "This section isn’t in the deck"
 msgid "This series is no longer here."
 msgstr "This series is no longer here."
 
+msgid "This service"
+msgstr "This service"
+
 msgid "This setting applies to your account on all devices. Turning it off stops Lymi from sending new content to AI services. Existing card text and saved audio stay."
 msgstr "This setting applies to your account on all devices. Turning it off stops Lymi from sending new content to AI services. Existing card text and saved audio stay."
 
 msgid "This shelf has no decks now"
 msgstr "This shelf has no decks now"
+
+msgid "This site doesn’t allow apps to read it. Paste the text instead."
+msgstr "This site doesn’t allow apps to read it. Paste the text instead."
 
 msgid "This takes a few seconds for most files. Nothing is added to your decks yet."
 msgstr "This takes a few seconds for most files. Nothing is added to your decks yet."
@@ -5421,3 +5485,10 @@ msgstr "Your set’s text"
 
 msgid "Your unsent reviews and cards are saved on this phone. They send after the update."
 msgstr "Your unsent reviews and cards are saved on this phone. They send after the update."
+
+msgid "YouTube doesn’t let apps read its captions. Paste the video’s transcript instead."
+msgstr "YouTube doesn’t let apps read its captions. Paste the video’s transcript instead."
+
+#. placeholder {0}: refusal.title
+msgid "YouTube doesn’t let apps read the captions of “{0}”. Paste its transcript instead."
+msgstr "YouTube doesn’t let apps read the captions of “{0}”. Paste its transcript instead."

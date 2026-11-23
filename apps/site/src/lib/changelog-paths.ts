@@ -22,6 +22,13 @@ export const changelogSlugs: readonly string[] = folders.map(
   (folder) => CHANGELOG_FOLDER.exec(folder)?.[2] ?? folder,
 );
 
+export const changelogDates: ReadonlyMap<string, Date> = new Map(
+  folders.flatMap((folder) => {
+    const match = CHANGELOG_FOLDER.exec(folder);
+    return match?.[1] && match[2] ? [[match[2], new Date(`${match[1]}T12:00:00Z`)] as const] : [];
+  }),
+);
+
 export function changelogUpdatePath(slug: string, locale: string): string {
   return `${localizedPath("changelog", locale)}/${slug}`;
 }

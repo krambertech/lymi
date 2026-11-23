@@ -131,6 +131,7 @@ export function ciFailures(env) {
     failures.push("coverage planning");
   }
   if (env.QUALITY_RESULT !== "success") failures.push("quality checks");
+  if (env.MODELS_RESULT !== "success") failures.push("flow models");
   if (env.RUN_E2E === "true" && env.BROWSER_RESULT !== "success") {
     failures.push("browser E2E");
   }
@@ -177,6 +178,7 @@ export function renderCiSummary(env, shardOutcomes = [], components = []) {
     "| --- | --- |",
     `| Coverage plan | ${outcome(env.PLAN_RESULT)} |`,
     `| Quality checks | ${outcome(env.QUALITY_RESULT)} |`,
+    `| Flow models | ${outcome(env.MODELS_RESULT)} |`,
     `| Browser E2E (all shards) | ${outcome(env.BROWSER_RESULT)} |`,
     "",
     "| Gate | Outcome |",
@@ -184,7 +186,6 @@ export function renderCiSummary(env, shardOutcomes = [], components = []) {
     `| Pull request title | ${outcome(env.TITLE_OUTCOME)} |`,
     `| Quality dependencies | ${outcome(env.DEPENDENCIES_OUTCOME)} |`,
     `| Formatting and lint | ${outcome(env.CHECK_OUTCOME)} |`,
-    `| Flow models | ${outcome(env.MODELS_OUTCOME)} |`,
     `| Interface strings | ${outcome(env.I18N_OUTCOME)} |`,
     `| Migration safety | ${outcome(env.MIGRATIONS_OUTCOME)} |`,
     `| Production build | ${outcome(env.BUILD_OUTCOME)} |`,

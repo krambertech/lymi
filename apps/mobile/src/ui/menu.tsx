@@ -9,18 +9,13 @@ import { ClearText } from "./search-bar";
 import { Sheet, SheetGroup, SheetRow } from "./sheet";
 import { useSheetFocus } from "./sheet-focus";
 
-// A choice rises from the bottom edge as a sheet: iOS's glass, Lymi's rows. Commands from a button are
-// iOS's own menu, in action-menu.tsx. phone.md "Menus" and "Sheets".
-
 export interface MenuItem {
   label: string;
   icon?: IconName;
-  /** Archive, Remove or Leave: red, and acts at once when it can be undone. */
   destructive?: boolean;
   onSelect: () => void;
 }
 
-/** Opens a sheet; a choice runs once the sheet has gone, so nothing moves under it. */
 function useMenuSheet(
   onClosed?: () => void,
   controlled?: { open: boolean; onOpenChange: (open: boolean) => void },
@@ -35,7 +30,7 @@ function useMenuSheet(
       chosen.current = then;
       setOpen(false);
     },
-    sheet: (title: string | undefined, groups: ReactNode) => (
+    sheet: (title: string, groups: ReactNode) => (
       <Sheet
         title={title}
         open={open}
@@ -52,26 +47,19 @@ function useMenuSheet(
   };
 }
 
-interface SelectProps<T extends string> {
-  /** Lymi's own box or chip, showing what is chosen; pressing it opens the list. */
+type Controlled = { open: boolean; onOpenChange: (open: boolean) => void };
+
+type SelectProps<T extends string> = {
   trigger: ReactNode;
-  /** The field's name: the sheet's title, and read with the choice. */
   label: string;
   value: T;
-  /** `detail` is a line under the option that says what choosing it means. */
   options: { value: T; label: string; detail?: string }[];
   onChange: (value: T) => void;
-  /** After the sheet has gone, chosen or not; a composer puts the cursor back. */
   onClosed?: () => void;
-  /** To open the list from elsewhere, such as right after a choice that needs it: pass both. */
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-}
+} & (Controlled | { open?: undefined; onOpenChange?: undefined });
 
-/** Past this many fixed options, such as languages, the list is searched rather than scrolled. forms.md. */
 export const SEARCHED_PAST = 15;
 
-/** Filters a list by its labels as the learner types, in the interface's locale. */
 export function useSearched<T extends { label: string }>(options: T[]) {
   const { i18n } = useLingui();
   const [query, setQuery] = useState("");
@@ -82,7 +70,6 @@ export function useSearched<T extends { label: string }>(options: T[]) {
   return { query, setQuery, searching: !!needle, shown };
 }
 
-/** A searched list's field; `group` fills it on a sheet iOS has made opaque, where `plate` vanishes. */
 export function SearchField({
   label,
   query,
@@ -97,9 +84,7 @@ export function SearchField({
   onChange: (query: string) => void;
   onSubmit: () => void;
   fill?: "plate" | "group";
-  /** Search, unless the field does more, such as creating what it does not find. */
   placeholder?: string;
-  /** Return keeps the keyboard up, for a field that takes one entry after another. */
   stay?: boolean;
 }) {
   const { t } = useLingui();
@@ -134,10 +119,6 @@ export function SearchField({
   );
 }
 
-/**
- * One option in a sheet titled with the field's name. Up to fifteen, such as a deck, are a list;
- * a longer fixed list is a Combobox, its search field first and the list one height as it filters.
- */
 export function Select<T extends string>({
   trigger,
   label,
@@ -156,7 +137,7 @@ export function Select<T extends string>({
       setQuery("");
       onClosed?.();
     },
-    open !== undefined && onOpenChange ? { open, onOpenChange } : undefined,
+    open === undefined ? undefined : { open, onOpenChange },
   );
   const chosen = options.find((o) => o.value === value)?.label ?? "";
   const searched = options.length > SEARCHED_PAST;
@@ -216,7 +197,6 @@ export function Select<T extends string>({
   );
 }
 
-/** A Select's closed box: the same 44 pt box as every control, the choice and a chevron. */
 export function SelectTrigger({
   children,
   invalid = false,

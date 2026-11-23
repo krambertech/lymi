@@ -888,8 +888,8 @@ export function OlevikLesson() {
                 <p>
                   <Trans>
                     Some verbs keep the stem of the -ma form: <Word w="elama" />, <Word w="elan" />.
-                    In others the stem changes, and only the I form shows it: <Word w="lugema" />,{" "}
-                    <Word w="ma loen" />.
+                    In others the stem changes, and the -ma form doesn’t show it, so learn the I
+                    form: <Word w="lugema" />, <Word w="ma loen" />.
                   </Trans>
                 </p>
                 <p>

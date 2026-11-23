@@ -568,7 +568,7 @@ export const PRESENT_TURNED = [
 ] as const;
 
 export const PRESENT_FIXES = [
-  { wrong: "Ma lugen raamatut.", said: "Ma loen raamatut.", kind: "stem" },
+  { wrong: "Mida sa teged?", said: "Mida sa teed?", kind: "stem" },
   { wrong: "Ma õppin eesti keelt.", said: "Ma õpin eesti keelt.", kind: "stem" },
   { wrong: "Ma rääkin eesti keelt.", said: "Ma räägin eesti keelt.", kind: "stem" },
   { wrong: "Nad elab Tallinnas.", said: "Nad elavad Tallinnas.", kind: "ending" },

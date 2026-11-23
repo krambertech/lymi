@@ -10802,11 +10802,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "olevik/ma-loen-raamatut": {
-    "text": "Ma loen raamatut.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "olevik/ma-o3pin-eesti-keelt": {
     "text": "Ma õpin eesti keelt.",
     "model": "eleven_v4",
@@ -10864,6 +10859,11 @@
   },
   "olevik/nad-armastavad-sind": {
     "text": "Nad armastavad sind.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/mida-sa-teed": {
+    "text": "Mida sa teed?",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

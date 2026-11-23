@@ -230,8 +230,8 @@ msgstr "Шесть окончаний"
 msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Некоторые основы меняются: <0>lugema, loen</0>. Запоминай каждый глагол с формой для «я»."
 
-msgid "Some verbs keep the stem of the -ma form: <0/>, <1/>. In others the stem changes, and only the I form shows it: <2/>, <3/>."
-msgstr "Одни глаголы сохраняют основу формы на -ma: <0/>, <1/>. У других основа меняется, и видно это только по форме для «я»: <2/>, <3/>."
+msgid "Some verbs keep the stem of the -ma form: <0/>, <1/>. In others the stem changes, and the -ma form doesn’t show it, so learn the I form: <2/>, <3/>."
+msgstr "Одни глаголы сохраняют основу формы на -ma: <0/>, <1/>. У других основа меняется, и по форме на -ma этого не видно, поэтому запоминай форму для «я»: <2/>, <3/>."
 
 msgid "Sort the verbs. Tap one to hear its I form."
 msgstr "Разложи глаголы. Нажми на глагол, чтобы услышать форму для «я»."

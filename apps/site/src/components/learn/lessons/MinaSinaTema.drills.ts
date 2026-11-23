@@ -128,7 +128,7 @@ export const DRILLS: DrillBank = {
       rule: "who",
       say: PRONOUN_SENTENCES["s-te-opetajad"],
       answers: [PRONOUN_SENTENCES["s-te-opetajad"]],
-      explain: msg`<et>Te olete</et>: you are, to more than one, or polite you.`,
+      explain: msg`<et>Te olete</et>: you are, to more than one; <et>õpetajad</et> is plural.`,
     },
     dropped("olen-kodus", "Ma olen kodus.", PRONOUN_SENTENCES["s-olen-kodus"]),
     dropped("oleme-valmis", "Me oleme valmis.", PRONOUN_SENTENCES["s-oleme-valmis"]),

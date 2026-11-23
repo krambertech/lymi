@@ -60,8 +60,8 @@ msgstr "<et>On</et> с <et>nad</et>: «они есть»."
 msgid "<et>On</et> with <et>ta</et>: he or she is."
 msgstr "<et>On</et> с <et>ta</et>: «он или она есть»."
 
-msgid "<et>Te olete</et>: you are, to more than one, or polite you."
-msgstr "<et>Te olete</et>: «вы есть», нескольким людям или вежливо."
+msgid "<et>Te olete</et>: you are, to more than one; <et>õpetajad</et> is plural."
+msgstr "<et>Te olete</et>: «вы есть», нескольким людям; <et>õpetajad</et> — множественное число."
 
 msgid "15 minutes"
 msgstr "15 минут"

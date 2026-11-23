@@ -10,8 +10,8 @@ const fixAnswers = (id: (typeof FLAT_FIX)[number]["id"]) =>
 
 const WHERE = msg`Where something is usually takes <et>-s</et>, or <et>-l</et> on a balcony: <et>köögis</et>, <et>rõdul</et>.`;
 const WHERE_TO = msg`Where something goes usually takes <et>-sse</et> or a short form, or <et>-le</et> onto a balcony: <et>korterisse</et>, <et>kööki</et>, <et>rõdule</et>.`;
-const NONE = msg`After <et>ei ole</et>, the partitive: <et>Majas ei ole lifti</et>.`;
-const FLOOR = msg`On a floor takes <et>-l</et> on both words: <et>kolmandal korrusel</et>.`;
+const NONE = msg`When something isn’t there or you don’t have it, <et>ei ole</et> takes the partitive: <et>Majas ei ole lifti</et>.`;
+const FLOOR = msg`On a floor takes <et>-l</et>, and the number usually takes it too: <et>kolmandal korrusel</et>.`;
 const DA = msg`After <et>tahan</et>, the <et>-da</et> infinitive: <et>kolida</et>, <et>vaadata</et>.`;
 const MA = msg`Coming to do something takes the <et>-ma</et> infinitive: <et>vaatama tulla</et>.`;
 const JOB = msg`Working as is usually <et>-na</et>: <et>õpetajana</et>.`;
@@ -19,7 +19,7 @@ const JOB = msg`Working as is usually <et>-na</et>: <et>õpetajana</et>.`;
 export const DRILLS: DrillBank = {
   rules: {
     place: { label: msg`Where or where to: <et>köögis</et>, <et>kööki</et>`, section: "where" },
-    none: { label: msg`After <et>ei ole</et>: <et>lifti</et>`, section: "reply" },
+    none: { label: msg`None there: <et>ei ole lifti</et>`, section: "reply" },
     floor: { label: msg`On a floor: <et>kolmandal korrusel</et>`, section: "say-it" },
     verbs: {
       label: msg`Which infinitive: <et>tahan kolida</et>, <et>tulen vaatama</et>`,
@@ -58,7 +58,7 @@ export const DRILLS: DrillBank = {
       id: "place-kooki",
       rule: "place",
       prompt: msg`Come into the kitchen!`,
-      answers: ["Tule kööki!", "Tulge kööki!"],
+      answers: ["Tule kööki!", "Tulge kööki!", "Tule köögisse!", "Tulge köögisse!"],
       say: "Tule kööki!",
       explain: WHERE_TO,
     },
@@ -136,6 +136,10 @@ export const DRILLS: DrillBank = {
         "Rõdu korteris pole.",
         "Korteril ei ole rõdu.",
         "Korteril pole rõdu.",
+        "Korteris rõdu ei ole.",
+        "Korteris rõdu pole.",
+        "Korteril rõdu ei ole.",
+        "Korteril rõdu pole.",
       ],
       say: "Korteris ei ole rõdu.",
       explain: NONE,
@@ -152,6 +156,10 @@ export const DRILLS: DrillBank = {
         "Minul pole kassi.",
         "Kassi mul ei ole.",
         "Kassi mul pole.",
+        "Mul kassi ei ole.",
+        "Mul kassi pole.",
+        "Minul kassi ei ole.",
+        "Minul kassi pole.",
       ],
       say: "Mul ei ole kassi.",
       explain: NONE,
@@ -278,8 +286,12 @@ export const DRILLS: DrillBank = {
         "Tartus ma töötan õpetajana.",
         "Ma töötan Tartus õpetajaks.",
         "Ma töötan õpetajaks Tartus.",
+        "Tartus töötan ma õpetajaks.",
+        "Tartus ma töötan õpetajaks.",
         "Ma olen Tartus õpetaja.",
         "Ma olen õpetaja Tartus.",
+        "Tartus olen ma õpetaja.",
+        "Tartus ma olen õpetaja.",
       ]),
       say: "Ma töötan Tartus õpetajana.",
       explain: JOB,
@@ -299,7 +311,7 @@ export const DRILLS: DrillBank = {
       base: "õpetaja",
       gloss: msg`a teacher`,
       cue: { et: "Ma töötan Tartus …" },
-      answers: ["õpetajana"],
+      answers: ["õpetajana", "õpetajaks"],
       say: "Ma töötan Tartus õpetajana.",
       explain: JOB,
     },

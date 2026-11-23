@@ -8955,8 +8955,8 @@ export const FLAT_SORT = [
 ] as const;
 
 export const FLAT_SAY = [
-  { id: "korrusel", answers: ["Korter on kolmandal korrusel."] },
-  { id: "lift", answers: ["Kas majas on lift?", "Kas maja on liftiga?"] },
+  { id: "korrusel", answers: ["Korter on kolmandal korrusel.", "Korter on 3. korrusel."] },
+  { id: "lift", answers: ["Kas majas on lift?", "Kas maja on liftiga?", "Kas majas lift on?"] },
   {
     id: "uur",
     answers: [
@@ -8981,7 +8981,12 @@ export const FLAT_SAY = [
   },
   {
     id: "kook",
-    answers: ["Köök on väike, aga uus.", "Köök on väike, kuid uus."],
+    answers: [
+      "Köök on väike, aga uus.",
+      "Köök on väike, kuid uus.",
+      "Köök on küll väike, aga uus.",
+      "Köök on väike, aga see on uus.",
+    ],
   },
   {
     id: "vaatama",
@@ -8993,6 +8998,10 @@ export const FLAT_SAY = [
       "Kas võin homme tulla korterit vaatama?",
       "Kas ma võin korterit homme vaatama tulla?",
       "Kas ma võin tulla homme korterit vaatama?",
+      "Kas ma saan korterit homme vaatama tulla?",
+      "Kas ma saan tulla homme korterit vaatama?",
+      "Kas ma võin homme tulla ja korterit vaadata?",
+      "Kas ma saan homme tulla ja korterit vaadata?",
     ]),
   },
 ] as const;

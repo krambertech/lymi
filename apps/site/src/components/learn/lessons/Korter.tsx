@@ -41,7 +41,7 @@ const GLOSSARY: Glossary = {
   kesklinnas: { en: msg`in the city centre` },
   lift: { en: msg`a lift` },
   lifti: { en: msg`a lift`, note: msg`Lift after ei ole.` },
-  akent: { en: msg`windows`, note: msg`Aken, a window; after a number, akent.` },
+  akent: { en: msg`windows`, note: msg`Aken, a window; after kaks or a higher number, akent.` },
   rõdu: { en: msg`a balcony` },
   rõdult: { en: msg`from the balcony` },
   magamistuba: { en: msg`a bedroom` },
@@ -62,7 +62,7 @@ const GLOSSARY: Glossary = {
   vaikne: { en: msg`quiet` },
   alles: { en: msg`only, not until` },
   omanikule: { en: msg`to the owner` },
-  kasti: { en: msg`boxes`, note: msg`Kast, a box; after a number, kasti.` },
+  kasti: { en: msg`boxes`, note: msg`Kast, a box; after kaks or a higher number, kasti.` },
   voodi: { en: msg`a bed` },
   appi: { en: msg`to someone’s aid, to help` },
 };
@@ -90,7 +90,7 @@ function useReplyGaps(): GapItem[] {
       answer: "kassi",
       why: (
         <Trans>
-          After <Et>ei ole</Et>, the partitive: <Et>kassi</Et>.
+          When you don’t have something, <Et>ei ole</Et> takes the partitive: <Et>kassi</Et>.
         </Trans>
       ),
     },
@@ -148,12 +148,13 @@ const FIX_PROMPTS: Record<(typeof FLAT_FIX)[number]["id"], MessageDescriptor> = 
 const FIX_WHY: Record<(typeof FLAT_FIX)[number]["id"], ReactNode> = {
   kolmandal: (
     <Trans>
-      On a floor takes <Et>-l</Et> on both words: <Et>kolmandal korrusel</Et>.
+      On a floor takes <Et>-l</Et>, and the number usually takes it too: <Et>kolmandal korrusel</Et>
+      .
     </Trans>
   ),
   lifti: (
     <Trans>
-      After <Et>ei ole</Et>, the partitive: <Et>lifti</Et>.
+      When something isn’t there, <Et>ei ole</Et> takes the partitive: <Et>lifti</Et>.
     </Trans>
   ),
   kolida: (
@@ -163,12 +164,12 @@ const FIX_WHY: Record<(typeof FLAT_FIX)[number]["id"], ReactNode> = {
   ),
   vaiksem: (
     <Trans>
-      Smaller is <Et>väiksem</Et>, from <Et>väike</Et>.
+      Smaller is <Et>väiksem</Et> or <Et>väikesem</Et>, from <Et>väike</Et>.
     </Trans>
   ),
   esimesest: (
     <Trans>
-      From a date takes <Et>-st</Et> on both words: <Et>esimesest detsembrist</Et>.
+      From a date usually takes <Et>-st</Et> on both words: <Et>esimesest detsembrist</Et>.
     </Trans>
   ),
   korterisse: (
@@ -380,7 +381,8 @@ function useContent() {
             line: "Tuba on väike. Kus on kööki?",
             why: (
               <Trans>
-                Where something is takes the plain form: <Et>Kus on köök?</Et> And the room is big.
+                The thing you ask about stays in its basic form: <Et>Kus on köök?</Et> And the room
+                is big.
               </Trans>
             ),
           },
@@ -404,7 +406,7 @@ function useContent() {
             line: "Ei, mul ei ole kass.",
             why: (
               <Trans>
-                After <Et>ei ole</Et>, the partitive: <Et>kassi</Et>.
+                When you don’t have something, <Et>ei ole</Et> takes the partitive: <Et>kassi</Et>.
               </Trans>
             ),
           },
@@ -496,10 +498,12 @@ export function KorterLesson() {
       words={["korter", "tuba", "köök", "rõdu", "üür", "lift", "kesklinnas", "sisse kolima"]}
       recap={[
         <Trans key="1">
-          On a floor: <b lang="et">kolmandal korrusel</b>, both words with <b lang="et">-l</b>.
+          On a floor: <b lang="et">kolmandal korrusel</b>, usually both words with{" "}
+          <b lang="et">-l</b>.
         </Trans>,
         <Trans key="2">
-          After <b lang="et">ei ole</b>, the partitive: <b lang="et">Majas ei ole lifti</b>.
+          When something isn’t there or you don’t have it, <b lang="et">ei ole</b> takes the
+          partitive: <b lang="et">Majas ei ole lifti</b>.
         </Trans>,
         <Trans key="3">
           Where something is, <b lang="et">köögis</b>; where it goes, <b lang="et">kööki</b> or{" "}
@@ -546,7 +550,7 @@ export function KorterLesson() {
                 <p>
                   <Trans>
                     Drag a word into each gap, or tap a word to put it in the open gap. Some words
-                    are spare. The gaps test <Et>-na</Et> for a job, the partitive after{" "}
+                    are spare. The gaps test <Et>-na</Et> for working as, the partitive after{" "}
                     <Et>ei ole</Et>, the <Et>-ma</Et> infinitive, <Et>sisse</Et> from lesson{" "}
                     {particles} and where something is.
                   </Trans>

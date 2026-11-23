@@ -85,32 +85,17 @@ msgstr "a washing machine"
 msgid "advert"
 msgstr "advert"
 
-msgid "After <0>ei ole</0>, the partitive: <1>kassi</1>."
-msgstr "After <0>ei ole</0>, the partitive: <1>kassi</1>."
-
-msgid "After <0>ei ole</0>, the partitive: <1>lifti</1>."
-msgstr "After <0>ei ole</0>, the partitive: <1>lifti</1>."
-
-msgid "After <0>ei ole</0>, the partitive: <1>Majas ei ole lifti</1>."
-msgstr "After <0>ei ole</0>, the partitive: <1>Majas ei ole lifti</1>."
-
 msgid "After <0>kaks</0>, the partitive: <1>kaks kassi</1>. And the advert says no cats."
 msgstr "After <0>kaks</0>, the partitive: <1>kaks kassi</1>. And the advert says no cats."
 
 msgid "After <0>tahan</0>, the <1>-da</1> infinitive: <2>kolida</2>."
 msgstr "After <0>tahan</0>, the <1>-da</1> infinitive: <2>kolida</2>."
 
-msgid "After <et>ei ole</et>, the partitive: <et>Majas ei ole lifti</et>."
-msgstr "After <et>ei ole</et>, the partitive: <et>Majas ei ole lifti</et>."
-
-msgid "After <et>ei ole</et>: <et>lifti</et>"
-msgstr "After <et>ei ole</et>: <et>lifti</et>"
-
 msgid "After <et>tahan</et>, the <et>-da</et> infinitive: <et>kolida</et>, <et>vaadata</et>."
 msgstr "After <et>tahan</et>, the <et>-da</et> infinitive: <et>kolida</et>, <et>vaadata</et>."
 
-msgid "Aken, a window; after a number, akent."
-msgstr "Aken, a window; after a number, akent."
+msgid "Aken, a window; after kaks or a higher number, akent."
+msgstr "Aken, a window; after kaks or a higher number, akent."
 
 msgid "All six found and fixed."
 msgstr "All six found and fixed."
@@ -151,8 +136,8 @@ msgstr "Coming to do something takes the <0>-ma</0> infinitive: <1>vaatama tulla
 msgid "Coming to do something takes the <et>-ma</et> infinitive: <et>vaatama tulla</et>."
 msgstr "Coming to do something takes the <et>-ma</et> infinitive: <et>vaatama tulla</et>."
 
-msgid "Drag a word into each gap, or tap a word to put it in the open gap. Some words are spare. The gaps test <0>-na</0> for a job, the partitive after <1>ei ole</1>, the <2>-ma</2> infinitive, <3>sisse</3> from lesson {particles} and where something is."
-msgstr "Drag a word into each gap, or tap a word to put it in the open gap. Some words are spare. The gaps test <0>-na</0> for a job, the partitive after <1>ei ole</1>, the <2>-ma</2> infinitive, <3>sisse</3> from lesson {particles} and where something is."
+msgid "Drag a word into each gap, or tap a word to put it in the open gap. Some words are spare. The gaps test <0>-na</0> for working as, the partitive after <1>ei ole</1>, the <2>-ma</2> infinitive, <3>sisse</3> from lesson {particles} and where something is."
+msgstr "Drag a word into each gap, or tap a word to put it in the open gap. Some words are spare. The gaps test <0>-na</0> for working as, the partitive after <1>ei ole</1>, the <2>-ma</2> infinitive, <3>sisse</3> from lesson {particles} and where something is."
 
 msgid "Each sentence should say what the line above it says, and one word is wrong. Tap it, then type it right."
 msgstr "Each sentence should say what the line above it says, and one word is wrong. Tap it, then type it right."
@@ -172,8 +157,8 @@ msgstr "Fix the sentence"
 msgid "for me"
 msgstr "for me"
 
-msgid "From a date takes <0>-st</0> on both words: <1>esimesest detsembrist</1>."
-msgstr "From a date takes <0>-st</0> on both words: <1>esimesest detsembrist</1>."
+msgid "From a date usually takes <0>-st</0> on both words: <1>esimesest detsembrist</1>."
+msgstr "From a date usually takes <0>-st</0> on both words: <1>esimesest detsembrist</1>."
 
 msgid "From January"
 msgstr "From January"
@@ -271,8 +256,8 @@ msgstr "Jõgi, a river; here the object of näeb."
 msgid "Kaks tuba: two rooms."
 msgstr "Kaks tuba: two rooms."
 
-msgid "Kast, a box; after a number, kasti."
-msgstr "Kast, a box; after a number, kasti."
+msgid "Kast, a box; after kaks or a higher number, kasti."
+msgstr "Kast, a box; after kaks or a higher number, kasti."
 
 msgid "Kuulutus as the object of nägin."
 msgstr "Kuulutus as the object of nägin."
@@ -313,6 +298,9 @@ msgstr "Moving in is <0>sisse kolima</0>, moving out <1>välja kolima</1>."
 msgid "Moving in is <0>sisse kolima</0>; <1>välja</1> would be moving out."
 msgstr "Moving in is <0>sisse kolima</0>; <1>välja</1> would be moving out."
 
+msgid "None there: <et>ei ole lifti</et>"
+msgstr "None there: <et>ei ole lifti</et>"
+
 msgid "Now"
 msgstr "Now"
 
@@ -322,14 +310,14 @@ msgstr "Now write your own message to Mari, about 30 words. Then compare it with
 msgid "On a date takes <0>-l</0>: <1>esimesel detsembril</1>."
 msgstr "On a date takes <0>-l</0>: <1>esimesel detsembril</1>."
 
-msgid "On a floor takes <0>-l</0> on both words: <1>kolmandal korrusel</1>."
-msgstr "On a floor takes <0>-l</0> on both words: <1>kolmandal korrusel</1>."
+msgid "On a floor takes <0>-l</0>, and the number usually takes it too: <1>kolmandal korrusel</1>."
+msgstr "On a floor takes <0>-l</0>, and the number usually takes it too: <1>kolmandal korrusel</1>."
 
-msgid "On a floor takes <et>-l</et> on both words: <et>kolmandal korrusel</et>."
-msgstr "On a floor takes <et>-l</et> on both words: <et>kolmandal korrusel</et>."
+msgid "On a floor takes <et>-l</et>, and the number usually takes it too: <et>kolmandal korrusel</et>."
+msgstr "On a floor takes <et>-l</et>, and the number usually takes it too: <et>kolmandal korrusel</et>."
 
-msgid "On a floor: <0>kolmandal korrusel</0>, both words with <1>-l</1>."
-msgstr "On a floor: <0>kolmandal korrusel</0>, both words with <1>-l</1>."
+msgid "On a floor: <0>kolmandal korrusel</0>, usually both words with <1>-l</1>."
+msgstr "On a floor: <0>kolmandal korrusel</0>, usually both words with <1>-l</1>."
 
 msgid "On a floor: <et>kolmandal korrusel</et>"
 msgstr "On a floor: <et>kolmandal korrusel</et>"
@@ -367,8 +355,8 @@ msgstr "She asks when you move in, not out."
 msgid "She asks you in, so you go <0>sisse</0>, not out."
 msgstr "She asks you in, so you go <0>sisse</0>, not out."
 
-msgid "Smaller is <0>väiksem</0>, from <1>väike</1>."
-msgstr "Smaller is <0>väiksem</0>, from <1>väike</1>."
+msgid "Smaller is <0>väiksem</0> or <1>väikesem</1>, from <2>väike</2>."
+msgstr "Smaller is <0>väiksem</0> or <1>väikesem</1>, from <2>väike</2>."
 
 msgid "suits"
 msgstr "suits"
@@ -412,6 +400,9 @@ msgstr "The owner"
 msgid "The station"
 msgstr "The station"
 
+msgid "The thing you ask about stays in its basic form: <0>Kus on köök?</0> And the room is big."
+msgstr "The thing you ask about stays in its basic form: <0>Kus on köök?</0> And the room is big."
+
 msgid "There is no lift in the building."
 msgstr "There is no lift in the building."
 
@@ -451,6 +442,18 @@ msgstr "When is the small flat free?"
 msgid "When should you call?"
 msgstr "When should you call?"
 
+msgid "When something isn’t there or you don’t have it, <0>ei ole</0> takes the partitive: <1>Majas ei ole lifti</1>."
+msgstr "When something isn’t there or you don’t have it, <0>ei ole</0> takes the partitive: <1>Majas ei ole lifti</1>."
+
+msgid "When something isn’t there or you don’t have it, <et>ei ole</et> takes the partitive: <et>Majas ei ole lifti</et>."
+msgstr "When something isn’t there or you don’t have it, <et>ei ole</et> takes the partitive: <et>Majas ei ole lifti</et>."
+
+msgid "When something isn’t there, <0>ei ole</0> takes the partitive: <1>lifti</1>."
+msgstr "When something isn’t there, <0>ei ole</0> takes the partitive: <1>lifti</1>."
+
+msgid "When you don’t have something, <0>ei ole</0> takes the partitive: <1>kassi</1>."
+msgstr "When you don’t have something, <0>ei ole</0> takes the partitive: <1>kassi</1>."
+
 msgid "where"
 msgstr "where"
 
@@ -459,9 +462,6 @@ msgstr "Where or where to: <et>köögis</et>, <et>kööki</et>"
 
 msgid "Where something goes usually takes <et>-sse</et> or a short form, or <et>-le</et> onto a balcony: <et>korterisse</et>, <et>kööki</et>, <et>rõdule</et>."
 msgstr "Where something goes usually takes <et>-sse</et> or a short form, or <et>-le</et> onto a balcony: <et>korterisse</et>, <et>kööki</et>, <et>rõdule</et>."
-
-msgid "Where something is takes the plain form: <0>Kus on köök?</0> And the room is big."
-msgstr "Where something is takes the plain form: <0>Kus on köök?</0> And the room is big."
 
 msgid "Where something is usually takes <0>-s</0>: <1>köögis</1>."
 msgstr "Where something is usually takes <0>-s</0>: <1>köögis</1>."

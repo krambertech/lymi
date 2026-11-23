@@ -85,32 +85,17 @@ msgstr "стиральная машина"
 msgid "advert"
 msgstr "объявление"
 
-msgid "After <0>ei ole</0>, the partitive: <1>kassi</1>."
-msgstr "После <0>ei ole</0> — партитив: <1>kassi</1>."
-
-msgid "After <0>ei ole</0>, the partitive: <1>lifti</1>."
-msgstr "После <0>ei ole</0> — партитив: <1>lifti</1>."
-
-msgid "After <0>ei ole</0>, the partitive: <1>Majas ei ole lifti</1>."
-msgstr "После <0>ei ole</0> — партитив: <1>Majas ei ole lifti</1>."
-
 msgid "After <0>kaks</0>, the partitive: <1>kaks kassi</1>. And the advert says no cats."
 msgstr "После <0>kaks</0> — партитив: <1>kaks kassi</1>. И в объявлении сказано: без кошек."
 
 msgid "After <0>tahan</0>, the <1>-da</1> infinitive: <2>kolida</2>."
 msgstr "После <0>tahan</0> — инфинитив на <1>-da</1>: <2>kolida</2>."
 
-msgid "After <et>ei ole</et>, the partitive: <et>Majas ei ole lifti</et>."
-msgstr "После <et>ei ole</et> — партитив: <et>Majas ei ole lifti</et>."
-
-msgid "After <et>ei ole</et>: <et>lifti</et>"
-msgstr "После <et>ei ole</et>: <et>lifti</et>"
-
 msgid "After <et>tahan</et>, the <et>-da</et> infinitive: <et>kolida</et>, <et>vaadata</et>."
 msgstr "После <et>tahan</et> — инфинитив на <et>-da</et>: <et>kolida</et>, <et>vaadata</et>."
 
-msgid "Aken, a window; after a number, akent."
-msgstr "Aken — окно; после числа — akent."
+msgid "Aken, a window; after kaks or a higher number, akent."
+msgstr "Aken — окно; после kaks или большего числа — akent."
 
 msgid "All six found and fixed."
 msgstr "Все шесть найдены и исправлены."
@@ -151,8 +136,8 @@ msgstr "Прийти что-то сделать — это инфинитив н
 msgid "Coming to do something takes the <et>-ma</et> infinitive: <et>vaatama tulla</et>."
 msgstr "Прийти что-то сделать — это инфинитив на <et>-ma</et>: <et>vaatama tulla</et>."
 
-msgid "Drag a word into each gap, or tap a word to put it in the open gap. Some words are spare. The gaps test <0>-na</0> for a job, the partitive after <1>ei ole</1>, the <2>-ma</2> infinitive, <3>sisse</3> from lesson {particles} and where something is."
-msgstr "Перетащи слово в каждый пропуск или нажми на слово, чтобы вставить его в открытый пропуск. Некоторые слова лишние. Пропуски проверяют <0>-na</0> для профессии, партитив после <1>ei ole</1>, инфинитив на <2>-ma</2>, <3>sisse</3> из урока {particles} и то, где что-то находится."
+msgid "Drag a word into each gap, or tap a word to put it in the open gap. Some words are spare. The gaps test <0>-na</0> for working as, the partitive after <1>ei ole</1>, the <2>-ma</2> infinitive, <3>sisse</3> from lesson {particles} and where something is."
+msgstr "Перетащи слово в каждый пропуск или нажми на слово, чтобы вставить его в открытый пропуск. Некоторые слова лишние. Пропуски проверяют <0>-na</0> для «работает как», партитив после <1>ei ole</1>, инфинитив на <2>-ma</2>, <3>sisse</3> из урока {particles} и то, где что-то находится."
 
 msgid "Each sentence should say what the line above it says, and one word is wrong. Tap it, then type it right."
 msgstr "Каждое предложение должно говорить то же, что строка над ним, но одно слово неправильное. Нажми на него, а потом напиши правильно."
@@ -172,8 +157,8 @@ msgstr "Исправь предложение"
 msgid "for me"
 msgstr "для меня"
 
-msgid "From a date takes <0>-st</0> on both words: <1>esimesest detsembrist</1>."
-msgstr "«С» какой-то даты — это <0>-st</0> на обоих словах: <1>esimesest detsembrist</1>."
+msgid "From a date usually takes <0>-st</0> on both words: <1>esimesest detsembrist</1>."
+msgstr "«С» какой-то даты — это обычно <0>-st</0> на обоих словах: <1>esimesest detsembrist</1>."
 
 msgid "From January"
 msgstr "С января"
@@ -271,8 +256,8 @@ msgstr "Jõgi — река; здесь это дополнение к näeb."
 msgid "Kaks tuba: two rooms."
 msgstr "Kaks tuba — две комнаты."
 
-msgid "Kast, a box; after a number, kasti."
-msgstr "Kast — коробка; после числа — kasti."
+msgid "Kast, a box; after kaks or a higher number, kasti."
+msgstr "Kast — коробка; после kaks или большего числа — kasti."
 
 msgid "Kuulutus as the object of nägin."
 msgstr "Kuulutus как дополнение к nägin."
@@ -313,6 +298,9 @@ msgstr "«Въехать» — это <0>sisse kolima</0>, «съехать» �
 msgid "Moving in is <0>sisse kolima</0>; <1>välja</1> would be moving out."
 msgstr "«Въехать» — это <0>sisse kolima</0>; с <1>välja</1> получилось бы «съехать»."
 
+msgid "None there: <et>ei ole lifti</et>"
+msgstr "Чего-то нет: <et>ei ole lifti</et>"
+
 msgid "Now"
 msgstr "Сейчас"
 
@@ -322,14 +310,14 @@ msgstr "Теперь напиши Мари своё сообщение, прим
 msgid "On a date takes <0>-l</0>: <1>esimesel detsembril</1>."
 msgstr "Дата — это <0>-l</0>: <1>esimesel detsembril</1>."
 
-msgid "On a floor takes <0>-l</0> on both words: <1>kolmandal korrusel</1>."
-msgstr "«На этаже» — это <0>-l</0> на обоих словах: <1>kolmandal korrusel</1>."
+msgid "On a floor takes <0>-l</0>, and the number usually takes it too: <1>kolmandal korrusel</1>."
+msgstr "«На этаже» — это <0>-l</0>, и числительное обычно тоже его получает: <1>kolmandal korrusel</1>."
 
-msgid "On a floor takes <et>-l</et> on both words: <et>kolmandal korrusel</et>."
-msgstr "«На этаже» — это <et>-l</et> на обоих словах: <et>kolmandal korrusel</et>."
+msgid "On a floor takes <et>-l</et>, and the number usually takes it too: <et>kolmandal korrusel</et>."
+msgstr "«На этаже» — это <et>-l</et>, и числительное обычно тоже его получает: <et>kolmandal korrusel</et>."
 
-msgid "On a floor: <0>kolmandal korrusel</0>, both words with <1>-l</1>."
-msgstr "На этаже: <0>kolmandal korrusel</0>, оба слова с <1>-l</1>."
+msgid "On a floor: <0>kolmandal korrusel</0>, usually both words with <1>-l</1>."
+msgstr "На этаже: <0>kolmandal korrusel</0>, обычно оба слова с <1>-l</1>."
 
 msgid "On a floor: <et>kolmandal korrusel</et>"
 msgstr "На этаже: <et>kolmandal korrusel</et>"
@@ -367,8 +355,8 @@ msgstr "Она спрашивает, когда ты въедешь, а не с�
 msgid "She asks you in, so you go <0>sisse</0>, not out."
 msgstr "Она приглашает зайти, так что ты идёшь <0>sisse</0>, а не наружу."
 
-msgid "Smaller is <0>väiksem</0>, from <1>väike</1>."
-msgstr "«Меньше» — это <0>väiksem</0>, от <1>väike</1>."
+msgid "Smaller is <0>väiksem</0> or <1>väikesem</1>, from <2>väike</2>."
+msgstr "«Меньше» — это <0>väiksem</0> или <1>väikesem</1>, от <2>väike</2>."
 
 msgid "suits"
 msgstr "подходит"
@@ -412,6 +400,9 @@ msgstr "Хозяйке"
 msgid "The station"
 msgstr "Вокзал"
 
+msgid "The thing you ask about stays in its basic form: <0>Kus on köök?</0> And the room is big."
+msgstr "То, о чём спрашиваешь, остаётся в начальной форме: <0>Kus on köök?</0> И комната большая."
+
 msgid "There is no lift in the building."
 msgstr "В доме нет лифта."
 
@@ -451,6 +442,18 @@ msgstr "Когда маленькая квартира свободна?"
 msgid "When should you call?"
 msgstr "Когда звонить?"
 
+msgid "When something isn’t there or you don’t have it, <0>ei ole</0> takes the partitive: <1>Majas ei ole lifti</1>."
+msgstr "Когда чего-то нет или у тебя этого нет, после <0>ei ole</0> — партитив: <1>Majas ei ole lifti</1>."
+
+msgid "When something isn’t there or you don’t have it, <et>ei ole</et> takes the partitive: <et>Majas ei ole lifti</et>."
+msgstr "Когда чего-то нет или у тебя этого нет, после <et>ei ole</et> — партитив: <et>Majas ei ole lifti</et>."
+
+msgid "When something isn’t there, <0>ei ole</0> takes the partitive: <1>lifti</1>."
+msgstr "Когда чего-то нет, после <0>ei ole</0> — партитив: <1>lifti</1>."
+
+msgid "When you don’t have something, <0>ei ole</0> takes the partitive: <1>kassi</1>."
+msgstr "Когда у тебя чего-то нет, после <0>ei ole</0> — партитив: <1>kassi</1>."
+
 msgid "where"
 msgstr "где"
 
@@ -459,9 +462,6 @@ msgstr "Где или куда: <et>köögis</et>, <et>kööki</et>"
 
 msgid "Where something goes usually takes <et>-sse</et> or a short form, or <et>-le</et> onto a balcony: <et>korterisse</et>, <et>kööki</et>, <et>rõdule</et>."
 msgstr "«Куда» обычно — это <et>-sse</et> или короткая форма, а на балкон — <et>-le</et>: <et>korterisse</et>, <et>kööki</et>, <et>rõdule</et>."
-
-msgid "Where something is takes the plain form: <0>Kus on köök?</0> And the room is big."
-msgstr "О том, где что-то находится, спрашивают с начальной формой: <0>Kus on köök?</0> И комната большая."
 
 msgid "Where something is usually takes <0>-s</0>: <1>köögis</1>."
 msgstr "«Где» обычно — это <0>-s</0>: <1>köögis</1>."

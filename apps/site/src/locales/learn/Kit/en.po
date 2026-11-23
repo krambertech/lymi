@@ -362,8 +362,8 @@ msgstr "a shop"
 msgid "A short text to read and hear, every question at once; its words open their cards once checked."
 msgstr "A short text to read and hear, every question at once; its words open their cards once checked."
 
-msgid "A short text written in a field with the Estonian letters, then shown beside a model answer and a checklist the learner ticks; nothing is marked for them."
-msgstr "A short text written in a field with the Estonian letters, then shown beside a model answer and a checklist the learner ticks; nothing is marked for them."
+msgid "A short text written in a field with the Estonian letters, then shown above a model answer and a checklist the learner ticks; nothing is marked for them."
+msgstr "A short text written in a field with the Estonian letters, then shown above a model answer and a checklist the learner ticks; nothing is marked for them."
 
 msgid "a town"
 msgstr "a town"
@@ -601,6 +601,10 @@ msgctxt "said to several people"
 msgid "Don’t wait!"
 msgstr "Don’t wait!"
 
+msgid "Done"
+msgstr "Done"
+
+msgctxt "button that ends the checklist"
 msgid "Done"
 msgstr "Done"
 

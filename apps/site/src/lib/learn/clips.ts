@@ -1170,10 +1170,8 @@ export const TUTVUMINE_TALK: Conversation = {
     { voice: "main", text: "Ma elan Tartus, aga ma töötan Tallinnas." },
     { voice: "second", text: "Kas sa räägid eesti keelt?" },
     { voice: "main", text: ["Natuke.", "Ma õpin eesti keelt."] },
-    { voice: "second", text: "Miks?" },
-    { voice: "main", text: ["Sest ma töötan koolis.", "Ma olen õpetaja."] },
     { voice: "second", text: ["Mina ei tööta.", "Ma õpin Tartus."] },
-    { voice: "main", text: "Ja kus sa elad?" },
+    { voice: "main", text: "Ja kus sina elad?" },
     { voice: "second", text: "Ma elan Pärnus." },
   ],
 };

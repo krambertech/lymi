@@ -493,22 +493,11 @@ export function TutvumineLesson() {
       line: 7,
     },
     {
-      id: "why",
-      ask: t`Why is Peeter learning Estonian?`,
-      options: [
-        { id: "liis", label: t`For Liis` },
-        { id: "school", label: t`Because he works at a school` },
-        { id: "fun", label: t`For fun` },
-      ],
-      answer: "school",
-      line: 10,
-    },
-    {
       id: "liis-studies",
       kind: "truefalse",
       ask: t`Liis works in Tartu.`,
       answer: false,
-      line: 12,
+      line: 9,
     },
     {
       id: "liis-lives",
@@ -519,7 +508,7 @@ export function TutvumineLesson() {
         { id: "tallinn", label: t`In Tallinn` },
       ],
       answer: "parnu",
-      line: 15,
+      line: 12,
     },
   ];
   const first = lessonBySlug("haaldus")?.n;
@@ -800,7 +789,7 @@ export function TutvumineLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Liis and Peeter meet and ask each other where they live and what they do.
+                    Liis and Peeter meet. They ask each other where they live and say what they do.
                   </Trans>
                 </p>
               </Prose>

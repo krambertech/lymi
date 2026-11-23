@@ -135,7 +135,7 @@ export function Writing({ id, title, prompt, model, src, checks }: WritingProps)
               onClick={finish}
             >
               <Check aria-hidden="true" className="size-4" strokeWidth={2.5} />
-              <Trans>Done</Trans>
+              <Trans context="button that ends the checklist">Done</Trans>
             </Button>
           ) : (
             <div className="grid gap-3">

@@ -444,7 +444,7 @@ export function KitDemo() {
             <Part
               id="writing"
               title={t`Writing`}
-              use={t`A short text written in a field with the Estonian letters, then shown beside a model answer and a checklist the learner ticks; nothing is marked for them.`}
+              use={t`A short text written in a field with the Estonian letters, then shown above a model answer and a checklist the learner ticks; nothing is marked for them.`}
             >
               <Writing
                 id="kit-writing"

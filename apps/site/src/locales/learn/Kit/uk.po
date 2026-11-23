@@ -362,8 +362,8 @@ msgstr "крамниця"
 msgid "A short text to read and hear, every question at once; its words open their cards once checked."
 msgstr "Короткий текст, щоб прочитати й послухати, і всі питання одразу; картки слів відкриваються після перевірки."
 
-msgid "A short text written in a field with the Estonian letters, then shown beside a model answer and a checklist the learner ticks; nothing is marked for them."
-msgstr "Короткий текст, написаний у полі з естонськими літерами, а потім показаний поруч зі зразком і списком, де учень сам ставить позначки; ніхто не оцінює за нього."
+msgid "A short text written in a field with the Estonian letters, then shown above a model answer and a checklist the learner ticks; nothing is marked for them."
+msgstr "Короткий текст, написаний у полі з естонськими літерами, а потім показаний над зразком і списком, де учень сам ставить позначки; ніхто не оцінює за нього."
 
 msgid "a town"
 msgstr "місто"
@@ -603,6 +603,10 @@ msgstr "Не чекайте!"
 
 msgid "Done"
 msgstr "Пройдено"
+
+msgctxt "button that ends the checklist"
+msgid "Done"
+msgstr "Готово"
 
 msgid "Drag each word to its gap, or tap it."
 msgstr "Перетягни кожне слово в його пропуск або торкнися його."
@@ -1720,13 +1724,13 @@ msgid "Saying where: -s and -l"
 msgstr "Як сказати, де: закінчення -s і -l"
 
 msgid "Says what you do."
-msgstr "Чим ти займаєшся."
+msgstr "Сказано, чим ти займаєшся."
 
 msgid "Says where you live."
-msgstr "Де ти живеш."
+msgstr "Сказано, де ти живеш."
 
 msgid "Says who you are."
-msgstr "Хто ти."
+msgstr "Сказано, хто ти."
 
 msgid "Scene"
 msgstr "Сцена"

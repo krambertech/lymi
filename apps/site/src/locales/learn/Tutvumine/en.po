@@ -112,9 +112,6 @@ msgstr "at the office"
 msgid "because"
 msgstr "because"
 
-msgid "Because he works at a school"
-msgstr "Because he works at a school"
-
 msgid "coffee"
 msgstr "coffee"
 
@@ -138,12 +135,6 @@ msgstr "Fill the gaps"
 
 msgid "Fine, thanks. And you?"
 msgstr "Fine, thanks. And you?"
-
-msgid "For fun"
-msgstr "For fun"
-
-msgid "For Liis"
-msgstr "For Liis"
 
 msgid "Four to six sentences: who you are, where you live, what you do, something you don’t do, and a question for Mari."
 msgstr "Four to six sentences: who you are, where you live, what you do, something you don’t do, and a question for Mari."
@@ -229,8 +220,8 @@ msgstr "Kati writes about herself. Each gap needs one thing you’ve practised: 
 msgid "Liis"
 msgstr "Liis"
 
-msgid "Liis and Peeter meet and ask each other where they live and what they do."
-msgstr "Liis and Peeter meet and ask each other where they live and what they do."
+msgid "Liis and Peeter meet. They ask each other where they live and say what they do."
+msgstr "Liis and Peeter meet. They ask each other where they live and say what they do."
 
 msgid "Liis works in Tartu."
 msgstr "Liis works in Tartu."
@@ -411,9 +402,6 @@ msgstr "who"
 
 msgid "why"
 msgstr "why"
-
-msgid "Why is Peeter learning Estonian?"
-msgstr "Why is Peeter learning Estonian?"
 
 msgid "Word for word: “good time”."
 msgstr "Word for word: “good time”."

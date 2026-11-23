@@ -11,7 +11,7 @@ msgid "{past} minutes past {struck}."
 msgstr "{past} минут после {struck}."
 
 msgid "<0/> counts on from the hour that has struck; <1/> counts down to the hour that’s coming. Mix them up and the time comes out wrong by up to forty minutes. Listen, then pick the time."
-msgstr "<0/> считает от часа, который уже наступил, а <1/> — до часа, который наступит. Перепутаешь их — и ошибёшься иногда на целых сорок минут. Послушай и выбери время."
+msgstr "<0/> считает от прошедшего часа, а <1/> — до наступающего. Перепутаешь их — и ошибёшься иногда на целых сорок минут. Послушай и выбери время."
 
 msgid "<0/> means half, and it looks ahead. <1/> is halfway to four, so it’s 3:30, not 4:30."
 msgstr "<0/> значит «половина» и смотрит вперёд. <1/> — это половина четвёртого, то есть 3:30, а не 4:30."
@@ -23,13 +23,13 @@ msgid "<0>Veerand neli</0> is a quarter of the way to four, 3:15. <1>Kolmveerand
 msgstr "<0>Veerand neli</0> — четверть пути к четырём, 3:15. <1>Kolmveerand neli</1> — три четверти, 3:45."
 
 msgid "<et>Läbi</et> counts on from the hour that has struck."
-msgstr "<et>Läbi</et> считает от часа, который уже наступил."
+msgstr "<et>Läbi</et> считает от прошедшего часа."
 
 msgid "<et>Pärast</et> counts down to the hour that’s coming."
-msgstr "<et>Pärast</et> считает до часа, который наступит."
+msgstr "<et>Pärast</et> отсчитывает до наступающего часа."
 
 msgid "<et>Pool</et>, <et>veerand</et> and <et>kolmveerand</et> name the hour that’s coming."
-msgstr "<et>Pool</et>, <et>veerand</et> и <et>kolmveerand</et> называют час, который наступит."
+msgstr "<et>Pool</et>, <et>veerand</et> и <et>kolmveerand</et> называют наступающий час."
 
 msgid "18 minutes"
 msgstr "18 минут"
@@ -86,8 +86,14 @@ msgstr "Спрашивай <0>Mis kell on?</0> Ответ — <1>kell on</1> и 
 msgid "Ask the time and understand the answer. Halves and quarters count toward the hour that’s coming."
 msgstr "Спроси, который час, и пойми ответ. Половины и четверти считают до наступающего часа."
 
+msgid "At home"
+msgstr "Дома"
+
 msgid "at six; six o’clock"
 msgstr "в шесть часов; шесть часов"
+
+msgid "At work"
+msgstr "На работе"
 
 msgid "Before the hour, say how long until the next one. <0/> is, word for word, “in ten minutes, four”: 3:50."
 msgstr "Перед ровным часом говорят, сколько осталось до следующего. <0/> — дословно «через десять минут четыре»: 3:50."
@@ -136,6 +142,9 @@ msgstr "Час"
 
 msgid "In {ahead} minutes it’s {next}."
 msgstr "Через {ahead} минут будет {next}."
+
+msgid "In a café"
+msgstr "В кафе"
 
 msgid "in words"
 msgstr "словами"
@@ -189,9 +198,6 @@ msgstr "Только на слух, без микрофона"
 
 msgid "Listening: a message from Mari"
 msgstr "На слух: сообщение от Мари"
-
-msgid "Mari is at home at three."
-msgstr "В три часа Мари дома."
 
 msgid "Mari is at home now."
 msgstr "Сейчас Мари дома."
@@ -338,6 +344,9 @@ msgstr "Когда они пьют кофе?"
 
 msgid "When do they wait for the bus?"
 msgstr "Когда они ждут автобус?"
+
+msgid "Where is Mari at three?"
+msgstr "Где Мари в три часа?"
 
 msgid "Which clock did you hear?"
 msgstr "Какое время прозвучало?"

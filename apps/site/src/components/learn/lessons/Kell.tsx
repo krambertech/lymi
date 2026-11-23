@@ -486,7 +486,7 @@ export const pastToRun = (items: readonly PastToItem[], pinned?: PastToItem): Pa
     item === pinned ? item : { ...item, options: shuffle(item.options) },
   );
 
-const WRITTEN = [at(6, 30), at(2, 15), at(12, 45), at(9, 5), at(11, 20), at(3, 55)];
+const WRITTEN = [at(9, 30), at(2, 15), at(12, 45), at(9, 5), at(11, 20), at(7, 55)];
 
 /** The times the listening quiz asks, chosen for the mix-ups learners make. */
 const HEARD = [
@@ -654,7 +654,17 @@ export function KellLesson() {
         line: 1,
       },
       { id: "work", kind: "truefalse", ask: t`Mari is at home now.`, answer: false, line: 2 },
-      { id: "home", kind: "truefalse", ask: t`Mari is at home at three.`, answer: true, line: 3 },
+      {
+        id: "home",
+        ask: t`Where is Mari at three?`,
+        options: [
+          { id: "home", label: t`At home` },
+          { id: "work", label: t`At work` },
+          { id: "cafe", label: t`In a café` },
+        ],
+        answer: "home",
+        line: 3,
+      },
       {
         id: "coffee",
         ask: t`When do they drink coffee?`,

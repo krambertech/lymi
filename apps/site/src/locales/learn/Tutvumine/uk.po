@@ -112,9 +112,6 @@ msgstr "в офісі"
 msgid "because"
 msgstr "бо, тому що"
 
-msgid "Because he works at a school"
-msgstr "Бо він працює в школі"
-
 msgid "coffee"
 msgstr "кава"
 
@@ -138,12 +135,6 @@ msgstr "Заповни пропуски"
 
 msgid "Fine, thanks. And you?"
 msgstr "Добре, дякую. А в тебе?"
-
-msgid "For fun"
-msgstr "Для задоволення"
-
-msgid "For Liis"
-msgstr "Заради Лііс"
 
 msgid "Four to six sentences: who you are, where you live, what you do, something you don’t do, and a question for Mari."
 msgstr "Від чотирьох до шести речень: хто ти, де живеш, чим займаєшся, чого не робиш і питання до Марі."
@@ -229,8 +220,8 @@ msgstr "Каті пише про себе. У кожному пропуску �
 msgid "Liis"
 msgstr "Лііс"
 
-msgid "Liis and Peeter meet and ask each other where they live and what they do."
-msgstr "Лііс і Пеетер знайомляться й питають одне одного, де вони живуть і чим займаються."
+msgid "Liis and Peeter meet. They ask each other where they live and say what they do."
+msgstr "Лііс і Пеетер знайомляться: питають одне одного, де живуть, і розповідають, чим займаються."
 
 msgid "Liis works in Tartu."
 msgstr "Лііс працює в Тарту."
@@ -314,13 +305,13 @@ msgid "Say who you are: <0>Mina olen Andres</0> or <1>Minu nimi on Andres</1>."
 msgstr "Кажи, хто ти: <0>Mina olen Andres</0> або <1>Minu nimi on Andres</1>."
 
 msgid "Says what you do."
-msgstr "Чим ти займаєшся."
+msgstr "Сказано, чим ти займаєшся."
 
 msgid "Says where you live, with <0>-s</0> on the place."
-msgstr "Де ти живеш, із <0>-s</0> у назві місця."
+msgstr "Сказано, де ти живеш, із <0>-s</0> у назві місця."
 
 msgid "Says who you are."
-msgstr "Хто ти."
+msgstr "Сказано, хто ти."
 
 msgid "She isn’t at home."
 msgstr "Її немає вдома."
@@ -411,9 +402,6 @@ msgstr "хто"
 
 msgid "why"
 msgstr "чому"
-
-msgid "Why is Peeter learning Estonian?"
-msgstr "Чому Пеетер вивчає естонську?"
 
 msgid "Word for word: “good time”."
 msgstr "Дослівно: «добрий час»."

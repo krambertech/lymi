@@ -176,7 +176,7 @@ export const DRILLS: DrillBank = {
       id: "fix-nad-on",
       rule: "agree",
       wrong: "Nad oleme piletid ostnud.",
-      answers: ["Nad on piletid ostnud."],
+      answers: PERFECT_FIX_ANSWERS["Nad on piletid ostnud."],
       say: "Nad on piletid ostnud.",
       explain: msg`<et>Olema</et> agrees with the person: <et>nad on</et>.`,
     },

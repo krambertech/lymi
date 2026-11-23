@@ -4513,6 +4513,8 @@ export const PLURAL_CASE_ANSWERS: Record<string, readonly [string, ...string[]]>
     "Lindudel on puudes pesad.",
     "Lindudel on pesad puudes.",
     "Puudes on lindudel pesad.",
+    "Lindudel on puudes pesi.",
+    "Lindudel on puudes pesasid.",
   ],
   "Me käime poodides.": [
     "Me käime poodides.",
@@ -4521,6 +4523,8 @@ export const PLURAL_CASE_ANSWERS: Record<string, readonly [string, ...string[]]>
     "Me läheme poodidesse.",
     "Meie läheme poodidesse.",
     "Läheme poodidesse.",
+    "Me käime poodides ringi.",
+    "Käime poodides ringi.",
   ],
   "Lapsed tulevad koolidest.": ["Lapsed tulevad koolidest.", "Koolidest tulevad lapsed."],
   "Ma lähen sõpradega kinno.": [
@@ -4534,6 +4538,9 @@ export const PLURAL_CASE_ANSWERS: Record<string, readonly [string, ...string[]]>
     "Lähen koos sõpradega kinno.",
     "Mina lähen koos sõpradega kinno.",
     "Ma lähen kinno koos sõpradega.",
+    "Mina lähen kinno koos sõpradega.",
+    "Lähen kinno koos sõpradega.",
+    "Ma lähen sõpradega koos kinno.",
   ],
   "Me tuleme poodidest.": [
     "Me tuleme poodidest.",
@@ -4543,14 +4550,30 @@ export const PLURAL_CASE_ANSWERS: Record<string, readonly [string, ...string[]]>
     "Meie tuleme poodidest välja.",
     "Tuleme poodidest välja.",
   ],
-  "Ta kirjutab sõpradest.": ["Ta kirjutab sõpradest.", "Tema kirjutab sõpradest."],
+  "Ta kirjutab sõpradest.": [
+    "Ta kirjutab sõpradest.",
+    "Tema kirjutab sõpradest.",
+    "Ta kirjutab sõprade kohta.",
+    "Tema kirjutab sõprade kohta.",
+  ],
   "Ma räägin inimestele.": [
     "Ma räägin inimestele.",
     "Mina räägin inimestele.",
     "Räägin inimestele.",
+    "Ma ütlen inimestele.",
+    "Ütlen inimestele.",
   ],
   "Pildid on raamatus.": ["Pildid on raamatus.", "Raamatus on pildid."],
-  "Me käime poes.": ["Me käime poes.", "Meie käime poes.", "Käime poes."],
+  "Me käime poes.": [
+    "Me käime poes.",
+    "Meie käime poes.",
+    "Käime poes.",
+    "Me läheme poodi.",
+    "Meie läheme poodi.",
+    "Läheme poodi.",
+    "Me läheme poesse.",
+    "Läheme poesse.",
+  ],
 };
 
 const PLURAL_CASE_CLIPS: Record<string, Clip> = {
@@ -4680,8 +4703,15 @@ export const PERFECT_FIXES = [
   },
 ] as const;
 
-export const PERFECT_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> =
-  Object.fromEntries(PERFECT_FIXES.map(({ right }) => [right, [right]]));
+export const PERFECT_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  ...Object.fromEntries(PERFECT_FIXES.map(({ right }) => [right, [right]])),
+  "Ma ei ole seda filmi näinud.": [
+    "Ma ei ole seda filmi näinud.",
+    "Ma ei olnud seda filmi näinud.",
+  ],
+  "Me oleme Tartus käinud.": ["Me oleme Tartus käinud.", "Me olime Tartus käinud."],
+  "Nad on piletid ostnud.": ["Nad on piletid ostnud.", "Nad olid piletid ostnud."],
+};
 
 export const PERFECT_DIALOGUE = {
   "d-mari-1": { text: "Tere! Kas sa oled Tartus käinud?", voice: "second" },
@@ -4837,6 +4867,10 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Eile läksin ma Tartusse.",
     "Läksin eile Tartusse.",
     "Mina läksin eile Tartusse.",
+    "Eile läksin Tartusse.",
+    "Eile ma käisin Tartus.",
+    "Eile ma läksin Tartusse.",
+    "Ma käisin Tartus eile.",
   ],
   "Ma olen Tartus käinud.": [
     "Ma olen Tartus käinud.",
@@ -4845,6 +4879,10 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Ma olen Tartus olnud.",
     "Olen Tartus olnud.",
     "Mina olen Tartus olnud.",
+    "Ma olen käinud Tartus.",
+    "Olen käinud Tartus.",
+    "Mina olen käinud Tartus.",
+    "Ma olen olnud Tartus.",
   ],
   "Ma ei ole veel söönud.": [
     "Ma ei ole veel söönud.",
@@ -4856,11 +4894,17 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Mina pole veel söönud.",
     "Ei ole söönud veel.",
     "Mina ei ole söönud veel.",
+    "Ma pole söönud veel.",
+    "Pole söönud veel.",
+    "Mina pole söönud veel.",
   ],
   "Kui ma koju jõudsin, oli Mari juba söönud.": [
     "Kui ma koju jõudsin, oli Mari juba söönud.",
     "Kui ma koju jõudsin, Mari oli juba söönud.",
     "Kui ma jõudsin koju, oli Mari juba söönud.",
+    "Kui ma jõudsin koju, Mari oli juba söönud.",
+    "Kui koju jõudsin, oli Mari juba söönud.",
+    "Mari oli juba söönud, kui ma koju jõudsin.",
   ],
   "Ta on eesti keelt kaks aastat õppinud.": [
     "Ta on eesti keelt kaks aastat õppinud.",
@@ -4871,12 +4915,19 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Ta on juba kaks aastat eesti keelt õppinud.",
     "Ta on eesti keelt juba kaks aastat õppinud.",
     "Tema õpib eesti keelt juba kaks aastat.",
+    "Ta õpib juba kaks aastat eesti keelt.",
+    "Tema on kaks aastat eesti keelt õppinud.",
+    "Ta on õppinud eesti keelt kaks aastat.",
   ],
   "Kas sa oled seda filmi näinud?": [
     "Kas sa oled seda filmi näinud?",
     "Kas sa oled seda filmi juba näinud?",
     "Kas te olete seda filmi näinud?",
     "Oled sa seda filmi näinud?",
+    "Kas oled seda filmi näinud?",
+    "Kas sina oled seda filmi näinud?",
+    "Olete te seda filmi näinud?",
+    "Kas sa oled näinud seda filmi?",
   ],
   "Eelmisel nädalal lugesin ma raamatu läbi.": [
     "Eelmisel nädalal lugesin ma raamatu läbi.",
@@ -4884,18 +4935,30 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Ma lugesin eelmisel nädalal raamatu läbi.",
     "Lugesin eelmisel nädalal raamatu läbi.",
     "Mina lugesin eelmisel nädalal raamatu läbi.",
+    "Eelmisel nädalal ma lugesin raamatu läbi.",
+    "Ma lugesin raamatu eelmisel nädalal läbi.",
   ],
   "Ma olen juba söönud.": ["Ma olen juba söönud.", "Olen juba söönud.", "Mina olen juba söönud."],
   "Ta on juba koju läinud.": [
     "Ta on juba koju läinud.",
     "Ta on koju juba läinud.",
     "Tema on juba koju läinud.",
+    "Tema on koju juba läinud.",
   ],
-  "Nad on piletid ostnud.": ["Nad on piletid ostnud.", "Nemad on piletid ostnud."],
+  "Nad on piletid ostnud.": [
+    "Nad on piletid ostnud.",
+    "Nemad on piletid ostnud.",
+    "Nad on piletid juba ostnud.",
+    "Nad on piletid ära ostnud.",
+  ],
   "Kui ma jaama jõudsin, oli rong juba läinud.": [
     "Kui ma jaama jõudsin, oli rong juba läinud.",
     "Kui ma jõudsin jaama, oli rong juba läinud.",
     "Kui ma jaama jõudsin, rong oli juba läinud.",
+    "Kui ma jaama jõudsin, oli rong juba ära läinud.",
+    "Kui ma jõudsin jaama, rong oli juba läinud.",
+    "Kui jaama jõudsin, oli rong juba läinud.",
+    "Rong oli juba läinud, kui ma jaama jõudsin.",
   ],
   "Ta pole seda filmi näinud.": [
     "Ta pole seda filmi näinud.",
@@ -4907,6 +4970,7 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Me oleme töö ära teinud.",
     "Oleme töö ära teinud.",
     "Meie oleme töö ära teinud.",
+    "Me oleme töö juba ära teinud.",
   ],
   "Ma ei ole seda filmi näinud.": [
     "Ma ei ole seda filmi näinud.",
@@ -4917,11 +4981,17 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Ei ole seda filmi näinud.",
     "Pole seda filmi näinud.",
     "Mina ei ole seda filmi näinud.",
+    "Ma pole seda filmi veel näinud.",
+    "Mina pole seda filmi näinud.",
+    "Ma ei ole kunagi seda filmi näinud.",
+    "Ma pole kunagi seda filmi näinud.",
+    "Ma ei ole veel seda filmi näinud.",
   ],
   "Sa oled raamatu läbi lugenud.": [
     "Sa oled raamatu läbi lugenud.",
     "Oled raamatu läbi lugenud.",
     "Sina oled raamatu läbi lugenud.",
+    "Sa oled raamatu juba läbi lugenud.",
   ],
 };
 

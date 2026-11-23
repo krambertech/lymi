@@ -4337,6 +4337,9 @@ export const PLURAL_CASE_FIXES = [
   { wrong: "Õpetajadele meeldib kohv.", right: "Õpetajatele meeldib kohv." },
 ] as const;
 
+export const PLURAL_CASE_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> =
+  Object.fromEntries(PLURAL_CASE_FIXES.map(({ right }) => [right, [right]]));
+
 export const PLURAL_CASE_SHOPPING = [
   "Laupäeval käivad Kati ja Mari poodides.",
   "Nad otsivad kingitusi oma sõpradele.",
@@ -4618,6 +4621,9 @@ export const PERFECT_FIXES = [
     right: "Kui ma jaama jõudsin, oli rong juba läinud.",
   },
 ] as const;
+
+export const PERFECT_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> =
+  Object.fromEntries(PERFECT_FIXES.map(({ right }) => [right, [right]]));
 
 export const PERFECT_DIALOGUE = {
   "d-mari-1": { text: "Tere! Kas sa oled Tartus käinud?", voice: "second" },

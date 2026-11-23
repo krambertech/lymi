@@ -1,5 +1,5 @@
 import { msg } from "@lingui/core/macro";
-import { PERFECT_ANSWERS } from "../../../lib/learn/clips";
+import { PERFECT_ANSWERS, PERFECT_FIX_ANSWERS } from "../../../lib/learn/clips";
 import type { DrillBank, FormDrill } from "../../../lib/learn/drill";
 
 const REGULAR = msg`Drop <et>-da</et> or <et>-a</et> from the <et>-da</et> infinitive and add <et>-nud</et>.`;
@@ -158,7 +158,7 @@ export const DRILLS: DrillBank = {
       id: "fix-ei-ole",
       rule: "agree",
       wrong: "Ma ei olen seda filmi näinud.",
-      answers: ["Ma ei ole seda filmi näinud."],
+      answers: PERFECT_FIX_ANSWERS["Ma ei ole seda filmi näinud."],
       say: "Ma ei ole seda filmi näinud.",
       explain: msg`In the present, after <et>ei</et>, <et>olema</et> is <et>ole</et> for every person.`,
     },
@@ -167,7 +167,7 @@ export const DRILLS: DrillBank = {
       id: "fix-oleme",
       rule: "agree",
       wrong: "Me ole Tartus käinud.",
-      answers: ["Me oleme Tartus käinud."],
+      answers: PERFECT_FIX_ANSWERS["Me oleme Tartus käinud."],
       say: "Me oleme Tartus käinud.",
       explain: msg`<et>Olema</et> agrees with the person: <et>me oleme</et>.`,
     },
@@ -185,7 +185,7 @@ export const DRILLS: DrillBank = {
       id: "fix-oli",
       rule: "which",
       wrong: "Kui ma jaama jõudsin, on rong juba läinud.",
-      answers: ["Kui ma jaama jõudsin, oli rong juba läinud."],
+      answers: PERFECT_FIX_ANSWERS["Kui ma jaama jõudsin, oli rong juba läinud."],
       say: "Kui ma jaama jõudsin, oli rong juba läinud.",
       explain: PLUPERFECT,
     },
@@ -194,7 +194,7 @@ export const DRILLS: DrillBank = {
       id: "fix-lainud",
       rule: "nud",
       wrong: "Ta on juba koju minnud.",
-      answers: ["Ta on juba koju läinud."],
+      answers: PERFECT_FIX_ANSWERS["Ta on juba koju läinud."],
       say: "Ta on juba koju läinud.",
       explain: SHORT,
     },
@@ -203,7 +203,7 @@ export const DRILLS: DrillBank = {
       id: "fix-oppinud",
       rule: "nud",
       wrong: "Ma olen eesti keelt kaks aastat õpinud.",
-      answers: ["Ma olen eesti keelt kaks aastat õppinud."],
+      answers: PERFECT_FIX_ANSWERS["Ma olen eesti keelt kaks aastat õppinud."],
       say: "Ma olen eesti keelt kaks aastat õppinud.",
       explain: REGULAR,
     },

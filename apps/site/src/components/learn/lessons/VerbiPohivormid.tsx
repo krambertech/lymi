@@ -478,7 +478,7 @@ export const HEARD = VERB_FORMS.filter((verb) => verb.pattern === "da" || verb.p
     pair: [kind, `${verb.ma}-${kind}`] as const,
   }));
 
-/** “Which verb is it?”: -da forms that look least like their -ma infinitive. */
+/** “Which verb is it?”: -da infinitives that look least like their -ma infinitive. */
 export const ASKED = [
   "olema",
   "tulema",
@@ -799,8 +799,8 @@ export function VerbiPohivormidLesson() {
                 <p>
                   <Trans>
                     Lessons {negation} and {commands} called <Word w="loen" /> the I form of the
-                    present, after <span lang="et">ma loen</span>. Here it is the present,
-                    and <Word w="lugema" /> is the <End>-ma</End> infinitive.
+                    present, after <span lang="et">ma loen</span>. Here it is the present, and{" "}
+                    <Word w="lugema" /> is the <End>-ma</End> infinitive.
                   </Trans>
                 </p>
                 <p>

@@ -1902,8 +1902,8 @@ msgstr "Это «доброе утро», а Мари уходит."
 msgid "The -des and -mata forms"
 msgstr "Формы на -des и -mata"
 
-msgid "the -ma form"
-msgstr "форма на -ma"
+msgid "the -ma infinitive"
+msgstr "инфинитив на -ma"
 
 msgid "the -nud form"
 msgstr "форма на -nud"
@@ -2142,8 +2142,8 @@ msgstr "идти"
 msgid "to read"
 msgstr "читать"
 
-msgid "to read, da-form"
-msgstr "читать, форма на -da"
+msgid "to read, the -da infinitive"
+msgstr "читать, инфинитив на -da"
 
 msgid "to wait"
 msgstr "ждать"

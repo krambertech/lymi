@@ -1902,8 +1902,8 @@ msgstr "That’s good morning; Mari is leaving."
 msgid "The -des and -mata forms"
 msgstr "The -des and -mata forms"
 
-msgid "the -ma form"
-msgstr "the -ma form"
+msgid "the -ma infinitive"
+msgstr "the -ma infinitive"
 
 msgid "the -nud form"
 msgstr "the -nud form"
@@ -2142,8 +2142,8 @@ msgstr "to go"
 msgid "to read"
 msgstr "to read"
 
-msgid "to read, da-form"
-msgstr "to read, da-form"
+msgid "to read, the -da infinitive"
+msgstr "to read, the -da infinitive"
 
 msgid "to wait"
 msgstr "to wait"

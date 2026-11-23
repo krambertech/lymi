@@ -176,6 +176,7 @@ export const DRILLS: DrillBank = {
         "Järgmisel nädalal me läheme Tartusse.",
         "Me läheme järgmisel nädalal Tartusse.",
         "Järgmisel nädalal läheme me Tartusse.",
+        "Järgmisel nädalal läheme meie Tartusse.",
         "Me läheme Tartusse järgmisel nädalal.",
         "Järgmisel nädalal meie läheme Tartusse.",
         "Läheme Tartusse järgmisel nädalal.",

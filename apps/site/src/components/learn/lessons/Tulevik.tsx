@@ -296,7 +296,7 @@ const LONG: Record<string, string> = {
 
 const DROPS = new Set(["Ma", "Sa", "Me", "Te"]);
 
-export function withPronouns(said: string): [string, ...string[]] {
+function withPronouns(said: string): [string, ...string[]] {
   const [first, next, ...rest] = said.split(" ");
   const long = first && LONG[first];
   if (!long || !next) return [said];

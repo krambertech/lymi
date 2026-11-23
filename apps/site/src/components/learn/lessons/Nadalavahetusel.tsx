@@ -174,6 +174,7 @@ const SAY_ALSO: Record<(typeof WEEKEND_SAY)[number]["id"], readonly string[]> = 
     "Eile me sõime kodus.",
     "Me sõime eile kodus.",
     "Eile sõime me kodus.",
+    "Eile sõime meie kodus.",
     "Eile meie sõime kodus.",
     "Meie sõime eile kodus.",
     "Sõime eile kodus.",

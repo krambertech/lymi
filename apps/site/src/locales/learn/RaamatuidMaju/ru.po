@@ -316,8 +316,8 @@ msgstr "Почти. Там, где ошибся, просмотри виды в 
 msgid "Nominative"
 msgstr "Именительный"
 
-msgid "Pick the form for each gap, then hear the sentence."
-msgstr "Выбери форму для каждого пропуска, потом послушай предложение."
+msgid "Pick the form each sentence needs, then hear it."
+msgstr "Выбери форму, которая нужна в каждом предложении, потом послушай его."
 
 msgid "Plural partitive"
 msgstr "Партитив множественного"

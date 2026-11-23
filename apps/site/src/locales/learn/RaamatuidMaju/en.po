@@ -316,8 +316,8 @@ msgstr "Nearly. Switch through the kinds in the table for the ones you missed."
 msgid "Nominative"
 msgstr "Nominative"
 
-msgid "Pick the form for each gap, then hear the sentence."
-msgstr "Pick the form for each gap, then hear the sentence."
+msgid "Pick the form each sentence needs, then hear it."
+msgstr "Pick the form each sentence needs, then hear it."
 
 msgid "Plural partitive"
 msgstr "Plural partitive"

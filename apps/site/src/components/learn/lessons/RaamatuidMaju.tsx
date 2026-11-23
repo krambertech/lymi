@@ -28,7 +28,7 @@ import { Aside, LessonView, Prose } from "../LessonView";
 import { Match, type MatchPair } from "../Match";
 import { Paradigm, type ParadigmRow } from "../Paradigm";
 import { Listening, type PassageQuestion } from "../Passage";
-import { type GapItem, GapRound, Quiz } from "../Quiz";
+import { Quiz } from "../Quiz";
 import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
 import { Sort, type SortItem } from "../Sort";
 import { Word } from "../Word";
@@ -191,7 +191,12 @@ function KindTable() {
 }
 
 type Use = "two" | "many" | "where";
-type GapRun = GapItem & { said: string; pair: readonly [string, string] };
+type GapRun = FormItem & {
+  said: string;
+  options: readonly string[];
+  answers: readonly string[];
+  pair: readonly [string, string];
+};
 
 export const gapRun = <T extends { pair: readonly [string, string]; options: readonly string[] }>(
   items: readonly T[],
@@ -230,11 +235,13 @@ function useContent() {
       const use = gap.id.split("-")[1] as Use;
       return {
         said,
+        base: gap.noun,
+        gloss: i18n._(NOUNS[gap.noun] as MessageDescriptor),
+        cue: `${gap.before} …${gap.after === "." ? "" : ` ${gap.after}`}`,
+        cueLang: "et",
         src: src(said),
-        before: `${gap.before} `,
-        after: gap.after === "." ? "." : ` ${gap.after}`,
         options: PLURAL_PART_FORMS[gap.noun],
-        answer: gap.answer,
+        answers: [gap.answer],
         pair: [use, gap.id] as const,
         explain: whys[use],
       };
@@ -531,7 +538,7 @@ export function RaamatuidMajuLesson() {
               <ListenRows items={rowsOf(PLURAL_PART_USES)} />
               <Prose>
                 <p>
-                  <Trans>Pick the form for each gap, then hear the sentence.</Trans>
+                  <Trans>Pick the form each sentence needs, then hear it.</Trans>
                 </p>
               </Prose>
               <Quiz
@@ -550,7 +557,7 @@ export function RaamatuidMajuLesson() {
                 }
                 recall={(item) => ({ label: item.said, src: item.src })}
                 order={gapRun}
-                round={(props) => <GapRound {...props} listen="after" />}
+                round={(props) => <FormRound {...props} />}
               />
             </>
           ),

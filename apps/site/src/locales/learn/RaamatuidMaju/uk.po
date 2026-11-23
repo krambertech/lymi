@@ -316,8 +316,8 @@ msgstr "Майже. Там, де помилився, переглянь види
 msgid "Nominative"
 msgstr "Називний"
 
-msgid "Pick the form for each gap, then hear the sentence."
-msgstr "Вибери форму для кожного пропуску, потім послухай речення."
+msgid "Pick the form each sentence needs, then hear it."
+msgstr "Вибери форму, потрібну в кожному реченні, потім послухай його."
 
 msgid "Plural partitive"
 msgstr "Партитив множини"

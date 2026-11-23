@@ -97,9 +97,6 @@ msgstr "Вони сьогодні працюють?"
 msgid "Ask the question"
 msgstr "Постав питання"
 
-msgid "ask with kas"
-msgstr "спитай словом kas"
-
 msgid "Asks about a person."
 msgstr "Питає про людину."
 
@@ -306,6 +303,9 @@ msgstr "На слух: Каті знайомиться з Яаном"
 
 msgid "Ma olen pärit… is I’m from…"
 msgstr "Ma olen pärit… означає «я родом з…»."
+
+msgid "make it a yes-or-no question"
+msgstr "зроби питанням «так чи ні»"
 
 msgid "Match each question word with what it asks about."
 msgstr "З’єднай кожне питальне слово з тим, про що воно питає."

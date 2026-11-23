@@ -161,7 +161,7 @@ msgid "Flip the six lines above once more, then come back."
 msgstr "Flip the six lines above once more, then come back."
 
 msgid "Flip the six lines at the top and the <0>olema</0> lines once more, then try again."
-msgstr "Flip the six lines at the top and the olema lines once more, then try again."
+msgstr "Flip the six lines at the top and the <0>olema</0> lines once more, then try again."
 
 msgid "Flip the six lines at the top once more, then try again."
 msgstr "Flip the six lines at the top once more, then try again."
@@ -299,7 +299,7 @@ msgid "No."
 msgstr "No."
 
 msgid "None of you read."
-msgstr "You all don’t read."
+msgstr "None of you read."
 
 msgid "not; no"
 msgstr "not; no"
@@ -423,6 +423,9 @@ msgstr "Turn it into a no"
 msgid "turns a sentence into a yes-or-no question"
 msgstr "turns a sentence into a yes-or-no question"
 
+msgid "Type the form after <0>ei</0>"
+msgstr "Type the form after <0>ei</0>"
+
 msgid "Type the form after ei"
 msgstr "Type the form after ei"
 
@@ -457,10 +460,10 @@ msgid "You all read."
 msgstr "You all read."
 
 msgid "You aren’t waiting."
-msgstr "You don’t wait."
+msgstr "You aren’t waiting."
 
 msgid "You’ll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
 msgstr "You’ll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
 
 msgid "You’re waiting."
-msgstr "You wait."
+msgstr "You’re waiting."

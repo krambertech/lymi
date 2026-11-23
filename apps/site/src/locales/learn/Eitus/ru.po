@@ -423,6 +423,9 @@ msgstr "Преврати в отрицание"
 msgid "turns a sentence into a yes-or-no question"
 msgstr "делает из предложения вопрос «да или нет»"
 
+msgid "Type the form after <0>ei</0>"
+msgstr "Напиши форму после <0>ei</0>"
+
 msgid "Type the form after ei"
 msgstr "Напиши форму после ei"
 

@@ -80,7 +80,7 @@ const made = (from: string, index: number): SentenceDrill => {
     id: `kas-${clipId(answers[0])}`,
     rule: "kas",
     from,
-    cue: msg`ask with kas`,
+    cue: msg`make it a yes-or-no question`,
     say: answers[0],
     answers: [answers[0]],
     explain: msg`Put <et>kas</et> in front; every other word stays where it was.`,

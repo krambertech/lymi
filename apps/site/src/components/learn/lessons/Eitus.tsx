@@ -801,7 +801,11 @@ export function EitusLesson() {
               </Prose>
               <Quiz
                 id="type-after-ei"
-                title={<Trans>Type the form after ei</Trans>}
+                title={
+                  <Trans>
+                    Type the form after <span lang="et">ei</span>
+                  </Trans>
+                }
                 items={formItems}
                 rounds={6}
                 verdict={(share) =>

@@ -12,8 +12,12 @@ import {
   dictionaryPair,
   MITMUS_ADJECTIVES,
   MITMUS_CHANGED,
+  MITMUS_FIX,
   MITMUS_SAME,
+  MITMUS_SAY,
   MITMUS_SENTENCES,
+  MITMUS_SORT,
+  MITMUS_TALK,
   type PluralNoun,
   type PluralSentence,
   pluralSentence,
@@ -21,11 +25,15 @@ import {
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Panel } from "../Explore";
+import { type FixItem, FixRound, fixRecall } from "../FixRound";
 import { type GapItem, GapPassage } from "../GapPassage";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
 import { Morph, type MorphChain } from "../Morph";
+import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz, type TypedItem, TypedRound } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
+import { Sort, type SortBin, type SortItem } from "../Sort";
 import { PlayButton, Playing } from "../Sound";
 import { Word } from "../Word";
 
@@ -386,6 +394,136 @@ function gapsOf(): GapItem[] {
   ];
 }
 
+const SAY_MEANS: Record<(typeof MITMUS_SAY)[number]["id"], MessageDescriptor> = {
+  lapsed: msg`The children are reading.`,
+  kassid: msg`The cats are at home.`,
+  toad: msg`The rooms are big.`,
+  tootavad: msg`Mum and Dad work in Tallinn.`,
+  sobrad: msg`The friends are waiting.`,
+  uued: msg`The new books are on the table.`,
+};
+
+export const sortItems = (): SortItem[] =>
+  MITMUS_SORT.map(({ one, many, bin }) => ({ w: `${one} → ${many}`, bin, src: src(many) }));
+
+export function sayItems(i18n: I18n): SentenceItem[] {
+  return MITMUS_SAY.map(({ id, said, also }) => ({
+    kind: "translate",
+    id: `say-${id}`,
+    prompt: i18n._(SAY_MEANS[id]),
+    src: src(said),
+    answers: [said, ...also],
+  }));
+}
+
+function FixWhy({ id }: { id: (typeof MITMUS_FIX)[number]["id"] }) {
+  switch (id) {
+    case "loevad":
+      return (
+        <Trans>
+          A plural noun takes the verb form of <b lang="et">nad</b>: <b lang="et">loevad</b>.
+        </Trans>
+      );
+    case "poed":
+      return (
+        <Trans>
+          The plural is the genitive plus <b lang="et">-d</b>: <b lang="et">pood, poe → poed</b>.
+        </Trans>
+      );
+    case "tootavad":
+      return (
+        <Trans>
+          Two people joined by <b lang="et">ja</b> take the verb form of <b lang="et">nad</b>:{" "}
+          <b lang="et">töötavad</b>.
+        </Trans>
+      );
+    case "joovad":
+      return (
+        <Trans>
+          A plural noun takes the verb form of <b lang="et">nad</b>: <b lang="et">joovad</b>.
+        </Trans>
+      );
+    case "suured":
+      return (
+        <Trans>
+          After <b lang="et">on</b>, the adjective takes <b lang="et">-d</b> too:{" "}
+          <b lang="et">suured</b>.
+        </Trans>
+      );
+    case "sobrad":
+      return (
+        <Trans>
+          The plural is the genitive plus <b lang="et">-d</b>:{" "}
+          <b lang="et">sõber, sõbra → sõbrad</b>.
+        </Trans>
+      );
+  }
+}
+
+const ABOUT_MANY = msg`It’s about more than one.`;
+
+export function fixItems(i18n: I18n): FixItem[] {
+  return MITMUS_FIX.map(({ id, wrong, right }) => ({
+    kind: "fix",
+    id: `fix-${id}`,
+    wrong,
+    prompt: i18n._(ABOUT_MANY),
+    answers: [right],
+    src: src(right),
+    explain: <FixWhy id={id} />,
+  }));
+}
+
+function useTalkQuestions(): PassageQuestion[] {
+  const { t } = useLingui();
+  return [
+    {
+      kind: "short",
+      id: "children",
+      ask: t`Where are Mari’s children? Write the place in Estonian, with its ending.`,
+      answers: ["koolis"],
+      line: 1,
+    },
+    { kind: "truefalse", id: "cats", ask: t`The cats are at school.`, answer: false, line: 4 },
+    {
+      id: "live",
+      ask: t`Where do Mari’s friends live?`,
+      options: [
+        { id: "tartu", label: t`In Tartu` },
+        { id: "tallinn", label: t`In Tallinn` },
+        { id: "parnu", label: t`In Pärnu` },
+      ],
+      answer: "tallinn",
+      line: 6,
+    },
+    {
+      id: "work",
+      ask: t`Where do the friends work?`,
+      options: [
+        { id: "school", label: t`At a school` },
+        { id: "shop", label: t`In a shop` },
+        { id: "hospital", label: t`In a hospital` },
+      ],
+      answer: "hospital",
+      line: 7,
+    },
+    {
+      kind: "truefalse",
+      id: "tallinn-shops",
+      ask: t`The shops in Tallinn are big.`,
+      answer: true,
+      line: 9,
+    },
+    {
+      kind: "truefalse",
+      id: "tartu-shops",
+      ask: t`The shops in Tartu are big.`,
+      answer: false,
+      line: 11,
+    },
+  ];
+}
+
 export function MitmusLesson() {
   const { t, i18n } = useLingui();
   const present = lessonBySlug("olevik")?.n;
@@ -394,6 +532,39 @@ export function MitmusLesson() {
   const genitive = lessonBySlug("omastav")?.n;
   const partitive = lessonBySlug("osastav")?.n;
   const gaps = gapsOf();
+  const talkQuestions = useTalkQuestions();
+  const bins: SortBin[] = [
+    {
+      id: "same",
+      label: t`No change inside`,
+      lang: i18n.locale,
+      hint: (
+        <Trans>
+          as in <b lang="et">kass, kassid</b>
+        </Trans>
+      ),
+      rule: (
+        <Trans>
+          Nothing changes inside: the genitive gains a vowel or nothing, then <b lang="et">-d</b>.
+        </Trans>
+      ),
+    },
+    {
+      id: "changed",
+      label: t`A change inside`,
+      lang: i18n.locale,
+      hint: (
+        <Trans>
+          as in <b lang="et">pood, poed</b>
+        </Trans>
+      ),
+      rule: (
+        <Trans>
+          The plural keeps the genitive’s change: <b lang="et">pood, poe → poed</b>.
+        </Trans>
+      ),
+    },
+  ];
 
   const typedItems = useMemo<(TypedItem & { many: string; pair: readonly [string, string] })[]>(
     () =>
@@ -520,8 +691,8 @@ export function MitmusLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">12 minutes</Trans>,
-        <Trans key="q">2 quizzes and a passage with gaps</Trans>,
+        <Trans key="m">20 minutes</Trans>,
+        <Trans key="q">7 exercises</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -678,6 +849,30 @@ export function MitmusLesson() {
           ),
         },
         {
+          id: "kinds",
+          title: t`Which plurals change inside`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Compare each noun with its plural. Did a letter inside drop or change, as in{" "}
+                    <b lang="et">tuba, toad</b>, or does the plural start with the whole noun, as in{" "}
+                    <b lang="et">kass, kassid</b>? Tap a word to hear the plural.
+                  </Trans>
+                </p>
+              </Prose>
+              <Sort
+                id="plural-kinds"
+                title={<Trans>A change inside or not?</Trans>}
+                bins={bins}
+                items={sortItems()}
+              />
+            </>
+          ),
+        },
+        {
           id: "verbs",
           title: t`The verb with a plural noun`,
           children: (
@@ -823,6 +1018,73 @@ export function MitmusLesson() {
           ),
         },
         {
+          id: "say-it",
+          title: t`Write it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write each sentence in Estonian. Each is about more than one person or thing.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="say-plural"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={sayItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six written right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Read the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "fix",
+          title: t`Fix the sentence`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each sentence is about more than one, and one word in it is in the wrong form: a
+                    noun, a verb or an adjective. Tap it, then write the right form.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="fix-plural"
+                title={<Trans>Find and fix the mistake</Trans>}
+                items={fixItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six found and fixed.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Look again at the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={fixRecall}
+                round={(props) => <FixRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
           id: "home",
           title: t`At home`,
           quiz: true,
@@ -833,8 +1095,8 @@ export function MitmusLesson() {
                   <Trans>
                     A family writes about its home in Tartu. Pick the word that fits each gap: the
                     words around it say whether it’s one or many. Two adjectives come from the
-                    section above, <Word w="väike" />, small, and <Word w="ilus" />, beautiful. One
-                    verb is new: <Word w="magama" />, to sleep.
+                    adjectives section above, <Word w="väike" />, small, and <Word w="ilus" />,
+                    beautiful. One verb is new: <Word w="magama" />, to sleep.
                   </Trans>
                 </p>
               </Prose>
@@ -844,6 +1106,30 @@ export function MitmusLesson() {
                 gaps={gaps}
                 mode="pick"
                 clip="p-home"
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listen: where everyone is`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Jaan asks Mari about her family and friends. Read the questions, then listen.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="mari-family"
+                title={<Trans>Listen: Jaan and Mari</Trans>}
+                clip="c-friends"
+                turns={MITMUS_TALK.turns}
+                names={{ third: "Mari", fourth: "Jaan" }}
+                questions={talkQuestions}
               />
             </>
           ),

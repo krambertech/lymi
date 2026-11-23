@@ -1,6 +1,19 @@
 import { msg } from "@lingui/core/macro";
-import { counted, PARTITIVE_NOUNS, type PartitiveNoun } from "../../../lib/learn/clips";
-import type { ChoiceDrill, DrillBank, FormDrill, GapDrill } from "../../../lib/learn/drill";
+import {
+  counted,
+  OSASTAV_FIX,
+  OSASTAV_SAY,
+  PARTITIVE_NOUNS,
+  type PartitiveNoun,
+} from "../../../lib/learn/clips";
+import type {
+  ChoiceDrill,
+  DrillBank,
+  FixDrill,
+  FormDrill,
+  GapDrill,
+  SentenceDrill,
+} from "../../../lib/learn/drill";
 
 const MEANS = {
   kass: msg`cat`,
@@ -94,6 +107,65 @@ const heard = (key: keyof typeof HEARD, explain: ChoiceDrill["explain"]): Choice
   explain,
 });
 
+const SAY_MEANS = {
+  kassi: msg`I have two cats.`,
+  tass: msg`A cup of coffee, please.`,
+  leiba: msg`There’s no bread on the table.`,
+  last: msg`How many children do you have?`,
+  vett: msg`He or she drinks water.`,
+  eurot: msg`Bread costs three euros.`,
+} satisfies Record<(typeof OSASTAV_SAY)[number]["id"], ReturnType<typeof msg>>;
+
+const SAY_RULE = {
+  kassi: "number",
+  tass: "amount",
+  leiba: "pole",
+  last: "number",
+  vett: "food",
+  eurot: "number",
+} as const satisfies Record<(typeof OSASTAV_SAY)[number]["id"], string>;
+
+const FIX_RULE = {
+  kassi: "number",
+  kohvi: "food",
+  leiba: "pole",
+  tass: "amount",
+  kass: "number",
+  last: "number",
+} as const satisfies Record<(typeof OSASTAV_FIX)[number]["id"], string>;
+
+const RULE_WHY = { number: FROM_TWO, amount: AMOUNT, pole: NOT_THERE, food: SOME };
+
+const said = ({ id, said, also }: (typeof OSASTAV_SAY)[number]): SentenceDrill => ({
+  kind: "translate",
+  id: `say-${id}`,
+  rule: SAY_RULE[id],
+  prompt: SAY_MEANS[id],
+  answers: [said, ...also],
+  say: said,
+  explain: RULE_WHY[SAY_RULE[id]],
+});
+
+const FIX_MEANS: Record<(typeof OSASTAV_FIX)[number]["id"], ReturnType<typeof msg>> = {
+  kassi: msg`I have two cats.`,
+  kohvi: msg`I drink coffee.`,
+  leiba: msg`There’s no bread on the table.`,
+  tass: msg`A cup of coffee, please.`,
+  kass: msg`We have one cat.`,
+  last: msg`How many children do you have?`,
+};
+
+const fixed = ({ id, wrong, right }: (typeof OSASTAV_FIX)[number]): FixDrill => ({
+  kind: "fix",
+  id: `fix-${id}`,
+  rule: FIX_RULE[id],
+  wrong,
+  prompt: FIX_MEANS[id],
+  answers: [right],
+  say: right,
+  explain: id === "kass" ? ONE : RULE_WHY[FIX_RULE[id]],
+});
+
 export const DRILLS: DrillBank = {
   rules: {
     number: { label: msg`The form after a number`, section: "numbers" },
@@ -180,9 +252,15 @@ export const DRILLS: DrillBank = {
         { id: "laud-pole", noun: "laud", cue: "… pole toas", say: "Laud pole toas.", first: true },
       ] satisfies Made[]
     ).map((item) => made("pole", item, SAID_FIRST)),
-    heard("hasChild", msg`<et>Tal on laps</et>: with <et>on</et>, the nominative.`),
+    heard(
+      "hasChild",
+      msg`<et>Tal on laps</et>: one child, counted, with <et>on</et>, so the nominative.`,
+    ),
     heard("noChild", msg`<et>Tal pole last</et>: with <et>pole</et>, the partitive.`),
-    heard("hasCar", msg`<et>Sul on auto</et>: with <et>on</et>, the nominative.`),
+    heard(
+      "hasCar",
+      msg`<et>Sul on auto</et>: one car, counted, with <et>on</et>, so the nominative.`,
+    ),
     heard("noCar", msg`<et>Sul pole autot</et>: with <et>pole</et>, the partitive.`),
 
     ...(
@@ -206,5 +284,7 @@ export const DRILLS: DrillBank = {
         { id: "leib-on", noun: "leib", cue: "… on laual", say: "Leib on laual.", first: true },
       ] satisfies Made[]
     ).map((item) => made("food", item, SAID_FIRST)),
+    ...OSASTAV_SAY.map(said),
+    ...OSASTAV_FIX.map(fixed),
   ],
 };

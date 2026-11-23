@@ -10,6 +10,9 @@ msgstr ""
 msgid "<0/> is I, the one who does something: <1/> <2/> is my, for what you own: <3/>"
 msgstr "<0/> is I, the one who does something: <1/> <2/> is my, for what you own: <3/>"
 
+msgid "<0>-s</0> or <1>-l</1> on the genitive says where: <2>koolis</2>."
+msgstr "<0>-s</0> or <1>-l</1> on the genitive says where: <2>koolis</2>."
+
 #. placeholder {0}: capital(ownedBook(whose))
 #. placeholder {1}: i18n._(PERSON[who].book)
 msgid "<0>{0}</0> is {1}."
@@ -47,11 +50,25 @@ msgstr "<0>Tartu</0> and <1>haigla</1> stay as they are, and <2>-s</2> or <3>-l<
 msgid "<0>Teie</0> is your. For you and Martin, say <1>meie</1>, our."
 msgstr "<0>Teie</0> is your. For you and Martin, say <1>meie</1>, our."
 
-msgid "12 minutes"
-msgstr "12 minutes"
+#. placeholder {0}: each.where
+#. placeholder {1}: each.whose
+msgid "<et>{0}</et> without its ending is the genitive: <et>{1}</et>."
+msgstr "<et>{0}</et> without its ending is the genitive: <et>{1}</et>."
 
-msgid "2 quizzes, a text and a conversation"
-msgstr "2 quizzes, a text and a conversation"
+msgid "<et>{form}</et> has <et>-s</et> on the genitive: it says where."
+msgstr "<et>{form}</et> has <et>-s</et> on the genitive: it says where."
+
+msgid "<et>{form}</et> is the genitive: it says whose."
+msgstr "<et>{form}</et> is the genitive: it says whose."
+
+msgid "<et>Mina</et> is I, the one who does something; <et>minu</et> is my."
+msgstr "<et>Mina</et> is I, the one who does something; <et>minu</et> is my."
+
+msgid "20 minutes"
+msgstr "20 minutes"
+
+msgid "8 exercises"
+msgstr "8 exercises"
 
 msgid "A change inside"
 msgstr "A change inside"
@@ -79,6 +96,12 @@ msgstr "All of them. You heard whose in every sentence."
 
 msgid "All of them. You made the genitive every time."
 msgstr "All of them. You made the genitive every time."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six written right."
+msgstr "All six written right."
 
 msgid "Answers"
 msgstr "Answers"
@@ -128,6 +151,9 @@ msgstr "door"
 msgid "Each round gives a word and the noun it owns. Type the word’s genitive, the form that goes in front, and hear the phrase. If you know the word with <0>-s</0> or <1>-l</1>, take off its last letter."
 msgstr "Each round gives a word and the noun it owns. Type the word’s genitive, the form that goes in front, and hear the phrase. If you know the word with <0>-s</0> or <1>-l</1>, take off its last letter."
 
+msgid "Each sentence has one word in the wrong form: who and whose mixed up, an owner without the genitive, or a place without its ending. Tap it, then write the right form."
+msgstr "Each sentence has one word in the wrong form: who and whose mixed up, an owner without the genitive, or a place without its ending. Tap it, then write the right form."
+
 msgid "Estonia; Estonia’s"
 msgstr "Estonia; Estonia’s"
 
@@ -136,6 +162,12 @@ msgstr "Every pronoun has a genitive, and it goes before the thing it owns. Tap 
 
 msgid "Fill the gaps"
 msgstr "Fill the gaps"
+
+msgid "Find and fix the mistake"
+msgstr "Find and fix the mistake"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
 
 msgid "Gains a vowel"
 msgstr "Gains a vowel"
@@ -181,6 +213,9 @@ msgstr "How the genitive is made"
 
 msgid "I"
 msgstr "I"
+
+msgid "I live in Tallinn."
+msgstr "I live in Tallinn."
 
 msgid "I live in Tartu."
 msgstr "I live in Tartu."
@@ -230,6 +265,12 @@ msgstr "Is this your café? To more than one, or polite."
 msgid "Is this your cat?"
 msgstr "Is this your cat?"
 
+msgid "Is this your cat? To one person."
+msgstr "Is this your cat? To one person."
+
+msgid "Jaan and Martin’s"
+msgstr "Jaan and Martin’s"
+
 msgid "Jaan is Kati’s brother, so my: <0>minu</0>."
 msgstr "Jaan is Kati’s brother, so my: <0>minu</0>."
 
@@ -238,6 +279,18 @@ msgstr "Jaan, a man’s name"
 
 msgid "Jaan’s"
 msgstr "Jaan’s"
+
+msgid "Jaan’s brother"
+msgstr "Jaan’s brother"
+
+msgid "Jaan’s cat is at home."
+msgstr "Jaan’s cat is at home."
+
+msgid "Jaan’s mother"
+msgstr "Jaan’s mother"
+
+msgid "Jaan’s mother’s"
+msgstr "Jaan’s mother’s"
 
 msgid "Kati asks for your name, so your: <0>sinu</0>."
 msgstr "Kati asks for your name, so your: <0>sinu</0>."
@@ -251,6 +304,12 @@ msgstr "Kati writes about her family. For each gap, pick who or whose."
 msgid "Listen first."
 msgstr "Listen first."
 
+msgid "Listen: Jaan’s picture"
+msgstr "Listen: Jaan’s picture"
+
+msgid "Listen: whose is it?"
+msgstr "Listen: whose is it?"
+
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
 
@@ -260,11 +319,23 @@ msgstr "Mari"
 msgid "Mari is at your home and asks who owns what. Answer with the genitive."
 msgstr "Mari is at your home and asks who owns what. Answer with the genitive."
 
+msgid "Mari looks at a picture on Jaan’s phone. Read the questions, then listen."
+msgstr "Mari looks at a picture on Jaan’s phone. Read the questions, then listen."
+
 msgid "Mari, a woman’s name"
 msgstr "Mari, a woman’s name"
 
+msgid "Mari’s"
+msgstr "Mari’s"
+
 msgid "Mari’s book"
 msgstr "Mari’s book"
+
+msgid "Mari’s brother"
+msgstr "Mari’s brother"
+
+msgid "Mari’s café is in Tartu."
+msgstr "Mari’s café is in Tartu."
 
 msgid "market"
 msgstr "market"
@@ -272,11 +343,20 @@ msgstr "market"
 msgid "Miisu, a name for a cat"
 msgstr "Miisu, a name for a cat"
 
+msgid "Most of them. Look again at the ones you missed."
+msgstr "Most of them. Look again at the ones you missed."
+
+msgid "Most of them. Read the ones you missed once more."
+msgstr "Most of them. Read the ones you missed once more."
+
 msgid "my"
 msgstr "my"
 
 msgid "my book"
 msgstr "my book"
+
+msgid "My brother lives in Tallinn."
+msgstr "My brother lives in Tallinn."
 
 msgid "My name is Kati."
 msgstr "My name is Kati."
@@ -321,6 +401,9 @@ msgstr "Our mother is a teacher."
 msgid "Our school is in Tartu."
 msgstr "Our school is in Tartu."
 
+msgid "Our teacher’s name is Kati."
+msgstr "Our teacher’s name is Kati."
+
 msgid "Pea, head, and linn, town."
 msgstr "Pea, head, and linn, town."
 
@@ -329,6 +412,12 @@ msgstr "Pick a kind of word and tap any form to hear it."
 
 msgid "picture"
 msgstr "picture"
+
+msgid "Read “The owner comes first” once more, then try again."
+msgstr "Read “The owner comes first” once more, then try again."
+
+msgid "Read “Who or whose?” and “The owner comes first” once more, then try again."
+msgstr "Read “Who or whose?” and “The owner comes first” once more, then try again."
 
 msgid "river"
 msgstr "river"
@@ -390,11 +479,26 @@ msgstr "the café’s, of the café"
 msgid "The capital of Estonia is Tallinn."
 msgstr "The capital of Estonia is Tallinn."
 
+msgid "The car is Jaan’s."
+msgstr "The car is Jaan’s."
+
+msgid "The cat is Jaan’s."
+msgstr "The cat is Jaan’s."
+
+msgid "The cat is theirs, so their: <0>nende</0>."
+msgstr "The cat is theirs, so their: <0>nende</0>."
+
+msgid "The cat is theirs, so their: <et>nende</et>."
+msgstr "The cat is theirs, so their: <et>nende</et>."
+
 msgid "The cat owns the name, so <0>kass</0> takes its genitive: <1>kassi nimi</1>."
 msgstr "The cat owns the name, so <0>kass</0> takes its genitive: <1>kassi nimi</1>."
 
 msgid "the cat’s"
 msgstr "the cat’s"
+
+msgid "The genitive alone says whose: <0/>. With <1>-s</1> or <2>-l</2> it says where: <3/>. Put each word in its group. Tap a word to hear it."
+msgstr "The genitive alone says whose: <0/>. With <1>-s</1> or <2>-l</2> it says where: <3/>. Put each word in its group. Tap a word to hear it."
 
 msgid "The genitive is the form before -s"
 msgstr "The genitive is the form before -s"
@@ -414,14 +518,26 @@ msgstr "The genitive of nemad. It has no short form."
 msgid "The genitive of sina. Short: su."
 msgstr "The genitive of sina. Short: su."
 
+msgid "The genitive says whose and goes before a noun: <0>kooli uks</0>."
+msgstr "The genitive says whose and goes before a noun: <0>kooli uks</0>."
+
 msgid "The genitive says whose, and the owner goes first: <0>minu raamat</0>, my book; <1>Mari raamat</1>, Mari’s book."
 msgstr "The genitive says whose, and the owner goes first: <0>minu raamat</0>, my book; <1>Mari raamat</1>, Mari’s book."
+
+msgid "the genitive, as in <0>kooli</0>"
+msgstr "the genitive, as in <0>kooli</0>"
 
 msgid "the market café"
 msgstr "the market café"
 
 msgid "the market’s, of the market"
 msgstr "the market’s, of the market"
+
+msgid "The name belongs to the speaker, so my: <0>minu</0>."
+msgstr "The name belongs to the speaker, so my: <0>minu</0>."
+
+msgid "The name belongs to the speaker, so my: <et>minu</et>."
+msgstr "The name belongs to the speaker, so my: <et>minu</et>."
 
 msgid "The name is Kati’s own, so my: <0>minu</0>."
 msgstr "The name is Kati’s own, so my: <0>minu</0>."
@@ -437,6 +553,15 @@ msgstr "the office’s, of the office"
 
 msgid "The owner comes first"
 msgstr "The owner comes first"
+
+msgid "The owner goes first in the genitive: <0>Jaani kass</0>."
+msgstr "The owner goes first in the genitive: <0>Jaani kass</0>."
+
+msgid "The owner goes first in the genitive: <et>Jaani kass</et>."
+msgstr "The owner goes first in the genitive: <et>Jaani kass</et>."
+
+msgid "The owner goes first, in the genitive."
+msgstr "The owner goes first, in the genitive."
 
 msgid "The owner goes first: <0>minu raamat</0>."
 msgstr "The owner goes first: <0>minu raamat</0>."
@@ -465,6 +590,12 @@ msgstr "the school’s, of the school"
 msgid "the shop door"
 msgstr "the shop door"
 
+msgid "The shop owns the door, so the genitive: <0>pood, poe</0>, <1>poe uks</1>."
+msgstr "The shop owns the door, so the genitive: <0>pood, poe</0>, <1>poe uks</1>."
+
+msgid "The shop owns the door, so the genitive: <et>poe uks</et>."
+msgstr "The shop owns the door, so the genitive: <et>poe uks</et>."
+
 msgid "the shop’s, of the shop"
 msgstr "the shop’s, of the shop"
 
@@ -473,6 +604,12 @@ msgstr "The short form of minu."
 
 msgid "The short form of sinu."
 msgstr "The short form of sinu."
+
+msgid "The speaker does the living, so I: <0>mina</0>."
+msgstr "The speaker does the living, so I: <0>mina</0>."
+
+msgid "The speaker does the living, so I: <et>mina</et>."
+msgstr "The speaker does the living, so I: <et>mina</et>."
 
 msgid "the table’s, of the table"
 msgstr "the table’s, of the table"
@@ -489,11 +626,20 @@ msgstr "their"
 msgid "their book"
 msgstr "their book"
 
+msgid "Their cat is at home."
+msgstr "Their cat is at home."
+
+msgid "Their cat is in Pärnu."
+msgstr "Their cat is in Pärnu."
+
 msgid "Their office is in Tallinn."
 msgstr "Their office is in Tallinn."
 
 msgid "they"
 msgstr "they"
+
+msgid "This is Jaan’s book."
+msgstr "This is Jaan’s book."
 
 msgid "This is Jaan’s cat."
 msgstr "This is Jaan’s cat."
@@ -504,17 +650,32 @@ msgstr "This is Mari’s book."
 msgid "This is my book."
 msgstr "This is my book."
 
+msgid "This is the shop’s door."
+msgstr "This is the shop’s door."
+
 msgid "This is their picture."
 msgstr "This is their picture."
 
 msgid "This is your coffee."
 msgstr "This is your coffee."
 
+msgid "This is your coffee. To one person."
+msgstr "This is your coffee. To one person."
+
 msgid "To ask whose, say <0/>. It’s the genitive of <1/>, who, from lesson {questions}. Tap a line to hear it."
 msgstr "To ask whose, say <0/>. It’s the genitive of <1/>, who, from lesson {questions}. Tap a line to hear it."
 
+msgid "To say in Tallinn, put <0>-s</0> on the genitive: <1>Tallinnas</1>."
+msgstr "To say in Tallinn, put <0>-s</0> on the genitive: <1>Tallinnas</1>."
+
+msgid "To say in Tallinn, put <et>-s</et> on the genitive: <et>Tallinnas</et>."
+msgstr "To say in Tallinn, put <et>-s</et> on the genitive: <et>Tallinnas</et>."
+
 msgid "To say whose something is, put the owner first, in the genitive: <0>minu raamat</0> is my book, and <1>Mari raamat</1> is Mari’s book."
 msgstr "To say whose something is, put the owner first, in the genitive: <0>minu raamat</0> is my book, and <1>Mari raamat</1> is Mari’s book."
+
+msgid "To say whose, use the pronoun’s genitive: <et>minu, sinu, tema, meie, teie, nende</et>."
+msgstr "To say whose, use the pronoun’s genitive: <et>minu, sinu, tema, meie, teie, nende</et>."
 
 msgid "we"
 msgstr "we"
@@ -522,8 +683,17 @@ msgstr "we"
 msgid "we; our"
 msgstr "we; our"
 
+msgid "What is the cat’s name?"
+msgstr "What is the cat’s name?"
+
 msgid "What’s your name?"
 msgstr "What’s your name?"
+
+msgid "Where"
+msgstr "Where"
+
+msgid "Where does Martin live? Write the place in Estonian, with its ending."
+msgstr "Where does Martin live? Write the place in Estonian, with its ending."
 
 msgid "Which form goes first?"
 msgstr "Which form goes first?"
@@ -540,6 +710,12 @@ msgstr "Who and whose"
 msgid "Who and whose are the same word."
 msgstr "Who and whose are the same word."
 
+msgid "Who is in the picture?"
+msgstr "Who is in the picture?"
+
+msgid "Who or whose"
+msgstr "Who or whose"
+
 msgid "Who or whose?"
 msgstr "Who or whose?"
 
@@ -555,6 +731,18 @@ msgstr "Whose book is this?"
 msgid "Whose cat is this?"
 msgstr "Whose cat is this?"
 
+msgid "Whose coffee is this?"
+msgstr "Whose coffee is this?"
+
+msgid "Whose house is it?"
+msgstr "Whose house is it?"
+
+msgid "Whose or where"
+msgstr "Whose or where"
+
+msgid "Whose or where?"
+msgstr "Whose or where?"
+
 msgid "Whose?"
 msgstr "Whose?"
 
@@ -564,8 +752,17 @@ msgstr "window"
 msgid "With -s or -l"
 msgstr "With -s or -l"
 
+msgid "with <0>-s</0> or <1>-l</1>, as in <2>koolis</2>"
+msgstr "with <0>-s</0> or <1>-l</1>, as in <2>koolis</2>"
+
 msgid "work; of work"
 msgstr "work; of work"
+
+msgid "Write each sentence in Estonian. Put the owner first, in the genitive."
+msgstr "Write each sentence in Estonian. Put the owner first, in the genitive."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
 
 msgid "You and your brother Martin share a flat and a cat, Liisu. The book is yours, and the coffee is Martin’s. Mari speaks first; pick what you say back."
 msgstr "You and your brother Martin share a flat and a cat, Liisu. The book is yours, and the coffee is Martin’s. Mari speaks first; pick what you say back."

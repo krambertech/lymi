@@ -1,6 +1,6 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import { KELL_DRILLED } from "../../../lib/learn/clips";
+import { KELL_DRILLED, timeAnswers } from "../../../lib/learn/clips";
 import type { ChoiceDrill, DrillBank, FormDrill, SentenceDrill } from "../../../lib/learn/drill";
 import {
   type ClockTime,
@@ -8,7 +8,6 @@ import {
   timeClip,
   timeDigits,
   timeSentence,
-  timeWords,
 } from "../../../lib/learn/estonian-time";
 
 const HOUR = msg`On the hour, say the hour alone: <et>kell on viis</et>, 5:00.`;
@@ -30,7 +29,7 @@ const typed = (time: ClockTime): FormDrill => ({
   base: timeDigits(time),
   gloss: msg`a time`,
   cue: msg`in words`,
-  answers: [timeWords(time), `kell on ${timeWords(time)}`],
+  answers: timeAnswers(time),
   say: timeSentence(time),
   explain: WHY[ruleOf(time)] as MessageDescriptor,
 });
@@ -64,10 +63,10 @@ const heard = (time: ClockTime): ChoiceDrill => {
     slip: option(slip),
     wrong:
       hour === 11 && minute !== 0
-        ? (minute === 15 ? [at(10, 45), at(11, 45)] : [at(10, 55), at(12, 5)]).map(option)
-        : (slip.hour === hourBy(hour, -1) ? [1, -2] : [-1, 2]).map((by) =>
-            option({ hour: hourBy(hour, by), minute }),
-          ),
+        ? (minute === 15 ? [at(10, 45), at(12, 45)] : [at(10, 55), at(12, 5)]).map(option)
+        : minute < 30 && minute % 15
+          ? [at(hourBy(hour, -1), minute), at(hour, (60 - minute) as Minute)].map(option)
+          : [-1, 2].map((by) => option({ hour: hourBy(hour, by), minute })),
     explain: WHY[ruleOf(time)] as MessageDescriptor,
   };
 };

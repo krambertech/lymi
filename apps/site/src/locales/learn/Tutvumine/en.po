@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
-msgid "<0>Kas</0> asks yes or no: the answer starts with <1>jah</1> or <2>ei</2>."
-msgstr "<0>Kas</0> asks yes or no: the answer starts with <1>jah</1> or <2>ei</2>."
+msgid "<0>Kas</0> asks yes or no: the answer usually starts with <1>jah</1> or <2>ei</2>."
+msgstr "<0>Kas</0> asks yes or no: the answer usually starts with <1>jah</1> or <2>ei</2>."
 
 msgid "<0>Kes</0> asks who, so a person answers it."
 msgstr "<0>Kes</0> asks who, so a person answers it."
@@ -70,11 +70,11 @@ msgstr "a lot"
 msgid "A note from Kati"
 msgstr "A note from Kati"
 
-msgid "A yes-or-no question starts with <et>kas</et>; the verb takes the ending for its person, as without <et>kas</et>."
-msgstr "A yes-or-no question starts with <et>kas</et>; the verb takes the ending for its person, as without <et>kas</et>."
+msgid "A yes-or-no question usually starts with <et>kas</et>; the verb takes the ending for its person, as without <et>kas</et>."
+msgstr "A yes-or-no question usually starts with <et>kas</et>; the verb takes the ending for its person, as without <et>kas</et>."
 
-msgid "A yes-or-no question starts with <et>kas</et>."
-msgstr "A yes-or-no question starts with <et>kas</et>."
+msgid "A yes-or-no question usually starts with <et>kas</et>."
+msgstr "A yes-or-no question usually starts with <et>kas</et>."
 
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
@@ -205,8 +205,8 @@ msgstr "in a café"
 msgid "In a café"
 msgstr "In a café"
 
-msgid "In a town or a building, <et>-s</et>; at work, <et>-l</et>."
-msgstr "In a town or a building, <et>-s</et>; at work, <et>-l</et>."
+msgid "In a town or a building, usually <et>-s</et>; at work, <et>-l</et>."
+msgstr "In a town or a building, usually <et>-s</et>; at work, <et>-l</et>."
 
 msgid "In an office"
 msgstr "In an office"
@@ -295,8 +295,8 @@ msgstr "Nice to meet you"
 msgid "not; no"
 msgstr "not; no"
 
-msgid "Now you ask. Pick the question that fits what Mari just said. Ask why with <0/>, and the answer starts with <1/>, because."
-msgstr "Now you ask. Pick the question that fits what Mari just said. Ask why with <0/>, and the answer starts with <1/>, because."
+msgid "Now you ask. Pick the question that fits what Mari just said. Ask why with <0/>, and the answer usually starts with <1/>, because."
+msgstr "Now you ask. Pick the question that fits what Mari just said. Ask why with <0/>, and the answer usually starts with <1/>, because."
 
 msgid "Pärnu takes <0>-s</0>: <1>Pärnus</1>."
 msgstr "Pärnu takes <0>-s</0>: <1>Pärnus</1>."

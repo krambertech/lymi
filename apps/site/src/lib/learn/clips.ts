@@ -1,5 +1,5 @@
 import { numberWords } from "./estonian-numbers";
-import { ALL_TIMES, type ClockTime, timeClip, timeSentence } from "./estonian-time";
+import { ALL_TIMES, type ClockTime, timeClip, timeSentence, timeWords } from "./estonian-time";
 import { KIT_EXPLORE_TEXTS } from "./kit-explore";
 
 /**
@@ -1171,6 +1171,13 @@ export const TUTVUMINE_TALK: Conversation = {
   ],
 };
 
+export const numberAnswers = (n: number): [string, ...string[]] => [numberWords(n)];
+
+export const timeAnswers = (time: ClockTime): [string, ...string[]] => {
+  const words = timeWords(time);
+  return [words, `kell on ${words}`, `kell ${words}`];
+};
+
 export const TUTVUMINE_ASKED = [
   {
     kind: "mis",
@@ -1186,6 +1193,8 @@ export const TUTVUMINE_ASKED = [
       "Kes sina oled?",
       "Kes te olete?",
       "Kes teie olete?",
+      "Kes oled?",
+      "Kes olete?",
     ],
   },
   {
@@ -1232,6 +1241,10 @@ export const TUTVUMINE_ASKED = [
       "Kas teie eesti keelt räägite?",
       "Kas eesti keelt räägid?",
       "Kas eesti keelt räägite?",
+      "Räägid sa eesti keelt?",
+      "Räägite te eesti keelt?",
+      "Räägid sina eesti keelt?",
+      "Räägite teie eesti keelt?",
     ],
   },
   {
@@ -1254,6 +1267,10 @@ export const TUTVUMINE_ASKED = [
       "Kas teie õpetaja olete?",
       "Kas õpetaja oled?",
       "Kas õpetaja olete?",
+      "Oled sa õpetaja?",
+      "Olete te õpetaja?",
+      "Oled sina õpetaja?",
+      "Olete teie õpetaja?",
     ],
   },
   {
@@ -1304,7 +1321,17 @@ export const TUTVUMINE_TRANSLATED = [
     kind: "ei",
     answers: ["Ma ei ole kodus.", "Ma pole kodus.", "Mina ei ole kodus.", "Mina pole kodus."],
   },
-  { kind: "place", answers: ["Me elame Tallinnas.", "Meie elame Tallinnas.", "Elame Tallinnas."] },
+  {
+    kind: "place",
+    answers: [
+      "Me elame Tallinnas.",
+      "Meie elame Tallinnas.",
+      "Elame Tallinnas.",
+      "Tallinnas me elame.",
+      "Tallinnas meie elame.",
+      "Tallinnas elame.",
+    ],
+  },
   { kind: "place", answers: ["Nad on tööl.", "Nemad on tööl."] },
   {
     kind: "ask",
@@ -1325,6 +1352,10 @@ export const TUTVUMINE_TRANSLATED = [
       "Kas teie Tallinnas elate?",
       "Kas Tallinnas elad?",
       "Kas Tallinnas elate?",
+      "Elad sa Tallinnas?",
+      "Elate te Tallinnas?",
+      "Elad sina Tallinnas?",
+      "Elate teie Tallinnas?",
     ],
   },
   {

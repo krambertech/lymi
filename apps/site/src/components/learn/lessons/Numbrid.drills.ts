@@ -1,5 +1,6 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
+import { numberAnswers } from "../../../lib/learn/clips";
 import type { ChoiceDrill, DrillBank, FormDrill } from "../../../lib/learn/drill";
 import { numberWords } from "../../../lib/learn/estonian-numbers";
 
@@ -14,7 +15,7 @@ const typed = (n: number, rule: string, explain: MessageDescriptor): FormDrill =
   base: String(n),
   gloss: msg`a number`,
   cue: msg`in words`,
-  answers: [numberWords(n)],
+  answers: numberAnswers(n),
   say: numberWords(n),
   explain,
 });

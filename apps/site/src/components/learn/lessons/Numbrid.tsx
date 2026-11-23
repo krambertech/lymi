@@ -10,6 +10,7 @@ import {
   NUMBER_SENTENCES,
   NUMBER_WRITTEN,
   numberClip,
+  numberAnswers,
 } from "../../../lib/learn/clips";
 import { DIGIT_WORDS, numberParts, numberWords } from "../../../lib/learn/estonian-numbers";
 import { playSound } from "../../../lib/learn/player";
@@ -158,7 +159,7 @@ function HowItsBuilt({ n }: { n: number }) {
         Built from <b className={b}>{teen}</b> and -teist: {digit} in the second ten.
       </Trans>
     );
-  if (n === 100) return <Trans>Sada alone, with no “one” in front.</Trans>;
+  if (n === 100) return <Trans>Sada alone, usually with no “one” in front.</Trans>;
   if (n % 10 === 0)
     return (
       <Trans>
@@ -298,7 +299,7 @@ export function NumbridLesson() {
       NUMBER_WRITTEN.map((n) => ({
         base: String(n),
         cue: t`in words`,
-        answers: [numberWords(n)],
+        answers: numberAnswers(n),
         src: numberSrc(n),
         pair: [kindOf(n), String(n)] as const,
       })),
@@ -584,8 +585,8 @@ export function NumbridLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Sada" /> is a hundred and <Word w="tuhat" /> a thousand, with no “one”
-                    in front of either. Hundreds join into one word, <Word w="kakssada" />, but
+                    <Word w="Sada" /> is a hundred and <Word w="tuhat" /> a thousand, usually with
+                    no “one” in front. Hundreds join into one word, <Word w="kakssada" />, but
                     thousands stay separate: <Word w="kaks tuhat" />.
                   </Trans>
                 </p>

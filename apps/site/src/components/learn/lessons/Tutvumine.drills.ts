@@ -10,9 +10,9 @@ import type { DrillBank, FixDrill, SentenceDrill } from "../../../lib/learn/dril
 
 const WHY: Record<string, MessageDescriptor> = {
   ei: msg`After <et>ei</et> the verb has no ending; <et>olema</et> is <et>ole</et>.`,
-  place: msg`In a town or a building, <et>-s</et>; at work, <et>-l</et>.`,
-  ask: msg`A yes-or-no question starts with <et>kas</et>; the verb takes the ending for its person, as without <et>kas</et>.`,
-  kas: msg`A yes-or-no question starts with <et>kas</et>.`,
+  place: msg`In a town or a building, usually <et>-s</et>; at work, <et>-l</et>.`,
+  ask: msg`A yes-or-no question usually starts with <et>kas</et>; the verb takes the ending for its person, as without <et>kas</et>.`,
+  kas: msg`A yes-or-no question usually starts with <et>kas</et>.`,
   kus: msg`<et>Kus</et> asks where, and the verb takes its person’s ending: <et>Kus sa õpid? Kus ta õpib?</et>`,
   mis: msg`<et>Mis</et> asks what; when the answer says <et>ma</et> or <et>minu</et>, ask with <et>sa</et> or <et>su</et>.`,
   olema: msg`<et>Mina</et> takes <et>olen</et>: <et>Mina olen Andres</et>.`,

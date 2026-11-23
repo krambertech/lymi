@@ -13,8 +13,8 @@ msgstr "-teist or -kümmend?"
 msgid "<0/> has a short <1>a</1> and a <2>k</2> before the <3>s</3>; <4/> has a long <5>uu</5>. <6/> starts with <7>ka</7>, <8/> with <9>ü</9>. The numbers built from them differ the same way. Listen, then pick."
 msgstr "<0/> has a short <1>a</1> and a <2>k</2> before the <3>s</3>; <4/> has a long <5>uu</5>. <6/> starts with <7>ka</7>, <8/> with <9>ü</9>. The numbers built from them differ the same way. Listen, then pick."
 
-msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
-msgstr "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
+msgid "<0/> is a hundred and <1/> a thousand, usually with no “one” in front. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
+msgstr "<0/> is a hundred and <1/> a thousand, usually with no “one” in front. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 
 msgid "<0/> is twelve and <1/> is twenty. Both start with kaks, so listen to how the word ends."
 msgstr "<0/> is twelve and <1/> is twenty. Both start with kaks, so listen to how the word ends."
@@ -244,8 +244,8 @@ msgstr "Put them together"
 msgid "Range"
 msgstr "Range"
 
-msgid "Sada alone, with no “one” in front."
-msgstr "Sada alone, with no “one” in front."
+msgid "Sada alone, usually with no “one” in front."
+msgstr "Sada alone, usually with no “one” in front."
 
 msgid "seven"
 msgstr "seven"

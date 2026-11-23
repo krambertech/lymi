@@ -1,0 +1,361 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0/> and <1/> both mean not, but they do different jobs. <2>Ei</2> says what someone doesn’t do: <3/>, I’m not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
+msgstr "<0/> and <1/> both mean not, but they do different jobs. <2>Ei</2> says what someone doesn’t do: <3/>, I’m not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
+
+msgid "<0/> becomes <1/>, and the verb takes its <2>-ge</2> or <3>-ke</3> form: <4/> <5/> Said politely to one person, the sentence to keep is <6/>"
+msgstr "<0/> becomes <1/>, and the verb takes its <2>-ge</2> or <3>-ke</3> form: <4/> <5/> Said politely to one person, the sentence to keep is <6/>"
+
+msgid "<0/>, please, makes a command polite. When Estonian comes too fast, say <1/>"
+msgstr "<0/>, please, makes a command polite. When Estonian comes too fast, say <1/>"
+
+msgid "<0>-ge</0> or <1>-ke</1> on the end"
+msgstr "<0>-ge</0> or <1>-ke</1> on the end"
+
+msgid "<0>Ära</0> before the stem"
+msgstr "<0>Ära</0> before the stem"
+
+msgid "<0>Ei</0> says what someone doesn’t do; <1>ära</1> tells them not to: <2>Ma ei istu. Ära istu!</2>"
+msgstr "<0>Ei</0> says what someone doesn’t do; <1>ära</1> tells them not to: <2>Ma ei istu. Ära istu!</2>"
+
+msgid "10 minutes"
+msgstr "10 minutes"
+
+msgid "2 quizzes and a conversation"
+msgstr "2 quizzes and a conversation"
+
+msgid "All of them. You told <0>ära</0> from <1>ei</1> every time."
+msgstr "All of them. You told <0>ära</0> from <1>ei</1> every time."
+
+msgid "All of them. You understood every command."
+msgstr "All of them. You understood every command."
+
+msgid "Ära istu tells her not to sit down."
+msgstr "Ära istu tells her not to sit down."
+
+msgid "Ära means don’t"
+msgstr "Ära means don’t"
+
+msgid "At a café"
+msgstr "At a café"
+
+msgid "Before the stem, to tell one person not to do something."
+msgstr "Before the stem, to tell one person not to do something."
+
+msgid "Come here."
+msgstr "Come here."
+
+msgctxt "command"
+msgid "Do"
+msgstr "Do"
+
+msgid "Do or don’t"
+msgstr "Do or don’t"
+
+msgid "Do, don’t or not?"
+msgstr "Do, don’t or not?"
+
+msgid "don’t"
+msgstr "don’t"
+
+msgctxt "command"
+msgid "Don’t"
+msgstr "Don’t"
+
+msgid "Don’t drink."
+msgstr "Don’t drink."
+
+msgid "Don’t eat."
+msgstr "Don’t eat."
+
+msgid "Don’t read."
+msgstr "Don’t read."
+
+msgid "Don’t read. To more than one, or polite."
+msgstr "Don’t read. To more than one, or polite."
+
+msgid "Don’t sit down."
+msgstr "Don’t sit down."
+
+msgid "Don’t speak."
+msgstr "Don’t speak."
+
+msgid "Don’t wait."
+msgstr "Don’t wait."
+
+msgid "Don’t wait. To more than one, or polite."
+msgstr "Don’t wait. To more than one, or polite."
+
+msgid "don’t, to more than one or polite"
+msgstr "don’t, to more than one or polite"
+
+msgid "Drink."
+msgstr "Drink."
+
+msgid "Each of these six everyday commands starts with a verb’s stem. Tap one to hear it."
+msgstr "Each of these six everyday commands starts with a verb’s stem. Tap one to hear it."
+
+msgid "Each reply is a command or a short answer. Pick the one that fits what Mari says."
+msgstr "Each reply is a command or a short answer. Pick the one that fits what Mari says."
+
+msgid "Eat."
+msgstr "Eat."
+
+msgid "Everyday commands"
+msgstr "Everyday commands"
+
+msgid "From istuma, to sit."
+msgstr "From istuma, to sit."
+
+msgid "From tulema, to come."
+msgstr "From tulema, to come."
+
+msgid "Go."
+msgstr "Go."
+
+msgid "Hear a command and pick what it asks you to do."
+msgstr "Hear a command and pick what it asks you to do."
+
+msgid "Hear a sentence and pick what it says. Listen to how it starts: with the verb, with <0>ära</0>, or with <1>ma ei</1>."
+msgstr "Hear a sentence and pick what it says. Listen to how it starts: with the verb, with <0>ära</0>, or with <1>ma ei</1>."
+
+msgid "Hearing a command"
+msgstr "Hearing a command"
+
+msgid "Hearing ära and ei"
+msgstr "Hearing ära and ei"
+
+msgid "here, to this place"
+msgstr "here, to this place"
+
+msgid "I come"
+msgstr "I come"
+
+msgid "I don’t read"
+msgstr "I don’t read"
+
+msgid "I read"
+msgstr "I read"
+
+msgid "I sit down"
+msgstr "I sit down"
+
+msgid "I’m going"
+msgstr "I’m going"
+
+msgid "I’m going."
+msgstr "I’m going."
+
+msgid "I’m not drinking."
+msgstr "I’m not drinking."
+
+msgid "I’m not reading."
+msgstr "I’m not reading."
+
+msgid "I’m not sitting down"
+msgstr "I’m not sitting down"
+
+msgid "I’m not sitting down."
+msgstr "I’m not sitting down."
+
+msgid "I’m not waiting."
+msgstr "I’m not waiting."
+
+msgid "It’s the form that follows <0>ei</0> in lesson {negation}: <1/>, I don’t read. Tap either side of a pair to hear it."
+msgstr "It’s the form that follows <0>ei</0> in lesson {negation}: <1/>, I don’t read. Tap either side of a pair to hear it."
+
+msgid "Listen."
+msgstr "Listen."
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Look."
+msgstr "Look."
+
+msgid "Ma istun says that you’re sitting down. To ask her, use the stem: istu."
+msgstr "Ma istun says that you’re sitting down. To ask her, use the stem: istu."
+
+msgid "Mari"
+msgstr "Mari"
+
+msgid "More than one"
+msgstr "More than one"
+
+msgid "Nearly. Listen to the first word of the ones you missed."
+msgstr "Nearly. Listen to the first word of the ones you missed."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "not; no"
+msgstr "not; no"
+
+msgid "Nothing before it and no ending after it."
+msgstr "Nothing before it and no ending after it."
+
+msgid "One common verb breaks the pattern: <0/>, to go. <1/> is I’m going, but the command is <2/>"
+msgstr "One common verb breaks the pattern: <0/>, to go. <1/> is I’m going, but the command is <2/>"
+
+msgid "One person"
+msgstr "One person"
+
+msgid "One person or more"
+msgstr "One person or more"
+
+msgid "please"
+msgstr "please"
+
+msgid "Read."
+msgstr "Read."
+
+msgid "Read. To more than one, or polite."
+msgstr "Read. To more than one, or polite."
+
+msgid "Sit down."
+msgstr "Sit down."
+
+msgid "Sit down. To more than one, or polite."
+msgstr "Sit down. To more than one, or polite."
+
+msgid "So far every command speaks to one person, someone you’d call <0/>. To more than one, or politely to one, the command ends in <1>-ge</1> or <2>-ke</2>: <3/> <4/> It’s the same split as <5>sa</5> and <6/> in lesson {pronouns}."
+msgstr "So far every command speaks to one person, someone you’d call <0/>. To more than one, or politely to one, the command ends in <1>-ge</1> or <2>-ke</2>: <3/> <4/> It’s the same split as <5>sa</5> and <6/> in lesson {pronouns}."
+
+msgid "Someone you’d call <0>sa</0>."
+msgstr "Someone you’d call <0>sa</0>."
+
+msgid "Speak more slowly, please."
+msgstr "Speak more slowly, please."
+
+msgid "Speak more slowly, please. To more than one, or polite."
+msgstr "Speak more slowly, please. To more than one, or polite."
+
+msgid "Speak."
+msgstr "Speak."
+
+msgid "Study."
+msgstr "Study."
+
+msgid "Switch between Do and Don’t, and tap a line to hear it."
+msgstr "Switch between Do and Don’t, and tap a line to hear it."
+
+msgid "Talk: at a café"
+msgstr "Talk: at a café"
+
+msgid "Tap the commands above once more, then try again."
+msgstr "Tap the commands above once more, then try again."
+
+msgid "Tap the Do and Don’t lines above once more, then try again."
+msgstr "Tap the Do and Don’t lines above once more, then try again."
+
+msgid "That asks her not to speak at all."
+msgstr "That asks her not to speak at all."
+
+msgid "That says you speak more slowly. To ask her, use the stem: räägi."
+msgstr "That says you speak more slowly. To ask her, use the stem: räägi."
+
+msgid "That tells Jaan not to come."
+msgstr "That tells Jaan not to come."
+
+msgid "That tells Mari not to drink water. She asked what you’d like."
+msgstr "That tells Mari not to drink water. She asked what you’d like."
+
+msgid "That tells Mari to drink coffee. She asked what you’d like."
+msgstr "That tells Mari to drink coffee. She asked what you’d like."
+
+msgid "The stem alone"
+msgstr "The stem alone"
+
+msgid "The stem doesn’t change: <0>istu</0>, <1>ära istu</1>."
+msgstr "The stem doesn’t change: <0>istu</0>, <1>ära istu</1>."
+
+msgid "The stem is the command"
+msgstr "The stem is the command"
+
+msgid "The stem is the ma form without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It’s the form that follows <3>ei</3>."
+msgstr "The stem is the ma form without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It’s the form that follows <3>ei</3>."
+
+msgid "The stem is the ma form without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
+msgstr "The stem is the ma form without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
+
+msgid "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb’s three forms, shows where they come from."
+msgstr "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb’s three forms, shows where they come from."
+
+msgid "to drink"
+msgstr "to drink"
+
+msgid "to eat"
+msgstr "to eat"
+
+msgid "to go"
+msgstr "to go"
+
+msgid "to learn, to study"
+msgstr "to learn, to study"
+
+msgid "To more than one person"
+msgstr "To more than one person"
+
+msgid "To more than one person, or politely to one."
+msgstr "To more than one person, or politely to one."
+
+msgid "To more than one person, or politely, the command ends in <0>-ge</0> or <1>-ke</1>: <2>Istuge! Oodake! Ärge lugege!</2>"
+msgstr "To more than one person, or politely, the command ends in <0>-ge</0> or <1>-ke</1>: <2>Istuge! Oodake! Ärge lugege!</2>"
+
+msgid "To one person"
+msgstr "To one person"
+
+msgid "to read"
+msgstr "to read"
+
+msgid "To say don’t, put <0>ära</0> before the stem: <1>Ära istu!</1>"
+msgstr "To say don’t, put <0>ära</0> before the stem: <1>Ära istu!</1>"
+
+msgid "to speak"
+msgstr "to speak"
+
+msgid "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the ma form from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
+msgstr "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the ma form from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
+
+msgid "To tell one person what to do, say the verb’s stem: <0>Loe! Istu!</0>"
+msgstr "To tell one person what to do, say the verb’s stem: <0>Loe! Istu!</0>"
+
+msgid "To tell someone not to do something, put <0/> before the stem. <1/> is sit down, and <2/> is don’t sit down. The stem stays as it is."
+msgstr "To tell someone not to do something, put <0/> before the stem. <1/> is sit down, and <2/> is don’t sit down. The stem stays as it is."
+
+msgid "To tell someone what to do, say the verb’s stem: <0>Istu!</0> is sit down. To tell them not to, put <1>ära</1> before it: <2>Ära istu!</2>"
+msgstr "To tell someone what to do, say the verb’s stem: <0>Istu!</0> is sit down. To tell them not to, put <1>ära</1> before it: <2>Ära istu!</2>"
+
+msgid "to wait"
+msgstr "to wait"
+
+msgid "Tuleb says that he’s coming. To call him over, use the stem: tule."
+msgstr "Tuleb says that he’s coming. To call him over, use the stem: tule."
+
+msgid "Wait."
+msgstr "Wait."
+
+msgid "Wait. To more than one, or polite."
+msgstr "Wait. To more than one, or polite."
+
+msgid "What to do?"
+msgstr "What to do?"
+
+msgid "Where someone goes: tule siia, come here."
+msgstr "Where someone goes: tule siia, come here."
+
+msgid "you, to more than one; polite you"
+msgstr "you, to more than one; polite you"
+
+msgid "you, to one person"
+msgstr "you, to one person"
+
+msgid "You’re at a café, and Mari comes in. She speaks first; pick what you say back."
+msgstr "You’re at a café, and Mari comes in. She speaks first; pick what you say back."

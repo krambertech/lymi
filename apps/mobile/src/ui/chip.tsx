@@ -19,7 +19,6 @@ const TONE: Record<ChipTone, { box: string; ink: keyof Palette }> = {
   danger: { box: "bg-danger-soft", ink: "danger" },
 };
 
-// Heights are minimums, so a chip grows with Dynamic Type instead of clipping.
 const SIZE: Record<ChipSize, { box: string; text: string; icon: number }> = {
   sm: { box: "min-h-6 gap-1 px-2", text: "text-xs", icon: 13 },
   md: { box: "min-h-7 gap-1.5 px-2.5", text: "text-sm", icon: 14 },
@@ -27,16 +26,13 @@ const SIZE: Record<ChipSize, { box: string; text: string; icon: number }> = {
 
 interface ChipProps {
   tone?: ChipTone;
-  /** `sm` beside other text in a row, `md` on its own. */
   size?: ChipSize;
-  /** Before the label, such as a state's mark. */
   lead?: ReactNode;
   icon?: IconName;
   accessibilityLabel?: string;
   children: string;
 }
 
-/** A small label that describes: never a button, and never amber. chips-and-marks.md. */
 export function Chip({
   tone = "default",
   size = "md",
@@ -68,10 +64,6 @@ export function Chip({
   );
 }
 
-/**
- * A card's state on a plain chip, so the colour is the mark's alone. Under review a relearning
- * card says "Forgotten" with the Forgot mark, at the same size; elsewhere the lapse may be months old.
- */
 export function StateChip({
   state,
   size = "md",
@@ -111,7 +103,6 @@ type SourceField =
   | "pronunciation"
   | "hint";
 
-// Whole sentences per field, so each language can inflect the field word on its own.
 const SOURCE_LABEL: Record<SourceField | "field", Record<FieldSource, MessageDescriptor>> = {
   field: { lesson: msg`From the lesson`, ai: msg`AI wrote this`, manual: msg`You wrote this` },
   meaning: { lesson: msg`Meaning from lesson`, ai: msg`AI meaning`, manual: msg`Meaning by you` },
@@ -134,10 +125,6 @@ const SOURCE_LABEL: Record<SourceField | "field", Record<FieldSource, MessageDes
   hint: { lesson: msg`Hint from lesson`, ai: msg`AI hint`, manual: msg`Hint by you` },
 };
 
-/**
- * Who wrote a field. AI text is always labelled and is the one source with a colour. `badge` is
- * the mark and one word beside a field's label, with the whole sentence for VoiceOver.
- */
 export function SourceChip({
   source,
   field,
@@ -149,7 +136,6 @@ export function SourceChip({
 }) {
   const { i18n } = useLingui();
   const m = SOURCE[source];
-  // A source a newer Worker added has no chip in this release: the field is open. ADR 0032.
   if (!m) return null;
   const label = i18n._(SOURCE_LABEL[field ?? "field"][source]);
   return (

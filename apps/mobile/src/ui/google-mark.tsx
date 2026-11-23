@@ -1,6 +1,5 @@
 import Svg, { Path } from "react-native-svg";
 
-/** Google's own G in Google's colours: a third party's mark, so it may carry colour Lymi's palette does not. */
 export function GoogleMark({ size = 20 }: { size?: number }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 48 48" accessibilityElementsHidden>

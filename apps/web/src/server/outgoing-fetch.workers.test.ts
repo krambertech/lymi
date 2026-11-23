@@ -9,6 +9,7 @@ import { createOpenAiTextProvider } from "./ai/openai-text";
 import { exchangeAppleCode, revokeAppleToken } from "./apple-revoke";
 import { fetchClientMetadataResource } from "./cimd-fetch";
 import { sendWithResend } from "./email/resend";
+import { fetchArticle, markdownSentences, youtubeTitle } from "./lessons/link";
 import { createLessonReader, pingLessonReader } from "./lessons/reader";
 import { erasePostHogPerson } from "./posthog";
 import { fetchGooglePhoto } from "./services/avatars";
@@ -73,6 +74,22 @@ describe("outgoing fetches in the Workers runtime", () => {
     );
     expect(text.join("")).toBe("{}");
     await expect(pingLessonReader(env, testAiConsent)).resolves.toBeUndefined();
+  });
+
+  it("a Smart add article, its robots.txt and a redirect, then its sentences", async () => {
+    const page = await fetchArticle(new URL("https://news.example.org/start"));
+    expect(page.url.href).toBe("https://news.example.org/story");
+    expect(page.title).toBe("Kevad");
+    expect(markdownSentences("Kevad on käes. Linnud laulavad!\n春が来た。鳥が歌う。")).toEqual([
+      "Kevad on käes.",
+      "Linnud laulavad!",
+      "春が来た。",
+      "鳥が歌う。",
+    ]);
+  });
+
+  it("a YouTube title from oEmbed", async () => {
+    await expect(youtubeTitle(new URL("https://youtu.be/abc"))).resolves.toBe("Eesti keel");
   });
 
   it("the CIMD metadata fetch hands a redirect back unfollowed", async () => {

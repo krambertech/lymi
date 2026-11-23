@@ -1,0 +1,263 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "-teist or -kümmend?"
+msgstr "-teist or -kümmend?"
+
+msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
+msgstr "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
+
+msgid "<0/> is twelve and <1/> is twenty. Both start with kaks, so listen to how the word ends."
+msgstr "<0/> is twelve and <1/> is twenty. Both start with kaks, so listen to how the word ends."
+
+msgid "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
+msgstr "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
+
+msgid "0 to 10"
+msgstr "0 to 10"
+
+msgid "10 minutes"
+msgstr "10 minutes"
+
+msgid "11 to 19"
+msgstr "11 to 19"
+
+msgid "20 to 100"
+msgstr "20 to 100"
+
+msgid "3 quizzes"
+msgstr "3 quizzes"
+
+msgid "A digit after the tens is a word of its own: <0/>, twenty-one. Slide to any number and hear how it’s built."
+msgstr "A digit after the tens is a word of its own: <0/>, twenty-one. Slide to any number and hear how it’s built."
+
+msgid "a hundred"
+msgstr "a hundred"
+
+msgid "a thousand"
+msgstr "a thousand"
+
+msgid "A year has 365 days."
+msgstr "A year has 365 days."
+
+msgid "Add <0>-teist</0> to a digit and you have eleven to nineteen: <1/>, <2/>, <3/>. Word for word, üksteist is “one of the second ten”."
+msgstr "Add <0>-teist</0> to a digit and you have eleven to nineteen: <1/>, <2/>, <3/>. Word for word, üksteist is “one of the second ten”."
+
+msgid "All of them, by ear."
+msgstr "All of them, by ear."
+
+msgid "All of them, inside real sentences."
+msgstr "All of them, inside real sentences."
+
+msgid "An hour has 60 minutes."
+msgstr "An hour has 60 minutes."
+
+msgid "Big numbers"
+msgstr "Big numbers"
+
+msgid "Built from <0>{teen}</0> and -teist: {digit} in the second ten."
+msgstr "Built from <0>{teen}</0> and -teist: {digit} in the second ten."
+
+msgid "Built from <0>{tensWord}</0> and -kümmend: {tens} tens, then <1>{ones}</1> as a word of its own."
+msgstr "Built from <0>{tensWord}</0> and -kümmend: {tens} tens, then <1>{ones}</1> as a word of its own."
+
+msgid "Built from <0>{tensWord}</0> and -kümmend: {tens} tens."
+msgstr "Built from <0>{tensWord}</0> and -kümmend: {tens} tens."
+
+msgid "Coffee costs €3.50."
+msgstr "Coffee costs €3.50."
+
+msgid "eight"
+msgstr "eight"
+
+msgid "eleven"
+msgstr "eleven"
+
+msgid "Eleven to nineteen"
+msgstr "Eleven to nineteen"
+
+msgid "Eleven to nineteen: -teist"
+msgstr "Eleven to nineteen: -teist"
+
+msgid "Eurot is the partitive of euro."
+msgstr "Eurot is the partitive of euro."
+
+msgid "five"
+msgstr "five"
+
+msgid "For the tens, add <0>-kümmend</0> to the digit: <1/> is two tens, twenty."
+msgstr "For the tens, add <0>-kümmend</0> to the digit: <1/> is two tens, twenty."
+
+msgid "four"
+msgstr "four"
+
+msgid "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
+msgstr "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
+
+msgid "Hundreds and thousands"
+msgstr "Hundreds and thousands"
+
+msgid "Hundreds join into one word."
+msgstr "Hundreds join into one word."
+
+msgid "I have three cats."
+msgstr "I have three cats."
+
+msgid "I’m 34 years old."
+msgstr "I’m 34 years old."
+
+msgid "Kassi is the partitive of kass, cat."
+msgstr "Kassi is the partitive of kass, cat."
+
+msgid "Learn eleven words, <0>null</0> to <1>kümme</1>. Every number up to 99 is built from them."
+msgstr "Learn eleven words, <0>null</0> to <1>kümme</1>. Every number up to 99 is built from them."
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Most of them. Play the ones you missed once more."
+msgstr "Most of them. Play the ones you missed once more."
+
+msgid "My flat is number 16."
+msgstr "My flat is number 16."
+
+msgid "My number is 5 2 0 9 4."
+msgstr "My number is 5 2 0 9 4."
+
+msgid "nine"
+msgstr "nine"
+
+msgid "Number"
+msgstr "Number"
+
+msgid "Numbers by ear. Eleven words and two endings take you to ninety-nine."
+msgstr "Numbers by ear. Eleven words and two endings take you to ninety-nine."
+
+msgid "Numbers in the wild"
+msgstr "Numbers in the wild"
+
+msgid "one"
+msgstr "one"
+
+msgid "One less"
+msgstr "One less"
+
+msgid "One more"
+msgstr "One more"
+
+msgid "One of the eleven base words."
+msgstr "One of the eleven base words."
+
+msgid "Pick a range, listen, and type the number in digits."
+msgstr "Pick a range, listen, and type the number in digits."
+
+msgid "Play {n}"
+msgstr "Play {n}"
+
+msgid "Play each number twice before you type."
+msgstr "Play each number twice before you type."
+
+msgid "Play each sentence twice before you type."
+msgstr "Play each sentence twice before you type."
+
+msgid "Put them together"
+msgstr "Put them together"
+
+msgid "Range"
+msgstr "Range"
+
+msgid "Sada alone, with no “one” in front."
+msgstr "Sada alone, with no “one” in front."
+
+msgid "seven"
+msgstr "seven"
+
+msgid "six"
+msgstr "six"
+
+msgid "ten"
+msgstr "ten"
+
+msgid "Tens and ones are separate words: <0>kakskümmend üks</0>."
+msgstr "Tens and ones are separate words: <0>kakskümmend üks</0>."
+
+msgid "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
+msgstr "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
+
+msgid "The tens"
+msgstr "The tens"
+
+msgid "The tens: -kümmend"
+msgstr "The tens: -kümmend"
+
+msgid "The word after the number changes too: <0/>, <1/>. That form is the partitive, which lesson {partitive} explains. For now, listen for the number."
+msgstr "The word after the number changes too: <0/>, <1/>. That form is the partitive, which lesson {partitive} explains. For now, listen for the number."
+
+msgid "There are 22 pupils in the class."
+msgstr "There are 22 pupils in the class."
+
+msgid "These eleven words build every number up to 99. Tap each one. Two pairs sound alike: <0/> and <1/>, <2/> and <3/>."
+msgstr "These eleven words build every number up to 99. Tap each one. Two pairs sound alike: <0/> and <1/>, <2/> and <3/>."
+
+msgid "thirteen"
+msgstr "thirteen"
+
+msgid "This costs twelve euros."
+msgstr "This costs twelve euros."
+
+msgid "Thousands stay a separate word."
+msgstr "Thousands stay a separate word."
+
+msgid "three"
+msgstr "three"
+
+msgid "three cats"
+msgstr "three cats"
+
+msgid "Try"
+msgstr "Try"
+
+msgid "twelve"
+msgstr "twelve"
+
+msgid "twelve euros"
+msgstr "twelve euros"
+
+msgid "twenty"
+msgstr "twenty"
+
+msgid "twenty-one"
+msgstr "twenty-one"
+
+msgid "two"
+msgstr "two"
+
+msgid "two hundred"
+msgstr "two hundred"
+
+msgid "two thousand"
+msgstr "two thousand"
+
+msgid "Type the number you hear"
+msgstr "Type the number you hear"
+
+msgid "Type what you hear"
+msgstr "Type what you hear"
+
+msgid "What number was in it?"
+msgstr "What number was in it?"
+
+msgid "Which number did you hear?"
+msgstr "Which number did you hear?"
+
+msgid "zero"
+msgstr "zero"
+
+msgid "Zero to ten"
+msgstr "Zero to ten"

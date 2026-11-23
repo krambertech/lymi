@@ -48,6 +48,7 @@ A change is verified when the feature it touches has been driven in the running 
 | API keys | [keys-and-apps.md](features/keys-and-apps.md) |
 | Apps: the list, assistant, Readwise and Yomitan pages | [apps.md](features/apps.md) |
 | Smart add | [smart-add.md](features/smart-add.md) |
+| Smart add from a link | [smart-add-link.md](features/smart-add-link.md) |
 | AI consent: the ask before the first AI action, and You → AI services | [ai-consent.md](features/ai-consent.md) |
 | Japanese: furigana in review, rows, the card page and search; the Japanese face | [japanese.md](features/japanese.md) |
 | Pitch accent: the chart under the term after the reveal and on the card page | [pitch-accent.md](features/pitch-accent.md) |

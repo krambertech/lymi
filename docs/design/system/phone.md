@@ -214,6 +214,109 @@ One sound, when the daily goal is reached. It follows the silent switch, and You
 
 Use Liquid Glass for navigation and overlays: the tab bar, top-bar buttons and sheets. The capture action is tinted amber. Reading content, including review cards, uses opaque panels. Additional tinted-glass uses need evaluation on a device. Reduce Transparency and iOS before 26 use opaque fallbacks ([surfaces.md](surfaces.md#on-glass)).
 
+## Platform constraints
+
+What iOS, Android, React Native, Reanimated, expo-router and Material require of the shared components in `apps/mobile/src/ui`. A constraint that a wrong call could break is held by the component's props or by a rule in `oxlint-plugin-lymi`, and this section names only its reason; the rest has no check, so keep it when changing the component.
+
+### Screen
+
+`ui/screen.tsx`. `titleAt` and `actionsArrive` follow the measured header, so their types require `header`: without one the bar's actions would never arrive. `scrollKey` moves the scroll view, so it excludes `list`.
+
+- Where the title rests is a React style, and the animated style adds only what scrolling changes, which is nothing at the top of the page. Android can drop the first write of an animated style after mount, which left titles missing until the page scrolled (#762). The bar's title stays hidden until the header is measured, and a short header still starts with it hidden, so it never flashes in.
+- A worklet copies what it closes over, so the title's worklet reads `hasHeader` rather than the header's elements; Oxlint refuses an element inside a worklet.
+- `contentInsetAdjustmentBehavior` is `never`: the pinned bar already clears the status bar, and iOS's tab bar would add the inset again.
+- Android ends content above Material's tab bar instead of running it underneath, so a page leaves `END_ROOM`, 64 pt, for the floating bar there.
+- Back's name is measured again when the name or the text size changes, so it is never clipped to a stale width, and stops at 42% of the screen, so it never pushes the bar's actions off.
+- A long-press preview is drawn inside its page's own scroll view, where a list cannot nest, so it lays out the first twelve rows. It has no status bar to clear, and nothing in it can be tapped, so it has no bar.
+- iOS blurs what scrolls under the bar through a mask that reads only its gradient's alpha. Over a page's own `ground` the bar takes that colour, so it lays no grey band across it.
+- `past` reports its first value too, so a page already scrolled says so when its point moves.
+
+### Sheet
+
+`ui/sheet.tsx`, `ui/sheet-frame.tsx`, `ui/sheet-frame.android.tsx`, `ui/sheet-focus.ts`. The header draws only under a `title`, and the back chevron only in a header that saves, so the types require them.
+
+- iOS lifts a sheet over a keyboard its field brings up. The sheet gives up that room frame by frame as the keyboard rises, and what no longer fits scrolls.
+- A sheet with `more` fills its frame rather than sizing to its rows, so its top shows while it peeks. At full height iOS turns the glass opaque, `plate` by day and `sheet` at night, so the scroll's soft edges take those colours.
+- Android's sheet is its own window, where `autoFocus` raises no keyboard: a field spreads `useSheetFocus`, which focuses it once the sheet has risen. Oxlint refuses `autoFocus` inside a `Sheet`.
+- On Android a hidden sheet does not rise again, so one reopened while still sliding away mounts anew. The app's own slide and the learner's swipe can both end a sheet, and only the first counts.
+- What a row chose runs after the sheet has gone and the screen's window has its focus back (`ui/window-focus.ts`, at most half a second), or the screen or field it opens gets no insets or keyboard.
+- Material's drag handle takes a 48 dp row above the sheet's padding, so Lymi's grabber floats over it, as iOS's does.
+
+### Form sheets
+
+`ui/stack.tsx`, `ui/form-header.tsx`. Oxlint holds the header's `collapsable={false}`, a full-height sheet to `FULL_SHEET` and a stack that presents form sheets to `SHEET_STACK`.
+
+- React Native flattens a view that draws nothing, and iOS then lays the sheet's scroll view over the header.
+- react-native-screens sizes a full-height sheet on Android from a top inset it can miss after a live theme switch, which leaves its foot under the keyboard, so the sheet covers the window and is padded below the status bar.
+- Android's form sheets are square unless given Material's 28 dp corner.
+- The stack calls its screen layout as a function, so `androidSheetLayout` uses no hooks. Its lower-case name makes `rules-of-hooks` refuse one.
+
+### Menus
+
+`ui/action-menu.tsx`, `ui/action-menu.android.tsx`, `ui/row-menu.tsx`, `ui/row-menu.android.tsx`, `ui/blur-root.android.tsx`.
+
+- The SwiftUI host has a fixed size that React Native lays out. A host that measures itself keeps a stale place when the list around it moves, and its button drifts off its row; Oxlint refuses `matchContents` on one.
+- Each row sets its own tint, so an amber button's tint stays on the button. A `row` button's `target` has no meaning on the other looks, so the type refuses it there.
+- Android blurs only what sits inside a blur target in the same window. `BlurRoot` wraps the screens in one, and what floats over them, the open menu included, is drawn in `over`, outside it. expo-blur divides its intensity by four on Android, so 48 is the web's 12 px; before Android 12 the menu is the plain plate.
+- The Android menu is drawn at the root, takes Back before the screen in front, closes once however often it is asked, and goes when its button unmounts.
+- iOS's preview view hides a row's own text from VoiceOver, so `RowMenu` takes a `label`. expo-router's link menu and preview exist on iOS alone; on Android the rows are a sheet, mounted on the long press so a long list carries none.
+
+### Alert
+
+`ui/alert.android.tsx`.
+
+- One dialog shows at a time, and a second waits, so neither covers the other. The dialog closes only once React commits, so a second tap or Back before then counts for nothing.
+- Compose takes Onest as one regular face and ignores a weight, so the text style's type has no `fontWeight`.
+- Material caps the text slot's height to keep the buttons on screen but does not scroll it, so the message scrolls itself.
+
+### Keyboard
+
+`ui/keyboard.tsx`, `ui/search-bar.tsx`. Oxlint refuses React Native's and react-native-keyboard-controller's own keyboard views outside `ui/keyboard.tsx`.
+
+- `KeyboardRoom` reads the keyboard's own height instead of measuring itself, which a sheet's offset from the top of the screen would throw.
+- iOS insets a scroll view for the keyboard itself; Android's edge-to-edge window needs it done (`KeyboardScroll`).
+- Android has no interactive dismissal, so a list under a search field takes `DISMISS_ON_DRAG`, and no `clearButtonMode`, so a field that sets it draws `ClearText` too. Oxlint holds both.
+- Closing search blurs its field as the screen leaves, which must not close it a second time.
+
+### Toasts and messages
+
+`ui/toast.tsx`, `ui/notice.tsx`, `ui/sheet.tsx`, `ui/field.tsx`.
+
+- iOS ignores `accessibilityLiveRegion`, so a component that sets it announces its words with `announceForAccessibility` too. Oxlint holds this in `ui`.
+- A toast's pill is the other theme's colour, so its red is too.
+
+### Text with a control after it
+
+`ui/inline-control.tsx`. iOS cuts an inline view off at its text's edge, and a 32 pt button stands taller than its line. `TextWithControl` gives the text that room and takes it back as a negative margin, joins the control to the last word so it never wraps alone, and lifts it from the baseline an inline view stands on to the middle of the line as drawn. Its parts are not exported, so a control cannot be placed without the room.
+
+### Text in a script
+
+`ui/primitives.tsx`, `ui/furigana.tsx`.
+
+- iOS orders a right-to-left term from its language tag, so one that opens with a Latin word still reads right. It stays on the app's start edge unless a block of it asks for `textStart`.
+- Furigana's boxes set their own `direction`, since a row follows the app's. React Native cannot raise a run inside a line, so a Jyutping tone number is its own text at the top of the row.
+- A box can report its place before the line has a width, so the cut at `lines` settles again for each width.
+- Every screen's text is `Text`, which sets the Dynamic Type ramp and cap; Oxlint refuses React Native's own.
+
+### Tab bar
+
+`ui/tab-bar.tsx`. iOS keeps 49 pt for its tab bar over the home indicator, Material 80 dp over the navigation bar, and a deck's accessory 56 pt; `useAboveTabBar` adds what shows. The accessory needs iOS 26. Which decks have scrolled their own Review away is kept per deck, since a second deck page can be pushed over a scrolled one.
+
+### Glass and surfaces
+
+`ui/glass.tsx`, `ui/seven-lights.tsx`, `ui/drag-list.tsx`, `ui/overlay.tsx`.
+
+- Dark glass greys a translucent amber to brown, so amber glass is opaque amber at night.
+- A screen presented as a sheet gets iOS's clear glass, which shows too much through, so `useFrost` lays the sheet colour over it at 50%.
+- A shadow on a clipped child breaks its corners, so the light along a glass's top edge is a border.
+- A lifted row's shadow is black: `ink` glows at night, and the row fills its plate, so a token's negative spread would hide it.
+- react-native-screens' full-window overlay is a view with no size on Android, so a layer over every screen is `Overlay`; Oxlint refuses the raw one.
+- A floating bar leaves with its screen's focus, since another tab keeps the screen mounted behind it.
+
+### Back and edge swipes
+
+`ui/system-back.ts`, `ui/edge-swipe.ts`. `useSystemBack` listens only while its screen is in front, and Oxlint refuses React Native's back handler elsewhere. A swipe that mirrors iOS's back swipe takes its hit slop from `edgeSwipeSlop`, 28 pt from the start edge on iOS and the whole view on Android; Oxlint refuses a slop held to an edge.
+
 ## Outside the app
 
 - **Widget:** one widget, two sizes. Small is the lantern with what is due; medium is the Week, the run and seven glasses with the due count. Both open a review. In a tinted or clear Home Screen the lantern has its own one-colour drawing.

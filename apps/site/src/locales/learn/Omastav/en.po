@@ -1,0 +1,601 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0/> is I, the one who does something: <1/> <2/> is my, for what you own: <3/>"
+msgstr "<0/> is I, the one who does something: <1/> <2/> is my, for what you own: <3/>"
+
+#. placeholder {0}: capital(ownedBook(whose))
+#. placeholder {1}: i18n._(PERSON[who].book)
+msgid "<0>{0}</0> is {1}."
+msgstr "<0>{0}</0> is {1}."
+
+#. placeholder {0}: capital(phrase.whose)
+#. placeholder {1}: phrase.where
+msgid "<0>{0}</0> is <1>{1}</1> without its last letter."
+msgstr "<0>{0}</0> is <1>{1}</1> without its last letter."
+
+msgid "<0>Kool</0> gains an i: <1>kooli</1>. It’s the vowel you heard in <2>koolis</2>."
+msgstr "<0>Kool</0> gains an i: <1>kooli</1>. It’s the vowel you heard in <2>koolis</2>."
+
+msgid "<0>Mina</0> is I. To say my, use <1>minu</1>: <2>minu raamat</2>."
+msgstr "<0>Mina</0> is I. To say my, use <1>minu</1>: <2>minu raamat</2>."
+
+msgid "<0>Mina</0>, <1>sina</1> and <2>nemad</2> change: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> and <6>teie</6> stay as they are."
+msgstr "<0>Mina</0>, <1>sina</1> and <2>nemad</2> change: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> and <6>teie</6> stay as they are."
+
+msgid "<0>Minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. <4>Tema</4>, <5>meie</5> and <6>teie</6> shorten to <7>ta, me</7> and <8>te</8>, the same short forms you met for he or she, we and you. Lesson {questions} used <9>su</9>: <10/> means “What’s your name?”"
+msgstr "<0>Minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. <4>Tema</4>, <5>meie</5> and <6>teie</6> shorten to <7>ta, me</7> and <8>te</8>, the same short forms you met for he or she, we and you. Lesson {questions} used <9>su</9>: <10/> means “What’s your name?”"
+
+msgid "<0>Nende</0> is their. For you and Martin, say <1>meie</1>, our."
+msgstr "<0>Nende</0> is their. For you and Martin, say <1>meie</1>, our."
+
+msgid "<0>Pood</0> loses its d, and the second o turns to e: <1>poe</1>. <2>Turg</2> and <3>laud</3> drop their last letter and gain a vowel: <4>turu, laua</4>."
+msgstr "<0>Pood</0> loses its d, and the second o turns to e: <1>poe</1>. <2>Turg</2> and <3>laud</3> drop their last letter and gain a vowel: <4>turu, laua</4>."
+
+msgid "<0>Sinu</0> is your: that says the coffee is Mari’s."
+msgstr "<0>Sinu</0> is your: that says the coffee is Mari’s."
+
+msgid "<0>Tartu</0> and <1>haigla</1> stay as they are, and <2>-s</2> or <3>-l</3> goes straight on."
+msgstr "<0>Tartu</0> and <1>haigla</1> stay as they are, and <2>-s</2> or <3>-l</3> goes straight on."
+
+msgid "<0>Teie</0> is your. For you and Martin, say <1>meie</1>, our."
+msgstr "<0>Teie</0> is your. For you and Martin, say <1>meie</1>, our."
+
+msgid "12 minutes"
+msgstr "12 minutes"
+
+msgid "2 quizzes, a text and a conversation"
+msgstr "2 quizzes, a text and a conversation"
+
+msgid "A change inside"
+msgstr "A change inside"
+
+msgid "A name ending in a consonant gains a vowel, often an i: <0/>, <1/>. A country goes first in the same way, and <2>Eesti</2> stays as it is: <3/>"
+msgstr "A name ending in a consonant gains a vowel, often an i: <0/>, <1/>. A country goes first in the same way, and <2>Eesti</2> stays as it is: <3/>"
+
+msgid "A name ending in a consonant gains a vowel."
+msgstr "A name ending in a consonant gains a vowel."
+
+msgid "A name ending in a vowel usually stays as it is: <0>Mari raamat</0>. A name ending in a consonant gains a vowel: <1>Jaani kass</1>."
+msgstr "A name ending in a vowel usually stays as it is: <0>Mari raamat</0>. A name ending in a consonant gains a vowel: <1>Jaani kass</1>."
+
+msgid "A name or a noun owns things the same way: it goes first, in the genitive. <0/> is Mari’s book. Estonian adds no ’s, and <1>Mari</1> stays as it is, as most names ending in a vowel do."
+msgstr "A name or a noun owns things the same way: it goes first, in the genitive. <0/> is Mari’s book. Estonian adds no ’s, and <1>Mari</1> stays as it is, as most names ending in a vowel do."
+
+msgid "A noun’s genitive is its form before <0>-s</0> or <1>-l</1>: <2>kooli</2> in <3>koolis</3>, <4>poe</4> in <5>poes</5>. A dictionary lists it second: <6>pood, poe</6>."
+msgstr "A noun’s genitive is its form before <0>-s</0> or <1>-l</1>: <2>kooli</2> in <3>koolis</3>, <4>poe</4> in <5>poes</5>. A dictionary lists it second: <6>pood, poe</6>."
+
+msgid "A vowel at the end"
+msgstr "A vowel at the end"
+
+msgid "All of them. You heard whose in every sentence."
+msgstr "All of them. You heard whose in every sentence."
+
+msgid "All of them. You made the genitive every time."
+msgstr "All of them. You made the genitive every time."
+
+msgid "Answers"
+msgstr "Answers"
+
+msgid "Ask whose with <0>kelle</0>: <1>Kelle raamat see on?</1> means “Whose book is this?”"
+msgstr "Ask whose with <0>kelle</0>: <1>Kelle raamat see on?</1> means “Whose book is this?”"
+
+msgid "at home"
+msgstr "at home"
+
+msgid "at school, in a school"
+msgstr "at school, in a school"
+
+msgid "at the market"
+msgstr "at the market"
+
+msgid "at work"
+msgstr "at work"
+
+msgid "Before a noun, <0>Martin</0> takes its genitive: <1>Martini kohv</1>."
+msgstr "Before a noun, <0>Martin</0> takes its genitive: <1>Martini kohv</1>."
+
+msgid "book"
+msgstr "book"
+
+msgid "brother"
+msgstr "brother"
+
+msgid "café"
+msgstr "café"
+
+msgid "capital city"
+msgstr "capital city"
+
+msgid "cat"
+msgstr "cat"
+
+msgid "Changes inside"
+msgstr "Changes inside"
+
+msgid "Choosing the genitive"
+msgstr "Choosing the genitive"
+
+msgid "door"
+msgstr "door"
+
+msgid "Each round gives a word and the noun it owns. Type the word’s genitive, the form that goes in front, and hear the phrase. If you know the word with <0>-s</0> or <1>-l</1>, take off its last letter."
+msgstr "Each round gives a word and the noun it owns. Type the word’s genitive, the form that goes in front, and hear the phrase. If you know the word with <0>-s</0> or <1>-l</1>, take off its last letter."
+
+msgid "Estonia; Estonia’s"
+msgstr "Estonia; Estonia’s"
+
+msgid "Every pronoun has a genitive, and it goes before the thing it owns. Tap a form to hear it."
+msgstr "Every pronoun has a genitive, and it goes before the thing it owns. Tap a form to hear it."
+
+msgid "Fill the gaps"
+msgstr "Fill the gaps"
+
+msgid "Gains a vowel"
+msgstr "Gains a vowel"
+
+msgid "Genitive"
+msgstr "Genitive"
+
+msgid "Go through the three kinds of word above once more, then try again."
+msgstr "Go through the three kinds of word above once more, then try again."
+
+msgid "he or she"
+msgstr "he or she"
+
+msgid "he or she; his or her"
+msgstr "he or she; his or her"
+
+msgid "Hear a sentence and pick whose it’s about. A short <0>mu</0> is <1>minu</1>, and <2>su</2> is <3>sinu</3>."
+msgstr "Hear a sentence and pick whose it’s about. A short <0>mu</0> is <1>minu</1>, and <2>su</2> is <3>sinu</3>."
+
+msgid "Hearing whose"
+msgstr "Hearing whose"
+
+msgid "his or her"
+msgstr "his or her"
+
+msgid "his or her book"
+msgstr "his or her book"
+
+msgid "His or her book is on the table."
+msgstr "His or her book is on the table."
+
+msgid "His or her brother works in a hospital."
+msgstr "His or her brother works in a hospital."
+
+msgid "home; the home’s"
+msgstr "home; the home’s"
+
+msgid "hospital; the hospital’s"
+msgstr "hospital; the hospital’s"
+
+msgid "How the genitive is made"
+msgstr "How the genitive is made"
+
+msgid "I"
+msgstr "I"
+
+msgid "I live in Tartu."
+msgstr "I live in Tartu."
+
+msgid "in a café"
+msgstr "in a café"
+
+msgid "in a hospital"
+msgstr "in a hospital"
+
+msgid "in an office"
+msgstr "in an office"
+
+msgid "in Estonia"
+msgstr "in Estonia"
+
+msgid "In lesson {places} you learned <0/>, at school, and <1/>, in Tallinn. Take off the <2>-s</2> and you have the genitive: <3/>, <4/>. The vowel that appeared before the <5>-s</5> belongs to the genitive."
+msgstr "In lesson {places} you learned <0/>, at school, and <1/>, in Tallinn. Take off the <2>-s</2> and you have the genitive: <3/>, <4/>. The vowel that appeared before the <5>-s</5> belongs to the genitive."
+
+msgid "In lesson {questions} you heard <0/> The word <1/>, my, is <2/> in the form that says whose. That form is the genitive."
+msgstr "In lesson {questions} you heard <0/> The word <1/>, my, is <2/> in the form that says whose. That form is the genitive."
+
+msgid "in Tallinn"
+msgstr "in Tallinn"
+
+msgid "in Tartu"
+msgstr "in Tartu"
+
+msgid "in ten minutes"
+msgstr "in ten minutes"
+
+msgid "in the book"
+msgstr "in the book"
+
+msgid "in the river"
+msgstr "in the river"
+
+msgid "in the room"
+msgstr "in the room"
+
+msgid "in the shop"
+msgstr "in the shop"
+
+msgid "Is this your café? To more than one, or polite."
+msgstr "Is this your café? To more than one, or polite."
+
+msgid "Is this your cat?"
+msgstr "Is this your cat?"
+
+msgid "Jaan is Kati’s brother, so my: <0>minu</0>."
+msgstr "Jaan is Kati’s brother, so my: <0>minu</0>."
+
+msgid "Jaan, a man’s name"
+msgstr "Jaan, a man’s name"
+
+msgid "Jaan’s"
+msgstr "Jaan’s"
+
+msgid "Kati asks for your name, so your: <0>sinu</0>."
+msgstr "Kati asks for your name, so your: <0>sinu</0>."
+
+msgid "Kati is the one who lives in Tartu, so I: <0>mina</0>."
+msgstr "Kati is the one who lives in Tartu, so I: <0>mina</0>."
+
+msgid "Kati writes about her family. For each gap, pick who or whose."
+msgstr "Kati writes about her family. For each gap, pick who or whose."
+
+msgid "Listen first."
+msgstr "Listen first."
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Mari"
+msgstr "Mari"
+
+msgid "Mari is at your home and asks who owns what. Answer with the genitive."
+msgstr "Mari is at your home and asks who owns what. Answer with the genitive."
+
+msgid "Mari, a woman’s name"
+msgstr "Mari, a woman’s name"
+
+msgid "Mari’s book"
+msgstr "Mari’s book"
+
+msgid "market"
+msgstr "market"
+
+msgid "Miisu, a name for a cat"
+msgstr "Miisu, a name for a cat"
+
+msgid "my"
+msgstr "my"
+
+msgid "my book"
+msgstr "my book"
+
+msgid "My name is Kati."
+msgstr "My name is Kati."
+
+msgctxt "genitive lesson"
+msgid "My name is Mari."
+msgstr "My name is Mari."
+
+msgid "My, your and their"
+msgstr "My, your and their"
+
+msgid "name"
+msgstr "name"
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "No change"
+msgstr "No change"
+
+msgid "Now Kati asks where you live, and you do the living, so you: <0>sina</0>."
+msgstr "Now Kati asks where you live, and you do the living, so you: <0>sina</0>."
+
+msgid "Numbers have a genitive too. In lesson {time}, <0/> is in ten minutes: <1>kümne</1> is the genitive of <2>kümme</2>, and <3>minuti</3> of <4>minut</4>."
+msgstr "Numbers have a genitive too. In lesson {time}, <0/> is in ten minutes: <1>kümne</1> is the genitive of <2>kümme</2>, and <3>minuti</3> of <4>minut</4>."
+
+msgid "office"
+msgstr "office"
+
+msgid "on the table"
+msgstr "on the table"
+
+msgid "our"
+msgstr "our"
+
+msgid "our book"
+msgstr "our book"
+
+msgid "Our mother is a teacher."
+msgstr "Our mother is a teacher."
+
+msgid "Our school is in Tartu."
+msgstr "Our school is in Tartu."
+
+msgid "Pea, head, and linn, town."
+msgstr "Pea, head, and linn, town."
+
+msgid "Pick a kind of word and tap any form to hear it."
+msgstr "Pick a kind of word and tap any form to hear it."
+
+msgid "picture"
+msgstr "picture"
+
+msgid "river"
+msgstr "river"
+
+msgid "room"
+msgstr "room"
+
+msgid "Saying whose at home"
+msgstr "Saying whose at home"
+
+msgid "school"
+msgstr "school"
+
+msgid "shop"
+msgstr "shop"
+
+msgid "So <0/> is the school door, and <1/> is at school. The endings <2>-s</2> and <3>-l</3> go on the genitive."
+msgstr "So <0/> is the school door, and <1/> is at school. The endings <2>-s</2> and <3>-l</3> go on the genitive."
+
+msgid "Some words change inside before an ending: <0/>, a shop, gives <1/>, in the shop. That changed form is the genitive too: <2/>, the shop door. A dictionary lists the genitive second: <3>pood, poe</3>. Lesson {stems} shows how these changes work."
+msgstr "Some words change inside before an ending: <0/>, a shop, gives <1/>, in the shop. That changed form is the genitive too: <2/>, the shop door. A dictionary lists the genitive second: <3>pood, poe</3>. Lesson {stems} shows how these changes work."
+
+msgid "table"
+msgstr "table"
+
+msgid "Talk: whose is it?"
+msgstr "Talk: whose is it?"
+
+msgid "Tallinn"
+msgstr "Tallinn"
+
+msgid "Tallinn’s, of Tallinn"
+msgstr "Tallinn’s, of Tallinn"
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap the Whose column above once more, then try again."
+msgstr "Tap the Whose column above once more, then try again."
+
+msgid "Tartu; Tartu’s, of Tartu"
+msgstr "Tartu; Tartu’s, of Tartu"
+
+msgid "That says Liisu’s name is <0>Kass</0>, Cat."
+msgstr "That says Liisu’s name is <0>Kass</0>, Cat."
+
+msgid "the book’s, of the book"
+msgstr "the book’s, of the book"
+
+msgid "The café is Jaan’s, so <0>Jaan</0> takes the genitive: <1>Jaani</1>."
+msgstr "The café is Jaan’s, so <0>Jaan</0> takes the genitive: <1>Jaani</1>."
+
+msgid "the café’s name"
+msgstr "the café’s name"
+
+msgid "the café’s, of the café"
+msgstr "the café’s, of the café"
+
+msgid "The capital of Estonia is Tallinn."
+msgstr "The capital of Estonia is Tallinn."
+
+msgid "The cat owns the name, so <0>kass</0> takes its genitive: <1>kassi nimi</1>."
+msgstr "The cat owns the name, so <0>kass</0> takes its genitive: <1>kassi nimi</1>."
+
+msgid "the cat’s"
+msgstr "the cat’s"
+
+msgid "The genitive is the form before -s"
+msgstr "The genitive is the form before -s"
+
+msgid "The genitive of kass: kassi nimi, the cat’s name."
+msgstr "The genitive of kass: kassi nimi, the cat’s name."
+
+msgid "The genitive of kes, who."
+msgstr "The genitive of kes, who."
+
+msgid "The genitive of mina. Short: mu."
+msgstr "The genitive of mina. Short: mu."
+
+msgid "The genitive of nemad. It has no short form."
+msgstr "The genitive of nemad. It has no short form."
+
+msgid "The genitive of sina. Short: su."
+msgstr "The genitive of sina. Short: su."
+
+msgid "The genitive says whose, and the owner goes first: <0>minu raamat</0>, my book; <1>Mari raamat</1>, Mari’s book."
+msgstr "The genitive says whose, and the owner goes first: <0>minu raamat</0>, my book; <1>Mari raamat</1>, Mari’s book."
+
+msgid "the market café"
+msgstr "the market café"
+
+msgid "the market’s, of the market"
+msgstr "the market’s, of the market"
+
+msgid "The name is Kati’s own, so my: <0>minu</0>."
+msgstr "The name is Kati’s own, so my: <0>minu</0>."
+
+msgid "The name is the cat’s, so <0>kass</0> takes the genitive: <1>kassi</1>."
+msgstr "The name is the cat’s, so <0>kass</0> takes the genitive: <1>kassi</1>."
+
+msgid "the office window"
+msgstr "the office window"
+
+msgid "the office’s, of the office"
+msgstr "the office’s, of the office"
+
+msgid "The owner comes first"
+msgstr "The owner comes first"
+
+msgid "The owner goes first: <0>minu raamat</0>."
+msgstr "The owner goes first: <0>minu raamat</0>."
+
+msgid "The pronouns: <0>minu, sinu, tema, meie, teie, nende</0>. Their short forms are <1>mu, su, ta, me</1> and <2>te</2>; <3>nende</3> has none."
+msgstr "The pronouns: <0>minu, sinu, tema, meie, teie, nende</0>. Their short forms are <1>mu, su, ta, me</1> and <2>te</2>; <3>nende</3> has none."
+
+msgid "the river’s name"
+msgstr "the river’s name"
+
+msgid "the river’s, of the river"
+msgstr "the river’s, of the river"
+
+msgid "the room’s window"
+msgstr "the room’s window"
+
+msgid "the room’s, of the room"
+msgstr "the room’s, of the room"
+
+msgid "the school door"
+msgstr "the school door"
+
+msgid "the school’s, of the school"
+msgstr "the school’s, of the school"
+
+msgid "the shop door"
+msgstr "the shop door"
+
+msgid "the shop’s, of the shop"
+msgstr "the shop’s, of the shop"
+
+msgid "The short form of minu."
+msgstr "The short form of minu."
+
+msgid "The short form of sinu."
+msgstr "The short form of sinu."
+
+msgid "the table’s, of the table"
+msgstr "the table’s, of the table"
+
+msgid "the Tallinn market"
+msgstr "the Tallinn market"
+
+msgid "The word"
+msgstr "The word"
+
+msgid "their"
+msgstr "their"
+
+msgid "their book"
+msgstr "their book"
+
+msgid "Their office is in Tallinn."
+msgstr "Their office is in Tallinn."
+
+msgid "they"
+msgstr "they"
+
+msgid "This is Jaan’s cat."
+msgstr "This is Jaan’s cat."
+
+msgid "This is Mari’s book."
+msgstr "This is Mari’s book."
+
+msgid "This is my book."
+msgstr "This is my book."
+
+msgid "This is their picture."
+msgstr "This is their picture."
+
+msgid "This is your coffee."
+msgstr "This is your coffee."
+
+msgid "To ask whose, say <0/>. It’s the genitive of <1/>, who, from lesson {questions}. Tap a line to hear it."
+msgstr "To ask whose, say <0/>. It’s the genitive of <1/>, who, from lesson {questions}. Tap a line to hear it."
+
+msgid "To say whose something is, put the owner first, in the genitive: <0>minu raamat</0> is my book, and <1>Mari raamat</1> is Mari’s book."
+msgstr "To say whose something is, put the owner first, in the genitive: <0>minu raamat</0> is my book, and <1>Mari raamat</1> is Mari’s book."
+
+msgid "we"
+msgstr "we"
+
+msgid "we; our"
+msgstr "we; our"
+
+msgid "What’s your name?"
+msgstr "What’s your name?"
+
+msgid "Which form goes first?"
+msgstr "Which form goes first?"
+
+msgid "who"
+msgstr "who"
+
+msgid "Who"
+msgstr "Who"
+
+msgid "Who and whose"
+msgstr "Who and whose"
+
+msgid "Who and whose are the same word."
+msgstr "Who and whose are the same word."
+
+msgid "Who or whose?"
+msgstr "Who or whose?"
+
+msgid "whose"
+msgstr "whose"
+
+msgid "Whose"
+msgstr "Whose"
+
+msgid "Whose book is this?"
+msgstr "Whose book is this?"
+
+msgid "Whose cat is this?"
+msgstr "Whose cat is this?"
+
+msgid "Whose?"
+msgstr "Whose?"
+
+msgid "window"
+msgstr "window"
+
+msgid "With -s or -l"
+msgstr "With -s or -l"
+
+msgid "work; of work"
+msgstr "work; of work"
+
+msgid "You and your brother Martin share a flat and a cat, Liisu. The book is yours, and the coffee is Martin’s. Mari speaks first; pick what you say back."
+msgstr "You and your brother Martin share a flat and a cat, Liisu. The book is yours, and the coffee is Martin’s. Mari speaks first; pick what you say back."
+
+msgid "you, to more than one; polite you"
+msgstr "you, to more than one; polite you"
+
+msgid "you, to more than one; polite you; your"
+msgstr "you, to more than one; polite you; your"
+
+msgid "you, to one person"
+msgstr "you, to one person"
+
+msgid "your book, to more than one or polite"
+msgstr "your book, to more than one or polite"
+
+msgid "your book, to one person"
+msgstr "your book, to one person"
+
+msgid "Your cat is at home. To more than one, or polite."
+msgstr "Your cat is at home. To more than one, or polite."
+
+msgid "your, to more than one; polite your"
+msgstr "your, to more than one; polite your"
+
+msgid "your, to one"
+msgstr "your, to one"
+
+msgid "your, to one person"
+msgstr "your, to one person"
+
+msgid "your, to several"
+msgstr "your, to several"

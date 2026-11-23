@@ -6,17 +6,10 @@ import { Text } from "./primitives";
 import { Skeleton } from "./skeleton";
 import { ExampleText } from "./term-text";
 
-/** Past the speaker's bare glyph, whose box sits in the block's corner. */
 const SPEAKER_ROOM = 28;
 
-/** The speaker's place, whose -8 pt margins centre its 32 pt box 20 pt down the block. */
 const EXAMPLE_CORNER = { position: "absolute", end: 6, top: 12 } as const;
 
-/**
- * A card's example as one inset block: the sentence over its translation, the speaker in the corner.
- * `speakerRoom` keeps the corner clear for a speaker drawn over the block from outside it, as the
- * card page's sits beside its edit button.
- */
 export function ExampleLines({
   text,
   lang,
@@ -32,10 +25,8 @@ export function ExampleLines({
   text: string;
   lang?: string | null | undefined;
   known?: KnownReadings | undefined;
-  /** Draws the sentence as written, with no readings over it, for a learner who shows pronunciation separately. */
   plain?: boolean | undefined;
   translation?: string | null | undefined;
-  /** Holds the translation's line while it is being written. */
   translating?: boolean | undefined;
   lines?: number | undefined;
   translationLines?: number | undefined;

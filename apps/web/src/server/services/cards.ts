@@ -445,7 +445,9 @@ export async function addCards(
       name: "cards_added",
       count: groups.length,
       source,
-      ...(source === "typed" ? { fields: TYPED_CARD_FIELDS.filter((f) => filled.has(f)) } : {}),
+      ...(source === "typed" || source === "lesson"
+        ? { fields: TYPED_CARD_FIELDS.filter((f) => filled.has(f)) }
+        : {}),
       ...(converted > 0 ? { normalized: converted } : {}),
       ...(options.entry ? { entry: options.entry } : {}),
     });

@@ -1,0 +1,390 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0/> asks about people and <1/> about things: <2/> Who is that? <3/> What is that?"
+msgstr "<0/> asks about people and <1/> about things: <2/> Who is that? <3/> What is that?"
+
+msgid "<0/> is yes and <1/> is no. When the question asks with olema, to be, the usual no is <2/>: he or she isn’t, I’m not. When you don’t know, say <3/>."
+msgstr "<0/> is yes and <1/> is no. When the question asks with olema, to be, the usual no is <2/>: he or she isn’t, I’m not. When you don’t know, say <3/>."
+
+msgid "<0/> is your, short for <1/>; lesson {genitive} explains the form. <2/> swaps the -s of kus for -st, out of: where from."
+msgstr "<0/> is your, short for <1/>; lesson {genitive} explains the form. <2/> swaps the -s of kus for -st, out of: where from."
+
+msgid "<0/> repeats the verb from the question, and any verb can answer this way: <1>Kas sa loed? Ei loe.</1> Lesson {negation} covers saying no."
+msgstr "<0/> repeats the verb from the question, and any verb can answer this way: <1>Kas sa loed? Ei loe.</1> Lesson {negation} covers saying no."
+
+msgid "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
+msgstr "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
+
+msgid "<0>Kes</0> asks about people, <1>mis</1> about things."
+msgstr "<0>Kes</0> asks about people, <1>mis</1> about things."
+
+msgid "10 minutes"
+msgstr "10 minutes"
+
+msgid "2 quizzes"
+msgstr "2 quizzes"
+
+msgid "a little"
+msgstr "a little"
+
+msgid "A little."
+msgstr "A little."
+
+msgid "A question word goes first, and the part you ask about drops out: <0>Kus sa elad?</0>"
+msgstr "A question word goes first, and the part you ask about drops out: <0>Kus sa elad?</0>"
+
+msgid "All of them. You can hear what a question asks."
+msgstr "All of them. You can hear what a question asks."
+
+msgid "All of them. You matched every answer to its question."
+msgstr "All of them. You matched every answer to its question."
+
+msgid "Answer <0>jah</0> or <1>ei</1>. When the question has olema, the no is <2>ei ole</2>. If you don’t know, say <3>Ma ei tea.</3>"
+msgstr "Answer <0>jah</0> or <1>ei</1>. When the question has olema, the no is <2>ei ole</2>. If you don’t know, say <3>Ma ei tea.</3>"
+
+msgid "Are they working today?"
+msgstr "Are they working today?"
+
+msgid "Asks about a person."
+msgstr "Asks about a person."
+
+msgid "Asks about a place."
+msgstr "Asks about a place."
+
+msgid "Asks about a thing."
+msgstr "Asks about a thing."
+
+msgid "Asks about a time."
+msgstr "Asks about a time."
+
+msgid "Asks about an amount."
+msgstr "Asks about an amount."
+
+msgid "Asks for a reason."
+msgstr "Asks for a reason."
+
+msgid "Asks how it’s done."
+msgstr "Asks how it’s done."
+
+msgid "at home"
+msgstr "at home"
+
+msgid "because"
+msgstr "because"
+
+msgid "Because I live in Tallinn."
+msgstr "Because I live in Tallinn."
+
+msgid "Do you drink coffee?"
+msgstr "Do you drink coffee?"
+
+msgid "Do you live in Tallinn?"
+msgstr "Do you live in Tallinn?"
+
+msgid "Do you speak Estonian?"
+msgstr "Do you speak Estonian?"
+
+msgid "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
+msgstr "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
+
+msgid "Fine, thanks. And you?"
+msgstr "Fine, thanks. And you?"
+
+msgid "Five sentences. Switch to Question and watch what changes."
+msgstr "Five sentences. Switch to Question and watch what changes."
+
+msgid "from, by birth"
+msgstr "from, by birth"
+
+msgid "He or she is at home."
+msgstr "He or she is at home."
+
+msgid "Hear a question and pick its question word. It always comes first, so listen to the start."
+msgstr "Hear a question and pick its question word. It always comes first, so listen to the start."
+
+msgid "Hear a question, then pick the answer that fits. A kas question takes yes, no or I don’t know; a question word wants what it asks about, such as a place for kus or a time for millal."
+msgstr "Hear a question, then pick the answer that fits. A kas question takes yes, no or I don’t know; a question word wants what it asks about, such as a place for kus or a time for millal."
+
+msgid "how"
+msgstr "how"
+
+msgid "How are you getting on?"
+msgstr "How are you getting on?"
+
+msgid "How are you learning Estonian?"
+msgstr "How are you learning Estonian?"
+
+msgid "How does he or she speak Estonian?"
+msgstr "How does he or she speak Estonian?"
+
+msgid "How much coffee do you drink?"
+msgstr "How much coffee do you drink?"
+
+msgid "How much do you work?"
+msgstr "How much do you work?"
+
+msgid "How much water do you drink?"
+msgstr "How much water do you drink?"
+
+msgid "how much, how many"
+msgstr "how much, how many"
+
+msgid "How to ask in Estonian: kas for yes or no, seven question words for the rest, and three everyday questions to learn whole."
+msgstr "How to ask in Estonian: kas for yes or no, seven question words for the rest, and three everyday questions to learn whole."
+
+msgid "How’s it going?"
+msgstr "How’s it going?"
+
+msgid "I don’t know"
+msgstr "I don’t know"
+
+msgid "I don’t know."
+msgstr "I don’t know."
+
+msgid "I read a lot."
+msgstr "I read a lot."
+
+msgid "I’m from Ukraine."
+msgstr "I’m from Ukraine."
+
+msgid "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
+msgstr "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
+
+msgid "in Tallinn"
+msgstr "in Tallinn"
+
+msgid "In Tallinn."
+msgstr "In Tallinn."
+
+msgid "in Tartu"
+msgstr "in Tartu"
+
+msgid "Is he or she at home?"
+msgstr "Is he or she at home?"
+
+msgid "It has no meaning of its own, like a spoken question mark."
+msgstr "It has no meaning of its own, like a spoken question mark."
+
+msgid "Jah, ei, ei ole"
+msgstr "Jah, ei, ei ole"
+
+msgid "Kas in front, a question mark at the end. Every other word stays put."
+msgstr "Kas in front, a question mark at the end. Every other word stays put."
+
+msgid "Kas makes a question"
+msgstr "Kas makes a question"
+
+msgid "Kus with its -s swapped for -st, “out of”."
+msgstr "Kus with its -s swapped for -st, “out of”."
+
+msgid "Learn three questions whole: <0>Mis su nimi on? Kuidas läheb?</0> and <1>Kust sa pärit oled?</1>"
+msgstr "Learn three questions whole: <0>Mis su nimi on? Kuidas läheb?</0> and <1>Kust sa pärit oled?</1>"
+
+msgid "Listen to the first word. Kas wants yes or no; a question word wants what it asks about."
+msgstr "Listen to the first word. Kas wants yes or no; a question word wants what it asks about."
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Ma olen pärit… is I’m from…"
+msgstr "Ma olen pärit… is I’m from…"
+
+msgid "My name is Mari."
+msgstr "My name is Mari."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "No, he or she isn’t."
+msgstr "No, he or she isn’t."
+
+msgid "no, when the question has olema"
+msgstr "no, when the question has olema"
+
+msgid "no; not"
+msgstr "no; not"
+
+msgid "No."
+msgstr "No."
+
+msgid "or; at the end of a sentence, a bit like “right?”"
+msgstr "or; at the end of a sentence, a bit like “right?”"
+
+msgid "People ask these three when they meet you. Learn them whole, each with an answer, and don’t take them apart yet."
+msgstr "People ask these three when they meet you. Learn them whole, each with an answer, and don’t take them apart yet."
+
+#. placeholder {0}: said(each.a)
+msgid "Play {0}"
+msgstr "Play {0}"
+
+msgid "Play {question}"
+msgstr "Play {question}"
+
+msgid "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
+msgstr "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
+
+msgid "Question"
+msgstr "Question"
+
+msgid "Question words"
+msgstr "Question words"
+
+msgid "Short for sinu."
+msgstr "Short for sinu."
+
+msgid "Statement"
+msgstr "Statement"
+
+msgid "Statement or question"
+msgstr "Statement or question"
+
+msgid "Tap a question word"
+msgstr "Tap a question word"
+
+msgid "Tap the question words above once more, then try again."
+msgstr "Tap the question words above once more, then try again."
+
+msgid "That’s a book."
+msgstr "That’s a book."
+
+msgid "That’s Jaan."
+msgstr "That’s Jaan."
+
+msgid "There are seven to start with. Tap one to hear it in a question."
+msgstr "There are seven to start with. Tap one to hear it in a question."
+
+msgid "They’re working today."
+msgstr "They’re working today."
+
+msgid "Three questions to know by heart"
+msgstr "Three questions to know by heart"
+
+msgid "To ask for more than yes or no, start with a question word instead of kas, and leave out the part you ask about. <0/> You live in Tallinn. <1/> Where do you live?"
+msgstr "To ask for more than yes or no, start with a question word instead of kas, and leave out the part you ask about. <0/> You live in Tallinn. <1/> Where do you live?"
+
+msgid "today"
+msgstr "today"
+
+msgid "tomorrow"
+msgstr "tomorrow"
+
+msgid "Tomorrow."
+msgstr "Tomorrow."
+
+msgid "turns a sentence into a yes-or-no question"
+msgstr "turns a sentence into a yes-or-no question"
+
+msgid "well, fine"
+msgstr "well, fine"
+
+msgid "what"
+msgstr "what"
+
+msgid "What are you doing?"
+msgstr "What are you doing?"
+
+msgid "What are you reading?"
+msgstr "What are you reading?"
+
+msgid "What does it ask?"
+msgstr "What does it ask?"
+
+msgid "What is that?"
+msgstr "What is that?"
+
+msgid "What’s your name?"
+msgstr "What’s your name?"
+
+msgid "when"
+msgstr "when"
+
+msgid "When are you working?"
+msgstr "When are you working?"
+
+msgid "When do you eat?"
+msgstr "When do you eat?"
+
+msgid "When do you read?"
+msgstr "When do you read?"
+
+msgid "where"
+msgstr "where"
+
+msgid "Where are you from?"
+msgstr "Where are you from?"
+
+msgid "Where do you all live?"
+msgstr "Where do you all live?"
+
+msgid "Where do you live?"
+msgstr "Where do you live?"
+
+msgid "Where does he or she work?"
+msgstr "Where does he or she work?"
+
+msgid "where from"
+msgstr "where from"
+
+msgid "Which answer fits?"
+msgstr "Which answer fits?"
+
+msgid "Which question word?"
+msgstr "Which question word?"
+
+msgid "who"
+msgstr "who"
+
+msgid "Who is that?"
+msgstr "Who is that?"
+
+msgid "Who lives in Tartu?"
+msgstr "Who lives in Tartu?"
+
+msgid "Who speaks Estonian?"
+msgstr "Who speaks Estonian?"
+
+msgid "Who, what, where"
+msgstr "Who, what, where"
+
+msgid "why"
+msgstr "why"
+
+msgid "Why are you learning Estonian?"
+msgstr "Why are you learning Estonian?"
+
+msgid "Why are you waiting?"
+msgstr "Why are you waiting?"
+
+msgid "Why is he or she learning Estonian?"
+msgstr "Why is he or she learning Estonian?"
+
+msgid "yes"
+msgstr "yes"
+
+msgid "Yes."
+msgstr "Yes."
+
+msgid "You drink coffee."
+msgstr "You drink coffee."
+
+msgid "You live in Tallinn, don’t you?"
+msgstr "You live in Tallinn, don’t you?"
+
+msgid "You live in Tallinn."
+msgstr "You live in Tallinn."
+
+msgid "You speak Estonian."
+msgstr "You speak Estonian."
+
+msgid "You’ll hear a question with it, and an answer."
+msgstr "You’ll hear a question with it, and an answer."
+
+msgid "your"
+msgstr "your"

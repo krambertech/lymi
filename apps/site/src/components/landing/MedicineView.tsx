@@ -19,7 +19,7 @@ import { SignUpSection } from "./SignUpSection";
 import { DeckStyle, DiagramTile, TagReview } from "./StudyTiles";
 import { type UseCase, UseCases } from "./UseCases";
 
-export const MEDICINE_TITLE = msg`Lymi for medical students · Flashcards with spaced repetition`;
+export const MEDICINE_TITLE = msg`Flashcards for medical students · Lymi`;
 export const MEDICINE_BLURB = msg`Flashcards for anatomy, pharmacology, microbiology and lab values. Bring your Anki decks with their review history, turn lecture notes into cards, and review a few minutes a day. Free.`;
 
 /** Facts every medical course asks for, checked against standard references. No clip plays. */

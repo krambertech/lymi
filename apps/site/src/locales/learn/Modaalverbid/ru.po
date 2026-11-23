@@ -1,0 +1,435 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "<0/> can also say that something might happen. This sentence can mean he or she is allowed to come tomorrow, or might: <1/>"
+msgstr "<0/> говорит ещё и о том, что что-то может случиться. Это предложение значит либо что ему или ей можно прийти завтра, либо что он или она, возможно, придёт: <1/>"
+
+msgid "<0/> is about being allowed. With <1>ei</1> it says mustn’t: <2/> In a question it asks whether you may, as <3/> does too: <4/> Tap one to hear its sentence."
+msgstr "<0/> — про разрешение. С <1>ei</1> это «нельзя»: <2/> В вопросе так просят разрешения, как и с <3/>: <4/> Коснись любого, чтобы услышать предложение."
+
+msgid "<0/> is for what you learned. To say you know how to swim: <1/> <2/> says nothing stops you: <3/>"
+msgstr "<0/> — про умение. Чтобы сказать, что умеешь плавать: <1/> <2/> говорит, что тебе ничто не мешает: <3/>"
+
+msgid "<0/> is I have to, and it takes the <1>-ma</1> form from lesson {infinitives}: <2/>"
+msgstr "<0/> — это «мне надо», и после него идёт форма на <1>-ma</1> из урока {infinitives}: <2/>"
+
+msgid "<0/> is must, but <1>ei pea</1> is don’t have to: <2/> For mustn’t, Estonian switches to <3>ei tohi</3>: <4/> <5/>, no need, also leaves it to you. Tap one to hear it said about swimming."
+msgstr "<0/> — это «надо», но <1>ei pea</1> — не «нельзя», а «не обязательно»: <2/> Для «нельзя» в эстонском другой глагол, <3>ei tohi</3>: <4/> <5/>, «не нужно», тоже оставляет выбор тебе. Коснись любого, чтобы услышать, как это говорят о плавании."
+
+msgid "<0/> says something is allowed, and you also offer with it: <1/> To let someone do something: <2/>"
+msgstr "<0/> — когда ты разрешаешь или предлагаешь. Так предлагают: <1/> И так разрешают: <2/>"
+
+msgid "<0/> with the <1>-da</1> form says something has to be done, without naming who: <2/> Put a person in the <3>-l</3> form from lesson {having} to make it theirs: <4/>"
+msgstr "<0/> с формой на <1>-da</1> говорит, что что-то надо сделать, и не называет кому: <2/> Чтобы сказать кому, добавь человека в форме на <3>-l</3> из урока {having}: <4/>"
+
+msgid "<0/>, I need, takes the <1>-da</1> form of a verb: <2/> Tap a form to hear its sentence."
+msgstr "После <0/>, «мне нужно», глагол стоит в форме на <1>-da</1>: <2/> Коснись формы, чтобы услышать предложение."
+
+msgid "<0>Ei oska</0> says you never learned. You learned as a child."
+msgstr "<0>Ei oska</0> значит, что ты не умеешь. А тебя научили ещё в детстве."
+
+msgid "<0>Ei pea</0> is don’t have to, and <1>ei tohi</1> is mustn’t: <2>Sa ei pea tulema. Sa ei tohi tulla.</2>"
+msgstr "<0>Ei pea</0> — это «не обязательно», а <1>ei tohi</1> — «нельзя»: <2>Sa ei pea tulema. Sa ei tohi tulla.</2>"
+
+msgid "<0>Ei pea</0> says you don’t have to work. You do work tomorrow."
+msgstr "<0>Ei pea</0> значит, что работать тебе не обязательно. А завтра ты работаешь."
+
+msgid "<0>Ei saa</0> says something stops you. She asked whether you know how."
+msgstr "<0>Ei saa</0> значит, что тебе что-то мешает. А она спросила, умеешь ли ты."
+
+msgid "<0>Ei tohi</0> says you’re not allowed to swim. Nothing stops you today."
+msgstr "<0>Ei tohi</0> значит, что тебе нельзя плавать. А сегодня тебе ничто не мешает."
+
+msgid "<0>Oskan</0> is for what you learned: <1>Ma oskan ujuda.</1> <2>Saan</2> says nothing stops you: <3>Ma saan homme tulla.</3>"
+msgstr "<0>Oskan</0> — про умение: <1>Ma oskan ujuda.</1> <2>Saan</2> — когда тебе ничто не мешает: <3>Ma saan homme tulla.</3>"
+
+msgid "<0>Oskan</0>: you learned how."
+msgstr "<0>Oskan</0>: ты это умеешь."
+
+msgid "<0>Pean</0> is I have to. <1>Tuleb</1> with the <2>-da</2> form says it has to be done, naming no one. <3>Mul on vaja</3> is I need to."
+msgstr "<0>Pean</0> — это «мне надо». <1>Tuleb</1> с формой на <2>-da</2> говорит, что что-то надо сделать, и никого не называет. <3>Mul on vaja</3> — это «мне нужно»."
+
+msgid "<0>Pean</0> says you have to come. Nobody makes you; you’re free."
+msgstr "<0>Pean</0> значит, что тебе надо прийти. Тебя никто не заставляет, у тебя просто свободный день."
+
+msgid "<0>Saan</0>: nothing stops you, not time, place or health."
+msgstr "<0>Saan</0>: тебе ничто не мешает — ни время, ни место, ни здоровье."
+
+msgid "<0>Võin</0> and <1>tohin</1> both say it’s allowed; <2>võin</2> also offers: <3>Ma võin sind oodata.</3> <4>Tohin</4> is mostly heard with <5>ei</5>: <6>Siin ei tohi süüa.</6>"
+msgstr "<0>Võin</0> и <1>tohin</1> оба говорят, что что-то разрешено; <2>võin</2> ещё и предлагает: <3>Ma võin sind oodata.</3> <4>Tohin</4> чаще всего слышно с <5>ei</5>: <6>Siin ei tohi süüa.</6>"
+
+msgid "12 minutes"
+msgstr "12 минут"
+
+msgid "A question: you ask whether you’re allowed."
+msgstr "Вопрос: ты просишь разрешения."
+
+msgid "A quiz, pairs to match and a conversation"
+msgstr "Тест, пары и разговор"
+
+msgid "A rule. With no person, it holds for everyone."
+msgstr "Правило. Никто не назван, значит, оно для всех."
+
+msgid "All four. By ear, you told apart “don’t know how”, “can’t”, “mustn’t” and “don’t have to”."
+msgstr "Все четыре. «Не умею», «не могу», «нельзя» и «не обязательно» ты различаешь на слух."
+
+msgid "An offer: you’re happy to."
+msgstr "Ты предлагаешь: тебе не трудно."
+
+msgid "Can: you know how, or nothing stops you"
+msgstr "Умею или могу"
+
+msgid "Can’t, mustn’t, don’t have to"
+msgstr "Не умею, не могу, нельзя, не обязательно"
+
+msgid "don’t have to"
+msgstr "не обязательно"
+
+msgid "English says I can for both. Both take the <0>-da</0> form, as lesson {infinitives} showed. Tap a form to hear its sentence."
+msgstr "По-русски это тоже разные слова: «умею» и «могу». После обоих идёт форма на <0>-da</0>, как показал урок {infinitives}. Коснись формы, чтобы услышать предложение."
+
+msgid "From oskama."
+msgstr "От oskama."
+
+msgid "From pidama."
+msgstr "От pidama."
+
+msgid "From saama, which also means to get."
+msgstr "От saama, которое значит ещё и «получать»."
+
+msgid "From tohtima."
+msgstr "От tohtima."
+
+msgid "From tulema, to come. Before a -da form it means has to."
+msgstr "От tulema, «приходить». Перед формой на -da значит «надо»."
+
+msgid "From võima."
+msgstr "От võima."
+
+msgid "has to be done; comes"
+msgstr "надо; приходит"
+
+msgid "Have to and need to"
+msgstr "Надо и нужно"
+
+msgid "He or she can’t swim today: something is in the way."
+msgstr "Он или она сегодня не может плавать: что-то мешает."
+
+msgid "He or she can’t swim: never learned."
+msgstr "Он или она не умеет плавать."
+
+msgid "He or she is coming to swim."
+msgstr "Он или она идёт плавать."
+
+msgid "He or she may come tomorrow."
+msgstr "Он или она может прийти завтра."
+
+msgid "here"
+msgstr "здесь"
+
+msgid "I can come tomorrow."
+msgstr "Я могу прийти завтра."
+
+msgid "I can read: I know how."
+msgstr "Я умею читать."
+
+msgid "I can read: nothing stops me."
+msgstr "Я могу читать: мне ничто не мешает."
+
+msgid "I can swim: I know how."
+msgstr "Я умею плавать."
+
+msgid "I can swim: nothing stops me."
+msgstr "Я могу плавать: мне ничто не мешает."
+
+msgid "I can wait for you."
+msgstr "Я могу тебя подождать."
+
+msgid "I can, I know how to"
+msgstr "я умею"
+
+msgid "I can, I’m able to"
+msgstr "я могу"
+
+msgid "I don’t have to read."
+msgstr "Мне не обязательно читать."
+
+msgid "I don’t have to swim."
+msgstr "Мне не обязательно плавать."
+
+msgid "I have to …"
+msgstr "Мне надо …"
+
+msgid "I have to go."
+msgstr "Мне надо идти."
+
+msgid "I have to wait."
+msgstr "Мне надо подождать."
+
+msgid "I have to work."
+msgstr "Мне надо работать."
+
+msgctxt "modal verbs lesson: pean"
+msgid "I have to, I must"
+msgstr "мне надо"
+
+msgid "I have to: it’s on me."
+msgstr "Мне надо: это моя обязанность."
+
+msgid "I know Estonian."
+msgstr "Я знаю эстонский."
+
+msgid "I know how to …"
+msgstr "Я умею …"
+
+msgid "I learned as a child."
+msgstr "Меня научили ещё в детстве."
+
+msgid "I may, I can"
+msgstr "я могу, мне можно"
+
+msgid "I need"
+msgstr "мне нужно"
+
+msgid "I need to …"
+msgstr "Мне нужно …"
+
+msgid "I need to go."
+msgstr "Мне нужно идти."
+
+msgid "I need to wait."
+msgstr "Мне нужно подождать."
+
+msgid "I need to work."
+msgstr "Мне нужно работать."
+
+msgid "I need to: there’s a need."
+msgstr "Мне нужно: есть нужда."
+
+msgid "I never learned to read."
+msgstr "Я не умею читать."
+
+msgid "I never learned to swim."
+msgstr "Я не умею плавать."
+
+msgid "I’ll have to wait."
+msgstr "Мне придётся подождать."
+
+msgid "I’m able to …"
+msgstr "Я могу …"
+
+msgid "I’m allowed to"
+msgstr "мне можно"
+
+msgid "I’m asking first."
+msgstr "Я сначала спрашиваю."
+
+msgid "I’m free."
+msgstr "У меня есть время."
+
+msgid "I’m late for work."
+msgstr "Я опаздываю на работу."
+
+msgid "I’m not allowed to read."
+msgstr "Мне нельзя читать."
+
+msgid "I’m not allowed to swim."
+msgstr "Мне нельзя плавать."
+
+msgid "It has to be done, and no one is named."
+msgstr "Надо сделать, и никто не назван."
+
+msgid "It isn’t allowed."
+msgstr "Это запрещено."
+
+msgid "It’s fine by me."
+msgstr "Я не против."
+
+msgid "It’s up to you."
+msgstr "Решать тебе."
+
+msgid "Its -da form is ujuda."
+msgstr "Его форма на -da — ujuda."
+
+msgid "Like <0>mul on vaja</0>: the person in the <1>-l</1> form, then the <2>-da</2> form. It means the same as <3>ei pea</3>."
+msgstr "Как и в <0>mul on vaja</0>: человек в форме на <1>-l</1>, потом форма на <2>-da</2>. Значит то же, что <3>ei pea</3>."
+
+msgid "Listen to each sentence and pick what it means."
+msgstr "Послушай каждое предложение и выбери, что оно значит."
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Mari"
+msgstr "Мари"
+
+msgid "Mari asks about swimming. Pick each reply by what it says about you."
+msgstr "Мари спрашивает про плавание. Выбирай каждый ответ по тому, что в нём сказано о тебе."
+
+msgid "May and allowed to"
+msgstr "Можно и разрешено"
+
+msgid "May I sit here?"
+msgstr "Можно мне здесь сесть?"
+
+msgid "may, might"
+msgstr "может, можно"
+
+msgid "Mul on vaja is I need."
+msgstr "Mul on vaja — это «мне нужно»."
+
+msgid "mustn’t, not allowed to"
+msgstr "нельзя"
+
+msgid "needed"
+msgstr "нужно"
+
+msgid "Never learned."
+msgstr "Не умеет."
+
+msgid "No eating here."
+msgstr "Здесь нельзя есть."
+
+msgid "no need"
+msgstr "не нужно"
+
+msgid "No swimming here."
+msgstr "Здесь нельзя плавать."
+
+msgid "One has to …"
+msgstr "Надо …"
+
+msgid "One has to go."
+msgstr "Надо идти."
+
+msgid "One has to swim."
+msgstr "Надо плавать."
+
+msgid "One has to wait."
+msgstr "Надо подождать."
+
+msgid "One has to work."
+msgstr "Надо работать."
+
+msgid "Plans with Mari"
+msgstr "Планы с Мари"
+
+msgid "Play the ones you missed once more, then try again."
+msgstr "Послушай ещё раз те, что не получились, и попробуй снова."
+
+msgid "Pole is ei ole."
+msgstr "Pole — это ei ole."
+
+msgid "Put <0>ei</0> before the verb and drop its ending, as in lesson {negation}: <1>oskan</1> becomes <2>ei oska</2>. <3>Oskan</3> and <4>saan</4> stay different with <5>ei</5> too. Never learned: <6/> Something is in the way today: <7/>"
+msgstr "Поставь <0>ei</0> перед глаголом и убери окончание, как в уроке {negation}: <1>oskan</1> становится <2>ei oska</2>. <3>Oskan</3> и <4>saan</4> различаются и с <5>ei</5>. Не умеет: <6/> Сегодня что-то мешает: <7/>"
+
+msgid "Reason"
+msgstr "Причина"
+
+msgid "Sentence"
+msgstr "Предложение"
+
+msgid "Something is in the way."
+msgstr "Что-то мешает."
+
+msgid "Something stops me reading."
+msgstr "Мне что-то мешает читать."
+
+msgid "Something stops me swimming."
+msgstr "Мне что-то мешает плавать."
+
+msgid "Swimming plans"
+msgstr "Договариваемся поплавать"
+
+msgid "Tap a form"
+msgstr "Коснись формы"
+
+msgid "Tap one"
+msgstr "Коснись любого"
+
+msgid "That goes for everyone."
+msgstr "Это для всех."
+
+msgid "The <0>sa</0> form of <1>võima</1>: you let someone."
+msgstr "Форма <1>võima</1> для <0>sa</0>: ты кому-то разрешаешь."
+
+msgid "The reason behind a sentence picks its verb. Match each sentence with its reason. A right pair plays the sentence."
+msgstr "В эстонском глагол зависит от причины. Соедини каждое предложение с его причиной. Когда пара верная, предложение прозвучит."
+
+msgid "The ta form of võima."
+msgstr "Форма võima для ta."
+
+msgid "There’s no need for you to swim."
+msgstr "Тебе не нужно плавать."
+
+msgid "Three ways to say have to"
+msgstr "Три способа сказать «надо»"
+
+msgid "to go"
+msgstr "идти"
+
+msgid "to read"
+msgstr "читать"
+
+msgid "to swim"
+msgstr "плавать"
+
+msgid "to wait"
+msgstr "ждать"
+
+msgid "to work"
+msgstr "работать"
+
+msgid "What does it say?"
+msgstr "Что это значит?"
+
+msgid "Where English says can, Estonian picks the verb by the reason. <0>Oskan</0> is when you know how, <1>saan</1> when nothing stops you, and <2>võin</2> when it’s allowed or you offer. Must is <3>pean</3>, and mustn’t is <4>ei tohi</4>."
+msgstr "Как в русском различают «умею» и «могу», так и в эстонском глагол выбирают по причине. <0>Oskan</0> — когда умеешь, <1>saan</1> — когда ничто не мешает, <2>võin</2> — когда ты разрешаешь или предлагаешь. «Мне надо» — это <3>pean</3>, а «нельзя» — <4>ei tohi</4>."
+
+msgid "Where something is. For where it goes, say siia."
+msgstr "Где что-то находится. Siia — «сюда»: куда что-то движется."
+
+msgid "Which verb, and why"
+msgstr "Какой глагол и почему"
+
+msgid "Why this verb?"
+msgstr "Почему этот глагол?"
+
+msgid "With a language, <0/> needs no second verb: <1/>"
+msgstr "С названием языка <0/> обходится без второго глагола: <1/>"
+
+msgid "With the <0>-ma</0> form, <1/> still means comes: <2/> Only with the <3>-da</3> form does it mean has to: <4/>"
+msgstr "С формой на <0>-ma</0> <1/> так и значит «приходит», «идёт»: <2/> «Надо» оно значит только с формой на <3>-da</3>: <4/>"
+
+msgid "You can sit here."
+msgstr "Можешь здесь сесть."
+
+msgid "You don’t have to come."
+msgstr "Тебе не обязательно приходить."
+
+msgid "You don’t have to swim."
+msgstr "Тебе не обязательно плавать."
+
+msgid "You learned to swim as a child. You’re free today and work tomorrow."
+msgstr "Плавать тебя научили в детстве. Сегодня у тебя свободный день, а завтра ты работаешь."
+
+msgid "You mustn’t come."
+msgstr "Тебе нельзя приходить."
+
+msgid "You work tomorrow, so you can’t come."
+msgstr "Завтра ты работаешь, так что прийти не можешь."
+
+msgid "You’ll hear it in a sentence."
+msgstr "Услышишь его в предложении."
+
+msgid "You’ll hear it said about swimming."
+msgstr "Услышишь, как это говорят о плавании."
+
+msgid "You’ll hear the whole sentence."
+msgstr "Услышишь всё предложение."

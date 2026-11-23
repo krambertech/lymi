@@ -1,0 +1,353 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "-s and -l go on the stem"
+msgstr "-s and -l go on the stem"
+
+#. placeholder {0}: i18n._(WORD_MEANS[noun.word])
+#. placeholder {1}: noun.stem
+msgid "{0}, stem <0>{1}</0>"
+msgstr "{0}, stem <0>{1}</0>"
+
+msgid "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
+msgstr "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
+
+#. placeholder {0}: noun.word
+#. placeholder {1}: noun.stem
+#. placeholder {2}: noun.stem
+msgid "<0>{0}, {1}</0>: the ending goes on <1>{2}</1>."
+msgstr "<0>{0}, {1}</0>: the ending goes on <1>{2}</1>."
+
+msgid "10 minutes"
+msgstr "10 minutes"
+
+msgid "2 quizzes and a passage"
+msgstr "2 quizzes and a passage"
+
+msgid "A dictionary gives the stem second: <0>pood, poe</0>. Learn a noun as that pair and you can put <1>-s</1> or <2>-l</2> on it. A stem changes a letter inside, gains a vowel at the end, or stays the same as the word. The next sections take one each."
+msgstr "A dictionary gives the stem second: <0>pood, poe</0>. Learn a noun as that pair and you can put <1>-s</1> or <2>-l</2> on it. A stem changes a letter inside, gains a vowel at the end, or stays the same as the word. The next sections take one each."
+
+msgid "A dictionary gives the stem second. Learn each noun as that pair: <0>pood, poe</0>."
+msgstr "A dictionary gives the stem second. Learn each noun as that pair: <0>pood, poe</0>."
+
+msgid "A dictionary lists a third form too: <0>pood, poe, poodi</0>. Lesson {forms} teaches all three."
+msgstr "A dictionary lists a third form too: <0>pood, poe, poodi</0>. Lesson {forms} teaches all three."
+
+msgid "A final vowel is no guarantee: <0>tuba</0> ends in one too, and its stem is <1>toa</1>. The dictionary pair settles it: <2>kodu, kodu</2> but <3>tuba, toa</3>."
+msgstr "A final vowel is no guarantee: <0>tuba</0> ends in one too, and its stem is <1>toa</1>. The dictionary pair settles it: <2>kodu, kodu</2> but <3>tuba, toa</3>."
+
+msgid "A letter drops or changes inside: <0>pood, poe</0>; <1>tuba, toa</1>."
+msgstr "A letter drops or changes inside: <0>pood, poe</0>; <1>tuba, toa</1>."
+
+msgid "A letter inside drops or changes"
+msgstr "A letter inside drops or changes"
+
+msgid "A shop is <0>pood</0>, but in the shop is <1>poes</1>. <2>-s</2> and <3>-l</3> go on the noun’s stem, and the stem can differ from the word."
+msgstr "A shop is <0>pood</0>, but in the shop is <1>poes</1>. <2>-s</2> and <3>-l</3> go on the noun’s stem, and the stem can differ from the word."
+
+msgid "A vowel at the end"
+msgstr "A vowel at the end"
+
+msgid "All of them. You found the word behind every form."
+msgstr "All of them. You found the word behind every form."
+
+msgid "All of them. You put every ending on the stem."
+msgstr "All of them. You put every ending on the stem."
+
+msgid "at home"
+msgstr "at home"
+
+msgid "at school, in a school"
+msgstr "at school, in a school"
+
+msgid "at the door"
+msgstr "at the door"
+
+msgid "at the market"
+msgstr "at the market"
+
+msgid "at work"
+msgstr "at work"
+
+msgid "book"
+msgstr "book"
+
+msgid "café"
+msgstr "café"
+
+msgid "door"
+msgstr "door"
+
+msgid "Each round shows a noun as a dictionary gives it, with its stem, and a meaning such as “in the shop”. Pick the form that says it, then hear it in a sentence. The nouns come from all three sections."
+msgstr "Each round shows a noun as a dictionary gives it, with its stem, and a meaning such as “in the shop”. Pick the form that says it, then hear it in a sentence. The nouns come from all three sections."
+
+msgid "Each word gains a vowel at the end: <0>kooli, ukse, raamatu</0>."
+msgstr "Each word gains a vowel at the end: <0>kooli, ukse, raamatu</0>."
+
+msgid "Fill the gaps"
+msgstr "Fill the gaps"
+
+msgid "Finland"
+msgstr "Finland"
+
+msgid "From ujuma, to swim."
+msgstr "From ujuma, to swim."
+
+msgid "He or she is in the room."
+msgstr "He or she is in the room."
+
+msgid "He or she studies at school."
+msgstr "He or she studies at school."
+
+msgid "He or she works at home."
+msgstr "He or she works at home."
+
+msgid "Hear a sentence and pick the word as a dictionary lists it. You hear <0>toas</0>, and you look up <1>tuba</1>."
+msgstr "Hear a sentence and pick the word as a dictionary lists it. You hear <0>toas</0>, and you look up <1>tuba</1>."
+
+msgid "Hearing the word behind the form"
+msgstr "Hearing the word behind the form"
+
+msgid "home"
+msgstr "home"
+
+msgid "hospital"
+msgstr "hospital"
+
+msgid "I live in Finland."
+msgstr "I live in Finland."
+
+msgid "I live in Tallinn."
+msgstr "I live in Tallinn."
+
+msgid "I’m at work."
+msgstr "I’m at work."
+
+msgid "In <0>pood, poe</0> the <1>d</1> drops, the long <2>oo</2> turns short, and an <3>e</3> ends the stem. In <4/>, room, the <5>b</5> drops and the <6>u</6> turns into <7>o</7>: the stem is <8/>, and in the room is <9/>."
+msgstr "In <0>pood, poe</0> the <1>d</1> drops, the long <2>oo</2> turns short, and an <3>e</3> ends the stem. In <4/>, room, the <5>b</5> drops and the <6>u</6> turns into <7>o</7>: the stem is <8/>, and in the room is <9/>."
+
+msgid "in a café"
+msgstr "in a café"
+
+msgid "in a hospital"
+msgstr "in a hospital"
+
+msgid "in Finland"
+msgstr "in Finland"
+
+msgid "In lesson {places} you put <0>-s</0> on a place to say in: <1/>, <2/>. A shop is <3/>, but in the shop is <4/>, not <5>poodis</5>."
+msgstr "In lesson {places} you put <0>-s</0> on a place to say in: <1/>, <2/>. A shop is <3/>, but in the shop is <4/>, not <5>poodis</5>."
+
+msgid "in Pärnu"
+msgstr "in Pärnu"
+
+msgid "In some nouns a letter inside drops or changes: <0>tuba, toa, toas</0>."
+msgstr "In some nouns a letter inside drops or changes: <0>tuba, toa, toas</0>."
+
+msgid "in Tallinn"
+msgstr "in Tallinn"
+
+msgid "in Tartu"
+msgstr "in Tartu"
+
+msgid "in the book"
+msgstr "in the book"
+
+msgid "in the river"
+msgstr "in the river"
+
+msgid "in the room"
+msgstr "in the room"
+
+msgid "in the shop"
+msgstr "in the shop"
+
+msgid "It’s Saturday, and the passage says where everyone is. Pick the right form for each gap. When every gap is filled, hear the whole passage."
+msgstr "It’s Saturday, and the passage says where everyone is. Pick the right form for each gap. When every gap is filled, hear the whole passage."
+
+msgid "Jaan is at the door."
+msgstr "Jaan is at the door."
+
+msgid "Jaan lives in Pärnu."
+msgstr "Jaan lives in Pärnu."
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Making the form"
+msgstr "Making the form"
+
+msgid "Many nouns that end in a vowel are their own stem. <0/> is home, and at home is <1/>. The ending goes straight on."
+msgstr "Many nouns that end in a vowel are their own stem. <0/> is home, and at home is <1/>. The ending goes straight on."
+
+msgid "Mari works in a hospital."
+msgstr "Mari works in a hospital."
+
+msgid "market"
+msgstr "market"
+
+msgid "Mum is at the shop."
+msgstr "Mum is at the shop."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "Nouns that stay the same"
+msgstr "Nouns that stay the same"
+
+msgid "on the table"
+msgstr "on the table"
+
+msgid "on the wall"
+msgstr "on the wall"
+
+msgid "on the windowsill"
+msgstr "on the windowsill"
+
+msgid "Other nouns keep every letter and gain a vowel at the end. <0/>, school, has the stem <1/>, so at school is <2/>. That’s also where the <3>a</3> in <4/>, from lesson {places}, comes from."
+msgstr "Other nouns keep every letter and gain a vowel at the end. <0/>, school, has the stem <1/>, so at school is <2/>. That’s also where the <3>a</3> in <4/>, from lesson {places}, comes from."
+
+msgid "Pärnu, a town by the sea"
+msgstr "Pärnu, a town by the sea"
+
+msgid "river"
+msgstr "river"
+
+msgid "room"
+msgstr "room"
+
+msgid "school"
+msgstr "school"
+
+msgid "shop"
+msgstr "shop"
+
+msgid "Some gain a vowel at the end, and the vowel can’t be guessed: <0>kool, kooli, koolis</0>."
+msgstr "Some gain a vowel at the end, and the vowel can’t be guessed: <0>kool, kooli, koolis</0>."
+
+msgid "Some stay as they are: <0>kodu, kodus</0>."
+msgstr "Some stay as they are: <0>kodu, kodus</0>."
+
+msgid "Switch through the six nouns above once more, then try again."
+msgstr "Switch through the six nouns above once more, then try again."
+
+msgid "Switch through the three sets above once more, then try again."
+msgstr "Switch through the three sets above once more, then try again."
+
+msgid "Switch to “The stem” and watch the end of each word."
+msgstr "Switch to “The stem” and watch the end of each word."
+
+msgid "Switch to “The stem” and watch which letters change."
+msgstr "Switch to “The stem” and watch which letters change."
+
+msgid "Switch to “The stem”: no letter changes."
+msgstr "Switch to “The stem”: no letter changes."
+
+msgid "table"
+msgstr "table"
+
+msgid "Tallinn, the capital"
+msgstr "Tallinn, the capital"
+
+msgid "Tartu, a university town"
+msgstr "Tartu, a university town"
+
+msgid "The book is on the table."
+msgstr "The book is on the table."
+
+msgid "The coffee is on the windowsill."
+msgstr "The coffee is on the windowsill."
+
+msgid "The ending comes after the vowel: <0>koolis, uksel</0>."
+msgstr "The ending comes after the vowel: <0>koolis, uksel</0>."
+
+msgid "The ending goes on the noun’s stem, as a verb’s endings go on its stem in lesson {present}. The stem of <0>pood</0> is <1/>, and <2>poe</2> with <3>-s</3> is <4>poes</4>. Tap each step to hear it."
+msgstr "The ending goes on the noun’s stem, as a verb’s endings go on its stem in lesson {present}. The stem of <0>pood</0> is <1/>, and <2>poe</2> with <3>-s</3> is <4>poes</4>. Tap each step to hear it."
+
+msgid "The ending goes on the stem: <0>poes</0>, not <1>poodis</1>."
+msgstr "The ending goes on the stem: <0>poes</0>, not <1>poodis</1>."
+
+msgid "The ending goes straight on: <0>kodus, tööl</0>."
+msgstr "The ending goes straight on: <0>kodus, tööl</0>."
+
+msgid "The picture is in the book."
+msgstr "The picture is in the book."
+
+msgid "The picture is on the wall."
+msgstr "The picture is on the wall."
+
+msgid "the stem"
+msgstr "the stem"
+
+msgid "The stem"
+msgstr "The stem"
+
+msgid "The stem is the word itself."
+msgstr "The stem is the word itself."
+
+#. placeholder {0}: noun.word
+msgid "The stem of {0}: -s and -l go on it."
+msgstr "The stem of {0}: -s and -l go on it."
+
+msgid "the word"
+msgstr "the word"
+
+msgid "The word"
+msgstr "The word"
+
+msgid "The word doesn’t show which vowel it gains: <0/>, <1/>; <2/>, <3/>. The dictionary’s second form does."
+msgstr "The word doesn’t show which vowel it gains: <0/>, <1/>; <2/>, <3/>. The dictionary’s second form does."
+
+msgid "The word, its stem or the stem with an ending"
+msgstr "The word, its stem or the stem with an ending"
+
+msgid "They study in Tartu."
+msgstr "They study in Tartu."
+
+msgid "They’re at the market."
+msgstr "They’re at the market."
+
+msgid "wall"
+msgstr "wall"
+
+msgid "we swim"
+msgstr "we swim"
+
+msgid "We swim in the river."
+msgstr "We swim in the river."
+
+msgid "We’re in a café."
+msgstr "We’re in a café."
+
+msgid "Which form?"
+msgstr "Which form?"
+
+msgid "Which letters change follows rules of its own, and lesson {gradation} teaches them. For now, take the stem from the dictionary."
+msgstr "Which letters change follows rules of its own, and lesson {gradation} teaches them. For now, take the stem from the dictionary."
+
+msgid "Which word?"
+msgstr "Which word?"
+
+msgid "Who is where on Saturday"
+msgstr "Who is where on Saturday"
+
+msgid "window"
+msgstr "window"
+
+msgid "With an ending"
+msgstr "With an ending"
+
+msgid "Words"
+msgstr "Words"
+
+msgid "work"
+msgstr "work"
+
+msgid "You have met two of these already: <0/>, on the table, is from <1/>, and <2/>, at the market, is from <3/>. Switch through the three steps for six nouns."
+msgstr "You have met two of these already: <0/>, on the table, is from <1/>, and <2/>, at the market, is from <3/>. Switch through the three steps for six nouns."

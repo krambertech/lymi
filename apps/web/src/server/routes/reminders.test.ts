@@ -1,7 +1,8 @@
 import { DeckOut, QueueOut, type Reminder } from "@lymi/core";
-import { beforeAll, describe, expect, it, vi } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { schema } from "../db";
 import { dispatchReviewReminders } from "../push-delivery";
+import { holdNoon } from "../services/test-clock";
 import { json, type Session, type TestApp, testApp } from "../test-app";
 
 /** The dispatcher against real rows: the day's reviews, the streak and the last opening. */
@@ -78,9 +79,14 @@ async function dispatch(who: Session) {
 }
 
 beforeAll(async () => {
+  holdNoon();
   app = await testApp();
   vi.spyOn(console, "info").mockImplementation(() => undefined);
 }, 60_000);
+
+afterAll(() => {
+  vi.useRealTimers();
+});
 
 describe("the daily reminder", () => {
   it("says what is ready on a day not started", async () => {

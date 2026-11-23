@@ -6,6 +6,7 @@ import {
   AnkiConnectNote,
   AnkiConnectNoteUpdate,
   CARD_LIMITS,
+  fitSource,
   fitsLanguage,
   inspectImage,
   pronunciationText,
@@ -387,15 +388,6 @@ function fitted(text: string, limit: number) {
   return (lastLine > 0 ? cut.slice(0, lastLine) : cut).trim();
 }
 
-/** The page, without its query when that is what makes it too long, or else its site. */
-function fittedSource(url: string) {
-  if (url.length <= CARD_LIMITS.source) return url;
-  const parsed = URL.parse(url);
-  if (!parsed) return undefined;
-  const page = `${parsed.origin}${parsed.pathname}`;
-  return page.length <= CARD_LIMITS.source ? page : parsed.host;
-}
-
 function tagsOf(note: Pick<AnkiConnectNote, "tags">) {
   const kept = new Map<string, string>();
   for (const tag of note.tags ?? []) {
@@ -441,7 +433,7 @@ function prepare(note: AnkiConnectNote | null, decks: Map<string, Deck>): Prepar
   const reading = plainText(field(note, "Reading"));
   const meaning = fitted(meaningText(field(note, "Meaning")), CARD_LIMITS.meaning);
   const example = fitted(plainText(field(note, "Sentence")), CARD_LIMITS.example);
-  const source = fittedSource(sourceText(field(note, "URL")));
+  const source = fitSource(sourceText(field(note, "URL")));
   const tags = tagsOf(note);
   return {
     ok: true,
@@ -756,7 +748,7 @@ async function updateNoteFields(
   }
   const example = fitted(plainText(text("Sentence")), CARD_LIMITS.example);
   if (example && example !== card.example) patch.example = example;
-  const source = fittedSource(sourceText(text("URL")));
+  const source = fitSource(sourceText(text("URL")));
   if (source && source !== card.source) patch.source = source;
   if (Object.keys(patch).length > 0) await updateCard(ctx, card.id, patch, deps.enrichment);
   // The uploads stay for the hourly sweep: asbplayer updates every card on the same line with the

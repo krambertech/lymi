@@ -1,6 +1,8 @@
-import type { LessonAccessOut, LessonEventOut, LessonReadOut } from "@lymi/core";
+import type { LessonAccessOut, LessonEventOut, LessonReadOut, LinkRefusal } from "@lymi/core";
 import {
   dayWindow,
+  fitSource,
+  LESSON_READ_WORDS,
   LESSON_READS_PER_DAY,
   newId,
   normalizeCardText,
@@ -9,23 +11,39 @@ import {
   termKey,
 } from "@lymi/core";
 import { textCallCost } from "@lymi/core/analytics";
-import { and, count, desc, eq, gt, isNull, sql } from "@lymi/core/db";
+import { and, count, desc, eq, gt, inArray, isNull, sql } from "@lymi/core/db";
 import type { z } from "zod";
 import type { AiConsent } from "../ai/consent";
+import type { Fetch } from "../ai/types";
 import { schema } from "../db";
 import { type DecisionModel, KEEP_THRESHOLD, keepScore } from "../lessons/keep";
 import {
+  classifyLink,
+  countWords,
+  type FetchedPage,
+  fetchArticle,
+  LinkInvalid,
+  LinkRefused,
+  LinkUnreadable,
+  markdownSentences,
+  youtubeTitle,
+} from "../lessons/link";
+import {
+  ARTICLE_RULES,
   type DeckCandidate,
   decksBrief,
   questionLimit,
   Reply,
   replySchema,
+  SEEN_LENGTH,
 } from "../lessons/prompt";
+import { holdsEveryWord, quoteAround } from "../lessons/quote";
 import {
   type LessonMaterial,
   type LessonReader,
   LessonReaderError,
   type LessonUsage,
+  type Transcript,
 } from "../lessons/reader";
 import { TermsStream } from "../lessons/terms-stream";
 import { log } from "../log";
@@ -130,19 +148,125 @@ function limitReached(ctx: ServiceContext): never {
 async function claimRead(
   ctx: ServiceContext,
   operators: Set<string>,
+  reads = 1,
 ): Promise<() => Promise<void>> {
   if (await isOperator(ctx, operators)) return async () => {};
   const day = await readDay(ctx);
-  const id = newId();
+  const ids = Array.from({ length: reads }, () => newId());
+  const rows = sql.join(
+    ids.map((id) => sql`select ${id} as id`),
+    sql` union all `,
+  );
   const result = await ctx.db.run(sql`
     insert into lesson_reads (id, user_id, local_date)
-    select ${id}, ${ctx.userId}, ${day.date}
+    select claimed.id, ${ctx.userId}, ${day.date} from (${rows}) as claimed
     where (
       select count(*) from lesson_reads where user_id = ${ctx.userId} and local_date = ${day.date}
-    ) < ${LESSON_READS_PER_DAY}`);
-  if ((result as D1Result).meta.changes !== 1) limitReached(ctx);
+    ) <= ${LESSON_READS_PER_DAY - reads}`);
+  if ((result as D1Result).meta.changes !== reads) limitReached(ctx);
   return async () => {
-    await ctx.db.delete(schema.lessonReads).where(eq(schema.lessonReads.id, id));
+    await ctx.db.delete(schema.lessonReads).where(inArray(schema.lessonReads.id, ids));
+  };
+}
+
+export type LinkDeps = {
+  request: Fetch;
+  toMarkdown: (page: FetchedPage, consent: AiConsent) => Promise<string>;
+};
+
+const MAX_ARTICLE_CHARACTERS = 300_000;
+
+const PERSONAL_PARAMETER =
+  /^(utm_.*|fbclid|gclid|dclid|msclkid|mc_(cid|eid)|igshid|si|ref|ref_src|smid|sgrp|share.*|gift.*|unlocked_.*|access.*|.*token.*|sk|pwapi.*|_hs.*|mkt_tok)$/i;
+
+export function cardSource(url: URL): string {
+  const kept = new URL(url.href);
+  kept.hash = "";
+  for (const key of [...kept.searchParams.keys()])
+    if (key !== "t" && PERSONAL_PARAMETER.test(key)) kept.searchParams.delete(key);
+  return kept.href;
+}
+
+export function readsFor(words: number): number {
+  return Math.max(1, Math.ceil(words / LESSON_READ_WORDS));
+}
+
+export async function readLink(
+  ctx: ServiceContext,
+  link: string,
+  deps: LinkDeps,
+  read: { client: "web" | "phone"; deck: "fixed" | "guessed" },
+): Promise<Transcript> {
+  const refuse = (refused: LinkRefusal, message: string, details: Record<string, string> = {}) => {
+    track(ctx.analytics, {
+      name: "lesson_read",
+      client: read.client,
+      material: "article",
+      reads: 0,
+      refused,
+      pages: 0,
+      pasted: false,
+      deck: read.deck,
+      terms: 0,
+      ticked: 0,
+      existing: 0,
+      questions: 0,
+    });
+    return new ServiceError("invalid", message, { refused, ...details }, "link_refused");
+  };
+  const unreadable = (message: string) =>
+    new ServiceError("invalid", message, undefined, "link_unreadable");
+
+  let kind: ReturnType<typeof classifyLink>;
+  try {
+    kind = classifyLink(link);
+  } catch (error) {
+    if (error instanceof LinkInvalid)
+      throw new ServiceError("invalid", error.message, undefined, "link_invalid");
+    throw error;
+  }
+  if (kind.kind === "drm") {
+    throw refuse(
+      "drm",
+      `${kind.service} doesn't let apps read what it plays. Paste the text instead.`,
+      { service: kind.service },
+    );
+  }
+  if (kind.kind === "youtube") {
+    const title = await youtubeTitle(kind.url, deps.request);
+    throw refuse(
+      "youtube",
+      "YouTube doesn't let apps read its captions. Paste the video's transcript instead.",
+      title ? { title } : {},
+    );
+  }
+
+  let page: FetchedPage;
+  try {
+    page = await fetchArticle(kind.url, deps.request);
+  } catch (error) {
+    if (error instanceof LinkRefused) throw refuse(error.refused, error.message);
+    if (error instanceof LinkUnreadable) throw unreadable(error.message);
+    throw error;
+  }
+  const consent = await requireAi(ctx);
+  let markdown: string;
+  try {
+    markdown = await deps.toMarkdown(page, consent);
+  } catch (error) {
+    if (error instanceof LinkUnreadable)
+      throw unreadable("Smart add couldn't read this page. Paste the text instead.");
+    console.error("Converting a page failed", {
+      error: error instanceof Error ? error.name : typeof error,
+    });
+    throw new ServiceError("unavailable", "Smart add couldn't read pages just now. Try again.");
+  }
+  const sentences = markdownSentences(markdown);
+  if (sentences.length === 0) throw unreadable("This page has no text Smart add can read.");
+  return {
+    title: page.title,
+    url: fitSource(cardSource(page.url)) ?? page.url.origin,
+    sentences: sentences.map((text) => ({ text, at: null })),
   };
 }
 
@@ -160,6 +284,7 @@ export function pdfPages(bytes: Uint8Array): number {
 
 /** What the model was given, so it never asks about marks on material that cannot carry any. */
 function materialLine(material: LessonMaterial, words: number): string {
+  if (material.transcript) return `Material: an article of ${words} words.\n${ARTICLE_RULES}`;
   const parts = [
     material.images.length > 0 ? `${material.images.length} photo(s)` : "",
     material.pdfs.length > 0 ? `${material.pdfs.length} PDF(s)` : "",
@@ -205,6 +330,8 @@ export type PreparedLesson = {
   byHead: Map<string, Owned>;
   /** Each candidate deck's language, which decides whether a term's reading counts. */
   languages: Map<string, string | null>;
+  transcript: Transcript | undefined;
+  reads: number;
   analytics: AnalyticsWriter | undefined;
   pasted: boolean;
   client: "web" | "phone";
@@ -235,6 +362,7 @@ export async function prepareLesson(
     deckId?: string | undefined;
     hint?: string | undefined;
     client?: "web" | "phone";
+    reads?: number | undefined;
   } = {},
 ): Promise<PreparedLesson> {
   const { reader, consent } = await assertCanReadLessons(ctx, deps);
@@ -289,9 +417,36 @@ export async function prepareLesson(
   const hint = candidates.find((d) => d.id === choice.hint)?.id;
 
   const pages = material.images.length + material.pdfs.reduce((sum, pdf) => sum + pdfPages(pdf), 0);
-  const words = material.text.trim() ? material.text.trim().split(/\s+/).length : 0;
+  const words = material.transcript
+    ? countWords(material.transcript.sentences.map((s) => s.text).join(" "))
+    : material.text.trim()
+      ? material.text.trim().split(/\s+/).length
+      : 0;
+  const reads = material.transcript ? readsFor(words) : 1;
+  const characters = material.transcript?.sentences.reduce((n, s) => n + s.text.length + 8, 0) ?? 0;
+  if (reads > LESSON_READS_PER_DAY || characters > MAX_ARTICLE_CHARACTERS) {
+    throw new ServiceError(
+      "invalid",
+      "This article is too long for Smart add. Paste the part you want to learn from.",
+      undefined,
+      "too_long",
+    );
+  }
+  if (reads > 1 && choice.reads !== reads) {
+    const { daily } = await lessonAccess(ctx, deps.operators);
+    throw new ServiceError(
+      "conflict",
+      `This article is about ${words} words, so it counts as ${reads} reads.`,
+      {
+        reads: String(reads),
+        words: String(words),
+        ...(daily ? { left: String(Math.max(0, daily.limit - daily.used)) } : {}),
+      },
+      "long_read",
+    );
+  }
   // Last, so a read refused above never counts.
-  const release = await claimRead(ctx, deps.operators);
+  const release = await claimRead(ctx, deps.operators, reads);
   return {
     release,
     reader,
@@ -304,7 +459,10 @@ export async function prepareLesson(
       meaningLanguage: settings.meaningLanguage,
       limit: questionLimit(pages, words),
     })}\n${materialLine(material, words)}`,
-    schema: replySchema(candidates.map((d) => d.id)),
+    schema: replySchema(
+      candidates.map((d) => d.id),
+      { article: !!material.transcript },
+    ),
     decks: new Map(candidates.map((d) => [d.id, d.name])),
     fixed: fixed?.id,
     fallback: fixed?.id ?? hint ?? candidates[0]?.id ?? "",
@@ -313,8 +471,10 @@ export async function prepareLesson(
     byKey: ownedByKey(owned),
     byHead: new Map(owned.map((c) => [headForm(c.key), ownedCard(c)])),
     languages: new Map(candidates.map((d) => [d.id, d.language])),
+    transcript: material.transcript,
+    reads,
     analytics: ctx.analytics,
-    pasted: words > 0,
+    pasted: !material.transcript && words > 0,
     client: choice.client ?? "web",
   };
 }
@@ -336,6 +496,26 @@ export async function streamLesson(
     await lesson.release();
     throw error;
   }
+}
+
+function exampleOf(
+  transcript: Transcript | undefined,
+  term: { term: string; seen: string; sentence?: number | undefined },
+): { example: string | null; at: number | null } {
+  if (!transcript) return { example: null, at: null };
+  const { sentences } = transcript;
+  const headWords = countWords(term.term.split(" · ")[0] ?? "");
+  const says = (s: { text: string }) => countWords(s.text) > headWords;
+  const holds = (s: { text: string }) => says(s) && holdsEveryWord(s.text, term.term);
+  const quoted = (s: { text: string }) =>
+    says(s) && s.text.slice(0, SEEN_LENGTH).trim() === term.seen;
+  const numbered = term.sentence ? sentences[term.sentence - 1] : undefined;
+  const sentence =
+    sentences.find(quoted) ??
+    (numbered && holds(numbered) ? numbered : undefined) ??
+    sentences.find(holds);
+  if (!sentence) return { example: null, at: null };
+  return { example: quoteAround(sentence.text, term.term), at: sentence.at };
 }
 
 /** The fewest terms one answer must untick for its question to beat unticking them on the list. */
@@ -409,6 +589,7 @@ async function readInto(
         handwritten: t.handwritten,
         heading: t.heading || null,
         seen: t.seen,
+        ...exampleOf(lesson.transcript, t),
         keep,
         ticked: !exact && !head && (keep === null || keep >= KEEP_THRESHOLD),
         existing: match(exact),
@@ -433,6 +614,8 @@ async function readInto(
     });
   };
   if (lesson.fixed) announce(lesson.fixed);
+  if (lesson.transcript)
+    emit({ type: "source", title: lesson.transcript.title, url: lesson.transcript.url });
 
   const report = textCallReporter(lesson.analytics, "lesson_read");
   const started = Date.now();
@@ -506,6 +689,8 @@ async function readInto(
   track(lesson.analytics, {
     name: "lesson_read",
     client: lesson.client,
+    material: lesson.transcript ? "article" : "lesson",
+    reads: lesson.reads,
     pages: lesson.pages,
     pasted: lesson.pasted,
     deck: lesson.fixed ? "fixed" : "guessed",

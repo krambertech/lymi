@@ -1,0 +1,432 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0/> means you’re setting off, so it takes <1>-ma</1>: <2/> <3/>, I am, says where you are now, so it takes <4>-mas</4>: <5/>"
+msgstr "<0/> means you’re setting off, so it takes <1>-ma</1>: <2/> <3/>, I am, says where you are now, so it takes <4>-mas</4>: <5/>"
+
+msgid "<0/>, from <1/>, means you go and come back, or go regularly. It takes <2>-mas</2>, not <3>-ma</3>: <4/>"
+msgstr "<0/>, from <1/>, means you go and come back, or go regularly. It takes <2>-mas</2>, not <3>-ma</3>: <4/>"
+
+msgid "<0/>, from <1/>, takes <2>-mast</2> when you come back from something: <3/> It takes <4>-ma</4> when you come to do something, as in the command <5/> Tap a verb to hear its sentence."
+msgstr "<0/>, from <1/>, takes <2>-mast</2> when you come back from something: <3/> It takes <4>-ma</4> when you come to do something, as in the command <5/> Tap a verb to hear its sentence."
+
+msgid "<0>Kuhu?</0> {means}"
+msgstr "<0>Kuhu?</0> {means}"
+
+msgid "<0>Kus?</0> {means}"
+msgstr "<0>Kus?</0> {means}"
+
+msgid "<0>Kust?</0> {means}"
+msgstr "<0>Kust?</0> {means}"
+
+msgid "<0>Lähen ujuma</0> is I’m going swimming, <1>olen ujumas</1> I’m out swimming, and <2>tulen ujumast</2> I’m coming back from swimming. The ending says which."
+msgstr "<0>Lähen ujuma</0> is I’m going swimming, <1>olen ujumas</1> I’m out swimming, and <2>tulen ujumast</2> I’m coming back from swimming. The ending says which."
+
+msgid "<0>Tulema</0> again, as a command: come here to do it, so <1>-ma</1>."
+msgstr "<0>Tulema</0> again, as a command: come here to do it, so <1>-ma</1>."
+
+msgid "<0>Tulema</0> takes <1>-mast</1> or <2>-ma</2>: <3>Ma tulen ujumast. Tule sööma!</3>"
+msgstr "<0>Tulema</0> takes <1>-mast</1> or <2>-ma</2>: <3>Ma tulen ujumast. Tule sööma!</3>"
+
+msgid "12 minutes"
+msgstr "12 minutes"
+
+msgid "A cat and a house"
+msgstr "A cat and a house"
+
+msgid "A place and an activity answer the same three questions. To <0/> you can answer <1/>, to the shop, or <2/>, swimming."
+msgstr "A place and an activity answer the same three questions. To <0/> you can answer <1/>, to the shop, or <2/>, swimming."
+
+msgid "A quiz by ear, a sort and a voice message"
+msgstr "A quiz by ear, a sort and a voice message"
+
+msgid "Add <0>-s</0> and it says someone is in the middle of it, often out doing it: <1/> Add <2>-st</2> and it says what they’re coming back from: <3/>"
+msgstr "Add <0>-s</0> and it says someone is in the middle of it, often out doing it: <1/> Add <2>-st</2> and it says what they’re coming back from: <3/>"
+
+msgid "After <0>läheb</0>, the <1>-ma</1> form says what someone is off to do: <2/> You met it after <3>lähen</3> in lesson {infinitives}."
+msgstr "After <0>läheb</0>, the <1>-ma</1> form says what someone is off to do: <2/> You met it after <3>lähen</3> in lesson {infinitives}."
+
+msgid "After <0>läheb</0>, the <1>-ma</1> form says what someone is off to do: <2>Mari läheb ujuma.</2>"
+msgstr "After <0>läheb</0>, the <1>-ma</1> form says what someone is off to do: <2>Mari läheb ujuma.</2>"
+
+msgid "After <0>tulen</0>, only the ending tells you which way: <1>tulen sööma</1> is I’m coming to eat, and <2>tulen söömast</2> is I’m coming back from eating."
+msgstr "After <0>tulen</0>, only the ending tells you which way: <1>tulen sööma</1> is I’m coming to eat, and <2>tulen söömast</2> is I’m coming back from eating."
+
+msgid "All six. You heard every ending."
+msgstr "All six. You heard every ending."
+
+msgid "An activity has the same three, built on its <0>-ma</0> form: <1/> <2/> <3/> She’s going swimming, she’s out swimming, and she’s on her way back."
+msgstr "An activity has the same three, built on its <0>-ma</0> form: <1/> <2/> <3/> She’s going swimming, she’s out swimming, and she’s on her way back."
+
+msgid "At home"
+msgstr "At home"
+
+msgid "back from a run"
+msgstr "back from a run"
+
+msgid "back from coffee"
+msgstr "back from coffee"
+
+msgid "back from eating"
+msgstr "back from eating"
+
+msgid "back from swimming"
+msgstr "back from swimming"
+
+msgid "Come and eat"
+msgstr "Come and eat"
+
+msgctxt "tulema, come here"
+msgid "Come and eat."
+msgstr "Come and eat."
+
+msgctxt "from doing something"
+msgid "Coming back"
+msgstr "Coming back"
+
+msgid "Coming back from his run"
+msgstr "Coming back from his run"
+
+msgid "Each round plays one form on its own, with no sentence around it. Only its ending tells you which: <0>-ma</0>, <1>-mas</1> or <2>-mast</2>. Pick what it says."
+msgstr "Each round plays one form on its own, with no sentence around it. Only its ending tells you which: <0>-ma</0>, <1>-mas</1> or <2>-mast</2>. Pick what it says."
+
+msgid "every day"
+msgstr "every day"
+
+msgid "Four activities: going, out and coming back"
+msgstr "Four activities: going, out and coming back"
+
+msgid "From <0>käima</0>. You go and come back, or go regularly. It takes <1>-mas</1>."
+msgstr "From <0>käima</0>. You go and come back, or go regularly. It takes <1>-mas</1>."
+
+msgid "From <0>minema</0>. You set off to do it, so <1>-ma</1>."
+msgstr "From <0>minema</0>. You set off to do it, so <1>-ma</1>."
+
+msgid "From <0>olema</0>, to be. You’re there, doing it, so <1>-mas</1>."
+msgstr "From <0>olema</0>, to be. You’re there, doing it, so <1>-mas</1>."
+
+msgid "From <0>tulema</0>. You’re coming back from it, so <1>-mast</1>."
+msgstr "From <0>tulema</0>. You’re coming back from it, so <1>-mast</1>."
+
+msgid "From käima."
+msgstr "From käima."
+
+msgid "From minema, to go."
+msgstr "From minema, to go."
+
+msgid "From olema, to be."
+msgstr "From olema, to be."
+
+msgid "from the shop"
+msgstr "from the shop"
+
+msgid "From tulema, to come."
+msgstr "From tulema, to come."
+
+msgid "Go swimming with her mum"
+msgstr "Go swimming with her mum"
+
+msgctxt "setting off to do something"
+msgid "Going"
+msgstr "Going"
+
+msgid "going for a coffee"
+msgstr "going for a coffee"
+
+msgid "going for a run"
+msgstr "going for a run"
+
+msgid "going off to eat"
+msgstr "going off to eat"
+
+msgid "going swimming"
+msgstr "going swimming"
+
+msgid "Going, out or back?"
+msgstr "Going, out or back?"
+
+msgid "Going, out, coming back"
+msgstr "Going, out, coming back"
+
+msgid "I am"
+msgstr "I am"
+
+msgid "I come, I’m coming"
+msgstr "I come, I’m coming"
+
+msgid "I go and come back; I go regularly"
+msgstr "I go and come back; I go regularly"
+
+msgid "I go swimming every day."
+msgstr "I go swimming every day."
+
+msgid "I go, I’m going"
+msgstr "I go, I’m going"
+
+msgid "I’m coming back from swimming."
+msgstr "I’m coming back from swimming."
+
+msgid "I’m going swimming."
+msgstr "I’m going swimming."
+
+msgid "I’m out swimming."
+msgstr "I’m out swimming."
+
+msgid "In lesson {inOut}, a place has a form for each question: <0/> for <1>kuhu?</1>, where to, <2/> for <3>kus?</3>, where, and <4/> for <5>kust?</5>, where from."
+msgstr "In lesson {inOut}, a place has a form for each question: <0/> for <1>kuhu?</1>, where to, <2/> for <3>kus?</3>, where, and <4/> for <5>kust?</5>, where from."
+
+msgid "in the house"
+msgstr "in the house"
+
+msgid "in the shop"
+msgstr "in the shop"
+
+msgid "into the house"
+msgstr "into the house"
+
+msgid "Its I form is käin."
+msgstr "Its I form is käin."
+
+msgid "Its I form is tulen."
+msgstr "Its I form is tulen."
+
+msgid "Kati leaves Jaan a voice message about her family. Listen for where each of them is and what she asks Jaan to do."
+msgstr "Kati leaves Jaan a voice message about her family. Listen for where each of them is and what she asks Jaan to do."
+
+msgid "Kuhu? From maja, a house."
+msgstr "Kuhu? From maja, a house."
+
+msgid "Kuhu? From pood, a shop."
+msgstr "Kuhu? From pood, a shop."
+
+msgid "Kus? From maja, a house."
+msgstr "Kus? From maja, a house."
+
+msgid "Kus? From pood, a shop."
+msgstr "Kus? From pood, a shop."
+
+msgid "Kus? The -ma form plus -s."
+msgstr "Kus? The -ma form plus -s."
+
+msgid "Kust? From maja, a house."
+msgstr "Kust? From maja, a house."
+
+msgid "Kust? From pood, a shop."
+msgstr "Kust? From pood, a shop."
+
+msgid "Kust? The -ma form plus -st."
+msgstr "Kust? The -ma form plus -st."
+
+msgid "Listen: Kati’s message"
+msgstr "Listen: Kati’s message"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Mari is coming back from a run."
+msgstr "Mari is coming back from a run."
+
+msgid "Mari is coming back from coffee."
+msgstr "Mari is coming back from coffee."
+
+msgid "Mari is coming back from eating."
+msgstr "Mari is coming back from eating."
+
+msgid "Mari is coming back from swimming."
+msgstr "Mari is coming back from swimming."
+
+msgid "Mari is going for a coffee."
+msgstr "Mari is going for a coffee."
+
+msgid "Mari is going for a run."
+msgstr "Mari is going for a run."
+
+msgid "Mari is going off to eat."
+msgstr "Mari is going off to eat."
+
+msgid "Mari is going swimming."
+msgstr "Mari is going swimming."
+
+msgid "Mari is out eating."
+msgstr "Mari is out eating."
+
+msgid "Mari is out for a coffee."
+msgstr "Mari is out for a coffee."
+
+msgid "Mari is out running."
+msgstr "Mari is out running."
+
+msgid "Mari is out swimming."
+msgstr "Mari is out swimming."
+
+msgid "Nearly. Play the ones you missed and listen for the last sound: <0>a</0>, <1>s</1> or <2>t</2>."
+msgstr "Nearly. Play the ones you missed and listen for the last sound: <0>a</0>, <1>s</1> or <2>t</2>."
+
+msgid "On her way to swim"
+msgstr "On her way to swim"
+
+msgctxt "away, doing something"
+msgid "Out"
+msgstr "Out"
+
+msgid "out eating"
+msgstr "out eating"
+
+msgid "out for a coffee"
+msgstr "out for a coffee"
+
+msgid "out of the house"
+msgstr "out of the house"
+
+msgid "out running"
+msgstr "out running"
+
+msgid "Out running."
+msgstr "Out running."
+
+msgid "out swimming"
+msgstr "out swimming"
+
+msgid "Out swimming"
+msgstr "Out swimming"
+
+msgid "Places and activities"
+msgstr "Places and activities"
+
+msgid "Put each word under the question it answers. Tap a word to hear it, then tap its question."
+msgstr "Put each word under the question it answers. Tap a word to hear it, then tap its question."
+
+msgid "Running in town"
+msgstr "Running in town"
+
+msgid "Setting off for a run"
+msgstr "Setting off for a run"
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap a verb"
+msgstr "Tap a verb"
+
+msgid "Tap a word to hear its sentence and see the cat go in to eat, eat, and come back out."
+msgstr "Tap a word to hear its sentence and see the cat go in to eat, eat, and come back out."
+
+msgid "Tap the forms in the table above once more, then try again."
+msgstr "Tap the forms in the table above once more, then try again."
+
+msgid "The -ma form. After lähen: going swimming."
+msgstr "The -ma form. After lähen: going swimming."
+
+msgid "The cat is coming back from eating."
+msgstr "The cat is coming back from eating."
+
+msgid "The cat is going off to eat."
+msgstr "The cat is going off to eat."
+
+msgid "The cat is off eating."
+msgstr "The cat is off eating."
+
+msgid "The same goes for <0/>, with <1/> or <2/>, and for <3/>, with <4/> or <5/>."
+msgstr "The same goes for <0/>, with <1/> or <2/>, and for <3/>, with <4/> or <5/>."
+
+msgid "The three answer <0>kuhu?</0>, <1>kus?</1> and <2>kust?</2>, as <3>poodi</3>, <4>poes</4> and <5>poest</5> do."
+msgstr "The three answer <0>kuhu?</0>, <1>kus?</1> and <2>kust?</2>, as <3>poodi</3>, <4>poes</4> and <5>poest</5> do."
+
+msgid "The verb before the form"
+msgstr "The verb before the form"
+
+msgid "They’re the <0>-s</0> and <1>-st</1> of <2>majas</2> and <3>majast</3>. Asked <4/>, you can answer with the form alone: <5/> Tap a form to hear it in a sentence."
+msgstr "They’re the <0>-s</0> and <1>-st</1> of <2>majas</2> and <3>majast</3>. Asked <4/>, you can answer with the form alone: <5/> Tap a form to hear it in a sentence."
+
+msgid "to come"
+msgstr "to come"
+
+msgid "to drink coffee"
+msgstr "to drink coffee"
+
+msgid "to eat"
+msgstr "to eat"
+
+msgid "to go and come back; to go regularly"
+msgstr "to go and come back; to go regularly"
+
+msgid "to run"
+msgstr "to run"
+
+msgid "to swim"
+msgstr "to swim"
+
+msgid "to the shop"
+msgstr "to the shop"
+
+msgid "Verbs before the form"
+msgstr "Verbs before the form"
+
+msgid "Wait for her dad at home"
+msgstr "Wait for her dad at home"
+
+msgid "What does Kati ask Jaan to do?"
+msgstr "What does Kati ask Jaan to do?"
+
+msgid "What is her dad doing at five?"
+msgstr "What is her dad doing at five?"
+
+msgid "where"
+msgstr "where"
+
+msgid "Where are you coming from?"
+msgstr "Where are you coming from?"
+
+msgid "Where are you going?"
+msgstr "Where are you going?"
+
+msgid "where from"
+msgstr "where from"
+
+msgid "Where from: an activity in <0>-mast</0>, or a place in <1>-st</1> such as <2>poest</2>."
+msgstr "Where from: an activity in <0>-mast</0>, or a place in <1>-st</1> such as <2>poest</2>."
+
+msgid "Where is everyone?"
+msgstr "Where is everyone?"
+
+msgid "Where is Kati’s mum?"
+msgstr "Where is Kati’s mum?"
+
+msgid "Where is Mari?"
+msgstr "Where is Mari?"
+
+msgid "Where the cat is"
+msgstr "Where the cat is"
+
+msgid "where to"
+msgstr "where to"
+
+msgid "Where to, where and where from"
+msgstr "Where to, where and where from"
+
+msgid "Where to: an activity in <0>-ma</0>, or a place such as <1>poodi</1>."
+msgstr "Where to: an activity in <0>-ma</0>, or a place such as <1>poodi</1>."
+
+msgid "Where: an activity in <0>-mas</0>, or a place in <1>-s</1> such as <2>poes</2>."
+msgstr "Where: an activity in <0>-mas</0>, or a place in <1>-s</1> such as <2>poes</2>."
+
+msgid "Which question does it answer?"
+msgstr "Which question does it answer?"
+
+msgid "With <0>-mas</0>, they’re in the middle of it: <1>Mari on ujumas.</1> <2>Käin</2> takes it too: <3>Ma käin iga päev ujumas.</3>"
+msgstr "With <0>-mas</0>, they’re in the middle of it: <1>Mari on ujumas.</1> <2>Käin</2> takes it too: <3>Ma käin iga päev ujumas.</3>"
+
+msgid "With <0>-mast</0>, they’re coming back from it: <1>Mari tuleb ujumast.</1>"
+msgstr "With <0>-mast</0>, they’re coming back from it: <1>Mari tuleb ujumast.</1>"
+
+msgid "You’ll hear it in a sentence about Mari."
+msgstr "You’ll hear it in a sentence about Mari."
+
+msgid "You’ll hear it in a sentence."
+msgstr "You’ll hear it in a sentence."

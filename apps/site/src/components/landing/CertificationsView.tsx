@@ -16,7 +16,7 @@ import { SignUpSection } from "./SignUpSection";
 import { OfflineTile, OldDecksTile, PdfTile, TagReview } from "./StudyTiles";
 import { type UseCase, UseCases } from "./UseCases";
 
-export const CERTIFICATIONS_TITLE = msg`Lymi for certification prep · Flashcards with spaced repetition`;
+export const CERTIFICATIONS_TITLE = msg`Flashcards for certification exams · Lymi`;
 export const CERTIFICATIONS_BLURB = msg`Flashcards for cloud, security, finance and project management certifications. Turn your study guide into cards with your AI assistant and review a few minutes a day. Free.`;
 
 /** Terms the common certifications ask about, in their usual definitions. No clip plays. */

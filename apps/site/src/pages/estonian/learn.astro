@@ -1,8 +1,13 @@
 ---
 import LearnHubPage, { LEARN_BLURB, LEARN_TITLE } from "../../components/islands/LearnHubPage";
+import LearnReload from "../../components/islands/LearnReload";
+import { prepareLearnPage } from "../../components/learn/learn-page";
 import MarketingLayout from "../../layouts/MarketingLayout.astro";
+
+await prepareLearnPage({ kind: "hub" }, "en");
 ---
 
 <MarketingLayout page="learn" title={LEARN_TITLE} blurb={LEARN_BLURB}>
   <LearnHubPage client:load locale="en" />
+  <LearnReload client:load locale="en" />
 </MarketingLayout>

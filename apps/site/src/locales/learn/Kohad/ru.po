@@ -1,0 +1,356 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "-s or -l?"
+msgstr "-s или -l?"
+
+msgid "<0/> is at home. Now answer <1/> six ways: tap a place."
+msgstr "<0/> — это дома. А теперь дай шесть ответов на <1/>: нажми на место."
+
+msgid "<0/> is the town; <1/> is in Tallinn. Estonian says in with an ending, not a word in front: it puts <2>-s</2> on the end of the name. I live in Tallinn is <3/>"
+msgstr "<0/> — это город, а <1/> — в Таллине. В эстонском «в» — не отдельное слово, а окончание: в конец названия добавляют <2>-s</2>. «Я живу в Таллине» — это <3/>"
+
+msgid "2 quizzes"
+msgstr "2 теста"
+
+msgid "8 minutes"
+msgstr "8 минут"
+
+msgid "A market takes <0>-l</0> by habit: <1/>, at the market. So do names ending in <2>-maa</2>: <3/>, on Saaremaa, and <4/>, in Germany, though English says in there. A few towns and districts take <5>-l</5> as well, such as <6/> and <7/>."
+msgstr "Рынок получает <0>-l</0> по традиции: <1/>, на рынке. Так же и названия на <2>-maa</2>: <3/>, на Сааремаа, и даже <4/>, в Германии, хотя по-русски тут говорят «в». Ещё <5>-l</5> получают некоторые города и районы, например <6/> и <7/>."
+
+msgid "All of them. You picked the place in every sentence."
+msgstr "Все. В каждом предложении место выбрано верно."
+
+msgid "All of them. You picked the right ending every time."
+msgstr "Все. Каждый раз окончание выбрано верно."
+
+msgid "Answering where with a place"
+msgstr "Как ответить, где"
+
+msgid "Ask with <0>kus</0>, and answer with a sentence or the place alone: <1>Kus sa elad? Tartus.</1>"
+msgstr "Спрашивай словом <0>kus</0>, а отвечай предложением или одним словом: <1>Kus sa elad? Tartus.</1>"
+
+msgid "at home"
+msgstr "дома"
+
+msgid "at school, in a school"
+msgstr "в школе"
+
+msgid "at the market"
+msgstr "на рынке"
+
+msgid "at the office"
+msgstr "в офисе"
+
+msgid "at work"
+msgstr "на работе"
+
+msgid "café"
+msgstr "кафе"
+
+msgid "Each name took -s, and the -s says in. Tallinn took an extra a before it."
+msgstr "К каждому названию добавилось -s, и это -s значит «в». К Tallinn перед ним добавилось ещё и a."
+
+msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
+msgstr "В каждом раунде — место. Выбери окончание, а потом послушай предложение. Большинство городов, зданий и стран получают <0>-s</0>; работа, рынок и названия на <1>-maa</1> получают <2>-l</2>."
+
+msgid "English says at work and at school alike. Estonian says <0/> but <1/>, so learn each place with its ending. Lesson {into} teaches the endings for going into a place and coming out of it."
+msgstr "По-русски говорят «на работе», но «в школе», и по-эстонски так же: <0/>, но <1/>. Правда, так совпадает не всегда, поэтому учи каждое место вместе с окончанием. Как сказать «в город» и «из города», объясняет урок {into}."
+
+msgid "Estonia"
+msgstr "Эстония"
+
+msgid "Finland"
+msgstr "Финляндия"
+
+msgid "Germany"
+msgstr "Германия"
+
+msgid "He or she is at home."
+msgstr "Он или она дома."
+
+msgid "He or she is at school."
+msgstr "Он или она в школе."
+
+msgid "He or she is having coffee in a café."
+msgstr "Он или она пьёт кофе в кафе."
+
+msgid "He or she lives in Finland."
+msgstr "Он или она живёт в Финляндии."
+
+msgid "He or she studies at school."
+msgstr "Он или она учится в школе."
+
+msgid "Hear a sentence and pick the place. Listen for the word that ends in <0>-s</0>."
+msgstr "Послушай предложение и выбери место. Слушай слово, которое кончается на <0>-s</0>."
+
+msgid "Hearing the place"
+msgstr "Место на слух"
+
+msgid "home"
+msgstr "дом"
+
+msgid "hospital"
+msgstr "больница"
+
+msgid "How to say where you are in Estonian: <0>-s</0> for in, <1>-l</1> for on and at, and how to answer <2>kus</2>, where."
+msgstr "Как сказать по-эстонски, где ты: <0>-s</0> значит «в», <1>-l</1> — «на», и как ответить на <2>kus</2>, где."
+
+msgid "I live in Estonia."
+msgstr "Я живу в Эстонии."
+
+msgid "I live in Finland."
+msgstr "Я живу в Финляндии."
+
+msgid "I live in Tallinn."
+msgstr "Я живу в Таллине."
+
+msgid "I live in Tartu."
+msgstr "Я живу в Тарту."
+
+msgid "I work at a school."
+msgstr "Я работаю в школе."
+
+msgid "I work at home."
+msgstr "Я работаю дома."
+
+msgid "I work in a café."
+msgstr "Я работаю в кафе."
+
+msgid "I work in a hospital."
+msgstr "Я работаю в больнице."
+
+msgid "I work in an office."
+msgstr "Я работаю в офисе."
+
+msgid "I work in Tallinn."
+msgstr "Я работаю в Таллине."
+
+msgid "I work in town."
+msgstr "Я работаю в городе."
+
+msgid "I’m at work."
+msgstr "Я на работе."
+
+msgid "in a café"
+msgstr "в кафе"
+
+msgid "in a hospital"
+msgstr "в больнице"
+
+msgid "in Estonia"
+msgstr "в Эстонии"
+
+msgid "in Finland"
+msgstr "в Финляндии"
+
+msgid "in Germany"
+msgstr "в Германии"
+
+msgid "in Lasnamäe"
+msgstr "в Ласнамяэ"
+
+msgid "in Otepää"
+msgstr "в Отепя"
+
+msgid "in Pärnu"
+msgstr "в Пярну"
+
+msgid "in Tallinn"
+msgstr "в Таллине"
+
+msgid "in Tartu"
+msgstr "в Тарту"
+
+msgid "In Tartu."
+msgstr "В Тарту."
+
+msgid "In the place"
+msgstr "Где?"
+
+msgid "in town"
+msgstr "в городе"
+
+msgid "in Ukraine"
+msgstr "в Украине"
+
+msgid "It works the same for towns, buildings and most countries. Try it on three countries and three towns."
+msgstr "Так же с городами, зданиями и большинством стран. Попробуй на трёх странах и трёх городах."
+
+msgid "Jaan lives in Pärnu."
+msgstr "Яан живёт в Пярну."
+
+msgid "Lasnamäe, a district of Tallinn"
+msgstr "Ласнамяэ, район Таллина"
+
+msgid "Learn each place together with its ending: <0>Tallinn, Tallinnas</0>."
+msgstr "Учи каждое место сразу с окончанием: <0>Tallinn, Tallinnas</0>."
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which vowel is hard to guess for now. So learn each place together with its <1>-s</1> form: <2/>, <3/>; <4/>, <5/>. Lesson {stems} shows where the vowel comes from."
+msgstr "У многих слов, как у Tallinn, перед <0>-s</0> появляется гласная, и какую именно, пока угадать трудно. Поэтому учи каждое место сразу с <1>-s</1>: <2/>, <3/>; <4/>, <5/>. Откуда берётся гласная, объясняет урок {stems}."
+
+msgid "Mari works in a hospital."
+msgstr "Мари работает в больнице."
+
+msgid "market"
+msgstr "рынок"
+
+msgid "Mum is at the market."
+msgstr "Мама на рынке."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Почти. Переслушай те, где были ошибки."
+
+msgid "office"
+msgstr "офис"
+
+msgid "on Saaremaa"
+msgstr "на Сааремаа"
+
+msgid "on the table"
+msgstr "на столе"
+
+msgid "on the wall"
+msgstr "на стене"
+
+msgid "Otepää, a small town in the south"
+msgstr "Отепя, небольшой город на юге"
+
+msgid "Pärnu, a town by the sea"
+msgstr "Пярну, город у моря"
+
+msgid "Places to work"
+msgstr "Где работать"
+
+msgid "Places with -l"
+msgstr "Места с -l"
+
+msgid "Read both endings above once more, then try again."
+msgstr "Ещё раз перечитай про оба окончания выше, а потом попробуй снова."
+
+msgid "Saaremaa, Estonia’s largest island"
+msgstr "Сааремаа, самый большой остров Эстонии"
+
+msgid "school"
+msgstr "школа"
+
+msgid "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
+msgstr "Некоторые места получают <0>-l</0> по традиции, например <1>turul</1> и названия на <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
+
+msgid "Switch to In the place and watch the last letters change."
+msgstr "Переключи на «Где?» и смотри, как меняются концы слов."
+
+msgid "table"
+msgstr "стол"
+
+msgid "Tallinn, the capital"
+msgstr "Таллин, столица"
+
+msgid "Tap a place"
+msgstr "Нажми на место"
+
+msgid "Tap a place to hear the answer."
+msgstr "Нажми на место, чтобы услышать ответ."
+
+msgid "Tap the places above once more, then try again."
+msgstr "Ещё раз нажми на места выше, а потом попробуй снова."
+
+msgid "Tartu, a university town"
+msgstr "Тарту, университетский город"
+
+msgid "The book is on the table."
+msgstr "Книга на столе."
+
+msgid "The ending -l means on or at"
+msgstr "Окончание -l — это «на»"
+
+msgid "The ending -s means in"
+msgstr "Окончание -s — это «в»"
+
+msgid "The ending <0>-l</0> says on a surface or at an activity: <1>laual, tööl</1>."
+msgstr "Окончание <0>-l</0> значит «на», когда речь о поверхности или о том, что ты делаешь: <1>laual, tööl</1>."
+
+msgid "The ending <0>-s</0> says in: <1>Eestis, Tallinnas, koolis</1>."
+msgstr "Окончание <0>-s</0> значит «в»: <1>Eestis, Tallinnas, koolis</1>."
+
+msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you’re doing something rather than inside a building: <2/>, at work."
+msgstr "Второе окончание — <0>-l</0>. Оно значит «на», когда речь о поверхности: <1/>, на столе. А ещё «на» там, где ты что-то делаешь, а не просто находишься в здании: <2/>, на работе."
+
+msgid "The picture is on the wall."
+msgstr "Картина на стене."
+
+msgid "The place"
+msgstr "Название"
+
+msgid "The place or in the place"
+msgstr "Название или «где»"
+
+msgid "They eat in town."
+msgstr "Они едят в городе."
+
+msgid "They live in Germany."
+msgstr "Они живут в Германии."
+
+msgid "They study in Tartu."
+msgstr "Они учатся в Тарту."
+
+msgid "They work in an office."
+msgstr "Они работают в офисе."
+
+msgid "town, city"
+msgstr "город"
+
+msgid "Ukraine"
+msgstr "Украина"
+
+msgid "wall"
+msgstr "стена"
+
+msgid "We live in Estonia."
+msgstr "Мы живём в Эстонии."
+
+msgid "We live on Saaremaa."
+msgstr "Мы живём на Сааремаа."
+
+msgid "We study in Tartu."
+msgstr "Мы учимся в Тарту."
+
+msgid "We’re at home."
+msgstr "Мы дома."
+
+msgid "where"
+msgstr "где"
+
+msgid "Where do you live?"
+msgstr "Где ты живёшь?"
+
+msgid "Where do you work?"
+msgstr "Где ты работаешь?"
+
+msgid "Where is he or she?"
+msgstr "Где он или она?"
+
+msgid "Which place?"
+msgstr "Какое место?"
+
+msgid "work"
+msgstr "работа"
+
+msgid "You all work in an office."
+msgstr "Вы работаете в офисе."
+
+msgid "You met <0/>, where, in lesson {questions}. Answer with a sentence or, in speech, with the place alone."
+msgstr "Ты уже знаешь <0/>, где, из урока {questions}. Отвечай предложением, а в разговоре — просто названием места."
+
+msgid "You’ll hear it in a sentence."
+msgstr "Услышишь его в предложении."

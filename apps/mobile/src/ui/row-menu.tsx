@@ -15,7 +15,6 @@ export type RowMenuAction = ContextMenuAction;
 export interface RowMenuItem {
   id: RowMenuAction;
   label: string;
-  /** Lymi's icon, drawn by iOS as the custom symbol scripts/symbols.mjs made from it. */
   icon: IconName;
   destructive?: boolean;
   onSelect: () => void;
@@ -23,27 +22,16 @@ export interface RowMenuItem {
 
 export interface RowMenuProps {
   surface: RowMenuSurface;
-  /** Where a tap goes, and the page the preview shows when `preview` is `page`. */
   href: Href;
-  /** A tap that does something other than follow `href`, such as starting a review. */
   onPress?: () => void;
-  /** As the finger lands, such as to start loading the page the row opens. */
   onPressIn?: () => void;
-  /** What VoiceOver reads for the row; the native preview view hides the row's own text from it. */
   label: string;
-  /** What the row is to VoiceOver; a heading does nothing on a tap unless it has `onPress`. */
   kind?: "link" | "button" | "heading";
-  /** Rows, or groups of rows split by iOS's separators; the removal goes last on its own. */
   items: RowMenuItem[] | RowMenuItem[][];
-  /** `page` lifts the page `href` opens; a node is drawn instead; none lifts the row itself. */
   preview?: "page" | { node: ReactNode; width?: number; height?: number };
   children: ReactNode;
 }
 
-/**
- * A list row that opens iOS's context menu on a long press, with a preview where one helps. Each
- * menu row is also a VoiceOver action, since a long press is never found by ear. phone.md "Menus".
- */
 export function RowMenu({
   surface,
   href,
@@ -63,7 +51,6 @@ export function RowMenu({
     item.onSelect();
   };
   const heading = kind === "heading";
-  // The link would follow `href`; this row does something else with a tap, or nothing.
   const tap =
     onPress || heading
       ? (e?: GestureResponderEvent) => {

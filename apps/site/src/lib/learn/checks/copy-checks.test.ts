@@ -9,12 +9,13 @@ import { LESSONS } from "../catalogue";
 import { ALLOWED_COPY } from "./allowed-copy";
 import { type Entry, messagesIn, readCatalog } from "./catalog";
 
-const LOCALES = new URL("../../../locales/", import.meta.url);
-const catalog = {
-  en: readCatalog(new URL("en.po", LOCALES)),
-  uk: readCatalog(new URL("uk.po", LOCALES)),
-  ru: readCatalog(new URL("ru.po", LOCALES)),
-};
+const CATALOGS = new URL("../../../locales/learn/", import.meta.url);
+const readPart = (part: string) => ({
+  en: readCatalog(new URL(`${part}/en.po`, CATALOGS)),
+  uk: readCatalog(new URL(`${part}/uk.po`, CATALOGS)),
+  ru: readCatalog(new URL(`${part}/ru.po`, CATALOGS)),
+});
+const KIT_CATALOG = readPart("Kit");
 
 const KIT = new URL("../../../components/learn/", import.meta.url);
 const LESSON_DIR = new URL("lessons/", KIT);
@@ -24,13 +25,22 @@ const FILES = [
     .map((name) => ({
       path: `apps/site/src/components/learn/lessons/${name}`,
       url: new URL(name, LESSON_DIR),
+      part: name.slice(0, -".tsx".length),
+      catalog: readPart(name.slice(0, -".tsx".length)),
     })),
   ...readdirSync(KIT)
     .filter((name) => name.endsWith(".tsx"))
-    .map((name) => ({ path: `apps/site/src/components/learn/${name}`, url: new URL(name, KIT) })),
+    .map((name) => ({
+      path: `apps/site/src/components/learn/${name}`,
+      url: new URL(name, KIT),
+      part: "Kit",
+      catalog: KIT_CATALOG,
+    })),
   {
     path: "apps/site/src/lib/learn/catalogue.ts",
     url: new URL("../catalogue.ts", import.meta.url),
+    part: "Kit",
+    catalog: KIT_CATALOG,
   },
 ].map((file) => ({ ...file, source: readFileSync(file.url, "utf8") }));
 
@@ -59,7 +69,7 @@ function lineOf(source: string, id: string): number {
   return at + 1;
 }
 
-describe.each(FILES)("$path", ({ path, source }) => {
+describe.each(FILES)("$path", ({ path, source, part, catalog }) => {
   const own = (entries: readonly Entry[]) => messagesIn(source, entries);
   const at = (id: string) => {
     const line = lineOf(source, id);
@@ -102,11 +112,11 @@ describe.each(FILES)("$path", ({ path, source }) => {
         const straight = locale === "uk" && /\p{L}'\p{L}/u.test(entry.text);
         if (hit && !allowed(locale, entry.text))
           return [
-            `apps/site/src/locales/${locale}.po: “${hit}” in “${entry.text}” (for “${entry.id}”). Write the plain verb or the natural phrase (copy.md#ukrainian-and-russian), or add it to allowed-copy.ts with the reason.`,
+            `apps/site/src/locales/learn/${part}/${locale}.po: “${hit}” in “${entry.text}” (for “${entry.id}”). Write the plain verb or the natural phrase (copy.md#ukrainian-and-russian), or add it to allowed-copy.ts with the reason.`,
           ];
         if (straight)
           return [
-            `apps/site/src/locales/uk.po: “${entry.text}” has a straight apostrophe. Fix: use ’ (з’являється).`,
+            `apps/site/src/locales/learn/${part}/uk.po: “${entry.text}” has a straight apostrophe. Fix: use ’ (з’являється).`,
           ];
         return [];
       });

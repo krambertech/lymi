@@ -6,10 +6,6 @@ import { ALWAYS, curve, useReduceMotion } from "../theme/motion";
 
 const OUT = curve(EASE_OUT);
 
-/**
- * The session track, 0 to 1: eight points inside the card's width, never on the screen's edge. The
- * fill is ink, because amber belongs to the flame, the one action and a due count. The label is read, not shown.
- */
 export function Progress({ value, label }: { value: number; label: string }) {
   const reduce = useReduceMotion();
   const v = Math.max(0, Math.min(1, value));

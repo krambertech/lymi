@@ -1,0 +1,438 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0/> is the same for one and many, so with it only the noun changes: <1/> <2/> Switch between One and Many, and tap a sentence to hear it."
+msgstr "<0/> is the same for one and many, so with it only the noun changes: <1/> <2/> Switch between One and Many, and tap a sentence to hear it."
+
+msgid "<0>Ema ja isa</0> are two people, like <1>nad</1>, so the verb ends in <2>-vad</2>."
+msgstr "<0>Ema ja isa</0> are two people, like <1>nad</1>, so the verb ends in <2>-vad</2>."
+
+msgid "<0>Kass</0> is one cat, like <1>ta</1>, so the verb ends in <2>-b</2>: <3>magab</3>."
+msgstr "<0>Kass</0> is one cat, like <1>ta</1>, so the verb ends in <2>-b</2>: <3>magab</3>."
+
+msgid "<0>kassi</0> + <1>d</1> = <2>kassid</2>"
+msgstr "<0>kassi</0> + <1>d</1> = <2>kassid</2>"
+
+msgid "<0>Kodu</0> is one home, so the adjective has no <1>-d</1>: <2>väike</2>."
+msgstr "<0>Kodu</0> is one home, so the adjective has no <1>-d</1>: <2>väike</2>."
+
+msgid "<0>Lapsed</0> is plural, so the verb takes the form of <1>nad</1>: <2>õpivad</2>."
+msgstr "<0>Lapsed</0> is plural, so the verb takes the form of <1>nad</1>: <2>õpivad</2>."
+
+msgid "<0>Suured</0> ends in <1>-d</1>, so there is more than one room: <2>toad</2>."
+msgstr "<0>Suured</0> ends in <1>-d</1>, so there is more than one room: <2>toad</2>."
+
+msgid "<0>Ta</0> is one cat, so the adjective has no <1>-d</1>, like <2>ilus</2>."
+msgstr "<0>Ta</0> is one cat, so the adjective has no <1>-d</1>, like <2>ilus</2>."
+
+msgid "12 minutes"
+msgstr "12 minutes"
+
+msgid "2 quizzes and a passage with gaps"
+msgstr "2 quizzes and a passage with gaps"
+
+msgid "a beautiful room"
+msgstr "a beautiful room"
+
+msgid "a big house"
+msgstr "a big house"
+
+#. placeholder {0}: ending("-d")
+msgid "A dictionary gives a noun in three forms, as lesson {forms} shows. The second form is the genitive from lesson {genitive}. To say more than one, add {0} to it: <0/>, <1/>, so <2/>, cats."
+msgstr "A dictionary gives a noun in three forms, as lesson {forms} shows. The second form is the genitive from lesson {genitive}. To say more than one, add {0} to it: <0/>, <1/>, so <2/>, cats."
+
+msgid "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. Two adjectives come from the section above, <0/>, small, and <1/>, beautiful. One verb is new: <2/>, to sleep."
+msgstr "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. Two adjectives come from the section above, <0/>, small, and <1/>, beautiful. One verb is new: <2/>, to sleep."
+
+msgid "A friend is waiting."
+msgstr "A friend is waiting."
+
+msgid "a good friend"
+msgstr "a good friend"
+
+msgid "a new book"
+msgstr "a new book"
+
+#. placeholder {0}: ending("-b")
+#. placeholder {1}: ending("-vad")
+msgid "A plural noun takes the same verb form as <0/>, they, from lesson {present}. One child reading is <1/>, with the {0} of <2>ta</2>. Children reading is <3/>, with the {1} of <4>nad</4>."
+msgstr "A plural noun takes the same verb form as <0/>, they, from lesson {present}. One child reading is <1/>, with the {0} of <2>ta</2>. Children reading is <3/>, with the {1} of <4>nad</4>."
+
+msgid "A plural noun takes the verb form of <0>nad</0>: <1>Lapsed loevad.</1> <2>On</2> stays <3>on</3>."
+msgstr "A plural noun takes the verb form of <0>nad</0>: <1>Lapsed loevad.</1> <2>On</2> stays <3>on</3>."
+
+msgid "a small cat"
+msgstr "a small cat"
+
+#. placeholder {0}: ending("-d")
+msgid "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Pick a word, then tap each form to see what changes."
+msgstr "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Pick a word, then tap each form to see what changes."
+
+msgid "Adjective and noun in the first form."
+msgstr "Adjective and noun in the first form."
+
+msgid "Adjectives take -d too"
+msgstr "Adjectives take -d too"
+
+msgid "After <0>on</0> it’s the same: <1/> <2/> Switch between One and Many, and tap a line to hear it."
+msgstr "After <0>on</0> it’s the same: <1/> <2/> Switch between One and Many, and tap a line to hear it."
+
+msgid "After a number from two up, Estonian keeps the noun singular, in the partitive from lesson {partitive}: <0/>, two cats, not <1>kaks kassid</1>."
+msgstr "After a number from two up, Estonian keeps the noun singular, in the partitive from lesson {partitive}: <0/>, two cats, not <1>kaks kassid</1>."
+
+msgid "After a number from two up, the partitive."
+msgstr "After a number from two up, the partitive."
+
+msgid "All six plurals right."
+msgstr "All six plurals right."
+
+msgid "All six right: you told one from many every time."
+msgstr "All six right: you told one from many every time."
+
+msgid "An adjective before a plural noun is plural too, built the same way: <0/>, <1/>, <2/>. A big house is <3/>, and big houses are <4/>."
+msgstr "An adjective before a plural noun is plural too, built the same way: <0/>, <1/>, <2/>. A big house is <3/>, and big houses are <4/>."
+
+#. placeholder {0}: ending("-d")
+msgid "An adjective takes {0} too, before the noun or after <0>on</0>: <1>suured majad; Majad on suured.</1>"
+msgstr "An adjective takes {0} too, before the noun or after <0>on</0>: <1>suured majad; Majad on suured.</1>"
+
+msgid "an old town"
+msgstr "an old town"
+
+msgid "and"
+msgstr "and"
+
+msgid "As in poes, in the shop."
+msgstr "As in poes, in the shop."
+
+msgid "At home"
+msgstr "At home"
+
+msgid "beautiful"
+msgstr "beautiful"
+
+msgid "beautiful rooms"
+msgstr "beautiful rooms"
+
+msgid "big"
+msgstr "big"
+
+msgid "big houses"
+msgstr "big houses"
+
+msgid "big, of more than one"
+msgstr "big, of more than one"
+
+msgid "book"
+msgstr "book"
+
+msgid "books"
+msgstr "books"
+
+msgid "Both take <0>-d</0>"
+msgstr "Both take <0>-d</0>"
+
+msgid "car"
+msgstr "car"
+
+msgid "cars"
+msgstr "cars"
+
+msgid "cat"
+msgstr "cat"
+
+msgid "cats"
+msgstr "cats"
+
+msgid "child"
+msgstr "child"
+
+msgid "children"
+msgstr "children"
+
+msgid "door"
+msgstr "door"
+
+msgid "doors"
+msgstr "doors"
+
+msgid "Each word is its second form plus <0>-d</0>."
+msgstr "Each word is its second form plus <0>-d</0>."
+
+msgid "Fill the gaps"
+msgstr "Fill the gaps"
+
+msgid "friend"
+msgstr "friend"
+
+msgid "friends"
+msgstr "friends"
+
+msgid "Friends are waiting."
+msgstr "Friends are waiting."
+
+msgid "good friends"
+msgstr "good friends"
+
+msgid "Hear a noun’s first and second forms, then type its plural. Build it on the second form."
+msgstr "Hear a noun’s first and second forms, then type its plural. Build it on the second form."
+
+msgid "Hear a sentence and pick what it says. Listen to the end of the noun and of the verb."
+msgstr "Hear a sentence and pick what it says. Listen to the end of the noun and of the verb."
+
+msgid "Hearing one or many"
+msgstr "Hearing one or many"
+
+msgid "house"
+msgstr "house"
+
+msgid "houses"
+msgstr "houses"
+
+msgid "is, are"
+msgstr "is, are"
+
+msgid "Kass, kassi: a vowel appears at the end."
+msgstr "Kass, kassi: a vowel appears at the end."
+
+msgid "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on that second form, so the change shows again: <2/>, shops."
+msgstr "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on that second form, so the change shows again: <2/>, shops."
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Making the plural"
+msgstr "Making the plural"
+
+msgid "man"
+msgstr "man"
+
+msgctxt "plural"
+msgid "Many"
+msgstr "Many"
+
+msgid "Many: the verb form of <0>nad</0>"
+msgstr "Many: the verb form of <0>nad</0>"
+
+msgid "men"
+msgstr "men"
+
+msgid "Mother and father are working."
+msgstr "Mother and father are working."
+
+msgid "Nearly. For the ones you missed, start from the second form."
+msgstr "Nearly. For the ones you missed, start from the second form."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "new books"
+msgstr "new books"
+
+msgid "old towns"
+msgstr "old towns"
+
+msgctxt "plural"
+msgid "One"
+msgstr "One"
+
+msgid "One or many"
+msgstr "One or many"
+
+msgid "One or many?"
+msgstr "One or many?"
+
+msgid "One: the verb form of <0>ta</0>"
+msgstr "One: the verb form of <0>ta</0>"
+
+#. placeholder {0}: noun.many
+msgid "Play {0}"
+msgstr "Play {0}"
+
+msgid "river"
+msgstr "river"
+
+msgid "rivers"
+msgstr "rivers"
+
+msgid "room"
+msgstr "room"
+
+msgid "rooms"
+msgstr "rooms"
+
+msgid "school"
+msgstr "school"
+
+msgid "schools"
+msgstr "schools"
+
+msgid "second form"
+msgstr "second form"
+
+msgid "shop"
+msgstr "shop"
+
+msgid "shops"
+msgstr "shops"
+
+msgid "small"
+msgstr "small"
+
+msgid "small cats"
+msgstr "small cats"
+
+msgid "Ta magab, nad magavad: he or she sleeps, they sleep."
+msgstr "Ta magab, nad magavad: he or she sleeps, they sleep."
+
+msgid "Tap the One and Many sentences above once more, then try again."
+msgstr "Tap the One and Many sentences above once more, then try again."
+
+msgid "Tap the rows above once more, then try again."
+msgstr "Tap the rows above once more, then try again."
+
+msgid "The b drops and the u becomes o."
+msgstr "The b drops and the u becomes o."
+
+msgid "The cat is at home."
+msgstr "The cat is at home."
+
+msgid "The cats are at home."
+msgstr "The cats are at home."
+
+msgid "The child is reading."
+msgstr "The child is reading."
+
+msgid "The children are reading."
+msgstr "The children are reading."
+
+msgid "The e drops and an a comes in."
+msgstr "The e drops and an a comes in."
+
+msgid "The ee shortens, the s becomes h, and an e comes in."
+msgstr "The ee shortens, the s becomes h, and an e comes in."
+
+msgid "The first form"
+msgstr "The first form"
+
+msgid "The form a dictionary lists first."
+msgstr "The form a dictionary lists first."
+
+msgid "The g drops and the i becomes e."
+msgstr "The g drops and the i becomes e."
+
+msgid "The house is big."
+msgstr "The house is big."
+
+msgid "The houses are big."
+msgstr "The houses are big."
+
+msgid "The man is working."
+msgstr "The man is working."
+
+msgid "The men are working."
+msgstr "The men are working."
+
+msgid "The n becomes s."
+msgstr "The n becomes s."
+
+msgid "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
+msgstr "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
+
+msgid "The od drops and an e comes in."
+msgstr "The od drops and an e comes in."
+
+#. placeholder {0}: ending("-d")
+msgid "The plural is the second form plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
+msgstr "The plural is the second form plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
+
+msgid "The plural keeps the stem change"
+msgstr "The plural keeps the stem change"
+
+msgid "The plural keeps the stem change of the second form: <0>pood, poe → poed; tuba, toa → toad</0>."
+msgstr "The plural keeps the stem change of the second form: <0>pood, poe → poed; tuba, toa → toad</0>."
+
+msgid "The same for ta and nad."
+msgstr "The same for ta and nad."
+
+msgid "The second form and -d"
+msgstr "The second form and -d"
+
+msgid "The second form and <0>-d</0>"
+msgstr "The second form and <0>-d</0>"
+
+msgid "the second form of kass"
+msgstr "the second form of kass"
+
+msgid "the second form of pood"
+msgstr "the second form of pood"
+
+msgid "the second form of suur"
+msgstr "the second form of suur"
+
+msgid "The second form plus -d."
+msgstr "The second form plus -d."
+
+msgid "The teacher is speaking."
+msgstr "The teacher is speaking."
+
+msgid "The teachers are speaking."
+msgstr "The teachers are speaking."
+
+msgid "The verb ends in <0>-b</0>, or is <1>on</1>."
+msgstr "The verb ends in <0>-b</0>, or is <1>on</1>."
+
+msgid "The verb with a plural noun"
+msgstr "The verb with a plural noun"
+
+msgid "The woman is drinking coffee."
+msgstr "The woman is drinking coffee."
+
+msgid "The women are drinking coffee."
+msgstr "The women are drinking coffee."
+
+msgid "they"
+msgstr "they"
+
+msgid "To say more than one, add <0>-d</0> to a noun’s second form: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5> The big cats are eating."
+msgstr "To say more than one, add <0>-d</0> to a noun’s second form: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5> The big cats are eating."
+
+msgid "to sleep"
+msgstr "to sleep"
+
+msgid "town, city"
+msgstr "town, city"
+
+msgid "towns, cities"
+msgstr "towns, cities"
+
+msgid "two cats"
+msgstr "two cats"
+
+msgid "Two people joined by <0/> count as many too, so the verb takes the form of <1>nad</1>: <2/>"
+msgstr "Two people joined by <0/> count as many too, so the verb takes the form of <1>nad</1>: <2/>"
+
+msgid "Two people joined by <0>ja</0> take the verb form of <1>nad</1> too: <2>Ema ja isa töötavad.</2>"
+msgstr "Two people joined by <0>ja</0> take the verb form of <1>nad</1> too: <2>Ema ja isa töötavad.</2>"
+
+msgid "Type the plural"
+msgstr "Type the plural"
+
+#. placeholder {0}: ending("-d")
+msgid "When the second form is the same as the first, only the {0} is new: <0/> gives <1/>. Switch between One and Many, and tap a word to hear it."
+msgstr "When the second form is the same as the first, only the {0} is new: <0/> gives <1/>. Switch between One and Many, and tap a word to hear it."
+
+msgid "woman"
+msgstr "woman"
+
+msgid "women"
+msgstr "women"
+
+msgid "Words"
+msgstr "Words"

@@ -3,6 +3,7 @@ import { DECK_PURPOSES } from "./enrichment";
 import { ImportFailure } from "./import";
 import { LANGUAGE_RECORDS, languageKey, READING_ENGINES, type RecordTag } from "./languages";
 import { ReminderMessage } from "./reminders";
+import { LINK_REFUSALS } from "./responses/lessons";
 import { AI_CONSENT_PLACES, PRONUNCIATION_DISPLAYS, ReviewAid, ReviewModeKey } from "./types";
 
 export const ANALYTICS_SCHEMA_VERSION = 1;
@@ -625,6 +626,9 @@ export const analyticsEvents = {
   }),
   lesson_read: z.object({
     client: z.enum(["web", "phone"]),
+    material: z.enum(["lesson", "article"]),
+    reads: count,
+    refused: z.enum(LINK_REFUSALS).optional(),
     pages: count,
     pasted: z.boolean(),
     deck: z.enum(["fixed", "guessed"]),

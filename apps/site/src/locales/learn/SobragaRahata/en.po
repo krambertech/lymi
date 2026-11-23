@@ -1,0 +1,610 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+#. placeholder {0}: i18n._(means.word)
+msgid "{0}; genitive <0>{genitive}</0>"
+msgstr "{0}; genitive <0>{genitive}</0>"
+
+msgid "<0/> is with a friend. To say with, Estonian adds <1>-ga</1> to the genitive from lesson {genitive}: <2/>, <3/>, <4>sõbraga</4>."
+msgstr "<0/> is with a friend. To say with, Estonian adds <1>-ga</1> to the genitive from lesson {genitive}: <2/>, <3/>, <4>sõbraga</4>."
+
+msgid "<0>-{ending}</0> on the genitive <1>{genitive}</1>."
+msgstr "<0>-{ending}</0> on the genitive <1>{genitive}</1>."
+
+msgid "<0>-ga</0> is with"
+msgstr "<0>-ga</0> is with"
+
+msgid "<0>-ga</0> is with, and by for how you travel: <1>sõbraga</1>, with a friend; <2>bussiga</2>, by bus. <3>Kellega?</3> asks with whom."
+msgstr "<0>-ga</0> is with, and by for how you travel: <1>sõbraga</1>, with a friend; <2>bussiga</2>, by bus. <3>Kellega?</3> asks with whom."
+
+msgid "<0>-ga</0> on the genitive."
+msgstr "<0>-ga</0> on the genitive."
+
+msgid "<0>-na</0> is as, in a role: <1>Kati töötab arstina</1>, Kati works as a doctor; <2>lapsena</2>, as a child."
+msgstr "<0>-na</0> is as, in a role: <1>Kati töötab arstina</1>, Kati works as a doctor; <2>lapsena</2>, as a child."
+
+msgid "<0>-na</0> on the genitive"
+msgstr "<0>-na</0> on the genitive"
+
+msgid "<0>-na</0> on the genitive."
+msgstr "<0>-na</0> on the genitive."
+
+msgid "<0>-na</0> says in what role: <1/> is Kati works as a doctor. The job takes the genitive first: <2/>, <3/>, <4/>."
+msgstr "<0>-na</0> says in what role: <1/> is Kati works as a doctor. The job takes the genitive first: <2/>, <3/>, <4/>."
+
+msgid "<0>-ni</0> is until or as far as: <1>kella viieni</1>, until five; <2>Tartuni</2>, as far as Tartu; <3>Homseni!</3>, see you tomorrow."
+msgstr "<0>-ni</0> is until or as far as: <1>kella viieni</1>, until five; <2>Tartuni</2>, as far as Tartu; <3>Homseni!</3>, see you tomorrow."
+
+msgid "<0>-ni</0> on the genitive."
+msgstr "<0>-ni</0> on the genitive."
+
+msgid "<0>-ni</0> says how far, in place or in time: <1/> is as far as Tartu. It marks where the way stops. Going into a place is still <2/> or <3/> from lesson {into}."
+msgstr "<0>-ni</0> says how far, in place or in time: <1/> is as far as Tartu. It marks where the way stops. Going into a place is still <2/> or <3/> from lesson {into}."
+
+msgid "<0>-ta</0> is the opposite of <1>-ga</1>. <2/> is with milk, and <3/> is without milk. It goes on the same genitive: <4/>, <5/>, <6/>."
+msgstr "<0>-ta</0> is the opposite of <1>-ga</1>. <2/> is with milk, and <3/> is without milk. It goes on the same genitive: <4/>, <5/>, <6/>."
+
+msgid "<0>-ta</0> is without"
+msgstr "<0>-ta</0> is without"
+
+msgid "<0>-ta</0> is without: <1>kohv piimata</1>, coffee without milk. <2>Ilma</2> before it stresses it."
+msgstr "<0>-ta</0> is without: <1>kohv piimata</1>, coffee without milk. <2>Ilma</2> before it stresses it."
+
+msgid "<0>-ta</0> on the genitive."
+msgstr "<0>-ta</0> on the genitive."
+
+msgid "<0>Kokk</0> has the genitive <1>koka</1>, so as a cook is <2>kokana</2>."
+msgstr "<0>Kokk</0> has the genitive <1>koka</1>, so as a cook is <2>kokana</2>."
+
+msgid "14 minutes"
+msgstr "14 minutes"
+
+msgid "3 quizzes, a message to read and one to fill in"
+msgstr "3 quizzes, a message to read and one to fill in"
+
+msgid "A coffee with milk, please."
+msgstr "A coffee with milk, please."
+
+msgid "A coffee without milk, please."
+msgstr "A coffee without milk, please."
+
+msgid "A goodbye with <0>-ni</0>: see you tomorrow."
+msgstr "A goodbye with <0>-ni</0>: see you tomorrow."
+
+msgid "A tea with lemon, please."
+msgstr "A tea with lemon, please."
+
+msgid "A tea with sugar, please."
+msgstr "A tea with sugar, please."
+
+msgid "A tea without lemon, please."
+msgstr "A tea without lemon, please."
+
+msgid "A tea without sugar, please."
+msgstr "A tea without sugar, please."
+
+msgid "After <0>on</0>, is, the job keeps the form a dictionary lists first: <1>Jaan on kokk</1>."
+msgstr "After <0>on</0>, is, the job keeps the form a dictionary lists first: <1>Jaan on kokk</1>."
+
+msgid "All four endings go on the genitive, the second form a dictionary gives (lesson {threeForms}). When the genitive changes inside, the new form keeps the change: <0/>, <1/>, <2/>, as far as the shop."
+msgstr "All four endings go on the genitive, the second form a dictionary gives (lesson {threeForms}). When the genitive changes inside, the new form keeps the change: <0/>, <1/>, <2/>, as far as the shop."
+
+msgid "All four go on the genitive, so its changes stay: <0>sõber, sõbra, sõbraga</0>; <1>pood, poe, poeni</1>."
+msgstr "All four go on the genitive, so its changes stay: <0>sõber, sõbra, sõbraga</0>; <1>pood, poe, poeni</1>."
+
+msgid "All of them, each ending on its genitive."
+msgstr "All of them, each ending on its genitive."
+
+msgid "All of them. You told <0>-ga</0> from <1>-ta</1> every time."
+msgstr "All of them. You told <0>-ga</0> from <1>-ta</1> every time."
+
+msgid "Also the genitive of kool."
+msgstr "Also the genitive of kool."
+
+msgid "as a child"
+msgstr "as a child"
+
+msgid "As a child, Mari lived in Tartu."
+msgstr "As a child, Mari lived in Tartu."
+
+msgid "as a cook"
+msgstr "as a cook"
+
+msgid "as a doctor"
+msgstr "as a doctor"
+
+msgid "As a doctor, as a child"
+msgstr "As a doctor, as a child"
+
+msgid "as far as Tartu"
+msgstr "as far as Tartu"
+
+msgid "as far as the bus"
+msgstr "as far as the bus"
+
+msgid "as far as the river"
+msgstr "as far as the river"
+
+msgid "as far as the school"
+msgstr "as far as the school"
+
+msgid "as far as the shop"
+msgstr "as far as the shop"
+
+msgid "Before a -ta form, to stress the without."
+msgstr "Before a -ta form, to stress the without."
+
+msgid "book"
+msgstr "book"
+
+msgid "Build the form"
+msgstr "Build the form"
+
+msgid "Built on the genitive"
+msgstr "Built on the genitive"
+
+msgid "bus"
+msgstr "bus"
+
+msgid "but"
+msgstr "but"
+
+msgid "by bus"
+msgstr "by bus"
+
+msgid "by train"
+msgstr "by train"
+
+msgid "child"
+msgstr "child"
+
+msgid "coffee"
+msgstr "coffee"
+
+msgid "Coffee with milk"
+msgstr "Coffee with milk"
+
+msgid "Coffee with sugar and no lemon"
+msgstr "Coffee with sugar and no lemon"
+
+msgid "Coffee without milk"
+msgstr "Coffee without milk"
+
+msgid "cook"
+msgstr "cook"
+
+msgid "doctor"
+msgstr "doctor"
+
+msgid "doctor’s, of a doctor"
+msgstr "doctor’s, of a doctor"
+
+msgid "drinks"
+msgstr "drinks"
+
+msgid "Fill the gaps"
+msgstr "Fill the gaps"
+
+msgid "for me, to me"
+msgstr "for me, to me"
+
+msgid "For three hours"
+msgstr "For three hours"
+
+msgid "For with, without, until and as in a role, Estonian adds an ending: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> or <3>-na</3>. Each goes on the genitive: <4>sõbraga</4> is with a friend, and <5>rahata</5> is without money."
+msgstr "For with, without, until and as in a role, Estonian adds an ending: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> or <3>-na</3>. Each goes on the genitive: <4>sõbraga</4> is with a friend, and <5>rahata</5> is without money."
+
+msgid "Four endings, four meanings"
+msgstr "Four endings, four meanings"
+
+msgid "friend"
+msgstr "friend"
+
+msgid "friend’s, of a friend"
+msgstr "friend’s, of a friend"
+
+msgid "From jooma, to drink."
+msgstr "From jooma, to drink."
+
+msgid "From kolm, three; its genitive is kolme."
+msgstr "From kolm, three; its genitive is kolme."
+
+msgid "From laps, child; its genitive is lapse."
+msgstr "From laps, child; its genitive is lapse."
+
+msgid "From piim, milk."
+msgstr "From piim, milk."
+
+msgid "From raha, money."
+msgstr "From raha, money."
+
+msgid "From rong, train."
+msgstr "From rong, train."
+
+msgid "From sidrun, lemon."
+msgstr "From sidrun, lemon."
+
+msgid "From tahtma, to want."
+msgstr "From tahtma, to want."
+
+msgid "From three"
+msgstr "From three"
+
+msgid "From tulema, to come."
+msgstr "From tulema, to come."
+
+msgid "genitive"
+msgstr "genitive"
+
+msgid "goodbye"
+msgstr "goodbye"
+
+msgid "Goodbye."
+msgstr "Goodbye."
+
+msgid "Her job: <0>-na</0>, as a doctor."
+msgstr "Her job: <0>-na</0>, as a doctor."
+
+msgid "How does Mari want her coffee?"
+msgstr "How does Mari want her coffee?"
+
+msgid "How long can Mari stay?"
+msgstr "How long can Mari stay?"
+
+msgid "How she gets to work: <0>-ga</0>, by train."
+msgstr "How she gets to work: <0>-ga</0>, by train."
+
+msgid "I don’t have my car today."
+msgstr "I don’t have my car today."
+
+msgid "I go to work by bus."
+msgstr "I go to work by bus."
+
+msgid "I have my car today."
+msgstr "I have my car today."
+
+msgid "I work until five."
+msgstr "I work until five."
+
+msgid "I’m talking with Mum."
+msgstr "I’m talking with Mum."
+
+msgid "in a café"
+msgstr "in a café"
+
+msgid "In an order: mulle üks kohv, a coffee for me."
+msgstr "In an order: mulle üks kohv, a coffee for me."
+
+msgid "into school, to school"
+msgstr "into school, to school"
+
+msgid "into the shop"
+msgstr "into the shop"
+
+msgctxt "is a doctor"
+msgid "Is"
+msgstr "Is"
+
+msgid "Is or works as"
+msgstr "Is or works as"
+
+msgid "It also says what someone was at a time: <0/>, as a child. In <1/>, <2>elas</2> is the past tense from lesson {past}."
+msgstr "It also says what someone was at a time: <0/>, as a child. In <1/>, <2>elas</2> is the past tense from lesson {past}."
+
+msgid "Jaan is a cook."
+msgstr "Jaan is a cook."
+
+msgid "Jaan is coming by train."
+msgstr "Jaan is coming by train."
+
+msgid "Jaan works as a cook."
+msgstr "Jaan works as a cook."
+
+msgid "Kati is a doctor."
+msgstr "Kati is a doctor."
+
+msgid "Kati tells Mari about her job in a message. Pick the word for each gap: the sentence around it says which ending fits."
+msgstr "Kati tells Mari about her job in a message. Pick the word for each gap: the sentence around it says which ending fits."
+
+msgid "Kati works as a doctor"
+msgstr "Kati works as a doctor"
+
+msgid "Kati works as a doctor."
+msgstr "Kati works as a doctor."
+
+msgid "Kati’s message"
+msgstr "Kati’s message"
+
+msgid "lemon"
+msgstr "lemon"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Mari is a teacher."
+msgstr "Mari is a teacher."
+
+msgid "Mari is coming with a friend."
+msgstr "Mari is coming with a friend."
+
+msgid "Mari is on her way to meet Kati at a café, and texts her the order. Read it and answer. Once you’ve answered, tap a word to see what it means."
+msgstr "Mari is on her way to meet Kati at a café, and texts her the order. Read it and answer. Once you’ve answered, tap a word to see what it means."
+
+msgid "Mari works as a teacher."
+msgstr "Mari works as a teacher."
+
+msgid "Mari writes"
+msgstr "Mari writes"
+
+msgid "Match each form with what it means. Two words come twice, so read the ending."
+msgstr "Match each form with what it means. Two words come twice, so read the ending."
+
+msgid "milk"
+msgstr "milk"
+
+msgid "Mul on aega: I have time."
+msgstr "Mul on aega: I have time."
+
+msgid "mul on: I have"
+msgstr "mul on: I have"
+
+msgid "Nearly. Check which ending the cue asks for, then put it on the genitive."
+msgstr "Nearly. Check which ending the cue asks for, then put it on the genitive."
+
+msgid "Nearly. Play the ones you missed and listen to the ending."
+msgstr "Nearly. Play the ones you missed and listen to the ending."
+
+msgid "Now build the forms: put the ending the cue asks for on the genitive. Where the genitive changes inside, the word shows it."
+msgstr "Now build the forms: put the ending the cue asks for on the genitive. Where the genitive changes inside, the word shows it."
+
+msgid "Now hear a line and pick what it means. Listen to how the word ends."
+msgstr "Now hear a line and pick what it means. Listen to how the word ends."
+
+msgid "of sugar"
+msgstr "of sugar"
+
+msgid "On the genitive: <0>suhkru</0>, <1>suhkruga</1>."
+msgstr "On the genitive: <0>suhkru</0>, <1>suhkruga</1>."
+
+msgid "On the same genitive: <0>suhkru</0>, <1>suhkruta</1>."
+msgstr "On the same genitive: <0>suhkru</0>, <1>suhkruta</1>."
+
+msgid "Ordering at a café"
+msgstr "Ordering at a café"
+
+msgid "Pick a word, then tap its forms to watch it change."
+msgstr "Pick a word, then tap its forms to watch it change."
+
+msgid "please"
+msgstr "please"
+
+msgid "river"
+msgstr "river"
+
+msgid "school"
+msgstr "school"
+
+msgid "see you tomorrow"
+msgstr "see you tomorrow"
+
+msgid "See you tomorrow."
+msgstr "See you tomorrow."
+
+msgid "She doesn’t drink milk, so <0>-ta</0>: without milk."
+msgstr "She doesn’t drink milk, so <0>-ta</0>: without milk."
+
+msgid "shop"
+msgstr "shop"
+
+msgid "shop’s, of a shop"
+msgstr "shop’s, of a shop"
+
+msgid "sugar"
+msgstr "sugar"
+
+msgid "Switch between Is and Works as, and tap a line to hear it."
+msgstr "Switch between Is and Works as, and tap a line to hear it."
+
+msgid "Switch between With and Without above once more, then try again."
+msgstr "Switch between With and Without above once more, then try again."
+
+msgid "Switch between With and Without, and tap a line to hear it. Only the ending changes."
+msgstr "Switch between With and Without, and tap a line to hear it. Only the ending changes."
+
+msgid "Tap the words above once more, then try again."
+msgstr "Tap the words above once more, then try again."
+
+msgid "tea"
+msgstr "tea"
+
+msgid "Tea with lemon and no sugar"
+msgstr "Tea with lemon and no sugar"
+
+msgid "Tea with milk"
+msgstr "Tea with milk"
+
+msgid "Tea with sugar and no lemon"
+msgstr "Tea with sugar and no lemon"
+
+msgid "The bus goes as far as Tartu."
+msgstr "The bus goes as far as Tartu."
+
+msgid "The genitive of arst."
+msgstr "The genitive of arst."
+
+msgid "The genitive of kes, who."
+msgstr "The genitive of kes, who."
+
+msgid "The genitive of pood."
+msgstr "The genitive of pood."
+
+msgid "The genitive of sõber."
+msgstr "The genitive of sõber."
+
+msgid "The genitive of suhkur: the u moves."
+msgstr "The genitive of suhkur: the u moves."
+
+msgid "The genitive: <0>od</0> becomes <1>e</1>."
+msgstr "The genitive: <0>od</0> becomes <1>e</1>."
+
+msgid "The genitive: an <0>e</0> goes on the end."
+msgstr "The genitive: an <0>e</0> goes on the end."
+
+msgid "The genitive: the <0>e</0> drops, and an <1>a</1> goes on the end."
+msgstr "The genitive: the <0>e</0> drops, and an <1>a</1> goes on the end."
+
+msgid "The genitive: the <0>u</0> moves to the end."
+msgstr "The genitive: the <0>u</0> moves to the end."
+
+msgid "The job alone"
+msgstr "The job alone"
+
+msgid "The partitive of aeg, time."
+msgstr "The partitive of aeg, time."
+
+msgid "The partitive of kohv, after a verb such as joob or tahab."
+msgstr "The partitive of kohv, after a verb such as joob or tahab."
+
+msgid "The partitive of tee, after joob."
+msgstr "The partitive of tee, after joob."
+
+msgid "The same ending says how you travel, so by bus is <0/>. To ask with whom, put it on <1/>, whose: <2/> Tap a line to hear it."
+msgstr "The same ending says how you travel, so by bus is <0/>. To ask with whom, put it on <1/>, whose: <2/> Tap a line to hear it."
+
+msgid "The short form for into, from pood."
+msgstr "The short form for into, from pood."
+
+msgid "time"
+msgstr "time"
+
+msgid "Two goodbyes end in <0>-ni</0> too. <1/> is see you tomorrow, and <2/> is goodbye. Tap a line to hear it."
+msgstr "Two goodbyes end in <0>-ni</0> too. <1/> is see you tomorrow, and <2/> is goodbye. Tap a line to hear it."
+
+msgid "Until and as far as"
+msgstr "Until and as far as"
+
+msgid "until five o’clock"
+msgstr "until five o’clock"
+
+msgid "until three"
+msgstr "until three"
+
+msgid "Until three"
+msgstr "Until three"
+
+msgid "Until when: <0>-ni</0>, until four."
+msgstr "Until when: <0>-ni</0>, until four."
+
+msgid "wants"
+msgstr "wants"
+
+msgid "we’re coming"
+msgstr "we’re coming"
+
+msgid "What does everyone want?"
+msgstr "What does everyone want?"
+
+msgid "What does it mean?"
+msgstr "What does it mean?"
+
+msgid "What does Jaan want?"
+msgstr "What does Jaan want?"
+
+msgid "What does Peeter drink?"
+msgstr "What does Peeter drink?"
+
+msgid "Who are you talking with?"
+msgstr "Who are you talking with?"
+
+msgid "whose"
+msgstr "whose"
+
+msgctxt "with or without"
+msgid "With"
+msgstr "With"
+
+msgid "with a book"
+msgstr "with a book"
+
+msgid "with a child"
+msgstr "with a child"
+
+msgid "with a friend"
+msgstr "with a friend"
+
+msgid "with lemon"
+msgstr "with lemon"
+
+msgid "with milk"
+msgstr "with milk"
+
+msgid "With milk"
+msgstr "With milk"
+
+msgid "with Mum"
+msgstr "with Mum"
+
+msgid "With or without"
+msgstr "With or without"
+
+msgid "With or without?"
+msgstr "With or without?"
+
+msgid "With someone or something"
+msgstr "With someone or something"
+
+msgid "With the clock from lesson {clock} it means until: <0/>, until five. Learn it as a phrase for now: lesson {times} does from and until with the clock."
+msgstr "With the clock from lesson {clock} it means until: <0/>, until five. Learn it as a phrase for now: lesson {times} does from and until with the clock."
+
+msgid "with whom?"
+msgstr "with whom?"
+
+msgid "without"
+msgstr "without"
+
+msgid "Without"
+msgstr "Without"
+
+msgctxt "with or without"
+msgid "Without"
+msgstr "Without"
+
+msgid "without lemon"
+msgstr "without lemon"
+
+msgid "without milk"
+msgstr "without milk"
+
+msgid "Without milk"
+msgstr "Without milk"
+
+msgid "without money"
+msgstr "without money"
+
+msgid "without sugar"
+msgstr "without sugar"
+
+msgid "Without sugar"
+msgstr "Without sugar"
+
+msgid "Word for word, “until seeing”."
+msgstr "Word for word, “until seeing”."
+
+msgid "Word for word, “until tomorrow”."
+msgstr "Word for word, “until tomorrow”."
+
+msgid "Words"
+msgstr "Words"
+
+msgctxt "works as a doctor"
+msgid "Works as"
+msgstr "Works as"
+
+msgid "You’ll also hear <0/> before the word: <1/>, without sugar. <2>Ilma</2> stresses the without, and the ending stays."
+msgstr "You’ll also hear <0/> before the word: <1/>, without sugar. <2>Ilma</2> stresses the without, and the ending stays."

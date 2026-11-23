@@ -1,0 +1,556 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "-⁠l form"
+msgstr "Форма на -⁠l"
+
+msgid "<0/> is the <1>-l</1> form of <2/>. That ending says on or at in lesson {places}, as in <3/>. You have met one already: <4/> In it, <5/> is “at you”."
+msgstr "<0/> — это форма на <1>-l</1> от <2/>. Это окончание в уроке {places} значит «на» и «у», как в <3/>. Одно такое слово уже встречалось: <4/> Здесь <5/> значит «у тебя»."
+
+msgid "<0/> means needed. I need help is <1/> Word for word, that’s “at me is needed help”. Ask with <2>kas</2>, as before."
+msgstr "<0/> значит «нужно». «Мне нужна помощь» — это <1/> Дословно: «у меня есть нужно помощь». Спрашивай с <2>kas</2>, как и раньше."
+
+msgid "<0>Mul on vaja</0> is I need: <1>Mul on vaja abi.</1>"
+msgstr "<0>Mul on vaja</0> — это «мне нужно»: <1>Mul on vaja abi.</1>"
+
+msgid "12 minutes"
+msgstr "12 минут"
+
+msgid "2 quizzes, a note to fill in and a conversation"
+msgstr "2 теста, записка с пропусками и разговор"
+
+msgid "a man’s name"
+msgstr "мужское имя"
+
+msgid "A name or a noun takes the same <0>-l</0>. <1/> Mari has a cat. <2/> Mum has a question."
+msgstr "Имя или существительное получает то же <0>-l</0>. <1/> У Мари есть кошка. <2/> У мамы есть вопрос."
+
+msgid "a woman’s name"
+msgstr "женское имя"
+
+msgid "After <0>pole</0> or <1>ei ole</1>, a thing changes form too, and lesson {partitive} teaches that form. For now, answer no with <2>Ei ole</2> or <3>Pole</3> alone. Learn one phrase whole: <4/> It means I don’t have time."
+msgstr "После <0>pole</0> или <1>ei ole</1> вещь тоже меняет форму, и эту форму объясняет урок {partitive}. А пока отвечай «нет» просто <2>Ei ole</2> или <3>Pole</3>. Одну фразу запомни целиком: <4/> Это значит «у меня нет времени»."
+
+msgid "After meil the verb is on, as after every -⁠l form."
+msgstr "После meil глагол — on, как и после любой формы на -⁠l."
+
+msgid "All of them. You heard who has it in every sentence."
+msgstr "Все верно: ты каждый раз слышишь, у кого что есть."
+
+msgid "All of them. You told am from have every time."
+msgstr "Все верно: ты каждый раз отличаешь «быть» от «иметь»."
+
+msgid "Am or have?"
+msgstr "Быть или иметь?"
+
+msgid "An -⁠l form plays in a sentence; a long form plays on its own."
+msgstr "Форма на -⁠l звучит в предложении, полная — отдельно."
+
+msgid "Answer no with the forms lesson {negation} uses for not: <0/> or <1/>"
+msgstr "Ответ «нет» — это формы отрицания из урока {negation}: <0/> или <1/>"
+
+msgid "Ask with <0>kas</0> or <1>kellel</1>, and answer with <2>Jah, on</2> or <3>Ei ole</3>."
+msgstr "Спрашивай с <0>kas</0> или <1>kellel</1>, отвечай <2>Jah, on</2> или <3>Ei ole</3>."
+
+msgid "Asking and answering"
+msgstr "Вопросы и ответы"
+
+msgid "at a friend"
+msgstr "у друга"
+
+msgid "at Dad"
+msgstr "у папы"
+
+msgid "at him or her"
+msgstr "у него или у неё"
+
+msgid "at him or her, for emphasis"
+msgstr "у него или у неё, чтобы подчеркнуть"
+
+msgid "at Jaan"
+msgstr "у Яана"
+
+msgid "at Mari"
+msgstr "у Мари"
+
+msgid "at me"
+msgstr "у меня"
+
+msgid "at me, for emphasis"
+msgstr "у меня, чтобы подчеркнуть"
+
+msgid "at Mum"
+msgstr "у мамы"
+
+msgid "at the teacher"
+msgstr "у учителя"
+
+msgid "at them"
+msgstr "у них"
+
+msgid "at them, for emphasis"
+msgstr "у них, чтобы подчеркнуть"
+
+msgid "at us"
+msgstr "у нас"
+
+msgid "at you, for emphasis"
+msgstr "у тебя, чтобы подчеркнуть"
+
+msgid "at you, to more than one; polite"
+msgstr "у вас; вежливое «у Вас»"
+
+msgid "at you, to one person"
+msgstr "у тебя"
+
+msgid "car"
+msgstr "машина"
+
+msgid "cat"
+msgstr "кошка"
+
+msgid "dad"
+msgstr "папа"
+
+msgid "Dad has a dog."
+msgstr "У папы есть собака."
+
+msgid "Do you have a book?"
+msgstr "У тебя есть книга?"
+
+msgid "Do you have a car?"
+msgstr "У тебя есть машина?"
+
+msgid "Do you have a car? To more than one, or polite."
+msgstr "У вас есть машина? Нескольким людям или вежливо."
+
+msgid "Do you have a question? To more than one, or polite."
+msgstr "У вас есть вопрос? Нескольким людям или вежливо."
+
+msgid "Do you have time?"
+msgstr "У тебя есть время?"
+
+msgid "Do you need help?"
+msgstr "Тебе нужна помощь?"
+
+msgid "dog"
+msgstr "собака"
+
+msgid "Each pronoun has its <0>-l</0> form. Tap one to hear it in a sentence."
+msgstr "У каждого местоимения своя форма на <0>-l</0>. Нажми на любую, чтобы услышать её в предложении."
+
+msgid "Each pronoun took -⁠l, and every verb is on."
+msgstr "Каждое местоимение получило -⁠l, а глагол везде on."
+
+msgid "Emal on auto: Mum has a car. Ema on auto would say Mum is a car."
+msgstr "Emal on auto: у мамы есть машина. Ema on auto значило бы «мама — это машина»."
+
+msgid "Emal on: Mum has."
+msgstr "Emal on: у мамы есть."
+
+msgid "Estonian has no everyday verb for have. To say I have a cat, it says <0/> Word for word, that’s “at me is a cat”."
+msgstr "Чтобы сказать, что у тебя что-то есть, по-эстонски говорят так же, как по-русски: <0/> Дословно это «у меня есть кошка». Глагола «иметь» здесь нет."
+
+msgid "Estonian says I have as “at me is”: <0>Mul on kass.</0>"
+msgstr "По-эстонски «у меня есть» говорят так же, как по-русски: <0>Mul on kass.</0>"
+
+msgid "Fill the gaps"
+msgstr "Заполни пропуски"
+
+msgid "Fine, thanks. And you?"
+msgstr "Хорошо, спасибо. А у тебя?"
+
+msgid "Flip the switch above once more, then try again."
+msgstr "Ещё раз пощёлкай переключатель выше, а потом попробуй снова."
+
+msgid "For emphasis"
+msgstr "Чтобы подчеркнуть"
+
+msgid "friend"
+msgstr "друг, подруга"
+
+msgid "genitive"
+msgstr "родительный падеж"
+
+msgid "he or she"
+msgstr "он или она"
+
+msgid "He or she has a child."
+msgstr "У него или у неё есть ребёнок."
+
+msgid "He or she has a dog."
+msgstr "У него или у неё есть собака."
+
+msgid "He or she has a good friend."
+msgstr "У него или у неё есть хороший друг."
+
+msgid "He or she has a good teacher."
+msgstr "У него или у неё хороший учитель."
+
+msgid "He or she is a child."
+msgstr "Он или она — ребёнок."
+
+msgid "He or she is a good friend."
+msgstr "Он или она — хороший друг."
+
+msgid "He or she is a good teacher."
+msgstr "Он или она — хороший учитель."
+
+msgid "Hear a sentence and pick what it means: being something, or having it. Between <0>ta on</0> and <1>tal on</1>, only the <2>-l</2> differs."
+msgstr "Послушай предложение и выбери, что оно значит: «быть» или «иметь». Между <0>ta on</0> и <1>tal on</1> разница только в <2>-l</2>."
+
+msgid "Hear a sentence and pick who has the thing. Listen to the first word, or to the word after <0/> in a question. <1>Mul</1> and <2>meil</2>, <3>sul</3> and <4>teil</4>, <5>tal</5> and <6>neil</6> differ by a sound or two."
+msgstr "Послушай предложение и выбери, у кого эта вещь. Слушай первое слово, а в вопросе — слово после <0/>. <1>Mul</1> и <2>meil</2>, <3>sul</3> и <4>teil</4>, <5>tal</5> и <6>neil</6> различаются одним-двумя звуками."
+
+msgid "Hearing who has it"
+msgstr "У кого это есть: на слух"
+
+msgid "help"
+msgstr "помощь"
+
+msgid "house"
+msgstr "дом"
+
+msgid "How to say I have in Estonian: <0>mul on</0>, word for word “at me is”, with the owner in the <1>-l</1> form and the verb <2>on</2> whoever has it."
+msgstr "Как сказать «у меня есть» по-эстонски: <0>mul on</0>, где владелец стоит в форме на <1>-l</1>, а глагол — <2>on</2>, у кого бы ни была вещь."
+
+msgid "I"
+msgstr "я"
+
+msgctxt "being or having"
+msgid "I am"
+msgstr "Быть"
+
+msgid "I am a cat is <0/> I have a cat is <1/> In the second, the cat is what “is”, so the verb is <2>on</2> whoever has it: <3>mul on, sul on, meil on</3>."
+msgstr "«Я кошка» — это <0/> «У меня есть кошка» — это <1/> Во втором предложении «есть» именно кошка, поэтому глагол всегда <2>on</2>, у кого бы она ни была: <3>mul on, sul on, meil on</3>."
+
+msgid "I am a cat."
+msgstr "Я кошка."
+
+msgid "I am or I have"
+msgstr "Быть или иметь"
+
+msgid "I do."
+msgstr "У меня."
+
+msgid "I don’t have time."
+msgstr "У меня нет времени."
+
+msgctxt "being or having"
+msgid "I have"
+msgstr "Иметь"
+
+msgid "I have a cat."
+msgstr "У меня есть кошка."
+
+msgid "I have a question."
+msgstr "У меня есть вопрос."
+
+msgid "I have a teacher."
+msgstr "У меня есть учитель."
+
+msgid "I need help."
+msgstr "Мне нужна помощь."
+
+msgid "I need money."
+msgstr "Мне нужны деньги."
+
+msgid "I’m a teacher."
+msgstr "Я учитель."
+
+msgid "In a yes sentence, one thing you can count stays in its first form, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
+msgstr "В утвердительном предложении одна вещь, которую можно посчитать, остаётся в первой форме, той, что в уроке {forms} идёт первой: <0/>, <1/>, <2/>. Время — это количество, а не одна вещь, поэтому у него другая форма: <3/> Эту форму объясняет урок {partitive}."
+
+msgid "In Kas sul on aega? and Mul pole aega, time takes this form."
+msgstr "В Kas sul on aega? и Mul pole aega время стоит именно в этой форме."
+
+msgid "Isal on: Dad has."
+msgstr "Isal on: у папы есть."
+
+msgid "Jaan does."
+msgstr "У Яана."
+
+msgid "Jaan has a car."
+msgstr "У Яана есть машина."
+
+msgid "Jaan on auto says Jaan is a car. For Jaan has a car, say Jaanil on auto."
+msgstr "Jaan on auto значит «Яан — это машина». «У Яана есть машина» — это Jaanil on auto."
+
+msgid "Jaan on minu sõber: Jaan is my friend. Jaanil on minu sõber would say Jaan has my friend."
+msgstr "Jaan on minu sõber: Яан — мой друг. Jaanil on minu sõber значило бы, что мой друг есть у Яана."
+
+msgid "Jaan’s"
+msgstr "Яана"
+
+msgid "Jaanil on koer: Jaan has a dog. Jaan on koer would say Jaan is a dog."
+msgstr "Jaanil on koer: у Яана есть собака. Jaan on koer значило бы «Яан — это собака»."
+
+msgid "Jaanil on: Jaan has."
+msgstr "Jaanil on: у Яана есть."
+
+msgid "Jah says yes, and ma pole says I am not. For no time, say Ei, mul pole."
+msgstr "Jah значит «да», а ma pole — «я не…». Чтобы сказать, что времени нет, говори Ei, mul pole."
+
+msgid "Jah, olen answers Kas sa oled? The answer to Kas sul on? is Jah, on."
+msgstr "Jah, olen — это ответ на Kas sa oled? На Kas sul on? отвечают Jah, on."
+
+msgid "Kas sul on? Do you have? The verb stays on for sul too."
+msgstr "Kas sul on? — «У тебя есть?» И после sul глагол остаётся on."
+
+msgid "Liis"
+msgstr "Лийс"
+
+msgid "Liis shares a flat with you and needs a hand. She speaks first; pick what you say back."
+msgstr "Лийс живёт с тобой в одной квартире, и ей нужна помощь. Она говорит первой, а ты выбирай, что ответить."
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Ma pole says I am not. For having, it’s mul pole."
+msgstr "Ma pole — это «я не…», о том, кто ты. Чтобы сказать «у меня нет», говорят mul pole."
+
+msgid "makes a yes-or-no question"
+msgstr "делает вопрос, на который отвечают «да» или «нет»"
+
+msgid "Mari has a cat."
+msgstr "У Мари есть кошка."
+
+msgid "Mari wrote about who has what. Pick the word for each gap, then hear the whole note."
+msgstr "Мари написала, у кого что есть. Выбери слово для каждого пропуска, а потом послушай всю записку."
+
+msgid "Mari’s note"
+msgstr "Записка Мари"
+
+msgid "Maril on: Mari has."
+msgstr "Maril on: у Мари есть."
+
+msgid "Me elame Tartus: we live in Tartu. The -⁠l form goes with on, not with other verbs."
+msgstr "Me elame Tartus: мы живём в Тарту. Форма на -⁠l идёт с on, а не с другими глаголами."
+
+msgid "Meil on: we have."
+msgstr "Meil on: у нас есть."
+
+msgid "Mina olen Mari: I am Mari. Mina takes olen; on goes with mul."
+msgstr "Mina olen Mari: я Мари. После mina идёт olen, а on — после mul."
+
+msgid "Minu ema on õpetaja: my mum is a teacher. Minu emal on õpetaja would say she has one."
+msgstr "Minu ema on õpetaja: моя мама — учительница. Minu emal on õpetaja значило бы, что у неё есть учитель."
+
+msgid "money"
+msgstr "деньги"
+
+msgid "Mul on kass: I have a cat. Ma would need olen and say I am a cat."
+msgstr "Mul on kass: у меня есть кошка. После ma было бы olen, и вышло бы «я кошка»."
+
+msgid "Mul on vaja: I need."
+msgstr "Mul on vaja: мне нужно."
+
+msgid "Mul on: I have."
+msgstr "Mul on: у меня есть."
+
+msgid "mum"
+msgstr "мама"
+
+msgid "Mum has a question."
+msgstr "У мамы есть вопрос."
+
+msgid "My friend has a house."
+msgstr "У моего друга есть дом."
+
+msgid "Names and nouns"
+msgstr "Имена и существительные"
+
+msgid "Names and nouns with -⁠l"
+msgstr "Имена и существительные с -⁠l"
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Почти. Переслушай те, где были ошибки."
+
+msgid "needed"
+msgstr "нужно"
+
+msgid "Neil on: they have."
+msgstr "Neil on: у них есть."
+
+msgid "No, I don’t."
+msgstr "Нет, у меня нет."
+
+msgid "on the table"
+msgstr "на столе"
+
+msgid "Õpetajal on: the teacher has."
+msgstr "Õpetajal on: у учителя есть."
+
+msgid "Put <0/> in front to ask: <1/> Answer yes with <2/> It’s <3>on</3>, not <4>olen</4>, because the car is what “is”."
+msgstr "Чтобы спросить, поставь в начало <0/>: <1/> Ответ «да» — <2/> Именно <3>on</3>, а не <4>olen</4>, потому что «есть» здесь машина."
+
+msgid "question"
+msgstr "вопрос"
+
+msgid "Saying what you need"
+msgstr "Как сказать, что тебе нужно"
+
+msgid "She asked whether you have time, not what you have."
+msgstr "Она спрашивала, есть ли у тебя время, а не что у тебя есть."
+
+msgid "Sina means you. To say that you have it, answer Minul."
+msgstr "Sina — это «ты». Чтобы сказать, что номер у тебя, отвечай Minul."
+
+msgid "Sinul says that Liis has it."
+msgstr "Sinul значит, что он у Лийс."
+
+msgid "Sõbral on: a friend has."
+msgstr "Sõbral on: у друга есть."
+
+msgid "Sul on auto says that Liis has a car. You don’t have one, so answer Ei ole."
+msgstr "Sul on auto значит, что машина есть у Лийс. У тебя машины нет, так что отвечай Ei ole."
+
+msgid "Sul on: you have."
+msgstr "Sul on: у тебя есть."
+
+msgid "Switch to I have and watch the start of each line."
+msgstr "Переключи на «Иметь» и следи за началом каждой строки."
+
+msgid "Tal on: he or she has."
+msgstr "Tal on: у него или у неё есть."
+
+msgid "Talk: at home"
+msgstr "Разговор: дома"
+
+msgid "Tap a form"
+msgstr "Коснись формы"
+
+msgid "Tap the six forms above once more, then try again."
+msgstr "Ещё раз послушай шесть форм выше, а потом попробуй снова."
+
+msgid "teacher"
+msgstr "учитель, учительница"
+
+msgid "Teil on: you have."
+msgstr "Teil on: у вас есть."
+
+msgid "The -⁠l form of kes, who."
+msgstr "Форма на -⁠l от kes, «кто»."
+
+msgid "The <0>-l</0> goes on the genitive, the form lesson {genitive} uses for whose. <1/> becomes <2/>, so Jaan has a car is <3/> Pick a word and tap each step."
+msgstr "<0>-l</0> добавляется к родительному падежу — форме, которую урок {genitive} использует для «чей». <1/> становится <2/>, так что «у Яана есть машина» — это <3/> Выбери слово и нажимай на каждый шаг."
+
+msgid "The genitive of Jaan."
+msgstr "Родительный падеж от Jaan."
+
+msgid "The genitive, the form for whose."
+msgstr "Родительный падеж, форма для «чей»."
+
+msgid "The long form of mul."
+msgstr "Полная форма mul."
+
+msgid "The long form of neil."
+msgstr "Полная форма neil."
+
+msgid "The long form of sul."
+msgstr "Полная форма sul."
+
+msgid "The long form of tal."
+msgstr "Полная форма tal."
+
+msgid "The owner takes <0>-l</0>: <1>mul, sul, tal, meil, teil, neil</1>. A name or noun adds it to its genitive: <2>Maril, Jaanil, emal</2>."
+msgstr "Владелец стоит в форме на <0>-l</0>: <1>mul, sul, tal, meil, teil, neil</1>. Имя или существительное добавляет это окончание к форме родительного падежа: <2>Maril, Jaanil, emal</2>."
+
+msgid "The teacher has a book."
+msgstr "У учителя есть книга."
+
+msgid "The verb is <0>on</0> whoever has the thing, and in a yes sentence one thing you can count stays in its first form: <1>Meil on maja.</1>"
+msgstr "Глагол — <0>on</0>, у кого бы ни была вещь, а в утвердительном предложении одна вещь, которую можно посчитать, остаётся в первой форме: <1>Meil on maja.</1>"
+
+msgid "they"
+msgstr "они"
+
+msgid "They have a child."
+msgstr "У них есть ребёнок."
+
+msgid "They have a house in Pärnu."
+msgstr "У них есть дом в Пярну."
+
+msgid "time"
+msgstr "время"
+
+msgid "To ask who has something, use <0/>, the <1>-l</1> form of <2/>, who. Answer with the owner alone, and for yourself with the long form <3/>."
+msgstr "Чтобы спросить, у кого что-то есть, говори <0/> — форму на <1>-l</1> от <2/>, «кто». В ответе достаточно назвать владельца, а если владелец ты — полную форму <3/>."
+
+msgid "To stress who has it, use the long forms: <0/>, <1/>, <2/> and <3/>. They work like the long pronouns lesson {pronouns} teaches, such as <4>mina</4> for <5>ma</5>. <6/> and <7/> have no long form."
+msgstr "Чтобы подчеркнуть, у кого это есть, используй полные формы: <0/>, <1/>, <2/> и <3/>. Они работают как полные местоимения из урока {pronouns}, например <4>mina</4> вместо <5>ma</5>. <6/> и <7/> отдельной полной формы не имеют."
+
+msgid "we"
+msgstr "мы"
+
+msgid "We have a home in Tartu."
+msgstr "У нас есть свой дом в Тарту."
+
+msgid "We have a house."
+msgstr "У нас есть дом."
+
+msgid "who"
+msgstr "кто"
+
+msgid "Who has a car?"
+msgstr "У кого есть машина?"
+
+msgid "Who has a question?"
+msgstr "У кого есть вопрос?"
+
+msgid "Who has it"
+msgstr "У кого это есть"
+
+msgid "Who has it: the -⁠l form"
+msgstr "У кого это есть: форма на -⁠l"
+
+msgid "Who has it?"
+msgstr "У кого это есть?"
+
+msgid "who has; at whom"
+msgstr "у кого"
+
+msgid "Word for word: “well, thanks. But at you?”"
+msgstr "Дословно: «хорошо, спасибо. А у тебя?»"
+
+msgid "Word for word: “yes, is”."
+msgstr "Дословно: «да, есть»."
+
+msgid "Yes, I do."
+msgstr "Да, есть."
+
+msgid "you"
+msgstr "ты"
+
+msgid "You are a teacher."
+msgstr "Ты учитель."
+
+msgid "You have a car."
+msgstr "У тебя есть машина."
+
+msgid "You have a good friend."
+msgstr "У тебя есть хороший друг."
+
+msgid "You have a good teacher. To more than one, or polite."
+msgstr "У вас хороший учитель. Нескольким людям или вежливо."
+
+msgid "You have a teacher."
+msgstr "У тебя есть учитель."
+
+msgid "You share a flat with Liis. You don’t have a car, but Jaan does."
+msgstr "Ты живёшь в одной квартире с Лийс. Машины у тебя нет, а у Яана есть."
+
+msgid "you, to more than one; polite"
+msgstr "вы; вежливое «Вы»"
+
+msgid "You’re a good friend."
+msgstr "Ты хороший друг."
+
+msgid "You’re a good teacher. Polite, to one person."
+msgstr "Вы хороший учитель. Вежливо, одному человеку."

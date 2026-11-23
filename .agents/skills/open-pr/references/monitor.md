@@ -5,6 +5,7 @@ Supervise the first automated pipeline until the PR is [review-ready](../SKILL.m
 ## Observe
 
 - Use one watcher per PR, started when the PR is created ([Open or update the PR](../SKILL.md#open-or-update-the-pr)): the runtime's PR monitor when available, such as Auto-fix in the Claude desktop app, otherwise `gh pr checks <number> --watch --required` in the background. A required-check watcher does not establish that review bots have finished; inspect their checks and review threads separately. Wait for configured blocking reviews on the current head; advisory reviews do not gate readiness.
+- Treat watcher output as an observation, not the readiness verdict. An empty list of required checks does not establish readiness; compare the live results with the checks this repository expects for the diff.
 - After each push, observe the new head. Match check results and automated reviews to that SHA; inspect unresolved older findings too when they still apply to the current code.
 - A wake-up or green check is a reason to reassess the gate, not evidence that the whole PR is ready. If the observation mechanism cannot continue, report the missing capability and current state.
 

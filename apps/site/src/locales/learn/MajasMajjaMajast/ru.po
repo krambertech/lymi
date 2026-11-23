@@ -1,0 +1,419 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "-sse means into or to"
+msgstr "-sse отвечает на «куда?»"
+
+msgid "-st means out of or from"
+msgstr "-st отвечает на «откуда?»"
+
+msgid "<0>Koolis</0> says where you are. To say where from, use <1>-st</1>: <2>koolist</2>."
+msgstr "<0>Koolis</0> говорит, где ты находишься. Чтобы сказать «откуда», нужно <1>-st</1>: <2>koolist</2>."
+
+msgid "<0>Koolisse</0> says where to: you’d be coming to school. She asked where from."
+msgstr "<0>Koolisse</0> отвечает на «куда?»: получилось бы, что ты приходишь в школу. Мари спросила, откуда."
+
+msgid "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>?"
+msgstr "<0>Kus</0>, <1>kuhu</1> или <2>kust</2>?"
+
+msgid "<0>Pärnus</0> says in Pärnu. <1>Pärit</1> takes the form for where from: <2>Pärnust</2>."
+msgstr "<0>Pärnus</0> — это «в Пярну». После <1>pärit</1> нужна форма «откуда»: <2>Pärnust</2>."
+
+msgid "<0>Pärnusse</0> says to Pärnu. <1>Pärit</1> takes the form for where from: <2>Pärnust</2>."
+msgstr "<0>Pärnusse</0> отвечает на «куда?». После <1>pärit</1> нужна форма «откуда»: <2>Pärnust</2>."
+
+msgid "<0>Poes</0> says where you are. After <1>lähen</1>, say where to: <2>poodi</2>."
+msgstr "<0>Poes</0> говорит, где ты находишься. После <1>lähen</1> нужно «куда»: <2>poodi</2>."
+
+msgid "<0>Poes</0> says you’re in the shop. She asked where you’re going."
+msgstr "<0>Poes</0> значит, что ты в магазине. Мари спросила, куда ты идёшь."
+
+msgid "<0>Tartust</0> says from Tartu. You’re going to Tartu: <1>Tartusse</1>."
+msgstr "<0>Tartust</0> значит «из Тарту». А ты едешь в Тарту: <1>Tartusse</1>."
+
+msgid "10 minutes"
+msgstr "10 минут"
+
+msgid "2 quizzes and a conversation"
+msgstr "2 теста и разговор"
+
+msgid "A cat and a house"
+msgstr "Кот и дом"
+
+msgid "After <0>lähen</0>, say where to: <1>Tartusse</1>. <2>Tartus</2> is where you are."
+msgstr "После <0>lähen</0> говорят, куда: <1>Tartusse</1>. <2>Tartus</2> отвечает на «где?»."
+
+msgid "All of them. You told <0>-s</0>, <1>-sse</1> and <2>-st</2> apart every time."
+msgstr "Все. Ты различаешь на слух <0>-s</0>, <1>-sse</1> и <2>-st</2>."
+
+msgid "All three go on the same stem: <0>haiglas, haiglasse, haiglast</0>."
+msgstr "Все три окончания встают на одну и ту же основу: <0>haiglas, haiglasse, haiglast</0>."
+
+msgid "Asks where someone or something is going."
+msgstr "Спрашивает, куда кто-то или что-то идёт."
+
+msgid "at home"
+msgstr "дома"
+
+msgid "at school, in a school"
+msgstr "в школе"
+
+msgid "at the office"
+msgstr "в офисе"
+
+msgid "at work"
+msgstr "на работе"
+
+msgid "café"
+msgstr "кафе"
+
+msgid "cat"
+msgstr "кошка"
+
+msgid "Come home!"
+msgstr "Иди домой!"
+
+msgid "English puts in, into or out of before the place. Estonian changes the end of the place instead. Tap a form to watch the cat move and hear the sentence."
+msgstr "Русский различает это предлогом и падежом: в доме, в дом, из дома. Эстонский меняет только конец слова. Нажми на форму, чтобы увидеть, как движется кот, и услышать предложение."
+
+msgid "Estonian asks three questions about a place, <0>kus</0>, <1>kuhu</1> and <2>kust</2>, and answers each with its own ending: <3>majas, majja, majast</3>."
+msgstr "Эстонский задаёт о месте три вопроса — <0>kus</0>, <1>kuhu</1> и <2>kust</2>, то есть где, куда и откуда, — и на каждый отвечает своим окончанием: <3>majas, majja, majast</3>."
+
+msgid "For <0/>, <1/> and <2/>, the short form is the third form a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. Two words have a short form of their own: <4/> for <5/>, <6/> for <7/>."
+msgstr "У <0/>, <1/> и <2/> короткая форма — это третья форма из словаря, её показывает урок {threeForms}: <3>pood, poe, poodi</3>. У двух слов своя короткая форма: <4/> от <5/>, <6/> от <7/>."
+
+msgid "Four places, each with a form for kus, kuhu and kust"
+msgstr "Четыре места, у каждого форма для kus, kuhu и kust"
+
+msgid "from Estonia"
+msgstr "из Эстонии"
+
+msgid "from Finland"
+msgstr "из Финляндии"
+
+msgid "from home"
+msgstr "из дома"
+
+msgid "from Pärnu"
+msgstr "из Пярну"
+
+msgid "from school"
+msgstr "из школы"
+
+msgid "from Tallinn"
+msgstr "из Таллина"
+
+msgid "from Tartu"
+msgstr "из Тарту"
+
+msgid "from the café"
+msgstr "из кафе"
+
+msgid "from the hospital"
+msgstr "из больницы"
+
+msgid "from the office"
+msgstr "из офиса"
+
+msgid "from the shop"
+msgstr "из магазина"
+
+msgid "from town"
+msgstr "из города"
+
+msgid "from Ukraine"
+msgstr "из Украины"
+
+msgid "from, by birth"
+msgstr "родом из"
+
+msgid "Hear a place on its own and pick the question it answers. Only its ending tells you: <0>-s</0>, <1>-sse</1> or <2>-st</2>."
+msgstr "Послушай место без предложения и выбери вопрос, на который оно отвечает. Подсказывает только окончание: <0>-s</0>, <1>-sse</1> или <2>-st</2>."
+
+msgid "home"
+msgstr "дом"
+
+msgid "Home, <0/>, has a short form of its own: <1/> when you go there. Then <2/> when you’re there, <3/> when you leave."
+msgstr "У слова «дом», <0/>, своя короткая форма: <1/> — когда идёшь домой. А дальше <2/> — когда ты дома, <3/> — когда уходишь из дома."
+
+msgid "home, to home"
+msgstr "домой"
+
+msgid "hospital"
+msgstr "больница"
+
+msgid "house"
+msgstr "дом"
+
+msgid "I’m at home."
+msgstr "Я дома."
+
+msgid "I’m coming from home."
+msgstr "Я иду из дома."
+
+msgid "I’m coming from school."
+msgstr "Я иду из школы."
+
+msgid "I’m coming from the shop."
+msgstr "Я иду из магазина."
+
+msgid "I’m from Estonia."
+msgstr "Я из Эстонии."
+
+msgid "I’m from Finland."
+msgstr "Я из Финляндии."
+
+msgid "I’m from Tallinn."
+msgstr "Я из Таллина."
+
+msgid "I’m from Ukraine."
+msgstr "Я из Украины."
+
+msgid "I’m going to school."
+msgstr "Я иду в школу."
+
+msgid "I’m going to Tartu."
+msgstr "Я еду в Тарту."
+
+msgid "I’m going to the hospital."
+msgstr "Я иду в больницу."
+
+msgid "I’m going to the shop."
+msgstr "Я иду в магазин."
+
+msgid "in a café"
+msgstr "в кафе"
+
+msgid "in a hospital"
+msgstr "в больнице"
+
+msgid "in Pärnu"
+msgstr "в Пярну"
+
+msgid "in Tallinn"
+msgstr "в Таллине"
+
+msgid "in Tartu"
+msgstr "в Тарту"
+
+msgid "in the house"
+msgstr "в доме"
+
+msgid "in the shop"
+msgstr "в магазине"
+
+msgid "in town"
+msgstr "в городе"
+
+msgid "into the house"
+msgstr "в дом"
+
+msgid "Kus with a t on the end."
+msgstr "Kus с t на конце."
+
+msgid "Lesson {places} taught <0/>, where, and its <1>-s</1>: <2/> Estonian asks two more questions about a place. <3/> asks where to: <4/> <5/> asks where from: <6/>"
+msgstr "В уроке {places} шла речь о <0/>, «где», и об окончании <1>-s</1>: <2/> Эстонский задаёт о месте ещё два вопроса. <3/> спрашивает «куда»: <4/> <5/> спрашивает «откуда»: <6/>"
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Ma olen pärit… is I’m from…"
+msgstr "Ma olen pärit… значит «я родом из…»."
+
+msgid "Mari"
+msgstr "Мари"
+
+msgid "Mari asks <0/>, <1/> and <2/>. Answer each with the form that fits its question."
+msgstr "Мари спрашивает <0/>, <1/> и <2/>. На каждый вопрос отвечай формой, которая к нему подходит."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Почти. Переслушай те, где были ошибки."
+
+msgid "out of the house"
+msgstr "из дома"
+
+msgid "Pärnu"
+msgstr "Пярну"
+
+msgid "Pärnu, a town by the sea"
+msgstr "Пярну, город у моря"
+
+msgid "Places that take <0>-l</0>, such as <1/>, have three forms of their own. Lesson {onto} teaches them."
+msgstr "У мест с окончанием <0>-l</0>, например <1/>, свои три формы. О них — в уроке {onto}."
+
+msgid "Put each form under the question it answers. The short forms count too: <0/> and <1/> answer <2/>."
+msgstr "Разложи формы по вопросам, на которые они отвечают. Короткие формы тоже считаются: <0/> и <1/> отвечают на <2/>."
+
+msgid "school"
+msgstr "школа"
+
+msgid "shop"
+msgstr "магазин"
+
+msgid "Short forms for where to"
+msgstr "Короткие формы для «куда»"
+
+msgid "Short forms of everyday words"
+msgstr "Короткие формы повседневных слов"
+
+msgid "So a place has a form for each question, all three on the same stem. Tap a form to hear it."
+msgstr "Значит, у места есть форма для каждого вопроса, и все три стоят на одной основе. Нажми на форму, чтобы её услышать."
+
+msgid "Some everyday words also have a short form for where to, with no <0>-sse</0>: <1/> <2/>"
+msgstr "У некоторых повседневных слов есть ещё и короткая форма для «куда», без <0>-sse</0>: <1/> <2/>"
+
+msgid "Some everyday words have a short form for where to: <0>kooli, poodi, linna, majja, koju</0>."
+msgstr "У некоторых повседневных слов есть короткая форма для «куда»: <0>kooli, poodi, linna, majja, koju</0>."
+
+msgid "Sort by question"
+msgstr "Разложи по вопросам"
+
+msgid "Sort the forms"
+msgstr "Разложи формы"
+
+msgid "Talk: in the street"
+msgstr "Разговор: на улице"
+
+msgid "Tallinn, the capital"
+msgstr "Таллин, столица"
+
+msgid "Tap a form"
+msgstr "Коснись формы"
+
+msgid "Tap a form to hear the answer."
+msgstr "Нажми на форму, чтобы услышать ответ."
+
+msgid "Tap a place to hear the answer."
+msgstr "Нажми на место, чтобы услышать ответ."
+
+msgid "Tap the forms in the table above once more, then try again."
+msgstr "Ещё раз нажми на формы в таблице выше, а потом попробуй снова."
+
+msgid "Tartu"
+msgstr "Тарту"
+
+msgid "Tartu, a university town"
+msgstr "Тарту, университетский город"
+
+msgid "The <0>-sse</0> forms are right too: <1/>, <2/>, <3/>, <4/>. <5/>, <6/>, <7/>, <8/> and <9/> have only the <10>-sse</10> form: <11/>, <12/>. So when you don’t know a short form, <13>-sse</13> is the safe choice."
+msgstr "Формы на <0>-sse</0> тоже правильные: <1/>, <2/>, <3/>, <4/>. У <5/>, <6/>, <7/>, <8/> и <9/> есть только форма на <10>-sse</10>: <11/>, <12/>. Так что, если не знаешь короткой формы, <13>-sse</13> — надёжный выбор."
+
+msgid "The cat comes out of the house."
+msgstr "Кот выходит из дома."
+
+msgid "The cat goes into the house."
+msgstr "Кот заходит в дом."
+
+msgid "The cat is in the house."
+msgstr "Кот в доме."
+
+msgid "Three questions about a place"
+msgstr "Три вопроса о месте"
+
+msgid "Three questions, three endings: <0>kus?</0> <1>-s</1> for in, <2>kuhu?</2> <3>-sse</3> for into, <4>kust?</4> <5>-st</5> for out of: <6>Tartus, Tartusse, Tartust</6>."
+msgstr "Три вопроса — три окончания: <0>kus?</0> <1>-s</1> — где, <2>kuhu?</2> <3>-sse</3> — куда, <4>kust?</4> <5>-st</5> — откуда: <6>Tartus, Tartusse, Tartust</6>."
+
+msgid "to Pärnu"
+msgstr "в Пярну"
+
+msgid "To say into or to, put <0>-sse</0> where the <1>-s</1> was: <2/>, <3/>; <4/>, <5/>. Ask with <6/>."
+msgstr "Чтобы сказать «куда», поставь <0>-sse</0> на место <1>-s</1>: <2/>, <3/>; <4/>, <5/>. Спрашивают словом <6/>."
+
+msgid "To say out of or from, swap the <0>-s</0> for <1>-st</1>: <2/>, <3/>. The rest of the word stays as it was: <4/>, <5/>."
+msgstr "Чтобы сказать «откуда», замени <0>-s</0> на <1>-st</1>: <2/>, <3/>. Остальная часть слова не меняется: <4/>, <5/>."
+
+msgid "to school"
+msgstr "в школу"
+
+msgid "to Tallinn"
+msgstr "в Таллин"
+
+msgid "to Tartu"
+msgstr "в Тарту"
+
+msgid "to the café"
+msgstr "в кафе"
+
+msgid "to the hospital"
+msgstr "в больницу"
+
+msgid "to the office"
+msgstr "в офис"
+
+msgid "to the shop"
+msgstr "в магазин"
+
+msgid "to town"
+msgstr "в город"
+
+msgid "town, city"
+msgstr "город"
+
+msgid "We’re going to town."
+msgstr "Мы идём в город."
+
+msgid "When you don’t know a short form, use <0>-sse</0>: it is right for every place in this lesson."
+msgstr "Если не знаешь короткой формы, бери <0>-sse</0>: она верна для каждого места в этом уроке."
+
+msgid "where"
+msgstr "где"
+
+msgid "Where are you coming from?"
+msgstr "Откуда ты идёшь?"
+
+msgid "Where are you from?"
+msgstr "Откуда ты?"
+
+msgid "Where are you going?"
+msgstr "Куда ты идёшь?"
+
+msgid "where from"
+msgstr "откуда"
+
+msgid "Where from?"
+msgstr "Откуда?"
+
+msgid "Where something comes from takes <0>-st</0>: <1>kodust</1>."
+msgstr "Откуда что-то идёт — <0>-st</0>: <1>kodust</1>."
+
+msgid "Where something goes takes <0>-sse</0> or a short form: <1>Tartusse, koju</1>."
+msgstr "Куда что-то идёт — <0>-sse</0> или короткая форма: <1>Tartusse, koju</1>."
+
+msgid "Where something is takes <0>-s</0>: <1>kodus</1>."
+msgstr "Где что-то находится — <0>-s</0>: <1>kodus</1>."
+
+msgid "Where the cat is and goes"
+msgstr "Где кот и куда он идёт"
+
+msgid "where to"
+msgstr "куда"
+
+msgid "Where to?"
+msgstr "Куда?"
+
+msgid "Where you’re from"
+msgstr "Откуда ты"
+
+msgid "Where you’re from takes <0>-st</0>: <1>Ma olen pärit Ukrainast.</1>"
+msgstr "Откуда ты родом — тоже <0>-st</0>: <1>Ma olen pärit Ukrainast.</1>"
+
+msgid "Where?"
+msgstr "Где?"
+
+msgid "Which question the place answers"
+msgstr "На какой вопрос отвечает место"
+
+msgid "You meet Mari on your way from school to the shop. You’re from Pärnu, and tomorrow you’re going to Tartu."
+msgstr "Ты встречаешь Мари по дороге из школы в магазин. Ты из Пярну, а завтра едешь в Тарту."
+
+msgid "You met <0/> in lesson {questions}. After <1/>, the country or town takes <2>-st</2>. Tap a place to hear the answer."
+msgstr "Вопрос <0/> был в уроке {questions}. После <1/> страна или город стоит в форме на <2>-st</2>. Нажми на место, чтобы услышать ответ."
+
+msgid "You’ll hear it and see what it means."
+msgstr "Услышишь её и увидишь, что она значит."

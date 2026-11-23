@@ -1,7 +1,6 @@
 import Svg, { Circle, Line, Rect } from "react-native-svg";
 import { usePalette } from "../theme/palette";
 
-/** Two kept days joined by a dashed bridge: the month's rest mark, small. */
 export function RestGlyph() {
   const p = usePalette();
   return (

@@ -15,7 +15,7 @@ test("the summary makes browser coverage and failed gates explicit", () => {
     TITLE_OUTCOME: "success",
     DEPENDENCIES_OUTCOME: "success",
     CHECK_OUTCOME: "success",
-    MODELS_OUTCOME: "failure",
+    MODELS_RESULT: "failure",
     I18N_OUTCOME: "success",
     MIGRATIONS_OUTCOME: "success",
     BUILD_OUTCOME: "success",
@@ -49,6 +49,7 @@ test("the final result accepts a deliberately skipped browser job", () => {
     ciFailures({
       PLAN_RESULT: "success",
       QUALITY_RESULT: "success",
+      MODELS_RESULT: "success",
       RUN_E2E: "false",
       BROWSER_RESULT: "skipped",
     }),
@@ -61,10 +62,11 @@ test("the final result rejects failed or missing required jobs", () => {
     ciFailures({
       PLAN_RESULT: "success",
       QUALITY_RESULT: "failure",
+      MODELS_RESULT: "cancelled",
       RUN_E2E: "true",
       BROWSER_RESULT: "skipped",
     }),
-    ["quality checks", "browser E2E"],
+    ["quality checks", "flow models", "browser E2E"],
   );
 });
 
@@ -73,6 +75,7 @@ test("the final result rejects a missing coverage decision", () => {
     ciFailures({
       PLAN_RESULT: "success",
       QUALITY_RESULT: "success",
+      MODELS_RESULT: "success",
       BROWSER_RESULT: "skipped",
     }),
     ["coverage planning"],

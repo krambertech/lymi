@@ -8,7 +8,6 @@ import { useOnGlass } from "./surface";
 
 const SLIDE = spring(CHOICE_SLIDE);
 
-/** The chosen plate springs to the new option with a trace of overshoot. motion.md "Choices". */
 export function Segmented<T extends string>({
   value,
   options,
@@ -57,7 +56,6 @@ export function Segmented<T extends string>({
           <Text
             className={`text-md font-medium ${value === o.value ? "text-ink" : "text-ink-muted"}`}
             numberOfLines={1}
-            // Options share one row, so a deck's name grows only as far as it still reads whole.
             maxFontSizeMultiplier={1.3}
           >
             {o.label}

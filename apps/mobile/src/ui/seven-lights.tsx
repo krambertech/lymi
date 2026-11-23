@@ -17,12 +17,10 @@ import { clear, type Palette, usePalette } from "../theme/palette";
 import { weekLetters } from "./days";
 import { Text } from "./primitives";
 
-/** Three steps of amber from the lantern's glass to its flame. streak.md. */
 function fill(p: Palette, level: Exclude<LightLevel, 0>) {
   return level === 3 ? p.amber : level === 2 ? p["lit-high"] : p["lit-low"];
 }
 
-/** The last seven days as seven glasses; the light climbs each one with what the day held. */
 export function SevenLights({
   dates,
   days,
@@ -36,26 +34,16 @@ export function SevenLights({
   turn,
   todayRef,
 }: {
-  /** Each day's review-local YYYY-MM-DD, oldest first; a blank date has no letter. */
   dates: string[];
   days: number[];
   goal: number;
   todayDone?: boolean;
-  /** Which days counted toward a streak; those are full whatever they held. */
   satisfied?: boolean[];
-  /** Which days were rest days; their glass is edged in dashes. streak.md. */
   rest?: boolean[];
-  /** Each day's own goal, so lowering today's goal never redraws an earlier day. */
   goals?: (number | null)[];
   size?: "sm" | "lg";
-  /** At the end of a review the lights switch on one after another, from this many ms. */
   sequence?: number;
-  /**
-   * When the day has just turned, today's light first shows the reviews it held before this one
-   * (`from`), then fills at `at`, when the spark lands in it.
-   */
   turn?: { at: number; from: number };
-  /** Today's glass, for the spark to find it. */
   todayRef?: AnimatedRef<View>;
 }) {
   const { t, i18n } = useLingui();
@@ -65,7 +53,6 @@ export function SevenLights({
   const letters = weekLetters(dates, i18n.locale);
   const reference = lightReference(days);
   const lit = daysReviewed(days, days.length);
-  // Rest is named, never counted. docs/review.md.
   const label = rest?.some(Boolean)
     ? t`Reviewed on ${lit} of the last ${plural(days.length, { one: "# day", other: "# days" })}, including a rest day`
     : t`Reviewed on ${lit} of the last ${plural(days.length, { one: "# day", other: "# days" })}`;
@@ -127,7 +114,6 @@ function Glass({
   today: boolean;
   resting: boolean;
   delay?: number | undefined;
-  /** The level it rises to first, and when it fills from there to `level`. */
   held?: LightLevel | undefined;
   fillAt?: number | undefined;
   glassRef?: AnimatedRef<View> | undefined;
@@ -155,7 +141,6 @@ function Glass({
   const step = (heldLevel ?? 0) / 3;
   const rise = useAnimatedStyle(() => ({
     transform: [{ scaleY: h.value }],
-    // Until the spark lands the light keeps the colour it had before this review.
     backgroundColor: h.value > step + 0.01 ? final : held,
   }));
   const swell = useAnimatedStyle(() => ({ transform: [{ scale: pulse.value }] }));
@@ -176,7 +161,6 @@ function Glass({
   };
   return (
     <Animated.View ref={glassRef} style={[box, swell]}>
-      {/* Tinted like the month's rest band, so the two read as one mark. */}
       {resting && <View className="absolute inset-0" style={{ backgroundColor: `${p.amber}12` }} />}
       <Animated.View
         style={[
@@ -185,7 +169,6 @@ function Glass({
             inset: 0,
             transformOrigin: "50% 100%",
             experimental_backgroundImage: `linear-gradient(to bottom, ${p["lit-sheen"]}, ${clear(p["lit-sheen"])} 70%)`,
-            // Light caught along the top edge. A border, because a shadow on a clipped child breaks its corners.
             borderTopWidth: 1,
             borderTopColor: p["lit-edge"],
           } as ViewStyle,

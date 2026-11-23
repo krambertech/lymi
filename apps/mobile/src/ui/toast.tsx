@@ -7,37 +7,23 @@ import { usePalette, useRoom } from "../theme/palette";
 import { Icon } from "./icons";
 import { Press, Text } from "./primitives";
 
-// What just happened, with at most one action, as the web's toast. phone.md "After an action".
-
-// iOS's compact pill, so it sits over a review's card or a list without taking it over.
 const HEIGHT = 44;
-// Ink over the blur, as opaque as Undo's 4.5:1 needs over a white or black screen beneath.
 const SMOKE = { light: "e6", dark: "f0" } as const;
 
 interface ToastProps {
-  /** One sentence, quoting at most 60 characters of the learner's text; wraps to two lines. */
   title: string;
-  /** A failure carries a red icon; anything else a check. */
   error?: boolean;
-  /** Usually Undo, or Try again on a failure. */
   action?: { label: string; onPress: () => void };
-  /** False for a sample that sits still on a page, such as the design screen's. */
   announce?: boolean;
 }
 
-/**
- * The toast's pill: smoked glass, the text colour at 90% or more over a blur, so it stands apart from
- * the plates under it in either room. Without glass it is the text colour, as the web's toast is.
- */
 export function Toast({ title, error = false, action, announce = true }: ToastProps) {
   const p = usePalette();
   const glass = useGlass();
-  // iOS ignores accessibilityLiveRegion, so VoiceOver hears the toast through an announcement.
   const spoken = action ? `${title.replace(/[.!?]$/, "")}. ${action.label}` : title;
   useEffect(() => {
     if (announce && Platform.OS === "ios") AccessibilityInfo.announceForAccessibility(spoken);
   }, [announce, spoken]);
-  // The pill is the other room's colour, so its red is the other room's too.
   const room = useRoom();
   const red = palette[room === "dark" ? "light" : "dark"].danger;
   const style: ViewStyle = {
@@ -61,7 +47,6 @@ export function Toast({ title, error = false, action, announce = true }: ToastPr
         <Press
           onPress={action.onPress}
           accessibilityRole="button"
-          // 36 pt inside the pill, reaching 44 through its hit area.
           hitSlop={4}
           className="h-9 justify-center px-3"
         >

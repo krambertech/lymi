@@ -1,0 +1,632 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+#. placeholder {0}: means(row.no, i18n)
+msgid "{0} The sentence starts with the cat, so <0>kass</0> keeps its first form, even with <1>pole</1>."
+msgstr "{0} Предложение начинается с кошки, поэтому <0>kass</0> остаётся в первой форме, хотя в предложении есть <1>pole</1>."
+
+msgid "<0/> asks how many, and the noun after it takes its third form too. For a price, ask with <1>kui palju</1>, how much, from lesson {questions}."
+msgstr "<0/> спрашивает «сколько» о том, что можно посчитать, и существительное после него тоже стоит в третьей форме. Цену спрашивают через <1>kui palju</1> из урока {questions}."
+
+msgid "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its third form: <2/> (Lesson {have} teaches <3>Mul on</3>.)"
+msgstr "<0/> У меня есть кошка. Чтобы сказать, что кошки нет, возьми <1/> из урока {negation}, а кошка перейдёт в третью форму: <2/> (О <3>Mul on</3> — в уроке {have}.)"
+
+msgid "<0/> is a cup of coffee. The amount comes first, and what it measures follows in its third form: <1/> becomes <2/>."
+msgstr "<0/> — чашка кофе. Сначала идёт слово количества, а за ним то, что меряют, в третьей форме: <1/> становится <2/>. По-русски так же: «стакан воды», а не «стакан вода»."
+
+msgid "<0/> is one cat; <1/> is two cats. After a number from two up, a noun takes its third form, the partitive, and stays singular: <2/> has no plural ending."
+msgstr "<0/> — одна кошка, <1/> — две кошки. После числа от двух и больше существительное стоит в третьей форме, партитиве, и остаётся в единственном числе: у <2/> нет окончания множественного числа."
+
+msgid "<0/>, a lot, <1/>, a little, and <2/>, not much, work the same way. The same rule is behind <3>Kui palju kohvi sa jood?</3> from lesson {questions}."
+msgstr "<0/> (много), <1/> (немного) и <2/> (мало) работают так же. То же правило стоит за <3>Kui palju kohvi sa jood?</3> из урока {questions}."
+
+#. placeholder {0}: means(text, i18n)
+msgid "<0>{text}</0>, {0}"
+msgstr "<0>{text}</0>, {0}"
+
+#. placeholder {0}: means(text, i18n)
+msgid "<0>{text}</0>, {0}; its third form is <1>maja</1> too, so it looks the same."
+msgstr "<0>{text}</0>, {0}; третья форма тоже <1>maja</1>, поэтому слово не меняется."
+
+msgid "€10"
+msgstr "10 €"
+
+msgid "€12"
+msgstr "12 €"
+
+msgid "€18"
+msgstr "18 €"
+
+msgid "€2"
+msgstr "2 €"
+
+msgid "€7"
+msgstr "7 €"
+
+msgid "€8"
+msgstr "8 €"
+
+msgid "16 minutes"
+msgstr "16 минут"
+
+msgid "6 exercises"
+msgstr "6 упражнений"
+
+msgid "a cup of coffee"
+msgstr "чашка кофе"
+
+msgid "a glass of water"
+msgstr "стакан воды"
+
+msgid "a kilo of cheese"
+msgstr "килограмм сыра"
+
+msgid "a little"
+msgstr "немного"
+
+msgid "a little milk"
+msgstr "немного молока"
+
+msgid "a lot of money"
+msgstr "много денег"
+
+msgid "a lot, much, many"
+msgstr "много"
+
+msgid "A voice message from the market"
+msgstr "Голосовое сообщение с рынка"
+
+msgid "Aeg, aja, aega."
+msgstr "Aeg, aja, aega."
+
+msgid "After <0>pole</0>, what isn’t there takes the third form."
+msgstr "После <0>pole</0> то, чего нет, стоит в третьей форме."
+
+msgid "After <0>pole</0>, what someone hasn’t got, or what there is none of in a place, takes the third form: <1>Mul pole kassi, Laual pole leiba</1>. When the sentence starts with the thing, it keeps its first: <2>Kass pole laual</2>."
+msgstr "После <0>pole</0> то, чего у кого-то нет или чего нет в каком-то месте, стоит в третьей форме: <1>Mul pole kassi, Laual pole leiba</1>. Если предложение начинается с самого предмета, он остаётся в первой: <2>Kass pole laual</2>."
+
+msgid "After <0>pole</0>, what there is none of in a place takes the third form: <1>pole leiba</1>."
+msgstr "После <0>pole</0> то, чего нет в каком-то месте, стоит в третьей форме: <1>pole leiba</1>."
+
+msgid "After <0>üks</0> on its own, a noun keeps its first form. From two up, it takes its third."
+msgstr "Если перед существительным только <0>üks</0>, оно остаётся в первой форме. От двух — стоит в третьей."
+
+msgid "After <0>üks</0> on its own, the first form: <1>üks kass</1>."
+msgstr "Только <0>üks</0> — значит, первая форма: <1>üks kass</1>."
+
+msgid "After <0>üks</0> on its own, the first form: <1>üks leib</1>."
+msgstr "Только <0>üks</0> — значит, первая форма: <1>üks leib</1>."
+
+msgid "After a number from two up"
+msgstr "После числа от двух"
+
+msgid "After a number from two up, a noun takes its third form and stays singular: <0>kaks kassi, viis eurot</0>. After <1>üks</1> on its own, it keeps its first: <2>üks kass</2>."
+msgstr "После числа от двух существительное стоит в третьей форме и остаётся в единственном числе: <0>kaks kassi, viis eurot</0>. Если перед ним только <1>üks</1>, оно остаётся в первой: <2>üks kass</2>."
+
+msgid "After a number from two up, the third form: <0>seitse eurot</0>."
+msgstr "После числа от двух — третья форма: <0>seitse eurot</0>."
+
+msgid "After an amount"
+msgstr "После слов количества"
+
+msgid "After an amount, the third form: <0>kilo juustu</0>."
+msgstr "После слова количества — третья форма: <0>kilo juustu</0>."
+
+msgid "After an amount, what it measures takes the third form: <0>tass kohvi, palju raha</0>."
+msgstr "После слова количества то, что меряют, стоит в третьей форме: <0>tass kohvi, palju raha</0>."
+
+msgid "All four. You told a gap after <0>pole</0> from a gap at the start."
+msgstr "Все четыре: ты различаешь пропуск после <0>pole</0> и пропуск в начале."
+
+msgid "All seven, typed in full."
+msgstr "Все семь набраны полностью."
+
+msgid "All six, typed in full."
+msgstr "Все шесть набраны полностью."
+
+msgid "All six. You picked the right form after every number."
+msgstr "Все шесть: после каждого числа верная форма."
+
+msgid "Amounts"
+msgstr "Слова количества"
+
+msgid "An answer with <0>üks</0> keeps the first form: <1/>"
+msgstr "В ответе с <0>üks</0> остаётся первая форма: <1/>"
+
+msgid "Ask how many with <0>mitu</0> and the third form: <1>Mitu last sul on?</1>"
+msgstr "Чтобы спросить «сколько», говори <0>mitu</0> и ставь существительное в третью форму: <1>Mitu last sul on?</1>"
+
+msgid "Asking how many"
+msgstr "Как спросить «сколько»"
+
+msgid "At the market"
+msgstr "На рынке"
+
+msgid "book"
+msgstr "книга"
+
+msgid "bread"
+msgstr "хлеб"
+
+msgid "café"
+msgstr "кафе"
+
+msgid "car"
+msgstr "машина"
+
+msgid "cat"
+msgstr "кошка"
+
+msgid "cat, said first"
+msgstr "кошка в начале предложения"
+
+msgid "cheese"
+msgstr "сыр"
+
+msgid "child"
+msgstr "ребёнок"
+
+msgid "coffee"
+msgstr "кофе"
+
+msgid "Coffee, please."
+msgstr "Кофе, пожалуйста."
+
+msgid "Compare each row’s two sentences. The last row starts with the cat."
+msgstr "Сравни два предложения в каждой строке. Последняя строка начинается с кошки."
+
+msgid "cup"
+msgstr "чашка"
+
+msgid "Each round shows a number. Pick the form of the noun that follows it, then hear the two together."
+msgstr "В каждом раунде — число. Выбери форму существительного, которое идёт после него, и послушай их вместе."
+
+msgid "Each round shows a sentence with a gap. Pick the form that fills it. Is the gap after <0>pole</0>, or at the start of the sentence?"
+msgstr "В каждом раунде — предложение с пропуском. Выбери подходящую форму. Пропуск стоит после <0>pole</0> или в начале предложения?"
+
+msgid "euro"
+msgstr "евро"
+
+msgid "Five"
+msgstr "Пять"
+
+msgid "five books"
+msgstr "пять книг"
+
+msgid "five cars"
+msgstr "пять машин"
+
+msgid "five cats"
+msgstr "пять кошек"
+
+msgid "five children"
+msgstr "пятеро детей"
+
+msgid "five euros"
+msgstr "пять евро"
+
+msgid "Five euros."
+msgstr "Пять евро."
+
+msgid "five houses"
+msgstr "пять домов"
+
+msgid "five tables"
+msgstr "пять столов"
+
+msgid "Food and drink"
+msgstr "Еда и напитки"
+
+msgid "four schools"
+msgstr "четыре школы"
+
+msgid "From tahtma, to want."
+msgstr "От tahtma, хотеть."
+
+msgid "glass"
+msgstr "стакан"
+
+msgid "He or she doesn’t have a child."
+msgstr "У него или у неё нет ребёнка."
+
+msgid "He or she drinks water."
+msgstr "Он или она пьёт воду."
+
+msgid "He or she has a child."
+msgstr "У него или у неё есть ребёнок."
+
+msgid "Hear the sentences above once more, then try again."
+msgstr "Ещё раз послушай предложения выше, а потом попробуй снова."
+
+msgid "house"
+msgstr "дом"
+
+msgid "how many"
+msgstr "сколько"
+
+msgid "How many cats do you have?"
+msgstr "Сколько у вас кошек?"
+
+msgid "How many children do you have?"
+msgstr "Сколько у тебя детей?"
+
+msgid "How much does it cost?"
+msgstr "Сколько это стоит?"
+
+msgid "How much is a kilo of cheese?"
+msgstr "Сколько стоит килограмм сыра?"
+
+msgid "How much is the bread?"
+msgstr "Сколько стоит хлеб?"
+
+msgid "I don’t have a cat."
+msgstr "У меня нет кошки."
+
+msgid "I drink coffee."
+msgstr "Я пью кофе."
+
+msgid "I have a cat."
+msgstr "У меня есть кошка."
+
+msgid "I have two children."
+msgstr "У меня двое детей."
+
+msgid "I want"
+msgstr "я хочу"
+
+msgid "I want some milk."
+msgstr "Я хочу молока."
+
+msgid "I’m reading a book."
+msgstr "Я читаю книгу."
+
+msgid "If you have money"
+msgstr "Есть ли у тебя деньги"
+
+msgid "If you want coffee"
+msgstr "Хочешь ли ты кофе"
+
+msgid "In a café you’ll also hear <0/> That’s one coffee, counted, so it keeps its first form. Lesson {object} explains why the third form appears here too: <1/>"
+msgstr "В кафе услышишь и <0/> Это один кофе, его считают, поэтому он остаётся в первой форме. Почему третья форма стоит и здесь, объясняет урок {object}: <1/>"
+
+msgid "Is there"
+msgstr "Есть"
+
+msgid "Isn’t there"
+msgstr "Нет"
+
+msgid "isn’t, aren’t"
+msgstr "нет"
+
+msgid "It works the same for a place: <0/> Tap the sentences in each column."
+msgstr "С местом так же: <0/> По-русски похоже: «нет хлеба», а не «нет хлеб». Нажимай на предложения в каждом столбце."
+
+msgid "Jaan leaves you a voice message from the market. Listen for the prices and for what there isn’t."
+msgstr "Яан прислал тебе голосовое с рынка. Слушай цены и то, чего нет."
+
+msgid "Juust, juustu, juustu."
+msgstr "Juust, juustu, juustu."
+
+msgid "Kass, kassi, kassi."
+msgstr "Kass, kassi, kassi."
+
+msgid "kilo"
+msgstr "килограмм"
+
+msgid "Kohv, kohvi, kohvi."
+msgstr "Kohv, kohvi, kohvi."
+
+msgid "Laps, lapse, last."
+msgstr "Laps, lapse, last."
+
+msgid "Leib, leiva, leiba."
+msgstr "Leib, leiva, leiba."
+
+msgid "Listen: Jaan at the market"
+msgstr "Аудирование: Яан на рынке"
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "little, not much"
+msgstr "мало"
+
+msgid "Maja, maja, maja: all three forms look alike."
+msgstr "Maja, maja, maja: все три формы одинаковые."
+
+msgid "Mari goes to the market on Saturday. Pick the first or third form for each gap. The third follows a number from two up, an amount or <0>pole</0>, and marks food or drink someone eats, drinks or wants."
+msgstr "В субботу Мари идёт на рынок. Выбери для каждого пропуска первую или третью форму. Третья стоит после числа от двух, после слова количества и после <0>pole</0>, а также для того, что едят, пьют или хотят."
+
+msgid "Mari’s Saturday"
+msgstr "Суббота Мари"
+
+msgid "milk"
+msgstr "молоко"
+
+msgid "Milk"
+msgstr "Молоко"
+
+msgid "money"
+msgstr "деньги"
+
+msgid "Nearly. Compare the last row of the table once more."
+msgstr "Почти. Ещё раз сравни последнюю строку таблицы."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Почти. Переслушай те, где были ошибки."
+
+msgid "Nearly. Play the sentences above for the ones you missed."
+msgstr "Почти. Ещё раз послушай предложения выше, особенно те, где была ошибка."
+
+msgid "Nearly. Tap the amounts above for the ones you missed."
+msgstr "Почти. Нажми выше на слова количества из раундов, где была ошибка."
+
+msgid "Nobody eats, drinks or wants it here: the sentence starts with it, so the first form."
+msgstr "Здесь это никто не ест, не пьёт и не хочет: предложение начинается с самого предмета, поэтому первая форма."
+
+msgid "not much time"
+msgstr "мало времени"
+
+msgid "Now make the form yourself. Each round shows the word as a dictionary gives it and the amount before it. Type its third form."
+msgstr "Теперь образуй форму. В каждом раунде — слово, как его даёт словарь, и слово количества перед ним. Набери третью форму."
+
+msgid "One"
+msgstr "Один"
+
+msgid "one book"
+msgstr "одна книга"
+
+msgid "one car"
+msgstr "одна машина"
+
+msgid "one cat"
+msgstr "одна кошка"
+
+msgid "one child"
+msgstr "один ребёнок"
+
+msgid "One coffee, please."
+msgstr "Один кофе, пожалуйста."
+
+msgid "one euro"
+msgstr "один евро"
+
+msgid "one house"
+msgstr "один дом"
+
+msgid "one school"
+msgstr "одна школа"
+
+msgid "one table"
+msgstr "один стол"
+
+msgid "Piim, piima, piima."
+msgstr "Piim, piima, piima."
+
+msgid "Raamat, raamatu, raamatut."
+msgstr "Raamat, raamatu, raamatut."
+
+msgid "Saying something isn’t there"
+msgstr "Когда чего-то нет"
+
+msgid "school"
+msgstr "школа"
+
+msgid "Sentences that say something is there, and that it isn’t"
+msgstr "Предложения о том, что что-то есть, и о том, что этого нет"
+
+msgid "She drinks some coffee, not a counted cup: <0>joob kohvi</0>."
+msgstr "Здесь кофе не считают чашками: <0>joob kohvi</0>."
+
+msgid "Since lesson {present} you’ve said <0/> You drink some coffee, not a counted cup, so <1>kohvi</1> is in its third form. Anything you eat, drink or want some of works the same way. Tap a sentence to hear it."
+msgstr "Ещё с урока {present} ты говоришь <0/> Ты пьёшь кофе, не считая чашек, поэтому <1>kohvi</1> стоит в третьей форме. Так же со всем, что ешь, пьёшь или хочешь, не считая. По-русски похоже: «хочу молока». Нажми на предложение, чтобы его услышать."
+
+msgid "Six nouns after one, two and five"
+msgstr "Шесть существительных после одного, двух и пяти"
+
+msgid "Some third forms change more than an ending: <0/> becomes <1/>, and <2/> becomes <3/>. So learn each noun with its third form, as the dictionary lists it."
+msgstr "Некоторые третьи формы меняют больше, чем окончание: <0/> становится <1/>, а <2/> — <3/>. Так что учи каждое существительное вместе с третьей формой, как даёт словарь."
+
+msgid "Someone eats, drinks or wants some of it, uncounted, so the third form."
+msgstr "Это едят, пьют или хотят, не считая, поэтому третья форма."
+
+msgid "table"
+msgstr "стол"
+
+msgid "Tap a form"
+msgstr "Коснись формы"
+
+msgid "Tap a sentence"
+msgstr "Нажми на предложение"
+
+msgid "Tap an amount"
+msgstr "Нажми на слово количества"
+
+msgid "Tap both columns of the table once more, then try again."
+msgstr "Ещё раз нажми на оба столбца таблицы, а потом попробуй снова."
+
+msgid "Tap the amounts above once more, then try again."
+msgstr "Ещё раз нажми на слова количества выше, а потом попробуй снова."
+
+msgid "Tap the forms in the table above once more, then try again."
+msgstr "Ещё раз нажми на формы в таблице выше, а потом попробуй снова."
+
+msgid "Tea"
+msgstr "Чай"
+
+msgid "ten euros"
+msgstr "десять евро"
+
+msgid "The bread is on the table."
+msgstr "Хлеб на столе."
+
+msgid "The bread isn’t on the table."
+msgstr "Хлеба нет на столе."
+
+msgid "The car isn’t in Tallinn."
+msgstr "Машины нет в Таллине."
+
+msgid "The cat is on the table."
+msgstr "Кошка на столе."
+
+msgid "The cat isn’t on the table."
+msgstr "Кошки нет на столе."
+
+msgid "The form after a number"
+msgstr "Форма после числа"
+
+msgid "The milk costs two euros."
+msgstr "Молоко стоит два евро."
+
+msgid "The sentence starts with it, so it keeps its first form."
+msgstr "Предложение начинается с этого предмета, поэтому он остаётся в первой форме."
+
+msgid "The short form of ei ole."
+msgstr "Краткая форма ei ole."
+
+msgid "The table isn’t in the room."
+msgstr "Стола нет в комнате."
+
+msgid "The third form is the last of the three a dictionary gives, as lesson {forms} shows: <0>raamat, raamatu, raamatut</0>. You’ve heard it in prices since lesson {numbers}: <1/>. Tap a form to hear it with its number."
+msgstr "Третья форма — последняя из трёх, которые даёт словарь, как показывает урок {forms}: <0>raamat, raamatu, raamatut</0>. Ты слышишь её в ценах ещё с урока {numbers}: <1/>. Нажми на форму, чтобы услышать её с числом."
+
+msgid "The third form of aeg."
+msgstr "Третья форма слова aeg."
+
+msgid "The third form of juust."
+msgstr "Третья форма слова juust."
+
+msgid "The third form of kass, the partitive."
+msgstr "Третья форма слова kass, партитив."
+
+msgid "The third form of kohv."
+msgstr "Третья форма слова kohv."
+
+msgid "The third form of laps."
+msgstr "Третья форма слова laps."
+
+msgid "The third form of leib."
+msgstr "Третья форма слова leib."
+
+msgid "The third form of piim."
+msgstr "Третья форма слова piim."
+
+msgid "The third form of vesi."
+msgstr "Третья форма слова vesi."
+
+msgid "There’s a table in the room."
+msgstr "В комнате есть стол."
+
+msgid "There’s bread on the table."
+msgstr "На столе есть хлеб."
+
+msgid "There’s no bread on the table."
+msgstr "На столе нет хлеба."
+
+msgid "There’s no table in the room."
+msgstr "В комнате нет стола."
+
+msgid "They don’t have a house."
+msgstr "У них нет дома."
+
+msgid "They eat cheese."
+msgstr "Они едят сыр."
+
+msgid "They have a house."
+msgstr "У них есть дом."
+
+msgid "three cats"
+msgstr "три кошки"
+
+msgid "three children"
+msgstr "трое детей"
+
+msgid "time"
+msgstr "время"
+
+msgid "Two"
+msgstr "Два"
+
+msgid "two books"
+msgstr "две книги"
+
+msgid "two cars"
+msgstr "две машины"
+
+msgid "two cats"
+msgstr "две кошки"
+
+msgid "two children"
+msgstr "двое детей"
+
+msgid "two euros"
+msgstr "два евро"
+
+msgid "two houses"
+msgstr "два дома"
+
+msgid "Type the form after the amount"
+msgstr "Набери форму после слова количества"
+
+msgid "Type the form each sentence needs. Two of the sentences start with the food itself."
+msgstr "Набери форму, которая нужна в предложении. Два предложения начинаются с самой еды."
+
+msgid "Type the form the sentence needs"
+msgstr "Набери нужную форму"
+
+msgid "Under each one is the word as a dictionary gives it."
+msgstr "Под каждым — слово в том виде, в каком его даёт словарь."
+
+msgid "Vesi, vee, vett."
+msgstr "Vesi, vee, vett."
+
+msgid "water"
+msgstr "вода"
+
+msgid "Water"
+msgstr "Вода"
+
+msgid "We eat bread."
+msgstr "Мы едим хлеб."
+
+msgid "We have one cat."
+msgstr "У нас одна кошка."
+
+msgid "What does Jaan ask you?"
+msgstr "О чём тебя спрашивает Яан?"
+
+msgid "What is there keeps its first form: <0>Turul on kohvik</0>."
+msgstr "То, что есть, остаётся в первой форме: <0>Turul on kohvik</0>."
+
+msgid "What isn’t there today?"
+msgstr "Чего сегодня нет?"
+
+msgid "What you eat, drink or want, when you don’t count it, takes the third form too: <0>Ma joon kohvi</0>."
+msgstr "То, что едят, пьют или хотят, не считая, тоже стоит в третьей форме: <0>Ma joon kohvi</0>."
+
+msgid "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, after <0>pole</0>, and for some of the food and drink someone eats, drinks or wants."
+msgstr "Когда в эстонском существительное стоит в третьей форме, партитиве: после числа от двух, после слова количества, после <0>pole</0> и для еды и напитков, которые едят, пьют или хотят, не считая."
+
+msgid "Where you are"
+msgstr "Где ты"
+
+msgid "Which form fills the gap?"
+msgstr "Какая форма заполняет пропуск?"
+
+msgid "Which form follows the number?"
+msgstr "Какая форма идёт после числа?"
+
+msgid "You can also say <0/> It means the same: <1>pole</1> is the short form of <2>ei ole</2>. A sentence that starts with the thing keeps its first form: <3/>"
+msgstr "Можно сказать и <0/> Это то же самое: <1>pole</1> — краткая форма <2>ei ole</2>. Если предложение начинается с самого предмета, он остаётся в первой форме, хотя по-русски говорим «кошки нет на столе»: <3/>"
+
+msgid "You don’t have a car."
+msgstr "У тебя нет машины."
+
+msgid "You have a car."
+msgstr "У тебя есть машина."

@@ -70,5 +70,5 @@ Each language meets the same bar on its own terms. Write each from the English, 
 The site tests scan this lesson's entries for officialese, praise and the calques above. By hand:
 
 ```bash
-grep -nEi "явля|здійсн|осуществ|данн|в рамках|у рамках|на протязі|слідуюч|приймати участь|молодець|молодец|чудово|отлично|хороший слух|добрий слух" apps/site/src/locales/uk.po apps/site/src/locales/ru.po
+grep -nEi "явля|здійсн|осуществ|данн|в рамках|у рамках|на протязі|слідуюч|приймати участь|молодець|молодец|чудово|отлично|хороший слух|добрий слух" apps/site/src/locales/learn/<File>/{uk,ru}.po
 ```

@@ -1,0 +1,257 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "10 minutes"
+msgstr "10 хвилин"
+
+msgid "2 quizzes"
+msgstr "2 тести"
+
+msgid "A dictionary lists a verb in its -ma form: <0/>, to live. Take off -ma and you have the stem, <1>ela-</1>. The ending goes on the stem: <2/>, I live."
+msgstr "У словнику дієслово стоїть у формі на -ma: <0/>, «жити». Відкинь -ma, і залишиться основа <1>ela-</1>. Закінчення додається до основи: <2/>, «я живу»."
+
+msgid "A dictionary lists a verb in its -ma form: <0>elama</0>, to live. The endings go on its stem, <1>ela-</1>."
+msgstr "У словнику дієслово стоїть у формі на -ma: <0>elama</0>, «жити». Закінчення додаються до основи, <1>ela-</1>."
+
+msgid "All of them. You hear who does it."
+msgstr "Усі. Ти чуєш, хто це робить."
+
+msgid "All six. You matched every pronoun with its ending."
+msgstr "Усі шість. Кожен займенник — зі своїм закінченням."
+
+msgid "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
+msgstr "Як і в olema, закінчення вже каже, хто це, тому ma, sa, me і te часто пропускають: <0/>. Щоб протиставити двох людей, бери повні займенники з уроку {pronouns}: <1/>."
+
+msgid "Each pronoun has its ending: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, so <1>elan, elad, elab, elame, elate, elavad</1>."
+msgstr "У кожного займенника своє закінчення: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, звідси <1>elan, elad, elab, elame, elate, elavad</1>."
+
+msgid "Endings of elama"
+msgstr "Закінчення elama"
+
+msgid "Estonian has one present tense. <0/> means both I read and I’m reading, and the rest of the sentence tells you which. Tap a sentence to hear it."
+msgstr "В естонській один теперішній час. <0/> означає і «я читаю» взагалі, і «я читаю зараз», а що саме, видно з решти речення. Натисни речення, щоб почути його."
+
+msgid "Fill the ending"
+msgstr "Встав закінчення"
+
+msgid "Go back to the endings above, then try again."
+msgstr "Повернися до закінчень вище й спробуй ще раз."
+
+msgid "he or she is; they are"
+msgstr "він чи вона є; вони є"
+
+msgid "he or she lives"
+msgstr "він чи вона живе"
+
+msgid "He or she speaks Estonian."
+msgstr "Він чи вона говорить естонською."
+
+msgid "He or she works from home."
+msgstr "Він чи вона працює вдома."
+
+msgid "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
+msgstr "Послухай речення й обери дієслово з нього. Варіанти відрізняються лише закінченням, тож слухай кінець дієслова."
+
+msgid "Here they are on <0/>, to live. The two new ones are in colour. Tap an ending."
+msgstr "Ось вони на дієслові <0/>, «жити». Два нові виділено кольором. Натисни закінчення."
+
+msgid "I am"
+msgstr "я є"
+
+msgid "I drink coffee, he or she drinks water."
+msgstr "Я п’ю каву, а він чи вона п’є воду."
+
+msgid "I live"
+msgstr "я живу"
+
+msgid "I live in Tallinn."
+msgstr "Я живу в Таллінні."
+
+msgid "I love you."
+msgstr "Я тебе кохаю."
+
+msgid "I read, I’m reading"
+msgstr "Я читаю: взагалі й зараз"
+
+msgid "I read; I’m reading"
+msgstr "я читаю (взагалі й зараз)"
+
+msgid "I’m learning Estonian."
+msgstr "Я вчу естонську."
+
+msgid "I’m reading a book."
+msgstr "Я читаю книжку."
+
+msgid "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
+msgstr "В уроці {pronouns} було дієслово <0/>, «бути»: <1/>, <2/>, <3/>, <4/>. Більшість дієслів мають ті самі закінчення. А там, де в olema стоїть <5/>, у них два власні: <6>-b</6> для «він чи вона» і <7>-vad</7> для «вони»."
+
+msgid "In some verbs the stem changes: <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don’t need the rule for that yet. Learn each verb with its I form: <3>lugema, loen</3>. Take off -n and the rest is the stem. In lesson {verbForms} you’ll add a third form, <4>lugeda</4>."
+msgstr "У деяких дієсловах основа змінюється: <0/>, «читати», має основу <1>loe-</1>, тому «я читаю» буде <2/>. Правило для цього поки не потрібне. Запам’ятовуй кожне дієслово разом із формою для «я»: <3>lugema, loen</3>. Відкинь -n, і решта буде основою. В уроці {verbForms} додаси третю форму, <4>lugeda</4>."
+
+msgid "Listen to the very end of the verb, then try again."
+msgstr "Слухай кінець дієслова до останнього звуку й спробуй ще раз."
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Long forms, because the two people are set side by side."
+msgstr "Повні форми, бо двох людей протиставлено."
+
+msgid "More than one"
+msgstr "Кілька людей"
+
+msgid "Most of them. Play the ones you missed once more."
+msgstr "Майже всі. Переслухай ще раз ті, де були помилки."
+
+msgid "Nearly. Tap the endings above once more."
+msgstr "Майже. Ще раз понатискай закінчення вище."
+
+msgid "No ma: the ending -n already says I."
+msgstr "Без ma: закінчення -n уже каже «я»."
+
+msgid "One person"
+msgstr "Одна людина"
+
+msgid "One present tense for both."
+msgstr "Один теперішній час для обох значень."
+
+msgid "One present tense: <0>ma loen</0> is both I read and I’m reading."
+msgstr "Один теперішній час: <0>ma loen</0> — це і «я читаю взагалі», і «я читаю зараз»."
+
+msgid "Pick the ending that goes with the pronoun, then hear the sentence."
+msgstr "Обери закінчення, яке пасує до займенника, а потім послухай речення."
+
+msgid "Play {text}"
+msgstr "Відтворити {text}"
+
+msgid "Six endings"
+msgstr "Шість закінчень"
+
+msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
+msgstr "Деякі основи змінюються: <0>lugema, loen</0>. Запам’ятовуй кожне дієслово з формою для «я»."
+
+msgid "Stem {stem}-: ma {form}."
+msgstr "Основа {stem}-: ma {form}."
+
+msgid "Stem and ending"
+msgstr "Основа і закінчення"
+
+msgid "Stems such as <0>loe-</0> and <1>räägi-</1> lose or change a consonant inside the word. Lesson {gradation} explains the rule, called consonant gradation."
+msgstr "Такі основи, як <0>loe-</0> і <1>räägi-</1>, втрачають або змінюють приголосний усередині слова. Це правило, чергування приголосних, пояснює урок {gradation}."
+
+msgid "Tallinnas ends in -s, which means in; lesson {where} explains that ending. Keelt and raamatut are in the partitive, a form an object often takes, which lesson {partitive} explains. For now, learn them as phrases."
+msgstr "Tallinnas закінчується на -s, що означає «у, в»; це закінчення пояснює урок {where}. Keelt і raamatut стоять у партитиві, формі, яку часто має додаток; її пояснює урок {partitive}. Поки що вчи їх як готові фрази."
+
+msgid "Tap an ending"
+msgstr "Натисни закінчення"
+
+msgid "Ten everyday verbs, the stem each one builds on, and six endings that say who does it."
+msgstr "Десять щоденних дієслів, основа кожного з них і шість закінчень, які кажуть, хто діє."
+
+msgid "The ending for ma, I."
+msgstr "Закінчення для ma, «я»."
+
+msgid "The ending for me, we."
+msgstr "Закінчення для me, «ми»."
+
+msgid "The ending for nad, they. Olema has on here too."
+msgstr "Закінчення для nad, «вони». В olema тут теж on."
+
+msgid "The ending for sa, you."
+msgstr "Закінчення для sa, «ти»."
+
+msgid "The ending for ta, he or she. Olema has on here."
+msgstr "Закінчення для ta, «він чи вона». В olema тут on."
+
+msgid "The ending for te: you, to more than one; polite you."
+msgstr "Закінчення для te: «ви» до кількох людей і ввічливе «Ви»."
+
+msgid "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>"
+msgstr "Закінчення каже, хто це, тому ma, sa, me і te можна пропустити: <0>Elan Tallinnas.</0>"
+
+msgid "They eat at home."
+msgstr "Вони їдять удома."
+
+msgid "they live"
+msgstr "вони живуть"
+
+msgid "They’re drinking coffee."
+msgstr "Вони п’ють каву."
+
+msgid "to be"
+msgstr "бути"
+
+msgid "to do, to make"
+msgstr "робити"
+
+msgid "to drink"
+msgstr "пити"
+
+msgid "to eat"
+msgstr "їсти"
+
+msgid "to learn, to study"
+msgstr "вчити, вчитися"
+
+msgid "to live"
+msgstr "жити"
+
+msgid "to love"
+msgstr "любити, кохати"
+
+msgid "to read"
+msgstr "читати"
+
+msgid "to speak, to talk"
+msgstr "говорити, розмовляти"
+
+msgid "to wait"
+msgstr "чекати"
+
+msgid "to work"
+msgstr "працювати"
+
+msgid "Verbs"
+msgstr "Дієслова"
+
+msgid "we are"
+msgstr "ми є"
+
+msgid "we live"
+msgstr "ми живемо"
+
+msgid "We’re waiting for the bus."
+msgstr "Ми чекаємо на автобус."
+
+msgid "What are you doing?"
+msgstr "Що ти робиш?"
+
+msgid "Which ending?"
+msgstr "Яке закінчення?"
+
+msgid "Which form did you hear?"
+msgstr "Яку форму ти чуєш?"
+
+msgid "you are"
+msgstr "ти є"
+
+msgid "you are, to more than one; polite you are"
+msgstr "ви є; ввічливе «Ви є»"
+
+msgid "you live"
+msgstr "ти живеш"
+
+msgid "you live, to more than one; polite you live"
+msgstr "ви живете; ввічливе «Ви живете»"
+
+msgid "You speak very well."
+msgstr "Ви дуже добре говорите."
+
+msgid "You’ll hear elama with it and who it’s for."
+msgstr "Почуєш elama з ним і дізнаєшся, для кого воно."

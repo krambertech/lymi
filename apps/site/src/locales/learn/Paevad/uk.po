@@ -1,0 +1,261 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "“On Monday” takes an ending: <0/>. That comes in lesson {when}."
+msgstr "«У понеділок» естонською — одне слово із закінченням: <0/>. Про це — в уроці {when}."
+
+#. placeholder {0}: i18n._(MEANINGS[word])
+msgid "{word}, {0}, today"
+msgstr "{word}, {0}, сьогодні"
+
+msgid "<0/> is tomorrow and <1/> yesterday. Put <2>üle-</2> in front to go one day further: <3/>, the day after tomorrow, and <4/>, the day before yesterday. Pick a day to be today."
+msgstr "<0/> — завтра, <1/> — учора. Додай спереду <2>üle-</2>, і буде на день далі: <3/> — післязавтра, <4/> — позавчора. Обери, який день сьогодні."
+
+msgid "<0/> means holy, so this is the holy day."
+msgstr "<0/> означає «святий», тож це святий день."
+
+msgid "<0>E–R</0> on a sign: Monday to Friday."
+msgstr "<0>E–R</0> на вивісці: з понеділка по п’ятницю."
+
+msgid "<0>P suletud</0> on a sign: closed on Sunday."
+msgstr "<0>P suletud</0> на вивісці: у неділю зачинено."
+
+msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
+msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2> — сьогодні, завтра, учора. <3>Üle-</3> додає ще один день."
+
+msgid "2 quizzes"
+msgstr "2 тести"
+
+msgid "8 minutes"
+msgstr "8 хвилин"
+
+msgid "A shop’s opening hours"
+msgstr "Години роботи магазину"
+
+msgid "All of them. You can count the week forward."
+msgstr "Усі правильно. Ти вмієш рахувати тиждень уперед."
+
+msgid "All seven. You know the week by ear."
+msgstr "Усі сім. Ти знаєш тиждень на слух."
+
+msgid "Also “other”."
+msgstr "А ще «інший»."
+
+msgid "Borrowed from Low German or Old Swedish."
+msgstr "Запозичене з нижньонімецької або давньошведської."
+
+msgid "Borrowed from the Low German or Old Swedish name for Friday. It’s the one day without <0>päev</0>."
+msgstr "Запозичене з нижньонімецької чи давньошведської назви п’ятниці. Єдиний день без <0>päev</0>."
+
+msgid "Calendars and signs use one capital letter a day: <0>E T K N R L P</0>."
+msgstr "У календарях і на вивісках кожен день — одна велика літера: <0>E T K N R L P</0>."
+
+msgid "Calendars, timetables and shop doors write each day as its first letter, a capital: <0>E, T, K, N, R, L, P</0>. A sign that says <1>E–R 9–18</1> is open Monday to Friday, nine to six."
+msgstr "У календарях, розкладах і на дверях магазинів кожен день пишуть однією першою літерою, великою: <0>E, T, K, N, R, L, P</0>. Табличка «<1>E–R 9–18</1>» означає, що відчинено з понеділка по п’ятницю, з 9 до 18."
+
+msgid "closed"
+msgstr "зачинено"
+
+msgid "Count forward"
+msgstr "Рахуємо вперед"
+
+msgid "day"
+msgstr "день"
+
+msgid "Esmaspäev with an ending that says when."
+msgstr "Esmaspäev із закінченням, яке відповідає на питання «коли»."
+
+msgid "first"
+msgstr "перший"
+
+msgid "four"
+msgstr "чотири"
+
+msgid "Friday"
+msgstr "П’ятниця"
+
+msgid "From a Scandinavian name: the day people washed."
+msgstr "Від скандинавської назви: день, коли милися."
+
+msgid "From a Scandinavian word: the day for washing."
+msgstr "Від скандинавського слова: день, коли милися."
+
+msgid "Good. Say the week through in your head before you pick."
+msgstr "Добре. Перш ніж обрати, проговори тиждень подумки."
+
+msgid "Hear a day"
+msgstr "День на слух"
+
+msgid "holy; a holiday"
+msgstr "святий; свято"
+
+msgid "Listen and pick the day. Most of them end the same way, so listen to how each one starts."
+msgstr "Послухай і обери день. Більшість закінчуються однаково, тож слухай, як кожен починається."
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Monday"
+msgstr "Понеділок"
+
+msgid "Most of them. Listen to how the ones you missed start."
+msgstr "Майже всі. Послухай, як починаються дні, де були помилки."
+
+msgid "On a door or a sign."
+msgstr "На дверях або на табличці."
+
+msgid "On a door you’ll also see <0/>, open, and <1/>, closed."
+msgstr "На дверях також побачиш <0/>, відчинено, і <1/>, зачинено."
+
+msgid "On a toilet door, N stands for <0>naistele</0>, for women."
+msgstr "На дверях туалету N означає <0>naistele</0>, для жінок."
+
+msgid "on Monday"
+msgstr "у понеділок"
+
+msgid "One letter a day"
+msgstr "Одна літера на день"
+
+msgid "open"
+msgstr "відчинено"
+
+msgid "Play {sentence}"
+msgstr "Відтворити {sentence}"
+
+msgid "Play the week above once more, then try again."
+msgstr "Ще раз переслухай тиждень вище, а тоді спробуй знову."
+
+msgid "Püha, holy, and päev, day."
+msgstr "Püha — святий, päev — день."
+
+msgid "Saturday"
+msgstr "Субота"
+
+msgid "Say the week through with the strip above, then try again."
+msgstr "Проговори тиждень за днями вище, а тоді спробуй знову."
+
+msgid "second"
+msgstr "другий"
+
+msgid "Seven days"
+msgstr "Сім днів"
+
+msgid "Six days end in <0>päev</0>, day. <1>Reede</1> doesn’t."
+msgstr "Шість днів закінчуються на <0>päev</0>, день. <1>Reede</1> — ні."
+
+msgid "Sunday"
+msgstr "Неділя"
+
+msgid "Tap a day"
+msgstr "Натисни на день"
+
+msgid "Tap a letter"
+msgstr "Натисни на літеру"
+
+msgid "the day after tomorrow"
+msgstr "післязавтра"
+
+msgid "the day before yesterday"
+msgstr "позавчора"
+
+msgid "The days as letters"
+msgstr "Дні літерами"
+
+msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Day names start with a small letter, like any other word."
+msgstr "Естонський тиждень, <0/>, починається з понеділка, як і в нас. Шість днів закінчуються на <1/>, день. <2/>, п’ятниця, — виняток. Як і в українській, назви днів пишуть з малої літери."
+
+msgid "The first day of the week."
+msgstr "Перший день тижня."
+
+msgid "The first day. Esmas- sounds like <0/>, first."
+msgstr "Перший день. Esmas- звучить як <0/>, перший."
+
+msgid "The first four count: <0/> is the first day, <1/> the second, <2/> the third and <3/> the fourth. The other three have names of their own. Tap a day to hear it and see where its name comes from."
+msgstr "Перші чотири — з числами: <0/> — перший день, <1/> — другий, <2/> — третій, <3/> — четвертий. У трьох інших назви з власною історією. Натисни на день, щоб почути його й дізнатися, звідки назва."
+
+msgid "The first four count: <0>esmaspäev</0> is the first day, and <1>neljapäev</1> the fourth."
+msgstr "Перші чотири — з числами: <0>esmaspäev</0> — перший день, <1>neljapäev</1> — четвертий."
+
+msgid "The fourth day of the week."
+msgstr "Четвертий день тижня."
+
+msgid "The fourth day. You can hear <0/>, four."
+msgstr "Четвертий день. Чути <0/>, чотири."
+
+msgid "The second day of the week."
+msgstr "Другий день тижня."
+
+msgid "The second day. Teisi- sounds like <0/>, second."
+msgstr "Другий день. Teisi- звучить як <0/>, другий."
+
+msgid "The seven days, the four that count, and how to say what day it is."
+msgstr "Сім днів, чотири з числами в назві, і як сказати, який сьогодні день."
+
+msgid "The third day of the week."
+msgstr "Третій день тижня."
+
+msgid "The third day. You can hear <0/>, three, from lesson {numbers}."
+msgstr "Третій день. Чути <0/>, три, з уроку {numbers}."
+
+msgid "The week starts on <0>esmaspäev</0>. Day names start with a small letter."
+msgstr "Тиждень починається з <0>esmaspäev</0>. Назви днів пишуть з малої літери."
+
+msgid "three"
+msgstr "три"
+
+msgid "Thursday"
+msgstr "Четвер"
+
+msgid "To ask what day it is, say <0/> To answer, put the day after <1>täna on</1>: <2/>."
+msgstr "Щоб спитати, який сьогодні день, скажи <0/> Щоб відповісти, назви день після <1>täna on</1>: <2/>."
+
+msgid "today"
+msgstr "сьогодні"
+
+msgid "Today is"
+msgstr "Сьогодні"
+
+msgid "Today is Monday."
+msgstr "Сьогодні понеділок."
+
+msgid "Today, tomorrow, yesterday"
+msgstr "Сьогодні, завтра, учора"
+
+msgid "tomorrow"
+msgstr "завтра"
+
+msgid "Tuesday"
+msgstr "Вівторок"
+
+msgid "Wednesday"
+msgstr "Середа"
+
+msgid "week"
+msgstr "тиждень"
+
+msgid "What day is it today?"
+msgstr "Який сьогодні день?"
+
+msgid "Which day did you hear?"
+msgstr "Який день прозвучав?"
+
+msgid "Which day is tomorrow?"
+msgstr "Який день завтра?"
+
+msgid "yesterday"
+msgstr "учора"
+
+msgid "You’ll hear it, and where its name comes from."
+msgstr "Почуєш його і дізнаєшся, звідки назва."
+
+msgid "You’ll hear the day it stands for."
+msgstr "Почуєш день, який вона позначає."
+
+msgid "You’ll hear what day it is today. Pick the day that comes next."
+msgstr "Почуєш, який сьогодні день. Обери, який буде завтра."

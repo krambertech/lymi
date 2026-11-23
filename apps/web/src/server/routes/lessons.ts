@@ -1,5 +1,6 @@
 import {
   ID_MAX,
+  LESSON_READS_PER_DAY,
   LessonAccessOut,
   LessonAnswerInput,
   LessonAnswerOut,
@@ -12,6 +13,7 @@ import { operatorEmails } from "../env";
 import { body, ctxOf, describe, reader, readForm } from "../http";
 import type { AppEnv } from "../index";
 import { decisionModel, termsAgainstAnswer } from "../lessons/keep";
+import { pageMarkdown } from "../lessons/link";
 import type { LessonMaterial } from "../lessons/reader";
 import { createLessonReader, LessonReaderError } from "../lessons/reader";
 import { log } from "../log";
@@ -22,6 +24,7 @@ import {
   type LessonEvent,
   lessonAccess,
   prepareLesson,
+  readLink,
   ServiceError,
   streamLesson,
 } from "../services";
@@ -41,6 +44,7 @@ const MAX_PDFS = 3;
 /** All PDFs together, so the request to the reader stays under Anthropic's 32 MB once encoded. */
 const MAX_PDF_BYTES = 20_000_000;
 const MAX_TEXT = 100_000;
+const MAX_LINK = 8_000;
 const MAX_BODY = 60_000_000;
 
 const readLesson = reader(
@@ -52,6 +56,8 @@ const readLesson = reader(
       .default(""),
     deckId: z.string().max(ID_MAX).optional(),
     hint: z.string().max(ID_MAX).optional(),
+    link: z.string().max(MAX_LINK).default(""),
+    reads: z.coerce.number().int().min(1).max(LESSON_READS_PER_DAY).optional(),
   }),
   "lesson",
 );
@@ -72,9 +78,9 @@ lessonReads.post(
   describe({
     hide: true,
     learnerOnly: true,
-    summary: "Read a lesson into a pick list",
+    summary: "Read a lesson or an article's link into a pick list",
     description:
-      "Newline-delimited JSON: a term event per term as the model writes it, then questions, then done.",
+      "Newline-delimited JSON: a term event per term as the model writes it, then questions, then done. A `link` field reads an https article on its own; a link the site or service refuses is a 400 with code `link_refused`, and an article over 15,000 words is a 409 with code `long_read` until `reads` repeats the count it gives.",
     ok: { schema: LessonEventOut, description: "One line of the stream" },
     errors: [400, 404, 409, 503],
   }),
@@ -91,7 +97,7 @@ lessonReads.post(
     }
     const { files, fields } = await readForm(c, readLesson);
     if (!fields.success) throw new ServiceError("invalid", "Invalid lesson", fields.error.issues);
-    const { text, deckId, hint } = fields.data;
+    const { text, deckId, hint, link, reads } = fields.data;
     let pdfBytes = 0;
     const material: LessonMaterial = { images: [], pdfs: [], text };
     for (const file of files) {
@@ -108,14 +114,31 @@ lessonReads.post(
       const page = await normalizeBoundedImage(c.env.IMAGES, bytes, PAGE_SIDE);
       material.images.push({ bytes: page.bytes, type: page.type });
     }
-    if (!material.text.trim() && material.images.length === 0 && material.pdfs.length === 0) {
+    // Refusals happen here, before the stream opens, so they arrive as ordinary errors.
+    const client = c.get("phone") ? "phone" : "web";
+    if (link.trim()) {
+      if (material.text.trim() || material.images.length > 0 || material.pdfs.length > 0)
+        throw new ServiceError("invalid", "Smart add reads a link on its own.");
+      material.transcript = await readLink(
+        ctxOf(c),
+        link,
+        { request: fetch, toMarkdown: (page, consent) => pageMarkdown(c.env, page, consent) },
+        { client, deck: deckId ? "fixed" : "guessed" },
+      );
+    }
+    if (
+      !material.text.trim() &&
+      material.images.length === 0 &&
+      material.pdfs.length === 0 &&
+      !material.transcript
+    ) {
       throw new ServiceError("invalid", "Paste the lesson or add a photo or PDF of it.");
     }
-    // Refusals happen here, before the stream opens, so they arrive as ordinary errors.
     const lesson = await prepareLesson(ctxOf(c), material, deps, {
       deckId: deckId || undefined,
       hint: hint || undefined,
-      client: c.get("phone") ? "phone" : "web",
+      client,
+      reads,
     });
     const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
     const writer = writable.getWriter();

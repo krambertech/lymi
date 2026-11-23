@@ -18,6 +18,7 @@ import { testGateway } from "../test/ai-gateway";
 import { handleFetch } from "./app";
 import { schema } from "./db";
 import { latestLocalEmail } from "./services/email";
+import { holdNoon } from "./services/test-clock";
 import { signUpCookieName } from "./signup-cookie";
 import { json, PRODUCT_URL, type Session, type TestApp, testApp } from "./test-app";
 
@@ -48,6 +49,7 @@ beforeAll(async () => {
 }, 60_000);
 
 afterEach(() => {
+  vi.useRealTimers();
   vi.unstubAllGlobals();
 });
 
@@ -569,6 +571,7 @@ describe.each(releases)("the phone release %s", (version) => {
 
   describe("a report", () => {
     it("sends a classmate's report, and refuses one past the day's limit with 409", async () => {
+      holdNoon();
       const { classmate, deckId, cardIds } = await sharedDeck("report", CONTENT_REPORT_DAILY_LIMIT);
       const report = (body: unknown) =>
         app.fetch("/api/content-reports", { ...fromPhone(json(body)), as: classmate });

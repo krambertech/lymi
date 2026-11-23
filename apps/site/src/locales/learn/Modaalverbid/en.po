@@ -1,0 +1,435 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0/> can also say that something might happen. This sentence can mean he or she is allowed to come tomorrow, or might: <1/>"
+msgstr "<0/> can also say that something might happen. This sentence can mean he or she is allowed to come tomorrow, or might: <1/>"
+
+msgid "<0/> is about being allowed. With <1>ei</1> it says mustn’t: <2/> In a question it asks whether you may, as <3/> does too: <4/> Tap one to hear its sentence."
+msgstr "<0/> is about being allowed. With <1>ei</1> it says mustn’t: <2/> In a question it asks whether you may, as <3/> does too: <4/> Tap one to hear its sentence."
+
+msgid "<0/> is for what you learned. To say you know how to swim: <1/> <2/> says nothing stops you: <3/>"
+msgstr "<0/> is for what you learned. To say you know how to swim: <1/> <2/> says nothing stops you: <3/>"
+
+msgid "<0/> is I have to, and it takes the <1>-ma</1> form from lesson {infinitives}: <2/>"
+msgstr "<0/> is I have to, and it takes the <1>-ma</1> form from lesson {infinitives}: <2/>"
+
+msgid "<0/> is must, but <1>ei pea</1> is don’t have to: <2/> For mustn’t, Estonian switches to <3>ei tohi</3>: <4/> <5/>, no need, also leaves it to you. Tap one to hear it said about swimming."
+msgstr "<0/> is must, but <1>ei pea</1> is don’t have to: <2/> For mustn’t, Estonian switches to <3>ei tohi</3>: <4/> <5/>, no need, also leaves it to you. Tap one to hear it said about swimming."
+
+msgid "<0/> says something is allowed, and you also offer with it: <1/> To let someone do something: <2/>"
+msgstr "<0/> says something is allowed, and you also offer with it: <1/> To let someone do something: <2/>"
+
+msgid "<0/> with the <1>-da</1> form says something has to be done, without naming who: <2/> Put a person in the <3>-l</3> form from lesson {having} to make it theirs: <4/>"
+msgstr "<0/> with the <1>-da</1> form says something has to be done, without naming who: <2/> Put a person in the <3>-l</3> form from lesson {having} to make it theirs: <4/>"
+
+msgid "<0/>, I need, takes the <1>-da</1> form of a verb: <2/> Tap a form to hear its sentence."
+msgstr "<0/>, I need, takes the <1>-da</1> form of a verb: <2/> Tap a form to hear its sentence."
+
+msgid "<0>Ei oska</0> says you never learned. You learned as a child."
+msgstr "<0>Ei oska</0> says you never learned. You learned as a child."
+
+msgid "<0>Ei pea</0> is don’t have to, and <1>ei tohi</1> is mustn’t: <2>Sa ei pea tulema. Sa ei tohi tulla.</2>"
+msgstr "<0>Ei pea</0> is don’t have to, and <1>ei tohi</1> is mustn’t: <2>Sa ei pea tulema. Sa ei tohi tulla.</2>"
+
+msgid "<0>Ei pea</0> says you don’t have to work. You do work tomorrow."
+msgstr "<0>Ei pea</0> says you don’t have to work. You do work tomorrow."
+
+msgid "<0>Ei saa</0> says something stops you. She asked whether you know how."
+msgstr "<0>Ei saa</0> says something stops you. She asked whether you know how."
+
+msgid "<0>Ei tohi</0> says you’re not allowed to swim. Nothing stops you today."
+msgstr "<0>Ei tohi</0> says you’re not allowed to swim. Nothing stops you today."
+
+msgid "<0>Oskan</0> is for what you learned: <1>Ma oskan ujuda.</1> <2>Saan</2> says nothing stops you: <3>Ma saan homme tulla.</3>"
+msgstr "<0>Oskan</0> is for what you learned: <1>Ma oskan ujuda.</1> <2>Saan</2> says nothing stops you: <3>Ma saan homme tulla.</3>"
+
+msgid "<0>Oskan</0>: you learned how."
+msgstr "<0>Oskan</0>: you learned how."
+
+msgid "<0>Pean</0> is I have to. <1>Tuleb</1> with the <2>-da</2> form says it has to be done, naming no one. <3>Mul on vaja</3> is I need to."
+msgstr "<0>Pean</0> is I have to. <1>Tuleb</1> with the <2>-da</2> form says it has to be done, naming no one. <3>Mul on vaja</3> is I need to."
+
+msgid "<0>Pean</0> says you have to come. Nobody makes you; you’re free."
+msgstr "<0>Pean</0> says you have to come. Nobody makes you; you’re free."
+
+msgid "<0>Saan</0>: nothing stops you, not time, place or health."
+msgstr "<0>Saan</0>: nothing stops you, not time, place or health."
+
+msgid "<0>Võin</0> and <1>tohin</1> both say it’s allowed; <2>võin</2> also offers: <3>Ma võin sind oodata.</3> <4>Tohin</4> is mostly heard with <5>ei</5>: <6>Siin ei tohi süüa.</6>"
+msgstr "<0>Võin</0> and <1>tohin</1> both say it’s allowed; <2>võin</2> also offers: <3>Ma võin sind oodata.</3> <4>Tohin</4> is mostly heard with <5>ei</5>: <6>Siin ei tohi süüa.</6>"
+
+msgid "12 minutes"
+msgstr "12 minutes"
+
+msgid "A question: you ask whether you’re allowed."
+msgstr "A question: you ask whether you’re allowed."
+
+msgid "A quiz, pairs to match and a conversation"
+msgstr "A quiz, pairs to match and a conversation"
+
+msgid "A rule. With no person, it holds for everyone."
+msgstr "A rule. With no person, it holds for everyone."
+
+msgid "All four. By ear, you told apart “don’t know how”, “can’t”, “mustn’t” and “don’t have to”."
+msgstr "All four. By ear, you told apart “don’t know how”, “can’t”, “mustn’t” and “don’t have to”."
+
+msgid "An offer: you’re happy to."
+msgstr "An offer: you’re happy to."
+
+msgid "Can: you know how, or nothing stops you"
+msgstr "Can: you know how, or nothing stops you"
+
+msgid "Can’t, mustn’t, don’t have to"
+msgstr "Can’t, mustn’t, don’t have to"
+
+msgid "don’t have to"
+msgstr "don’t have to"
+
+msgid "English says I can for both. Both take the <0>-da</0> form, as lesson {infinitives} showed. Tap a form to hear its sentence."
+msgstr "English says I can for both. Both take the <0>-da</0> form, as lesson {infinitives} showed. Tap a form to hear its sentence."
+
+msgid "From oskama."
+msgstr "From oskama."
+
+msgid "From pidama."
+msgstr "From pidama."
+
+msgid "From saama, which also means to get."
+msgstr "From saama, which also means to get."
+
+msgid "From tohtima."
+msgstr "From tohtima."
+
+msgid "From tulema, to come. Before a -da form it means has to."
+msgstr "From tulema, to come. Before a -da form it means has to."
+
+msgid "From võima."
+msgstr "From võima."
+
+msgid "has to be done; comes"
+msgstr "has to be done; comes"
+
+msgid "Have to and need to"
+msgstr "Have to and need to"
+
+msgid "He or she can’t swim today: something is in the way."
+msgstr "He or she can’t swim today: something is in the way."
+
+msgid "He or she can’t swim: never learned."
+msgstr "He or she can’t swim: never learned."
+
+msgid "He or she is coming to swim."
+msgstr "He or she is coming to swim."
+
+msgid "He or she may come tomorrow."
+msgstr "He or she may come tomorrow."
+
+msgid "here"
+msgstr "here"
+
+msgid "I can come tomorrow."
+msgstr "I can come tomorrow."
+
+msgid "I can read: I know how."
+msgstr "I can read: I know how."
+
+msgid "I can read: nothing stops me."
+msgstr "I can read: nothing stops me."
+
+msgid "I can swim: I know how."
+msgstr "I can swim: I know how."
+
+msgid "I can swim: nothing stops me."
+msgstr "I can swim: nothing stops me."
+
+msgid "I can wait for you."
+msgstr "I can wait for you."
+
+msgid "I can, I know how to"
+msgstr "I can, I know how to"
+
+msgid "I can, I’m able to"
+msgstr "I can, I’m able to"
+
+msgid "I don’t have to read."
+msgstr "I don’t have to read."
+
+msgid "I don’t have to swim."
+msgstr "I don’t have to swim."
+
+msgid "I have to …"
+msgstr "I have to …"
+
+msgid "I have to go."
+msgstr "I have to go."
+
+msgid "I have to wait."
+msgstr "I have to wait."
+
+msgid "I have to work."
+msgstr "I have to work."
+
+msgctxt "modal verbs lesson: pean"
+msgid "I have to, I must"
+msgstr "I have to, I must"
+
+msgid "I have to: it’s on me."
+msgstr "I have to: it’s on me."
+
+msgid "I know Estonian."
+msgstr "I know Estonian."
+
+msgid "I know how to …"
+msgstr "I know how to …"
+
+msgid "I learned as a child."
+msgstr "I learned as a child."
+
+msgid "I may, I can"
+msgstr "I may, I can"
+
+msgid "I need"
+msgstr "I need"
+
+msgid "I need to …"
+msgstr "I need to …"
+
+msgid "I need to go."
+msgstr "I need to go."
+
+msgid "I need to wait."
+msgstr "I need to wait."
+
+msgid "I need to work."
+msgstr "I need to work."
+
+msgid "I need to: there’s a need."
+msgstr "I need to: there’s a need."
+
+msgid "I never learned to read."
+msgstr "I never learned to read."
+
+msgid "I never learned to swim."
+msgstr "I never learned to swim."
+
+msgid "I’ll have to wait."
+msgstr "I’ll have to wait."
+
+msgid "I’m able to …"
+msgstr "I’m able to …"
+
+msgid "I’m allowed to"
+msgstr "I’m allowed to"
+
+msgid "I’m asking first."
+msgstr "I’m asking first."
+
+msgid "I’m free."
+msgstr "I’m free."
+
+msgid "I’m late for work."
+msgstr "I’m late for work."
+
+msgid "I’m not allowed to read."
+msgstr "I’m not allowed to read."
+
+msgid "I’m not allowed to swim."
+msgstr "I’m not allowed to swim."
+
+msgid "It has to be done, and no one is named."
+msgstr "It has to be done, and no one is named."
+
+msgid "It isn’t allowed."
+msgstr "It isn’t allowed."
+
+msgid "It’s fine by me."
+msgstr "It’s fine by me."
+
+msgid "It’s up to you."
+msgstr "It’s up to you."
+
+msgid "Its -da form is ujuda."
+msgstr "Its -da form is ujuda."
+
+msgid "Like <0>mul on vaja</0>: the person in the <1>-l</1> form, then the <2>-da</2> form. It means the same as <3>ei pea</3>."
+msgstr "Like <0>mul on vaja</0>: the person in the <1>-l</1> form, then the <2>-da</2> form. It means the same as <3>ei pea</3>."
+
+msgid "Listen to each sentence and pick what it means."
+msgstr "Listen to each sentence and pick what it means."
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Mari"
+msgstr "Mari"
+
+msgid "Mari asks about swimming. Pick each reply by what it says about you."
+msgstr "Mari asks about swimming. Pick each reply by what it says about you."
+
+msgid "May and allowed to"
+msgstr "May and allowed to"
+
+msgid "May I sit here?"
+msgstr "May I sit here?"
+
+msgid "may, might"
+msgstr "may, might"
+
+msgid "Mul on vaja is I need."
+msgstr "Mul on vaja is I need."
+
+msgid "mustn’t, not allowed to"
+msgstr "mustn’t, not allowed to"
+
+msgid "needed"
+msgstr "needed"
+
+msgid "Never learned."
+msgstr "Never learned."
+
+msgid "No eating here."
+msgstr "No eating here."
+
+msgid "no need"
+msgstr "no need"
+
+msgid "No swimming here."
+msgstr "No swimming here."
+
+msgid "One has to …"
+msgstr "One has to …"
+
+msgid "One has to go."
+msgstr "One has to go."
+
+msgid "One has to swim."
+msgstr "One has to swim."
+
+msgid "One has to wait."
+msgstr "One has to wait."
+
+msgid "One has to work."
+msgstr "One has to work."
+
+msgid "Plans with Mari"
+msgstr "Plans with Mari"
+
+msgid "Play the ones you missed once more, then try again."
+msgstr "Play the ones you missed once more, then try again."
+
+msgid "Pole is ei ole."
+msgstr "Pole is ei ole."
+
+msgid "Put <0>ei</0> before the verb and drop its ending, as in lesson {negation}: <1>oskan</1> becomes <2>ei oska</2>. <3>Oskan</3> and <4>saan</4> stay different with <5>ei</5> too. Never learned: <6/> Something is in the way today: <7/>"
+msgstr "Put <0>ei</0> before the verb and drop its ending, as in lesson {negation}: <1>oskan</1> becomes <2>ei oska</2>. <3>Oskan</3> and <4>saan</4> stay different with <5>ei</5> too. Never learned: <6/> Something is in the way today: <7/>"
+
+msgid "Reason"
+msgstr "Reason"
+
+msgid "Sentence"
+msgstr "Sentence"
+
+msgid "Something is in the way."
+msgstr "Something is in the way."
+
+msgid "Something stops me reading."
+msgstr "Something stops me reading."
+
+msgid "Something stops me swimming."
+msgstr "Something stops me swimming."
+
+msgid "Swimming plans"
+msgstr "Swimming plans"
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap one"
+msgstr "Tap one"
+
+msgid "That goes for everyone."
+msgstr "That goes for everyone."
+
+msgid "The <0>sa</0> form of <1>võima</1>: you let someone."
+msgstr "The <0>sa</0> form of <1>võima</1>: you let someone."
+
+msgid "The reason behind a sentence picks its verb. Match each sentence with its reason. A right pair plays the sentence."
+msgstr "The reason behind a sentence picks its verb. Match each sentence with its reason. A right pair plays the sentence."
+
+msgid "The ta form of võima."
+msgstr "The ta form of võima."
+
+msgid "There’s no need for you to swim."
+msgstr "There’s no need for you to swim."
+
+msgid "Three ways to say have to"
+msgstr "Three ways to say have to"
+
+msgid "to go"
+msgstr "to go"
+
+msgid "to read"
+msgstr "to read"
+
+msgid "to swim"
+msgstr "to swim"
+
+msgid "to wait"
+msgstr "to wait"
+
+msgid "to work"
+msgstr "to work"
+
+msgid "What does it say?"
+msgstr "What does it say?"
+
+msgid "Where English says can, Estonian picks the verb by the reason. <0>Oskan</0> is when you know how, <1>saan</1> when nothing stops you, and <2>võin</2> when it’s allowed or you offer. Must is <3>pean</3>, and mustn’t is <4>ei tohi</4>."
+msgstr "Where English says can, Estonian picks the verb by the reason. <0>Oskan</0> is when you know how, <1>saan</1> when nothing stops you, and <2>võin</2> when it’s allowed or you offer. Must is <3>pean</3>, and mustn’t is <4>ei tohi</4>."
+
+msgid "Where something is. For where it goes, say siia."
+msgstr "Where something is. For where it goes, say siia."
+
+msgid "Which verb, and why"
+msgstr "Which verb, and why"
+
+msgid "Why this verb?"
+msgstr "Why this verb?"
+
+msgid "With a language, <0/> needs no second verb: <1/>"
+msgstr "With a language, <0/> needs no second verb: <1/>"
+
+msgid "With the <0>-ma</0> form, <1/> still means comes: <2/> Only with the <3>-da</3> form does it mean has to: <4/>"
+msgstr "With the <0>-ma</0> form, <1/> still means comes: <2/> Only with the <3>-da</3> form does it mean has to: <4/>"
+
+msgid "You can sit here."
+msgstr "You can sit here."
+
+msgid "You don’t have to come."
+msgstr "You don’t have to come."
+
+msgid "You don’t have to swim."
+msgstr "You don’t have to swim."
+
+msgid "You learned to swim as a child. You’re free today and work tomorrow."
+msgstr "You learned to swim as a child. You’re free today and work tomorrow."
+
+msgid "You mustn’t come."
+msgstr "You mustn’t come."
+
+msgid "You work tomorrow, so you can’t come."
+msgstr "You work tomorrow, so you can’t come."
+
+msgid "You’ll hear it in a sentence."
+msgstr "You’ll hear it in a sentence."
+
+msgid "You’ll hear it said about swimming."
+msgstr "You’ll hear it said about swimming."
+
+msgid "You’ll hear the whole sentence."
+msgstr "You’ll hear the whole sentence."

@@ -1,0 +1,353 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "-s and -l go on the stem"
+msgstr "-s и -l добавляем к основе"
+
+#. placeholder {0}: i18n._(WORD_MEANS[noun.word])
+#. placeholder {1}: noun.stem
+msgid "{0}, stem <0>{1}</0>"
+msgstr "{0}, основа <0>{1}</0>"
+
+msgid "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
+msgstr "<0>-s</0> и <1>-l</1> добавляем к основе существительного: <2>pood</2>, основа <3>poe</3>, <4>poes</4>."
+
+#. placeholder {0}: noun.word
+#. placeholder {1}: noun.stem
+#. placeholder {2}: noun.stem
+msgid "<0>{0}, {1}</0>: the ending goes on <1>{2}</1>."
+msgstr "<0>{0}, {1}</0>: окончание добавляем к <1>{2}</1>."
+
+msgid "10 minutes"
+msgstr "10 минут"
+
+msgid "2 quizzes and a passage"
+msgstr "2 теста и текст"
+
+msgid "A dictionary gives the stem second: <0>pood, poe</0>. Learn a noun as that pair and you can put <1>-s</1> or <2>-l</2> on it. A stem changes a letter inside, gains a vowel at the end, or stays the same as the word. The next sections take one each."
+msgstr "В словаре основа стоит второй: <0>pood, poe</0>. Запоминай существительное именно такой парой — тогда к нему можно добавить <1>-s</1> или <2>-l</2>. Основа либо меняет букву внутри, либо получает гласную на конце, либо совпадает со словом. Дальше о каждом случае по отдельности."
+
+msgid "A dictionary gives the stem second. Learn each noun as that pair: <0>pood, poe</0>."
+msgstr "В словаре основа стоит второй. Учи каждое существительное парой: <0>pood, poe</0>."
+
+msgid "A dictionary lists a third form too: <0>pood, poe, poodi</0>. Lesson {forms} teaches all three."
+msgstr "Словарь даёт и третью форму: <0>pood, poe, poodi</0>. Обо всех трёх — в уроке {forms}."
+
+msgid "A final vowel is no guarantee: <0>tuba</0> ends in one too, and its stem is <1>toa</1>. The dictionary pair settles it: <2>kodu, kodu</2> but <3>tuba, toa</3>."
+msgstr "Гласная на конце ничего не гарантирует: <0>tuba</0> тоже на неё кончается, а основа — <1>toa</1>. Решает пара из словаря: <2>kodu, kodu</2>, но <3>tuba, toa</3>."
+
+msgid "A letter drops or changes inside: <0>pood, poe</0>; <1>tuba, toa</1>."
+msgstr "Внутри буква выпадает или меняется: <0>pood, poe</0>; <1>tuba, toa</1>."
+
+msgid "A letter inside drops or changes"
+msgstr "Буква внутри выпадает или меняется"
+
+msgid "A shop is <0>pood</0>, but in the shop is <1>poes</1>. <2>-s</2> and <3>-l</3> go on the noun’s stem, and the stem can differ from the word."
+msgstr "Магазин — <0>pood</0>, а в магазине — <1>poes</1>. <2>-s</2> и <3>-l</3> добавляем к основе существительного, а основа может отличаться от слова."
+
+msgid "A vowel at the end"
+msgstr "Гласная в конце"
+
+msgid "All of them. You found the word behind every form."
+msgstr "Все. За каждой формой тебе удалось найти слово."
+
+msgid "All of them. You put every ending on the stem."
+msgstr "Все. Каждое окончание добавлено к основе."
+
+msgid "at home"
+msgstr "дома"
+
+msgid "at school, in a school"
+msgstr "в школе"
+
+msgid "at the door"
+msgstr "у двери"
+
+msgid "at the market"
+msgstr "на рынке"
+
+msgid "at work"
+msgstr "на работе"
+
+msgid "book"
+msgstr "книга"
+
+msgid "café"
+msgstr "кафе"
+
+msgid "door"
+msgstr "дверь"
+
+msgid "Each round shows a noun as a dictionary gives it, with its stem, and a meaning such as “in the shop”. Pick the form that says it, then hear it in a sentence. The nouns come from all three sections."
+msgstr "В каждом раунде — существительное, как его даёт словарь, вместе с основой, и смысл, который нужно передать, например «в магазине». Выбери форму с этим значением, а потом послушай её в предложении. Существительные — из всех трёх разделов."
+
+msgid "Each word gains a vowel at the end: <0>kooli, ukse, raamatu</0>."
+msgstr "Каждое слово получает гласную на конце: <0>kooli, ukse, raamatu</0>."
+
+msgid "Fill the gaps"
+msgstr "Заполни пропуски"
+
+msgid "Finland"
+msgstr "Финляндия"
+
+msgid "From ujuma, to swim."
+msgstr "От ujuma, плавать."
+
+msgid "He or she is in the room."
+msgstr "Он или она в комнате."
+
+msgid "He or she studies at school."
+msgstr "Он или она учится в школе."
+
+msgid "He or she works at home."
+msgstr "Он или она работает дома."
+
+msgid "Hear a sentence and pick the word as a dictionary lists it. You hear <0>toas</0>, and you look up <1>tuba</1>."
+msgstr "Послушай предложение и выбери слово так, как его даёт словарь. Слышишь <0>toas</0> — ищешь <1>tuba</1>."
+
+msgid "Hearing the word behind the form"
+msgstr "Слово за формой"
+
+msgid "home"
+msgstr "дом"
+
+msgid "hospital"
+msgstr "больница"
+
+msgid "I live in Finland."
+msgstr "Я живу в Финляндии."
+
+msgid "I live in Tallinn."
+msgstr "Я живу в Таллине."
+
+msgid "I’m at work."
+msgstr "Я на работе."
+
+msgid "In <0>pood, poe</0> the <1>d</1> drops, the long <2>oo</2> turns short, and an <3>e</3> ends the stem. In <4/>, room, the <5>b</5> drops and the <6>u</6> turns into <7>o</7>: the stem is <8/>, and in the room is <9/>."
+msgstr "Как в «день — дня», внутри выпадает буква: в <0>pood, poe</0> исчезает <1>d</1>, долгое <2>oo</2> становится кратким, а в конце основы появляется <3>e</3>. В <4/>, комната, выпадает <5>b</5>, а <6>u</6> становится <7>o</7>: основа — <8/>, а в комнате — <9/>."
+
+msgid "in a café"
+msgstr "в кафе"
+
+msgid "in a hospital"
+msgstr "в больнице"
+
+msgid "in Finland"
+msgstr "в Финляндии"
+
+msgid "In lesson {places} you put <0>-s</0> on a place to say in: <1/>, <2/>. A shop is <3/>, but in the shop is <4/>, not <5>poodis</5>."
+msgstr "В уроке {places} <0>-s</0> добавляется к названию места, чтобы сказать «в»: <1/>, <2/>. Магазин — <3/>, но в магазине — <4/>, а не <5>poodis</5>."
+
+msgid "in Pärnu"
+msgstr "в Пярну"
+
+msgid "In some nouns a letter inside drops or changes: <0>tuba, toa, toas</0>."
+msgstr "В некоторых существительных буква внутри выпадает или меняется: <0>tuba, toa, toas</0>."
+
+msgid "in Tallinn"
+msgstr "в Таллине"
+
+msgid "in Tartu"
+msgstr "в Тарту"
+
+msgid "in the book"
+msgstr "в книге"
+
+msgid "in the river"
+msgstr "в реке"
+
+msgid "in the room"
+msgstr "в комнате"
+
+msgid "in the shop"
+msgstr "в магазине"
+
+msgid "It’s Saturday, and the passage says where everyone is. Pick the right form for each gap. When every gap is filled, hear the whole passage."
+msgstr "Суббота, и текст рассказывает, кто где. Выбери правильную форму для каждого пропуска. Когда все пропуски заполнены, послушай весь текст."
+
+msgid "Jaan is at the door."
+msgstr "Яан у двери."
+
+msgid "Jaan lives in Pärnu."
+msgstr "Яан живёт в Пярну."
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Making the form"
+msgstr "Как образовать форму"
+
+msgid "Many nouns that end in a vowel are their own stem. <0/> is home, and at home is <1/>. The ending goes straight on."
+msgstr "У многих существительных на гласную основа совпадает со словом. <0/> — дом, а дома — <1/>. Окончание добавляем прямо к слову."
+
+msgid "Mari works in a hospital."
+msgstr "Мари работает в больнице."
+
+msgid "market"
+msgstr "рынок"
+
+msgid "Mum is at the shop."
+msgstr "Мама в магазине."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Почти. Переслушай те, где были ошибки."
+
+msgid "Nouns that stay the same"
+msgstr "Существительные без изменений"
+
+msgid "on the table"
+msgstr "на столе"
+
+msgid "on the wall"
+msgstr "на стене"
+
+msgid "on the windowsill"
+msgstr "на подоконнике"
+
+msgid "Other nouns keep every letter and gain a vowel at the end. <0/>, school, has the stem <1/>, so at school is <2/>. That’s also where the <3>a</3> in <4/>, from lesson {places}, comes from."
+msgstr "Другие существительные сохраняют все буквы и получают гласную на конце. <0/>, школа, имеет основу <1/>, поэтому в школе — <2/>. Отсюда же и <3>a</3> в <4/> из урока {places}."
+
+msgid "Pärnu, a town by the sea"
+msgstr "Пярну, город у моря"
+
+msgid "river"
+msgstr "река"
+
+msgid "room"
+msgstr "комната"
+
+msgid "school"
+msgstr "школа"
+
+msgid "shop"
+msgstr "магазин"
+
+msgid "Some gain a vowel at the end, and the vowel can’t be guessed: <0>kool, kooli, koolis</0>."
+msgstr "Некоторые получают гласную на конце, и её не угадать: <0>kool, kooli, koolis</0>."
+
+msgid "Some stay as they are: <0>kodu, kodus</0>."
+msgstr "Некоторые не меняются: <0>kodu, kodus</0>."
+
+msgid "Switch through the six nouns above once more, then try again."
+msgstr "Ещё раз пройди шаги для шести существительных выше, а потом попробуй снова."
+
+msgid "Switch through the three sets above once more, then try again."
+msgstr "Ещё раз пройди шаги в трёх наборах выше, а потом попробуй снова."
+
+msgid "Switch to “The stem” and watch the end of each word."
+msgstr "Переключи на «Основа» и смотри на конец каждого слова."
+
+msgid "Switch to “The stem” and watch which letters change."
+msgstr "Переключи на «Основа» и смотри, какие буквы меняются."
+
+msgid "Switch to “The stem”: no letter changes."
+msgstr "Переключи на «Основа»: ни одна буква не изменится."
+
+msgid "table"
+msgstr "стол"
+
+msgid "Tallinn, the capital"
+msgstr "Таллин, столица"
+
+msgid "Tartu, a university town"
+msgstr "Тарту, университетский город"
+
+msgid "The book is on the table."
+msgstr "Книга на столе."
+
+msgid "The coffee is on the windowsill."
+msgstr "Кофе на подоконнике."
+
+msgid "The ending comes after the vowel: <0>koolis, uksel</0>."
+msgstr "Окончание идёт после гласной: <0>koolis, uksel</0>."
+
+msgid "The ending goes on the noun’s stem, as a verb’s endings go on its stem in lesson {present}. The stem of <0>pood</0> is <1/>, and <2>poe</2> with <3>-s</3> is <4>poes</4>. Tap each step to hear it."
+msgstr "Окончание добавляем к основе существительного — так же, как окончания глагола к его основе в уроке {present}. Основа <0>pood</0> — <1/>, а <2>poe</2> с <3>-s</3> — это <4>poes</4>. Нажми на каждый шаг, чтобы услышать."
+
+msgid "The ending goes on the stem: <0>poes</0>, not <1>poodis</1>."
+msgstr "Окончание добавляем к основе: <0>poes</0>, а не <1>poodis</1>."
+
+msgid "The ending goes straight on: <0>kodus, tööl</0>."
+msgstr "Окончание добавляем прямо к слову: <0>kodus, tööl</0>."
+
+msgid "The picture is in the book."
+msgstr "Картинка в книге."
+
+msgid "The picture is on the wall."
+msgstr "Картина на стене."
+
+msgid "the stem"
+msgstr "основа"
+
+msgid "The stem"
+msgstr "Основа"
+
+msgid "The stem is the word itself."
+msgstr "Основа — само слово."
+
+#. placeholder {0}: noun.word
+msgid "The stem of {0}: -s and -l go on it."
+msgstr "Основа слова {0}: к ней добавляем -s и -l."
+
+msgid "the word"
+msgstr "слово"
+
+msgid "The word"
+msgstr "Слово"
+
+msgid "The word doesn’t show which vowel it gains: <0/>, <1/>; <2/>, <3/>. The dictionary’s second form does."
+msgstr "По слову не видно, какую гласную оно получит: <0/>, <1/>; <2/>, <3/>. Это показывает вторая форма в словаре."
+
+msgid "The word, its stem or the stem with an ending"
+msgstr "Слово, его основа или основа с окончанием"
+
+msgid "They study in Tartu."
+msgstr "Они учатся в Тарту."
+
+msgid "They’re at the market."
+msgstr "Они на рынке."
+
+msgid "wall"
+msgstr "стена"
+
+msgid "we swim"
+msgstr "мы плаваем"
+
+msgid "We swim in the river."
+msgstr "Мы плаваем в реке."
+
+msgid "We’re in a café."
+msgstr "Мы в кафе."
+
+msgid "Which form?"
+msgstr "Какая форма?"
+
+msgid "Which letters change follows rules of its own, and lesson {gradation} teaches them. For now, take the stem from the dictionary."
+msgstr "Какие буквы меняются, определяют отдельные правила; о них — в уроке {gradation}. А пока бери основу из словаря."
+
+msgid "Which word?"
+msgstr "Какое слово?"
+
+msgid "Who is where on Saturday"
+msgstr "Кто где в субботу"
+
+msgid "window"
+msgstr "окно"
+
+msgid "With an ending"
+msgstr "С окончанием"
+
+msgid "Words"
+msgstr "Слова"
+
+msgid "work"
+msgstr "работа"
+
+msgid "You have met two of these already: <0/>, on the table, is from <1/>, and <2/>, at the market, is from <3/>. Switch through the three steps for six nouns."
+msgstr "Два таких слова ты уже знаешь: <0/>, на столе, — от <1/>, а <2/>, на рынке, — от <3/>. Пройди все три шага для шести существительных."

@@ -1,0 +1,293 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "{v}, as in {word}"
+msgstr "{v}, as in {word}"
+
+msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
+msgstr "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
+
+msgid "10 minutes"
+msgstr "10 minutes"
+
+msgid "2 quizzes"
+msgstr "2 quizzes"
+
+msgid "A double letter is longer, and it makes a different word."
+msgstr "A double letter is longer, and it makes a different word."
+
+msgid "A few words break the rule: <0/>, thank you, puts the stress on its second half."
+msgstr "A few words break the rule: <0/>, thank you, puts the stress on its second half."
+
+msgid "a hen"
+msgstr "a hen"
+
+msgid "a hundred"
+msgstr "a hundred"
+
+msgid "a quarrel"
+msgstr "a quarrel"
+
+msgid "All of them. You can hear length."
+msgstr "All of them. You can hear length."
+
+msgid "All of them. You can hear the difference."
+msgstr "All of them. You can hear the difference."
+
+msgid "Also “came”: ta tuli, he or she came."
+msgstr "Also “came”: ta tuli, he or she came."
+
+msgid "Also “to get”, from saama."
+msgstr "Also “to get”, from saama."
+
+msgid "apple"
+msgstr "apple"
+
+msgid "basket"
+msgstr "basket"
+
+msgid "bed"
+msgstr "bed"
+
+msgid "carry!"
+msgstr "carry!"
+
+msgid "cat"
+msgstr "cat"
+
+msgid "come!"
+msgstr "come!"
+
+msgid "door"
+msgstr "door"
+
+msgid "ear"
+msgstr "ear"
+
+msgid "Estonia; Estonian"
+msgstr "Estonia; Estonian"
+
+msgid "Estonia’s capital"
+msgstr "Estonia’s capital"
+
+msgid "Estonian also has a third, extra-long length, and the spelling doesn’t always show it. <0>Linna</0> means both “of the town” and “into the town”, and the second is held longer."
+msgstr "Estonian also has a third, extra-long length, and the spelling doesn’t always show it. <0>Linna</0> means both “of the town” and “into the town”, and the second is held longer."
+
+msgid "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read a new word aloud."
+msgstr "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read a new word aloud."
+
+msgid "father"
+msgstr "father"
+
+msgid "fire"
+msgstr "fire"
+
+msgid "Five look familiar. The four with marks are separate letters, not accents, and swapping one changes the word. English has no sound like <0/>."
+msgstr "Five look familiar. The four with marks are separate letters, not accents, and swapping one changes the word. English has no sound like <0/>."
+
+msgid "From kool, school."
+msgstr "From kool, school."
+
+msgid "From linn, town."
+msgstr "From linn, town."
+
+msgid "From tuul, wind."
+msgstr "From tuul, wind."
+
+msgid "handle, as on a bucket"
+msgstr "handle, as on a bucket"
+
+msgid "hello"
+msgstr "hello"
+
+msgid "How Estonian sounds: nine vowels, letters that always sound the same, and length that changes the word."
+msgstr "How Estonian sounds: nine vowels, letters that always sound the same, and length that changes the word."
+
+msgid "I"
+msgstr "I"
+
+msgid "junk, clutter"
+msgstr "junk, clutter"
+
+msgid "Kas sa tuled? Are you coming?"
+msgstr "Kas sa tuled? Are you coming?"
+
+msgid "land, country; the ground"
+msgstr "land, country; the ground"
+
+msgid "library"
+msgstr "library"
+
+msgid "Like the a in “cat”."
+msgstr "Like the a in “cat”."
+
+msgid "Like the a in “father”, but short."
+msgstr "Like the a in “father”, but short."
+
+msgid "Like the e in “bed”."
+msgstr "Like the e in “bed”."
+
+msgid "Like the ee in “see”, but short, never like “ice”."
+msgstr "Like the ee in “see”, but short, never like “ice”."
+
+msgid "Like the o in “more”, but short."
+msgstr "Like the o in “more”, but short."
+
+msgid "Like the oo in “food”, but short."
+msgstr "Like the oo in “food”, but short."
+
+msgid "linen; a bedsheet"
+msgstr "linen; a bedsheet"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Mix these up and you say another word: <0/> is an ear and <1/> a basket. <2/> is one and <3/> a door. Listen and pick the word you hear."
+msgstr "Mix these up and you say another word: <0/> is an ear and <1/> a basket. <2/> is one and <3/> a door. Listen and pick the word you hear."
+
+msgid "Most of them. Play the ones you missed once more."
+msgstr "Most of them. Play the ones you missed once more."
+
+msgid "mother"
+msgstr "mother"
+
+msgid "night"
+msgstr "night"
+
+msgid "Nine vowels"
+msgstr "Nine vowels"
+
+msgid "No English sound is like it. Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
+msgstr "No English sound is like it. Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
+
+msgid "Õ or o, ä or a, ü or u"
+msgstr "Õ or o, ä or a, ü or u"
+
+msgid "of the town; into town"
+msgstr "of the town; into town"
+
+msgid "of the wind"
+msgstr "of the wind"
+
+msgid "old"
+msgstr "old"
+
+msgid "one"
+msgstr "one"
+
+msgid "One letter or two?"
+msgstr "One letter or two?"
+
+msgid "One letter or two? Listen, then fill the gap."
+msgstr "One letter or two? Listen, then fill the gap."
+
+msgid "One word for both."
+msgstr "One word for both."
+
+msgid "Pick a pair. Both words are drawn on one time scale, so the longer one takes more room."
+msgstr "Pick a pair. Both words are drawn on one time scale, so the longer one takes more room."
+
+msgid "Pick each pair above again and hear which word is longer."
+msgstr "Pick each pair above again and hear which word is longer."
+
+msgid "Raamat, book, and kogu, collection."
+msgstr "Raamat, book, and kogu, collection."
+
+msgid "Read it as it’s written"
+msgstr "Read it as it’s written"
+
+msgid "road; tea"
+msgstr "road; tea"
+
+msgid "Said to one person, from kandma. Also “of the heel”, from kand."
+msgstr "Said to one person, from kandma. Also “of the heel”, from kand."
+
+msgid "Said to one person."
+msgstr "Said to one person."
+
+msgid "Say e with rounded lips, as in German “schön”."
+msgstr "Say e with rounded lips, as in German “schön”."
+
+msgid "Say every letter the way it’s written."
+msgstr "Say every letter the way it’s written."
+
+msgid "Say i with rounded lips, as in German “über” or French “tu”."
+msgstr "Say i with rounded lips, as in German “über” or French “tu”."
+
+msgid "Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
+msgstr "Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
+
+msgid "school"
+msgstr "school"
+
+msgid "send!"
+msgstr "send!"
+
+msgid "Short and long"
+msgstr "Short and long"
+
+msgid "Short for mina."
+msgstr "Short for mina."
+
+msgid "Spell what you hear"
+msgstr "Spell what you hear"
+
+msgid "spider"
+msgstr "spider"
+
+msgid "Stress falls on the <0>first syllable</0>. Tap a word to hear it."
+msgstr "Stress falls on the <0>first syllable</0>. Tap a word to hear it."
+
+msgid "Stress the first syllable."
+msgstr "Stress the first syllable."
+
+msgid "Tap a vowel"
+msgstr "Tap a vowel"
+
+msgid "Tap õ, ä and ü in the vowels above once more, then try again."
+msgstr "Tap õ, ä and ü in the vowels above once more, then try again."
+
+msgid "thank you"
+msgstr "thank you"
+
+msgid "the letter õ"
+msgstr "the letter õ"
+
+msgid "The letters <0>õ ä ö ü</0> are vowels of their own, and English has no sound like <1>õ</1>."
+msgstr "The letters <0>õ ä ö ü</0> are vowels of their own, and English has no sound like <1>õ</1>."
+
+msgid "to school"
+msgstr "to school"
+
+msgid "town, city"
+msgstr "town, city"
+
+msgid "turns a sentence into a yes-or-no question"
+msgstr "turns a sentence into a yes-or-no question"
+
+msgid "uncle"
+msgstr "uncle"
+
+msgid "Vowels"
+msgstr "Vowels"
+
+msgid "Which word did you hear?"
+msgstr "Which word did you hear?"
+
+msgid "window"
+msgstr "window"
+
+msgid "yes"
+msgstr "yes"
+
+msgid "you, to more than one; polite you"
+msgstr "you, to more than one; polite you"
+
+msgid "You’ll hear it in a word, with a note on how to say it."
+msgstr "You’ll hear it in a word, with a note on how to say it."

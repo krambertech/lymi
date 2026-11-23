@@ -1,0 +1,378 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "-le means onto or to, -lt off or from"
+msgstr "-le means onto or to, -lt off or from"
+
+msgid "-le or -sse"
+msgstr "-le or -sse"
+
+msgid "<0/> takes <1>-l</1>, as lesson {places} showed for names ending in <2>-maa</2>. So it takes <3>-le</3> and <4>-lt</4> too: <5/>, <6/>."
+msgstr "<0/> takes <1>-l</1>, as lesson {places} showed for names ending in <2>-maa</2>. So it takes <3>-le</3> and <4>-lt</4> too: <5/>, <6/>."
+
+msgid "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>"
+msgstr "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>"
+
+msgid "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>?"
+msgstr "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>?"
+
+msgid "10 minutes"
+msgstr "10 minutes"
+
+msgid "2 quizzes and a story to fill in"
+msgstr "2 quizzes and a story to fill in"
+
+msgid "A cat and a table"
+msgstr "A cat and a table"
+
+msgid "A place that takes <0>-l</0> takes <1>-le</1> for where to; one that takes <2>-s</2> takes <3>-sse</3> or a short form: <4>tööle</4> but <5>kooli</5>. Every place in this lesson works this way."
+msgstr "A place that takes <0>-l</0> takes <1>-le</1> for where to; one that takes <2>-s</2> takes <3>-sse</3> or a short form: <4>tööle</4> but <5>kooli</5>. Every place in this lesson works this way."
+
+msgid "A shop takes <0>-s</0>, not <1>-l</1>: <2>poes</2>, in the shop."
+msgstr "A shop takes <0>-s</0>, not <1>-l</1>: <2>poes</2>, in the shop."
+
+msgid "A shop takes <0>-s</0>, so from it takes <1>-st</1>: <2>poest</2>."
+msgstr "A shop takes <0>-s</0>, so from it takes <1>-st</1>: <2>poest</2>."
+
+msgid "After <0/>, the person you call takes <1>-le</1>. After <2/>, the person you ask takes <3>-lt</3>: <4/> is word for word “I ask from Mum”. A word whose stem changes, as in lesson {stems}, takes the ending on its stem: <5/>."
+msgstr "After <0/>, the person you call takes <1>-le</1>. After <2/>, the person you ask takes <3>-lt</3>: <4/> is word for word “I ask from Mum”. A word whose stem changes, as in lesson {stems}, takes the ending on its stem: <5/>."
+
+msgid "After <0>helistama</0> and <1>küsima</1>, the person takes <2>-le</2> or <3>-lt</3>: <4>Ma helistan emale. Ma küsin emalt</4>, word for word “I ask from Mum”."
+msgstr "After <0>helistama</0> and <1>küsima</1>, the person takes <2>-le</2> or <3>-lt</3>: <4>Ma helistan emale. Ma küsin emalt</4>, word for word “I ask from Mum”."
+
+msgid "After <0>läheb</0>, goes, the place answers <1>kuhu</1>, so the market takes <2>-le</2>: <3>turule</3>."
+msgstr "After <0>läheb</0>, goes, the place answers <1>kuhu</1>, so the market takes <2>-le</2>: <3>turule</3>."
+
+msgid "All of them. You heard the ending of every form."
+msgstr "All of them. You heard the ending of every form."
+
+msgid "All three endings go on the same stem: <0/>, <1/>, <2/>. Tap a form in the table to hear it."
+msgstr "All three endings go on the same stem: <0/>, <1/>, <2/>. Tap a form in the table to hear it."
+
+msgid "All three endings go on the same stem: <0>turul, turule, turult</0>."
+msgstr "All three endings go on the same stem: <0>turul, turule, turult</0>."
+
+msgid "Asks where someone or something is going."
+msgstr "Asks where someone or something is going."
+
+msgid "at school, in a school"
+msgstr "at school, in a school"
+
+msgid "at the market"
+msgstr "at the market"
+
+msgid "at work"
+msgstr "at work"
+
+msgctxt "kass, the cat on the table"
+msgid "cat"
+msgstr "cat"
+
+msgid "Fill each gap with the form that fits. Some places take <0>-l</0>, some <1>-s</1>, and one gap is a person. Hear the whole story at the end."
+msgstr "Fill each gap with the form that fits. Some places take <0>-l</0>, some <1>-s</1>, and one gap is a person. Hear the whole story at the end."
+
+msgid "Fill the gaps"
+msgstr "Fill the gaps"
+
+msgid "For the table, the answer to <0/> ends in <1>-le</1>: <2/> The answer to <3/> ends in <4>-lt</4>: <5/> The cat lands on the floor, so <6/> takes <7>-le</7>."
+msgstr "For the table, the answer to <0/> ends in <1>-le</1>: <2/> The answer to <3/> ends in <4>-lt</4>: <5/> The cat lands on the floor, so <6/> takes <7>-le</7>."
+
+msgid "from Mum"
+msgstr "from Mum"
+
+msgid "from Saaremaa"
+msgstr "from Saaremaa"
+
+msgid "from the market"
+msgstr "from the market"
+
+msgid "from work"
+msgstr "from work"
+
+msgid "Hear a form on its own and pick the question it answers. Listen to its last sounds: <0>-l</0>, <1>-le</1> or <2>-lt</2>."
+msgstr "Hear a form on its own and pick the question it answers. Listen to its last sounds: <0>-l</0>, <1>-le</1> or <2>-lt</2>."
+
+msgid "Helistama takes -le: helistan emale."
+msgstr "Helistama takes -le: helistan emale."
+
+msgid "hospital"
+msgstr "hospital"
+
+msgid "Hüppama with the ta ending."
+msgstr "Hüppama with the ta ending."
+
+msgid "I ask"
+msgstr "I ask"
+
+msgid "I call, I phone"
+msgstr "I call, I phone"
+
+msgid "I, you and the other pronouns have their own forms for to and from. Lesson {pronouns} teaches them."
+msgstr "I, you and the other pronouns have their own forms for to and from. Lesson {pronouns} teaches them."
+
+msgid "I’ll ask Dad."
+msgstr "I’ll ask Dad."
+
+msgid "I’ll ask Mum."
+msgstr "I’ll ask Mum."
+
+msgid "I’m calling a friend."
+msgstr "I’m calling a friend."
+
+msgid "I’m calling Mum."
+msgstr "I’m calling Mum."
+
+msgid "I’m coming from the market."
+msgstr "I’m coming from the market."
+
+msgid "I’m coming from work."
+msgstr "I’m coming from work."
+
+msgid "I’m going to the market."
+msgstr "I’m going to the market."
+
+msgid "I’m going to work, but Mari is going to school."
+msgstr "I’m going to work, but Mari is going to school."
+
+msgid "I’m going to work."
+msgstr "I’m going to work."
+
+msgid "in a hospital"
+msgstr "in a hospital"
+
+msgid "in Tartu"
+msgstr "in Tartu"
+
+msgid "in the shop"
+msgstr "in the shop"
+
+msgid "jumps"
+msgstr "jumps"
+
+msgid "Kus with a t on the end."
+msgstr "Kus with a t on the end."
+
+msgid "Küsima takes -lt: küsin emalt."
+msgstr "Küsima takes -lt: küsin emalt."
+
+msgid "Lesson {have} put <0>-l</0> on a person to say who has something: <1/> After some verbs a person takes <2>-le</2> or <3>-lt</3> instead."
+msgstr "Lesson {have} put <0>-l</0> on a person to say who has something: <1/> After some verbs a person takes <2>-le</2> or <3>-lt</3> instead."
+
+msgid "Lesson {places} taught <0>-l</0> for on and at: <1/> Lesson {inner} paired <2>-s</2> with <3>-sse</3> and <4>-st</4>, for “where to” and “where from”. <5>-l</5> has a pair of its own: <6>-le</6> and <7>-lt</7>."
+msgstr "Lesson {places} taught <0>-l</0> for on and at: <1/> Lesson {inner} paired <2>-s</2> with <3>-sse</3> and <4>-st</4>, for “where to” and “where from”. <5>-l</5> has a pair of its own: <6>-le</6> and <7>-lt</7>."
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Mari’s Saturday"
+msgstr "Mari’s Saturday"
+
+msgid "market"
+msgstr "market"
+
+msgid "Mum has a cat."
+msgstr "Mum has a cat."
+
+msgid "Mum is coming from work, but Dad is coming from school."
+msgstr "Mum is coming from work, but Dad is coming from school."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "off the table"
+msgstr "off the table"
+
+msgctxt "a place's form that answers kust"
+msgid "off, from"
+msgstr "off, from"
+
+msgctxt "the island, where"
+msgid "on Saaremaa"
+msgstr "on Saaremaa"
+
+msgid "on the floor"
+msgstr "on the floor"
+
+msgid "on the table"
+msgstr "on the table"
+
+msgctxt "a place's form that answers kus"
+msgid "on, at"
+msgstr "on, at"
+
+msgid "On, onto and off the table"
+msgstr "On, onto and off the table"
+
+msgid "onto the floor"
+msgstr "onto the floor"
+
+msgid "onto the table"
+msgstr "onto the table"
+
+msgctxt "a place's form that answers kuhu"
+msgid "onto, to"
+msgstr "onto, to"
+
+msgid "or a short form"
+msgstr "or a short form"
+
+msgid "Places that take <0>-l</0> answer <1>kus</1>, <2>kuhu</2> and <3>kust</3> with <4>-l</4>, <5>-le</5> and <6>-lt</6>: <7>laual, lauale, laualt</7>."
+msgstr "Places that take <0>-l</0> answer <1>kus</1>, <2>kuhu</2> and <3>kust</3> with <4>-l</4>, <5>-le</5> and <6>-lt</6>: <7>laual, lauale, laualt</7>."
+
+msgid "places with -l"
+msgstr "places with -l"
+
+msgid "Põrand, floor, with -l."
+msgstr "Põrand, floor, with -l."
+
+msgid "Põrand, floor, with -le."
+msgstr "Põrand, floor, with -le."
+
+msgid "Put <0>-le</0> or <1>-lt</1> where the <2>-l</2> was: <3/>, <4/>, <5/>. Ask with <6/> and <7/>, as you do for places with <8>-s</8>."
+msgstr "Put <0>-le</0> or <1>-lt</1> where the <2>-l</2> was: <3/>, <4/>, <5/>. Ask with <6/> and <7/>, as you do for places with <8>-s</8>."
+
+msgid "Put each place under the ending it takes for where to. Think of where first: <0/>, so <1/>."
+msgstr "Put each place under the ending it takes for where to. Think of where first: <0/>, so <1/>."
+
+msgid "Saaremaa"
+msgstr "Saaremaa"
+
+msgid "Saaremaa, Estonia’s largest island"
+msgstr "Saaremaa, Estonia’s largest island"
+
+msgid "school"
+msgstr "school"
+
+msgid "She comes home from the market, so <0>-lt</0>: <1>turult</1>."
+msgstr "She comes home from the market, so <0>-lt</0>: <1>turult</1>."
+
+msgid "shop"
+msgstr "shop"
+
+msgid "So one English “to” can be <0>-le</0> or a short form, even in one sentence. Tap a sentence to hear it."
+msgstr "So one English “to” can be <0>-le</0> or a short form, even in one sentence. Tap a sentence to hear it."
+
+msgid "Sõber, friend: -le goes on its stem sõbra-."
+msgstr "Sõber, friend: -le goes on its stem sõbra-."
+
+msgid "table"
+msgstr "table"
+
+msgid "Tap a form to hear it and see what its ending says."
+msgstr "Tap a form to hear it and see what its ending says."
+
+msgid "Tap the forms in the table once more, then try again."
+msgstr "Tap the forms in the table once more, then try again."
+
+msgid "Tartu, a university town"
+msgstr "Tartu, a university town"
+
+msgid "Tartu, the hospital, the school and the shop take <0>-s</0>, so <1>-sse</1> or a short form: <2>Tartusse, kooli</2>."
+msgstr "Tartu, the hospital, the school and the shop take <0>-s</0>, so <1>-sse</1> or a short form: <2>Tartusse, kooli</2>."
+
+msgid "The cat is on the table."
+msgstr "The cat is on the table."
+
+msgid "The cat jumps off the table onto the floor."
+msgstr "The cat jumps off the table onto the floor."
+
+msgid "The cat jumps onto the table."
+msgstr "The cat jumps onto the table."
+
+msgid "The ending for “where to” follows the ending for “where”. A place with <0>-l</0> takes <1>-le</1>: <2/>, <3/>. A place with <4>-s</4> takes <5>-sse</5> or a short form, as lesson {inner} showed: <6/>, <7/>. Every place in this lesson works this way."
+msgstr "The ending for “where to” follows the ending for “where”. A place with <0>-l</0> takes <1>-le</1>: <2/>, <3/>. A place with <4>-s</4> takes <5>-sse</5> or a short form, as lesson {inner} showed: <6/>, <7/>. Every place in this lesson works this way."
+
+msgid "The person you call takes <0>-le</0>: <1>emale</1>."
+msgstr "The person you call takes <0>-le</0>: <1>emale</1>."
+
+msgid "The verb is the same both ways, so only the ending says which way the cat goes. Tap a form to watch it and hear the sentence."
+msgstr "The verb is the same both ways, so only the ending says which way the cat goes. Tap a form to watch it and hear the sentence."
+
+msgid "Three places, each in three forms"
+msgstr "Three places, each in three forms"
+
+msgid "Three questions, three endings: <0>kus?</0> <1>-l</1> for on and at, <2>kuhu?</2> <3>-le</3> for onto and to, <4>kust?</4> <5>-lt</5> for off and from: <6>laual, lauale, laualt</6>."
+msgstr "Three questions, three endings: <0>kus?</0> <1>-l</1> for on and at, <2>kuhu?</2> <3>-le</3> for onto and to, <4>kust?</4> <5>-lt</5> for off and from: <6>laual, lauale, laualt</6>."
+
+msgid "to a friend"
+msgstr "to a friend"
+
+msgid "To and from a person"
+msgstr "To and from a person"
+
+msgid "to Mum"
+msgstr "to Mum"
+
+msgctxt "the island, where to"
+msgid "to Saaremaa"
+msgstr "to Saaremaa"
+
+msgid "to school"
+msgstr "to school"
+
+msgid "to Tartu"
+msgstr "to Tartu"
+
+msgid "to the hospital"
+msgstr "to the hospital"
+
+msgid "to the market"
+msgstr "to the market"
+
+msgid "to the shop"
+msgstr "to the shop"
+
+msgctxt "the place: going to work"
+msgid "to work"
+msgstr "to work"
+
+msgid "where"
+msgstr "where"
+
+msgid "Where are you coming from?"
+msgstr "Where are you coming from?"
+
+msgid "Where are you going?"
+msgstr "Where are you going?"
+
+msgid "where from"
+msgstr "where from"
+
+msgid "Where something comes from: <0>-lt</0> says off it or from it."
+msgstr "Where something comes from: <0>-lt</0> says off it or from it."
+
+msgid "Where something goes: <0>-le</0> says onto it or to it."
+msgstr "Where something goes: <0>-le</0> says onto it or to it."
+
+msgid "Where something is: <0>-l</0> says on it or at it."
+msgstr "Where something is: <0>-l</0> says on it or at it."
+
+msgid "Where the cat is and goes"
+msgstr "Where the cat is and goes"
+
+msgid "where to"
+msgstr "where to"
+
+msgid "Where to: <0>-le</0> or <1>-sse</1>?"
+msgstr "Where to: <0>-le</0> or <1>-sse</1>?"
+
+msgid "Which question the form answers"
+msgstr "Which question the form answers"
+
+msgid "work"
+msgstr "work"
+
+msgid "Work takes <0>-l</0>, so going there takes <1>-le</1>: <2>tööle</2>."
+msgstr "Work takes <0>-l</0>, so going there takes <1>-le</1>: <2>tööle</2>."
+
+msgid "work, job"
+msgstr "work, job"
+
+msgid "Work, the market, the table and names ending in <0>-maa</0> take <1>-l</1>, so <2>-le</2>: <3>turule</3>."
+msgstr "Work, the market, the table and names ending in <0>-maa</0> take <1>-l</1>, so <2>-le</2>: <3>turule</3>."

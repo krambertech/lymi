@@ -1,4 +1,6 @@
-import { testRule } from "../test/run.mjs";
+import assert from "node:assert/strict";
+import { test } from "node:test";
+import { lint, testRule } from "../test/run.mjs";
 
 const filename = "new.tsx";
 
@@ -23,4 +25,24 @@ testRule("form-header", {
       errors: ['label={t`Close`} icon="close"'],
     },
   ],
+});
+
+test("form-header keeps FormHeader's own view from being flattened", () => {
+  const header = (attributes) =>
+    lint(
+      "form-header",
+      "form-header.tsx",
+      `export function FormHeader() { return <View${attributes} className="flex-row" />; }`,
+    );
+  assert.deepEqual(header(" collapsable={false}"), []);
+  assert.deepEqual(
+    header("").map(({ message, text }) => [message, text]),
+    [
+      [
+        "FormHeader's outer view takes collapsable={false}: iOS lays a form sheet's scroll view " +
+          "over a header that React Native has flattened away.",
+        "View",
+      ],
+    ],
+  );
 });

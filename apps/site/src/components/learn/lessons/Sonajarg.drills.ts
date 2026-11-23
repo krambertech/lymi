@@ -1,0 +1,243 @@
+import { msg } from "@lingui/core/macro";
+import { ORDER_MEANING, ORDER_REWRITE, ORDER_TRANSLATE } from "../../../lib/learn/clips";
+import type { DrillBank } from "../../../lib/learn/drill";
+import { withPronouns } from "../../../lib/learn/pronouns";
+
+const orderAnswers = (id: (typeof ORDER_TRANSLATE)[number]["id"]) =>
+  (ORDER_TRANSLATE.find((item) => item.id === id) as (typeof ORDER_TRANSLATE)[number]).answers;
+const rewriteAnswers = (id: string) =>
+  (ORDER_REWRITE.find((item) => item.id === id) as (typeof ORDER_REWRITE)[number]).answers;
+const builtAnswers = (id: (typeof ORDER_MEANING)[number]["id"]) =>
+  (ORDER_MEANING.find((item) => item.id === id) as (typeof ORDER_MEANING)[number]).answers;
+
+const SECOND = msg`The verb usually comes second; when a time or place starts the sentence, the person usually follows the verb: <et>Täna lähen ma</et>.`;
+const QUESTION = msg`In a question, the short pronoun usually comes right after the question word: <et>Kus sa elad?</et>`;
+const TWO = msg`With two verbs, the first takes second place and the other usually goes last: <et>Homme pean ma tööle minema.</et>`;
+const NO = msg`With <et>ei</et>, the person usually stays before it: <et>Täna ma ei tööta.</et>`;
+const START = msg`Start with the time word`;
+
+export const DRILLS: DrillBank = {
+  rules: {
+    front: { label: msg`The verb usually second: <et>Täna lähen ma</et>`, section: "second" },
+    question: { label: msg`Questions: <et>Kus sa elad?</et>`, section: "questions" },
+    two: { label: msg`Two verbs: <et>pean … minema</et>`, section: "two-verbs" },
+    no: { label: msg`With <et>ei</et>: <et>Täna ma ei tööta</et>`, section: "no" },
+  },
+  items: [
+    {
+      kind: "rewrite",
+      id: "front-tana",
+      rule: "front",
+      from: "Ma lähen täna Tartusse.",
+      cue: START,
+      answers: rewriteAnswers("start-tana"),
+      say: "Täna lähen ma Tartusse.",
+      explain: SECOND,
+    },
+    {
+      kind: "rewrite",
+      id: "front-hommikul",
+      rule: "front",
+      from: "Mari joob hommikul kohvi.",
+      cue: START,
+      answers: rewriteAnswers("start-hommikul"),
+      say: "Hommikul joob Mari kohvi.",
+      explain: SECOND,
+    },
+    {
+      kind: "rewrite",
+      id: "front-laupaeval",
+      rule: "front",
+      from: "Jaan töötab laupäeval.",
+      cue: START,
+      answers: rewriteAnswers("start-laupaeval"),
+      say: "Laupäeval töötab Jaan.",
+      explain: SECOND,
+    },
+    {
+      kind: "rewrite",
+      id: "front-ohtul",
+      rule: "front",
+      from: "Me oleme õhtul kodus.",
+      cue: START,
+      answers: rewriteAnswers("start-ohtul"),
+      say: "Õhtul oleme me kodus.",
+      explain: SECOND,
+    },
+    {
+      kind: "translate",
+      id: "front-today-tartu",
+      rule: "front",
+      prompt: msg`Today I’m going to Tartu.`,
+      answers: orderAnswers("tana-tartusse"),
+      say: "Täna lähen ma Tartusse.",
+      explain: SECOND,
+    },
+    {
+      kind: "dictation",
+      id: "front-tartus-elab",
+      rule: "front",
+      answers: ["Tartus elab Kati."],
+      say: "Tartus elab Kati.",
+      explain: SECOND,
+    },
+    {
+      kind: "dictation",
+      id: "front-ohtul-loen",
+      rule: "front",
+      answers: ["Õhtul loen ma raamatut."],
+      say: "Õhtul loen ma raamatut.",
+      explain: SECOND,
+    },
+
+    {
+      kind: "translate",
+      id: "question-kus-elad",
+      rule: "question",
+      prompt: msg`Where do you live? (To a friend.)`,
+      answers: orderAnswers("kus-elad"),
+      say: "Kus sa elad?",
+      explain: QUESTION,
+    },
+    {
+      kind: "dictation",
+      id: "question-mida-teed",
+      rule: "question",
+      answers: ["Mida sa täna teed?"],
+      say: "Mida sa täna teed?",
+      explain: QUESTION,
+    },
+    {
+      kind: "dictation",
+      id: "question-millal-tulete",
+      rule: "question",
+      answers: ["Millal te tulete?"],
+      say: "Millal te tulete?",
+      explain: QUESTION,
+    },
+    {
+      kind: "translate",
+      id: "question-saturday",
+      rule: "question",
+      prompt: msg`What are you doing on Saturday? (To a friend.)`,
+      answers: orderAnswers("laupaeval-teed"),
+      say: "Mida sa laupäeval teed?",
+      explain: QUESTION,
+    },
+    {
+      kind: "ask",
+      id: "question-ask-kus",
+      rule: "question",
+      reply: "Ma elan Tartus.",
+      answers: withPronouns(["Kus sa elad?", "Kus te elate?"]),
+      say: "Kus sa elad?",
+      explain: QUESTION,
+    },
+    {
+      kind: "dictation",
+      id: "question-kellega",
+      rule: "question",
+      answers: ["Kellega te räägite?"],
+      say: "Kellega te räägite?",
+      explain: QUESTION,
+    },
+
+    {
+      kind: "rewrite",
+      id: "two-homme",
+      rule: "two",
+      from: "Ma pean homme tööle minema.",
+      cue: START,
+      answers: rewriteAnswers("start-homme"),
+      say: "Homme pean ma tööle minema.",
+      explain: TWO,
+    },
+    {
+      kind: "translate",
+      id: "two-homme-tootama",
+      rule: "two",
+      prompt: msg`Tomorrow I have to work.`,
+      answers: orderAnswers("homme-tootama"),
+      say: "Homme pean ma töötama.",
+      explain: TWO,
+    },
+    {
+      kind: "dictation",
+      id: "two-ohtul-lugeda",
+      rule: "two",
+      answers: ["Õhtul tahan ma raamatut lugeda."],
+      say: "Õhtul tahan ma raamatut lugeda.",
+      explain: TWO,
+    },
+    {
+      kind: "dictation",
+      id: "two-oppima",
+      rule: "two",
+      answers: ["Pühapäeval pean ma õppima."],
+      say: "Pühapäeval pean ma õppima.",
+      explain: TWO,
+    },
+    {
+      kind: "translate",
+      id: "two-ujuma",
+      rule: "two",
+      prompt: msg`On Saturday we’re going swimming.`,
+      answers: builtAnswers("laupaeval-ujuma"),
+      say: "Laupäeval läheme me ujuma.",
+      explain: TWO,
+    },
+
+    {
+      kind: "translate",
+      id: "no-today",
+      rule: "no",
+      prompt: msg`Today we’re not working.`,
+      answers: orderAnswers("tana-ei-too"),
+      say: "Täna me ei tööta.",
+      explain: NO,
+    },
+    {
+      kind: "dictation",
+      id: "no-homme-ta",
+      rule: "no",
+      answers: ["Homme ta ei tööta."],
+      say: "Homme ta ei tööta.",
+      explain: NO,
+    },
+    {
+      kind: "dictation",
+      id: "no-ohtul-ta",
+      rule: "no",
+      answers: ["Õhtul ta ei ole kodus."],
+      say: "Õhtul ta ei ole kodus.",
+      explain: NO,
+    },
+    {
+      kind: "translate",
+      id: "no-tomorrow",
+      rule: "no",
+      prompt: msg`Tomorrow we’re not coming.`,
+      answers: builtAnswers("homme-ei-tule"),
+      say: "Homme me ei tule.",
+      explain: NO,
+    },
+    {
+      kind: "dictation",
+      id: "no-laupaeval-ma",
+      rule: "no",
+      answers: ["Laupäeval ma ei tööta."],
+      say: "Laupäeval ma ei tööta.",
+      explain: NO,
+    },
+    {
+      kind: "rewrite",
+      id: "no-rewrite",
+      rule: "no",
+      from: "Ma ei tööta täna.",
+      cue: START,
+      answers: withPronouns(["Täna ma ei tööta.", "Täna ei tööta ma."]),
+      say: "Täna ma ei tööta.",
+      explain: NO,
+    },
+  ],
+};

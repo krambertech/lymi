@@ -607,7 +607,7 @@ export function TegevusnimedLesson() {
   const canMay = lessonBySlug("modaalverbid")?.n;
   const going = at("Lähen ujuma, olen ujumas");
   const nounForms = lessonBySlug("pohivormid")?.n;
-  const wordOrder = at("Täna lähen ma");
+  const wordOrder = lessonBySlug("sonajarg")?.n;
   const present = lessonBySlug("olevik")?.n;
 
   const rows = useMemo(() => orderRows(i18n), [i18n]);

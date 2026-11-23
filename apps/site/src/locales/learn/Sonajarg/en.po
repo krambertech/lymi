@@ -1,0 +1,410 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 10:26+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0>Ei</0> goes right before the verb."
+msgstr "<0>Ei</0> goes right before the verb."
+
+msgid "<0>Ei</0> usually goes right before the verb, so the person doesn’t stand between them: <1>laupäeval ma ei tule</1>."
+msgstr "<0>Ei</0> usually goes right before the verb, so the person doesn’t stand between them: <1>laupäeval ma ei tule</1>."
+
+msgid "<0>Läheme</0> takes second place, and here <1>ujuma</1> goes last, the usual place."
+msgstr "<0>Läheme</0> takes second place, and here <1>ujuma</1> goes last, the usual place."
+
+msgid "<0>Ma lähen täna Tartusse</0> is I’m going to Tartu today. Start it with <1>täna</1> instead, and the verb stays in second place while the person usually moves after it: <2/> <3>Tartusse</3>."
+msgstr "<0>Ma lähen täna Tartusse</0> is I’m going to Tartu today. Start it with <1>täna</1> instead, and the verb stays in second place while the person usually moves after it: <2/> <3>Tartusse</3>."
+
+msgid "<0>Minema</0> sits in second place, where the first verb, <1>pean</1>, belongs."
+msgstr "<0>Minema</0> sits in second place, where the first verb, <1>pean</1>, belongs."
+
+msgid "<0>Pean</0> takes second place, and here the other verb, <1>minema</1>, goes last, the usual place."
+msgstr "<0>Pean</0> takes second place, and here the other verb, <1>minema</1>, goes last, the usual place."
+
+msgid "<0>Tahan</0> takes second place, and here <1>lugeda</1> goes last, the usual place."
+msgstr "<0>Tahan</0> takes second place, and here <1>lugeda</1> goes last, the usual place."
+
+msgid "16 minutes"
+msgstr "16 minutes"
+
+msgid "5 exercises, 2 of them typed, and a conversation"
+msgstr "5 exercises, 2 of them typed, and a conversation"
+
+msgid "A question works differently. After a question word from lesson {questions}, the short pronoun, such as <0>sa</0> or <1>te</1>, usually comes next and the verb after it: <2/>, where do you live? A question with <3>kas</3> puts <4>kas</4> in front of a plain statement: <5>Kas sa tuled homme?</5>"
+msgstr "A question works differently. After a question word from lesson {questions}, the short pronoun, such as <0>sa</0> or <1>te</1>, usually comes next and the verb after it: <2/>, where do you live? A question with <3>kas</3> puts <4>kas</4> in front of a plain statement: <5>Kas sa tuled homme?</5>"
+
+msgid "After <0>et</0>, <1>kui</1> and words like them, the verb usually moves towards the end of its part of the sentence. Lesson {conjunctions} covers it."
+msgstr "After <0>et</0>, <1>kui</1> and words like them, the verb usually moves towards the end of its part of the sentence. Lesson {conjunctions} covers it."
+
+msgid "After work Peeter goes to the shop."
+msgstr "After work Peeter goes to the shop."
+
+msgid "All eight, each with the verb in its place."
+msgstr "All eight, each with the verb in its place."
+
+msgid "All eight, questions and statements each in their order."
+msgstr "All eight, questions and statements each in their order."
+
+msgid "All six sentences, each in its order."
+msgstr "All six sentences, each in its order."
+
+msgid "All six: the verb second, the person after it."
+msgstr "All six: the verb second, the person after it."
+
+msgid "Are you coming tomorrow?"
+msgstr "Are you coming tomorrow?"
+
+msgid "At eleven"
+msgstr "At eleven"
+
+msgid "At nine"
+msgstr "At nine"
+
+msgid "At twelve"
+msgstr "At twelve"
+
+msgid "Build each sentence from what it means. Some are questions and some are statements, so check which order each needs."
+msgstr "Build each sentence from what it means. Some are questions and some are statements, so check which order each needs."
+
+msgid "Build the sentence"
+msgstr "Build the sentence"
+
+msgid "Build what you hear"
+msgstr "Build what you hear"
+
+msgid "Go swimming"
+msgstr "Go swimming"
+
+msgid "Go to Tartu"
+msgstr "Go to Tartu"
+
+msgid "Go to the shop"
+msgstr "Go to the shop"
+
+msgid "He reads"
+msgstr "He reads"
+
+msgid "He studies"
+msgstr "He studies"
+
+msgid "He works"
+msgstr "He works"
+
+msgid "I have to go to work tomorrow."
+msgstr "I have to go to work tomorrow."
+
+msgid "I’m going to Tartu today."
+msgstr "I’m going to Tartu today."
+
+msgid "In a question, the short pronoun usually comes right after the question word: <0>Kus sa elad? Mida sa täna teed?</0>"
+msgstr "In a question, the short pronoun usually comes right after the question word: <0>Kus sa elad? Mida sa täna teed?</0>"
+
+msgid "In a question, the short pronoun usually comes right after the question word: <0>Kus sa elad?</0>"
+msgstr "In a question, the short pronoun usually comes right after the question word: <0>Kus sa elad?</0>"
+
+msgid "In a question, the short pronoun usually comes right after the question word: <et>Kus sa elad?</et>"
+msgstr "In a question, the short pronoun usually comes right after the question word: <et>Kus sa elad?</et>"
+
+msgid "In a statement the verb usually comes second. Start with a time or a place, and the person usually follows the verb: <0>Täna lähen ma Tartusse.</0>"
+msgstr "In a statement the verb usually comes second. Start with a time or a place, and the person usually follows the verb: <0>Täna lähen ma Tartusse.</0>"
+
+msgid "In an Estonian statement the verb usually comes second. Start with a time or a place, and the person usually moves after the verb: <0>Täna lähen ma Tartusse</0>, today I’m going to Tartu."
+msgstr "In an Estonian statement the verb usually comes second. Start with a time or a place, and the person usually moves after the verb: <0>Täna lähen ma Tartusse</0>, today I’m going to Tartu."
+
+msgid "In Tartu lives Kati."
+msgstr "In Tartu lives Kati."
+
+msgid "In the evening he or she isn’t at home."
+msgstr "In the evening he or she isn’t at home."
+
+msgid "In the evening I want to read a book."
+msgstr "In the evening I want to read a book."
+
+msgid "In the evening we’re at home."
+msgstr "In the evening we’re at home."
+
+msgid "In the morning Mari drinks coffee."
+msgstr "In the morning Mari drinks coffee."
+
+msgid "Jaan is coming on Saturday."
+msgstr "Jaan is coming on Saturday."
+
+msgid "Jaan works on Saturday."
+msgstr "Jaan works on Saturday."
+
+msgid "Kati lives in Tartu."
+msgstr "Kati lives in Tartu."
+
+msgid "Liisa"
+msgstr "Liisa"
+
+msgid "Liisa and Peeter talk about the weekend."
+msgstr "Liisa and Peeter talk about the weekend."
+
+msgid "Liisa asks about your plans. Pick each reply."
+msgstr "Liisa asks about your plans. Pick each reply."
+
+msgid "Listen: Liisa and Peeter"
+msgstr "Listen: Liisa and Peeter"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Mari drinks coffee in the morning."
+msgstr "Mari drinks coffee in the morning."
+
+msgid "Most of them. Check that the verb comes right after the first word."
+msgstr "Most of them. Check that the verb comes right after the first word."
+
+msgid "Most of them. Check where the verb is in the ones you missed."
+msgstr "Most of them. Check where the verb is in the ones you missed."
+
+msgid "Now listen, and build the sentence you hear."
+msgstr "Now listen, and build the sentence you hear."
+
+msgid "Now rewrite each sentence so that it starts with the word given."
+msgstr "Now rewrite each sentence so that it starts with the word given."
+
+msgid "On Saturday Jaan works."
+msgstr "On Saturday Jaan works."
+
+msgid "On Saturday we’re going swimming."
+msgstr "On Saturday we’re going swimming."
+
+msgid "Peeter"
+msgstr "Peeter"
+
+msgid "Plans for the weekend"
+msgstr "Plans for the weekend"
+
+msgid "Play the ones you missed and listen for where the verb is."
+msgstr "Play the ones you missed and listen for where the verb is."
+
+msgid "Question word first, then the pronoun: <0>Mida sa täna teed?</0>"
+msgstr "Question word first, then the pronoun: <0>Mida sa täna teed?</0>"
+
+msgid "Questions: <et>Kus sa elad?</et>"
+msgstr "Questions: <et>Kus sa elad?</et>"
+
+msgid "Questions: where the pronoun goes"
+msgstr "Questions: where the pronoun goes"
+
+msgid "Read What to remember at the end, then try again."
+msgstr "Read What to remember at the end, then try again."
+
+msgid "Read why under each one you missed, then try again."
+msgstr "Read why under each one you missed, then try again."
+
+msgid "Saturday and Sunday"
+msgstr "Saturday and Sunday"
+
+msgid "Saying no"
+msgstr "Saying no"
+
+msgid "She asks about Saturday, and <0>ei</0> goes right before the verb."
+msgstr "She asks about Saturday, and <0>ei</0> goes right before the verb."
+
+msgid "She asks about Sunday, and <0>ei</0> goes right before the verb."
+msgstr "She asks about Sunday, and <0>ei</0> goes right before the verb."
+
+msgid "She asks about the evening, and the verb usually comes second."
+msgstr "She asks about the evening, and the verb usually comes second."
+
+msgid "She asks about tomorrow, and <0>minema</0> sits in second place, where <1>pean</1> belongs."
+msgstr "She asks about tomorrow, and <0>minema</0> sits in second place, where <1>pean</1> belongs."
+
+msgid "So a statement says <0>Täna lähen ma</0>, and a question says <1>Millal sa lähed?</1> Tap a line to hear it."
+msgstr "So a statement says <0>Täna lähen ma</0>, and a question says <1>Millal sa lähed?</1> Tap a line to hear it."
+
+msgid "Start with <0>{first}</0>"
+msgstr "Start with <0>{first}</0>"
+
+msgid "Start with another word"
+msgstr "Start with another word"
+
+msgid "Start with the time word"
+msgstr "Start with the time word"
+
+msgid "Switch between the two starts above once more, then try again."
+msgstr "Switch between the two starts above once more, then try again."
+
+msgid "Talk: plans"
+msgstr "Talk: plans"
+
+msgid "The first"
+msgstr "The first"
+
+msgid "The first word is not the person, so the verb usually comes second and the person after it."
+msgstr "The first word is not the person, so the verb usually comes second and the person after it."
+
+msgid "The person"
+msgstr "The person"
+
+msgid "The person comes first and the verb second."
+msgstr "The person comes first and the verb second."
+
+msgid "The same goes for a place, or a time word from lesson {when}: <0>Tartus elab Kati</0>, <1>Hommikul joob Mari kohvi</1>. Switch between the two starts, and tap a line to hear it."
+msgstr "The same goes for a place, or a time word from lesson {when}: <0>Tartus elab Kati</0>, <1>Hommikul joob Mari kohvi</1>. Switch between the two starts, and tap a line to hear it."
+
+msgid "The second"
+msgstr "The second"
+
+msgid "The third"
+msgstr "The third"
+
+msgid "The time or place"
+msgstr "The time or place"
+
+msgid "The time or place comes first, the verb usually stays second, and the person moves after it."
+msgstr "The time or place comes first, the verb usually stays second, and the person moves after it."
+
+msgid "The verb usually comes second"
+msgstr "The verb usually comes second"
+
+msgid "The verb usually comes second, not last."
+msgstr "The verb usually comes second, not last."
+
+msgid "The verb usually comes second; when a time or place starts the sentence, the person usually follows the verb: <et>Täna lähen ma</et>."
+msgstr "The verb usually comes second; when a time or place starts the sentence, the person usually follows the verb: <et>Täna lähen ma</et>."
+
+msgid "The verb usually second: <et>Täna lähen ma</et>"
+msgstr "The verb usually second: <et>Täna lähen ma</et>"
+
+msgid "today I’m going"
+msgstr "today I’m going"
+
+msgid "Today I’m going to Tartu."
+msgstr "Today I’m going to Tartu."
+
+msgid "today I’m not working"
+msgstr "today I’m not working"
+
+msgid "Today I’m not working."
+msgstr "Today I’m not working."
+
+msgid "Today I’m working at home."
+msgstr "Today I’m working at home."
+
+msgid "Today we’re not working."
+msgstr "Today we’re not working."
+
+msgid "tomorrow I have to go to work"
+msgstr "tomorrow I have to go to work"
+
+msgid "Tomorrow I have to go to work."
+msgstr "Tomorrow I have to go to work."
+
+msgid "Tomorrow I have to work."
+msgstr "Tomorrow I have to work."
+
+msgid "Tomorrow we’re not coming."
+msgstr "Tomorrow we’re not coming."
+
+msgid "Two verbs: <et>pean … minema</et>"
+msgstr "Two verbs: <et>pean … minema</et>"
+
+msgid "Two verbs: the second usually goes last"
+msgstr "Two verbs: the second usually goes last"
+
+msgid "Until one"
+msgstr "Until one"
+
+msgid "Until six"
+msgstr "Until six"
+
+msgid "Until two"
+msgstr "Until two"
+
+msgid "Until when does Peeter work?"
+msgstr "Until when does Peeter work?"
+
+msgid "We’re at home in the evening."
+msgstr "We’re at home in the evening."
+
+msgid "What are you doing on Saturday? (To a friend.)"
+msgstr "What are you doing on Saturday? (To a friend.)"
+
+msgid "What are you doing today?"
+msgstr "What are you doing today?"
+
+msgid "What does Peeter do on Saturday morning?"
+msgstr "What does Peeter do on Saturday morning?"
+
+msgid "What does Peeter want to do on Sunday?"
+msgstr "What does Peeter want to do on Sunday?"
+
+msgid "What exam is it? Write the language as Liisa says it."
+msgstr "What exam is it? Write the language as Liisa says it."
+
+msgid "What the sentence starts with"
+msgstr "What the sentence starts with"
+
+msgid "What time is Liisa’s exam?"
+msgstr "What time is Liisa’s exam?"
+
+msgid "What time should Peeter come? Write the number as Liisa says it."
+msgstr "What time should Peeter come? Write the number as Liisa says it."
+
+msgid "When are you coming?"
+msgstr "When are you coming?"
+
+msgid "where do you live?"
+msgstr "where do you live?"
+
+msgid "Where do you live?"
+msgstr "Where do you live?"
+
+msgid "Where do you live? (To a friend.)"
+msgstr "Where do you live? (To a friend.)"
+
+msgid "Which floor does Liisa live on?"
+msgstr "Which floor does Liisa live on?"
+
+msgid "Who are you talking with?"
+msgstr "Who are you talking with?"
+
+msgid "With <0>ei</0> from lesson {negation}, the person usually stays before it: <1/>, today I’m not working. Tap a line to hear it."
+msgstr "With <0>ei</0> from lesson {negation}, the person usually stays before it: <1/>, today I’m not working. Tap a line to hear it."
+
+msgid "With <0>ei</0>, the person usually stays before it: <1>Homme me ei tule.</1>"
+msgstr "With <0>ei</0>, the person usually stays before it: <1>Homme me ei tule.</1>"
+
+msgid "With <0>ei</0>, the person usually stays before it: <1>Õhtul ta ei ole kodus.</1>"
+msgstr "With <0>ei</0>, the person usually stays before it: <1>Õhtul ta ei ole kodus.</1>"
+
+msgid "With <0>ei</0>, the person usually stays before it: <1>Täna ma ei tööta.</1>"
+msgstr "With <0>ei</0>, the person usually stays before it: <1>Täna ma ei tööta.</1>"
+
+msgid "With <et>ei</et>, the person usually stays before it: <et>Täna ma ei tööta.</et>"
+msgstr "With <et>ei</et>, the person usually stays before it: <et>Täna ma ei tööta.</et>"
+
+msgid "With <et>ei</et>: <et>Täna ma ei tööta</et>"
+msgstr "With <et>ei</et>: <et>Täna ma ei tööta</et>"
+
+msgid "With two verbs, as in lesson {infinitives}, the first one takes second place, and the other usually goes to the end: <0/>, tomorrow I have to go to work. Tap a line to hear it."
+msgstr "With two verbs, as in lesson {infinitives}, the first one takes second place, and the other usually goes to the end: <0/>, tomorrow I have to go to work. Tap a line to hear it."
+
+msgid "With two verbs, the first takes second place and the other usually goes last: <0>Homme pean ma tööle minema.</0>"
+msgstr "With two verbs, the first takes second place and the other usually goes last: <0>Homme pean ma tööle minema.</0>"
+
+msgid "With two verbs, the first takes second place and the other usually goes last: <et>Homme pean ma tööle minema.</et>"
+msgstr "With two verbs, the first takes second place and the other usually goes last: <et>Homme pean ma tööle minema.</et>"
+
+msgid "Without <0>ei</0>, you will also hear and read <1>Täna ma lähen</1>. It is correct, but the verb in second place, <2>Täna lähen ma</2>, is the usual, neutral order."
+msgstr "Without <0>ei</0>, you will also hear and read <1>Täna ma lähen</1>. It is correct, but the verb in second place, <2>Täna lähen ma</2>, is the usual, neutral order."
+
+msgid "Write each sentence in Estonian. Start with the word the English starts with."
+msgstr "Write each sentence in Estonian. Start with the word the English starts with."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "Write it in order"
+msgstr "Write it in order"
+
+msgid "You work tomorrow, you’re at home in the evening, you’re not coming on Saturday, and you are on Sunday."
+msgstr "You work tomorrow, you’re at home in the evening, you’re not coming on Saturday, and you are on Sunday."

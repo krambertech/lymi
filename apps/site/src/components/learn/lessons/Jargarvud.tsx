@@ -3,7 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Minus, Plus } from "lucide-react";
 import { type ReactNode, useMemo, useRef, useState } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   capital,
   clipId,
@@ -882,7 +882,7 @@ export function JargarvudLesson() {
   const days = lessonBySlug("paevad")?.n;
   const genitive = lessonBySlug("omastav")?.n;
   const partitive = lessonBySlug("osastav")?.n;
-  const when = LESSONS.find((lesson) => lesson.et === "Esmaspäeval, aasta pärast")?.n;
+  const when = lessonBySlug("millal")?.n;
 
   return (
     <LessonView

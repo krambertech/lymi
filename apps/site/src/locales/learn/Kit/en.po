@@ -251,8 +251,14 @@ msgstr "A free Estonian lesson on personal pronouns in their cases: minuga and s
 msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 msgstr "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 
+msgid "A free Estonian lesson on saying when: hommikul and suvel with -l, mais with -s, hommikuti for every morning, nädala pärast and nädal tagasi, pärast tööd, and from and until with -st and -ni. Every sentence is read aloud."
+msgstr "A free Estonian lesson on saying when: hommikul and suvel with -l, mais with -s, hommikuti for every morning, nädala pärast and nädal tagasi, pärast tööd, and from and until with -st and -ni. Every sentence is read aloud."
+
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, minutes past and to, and writing the time in words. Every time is read aloud."
 msgstr "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, minutes past and to, and writing the time in words. Every time is read aloud."
+
+msgid "A free Estonian lesson on word order: the verb usually in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud."
+msgstr "A free Estonian lesson on word order: the verb usually in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud."
 
 msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
 msgstr "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
@@ -764,8 +770,14 @@ msgstr "Estonian pronunciation"
 msgid "Estonian reading and listening practice: a day in Tallinn"
 msgstr "Estonian reading and listening practice: a day in Tallinn"
 
+msgid "Estonian time expressions: when things happen"
+msgstr "Estonian time expressions: when things happen"
+
 msgid "Estonian total and partial object"
 msgstr "Estonian total and partial object"
+
+msgid "Estonian word order: the verb usually comes second"
+msgstr "Estonian word order: the verb usually comes second"
 
 msgid "Estonian writing practice: a message to the landlord"
 msgstr "Estonian writing practice: a message to the landlord"
@@ -2505,8 +2517,8 @@ msgstr "Word changes"
 msgid "Word meanings open once you have answered."
 msgstr "Word meanings open once you have answered."
 
-msgid "Word order: the verb comes second"
-msgstr "Word order: the verb comes second"
+msgid "Word order: the verb usually comes second"
+msgstr "Word order: the verb usually comes second"
 
 msgid "Word pairs"
 msgstr "Word pairs"

@@ -358,7 +358,14 @@ export const STAGES: readonly Stage[] = [
     hue: 18,
     goal: msg`Words that change inside, the object’s case, and new tenses and moods. You know every word by now, so only the rule is new.`,
     lessons: [
-      { name: msg`Consonant gradation`, et: "Jalg, jala" },
+      {
+        slug: "jalg-jala",
+        name: msg`Consonant gradation`,
+        title: msg`Estonian consonant gradation`,
+        et: "Jalg, jala",
+        minutes: 20,
+        blurb: msg`A free lesson on consonant gradation in Estonian: why jalg becomes jala and tuba becomes toa, which forms take the strong or the weak stem, the four usual ways a consonant weakens (kapp, kapi; pank, panga; pood, poe; lind, linnu), words that go the other way (mõte, mõtte), and the same change in verbs (lugema, loen). Every sentence is read aloud.`,
+      },
       {
         slug: "raamatut-voi-raamatu",
         name: msg`The object: whole or part`,
@@ -367,7 +374,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 20,
         blurb: msg`A free lesson on the Estonian object: the partitive for part of something, an action still going on, after ei and after verbs such as ootama and otsima on their own; and for a noun, usually the genitive for the whole thing done (Ma lugesin raamatu läbi) and the nominative in commands (Osta pilet!). Every sentence is read aloud.`,
       },
-      { name: msg`Plural partitive`, et: "Raamatuid, maju" },
+      {
+        slug: "raamatuid-maju",
+        name: msg`Plural partitive`,
+        title: msg`Estonian plural partitive`,
+        et: "Raamatuid, maju",
+        minutes: 20,
+        blurb: msg`A free lesson on the Estonian plural partitive, the partitive for more than one: palju raamatuid, poes on õunu, mul ei ole lapsi; its endings -id, -sid and a changed last vowel (raamatuid, autosid, maju, koole); and how it differs from kaks raamatut and the plural raamatud. Every sentence is read aloud.`,
+      },
       { name: msg`Plural cases`, et: "Majades, inimestele" },
       { name: msg`Perfect and pluperfect`, et: "Olen lugenud, olin lugenud" },
       { name: msg`Conditional mood`, et: "Läheksin" },

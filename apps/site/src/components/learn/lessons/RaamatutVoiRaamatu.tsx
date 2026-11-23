@@ -2,7 +2,7 @@ import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type ReactNode, useMemo } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -755,8 +755,8 @@ export function RaamatutVoiRaamatuLesson() {
   const plural = lessonBySlug("mitmus")?.n;
   const future = lessonBySlug("tulevik")?.n;
   const pastNo = lessonBySlug("mineviku-eitus")?.n;
-  const gradation = LESSONS.find((lesson) => lesson.et === "Jalg, jala")?.n;
-  const pluralPartitive = LESSONS.find((lesson) => lesson.et === "Raamatuid, maju")?.n;
+  const gradation = lessonBySlug("jalg-jala")?.n;
+  const pluralPartitive = lessonBySlug("raamatuid-maju")?.n;
   const pronouns = lessonBySlug("asesonad")?.n;
 
   const rowsOf = (texts: readonly string[]): RowItem[] =>

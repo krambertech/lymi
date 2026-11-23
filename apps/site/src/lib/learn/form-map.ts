@@ -798,6 +798,7 @@ const HEARD: Readonly<Record<string, string>> = {
   "Kohv piimata, palun.": "sobraga-rahata/kohv-piimata-palun",
   kohvik: "kohad/kohvik",
   kohviku: "omastav/kohviku",
+  kohvikut: "raamatuid-maju/kohvikut",
   "Lapsed loevad.": "mitmus/lapsed-loevad",
   loen: "kit/loen",
   lugeda: "kit/lugeda",

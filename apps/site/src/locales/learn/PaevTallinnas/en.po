@@ -7,6 +7,15 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
+msgid "<0>Eurot</0> or <1>maksab</1> makes the number a price."
+msgstr "<0>Eurot</0> or <1>maksab</1> makes the number a price."
+
+msgid "<0>Kell on</0> before the number makes it a time."
+msgstr "<0>Kell on</0> before the number makes it a time."
+
+msgid "<et>Avatud</et> is open and <et>suletud</et> closed, as on a door."
+msgstr "<et>Avatud</et> is open and <et>suletud</et> closed, as on a door."
+
 msgid "<et>Ei</et> comes before the verb, and the verb drops its ending: <et>ei tööta</et>."
 msgstr "<et>Ei</et> comes before the verb, and the verb drops its ending: <et>ei tööta</et>."
 
@@ -39,6 +48,9 @@ msgstr "A command, from istuma, to sit."
 
 msgid "A day says <et>täna on</et> or <et>homme on</et> and the day, with a small letter."
 msgstr "A day says <et>täna on</et> or <et>homme on</et> and the day, with a small letter."
+
+msgid "A day’s name, or <0>täna on</0> and <1>homme on</1>, says what day it is."
+msgstr "A day’s name, or <0>täna on</0> and <1>homme on</1>, says what day it is."
 
 msgid "A day’s name, or <et>täna on</et> and <et>homme on</et>, says what day it is."
 msgstr "A day’s name, or <et>täna on</et> and <et>homme on</et>, says what day it is."
@@ -190,9 +202,6 @@ msgstr "half"
 msgid "half past ten, 10:30"
 msgstr "half past ten, 10:30"
 
-msgid "Has a sentence with <0>ei</0> and the verb without its ending."
-msgstr "Has a sentence with <0>ei</0> and the verb without its ending."
-
 msgid "How are you?"
 msgstr "How are you?"
 
@@ -283,8 +292,8 @@ msgstr "Mari calls Jaan to make a plan. Listen for the days, the times and the p
 msgid "Mari doesn’t work today."
 msgstr "Mari doesn’t work today."
 
-msgid "Mari is at the market at twelve."
-msgstr "Mari is at the market at twelve."
+msgid "Mari is at home at twelve."
+msgstr "Mari is at home at twelve."
 
 msgid "Mari writes"
 msgstr "Mari writes"
@@ -292,11 +301,11 @@ msgstr "Mari writes"
 msgid "Mari’s message ended with a question: <0>Kas sa oled homme linnas?</0> Write her a short reply, then compare it with a model and tick what yours does. Nothing is marked for you here."
 msgstr "Mari’s message ended with a question: <0>Kas sa oled homme linnas?</0> Write her a short reply, then compare it with a model and tick what yours does. Nothing is marked for you here."
 
-msgid "Nearly. Check the word after the number in the ones you missed."
-msgstr "Nearly. Check the word after the number in the ones you missed."
-
 msgid "Nearly. Hear the ones you missed below, then try again with Slower."
 msgstr "Nearly. Hear the ones you missed below, then try again with Slower."
+
+msgid "Nearly. In the ones you missed, check <0>kell</0> for a time and <1>maksab … eurot</1> for a price."
+msgstr "Nearly. In the ones you missed, check <0>kell</0> for a time and <1>maksab … eurot</1> for a price."
 
 msgid "No, it’s closed"
 msgstr "No, it’s closed"
@@ -352,9 +361,6 @@ msgstr "Saturday"
 msgid "Say a price with <0>maksab</0>: <1>Kohv maksab kolm eurot</1>, coffee costs three euros."
 msgstr "Say a price with <0>maksab</0>: <1>Kohv maksab kolm eurot</1>, coffee costs three euros."
 
-msgid "Say it in Estonian"
-msgstr "Say it in Estonian"
-
 msgid "Say when with <0>kell</0> and a number: <1>Ma joon kell kümme kohvi</1>, I drink coffee at ten. Pool looks ahead, so <2>pool üksteist</2> is 10:30."
 msgstr "Say when with <0>kell</0> and a number: <1>Ma joon kell kümme kohvi</1>, I drink coffee at ten. Pool looks ahead, so <2>pool üksteist</2> is 10:30."
 
@@ -370,6 +376,9 @@ msgstr "Saying no with <et>ei</et>"
 msgid "Says a time with <0>kell</0>."
 msgstr "Says a time with <0>kell</0>."
 
+msgid "Says something you don’t do, with <0>ei</0>."
+msgstr "Says something you don’t do, with <0>ei</0>."
+
 msgid "Says where, with <0>-s</0> or <1>-l</1> on the place."
 msgstr "Says where, with <0>-s</0> or <1>-l</1> on the place."
 
@@ -379,8 +388,8 @@ msgstr "Sina as the one something is done to: Ma ootan sind, I’m waiting for y
 msgid "sit down"
 msgstr "sit down"
 
-msgid "Six short lines from a day in town: a time, a price, a day and a sign. Write each one as you hear it."
-msgstr "Six short lines from a day in town: a time, a price, a day and a sign. Write each one as you hear it."
+msgid "Six short lines from a day in town: two times, a price, a day, a no and a sign. Write each one as you hear it."
+msgstr "Six short lines from a day in town: two times, a price, a day, a no and a sign. Write each one as you hear it."
 
 msgid "Sunday"
 msgstr "Sunday"
@@ -475,8 +484,8 @@ msgstr "When does it close on Thursday?"
 msgid "When does it open on Saturday?"
 msgstr "When does it open on Saturday?"
 
-msgid "When does Jaan come to the café?"
-msgstr "When does Jaan come to the café?"
+msgid "When does Jaan come to the market?"
+msgstr "When does Jaan come to the market?"
 
 msgid "When does Mari have coffee tomorrow?"
 msgstr "When does Mari have coffee tomorrow?"
@@ -484,8 +493,8 @@ msgstr "When does Mari have coffee tomorrow?"
 msgid "When is the café open?"
 msgstr "When is the café open?"
 
-msgid "Where is Jaan at ten tomorrow?"
-msgstr "Where is Jaan at ten tomorrow?"
+msgid "Where is Jaan at eleven tomorrow?"
+msgstr "Where is Jaan at eleven tomorrow?"
 
 msgid "Where is Jaan on Sunday?"
 msgstr "Where is Jaan on Sunday?"

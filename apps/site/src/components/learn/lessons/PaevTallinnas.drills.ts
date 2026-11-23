@@ -43,13 +43,17 @@ const answers = ({ w, bin }: (typeof TALLINN_SORTED)[number]): ChoiceDrill => ({
   explain: WHICH[bin],
 });
 
+const SIGN = msg`<et>Avatud</et> is open and <et>suletud</et> closed, as on a door.`;
+
+const explained = (kind: Kind, said: string) => (said.startsWith("Kohvik on") ? SIGN : WHY[kind]);
+
 const written = ({ kind, said }: { kind: Kind; said: string }): SentenceDrill => ({
   kind: "dictation",
   id: `write-${clipId(said)}`,
   rule: kind,
   say: said,
   answers: [said],
-  explain: WHY[kind],
+  explain: explained(kind, said),
 });
 
 const TRANSLATED_MEANS: readonly MessageDescriptor[] = [
@@ -74,7 +78,7 @@ const translated = (
   prompt: TRANSLATED_MEANS[i] as MessageDescriptor,
   say: accepted[0],
   answers: accepted,
-  explain: WHY[kind],
+  explain: explained(kind, accepted[0]),
 });
 
 export const DRILLS: DrillBank = {

@@ -1495,13 +1495,13 @@ export const KASKIV_CLASS = [
 
 export const KASKIV_TURNED = [
   { from: "Loe!", to: "Ära loe!", kind: "dont" },
-  { from: "Istu!", to: "Ära istu!", kind: "dont" },
+  { from: "Oota!", to: "Ära oota!", kind: "dont" },
   { from: "Söö!", to: "Ära söö!", kind: "dont" },
   { from: "Joo!", to: "Ära joo!", kind: "dont" },
-  { from: "Oota!", to: "Oodake!", kind: "more" },
+  { from: "Tule siia!", to: "Tulge siia!", kind: "more" },
   { from: "Vaata!", to: "Vaadake!", kind: "more" },
   { from: "Kuula!", to: "Kuulake!", kind: "more" },
-  { from: "Istu!", to: "Istuge!", kind: "more" },
+  { from: "Ära istu!", to: "Ärge istuge!", kind: "more" },
 ] as const;
 
 /** Words and lines the commands lesson says outside its lists. */
@@ -1962,11 +1962,11 @@ export const TALLINN_WORDS = [
 
 export const TALLINN_TALK: Conversation = {
   turns: [
-    { voice: "second", text: ["Tere, Jaan!", "Mida sa täna teed?"] },
+    { voice: "second", text: ["Tere, Jaan!", "Mis sa täna teed?"] },
     { voice: "main", text: "Täna on reede ja ma olen tööl." },
     { voice: "second", text: "Kas sa töötad homme?" },
-    { voice: "main", text: ["Ei, homme ma ei tööta.", "Kell kümme olen turul."] },
-    { voice: "second", text: "Ma olen kell kaksteist kohvikus." },
+    { voice: "main", text: ["Ei, homme ma ei tööta.", "Kell üksteist olen kohvikus."] },
+    { voice: "second", text: "Ma olen kell kaksteist turul." },
     { voice: "main", text: "Hästi, ma tulen kell kaksteist!" },
     { voice: "second", text: "Ja pühapäeval?" },
     { voice: "main", text: "Pühapäeval olen kodus." },
@@ -1976,8 +1976,8 @@ export const TALLINN_TALK: Conversation = {
 export const TALLINN_SORTED = [
   { w: "Kell on pool üksteist.", bin: "kell" },
   { w: "Kolm eurot.", bin: "hind" },
-  { w: "Täna on laupäev.", bin: "paev" },
-  { w: "Kohv maksab kaks eurot.", bin: "hind" },
+  { w: "Täna on reede.", bin: "paev" },
+  { w: "See maksab neli eurot.", bin: "hind" },
   { w: "Kell on kaksteist.", bin: "kell" },
   { w: "Reede.", bin: "paev" },
   { w: "Kaksteist eurot.", bin: "hind" },
@@ -2010,6 +2010,7 @@ export const TALLINN_TRANSLATED = [
       "Homme ma ei tööta.",
       "Ma ei tööta homme.",
       "Ma homme ei tööta.",
+      "Mina homme ei tööta.",
       "Mina ei tööta homme.",
       "Homme mina ei tööta.",
       "Homme ei tööta.",

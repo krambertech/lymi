@@ -35,6 +35,12 @@ msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>
 msgid "<et>Homme</et> is tomorrow: the day after today."
 msgstr "<et>Homme</et> is tomorrow: the day after today."
 
+msgid "<et>Mis päev täna on?</et> asks what day it is; <et>on</et> comes last."
+msgstr "<et>Mis päev täna on?</et> asks what day it is; <et>on</et> comes last."
+
+msgid "<et>Reede</et> is the one day without <et>päev</et>; <et>laupäev</et> and <et>pühapäev</et> have names of their own."
+msgstr "<et>Reede</et> is the one day without <et>päev</et>; <et>laupäev</et> and <et>pühapäev</et> have names of their own."
+
 msgid "15 minutes"
 msgstr "15 minutes"
 
@@ -176,8 +182,8 @@ msgstr "One letter a day"
 msgid "open"
 msgstr "open"
 
-msgid "Pick a day on the line above and read it through, then try again."
-msgstr "Pick a day on the line above and read it through, then try again."
+msgid "Pick a day to be today in the panel above, read what tomorrow is, then try again."
+msgstr "Pick a day to be today in the panel above, read what tomorrow is, then try again."
 
 msgid "Play {sentence}"
 msgstr "Play {sentence}"
@@ -305,9 +311,6 @@ msgstr "Today is Tuesday."
 msgid "Today is Wednesday."
 msgstr "Today is Wednesday."
 
-msgid "Today, tomorrow or yesterday"
-msgstr "Today, tomorrow or yesterday"
-
 msgid "Today, tomorrow, yesterday"
 msgstr "Today, tomorrow, yesterday"
 
@@ -358,6 +361,9 @@ msgstr "Which day did you hear?"
 
 msgid "Which day is tomorrow?"
 msgstr "Which day is tomorrow?"
+
+msgid "Words for days"
+msgstr "Words for days"
 
 msgid "Write it in Estonian"
 msgstr "Write it in Estonian"

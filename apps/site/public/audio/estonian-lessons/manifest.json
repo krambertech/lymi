@@ -11642,14 +11642,14 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "paev-tallinnas/d-plan": {
-    "text": "Tere, Jaan! Mida sa täna teed? Täna on reede ja ma olen tööl. Kas sa töötad homme? Ei, homme ma ei tööta. Kell kümme olen turul. Ma olen kell kaksteist kohvikus. Hästi, ma tulen kell kaksteist! Ja pühapäeval? Pühapäeval olen kodus.",
+    "text": "Tere, Jaan! Mis sa täna teed? Täna on reede ja ma olen tööl. Kas sa töötad homme? Ei, homme ma ei tööta. Kell üksteist olen kohvikus. Ma olen kell kaksteist turul. Hästi, ma tulen kell kaksteist! Ja pühapäeval? Pühapäeval olen kodus.",
     "model": "eleven_v4",
     "turns": [
       {
         "voice": "WtzwR2kNGVNuaTGaYLfK",
         "sentences": [
           "Tere, Jaan!",
-          "Mida sa täna teed?"
+          "Mis sa täna teed?"
         ]
       },
       {
@@ -11668,13 +11668,13 @@
         "voice": "jGja51dd7gcoK0zkxeyg",
         "sentences": [
           "Ei, homme ma ei tööta.",
-          "Kell kümme olen turul."
+          "Kell üksteist olen kohvikus."
         ]
       },
       {
         "voice": "WtzwR2kNGVNuaTGaYLfK",
         "sentences": [
-          "Ma olen kell kaksteist kohvikus."
+          "Ma olen kell kaksteist turul."
         ]
       },
       {
@@ -11709,6 +11709,16 @@
   },
   "paev-tallinnas/see-maksab-kaksteist-eurot": {
     "text": "See maksab kaksteist eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/ta2na-on-reede": {
+    "text": "Täna on reede.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/see-maksab-neli-eurot": {
+    "text": "See maksab neli eurot.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

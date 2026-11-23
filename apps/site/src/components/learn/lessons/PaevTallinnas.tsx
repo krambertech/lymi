@@ -291,19 +291,26 @@ function useContent() {
     },
     { id: "works", kind: "truefalse", ask: t`Jaan works tomorrow.`, answer: false, line: 4 },
     {
-      id: "ten",
-      ask: t`Where is Jaan at ten tomorrow?`,
+      id: "eleven",
+      ask: t`Where is Jaan at eleven tomorrow?`,
       options: [
         { id: "work", label: t`At work` },
         { id: "cafe", label: t`In a café` },
-        { id: "market", label: t`At the market` },
+        { id: "home", label: t`At home` },
       ],
-      answer: "market",
+      answer: "cafe",
       line: 5,
     },
     {
+      id: "mari-home",
+      kind: "truefalse",
+      ask: t`Mari is at home at twelve.`,
+      answer: false,
+      line: 6,
+    },
+    {
       id: "meet",
-      ask: t`When does Jaan come to the café?`,
+      ask: t`When does Jaan come to the market?`,
       options: [
         { id: "ten", label: t`At ten` },
         { id: "twelve", label: t`At twelve` },
@@ -312,21 +319,42 @@ function useContent() {
       answer: "twelve",
       line: 7,
     },
-    {
-      id: "mari-market",
-      kind: "truefalse",
-      ask: t`Mari is at the market at twelve.`,
-      answer: false,
-      line: 6,
-    },
     { id: "sunday", kind: "truefalse", ask: t`Jaan is at home on Sunday.`, answer: true, line: 9 },
   ];
   const bins: SortBin[] = [
-    { id: "kell", label: "Mis kell on?", hint: t`what time` },
-    { id: "hind", label: "Kui palju?", hint: t`how much` },
-    { id: "paev", label: "Mis päev?", hint: t`what day` },
+    {
+      id: "kell",
+      label: "Mis kell on?",
+      hint: t`what time`,
+      rule: (
+        <Trans>
+          <span lang="et">Kell on</span> before the number makes it a time.
+        </Trans>
+      ),
+    },
+    {
+      id: "hind",
+      label: "Kui palju?",
+      hint: t`how much`,
+      rule: (
+        <Trans>
+          <span lang="et">Eurot</span> or <span lang="et">maksab</span> makes the number a price.
+        </Trans>
+      ),
+    },
+    {
+      id: "paev",
+      label: "Mis päev?",
+      hint: t`what day`,
+      rule: (
+        <Trans>
+          A day’s name, or <span lang="et">täna on</span> and <span lang="et">homme on</span>, says
+          what day it is.
+        </Trans>
+      ),
+    },
   ];
-  const sorted: SortItem[] = TALLINN_SORTED.map(({ w, bin }) => ({ w, bin }));
+  const sorted: SortItem[] = TALLINN_SORTED.map(({ w, bin }) => ({ w, bin, src: src(w) }));
   const heard: (SentenceItem & { pair: readonly [string, string] })[] = TALLINN_HEARD.map(
     ({ kind, said }) => ({
       kind: "dictation" as const,
@@ -557,8 +585,8 @@ export function PaevTallinnasLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Six short lines from a day in town: a time, a price, a day and a sign. Write
-                    each one as you hear it.
+                    Six short lines from a day in town: two times, a price, a day, a no and a sign.
+                    Write each one as you hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -587,7 +615,7 @@ export function PaevTallinnasLesson() {
         },
         {
           id: "translate",
-          title: t`Say it in Estonian`,
+          title: t`Write it in Estonian`,
           quiz: true,
           children: (
             <>
@@ -608,7 +636,10 @@ export function PaevTallinnasLesson() {
                   share === 1 ? (
                     <Trans>All six, every sentence right.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Nearly. Check the word after the number in the ones you missed.</Trans>
+                    <Trans>
+                      Nearly. In the ones you missed, check <span lang="et">kell</span> for a time
+                      and <span lang="et">maksab … eurot</span> for a price.
+                    </Trans>
                   ) : (
                     <Trans>Read Mari’s message once more, then try again.</Trans>
                   )
@@ -715,8 +746,7 @@ export function PaevTallinnasLesson() {
                     id: "no",
                     label: (
                       <Trans>
-                        Has a sentence with <span lang="et">ei</span> and the verb without its
-                        ending.
+                        Says something you don’t do, with <span lang="et">ei</span>.
                       </Trans>
                     ),
                   },

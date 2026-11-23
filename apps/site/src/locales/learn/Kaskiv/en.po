@@ -23,6 +23,9 @@ msgstr "<0/>, please, makes a command polite. When Estonian comes too fast, say 
 msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> or <1>-ke</1> on the end"
 
+msgid "<0>-ge</0> or <1>-ke</1> on the end: more than one, or polite."
+msgstr "<0>-ge</0> or <1>-ke</1> on the end: more than one, or polite."
+
 msgid "<0>Ära</0> before the stem"
 msgstr "<0>Ära</0> before the stem"
 
@@ -32,8 +35,8 @@ msgstr "<0>Ei</0> says what someone doesn’t do; <1>ära</1> tells them not to:
 msgid "<et>Ära</et> before the stem tells one person not to do it."
 msgstr "<et>Ära</et> before the stem tells one person not to do it."
 
-msgid "<et>Ära</et> tells someone not to; <et>ei</et> says what isn’t so."
-msgstr "<et>Ära</et> tells someone not to; <et>ei</et> says what isn’t so."
+msgid "<et>Ära</et> tells someone not to do it; <et>ei</et> says what someone doesn’t do."
+msgstr "<et>Ära</et> tells someone not to do it; <et>ei</et> says what someone doesn’t do."
 
 msgid "<et>Ära</et>, don’t"
 msgstr "<et>Ära</et>, don’t"
@@ -45,8 +48,8 @@ msgstr "<et>Ma {ma}</et>, so the command is <et>{0}</et>"
 msgid "15 minutes"
 msgstr "15 minutes"
 
-msgid "5 quizzes, a sort and a conversation"
-msgstr "5 quizzes, a sort and a conversation"
+msgid "4 quizzes, a sort, a conversation and a passage"
+msgstr "4 quizzes, a sort, a conversation and a passage"
 
 msgid "A command to one person is the stem alone. To more than one, or politely, it ends in <0>-ge</0> or <1>-ke</1>. Sort the commands; tap one to hear it."
 msgstr "A command to one person is the stem alone. To more than one, or politely, it ends in <0>-ge</0> or <1>-ke</1>. Sort the commands; tap one to hear it."
@@ -63,8 +66,8 @@ msgstr "All of them. You understood every command."
 msgid "All six commands right."
 msgstr "All six commands right."
 
-msgid "All six, each on its stem."
-msgstr "All six, each on its stem."
+msgid "All six, each the ma form without its -n."
+msgstr "All six, each the ma form without its -n."
 
 msgid "Ära istu tells her not to sit down."
 msgstr "Ära istu tells her not to sit down."
@@ -137,8 +140,8 @@ msgstr "Each of these six everyday commands starts with a verb’s stem. Tap one
 msgid "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 msgstr "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 
-msgid "Each round gives a verb with its I form. Type the command to one person: the I form without its <0>-n</0>."
-msgstr "Each round gives a verb with its I form. Type the command to one person: the I form without its <0>-n</0>."
+msgid "Each round gives a verb and its ma form. Type the command to one person: the ma form without its <0>-n</0>."
+msgstr "Each round gives a verb and its ma form. Type the command to one person: the ma form without its <0>-n</0>."
 
 msgid "Eat."
 msgstr "Eat."
@@ -158,11 +161,11 @@ msgstr "From istuma, to sit."
 msgid "From tulema, to come."
 msgstr "From tulema, to come."
 
-msgid "Go back to the do-and-don’t switch above, then try again."
-msgstr "Go back to the do-and-don’t switch above, then try again."
-
 msgid "Go back to the stems at the top, then try again."
 msgstr "Go back to the stems at the top, then try again."
+
+msgid "Go back to the two switches above, then try again."
+msgstr "Go back to the two switches above, then try again."
 
 msgid "Go."
 msgstr "Go."
@@ -227,6 +230,9 @@ msgstr "Jaan should talk."
 msgid "Kati"
 msgstr "Kati"
 
+msgid "Listen"
+msgstr "Listen"
+
 msgid "Listen: in class"
 msgstr "Listen: in class"
 
@@ -284,9 +290,6 @@ msgstr "One person or more?"
 msgid "please"
 msgstr "please"
 
-msgid "Read"
-msgstr "Read"
-
 msgid "Read."
 msgstr "Read."
 
@@ -323,6 +326,9 @@ msgstr "Speak more slowly, please. To more than one, or polite."
 msgid "Speak."
 msgstr "Speak."
 
+msgid "Stand up"
+msgstr "Stand up"
+
 msgid "Study."
 msgstr "Study."
 
@@ -356,11 +362,14 @@ msgstr "That tells Mari to drink coffee. She asked what you’d like."
 msgid "The command to one person"
 msgstr "The command to one person"
 
-msgid "The command to one person is the I form without its <et>-n</et>."
-msgstr "The command to one person is the I form without its <et>-n</et>."
+msgid "The command to one person is the ma form without its <et>-n</et>."
+msgstr "The command to one person is the ma form without its <et>-n</et>."
 
 msgid "The stem alone"
 msgstr "The stem alone"
+
+msgid "The stem alone: one person."
+msgstr "The stem alone: one person."
 
 msgid "The stem doesn’t change: <0>istu</0>, <1>ära istu</1>."
 msgstr "The stem doesn’t change: <0>istu</0>, <1>ära istu</1>."
@@ -457,9 +466,6 @@ msgstr "Tuleb says that he’s coming. To call him over, use the stem: tule."
 
 msgid "Type the command"
 msgstr "Type the command"
-
-msgid "Wait outside"
-msgstr "Wait outside"
 
 msgid "Wait."
 msgstr "Wait."

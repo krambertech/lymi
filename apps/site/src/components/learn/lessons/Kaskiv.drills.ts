@@ -10,25 +10,32 @@ import {
 } from "../../../lib/learn/clips";
 import type { ChoiceDrill, DrillBank, FormDrill, SentenceDrill } from "../../../lib/learn/drill";
 
-const MEANS: Record<(typeof KASKIV_STEMS)[number]["verb"], MessageDescriptor> = {
-  lugema: msg`to read`,
+const MEANS: Record<string, MessageDescriptor> = {
   rääkima: msg`to speak`,
   ootama: msg`to wait`,
   sööma: msg`to eat`,
   jooma: msg`to drink`,
   õppima: msg`to study`,
+  kuulama: msg`to listen`,
+  vaatama: msg`to look`,
 };
 
-const STEM = msg`The command to one person is the I form without its <et>-n</et>.`;
+const TYPED = [
+  ...KASKIV_STEMS.filter(({ verb }) => verb !== "lugema"),
+  { verb: "kuulama", ma: "kuulan", stem: "kuula" },
+  { verb: "vaatama", ma: "vaatan", stem: "vaata" },
+] as const;
+
+const STEM = msg`The command to one person is the ma form without its <et>-n</et>.`;
 const DONT = msg`<et>Ära</et> before the stem tells one person not to do it.`;
 const MORE = msg`To more than one, or politely, the command ends in <et>-ge</et> or <et>-ke</et>.`;
 
-const typed = ({ verb, ma, stem }: (typeof KASKIV_STEMS)[number]): FormDrill => ({
+const typed = ({ verb, ma, stem }: (typeof TYPED)[number]): FormDrill => ({
   kind: "form",
   id: `command-${clipId(stem)}`,
   rule: "one",
   base: verb,
-  gloss: MEANS[verb],
+  gloss: MEANS[verb] as MessageDescriptor,
   cue: msg`to one person`,
   answers: [stem, `${stem}!`],
   say: commandTo(stem),
@@ -79,7 +86,7 @@ const heard = (stem: keyof typeof HEARD, saidNot: boolean): ChoiceDrill => {
     answer: saidNot ? notOption : dontOption,
     slip: saidNot ? dontOption : notOption,
     wrong: [{ id: "do", label: means.doIt }],
-    explain: msg`<et>Ära</et> tells someone not to; <et>ei</et> says what isn’t so.`,
+    explain: msg`<et>Ära</et> tells someone not to do it; <et>ei</et> says what someone doesn’t do.`,
   };
 };
 
@@ -90,7 +97,7 @@ export const DRILLS: DrillBank = {
     more: { label: msg`To more than one`, section: "more" },
   },
   items: [
-    ...KASKIV_STEMS.map(typed),
+    ...TYPED.map(typed),
     ...KASKIV_FLIP.map(dont),
     heard("istu", false),
     heard("istu", true),

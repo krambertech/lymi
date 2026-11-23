@@ -23,6 +23,9 @@ msgstr "<0/>, «пожалуйста», делает команду вежлив
 msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> или <1>-ke</1> на конце"
 
+msgid "<0>-ge</0> or <1>-ke</1> on the end: more than one, or polite."
+msgstr "<0>-ge</0> или <1>-ke</1> в конце: несколько людей или на «вы»."
+
 msgid "<0>Ära</0> before the stem"
 msgstr "<0>Ära</0> перед основой"
 
@@ -32,24 +35,24 @@ msgstr "<0>Ei</0> говорит, чего человек не делает; <1>
 msgid "<et>Ära</et> before the stem tells one person not to do it."
 msgstr "<et>Ära</et> перед основой говорит одному человеку этого не делать."
 
-msgid "<et>Ära</et> tells someone not to; <et>ei</et> says what isn’t so."
-msgstr "<et>Ära</et> говорит кому-то не делать; <et>ei</et> говорит, чего нет."
+msgid "<et>Ära</et> tells someone not to do it; <et>ei</et> says what someone doesn’t do."
+msgstr "<et>Ära</et> просит этого не делать; <et>ei</et> говорит, чего кто-то не делает."
 
 msgid "<et>Ära</et>, don’t"
 msgstr "<et>Ära</et>, «не»"
 
 #. placeholder {0}: commandTo(stem)
 msgid "<et>Ma {ma}</et>, so the command is <et>{0}</et>"
-msgstr "<et>Ma {ma}</et>, значит, приказ — <et>{0}</et>"
+msgstr "<et>Ma {ma}</et>, значит, команда — <et>{0}</et>"
 
 msgid "15 minutes"
 msgstr "15 минут"
 
-msgid "5 quizzes, a sort and a conversation"
-msgstr "5 тестов, сортировка и разговор"
+msgid "4 quizzes, a sort, a conversation and a passage"
+msgstr "4 теста, сортировка, разговор и текст"
 
 msgid "A command to one person is the stem alone. To more than one, or politely, it ends in <0>-ge</0> or <1>-ke</1>. Sort the commands; tap one to hear it."
-msgstr "Приказ одному человеку — это одна основа. Нескольким людям или на «вы» он оканчивается на <0>-ge</0> или <1>-ke</1>. Рассортируй приказы; нажми на приказ, чтобы его услышать."
+msgstr "Команда одному человеку — это просто основа. Нескольким людям или на «вы» она оканчивается на <0>-ge</0> или <1>-ke</1>. Рассортируй команды; нажми на команду, чтобы её услышать."
 
 msgid "A teacher starts the class. Listen to who is told to do what."
 msgstr "Учительница начинает урок. Послушай, кому что нужно сделать."
@@ -61,10 +64,10 @@ msgid "All of them. You understood every command."
 msgstr "Все. Каждая команда понята верно."
 
 msgid "All six commands right."
-msgstr "Все шесть приказов верны."
+msgstr "Все шесть команд верны."
 
-msgid "All six, each on its stem."
-msgstr "Все шесть, каждый на своей основе."
+msgid "All six, each the ma form without its -n."
+msgstr "Все шесть: каждая — форма с ma без -n."
 
 msgid "Ära istu tells her not to sit down."
 msgstr "Ära istu просит её не садиться."
@@ -79,7 +82,7 @@ msgid "Before the stem, to tell one person not to do something."
 msgstr "Стоит перед основой, когда просишь одного человека чего-то не делать."
 
 msgid "Change the command"
-msgstr "Измени приказ"
+msgstr "Измени команду"
 
 msgid "Come here."
 msgstr "Иди сюда."
@@ -137,8 +140,8 @@ msgstr "Каждая из этих шести повседневных кома�
 msgid "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 msgstr "Каждый ответ — это команда или короткая реплика. Выбирай тот, что подходит к словам Мари."
 
-msgid "Each round gives a verb with its I form. Type the command to one person: the I form without its <0>-n</0>."
-msgstr "В каждом раунде есть глагол с формой для «я». Напиши приказ одному человеку: форму для «я» без <0>-n</0>."
+msgid "Each round gives a verb and its ma form. Type the command to one person: the ma form without its <0>-n</0>."
+msgstr "В каждом раунде есть глагол и его форма с ma. Напиши команду одному человеку: форму с ma без <0>-n</0>."
 
 msgid "Eat."
 msgstr "Ешь."
@@ -147,7 +150,7 @@ msgid "Everyday commands"
 msgstr "Команды на каждый день"
 
 msgid "Everyone"
-msgstr "Всем"
+msgstr "Все"
 
 msgid "Everyone should look here."
 msgstr "Все должны посмотреть сюда."
@@ -158,11 +161,11 @@ msgstr "От istuma, «садиться, сидеть»."
 msgid "From tulema, to come."
 msgstr "От tulema, «приходить»."
 
-msgid "Go back to the do-and-don’t switch above, then try again."
-msgstr "Вернись к переключателю «делай — не делай» выше, а потом попробуй снова."
-
 msgid "Go back to the stems at the top, then try again."
 msgstr "Вернись к основам в начале урока, а потом попробуй снова."
+
+msgid "Go back to the two switches above, then try again."
+msgstr "Вернись к двум переключателям выше, а потом попробуй снова."
 
 msgid "Go."
 msgstr "Иди."
@@ -227,8 +230,11 @@ msgstr "Яан должен говорить."
 msgid "Kati"
 msgstr "Кати"
 
+msgid "Listen"
+msgstr "Слушать"
+
 msgid "Listen: in class"
-msgstr "На слух: на уроке"
+msgstr "Аудирование: на уроке"
 
 msgid "Listen."
 msgstr "Слушай."
@@ -237,7 +243,7 @@ msgid "Listening only, no microphone"
 msgstr "Только на слух, без микрофона"
 
 msgid "Listening: in class"
-msgstr "Аудирование: на уроке"
+msgstr "На слух: на уроке"
 
 msgid "Look."
 msgstr "Смотри."
@@ -284,9 +290,6 @@ msgstr "Один человек или несколько?"
 msgid "please"
 msgstr "пожалуйста"
 
-msgid "Read"
-msgstr "Читать"
-
 msgid "Read."
 msgstr "Читай."
 
@@ -294,10 +297,10 @@ msgid "Read. To more than one, or polite."
 msgstr "Читайте. Нескольким людям или на «вы»."
 
 msgid "Rewrite each command as the cue says: with <0>ära</0> for don’t, or for more than one."
-msgstr "Перепиши каждый приказ, как говорит подсказка: с <0>ära</0>, чтобы сказать «не», или для нескольких людей."
+msgstr "Перепиши каждую команду, как говорит подсказка: с <0>ära</0>, чтобы сказать «не», или для нескольких людей."
 
 msgid "Rewrite the command"
-msgstr "Перепиши приказ"
+msgstr "Перепиши команду"
 
 msgid "Sit down"
 msgstr "Сесть"
@@ -322,6 +325,9 @@ msgstr "Говорите помедленнее, пожалуйста. Неск�
 
 msgid "Speak."
 msgstr "Говори."
+
+msgid "Stand up"
+msgstr "Встать"
 
 msgid "Study."
 msgstr "Учись."
@@ -354,13 +360,16 @@ msgid "That tells Mari to drink coffee. She asked what you’d like."
 msgstr "Так ты говоришь Мари пить кофе. А она спрашивала, что будешь ты."
 
 msgid "The command to one person"
-msgstr "Приказ одному человеку"
+msgstr "Команда одному человеку"
 
-msgid "The command to one person is the I form without its <et>-n</et>."
-msgstr "Приказ одному человеку — это форма для «я» без <et>-n</et>."
+msgid "The command to one person is the ma form without its <et>-n</et>."
+msgstr "Команда одному человеку — это форма с ma без <et>-n</et>."
 
 msgid "The stem alone"
 msgstr "Только основа"
+
+msgid "The stem alone: one person."
+msgstr "Одна основа без окончания: один человек."
 
 msgid "The stem doesn’t change: <0>istu</0>, <1>ära istu</1>."
 msgstr "Основа не меняется: <0>istu</0>, <1>ära istu</1>."
@@ -414,7 +423,7 @@ msgid "To more than one, or polite"
 msgstr "Нескольким людям или на «вы»"
 
 msgid "To more than one, or politely, the command ends in <et>-ge</et> or <et>-ke</et>."
-msgstr "Нескольким людям или на «вы» приказ оканчивается на <et>-ge</et> или <et>-ke</et>."
+msgstr "Нескольким людям или на «вы» команда оканчивается на <et>-ge</et> или <et>-ke</et>."
 
 msgid "to one person"
 msgstr "одному человеку"
@@ -456,10 +465,7 @@ msgid "Tuleb says that he’s coming. To call him over, use the stem: tule."
 msgstr "Tuleb значит, что он идёт. Чтобы позвать его, скажи основу: tule."
 
 msgid "Type the command"
-msgstr "Напиши приказ"
-
-msgid "Wait outside"
-msgstr "Ждать на улице"
+msgstr "Напиши команду"
 
 msgid "Wait."
 msgstr "Подожди."

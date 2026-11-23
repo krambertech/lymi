@@ -249,7 +249,7 @@ const WRITTEN_DAYS: readonly Day[] = [
 ];
 
 const TRANSLATED: readonly { said: string; prompt: MessageDescriptor }[] = [
-  { said: "Täna on esmaspäev.", prompt: msg`Today is Monday.` },
+  { said: "Täna on teisipäev.", prompt: msg`Today is Tuesday.` },
   { said: "Homme on teisipäev.", prompt: msg`Tomorrow is Tuesday.` },
   { said: "Täna on neljapäev.", prompt: msg`Today is Thursday.` },
   { said: "Homme on reede.", prompt: msg`Tomorrow is Friday.` },
@@ -508,15 +508,18 @@ export function PaevadLesson() {
       },
       { id: "work", kind: "truefalse", ask: t`Jaan is at work today.`, answer: true, line: 2 },
       {
-        id: "town",
-        ask: t`Where is Jaan the day after tomorrow?`,
-        options: [
-          { id: "work", label: t`At work` },
-          { id: "home", label: t`At home` },
-          { id: "town", label: t`In town` },
-        ],
-        answer: "town",
-        line: 6,
+        id: "thursday",
+        kind: "truefalse",
+        ask: t`Tomorrow is Tuesday.`,
+        answer: false,
+        line: 3,
+      },
+      {
+        id: "work-tomorrow",
+        kind: "truefalse",
+        ask: t`Jaan is at work tomorrow.`,
+        answer: false,
+        line: 4,
       },
       {
         id: "after",
@@ -530,18 +533,15 @@ export function PaevadLesson() {
         line: 5,
       },
       {
-        id: "thursday",
-        kind: "truefalse",
-        ask: t`Tomorrow is Thursday.`,
-        answer: true,
-        line: 3,
-      },
-      {
-        id: "work-tomorrow",
-        kind: "truefalse",
-        ask: t`Jaan is at work tomorrow.`,
-        answer: false,
-        line: 4,
+        id: "town",
+        ask: t`Where is Jaan the day after tomorrow?`,
+        options: [
+          { id: "work", label: t`At work` },
+          { id: "home", label: t`At home` },
+          { id: "town", label: t`In town` },
+        ],
+        answer: "town",
+        line: 6,
       },
     ],
     [t, i18n],
@@ -762,7 +762,7 @@ export function PaevadLesson() {
         },
         {
           id: "which-day",
-          title: t`Today, tomorrow or yesterday`,
+          title: t`Words for days`,
           quiz: true,
           children: (
             <>
@@ -842,7 +842,10 @@ export function PaevadLesson() {
                       the ones you missed.
                     </Trans>
                   ) : (
-                    <Trans>Pick a day on the line above and read it through, then try again.</Trans>
+                    <Trans>
+                      Pick a day to be today in the panel above, read what tomorrow is, then try
+                      again.
+                    </Trans>
                   )
                 }
                 recall={sentenceRecall}

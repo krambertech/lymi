@@ -394,8 +394,12 @@ function Explain({ said }: { said: string }) {
 }
 
 const TYPED: readonly { verb: string; ma: string; stem: string; said: string }[] = [
-  ...KASKIV_STEMS.map(({ verb, ma, stem }) => ({ verb, ma, stem, said: commandTo(stem) })),
-  { verb: "istuma", ma: "istun", stem: "istu", said: "Istu!" },
+  ...KASKIV_STEMS.filter(({ verb }) => verb !== "lugema").map(({ verb, ma, stem }) => ({
+    verb,
+    ma,
+    stem,
+    said: commandTo(stem),
+  })),
   { verb: "kuulama", ma: "kuulan", stem: "kuula", said: "Kuula!" },
   { verb: "vaatama", ma: "vaatan", stem: "vaata", said: "Vaata!" },
 ];
@@ -551,8 +555,23 @@ export function KaskivLesson() {
 
   const sortBins = useMemo<SortBin[]>(
     () => [
-      { id: "one", label: t`To one person`, lang: i18n.locale },
-      { id: "more", label: t`To more than one, or polite`, lang: i18n.locale },
+      {
+        id: "one",
+        label: t`To one person`,
+        lang: i18n.locale,
+        rule: <Trans>The stem alone: one person.</Trans>,
+      },
+      {
+        id: "more",
+        label: t`To more than one, or polite`,
+        lang: i18n.locale,
+        rule: (
+          <Trans>
+            <span lang="et">-ge</span> or <span lang="et">-ke</span> on the end: more than one, or
+            polite.
+          </Trans>
+        ),
+      },
     ],
     [t, i18n],
   );
@@ -586,9 +605,9 @@ export function KaskivLesson() {
         id: "first",
         ask: t`What should everyone do first?`,
         options: [
-          { id: "read", label: t`Read` },
+          { id: "listen", label: t`Listen` },
           { id: "sit", label: t`Sit down` },
-          { id: "wait", label: t`Wait outside` },
+          { id: "stand", label: t`Stand up` },
         ],
         answer: "sit",
         line: 1,
@@ -634,7 +653,7 @@ export function KaskivLesson() {
       }
       facts={[
         <Trans key="m">15 minutes</Trans>,
-        <Trans key="q">5 quizzes, a sort and a conversation</Trans>,
+        <Trans key="q">4 quizzes, a sort, a conversation and a passage</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -938,7 +957,7 @@ export function KaskivLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each round gives a verb with its I form. Type the command to one person: the I
+                    Each round gives a verb and its ma form. Type the command to one person: the ma
                     form without its <span lang="et">-n</span>.
                   </Trans>
                 </p>
@@ -950,7 +969,7 @@ export function KaskivLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All six, each on its stem.</Trans>
+                    <Trans>All six, each the ma form without its -n.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Check the stem in the ones you missed.</Trans>
                   ) : (
@@ -1013,7 +1032,7 @@ export function KaskivLesson() {
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Check the cue in the ones you missed.</Trans>
                   ) : (
-                    <Trans>Go back to the do-and-don’t switch above, then try again.</Trans>
+                    <Trans>Go back to the two switches above, then try again.</Trans>
                   )
                 }
                 recall={sentenceRecall}

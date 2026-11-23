@@ -16,6 +16,7 @@ const MEANS: Record<Day, MessageDescriptor> = {
 };
 
 const COUNT = msg`The first four count: <et>esmaspäev</et> is the first day, <et>neljapäev</et> the fourth.`;
+const OWN = msg`<et>Reede</et> is the one day without <et>päev</et>; <et>laupäev</et> and <et>pühapäev</et> have names of their own.`;
 const NEXT = msg`<et>Homme</et> is tomorrow: the day after today.`;
 
 const next = (each: Day) => WEEK[(WEEK.indexOf(each) + 1) % WEEK.length] as Day;
@@ -30,7 +31,7 @@ const heard = (each: Day, near: Day): ChoiceDrill => {
     answer: option(each),
     slip: option(near),
     wrong: WEEK.filter((d) => d !== each && d !== near).map(option),
-    explain: COUNT,
+    explain: ["reede", "laupäev", "pühapäev"].includes(each) ? OWN : COUNT,
   };
 };
 
@@ -71,7 +72,9 @@ const written = (said: string): SentenceDrill => ({
   rule: "sentence",
   say: said,
   answers: [said],
-  explain: msg`Day names start with a small letter inside a sentence.`,
+  explain: said.endsWith("?")
+    ? msg`<et>Mis päev täna on?</et> asks what day it is; <et>on</et> comes last.`
+    : msg`Day names start with a small letter inside a sentence.`,
 });
 
 export const DRILLS: DrillBank = {

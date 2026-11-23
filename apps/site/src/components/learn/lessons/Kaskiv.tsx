@@ -9,21 +9,27 @@ import {
   clipId,
   clipUrl,
   commandTo,
+  KASKIV_CLASS,
   KASKIV_DIALOGUE,
   KASKIV_EVERYDAY,
   KASKIV_FLIP,
   KASKIV_HEARD,
   KASKIV_MORE,
   KASKIV_STEMS,
+  KASKIV_TURNED,
   notSentence,
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, ListenRows, Panel } from "../Explore";
+import { type FormItem, FormRound, formRecall } from "../FormRound";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
+import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
+import { type SortBin, type SortItem, Sort } from "../Sort";
 import { Playing } from "../Sound";
 import { Word } from "../Word";
 
@@ -387,6 +393,36 @@ function Explain({ said }: { said: string }) {
   );
 }
 
+const TYPED: readonly { verb: string; ma: string; stem: string; said: string }[] = [
+  ...KASKIV_STEMS.map(({ verb, ma, stem }) => ({ verb, ma, stem, said: commandTo(stem) })),
+  { verb: "istuma", ma: "istun", stem: "istu", said: "Istu!" },
+  { verb: "kuulama", ma: "kuulan", stem: "kuula", said: "Kuula!" },
+  { verb: "vaatama", ma: "vaatan", stem: "vaata", said: "Vaata!" },
+];
+
+const COMMAND_VERB_MEANS: Record<string, MessageDescriptor> = {
+  lugema: msg`to read`,
+  rääkima: msg`to speak`,
+  ootama: msg`to wait`,
+  sööma: msg`to eat`,
+  jooma: msg`to drink`,
+  õppima: msg`to study`,
+  istuma: msg`to sit down`,
+  kuulama: msg`to listen`,
+  vaatama: msg`to look`,
+};
+
+const ONE_OR_MORE = [
+  "Istu!",
+  "Oodake!",
+  "Kuula!",
+  "Lugege!",
+  "Oota!",
+  "Istuge!",
+  "Loe!",
+  "Kuulake!",
+] as const;
+
 export function KaskivLesson() {
   const { t, i18n } = useLingui();
   const pronouns = lessonBySlug("mina-sina-tema")?.n;
@@ -496,6 +532,95 @@ export function KaskivLesson() {
     },
   ];
 
+  const typedItems = useMemo<(FormItem & { pair: readonly [string, string] })[]>(
+    () =>
+      TYPED.map(({ verb, ma, stem, said }) => ({
+        base: verb,
+        gloss: (
+          <Trans>
+            {i18n._(COMMAND_VERB_MEANS[verb] as MessageDescriptor)}, <span lang="et">ma {ma}</span>
+          </Trans>
+        ),
+        cue: t`to one person`,
+        answers: [stem, `${stem}!`],
+        src: src(said),
+        pair: [`${verb.slice(0, -2)}` === stem ? "same" : "changed", verb] as const,
+      })),
+    [t, i18n],
+  );
+
+  const sortBins = useMemo<SortBin[]>(
+    () => [
+      { id: "one", label: t`To one person`, lang: i18n.locale },
+      { id: "more", label: t`To more than one, or polite`, lang: i18n.locale },
+    ],
+    [t, i18n],
+  );
+  const sortItems = useMemo<SortItem[]>(
+    () =>
+      ONE_OR_MORE.map((w) => ({
+        w,
+        bin: w.endsWith("ge!") || w.endsWith("ke!") ? "more" : "one",
+        src: src(w),
+      })),
+    [],
+  );
+
+  const turnedItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
+    () =>
+      KASKIV_TURNED.map(({ from, to, kind }) => ({
+        kind: "rewrite" as const,
+        id: `turn-${clipId(to)}`,
+        from,
+        cue: kind === "dont" ? t`don’t` : t`to more than one`,
+        src: src(to),
+        answers: [to],
+        pair: [kind, to] as const,
+      })),
+    [t],
+  );
+
+  const classQuestions = useMemo<PassageQuestion[]>(
+    () => [
+      {
+        id: "first",
+        ask: t`What should everyone do first?`,
+        options: [
+          { id: "read", label: t`Read` },
+          { id: "sit", label: t`Sit down` },
+          { id: "wait", label: t`Wait outside` },
+        ],
+        answer: "sit",
+        line: 1,
+      },
+      { id: "jaan", kind: "truefalse", ask: t`Jaan should talk.`, answer: false, line: 3 },
+      {
+        id: "read",
+        ask: t`Who should read?`,
+        options: [
+          { id: "jaan", label: t`Jaan` },
+          { id: "kati", label: t`Kati` },
+          { id: "mari", label: t`Mari` },
+        ],
+        answer: "mari",
+        line: 4,
+      },
+      {
+        id: "wait",
+        ask: t`Who should wait?`,
+        options: [
+          { id: "kati", label: t`Kati` },
+          { id: "mari", label: t`Mari` },
+          { id: "all", label: t`Everyone` },
+        ],
+        answer: "kati",
+        line: 5,
+      },
+      { id: "look", kind: "truefalse", ask: t`Everyone should look here.`, answer: true, line: 6 },
+    ],
+    [t],
+  );
+
   return (
     <LessonView
       slug={SLUG}
@@ -508,8 +633,8 @@ export function KaskivLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">10 minutes</Trans>,
-        <Trans key="q">2 quizzes and a conversation</Trans>,
+        <Trans key="m">15 minutes</Trans>,
+        <Trans key="q">5 quizzes, a sort and a conversation</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -800,6 +925,121 @@ export function KaskivLesson() {
                 }
                 them={t`Mari`}
                 turns={dialogue}
+              />
+            </>
+          ),
+        },
+        {
+          id: "type",
+          title: t`Type the command`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each round gives a verb with its I form. Type the command to one person: the I
+                    form without its <span lang="et">-n</span>.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="type-command"
+                title={<Trans>Type the command</Trans>}
+                items={typedItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, each on its stem.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check the stem in the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Go back to the stems at the top, then try again.</Trans>
+                  )
+                }
+                recall={formRecall}
+                order={eachPairFirst}
+                round={(props) => <FormRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "one-or-more",
+          title: t`One person or more?`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    A command to one person is the stem alone. To more than one, or politely, it
+                    ends in <span lang="et">-ge</span> or <span lang="et">-ke</span>. Sort the
+                    commands; tap one to hear it.
+                  </Trans>
+                </p>
+              </Prose>
+              <Sort
+                id="sort-one-more"
+                title={<Trans>Who is it said to?</Trans>}
+                bins={sortBins}
+                items={sortItems}
+              />
+            </>
+          ),
+        },
+        {
+          id: "rewrite",
+          title: t`Change the command`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Rewrite each command as the cue says: with <span lang="et">ära</span> for don’t,
+                    or for more than one.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="rewrite-command"
+                title={<Trans>Rewrite the command</Trans>}
+                items={turnedItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six commands right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check the cue in the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Go back to the do-and-don’t switch above, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listening: in class`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>A teacher starts the class. Listen to who is told to do what.</Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="in-class"
+                title={<Trans>Listen: in class</Trans>}
+                clip="p-class"
+                sentences={KASKIV_CLASS}
+                questions={classQuestions}
               />
             </>
           ),

@@ -14,6 +14,9 @@ msgstr "«У понеділок» естонською — одне слово 
 msgid "{word}, {0}, today"
 msgstr "{word}, {0}, сьогодні"
 
+msgid "<0/> and <1/> point opposite ways, and <2>üle-</2> takes each one a day further. Match each word with what it means."
+msgstr "<0/> і <1/> вказують у протилежні боки, а <2>üle-</2> відсуває кожне ще на день. Знайди пару кожному слову."
+
 msgid "<0/> is tomorrow and <1/> yesterday. Put <2>üle-</2> in front to go one day further: <3/>, the day after tomorrow, and <4/>, the day before yesterday. Pick a day to be today."
 msgstr "<0/> — завтра, <1/> — учора. Додай спереду <2>üle-</2>, і буде на день далі: <3/> — післязавтра, <4/> — позавчора. Обери, який день сьогодні."
 
@@ -29,23 +32,38 @@ msgstr "<0>P suletud</0> на вивісці: у неділю зачинено."
 msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2> — сьогодні, завтра, учора. <3>Üle-</3> додає ще один день."
 
-msgid "2 quizzes"
-msgstr "2 тести"
+msgid "<et>Homme</et> is tomorrow: the day after today."
+msgstr "<et>Homme</et> — це завтра: день після сьогодні."
 
-msgid "8 minutes"
-msgstr "8 хвилин"
+msgid "15 minutes"
+msgstr "15 хвилин"
+
+msgid "4 quizzes, a matching game and a passage"
+msgstr "4 тести, гра на пари й текст"
 
 msgid "A shop’s opening hours"
 msgstr "Години роботи магазину"
 
+msgid "All eight, each day and each word right."
+msgstr "Усі вісім: кожен день і кожне слово правильні."
+
 msgid "All of them. You can count the week forward."
 msgstr "Усі правильно. Ти вмієш рахувати тиждень уперед."
+
+msgid "All seven, every day spelled right."
+msgstr "Усі сім, кожен день написано правильно."
 
 msgid "All seven. You know the week by ear."
 msgstr "Усі сім. Ти знаєш тиждень на слух."
 
 msgid "Also “other”."
 msgstr "А ще «інший»."
+
+msgid "At home"
+msgstr "Удома"
+
+msgid "At work"
+msgstr "На роботі"
 
 msgid "Borrowed from Low German or Old Swedish."
 msgstr "Запозичене з нижньонімецької або давньошведської."
@@ -67,6 +85,9 @@ msgstr "Рахуємо вперед"
 
 msgid "day"
 msgstr "день"
+
+msgid "Day names start with a small letter inside a sentence."
+msgstr "Усередині речення назви днів пишуть з малої літери."
 
 msgid "Esmaspäev with an ending that says when."
 msgstr "Esmaspäev із закінченням, яке відповідає на питання «коли»."
@@ -92,20 +113,50 @@ msgstr "Добре. Перш ніж обрати, проговори тижде�
 msgid "Hear a day"
 msgstr "День на слух"
 
+msgid "Hear what day it is and write the sentence. Day names start with a small letter."
+msgstr "Послухай, який сьогодні день, і напиши речення. Назви днів пишуть з малої літери."
+
 msgid "holy; a holiday"
 msgstr "святий; свято"
+
+msgid "In town"
+msgstr "У місті"
+
+msgid "Jaan is at home today."
+msgstr "Яан сьогодні вдома."
+
+msgid "Jaan is at work today."
+msgstr "Яан сьогодні на роботі."
+
+msgid "Jaan tells Mari what day it is and where he is this week."
+msgstr "Яан розповідає Марі, який сьогодні день і де він цього тижня."
 
 msgid "Listen and pick the day. Most of them end the same way, so listen to how each one starts."
 msgstr "Послухай і обери день. Більшість закінчуються однаково, тож слухай, як кожен починається."
 
+msgid "Listen: Jaan’s week"
+msgstr "На слух: тиждень Яана"
+
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"
+
+msgid "Listening: Jaan’s week"
+msgstr "Слухання: тиждень Яана"
+
+msgid "Match the words"
+msgstr "Знайди пари"
 
 msgid "Monday"
 msgstr "Понеділок"
 
 msgid "Most of them. Listen to how the ones you missed start."
 msgstr "Майже всі. Послухай, як починаються дні, де були помилки."
+
+msgid "Nearly. Check <0>täna</0> and <1>homme</1> in the ones you missed."
+msgstr "Майже. Там, де була помилка, перевір <0>täna</0> і <1>homme</1>."
+
+msgid "Nearly. Play the ones you missed slower."
+msgstr "Майже. Там, де була помилка, послухай повільніше."
 
 msgid "On a door or a sign."
 msgstr "На дверях або на табличці."
@@ -125,6 +176,9 @@ msgstr "Одна літера на день"
 msgid "open"
 msgstr "відчинено"
 
+msgid "Pick a day on the line above and read it through, then try again."
+msgstr "Вибери день на лінії вище й прочитай усе, а тоді спробуй знову."
+
 msgid "Play {sentence}"
 msgstr "Відтворити {sentence}"
 
@@ -139,6 +193,9 @@ msgstr "Субота"
 
 msgid "Say the week through with the strip above, then try again."
 msgstr "Проговори тиждень за днями вище, а тоді спробуй знову."
+
+msgid "Say what day it is today or tomorrow. Both take <0>on</0> and the day."
+msgstr "Скажи, який день сьогодні чи завтра. В обох реченнях є <0>on</0> і день."
 
 msgid "second"
 msgstr "другий"
@@ -158,6 +215,9 @@ msgstr "Натисни на день"
 msgid "Tap a letter"
 msgstr "Натисни на літеру"
 
+msgid "The day after"
+msgstr "Наступний день"
+
 msgid "the day after tomorrow"
 msgstr "післязавтра"
 
@@ -166,6 +226,9 @@ msgstr "позавчора"
 
 msgid "The days as letters"
 msgstr "Дні літерами"
+
+msgid "The days by ear"
+msgstr "Дні на слух"
 
 msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Day names start with a small letter, like any other word."
 msgstr "Естонський тиждень, <0/>, починається з понеділка, як і в нас. Шість днів закінчуються на <1/>, день. <2/>, п’ятниця, — виняток. Як і в українській, назви днів пишуть з малої літери."
@@ -181,6 +244,9 @@ msgstr "Перші чотири — з числами: <0/> — перший �
 
 msgid "The first four count: <0>esmaspäev</0> is the first day, and <1>neljapäev</1> the fourth."
 msgstr "Перші чотири — з числами: <0>esmaspäev</0> — перший день, <1>neljapäev</1> — четвертий."
+
+msgid "The first four count: <et>esmaspäev</et> is the first day, <et>neljapäev</et> the fourth."
+msgstr "Перші чотири лічать: <et>esmaspäev</et> — перший день, <et>neljapäev</et> — четвертий."
 
 msgid "The fourth day of the week."
 msgstr "Четвертий день тижня."
@@ -224,11 +290,47 @@ msgstr "Сьогодні"
 msgid "Today is Monday."
 msgstr "Сьогодні понеділок."
 
+msgid "Today is Saturday."
+msgstr "Сьогодні субота."
+
+msgid "Today is Sunday."
+msgstr "Сьогодні неділя."
+
+msgid "Today is Thursday."
+msgstr "Сьогодні четвер."
+
+msgid "Today is Tuesday."
+msgstr "Сьогодні вівторок."
+
+msgid "Today is Wednesday."
+msgstr "Сьогодні середа."
+
+msgid "Today, tomorrow or yesterday"
+msgstr "Сьогодні, завтра чи вчора"
+
 msgid "Today, tomorrow, yesterday"
 msgstr "Сьогодні, завтра, учора"
 
 msgid "tomorrow"
 msgstr "завтра"
+
+msgid "Tomorrow is Friday."
+msgstr "Завтра п’ятниця."
+
+msgid "Tomorrow is Monday."
+msgstr "Завтра понеділок."
+
+msgid "Tomorrow is Saturday."
+msgstr "Завтра субота."
+
+msgid "Tomorrow is Sunday."
+msgstr "Завтра неділя."
+
+msgid "Tomorrow is Thursday."
+msgstr "Завтра четвер."
+
+msgid "Tomorrow is Tuesday."
+msgstr "Завтра вівторок."
 
 msgid "Tuesday"
 msgstr "Вівторок"
@@ -242,11 +344,29 @@ msgstr "тиждень"
 msgid "What day is it today?"
 msgstr "Який сьогодні день?"
 
+msgid "What day is the day after tomorrow?"
+msgstr "Який день буде післязавтра?"
+
+msgid "What day it is"
+msgstr "Який сьогодні день"
+
+msgid "Where is Jaan tomorrow?"
+msgstr "Де Яан буде завтра?"
+
 msgid "Which day did you hear?"
 msgstr "Який день прозвучав?"
 
 msgid "Which day is tomorrow?"
 msgstr "Який день завтра?"
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "Write the sentence"
+msgstr "Напиши речення"
+
+msgid "Write what you hear"
+msgstr "Напиши, що чуєш"
 
 msgid "yesterday"
 msgstr "учора"

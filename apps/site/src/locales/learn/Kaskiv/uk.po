@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: uk\n"
 
+#. placeholder {0}: i18n._(COMMAND_VERB_MEANS[verb] as MessageDescriptor)
+msgid "{0}, <0>ma {ma}</0>"
+msgstr "{0}, <0>ma {ma}</0>"
+
 msgid "<0/> and <1/> both mean not, but they do different jobs. <2>Ei</2> says what someone doesn’t do: <3/>, I’m not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
 msgstr "<0/> і <1/> обидва заперечують, але кожне по-своєму. <2>Ei</2> каже, чого людина не робить: <3/>, я не сідаю. <4>Ära</4> просить цього не робити: <5/> Наказ ніколи не починається з <6>ei</6>."
 
@@ -25,17 +29,42 @@ msgstr "<0>Ära</0> перед основою"
 msgid "<0>Ei</0> says what someone doesn’t do; <1>ära</1> tells them not to: <2>Ma ei istu. Ära istu!</2>"
 msgstr "<0>Ei</0> каже, чого людина не робить; <1>ära</1> просить цього не робити: <2>Ma ei istu. Ära istu!</2>"
 
-msgid "10 minutes"
-msgstr "10 хвилин"
+msgid "<et>Ära</et> before the stem tells one person not to do it."
+msgstr "<et>Ära</et> перед основою каже одній людині цього не робити."
 
-msgid "2 quizzes and a conversation"
-msgstr "2 тести й розмова"
+msgid "<et>Ära</et> tells someone not to; <et>ei</et> says what isn’t so."
+msgstr "<et>Ära</et> каже комусь не робити; <et>ei</et> каже, чого немає."
+
+msgid "<et>Ära</et>, don’t"
+msgstr "<et>Ära</et>, «не»"
+
+#. placeholder {0}: commandTo(stem)
+msgid "<et>Ma {ma}</et>, so the command is <et>{0}</et>"
+msgstr "<et>Ma {ma}</et>, тож наказ — <et>{0}</et>"
+
+msgid "15 minutes"
+msgstr "15 хвилин"
+
+msgid "5 quizzes, a sort and a conversation"
+msgstr "5 тестів, сортування й розмова"
+
+msgid "A command to one person is the stem alone. To more than one, or politely, it ends in <0>-ge</0> or <1>-ke</1>. Sort the commands; tap one to hear it."
+msgstr "Наказ одній людині — це сама основа. Кільком людям або на «ви» він закінчується на <0>-ge</0> чи <1>-ke</1>. Розсортуй накази; торкнись наказу, щоб його почути."
+
+msgid "A teacher starts the class. Listen to who is told to do what."
+msgstr "Учителька починає урок. Послухай, кому що треба зробити."
 
 msgid "All of them. You told <0>ära</0> from <1>ei</1> every time."
 msgstr "Усі. У кожному реченні <0>ära</0> й <1>ei</1> розрізнено правильно."
 
 msgid "All of them. You understood every command."
 msgstr "Усі. Ти розумієш кожен наказ."
+
+msgid "All six commands right."
+msgstr "Усі шість наказів правильні."
+
+msgid "All six, each on its stem."
+msgstr "Усі шість, кожен на своїй основі."
 
 msgid "Ära istu tells her not to sit down."
 msgstr "Ära istu просить її не сідати."
@@ -48,6 +77,9 @@ msgstr "У кав’ярні"
 
 msgid "Before the stem, to tell one person not to do something."
 msgstr "Стоїть перед основою, коли просиш одну людину чогось не робити."
+
+msgid "Change the command"
+msgstr "Зміни наказ"
 
 msgid "Come here."
 msgstr "Іди сюди."
@@ -105,17 +137,32 @@ msgstr "Кожен із цих шести щоденних наказів поч
 msgid "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 msgstr "Кожна відповідь — це наказ або коротка репліка. Обирай ту, що пасує до слів Марі."
 
+msgid "Each round gives a verb with its I form. Type the command to one person: the I form without its <0>-n</0>."
+msgstr "У кожному раунді є дієслово з формою для «я». Напиши наказ одній людині: форму для «я» без <0>-n</0>."
+
 msgid "Eat."
 msgstr "Їж."
 
 msgid "Everyday commands"
 msgstr "Накази на щодень"
 
+msgid "Everyone"
+msgstr "Усім"
+
+msgid "Everyone should look here."
+msgstr "Усі мають подивитися сюди."
+
 msgid "From istuma, to sit."
 msgstr "Від istuma, «сідати, сидіти»."
 
 msgid "From tulema, to come."
 msgstr "Від tulema, «приходити»."
+
+msgid "Go back to the do-and-don’t switch above, then try again."
+msgstr "Повернися до перемикача «роби — не роби» вище, а тоді спробуй знову."
+
+msgid "Go back to the stems at the top, then try again."
+msgstr "Повернися до основ на початку уроку, а тоді спробуй знову."
 
 msgid "Go."
 msgstr "Іди."
@@ -171,11 +218,26 @@ msgstr "Я не чекаю."
 msgid "It’s the form that follows <0>ei</0> in lesson {negation}: <1/>, I don’t read. Tap either side of a pair to hear it."
 msgstr "Це та сама форма, що йде після <0>ei</0> в уроці {negation}: <1/>, я не читаю. Торкнися будь-якої половини пари, щоб почути її."
 
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan should talk."
+msgstr "Яан має говорити."
+
+msgid "Kati"
+msgstr "Каті"
+
+msgid "Listen: in class"
+msgstr "На слух: на уроці"
+
 msgid "Listen."
 msgstr "Слухай."
 
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"
+
+msgid "Listening: in class"
+msgstr "Слухання: на уроці"
 
 msgid "Look."
 msgstr "Дивись."
@@ -188,6 +250,12 @@ msgstr "Марі"
 
 msgid "More than one"
 msgstr "Кілька людей"
+
+msgid "Nearly. Check the cue in the ones you missed."
+msgstr "Майже. Там, де була помилка, перевір підказку."
+
+msgid "Nearly. Check the stem in the ones you missed."
+msgstr "Майже. Там, де була помилка, перевір основу."
 
 msgid "Nearly. Listen to the first word of the ones you missed."
 msgstr "Майже. Там, де була помилка, послухай перше слово."
@@ -210,14 +278,29 @@ msgstr "Одна людина"
 msgid "One person or more"
 msgstr "Одна людина чи кілька"
 
+msgid "One person or more?"
+msgstr "Одна людина чи кілька?"
+
 msgid "please"
 msgstr "будь ласка"
+
+msgid "Read"
+msgstr "Читати"
 
 msgid "Read."
 msgstr "Читай."
 
 msgid "Read. To more than one, or polite."
 msgstr "Читайте. До кількох людей або на «ви»."
+
+msgid "Rewrite each command as the cue says: with <0>ära</0> for don’t, or for more than one."
+msgstr "Перепиши кожен наказ, як каже підказка: з <0>ära</0>, щоб сказати «не», або для кількох людей."
+
+msgid "Rewrite the command"
+msgstr "Перепиши наказ"
+
+msgid "Sit down"
+msgstr "Сісти"
 
 msgid "Sit down."
 msgstr "Сідай."
@@ -270,6 +353,12 @@ msgstr "Так ти просиш Марі не пити воду. А вона п
 msgid "That tells Mari to drink coffee. She asked what you’d like."
 msgstr "Так ти кажеш Марі пити каву. А вона питала, що будеш ти."
 
+msgid "The command to one person"
+msgstr "Наказ одній людині"
+
+msgid "The command to one person is the I form without its <et>-n</et>."
+msgstr "Наказ одній людині — це форма для «я» без <et>-n</et>."
+
 msgid "The stem alone"
 msgstr "Сама основа"
 
@@ -300,6 +389,18 @@ msgstr "іти"
 msgid "to learn, to study"
 msgstr "вчити, вчитися"
 
+msgid "to listen"
+msgstr "слухати"
+
+msgid "to look"
+msgstr "дивитися"
+
+msgid "to more than one"
+msgstr "кільком людям"
+
+msgid "To more than one"
+msgstr "Кільком людям"
+
 msgid "To more than one person"
 msgstr "До кількох людей"
 
@@ -308,6 +409,15 @@ msgstr "До кількох людей або до однієї на «ви»."
 
 msgid "To more than one person, or politely, the command ends in <0>-ge</0> or <1>-ke</1>: <2>Istuge! Oodake! Ärge lugege!</2>"
 msgstr "До кількох людей або на «ви» наказ закінчується на <0>-ge</0> або <1>-ke</1>: <2>Istuge! Oodake! Ärge lugege!</2>"
+
+msgid "To more than one, or polite"
+msgstr "Кільком людям або на «ви»"
+
+msgid "To more than one, or politely, the command ends in <et>-ge</et> or <et>-ke</et>."
+msgstr "Кільком людям або на «ви» наказ закінчується на <et>-ge</et> чи <et>-ke</et>."
+
+msgid "to one person"
+msgstr "одній людині"
 
 msgid "To one person"
 msgstr "Одній людині"
@@ -318,8 +428,14 @@ msgstr "читати"
 msgid "To say don’t, put <0>ära</0> before the stem: <1>Ära istu!</1>"
 msgstr "Щоб сказати «не роби», став <0>ära</0> перед основою: <1>Ära istu!</1>"
 
+msgid "to sit down"
+msgstr "сідати"
+
 msgid "to speak"
 msgstr "говорити"
+
+msgid "to study"
+msgstr "вчитися"
 
 msgid "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the ma form from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
 msgstr "Щоб сказати одній людині, що робити, естонська бере основу дієслова й нічого до неї не додає. Візьми форму з ma з уроку {present} і прибери <0>-n</0>. <1/> — це «я читаю», а <2/> просить одну людину читати."
@@ -339,17 +455,35 @@ msgstr "чекати"
 msgid "Tuleb says that he’s coming. To call him over, use the stem: tule."
 msgstr "Tuleb означає, що він іде. Щоб покликати його, скажи основу: tule."
 
+msgid "Type the command"
+msgstr "Напиши наказ"
+
+msgid "Wait outside"
+msgstr "Чекати надворі"
+
 msgid "Wait."
 msgstr "Чекай."
 
 msgid "Wait. To more than one, or polite."
 msgstr "Чекайте. До кількох людей або на «ви»."
 
+msgid "What should everyone do first?"
+msgstr "Що всі мають зробити спершу?"
+
 msgid "What to do?"
 msgstr "Що робити?"
 
 msgid "Where someone goes: tule siia, come here."
 msgstr "Куди: tule siia, «іди сюди»."
+
+msgid "Who is it said to?"
+msgstr "Кому це кажуть?"
+
+msgid "Who should read?"
+msgstr "Хто має читати?"
+
+msgid "Who should wait?"
+msgstr "Хто має чекати?"
 
 msgid "you, to more than one; polite you"
 msgstr "ви; ввічливе «Ви»"

@@ -269,6 +269,16 @@ export const PAEVAD_WORDS = [
   "esmaspäeval",
 ] as const;
 
+export const PAEVAD_PASSAGE = [
+  "Tere, Mari!",
+  "Täna on kolmapäev.",
+  "Ma olen täna tööl.",
+  "Homme on neljapäev.",
+  "Ma olen homme kodus.",
+  "Ülehomme on reede.",
+  "Ma olen ülehomme linnas.",
+] as const;
+
 /** What day it is, and the day after: “Täna on reede.” “Homme on laupäev.” */
 export const PAEVAD_SENTENCES = [
   "Mis päev täna on?",
@@ -1470,6 +1480,28 @@ export const KASKIV_MORE = [
   { one: "Loe!", more: "Lugege!" },
   { one: "Ära istu!", more: "Ärge istuge!" },
   { one: "Ära loe!", more: "Ärge lugege!" },
+] as const;
+
+export const KASKIV_CLASS = [
+  "Tere!",
+  "Istuge, palun.",
+  "Kuulake!",
+  "Jaan, ära räägi!",
+  "Mari, loe raamatut, palun!",
+  "Kati, oota!",
+  "Vaadake siia!",
+  "Aitäh!",
+] as const;
+
+export const KASKIV_TURNED = [
+  { from: "Loe!", to: "Ära loe!", kind: "dont" },
+  { from: "Istu!", to: "Ära istu!", kind: "dont" },
+  { from: "Söö!", to: "Ära söö!", kind: "dont" },
+  { from: "Joo!", to: "Ära joo!", kind: "dont" },
+  { from: "Oota!", to: "Oodake!", kind: "more" },
+  { from: "Vaata!", to: "Vaadake!", kind: "more" },
+  { from: "Kuula!", to: "Kuulake!", kind: "more" },
+  { from: "Istu!", to: "Istuge!", kind: "more" },
 ] as const;
 
 /** Words and lines the commands lesson says outside its lists. */
@@ -3509,7 +3541,11 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...words(KELL_DRILLED.map(timeSentence)),
     "p-mari": { sentences: KELL_PASSAGE, voice: "third" },
   },
-  paevad: { ...words(PAEVAD_WORDS), ...words(PAEVAD_SENTENCES) },
+  paevad: {
+    ...words(PAEVAD_WORDS),
+    ...words(PAEVAD_SENTENCES),
+    "p-jaan": { sentences: PAEVAD_PASSAGE, voice: "main" },
+  },
   tutvumine: {
     ...words(TUTVUMINE_WORDS),
     ...TUTVUMINE_ANSWERING,
@@ -3534,6 +3570,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
       ...KASKIV_WORDS,
     ]),
     ...KASKIV_DIALOGUE,
+    "p-class": { sentences: KASKIV_CLASS, voice: "fourth" },
   },
   "paev-tallinnas": TALLINN_CLIPS,
   modaalverbid: MODAL_CLIPS,

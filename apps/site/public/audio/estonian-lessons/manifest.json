@@ -11335,26 +11335,26 @@
     "voice": "xd3ufyLcuKKZZXDZO9H7"
   },
   "tutvumine/d-kati": {
-    "text": "Tere! Kas sa oled Peeter? Jah, mina olen Peeter. Mina olen Liis. Kus sa elad? Ma elan Tartus, aga ma töötan Tallinnas. Kas sa räägid eesti keelt? Natuke. Ma õpin eesti keelt. Mina ei tööta. Ma õpin Tartus. Ja kus sina elad? Ma elan Pärnus.",
+    "text": "Tere! Kas sa oled Andres? Jah, mina olen Andres. Mina olen Kati. Kus sa elad? Ma elan Tartus, aga ma töötan Tallinnas. Kas sa räägid eesti keelt? Natuke. Ma õpin eesti keelt. Miks? Sest ma töötan koolis. Ma olen õpetaja. Mina ei tööta. Ma õpin Tartus. Ja kus sa elad? Ma elan Pärnus.",
     "model": "eleven_v4",
     "turns": [
       {
         "voice": "WtzwR2kNGVNuaTGaYLfK",
         "sentences": [
           "Tere!",
-          "Kas sa oled Peeter?"
+          "Kas sa oled Andres?"
         ]
       },
       {
         "voice": "jGja51dd7gcoK0zkxeyg",
         "sentences": [
-          "Jah, mina olen Peeter."
+          "Jah, mina olen Andres."
         ]
       },
       {
         "voice": "WtzwR2kNGVNuaTGaYLfK",
         "sentences": [
-          "Mina olen Liis.",
+          "Mina olen Kati.",
           "Kus sa elad?"
         ]
       },
@@ -11380,6 +11380,19 @@
       {
         "voice": "WtzwR2kNGVNuaTGaYLfK",
         "sentences": [
+          "Miks?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Sest ma töötan koolis.",
+          "Ma olen õpetaja."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
           "Mina ei tööta.",
           "Ma õpin Tartus."
         ]
@@ -11387,7 +11400,7 @@
       {
         "voice": "jGja51dd7gcoK0zkxeyg",
         "sentences": [
-          "Ja kus sina elad?"
+          "Ja kus sa elad?"
         ]
       },
       {
@@ -11507,5 +11520,15 @@
     "text": "Kell on viis minutit kolm läbi.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/p-jaan": {
+    "text": "Tere, Mari! Täna on kolmapäev. Ma olen täna tööl. Homme on neljapäev. Ma olen homme kodus. Ülehomme on reede. Ma olen ülehomme linnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/p-class": {
+    "text": "Tere! Istuge, palun. Kuulake! Jaan, ära räägi! Mari, loe raamatut, palun! Kati, oota! Vaadake siia! Aitäh!",
+    "model": "eleven_v4",
+    "voice": "0cuaFlR2we1Gl3woPjeJ"
   }
 }

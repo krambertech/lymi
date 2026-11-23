@@ -864,7 +864,8 @@ export function TutvumineLesson() {
                     id: "where",
                     label: (
                       <Trans>
-                        Says where you live, with <span lang="et">-s</span> on the place.
+                        Says where you live, with <span lang="et">-s</span> or{" "}
+                        <span lang="et">-l</span> on the place.
                       </Trans>
                     ),
                   },

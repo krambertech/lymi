@@ -11279,11 +11279,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "kell/kell-on-kaks": {
-    "text": "Kell on kaks.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "kell/kell-on-kaheksa": {
     "text": "Kell on kaheksa.",
     "model": "eleven_v4",
@@ -12987,6 +12982,11 @@
   },
   "haaldus/ja2lg-jalg": {
     "text": "Jälg, jalg.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-neli": {
+    "text": "Kell on neli.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

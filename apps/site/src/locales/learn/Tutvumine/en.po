@@ -325,8 +325,8 @@ msgstr "Say who you are: <0>Mina olen Andres</0> or <1>Minu nimi on Andres</1>."
 msgid "Says what you do."
 msgstr "Says what you do."
 
-msgid "Says where you live, with <0>-s</0> on the place."
-msgstr "Says where you live, with <0>-s</0> on the place."
+msgid "Says where you live, with <0>-s</0> or <1>-l</1> on the place."
+msgstr "Says where you live, with <0>-s</0> or <1>-l</1> on the place."
 
 msgid "Says who you are."
 msgstr "Says who you are."

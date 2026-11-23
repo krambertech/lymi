@@ -499,9 +499,9 @@ export function PaevadLesson() {
         id: "today",
         ask: t`What day is it today?`,
         options: [
-          { id: "tue", label: i18n._(MEANINGS.teisipäev) },
           { id: "wed", label: i18n._(MEANINGS.kolmapäev) },
           { id: "thu", label: i18n._(MEANINGS.neljapäev) },
+          { id: "fri", label: i18n._(MEANINGS.reede) },
         ],
         answer: "wed",
         line: 1,

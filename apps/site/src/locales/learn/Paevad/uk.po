@@ -69,7 +69,7 @@ msgid "At work"
 msgstr "На роботі"
 
 msgid "Before and after today"
-msgstr "До і після сьогоднішнього дня"
+msgstr "До й після сьогоднішнього дня"
 
 msgid "Borrowed from Low German or Old Swedish."
 msgstr "Запозичене з нижньонімецької або давньошведської."

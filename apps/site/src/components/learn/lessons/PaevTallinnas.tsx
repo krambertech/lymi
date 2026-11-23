@@ -354,9 +354,9 @@ function useContent() {
       id: "meet",
       ask: t`When does Jaan come to the market?`,
       options: [
-        { id: "1200", label: t`At 12:00` },
-        { id: "1230", label: t`At 12:30` },
         { id: "1300", label: t`At 13:00` },
+        { id: "1330", label: t`At 13:30` },
+        { id: "1230", label: t`At 12:30` },
       ],
       answer: "1230",
       line: 7,

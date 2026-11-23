@@ -55,7 +55,7 @@ msgid "4 quizzes, a sort, a conversation and a passage"
 msgstr "4 теста, сортировка, разговор и текст"
 
 msgid "A command to one person is the stem alone. To more than one, or politely, it ends in <0>-ge</0> or <1>-ke</1>. Sort the commands; tap one to hear it."
-msgstr "Команда одному человеку — это просто основа. Нескольким людям или на «вы» она оканчивается на <0>-ge</0> или <1>-ke</1>. Рассортируй команды; нажми на команду, чтобы её услышать."
+msgstr "Команда одному человеку — это только основа. Нескольким людям или на «вы» она оканчивается на <0>-ge</0> или <1>-ke</1>. Рассортируй команды; нажми на команду, чтобы её услышать."
 
 msgid "A teacher starts the class. Listen to who is told to do what."
 msgstr "Учитель начинает урок. Послушай, кому что нужно сделать."

@@ -109,14 +109,14 @@ msgstr "В 11:00"
 msgid "At 11:30"
 msgstr "В 11:30"
 
-msgid "At 12:00"
-msgstr "В 12:00"
-
 msgid "At 12:30"
 msgstr "В 12:30"
 
 msgid "At 13:00"
 msgstr "В 13:00"
+
+msgid "At 13:30"
+msgstr "В 13:30"
 
 msgid "At 16:00"
 msgstr "В 16:00"

@@ -1,6 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { clipId, clipUrl } from "../../lib/learn/clips";
+import { usesTaughtBy } from "../../lib/learn/form-map";
 import { formText } from "../../lib/learn/forms";
 import {
   KIT_BOX,
@@ -11,6 +12,8 @@ import {
   KIT_TENSES,
 } from "../../lib/learn/kit-explore";
 import { Panel } from "./Explore";
+import { FormMap } from "./FormMap";
+import { FormSheetButton } from "./FormSheet";
 import { Morph, type MorphChain } from "./Morph";
 import { Paradigm, type ParadigmRow } from "./Paradigm";
 import { Quiz } from "./Quiz";
@@ -254,6 +257,44 @@ export function KitExplorers({ Part }: { Part: (props: PartProps) => ReactNode }
         <Panel>
           <Morph label={t`Words`} chains={chains} />
         </Panel>
+      </Part>
+      <Part
+        id="form-map"
+        title={t`Form map`}
+        use={t`A word’s three forms and what is built from each. Pressing a form opens its uses, and a use opens its sentences.`}
+      >
+        <Panel>
+          <FormMap />
+        </Panel>
+      </Part>
+      <Part
+        id="form-map-known"
+        title={t`Form map, partway through the course`}
+        use={t`The same map for a learner who has reached modal verbs: later uses are dimmed and name the lesson that teaches them.`}
+      >
+        <Panel>
+          <FormMap start={{ word: "sööma", use: "past" }} known={usesTaughtBy("modaalverbid")} />
+        </Panel>
+      </Part>
+      <Part
+        id="form-map-table"
+        title={t`Form map as a table`}
+        use={t`The same uses in a table, for one kind of word only.`}
+      >
+        <Panel>
+          <FormMap kind="noun" start={{ word: "tuba", view: "table" }} />
+        </Panel>
+      </Part>
+      <Part
+        id="form-sheet"
+        title={t`Form sheet`}
+        use={t`The table for one word, opened over the page on the use in question. A lesson or a wrong answer can open it.`}
+      >
+        <div className="flex flex-wrap gap-2">
+          <FormSheetButton word="sööma" use="past" />
+          <FormSheetButton word="tuba" use="count" known={usesTaughtBy("osastav")} />
+          <FormSheetButton word="sõber" />
+        </div>
       </Part>
     </>
   );

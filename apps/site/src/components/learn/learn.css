@@ -398,8 +398,10 @@
   }
   .learn-ring::after,
   .learn-swap > *,
-  .learn-morph[data-play] *,
+  .learn-morph[data-play] [data-kind="dropped"],
   .learn-morph[data-play] [data-kind="dropped"]::after,
+  .learn-morph[data-play] [data-kind="added"],
+  .learn-morph[data-play] [data-kind="added"] > span,
   .learn-gap[data-mark="right"] {
     animation: none;
   }
@@ -438,5 +440,251 @@
 @media (prefers-reduced-motion: reduce) {
   .learn-shake {
     animation: none;
+  }
+}
+
+.learn-turn [data-kind="added"],
+.learn-turn [data-kind="dropped"] {
+  display: inline-grid;
+  grid-template-columns: 1fr;
+}
+.learn-turn [data-kind="dropped"] {
+  grid-template-columns: 0fr;
+  color: var(--ink-faint);
+}
+.learn-turn [data-kind] > span {
+  min-width: 0;
+  overflow: hidden;
+}
+.learn-turn[data-play] [data-kind="added"] {
+  animation: learn-grow 280ms var(--ease-out) 120ms both;
+}
+.learn-turn[data-play] [data-kind="added"] > span {
+  animation: learn-fill 280ms var(--ease-out) 120ms both;
+}
+.learn-turn[data-play] [data-kind="dropped"] {
+  animation: learn-shrink 240ms var(--ease-out) both;
+}
+@keyframes learn-shrink {
+  from {
+    grid-template-columns: 1fr;
+    color: var(--ink);
+  }
+}
+
+.learn-key[data-open] {
+  box-shadow:
+    0 0 0 2px var(--form),
+    0 2px 0 var(--edge-strong);
+}
+.learn-stem {
+  --at: 50%;
+  position: relative;
+  height: 28px;
+}
+.learn-stem::before,
+.learn-stem::after {
+  content: "";
+  position: absolute;
+  border: 0 solid var(--form);
+}
+.learn-stem::before {
+  top: 2px;
+  height: 14px;
+  inset-inline-start: 23px;
+  width: calc(var(--at) - 23px);
+  border-inline-end-width: 2px;
+  border-block-end-width: 2px;
+  border-end-end-radius: 12px;
+}
+.learn-stem::after {
+  top: 14px;
+  bottom: 0;
+  inset-inline-start: 11px;
+  width: 13px;
+  border-inline-start-width: 2px;
+  border-block-start-width: 2px;
+  border-start-start-radius: 12px;
+}
+.learn-trunk,
+.learn-stop,
+.learn-off-line {
+  position: relative;
+}
+.learn-trunk::before,
+.learn-stop::before,
+.learn-off-line::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 11px;
+  width: 2px;
+  background: var(--form);
+}
+.learn-stop[data-last]::before {
+  bottom: auto;
+  height: 22px;
+}
+.learn-off-line {
+  padding-inline-start: 32px;
+}
+.learn-off-line[data-last]::before {
+  display: none;
+}
+.learn-stop {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  column-gap: 8px;
+  align-items: start;
+  min-height: 44px;
+  padding-block: 10px;
+  padding-inline-end: 12px;
+  border-radius: 12px;
+  text-align: start;
+  cursor: pointer;
+  color: var(--ink);
+  transition: background-color 150ms;
+}
+.learn-dot {
+  position: relative;
+  justify-self: center;
+  width: 14px;
+  height: 14px;
+  margin-top: 4px;
+  border-radius: 9999px;
+  border: 2px solid var(--form);
+  background: var(--form);
+  transition: box-shadow 150ms;
+}
+.learn-stop[data-open] .learn-dot {
+  box-shadow: 0 0 0 4px var(--form-faint);
+}
+.learn-stop:not([data-taught]) {
+  color: var(--ink-secondary);
+}
+.learn-stop:not([data-taught]) .learn-dot {
+  background: var(--tray);
+}
+.learn-stop:not([data-taught]) .learn-turn [class],
+.learn-later .learn-turn [class] {
+  color: inherit;
+}
+@media (hover: hover) and (pointer: fine) {
+  .learn-stop:hover {
+    background: var(--form-soft);
+  }
+}
+
+.learn-map {
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 12px;
+}
+@container (min-width: 36rem) {
+  .learn-map {
+    grid-template-columns: minmax(11.5rem, 1.4fr) repeat(3, minmax(0, 1fr));
+    column-gap: 0;
+  }
+  .learn-off-line {
+    padding: 0;
+  }
+  .learn-off-line::before {
+    display: none;
+  }
+  .learn-stop[data-open] {
+    background: var(--form-soft);
+  }
+  .learn-lane {
+    position: relative;
+  }
+  .learn-lane[data-lane]::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: calc(50% - 1px);
+    width: 2px;
+    background: var(--form-faint);
+  }
+  .learn-lane[data-lane="end"]::before {
+    bottom: 50%;
+  }
+}
+.learn-plain {
+  background: var(--form-soft);
+  transition: background-color 150ms;
+}
+.learn-plain[data-open] {
+  box-shadow: 0 0 0 2px var(--form);
+}
+@media (hover: hover) and (pointer: fine) {
+  .learn-plain:hover {
+    background: var(--plate);
+  }
+}
+.learn-later {
+  color: var(--ink-secondary);
+  background: var(--tray);
+  border: 2px dashed var(--form-faint);
+}
+.learn-later[data-open] {
+  border-style: solid;
+  border-color: var(--form);
+}
+
+.learn-sheet {
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 24px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+}
+.learn-sheet[open] {
+  display: grid;
+  place-items: center;
+}
+.learn-sheet::backdrop {
+  background: var(--scrim);
+}
+.learn-sheet-panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: min(720px, 100%);
+  max-height: 100%;
+  overflow: hidden;
+  border-radius: 22px;
+  background: var(--tray);
+  box-shadow: var(--learn-pop);
+  animation: enter-card 200ms var(--ease-out) both;
+}
+@media (max-width: 40rem) {
+  .learn-sheet {
+    padding: 48px 0 0;
+  }
+  .learn-sheet[open] {
+    place-items: end stretch;
+  }
+  .learn-sheet-panel {
+    width: 100%;
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+    animation: learn-sheet-up 450ms var(--ease-drawer) both;
+  }
+}
+@keyframes learn-sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .learn-turn[data-play] [data-kind="dropped"],
+  .learn-turn[data-play] [data-kind="added"],
+  .learn-turn[data-play] [data-kind="added"] > span {
+    animation: none;
+  }
+  .learn-sheet-panel {
+    animation: enter-fade 150ms both;
   }
 }

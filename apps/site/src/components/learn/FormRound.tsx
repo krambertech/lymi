@@ -6,6 +6,7 @@ import { playSound } from "../../lib/learn/player";
 import { formMatches, onlyMarksDiffer } from "../../lib/learn/practice";
 import { Button } from "../Button";
 import { LetterKeys, useLetters } from "./LetterKeys";
+import { MorphLetters } from "./Morph";
 import { Answer, Feedback, type RoundProps } from "./Quiz";
 import { PlayButton } from "./Sound";
 
@@ -51,19 +52,7 @@ function Change({ base, form, src }: { base: string; form: string; src?: string 
           </Trans>
         </span>
         <span aria-hidden="true">
-          {parts.map((part, i) =>
-            part.kind === "added" ? (
-              // oxlint-disable-next-line react/no-array-index-key -- a word's parts never reorder
-              <span key={i} data-kind="added">
-                <span>{part.text}</span>
-              </span>
-            ) : (
-              // oxlint-disable-next-line react/no-array-index-key -- a word's parts never reorder
-              <span key={i} data-kind={part.kind}>
-                {part.text}
-              </span>
-            ),
-          )}
+          <MorphLetters parts={parts} />
         </span>
       </span>
       {src && (

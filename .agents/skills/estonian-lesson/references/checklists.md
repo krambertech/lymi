@@ -19,7 +19,9 @@ What does the learner do here?
 │   ├── a word's forms in a table: cases, persons, tenses → Paradigm
 │   ├── where something is or goes, in a picture → Scene
 │   ├── when, across tenses, and how each is built → Timeline
-│   └── how a stem changes from form to form → Morph
+│   ├── how a stem changes from form to form → Morph
+│   └── which base form a use is built on, and what else is → FormMap
+├── Look a word's forms up from where they are → FormSheetButton
 ├── Read a skippable exception or comparison → Aside
 ├── Get marked on the new rule → Quiz with:
 │   ├── hear, then pick a word or form → ChoiceRound

@@ -5,8 +5,8 @@
  *
  *   pnpm --filter @lymi/site lesson:forms
  *
- * The lesson checks (`src/lib/learn/checks/lesson-checks.test.ts`) list every form a lesson shows
- * or says that the file doesn't hold yet. This script asks Sõnaveeb's EKI dictionary, which carries
+ * The lesson checks (`src/lib/learn/checks/lesson-checks.test.ts`) and the form map's test list every
+ * form a lesson or the map shows or says that the file doesn't hold yet. This script asks Sõnaveeb's EKI dictionary, which carries
  * ÕS 2025, about each one: a headword, or "a form of <headword>", is added with that headword. A
  * form Sõnaveeb doesn't know is printed for a person to fix or to add by hand with its source.
  */
@@ -27,6 +27,7 @@ const run = spawnSync(
     "vitest",
     "run",
     "src/lib/learn/checks/lesson-checks.test.ts",
+    "src/lib/learn/form-map.test.ts",
     "-t",
     "uses only Estonian forms",
   ],

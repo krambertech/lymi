@@ -36,13 +36,13 @@ const src = (text: string) => clipUrl(SLUG, clipId(text));
 const MEANS: Record<string, MessageDescriptor> = {
   "Tallinn on suurem kui Tartu.": msg`Tallinn is bigger than Tartu.`,
   "Minu auto on uuem kui sinu auto.": msg`My car is newer than your car.`,
-  "Kohv on kallim kui tee.": msg`Coffee is dearer than tea.`,
+  "Kohv on kallim kui tee.": msg`Coffee is more expensive than tea.`,
   "Tartu on väiksem kui Tallinn.": msg`Tartu is smaller than Tallinn.`,
   "Täna on soojem kui eile.": msg`It’s warmer today than yesterday.`,
   "Tallinn on Tartust suurem.": msg`Tallinn is bigger than Tartu.`,
   "Jaan on vanem kui Mari.": msg`Jaan is older than Mari.`,
   "Jaan on Marist vanem.": msg`Jaan is older than Mari.`,
-  "Kohv on teest kallim.": msg`Coffee is dearer than tea.`,
+  "Kohv on teest kallim.": msg`Coffee is more expensive than tea.`,
   "Minu tuba on suurem kui sinu tuba.": msg`My room is bigger than your room.`,
   "Minu tuba on sinu toast suurem.": msg`My room is bigger than your room.`,
   "Mari on noorem kui Kati.": msg`Mari is younger than Kati.`,
@@ -54,6 +54,10 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Jaan on kõige vanem.": msg`Jaan is the oldest.`,
   "Mari on minu parim sõber.": msg`Mari is my best friend.`,
   "Minu tuba on sama suur kui sinu tuba.": msg`My room is as big as your room.`,
+  "Tallinn on suur linn.": msg`Tallinn is a big town.`,
+  "Jaan on vana.": msg`Jaan is old.`,
+  "See kohvik on hea.": msg`This café is good.`,
+  "See kohvik on parem.": msg`This café is better.`,
 };
 
 const HEARD_LABELS: Record<string, Record<"plain" | "more" | "most", MessageDescriptor>> = {
@@ -67,15 +71,20 @@ const MAKE_GLOSS: Record<(typeof CMP_MAKE)[number]["id"], MessageDescriptor> = {
   vanem: msg`old`,
   kulmem: msg`cold`,
   uuem: msg`new`,
-  kallim: msg`dear, expensive`,
+  kallim: msg`expensive`,
   ilusam: msg`beautiful`,
   parem: msg`good`,
   vaiksem: msg`small`,
 };
 
+const FIX_PROMPTS = {
+  "fix-kui": msg`Tallinn is bigger than Tartu.`,
+  "fix-kulmem": msg`It’s colder today than yesterday.`,
+} as const;
+
 const TRANSLATE_PROMPTS: Record<(typeof CMP_TRANSLATE)[number]["id"], MessageDescriptor> = {
   "suurem-kui": msg`Tallinn is bigger than Tartu.`,
-  kallim: msg`Coffee is dearer than tea.`,
+  kallim: msg`Coffee is more expensive than tea.`,
   "koige-parem": msg`This is the best café.`,
   vanem: msg`Jaan is older than Mari.`,
   "sama-suur": msg`My room is as big as your room.`,
@@ -90,7 +99,7 @@ const GLOSSARY: Glossary = {
   parim: { en: msg`the best`, note: msg`The short form of kõige parem.` },
   kui: { en: msg`than; as`, note: msg`After a comparative: suurem kui, bigger than.` },
   sama: { en: msg`the same`, note: msg`Sama suur kui: as big as.` },
-  kallis: { en: msg`dear, expensive` },
+  kallis: { en: msg`expensive` },
   "tallinn on suurem kui tartu": {
     en: msg`Tallinn is bigger than Tartu.`,
     show: "Tallinn on suurem kui Tartu",
@@ -157,7 +166,8 @@ function useContent() {
       ),
       "fix-vaiksem": (
         <Trans>
-          Smaller drops an e: <span lang="et">väiksem</span>.
+          The genitive <span lang="et">väikese</span> drops an e before <span lang="et">-m</span>:{" "}
+          <span lang="et">väiksem</span>.
         </Trans>
       ),
       "fix-koige": (
@@ -168,14 +178,14 @@ function useContent() {
       ),
       "fix-tartust": (
         <Trans>
-          Without <span lang="et">kui</span>, the town you compare with takes{" "}
+          Without <span lang="et">kui</span>, the thing you compare with takes{" "}
           <span lang="et">-st</span>: <span lang="et">Tartust</span>.
         </Trans>
       ),
       "fix-kulmem": (
         <Trans>
-          With <span lang="et">kui</span>, the adjective is a comparative:{" "}
-          <span lang="et">külmem</span>.
+          Colder than is the comparative with <span lang="et">kui</span>:{" "}
+          <span lang="et">külmem kui eile</span>.
         </Trans>
       ),
     };
@@ -185,6 +195,7 @@ function useContent() {
       wrong,
       answers,
       src: src(answers[0]),
+      prompt: id in FIX_PROMPTS ? i18n._(FIX_PROMPTS[id as keyof typeof FIX_PROMPTS]) : undefined,
       explain: fixWhy[id],
     }));
 
@@ -216,9 +227,9 @@ function useContent() {
         id: "why",
         ask: t`What is better about the new flat?`,
         options: [
-          { id: "bigger", label: t`It’s bigger` },
+          { id: "cheaper-quieter", label: t`It’s cheaper and quieter` },
           { id: "newer", label: t`It’s newer and warmer` },
-          { id: "cheaper", label: t`It’s bigger and cheaper` },
+          { id: "sea", label: t`It’s nearer the sea` },
         ],
         answer: "newer",
         line: 7,
@@ -227,16 +238,16 @@ function useContent() {
         id: "coffee",
         kind: "short",
         ask: t`How much did a coffee cost in Tartu? Write the number as Mari says it.`,
-        answers: ["kaks", "kaks eurot", "2"],
+        answers: ["kaks", "kaks eurot", "2", "2 eurot", "2 €"],
         line: 11,
       },
       {
         id: "cafe",
         ask: t`Where is the best café?`,
         options: [
-          { id: "centre", label: t`In the centre of Tallinn` },
-          { id: "work", label: t`Next to her work` },
-          { id: "home", label: t`Next to her house` },
+          { id: "old-town", label: t`In the old town` },
+          { id: "work", label: t`At her work` },
+          { id: "home", label: t`Next to her home` },
         ],
         answer: "home",
         line: 14,
@@ -276,7 +287,7 @@ function useContent() {
         options: [
           { id: "tomorrow", label: t`Tomorrow` },
           { id: "week", label: t`In a week` },
-          { id: "month", label: t`In a month` },
+          { id: "summer", label: t`Next summer` },
         ],
         answer: "week",
         line: 27,
@@ -314,7 +325,7 @@ export function VordlusLesson() {
       CMP_MAKE.map(({ id, kind, base, answer }) => ({
         base,
         gloss: i18n._(MAKE_GLOSS[id]),
-        cue: t`more`,
+        cue: t`comparative`,
         answers: [answer],
         src: src(answer),
         pair: [kind, id] as const,
@@ -322,6 +333,21 @@ export function VordlusLesson() {
           kind === "own" ? (
             <Trans>
               This one is its own word: <span lang="et">{answer}</span>.
+            </Trans>
+          ) : kind === "drop" ? (
+            <Trans>
+              The genitive <span lang="et">väikese</span> drops an e before{" "}
+              <span lang="et">-m</span>: <span lang="et">väiksem</span>.
+            </Trans>
+          ) : kind === "three" ? (
+            <Trans>
+              <span lang="et">Ilusa</span> has three syllables, so its a stays:{" "}
+              <span lang="et">ilusam</span>.
+            </Trans>
+          ) : kind === "a-to-e" ? (
+            <Trans>
+              Before <span lang="et">-m</span>, the genitive’s a becomes e:{" "}
+              <span lang="et">{answer}</span>.
             </Trans>
           ) : (
             <Trans>
@@ -386,14 +412,17 @@ export function VordlusLesson() {
       recap={[
         <Trans key="1">
           A comparative is the genitive with <b lang="et">-m</b>:{" "}
-          <b lang="et">suur, suure, suurem</b>; <b lang="et">uus, uue, uuem</b>.
+          <b lang="et">suur, suure, suurem</b>; <b lang="et">uus, uue, uuem</b>. A two-syllable
+          genitive’s a usually becomes e: <b lang="et">vana, vanem</b>.
         </Trans>,
         <Trans key="2">
-          Than is <b lang="et">kui</b>, or the other thing with <b lang="et">-st</b> before the
-          comparative: <b lang="et">suurem kui Tartu</b>, <b lang="et">Tartust suurem</b>.
+          Than is <b lang="et">kui</b>, or the thing you compare with, with <b lang="et">-st</b>,
+          before the comparative: <b lang="et">suurem kui Tartu</b>, <b lang="et">Tartust suurem</b>
+          .
         </Trans>,
         <Trans key="3">
-          The most is <b lang="et">kõige</b> and the comparative: <b lang="et">kõige suurem</b>.
+          For the biggest, put <b lang="et">kõige</b> before the comparative:{" "}
+          <b lang="et">kõige suurem</b>.
         </Trans>,
         <Trans key="4">
           Good, better, best: <b lang="et">hea, parem, kõige parem</b> or <b lang="et">parim</b>.
@@ -412,15 +441,24 @@ export function VordlusLesson() {
                   <Trans>
                     To say bigger, take the adjective’s genitive from lesson {forms} and add{" "}
                     <span lang="et">-m</span>: <span lang="et">suur</span>,{" "}
-                    <span lang="et">suure</span>, <Word w="suurem" />. Than is <Word w="kui" />:{" "}
-                    <Word w="Tallinn on suurem kui Tartu" />.
+                    <span lang="et">suure</span>, <Word w="suurem" />. This form is the comparative.
+                    Than is <Word w="kui" />: <Word w="Tallinn on suurem kui Tartu" />.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Two are different. Good, <span lang="et">hea</span>, becomes <Word w="parem" />,
-                    a word of its own, and small, <span lang="et">väike</span>, drops an e:{" "}
-                    <span lang="et">väiksem</span>. Pick a word and tap its forms.
+                    When the genitive has two syllables and ends in a, the a usually becomes e:{" "}
+                    <span lang="et">vana, vana, vanem</span>;{" "}
+                    <span lang="et">külm, külma, külmem</span>.
+                  </Trans>
+                </p>
+                <p>
+                  <Trans>
+                    Some words change more. Two common ones: good, <span lang="et">hea</span>,
+                    becomes <Word w="parem" />, a word of its own, and small,{" "}
+                    <span lang="et">väike</span>, drops an e from its genitive{" "}
+                    <span lang="et">väikese</span>: <span lang="et">väiksem</span>. Pick a word and
+                    tap its forms.
                   </Trans>
                 </p>
               </Prose>
@@ -466,8 +504,9 @@ export function VordlusLesson() {
                 <p>
                   <Trans>
                     There is a second way to say than. Leave out <span lang="et">kui</span>, put the
-                    other thing before the comparative, and give it <span lang="et">-st</span> from
-                    lesson {into}: <Word w="Tallinn on Tartust suurem" />. Both mean the same.
+                    thing you compare with before the comparative, and give it{" "}
+                    <span lang="et">-st</span> from lesson {into}:{" "}
+                    <Word w="Tallinn on Tartust suurem" />. Both mean the same.
                   </Trans>
                 </p>
               </Prose>
@@ -492,8 +531,7 @@ export function VordlusLesson() {
                 verdict={(share) =>
                   share === 1 ? (
                     <Trans>
-                      All six, the other thing with <span lang="et">-st</span> before the
-                      comparative.
+                      All six, with <span lang="et">-st</span> before the comparative.
                     </Trans>
                   ) : share >= 0.6 ? (
                     <Trans>
@@ -518,9 +556,10 @@ export function VordlusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The most is <span lang="et">kõige</span> before the comparative:{" "}
-                    <Word w="kõige suurem" />, the biggest; <Word w="kõige parem" />, the best.
-                    There is also a short form, <Word w="parim" />, the best.
+                    For the biggest, put <span lang="et">kõige</span> before the comparative:{" "}
+                    <Word w="kõige suurem" />, the biggest; <Word w="kõige parem" />, the best. Word
+                    for word, <span lang="et">kõige</span> is of all. The best also has a short
+                    form: <Word w="parim" />.
                   </Trans>
                 </p>
                 <p>
@@ -534,7 +573,9 @@ export function VordlusLesson() {
               <ListenRows items={rows(CMP_MOST)} />
               <Prose>
                 <p>
-                  <Trans>Hear a sentence and pick what it says: big, bigger or the biggest.</Trans>
+                  <Trans>
+                    Hear a sentence and pick what it says, such as big, bigger or the biggest.
+                  </Trans>
                 </p>
               </Prose>
               <Quiz
@@ -658,7 +699,7 @@ export function VordlusLesson() {
             <>
               <Prose>
                 <p>
-                  <Trans>Mari has moved from Tartu to Tallinn. Jaan asks how it is.</Trans>
+                  <Trans>Mari has moved from Tartu to Tallinn. Jaan asks how she likes it.</Trans>
                 </p>
               </Prose>
               <Listening

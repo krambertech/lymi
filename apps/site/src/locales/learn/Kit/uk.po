@@ -235,7 +235,7 @@ msgstr "Безкоштовний урок естонської про три о�
 msgid "A free Estonian lesson on adjectives with nouns: suures majas and uut raamatut, where the adjective takes the noun’s case, suure autoga with -ga, -ta, -ni and -na, and suured majad in the plural. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про прикметники з іменниками: suures majas і uut raamatut, де прикметник стоїть у відмінку іменника, suure autoga з -ga, -ta, -ni і -na та suured majad у множині. Кожне речення озвучене."
 
-msgid "A free Estonian lesson on comparing: suurem and uuem built on the genitive, suurem kui Tartu and Tartust suurem, kõige suurem for the biggest, sama suur kui for as big as, and the two odd ones, hea, parem, parim and väike, väiksem. Every sentence is read aloud."
+msgid "A free Estonian lesson on comparing: suurem and uuem built on the genitive, suurem kui Tartu and Tartust suurem, kõige suurem for the biggest, sama suur kui for as big as, and two odd ones, hea, parem, parim and väike, väiksem. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про порівняння: suurem і uuem, утворені від родового, suurem kui Tartu і Tartust suurem, kõige suurem — «найбільший», sama suur kui — «такий самий великий, як», і два особливі слова: hea, parem, parim та väike, väiksem. Кожне речення озвучене."
 
 msgid "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive. Every sentence is read aloud."

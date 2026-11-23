@@ -365,7 +365,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian comparatives and superlatives`,
         et: "Suurem, kõige suurem",
         minutes: 18,
-        blurb: msg`A free Estonian lesson on comparing: suurem and uuem built on the genitive, suurem kui Tartu and Tartust suurem, kõige suurem for the biggest, sama suur kui for as big as, and the two odd ones, hea, parem, parim and väike, väiksem. Every sentence is read aloud.`,
+        blurb: msg`A free Estonian lesson on comparing: suurem and uuem built on the genitive, suurem kui Tartu and Tartust suurem, kõige suurem for the biggest, sama suur kui for as big as, and two odd ones, hea, parem, parim and väike, väiksem. Every sentence is read aloud.`,
       },
       { name: msg`The translative case`, et: "Arstiks" },
       { name: msg`Somebody, nobody: -gi and -ki`, et: "Keegi, mitte keegi" },

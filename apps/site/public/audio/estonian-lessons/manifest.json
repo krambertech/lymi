@@ -15427,11 +15427,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "omadussonad/ma-ei-na2e-ilusat-linna": {
-    "text": "Ma ei näe ilusat linna.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "omadussonad/kass-magab-suures-autos": {
     "text": "Kass magab suures autos.",
     "model": "eleven_v4",
@@ -15604,11 +15599,6 @@
   },
   "omadussonad/meil-on-kolm-va2ikest-tuba": {
     "text": "Meil on kolm väikest tuba.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "omadussonad/ta-on-tuntud-hea-arstina": {
-    "text": "Ta on tuntud hea arstina.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -15888,7 +15878,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "vordlus/c-talk": {
-    "text": "Tere, Mari! Kuidas sulle Tallinn meeldib? Tere, Jaan! Tallinn on ilus, aga ta on palju suurem kui Tartu. Ja korter? Kas see on suurem kui sinu vana korter? Ei, uus korter on väiksem. Aga see on uuem ja soojem. Tartus oli mul talvel väga külm. Kas Tallinnas on kõik kallim? Jah, korter on kallim ja kohv on ka kallim. Tartus maksis kohv kaks eurot, siin maksab ta kolm eurot. Kolm eurot! Aga kas kohv on ka parem? Jah, minu maja kõrval on Tallinna kõige parem kohvik. Ma joon seal iga päev kohvi. Ja töö? Kas uus töö on parem kui vana? Jah, palju parem. Mul on seal suurem laud ja uuem arvuti. Aga ma töötan kella üheksast kella kuueni. Tartus töötasid sa kella viieni. Kas Tartu oli parem? Natuke. Tartu on vanem ja väiksem linn. Aga Tallinnas on mu parim sõber Kati. Hästi. Ma tulen nädala pärast Tallinna. Siis joome kõige paremat kohvi!",
+    "text": "Tere, Mari! Kuidas sulle Tallinn meeldib? Tere, Jaan! Tallinn on ilus, aga palju suurem kui Tartu. Ja korter? Kas see on suurem kui sinu vana korter? Ei, uus korter on väiksem. Aga see on uuem ja soojem. Tartus oli mul talvel väga külm. Kas Tallinnas on kõik kallim? Jah, korter on kallim ja kohv on ka kallim. Tartus maksis kohv kaks eurot, siin kolm eurot. Kolm eurot! Aga kas kohv on ka parem? Jah, minu maja kõrval on Tallinna kõige parem kohvik. Ma joon seal iga päev kohvi. Ja töö? Kas uus töö on parem kui vana? Jah, palju parem. Mul on seal suurem laud ja uuem arvuti. Aga ma töötan kella üheksast kella kuueni. Tartus töötasid sa kella viieni. Kas Tartu oli parem? Natuke. Tartu on vanem ja väiksem linn. Aga Tallinnas on mu parim sõber Kati. Hästi. Ma tulen nädala pärast Tallinna. Siis joome kõige paremat kohvi!",
     "model": "eleven_v4",
     "turns": [
       {
@@ -15903,7 +15893,7 @@
         "voice": "WtzwR2kNGVNuaTGaYLfK",
         "sentences": [
           "Tere, Jaan!",
-          "Tallinn on ilus, aga ta on palju suurem kui Tartu."
+          "Tallinn on ilus, aga palju suurem kui Tartu."
         ]
       },
       {
@@ -15932,7 +15922,7 @@
         "voice": "WtzwR2kNGVNuaTGaYLfK",
         "sentences": [
           "Jah, korter on kallim ja kohv on ka kallim.",
-          "Tartus maksis kohv kaks eurot, siin maksab ta kolm eurot."
+          "Tartus maksis kohv kaks eurot, siin kolm eurot."
         ]
       },
       {
@@ -15990,5 +15980,25 @@
         ]
       }
     ]
+  },
+  "omadussonad/va2ikese-lapsena-elasin-ma-tartus": {
+    "text": "Väikese lapsena elasin ma Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/need-on-ilusad-linnad": {
+    "text": "Need on ilusad linnad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/vana": {
+    "text": "vana",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/mul-ei-ole-uut-autot": {
+    "text": "Mul ei ole uut autot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

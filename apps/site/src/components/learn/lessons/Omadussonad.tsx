@@ -45,7 +45,7 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Ma sõidan suure autoga.": msg`I drive a big car.`,
   "Mari tuleb uue sõbraga.": msg`Mari is coming with a new friend.`,
   "Ma joon kohvi sooja piimaga.": msg`I drink coffee with warm milk.`,
-  "Ta on tuntud hea arstina.": msg`He or she is known as a good doctor.`,
+  "Väikese lapsena elasin ma Tartus.": msg`As a small child, I lived in Tartu.`,
   "Need on suured majad.": msg`These are big houses.`,
   "Need on uued raamatud.": msg`These are new books.`,
   "Need on head sõbrad.": msg`These are good friends.`,
@@ -90,7 +90,7 @@ const MAKE_CUES: Record<(typeof ADJ_MAKE)[number]["id"], MessageDescriptor | { e
   "heas-kohvikus": msg`in a good café`,
   "uut-raamatut": { et: "Ma loen …" },
   "suurt-kassi": { et: "Mul on kaks …" },
-  "ilusat-linna": { et: "Ma ei näe …" },
+  "uut-autot": { et: "Mul ei ole …" },
   "suured-majad": msg`big houses`,
 };
 
@@ -98,7 +98,7 @@ const WHICH_CUES: Record<(typeof ADJ_WHICH)[number]["id"], MessageDescriptor> = 
   "suure-autoga": msg`with a big car`,
   "uue-sobraga": msg`with a new friend`,
   "sooja-piimaga": msg`with warm milk`,
-  "hea-arstina": msg`as a good doctor`,
+  "vaikese-lapsena": msg`as a small child`,
   "suures-autos": msg`in a big car`,
   "uues-majas": msg`in a new house`,
   "soojas-toas": msg`in a warm room`,
@@ -184,7 +184,9 @@ function PhraseTable() {
           ask: row.ask,
           tip:
             row.id === "with" ? (
-              <Trans>Only the noun takes -ga; the adjective stays in the genitive.</Trans>
+              <Trans>
+                Only the noun takes <span lang="et">-ga</span>; the adjective stays in the genitive.
+              </Trans>
             ) : (
               <Trans>Both words take the same case.</Trans>
             ),
@@ -225,7 +227,7 @@ function useContent() {
       ),
       head: (
         <Trans>
-          After two, three or a higher number, both words take the partitive singular:{" "}
+          After a number from two up, both words take the partitive singular:{" "}
           <span lang="et">kaks head sõpra</span>.
         </Trans>
       ),
@@ -255,7 +257,7 @@ function useContent() {
       ),
       "fix-suurt": (
         <Trans>
-          After two, three or a higher number, the adjective is in the partitive singular as well:{" "}
+          After a number from two up, the adjective is in the partitive singular as well:{" "}
           <span lang="et">kaks suurt kassi</span>.
         </Trans>
       ),
@@ -306,11 +308,11 @@ function useContent() {
       },
       {
         id: "rooms",
-        ask: t`How many small rooms are there?`,
+        ask: t`How many small rooms does the brother’s house have?`,
         options: [
           { id: "two", label: t`Two` },
           { id: "three", label: t`Three` },
-          { id: "ten", label: t`Ten` },
+          { id: "one", label: t`One` },
         ],
         answer: "three",
         line: 8,
@@ -338,8 +340,8 @@ function useContent() {
         id: "book",
         ask: t`What is Kati reading?`,
         options: [
-          { id: "letter", label: t`An old letter` },
-          { id: "estonian", label: t`An old Estonian book` },
+          { id: "letter", label: t`A long letter` },
+          { id: "new-letter", label: t`A new letter` },
           { id: "new", label: t`A new book` },
         ],
         answer: "new",
@@ -403,7 +405,7 @@ export function OmadussonadLesson() {
             <Trans>Both words in the partitive.</Trans>
           ) : (
             <Trans>
-              Both words take <span lang="et">-s</span>, each on its own genitive form.
+              Both words take <span lang="et">-s</span>.
             </Trans>
           ),
       })),
@@ -459,8 +461,8 @@ export function OmadussonadLesson() {
           <b lang="et">uut raamatut</b>, <b lang="et">suured majad</b>.
         </Trans>,
         <Trans key="2">
-          It adds the ending to its own genitive: <b lang="et">uus, uue, uues</b>;{" "}
-          <b lang="et">väike, väikese, väikeses</b>.
+          An adjective adds <b lang="et">-s</b> and plural <b lang="et">-d</b> to its own genitive:{" "}
+          <b lang="et">uus, uue, uues, uued</b>; <b lang="et">väike, väikese, väikeses</b>.
         </Trans>,
         <Trans key="3">
           With <b lang="et">-ga</b>, <b lang="et">-ta</b>, <b lang="et">-ni</b> and{" "}
@@ -468,7 +470,7 @@ export function OmadussonadLesson() {
           genitive: <b lang="et">suure autoga</b>.
         </Trans>,
         <Trans key="4">
-          After two, three or a higher number, both words take the partitive singular:{" "}
+          After a number from two up, both words take the partitive singular:{" "}
           <b lang="et">kaks suurt kassi</b>.
         </Trans>,
       ]}
@@ -483,9 +485,11 @@ export function OmadussonadLesson() {
                 <p>
                   <Trans>
                     <Word w="Suur" /> is big, and <span lang="et">suur maja</span> is a big house.
-                    When the noun takes a case, the adjective takes it as well:{" "}
-                    <Word w="suures majas" />, in a big house; <Word w="uut raamatut" />, a new
-                    book, as the object of <span lang="et">loen</span>, I’m reading.
+                    The adjective goes into the same case as the noun: <Word w="suures majas" />, in
+                    a big house; <Word w="uut raamatut" />, a new book, as the object of{" "}
+                    <span lang="et">loen</span>, I’m reading. Each word builds the case on its own
+                    forms, so the endings can differ: <span lang="et">suurt maja</span>. Four
+                    endings work differently; a section below shows them.
                   </Trans>
                 </p>
                 <p>
@@ -531,12 +535,13 @@ export function OmadussonadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    An adjective has the same three forms as a noun, from lesson {forms}:{" "}
-                    <span lang="et">uus, uue, uut</span>. The <span lang="et">-s</span> and{" "}
-                    <span lang="et">-ga</span> forms and plural <span lang="et">-d</span> are built
-                    on the genitive <span lang="et">uue</span>: <span lang="et">uues majas</span>,{" "}
-                    <span lang="et">uue autoga</span>, <span lang="et">uued majad</span>. Pick a
-                    word and tap its forms.
+                    Like a noun, an adjective has three main forms, as lesson {forms} shows for
+                    nouns: <span lang="et">uus, uue, uut</span>. The <span lang="et">-s</span> form
+                    and plural <span lang="et">-d</span> are built on the genitive{" "}
+                    <span lang="et">uue</span>: <span lang="et">uues majas</span>,{" "}
+                    <span lang="et">uued majad</span>. With <span lang="et">-ga</span> the adjective
+                    stays <span lang="et">uue</span>: <span lang="et">uue autoga</span>, as the next
+                    section shows. Pick a word and tap its forms.
                   </Trans>
                 </p>
               </Prose>
@@ -548,7 +553,7 @@ export function OmadussonadLesson() {
         },
         {
           id: "genitive",
-          title: t`With -ga: only the noun`,
+          title: t`Four endings: only the noun`,
           quiz: true,
           children: (
             <>
@@ -561,14 +566,13 @@ export function OmadussonadLesson() {
                     them, and the adjective stays in the genitive: <Word w="suure autoga" />, with a
                     big car; <span lang="et">uue autota</span>, without a new car;{" "}
                     <span lang="et">suure majani</span>, as far as the big house;{" "}
-                    <span lang="et">hea arstina</span>, as a good doctor.
+                    <span lang="et">väikese lapsena</span>, as a small child.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    So it is <span lang="et">suures autos</span>, inside a big car, but{" "}
-                    <span lang="et">suure autoga</span>, with a big car, going by car. Tap a line to
-                    hear it.
+                    So in a big car is <span lang="et">suures autos</span>, and with a big car is{" "}
+                    <span lang="et">suure autoga</span>. Tap a line to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -585,7 +589,10 @@ export function OmadussonadLesson() {
                 rounds={8}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All eight: both words with -s, the noun alone with -ga.</Trans>
+                    <Trans>
+                      All eight: both words with <span lang="et">-s</span>, the noun alone with{" "}
+                      <span lang="et">-ga</span> or <span lang="et">-na</span>.
+                    </Trans>
                   ) : share >= 0.6 ? (
                     <Trans>Most of them. Look at the noun’s ending before you pick.</Trans>
                   ) : (
@@ -601,7 +608,7 @@ export function OmadussonadLesson() {
         },
         {
           id: "plural",
-          title: t`Big houses`,
+          title: t`Adjectives in the plural`,
           children: (
             <>
               <Prose>
@@ -708,13 +715,13 @@ export function OmadussonadLesson() {
         },
         {
           id: "talk",
-          title: t`An old house in Tartu`,
+          title: t`Jaan’s brother`,
           quiz: true,
           children: (
             <>
               <Prose>
                 <p>
-                  <Trans>Jaan tells Kati about his brother’s house in Tartu.</Trans>
+                  <Trans>Kati asks Jaan where he was yesterday.</Trans>
                 </p>
               </Prose>
               <Listening

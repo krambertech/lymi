@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
-msgid "<0/> is big, and <1>suur maja</1> is a big house. When the noun takes a case, the adjective takes it as well: <2/>, in a big house; <3/>, a new book, as the object of <4>loen</4>, I’m reading."
-msgstr "<0/> is big, and <1>suur maja</1> is a big house. When the noun takes a case, the adjective takes it as well: <2/>, in a big house; <3/>, a new book, as the object of <4>loen</4>, I’m reading."
+msgid "<0/> is big, and <1>suur maja</1> is a big house. The adjective goes into the same case as the noun: <2/>, in a big house; <3/>, a new book, as the object of <4>loen</4>, I’m reading. Each word builds the case on its own forms, so the endings can differ: <5>suurt maja</5>. Four endings work differently; a section below shows them."
+msgstr "<0/> is big, and <1>suur maja</1> is a big house. The adjective goes into the same case as the noun: <2/>, in a big house; <3/>, a new book, as the object of <4>loen</4>, I’m reading. Each word builds the case on its own forms, so the endings can differ: <5>suurt maja</5>. Four endings work differently; a section below shows them."
 
 msgid "<et>Soe</et> takes <et>-s</et> on its genitive <et>sooja</et>: <et>soojas toas</et>."
 msgstr "<et>Soe</et> takes <et>-s</et> on its genitive <et>sooja</et>: <et>soojas toas</et>."
@@ -31,11 +31,11 @@ msgstr "a beautiful town"
 msgid "a big house"
 msgstr "a big house"
 
-msgid "a good doctor"
-msgstr "a good doctor"
-
 msgid "a good friend"
 msgstr "a good friend"
+
+msgid "A long letter"
+msgstr "A long letter"
 
 msgid "a new book"
 msgstr "a new book"
@@ -46,8 +46,17 @@ msgstr "A new book"
 msgid "a new house"
 msgstr "a new house"
 
+msgid "A new letter"
+msgstr "A new letter"
+
+msgid "a small child"
+msgstr "a small child"
+
 msgid "a small room"
 msgstr "a small room"
+
+msgid "a warm room"
+msgstr "a warm room"
 
 msgid "Adjectives"
 msgstr "Adjectives"
@@ -55,20 +64,23 @@ msgstr "Adjectives"
 msgid "Adjectives change like nouns"
 msgstr "Adjectives change like nouns"
 
-msgid "After two, three or a higher number, both words take the partitive singular: <0>kaks head sõpra</0>."
-msgstr "After two, three or a higher number, both words take the partitive singular: <0>kaks head sõpra</0>."
+msgid "Adjectives in the plural"
+msgstr "Adjectives in the plural"
 
-msgid "After two, three or a higher number, both words take the partitive singular: <0>kaks suurt kassi</0>."
-msgstr "After two, three or a higher number, both words take the partitive singular: <0>kaks suurt kassi</0>."
+msgid "After a number from two up, both words take the partitive singular: <0>kaks head sõpra</0>."
+msgstr "After a number from two up, both words take the partitive singular: <0>kaks head sõpra</0>."
 
-msgid "After two, three or a higher number, both words take the partitive singular: <et>kaks suurt kassi</et>."
-msgstr "After two, three or a higher number, both words take the partitive singular: <et>kaks suurt kassi</et>."
+msgid "After a number from two up, both words take the partitive singular: <0>kaks suurt kassi</0>."
+msgstr "After a number from two up, both words take the partitive singular: <0>kaks suurt kassi</0>."
 
-msgid "After two, three or a higher number, the adjective is in the partitive singular as well: <0>kaks suurt kassi</0>."
-msgstr "After two, three or a higher number, the adjective is in the partitive singular as well: <0>kaks suurt kassi</0>."
+msgid "After a number from two up, both words take the partitive singular: <et>kaks suurt kassi</et>."
+msgstr "After a number from two up, both words take the partitive singular: <et>kaks suurt kassi</et>."
 
-msgid "All eight: both words with -s, the noun alone with -ga."
-msgstr "All eight: both words with -s, the noun alone with -ga."
+msgid "After a number from two up, the adjective is in the partitive singular as well: <0>kaks suurt kassi</0>."
+msgstr "After a number from two up, the adjective is in the partitive singular as well: <0>kaks suurt kassi</0>."
+
+msgid "All eight: both words with <0>-s</0>, the noun alone with <1>-ga</1> or <2>-na</2>."
+msgstr "All eight: both words with <0>-s</0>, the noun alone with <1>-ga</1> or <2>-na</2>."
 
 msgid "All of them, the adjective in the noun’s case every time."
 msgstr "All of them, the adjective in the noun’s case every time."
@@ -79,8 +91,8 @@ msgstr "All six found and fixed."
 msgid "All six, every adjective in the right form."
 msgstr "All six, every adjective in the right form."
 
-msgid "An adjective has the same three forms as a noun, from lesson {forms}: <0>uus, uue, uut</0>. The <1>-s</1> and <2>-ga</2> forms and plural <3>-d</3> are built on the genitive <4>uue</4>: <5>uues majas</5>, <6>uue autoga</6>, <7>uued majad</7>. Pick a word and tap its forms."
-msgstr "An adjective has the same three forms as a noun, from lesson {forms}: <0>uus, uue, uut</0>. The <1>-s</1> and <2>-ga</2> forms and plural <3>-d</3> are built on the genitive <4>uue</4>: <5>uues majas</5>, <6>uue autoga</6>, <7>uued majad</7>. Pick a word and tap its forms."
+msgid "An adjective adds <0>-s</0> and plural <1>-d</1> to its own genitive: <2>uus, uue, uues, uued</2>; <3>väike, väikese, väikeses</3>."
+msgstr "An adjective adds <0>-s</0> and plural <1>-d</1> to its own genitive: <2>uus, uue, uues, uued</2>; <3>väike, väikese, väikeses</3>."
 
 msgid "An adjective takes the noun’s case and number: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
 msgstr "An adjective takes the noun’s case and number: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
@@ -88,17 +100,11 @@ msgstr "An adjective takes the noun’s case and number: <0>suures majas</0>, <1
 msgid "An adjective takes the noun’s case: <0>suur maja</0>, a big house, and <1>suures majas</1>, in a big house. With <2>-ga</2>, <3>-ta</3>, <4>-ni</4> and <5>-na</5>, only the noun takes the ending: <6>suure autoga</6>."
 msgstr "An adjective takes the noun’s case: <0>suur maja</0>, a big house, and <1>suures majas</1>, in a big house. With <2>-ga</2>, <3>-ta</3>, <4>-ni</4> and <5>-na</5>, only the noun takes the ending: <6>suure autoga</6>."
 
-msgid "An old Estonian book"
-msgstr "An old Estonian book"
+msgid "as a small child"
+msgstr "as a small child"
 
-msgid "An old house in Tartu"
-msgstr "An old house in Tartu"
-
-msgid "An old letter"
-msgstr "An old letter"
-
-msgid "as a good doctor"
-msgstr "as a good doctor"
+msgid "As a small child, I lived in Tartu."
+msgstr "As a small child, I lived in Tartu."
 
 msgid "At the market"
 msgstr "At the market"
@@ -112,17 +118,14 @@ msgstr "big"
 msgid "big houses"
 msgstr "big houses"
 
-msgid "Big houses"
-msgstr "Big houses"
-
 msgid "Both words in the partitive: <0>uut raamatut</0>."
 msgstr "Both words in the partitive: <0>uut raamatut</0>."
 
 msgid "Both words in the partitive."
 msgstr "Both words in the partitive."
 
-msgid "Both words take <0>-s</0>, each on its own genitive form."
-msgstr "Both words take <0>-s</0>, each on its own genitive form."
+msgid "Both words take <0>-s</0>."
+msgstr "Both words take <0>-s</0>."
 
 msgid "Both words take the same case."
 msgstr "Both words take the same case."
@@ -146,8 +149,11 @@ msgstr "Fix the sentence"
 msgid "Forms of {0}"
 msgstr "Forms of {0}"
 
-msgid "Four endings from lesson {withLesson} work differently: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> and <3>-na</3>. Only the noun takes them, and the adjective stays in the genitive: <4/>, with a big car; <5>uue autota</5>, without a new car; <6>suure majani</6>, as far as the big house; <7>hea arstina</7>, as a good doctor."
-msgstr "Four endings from lesson {withLesson} work differently: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> and <3>-na</3>. Only the noun takes them, and the adjective stays in the genitive: <4/>, with a big car; <5>uue autota</5>, without a new car; <6>suure majani</6>, as far as the big house; <7>hea arstina</7>, as a good doctor."
+msgid "Four endings from lesson {withLesson} work differently: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> and <3>-na</3>. Only the noun takes them, and the adjective stays in the genitive: <4/>, with a big car; <5>uue autota</5>, without a new car; <6>suure majani</6>, as far as the big house; <7>väikese lapsena</7>, as a small child."
+msgstr "Four endings from lesson {withLesson} work differently: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> and <3>-na</3>. Only the noun takes them, and the adjective stays in the genitive: <4/>, with a big car; <5>uue autota</5>, without a new car; <6>suure majani</6>, as far as the big house; <7>väikese lapsena</7>, as a small child."
+
+msgid "Four endings: only the noun"
+msgstr "Four endings: only the noun"
 
 msgid "genitive"
 msgstr "genitive"
@@ -158,14 +164,11 @@ msgstr "Genitive"
 msgid "good"
 msgstr "good"
 
-msgid "He or she is known as a good doctor."
-msgstr "He or she is known as a good doctor."
-
 msgid "How does the brother get to work? Write it as Jaan says it."
 msgstr "How does the brother get to work? Write it as Jaan says it."
 
-msgid "How many small rooms are there?"
-msgstr "How many small rooms are there?"
+msgid "How many small rooms does the brother’s house have?"
+msgstr "How many small rooms does the brother’s house have?"
 
 msgid "I drink coffee with warm milk."
 msgstr "I drink coffee with warm milk."
@@ -243,9 +246,6 @@ msgstr "In Tartu"
 msgid "in the small room"
 msgstr "in the small room"
 
-msgid "It adds the ending to its own genitive: <0>uus, uue, uues</0>; <1>väike, väikese, väikeses</1>."
-msgstr "It adds the ending to its own genitive: <0>uus, uue, uues</0>; <1>väike, väikese, väikeses</1>."
-
 msgid "Its genitive is sooja."
 msgstr "Its genitive is sooja."
 
@@ -258,11 +258,11 @@ msgstr "Jaan drives a new car."
 msgid "Jaan lives in a beautiful town."
 msgstr "Jaan lives in a beautiful town."
 
-msgid "Jaan tells Kati about his brother’s house in Tartu."
-msgstr "Jaan tells Kati about his brother’s house in Tartu."
-
 msgid "Jaan works tomorrow."
 msgstr "Jaan works tomorrow."
+
+msgid "Jaan’s brother"
+msgstr "Jaan’s brother"
 
 msgid "Jaan’s brother lives in a new house."
 msgstr "Jaan’s brother lives in a new house."
@@ -270,8 +270,14 @@ msgstr "Jaan’s brother lives in a new house."
 msgid "Kati"
 msgstr "Kati"
 
+msgid "Kati asks Jaan where he was yesterday."
+msgstr "Kati asks Jaan where he was yesterday."
+
 msgid "Kati goes to work by bus."
 msgstr "Kati goes to work by bus."
+
+msgid "Like a noun, an adjective has three main forms, as lesson {forms} shows for nouns: <0>uus, uue, uut</0>. The <1>-s</1> form and plural <2>-d</2> are built on the genitive <3>uue</3>: <4>uues majas</4>, <5>uued majad</5>. With <6>-ga</6> the adjective stays <7>uue</7>: <8>uue autoga</8>, as the next section shows. Pick a word and tap its forms."
+msgstr "Like a noun, an adjective has three main forms, as lesson {forms} shows for nouns: <0>uus, uue, uut</0>. The <1>-s</1> form and plural <2>-d</2> are built on the genitive <3>uue</3>: <4>uues majas</4>, <5>uued majad</5>. With <6>-ga</6> the adjective stays <7>uue</7>: <8>uue autoga</8>, as the next section shows. Pick a word and tap its forms."
 
 msgid "Listen: Kati and Jaan"
 msgstr "Listen: Kati and Jaan"
@@ -333,8 +339,11 @@ msgstr "Now type each phrase in the form the cue asks for."
 msgid "old"
 msgstr "old"
 
-msgid "Only the noun takes -ga; the adjective stays in the genitive."
-msgstr "Only the noun takes -ga; the adjective stays in the genitive."
+msgid "One"
+msgstr "One"
+
+msgid "Only the noun takes <0>-ga</0>; the adjective stays in the genitive."
+msgstr "Only the noun takes <0>-ga</0>; the adjective stays in the genitive."
 
 msgid "Only the noun: <et>suure autoga</et>"
 msgstr "Only the noun: <et>suure autoga</et>"
@@ -363,8 +372,8 @@ msgstr "Six mistakes to catch"
 msgid "small, little"
 msgstr "small, little"
 
-msgid "So it is <0>suures autos</0>, inside a big car, but <1>suure autoga</1>, with a big car, going by car. Tap a line to hear it."
-msgstr "So it is <0>suures autos</0>, inside a big car, but <1>suure autoga</1>, with a big car, going by car. Tap a line to hear it."
+msgid "So in a big car is <0>suures autos</0>, and with a big car is <1>suure autoga</1>. Tap a line to hear it."
+msgstr "So in a big car is <0>suures autos</0>, and with a big car is <1>suure autoga</1>. Tap a line to hear it."
 
 msgid "Tap a form"
 msgstr "Tap a form"
@@ -374,9 +383,6 @@ msgstr "Tap the forms in the table once more, then try again."
 
 msgid "Tap the lines above once more, then try again."
 msgstr "Tap the lines above once more, then try again."
-
-msgid "Ten"
-msgstr "Ten"
 
 msgid "The adjective takes <0>-s</0> as well: <1>suures majas</1>."
 msgstr "The adjective takes <0>-s</0> as well: <1>suures majas</1>."
@@ -437,9 +443,6 @@ msgstr "Where will Kati wait for Jaan? Write it as she says it."
 
 msgid "With"
 msgstr "With"
-
-msgid "With -ga: only the noun"
-msgstr "With -ga: only the noun"
 
 msgid "With <0>-ga</0>, <1>-ta</1>, <2>-ni</2> and <3>-na</3>, only the noun takes the ending, and the adjective stays in the genitive: <4>suure autoga</4>."
 msgstr "With <0>-ga</0>, <1>-ta</1>, <2>-ni</2> and <3>-na</3>, only the noun takes the ending, and the adjective stays in the genitive: <4>suure autoga</4>."

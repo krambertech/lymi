@@ -1,13 +1,14 @@
 import { msg } from "@lingui/core/macro";
 import type { DrillBank } from "../../../lib/learn/drill";
 
-const BUILD = msg`A comparative is the genitive with <et>-m</et>: <et>vana</et>, <et>vanem</et>; <et>uus</et>, <et>uue</et>, <et>uuem</et>.`;
+const BUILD = msg`A comparative is the genitive with <et>-m</et>: <et>suur</et>, <et>suure</et>, <et>suurem</et>; <et>uus</et>, <et>uue</et>, <et>uuem</et>.`;
+const VANEM = msg`The genitive of <et>vana</et> is <et>vana</et>; before <et>-m</et> its a becomes e: <et>vanem</et>.`;
 const KUI = msg`Than is <et>kui</et>: <et>suurem kui Tartu</et>.`;
-const ST = msg`Without <et>kui</et>, the other thing takes <et>-st</et> and goes before the comparative: <et>Tartust suurem</et>.`;
-const MOST = msg`The most is <et>kõige</et> and the comparative: <et>kõige suurem</et>.`;
+const ST = msg`Without <et>kui</et>, the thing you compare with takes <et>-st</et> and goes before the comparative: <et>Tartust suurem</et>.`;
+const MOST = msg`For the biggest, put <et>kõige</et> before the comparative: <et>kõige suurem</et>.`;
 const SAME = msg`As big as is <et>sama suur kui</et>.`;
 const GOOD = msg`Good, better, best: <et>hea</et>, <et>parem</et>, <et>kõige parem</et> or <et>parim</et>.`;
-const SMALL = msg`Small drops an e: <et>väike</et>, <et>väiksem</et>.`;
+const SMALL = msg`The genitive <et>väikese</et> drops an e before <et>-m</et>: <et>väiksem</et>.`;
 const WITH_ST = msg`with -st, without kui`;
 
 export const DRILLS: DrillBank = {
@@ -15,7 +16,7 @@ export const DRILLS: DrillBank = {
     build: { label: msg`Bigger: <et>suurem</et>, <et>uuem</et>`, section: "bigger" },
     than: { label: msg`Than: <et>kui</et> or <et>-st</et>`, section: "than" },
     most: { label: msg`The biggest: <et>kõige suurem</et>`, section: "most" },
-    own: { label: msg`Good, better: <et>parem</et>, <et>väiksem</et>`, section: "own-words" },
+    own: { label: msg`Better, smaller: <et>parem</et>, <et>väiksem</et>`, section: "own-words" },
   },
   items: [
     {
@@ -27,7 +28,7 @@ export const DRILLS: DrillBank = {
       cue: { et: "Jaan on … kui Mari." },
       answers: ["vanem"],
       say: "Jaan on vanem kui Mari.",
-      explain: BUILD,
+      explain: VANEM,
     },
     {
       kind: "form",
@@ -45,11 +46,11 @@ export const DRILLS: DrillBank = {
       id: "build-kallim",
       rule: "build",
       base: "kallis",
-      gloss: msg`dear, expensive`,
+      gloss: msg`expensive`,
       cue: { et: "Kohv on … kui tee." },
       answers: ["kallim"],
       say: "Kohv on kallim kui tee.",
-      explain: msg`The genitive of <et>kallis</et> is <et>kalli</et>, so dearer is <et>kallim</et>.`,
+      explain: msg`The genitive of <et>kallis</et> is <et>kalli</et>, so more expensive is <et>kallim</et>.`,
     },
     {
       kind: "dictation",
@@ -57,7 +58,7 @@ export const DRILLS: DrillBank = {
       rule: "build",
       answers: ["Täna on külmem kui eile."],
       say: "Täna on külmem kui eile.",
-      explain: BUILD,
+      explain: msg`The genitive of <et>külm</et> is <et>külma</et>; before <et>-m</et> its a becomes e: <et>külmem</et>.`,
     },
     {
       kind: "translate",
@@ -68,9 +69,13 @@ export const DRILLS: DrillBank = {
         "Minu kass on vanem kui sinu kass.",
         "Mu kass on vanem kui su kass.",
         "Minu kass on sinu kassist vanem.",
+        "Mu kass on vanem kui sinu kass.",
+        "Minu kass on vanem kui su kass.",
+        "Minu kass on vanem kui sinu oma.",
+        "Mu kass on su kassist vanem.",
       ],
       say: "Minu kass on vanem kui sinu kass.",
-      explain: BUILD,
+      explain: VANEM,
     },
     {
       kind: "fix",
@@ -87,7 +92,7 @@ export const DRILLS: DrillBank = {
       rule: "build",
       answers: ["Tee on odavam kui kohv."],
       say: "Tee on odavam kui kohv.",
-      explain: msg`Cheap is <et>odav</et>, its genitive <et>odava</et>, so cheaper is <et>odavam</et>.`,
+      explain: msg`Cheap is <et>odav</et>, genitive <et>odava</et>. It has three syllables, so the a stays: <et>odavam</et>.`,
     },
 
     {
@@ -132,6 +137,7 @@ export const DRILLS: DrillBank = {
       id: "than-fix-nagu",
       rule: "than",
       wrong: "Tallinn on suurem nagu Tartu.",
+      prompt: msg`Tallinn is bigger than Tartu.`,
       answers: ["Tallinn on suurem kui Tartu."],
       say: "Tallinn on suurem kui Tartu.",
       explain: msg`Than is <et>kui</et>. <et>Nagu</et> means like.`,
@@ -162,7 +168,12 @@ export const DRILLS: DrillBank = {
       id: "most-linn",
       rule: "most",
       prompt: msg`Tallinn is the biggest town in Estonia.`,
-      answers: ["Tallinn on Eesti kõige suurem linn.", "Tallinn on Eesti suurim linn."],
+      answers: [
+        "Tallinn on Eesti kõige suurem linn.",
+        "Tallinn on Eesti suurim linn.",
+        "Tallinn on kõige suurem linn Eestis.",
+        "Tallinn on Eestis kõige suurem linn.",
+      ],
       say: "Tallinn on Eesti kõige suurem linn.",
       explain: MOST,
     },
@@ -201,6 +212,8 @@ export const DRILLS: DrillBank = {
         "Minu tuba on sama suur kui sinu tuba.",
         "Mu tuba on sama suur kui su tuba.",
         "Minu tuba on sama suur kui sinu oma.",
+        "Mu tuba on sama suur kui su oma.",
+        "Minu tuba on sama suur nagu sinu tuba.",
       ],
       say: "Minu tuba on sama suur kui sinu tuba.",
       explain: SAME,
@@ -248,6 +261,7 @@ export const DRILLS: DrillBank = {
         "Mari on minu parim sõber.",
         "Mari on mu parim sõber.",
         "Mari on minu kõige parem sõber.",
+        "Mari on mu kõige parem sõber.",
       ],
       say: "Mari on minu parim sõber.",
       explain: GOOD,

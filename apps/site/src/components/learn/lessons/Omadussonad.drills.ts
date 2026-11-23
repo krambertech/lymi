@@ -3,7 +3,7 @@ import type { DrillBank } from "../../../lib/learn/drill";
 
 const AGREE = msg`The adjective takes the noun’s case: <et>suures majas</et>, <et>uut raamatut</et>.`;
 const GEN = msg`With <et>-ga</et>, <et>-ta</et>, <et>-ni</et> or <et>-na</et>, only the noun takes the ending: <et>suure autoga</et>.`;
-const NUMBER = msg`After two, three or a higher number, both words take the partitive singular: <et>kaks suurt kassi</et>.`;
+const NUMBER = msg`After a number from two up, both words take the partitive singular: <et>kaks suurt kassi</et>.`;
 const PLURAL = msg`When the noun takes plural <et>-d</et>, the adjective takes <et>-d</et> as well: <et>uued raamatud</et>.`;
 
 export const DRILLS: DrillBank = {
@@ -117,13 +117,13 @@ export const DRILLS: DrillBank = {
     },
     {
       kind: "form",
-      id: "gen-hea-arstina",
+      id: "gen-vaikese-lapsena",
       rule: "genitive",
-      base: "hea arst",
-      gloss: msg`a good doctor`,
-      cue: msg`as a good doctor`,
-      answers: ["hea arstina"],
-      say: "Ta on tuntud hea arstina.",
+      base: "väike laps",
+      gloss: msg`a small child`,
+      cue: msg`as a small child`,
+      answers: ["väikese lapsena"],
+      say: "Väikese lapsena elasin ma Tartus.",
       explain: GEN,
     },
 
@@ -171,8 +171,8 @@ export const DRILLS: DrillBank = {
       kind: "form",
       id: "stems-soojas",
       rule: "stems",
-      base: "soe",
-      gloss: msg`warm`,
+      base: "soe tuba",
+      gloss: msg`a warm room`,
       cue: msg`in a warm room`,
       answers: ["soojas toas"],
       say: "Me istume soojas toas.",
@@ -245,10 +245,10 @@ export const DRILLS: DrillBank = {
     },
     {
       kind: "dictation",
-      id: "plural-uued-raamatud",
+      id: "plural-ilusad-linnad",
       rule: "plural",
-      answers: ["Need on uued raamatud."],
-      say: "Need on uued raamatud.",
+      answers: ["Need on ilusad linnad."],
+      say: "Need on ilusad linnad.",
       explain: PLURAL,
     },
     {

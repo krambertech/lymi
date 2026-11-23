@@ -2778,7 +2778,7 @@ export const ADJ_GENITIVE = [
   "Ma sõidan suure autoga.",
   "Mari tuleb uue sõbraga.",
   "Ma joon kohvi sooja piimaga.",
-  "Ta on tuntud hea arstina.",
+  "Väikese lapsena elasin ma Tartus.",
 ] as const;
 
 export const ADJ_PLURAL = [
@@ -2831,11 +2831,11 @@ export const ADJ_MAKE = [
     said: "Mul on kaks suurt kassi.",
   },
   {
-    id: "ilusat-linna",
+    id: "uut-autot",
     way: "partitive",
-    base: "ilus linn",
-    answer: "ilusat linna",
-    said: "Ma ei näe ilusat linna.",
+    base: "uus auto",
+    answer: "uut autot",
+    said: "Mul ei ole uut autot.",
   },
   {
     id: "suured-majad",
@@ -2872,12 +2872,12 @@ export const ADJ_WHICH = [
     said: "Ma joon kohvi sooja piimaga.",
   },
   {
-    id: "hea-arstina",
+    id: "vaikese-lapsena",
     way: "ga",
-    base: "hea arst",
-    answer: "hea arstina",
-    options: ["hea arstina", "heana arstina", "heas arstina"],
-    said: "Ta on tuntud hea arstina.",
+    base: "väike laps",
+    answer: "väikese lapsena",
+    options: ["väikese lapsena", "väikesena lapsena", "väikeses lapsena"],
+    said: "Väikese lapsena elasin ma Tartus.",
   },
   {
     id: "suures-autos",
@@ -3032,6 +3032,7 @@ export const ADJ_DRILL = [
   "Ta tuleb hea sõbraga.",
   "Meil on kolm väikest tuba.",
   "Mari elab väikeses linnas.",
+  "Need on ilusad linnad.",
 ] as const;
 
 const ADJ_CLIPS: Record<string, Clip> = {
@@ -3056,6 +3057,7 @@ export const CMP_CHAINS = [
   { id: "suur", steps: ["suur", "suure", "suurem"] },
   { id: "uus", steps: ["uus", "uue", "uuem"] },
   { id: "kallis", steps: ["kallis", "kalli", "kallim"] },
+  { id: "vana", steps: ["vana", "vana", "vanem"] },
   { id: "vaike", steps: ["väike", "väikese", "väiksem"] },
   { id: "hea", steps: ["hea", "hea", "parem"] },
 ] as const;
@@ -3087,13 +3089,13 @@ export const CMP_MOST = [
 
 export const CMP_MAKE = [
   { id: "suurem", kind: "plain", base: "suur", answer: "suurem" },
-  { id: "vanem", kind: "plain", base: "vana", answer: "vanem" },
-  { id: "kulmem", kind: "plain", base: "külm", answer: "külmem" },
+  { id: "vanem", kind: "a-to-e", base: "vana", answer: "vanem" },
+  { id: "kulmem", kind: "a-to-e", base: "külm", answer: "külmem" },
   { id: "uuem", kind: "stem", base: "uus", answer: "uuem" },
   { id: "kallim", kind: "stem", base: "kallis", answer: "kallim" },
-  { id: "ilusam", kind: "stem", base: "ilus", answer: "ilusam" },
+  { id: "ilusam", kind: "three", base: "ilus", answer: "ilusam" },
   { id: "parem", kind: "own", base: "hea", answer: "parem" },
-  { id: "vaiksem", kind: "own", base: "väike", answer: "väiksem" },
+  { id: "vaiksem", kind: "drop", base: "väike", answer: "väiksem" },
 ] as const;
 
 export const CMP_HEARD = [
@@ -3119,6 +3121,8 @@ export const CMP_TRANSLATE = [
       "Minu tuba on sama suur kui sinu tuba.",
       "Mu tuba on sama suur kui su tuba.",
       "Minu tuba on sama suur kui sinu oma.",
+      "Mu tuba on sama suur kui su oma.",
+      "Minu tuba on sama suur nagu sinu tuba.",
     ],
   },
   {
@@ -3127,6 +3131,7 @@ export const CMP_TRANSLATE = [
       "Mari on minu parim sõber.",
       "Mari on mu parim sõber.",
       "Mari on minu kõige parem sõber.",
+      "Mari on mu kõige parem sõber.",
     ],
   },
 ] as const;
@@ -3161,7 +3166,7 @@ export const CMP_TALK: Conversation = {
     },
     {
       voice: "second",
-      text: ["Tere, Jaan!", "Tallinn on ilus, aga ta on palju suurem kui Tartu."],
+      text: ["Tere, Jaan!", "Tallinn on ilus, aga palju suurem kui Tartu."],
     },
     { voice: "main", text: ["Ja korter?", "Kas see on suurem kui sinu vana korter?"] },
     {
@@ -3178,7 +3183,7 @@ export const CMP_TALK: Conversation = {
       voice: "second",
       text: [
         "Jah, korter on kallim ja kohv on ka kallim.",
-        "Tartus maksis kohv kaks eurot, siin maksab ta kolm eurot.",
+        "Tartus maksis kohv kaks eurot, siin kolm eurot.",
       ],
     },
     {

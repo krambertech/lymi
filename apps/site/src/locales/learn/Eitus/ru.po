@@ -172,14 +172,11 @@ msgstr "От rääkima, «говорить»."
 msgid "Go back to the two switches above, then try again."
 msgstr "Вернись к двум переключателям выше, а потом попробуй ещё раз."
 
-msgid "Green tea"
-msgstr "Зелёный чай"
+msgid "He doesn’t speak."
+msgstr "Он не говорит."
 
-msgid "He doesn’t talk."
-msgstr "Он не разговаривает."
-
-msgid "He talks."
-msgstr "Он разговаривает."
+msgid "He speaks."
+msgstr "Он говорит."
 
 msgid "He’s a teacher."
 msgstr "Он учитель."
@@ -208,17 +205,11 @@ msgstr "Я не знаю."
 msgid "I don’t read"
 msgstr "я не читаю"
 
-msgid "I don’t read."
-msgstr "Я не читаю."
-
 msgid "I don’t speak Estonian"
 msgstr "я не говорю по-эстонски"
 
 msgid "I read"
 msgstr "я читаю"
-
-msgid "I read."
-msgstr "Я читаю."
 
 msgid "I speak"
 msgstr "я говорю"
@@ -260,7 +251,7 @@ msgid "Listening: Mari’s questions"
 msgstr "На слух: вопросы Мари"
 
 msgid "make it no"
-msgstr "сделай отрицание"
+msgstr "сделай отрицательным"
 
 msgid "Make it no"
 msgstr "Из «да» в «нет»"
@@ -271,14 +262,14 @@ msgstr "Мари"
 msgid "Mari asks Jaan three questions. Listen to how he answers each, and to what he says after it."
 msgstr "Мари задаёт Яану три вопроса. Слушай, как он отвечает на каждый и что говорит после ответа."
 
+msgid "Nearly. Check that the whole ending went, -vad and -te too."
+msgstr "Почти. Проверь, отпало ли всё окончание, и -vad, и -te."
+
 msgid "Nearly. Check the verb in the ones you missed."
 msgstr "Почти. Там, где была ошибка, проверь глагол."
 
 msgid "Nearly. Check whether each one meant yes or no."
 msgstr "Почти. Проверь, где было «да», а где «нет»."
-
-msgid "Nearly. Check which ending each one dropped."
-msgstr "Почти. Проверь, какое окончание отпало в каждом."
 
 msgid "Nearly. Listen for the verb in the question."
 msgstr "Почти. Вслушивайся в глагол в вопросе."
@@ -300,9 +291,6 @@ msgstr "Нет, не читаю."
 
 msgid "No."
 msgstr "Нет."
-
-msgid "None of you read."
-msgstr "Никто из вас не читает."
 
 msgid "not; no"
 msgstr "не; нет"
@@ -359,6 +347,9 @@ msgstr "Шесть окончаний"
 
 msgid "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
 msgstr "Переключи <0/> на <1/>, и все шесть предложений станут отрицательными. Нажми на строку, чтобы послушать."
+
+msgid "Tea"
+msgstr "Чай"
 
 msgid "The form says who"
 msgstr "Форма говорит, кто"
@@ -438,11 +429,11 @@ msgstr "Глагол"
 msgid "Water"
 msgstr "Воду"
 
-msgid "We don’t talk."
-msgstr "Мы не разговариваем."
+msgid "We don’t speak."
+msgstr "Мы не говорим."
 
-msgid "We talk."
-msgstr "Мы разговариваем."
+msgid "We speak."
+msgstr "Мы говорим."
 
 msgid "What does Jaan drink?"
 msgstr "Что пьёт Яан?"
@@ -465,8 +456,17 @@ msgstr "У «да» шесть окончаний, которые надо вы�
 msgid "Yes or no"
 msgstr "Да или нет"
 
+msgid "You all don’t read."
+msgstr "Вы не читаете."
+
 msgid "You all read."
 msgstr "Вы читаете."
+
+msgid "You don’t wait."
+msgstr "Ты не ждёшь."
+
+msgid "You wait."
+msgstr "Ты ждёшь."
 
 msgid "You’ll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
 msgstr "Часто его говорят одним словом, <0/>, и это ровно то же, что <1/>. Попробуй все три."

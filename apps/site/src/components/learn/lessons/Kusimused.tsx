@@ -183,7 +183,7 @@ const MATCHED: readonly { word: QuestionWord; about: MessageDescriptor }[] = [
   { word: "kus", about: msg`a place` },
   { word: "millal", about: msg`a time` },
   { word: "miks", about: msg`a reason` },
-  { word: "kuidas", about: msg`the way` },
+  { word: "kuidas", about: msg`how it’s done` },
 ];
 
 const capital = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
@@ -542,21 +542,14 @@ export function KusimusedLesson() {
         line: 1,
       },
       {
-        id: "from",
-        ask: t`Where is Jaan from?`,
+        id: "lives",
+        ask: t`Where does Jaan live?`,
         options: [
-          { id: "estonia", label: t`Estonia` },
-          { id: "finland", label: t`Finland` },
-          { id: "britain", label: t`The United Kingdom` },
+          { id: "tallinn", label: t`In Tallinn` },
+          { id: "tartu", label: t`In Tartu` },
+          { id: "parnu", label: t`In Pärnu` },
         ],
-        answer: "finland",
-        line: 6,
-      },
-      {
-        id: "tallinn",
-        kind: "truefalse",
-        ask: t`Jaan lives in Tallinn.`,
-        answer: false,
+        answer: "tartu",
         line: 8,
       },
       {
@@ -790,9 +783,9 @@ export function KusimusedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a question and write it. <Word w="Kes" /> and <Word w="kus" />,{" "}
-                    <Word w="mis" /> and <Word w="miks" /> differ by a sound or two, so listen to
-                    the start.
+                    Hear a question and write it. <Word w="Kes" /> and <Word w="kus" /> differ by
+                    one vowel, and <Word w="mis" /> and <Word w="miks" /> by one k, so listen
+                    closely to the first word.
                   </Trans>
                 </p>
               </Prose>

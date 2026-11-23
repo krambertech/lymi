@@ -172,14 +172,11 @@ msgstr "From rääkima, to speak."
 msgid "Go back to the two switches above, then try again."
 msgstr "Go back to the two switches above, then try again."
 
-msgid "Green tea"
-msgstr "Green tea"
+msgid "He doesn’t speak."
+msgstr "He doesn’t speak."
 
-msgid "He doesn’t talk."
-msgstr "He doesn’t talk."
-
-msgid "He talks."
-msgstr "He talks."
+msgid "He speaks."
+msgstr "He speaks."
 
 msgid "He’s a teacher."
 msgstr "He’s a teacher."
@@ -208,17 +205,11 @@ msgstr "I don’t know."
 msgid "I don’t read"
 msgstr "I don’t read"
 
-msgid "I don’t read."
-msgstr "I don’t read."
-
 msgid "I don’t speak Estonian"
 msgstr "I don’t speak Estonian"
 
 msgid "I read"
 msgstr "I read"
-
-msgid "I read."
-msgstr "I read."
 
 msgid "I speak"
 msgstr "I speak"
@@ -271,14 +262,14 @@ msgstr "Mari"
 msgid "Mari asks Jaan three questions. Listen to how he answers each, and to what he says after it."
 msgstr "Mari asks Jaan three questions. Listen to how he answers each, and to what he says after it."
 
+msgid "Nearly. Check that the whole ending went, -vad and -te too."
+msgstr "Nearly. Check that the whole ending went, -vad and -te too."
+
 msgid "Nearly. Check the verb in the ones you missed."
 msgstr "Nearly. Check the verb in the ones you missed."
 
 msgid "Nearly. Check whether each one meant yes or no."
 msgstr "Nearly. Check whether each one meant yes or no."
-
-msgid "Nearly. Check which ending each one dropped."
-msgstr "Nearly. Check which ending each one dropped."
 
 msgid "Nearly. Listen for the verb in the question."
 msgstr "Nearly. Listen for the verb in the question."
@@ -300,9 +291,6 @@ msgstr "No, I’m not."
 
 msgid "No."
 msgstr "No."
-
-msgid "None of you read."
-msgstr "None of you read."
 
 msgid "not; no"
 msgstr "not; no"
@@ -359,6 +347,9 @@ msgstr "Six endings"
 
 msgid "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
 msgstr "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
+
+msgid "Tea"
+msgstr "Tea"
 
 msgid "The form says who"
 msgstr "The form says who"
@@ -438,11 +429,11 @@ msgstr "Verb"
 msgid "Water"
 msgstr "Water"
 
-msgid "We don’t talk."
-msgstr "We don’t talk."
+msgid "We don’t speak."
+msgstr "We don’t speak."
 
-msgid "We talk."
-msgstr "We talk."
+msgid "We speak."
+msgstr "We speak."
 
 msgid "What does Jaan drink?"
 msgstr "What does Jaan drink?"
@@ -465,8 +456,17 @@ msgstr "Yes has six endings to learn, and no has none. That makes the no the eas
 msgid "Yes or no"
 msgstr "Yes or no"
 
+msgid "You all don’t read."
+msgstr "You all don’t read."
+
 msgid "You all read."
 msgstr "You all read."
+
+msgid "You don’t wait."
+msgstr "You don’t wait."
+
+msgid "You wait."
+msgstr "You wait."
 
 msgid "You’ll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
 msgstr "You’ll often hear it as one word, <0/>, which means exactly <1/>. Try all three."

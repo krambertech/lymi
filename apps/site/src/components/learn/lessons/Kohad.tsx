@@ -973,15 +973,19 @@ export function KohadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Write each sentence in Estonian. The place takes{" "}
+                    Write each sentence in Estonian. A town, a country or a building takes{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -s
-                    </b>{" "}
-                    for in a town, a country or a building, and{" "}
+                    </b>
+                    . Something on a surface takes{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -l
-                    </b>{" "}
-                    for on something and for the places this lesson listed with it.
+                    </b>
+                    , and so do work, the market and names ending in{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -maa
+                    </b>
+                    .
                   </Trans>
                 </p>
               </Prose>

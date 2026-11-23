@@ -145,14 +145,8 @@ msgstr "Each round gives an answer. Write the question it answers: start with th
 msgid "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
 msgstr "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
 
-msgid "Estonia"
-msgstr "Estonia"
-
 msgid "Fine, thanks. And you?"
 msgstr "Fine, thanks. And you?"
-
-msgid "Finland"
-msgstr "Finland"
 
 msgid "Five sentences. Switch to Question and watch what changes."
 msgstr "Five sentences. Switch to Question and watch what changes."
@@ -178,14 +172,11 @@ msgstr "He works in Tartu."
 msgid "Hear a question and pick its question word. It always comes first, so listen to the start."
 msgstr "Hear a question and pick its question word. It always comes first, so listen to the start."
 
-msgid "Hear a question and write it. <0/> and <1/>, <2/> and <3/> differ by a sound or two, so listen to the start."
-msgstr "Hear a question and write it. <0/> and <1/>, <2/> and <3/> differ by a sound or two, so listen to the start."
+msgid "Hear a question and write it. <0/> and <1/> differ by one vowel, and <2/> and <3/> by one k, so listen closely to the first word."
+msgstr "Hear a question and write it. <0/> and <1/> differ by one vowel, and <2/> and <3/> by one k, so listen closely to the first word."
 
 msgid "Hear a question, then pick the answer that fits. A kas question takes yes, no or I don’t know; a question word wants what it asks about, such as a place for kus or a time for millal."
 msgstr "Hear a question, then pick the answer that fits. A kas question takes yes, no or I don’t know; a question word wants what it asks about, such as a place for kus or a time for millal."
-
-msgid "Hearing the question word"
-msgstr "Hearing the question word"
 
 msgid "His name"
 msgstr "His name"
@@ -201,6 +192,9 @@ msgstr "How are you learning Estonian?"
 
 msgid "How does he or she speak Estonian?"
 msgstr "How does he or she speak Estonian?"
+
+msgid "how it’s done"
+msgstr "how it’s done"
 
 msgid "How much coffee do you drink?"
 msgstr "How much coffee do you drink?"
@@ -235,14 +229,23 @@ msgstr "I’m from Ukraine."
 msgid "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
 msgstr "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
 
+msgid "In Pärnu"
+msgstr "In Pärnu"
+
 msgid "in Tallinn"
 msgstr "in Tallinn"
+
+msgid "In Tallinn"
+msgstr "In Tallinn"
 
 msgid "In Tallinn."
 msgstr "In Tallinn."
 
 msgid "in Tartu"
 msgstr "in Tartu"
+
+msgid "In Tartu"
+msgstr "In Tartu"
 
 msgid "Is he at home?"
 msgstr "Is he at home?"
@@ -255,9 +258,6 @@ msgstr "It has no meaning of its own, like a spoken question mark."
 
 msgid "Jaan"
 msgstr "Jaan"
-
-msgid "Jaan lives in Tallinn."
-msgstr "Jaan lives in Tallinn."
 
 msgid "Jah, ei, ei ole"
 msgstr "Jah, ei, ei ole"
@@ -380,14 +380,11 @@ msgstr "That’s a book."
 msgid "That’s Jaan."
 msgstr "That’s Jaan."
 
+msgid "The question word by ear"
+msgstr "The question word by ear"
+
 msgid "The question word comes first: <et>{word}</et>."
 msgstr "The question word comes first: <et>{word}</et>."
-
-msgid "The United Kingdom"
-msgstr "The United Kingdom"
-
-msgid "the way"
-msgstr "the way"
 
 msgid "There are seven to start with. Tap one to hear it in a question."
 msgstr "There are seven to start with. Tap one to hear it in a question."
@@ -470,6 +467,9 @@ msgstr "Where do you work?"
 msgid "Where does he or she work?"
 msgstr "Where does he or she work?"
 
+msgid "Where does Jaan live?"
+msgstr "Where does Jaan live?"
+
 msgid "where from"
 msgstr "where from"
 
@@ -481,9 +481,6 @@ msgstr "Where he lives and works"
 
 msgid "Where is he?"
 msgstr "Where is he?"
-
-msgid "Where is Jaan from?"
-msgstr "Where is Jaan from?"
 
 msgid "Which answer fits?"
 msgstr "Which answer fits?"

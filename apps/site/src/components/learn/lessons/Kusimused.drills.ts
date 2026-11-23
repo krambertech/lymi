@@ -89,7 +89,7 @@ const made = (from: string, index: number): SentenceDrill => {
 
 export const DRILLS: DrillBank = {
   rules: {
-    word: { label: msg`Hearing the question word`, section: "which-word" },
+    word: { label: msg`The question word by ear`, section: "which-word" },
     ask: { label: msg`Writing the question for an answer`, section: "ask" },
     kas: { label: msg`<et>Kas</et> or a question word`, section: "kas-or-word" },
   },

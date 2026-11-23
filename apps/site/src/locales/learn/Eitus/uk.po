@@ -172,14 +172,11 @@ msgstr "Від rääkima, «говорити»."
 msgid "Go back to the two switches above, then try again."
 msgstr "Повернися до двох перемикачів вище, а тоді спробуй ще раз."
 
-msgid "Green tea"
-msgstr "Зелений чай"
+msgid "He doesn’t speak."
+msgstr "Він не говорить."
 
-msgid "He doesn’t talk."
-msgstr "Він не розмовляє."
-
-msgid "He talks."
-msgstr "Він розмовляє."
+msgid "He speaks."
+msgstr "Він говорить."
 
 msgid "He’s a teacher."
 msgstr "Він учитель."
@@ -188,7 +185,7 @@ msgid "He’s busy."
 msgstr "Він зайнятий."
 
 msgid "He’s tired."
-msgstr "Він утомлений."
+msgstr "Він утомився."
 
 msgid "Hear a sentence, then pick how to say its no."
 msgstr "Послухай речення й обери, як сказати його із запереченням."
@@ -208,17 +205,11 @@ msgstr "Я не знаю."
 msgid "I don’t read"
 msgstr "я не читаю"
 
-msgid "I don’t read."
-msgstr "Я не читаю."
-
 msgid "I don’t speak Estonian"
 msgstr "я не говорю естонською"
 
 msgid "I read"
 msgstr "я читаю"
-
-msgid "I read."
-msgstr "Я читаю."
 
 msgid "I speak"
 msgstr "я говорю"
@@ -251,16 +242,16 @@ msgid "Jaan is reading."
 msgstr "Яан читає."
 
 msgid "Listen: Mari’s questions"
-msgstr "Слухання: запитання Марі"
+msgstr "Слухання: питання Марі"
 
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"
 
 msgid "Listening: Mari’s questions"
-msgstr "На слух: запитання Марі"
+msgstr "На слух: питання Марі"
 
 msgid "make it no"
-msgstr "зроби заперечення"
+msgstr "перетвори на заперечення"
 
 msgid "Make it no"
 msgstr "Із «так» у «ні»"
@@ -269,16 +260,16 @@ msgid "Mari"
 msgstr "Марі"
 
 msgid "Mari asks Jaan three questions. Listen to how he answers each, and to what he says after it."
-msgstr "Марі ставить Яанові три запитання. Слухай, як він відповідає на кожне і що каже після відповіді."
+msgstr "Марі ставить Яанові три питання. Слухай, як він відповідає на кожне і що каже після відповіді."
+
+msgid "Nearly. Check that the whole ending went, -vad and -te too."
+msgstr "Майже. Перевір, чи відпало все закінчення, і -vad, і -te."
 
 msgid "Nearly. Check the verb in the ones you missed."
 msgstr "Майже. Там, де була помилка, перевір дієслово."
 
 msgid "Nearly. Check whether each one meant yes or no."
 msgstr "Майже. Перевір, де було «так», а де «ні»."
-
-msgid "Nearly. Check which ending each one dropped."
-msgstr "Майже. Перевір, яке закінчення відпало в кожному."
 
 msgid "Nearly. Listen for the verb in the question."
 msgstr "Майже. Прислухайся до дієслова в питанні."
@@ -300,9 +291,6 @@ msgstr "Ні, не читаю."
 
 msgid "No."
 msgstr "Ні."
-
-msgid "None of you read."
-msgstr "Ніхто з вас не читає."
 
 msgid "not; no"
 msgstr "не; ні"
@@ -359,6 +347,9 @@ msgstr "Шість закінчень"
 
 msgid "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
 msgstr "Перемкни <0/> на <1/>, і всі шість речень стануть заперечними. Натисни рядок, щоб послухати."
+
+msgid "Tea"
+msgstr "Чай"
 
 msgid "The form says who"
 msgstr "Форма каже, хто"
@@ -438,11 +429,11 @@ msgstr "Дієслово"
 msgid "Water"
 msgstr "Воду"
 
-msgid "We don’t talk."
-msgstr "Ми не розмовляємо."
+msgid "We don’t speak."
+msgstr "Ми не говоримо."
 
-msgid "We talk."
-msgstr "Ми розмовляємо."
+msgid "We speak."
+msgstr "Ми говоримо."
 
 msgid "What does Jaan drink?"
 msgstr "Що п’є Яан?"
@@ -465,8 +456,17 @@ msgstr "У «так» шість закінчень, які треба вивч�
 msgid "Yes or no"
 msgstr "Так чи ні"
 
+msgid "You all don’t read."
+msgstr "Ви не читаєте."
+
 msgid "You all read."
 msgstr "Ви читаєте."
+
+msgid "You don’t wait."
+msgstr "Ти не чекаєш."
+
+msgid "You wait."
+msgstr "Ти чекаєш."
 
 msgid "You’ll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
 msgstr "Часто його кажуть одним словом, <0/>, і це рівно те саме, що <1/>. Спробуй усі три."

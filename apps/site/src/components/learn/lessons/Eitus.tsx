@@ -403,16 +403,16 @@ export const AFTER_EI: readonly (readonly [(typeof FLIP_STEMS)[number], Person])
 ];
 
 const YES_OR_NO: readonly {
-  stem: (typeof FLIP_STEMS)[number];
+  stem: string;
   person: Person;
   long: string;
   yes: MessageDescriptor;
   no: MessageDescriptor;
 }[] = [
-  { stem: "loe", person: "ma", long: "Mina", yes: msg`I read.`, no: msg`I don’t read.` },
+  { stem: "oota", person: "sa", long: "Sina", yes: msg`You wait.`, no: msg`You don’t wait.` },
   { stem: "tööta", person: "ta", long: "Tema", yes: msg`She works.`, no: msg`She doesn’t work.` },
   { stem: "söö", person: "nad", long: "Nemad", yes: msg`They eat.`, no: msg`They don’t eat.` },
-  { stem: "räägi", person: "me", long: "Meie", yes: msg`We talk.`, no: msg`We don’t talk.` },
+  { stem: "räägi", person: "me", long: "Meie", yes: msg`We speak.`, no: msg`We don’t speak.` },
 ];
 
 interface PairedItem extends ChoiceItem {
@@ -496,7 +496,7 @@ export function EitusLesson() {
         gloss: i18n._(MEANS[stem] as MessageDescriptor),
         cue: "ei …",
         cueLang: "et",
-        answers: [stem],
+        answers: [stem, `ei ${stem}`],
         src: src(verbSentence(person, stem, true)),
         said: verbSentence(person, stem, true),
         pair: [person, `${stem}-${person}`] as const,
@@ -598,10 +598,10 @@ export function EitusLesson() {
         ask: t`What does Jaan drink?`,
         options: [
           { id: "coffee", label: t`Coffee` },
-          { id: "tea", label: t`Green tea` },
+          { id: "tea", label: t`Tea` },
           { id: "water", label: t`Water` },
         ],
-        answer: "water",
+        answer: "tea",
         line: 5,
       },
       {
@@ -794,7 +794,7 @@ export function EitusLesson() {
                   share === 1 ? (
                     <Trans>All six, each without its ending.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Nearly. Check which ending each one dropped.</Trans>
+                    <Trans>Nearly. Check that the whole ending went, -vad and -te too.</Trans>
                   ) : (
                     <Trans>Flip the six lines at the top once more, then try again.</Trans>
                   )

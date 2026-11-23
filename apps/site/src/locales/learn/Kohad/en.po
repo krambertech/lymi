@@ -460,8 +460,8 @@ msgstr "Who is in Tartu?"
 msgid "work"
 msgstr "work"
 
-msgid "Write each sentence in Estonian. The place takes <0>-s</0> for in a town, a country or a building, and <1>-l</1> for on something and for the places this lesson listed with it."
-msgstr "Write each sentence in Estonian. The place takes <0>-s</0> for in a town, a country or a building, and <1>-l</1> for on something and for the places this lesson listed with it."
+msgid "Write each sentence in Estonian. A town, a country or a building takes <0>-s</0>. Something on a surface takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
+msgstr "Write each sentence in Estonian. A town, a country or a building takes <0>-s</0>. Something on a surface takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
 
 msgid "Write it in Estonian"
 msgstr "Write it in Estonian"

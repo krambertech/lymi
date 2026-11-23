@@ -98,7 +98,7 @@ msgid "Each name took -s, and the -s says in. Tallinn took an extra a before it.
 msgstr "К каждому названию добавилось -s, и это -s значит «в». К Tallinn перед ним добавилось ещё и a."
 
 msgid "Each round gives a place and asks <0/>, where. Type the place with <1>-s</1> or <2>-l</2>. Each of these takes its ending with no other change."
-msgstr "В каждом раунде есть место и вопрос <0/>, «где». Напиши место с <1>-s</1> или <2>-l</2>. Эти слова только получают окончание, больше ничего не меняется."
+msgstr "В каждом раунде есть место и вопрос <0/>, «где». Напиши место с <1>-s</1> или <2>-l</2>. К этим словам только добавляется окончание, больше ничего не меняется."
 
 msgid "Each round gives an answer. Write the question it answers, starting with <0/>. Leave out the place: that is what you ask about."
 msgstr "В каждом раунде есть ответ. Напиши к нему вопрос, начав с <0/>. Место не называй: о нём ты и спрашиваешь."
@@ -140,7 +140,7 @@ msgid "Hear a sentence and pick the place. Listen for the word that ends in <0>-
 msgstr "Послушай предложение и выбери место. Слушай слово, которое кончается на <0>-s</0>."
 
 msgid "Hear a sentence and write it. Listen for the last sound of the place: <0>-s</0> or <1>-l</1>."
-msgstr "Послушай предложение и напиши его. Слушай последний звук места: <0>-s</0> или <1>-l</1>."
+msgstr "Послушай предложение и напиши его. Слушай, каким звуком заканчивается название места: <0>-s</0> или <1>-l</1>."
 
 msgid "Hear the questions and answers above once more, then try again."
 msgstr "Ещё раз послушай вопросы и ответы выше, а потом попробуй снова."
@@ -460,8 +460,8 @@ msgstr "Кто в Тарту?"
 msgid "work"
 msgstr "работа"
 
-msgid "Write each sentence in Estonian. The place takes <0>-s</0> for in a town, a country or a building, and <1>-l</1> for on something and for the places this lesson listed with it."
-msgstr "Напиши каждое предложение по-эстонски. Место получает <0>-s</0>, когда речь о городе, стране или здании, и <1>-l</1>, когда что-то на чём-то, а также с теми местами, которые урок назвал вместе с ним."
+msgid "Write each sentence in Estonian. A town, a country or a building takes <0>-s</0>. Something on a surface takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
+msgstr "Напиши каждое предложение по-эстонски. Город, страна или здание получают <0>-s</0>. То, что на чём-то, получает <1>-l</1>, как и работа, рынок и названия на <2>-maa</2>."
 
 msgid "Write it in Estonian"
 msgstr "Напиши по-эстонски"

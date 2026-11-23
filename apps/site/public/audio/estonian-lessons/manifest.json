@@ -10933,7 +10933,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "eitus/d-mari": {
-    "text": "Kas sa loed? Ei, ma ei loe. Ma olen väsinud. Kas sa jood kohvi? Ei joo. Ma joon vett. Kas Peeter on kodus? Pole. Ta töötab.",
+    "text": "Kas sa loed? Ei, ma ei loe. Ma olen väsinud. Kas sa jood kohvi? Ei joo. Ma joon teed. Kas Peeter on kodus? Pole. Ta töötab.",
     "model": "eleven_v4",
     "turns": [
       {
@@ -10959,7 +10959,7 @@
         "voice": "jGja51dd7gcoK0zkxeyg",
         "sentences": [
           "Ei joo.",
-          "Ma joon vett."
+          "Ma joon teed."
         ]
       },
       {
@@ -11043,7 +11043,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "kusimused/d-kati": {
-    "text": "Tere! Mis su nimi on? Minu nimi on Jaan. Aga sinu? Kati. Kust sa pärit oled? Ma olen pärit Soomest. Kas sa elad Tallinnas? Ei, ma elan Tartus. Miks sa eesti keelt õpid? Sest ma töötan Tartus.",
+    "text": "Tere! Mis su nimi on? Minu nimi on Jaan. Aga sinu? Kati. Kust sa pärit oled? Ma olen pärit Ukrainast. Kas sa elad Tallinnas? Ei, ma elan Tartus. Miks sa eesti keelt õpid? Sest ma töötan Tartus.",
     "model": "eleven_v4",
     "turns": [
       {
@@ -11070,7 +11070,7 @@
       {
         "voice": "jGja51dd7gcoK0zkxeyg",
         "sentences": [
-          "Ma olen pärit Soomest."
+          "Ma olen pärit Ukrainast."
         ]
       },
       {

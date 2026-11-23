@@ -34,7 +34,7 @@ const typed = (stem: string, person: Person): FormDrill => ({
   base: `${stem}${endingOf(person)}`,
   gloss: MEANS[stem] as MessageDescriptor,
   cue: { et: "ei …" },
-  answers: [stem],
+  answers: [stem, `ei ${stem}`],
   say: verbSentence(person, stem, true),
   explain: NO_ENDING,
 });
@@ -118,7 +118,7 @@ const YES_NO: readonly {
   },
   {
     id: "no-loete",
-    prompt: msg`None of you read.`,
+    prompt: msg`You all don’t read.`,
     stem: "loe",
     person: "te",
     no: true,
@@ -126,7 +126,7 @@ const YES_NO: readonly {
   },
   {
     id: "yes-raagib",
-    prompt: msg`He talks.`,
+    prompt: msg`He speaks.`,
     stem: "räägi",
     person: "ta",
     no: false,
@@ -134,7 +134,7 @@ const YES_NO: readonly {
   },
   {
     id: "no-raagib",
-    prompt: msg`He doesn’t talk.`,
+    prompt: msg`He doesn’t speak.`,
     stem: "räägi",
     person: "ta",
     no: true,

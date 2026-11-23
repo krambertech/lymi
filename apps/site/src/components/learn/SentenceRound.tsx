@@ -27,7 +27,7 @@ interface Written {
 }
 
 export type SentenceItem =
-  | (Written & { kind: "dictation"; src: string })
+  | (Written & { kind: "dictation"; src: string; word?: boolean })
   | (Written & { kind: "translate"; prompt: ReactNode; src?: string })
   | (Written & { kind: "rewrite"; from: string; cue: ReactNode; src?: string })
   | (Written & { kind: "ask"; reply: string; src?: string })
@@ -64,7 +64,11 @@ function Prompt({ item, heard }: { item: SentenceItem; heard: () => void }) {
       return (
         <>
           <Task>
-            <Trans>Write the sentence you hear.</Trans>
+            {item.word ? (
+              <Trans>Write the word you hear.</Trans>
+            ) : (
+              <Trans>Write the sentence you hear.</Trans>
+            )}
           </Task>
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
             <Listen src={item.src} onPlay={heard} />
@@ -170,7 +174,13 @@ export function SentenceRound({ item, state, heard, answer, autoplay }: RoundPro
           <SentenceField
             ref={field}
             value={value}
-            label={item.kind === "ask" ? t`Type the question` : t`Type the sentence`}
+            label={
+              item.kind === "ask"
+                ? t`Type the question`
+                : item.kind === "dictation" && item.word
+                  ? t`Type the word`
+                  : t`Type the sentence`
+            }
             describedBy={promptId}
             onChange={setValue}
             onEnter={submit}

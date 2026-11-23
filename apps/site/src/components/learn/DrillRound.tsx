@@ -133,7 +133,7 @@ function SentenceDrillRound({ item, lesson, ...round }: Round<SentenceDrill>) {
   const task = (): SentenceItem => {
     switch (item.kind) {
       case "dictation":
-        return { ...written, kind: "dictation" };
+        return { ...written, kind: "dictation", ...(item.word ? { word: true } : {}) };
       case "translate":
         return { ...written, kind: "translate", prompt: i18n._(item.prompt) };
       case "rewrite":

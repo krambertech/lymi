@@ -2050,7 +2050,12 @@ export const TALLINN_DRILL_TRANSLATED = [
   { kind: "hind", answers: ["See maksab kaksteist eurot.", "Maksab kaksteist eurot."] },
   {
     kind: "ei",
-    answers: ["Mari ei tööta täna.", "Täna Mari ei tööta.", "Mari täna ei tööta."],
+    answers: [
+      "Mari ei tööta täna.",
+      "Täna Mari ei tööta.",
+      "Mari täna ei tööta.",
+      "Täna ei tööta Mari.",
+    ],
   },
 ] as const;
 

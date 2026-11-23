@@ -32,6 +32,9 @@ msgstr "<0>Ära</0> перед основою"
 msgid "<0>Ei</0> says what someone doesn’t do; <1>ära</1> tells them not to: <2>Ma ei istu. Ära istu!</2>"
 msgstr "<0>Ei</0> каже, чого людина не робить; <1>ära</1> просить цього не робити: <2>Ma ei istu. Ära istu!</2>"
 
+msgid "<et>Ära</et> becomes <et>ärge</et>, and the verb takes its <et>-ge</et> or <et>-ke</et> form: <et>Ärge istuge!</et>"
+msgstr "<et>Ära</et> стає <et>ärge</et>, а дієслово теж стоїть у формі на <et>-ge</et> або <et>-ke</et>: <et>Ärge istuge!</et>"
+
 msgid "<et>Ära</et> before the stem tells one person not to do it."
 msgstr "<et>Ära</et> перед основою каже одній людині цього не робити."
 
@@ -66,8 +69,8 @@ msgstr "Усі. Ти розумієш кожен наказ."
 msgid "All six commands right."
 msgstr "Усі шість наказів правильні."
 
-msgid "All six, each the ma form without its -n."
-msgstr "Усі шість: кожен — форма з ma без -n."
+msgid "All six, each the ma form without its <0>-n</0>."
+msgstr "Усі шість: кожен — форма з ma без <0>-n</0>."
 
 msgid "Ära istu tells her not to sit down."
 msgstr "Ära istu просить її не сідати."

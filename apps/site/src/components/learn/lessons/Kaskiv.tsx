@@ -969,7 +969,9 @@ export function KaskivLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All six, each the ma form without its -n.</Trans>
+                    <Trans>
+                      All six, each the ma form without its <span lang="et">-n</span>.
+                    </Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Check the stem in the ones you missed.</Trans>
                   ) : (

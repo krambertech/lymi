@@ -28,6 +28,7 @@ const TYPED = [
 
 const STEM = msg`The command to one person is the ma form without its <et>-n</et>.`;
 const DONT = msg`<et>Ära</et> before the stem tells one person not to do it.`;
+const ARGE = msg`<et>Ära</et> becomes <et>ärge</et>, and the verb takes its <et>-ge</et> or <et>-ke</et> form: <et>Ärge istuge!</et>`;
 const MORE = msg`To more than one, or politely, the command ends in <et>-ge</et> or <et>-ke</et>.`;
 
 const typed = ({ verb, ma, stem }: (typeof TYPED)[number]): FormDrill => ({
@@ -61,7 +62,7 @@ const more = ({ one, more: many }: (typeof KASKIV_MORE)[number]): SentenceDrill 
   cue: msg`to more than one`,
   say: many,
   answers: [many],
-  explain: MORE,
+  explain: one.startsWith("Ära") ? ARGE : MORE,
 });
 
 const HEARD: Record<

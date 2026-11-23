@@ -32,6 +32,9 @@ msgstr "<0>Ära</0> before the stem"
 msgid "<0>Ei</0> says what someone doesn’t do; <1>ära</1> tells them not to: <2>Ma ei istu. Ära istu!</2>"
 msgstr "<0>Ei</0> says what someone doesn’t do; <1>ära</1> tells them not to: <2>Ma ei istu. Ära istu!</2>"
 
+msgid "<et>Ära</et> becomes <et>ärge</et>, and the verb takes its <et>-ge</et> or <et>-ke</et> form: <et>Ärge istuge!</et>"
+msgstr "<et>Ära</et> becomes <et>ärge</et>, and the verb takes its <et>-ge</et> or <et>-ke</et> form: <et>Ärge istuge!</et>"
+
 msgid "<et>Ära</et> before the stem tells one person not to do it."
 msgstr "<et>Ära</et> before the stem tells one person not to do it."
 
@@ -66,8 +69,8 @@ msgstr "All of them. You understood every command."
 msgid "All six commands right."
 msgstr "All six commands right."
 
-msgid "All six, each the ma form without its -n."
-msgstr "All six, each the ma form without its -n."
+msgid "All six, each the ma form without its <0>-n</0>."
+msgstr "All six, each the ma form without its <0>-n</0>."
 
 msgid "Ära istu tells her not to sit down."
 msgstr "Ära istu tells her not to sit down."

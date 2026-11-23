@@ -183,7 +183,7 @@ msgid "open"
 msgstr "открыто"
 
 msgid "Pick a day to be today in the panel above, read what tomorrow is, then try again."
-msgstr "Выбери выше, какой день будет сегодня, прочитай, какой тогда завтра, и попробуй снова."
+msgstr "Выбери выше, какой сегодня день, прочитай, какой тогда завтра, и попробуй снова."
 
 msgid "Play {sentence}"
 msgstr "Воспроизвести {sentence}"

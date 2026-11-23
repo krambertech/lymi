@@ -7,21 +7,13 @@ import { usePalette, useRoom } from "../theme/palette";
 import { Icon, type IconName } from "./icons";
 import { Press, Text } from "./primitives";
 
-// Liquid Glass for chrome that floats over content: a sheet's corner buttons, the bar, capture.
-// Tinted amber it marks the one standing action. Before iOS 26 it is an opaque plate. phone.md "Glass".
-
 const SIZE = 44;
 
-/**
- * A screen presented as a sheet gets iOS's clear glass, which shows too much through; the sheet
- * colour at 50% frosts it to match the system sheets. Before iOS 26, the sheet colour.
- */
 export function useFrost() {
   const sheet = usePalette().sheet;
   return useGlass() ? `${sheet}80` : sheet;
 }
 
-/** Glass tinted toward the room or amber, opaque without glass; capture in the top bar uses it too. */
 export function GlassSurface({
   tint,
   style,
@@ -33,7 +25,6 @@ export function GlassSurface({
 }) {
   const p = usePalette();
   const glass = useGlass();
-  // Dark glass greys a translucent amber to brown, so at night it is the whole amber.
   const amber = useRoom() === "dark" ? p.amber : `${p.amber}d9`;
   if (glass)
     return (
@@ -55,18 +46,13 @@ export function GlassSurface({
 
 interface GlassButtonProps {
   icon: IconName;
-  /** What pressing does, for VoiceOver. */
   label: string;
-  /** The one standing action, as Add in a sheet. */
   primary?: boolean;
-  /** Its work is under way: a spinner in place of the icon, and no second press. */
   busy?: boolean;
-  /** Nothing to act on yet, such as Add with no term: the amber goes and the press does nothing. */
   disabled?: boolean;
   onPress?: () => void;
 }
 
-/** A round glass button, 44 pt, for a sheet's corners. */
 export function GlassButton({
   icon,
   label,
@@ -106,7 +92,6 @@ export function GlassButton({
   );
 }
 
-/** A glass pill holding a short value, such as the deck a card goes to; a Select's trigger. */
 export function GlassPill({ icon, children }: { icon: IconName; children: string }) {
   const p = usePalette();
   return (

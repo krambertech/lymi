@@ -1,19 +1,15 @@
-import type { ReactNode } from "react";
+import type { ReactElement } from "react";
 import { View, type ViewStyle } from "react-native";
 import { GlassButton } from "./glass";
 import type { IconName } from "./icons";
 import { Text } from "./primitives";
 
-interface FormHeaderProps {
-  /** Close at the start: Cancel when leaving discards something, Close when it does not. */
+type MiddleProps =
+  | { title: string; subtitle?: string | undefined; middle?: undefined }
+  | { title?: undefined; subtitle?: undefined; middle: ReactElement | undefined };
+
+interface BaseProps {
   close: { label: string; onPress: () => void; icon?: IconName };
-  /** The form's name, centred at `text-md`. */
-  title?: string;
-  /** A line under the name, such as the series being edited. */
-  subtitle?: string | undefined;
-  /** What the form works in, such as Add a word's deck, in place of the name. */
-  middle?: ReactNode;
-  /** The form's one action, amber at the end. */
   action?: {
     icon: IconName;
     label: string;
@@ -24,11 +20,8 @@ interface FormHeaderProps {
   style?: ViewStyle;
 }
 
-/**
- * Every form sheet's header: close, its name or what it works in, its one action. phone.md "Sheets".
- * A form sheet lays out a header and one scroll view, so the header must not be flattened away, or
- * iOS lays the scroll view over it.
- */
+type FormHeaderProps = BaseProps & MiddleProps;
+
 export function FormHeader({ close, title, subtitle, middle, action, style }: FormHeaderProps) {
   return (
     <View
@@ -65,7 +58,6 @@ export function FormHeader({ close, title, subtitle, middle, action, style }: Fo
           onPress={action.onPress}
         />
       ) : (
-        // Keeps the name centred when there is nothing to do but close.
         <View className="size-11" />
       )}
     </View>

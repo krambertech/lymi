@@ -66,7 +66,6 @@ describe("furiganaBoxes", () => {
 });
 
 describe("clampBoxes", () => {
-  // Three lines of boxes 30 pt tall in a 100 pt line.
   const frames = [
     { top: 0, end: 40 },
     { top: 0, end: 90 },

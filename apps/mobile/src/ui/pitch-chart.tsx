@@ -6,7 +6,6 @@ import Svg, { Circle, Line } from "react-native-svg";
 import { usePalette } from "../theme/palette";
 import { Text } from "./primitives";
 
-/** Where a card's voice rises and falls: a joined dot over each mora, with a tail for a particle after the word. */
 export function PitchChart({
   card,
   size = 17,
@@ -16,7 +15,6 @@ export function PitchChart({
     language?: string | null | undefined;
     pronunciation?: string | null | undefined;
   };
-  /** The kana's size in points before the reader's text size, which the chart scales with. */
   size?: number;
 }) {
   const { t } = useLingui();
@@ -55,7 +53,6 @@ function PitchLine({
   const p = usePalette();
   const { fontScale, width: screen } = useWindowDimensions();
   const { width, morae, segments } = pitchLayout(pattern);
-  // A long word at a large text size shrinks to stay inside the card's 40 pt sides on each edge.
   const em = Math.min(size * fontScale, (screen - 80) / (width / 10));
   const color = p["ink-secondary"];
   return (

@@ -10,10 +10,6 @@ import Animated, {
 import { ALWAYS, useReduceMotion } from "../theme/motion";
 import { clear, usePalette } from "../theme/palette";
 
-/**
- * Holds a shape while it loads or while the AI writes it. A light sweeps across it only if motion
- * is welcome; under Reduce Motion it stays still.
- */
 export function Skeleton({
   width = "100%",
   height = 12,

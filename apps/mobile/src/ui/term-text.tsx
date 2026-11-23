@@ -14,11 +14,6 @@ import { Furigana } from "./furigana";
 
 type FuriganaProps = Omit<ComponentProps<typeof Furigana>, "segments" | "room">;
 
-/**
- * A card's term, with its reading drawn over it or its stress marked in place when its language
- * does either. Without a reading over it, it is `plain` of the text when given, else one plain
- * `Text` in the same classes; `hidden` draws it without its stress, as on a Known card's cue.
- */
 export function TermText({
   card,
   room,
@@ -30,7 +25,6 @@ export function TermText({
     language?: string | null | undefined;
     pronunciation?: string | null | undefined;
   };
-  /** Holds a reading's room over a term without one, so a list of terms that draw readings keeps one height. */
   room?: boolean;
   plain?: (text: string) => ReactNode;
 }) {
@@ -55,10 +49,6 @@ export function TermText({
   );
 }
 
-/**
- * An example, with its inline readings drawn in its language's notation: furigana, or pinyin and
- * Jyutping for Chinese and Cantonese.
- */
 export function ExampleText({
   text,
   known,
@@ -67,7 +57,6 @@ export function ExampleText({
 }: Omit<ComponentProps<typeof Furigana>, "segments" | "after" | "tail"> & {
   text: string;
   known?: KnownReadings | undefined;
-  /** Draws the sentence as written, with no readings over it, for a learner who shows pronunciation separately. */
   plain?: boolean | undefined;
 }) {
   const { lang } = props;

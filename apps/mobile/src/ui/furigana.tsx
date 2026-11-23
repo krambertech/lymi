@@ -31,28 +31,17 @@ import { Text } from "./primitives";
 interface Props {
   segments: readonly ReadingSegment[];
   lang?: string | null | undefined;
-  /** Fades the readings in and out in place, keeping their room; only a review cue passes it. */
   hidden?: boolean | undefined;
-  /** The text's size, weight and colour, as `Text` takes them; the readings follow its size. */
   className?: string;
   style?: TextStyle | (TextStyle | null | undefined)[];
   maxFontSizeMultiplier?: number;
-  /** Text that flows after the runs and wraps with them, in its own classes with its size: a term's other forms or an example's translation. */
   tail?: { text: string; className: string; lang?: string | undefined } | undefined;
-  /** Kept beside the last run, past any cut: the speaker, or an important card's ★. */
   after?: ReactNode;
-  /** At most this many lines; the rest gives way to an ellipsis. */
   lines?: number;
-  /** Holds a reading's room over text without one, so a list of Japanese terms keeps one height. */
   room?: boolean;
   accessibilityRole?: "header" | "text";
 }
 
-/**
- * Runs of text with their readings drawn over them, as furigana over kanji. React Native has no
- * ruby, so each run is a column, its reading over its text, and the columns wrap as a line would.
- * Text with no reading to draw stays one plain `Text`. phone.md "Components".
- */
 export function Furigana(props: Props) {
   const { segments, room, tail, after, lines, className, style, lang } = props;
   if (room || segments.some((segment) => segment.reading !== undefined)) {
@@ -78,7 +67,6 @@ export function Furigana(props: Props) {
   );
 }
 
-/** The readings fade as `hidden` changes, as the web's `rt` does at the reveal. */
 function FadingRuby(props: Props) {
   const reduce = useReduceMotion();
   const target = props.hidden ? 0 : 1;
@@ -90,10 +78,8 @@ function FadingRuby(props: Props) {
   return <Ruby {...props} fade={fade} />;
 }
 
-/** The largest a reading in letters is drawn, the lede's size, so a big cue's pinyin stays quiet. */
 const LETTERS_MAX = 15.5;
 
-/** The sizes a run of text and its readings are drawn at, with the room the readings take over it. */
 function useRubyMetrics(
   segments: readonly ReadingSegment[],
   className: string | undefined,
@@ -105,7 +91,6 @@ function useRubyMetrics(
   const flat = StyleSheet.flatten([resolved, style]);
   const size = flat.fontSize ?? 17;
   const drawn = fitType(size, fontScale, maxFontSizeMultiplier).drawn;
-  // Half the text's drawn size and never under 10 pt, as the web's `rt`; letters 0.4 of it, capped at the lede.
   const letters = segments.some((segment) => segment.reading && lettersReading(segment.reading));
   const readingSize = letters
     ? Math.min(
@@ -120,10 +105,8 @@ function useRubyMetrics(
 
 const KNOWN_READING = { opacity: 0, width: 0, overflow: "hidden" } as const;
 
-/** A Jyutping tone number's size against its syllable's. */
 const TONE_SCALE = 0.7;
 
-/** An ellipsis is about one em across in either face. */
 const ELLIPSIS_EM = 1;
 
 function Ruby({
@@ -150,7 +133,6 @@ function Ruby({
     maxFontSizeMultiplier,
   );
   const pitch = slot + line;
-  // The boxes run the way the language does, which a row would not: it follows the app's direction.
   const rtl = textDirection(lang) === "rtl";
   const keep = useClamp(boxes.length, lines, drawn * ELLIPSIS_EM, rtl);
   const shown = keep.count === null ? boxes : boxes.slice(0, keep.count);
@@ -182,7 +164,6 @@ function Ruby({
       {run}
     </Text>
   );
-  // React Native cannot raise a run inside a line, so a tone number is its own text at the row's top.
   const reading = (run: string) => {
     const parts = toneRuns(run);
     const inset = readingInset(run, readingSize);
@@ -203,7 +184,6 @@ function Ruby({
       </View>
     );
   };
-  // The ellipsis and the mark close the last line kept, so a cut never takes the ★ with it.
   const end = (
     <View className="flex-row items-end" style={{ paddingTop: slot }} onLayout={keep.onEnd}>
       {keep.count !== null && text("…")}
@@ -226,7 +206,6 @@ function Ruby({
       onLayout={keep.onLine}
     >
       {shown.map((box, i) => (
-        // Boxes never reorder, so the index is a stable key.
         // oxlint-disable-next-line react/no-array-index-key -- boxes in a fixed order
         <View key={i} className="shrink flex-row items-end" onLayout={keep.onBox(i)}>
           {box.map((run, j) =>
@@ -236,11 +215,9 @@ function Ruby({
                 {text(run.text, run.tail ? tail?.className : className)}
               </View>
             ) : (
-              // A reading wider than its kanji centres over them, as the web's ruby does.
               // oxlint-disable-next-line react/no-array-index-key -- runs in a fixed order
               <View key={j} className="shrink items-center">
                 {run.known ? (
-                  // Its height only, so a long reading leaves no gap around a word the learner knows.
                   <View style={KNOWN_READING}>{reading(run.reading)}</View>
                 ) : fade ? (
                   <Animated.View style={fade}>{reading(run.reading)}</Animated.View>
@@ -259,10 +236,6 @@ function Ruby({
   );
 }
 
-/**
- * Where to cut runs that would pass `lines`: each box reports where it landed, and once all have,
- * the boxes past the last line go, with room left for the ellipsis and the mark.
- */
 function useClamp(count: number, lines: number | undefined, ellipsis: number, rtl: boolean) {
   const boxes = useRef<({ x: number; y: number; width: number } | undefined)[]>([]);
   const endWidth = useRef(0);
@@ -280,7 +253,6 @@ function useClamp(count: number, lines: number | undefined, ellipsis: number, rt
     });
     setKept({ key, count: clampBoxes(frames, lines, lineWidth, endWidth.current + ellipsis) });
   };
-  // The width can arrive after the boxes have reported, and a new width measures again.
   // oxlint-disable-next-line react-hooks/exhaustive-deps -- settles once per measured key
   useEffect(settle, [key]);
   return {

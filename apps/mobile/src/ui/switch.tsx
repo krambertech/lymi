@@ -13,19 +13,13 @@ const TRAVEL = 20;
 interface Props {
   checked: boolean;
   onCheckedChange: (checked: boolean) => void;
-  /** Named by its Field's label; this is for a switch standing alone. */
   accessibilityLabel?: string;
   disabled?: boolean;
 }
 
-/**
- * On or off, taking effect the moment it changes. Amber when on, as on the web, and drawn by Lymi
- * rather than iOS so it sits in a form with the other controls. forms.md "Choice controls".
- */
 export function Switch({ checked, onCheckedChange, accessibilityLabel, disabled = false }: Props) {
   const field = useContext(FieldContext);
   const reduce = useReduceMotion();
-  // At night a plate knob on a plate track all but vanishes, so the knob off is the muted ink.
   const dark = useRoom() === "dark";
   const off = disabled || field?.disabled;
   const toggle = () => {
@@ -33,7 +27,6 @@ export function Switch({ checked, onCheckedChange, accessibilityLabel, disabled 
     onCheckedChange(!checked);
   };
   const setPress = field?.setPress;
-  // The row presses the latest toggle, so a handler that reads other state never goes stale.
   const latest = useRef(toggle);
   latest.current = toggle;
   useEffect(() => {

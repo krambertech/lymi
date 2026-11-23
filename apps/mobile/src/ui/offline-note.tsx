@@ -6,10 +6,6 @@ import { useKeptSince } from "../data/queries";
 import { usePalette } from "../theme/palette";
 import { Icon, Text } from "./primitives";
 
-/**
- * One quiet line at the top of a screen that is showing what was kept, saying since when. Being
- * offline is never an error, so it carries no colour and asks nothing. phone.md "Offline".
- */
 export function OfflineNote({ query }: { query: UseQueryResult }) {
   const { t, i18n } = useLingui();
   const p = usePalette();

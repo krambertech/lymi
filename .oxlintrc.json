@@ -182,6 +182,31 @@
                 "message": "Use alert from src/ui/alert.tsx: it shows iOS's alert and, on Android, Material's dialog in Lymi's colours."
               },
               {
+                "name": "react-native",
+                "importNames": ["Text"],
+                "message": "Use Text from src/ui/primitives.tsx: it sets Onest, the Dynamic Type ramp and cap, and the face a card's script needs."
+              },
+              {
+                "name": "react-native",
+                "importNames": ["BackHandler"],
+                "message": "Use useSystemBack from src/ui/system-back.ts: a handler that outlives its screen's focus takes Back from the screen in front."
+              },
+              {
+                "name": "react-native",
+                "importNames": ["KeyboardAvoidingView"],
+                "message": "Use KeyboardRoom from src/ui/keyboard.tsx: KeyboardAvoidingView measures itself, which a sheet's offset from the top of the screen throws."
+              },
+              {
+                "name": "react-native-keyboard-controller",
+                "importNames": ["KeyboardAvoidingView", "KeyboardAwareScrollView"],
+                "message": "Use KeyboardRoom or KeyboardScroll from src/ui/keyboard.tsx: they read the keyboard's own height and let iOS inset a scroll itself."
+              },
+              {
+                "name": "react-native-screens",
+                "importNames": ["FullWindowOverlay"],
+                "message": "Use Overlay from src/ui/overlay.tsx: FullWindowOverlay is a view with no size on Android (#762)."
+              },
+              {
                 "name": "@expo/ui/jetpack-compose",
                 "importNames": ["ModalBottomSheet"],
                 "message": "Use Sheet from src/ui/sheet.tsx: it owns the title, description, save header and the inset every sheet shares."
@@ -225,11 +250,45 @@
     {
       "files": ["apps/mobile/**"],
       "rules": {
-        "lymi/scroll-view-persist-taps": "error"
+        "react/rules-of-hooks": "error",
+        "lymi/clear-text": "error",
+        "lymi/edge-swipe": "error",
+        "lymi/fixed-host": "error",
+        "lymi/scroll-view-persist-taps": "error",
+        "lymi/worklet-no-elements": "error"
       }
     },
     {
-      "files": ["apps/mobile/src/app/**"],
+      "files": ["apps/mobile/**"],
+      "excludeFiles": [
+        "apps/mobile/src/app/(tabs)/you/api-keys.tsx",
+        "apps/mobile/src/smart-add/term-sheet.tsx"
+      ],
+      "rules": {
+        "lymi/sheet-field-focus": "error"
+      }
+    },
+    {
+      "files": ["apps/mobile/**"],
+      "excludeFiles": ["apps/mobile/src/app/smart-add.tsx"],
+      "rules": {
+        "lymi/dismiss-on-drag": "error"
+      }
+    },
+    {
+      "files": ["apps/mobile/src/ui/**"],
+      "rules": {
+        "lymi/announce-live-region": "error"
+      }
+    },
+    {
+      "files": ["apps/mobile/src/app/**/_layout.tsx"],
+      "rules": {
+        "lymi/form-sheet-options": "error"
+      }
+    },
+    {
+      "files": ["apps/mobile/src/app/**", "apps/mobile/src/ui/form-header.tsx"],
       "rules": {
         "lymi/form-header": "error"
       }

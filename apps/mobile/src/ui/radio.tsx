@@ -1,6 +1,5 @@
 import { View } from "react-native";
 
-/** A radio's mark: an empty ring, or a ring around a dot once chosen. */
 export function Radio({ on, className = "" }: { on: boolean; className?: string }) {
   return (
     <View

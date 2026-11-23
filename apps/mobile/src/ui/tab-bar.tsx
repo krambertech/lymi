@@ -11,12 +11,9 @@ import { haptics } from "../theme/haptics";
 import { usePalette } from "../theme/palette";
 import { Text } from "./primitives";
 
-/** iOS gives a tab bar an accessory from iOS 26; elsewhere a deck keeps its own Review button. */
 export const DECK_ACCESSORY =
   Platform.OS === "ios" && Number.parseInt(String(Platform.Version), 10) >= 26;
 
-// The decks whose own Review button has scrolled out of sight; the accessory waits for it. Kept per
-// deck, since a second deck page can be pushed over a scrolled one.
 const hiddenDecks = new Set<string>();
 const listeners = new Set<() => void>();
 let version = 0;
@@ -27,7 +24,6 @@ export function setDeckReviewHidden(deckId: string, hidden: boolean) {
   version++;
   for (const l of listeners) l();
 }
-// The decks whose list is choosing cards: their selection bar owns the space, so no review rides there.
 const selectingDecks = new Set<string>();
 export function setDeckSelecting(deckId: string, selecting: boolean) {
   if (selectingDecks.has(deckId) === selecting) return;
@@ -47,7 +43,6 @@ function useDeckReviewRides(deckId: string | undefined) {
   return !!deckId && hiddenDecks.has(deckId) && !selectingDecks.has(deckId);
 }
 
-/** Whether the bar carries a deck's review accessory now, so what floats above the bar clears it. */
 export function useDeckAccessoryShown() {
   const deckId = usePathname().match(/^\/library\/([^/]+)$/)?.[1];
   const due = useDecks().data?.find((d) => d.id === deckId)?.due ?? 0;
@@ -56,13 +51,10 @@ export function useDeckAccessoryShown() {
 }
 
 const ANDROID = Platform.OS === "android";
-// The room iOS keeps for its tab bar over the home indicator's inset, and Material's 80 dp bar over the
-// navigation bar's, which the floating bar sits in, and the accessory a deck's review rides in.
 const TAB_BAR = ANDROID ? 80 : 49;
 const ACCESSORY = 56;
 const TABS = /^\/(today|library|explore|you)(\/|$)/;
 
-/** How far above the screen's bottom something floating sits to clear the tab bar and its accessory. */
 export function useAboveTabBar() {
   const insets = useSafeAreaInsets();
   const onTab = TABS.test(usePathname());
@@ -70,12 +62,6 @@ export function useAboveTabBar() {
   return insets.bottom + (onTab ? TAB_BAR + accessory : 0);
 }
 
-/**
- * The phone's tabs are iOS's own tab bar, so the lens and the press are Apple's Liquid Glass, in
- * Onest with Lucide icons, filled and amber on the chosen tab. Inside a deck with cards due, once the deck's own Review button has
- * scrolled away, its review rides in the bar's accessory, as Podcasts shows what is playing.
- * phone.md "Navigation".
- */
 export function TabBar() {
   const p = usePalette();
   const { t } = useLingui();
@@ -92,8 +78,6 @@ export function TabBar() {
       iconColor={{ default: p["ink-muted"], selected: p["amber-mark"] }}
       tintColor={p["amber-mark"]}
       minimizeBehavior="onScrollDown"
-      // Material's bar, in the web rail's colours rather than the wallpaper's: its pill is the chip
-      // the rail puts under the current page.
       {...(ANDROID && {
         backgroundColor: p.rail,
         indicatorColor: p["rail-chosen"],
@@ -146,7 +130,6 @@ export function TabBar() {
   );
 }
 
-/** What the open deck has due, as Podcasts shows what is playing: the count, and Review. */
 function MiniPlayer({ deckId, due }: { deckId: string; due: number }) {
   const p = usePalette();
   const { t } = useLingui();

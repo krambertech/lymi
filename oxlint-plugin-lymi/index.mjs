@@ -1,10 +1,16 @@
 import { definePlugin } from "@oxlint/plugins";
 import aiConsent from "./rules/ai-consent.mjs";
+import announceLiveRegion from "./rules/announce-live-region.mjs";
+import clearText from "./rules/clear-text.mjs";
 import clipOwner from "./rules/clip-owner.mjs";
+import dismissOnDrag from "./rules/dismiss-on-drag.mjs";
+import edgeSwipe from "./rules/edge-swipe.mjs";
 import enterComposing from "./rules/enter-composing.mjs";
 import failedWriteSaid from "./rules/failed-write-said.mjs";
 import fieldError from "./rules/field-error.mjs";
+import fixedHost from "./rules/fixed-host.mjs";
 import formHeader from "./rules/form-header.mjs";
+import formSheetOptions from "./rules/form-sheet-options.mjs";
 import guardedStateMove from "./rules/guarded-state-move.mjs";
 import isolateLearnerText from "./rules/isolate-learner-text.mjs";
 import languageTags from "./rules/language-tags.mjs";
@@ -18,19 +24,27 @@ import noSqlLower from "./rules/no-sql-lower.mjs";
 import noticePlainText from "./rules/notice-plain-text.mjs";
 import readRequestThroughHttp from "./rules/read-request-through-http.mjs";
 import scrollViewPersistTaps from "./rules/scroll-view-persist-taps.mjs";
+import sheetFieldFocus from "./rules/sheet-field-focus.mjs";
 import shortcutOwner from "./rules/shortcut-owner.mjs";
 import springPresets from "./rules/spring-presets.mjs";
 import termText from "./rules/term-text.mjs";
+import workletNoElements from "./rules/worklet-no-elements.mjs";
 
 export default definePlugin({
   meta: { name: "lymi" },
   rules: {
+    "announce-live-region": announceLiveRegion,
+    "clear-text": clearText,
+    "dismiss-on-drag": dismissOnDrag,
+    "edge-swipe": edgeSwipe,
     "enter-composing": enterComposing,
     "failed-write-said": failedWriteSaid,
     "ai-consent": aiConsent,
     "clip-owner": clipOwner,
     "field-error": fieldError,
+    "fixed-host": fixedHost,
     "form-header": formHeader,
+    "form-sheet-options": formSheetOptions,
     "guarded-state-move": guardedStateMove,
     "isolate-learner-text": isolateLearnerText,
     "language-tags": languageTags,
@@ -44,8 +58,10 @@ export default definePlugin({
     "notice-plain-text": noticePlainText,
     "read-request-through-http": readRequestThroughHttp,
     "scroll-view-persist-taps": scrollViewPersistTaps,
+    "sheet-field-focus": sheetFieldFocus,
     "shortcut-owner": shortcutOwner,
     "spring-presets": springPresets,
     "term-text": termText,
+    "worklet-no-elements": workletNoElements,
   },
 });

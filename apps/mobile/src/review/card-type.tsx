@@ -1,8 +1,7 @@
 import { type ReactNode, useState } from "react";
 import { type LayoutChangeEvent, type TextStyle, useWindowDimensions } from "react-native";
 import { fitType, INLINE_LIFT, textStart } from "../theme/type";
-import { INLINE_ROOM, InlineControl, RunControl } from "../ui/inline-control";
-import { Text } from "../ui/primitives";
+import { RunControl, TextWithControl } from "../ui/inline-control";
 import { TermText } from "../ui/term-text";
 
 // The review card's type on the phone's ramp, which steps down at most twice to fit. phone.md "Review".
@@ -95,18 +94,16 @@ export function CardLine({
   const limit = grows ? ANSWER_GROWS : 1;
   const drawn = fitType(style.fontSize, fontScale, limit).drawn;
   const plain = (text: string) => (
-    <Text
+    <TextWithControl
       className="text-ink"
-      style={[style, textStart(lang), after ? INLINE_ROOM : null, muted ? { color: muted } : null]}
+      style={[style, textStart(lang), muted ? { color: muted } : null]}
       maxFontSizeMultiplier={limit}
       lang={lang}
+      control={after}
+      lift={Math.round(16 - drawn * INLINE_LIFT)}
     >
       {text}
-      {after ? (
-        // An inline view stands on the baseline; this centres the 32 pt button on the line as drawn.
-        <InlineControl lift={Math.round(16 - drawn * INLINE_LIFT)}>{after}</InlineControl>
-      ) : null}
-    </Text>
+    </TextWithControl>
   );
   if (!term) return plain(children);
   const line = Math.round(((style.lineHeight ?? style.fontSize * 1.2) * drawn) / style.fontSize);

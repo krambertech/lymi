@@ -15,6 +15,7 @@ import {
   Platform,
   Pressable,
   type PressableProps,
+  // oxlint-disable-next-line eslint/no-restricted-imports -- Text is built on it here.
   Text as RNText,
   StyleSheet,
   type TextProps,
@@ -45,7 +46,6 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 const STEP = /(?:^|\s)(text-(?:2xs|xs|sm|base|md|lg|[2-7]?xl))(?=\s|$)/;
 
-/** Each script's letters with the marks and full-width forms that run with them, none of which Onest has. */
 const HANZI_RUNS =
   /([\u3000-\u303f\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff00-\uffef\u{20000}-\u{3134f}]+)/u;
 const SCRIPT_RUNS: Record<Script, RegExp> = {
@@ -60,10 +60,8 @@ const RTL_IN_APP = {
   textAlign: I18nManager.isRTL ? "right" : "left",
 } as const;
 
-// iOS falls back from Onest by the device's languages, so a script needs a named face; phone.md "Components".
 const NAMES_FACES = Platform.OS === "ios";
 
-/** The script's runs take its face and the rest stays in Onest, as the web's `:lang()` rules. */
 function inScript(children: ReactNode, script: Script): ReactNode {
   const face = { fontFamily: faces[script][0] };
   return Children.map(children, (child) =>
@@ -82,11 +80,6 @@ function inScript(children: ReactNode, script: Script): ReactNode {
   );
 }
 
-/**
- * Text in Onest. Size and colour come from the token classes, as on the web. It follows Dynamic Type
- * by the size it is set in, and `maxFontSizeMultiplier` can only lower that size's own cap. `lang` is
- * the BCP 47 tag of a card's own words, so a script Onest lacks draws in that script's face.
- */
 export function Text({
   className,
   style,
@@ -100,8 +93,6 @@ export function Text({
   const size = StyleSheet.flatten(style)?.fontSize ?? step.fontSize ?? 17;
   const fit = fitType(size, fontScale, maxFontSizeMultiplier ?? undefined);
   const script = NAMES_FACES ? languageScript(lang) : null;
-  // iOS orders a right-to-left term from its tag, so one that opens with a Latin word still reads right;
-  // it stays on the app's start edge, as a row expects, unless a block of it asks for `textStart`.
   const rtl = textDirection(lang) === "rtl";
   return (
     <RNText
@@ -116,24 +107,19 @@ export function Text({
   );
 }
 
-/** A state the design screen holds a control in, so each can be seen without a finger on it. */
 export type ForcedState = "pressed" | "focused" | null;
 export const ForcedStateContext = createContext<ForcedState>(null);
 
 interface PressProps extends Omit<PressableProps, "style"> {
-  /** How far a press gives, from motion.md: 0.97 buttons, 0.98 cards, 0.96 grades. */
   scale?: number;
   haptic?: boolean;
   className?: string;
   style?: ViewStyle | ViewStyle[];
-  /** The drawn control's shorter side, when it is under 44 pt; the touch area grows to 44 around it. */
   drawn?: number;
 }
 
-/** Every control's touch area is at least this, whatever is drawn. phone.md "Components". */
 export const TARGET = 44;
 
-/** A press that gives a little over 150 ms and answers with a light tap. Nothing moves up. */
 export function Press({
   scale = 0.97,
   haptic = true,
@@ -174,9 +160,6 @@ export function Press({
 export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 export type ButtonSize = "sm" | "md" | "lg" | "xl";
 
-// Every control on the phone is 44 pt, so `md` is too; `sm` reaches 44 through its hit slop. `xl` is
-// Today's one Review button alone; a stack of buttons, such as a review's end, takes `lg`. The
-// heights are floors with padding, so a label grown by the reader's text size grows the button.
 const HEIGHT: Record<ButtonSize, string> = {
   sm: "min-h-8 px-3 py-1.5 rounded-sm",
   md: "min-h-11 px-4 py-2 rounded-md",
@@ -208,30 +191,23 @@ function look(variant: ButtonVariant, p: Palette, strong = false) {
   }
 }
 
-interface ButtonProps {
+interface BaseButtonProps {
   label: string;
-  /** A quiet fact after the label, such as how much a review still holds; centred with it. */
   detail?: string;
   variant?: ButtonVariant;
   size?: ButtonSize;
-  icon?: IconName;
-  /** A mark that is not one of Lymi's icons, such as Google's G. */
   lead?: ReactNode;
   loading?: boolean;
-  /** Its work is slow in coming and the label says so: a turning loader takes the icon's place, as on IconButton. */
-  busy?: boolean;
-  /** Pressing cannot do anything yet. It dims and swallows the press, and VoiceOver still finds it. */
   disabled?: boolean;
-  /** A secondary with a stronger edge, for the way in most learners take (Google on sign-in). */
   strong?: boolean;
   onPress?: () => void;
   testID?: string;
 }
 
-/**
- * buttons.md: one primary per view, secondary by default. `lg` ends a flow such as sign-in,
- * `xl` is Today's Review. `loading` keeps the width, shows a spinner and swallows a press.
- */
+type ButtonIconProps = { icon?: IconName; busy?: undefined } | { icon: IconName; busy?: boolean };
+
+type ButtonProps = BaseButtonProps & ButtonIconProps;
+
 export function Button({
   label,
   detail,
@@ -298,31 +274,22 @@ const ICON_GLYPH = { sm: 16, md: 20, lg: 22 } as const;
 
 interface IconButtonProps {
   icon: IconName;
-  /** What pressing does, never what the icon is: "Add card", not "Plus". */
   label: string;
   variant?: ButtonVariant;
   size?: keyof typeof ICON_BOX;
-  /** A circle, for capture and the pronunciation button only. */
   round?: boolean;
   disabled?: boolean;
-  /** Off where a screen answers with its own haptics, as the review does. */
   haptic?: boolean;
-  /** Held down, it presses again and again, as a stepper's − and + do. */
   repeat?: boolean;
-  /** Its work is slow in coming: a turning loader takes the icon's place, as on the web. */
   busy?: boolean;
-  /** Draws a glyph that moves in the icon's place, in the button's ink, such as the playing speaker. */
   glyph?: (ink: string, size: number) => ReactNode;
-  /** How far the touch area reaches past each side, where a miss costs more than the 44 pt default. */
   reach?: number;
   onPress?: () => void;
   testID?: string;
 }
 
-/** How often a held stepper button presses again. */
 const REPEAT_MS = 90;
 
-/** One icon whose meaning carries alone. Ghost by default; every size reaches a 44 pt target. */
 export function IconButton({
   icon,
   label,
@@ -389,7 +356,6 @@ export function IconButton({
   );
 }
 
-/** Turns what it holds once a second, as the web's spinner does; under Reduce Motion it holds still. */
 function Turning({ children }: { children: ReactNode }) {
   const reduce = useReduceMotion();
   const turn = useSharedValue(0);
@@ -405,7 +371,6 @@ function Turning({ children }: { children: ReactNode }) {
   return <Animated.View style={style}>{children}</Animated.View>;
 }
 
-/** The one button to press: a soft fall of light along its top. surfaces.md "key-light". */
 function keyLight(p: Palette): ViewStyle {
   return {
     experimental_backgroundImage: `linear-gradient(to bottom, ${p["key-sheen"]}, ${clear(p["key-sheen"])})`,
@@ -413,7 +378,6 @@ function keyLight(p: Palette): ViewStyle {
   } as ViewStyle;
 }
 
-/** A plate: flat by day with one hairline, a little off the room at night on a soft shadow. */
 export function Plate({
   className,
   style,
@@ -421,7 +385,6 @@ export function Plate({
   ...props
 }: ViewProps & { className?: string; children?: ReactNode }) {
   const dark = useRoom() === "dark";
-  // On glass a plate lets the glass through, and nothing lifts off a surface that already floats.
   const glass = useOnGlass();
   return (
     <View
@@ -434,10 +397,8 @@ export function Plate({
   );
 }
 
-/** The night's lift; by day surfaces stay flat. */
 export const LIFT = { boxShadow: shadows.dark.lift } as ViewStyle;
 
-/** A bare chevron: how a whole-row link ends; the row itself is the target. */
 export function RowArrow() {
   const p = usePalette();
   return <Icon name="forward" size={18} colour={p["ink-muted"]} strokeWidth={2.5} />;

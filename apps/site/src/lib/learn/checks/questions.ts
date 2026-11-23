@@ -3,7 +3,8 @@ import type { SpeakerNames } from "../conversation";
 import { normalizeForm } from "../practice";
 import { markedItems, type PassageQuestion } from "../questions";
 
-const words = (text: string) => normalizeForm(text).match(/[\p{L}\p{M}\p{N}]+/gu) ?? [];
+const words = (text: string) =>
+  normalizeForm(text).match(/[\p{L}\p{M}\p{N}]+(?:[.:]\p{N}+)*/gu) ?? [];
 
 function says(sentence: string, answer: string): boolean {
   const said = words(sentence);

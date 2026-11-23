@@ -27,7 +27,7 @@ interface Written {
 }
 
 export type SentenceItem =
-  | (Written & { kind: "dictation"; src: string })
+  | (Written & { kind: "dictation"; src: string; word?: boolean })
   | (Written & { kind: "translate"; prompt: ReactNode; src?: string })
   | (Written & { kind: "rewrite"; from: string; cue: ReactNode; src?: string })
   | (Written & { kind: "ask"; reply: string; src?: string })
@@ -64,7 +64,11 @@ function Prompt({ item, heard }: { item: SentenceItem; heard: () => void }) {
       return (
         <>
           <Task>
-            <Trans>Write the sentence you hear.</Trans>
+            {item.word ? (
+              <Trans>Write the word you hear.</Trans>
+            ) : (
+              <Trans>Write the sentence you hear.</Trans>
+            )}
           </Task>
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
             <Listen src={item.src} onPlay={heard} />
@@ -170,7 +174,13 @@ export function SentenceRound({ item, state, heard, answer, autoplay }: RoundPro
           <SentenceField
             ref={field}
             value={value}
-            label={item.kind === "ask" ? t`Type the question` : t`Type the sentence`}
+            label={
+              item.kind === "ask"
+                ? t`Type the question`
+                : item.kind === "dictation" && item.word
+                  ? t`Type the word`
+                  : t`Type the sentence`
+            }
             describedBy={promptId}
             onChange={setValue}
             onEnter={submit}
@@ -194,6 +204,7 @@ export function SentenceResult({ item, typed }: { item: SentenceItem; typed: str
   const marked = markSentence(item, typed);
   const src = item.kind === "dictation" ? undefined : item.src;
   const shownSrc = marked.accepted === item.answers[0] ? src : undefined;
+  const word = item.kind === "dictation" && item.word === true;
   return (
     <div className="grid w-full grid-cols-1 gap-3">
       <div className="flex items-center gap-3">
@@ -205,8 +216,8 @@ export function SentenceResult({ item, typed }: { item: SentenceItem; typed: str
           <PlaySentence src={shownSrc} sentence={marked.accepted} />
         )}
       </div>
-      <SentenceVerdict marked={marked} />
-      {marked.verdict !== "right" && <RightSentence marked={marked} src={shownSrc} />}
+      <SentenceVerdict marked={marked} word={word} />
+      {marked.verdict !== "right" && <RightSentence marked={marked} src={shownSrc} word={word} />}
       <OtherForm marked={marked} />
       {item.explain && <p className="text-md text-ink-secondary">{item.explain}</p>}
       <AlsoRight marked={marked} accepted={item.answers} src={shownSrc ? undefined : src} />

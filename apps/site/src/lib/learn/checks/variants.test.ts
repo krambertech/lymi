@@ -48,6 +48,7 @@ describe("the variants of an accepted sentence that are always right", () => {
     expect(sentences("Mari ja meie elame Tallinnas.")).toEqual([]);
     expect(sentences("Sina või mina olen süüdi.")).toEqual([]);
     expect(sentences("See olen mina ise.")).toEqual([]);
+    expect(sentences("Las ma loen.")).toEqual([]);
     expect(sentences("Me ootame meie bussi.")).toEqual([
       "Meie ootame meie bussi.",
       "Ootame meie bussi.",

@@ -7,9 +7,6 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: uk\n"
 
-msgid "<0>-m</0> on the genitive: <1>{answer}</1>."
-msgstr "<0>-m</0> до родового: <1>{answer}</1>."
-
 msgid "<0>Ilusa</0> has three syllables, so its a stays: <1>ilusam</1>."
 msgstr "У <0>ilusa</0> три склади, тож a лишається: <1>ilusam</1>."
 
@@ -33,6 +30,9 @@ msgstr "Вищий ступінь — це родовий із <et>-m</et>: <et>
 
 msgid "A comparative takes the noun’s case like any adjective from lesson {agree}: <0>suuremas majas</0>, in a bigger house."
 msgstr "Вищий ступінь стоїть у відмінку іменника, як і будь-який прикметник з уроку {agree}: <0>suuremas majas</0> — «у більшому будинку»."
+
+msgid "Add <0>-m</0> to the genitive <1>{gen}</1>: <2>{answer}</2>."
+msgstr "Додай <0>-m</0> до родового <1>{gen}</1>: <2>{answer}</2>."
 
 msgid "adjective"
 msgstr "прикметник"
@@ -127,7 +127,7 @@ msgstr "дорогий"
 msgid "Fix the sentence"
 msgstr "Виправ речення"
 
-msgid "For the biggest, put <0>kõige</0> before the comparative: <1/>, the biggest; <2/>, the best. Word for word, <3>kõige</3> is of all. The best also has a short form: <4/>."
+msgid "For the biggest, put <0>kõige</0> before the comparative: <1/>, the biggest; <2/>, the best. Word for word, <3>kõige</3> is “of all”. The best also has a short form: <4/>."
 msgstr "Щоб сказати «найбільший», постав <0>kõige</0> перед вищим ступенем: <1/> — «найбільший»; <2/> — «найкращий». Дослівно <3>kõige</3> — «з усіх». «Найкращий» має й коротку форму: <4/>."
 
 msgid "For the biggest, put <0>kõige</0> before the comparative: <1>kõige suurem</1>."
@@ -152,7 +152,7 @@ msgid "Good, better, best: <et>hea</et>, <et>parem</et>, <et>kõige parem</et> o
 msgstr "Хороший, кращий, найкращий: <et>hea</et>, <et>parem</et>, <et>kõige parem</et> або <et>parim</et>."
 
 msgid "Hear a sentence and pick what it says, such as big, bigger or the biggest."
-msgstr "Послухай речення й обери, що в ньому, наприклад: великий, більший чи найбільший."
+msgstr "Послухай речення й обери, що в ньому сказано, наприклад: великий, більший чи найбільший."
 
 msgid "How much did a coffee cost in Tartu? Write the number as Mari says it."
 msgstr "Скільки коштувала кава в Тарту? Напиши число так, як каже Марі."
@@ -289,16 +289,16 @@ msgstr "маленький"
 msgid "smaller"
 msgstr "менший"
 
-msgid "Some words change more. Two common ones: good, <0>hea</0>, becomes <1/>, a word of its own, and small, <2>väike</2>, usually drops an e from its genitive <3>väikese</3>: <4>väiksem</4>. Pick a word and tap its forms."
-msgstr "Деякі слова змінюються сильніше. Ось два поширені: «хороший», <0>hea</0>, стає <1/> — це окреме слово, а «маленький», <2>väike</2>, зазвичай утрачає e з родового <3>väikese</3>: <4>väiksem</4>. Обери слово й торкнися його форм."
+msgid "Some words change more. Good, <0>hea</0>, becomes <1/>, a word of its own. Small, <2>väike</2>, usually drops an e from its genitive <3>väikese</3>: <4>väiksem</4>. Pick a word and tap its forms."
+msgstr "Деякі слова змінюються сильніше. «Хороший», <0>hea</0>, стає <1/> — це окреме слово. «Маленький», <2>väike</2>, зазвичай утрачає e з родового <3>väikese</3>: <4>väiksem</4>. Обери слово й торкнися його форм."
 
-msgid "Tallinn is a big town."
+msgid "Tallinn is a big city."
 msgstr "Таллінн — велике місто."
 
 msgid "Tallinn is bigger than Tartu."
 msgstr "Таллінн більший за Тарту."
 
-msgid "Tallinn is the biggest town in Estonia."
+msgid "Tallinn is the biggest city in Estonia."
 msgstr "Таллінн — найбільше місто Естонії."
 
 msgid "Tallinn or Tartu?"

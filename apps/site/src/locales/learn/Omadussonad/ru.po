@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 
 msgid "<0/> is big, and <1>suur maja</1> is a big house. The adjective goes into the same case as the noun: <2/>, in a big house; <3/>, a new book, as the object of <4>loen</4>, I’m reading. Each word builds the case on its own forms, so the endings can differ: <5>suurt maja</5>. Four endings work differently; a section below shows them."
-msgstr "<0/> — «большой», а <1>suur maja</1> — «большой дом». Прилагательное стоит в том же падеже, что и существительное: <2/> — «в большом доме»; <3/> — «новую книгу», как дополнение к <4>loen</4>, «читаю». Каждое слово образует падеж от своих форм, поэтому окончания могут различаться: <5>suurt maja</5>. Четыре окончания работают иначе — о них раздел ниже."
+msgstr "<0/> — «большой», а <1>suur maja</1> — «большой дом». Прилагательное стоит в том же падеже, что и существительное: <2/> — «в большом доме»; <3/> — «новую книгу», как дополнение к <4>loen</4>, «читаю». Каждое слово образует падеж от своих форм, поэтому окончания могут различаться: <5>suurt maja</5>. Четыре окончания работают иначе, о них — в разделе ниже."
 
 msgid "<et>Soe</et> takes <et>-s</et> on its genitive <et>sooja</et>: <et>soojas toas</et>."
 msgstr "<et>Soe</et> добавляет <et>-s</et> к своему родительному <et>sooja</et>: <et>soojas toas</et>."
@@ -277,7 +277,7 @@ msgid "Kati goes to work by bus."
 msgstr "Кати ездит на работу на автобусе."
 
 msgid "Like a noun, an adjective has three main forms, as lesson {forms} shows for nouns: <0>uus, uue, uut</0>. The <1>-s</1> form and plural <2>-d</2> are built on the genitive <3>uue</3>: <4>uues majas</4>, <5>uued majad</5>. With <6>-ga</6> the adjective stays <7>uue</7>: <8>uue autoga</8>, as the next section shows. Pick a word and tap its forms."
-msgstr "Как и у существительного, у прилагательного три основные формы — урок {forms} показывает их для существительных: <0>uus, uue, uut</0>. Форма с <1>-s</1> и множественное число на <2>-d</2> образуются от родительного <3>uue</3>: <4>uues majas</4>, <5>uued majad</5>. С <6>-ga</6> прилагательное остаётся <7>uue</7>: <8>uue autoga</8> — об этом следующий раздел. Выбери слово и нажми на его формы."
+msgstr "Как и у существительного, у прилагательного три основные формы — урок {forms} показывает их для существительных: <0>uus, uue, uut</0>. Форма с <1>-s</1> и множественное число на <2>-d</2> образуются от родительного <3>uue</3>: <4>uues majas</4>, <5>uued majad</5>. С <6>-ga</6> прилагательное остаётся <7>uue</7>: <8>uue autoga</8>, об этом — в следующем разделе. Выбери слово и нажми на его формы."
 
 msgid "Listen: Kati and Jaan"
 msgstr "Послушай: Кати и Яан"
@@ -453,8 +453,8 @@ msgstr "С <0>-ga</0>, <1>-ta</1>, <2>-ni</2> или <3>-na</3> окончани
 msgid "With <0>-ga</0>, only the noun takes it; the adjective stays in the genitive: <1>suure autoga</1>."
 msgstr "С <0>-ga</0> его получает только существительное; прилагательное остаётся в родительном: <1>suure autoga</1>."
 
-msgid "With <0>-ga</0>, the adjective stays in the genitive: <1>vana autoga</1>."
-msgstr "С <0>-ga</0> прилагательное остаётся в родительном: <1>vana autoga</1>."
+msgid "With <0>-ga</0>, the adjective stays in the genitive, and the genitive of <1>vana</1> is <2>vana</2>: <3>vana autoga</3>."
+msgstr "С <0>-ga</0> прилагательное остаётся в родительном, а родительный от <1>vana</1> — тоже <2>vana</2>: <3>vana autoga</3>."
 
 msgid "With <0>-s</0>, both words take the ending."
 msgstr "С <0>-s</0> окончание получают оба слова."

@@ -221,7 +221,8 @@ function useContent() {
       ),
       vana: (
         <Trans>
-          With <span lang="et">-ga</span>, the adjective stays in the genitive:{" "}
+          With <span lang="et">-ga</span>, the adjective stays in the genitive, and the genitive of{" "}
+          <span lang="et">vana</span> is <span lang="et">vana</span>:{" "}
           <span lang="et">vana autoga</span>.
         </Trans>
       ),

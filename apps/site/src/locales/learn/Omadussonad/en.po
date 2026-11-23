@@ -453,8 +453,8 @@ msgstr "With <0>-ga</0>, <1>-ta</1>, <2>-ni</2> or <3>-na</3>, only the noun tak
 msgid "With <0>-ga</0>, only the noun takes it; the adjective stays in the genitive: <1>suure autoga</1>."
 msgstr "With <0>-ga</0>, only the noun takes it; the adjective stays in the genitive: <1>suure autoga</1>."
 
-msgid "With <0>-ga</0>, the adjective stays in the genitive: <1>vana autoga</1>."
-msgstr "With <0>-ga</0>, the adjective stays in the genitive: <1>vana autoga</1>."
+msgid "With <0>-ga</0>, the adjective stays in the genitive, and the genitive of <1>vana</1> is <2>vana</2>: <3>vana autoga</3>."
+msgstr "With <0>-ga</0>, the adjective stays in the genitive, and the genitive of <1>vana</1> is <2>vana</2>: <3>vana autoga</3>."
 
 msgid "With <0>-s</0>, both words take the ending."
 msgstr "With <0>-s</0>, both words take the ending."

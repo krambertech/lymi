@@ -7,9 +7,6 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
-msgid "<0>-m</0> on the genitive: <1>{answer}</1>."
-msgstr "<0>-m</0> on the genitive: <1>{answer}</1>."
-
 msgid "<0>Ilusa</0> has three syllables, so its a stays: <1>ilusam</1>."
 msgstr "<0>Ilusa</0> has three syllables, so its a stays: <1>ilusam</1>."
 
@@ -33,6 +30,9 @@ msgstr "A comparative is the genitive with <et>-m</et>: <et>suur</et>, <et>suure
 
 msgid "A comparative takes the noun’s case like any adjective from lesson {agree}: <0>suuremas majas</0>, in a bigger house."
 msgstr "A comparative takes the noun’s case like any adjective from lesson {agree}: <0>suuremas majas</0>, in a bigger house."
+
+msgid "Add <0>-m</0> to the genitive <1>{gen}</1>: <2>{answer}</2>."
+msgstr "Add <0>-m</0> to the genitive <1>{gen}</1>: <2>{answer}</2>."
 
 msgid "adjective"
 msgstr "adjective"
@@ -127,8 +127,8 @@ msgstr "expensive"
 msgid "Fix the sentence"
 msgstr "Fix the sentence"
 
-msgid "For the biggest, put <0>kõige</0> before the comparative: <1/>, the biggest; <2/>, the best. Word for word, <3>kõige</3> is of all. The best also has a short form: <4/>."
-msgstr "For the biggest, put <0>kõige</0> before the comparative: <1/>, the biggest; <2/>, the best. Word for word, <3>kõige</3> is of all. The best also has a short form: <4/>."
+msgid "For the biggest, put <0>kõige</0> before the comparative: <1/>, the biggest; <2/>, the best. Word for word, <3>kõige</3> is “of all”. The best also has a short form: <4/>."
+msgstr "For the biggest, put <0>kõige</0> before the comparative: <1/>, the biggest; <2/>, the best. Word for word, <3>kõige</3> is “of all”. The best also has a short form: <4/>."
 
 msgid "For the biggest, put <0>kõige</0> before the comparative: <1>kõige suurem</1>."
 msgstr "For the biggest, put <0>kõige</0> before the comparative: <1>kõige suurem</1>."
@@ -289,17 +289,17 @@ msgstr "small"
 msgid "smaller"
 msgstr "smaller"
 
-msgid "Some words change more. Two common ones: good, <0>hea</0>, becomes <1/>, a word of its own, and small, <2>väike</2>, usually drops an e from its genitive <3>väikese</3>: <4>väiksem</4>. Pick a word and tap its forms."
-msgstr "Some words change more. Two common ones: good, <0>hea</0>, becomes <1/>, a word of its own, and small, <2>väike</2>, usually drops an e from its genitive <3>väikese</3>: <4>väiksem</4>. Pick a word and tap its forms."
+msgid "Some words change more. Good, <0>hea</0>, becomes <1/>, a word of its own. Small, <2>väike</2>, usually drops an e from its genitive <3>väikese</3>: <4>väiksem</4>. Pick a word and tap its forms."
+msgstr "Some words change more. Good, <0>hea</0>, becomes <1/>, a word of its own. Small, <2>väike</2>, usually drops an e from its genitive <3>väikese</3>: <4>väiksem</4>. Pick a word and tap its forms."
 
-msgid "Tallinn is a big town."
-msgstr "Tallinn is a big town."
+msgid "Tallinn is a big city."
+msgstr "Tallinn is a big city."
 
 msgid "Tallinn is bigger than Tartu."
 msgstr "Tallinn is bigger than Tartu."
 
-msgid "Tallinn is the biggest town in Estonia."
-msgstr "Tallinn is the biggest town in Estonia."
+msgid "Tallinn is the biggest city in Estonia."
+msgstr "Tallinn is the biggest city in Estonia."
 
 msgid "Tallinn or Tartu?"
 msgstr "Tallinn or Tartu?"

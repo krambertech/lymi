@@ -49,12 +49,12 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Mari on Katist noorem.": msg`Mari is younger than Kati.`,
   "Tartu on vanem kui Tallinn.": msg`Tartu is older than Tallinn.`,
   "Tartu on Tallinnast vanem.": msg`Tartu is older than Tallinn.`,
-  "Tallinn on Eesti kõige suurem linn.": msg`Tallinn is the biggest town in Estonia.`,
+  "Tallinn on Eesti kõige suurem linn.": msg`Tallinn is the biggest city in Estonia.`,
   "See on kõige parem kohvik.": msg`This is the best café.`,
   "Jaan on kõige vanem.": msg`Jaan is the oldest.`,
   "Mari on minu parim sõber.": msg`Mari is my best friend.`,
   "Minu tuba on sama suur kui sinu tuba.": msg`My room is as big as your room.`,
-  "Tallinn on suur linn.": msg`Tallinn is a big town.`,
+  "Tallinn on suur linn.": msg`Tallinn is a big city.`,
   "Jaan on vana.": msg`Jaan is old.`,
   "See kohvik on hea.": msg`This café is good.`,
   "See kohvik on parem.": msg`This café is better.`,
@@ -64,6 +64,12 @@ const HEARD_LABELS: Record<string, Record<"plain" | "more" | "most", MessageDesc
   suur: { plain: msg`big`, more: msg`bigger`, most: msg`the biggest` },
   vana: { plain: msg`old`, more: msg`older`, most: msg`the oldest` },
   hea: { plain: msg`good`, more: msg`better`, most: msg`the best` },
+};
+
+const MAKE_GENITIVE: Partial<Record<(typeof CMP_MAKE)[number]["id"], string>> = {
+  suurem: "suure",
+  uuem: "uue",
+  kallim: "kalli",
 };
 
 const MAKE_GLOSS: Record<(typeof CMP_MAKE)[number]["id"], MessageDescriptor> = {
@@ -322,39 +328,43 @@ export function VordlusLesson() {
 
   const makeItems = useMemo<MakeItem[]>(
     () =>
-      CMP_MAKE.map(({ id, kind, base, answer }) => ({
-        base,
-        gloss: i18n._(MAKE_GLOSS[id]),
-        cue: t`comparative`,
-        answers: id === "vaiksem" ? [answer, "väikesem"] : [answer],
-        src: src(answer),
-        pair: [kind, id] as const,
-        explain:
-          kind === "own" ? (
-            <Trans>
-              This one is its own word: <span lang="et">{answer}</span>.
-            </Trans>
-          ) : kind === "drop" ? (
-            <Trans>
-              The <span lang="et">-m</span> goes on the genitive <span lang="et">väikese</span>,
-              which usually drops an e: <span lang="et">väiksem</span>.
-            </Trans>
-          ) : kind === "three" ? (
-            <Trans>
-              <span lang="et">Ilusa</span> has three syllables, so its a stays:{" "}
-              <span lang="et">ilusam</span>.
-            </Trans>
-          ) : kind === "a-to-e" ? (
-            <Trans>
-              Before <span lang="et">-m</span>, the genitive’s a becomes e:{" "}
-              <span lang="et">{answer}</span>.
-            </Trans>
-          ) : (
-            <Trans>
-              <span lang="et">-m</span> on the genitive: <span lang="et">{answer}</span>.
-            </Trans>
-          ),
-      })),
+      CMP_MAKE.map(({ id, kind, base, answer }) => {
+        const gen = MAKE_GENITIVE[id] ?? base;
+        return {
+          base,
+          gloss: i18n._(MAKE_GLOSS[id]),
+          cue: t`comparative`,
+          answers: id === "vaiksem" ? [answer, "väikesem"] : [answer],
+          src: src(answer),
+          pair: [kind, id] as const,
+          explain:
+            kind === "own" ? (
+              <Trans>
+                This one is its own word: <span lang="et">{answer}</span>.
+              </Trans>
+            ) : kind === "drop" ? (
+              <Trans>
+                The <span lang="et">-m</span> goes on the genitive <span lang="et">väikese</span>,
+                which usually drops an e: <span lang="et">väiksem</span>.
+              </Trans>
+            ) : kind === "three" ? (
+              <Trans>
+                <span lang="et">Ilusa</span> has three syllables, so its a stays:{" "}
+                <span lang="et">ilusam</span>.
+              </Trans>
+            ) : kind === "a-to-e" ? (
+              <Trans>
+                Before <span lang="et">-m</span>, the genitive’s a becomes e:{" "}
+                <span lang="et">{answer}</span>.
+              </Trans>
+            ) : (
+              <Trans>
+                Add <span lang="et">-m</span> to the genitive <span lang="et">{gen}</span>:{" "}
+                <span lang="et">{answer}</span>.
+              </Trans>
+            ),
+        };
+      }),
     [t, i18n],
   );
 
@@ -454,11 +464,10 @@ export function VordlusLesson() {
                 </p>
                 <p>
                   <Trans>
-                    Some words change more. Two common ones: good, <span lang="et">hea</span>,
-                    becomes <Word w="parem" />, a word of its own, and small,{" "}
-                    <span lang="et">väike</span>, usually drops an e from its genitive{" "}
-                    <span lang="et">väikese</span>: <span lang="et">väiksem</span>. Pick a word and
-                    tap its forms.
+                    Some words change more. Good, <span lang="et">hea</span>, becomes{" "}
+                    <Word w="parem" />, a word of its own. Small, <span lang="et">väike</span>,
+                    usually drops an e from its genitive <span lang="et">väikese</span>:{" "}
+                    <span lang="et">väiksem</span>. Pick a word and tap its forms.
                   </Trans>
                 </p>
               </Prose>
@@ -558,7 +567,7 @@ export function VordlusLesson() {
                   <Trans>
                     For the biggest, put <span lang="et">kõige</span> before the comparative:{" "}
                     <Word w="kõige suurem" />, the biggest; <Word w="kõige parem" />, the best. Word
-                    for word, <span lang="et">kõige</span> is of all. The best also has a short
+                    for word, <span lang="et">kõige</span> is “of all”. The best also has a short
                     form: <Word w="parim" />.
                   </Trans>
                 </p>

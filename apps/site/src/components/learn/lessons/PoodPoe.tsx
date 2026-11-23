@@ -3,16 +3,31 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type ReactNode, useMemo, useState } from "react";
 import { lessonBySlug } from "../../../lib/learn/catalogue";
-import { clipId, clipUrl, STEM_PASSAGE, STEM_WORDS, type StemKind } from "../../../lib/learn/clips";
+import {
+  clipId,
+  clipUrl,
+  STEM_FIX,
+  STEM_PASSAGE,
+  STEM_SAID_ALSO,
+  STEM_SAY,
+  STEM_SORT,
+  STEM_TALK,
+  STEM_WORDS,
+  type StemKind,
+} from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Panel } from "../Explore";
+import { type FixItem, FixRound, fixRecall } from "../FixRound";
 import { FormRound, type FormItem as KitFormItem } from "../FormRound";
 import { GapPassage, type GapItem as PassageGap } from "../GapPassage";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
 import { Morph } from "../Morph";
+import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
+import { Sort, type SortBin, type SortItem } from "../Sort";
 import { PlayMark } from "../Sound";
 import { Word } from "../Word";
 
@@ -110,6 +125,13 @@ const GLOSSARY: Glossary = {
     ]),
   ),
   ujume: { en: msg`we swim`, note: msg`From ujuma, to swim.` },
+  "kus sa oled?": { en: msg`Where are you?` },
+  "aga sina?": { en: msg`And you?` },
+  "ma olen toas ja loen.": { en: msg`I’m in my room, reading.` },
+  "kus kati on?": { en: msg`Where is Kati?` },
+  "ta töötab täna tartus.": { en: msg`He’s working in Tartu today.` },
+  "kas minu raamat on laual?": { en: msg`Is my book on the table?` },
+  "ei, raamat on aknal.": { en: msg`No, the book is on the windowsill.` },
 };
 
 /** A pair's three parts: the letters both share at the start, what changed, and the rest. */
@@ -367,6 +389,100 @@ const SATURDAY_GAPS = (why: (noun: Noun) => ReactNode): PassageGap[] => {
   ];
 };
 
+export function sayItems(i18n: I18n): SentenceItem[] {
+  return STEM_SAY.map((said) => {
+    const noun = STEM_WORDS.find((each) => each.said === said) as Noun;
+    return {
+      kind: "translate",
+      id: `say-${noun.where}`,
+      prompt: i18n._(SAID_MEANS[said]),
+      src: src(said),
+      answers: [said, ...STEM_SAID_ALSO[said]],
+      explain: <StemRule noun={noun} />,
+    };
+  });
+}
+
+export function fixItems(): FixItem[] {
+  return STEM_FIX.map(({ word, wrong }) => {
+    const noun = nounOf(word);
+    return {
+      kind: "fix",
+      id: `fix-${noun.where}`,
+      wrong,
+      answers: [noun.said],
+      src: src(noun.said),
+      explain: <StemRule noun={noun} />,
+    };
+  });
+}
+
+export const sortItems = (): SortItem[] =>
+  STEM_SORT.map(({ word, bin }) => {
+    const noun = nounOf(word);
+    return { w: `${noun.word} → ${noun.where}`, bin, src: src(noun.where) };
+  });
+
+function useCallQuestions(): PassageQuestion[] {
+  const { t } = useLingui();
+  return [
+    {
+      id: "mari",
+      ask: t`Where is Mari?`,
+      options: [
+        { id: "work", label: t`At work` },
+        { id: "shop", label: t`At the shop` },
+        { id: "home", label: t`At home` },
+      ],
+      answer: "shop",
+      line: 3,
+    },
+    {
+      kind: "truefalse",
+      id: "jaan-home",
+      ask: t`Jaan is at home.`,
+      answer: true,
+      line: 5,
+    },
+    {
+      kind: "short",
+      id: "kati",
+      ask: t`Where is Kati? Write the place in Estonian, with its ending.`,
+      answers: ["koolis", "on koolis"],
+      line: 8,
+    },
+    {
+      kind: "truefalse",
+      id: "mum-shop",
+      ask: t`Mum is at the shop.`,
+      answer: false,
+      line: 9,
+    },
+    {
+      id: "dad",
+      ask: t`Where is Dad working today?`,
+      options: [
+        { id: "tartu", label: t`In Tartu` },
+        { id: "tallinn", label: t`In Tallinn` },
+        { id: "hospital", label: t`At the hospital` },
+      ],
+      answer: "tartu",
+      line: 12,
+    },
+    {
+      id: "book",
+      ask: t`Where is Mari’s book?`,
+      options: [
+        { id: "window", label: t`On the windowsill` },
+        { id: "table", label: t`On the table in the room` },
+        { id: "door", label: t`At the door` },
+      ],
+      answer: "window",
+      line: 14,
+    },
+  ];
+}
+
 export function PoodPoeLesson() {
   const { t, i18n } = useLingui();
   const places = lessonBySlug("kohad")?.n;
@@ -428,6 +544,55 @@ export function PoodPoeLesson() {
     );
 
   const gaps = SATURDAY_GAPS((noun) => <StemRule noun={noun} />);
+  const callQuestions = useCallQuestions();
+
+  const bins: SortBin[] = [
+    {
+      id: "inside",
+      label: t`A letter drops or changes`,
+      lang: i18n.locale,
+      hint: (
+        <Trans>
+          as in <span lang="et">tuba, toa</span>
+        </Trans>
+      ),
+      rule: (
+        <Trans>
+          A letter inside drops or changes: <span lang="et">tuba, toa, toas</span>.
+        </Trans>
+      ),
+    },
+    {
+      id: "vowel",
+      label: t`A vowel added`,
+      lang: i18n.locale,
+      hint: (
+        <Trans>
+          every letter kept, as in <span lang="et">kool, kooli</span>
+        </Trans>
+      ),
+      rule: (
+        <Trans>
+          The stem gains a vowel at the end: <span lang="et">kool, kooli, koolis</span>.
+        </Trans>
+      ),
+    },
+    {
+      id: "same",
+      label: t`No change`,
+      lang: i18n.locale,
+      hint: (
+        <Trans>
+          as in <span lang="et">kodu, kodu</span>
+        </Trans>
+      ),
+      rule: (
+        <Trans>
+          The stem is the word itself: <span lang="et">kodu, kodus</span>.
+        </Trans>
+      ),
+    },
+  ];
 
   const kindNotes = {
     inside: {
@@ -487,8 +652,8 @@ export function PoodPoeLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">10 minutes</Trans>,
-        <Trans key="q">2 quizzes and a passage</Trans>,
+        <Trans key="m">18 minutes</Trans>,
+        <Trans key="q">7 exercises</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -674,8 +839,8 @@ export function PoodPoeLesson() {
                 <p>
                   <Trans>
                     The word doesn’t show which vowel it gains: <Word w="raamat" />,{" "}
-                    <Word w="raamatu" />; <Word w="uks" />, <Word w="ukse" />. The dictionary’s
-                    genitive does.
+                    <Word w="raamatu" />; <Word w="uks" />, <Word w="ukse" />. The dictionary pair
+                    does.
                   </Trans>
                 </p>
               </Prose>
@@ -744,6 +909,100 @@ export function PoodPoeLesson() {
           ),
         },
         {
+          id: "kinds",
+          title: t`Which kind of stem`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each noun is shown with its <b lang="et">-s</b> or <b lang="et">-l</b> form.
+                    Take the ending off and compare what’s left with the word. A letter dropped or
+                    changed: the first group, even if a vowel also comes at the end, as in{" "}
+                    <span lang="et">pood, poe</span>. Every letter kept and a vowel added: the
+                    second. Nothing changed: the third.
+                  </Trans>
+                </p>
+              </Prose>
+              <Sort
+                id="stem-kinds"
+                title={<Trans>Which kind of stem?</Trans>}
+                bins={bins}
+                items={sortItems()}
+              />
+            </>
+          ),
+        },
+        {
+          id: "say-it",
+          title: t`Write it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write each sentence in Estonian. Put <b lang="et">-s</b> or <b lang="et">-l</b>{" "}
+                    on the stem, not on the word.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="say-where"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={sayItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six written right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Read the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Switch through the three sets above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "fix",
+          title: t`Fix the sentence`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each sentence builds the form from the word, not its stem. Tap the wrong word,
+                    then write the right form.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="fix-stem"
+                title={<Trans>Find and fix the mistake</Trans>}
+                items={fixItems()}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six found and fixed.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Look again at the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Switch through the three sets above once more, then try again.</Trans>
+                  )
+                }
+                recall={fixRecall}
+                round={(props) => <FixRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
           id: "saturday",
           title: t`Who is where on Saturday`,
           quiz: true,
@@ -763,6 +1022,31 @@ export function PoodPoeLesson() {
                 gaps={gaps}
                 mode="pick"
                 clip="p-saturday"
+              />
+            </>
+          ),
+        },
+        {
+          id: "call",
+          title: t`Listen: where is everyone?`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Jaan calls Mari on Monday and they say where everyone is. Read the questions,
+                    then listen.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="saturday-call"
+                title={<Trans>Listen: Jaan calls Mari</Trans>}
+                clip="c-call"
+                turns={STEM_TALK.turns}
+                names={{ third: "Mari", fourth: "Jaan" }}
+                questions={callQuestions}
               />
             </>
           ),

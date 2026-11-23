@@ -34,6 +34,9 @@ msgstr "5 exercises, 2 of them typed, and a conversation"
 msgid "A question works differently. After a question word from lesson {questions}, the short pronoun, such as <0>sa</0> or <1>te</1>, comes next and the verb after it: <2/>, where do you live? A question with <3>kas</3> puts <4>kas</4> in front of a plain statement: <5>Kas sa tuled homme?</5>"
 msgstr "A question works differently. After a question word from lesson {questions}, the short pronoun, such as <0>sa</0> or <1>te</1>, comes next and the verb after it: <2/>, where do you live? A question with <3>kas</3> puts <4>kas</4> in front of a plain statement: <5>Kas sa tuled homme?</5>"
 
+msgid "After <0>et</0>, <1>kui</1> and words like them, the verb usually moves towards the end of its part of the sentence. Lesson {conjunctions} covers it."
+msgstr "After <0>et</0>, <1>kui</1> and words like them, the verb usually moves towards the end of its part of the sentence. Lesson {conjunctions} covers it."
+
 msgid "After work Peeter goes to the shop."
 msgstr "After work Peeter goes to the shop."
 
@@ -265,11 +268,11 @@ msgstr "The verb comes second"
 msgid "The verb comes second, not last."
 msgstr "The verb comes second, not last."
 
-msgid "The verb comes second; when a time or place starts the sentence, the person follows the verb: <et>Täna lähen ma</et>."
-msgstr "The verb comes second; when a time or place starts the sentence, the person follows the verb: <et>Täna lähen ma</et>."
-
 msgid "The verb second: <et>Täna lähen ma</et>"
 msgstr "The verb second: <et>Täna lähen ma</et>"
+
+msgid "The verb usually comes second; when a time or place starts the sentence, the person usually follows the verb: <et>Täna lähen ma</et>."
+msgstr "The verb usually comes second; when a time or place starts the sentence, the person usually follows the verb: <et>Täna lähen ma</et>."
 
 msgid "today I’m going"
 msgstr "today I’m going"
@@ -334,8 +337,8 @@ msgstr "What does Peeter do on Saturday morning?"
 msgid "What does Peeter want to do on Sunday?"
 msgstr "What does Peeter want to do on Sunday?"
 
-msgid "What exam is it? Write it as Liisa says it."
-msgstr "What exam is it? Write it as Liisa says it."
+msgid "What subject is the exam in? Write it as Liisa says it."
+msgstr "What subject is the exam in? Write it as Liisa says it."
 
 msgid "What the sentence starts with"
 msgstr "What the sentence starts with"
@@ -382,17 +385,17 @@ msgstr "With <et>ei</et>, the person usually stays before it: <et>Täna ma ei t�
 msgid "With <et>ei</et>: <et>Täna ma ei tööta</et>"
 msgstr "With <et>ei</et>: <et>Täna ma ei tööta</et>"
 
-msgid "With two verbs, as in lesson {infinitives}, the first one takes second place, and the other goes to the end: <0/>, tomorrow I have to go to work. Tap a line to hear it."
-msgstr "With two verbs, as in lesson {infinitives}, the first one takes second place, and the other goes to the end: <0/>, tomorrow I have to go to work. Tap a line to hear it."
+msgid "With two verbs, as in lesson {infinitives}, the first one takes second place, and the other usually goes to the end: <0/>, tomorrow I have to go to work. Tap a line to hear it."
+msgstr "With two verbs, as in lesson {infinitives}, the first one takes second place, and the other usually goes to the end: <0/>, tomorrow I have to go to work. Tap a line to hear it."
 
-msgid "With two verbs, the first takes second place and the other goes last: <0>Homme pean ma tööle minema.</0>"
-msgstr "With two verbs, the first takes second place and the other goes last: <0>Homme pean ma tööle minema.</0>"
+msgid "With two verbs, the first takes second place and the other usually goes last: <0>Homme pean ma tööle minema.</0>"
+msgstr "With two verbs, the first takes second place and the other usually goes last: <0>Homme pean ma tööle minema.</0>"
 
-msgid "With two verbs, the first takes second place and the other goes last: <et>Homme pean ma tööle minema.</et>"
-msgstr "With two verbs, the first takes second place and the other goes last: <et>Homme pean ma tööle minema.</et>"
+msgid "With two verbs, the first takes second place and the other usually goes last: <et>Homme pean ma tööle minema.</et>"
+msgstr "With two verbs, the first takes second place and the other usually goes last: <et>Homme pean ma tööle minema.</et>"
 
-msgid "Without <0>ei</0>, you will also hear <1>Täna ma lähen</1> in speech. When you write, keep the verb second: <2>Täna lähen ma</2>."
-msgstr "Without <0>ei</0>, you will also hear <1>Täna ma lähen</1> in speech. When you write, keep the verb second: <2>Täna lähen ma</2>."
+msgid "Without <0>ei</0>, you will also hear and read <1>Täna ma lähen</1>. It is correct, but the verb in second place, <2>Täna lähen ma</2>, is the usual, neutral order."
+msgstr "Without <0>ei</0>, you will also hear and read <1>Täna ma lähen</1>. It is correct, but the verb in second place, <2>Täna lähen ma</2>, is the usual, neutral order."
 
 msgid "Write each sentence in Estonian. Start with the word the English starts with."
 msgstr "Write each sentence in Estonian. Start with the word the English starts with."

@@ -34,6 +34,9 @@ msgstr "5 вправ, у 2 з них треба писати, і розмова"
 msgid "A question works differently. After a question word from lesson {questions}, the short pronoun, such as <0>sa</0> or <1>te</1>, comes next and the verb after it: <2/>, where do you live? A question with <3>kas</3> puts <4>kas</4> in front of a plain statement: <5>Kas sa tuled homme?</5>"
 msgstr "У питанні інакше. Після питального слова з уроку {questions} іде короткий займенник, як-от <0>sa</0> чи <1>te</1>, а за ним дієслово: <2/> — «де ти живеш?». Питання з <3>kas</3> просто ставить <4>kas</4> перед звичайним реченням: <5>Kas sa tuled homme?</5>"
 
+msgid "After <0>et</0>, <1>kui</1> and words like them, the verb usually moves towards the end of its part of the sentence. Lesson {conjunctions} covers it."
+msgstr "Після <0>et</0>, <1>kui</1> і схожих слів дієслово зазвичай зсувається ближче до кінця своєї частини речення. Про це — урок {conjunctions}."
+
 msgid "After work Peeter goes to the shop."
 msgstr "Після роботи Пеетер іде в магазин."
 
@@ -265,11 +268,11 @@ msgstr "Дієслово на другому місці"
 msgid "The verb comes second, not last."
 msgstr "Дієслово стоїть другим, а не в кінці."
 
-msgid "The verb comes second; when a time or place starts the sentence, the person follows the verb: <et>Täna lähen ma</et>."
-msgstr "Дієслово стоїть другим; коли речення починається з часу чи місця, підмет іде за дієсловом: <et>Täna lähen ma</et>."
-
 msgid "The verb second: <et>Täna lähen ma</et>"
 msgstr "Дієслово друге: <et>Täna lähen ma</et>"
+
+msgid "The verb usually comes second; when a time or place starts the sentence, the person usually follows the verb: <et>Täna lähen ma</et>."
+msgstr "Дієслово зазвичай стоїть другим; коли речення починається з часу чи місця, підмет зазвичай іде за дієсловом: <et>Täna lähen ma</et>."
 
 msgid "today I’m going"
 msgstr "сьогодні я йду"
@@ -334,8 +337,8 @@ msgstr "Що Пеетер робить у суботу зранку?"
 msgid "What does Peeter want to do on Sunday?"
 msgstr "Що Пеетер хоче робити в неділю?"
 
-msgid "What exam is it? Write it as Liisa says it."
-msgstr "Що це за іспит? Напиши так, як каже Лііса."
+msgid "What subject is the exam in? Write it as Liisa says it."
+msgstr "З якого предмета іспит? Напиши так, як каже Лііса."
 
 msgid "What the sentence starts with"
 msgstr "З чого починається речення"
@@ -382,17 +385,17 @@ msgstr "З <et>ei</et> підмет зазвичай лишається пере
 msgid "With <et>ei</et>: <et>Täna ma ei tööta</et>"
 msgstr "З <et>ei</et>: <et>Täna ma ei tööta</et>"
 
-msgid "With two verbs, as in lesson {infinitives}, the first one takes second place, and the other goes to the end: <0/>, tomorrow I have to go to work. Tap a line to hear it."
-msgstr "З двома дієсловами, як в уроці {infinitives}, перше стає на друге місце, а інше йде в кінець: <0/> — «завтра мені треба на роботу». Торкнися рядка, щоб послухати."
+msgid "With two verbs, as in lesson {infinitives}, the first one takes second place, and the other usually goes to the end: <0/>, tomorrow I have to go to work. Tap a line to hear it."
+msgstr "З двома дієсловами, як в уроці {infinitives}, перше стає на друге місце, а інше зазвичай іде в кінець: <0/> — «завтра мені треба на роботу». Торкнися рядка, щоб послухати."
 
-msgid "With two verbs, the first takes second place and the other goes last: <0>Homme pean ma tööle minema.</0>"
-msgstr "З двома дієсловами перше стає на друге місце, а інше — у кінці: <0>Homme pean ma tööle minema.</0>"
+msgid "With two verbs, the first takes second place and the other usually goes last: <0>Homme pean ma tööle minema.</0>"
+msgstr "З двома дієсловами перше стає на друге місце, а інше зазвичай — у кінці: <0>Homme pean ma tööle minema.</0>"
 
-msgid "With two verbs, the first takes second place and the other goes last: <et>Homme pean ma tööle minema.</et>"
-msgstr "З двома дієсловами перше стає на друге місце, а інше — у кінці: <et>Homme pean ma tööle minema.</et>"
+msgid "With two verbs, the first takes second place and the other usually goes last: <et>Homme pean ma tööle minema.</et>"
+msgstr "З двома дієсловами перше стає на друге місце, а інше зазвичай — у кінці: <et>Homme pean ma tööle minema.</et>"
 
-msgid "Without <0>ei</0>, you will also hear <1>Täna ma lähen</1> in speech. When you write, keep the verb second: <2>Täna lähen ma</2>."
-msgstr "Без <0>ei</0> у розмові почуєш і <1>Täna ma lähen</1>. Коли пишеш, став дієслово другим: <2>Täna lähen ma</2>."
+msgid "Without <0>ei</0>, you will also hear and read <1>Täna ma lähen</1>. It is correct, but the verb in second place, <2>Täna lähen ma</2>, is the usual, neutral order."
+msgstr "Без <0>ei</0> можна почути й прочитати <1>Täna ma lähen</1>. Це правильно, але звичайний, нейтральний порядок — дієслово на другому місці: <2>Täna lähen ma</2>."
 
 msgid "Write each sentence in Estonian. Start with the word the English starts with."
 msgstr "Напиши кожне речення естонською. Почни з того слова, з якого починається завдання."

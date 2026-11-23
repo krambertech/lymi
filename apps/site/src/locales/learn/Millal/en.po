@@ -151,6 +151,9 @@ msgstr "day"
 msgid "Days, parts of the day and seasons take <0>-l</0>: <1>suvel</1>, in summer."
 msgstr "Days, parts of the day and seasons take <0>-l</0>: <1>suvel</1>, in summer."
 
+msgid "Days, times of day, seasons: -l"
+msgstr "Days, times of day, seasons: -l"
+
 msgid "evening"
 msgstr "evening"
 
@@ -169,8 +172,8 @@ msgstr "Fix the sentence"
 msgid "For a month"
 msgstr "For a month"
 
-msgid "For something that happens again and again, use <0>-ti</0>: <1/>, in the mornings; <2/>, in the evenings. Days ending in <3>päev</3> take <4>-iti</4>: <5>laupäeviti</5>, on Saturdays. Tap a line to hear it."
-msgstr "For something that happens again and again, use <0>-ti</0>: <1/>, in the mornings; <2/>, in the evenings. Days ending in <3>päev</3> take <4>-iti</4>: <5>laupäeviti</5>, on Saturdays. Tap a line to hear it."
+msgid "For something that happens again and again, put <0>-ti</0> on the genitive: <1>hommiku</1>, so <2/>, in the mornings; <3/>, in the evenings. At night is <4>öösiti</4>. Days ending in <5>päev</5> take <6>-iti</6>: <7>laupäeviti</7>, on Saturdays. Tap a line to hear it."
+msgstr "For something that happens again and again, put <0>-ti</0> on the genitive: <1>hommiku</1>, so <2/>, in the mornings; <3/>, in the evenings. At night is <4>öösiti</4>. Days ending in <5>päev</5> take <6>-iti</6>: <7>laupäeviti</7>, on Saturdays. Tap a line to hear it."
 
 msgid "For two days"
 msgstr "For two days"
@@ -481,9 +484,6 @@ msgstr "on Monday"
 msgid "on Saturday evening"
 msgstr "on Saturday evening"
 
-msgid "Other times: -l"
-msgstr "Other times: -l"
-
 msgid "Read What to remember at the end, then try again."
 msgstr "Read What to remember at the end, then try again."
 
@@ -609,6 +609,9 @@ msgstr "Write the time"
 
 msgid "year"
 msgstr "year"
+
+msgid "You will also hear <0>kahe päeva eest</0>, two days ago: the genitive, then <1>eest</1>. It means the same as <2>kaks päeva tagasi</2>."
+msgstr "You will also hear <0>kahe päeva eest</0>, two days ago: the genitive, then <1>eest</1>. It means the same as <2>kaks päeva tagasi</2>."
 
 msgid "You’ll hear it and see what it means."
 msgstr "You’ll hear it and see what it means."

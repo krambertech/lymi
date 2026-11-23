@@ -66,7 +66,7 @@ export const DRILLS: DrillBank = {
       base: "suvi",
       gloss: msg`summer`,
       cue: { et: "Ma ujun …" },
-      answers: ["suvel"],
+      answers: ["suvel", "suviti"],
       say: "Ma ujun suvel.",
       explain: L,
     },

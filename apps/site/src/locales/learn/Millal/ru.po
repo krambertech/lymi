@@ -151,6 +151,9 @@ msgstr "день"
 msgid "Days, parts of the day and seasons take <0>-l</0>: <1>suvel</1>, in summer."
 msgstr "Дни, части дня и времена года получают <0>-l</0>: <1>suvel</1> — «летом»."
 
+msgid "Days, times of day, seasons: -l"
+msgstr "Дни, время суток, времена года: -l"
+
 msgid "evening"
 msgstr "вечер"
 
@@ -169,8 +172,8 @@ msgstr "Исправь предложение"
 msgid "For a month"
 msgstr "На месяц"
 
-msgid "For something that happens again and again, use <0>-ti</0>: <1/>, in the mornings; <2/>, in the evenings. Days ending in <3>päev</3> take <4>-iti</4>: <5>laupäeviti</5>, on Saturdays. Tap a line to hear it."
-msgstr "Для того, что повторяется, есть <0>-ti</0>: <1/> — «по утрам», <2/> — «по вечерам». Дни на <3>päev</3> получают <4>-iti</4>: <5>laupäeviti</5> — «по субботам». Нажми на строку, чтобы послушать."
+msgid "For something that happens again and again, put <0>-ti</0> on the genitive: <1>hommiku</1>, so <2/>, in the mornings; <3/>, in the evenings. At night is <4>öösiti</4>. Days ending in <5>päev</5> take <6>-iti</6>: <7>laupäeviti</7>, on Saturdays. Tap a line to hear it."
+msgstr "Для того, что повторяется, <0>-ti</0> добавляют к родительному: <1>hommiku</1>, так что <2/> — «по утрам»; <3/> — «по вечерам». «По ночам» — это <4>öösiti</4>. Дни на <5>päev</5> получают <6>-iti</6>: <7>laupäeviti</7> — «по субботам». Нажми на строку, чтобы послушать."
 
 msgid "For two days"
 msgstr "На два дня"
@@ -481,9 +484,6 @@ msgstr "в понедельник"
 msgid "on Saturday evening"
 msgstr "в субботу вечером"
 
-msgid "Other times: -l"
-msgstr "Другое время: -l"
-
 msgid "Read What to remember at the end, then try again."
 msgstr "Прочитай «Что запомнить» в конце и попробуй снова."
 
@@ -609,6 +609,9 @@ msgstr "Напиши время"
 
 msgid "year"
 msgstr "год"
+
+msgid "You will also hear <0>kahe päeva eest</0>, two days ago: the genitive, then <1>eest</1>. It means the same as <2>kaks päeva tagasi</2>."
+msgstr "Ещё можно услышать <0>kahe päeva eest</0> — «два дня назад»: родительный, потом <1>eest</1>. Это то же самое, что <2>kaks päeva tagasi</2>."
 
 msgid "You’ll hear it and see what it means."
 msgstr "Услышишь её и увидишь, что она значит."

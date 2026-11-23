@@ -15206,5 +15206,10 @@
         ]
       }
     ]
+  },
+  "sonajarg/laupa2eval-ma-ei-to2o2ta": {
+    "text": "Laupäeval ma ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

@@ -2,7 +2,7 @@ import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type ReactNode, useMemo, useState } from "react";
-import { lessonBySlug } from "../../../lib/learn/catalogue";
+import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -325,7 +325,7 @@ function useContent() {
         id: "time",
         kind: "short",
         ask: t`What time should Peeter come? Write the number as Liisa says it.`,
-        answers: ["seitse", "7"],
+        answers: ["seitse", "7", "kell seitse", "kell 7"],
         line: 13,
       },
       {
@@ -371,7 +371,7 @@ function useContent() {
       {
         id: "exam",
         kind: "short",
-        ask: t`What exam is it? Write it as Liisa says it.`,
+        ask: t`What subject is the exam in? Write it as Liisa says it.`,
         answers: ["eesti keele", "eesti keel"],
         line: 29,
       },
@@ -385,6 +385,7 @@ export function SonajargLesson() {
   const { t, i18n } = useLingui();
   const content = useContent();
   const infinitives = lessonBySlug("tegevusnimed")?.n;
+  const conjunctions = LESSONS.find((lesson) => lesson.et === "Et, sest, kui")?.n;
   const questions = lessonBySlug("kusimused")?.n;
   const when = lessonBySlug("millal")?.n;
   const negation = lessonBySlug("eitus")?.n;
@@ -423,7 +424,7 @@ export function SonajargLesson() {
           <b lang="et">Kus sa elad? Mida sa täna teed?</b>
         </Trans>,
         <Trans key="3">
-          With two verbs, the first takes second place and the other goes last:{" "}
+          With two verbs, the first takes second place and the other usually goes last:{" "}
           <b lang="et">Homme pean ma tööle minema.</b>
         </Trans>,
         <Trans key="4">
@@ -542,12 +543,19 @@ export function SonajargLesson() {
                 <p>
                   <Trans>
                     With two verbs, as in lesson {infinitives}, the first one takes second place,
-                    and the other goes to the end: <Word w="Homme pean ma tööle minema" />, tomorrow
-                    I have to go to work. Tap a line to hear it.
+                    and the other usually goes to the end: <Word w="Homme pean ma tööle minema" />,
+                    tomorrow I have to go to work. Tap a line to hear it.
                   </Trans>
                 </p>
               </Prose>
               <ListenRows items={rows(ORDER_TWO)} />
+              <Aside>
+                <Trans>
+                  After <span lang="et">et</span>, <span lang="et">kui</span> and words like them,
+                  the verb usually moves towards the end of its part of the sentence. Lesson{" "}
+                  {conjunctions} covers it.
+                </Trans>
+              </Aside>
             </>
           ),
         },
@@ -569,9 +577,9 @@ export function SonajargLesson() {
               <ListenRows items={rows(ORDER_NO)} />
               <Aside>
                 <Trans>
-                  Without <span lang="et">ei</span>, you will also hear{" "}
-                  <span lang="et">Täna ma lähen</span> in speech. When you write, keep the verb
-                  second: <span lang="et">Täna lähen ma</span>.
+                  Without <span lang="et">ei</span>, you will also hear and read{" "}
+                  <span lang="et">Täna ma lähen</span>. It is correct, but the verb in second place,{" "}
+                  <span lang="et">Täna lähen ma</span>, is the usual, neutral order.
                 </Trans>
               </Aside>
               <Prose>

@@ -422,7 +422,7 @@ export function MillalLesson() {
     },
     {
       id: "l",
-      label: t`Other times: -l`,
+      label: t`Days, times of day, seasons: -l`,
       lang: i18n.locale,
       rule: (
         <Trans>
@@ -621,10 +621,12 @@ export function MillalLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    For something that happens again and again, use <span lang="et">-ti</span>:{" "}
-                    <Word w="hommikuti" />, in the mornings; <Word w="õhtuti" />, in the evenings.
-                    Days ending in <span lang="et">päev</span> take <span lang="et">-iti</span>:{" "}
-                    <span lang="et">laupäeviti</span>, on Saturdays. Tap a line to hear it.
+                    For something that happens again and again, put <span lang="et">-ti</span> on
+                    the genitive: <span lang="et">hommiku</span>, so <Word w="hommikuti" />, in the
+                    mornings; <Word w="õhtuti" />, in the evenings. At night is{" "}
+                    <span lang="et">öösiti</span>. Days ending in <span lang="et">päev</span> take{" "}
+                    <span lang="et">-iti</span>: <span lang="et">laupäeviti</span>, on Saturdays.
+                    Tap a line to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -677,6 +679,13 @@ export function MillalLesson() {
                   empty={{ title: t`Tap a form`, tip: t`You’ll hear it and see what it means.` }}
                 />
               </Panel>
+              <Aside>
+                <Trans>
+                  You will also hear <span lang="et">kahe päeva eest</span>, two days ago: the
+                  genitive, then <span lang="et">eest</span>. It means the same as{" "}
+                  <span lang="et">kaks päeva tagasi</span>.
+                </Trans>
+              </Aside>
               <Prose>
                 <p>
                   <Trans>Now type each one: ago or in, as the cue says.</Trans>

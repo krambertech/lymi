@@ -2241,6 +2241,7 @@ export const WHEN_TRANSLATE = [
       "Mina töötan hommikul.",
       "Hommikul töötan ma.",
       "Hommikul ma töötan.",
+      "Töötan hommikul.",
     ],
   },
   {
@@ -2251,6 +2252,7 @@ export const WHEN_TRANSLATE = [
       "Juulis oleme me Pärnus.",
       "Juulis me oleme Pärnus.",
       "Oleme juulis Pärnus.",
+      "Me oleme Pärnus juulis.",
     ],
   },
   {
@@ -2268,6 +2270,8 @@ export const WHEN_TRANSLATE = [
       "Jaan oli siin kaks päeva tagasi.",
       "Kaks päeva tagasi oli Jaan siin.",
       "Jaan oli kaks päeva tagasi siin.",
+      "Jaan oli siin kahe päeva eest.",
+      "Kahe päeva eest oli Jaan siin.",
     ],
   },
   {
@@ -2277,11 +2281,16 @@ export const WHEN_TRANSLATE = [
       "Pärast tööd lähen ma koju.",
       "Pärast tööd ma lähen koju.",
       "Pärast tööd lähen koju.",
+      "Ma lähen koju pärast tööd.",
     ],
   },
   {
     id: "esmaspaevast",
-    answers: ["Pood on avatud esmaspäevast reedeni.", "Pood on esmaspäevast reedeni avatud."],
+    answers: [
+      "Pood on avatud esmaspäevast reedeni.",
+      "Pood on esmaspäevast reedeni avatud.",
+      "Esmaspäevast reedeni on pood avatud.",
+    ],
   },
 ] as const;
 
@@ -2487,29 +2496,60 @@ export const ORDER_HEARD = [
 
 export const ORDER_MEANING = [
   { id: "kus-elad", answers: ["Kus sa elad?"] },
-  { id: "tana-tootan", answers: ["Täna töötan ma kodus.", "Ma töötan täna kodus."] },
+  {
+    id: "tana-tootan",
+    answers: ["Täna töötan ma kodus.", "Ma töötan täna kodus.", "Täna ma töötan kodus."],
+  },
   { id: "mida-teed", answers: ["Mida sa täna teed?", "Mida sa teed täna?"] },
-  { id: "homme-pean", answers: ["Homme pean ma tööle minema.", "Ma pean homme tööle minema."] },
+  {
+    id: "homme-pean",
+    answers: [
+      "Homme pean ma tööle minema.",
+      "Ma pean homme tööle minema.",
+      "Homme pean ma minema tööle.",
+      "Homme ma pean tööle minema.",
+    ],
+  },
   {
     id: "ohtul-tahan",
-    answers: ["Õhtul tahan ma raamatut lugeda.", "Ma tahan õhtul raamatut lugeda."],
+    answers: [
+      "Õhtul tahan ma raamatut lugeda.",
+      "Ma tahan õhtul raamatut lugeda.",
+      "Õhtul tahan ma lugeda raamatut.",
+      "Õhtul ma tahan raamatut lugeda.",
+    ],
   },
   { id: "homme-ei-tule", answers: ["Homme me ei tule.", "Me ei tule homme.", "Homme ei tule me."] },
   {
     id: "ohtul-ei-ole",
     answers: ["Õhtul ta ei ole kodus.", "Ta ei ole õhtul kodus.", "Õhtul ei ole ta kodus."],
   },
-  { id: "laupaeval-ujuma", answers: ["Laupäeval läheme me ujuma.", "Me läheme laupäeval ujuma."] },
+  {
+    id: "laupaeval-ujuma",
+    answers: [
+      "Laupäeval läheme me ujuma.",
+      "Me läheme laupäeval ujuma.",
+      "Laupäeval me läheme ujuma.",
+    ],
+  },
 ] as const;
+
+const ORDER_REWRITE_MORE: Record<string, readonly string[]> = {
+  tana: ["Täna ma lähen Tartusse."],
+  ohtul: ["Õhtul me oleme kodus."],
+  homme: ["Homme pean ma minema tööle.", "Homme ma pean tööle minema."],
+};
 
 export const ORDER_REWRITE = ORDER_PAIRS.map(({ id, plain, front, first }) => ({
   id: `start-${id}`,
   from: plain,
   first,
-  answers:
-    front.includes(" ma ") || front.includes(" me ")
+  answers: [
+    ...(front.includes(" ma ") || front.includes(" me ")
       ? [front, front.replace(/ (ma|me) /, " ")]
-      : [front],
+      : [front]),
+    ...(ORDER_REWRITE_MORE[id] ?? []),
+  ],
 }));
 
 export const ORDER_TRANSLATE = [
@@ -2520,16 +2560,30 @@ export const ORDER_TRANSLATE = [
       "Täna lähen Tartusse.",
       "Ma lähen täna Tartusse.",
       "Mina lähen täna Tartusse.",
+      "Täna ma lähen Tartusse.",
     ],
   },
   { id: "kus-elad", answers: ["Kus sa elad?", "Kus sina elad?"] },
   {
     id: "homme-tootama",
-    answers: ["Homme pean ma töötama.", "Homme pean töötama.", "Ma pean homme töötama."],
+    answers: [
+      "Homme pean ma töötama.",
+      "Homme pean töötama.",
+      "Ma pean homme töötama.",
+      "Homme ma pean töötama.",
+    ],
   },
-  { id: "tana-ei-too", answers: ["Täna me ei tööta.", "Me ei tööta täna."] },
+  { id: "tana-ei-too", answers: ["Täna me ei tööta.", "Me ei tööta täna.", "Täna ei tööta me."] },
   { id: "hommikul-joob", answers: ["Hommikul joob Mari kohvi.", "Mari joob hommikul kohvi."] },
-  { id: "laupaeval-teed", answers: ["Mida sa laupäeval teed?", "Mida sa teed laupäeval?"] },
+  {
+    id: "laupaeval-teed",
+    answers: [
+      "Mida sa laupäeval teed?",
+      "Mida sa teed laupäeval?",
+      "Mis sa laupäeval teed?",
+      "Mis sa teed laupäeval?",
+    ],
+  },
 ] as const;
 
 export const ORDER_DIALOGUE = {
@@ -2613,6 +2667,7 @@ export const ORDER_DRILL = [
   "Pühapäeval pean ma õppima.",
   "Millal te tulete?",
   "Homme ta ei tööta.",
+  "Laupäeval ma ei tööta.",
 ] as const;
 
 const ORDER_CLIPS: Record<string, Clip> = {

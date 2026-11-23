@@ -151,6 +151,9 @@ msgstr "день"
 msgid "Days, parts of the day and seasons take <0>-l</0>: <1>suvel</1>, in summer."
 msgstr "Дні, частини дня і пори року отримують <0>-l</0>: <1>suvel</1> — «влітку»."
 
+msgid "Days, times of day, seasons: -l"
+msgstr "Дні, пори доби, пори року: -l"
+
 msgid "evening"
 msgstr "вечір"
 
@@ -169,8 +172,8 @@ msgstr "Виправ речення"
 msgid "For a month"
 msgstr "На місяць"
 
-msgid "For something that happens again and again, use <0>-ti</0>: <1/>, in the mornings; <2/>, in the evenings. Days ending in <3>päev</3> take <4>-iti</4>: <5>laupäeviti</5>, on Saturdays. Tap a line to hear it."
-msgstr "Для того, що повторюється, є <0>-ti</0>: <1/> — «щоранку», <2/> — «щовечора». Дні на <3>päev</3> мають <4>-iti</4>: <5>laupäeviti</5> — «щосуботи». Торкнися рядка, щоб послухати."
+msgid "For something that happens again and again, put <0>-ti</0> on the genitive: <1>hommiku</1>, so <2/>, in the mornings; <3/>, in the evenings. At night is <4>öösiti</4>. Days ending in <5>päev</5> take <6>-iti</6>: <7>laupäeviti</7>, on Saturdays. Tap a line to hear it."
+msgstr "Для того, що повторюється, <0>-ti</0> додають до родового: <1>hommiku</1>, тож <2/> — «щоранку»; <3/> — «щовечора». «Щоночі» — це <4>öösiti</4>. Дні на <5>päev</5> мають <6>-iti</6>: <7>laupäeviti</7> — «щосуботи». Торкнися рядка, щоб послухати."
 
 msgid "For two days"
 msgstr "На два дні"
@@ -481,9 +484,6 @@ msgstr "у понеділок"
 msgid "on Saturday evening"
 msgstr "у суботу ввечері"
 
-msgid "Other times: -l"
-msgstr "Інший час: -l"
-
 msgid "Read What to remember at the end, then try again."
 msgstr "Прочитай «Що запам’ятати» наприкінці й спробуй знову."
 
@@ -609,6 +609,9 @@ msgstr "Напиши час"
 
 msgid "year"
 msgstr "рік"
+
+msgid "You will also hear <0>kahe päeva eest</0>, two days ago: the genitive, then <1>eest</1>. It means the same as <2>kaks päeva tagasi</2>."
+msgstr "Ще можна почути <0>kahe päeva eest</0> — «два дні тому»: родовий, потім <1>eest</1>. Це те саме, що <2>kaks päeva tagasi</2>."
 
 msgid "You’ll hear it and see what it means."
 msgstr "Почуєш її й побачиш, що вона означає."

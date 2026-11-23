@@ -1,9 +1,9 @@
 import { msg } from "@lingui/core/macro";
 import type { DrillBank } from "../../../lib/learn/drill";
 
-const SECOND = msg`The verb comes second; when a time or place starts the sentence, the person follows the verb: <et>Täna lähen ma</et>.`;
+const SECOND = msg`The verb usually comes second; when a time or place starts the sentence, the person usually follows the verb: <et>Täna lähen ma</et>.`;
 const QUESTION = msg`In a question, the short pronoun comes right after the question word: <et>Kus sa elad?</et>`;
-const TWO = msg`With two verbs, the first takes second place and the other goes last: <et>Homme pean ma tööle minema.</et>`;
+const TWO = msg`With two verbs, the first takes second place and the other usually goes last: <et>Homme pean ma tööle minema.</et>`;
 const NO = msg`With <et>ei</et>, the person usually stays before it: <et>Täna ma ei tööta.</et>`;
 const START = msg`Start with the time word`;
 
@@ -21,7 +21,7 @@ export const DRILLS: DrillBank = {
       rule: "front",
       from: "Ma lähen täna Tartusse.",
       cue: START,
-      answers: ["Täna lähen ma Tartusse.", "Täna lähen Tartusse."],
+      answers: ["Täna lähen ma Tartusse.", "Täna lähen Tartusse.", "Täna ma lähen Tartusse."],
       say: "Täna lähen ma Tartusse.",
       explain: SECOND,
     },
@@ -51,7 +51,7 @@ export const DRILLS: DrillBank = {
       rule: "front",
       from: "Me oleme õhtul kodus.",
       cue: START,
-      answers: ["Õhtul oleme me kodus.", "Õhtul oleme kodus."],
+      answers: ["Õhtul oleme me kodus.", "Õhtul oleme kodus.", "Õhtul me oleme kodus."],
       say: "Õhtul oleme me kodus.",
       explain: SECOND,
     },
@@ -65,6 +65,7 @@ export const DRILLS: DrillBank = {
         "Täna lähen Tartusse.",
         "Ma lähen täna Tartusse.",
         "Mina lähen täna Tartusse.",
+        "Täna ma lähen Tartusse.",
       ],
       say: "Täna lähen ma Tartusse.",
       explain: SECOND,
@@ -116,7 +117,12 @@ export const DRILLS: DrillBank = {
       id: "question-saturday",
       rule: "question",
       prompt: msg`What are you doing on Saturday? (To a friend.)`,
-      answers: ["Mida sa laupäeval teed?", "Mida sa teed laupäeval?"],
+      answers: [
+        "Mida sa laupäeval teed?",
+        "Mida sa teed laupäeval?",
+        "Mis sa laupäeval teed?",
+        "Mis sa teed laupäeval?",
+      ],
       say: "Mida sa laupäeval teed?",
       explain: QUESTION,
     },
@@ -144,7 +150,12 @@ export const DRILLS: DrillBank = {
       rule: "two",
       from: "Ma pean homme tööle minema.",
       cue: START,
-      answers: ["Homme pean ma tööle minema.", "Homme pean tööle minema."],
+      answers: [
+        "Homme pean ma tööle minema.",
+        "Homme pean tööle minema.",
+        "Homme pean ma minema tööle.",
+        "Homme ma pean tööle minema.",
+      ],
       say: "Homme pean ma tööle minema.",
       explain: TWO,
     },
@@ -153,7 +164,12 @@ export const DRILLS: DrillBank = {
       id: "two-homme-tootama",
       rule: "two",
       prompt: msg`Tomorrow I have to work.`,
-      answers: ["Homme pean ma töötama.", "Homme pean töötama.", "Ma pean homme töötama."],
+      answers: [
+        "Homme pean ma töötama.",
+        "Homme pean töötama.",
+        "Ma pean homme töötama.",
+        "Homme ma pean töötama.",
+      ],
       say: "Homme pean ma töötama.",
       explain: TWO,
     },
@@ -182,6 +198,7 @@ export const DRILLS: DrillBank = {
         "Laupäeval läheme me ujuma.",
         "Laupäeval läheme ujuma.",
         "Me läheme laupäeval ujuma.",
+        "Laupäeval me läheme ujuma.",
       ],
       say: "Laupäeval läheme me ujuma.",
       explain: TWO,
@@ -192,7 +209,7 @@ export const DRILLS: DrillBank = {
       id: "no-today",
       rule: "no",
       prompt: msg`Today we’re not working.`,
-      answers: ["Täna me ei tööta.", "Me ei tööta täna."],
+      answers: ["Täna me ei tööta.", "Me ei tööta täna.", "Täna ei tööta me."],
       say: "Täna me ei tööta.",
       explain: NO,
     },
@@ -217,16 +234,16 @@ export const DRILLS: DrillBank = {
       id: "no-tomorrow",
       rule: "no",
       prompt: msg`Tomorrow we’re not coming.`,
-      answers: ["Homme me ei tule.", "Me ei tule homme."],
+      answers: ["Homme me ei tule.", "Me ei tule homme.", "Homme ei tule me."],
       say: "Homme me ei tule.",
       explain: NO,
     },
     {
       kind: "dictation",
-      id: "no-tana-ma",
+      id: "no-laupaeval-ma",
       rule: "no",
-      answers: ["Täna ma ei tööta."],
-      say: "Täna ma ei tööta.",
+      answers: ["Laupäeval ma ei tööta."],
+      say: "Laupäeval ma ei tööta.",
       explain: NO,
     },
     {

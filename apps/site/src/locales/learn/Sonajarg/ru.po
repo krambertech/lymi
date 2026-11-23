@@ -34,6 +34,9 @@ msgstr "5 упражнений, в 2 из них нужно писать, и р�
 msgid "A question works differently. After a question word from lesson {questions}, the short pronoun, such as <0>sa</0> or <1>te</1>, comes next and the verb after it: <2/>, where do you live? A question with <3>kas</3> puts <4>kas</4> in front of a plain statement: <5>Kas sa tuled homme?</5>"
 msgstr "В вопросе иначе. После вопросительного слова из урока {questions} идёт короткое местоимение, например <0>sa</0> или <1>te</1>, а за ним глагол: <2/> — «где ты живёшь?». Вопрос с <3>kas</3> просто ставит <4>kas</4> перед обычным предложением: <5>Kas sa tuled homme?</5>"
 
+msgid "After <0>et</0>, <1>kui</1> and words like them, the verb usually moves towards the end of its part of the sentence. Lesson {conjunctions} covers it."
+msgstr "После <0>et</0>, <1>kui</1> и похожих слов глагол обычно сдвигается ближе к концу своей части предложения. Об этом — урок {conjunctions}."
+
 msgid "After work Peeter goes to the shop."
 msgstr "После работы Пеэтер идёт в магазин."
 
@@ -265,11 +268,11 @@ msgstr "Глагол на втором месте"
 msgid "The verb comes second, not last."
 msgstr "Глагол стоит вторым, а не в конце."
 
-msgid "The verb comes second; when a time or place starts the sentence, the person follows the verb: <et>Täna lähen ma</et>."
-msgstr "Глагол стоит вторым; когда предложение начинается со времени или места, подлежащее идёт за глаголом: <et>Täna lähen ma</et>."
-
 msgid "The verb second: <et>Täna lähen ma</et>"
 msgstr "Глагол второй: <et>Täna lähen ma</et>"
+
+msgid "The verb usually comes second; when a time or place starts the sentence, the person usually follows the verb: <et>Täna lähen ma</et>."
+msgstr "Глагол обычно стоит вторым; когда предложение начинается со времени или места, подлежащее обычно идёт за глаголом: <et>Täna lähen ma</et>."
 
 msgid "today I’m going"
 msgstr "сегодня я иду"
@@ -334,8 +337,8 @@ msgstr "Что Пеэтер делает в субботу утром?"
 msgid "What does Peeter want to do on Sunday?"
 msgstr "Что Пеэтер хочет делать в воскресенье?"
 
-msgid "What exam is it? Write it as Liisa says it."
-msgstr "Что это за экзамен? Напиши так, как говорит Лийса."
+msgid "What subject is the exam in? Write it as Liisa says it."
+msgstr "По какому предмету экзамен? Напиши так, как говорит Лийса."
 
 msgid "What the sentence starts with"
 msgstr "С чего начинается предложение"
@@ -382,17 +385,17 @@ msgstr "С <et>ei</et> подлежащее обычно остаётся пер
 msgid "With <et>ei</et>: <et>Täna ma ei tööta</et>"
 msgstr "С <et>ei</et>: <et>Täna ma ei tööta</et>"
 
-msgid "With two verbs, as in lesson {infinitives}, the first one takes second place, and the other goes to the end: <0/>, tomorrow I have to go to work. Tap a line to hear it."
-msgstr "С двумя глаголами, как в уроке {infinitives}, первый встаёт на второе место, а другой идёт в конец: <0/> — «завтра мне нужно на работу». Нажми на строку, чтобы послушать."
+msgid "With two verbs, as in lesson {infinitives}, the first one takes second place, and the other usually goes to the end: <0/>, tomorrow I have to go to work. Tap a line to hear it."
+msgstr "С двумя глаголами, как в уроке {infinitives}, первый встаёт на второе место, а другой обычно идёт в конец: <0/> — «завтра мне нужно на работу». Нажми на строку, чтобы послушать."
 
-msgid "With two verbs, the first takes second place and the other goes last: <0>Homme pean ma tööle minema.</0>"
-msgstr "С двумя глаголами первый встаёт на второе место, а другой — в конец: <0>Homme pean ma tööle minema.</0>"
+msgid "With two verbs, the first takes second place and the other usually goes last: <0>Homme pean ma tööle minema.</0>"
+msgstr "С двумя глаголами первый встаёт на второе место, а другой обычно — в конец: <0>Homme pean ma tööle minema.</0>"
 
-msgid "With two verbs, the first takes second place and the other goes last: <et>Homme pean ma tööle minema.</et>"
-msgstr "С двумя глаголами первый встаёт на второе место, а другой — в конец: <et>Homme pean ma tööle minema.</et>"
+msgid "With two verbs, the first takes second place and the other usually goes last: <et>Homme pean ma tööle minema.</et>"
+msgstr "С двумя глаголами первый встаёт на второе место, а другой обычно — в конец: <et>Homme pean ma tööle minema.</et>"
 
-msgid "Without <0>ei</0>, you will also hear <1>Täna ma lähen</1> in speech. When you write, keep the verb second: <2>Täna lähen ma</2>."
-msgstr "Без <0>ei</0> в разговоре услышишь и <1>Täna ma lähen</1>. Когда пишешь, ставь глагол вторым: <2>Täna lähen ma</2>."
+msgid "Without <0>ei</0>, you will also hear and read <1>Täna ma lähen</1>. It is correct, but the verb in second place, <2>Täna lähen ma</2>, is the usual, neutral order."
+msgstr "Без <0>ei</0> можно услышать и прочитать <1>Täna ma lähen</1>. Это правильно, но обычный, нейтральный порядок — глагол на втором месте: <2>Täna lähen ma</2>."
 
 msgid "Write each sentence in Estonian. Start with the word the English starts with."
 msgstr "Напиши каждое предложение по-эстонски. Начни с того слова, с которого начинается задание."

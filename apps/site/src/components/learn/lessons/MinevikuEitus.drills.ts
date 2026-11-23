@@ -107,9 +107,9 @@ const heard = (
 export const DRILLS: DrillBank = {
   rules: {
     nud: { label: msg`The <et>-nud</et> form from the -da infinitive`, section: "from-da" },
-    whole: { label: msg`The five <et>-nud</et> forms to learn whole`, section: "whole" },
+    whole: { label: msg`The five <et>-nud</et> forms to learn by heart`, section: "whole" },
     person: { label: msg`One form for every person`, section: "persons" },
-    when: { label: msg`No now, no in the past`, section: "when" },
+    when: { label: msg`No, now and in the past`, section: "when" },
   },
   items: [
     made("raakida", "rääkida", msg`to speak, to talk`, "rääkinud"),
@@ -124,7 +124,7 @@ export const DRILLS: DrillBank = {
       "laks",
       msg`He or she didn’t go home.`,
       "Ta ei läinud koju.",
-      msg`<et>Minema</et> gives <et>läinud</et>, to learn whole.`,
+      msg`<et>Minema</et> gives <et>läinud</et>. Learn it by heart.`,
     ),
     translate(
       "teinud",
@@ -162,7 +162,7 @@ export const DRILLS: DrillBank = {
       "whole",
       "Te käisite poes.",
       "Te ei käinud poes.",
-      msg`<et>Käima</et> gives <et>käinud</et>.`,
+      msg`<et>Käima</et> gives <et>käinud</et>, as in <et>Kas sa käisid poes? Ei käinud.</et>`,
     ),
 
     fix("olid", "Nad ei olid kodus.", "Nad ei olnud kodus."),
@@ -187,7 +187,7 @@ export const DRILLS: DrillBank = {
       "luges",
       "Ta luges raamatut.",
       "yes",
-      msg`<et>Luges</et>, with no <et>ei</et>: it happened.`,
+      msg`<et>Luges</et>, without <et>ei</et>: yes, in the past.`,
     ),
     heard(
       "oodanud",

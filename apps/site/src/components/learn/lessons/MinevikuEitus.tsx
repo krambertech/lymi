@@ -107,7 +107,7 @@ const GLOSSARY: Glossary = {
   lugesin: { en: msg`I read, I was reading`, note: msg`The past of lugema, with yes.` },
   "ma ei lugenud": { en: msg`I didn’t read` },
   "nad ei lugenud": { en: msg`they didn’t read` },
-  "ei olnud": { en: msg`wasn’t, weren’t`, note: msg`The no of olema in the past.` },
+  "ei olnud": { en: msg`wasn’t, weren’t`, note: msg`Olema with no, in the past.` },
   polnud: { en: msg`wasn’t, weren’t`, note: msg`Ei olnud in one word.` },
   "ma polnud kodus": { en: msg`I wasn’t at home.`, show: "Ma polnud kodus" },
   elada: { en: msg`to live`, note: msg`The -da infinitive of elama.` },
@@ -518,7 +518,10 @@ function useContent() {
           src: src(point.sentence),
           build: [
             { form: "ei", note: t`no, for every person` },
-            { form: point.build, note: point.at < 0 ? t`the past` : t`the present` },
+            {
+              form: point.build,
+              note: point.at < 0 ? t`the -nud form` : t`the present, without its ending`,
+            },
           ],
         },
       ],
@@ -617,7 +620,7 @@ function useContent() {
             line: "Mul pole aega.",
             why: (
               <Trans>
-                <Et>Pole</Et> is no, now. Yesterday’s no is <Et>polnud</Et>.
+                <Et>Pole</Et> is no, now. In the past it is <Et>polnud</Et>.
               </Trans>
             ),
           },
@@ -707,7 +710,7 @@ export function MinevikuEitusLesson() {
       ),
       rule: (
         <Trans>
-          <Et>Ei</Et> and the present without its <End>n</End>: <Et>ei tööta</Et>. <Et>Pole</Et> is{" "}
+          <Et>Ei</Et> and the present with no ending: <Et>ei tööta</Et>. <Et>Pole</Et> is{" "}
           <Et>ei ole</Et>.
         </Trans>
       ),
@@ -763,7 +766,7 @@ export function MinevikuEitusLesson() {
       }
       facts={[
         <Trans key="m">12 minutes</Trans>,
-        <Trans key="q">6 quizzes, a conversation and a recording heard twice</Trans>,
+        <Trans key="q">5 quizzes, a conversation and a recording you can play twice</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -794,7 +797,7 @@ export function MinevikuEitusLesson() {
           <b lang="et">elada, elanud; oodata, oodanud; olla, olnud</b>.
         </Trans>,
         <Trans key="4">
-          Learn five whole: <b lang="et">läinud, teinud, näinud, söönud, joonud</b>.{" "}
+          Learn five by heart: <b lang="et">läinud, teinud, näinud, söönud, joonud</b>.{" "}
           <b lang="et">Tahtma</b> keeps its t: <b lang="et">tahtnud</b>.
         </Trans>,
         <Trans key="5">
@@ -824,9 +827,10 @@ export function MinevikuEitusLesson() {
                 </p>
                 <p>
                   <Trans>
-                    Lesson {past} said yes in the past: <Word w="töötasin" />, I worked. With no,
-                    the verb takes its <End>nud</End> form instead: <Word w="ma ei töötanud" />, I
-                    didn’t work. Tap a time on the line to hear its sentence.
+                    Lesson {past} taught the past with yes, with an ending for each person:{" "}
+                    <Word w="töötasin" />, I worked. With no there is no person ending:{" "}
+                    <Word w="ma ei töötanud" />, I didn’t work. Tap a time on the line to hear its
+                    sentence.
                   </Trans>
                 </p>
               </Prose>
@@ -911,8 +915,8 @@ export function MinevikuEitusLesson() {
                 <p>
                   <Trans>
                     Grammars call it the <End>nud</End> participle, <Et>nud-kesksõna</Et>. The map
-                    below shows it as one more use of the <End>da</End> infinitive, beside the uses
-                    you already know.
+                    below shows it among the forms built on the <End>da</End> infinitive, beside the
+                    ones you already know.
                   </Trans>
                 </p>
               </Prose>
@@ -970,7 +974,7 @@ export function MinevikuEitusLesson() {
         },
         {
           id: "whole",
-          title: t`Five to learn whole`,
+          title: t`Five to learn by heart`,
           children: (
             <>
               <Prose>
@@ -991,7 +995,7 @@ export function MinevikuEitusLesson() {
               </Prose>
               <Panel>
                 <Keys
-                  label={t`Five -nud forms to learn whole`}
+                  label={t`Five -nud forms to learn by heart`}
                   columns={5}
                   phoneColumns={3}
                   empty={{
@@ -1038,7 +1042,7 @@ export function MinevikuEitusLesson() {
                 rounds={7}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All seven. You heard the past in every no.</Trans>
+                    <Trans>All seven. You told now from the past every time.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Most of them. Play the ones you missed once more.</Trans>
                   ) : (
@@ -1118,8 +1122,8 @@ export function MinevikuEitusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each sentence has one wrong word, the kind learners write: an ending kept after{" "}
-                    <Et>ei</Et>, or the present where the past belongs. Tap it, then write it right.
+                    Each sentence has one wrong word: a past ending kept after <Et>ei</Et>, or the
+                    present where the past belongs. Tap it, then write it right.
                   </Trans>
                 </p>
               </Prose>
@@ -1162,7 +1166,7 @@ export function MinevikuEitusLesson() {
                     <Nowrap>
                       <Word w="Ei käinud" />.
                     </Nowrap>{" "}
-                    Lesson {negation} answered the present the same way, with{" "}
+                    Lesson {negation} answered about the present the same way:{" "}
                     <b lang="et">Ei loe</b>.
                   </Trans>
                 </p>

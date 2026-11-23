@@ -84,7 +84,8 @@ function useReplyGaps(): GapItem[] {
       answer: "turul",
       why: (
         <Trans>
-          Where she is, so <End>l</End>: <Et>turul</Et>. <Et>Turule</Et> is where she goes.
+          Liis says where she will be, so <End>l</End>: <Et>turul</Et>. <Et>Turule</Et> would be
+          where she goes.
         </Trans>
       ),
     },
@@ -114,7 +115,7 @@ function useReplyGaps(): GapItem[] {
       answer: "saame",
       why: (
         <Trans>
-          <Et>Me</Et> takes <End>me</End>: <Et>me saame</Et>.
+          With <Et>me</Et>, we, the verb ends in <End>me</End>: <Et>me saame</Et>.
         </Trans>
       ),
     },
@@ -142,7 +143,7 @@ const SAY_PROMPTS: Record<(typeof MARKET_SAY)[number]["id"], MessageDescriptor> 
 
 const SAY_ALSO: Record<(typeof MARKET_SAY)[number]["id"], readonly string[]> = {
   juustu: [],
-  maksab: [],
+  maksab: ["Mis see maksab?"],
   ounad: [],
   turule: ["Ma tahan minna turule.", "Mina tahan turule minna.", "Tahan turule minna."],
   kodus: [
@@ -186,7 +187,7 @@ const FIX_WHY: Record<(typeof MARKET_FIX)[number]["id"], ReactNode> = {
   ),
   euro: (
     <Trans>
-      From two up, the partitive: <Et>kaks eurot</Et>.
+      After a number from two up, the partitive: <Et>kaks eurot</Et>.
     </Trans>
   ),
   turul: (
@@ -225,7 +226,7 @@ function useContent() {
       {
         kind: "short",
         id: "cheese-price",
-        ask: t`How much is a kilo of cheese at the market? Write it in Estonian.`,
+        ask: t`How much is a kilo of cheese in the shop? Write it in Estonian.`,
         answers: ["kümme eurot", "kümme", "10 eurot", "10", "10 €", "€10"],
         line: 3,
       },
@@ -313,8 +314,8 @@ function useContent() {
       },
       {
         kind: "truefalse",
-        id: "apples",
-        ask: t`Mari buys apples today.`,
+        id: "coffee-buy",
+        ask: t`Mari buys coffee today.`,
         answer: false,
         line: 18,
       },
@@ -361,7 +362,7 @@ function useContent() {
             line: "Jah, mul on vaja ka kaks leib.",
             why: (
               <Trans>
-                After <Et>kaks</Et>, the partitive: <Et>kaks leiba</Et>. And you need one bread.
+                After <Et>kaks</Et>, the partitive: <Et>kaks leiba</Et>. And you need one loaf.
               </Trans>
             ),
           },
@@ -369,7 +370,8 @@ function useContent() {
             line: "Jah, ma tahan ka leib.",
             why: (
               <Trans>
-                Wanting some takes the partitive: <Et>ma tahan leiba</Et>.
+                After <Et>tahan</Et>, the thing you want takes the partitive:{" "}
+                <Et>ma tahan leiba</Et>.
               </Trans>
             ),
           },
@@ -390,7 +392,7 @@ function useContent() {
             line: "Palun, see on kümme euro.",
             why: (
               <Trans>
-                From two up, the partitive: <Et>kümme eurot</Et>.
+                After a number from two up, the partitive: <Et>kümme eurot</Et>.
               </Trans>
             ),
           },
@@ -450,13 +452,13 @@ export function TurulLesson() {
       sub={
         <Trans>
           Read a friend’s message and answer it, buy cheese and bread at a stall, and follow a
-          conversation at the market: amounts, prices, liking and the verbs after <Et>tahan</Et> and{" "}
-          <Et>pean</Et>, in sentences you know.
+          conversation at the market: amounts, prices, <Et>meeldib</Et> and <Et>meeldivad</Et>, and
+          the <End>da</End> and <End>ma</End> infinitive after <Et>tahan</Et> and <Et>pean</Et>.
         </Trans>
       }
       facts={[
         <Trans key="m">15 minutes</Trans>,
-        <Trans key="q">6 exercises and a conversation heard twice</Trans>,
+        <Trans key="q">6 exercises and a conversation you can play twice</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -478,7 +480,7 @@ export function TurulLesson() {
           <b lang="et">kaks eurot</b>.
         </Trans>,
         <Trans key="2">
-          Say a price with <b lang="et">maksab</b>, and ask it with{" "}
+          Say a price with <b lang="et">maksab</b>, and ask for one with{" "}
           <b lang="et">Kui palju see maksab?</b>
         </Trans>,
         <Trans key="3">
@@ -506,14 +508,14 @@ export function TurulLesson() {
                 <p>
                   <Trans>
                     Mari is going to the <Word w="turg" />, the market, and asks Liis to come. Read
-                    her message, then answer the questions. Its words open their cards once you
-                    check.
+                    her message, then answer the questions. Once you check, tap a word in the
+                    message to open its card.
                   </Trans>
                 </p>
               </Prose>
               <Reading
                 id="mari-message"
-                title={<Trans>What does Mari write?</Trans>}
+                title={<Trans>Mari’s message to Liis</Trans>}
                 by={t`Mari writes`}
                 clip="p-mari"
                 sentences={MARKET_PASSAGES.mari}
@@ -531,9 +533,10 @@ export function TurulLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Fill Liis’s answer from the words under it. Some words are spare. Each gap tests
-                    a rule you know: the infinitive after <Et>tahan</Et> or <Et>pean</Et>, where
-                    someone is, an amount, and <Et>meeldib</Et> or <Et>meeldivad</Et>.
+                    Drag each word under Liis’s answer into a gap, or tap a word to put it in the
+                    open gap. Some words are spare. The gaps test the infinitive after{" "}
+                    <Et>tahan</Et> or <Et>pean</Et>, where someone is, an amount, the ending after{" "}
+                    <Et>me</Et>, and <Et>meeldib</Et> or <Et>meeldivad</Et>.
                   </Trans>
                 </p>
               </Prose>
@@ -578,7 +581,7 @@ export function TurulLesson() {
         },
         {
           id: "say-it",
-          title: t`Say it in Estonian`,
+          title: t`Write it in Estonian`,
           quiz: true,
           children: (
             <>
@@ -602,7 +605,7 @@ export function TurulLesson() {
                   ) : share >= 0.7 ? (
                     <Trans>Most of them. Read the ones you missed once more.</Trans>
                   ) : (
-                    <Trans>Read Mari’s message again, then try again.</Trans>
+                    <Trans>Read Mari’s message once more, then try again.</Trans>
                   )
                 }
                 recall={sentenceRecall}
@@ -619,10 +622,7 @@ export function TurulLesson() {
             <>
               <Prose>
                 <p>
-                  <Trans>
-                    Each sentence has one wrong word, the kind learners write. Tap it, then write it
-                    right.
-                  </Trans>
+                  <Trans>Each sentence has one wrong word. Tap it, then write it right.</Trans>
                 </p>
               </Prose>
               <Quiz
@@ -636,7 +636,9 @@ export function TurulLesson() {
                   ) : share >= 0.7 ? (
                     <Trans>Most of them. Look again at the ones you missed.</Trans>
                   ) : (
-                    <Trans>Go back to Liis’s answer and its rules, then try again.</Trans>
+                    <Trans>
+                      Go back to Liis’s answer, read why each word fits, then try again.
+                    </Trans>
                   )
                 }
                 recall={fixRecall}
@@ -654,8 +656,8 @@ export function TurulLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The seller asks <Word w="Mida te soovite?" />, what would you like, and then{" "}
-                    <Word w="Midagi veel?" />, anything else. If you pick a wrong reply, you see
+                    The seller asks <Word w="Mida te soovite?" /> (What would you like?), then{" "}
+                    <Word w="Midagi veel?" /> (Anything else?). If you pick a wrong reply, you see
                     why, then hear the right one.
                   </Trans>
                 </p>
@@ -665,8 +667,8 @@ export function TurulLesson() {
                 title={<Trans>Talk: buying cheese and bread</Trans>}
                 part={
                   <Trans>
-                    You need a kilo of cheese and one bread, and you have ten euros. The seller
-                    speaks first; pick what you say back.
+                    You need a kilo of cheese and a loaf of bread, and you have ten euros. The
+                    seller speaks first; pick what you say back.
                   </Trans>
                 }
                 them={t`Seller`}

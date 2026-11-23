@@ -7,20 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: uk\n"
 
-msgid "<0>Me</0> takes <1>me</1>: <2>me saame</2>."
-msgstr "З <0>me</0> — закінчення <1>me</1>: <2>me saame</2>."
-
 msgid "<0>Tahan</0>, <1>saan</1> and <2>mul on vaja</2> take the <3>da</3> infinitive; <4>pean</4> and <5>lähen</5> take <6>ma</6>: <7>tahan juua, pean minema</7>."
 msgstr "Після <0>tahan</0>, <1>saan</1> і <2>mul on vaja</2> іде інфінітив на <3>da</3>, а після <4>pean</4> і <5>lähen</5> — на <6>ma</6>: <7>tahan juua, pean minema</7>."
 
 msgid "<0>Turule</0> is where you go, <1>turul</1> where you are, and <2>turult</2> where you come from."
-msgstr "<0>Turule</0> — куди йдеш, <1>turul</1> — де ти є, а <2>turult</2> — звідки повертаєшся."
+msgstr "<0>Turule</0> — куди йдеш, <1>turul</1> — де ти перебуваєш, а <2>turult</2> — звідки йдеш."
 
 msgid "<et>Meeldib</et> or <et>meeldivad</et>"
 msgstr "<et>Meeldib</et> чи <et>meeldivad</et>"
 
 msgid "<et>Turul</et>: where you are."
-msgstr "<et>Turul</et>: де ти є."
+msgstr "<et>Turul</et>: де ти перебуваєш."
 
 msgid "<et>Turule</et>, <et>turul</et> or <et>turult</et>"
 msgstr "<et>Turule</et>, <et>turul</et> чи <et>turult</et>"
@@ -34,8 +31,8 @@ msgstr "<et>Turult</et>: звідки ти йдеш."
 msgid "15 minutes"
 msgstr "15 хвилин"
 
-msgid "6 exercises and a conversation heard twice"
-msgstr "6 вправ і розмова, яку можна послухати двічі"
+msgid "6 exercises and a conversation you can play twice"
+msgstr "6 вправ і розмова, яку можна прослухати двічі"
 
 msgid "a kilo of cheese"
 msgstr "кілограм сиру"
@@ -46,7 +43,7 @@ msgstr "Кілограм сиру"
 msgid "a pity, too bad"
 msgstr "шкода"
 
-msgid "After <0>kaks</0>, the partitive: <1>kaks leiba</1>. And you need one bread."
+msgid "After <0>kaks</0>, the partitive: <1>kaks leiba</1>. And you need one loaf."
 msgstr "Після <0>kaks</0> — партитив: <1>kaks leiba</1>. І тобі потрібна одна хлібина."
 
 msgid "After <0>kilo</0>, the partitive: <1>kilo juustu</1>."
@@ -61,6 +58,9 @@ msgstr "Після <0>tahan</0> — інфінітив на <1>da</1>: <2>juua</
 msgid "After <0>tahan</0>, the <1>da</1> infinitive: <2>tulla</2>."
 msgstr "Після <0>tahan</0> — інфінітив на <1>da</1>: <2>tulla</2>."
 
+msgid "After <0>tahan</0>, the thing you want takes the partitive: <1>ma tahan leiba</1>."
+msgstr "Після <0>tahan</0> те, чого хочеш, стоїть у партитиві: <1>ma tahan leiba</1>."
+
 msgid "After <et>pean</et> or <et>lähen</et>, the -ma infinitive."
 msgstr "Після <et>pean</et> чи <et>lähen</et> — інфінітив на -ma."
 
@@ -69,6 +69,12 @@ msgstr "Після <et>saame</et> — інфінітив на -da: <et>süüa</e
 
 msgid "After <et>tahan</et>, <et>saan</et> or <et>mul on vaja</et>, the -da infinitive."
 msgstr "Після <et>tahan</et>, <et>saan</et> чи <et>mul on vaja</et> — інфінітив на -da."
+
+msgid "After a number from two up, the partitive: <0>kaks eurot</0>."
+msgstr "Після числа від двох — партитив: <0>kaks eurot</0>."
+
+msgid "After a number from two up, the partitive: <0>kümme eurot</0>."
+msgstr "Після числа від двох — партитив: <0>kümme eurot</0>."
 
 msgid "After an amount or a number from two up, the partitive: <0>kilo juustu</0>, <1>kaks eurot</1>."
 msgstr "Після слова кількості чи числа від двох — партитив: <0>kilo juustu</0>, <1>kaks eurot</1>."
@@ -146,7 +152,7 @@ msgid "coffee"
 msgstr "кава"
 
 msgid "coming from the market"
-msgstr "іде з ринку"
+msgstr "іти з ринку"
 
 msgid "Coming from there takes <et>turult</et>."
 msgstr "Іти звідти — <et>turult</et>."
@@ -154,14 +160,14 @@ msgstr "Іти звідти — <et>turult</et>."
 msgid "costs"
 msgstr "коштує"
 
-msgid "Each sentence has one wrong word, the kind learners write. Tap it, then write it right."
-msgstr "У кожному реченні одне хибне слово, з тих, що часто пишуть студенти. Торкнися його, а потім напиши правильно."
+msgid "Drag each word under Liis’s answer into a gap, or tap a word to put it in the open gap. Some words are spare. The gaps test the infinitive after <0>tahan</0> or <1>pean</1>, where someone is, an amount, the ending after <2>me</2>, and <3>meeldib</3> or <4>meeldivad</4>."
+msgstr "Перетягни слова з-під відповіді Ліїс у пропуски або торкнися слова, щоб поставити його у відкритий пропуск. Деякі слова зайві. Пропуски перевіряють інфінітив після <0>tahan</0> чи <1>pean</1>, де хтось перебуває, кількість, закінчення після <2>me</2> і <3>meeldib</3> чи <4>meeldivad</4>."
+
+msgid "Each sentence has one wrong word. Tap it, then write it right."
+msgstr "У кожному реченні одне хибне слово. Торкнися його, а потім напиши правильно."
 
 msgid "euro"
 msgstr "євро"
-
-msgid "Fill Liis’s answer from the words under it. Some words are spare. Each gap tests a rule you know: the infinitive after <0>tahan</0> or <1>pean</1>, where someone is, an amount, and <2>meeldib</2> or <3>meeldivad</3>."
-msgstr "Заповни відповідь Ліїс словами під нею. Кілька слів зайві. Кожен пропуск перевіряє знайоме правило: інфінітив після <0>tahan</0> чи <1>pean</1>, де хтось є, кількість і <2>meeldib</2> чи <3>meeldivad</3>."
 
 msgid "Fill the gaps: Liis’s answer"
 msgstr "Заповни пропуски: відповідь Ліїс"
@@ -187,14 +193,8 @@ msgstr "з ринку"
 msgid "From the shop"
 msgstr "З крамниці"
 
-msgid "From two up, the partitive: <0>kaks eurot</0>."
-msgstr "Від двох — партитив: <0>kaks eurot</0>."
-
-msgid "From two up, the partitive: <0>kümme eurot</0>."
-msgstr "Від двох — партитив: <0>kümme eurot</0>."
-
-msgid "Go back to Liis’s answer and its rules, then try again."
-msgstr "Повернися до відповіді Ліїс і її правил, а тоді спробуй знову."
+msgid "Go back to Liis’s answer, read why each word fits, then try again."
+msgstr "Повернися до відповіді Ліїс, перечитай, чому підходить кожне слово, а тоді спробуй знову."
 
 msgid "Going there takes <0>turule</0>; <1>turul</1> is being there."
 msgstr "Іти туди — <0>turule</0>; <1>turul</1> — бути там."
@@ -203,7 +203,7 @@ msgid "Going there takes <et>turule</et>."
 msgstr "Іти туди — <et>turule</et>."
 
 msgid "going to the market"
-msgstr "іде на ринок"
+msgstr "іти на ринок"
 
 msgid "Having to, going and starting take the <0>ma</0> infinitive: <1>pean jooma</1>."
 msgstr "Після «мушу», «іду» й «починаю» — інфінітив на <0>ma</0>: <1>pean jooma</1>."
@@ -218,10 +218,10 @@ msgid "How much does it cost?"
 msgstr "Скільки це коштує?"
 
 msgid "How much does Mari pay in all? Write it in Estonian."
-msgstr "Скільки Марі платить загалом? Напиши естонською."
+msgstr "Скільки всього платить Марі? Напиши естонською."
 
-msgid "How much is a kilo of cheese at the market? Write it in Estonian."
-msgstr "Скільки коштує кілограм сиру на ринку? Напиши естонською."
+msgid "How much is a kilo of cheese in the shop? Write it in Estonian."
+msgstr "Скільки коштує кілограм сиру в магазині? Напиши естонською."
 
 msgid "How much is a kilo of cheese? Write it in Estonian."
 msgstr "Скільки коштує кілограм сиру? Напиши естонською."
@@ -268,6 +268,15 @@ msgstr "Урок {verbs} поділив дієслова, після яких і
 msgid "Liis answers"
 msgstr "Ліїс відповідає"
 
+msgid "Liis says where she will be, so <0>l</0>: <1>turul</1>. <2>Turule</2> would be where she goes."
+msgstr "Ліїс каже, де буде, тож <0>l</0>: <1>turul</1>. <2>Turule</2> — це було б куди вона йде."
+
+msgid "Liking more than one thing takes <et>meeldivad</et>."
+msgstr "Коли подобається кілька речей — <et>meeldivad</et>."
+
+msgid "Liking one thing takes <et>meeldib</et>."
+msgstr "Коли подобається одна річ — <et>meeldib</et>."
+
 msgid "Listen: Mari at a cheese stall"
 msgstr "Послухай: Марі біля прилавка з сиром"
 
@@ -277,14 +286,14 @@ msgstr "Послухай: Марі на ринку"
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"
 
-msgid "Mari buys apples today."
-msgstr "Сьогодні Марі купує яблука."
-
 msgid "Mari buys cheese at a stall. Read the questions first. You can play the recording twice, as in the A2 exam."
 msgstr "Марі купує сир біля прилавка. Спершу прочитай запитання. Запис можна прослухати двічі, як на іспиті A2."
 
-msgid "Mari is going to the <0/>, the market, and asks Liis to come. Read her message, then answer the questions. Its words open their cards once you check."
-msgstr "Марі йде на <0/>, ринок, і кличе з собою Ліїс. Прочитай її повідомлення й дай відповіді. Картки слів відкриються після перевірки."
+msgid "Mari buys coffee today."
+msgstr "Сьогодні Марі купує каву."
+
+msgid "Mari is going to the <0/>, the market, and asks Liis to come. Read her message, then answer the questions. Once you check, tap a word in the message to open its card."
+msgstr "Марі йде на <0/>, ринок, і кличе з собою Ліїс. Прочитай її повідомлення й відповідай на запитання. Після перевірки торкнися слова в повідомленні, щоб відкрити його картку."
 
 msgid "Mari likes the shop more than the market."
 msgstr "Марі більше подобається крамниця, ніж ринок."
@@ -295,20 +304,20 @@ msgstr "Марі пише"
 msgid "Mari’s message"
 msgstr "Повідомлення від Марі"
 
+msgid "Mari’s message to Liis"
+msgstr "Повідомлення Марі для Ліїс"
+
 msgid "market"
 msgstr "ринок"
 
 msgid "More than one apple, so <0>meeldivad</0>."
-msgstr "Яблук багато, тож <0>meeldivad</0>."
-
-msgid "More than one thing liked takes <et>meeldivad</et>."
-msgstr "Коли подобається кілька речей — <et>meeldivad</et>."
+msgstr "Яблук кілька, тож <0>meeldivad</0>."
 
 msgid "Most of them. Look again at the ones you missed."
-msgstr "Майже все. Ще раз поглянь на ті, де була помилка."
+msgstr "Майже всі. Ще раз поглянь на ті, де була помилка."
 
 msgid "Most of them. Read the ones you missed once more."
-msgstr "Майже все. Ще раз прочитай ті, де була помилка."
+msgstr "Майже всі. Ще раз прочитай ті, де була помилка."
 
 msgid "of the market"
 msgstr "ринку, ринковий"
@@ -316,20 +325,14 @@ msgstr "ринку, ринковий"
 msgid "One thing <0>meeldib</0>, more than one <1>meeldivad</1>: <2>mulle meeldib turg, mulle meeldivad õunad</2>."
 msgstr "Одна річ — <0>meeldib</0>, кілька — <1>meeldivad</1>: <2>mulle meeldib turg, mulle meeldivad õunad</2>."
 
-msgid "One thing liked takes <et>meeldib</et>."
-msgstr "Коли подобається одна річ — <et>meeldib</et>."
+msgid "Read a friend’s message and answer it, buy cheese and bread at a stall, and follow a conversation at the market: amounts, prices, <0>meeldib</0> and <1>meeldivad</1>, and the <2>da</2> and <3>ma</3> infinitive after <4>tahan</4> and <5>pean</5>."
+msgstr "Прочитай повідомлення подруги й дай відповідь, купи сир і хліб біля прилавка й зрозумій розмову на ринку: кількість, ціни, <0>meeldib</0> і <1>meeldivad</1>, інфінітив на <2>da</2> і на <3>ma</3> після <4>tahan</4> та <5>pean</5>."
 
-msgid "Read a friend’s message and answer it, buy cheese and bread at a stall, and follow a conversation at the market: amounts, prices, liking and the verbs after <0>tahan</0> and <1>pean</1>, in sentences you know."
-msgstr "Прочитай повідомлення подруги й дай відповідь, купи сир і хліб біля прилавка й зрозумій розмову на ринку: кількість, ціни, «подобається» і дієслова після <0>tahan</0> та <1>pean</1> у знайомих реченнях."
-
-msgid "Read Mari’s message again, then try again."
+msgid "Read Mari’s message once more, then try again."
 msgstr "Ще раз прочитай повідомлення Марі, а тоді спробуй знову."
 
-msgid "Say a price with <0>maksab</0>, and ask it with <1>Kui palju see maksab?</1>"
+msgid "Say a price with <0>maksab</0>, and ask for one with <1>Kui palju see maksab?</1>"
 msgstr "Ціну називають через <0>maksab</0>, а питають так: <1>Kui palju see maksab?</1>"
-
-msgid "Say it in Estonian"
-msgstr "Скажи естонською"
 
 msgid "Seller"
 msgstr "Продавець"
@@ -341,13 +344,13 @@ msgid "Talk: buying cheese and bread"
 msgstr "Розмова: купуємо сир і хліб"
 
 msgid "That says you like cheese. She asked what you’d like to buy."
-msgstr "Так ти кажеш, що любиш сир. А питали, що ти хочеш купити."
+msgstr "Так ти кажеш, що тобі подобається сир. А питали, що ти хочеш купити."
 
 msgid "The -da or -ma infinitive after another verb"
 msgstr "Інфінітив на -da чи -ma після іншого дієслова"
 
 msgid "The genitive of turg."
-msgstr "Генітив від turg."
+msgstr "Родовий відмінок від turg."
 
 msgid "the market’s apples"
 msgstr "яблука з ринку"
@@ -355,8 +358,8 @@ msgstr "яблука з ринку"
 msgid "The partitive after an amount"
 msgstr "Партитив після слова кількості"
 
-msgid "The seller asks <0/>, what would you like, and then <1/>, anything else. If you pick a wrong reply, you see why, then hear the right one."
-msgstr "Продавець питає <0/>, що бажаєте, а потім <1/>, щось іще. Якщо обереш хибну відповідь, побачиш чому, а потім почуєш правильну."
+msgid "The seller asks <0/> (What would you like?), then <1/> (Anything else?). If you pick a wrong reply, you see why, then hear the right one."
+msgstr "Продавець питає <0/> («Що бажаєте?»), потім <1/> («Щось іще?»). Якщо обереш хибну відповідь, побачиш чому, а потім почуєш правильну."
 
 msgid "The seller has bread today."
 msgstr "Сьогодні в продавця є хліб."
@@ -376,9 +379,6 @@ msgstr "Turul — на ринку, turule — на ринок, turult — з р�
 msgid "Two kilos of apples"
 msgstr "Два кілограми яблук"
 
-msgid "Wanting some takes the partitive: <0>ma tahan leiba</0>."
-msgstr "Хочеш трохи чогось — партитив: <0>ma tahan leiba</0>."
-
 msgid "Wanting, being able, being allowed, needing and liking take the <0>da</0> infinitive: <1>tahan juua</1>."
 msgstr "Після «хочу», «можу», «мені можна», «мені потрібно» й «подобається» — інфінітив на <0>da</0>: <1>tahan juua</1>."
 
@@ -390,9 +390,6 @@ msgstr "Так питає продавець. Soovima — бажати, хоті
 
 msgid "What does Mari ask for first?"
 msgstr "Що Марі просить спершу?"
-
-msgid "What does Mari write?"
-msgstr "Що пише Марі?"
 
 msgid "What would you like?"
 msgstr "Що бажаєте?"
@@ -406,14 +403,14 @@ msgstr "Де Марі хоче випити кави?"
 msgid "Where is the cheese from?"
 msgstr "Звідки сир?"
 
-msgid "Where she is, so <0>l</0>: <1>turul</1>. <2>Turule</2> is where she goes."
-msgstr "Де вона є, тож <0>l</0>: <1>turul</1>. <2>Turule</2> — куди вона йде."
-
 msgid "Where will Mari get milk?"
 msgstr "Де Марі купить молоко?"
 
 msgid "Which infinitive follows"
 msgstr "Який інфінітив іде далі"
+
+msgid "With <0>me</0>, we, the verb ends in <1>me</1>: <2>me saame</2>."
+msgstr "З <0>me</0>, «ми», дієслово закінчується на <1>me</1>: <2>me saame</2>."
 
 msgid "Write it in Estonian"
 msgstr "Напиши естонською"
@@ -421,5 +418,5 @@ msgstr "Напиши естонською"
 msgid "Write what you’d say at the market. After an amount comes the partitive, as lesson {amounts} showed, and liking more than one thing takes <0>meeldivad</0>, as in lesson {liking}."
 msgstr "Напиши, що можна сказати на ринку. Після слова кількості іде партитив, як показав урок {amounts}, а коли подобається кілька речей — <0>meeldivad</0>, як в уроці {liking}."
 
-msgid "You need a kilo of cheese and one bread, and you have ten euros. The seller speaks first; pick what you say back."
-msgstr "Тобі потрібні кілограм сиру й одна хлібина, і в тебе є десять євро. Продавець говорить першим; обирай, що відповісти."
+msgid "You need a kilo of cheese and a loaf of bread, and you have ten euros. The seller speaks first; pick what you say back."
+msgstr "Тобі потрібні кілограм сиру й хлібина, і в тебе є десять євро. Продавець говорить першим; обирай, що відповісти."

@@ -7,9 +7,6 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
-msgid "<0>Me</0> takes <1>me</1>: <2>me saame</2>."
-msgstr "<0>Me</0> takes <1>me</1>: <2>me saame</2>."
-
 msgid "<0>Tahan</0>, <1>saan</1> and <2>mul on vaja</2> take the <3>da</3> infinitive; <4>pean</4> and <5>lähen</5> take <6>ma</6>: <7>tahan juua, pean minema</7>."
 msgstr "<0>Tahan</0>, <1>saan</1> and <2>mul on vaja</2> take the <3>da</3> infinitive; <4>pean</4> and <5>lähen</5> take <6>ma</6>: <7>tahan juua, pean minema</7>."
 
@@ -34,8 +31,8 @@ msgstr "<et>Turult</et>: where you come from."
 msgid "15 minutes"
 msgstr "15 minutes"
 
-msgid "6 exercises and a conversation heard twice"
-msgstr "6 exercises and a conversation heard twice"
+msgid "6 exercises and a conversation you can play twice"
+msgstr "6 exercises and a conversation you can play twice"
 
 msgid "a kilo of cheese"
 msgstr "a kilo of cheese"
@@ -46,8 +43,8 @@ msgstr "A kilo of cheese"
 msgid "a pity, too bad"
 msgstr "a pity, too bad"
 
-msgid "After <0>kaks</0>, the partitive: <1>kaks leiba</1>. And you need one bread."
-msgstr "After <0>kaks</0>, the partitive: <1>kaks leiba</1>. And you need one bread."
+msgid "After <0>kaks</0>, the partitive: <1>kaks leiba</1>. And you need one loaf."
+msgstr "After <0>kaks</0>, the partitive: <1>kaks leiba</1>. And you need one loaf."
 
 msgid "After <0>kilo</0>, the partitive: <1>kilo juustu</1>."
 msgstr "After <0>kilo</0>, the partitive: <1>kilo juustu</1>."
@@ -61,6 +58,9 @@ msgstr "After <0>tahan</0>, the <1>da</1> infinitive: <2>juua</2>."
 msgid "After <0>tahan</0>, the <1>da</1> infinitive: <2>tulla</2>."
 msgstr "After <0>tahan</0>, the <1>da</1> infinitive: <2>tulla</2>."
 
+msgid "After <0>tahan</0>, the thing you want takes the partitive: <1>ma tahan leiba</1>."
+msgstr "After <0>tahan</0>, the thing you want takes the partitive: <1>ma tahan leiba</1>."
+
 msgid "After <et>pean</et> or <et>lähen</et>, the -ma infinitive."
 msgstr "After <et>pean</et> or <et>lähen</et>, the -ma infinitive."
 
@@ -69,6 +69,12 @@ msgstr "After <et>saame</et>, the -da infinitive: <et>süüa</et>."
 
 msgid "After <et>tahan</et>, <et>saan</et> or <et>mul on vaja</et>, the -da infinitive."
 msgstr "After <et>tahan</et>, <et>saan</et> or <et>mul on vaja</et>, the -da infinitive."
+
+msgid "After a number from two up, the partitive: <0>kaks eurot</0>."
+msgstr "After a number from two up, the partitive: <0>kaks eurot</0>."
+
+msgid "After a number from two up, the partitive: <0>kümme eurot</0>."
+msgstr "After a number from two up, the partitive: <0>kümme eurot</0>."
 
 msgid "After an amount or a number from two up, the partitive: <0>kilo juustu</0>, <1>kaks eurot</1>."
 msgstr "After an amount or a number from two up, the partitive: <0>kilo juustu</0>, <1>kaks eurot</1>."
@@ -154,14 +160,14 @@ msgstr "Coming from there takes <et>turult</et>."
 msgid "costs"
 msgstr "costs"
 
-msgid "Each sentence has one wrong word, the kind learners write. Tap it, then write it right."
-msgstr "Each sentence has one wrong word, the kind learners write. Tap it, then write it right."
+msgid "Drag each word under Liis’s answer into a gap, or tap a word to put it in the open gap. Some words are spare. The gaps test the infinitive after <0>tahan</0> or <1>pean</1>, where someone is, an amount, the ending after <2>me</2>, and <3>meeldib</3> or <4>meeldivad</4>."
+msgstr "Drag each word under Liis’s answer into a gap, or tap a word to put it in the open gap. Some words are spare. The gaps test the infinitive after <0>tahan</0> or <1>pean</1>, where someone is, an amount, the ending after <2>me</2>, and <3>meeldib</3> or <4>meeldivad</4>."
+
+msgid "Each sentence has one wrong word. Tap it, then write it right."
+msgstr "Each sentence has one wrong word. Tap it, then write it right."
 
 msgid "euro"
 msgstr "euro"
-
-msgid "Fill Liis’s answer from the words under it. Some words are spare. Each gap tests a rule you know: the infinitive after <0>tahan</0> or <1>pean</1>, where someone is, an amount, and <2>meeldib</2> or <3>meeldivad</3>."
-msgstr "Fill Liis’s answer from the words under it. Some words are spare. Each gap tests a rule you know: the infinitive after <0>tahan</0> or <1>pean</1>, where someone is, an amount, and <2>meeldib</2> or <3>meeldivad</3>."
 
 msgid "Fill the gaps: Liis’s answer"
 msgstr "Fill the gaps: Liis’s answer"
@@ -187,14 +193,8 @@ msgstr "from the market"
 msgid "From the shop"
 msgstr "From the shop"
 
-msgid "From two up, the partitive: <0>kaks eurot</0>."
-msgstr "From two up, the partitive: <0>kaks eurot</0>."
-
-msgid "From two up, the partitive: <0>kümme eurot</0>."
-msgstr "From two up, the partitive: <0>kümme eurot</0>."
-
-msgid "Go back to Liis’s answer and its rules, then try again."
-msgstr "Go back to Liis’s answer and its rules, then try again."
+msgid "Go back to Liis’s answer, read why each word fits, then try again."
+msgstr "Go back to Liis’s answer, read why each word fits, then try again."
 
 msgid "Going there takes <0>turule</0>; <1>turul</1> is being there."
 msgstr "Going there takes <0>turule</0>; <1>turul</1> is being there."
@@ -220,8 +220,8 @@ msgstr "How much does it cost?"
 msgid "How much does Mari pay in all? Write it in Estonian."
 msgstr "How much does Mari pay in all? Write it in Estonian."
 
-msgid "How much is a kilo of cheese at the market? Write it in Estonian."
-msgstr "How much is a kilo of cheese at the market? Write it in Estonian."
+msgid "How much is a kilo of cheese in the shop? Write it in Estonian."
+msgstr "How much is a kilo of cheese in the shop? Write it in Estonian."
 
 msgid "How much is a kilo of cheese? Write it in Estonian."
 msgstr "How much is a kilo of cheese? Write it in Estonian."
@@ -268,6 +268,15 @@ msgstr "Lesson {verbs} split the verbs that go before another verb in two. Put e
 msgid "Liis answers"
 msgstr "Liis answers"
 
+msgid "Liis says where she will be, so <0>l</0>: <1>turul</1>. <2>Turule</2> would be where she goes."
+msgstr "Liis says where she will be, so <0>l</0>: <1>turul</1>. <2>Turule</2> would be where she goes."
+
+msgid "Liking more than one thing takes <et>meeldivad</et>."
+msgstr "Liking more than one thing takes <et>meeldivad</et>."
+
+msgid "Liking one thing takes <et>meeldib</et>."
+msgstr "Liking one thing takes <et>meeldib</et>."
+
 msgid "Listen: Mari at a cheese stall"
 msgstr "Listen: Mari at a cheese stall"
 
@@ -277,14 +286,14 @@ msgstr "Listen: Mari at the market"
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
 
-msgid "Mari buys apples today."
-msgstr "Mari buys apples today."
-
 msgid "Mari buys cheese at a stall. Read the questions first. You can play the recording twice, as in the A2 exam."
 msgstr "Mari buys cheese at a stall. Read the questions first. You can play the recording twice, as in the A2 exam."
 
-msgid "Mari is going to the <0/>, the market, and asks Liis to come. Read her message, then answer the questions. Its words open their cards once you check."
-msgstr "Mari is going to the <0/>, the market, and asks Liis to come. Read her message, then answer the questions. Its words open their cards once you check."
+msgid "Mari buys coffee today."
+msgstr "Mari buys coffee today."
+
+msgid "Mari is going to the <0/>, the market, and asks Liis to come. Read her message, then answer the questions. Once you check, tap a word in the message to open its card."
+msgstr "Mari is going to the <0/>, the market, and asks Liis to come. Read her message, then answer the questions. Once you check, tap a word in the message to open its card."
 
 msgid "Mari likes the shop more than the market."
 msgstr "Mari likes the shop more than the market."
@@ -295,14 +304,14 @@ msgstr "Mari writes"
 msgid "Mari’s message"
 msgstr "Mari’s message"
 
+msgid "Mari’s message to Liis"
+msgstr "Mari’s message to Liis"
+
 msgid "market"
 msgstr "market"
 
 msgid "More than one apple, so <0>meeldivad</0>."
 msgstr "More than one apple, so <0>meeldivad</0>."
-
-msgid "More than one thing liked takes <et>meeldivad</et>."
-msgstr "More than one thing liked takes <et>meeldivad</et>."
 
 msgid "Most of them. Look again at the ones you missed."
 msgstr "Most of them. Look again at the ones you missed."
@@ -316,20 +325,14 @@ msgstr "of the market"
 msgid "One thing <0>meeldib</0>, more than one <1>meeldivad</1>: <2>mulle meeldib turg, mulle meeldivad õunad</2>."
 msgstr "One thing <0>meeldib</0>, more than one <1>meeldivad</1>: <2>mulle meeldib turg, mulle meeldivad õunad</2>."
 
-msgid "One thing liked takes <et>meeldib</et>."
-msgstr "One thing liked takes <et>meeldib</et>."
+msgid "Read a friend’s message and answer it, buy cheese and bread at a stall, and follow a conversation at the market: amounts, prices, <0>meeldib</0> and <1>meeldivad</1>, and the <2>da</2> and <3>ma</3> infinitive after <4>tahan</4> and <5>pean</5>."
+msgstr "Read a friend’s message and answer it, buy cheese and bread at a stall, and follow a conversation at the market: amounts, prices, <0>meeldib</0> and <1>meeldivad</1>, and the <2>da</2> and <3>ma</3> infinitive after <4>tahan</4> and <5>pean</5>."
 
-msgid "Read a friend’s message and answer it, buy cheese and bread at a stall, and follow a conversation at the market: amounts, prices, liking and the verbs after <0>tahan</0> and <1>pean</1>, in sentences you know."
-msgstr "Read a friend’s message and answer it, buy cheese and bread at a stall, and follow a conversation at the market: amounts, prices, liking and the verbs after <0>tahan</0> and <1>pean</1>, in sentences you know."
+msgid "Read Mari’s message once more, then try again."
+msgstr "Read Mari’s message once more, then try again."
 
-msgid "Read Mari’s message again, then try again."
-msgstr "Read Mari’s message again, then try again."
-
-msgid "Say a price with <0>maksab</0>, and ask it with <1>Kui palju see maksab?</1>"
-msgstr "Say a price with <0>maksab</0>, and ask it with <1>Kui palju see maksab?</1>"
-
-msgid "Say it in Estonian"
-msgstr "Say it in Estonian"
+msgid "Say a price with <0>maksab</0>, and ask for one with <1>Kui palju see maksab?</1>"
+msgstr "Say a price with <0>maksab</0>, and ask for one with <1>Kui palju see maksab?</1>"
 
 msgid "Seller"
 msgstr "Seller"
@@ -355,8 +358,8 @@ msgstr "the market’s apples"
 msgid "The partitive after an amount"
 msgstr "The partitive after an amount"
 
-msgid "The seller asks <0/>, what would you like, and then <1/>, anything else. If you pick a wrong reply, you see why, then hear the right one."
-msgstr "The seller asks <0/>, what would you like, and then <1/>, anything else. If you pick a wrong reply, you see why, then hear the right one."
+msgid "The seller asks <0/> (What would you like?), then <1/> (Anything else?). If you pick a wrong reply, you see why, then hear the right one."
+msgstr "The seller asks <0/> (What would you like?), then <1/> (Anything else?). If you pick a wrong reply, you see why, then hear the right one."
 
 msgid "The seller has bread today."
 msgstr "The seller has bread today."
@@ -376,9 +379,6 @@ msgstr "Turul is at the market, turule to it, turult from it."
 msgid "Two kilos of apples"
 msgstr "Two kilos of apples"
 
-msgid "Wanting some takes the partitive: <0>ma tahan leiba</0>."
-msgstr "Wanting some takes the partitive: <0>ma tahan leiba</0>."
-
 msgid "Wanting, being able, being allowed, needing and liking take the <0>da</0> infinitive: <1>tahan juua</1>."
 msgstr "Wanting, being able, being allowed, needing and liking take the <0>da</0> infinitive: <1>tahan juua</1>."
 
@@ -390,9 +390,6 @@ msgstr "What a seller asks. Soovima is to wish, to want."
 
 msgid "What does Mari ask for first?"
 msgstr "What does Mari ask for first?"
-
-msgid "What does Mari write?"
-msgstr "What does Mari write?"
 
 msgid "What would you like?"
 msgstr "What would you like?"
@@ -406,14 +403,14 @@ msgstr "Where does Mari want to have coffee?"
 msgid "Where is the cheese from?"
 msgstr "Where is the cheese from?"
 
-msgid "Where she is, so <0>l</0>: <1>turul</1>. <2>Turule</2> is where she goes."
-msgstr "Where she is, so <0>l</0>: <1>turul</1>. <2>Turule</2> is where she goes."
-
 msgid "Where will Mari get milk?"
 msgstr "Where will Mari get milk?"
 
 msgid "Which infinitive follows"
 msgstr "Which infinitive follows"
+
+msgid "With <0>me</0>, we, the verb ends in <1>me</1>: <2>me saame</2>."
+msgstr "With <0>me</0>, we, the verb ends in <1>me</1>: <2>me saame</2>."
 
 msgid "Write it in Estonian"
 msgstr "Write it in Estonian"
@@ -421,5 +418,5 @@ msgstr "Write it in Estonian"
 msgid "Write what you’d say at the market. After an amount comes the partitive, as lesson {amounts} showed, and liking more than one thing takes <0>meeldivad</0>, as in lesson {liking}."
 msgstr "Write what you’d say at the market. After an amount comes the partitive, as lesson {amounts} showed, and liking more than one thing takes <0>meeldivad</0>, as in lesson {liking}."
 
-msgid "You need a kilo of cheese and one bread, and you have ten euros. The seller speaks first; pick what you say back."
-msgstr "You need a kilo of cheese and one bread, and you have ten euros. The seller speaks first; pick what you say back."
+msgid "You need a kilo of cheese and a loaf of bread, and you have ten euros. The seller speaks first; pick what you say back."
+msgstr "You need a kilo of cheese and a loaf of bread, and you have ten euros. The seller speaks first; pick what you say back."

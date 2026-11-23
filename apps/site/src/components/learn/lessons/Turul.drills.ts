@@ -11,8 +11,8 @@ import type {
 const AMOUNT = msg`After an amount or a number from two up, the partitive.`;
 const DA = msg`After <et>tahan</et>, <et>saan</et> or <et>mul on vaja</et>, the -da infinitive.`;
 const MA = msg`After <et>pean</et> or <et>lähen</et>, the -ma infinitive.`;
-const ONE = msg`One thing liked takes <et>meeldib</et>.`;
-const MANY = msg`More than one thing liked takes <et>meeldivad</et>.`;
+const ONE = msg`Liking one thing takes <et>meeldib</et>.`;
+const MANY = msg`Liking more than one thing takes <et>meeldivad</et>.`;
 
 const amount = (
   id: string,
@@ -117,7 +117,7 @@ export const DRILLS: DrillBank = {
       AMOUNT,
     ),
     say("kilo", "amount", msg`I need a kilo of coffee.`, ["Mul on vaja kilo kohvi."], AMOUNT),
-    fix("piim", "amount", "Ma tahan klaas piim.", "Ma tahan klaas piima.", AMOUNT),
+    fix("eurot", "amount", "Kohv maksab kolm euro.", "Kohv maksab kolm eurot.", AMOUNT),
 
     fix("minna", "infinitive", "Ma tahan turule minema.", "Ma tahan turule minna.", DA),
     fix("olema", "infinitive", "Ma pean kodus olla.", "Ma pean kodus olema.", MA),

@@ -50,7 +50,7 @@ const heard = (time: ClockTime): ChoiceDrill => {
   const option = (each: ClockTime) => ({ id: timeClip(each), label: { et: timeDigits(each) } });
   const slip =
     minute === 0
-      ? { hour: hourBy(hour, 1), minute }
+      ? { hour: hourBy(hour, -1), minute }
       : minute < 30 && minute % 15
         ? { hour: hourBy(hour, -1), minute: (60 - minute) as Minute }
         : { hour: hourBy(hour, 1), minute };
@@ -66,7 +66,9 @@ const heard = (time: ClockTime): ChoiceDrill => {
         ? (minute === 15 ? [at(10, 45), at(12, 45)] : [at(10, 55), at(12, 5)]).map(option)
         : minute < 30 && minute % 15
           ? [at(hourBy(hour, -1), minute), at(hour, (60 - minute) as Minute)].map(option)
-          : [-1, 2].map((by) => option({ hour: hourBy(hour, by), minute })),
+          : (minute === 0 ? [1, -2] : [-1, 2]).map((by) =>
+              option({ hour: hourBy(hour, by), minute }),
+            ),
     explain: WHY[ruleOf(time)] as MessageDescriptor,
   };
 };

@@ -7287,6 +7287,621 @@ const COND_CLIPS: Record<string, Clip> = {
   "c-holiday": COND_CONVERSATION,
 };
 
+export const LETS_VERBS = [
+  { ma: "vaatama", n: "vaatan", we: "me vaatame", lets: "Vaatame!" },
+  { ma: "tegema", n: "teen", we: "me teeme", lets: "Teeme!" },
+  { ma: "lugema", n: "loen", we: "me loeme", lets: "Loeme!" },
+  { ma: "sõitma", n: "sõidan", we: "me sõidame", lets: "Sõidame!" },
+  { ma: "õppima", n: "õpin", we: "me õpime", lets: "Õpime!" },
+  { ma: "ostma", n: "ostan", we: "me ostame", lets: "Ostame!" },
+  { ma: "jooma", n: "joon", we: "me joome", lets: "Joome!" },
+  { ma: "minema", n: "lähen", we: "me läheme", lets: "Lähme!" },
+] as const;
+
+export const LAS_USES = [
+  "Las ta magab.",
+  "Las lapsed mängivad õues.",
+  "Las ma aitan sind.",
+  "Las Mari otsustab.",
+] as const;
+
+export const LETS_GO_TO = ["Lähme ujuma!", "Lähme sööma!", "Lähme koju!"] as const;
+
+export const LETS_GAPS = [
+  { id: "minema-ta", verb: "minema", before: "Las ta", after: "koju.", answer: "läheb" },
+  { id: "minema-nad", verb: "minema", before: "Las nad", after: "koju.", answer: "lähevad" },
+  { id: "minema-lets", verb: "minema", before: "Kati,", after: "koju!", answer: "lähme" },
+  { id: "sooma-ta", verb: "sööma", before: "Las ta", after: "kodus.", answer: "sööb" },
+  { id: "sooma-nad", verb: "sööma", before: "Las nad", after: "kodus.", answer: "söövad" },
+  { id: "sooma-lets", verb: "sööma", before: "Kati,", after: "midagi!", answer: "sööme" },
+  { id: "mangima-ta", verb: "mängima", before: "Las ta", after: "õues.", answer: "mängib" },
+  { id: "mangima-nad", verb: "mängima", before: "Las lapsed", after: "õues.", answer: "mängivad" },
+  { id: "mangima-lets", verb: "mängima", before: "Tule,", after: "koos!", answer: "mängime" },
+] as const;
+
+export const LETS_OPTIONS: Record<(typeof LETS_GAPS)[number]["verb"], readonly string[]> = {
+  minema: ["läheb", "lähevad", "lähme"],
+  sööma: ["sööb", "söövad", "sööme"],
+  mängima: ["mängib", "mängivad", "mängime"],
+};
+
+export const LETS_HEARD = [
+  {
+    id: "minema",
+    lets: "Lähme kinno!",
+    we: "Me läheme kinno.",
+    one: "Mine kinno!",
+    las: "Las ta läheb kinno.",
+  },
+  {
+    id: "sooma",
+    lets: "Sööme pitsat!",
+    we: "Me sööme pitsat.",
+    one: "Söö pitsat!",
+    las: "Las ta sööb pitsat.",
+  },
+  {
+    id: "vaatama",
+    lets: "Vaatame filmi!",
+    we: "Me vaatame filmi.",
+    one: "Vaata filmi!",
+    las: "Las ta vaatab filmi.",
+  },
+  {
+    id: "mangima",
+    lets: "Mängime õues!",
+    we: "Me mängime õues.",
+    one: "Mängi õues!",
+    las: "Las ta mängib õues.",
+  },
+] as const;
+
+export const LETS_TRANSLATE = [
+  "Lähme ujuma!",
+  "Las nad mängivad õues.",
+  "Las ma aitan sind.",
+  "Sööme koos!",
+  "Las ta otsustab.",
+  "Ostame koogi!",
+  "Vaatame täna õhtul filmi!",
+] as const;
+
+export const LETS_FIXES = [
+  { wrong: "Las ta tulla.", right: "Las ta tuleb." },
+  { wrong: "Las nad mängib õues.", right: "Las nad mängivad õues." },
+  { wrong: "Las ma aitab sind.", right: "Las ma aitan sind." },
+  { wrong: "Vaatama filmi!", right: "Vaatame filmi!" },
+  { wrong: "Las ta magama.", right: "Las ta magab." },
+  { wrong: "Me sööma koos.", right: "Me sööme koos." },
+  { wrong: "Ostame kook!", right: "Ostame koogi!" },
+] as const;
+
+export const LETS_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  ...Object.fromEntries(LETS_FIXES.map(({ right }) => [right, [right]])),
+  "Las ta tuleb.": ["Las ta tuleb.", "Las ta tulgu."],
+  "Las nad mängivad õues.": ["Las nad mängivad õues.", "Las nad mängigu õues."],
+  "Las ta magab.": ["Las ta magab.", "Las ta magagu."],
+};
+
+export const LETS_DIALOGUE = {
+  "d-kati-1": { text: "Mida me laupäeval teeme?", voice: "second" },
+  "d-kati-2": { text: "Hea mõte! Aga Jaan tahab ka tulla.", voice: "second" },
+  "d-sina-2": "Las ta tuleb!",
+  "d-kati-3": { text: "Ja pärast filmi?", voice: "second" },
+  "d-sina-3": "Sööme pitsat!",
+} as const satisfies Record<string, Clip>;
+
+export const LETS_CONVERSATION: Conversation = {
+  turns: [
+    {
+      voice: "second",
+      text: ["Jaan, mu õde Liisa tuleb laupäeval Tartust külla.", "Mida me temaga teeme?"],
+      say: "[cheerful] Jaan, mu õde Liisa tuleb laupäeval Tartust külla. Mida me temaga teeme?",
+    },
+    {
+      voice: "main",
+      text: ["Hea küsimus.", "Kas ta on varem Tallinnas käinud?"],
+    },
+    { voice: "second", text: "Ainult üks kord, lapsena." },
+    {
+      voice: "main",
+      text: ["Siis lähme hommikul vanalinna.", "Jalutame natuke ja vaatame Raekoja platsi."],
+    },
+    {
+      voice: "second",
+      text: ["Hea mõte.", "Aga Liisale ei meeldi kaua kõndida."],
+    },
+    {
+      voice: "main",
+      text: ["Siis võtame trammi.", "Või sõidame rattaga, see on lõbusam."],
+    },
+    {
+      voice: "second",
+      text: ["Ei, las ta puhkab.", "Ta sõidab ju kolm tundi bussiga."],
+    },
+    { voice: "main", text: ["Õige.", "Kus me lõunat sööme?"] },
+    {
+      voice: "second",
+      text: ["Lähme sellesse väikesesse kohvikusse mere ääres.", "Seal on väga hea kalasupp."],
+    },
+    { voice: "main", text: "Aga Liisa ei söö kala." },
+    {
+      voice: "second",
+      text: ["Ah jaa, ma unustasin.", "Siis las ta valib ise."],
+    },
+    { voice: "main", text: ["Jah, las ta otsustab.", "Ja pärastlõunal?"] },
+    {
+      voice: "second",
+      text: ["Lähme Kumusse!", "Liisale meeldib kunst."],
+    },
+    { voice: "main", text: "Kumu on ju kaugel." },
+    { voice: "second", text: "Ei ole, bussiga on see ainult kümme minutit." },
+    {
+      voice: "main",
+      text: "Mina tahaksin pigem jalgpalli vaadata.",
+      say: "[laughs] Mina tahaksin pigem jalgpalli vaadata.",
+    },
+    {
+      voice: "second",
+      text: ["Vaata siis kodus jalgpalli!", "Meie läheme kahekesi."],
+    },
+    { voice: "main", text: ["Ei, ei, ma tulen ka.", "Aga mida me õhtul teeme?"] },
+    {
+      voice: "second",
+      text: "Teeme kodus süüa ja kutsume sõbrad külla.",
+    },
+    {
+      voice: "main",
+      text: ["Kutsume ka Peetri ja Kati.", "Las nad toovad koogi."],
+    },
+    { voice: "second", text: ["Hea küll.", "Ja mina teen salatit."] },
+    { voice: "main", text: ["Ja las ma teen pitsa!"] },
+    {
+      voice: "second",
+      text: ["Sina?", "Pitsa?"],
+      say: "[surprised] Sina? Pitsa?",
+    },
+    { voice: "main", text: ["Jah!", "Ma olen seda juba kaks korda teinud."] },
+    {
+      voice: "second",
+      text: ["Hästi, tee siis!", "Aga ärme kutsu liiga palju inimesi.", "Korter on väike."],
+    },
+    { voice: "main", text: ["Hea küll, ainult neli-viis inimest.", "Ja pühapäeval?"] },
+    {
+      voice: "second",
+      text: [
+        "Pühapäeval magame kaua.",
+        "Siis viime Liisa bussijaama.",
+        "Tema buss läheb kell kolm.",
+      ],
+    },
+    {
+      voice: "main",
+      text: ["Enne seda lähme randa, kui ilm on ilus.", "Ujume ka?"],
+    },
+    {
+      voice: "second",
+      text: ["Mais?", "Vesi on veel liiga külm!", "Aga võtame teki kaasa ja istume liival."],
+      say: "[laughs] Mais? Vesi on veel liiga külm! Aga võtame teki kaasa ja istume liival.",
+    },
+    { voice: "main", text: ["Hea küll, siis jalutame ainult.", "Kirjutame Liisale kohe."] },
+    {
+      voice: "second",
+      text: ["Las ta vastab õhtul.", "Lähme nüüd sööma, ma olen näljane!"],
+    },
+  ],
+};
+
+export const LETS_WORDS = ["las", "koos", "kahekesi", "õues"] as const;
+
+export const LETS_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Lähme ujuma!": ["Lähme ujuma!", "Läheme ujuma!"],
+  "Las nad mängivad õues.": [
+    "Las nad mängivad õues.",
+    "Las nad mängivad väljas.",
+    "Las nad õues mängivad.",
+    "Las nemad mängivad õues.",
+    "Las nad mängigu õues.",
+    "Las nad õues mängigu.",
+    "Las nemad mängivad väljas.",
+    "Las nad väljas mängivad.",
+    "Las nad mängigu väljas.",
+    "Las nad väljas mängigu.",
+    "Lase neil õues mängida.",
+    "Laske neil õues mängida.",
+  ],
+  "Las ma aitan sind.": [
+    "Las ma aitan sind.",
+    "Las mina aitan sind.",
+    "Las ma aitan teid.",
+    "Las mina aitan teid.",
+    "Las ma sind aitan.",
+    "Lase mul sind aidata.",
+    "Lubage mul teid aidata.",
+  ],
+  "Sööme koos!": ["Sööme koos!", "Sööme üheskoos!"],
+  "Las ta otsustab.": [
+    "Las ta otsustab.",
+    "Las tema otsustab.",
+    "Las ta ise otsustab.",
+    "Las ta otsustab ise.",
+    "Las tema ise otsustab.",
+    "Las ta otsustagu.",
+    "Las ta ise otsustagu.",
+    "Las tema otsustab ise.",
+    "Las ta otsustagu ise.",
+    "Lase tal otsustada.",
+    "Laske tal otsustada.",
+  ],
+  "Ostame koogi!": ["Ostame koogi!", "Ostame ühe koogi!", "Ostame tordi!"],
+  "Vaatame täna õhtul filmi!": [
+    "Vaatame täna õhtul filmi!",
+    "Vaatame õhtul filmi!",
+    "Täna õhtul vaatame filmi!",
+    "Vaatame filmi täna õhtul!",
+    "Õhtul vaatame filmi!",
+    "Vaatame filmi õhtul!",
+  ],
+  "Lähme kinno!": ["Lähme kinno!", "Läheme kinno!"],
+  "Sööme pitsat!": ["Sööme pitsat!"],
+  "Vaatame filmi!": ["Vaatame filmi!"],
+  "Mängime õues!": ["Mängime õues!"],
+  "Las ta magab.": ["Las ta magab.", "Las ta magagu.", "Las tema magab."],
+  "Las lapsed mängivad õues.": [
+    "Las lapsed mängivad õues.",
+    "Las lapsed mängivad väljas.",
+    "Las lapsed õues mängivad.",
+    "Las lapsed mängigu õues.",
+    "Las lapsed õues mängigu.",
+  ],
+  "Mine kinno!": ["Mine kinno!"],
+  lähme: ["lähme", "läheme"],
+};
+
+const LETS_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...LETS_WORDS,
+    ...LETS_VERBS.flatMap(({ n, we, lets }) => [n, we, lets]),
+    ...LAS_USES,
+    ...LETS_GO_TO,
+    ...LETS_GAPS.map(({ before, answer, after }) => `${before} ${answer} ${after}`),
+    ...LETS_HEARD.flatMap(({ lets, we, one, las }) => [lets, we, one, las]),
+    ...LETS_TRANSLATE,
+    ...LETS_FIXES.map(({ right }) => right),
+  ]),
+  ...LETS_DIALOGUE,
+  "c-weekend": LETS_CONVERSATION,
+};
+
+export const IMPERSONAL_KINDS = {
+  regular: [
+    { ma: "rääkima", done: "räägitud", now: "räägitakse", past: "räägiti" },
+    { ma: "lugema", done: "loetud", now: "loetakse", past: "loeti" },
+    { ma: "elama", done: "elatud", now: "elatakse", past: "elati" },
+    { ma: "ootama", done: "oodatud", now: "oodatakse", past: "oodati" },
+    { ma: "ehitama", done: "ehitatud", now: "ehitatakse", past: "ehitati" },
+    { ma: "kuulma", done: "kuuldud", now: "kuuldakse", past: "kuuldi" },
+    { ma: "laulma", done: "lauldud", now: "lauldakse", past: "lauldi" },
+    { ma: "saama", done: "saadud", now: "saadakse", past: "saadi" },
+  ],
+  heart: [
+    { ma: "tegema", done: "tehtud", now: "tehakse", past: "tehti" },
+    { ma: "nägema", done: "nähtud", now: "nähakse", past: "nähti" },
+    { ma: "sööma", done: "söödud", now: "süüakse", past: "söödi" },
+    { ma: "jooma", done: "joodud", now: "juuakse", past: "joodi" },
+    { ma: "minema", done: "mindud", now: "minnakse", past: "mindi" },
+    { ma: "tulema", done: "tuldud", now: "tullakse", past: "tuldi" },
+    { ma: "panema", done: "pandud", now: "pannakse", past: "pandi" },
+    { ma: "müüma", done: "müüdud", now: "müüakse", past: "müüdi" },
+  ],
+} as const;
+
+export const IMPERSONAL_USES = [
+  "Eestis räägitakse eesti keelt.",
+  "Poes müüakse leiba.",
+  "Pood avatakse kell üheksa.",
+  "See maja ehitati 1920. aastal.",
+] as const;
+
+export const IMPERSONAL_FORM_QUIZ = [
+  { ma: "rääkima", done: "räägitud", when: "now", answer: "räägitakse" },
+  { ma: "lugema", done: "loetud", when: "past", answer: "loeti" },
+  { ma: "elama", done: "elatud", when: "now", answer: "elatakse" },
+  { ma: "laulma", done: "lauldud", when: "past", answer: "lauldi" },
+  { ma: "ehitama", done: "ehitatud", when: "now", answer: "ehitatakse" },
+  { ma: "kuulma", done: "kuuldud", when: "now", answer: "kuuldakse" },
+  { ma: "tegema", done: "tehtud", when: "past", answer: "tehti" },
+  { ma: "ootama", done: "oodatud", when: "past", answer: "oodati" },
+] as const;
+
+export const IMPERSONAL_GAPS = [
+  {
+    id: "raakima-person",
+    verb: "rääkima",
+    before: "Mari",
+    after: "eesti keelt.",
+    answer: "räägib",
+  },
+  {
+    id: "raakima-now",
+    verb: "rääkima",
+    before: "Nüüd",
+    after: "siin eesti keelt.",
+    answer: "räägitakse",
+  },
+  {
+    id: "raakima-past",
+    verb: "rääkima",
+    before: "Vanasti",
+    after: "siin saksa keelt.",
+    answer: "räägiti",
+  },
+  { id: "ehitama-person", verb: "ehitama", before: "Jaan", after: "maja.", answer: "ehitab" },
+  {
+    id: "ehitama-now",
+    verb: "ehitama",
+    before: "Siia",
+    after: "järgmisel aastal uus kool.",
+    answer: "ehitatakse",
+  },
+  {
+    id: "ehitama-past",
+    verb: "ehitama",
+    before: "See maja",
+    after: "1920. aastal.",
+    answer: "ehitati",
+  },
+  { id: "avama-person", verb: "avama", before: "Kati", after: "akna.", answer: "avab" },
+  {
+    id: "avama-now",
+    verb: "avama",
+    before: "Pood",
+    after: "iga päev kell üheksa.",
+    answer: "avatakse",
+  },
+  { id: "avama-past", verb: "avama", before: "Uus pood", after: "eile.", answer: "avati" },
+] as const;
+
+export const IMPERSONAL_OPTIONS: Record<
+  (typeof IMPERSONAL_GAPS)[number]["verb"],
+  readonly string[]
+> = {
+  rääkima: ["räägib", "räägitakse", "räägiti"],
+  ehitama: ["ehitab", "ehitatakse", "ehitati"],
+  avama: ["avab", "avatakse", "avati"],
+};
+
+export const IMPERSONAL_HEARD = [
+  { id: "smoke", now: "Siin suitsetatakse.", past: "Siin suitsetati.", no: "Siin ei suitsetata." },
+  {
+    id: "speak",
+    now: "Siin räägitakse eesti keelt.",
+    past: "Siin räägiti eesti keelt.",
+    no: "Siin ei räägita eesti keelt.",
+  },
+  {
+    id: "repair",
+    now: "Siin tehakse remonti.",
+    past: "Siin tehti remonti.",
+    no: "Siin ei tehta remonti.",
+  },
+  { id: "fish", now: "Siin süüakse kala.", past: "Siin söödi kala.", no: "Siin ei sööda kala." },
+] as const;
+
+export const IMPERSONAL_NO = [
+  { from: "Pühapäeval töötatakse.", to: "Pühapäeval ei töötata." },
+  { from: "Eile räägiti sellest.", to: "Eile ei räägitud sellest." },
+  { from: "Poes müüakse leiba.", to: "Poes ei müüda leiba." },
+  { from: "Siin tehakse remonti.", to: "Siin ei tehta remonti." },
+  { from: "Seal süüakse liha.", to: "Seal ei sööda liha." },
+  { from: "Vanasti tantsiti palju.", to: "Vanasti ei tantsitud palju." },
+] as const;
+
+export const IMPERSONAL_TRANSLATE = [
+  "Eestis räägitakse eesti keelt.",
+  "Pood avatakse kell üheksa.",
+  "See maja ehitati 1920. aastal.",
+  "Siin ei suitsetata.",
+  "Siin müüakse leiba.",
+  "Jaanipäeval tehakse lõke.",
+  "Pühapäeval ei töötata.",
+] as const;
+
+export const IMPERSONAL_FIXES = [
+  { wrong: "Eestis räägib eesti keelt.", right: "Eestis räägitakse eesti keelt." },
+  { wrong: "Siin ei suitsetatakse.", right: "Siin ei suitsetata." },
+  { wrong: "Eile räägitakse sellest.", right: "Eile räägiti sellest." },
+  { wrong: "Uus kool ehitab järgmisel aastal.", right: "Uus kool ehitatakse järgmisel aastal." },
+  { wrong: "Jaanipäeval tegakse lõke.", right: "Jaanipäeval tehakse lõke." },
+  { wrong: "Talvel minakse sauna.", right: "Talvel minnakse sauna." },
+  { wrong: "Siin ei räägiti saksa keelt.", right: "Siin ei räägitud saksa keelt." },
+] as const;
+
+export const IMPERSONAL_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  ...Object.fromEntries(IMPERSONAL_FIXES.map(({ right }) => [right, [right]])),
+  "Siin ei räägitud saksa keelt.": [
+    "Siin ei räägitud saksa keelt.",
+    "Siin ei räägita saksa keelt.",
+  ],
+  "Siin ei suitsetata.": ["Siin ei suitsetata.", "Siin ei suitsetatud."],
+};
+
+export const IMPERSONAL_CONVERSATION: Conversation = {
+  turns: [
+    {
+      voice: "second",
+      text: "Jaan, mida jaanipäeval Eestis tehakse?",
+      say: "[curious] Jaan, mida jaanipäeval Eestis tehakse?",
+    },
+    {
+      voice: "main",
+      text: [
+        "Oh, see on suur püha.",
+        "Jaanilaupäeval sõidetakse maale.",
+        "Linnad on siis peaaegu tühjad.",
+      ],
+    },
+    { voice: "second", text: "Ja mida maal tehakse?" },
+    {
+      voice: "main",
+      text: ["Tehakse suur lõke.", "Üle lõkke hüpatakse, see toob õnne."],
+    },
+    { voice: "second", text: "Kas lõkke ümber ka tantsitakse?" },
+    {
+      voice: "main",
+      text: ["Jah, tantsitakse ja lauldakse vanu laule.", "Kõik laulavad kaasa."],
+    },
+    { voice: "second", text: "Mida süüakse?" },
+    {
+      voice: "main",
+      text: ["Süüakse grillitud liha ja kartulisalatit.", "Juuakse õlut ja kalja."],
+    },
+    { voice: "second", text: "Kas kalja tehakse ise?" },
+    { voice: "main", text: "Maal tehakse kodus, linnas ostetakse poest." },
+    { voice: "second", text: "Kas magama ka minnakse?" },
+    {
+      voice: "main",
+      text: ["Ei minda!", "Jaaniööl ei maga keegi.", "Vanasti otsiti metsast sõnajalaõit."],
+      say: "[laughs] Ei minda! Jaaniööl ei maga keegi. Vanasti otsiti metsast sõnajalaõit.",
+    },
+    { voice: "second", text: "Mis see on?" },
+    {
+      voice: "main",
+      text: [
+        "Seda lille tegelikult ei ole olemas.",
+        "Aga öeldi, et kes selle leiab, saab rikkaks.",
+      ],
+    },
+    { voice: "second", text: "Kas seda otsitakse ka praegu?" },
+    { voice: "main", text: "Mõnikord otsitakse, aga rohkem nalja pärast." },
+    { voice: "second", text: "Kas jaanipäeval töötatakse?" },
+    {
+      voice: "main",
+      text: ["Ei, siis ei töötata.", "Kahekümne kolmas ja kahekümne neljas juuni on puhkepäevad."],
+    },
+    { voice: "second", text: "Ja mida linnas tehakse, kui kõik on maal?" },
+    { voice: "main", text: "Linnas peetakse ka pidusid, näiteks Tallinna vabaõhumuuseumis." },
+    { voice: "second", text: "Kus sina eelmisel aastal jaani pidasid?" },
+    {
+      voice: "main",
+      text: [
+        "Me olime vanaema juures Saaremaal.",
+        "Seal tehti mere ääres suur lõke.",
+        "Ja hommikul mindi ujuma.",
+      ],
+    },
+    {
+      voice: "second",
+      text: ["Hommikul vara?", "Vesi oli ju külm!"],
+      say: "[surprised] Hommikul vara? Vesi oli ju külm!",
+    },
+    {
+      voice: "main",
+      text: "Jah, aga nii tehakse meie peres igal aastal.",
+      say: "[laughs] Jah, aga nii tehakse meie peres igal aastal.",
+    },
+    { voice: "second", text: "Kas teie peres lauldi ka?" },
+    { voice: "main", text: "Jah, vanaisa mängis lõõtsa ja kõik laulsid kaasa." },
+    { voice: "second", text: ["Mulle meeldib see komme.", "Kas mind ka kutsutakse?"] },
+    {
+      voice: "main",
+      text: ["Muidugi!", "Sel aastal peetakse pidu minu suvilas.", "Seal on saun ka."],
+    },
+    { voice: "second", text: "Kas sauna minnakse enne lõket?" },
+    { voice: "main", text: "Jah, kõigepealt minnakse sauna ja siis süüakse." },
+    { voice: "second", text: "Mida ma pean kaasa võtma?" },
+    {
+      voice: "main",
+      text: [
+        "Võta kaasa soojad riided ja hea tuju.",
+        "Toitu tuuakse nii palju, et kõigile jätkub.",
+      ],
+    },
+    {
+      voice: "second",
+      text: "Aitäh, ma tulen hea meelega!",
+      say: "[cheerful] Aitäh, ma tulen hea meelega!",
+    },
+  ],
+};
+
+export const IMPERSONAL_WORDS = ["vanasti", "jaanipäev", "lõke", "püha", "komme"] as const;
+
+export const IMPERSONAL_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Eestis räägitakse eesti keelt.": [
+    "Eestis räägitakse eesti keelt.",
+    "Eesti keelt räägitakse Eestis.",
+  ],
+  "Pood avatakse kell üheksa.": [
+    "Pood avatakse kell üheksa.",
+    "Pood avatakse kell 9.",
+    "Kell üheksa avatakse pood.",
+    "Pood tehakse lahti kell üheksa.",
+    "Kell 9 avatakse pood.",
+    "Pood tehakse kell üheksa lahti.",
+    "Pood läheb kell üheksa lahti.",
+    "Pood läheb lahti kell üheksa.",
+    "Kell üheksa tehakse pood lahti.",
+  ],
+  "See maja ehitati 1920. aastal.": [
+    "See maja ehitati 1920. aastal.",
+    "See maja ehitati aastal 1920.",
+    "1920. aastal ehitati see maja.",
+    "See maja on ehitatud 1920. aastal.",
+    "See maja on 1920. aastal ehitatud.",
+    "See maja on ehitatud aastal 1920.",
+  ],
+  "Siin ei suitsetata.": [
+    "Siin ei suitsetata.",
+    "Siin ei tohi suitsetada.",
+    "Siin on suitsetamine keelatud.",
+    "Suitsetamine on siin keelatud.",
+    "Siin suitsetada ei tohi.",
+  ],
+  "Siin müüakse leiba.": ["Siin müüakse leiba.", "Leiba müüakse siin."],
+  "Jaanipäeval tehakse lõke.": [
+    "Jaanipäeval tehakse lõke.",
+    "Jaanipäeval tehakse lõket.",
+    "Lõke tehakse jaanipäeval.",
+    "Jaanipäeval teevad inimesed lõkke.",
+    "Inimesed teevad jaanipäeval lõkke.",
+    "Jaanipäeval süüdatakse lõke.",
+  ],
+  "Pühapäeval ei töötata.": [
+    "Pühapäeval ei töötata.",
+    "Pühapäeviti ei töötata.",
+    "Inimesed ei tööta pühapäeval.",
+    "Pühapäeval inimesed ei tööta.",
+    "Pühapäeviti inimesed ei tööta.",
+  ],
+  "Eile ei räägitud sellest.": [
+    "Eile ei räägitud sellest.",
+    "Eile sellest ei räägitud.",
+    "Sellest ei räägitud eile.",
+    "Sellest eile ei räägitud.",
+  ],
+  "Poes ei müüda leiba.": ["Poes ei müüda leiba.", "Poes leiba ei müüda.", "Leiba poes ei müüda."],
+  "Siin ei tehta remonti.": ["Siin ei tehta remonti.", "Siin remonti ei tehta."],
+  "Seal ei sööda liha.": ["Seal ei sööda liha.", "Seal liha ei sööda."],
+  "Vanasti ei tantsitud palju.": ["Vanasti ei tantsitud palju.", "Vanasti palju ei tantsitud."],
+};
+
+const IMPERSONAL_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...IMPERSONAL_WORDS,
+    ...Object.values(IMPERSONAL_KINDS).flatMap((verbs) =>
+      verbs.flatMap(({ done, now, past }) => [done, now, past]),
+    ),
+    ...IMPERSONAL_USES,
+    ...IMPERSONAL_GAPS.map(({ before, answer, after }) => `${before} ${answer} ${after}`),
+    ...IMPERSONAL_HEARD.flatMap(({ now, past, no }) => [now, past, no]),
+    ...IMPERSONAL_NO.map(({ to }) => to),
+    ...IMPERSONAL_TRANSLATE,
+    ...IMPERSONAL_FIXES.map(({ right }) => right),
+  ]),
+  "c-midsummer": IMPERSONAL_CONVERSATION,
+};
+
 export const PAST_NO_PERSONS = ["ma", "sa", "ta", "me", "te", "nad"] as const;
 
 export const PAST_NO_TABLE = [
@@ -8233,6 +8848,8 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "majades-inimestele": PLURAL_CASE_CLIPS,
   "olen-lugenud": PERFECT_CLIPS,
   laheksin: COND_CLIPS,
+  "lahme-las": LETS_CLIPS,
+  raagitakse: IMPERSONAL_CLIPS,
   turul: MARKET_CLIPS,
   lihtminevik: PAST_CLIPS,
   "mineviku-eitus": PAST_NO_CLIPS,

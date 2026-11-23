@@ -299,6 +299,9 @@ msgstr "Безкоштовний урок про заперечення в ми�
 msgid "A free lesson on saying where you are in Estonian: -s, usually for in (Tallinnas, koolis), -l, usually for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про те, як сказати, де ти: -s зазвичай означає «в» (Tallinnas, koolis), -l — «на» (laual, tööl), які місця мають яке закінчення і як відповісти на kus, «де». Кожне речення озвучене."
 
+msgid "A free lesson on suggesting and allowing in Estonian: let’s, usually the present’s me form without me (teeme, vaatame; minema gives lähme), lähme with the -ma infinitive (lähme ujuma), and las, usually with the present (las ta tuleb, las ma aitan). Every sentence is read aloud."
+msgstr "Безкоштовний урок про те, як пропонувати й дозволяти естонською: «давай» — зазвичай форма теперішнього часу для me без me (teeme, vaatame; від minema — lähme), lähme з інфінітивом на -ma (lähme ujuma) і las, зазвичай із теперішнім часом (las ta tuleb, las ma aitan). Кожне речення озвучене."
+
 msgid "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
 msgstr "Безкоштовний урок про естонські форми на -ma, -mas і -mast: lähen ujuma (іду плавати), olen ujumas (на плаванні) і tulen ujumast (повертаюся з плавання). Вони відповідають на kuhu?, kus? і kust?, як і назви місць. А ще — коли казати lähen, käin чи tulen. Кожне речення озвучене."
 
@@ -313,6 +316,9 @@ msgstr "Безкоштовний урок про родовий відмінок
 
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "Безкоштовний урок про наказовий спосіб в естонській мові: основа дієслова як наказ (loe!, istu!, tule siia!), ära для «не роби», форми на -ge і -ke для кількох людей або на «ви», щоденні накази на кшталт räägi aeglasemalt, palun і коротка розмова в кав’ярні. Кожне речення озвучене."
+
+msgid "A free lesson on the Estonian impersonal, for what people do with no person named: building it from the -tud form (räägitud, räägitakse, räägiti), the verbs to learn by heart (tehakse, süüakse, minnakse), saying no (ei räägita, ei räägitud) and the case of the object. Every sentence is read aloud."
+msgstr "Безкоштовний урок про безособову форму в естонській — що роблять люди, коли особу не названо: утворення від форми на -tud (räägitud, räägitakse, räägiti), дієслова, які треба вивчити напам’ять (tehakse, süüakse, minnakse), заперечення (ei räägita, ei räägitud) і відмінок об’єкта. Кожне речення озвучене."
 
 msgid "A free lesson on the Estonian object: the partitive for part of something, an action still going on, after ei and after verbs such as ootama and otsima on their own; and for a noun, usually the genitive for the whole thing done (Ma lugesin raamatu läbi) and the nominative in commands (Osta pilet!). Every sentence is read aloud."
 msgstr "Безкоштовний урок про об’єкт в естонській мові: партитив для частини, для дії, що триває, після ei і після дієслів на кшталт ootama та otsima без інших слів; а в іменника зазвичай родовий для завершеної дії над усім цілим (Ma lugesin raamatu läbi) і називний у наказах (Osta pilet!). Кожне речення озвучене."
@@ -694,6 +700,9 @@ msgstr "В естонській є і <0>{typed}</0>, і <1>{right}</1>, і зн
 
 msgid "Estonian imperative: giving commands"
 msgstr "Наказовий спосіб в естонській мові"
+
+msgid "Estonian impersonal voice"
+msgstr "Безособова форма в естонській мові"
 
 msgid "Estonian infinitives after other verbs"
 msgstr "Інфінітив після інших дієслів в естонській мові"
@@ -1270,6 +1279,9 @@ msgstr "Пройдено уроків: <0>{doneCount}</0> з {builtCount}"
 
 msgid "Let’s and let them"
 msgstr "«Ходімо» і «нехай»"
+
+msgid "Let’s and let them in Estonian"
+msgstr "«Ходімо» і «нехай» в естонській мові"
 
 msgid "Listen"
 msgstr "Послухати"

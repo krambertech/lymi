@@ -415,9 +415,6 @@ msgstr "смотреть"
 msgid "to more than one"
 msgstr "нескольким людям"
 
-msgid "To more than one"
-msgstr "Нескольким людям"
-
 msgid "To more than one person"
 msgstr "Нескольким людям"
 

@@ -88,7 +88,7 @@ export const DRILLS: DrillBank = {
   rules: {
     one: { label: msg`The command to one person`, section: "stem" },
     dont: { label: msg`<et>Ära</et>, don’t`, section: "ara" },
-    more: { label: msg`To more than one`, section: "more" },
+    more: { label: msg`To more than one, or polite`, section: "more" },
   },
   items: [
     ...KASKIV_TYPED.map(typed),

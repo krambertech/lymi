@@ -247,7 +247,7 @@ function useContent() {
       replies: [
         { line: said("d-sina-1"), right: true },
         { line: "Ma elan Tallinnas.", why: t`That says where you live. Mari asked how you are.` },
-        { line: "Kohv maksab kolm eurot.", why: t`That’s a price. Mari asked how you are.` },
+        { line: "Kolm eurot.", why: t`That’s a price. Mari asked how you are.` },
       ],
     },
     { who: "them", clip: "d-mari-2", line: said("d-mari-2") },
@@ -265,11 +265,12 @@ function useContent() {
           ),
         },
         {
-          line: "Ei, ma ei joon kohvi.",
+          line: "Jah, ma jood kohvi.",
           why: (
             <Trans>
-              After <span lang="et">ei</span>, the verb drops its ending:{" "}
-              <span lang="et">ei joo</span>.
+              With <span lang="et">ma</span>, the verb ends in <span lang="et">-n</span>:{" "}
+              <span lang="et">ma joon</span>. <span lang="et">Jood</span> goes with{" "}
+              <span lang="et">sa</span>.
             </Trans>
           ),
         },

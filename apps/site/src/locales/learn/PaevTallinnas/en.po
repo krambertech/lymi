@@ -73,9 +73,6 @@ msgstr "A time takes <et>kell</et> and the number: <et>kell kümme</et>, at ten.
 msgid "A voice message from Jaan"
 msgstr "A voice message from Jaan"
 
-msgid "After <0>ei</0>, the verb drops its ending: <1>ei joo</1>."
-msgstr "After <0>ei</0>, the verb drops its ending: <1>ei joo</1>."
-
 msgid "After <0>ei</0>, the verb drops its ending: <1>ei tööta</1>."
 msgstr "After <0>ei</0>, the verb drops its ending: <1>ei tööta</1>."
 
@@ -513,6 +510,9 @@ msgstr "Which question does it answer?"
 
 msgid "With <0>ma</0>, the verb ends in <1>-n</1>: <2>ma joon</2>."
 msgstr "With <0>ma</0>, the verb ends in <1>-n</1>: <2>ma joon</2>."
+
+msgid "With <0>ma</0>, the verb ends in <1>-n</1>: <2>ma joon</2>. <3>Jood</3> goes with <4>sa</4>."
+msgstr "With <0>ma</0>, the verb ends in <1>-n</1>: <2>ma joon</2>. <3>Jood</3> goes with <4>sa</4>."
 
 msgid "Write back to Mari"
 msgstr "Write back to Mari"

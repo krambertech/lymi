@@ -415,9 +415,6 @@ msgstr "дивитися"
 msgid "to more than one"
 msgstr "кільком людям"
 
-msgid "To more than one"
-msgstr "Кільком людям"
-
 msgid "To more than one person"
 msgstr "До кількох людей"
 

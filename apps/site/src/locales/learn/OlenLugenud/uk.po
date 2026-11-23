@@ -43,11 +43,8 @@ msgstr "Названо завершений час, минулий місяць,
 msgid "A finished time is named, so usually the simple past."
 msgstr "Названо завершений час, тож зазвичай простий минулий."
 
-msgid "A finished time is named, yesterday, so the simple past."
-msgstr "Названо завершений час, учора, тож простий минулий."
-
-msgid "After <0>ei</0>, <1>olema</1> is <2>ole</2> for every person."
-msgstr "Після <0>ei</0> <1>olema</1> має форму <2>ole</2> для всіх осіб."
+msgid "A finished time is named, yesterday, so usually the simple past."
+msgstr "Названо завершений час, учора, тож зазвичай простий минулий."
 
 msgid "After <0>ei</0>: <1>ei ole</1>."
 msgstr "Після <0>ei</0>: <1>ei ole</1>."
@@ -207,6 +204,9 @@ msgstr "У дієслові на <0>-lla</0> зникає одне <1>l</1>: <2>
 msgid "In a sentence"
 msgstr "У реченні"
 
+msgid "In the present, after <0>ei</0>, <1>olema</1> is <2>ole</2> for every person."
+msgstr "У теперішньому часі після <0>ei</0> <1>olema</1> має форму <2>ole</2> для всіх осіб."
+
 msgid "In the present, after <et>ei</et>, <et>olema</et> is <et>ole</et> for every person."
 msgstr "У теперішньому часі після <et>ei</et> дієслово <et>olema</et> має форму <et>ole</et> для всіх осіб."
 
@@ -267,14 +267,14 @@ msgstr "Минулого літа"
 msgid "Last week I read the book to the end."
 msgstr "Минулого тижня я дочитав книжку."
 
-msgid "Last week is named, so the simple past."
-msgstr "Названо минулий тиждень, тож простий минулий."
+msgid "Last week is named, so usually the simple past."
+msgstr "Названо минулий тиждень, тож зазвичай простий минулий."
 
 msgid "Last winter"
 msgstr "Минулої зими"
 
-msgid "Lesson {past}’s simple past tells what happened at a finished time you name: <0/> The perfect reaches up to now, with no finished time named."
-msgstr "Простий минулий з уроку {past} каже, що сталося в названий завершений час: <0/> Перфект сягає аж дотепер, і завершений час не названо."
+msgid "Lesson {past}’s simple past tells what happened, usually at a finished time you name: <0/> The perfect reaches up to now, usually with no finished time named."
+msgstr "Простий минулий з уроку {past} каже, що сталося, зазвичай у названий завершений час: <0/> Перфект сягає аж дотепер, і завершений час зазвичай не названо."
 
 msgid "Lesson {pastNo} used a verb form ending in <0>-nud</0> to say no in the past: <1>ma ei lugenud</1>. The same form builds two more tenses in this lesson."
 msgstr "В уроці {pastNo} форма на <0>-nud</0> допомагала заперечувати в минулому: <1>ma ei lugenud</1>. У цьому уроці вона утворює ще два часи."
@@ -426,11 +426,11 @@ msgstr "Пором уже відплив"
 msgid "The perfect and the pluperfect of lugema"
 msgstr "Перфект і плюсквамперфект дієслова lugema"
 
-msgid "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form, for what has happened with no finished time named: <2>Ma olen Tartus käinud.</2>"
-msgstr "Перфект — це <0>olema</0> у теперішньому часі плюс форма на <1>-nud</1>: для того, що сталося, коли завершений час не названо: <2>Ma olen Tartus käinud.</2>"
+msgid "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form, usually for what has happened with no finished time named: <2>Ma olen Tartus käinud.</2>"
+msgstr "Перфект — це <0>olema</0> у теперішньому часі плюс форма на <1>-nud</1>: зазвичай для того, що сталося, коли завершений час не названо: <2>Ma olen Tartus käinud.</2>"
 
-msgid "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form: <2/> It says something has happened, with no finished time named: ever, already, or not yet."
-msgstr "Перфект — це <0>olema</0> у теперішньому часі плюс форма на <1>-nud</1>: <2/> Він каже, що щось сталося, а завершений час не названо: колись, уже чи ще ні."
+msgid "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form: <2/> It says something has happened, usually with no finished time named: ever, already, or not yet."
+msgstr "Перфект — це <0>olema</0> у теперішньому часі плюс форма на <1>-nud</1>: <2/> Він каже, що щось сталося, а завершений час зазвичай не названо: колись, уже чи ще ні."
 
 msgid "The perfect reaches up to now. The pluperfect is before another past."
 msgstr "Перфект сягає аж дотепер. Плюсквамперфект — раніше за інше минуле."

@@ -332,7 +332,7 @@ function useContent() {
         src: src("Ma käisin eile Tartus."),
         answers: PERFECT_ANSWERS["Ma käisin eile Tartus."],
         pair: ["past", "went-yesterday"],
-        explain: <Trans>A finished time is named, yesterday, so the simple past.</Trans>,
+        explain: <Trans>A finished time is named, yesterday, so usually the simple past.</Trans>,
       },
       {
         kind: "translate",
@@ -387,15 +387,15 @@ function useContent() {
         src: src("Eelmisel nädalal lugesin ma raamatu läbi."),
         answers: PERFECT_ANSWERS["Eelmisel nädalal lugesin ma raamatu läbi."],
         pair: ["past", "last-week"],
-        explain: <Trans>Last week is named, so the simple past.</Trans>,
+        explain: <Trans>Last week is named, so usually the simple past.</Trans>,
       },
     ];
 
     const fixWhy: Record<string, ReactNode> = {
       "Ma ei ole seda filmi näinud.": (
         <Trans>
-          After <b lang="et">ei</b>, <b lang="et">olema</b> is <b lang="et">ole</b> for every
-          person.
+          In the present, after <b lang="et">ei</b>, <b lang="et">olema</b> is <b lang="et">ole</b>{" "}
+          for every person.
         </Trans>
       ),
       "Ta on juba koju läinud.": (
@@ -626,7 +626,8 @@ export function OlenLugenudLesson() {
         </Trans>,
         <Trans key="2">
           The perfect is <b lang="et">olema</b> in the present plus the <b lang="et">-nud</b> form,
-          for what has happened with no finished time named: <b lang="et">Ma olen Tartus käinud.</b>
+          usually for what has happened with no finished time named:{" "}
+          <b lang="et">Ma olen Tartus käinud.</b>
         </Trans>,
         <Trans key="3">
           When a finished past time is named, such as <b lang="et">eile</b>, usually use the simple
@@ -709,7 +710,8 @@ export function OlenLugenudLesson() {
                   <Trans>
                     The perfect is <b lang="et">olema</b> in the present plus the{" "}
                     <b lang="et">-nud</b> form: <Word w="Ma olen Tartus käinud." /> It says
-                    something has happened, with no finished time named: ever, already, or not yet.
+                    something has happened, usually with no finished time named: ever, already, or
+                    not yet.
                   </Trans>
                 </p>
                 <p>
@@ -761,9 +763,9 @@ export function OlenLugenudLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Lesson {past}’s simple past tells what happened at a finished time you name:{" "}
-                    <Word w="Eile käisin ma Tartus." /> The perfect reaches up to now, with no
-                    finished time named.
+                    Lesson {past}’s simple past tells what happened, usually at a finished time you
+                    name: <Word w="Eile käisin ma Tartus." /> The perfect reaches up to now, usually
+                    with no finished time named.
                   </Trans>
                 </p>
                 <p>

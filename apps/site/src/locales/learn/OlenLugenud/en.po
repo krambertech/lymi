@@ -43,11 +43,8 @@ msgstr "A finished time is named, last month, so usually the simple past: <0>kä
 msgid "A finished time is named, so usually the simple past."
 msgstr "A finished time is named, so usually the simple past."
 
-msgid "A finished time is named, yesterday, so the simple past."
-msgstr "A finished time is named, yesterday, so the simple past."
-
-msgid "After <0>ei</0>, <1>olema</1> is <2>ole</2> for every person."
-msgstr "After <0>ei</0>, <1>olema</1> is <2>ole</2> for every person."
+msgid "A finished time is named, yesterday, so usually the simple past."
+msgstr "A finished time is named, yesterday, so usually the simple past."
 
 msgid "After <0>ei</0>: <1>ei ole</1>."
 msgstr "After <0>ei</0>: <1>ei ole</1>."
@@ -207,6 +204,9 @@ msgstr "In a <0>-lla</0> verb, one <1>l</1> goes: <2>{0}, {1}</2>."
 msgid "In a sentence"
 msgstr "In a sentence"
 
+msgid "In the present, after <0>ei</0>, <1>olema</1> is <2>ole</2> for every person."
+msgstr "In the present, after <0>ei</0>, <1>olema</1> is <2>ole</2> for every person."
+
 msgid "In the present, after <et>ei</et>, <et>olema</et> is <et>ole</et> for every person."
 msgstr "In the present, after <et>ei</et>, <et>olema</et> is <et>ole</et> for every person."
 
@@ -267,14 +267,14 @@ msgstr "Last summer"
 msgid "Last week I read the book to the end."
 msgstr "Last week I read the book to the end."
 
-msgid "Last week is named, so the simple past."
-msgstr "Last week is named, so the simple past."
+msgid "Last week is named, so usually the simple past."
+msgstr "Last week is named, so usually the simple past."
 
 msgid "Last winter"
 msgstr "Last winter"
 
-msgid "Lesson {past}’s simple past tells what happened at a finished time you name: <0/> The perfect reaches up to now, with no finished time named."
-msgstr "Lesson {past}’s simple past tells what happened at a finished time you name: <0/> The perfect reaches up to now, with no finished time named."
+msgid "Lesson {past}’s simple past tells what happened, usually at a finished time you name: <0/> The perfect reaches up to now, usually with no finished time named."
+msgstr "Lesson {past}’s simple past tells what happened, usually at a finished time you name: <0/> The perfect reaches up to now, usually with no finished time named."
 
 msgid "Lesson {pastNo} used a verb form ending in <0>-nud</0> to say no in the past: <1>ma ei lugenud</1>. The same form builds two more tenses in this lesson."
 msgstr "Lesson {pastNo} used a verb form ending in <0>-nud</0> to say no in the past: <1>ma ei lugenud</1>. The same form builds two more tenses in this lesson."
@@ -426,11 +426,11 @@ msgstr "The ferry had already left"
 msgid "The perfect and the pluperfect of lugema"
 msgstr "The perfect and the pluperfect of lugema"
 
-msgid "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form, for what has happened with no finished time named: <2>Ma olen Tartus käinud.</2>"
-msgstr "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form, for what has happened with no finished time named: <2>Ma olen Tartus käinud.</2>"
+msgid "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form, usually for what has happened with no finished time named: <2>Ma olen Tartus käinud.</2>"
+msgstr "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form, usually for what has happened with no finished time named: <2>Ma olen Tartus käinud.</2>"
 
-msgid "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form: <2/> It says something has happened, with no finished time named: ever, already, or not yet."
-msgstr "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form: <2/> It says something has happened, with no finished time named: ever, already, or not yet."
+msgid "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form: <2/> It says something has happened, usually with no finished time named: ever, already, or not yet."
+msgstr "The perfect is <0>olema</0> in the present plus the <1>-nud</1> form: <2/> It says something has happened, usually with no finished time named: ever, already, or not yet."
 
 msgid "The perfect reaches up to now. The pluperfect is before another past."
 msgstr "The perfect reaches up to now. The pluperfect is before another past."

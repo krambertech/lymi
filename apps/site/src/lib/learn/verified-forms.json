@@ -370,6 +370,7 @@
   "kogu": "kogu",
   "koguma": "koguma",
   "kohe": "kohe",
+  "kohta": "kohta",
   "kohtumiseni": "kohtumiseni",
   "kohupiimakoogid": "kohupiimakook",
   "kohv": "kohv",
@@ -946,7 +947,9 @@
   "peeter": "by hand: a name",
   "perenaine": "perenaine",
   "pesad": "pesa",
+  "pesasid": "pesa",
   "pese": "pesema",
+  "pesi": "pesa",
   "pidama": "pidama",
   "piim": "piim",
   "piima": "piim",
@@ -1063,6 +1066,7 @@
   "rikas": "rikas",
   "rikast": "rikas",
   "rikka": "rikas",
+  "ringi": "ringi",
   "rohkem": "rohkem",
   "rong": "rong",
   "rongiga": "rong",
@@ -1636,5 +1640,6 @@
   "üldse": "üldse",
   "üleeile": "üleeile",
   "ülehomme": "ülehomme",
-  "üles": "üles"
+  "üles": "üles",
+  "ütlen": "ütlema"
 }

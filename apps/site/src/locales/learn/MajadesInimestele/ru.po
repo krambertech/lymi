@@ -70,9 +70,6 @@ msgstr "В каждом предложении одна форма множес�
 msgid "Endings on the plural genitive"
 msgstr "Окончания после родительного множественного"
 
-msgid "Every case on one stem"
-msgstr "Все падежи на одной основе"
-
 msgid "Everyone is welcome."
 msgstr "Всем рады."
 
@@ -277,6 +274,9 @@ msgstr "школа"
 msgid "shop"
 msgstr "магазин"
 
+msgid "Six cases on one stem"
+msgstr "Шесть падежей на одной основе"
+
 msgid "Some words have a second, shorter plural, such as <0>majus</0> beside <1>majades</1>. The long one is always right, so this lesson uses it."
 msgstr "У некоторых слов есть ещё и более короткое множественное, например <0>majus</0> рядом с <1>majades</1>. Длинная форма всегда правильна, поэтому в уроке — она."
 
@@ -385,8 +385,8 @@ msgstr "Родительный множественного от sõber."
 msgid "The plural genitive usually comes from the partitive, the third of lesson {forms}’s three forms. If the partitive ends in <0>-t</0>, add <1>-e</1>: <2/>. If not, drop any <3>-d</3> and add <4>-de</4>: <5/>. Tap each form in both columns to hear it."
 msgstr "Родительный множественного обычно образуется от партитива, третьей из трёх форм из урока {forms}. Если партитив оканчивается на <0>-t</0>, добавь <1>-e</1>: <2/>. Если нет, убери <3>-d</3>, если он есть, и добавь <4>-de</4>: <5/>. Нажми каждую форму в обоих столбцах, чтобы её услышать."
 
-msgid "The plurals with <0>-s</0>, <1>-st</1>, <2>-sse</2>, <3>-le</3>, <4>-l</4> and <5>-ga</5> are the plural genitive plus that ending: <6>majades, inimestele, sõpradega</6>."
-msgstr "Формы множественного с <0>-s</0>, <1>-st</1>, <2>-sse</2>, <3>-le</3>, <4>-l</4> и <5>-ga</5> — это родительный множественного плюс это окончание: <6>majades, inimestele, sõpradega</6>."
+msgid "The plurals with <0>-s</0>, <1>-st</1>, <2>-sse</2>, <3>-le</3>, <4>-l</4> and <5>-ga</5> can always be built as the plural genitive plus that ending: <6>majades, inimestele, sõpradega</6>."
+msgstr "Формы множественного с <0>-s</0>, <1>-st</1>, <2>-sse</2>, <3>-le</3>, <4>-l</4> и <5>-ga</5> всегда можно образовать как родительный множественного плюс это окончание: <6>majades, inimestele, sõpradega</6>."
 
 msgid "The right stem for the plural"
 msgstr "Правильная основа для множественного"
@@ -457,8 +457,8 @@ msgstr "Кто это говорит?"
 msgid "With"
 msgstr "С"
 
-msgid "With <0>käima</0>, going and coming back, the place takes <1>-s</1>."
-msgstr "После <0>käima</0> («сходить и вернуться») место получает <1>-s</1>."
+msgid "With <0>käima</0>, going and coming back, the place usually takes <1>-s</1>."
+msgstr "После <0>käima</0> («сходить и вернуться») место обычно получает <1>-s</1>."
 
 msgid "Write each sentence in Estonian. Each one has a plural noun in a case."
 msgstr "Напиши каждое предложение по-эстонски. В каждом есть существительное во множественном числе в каком-то падеже."

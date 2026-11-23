@@ -1,6 +1,6 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import type { ChoiceDrill, DrillBank, FormDrill, SentenceDrill } from "../../../lib/learn/drill";
+import type { ChoiceDrill, DrillBank, FormDrill } from "../../../lib/learn/drill";
 import { numberWords } from "../../../lib/learn/estonian-numbers";
 
 const TEIST = msg`<et>-teist</et> makes eleven to nineteen; <et>-kümmend</et> makes the tens.`;
@@ -49,17 +49,14 @@ const heard = (n: number, other: number, rule: string, explain: MessageDescripto
 
 const ALIKE = msg`<et>Kaks</et> has a short a and a k; <et>kuus</et> a long uu. <et>Kaheksa</et> starts with ka, <et>üheksa</et> with ü.`;
 
-const sentence = (
-  id: string,
-  said: string,
-  item: { kind: "dictation" } | { kind: "translate"; prompt: MessageDescriptor },
-): SentenceDrill => ({
-  ...item,
+const heardIn = (id: string, said: string, answer: string, wrong: string): ChoiceDrill => ({
+  kind: "choice",
   id,
   rule: "sentence",
   say: said,
-  answers: [said],
-  explain: msg`After a number from two up, the word takes the partitive: <et>kaks kassi</et>, <et>kaks eurot</et>.`,
+  answer: { id: answer, label: { et: answer } },
+  wrong: [{ id: wrong, label: { et: wrong } }],
+  explain: ALIKE,
 });
 
 export const DRILLS: DrillBank = {
@@ -70,8 +67,8 @@ export const DRILLS: DrillBank = {
     sentence: { label: msg`Numbers in sentences`, section: "wild" },
   },
   items: [
-    typed(12, "teist", TEIST),
-    typed(20, "teist", TEIST),
+    typed(16, "teist", TEIST),
+    typed(60, "teist", TEIST),
     typed(15, "teist", TEIST),
     typed(50, "teist", TEIST),
     typed(17, "teist", TEIST),
@@ -82,25 +79,17 @@ export const DRILLS: DrillBank = {
     typed(43, "words", BOTH),
     typed(68, "words", BOTH),
     typed(91, "words", BOTH),
-    typed(200, "words", BIG),
+    typed(400, "words", BIG),
     typed(300, "words", BIG),
     typed(1000, "words", BIG),
-    typed(2000, "words", BIG),
+    typed(3000, "words", BIG),
     heard(2, 6, "alike", ALIKE),
     heard(6, 2, "alike", ALIKE),
     heard(8, 9, "alike", ALIKE),
     heard(9, 8, "alike", ALIKE),
-    sentence("two-cats", "Mul on kaks kassi.", { kind: "dictation" }),
-    sentence("six-cats", "Mul on kuus kassi.", { kind: "dictation" }),
-    sentence("coffee-two", "Kohv maksab kaks eurot.", { kind: "dictation" }),
-    sentence("coffee-four", "Kohv maksab neli eurot.", { kind: "dictation" }),
-    {
-      kind: "dictation",
-      id: "flat-eighteen",
-      rule: "teist",
-      say: "Minu korteri number on kaheksateist.",
-      answers: ["Minu korteri number on kaheksateist."],
-      explain: msg`<et>Kaheksateist</et>: <et>kaheksa</et> and <et>-teist</et>, 18.`,
-    },
+    heardIn("two-cats", "Mul on kaks kassi.", "kaks", "kuus"),
+    heardIn("six-cats", "Mul on kuus kassi.", "kuus", "kaks"),
+    heardIn("coffee-two", "Kohv maksab kaks eurot.", "kaks", "kuus"),
+    heardIn("coffee-six", "Kohv maksab kuus eurot.", "kuus", "kaks"),
   ],
 };

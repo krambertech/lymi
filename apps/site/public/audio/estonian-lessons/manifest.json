@@ -11447,7 +11447,7 @@
     ]
   },
   "tutvumine/p-message": {
-    "text": "Tere, Mari! Mina olen Andres. Ma olen pärit Ukrainast. Ma elan Tartus ja töötan kontoris. Ma ei räägi palju eesti keelt. Kus sina elad?",
+    "text": "Tere, Mari! Kuidas läheb? Mina olen Andres. Ma olen pärit Ukrainast. Ma elan Tartus ja töötan kontoris. Ma ei räägi palju eesti keelt.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -11511,8 +11511,28 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "numbrid/kohv-maksab-neli-eurot": {
-    "text": "Kohv maksab neli eurot.",
+  "numbrid/nelisada": {
+    "text": "nelisada",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/kolm-tuhat": {
+    "text": "kolm tuhat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/kuusteist": {
+    "text": "kuusteist",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/kuusku2mmend": {
+    "text": "kuuskümmend",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/kohv-maksab-kuus-eurot": {
+    "text": "Kohv maksab kuus eurot.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

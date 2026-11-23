@@ -11,7 +11,7 @@ import {
   timeWords,
 } from "../../../lib/learn/estonian-time";
 
-const HOUR = msg`On the hour, say the hour alone: <et>kell on kaks</et>.`;
+const HOUR = msg`On the hour, say the hour alone: <et>kell on kolm</et>.`;
 const HALF = msg`<et>Pool</et>, <et>veerand</et> and <et>kolmveerand</et> name the hour that’s coming.`;
 const PAST = msg`<et>Läbi</et> counts on from the hour that has struck.`;
 const TO = msg`<et>Pärast</et> counts down to the hour that’s coming.`;
@@ -30,7 +30,7 @@ const typed = (time: ClockTime): FormDrill => ({
   base: timeDigits(time),
   gloss: msg`a time`,
   cue: msg`in words`,
-  answers: [timeWords(time)],
+  answers: [timeWords(time), `kell on ${timeWords(time)}`],
   say: timeSentence(time),
   explain: WHY[ruleOf(time)] as MessageDescriptor,
 });

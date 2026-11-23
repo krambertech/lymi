@@ -229,14 +229,18 @@ export const NUMBER_DRILLED = [
   "nelikümmend kolm",
   "kuuskümmend kaheksa",
   "üheksakümmend üks",
+  "kuusteist",
+  "kuuskümmend",
   "kakssada",
+  "nelisada",
   "tuhat",
   "kaks tuhat",
+  "kolm tuhat",
   "kolmsada",
   "Mul on kaks kassi.",
   "Mul on kuus kassi.",
   "Kohv maksab kaks eurot.",
-  "Kohv maksab neli eurot.",
+  "Kohv maksab kuus eurot.",
   "Minu korteri number on kaheksateist.",
 ] as const;
 
@@ -1158,7 +1162,6 @@ export const TUTVUMINE_PASSAGES = {
   ],
 } as const;
 
-/** Words and phrases with a card: the passage's words, and the phrases worth keeping. */
 export const TUTVUMINE_TALK: Conversation = {
   turns: [
     { voice: "second", text: ["Tere!", "Kas sa oled Peeter?"] },
@@ -1262,6 +1265,8 @@ export const TUTVUMINE_TRANSLATED = [
       "Mina ei tööta, ma õpin.",
       "Ma ei tööta, mina õpin.",
       "Mina ei tööta, mina õpin.",
+      "Ma ei tööta, õpin.",
+      "Mina ei tööta, õpin.",
     ],
   },
   {
@@ -1305,13 +1310,14 @@ export const TUTVUMINE_FIXES = [
 
 export const TUTVUMINE_MESSAGE = [
   "Tere, Mari!",
+  "Kuidas läheb?",
   "Mina olen Andres.",
   "Ma olen pärit Ukrainast.",
   "Ma elan Tartus ja töötan kontoris.",
   "Ma ei räägi palju eesti keelt.",
-  "Kus sina elad?",
 ] as const;
 
+/** Words and phrases with a card: the passage's words, and the phrases worth keeping. */
 export const TUTVUMINE_WORDS = [
   "nimi",
   "elan",
@@ -1342,7 +1348,6 @@ export const TUTVUMINE_WORDS = [
   "Head aega!",
 ] as const;
 
-/** The time lesson's words and phrases; each time it says is a clip of its own, by `timeClip`. */
 export const KELL_PASSAGE = [
   "Tere, Jaan!",
   "Kell on pool kaks.",
@@ -1364,6 +1369,7 @@ export const KELL_DRILLED: readonly ClockTime[] = [
   { hour: 11, minute: 55 },
 ];
 
+/** The time lesson's words and phrases; each time it says is a clip of its own, by `timeClip`. */
 export const KELL_WORDS = [
   "Mis kell on?",
   "kell",

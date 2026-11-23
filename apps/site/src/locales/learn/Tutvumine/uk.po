@@ -37,8 +37,8 @@ msgstr "<0>Sinu</0> — це «твоє»: виходить «Твоє ім’я
 msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> — це «привіт», а Марі вже йде."
 
-msgid "<et>Kus</et> asks where; with <et>sa</et> the verb takes -d: <et>Kus sa elad?</et>"
-msgstr "<et>Kus</et> питає «де»; із <et>sa</et> дієслово має -d: <et>Kus sa elad?</et>"
+msgid "<et>Kus</et> asks where; with <et>sa</et> the verb takes -d: <et>Kus sa õpid?</et>"
+msgstr "<et>Kus</et> питає «де»; із <et>sa</et> дієслово має -d: <et>Kus sa õpid?</et>"
 
 msgid "<et>Mina</et> takes <et>olen</et>: <et>Mina olen Andres</et>."
 msgstr "З <et>mina</et> — <et>olen</et>: <et>Mina olen Andres</et>."
@@ -49,8 +49,8 @@ msgstr "<et>Mis</et> питає «що»; якщо у відповіді <et>ma<
 msgid "20 minutes"
 msgstr "20 хвилин"
 
-msgid "A <0/> question wants yes or no. <1/> wants a place, and <2/> a person. Put each answer under the question it fits."
-msgstr "На питання з <0/> відповідають «так» чи «ні», на <1/> — місцем, на <2/> — людиною. Розклади відповіді за питаннями."
+msgid "A <0/> question wants yes or no, a <1/> question a place, and a <2/> question a person. Put each answer under the question it fits."
+msgstr "На питання з <0/> відповідають «так» чи «ні», на питання з <1/> — місцем, на питання з <2/> — людиною. Розклади відповіді за питаннями."
 
 msgid "a little"
 msgstr "трохи"
@@ -146,7 +146,7 @@ msgid "For Liis"
 msgstr "Заради Лііс"
 
 msgid "Four to six sentences: who you are, where you live, what you do, something you don’t do, and a question for Mari."
-msgstr "Чотири–шість речень: хто ти, де живеш, чим займаєшся, чого не робиш, і питання до Марі."
+msgstr "Від чотирьох до шести речень: хто ти, де живеш, чим займаєшся, чого не робиш і питання до Марі."
 
 msgid "friend"
 msgstr "друг, подруга"

@@ -419,7 +419,7 @@ const TRANSLATED_MEANS = [
 ] as const;
 
 const SORTED: readonly { w: string; bin: string }[] = [
-  { w: "Jah, ma elan.", bin: "kas" },
+  { w: "Jah, ma elan Tartus.", bin: "kas" },
   { w: "Tartus.", bin: "kus" },
   { w: "Mari.", bin: "kes" },
   { w: "Ei, ma ei ole.", bin: "kas" },
@@ -705,8 +705,9 @@ export function TutvumineLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    A <Word w="kas" /> question wants yes or no. <Word w="Kus" /> wants a place, and{" "}
-                    <Word w="kes" /> a person. Put each answer under the question it fits.
+                    A <Word w="kas" /> question wants yes or no, a <Word w="kus" /> question a
+                    place, and a <Word w="kes" /> question a person. Put each answer under the
+                    question it fits.
                   </Trans>
                 </p>
               </Prose>

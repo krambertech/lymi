@@ -2149,8 +2149,8 @@ msgstr "This is Martin’s coffee."
 msgid "Through, over, along"
 msgstr "Through, over, along"
 
-msgid "Tick what your message does."
-msgstr "Tick what your message does."
+msgid "Tick what your text does."
+msgstr "Tick what your text does."
 
 msgid "Time expressions: when things happen"
 msgstr "Time expressions: when things happen"
@@ -2522,11 +2522,11 @@ msgstr "your answer"
 msgid "Your answer"
 msgstr "Your answer"
 
-msgid "Your message"
-msgstr "Your message"
-
 msgid "Your reply"
 msgstr "Your reply"
 
 msgid "Your sentence"
 msgstr "Your sentence"
+
+msgid "Your text"
+msgstr "Your text"

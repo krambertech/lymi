@@ -446,7 +446,6 @@ function HalfRound({ item, state, heard, answer, autoplay }: RoundProps<ClockTim
   );
 }
 
-/** The times the listening quiz asks, chosen for the mix-ups learners make. */
 const kindOf = ({ minute }: ClockTime) =>
   minute === 0
     ? "hour"
@@ -461,7 +460,7 @@ const kindOf = ({ minute }: ClockTime) =>
             : "parast";
 
 const IN_WORDS = [
-  at(3, 0),
+  at(11, 0),
   at(5, 30),
   at(8, 15),
   at(10, 45),
@@ -471,7 +470,7 @@ const IN_WORDS = [
   at(9, 40),
 ];
 
-const PAST_OR_TO = [at(3, 10), at(5, 20), at(8, 5), at(6, 50), at(2, 40), at(11, 55)];
+const PAST_OR_TO = [at(9, 10), at(5, 20), at(8, 5), at(6, 50), at(2, 40), at(11, 55)];
 
 const otherHour = (hour: number, by: number) => ((hour - 1 + by + 12) % 12) + 1;
 
@@ -489,6 +488,7 @@ export const pastToRun = (items: readonly PastToItem[], pinned?: PastToItem): Pa
 
 const WRITTEN = [at(6, 30), at(2, 15), at(12, 45), at(9, 5), at(11, 20), at(3, 55)];
 
+/** The times the listening quiz asks, chosen for the mix-ups learners make. */
 const HEARD = [
   at(5, 15),
   at(8, 30),
@@ -597,7 +597,7 @@ export function KellLesson() {
       IN_WORDS.map((time) => ({
         base: timeDigits(time),
         cue: t`in words`,
-        answers: [timeWords(time)],
+        answers: [timeWords(time), `kell on ${timeWords(time)}`],
         src: timeSrc(time),
         said: timeSentence(time),
         pair: [kindOf(time), timeClip(time)] as const,
@@ -1012,7 +1012,7 @@ export function KellLesson() {
                   <Trans>
                     <Word w="Läbi" /> counts on from the hour that has struck; <Word w="pärast" />{" "}
                     counts down to the hour that’s coming. Mix them up and the time comes out wrong
-                    by up to forty minutes. Listen, then pick the clock.
+                    by up to forty minutes. Listen, then pick the time.
                   </Trans>
                 </p>
               </Prose>
@@ -1023,7 +1023,7 @@ export function KellLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All six, each clock right.</Trans>
+                    <Trans>All six right.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Play the ones you missed once more.</Trans>
                   ) : (
@@ -1086,10 +1086,11 @@ export function KellLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a time and write the whole sentence. After a number,{" "}
-                    <span lang="et">minut</span> is <span lang="et">minutit</span> before{" "}
-                    <span lang="et">läbi</span> and <span lang="et">minuti</span> before{" "}
-                    <span lang="et">pärast</span>.
+                    Hear a time and write the whole sentence. Before <span lang="et">läbi</span>,
+                    say <span lang="et">viis</span>, <span lang="et">kümme</span> or{" "}
+                    <span lang="et">kakskümmend minutit</span>; before <span lang="et">pärast</span>
+                    , <span lang="et">viie</span>, <span lang="et">kümne</span> or{" "}
+                    <span lang="et">kahekümne minuti</span>.
                   </Trans>
                 </p>
               </Prose>
@@ -1123,8 +1124,9 @@ export function KellLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Mari leaves Jaan a message about her afternoon. <Word w="Kell kuus" /> also
-                    means at six. Listen for each time.
+                    Mari leaves Jaan a message about her afternoon. Without{" "}
+                    <span lang="et">on</span>, <Word w="kell kuus" /> says when: at six. Listen for
+                    each time.
                   </Trans>
                 </p>
               </Prose>

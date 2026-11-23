@@ -28,9 +28,6 @@ msgstr "<et>-teist</et> образует числа от одиннадцати 
 msgid "<et>-teist</et> or <et>-kümmend</et>"
 msgstr "<et>-teist</et> или <et>-kümmend</et>"
 
-msgid "<et>Kaheksateist</et>: <et>kaheksa</et> and <et>-teist</et>, 18."
-msgstr "<et>Kaheksateist</et>: <et>kaheksa</et> и <et>-teist</et>, 18."
-
 msgid "<et>Kaks</et> has a short a and a k; <et>kuus</et> a long uu. <et>Kaheksa</et> starts with ka, <et>üheksa</et> with ü."
 msgstr "В <et>kaks</et> короткое a и k, в <et>kuus</et> — долгое uu. <et>Kaheksa</et> начинается с ka, <et>üheksa</et> — с ü."
 
@@ -66,9 +63,6 @@ msgstr "В году 365 дней."
 
 msgid "Add <0>-teist</0> to a digit and you have eleven to nineteen: <1/>, <2/>, <3/>. Word for word, üksteist is “one of the second ten”."
 msgstr "Добавь <0>-teist</0> к цифре — и получишь числа от одиннадцати до девятнадцати: <1/>, <2/>, <3/>. Дословно üksteist — «один второго десятка»."
-
-msgid "After a number from two up, the word takes the partitive: <et>kaks kassi</et>, <et>kaks eurot</et>."
-msgstr "После числа от двух и больше слово стоит в партитиве: <et>kaks kassi</et>, <et>kaks eurot</et>."
 
 msgid "All of them, by ear."
 msgstr "Все верно, на слух."

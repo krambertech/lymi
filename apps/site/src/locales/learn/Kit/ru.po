@@ -2149,8 +2149,8 @@ msgstr "Это кофе Мартина."
 msgid "Through, over, along"
 msgstr "Сквозь, через, вдоль"
 
-msgid "Tick what your message does."
-msgstr "Отметь, что есть в твоём сообщении."
+msgid "Tick what your text does."
+msgstr "Отметь, что есть в твоём тексте."
 
 msgid "Time expressions: when things happen"
 msgstr "Выражения времени: когда что происходит"
@@ -2522,11 +2522,11 @@ msgstr "твой ответ"
 msgid "Your answer"
 msgstr "Твой ответ"
 
-msgid "Your message"
-msgstr "Твоё сообщение"
-
 msgid "Your reply"
 msgstr "Твой ответ"
 
 msgid "Your sentence"
 msgstr "Твоё предложение"
+
+msgid "Your text"
+msgstr "Твой текст"

@@ -71,9 +71,9 @@ export function Writing({ id, title, prompt, model, src, checks }: WritingProps)
             autoCapitalize="sentences"
             autoCorrect="off"
             spellCheck={false}
-            aria-label={t`Your message`}
+            aria-label={t`Your text`}
             aria-describedby={promptId}
-            placeholder={t`Your message`}
+            placeholder={t`Your text`}
             className="learn-answer min-h-32 w-full resize-y rounded-tile border border-edge-strong bg-plate px-4 py-3 text-xl font-medium placeholder:font-normal placeholder:text-ink-muted focus:outline-2 focus:outline-offset-1 focus:outline-(--form)"
           />
           <div className="flex flex-wrap items-center justify-between gap-2.5">
@@ -104,7 +104,7 @@ export function Writing({ id, title, prompt, model, src, checks }: WritingProps)
           </div>
           <fieldset className="m-0 grid min-w-0 gap-2 border-0 p-0">
             <legend className="mb-1.5 text-md font-medium">
-              <Trans>Tick what your message does.</Trans>
+              <Trans>Tick what your text does.</Trans>
             </legend>
             {checks.map((check, i) => (
               <label

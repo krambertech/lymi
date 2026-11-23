@@ -3532,7 +3532,15 @@ export const TRA_TRANSLATE = [
       "Mina tahan arstiks saada.",
     ],
   },
-  { id: "kulmaks", answers: ["Ilm muutub külmaks.", "Ilm läheb külmaks.", "Läheb külmaks."] },
+  {
+    id: "kulmaks",
+    answers: [
+      "Ilm muutub külmaks.",
+      "Ilm läheb külmaks.",
+      "Ilm on muutumas külmaks.",
+      "Läheb külmaks.",
+    ],
+  },
   {
     id: "reedeks",
     answers: [
@@ -3546,6 +3554,8 @@ export const TRA_TRANSLATE = [
       "Reedeks olen tagasi.",
       "Reedeks tulen tagasi.",
       "Mina olen reedeks tagasi.",
+      "Ma tulen tagasi reedeks.",
+      "Tulen tagasi reedeks.",
     ],
   },
   {
@@ -3561,6 +3571,7 @@ export const TRA_TRANSLATE = [
       "Ma sõidan Tartusse nädalaks.",
       "Sõidan nädalaks Tartusse.",
       "Mina lähen Tartusse nädalaks.",
+      "Ma lähen nädalaks Tartu.",
     ],
   },
   {
@@ -3572,17 +3583,19 @@ export const TRA_TRANSLATE = [
       "Mida sina sünnipäevaks tahad?",
       "Mis sa tahad sünnipäevaks?",
       "Mida sa oma sünnipäevaks tahad?",
+      "Mis sa oma sünnipäevaks tahad?",
+      "Mida sa tahad oma sünnipäevaks?",
     ],
   },
   {
     id: "heaks-opetajaks",
-    answers: ["Ta sai heaks õpetajaks.", "Tema sai heaks õpetajaks."],
+    answers: ["Ta sai heaks õpetajaks.", "Tema sai heaks õpetajaks.", "Temast sai hea õpetaja."],
   },
 ] as const;
 
 export const TRA_FIX = [
   { id: "fix-arstiks", wrong: "Ta sai arstina.", answers: ["Ta sai arstiks."] },
-  { id: "fix-arstina", wrong: "Ta töötab arstiks.", answers: ["Ta töötab arstina."] },
+  { id: "fix-arstina", wrong: "Ta töötab arst.", answers: ["Ta töötab arstina."] },
   { id: "fix-haigeks", wrong: "Ma jäin haige.", answers: ["Ma jäin haigeks."] },
   { id: "fix-heaks", wrong: "Ta sai hea arstiks.", answers: ["Ta sai heaks arstiks."] },
   { id: "fix-reedeks", wrong: "Ma tulen reede tagasi.", answers: ["Ma tulen reedeks tagasi."] },
@@ -3707,12 +3720,20 @@ export const GI_SOME = [
 ] as const;
 
 export const GI_NOT = [
-  { pos: "Keegi tuleb.", neg: "Keegi ei tule." },
-  { pos: "Ma näen kedagi.", neg: "Ma ei näe kedagi." },
-  { pos: "Mul on midagi.", neg: "Mul ei ole midagi.", also: ["Mul pole midagi."] },
-  { pos: "Ta läheb kuhugi.", neg: "Ta ei lähe kuhugi." },
-  { pos: "Kati ostab midagi.", neg: "Kati ei osta midagi." },
-  { pos: "Ma räägin kellegagi.", neg: "Ma ei räägi kellegagi." },
+  { pos: "Keegi tuleb.", neg: "Keegi ei tule.", also: ["Mitte keegi ei tule."] },
+  { pos: "Ma näen kedagi.", neg: "Ma ei näe kedagi.", also: ["Ma ei näe mitte kedagi."] },
+  {
+    pos: "Mul on midagi.",
+    neg: "Mul ei ole midagi.",
+    also: ["Mul pole midagi.", "Mul ei ole mitte midagi.", "Mul pole mitte midagi."],
+  },
+  { pos: "Ta läheb kuhugi.", neg: "Ta ei lähe kuhugi.", also: ["Ta ei lähe mitte kuhugi."] },
+  { pos: "Kati ostab midagi.", neg: "Kati ei osta midagi.", also: ["Kati ei osta mitte midagi."] },
+  {
+    pos: "Ma räägin kellegagi.",
+    neg: "Ma ei räägi kellegagi.",
+    also: ["Ma ei räägi mitte kellegagi."],
+  },
 ] as const;
 
 export const GI_MITTE = ["Kes tuli? Mitte keegi.", "Mida sa tahad? Mitte midagi."] as const;
@@ -3852,8 +3873,8 @@ export const GI_TALK: Conversation = {
   turns: [
     {
       voice: "second",
-      text: ["Peeter, kas sa nägid kuskil mu võtmeid?"],
-      say: "[worried] Peeter, kas sa nägid kuskil mu võtmeid?",
+      text: ["Peeter, kas mu võtmed on kuskil siin?"],
+      say: "[worried] Peeter, kas mu võtmed on kuskil siin?",
     },
     { voice: "main", text: ["Ei, ma ei näinud neid kuskil.", "Kus nad eile olid?"] },
     {
@@ -3911,7 +3932,6 @@ export const GI_DRILL = [
   "Kas sa tahad midagi juua?",
   "Ma ei tea midagi.",
   "Kas kellelgi on aega?",
-  "Ma ei leia oma võtmeid kustki.",
 ] as const;
 
 const GI_CLIPS: Record<string, Clip> = {

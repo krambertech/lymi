@@ -13,6 +13,7 @@ import {
   GI_TALK,
   GI_TRANSLATE,
   GI_WHICH,
+  capital,
   clipId,
   clipUrl,
 } from "../../../lib/learn/clips";
@@ -64,7 +65,6 @@ const MEANS: Record<string, MessageDescriptor> = {
   "See on kellegi kott.": msg`This is somebody’s bag.`,
   "Ma sain kelleltki kirja.": msg`I got a letter from somebody.`,
   "Ta tahab kellekski saada.": msg`He or she wants to become somebody.`,
-  "Ma ei leia oma võtmeid kustki.": msg`I can’t find my keys anywhere.`,
 };
 
 const MAKE_CUES: Record<(typeof GI_MAKE)[number]["id"], MessageDescriptor> = {
@@ -135,7 +135,7 @@ export const whichRun = (items: readonly WhichItem[], pinned?: WhichItem): Which
 function useContent() {
   const { t, i18n } = useLingui();
   return useMemo(() => {
-    const rewrite: SentenceItem[] = GI_NOT.map(({ pos, neg, ...rest }, i) => ({
+    const rewrite: SentenceItem[] = GI_NOT.map(({ pos, neg, also }, i) => ({
       kind: "rewrite",
       id: `not-${i}`,
       from: pos,
@@ -144,7 +144,7 @@ function useContent() {
           with <span lang="et">ei</span>
         </Trans>
       ),
-      answers: ["also" in rest ? [neg, ...rest.also] : [neg]].flat(),
+      answers: [neg, ...also],
       src: src(neg),
       explain: (
         <Trans>
@@ -214,7 +214,7 @@ function useContent() {
       { id: "midagi", left: "midagi", right: t`something`, src: src("midagi") },
       { id: "kuskil", left: "kuskil", right: t`somewhere`, src: src("kuskil") },
       { id: "kuhugi", left: "kuhugi", right: t`to somewhere`, src: src("kuhugi") },
-      { id: "kunagi", left: "kunagi", right: t`ever; after a no, never`, src: src("kunagi") },
+      { id: "kunagi", left: "kunagi", right: t`ever; never, when negated`, src: src("kunagi") },
       { id: "millalgi", left: "millalgi", right: t`some time`, src: src("millalgi") },
     ];
 
@@ -324,6 +324,7 @@ export function KeegiLesson() {
     () =>
       GI_MAKE.map(({ id, kind, base, said }) => {
         const last = base.at(-1);
+        const Base = capital(base);
         return {
           base,
           gloss: i18n._(MAKE_GLOSS[id]),
@@ -334,17 +335,17 @@ export function KeegiLesson() {
           explain:
             kind === "ki" ? (
               <Trans>
-                <span lang="et">{base}</span> ends in {last}, so <span lang="et">-ki</span>:{" "}
+                <span lang="et">{Base}</span> ends in {last}, so <span lang="et">-ki</span>:{" "}
                 <span lang="et">{id}</span>.
               </Trans>
             ) : base.endsWith("l") ? (
               <Trans>
-                <span lang="et">{base}</span> ends in l, so <span lang="et">-gi</span>:{" "}
+                <span lang="et">{Base}</span> ends in l, so <span lang="et">-gi</span>:{" "}
                 <span lang="et">{id}</span>.
               </Trans>
             ) : (
               <Trans>
-                <span lang="et">{base}</span> ends in a vowel, so <span lang="et">-gi</span>:{" "}
+                <span lang="et">{Base}</span> ends in a vowel, so <span lang="et">-gi</span>:{" "}
                 <span lang="et">{id}</span>.
               </Trans>
             ),
@@ -357,6 +358,7 @@ export function KeegiLesson() {
     () =>
       GI_WHICH.map(({ id, kind, base, cue, said }) => {
         const last = base.at(-1);
+        const Base = capital(base);
         return {
           base,
           cue,
@@ -368,17 +370,17 @@ export function KeegiLesson() {
           explain:
             kind === "ki" ? (
               <Trans>
-                <span lang="et">{base}</span> ends in {last}, so <span lang="et">-ki</span>:{" "}
+                <span lang="et">{Base}</span> ends in {last}, so <span lang="et">-ki</span>:{" "}
                 <span lang="et">{id}</span>.
               </Trans>
             ) : base.endsWith("l") ? (
               <Trans>
-                <span lang="et">{base}</span> ends in l, so <span lang="et">-gi</span>:{" "}
+                <span lang="et">{Base}</span> ends in l, so <span lang="et">-gi</span>:{" "}
                 <span lang="et">{id}</span>.
               </Trans>
             ) : (
               <Trans>
-                <span lang="et">{base}</span> ends in a vowel, so <span lang="et">-gi</span>:{" "}
+                <span lang="et">{Base}</span> ends in a vowel, so <span lang="et">-gi</span>:{" "}
                 <span lang="et">{id}</span>.
               </Trans>
             ),
@@ -393,8 +395,8 @@ export function KeegiLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Add <span lang="et">-gi</span> or <span lang="et">-ki</span> to a question word and it
-          means some: <span lang="et">keegi</span>, somebody; <span lang="et">midagi</span>,
+          Add <span lang="et">-gi</span> or <span lang="et">-ki</span> to most question words and
+          they mean some: <span lang="et">keegi</span>, somebody; <span lang="et">midagi</span>,
           something. With <span lang="et">ei</span>, the same words mean nobody and nothing.
         </Trans>
       }
@@ -415,7 +417,7 @@ export function KeegiLesson() {
       ]}
       recap={[
         <Trans key="1">
-          A question word with <b lang="et">-gi</b> or <b lang="et">-ki</b> means some:{" "}
+          Most question words with <b lang="et">-gi</b> or <b lang="et">-ki</b> mean some:{" "}
           <b lang="et">keegi</b>, somebody; <b lang="et">midagi</b>, something;{" "}
           <b lang="et">kuhugi</b>, to somewhere.
         </Trans>,
@@ -443,7 +445,7 @@ export function KeegiLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Take a question word and add <span lang="et">-gi</span>, and it means some:{" "}
+                    Take most question words and add <span lang="et">-gi</span>, and they mean some:{" "}
                     <span lang="et">mida</span>, what, becomes <Word w="midagi" />, something;{" "}
                     <span lang="et">kuhu</span>, where to, becomes <Word w="kuhugi" />, to
                     somewhere. <span lang="et">Kes</span>, who, is the odd one: <Word w="keegi" />,
@@ -493,17 +495,18 @@ export function KeegiLesson() {
               <ListenRows items={rows(GI_MITTE)} />
               <Aside>
                 <Trans>
-                  One exception: after <span lang="et">ei ole</span>, <span lang="et">keegi</span>{" "}
-                  takes the partitive, as <span lang="et">kassi</span> does in{" "}
-                  <span lang="et">Mul pole kassi</span> in lesson {partitive}.
+                  One exception: when <span lang="et">ei ole</span> says nobody is there,{" "}
+                  <span lang="et">keegi</span> takes the partitive, as <span lang="et">kassi</span>{" "}
+                  does in <span lang="et">Mul pole kassi</span> in lesson {partitive}:{" "}
+                  <span lang="et">Kodus ei ole kedagi</span>.
                 </Trans>
               </Aside>
               <ListenRows items={rows(GI_EXCEPT)} />
               <Prose>
                 <p>
                   <Trans>
-                    Rewrite each sentence with <span lang="et">ei</span>, so it says nobody or
-                    nothing.
+                    Rewrite each sentence with <span lang="et">ei</span>, so it says nobody, nothing
+                    or nowhere.
                   </Trans>
                 </p>
               </Prose>

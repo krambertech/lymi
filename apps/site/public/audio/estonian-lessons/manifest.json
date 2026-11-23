@@ -16610,15 +16610,15 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "keegi/c-talk": {
-    "text": "Peeter, kas sa nägid kuskil mu võtmeid? Ei, ma ei näinud neid kuskil. Kus nad eile olid? Eile olid nad laual. Aga nüüd ei ole seal midagi. Ma otsisin terve hommiku. Kas keegi käis eile siin? Jah, Mari käis. Aga ta ei võtnud midagi. Kas sa helistasid talle? Helistasin, aga keegi ei vastanud. Võib-olla ta magab. Hmm. Kas sa läksid eile kuhugi? Ma käisin poes ja kohvikus. Kohvikus jõin ma kohvi ja lugesin raamatut. Võib-olla jäid võtmed kohvikusse. Ei, ma ei unusta kunagi midagi! Kunagi? Nädal tagasi jäi sul telefon poodi. Jah, see on tõsi. Hästi, ma helistan kohvikusse. Noh? Kas keegi vastas? Jah! Kohvikus on laual võtmed. Need on minu omad! Näed! Kas ma tulen sinuga kaasa? Ei, aitäh. Aga õhtul võime kuhugi sööma minna. Hea mõte! Kuhu? Mulle on ükskõik. Kuhugi, kus on hea supp. Supp on hea mõte. Siis näeme kell seitse!",
+    "text": "Peeter, kas mu võtmed on kuskil siin? Ei, ma ei näinud neid kuskil. Kus nad eile olid? Eile olid nad laual. Aga nüüd ei ole seal midagi. Ma otsisin terve hommiku. Kas keegi käis eile siin? Jah, Mari käis. Aga ta ei võtnud midagi. Kas sa helistasid talle? Helistasin, aga keegi ei vastanud. Võib-olla ta magab. Hmm. Kas sa läksid eile kuhugi? Ma käisin poes ja kohvikus. Kohvikus jõin ma kohvi ja lugesin raamatut. Võib-olla jäid võtmed kohvikusse. Ei, ma ei unusta kunagi midagi! Kunagi? Nädal tagasi jäi sul telefon poodi. Jah, see on tõsi. Hästi, ma helistan kohvikusse. Noh? Kas keegi vastas? Jah! Kohvikus on laual võtmed. Need on minu omad! Näed! Kas ma tulen sinuga kaasa? Ei, aitäh. Aga õhtul võime kuhugi sööma minna. Hea mõte! Kuhu? Mulle on ükskõik. Kuhugi, kus on hea supp. Supp on hea mõte. Siis näeme kell seitse!",
     "model": "eleven_v4",
     "turns": [
       {
         "voice": "WtzwR2kNGVNuaTGaYLfK",
         "sentences": [
-          "Peeter, kas sa nägid kuskil mu võtmeid?"
+          "Peeter, kas mu võtmed on kuskil siin?"
         ],
-        "say": "[worried] Peeter, kas sa nägid kuskil mu võtmeid?"
+        "say": "[worried] Peeter, kas mu võtmed on kuskil siin?"
       },
       {
         "voice": "jGja51dd7gcoK0zkxeyg",
@@ -16755,10 +16755,5 @@
         ]
       }
     ]
-  },
-  "keegi/ma-ei-leia-oma-vo3tmeid-kustki": {
-    "text": "Ma ei leia oma võtmeid kustki.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

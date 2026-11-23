@@ -91,7 +91,7 @@ const FIX_PROMPTS: Record<(typeof TRA_FIX)[number]["id"], MessageDescriptor> = {
 const GLOSSARY: Glossary = {
   arstiks: { en: msg`into a doctor`, note: msg`Ta sai arstiks: he or she became a doctor.` },
   saama: { en: msg`to become; to get; can`, note: msg`With -ks it means become.` },
-  jääma: { en: msg`to stay; to fall (ill)`, note: msg`Jääma haigeks: to fall ill.` },
+  jääma: { en: msg`to stay; to become (ill)`, note: msg`Haigeks jääma: to fall ill.` },
   muutuma: { en: msg`to change, to turn` },
   reedeks: { en: msg`by Friday` },
   nädalaks: { en: msg`for a week` },
@@ -115,7 +115,7 @@ const MESSAGE_GAPS: readonly GapItem[] = [
     before: "Ta töötab nüüd Pärnus",
     after: ".",
     answer: "arstina",
-    options: ["arstiks", "arstina", "arst"],
+    options: ["arstile", "arstina", "arst"],
   },
   {
     id: "nadalaks",
@@ -453,7 +453,7 @@ export function SaavLesson() {
         </Trans>,
         <Trans key="2">
           Become is <b lang="et">saama</b> with <b lang="et">-ks</b>:{" "}
-          <b lang="et">Ta sai arstiks</b>. Also <b lang="et">jääma haigeks</b>, to fall ill, and{" "}
+          <b lang="et">Ta sai arstiks</b>. Also <b lang="et">haigeks jääma</b>, to fall ill, and{" "}
           <b lang="et">muutub külmaks</b>, turns cold.
         </Trans>,
         <Trans key="3">
@@ -462,8 +462,8 @@ export function SaavLesson() {
         </Trans>,
         <Trans key="4">
           By and for a time: <b lang="et">reedeks</b>, by Friday; <b lang="et">nädalaks</b>, for a
-          week. With a meal or an occasion, it says what for: <b lang="et">sünnipäevaks</b>, for a
-          birthday.
+          week. With a meal or an occasion, <b lang="et">-ks</b> says what for:{" "}
+          <b lang="et">sünnipäevaks</b>, for a birthday.
         </Trans>,
         <Trans key="5">
           An adjective takes <b lang="et">-ks</b> too: <b lang="et">heaks arstiks</b>. With{" "}
@@ -493,8 +493,9 @@ export function SaavLesson() {
                 <p>
                   <Trans>
                     Other verbs take it too. <Word w="Jääma" /> with <span lang="et">haigeks</span>{" "}
-                    is to fall ill, and its past goes the same way: <span lang="et">ma jäin</span>;{" "}
-                    <Word w="muutuma" /> and <span lang="et">minema</span> are to turn:{" "}
+                    is to fall ill, and its past is built the same way:{" "}
+                    <span lang="et">ma jäin</span>. <Word w="Muutuma" /> and{" "}
+                    <span lang="et">minema</span> with <span lang="et">-ks</span> mean to turn:{" "}
                     <span lang="et">Ilm muutub külmaks</span>,{" "}
                     <span lang="et">Tuba läheb soojaks</span>. Pick a word and tap its forms.
                   </Trans>
@@ -544,9 +545,11 @@ export function SaavLesson() {
                 <p>
                   <Trans>
                     Lesson {asLesson} gave you <span lang="et">-na</span> for “as”:{" "}
-                    <Word w="Ta töötab arstina" />. That says what someone is.{" "}
+                    <Word w="Ta töötab arstina" />. That says the role someone has.{" "}
                     <span lang="et">-ks</span> says what someone becomes:{" "}
-                    <Word w="Ta sai arstiks" />.
+                    <Word w="Ta sai arstiks" />. After <span lang="et">töötab</span> you may also
+                    hear <span lang="et">-ks</span>, but <span lang="et">-na</span> is the usual
+                    form.
                   </Trans>
                 </p>
               </Prose>

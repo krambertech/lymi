@@ -19,14 +19,14 @@ msgstr "кудись, куди-небудь"
 msgid "<0>-ki</0> after k, p, t, g, b, d, s, h, f, š, z or ž; <1>-gi</1> after anything else."
 msgstr "<0>-ki</0> після k, p, t, g, b, d, s, h, f, š, z або ž; <1>-gi</1> після всього іншого."
 
-msgid "<0>{base}</0> ends in {last}, so <1>-ki</1>: <2>{id}</2>."
-msgstr "<0>{base}</0> закінчується на {last}, тож <1>-ki</1>: <2>{id}</2>."
+msgid "<0>{Base}</0> ends in {last}, so <1>-ki</1>: <2>{id}</2>."
+msgstr "<0>{Base}</0> закінчується на {last}, тож <1>-ki</1>: <2>{id}</2>."
 
-msgid "<0>{base}</0> ends in a vowel, so <1>-gi</1>: <2>{id}</2>."
-msgstr "<0>{base}</0> закінчується на голосну, тож <1>-gi</1>: <2>{id}</2>."
+msgid "<0>{Base}</0> ends in a vowel, so <1>-gi</1>: <2>{id}</2>."
+msgstr "<0>{Base}</0> закінчується на голосну, тож <1>-gi</1>: <2>{id}</2>."
 
-msgid "<0>{base}</0> ends in l, so <1>-gi</1>: <2>{id}</2>."
-msgstr "<0>{base}</0> закінчується на l, тож <1>-gi</1>: <2>{id}</2>."
+msgid "<0>{Base}</0> ends in l, so <1>-gi</1>: <2>{id}</2>."
+msgstr "<0>{Base}</0> закінчується на l, тож <1>-gi</1>: <2>{id}</2>."
 
 msgid "<0>Kellega</0> ends in a vowel, so <1>-gi</1>: <2>kellegagi</2>."
 msgstr "<0>Kellega</0> закінчується на голосну, тож <1>-gi</1>: <2>kellegagi</2>."
@@ -46,9 +46,6 @@ msgstr "18 хвилин"
 msgid "6 exercises, 4 of them typed, and a conversation"
 msgstr "6 вправ, у 4 з них треба писати, і розмова"
 
-msgid "A question word with <0>-gi</0> or <1>-ki</1> means some: <2>keegi</2>, somebody; <3>midagi</3>, something; <4>kuhugi</4>, to somewhere."
-msgstr "Питальне слово з <0>-gi</0> чи <1>-ki</1> означає «-сь»: <2>keegi</2> — «хтось»; <3>midagi</3> — «щось»; <4>kuhugi</4> — «кудись»."
-
 msgid "A question word with <et>-gi</et> means some: <et>midagi</et>, something; <et>kuhugi</et>, to somewhere."
 msgstr "Питальне слово з <et>-gi</et> означає «-сь»: <et>midagi</et> — «щось»; <et>kuhugi</et> — «кудись»."
 
@@ -67,14 +64,11 @@ msgstr "про що"
 msgid "about whom"
 msgstr "про кого"
 
-msgid "Add <0>-gi</0> or <1>-ki</1> to a question word and it means some: <2>keegi</2>, somebody; <3>midagi</3>, something. With <4>ei</4>, the same words mean nobody and nothing."
-msgstr "Додай до питального слова <0>-gi</0> чи <1>-ki</1> — і воно означає «-сь»: <2>keegi</2> — «хтось»; <3>midagi</3> — «щось». З <4>ei</4> ті самі слова означають «ніхто» і «нічого»."
+msgid "Add <0>-gi</0> or <1>-ki</1> to most question words and they mean some: <2>keegi</2>, somebody; <3>midagi</3>, something. With <4>ei</4>, the same words mean nobody and nothing."
+msgstr "Додай до більшості питальних слів <0>-gi</0> чи <1>-ki</1> — і вони означатимуть «-сь»: <2>keegi</2> — «хтось»; <3>midagi</3> — «щось». З <4>ei</4> ті самі слова означають «ніхто» і «нічого»."
 
 msgid "Add the ending"
 msgstr "Додай закінчення"
-
-msgid "After <et>ei ole</et>, <et>keegi</et> takes the partitive: <et>Kodus ei ole kedagi</et>."
-msgstr "Після <et>ei ole</et> слово <et>keegi</et> стоїть у партитиві: <et>Kodus ei ole kedagi</et>."
 
 msgid "After a vowel or l, m, n, r, the ending is <et>-gi</et>: <et>kellelegi</et>, <et>millalgi</et>."
 msgstr "Після голосної чи l, m, n, r закінчення <et>-gi</et>: <et>kellelegi</et>, <et>millalgi</et>."
@@ -101,10 +95,10 @@ msgid "An answer on its own: Kes tuli? Mitte keegi."
 msgstr "Як окрема відповідь: Kes tuli? Mitte keegi."
 
 msgid "Anywhere is <0>kuhugi</0>; <1>kuhu</1> alone asks where to."
-msgstr "«Нікуди» з ei — це <0>kuhugi</0>; саме <1>kuhu</1> питає «куди»."
+msgstr "«Нікуди» — це <0>kuhugi</0> із запереченням; саме <1>kuhu</1> питає «куди»."
 
 msgid "As an answer on its own, say <0/> or <1/>: <2>Kes tuli? Mitte keegi.</2>"
-msgstr "Як окрему відповідь кажи <0/> або <1/>: <2>Kes tuli? Mitte keegi.</2>"
+msgstr "Якщо це вся відповідь, кажи <0/> або <1/>: <2>Kes tuli? Mitte keegi.</2>"
 
 msgid "At home"
 msgstr "Удома"
@@ -139,7 +133,7 @@ msgstr "У когось є олівець?"
 msgid "Each sentence should say what the line above it says, and one word is wrong. Tap it, then type it right."
 msgstr "Кожне речення має казати те саме, що й рядок над ним, але одне слово в ньому неправильне. Торкнися його, а потім напиши правильно."
 
-msgid "ever; after a no, never"
+msgid "ever; never, when negated"
 msgstr "коли-небудь; із запереченням — ніколи"
 
 msgid "ever; some day"
@@ -156,6 +150,9 @@ msgstr "Щоб сказати «ніхто» чи «нічого», постав
 
 msgid "For nobody or nothing, put <et>ei</et> before the verb: <et>Keegi ei tule</et>."
 msgstr "Щоб сказати «ніхто» чи «нічого», постав <et>ei</et> перед дієсловом: <et>Keegi ei tule</et>."
+
+msgid "from whom"
+msgstr "від кого"
 
 msgid "Go somewhere to eat"
 msgstr "Піти кудись поїсти"
@@ -186,9 +183,6 @@ msgstr "Гаманець"
 
 msgid "I called somebody."
 msgstr "Я комусь подзвонив."
-
-msgid "I can’t find my keys anywhere."
-msgstr "Я ніде не можу знайти свої ключі."
 
 msgid "I don’t see anybody."
 msgstr "Я нікого не бачу."
@@ -268,6 +262,9 @@ msgstr "Більшість. Зверни увагу на останній зву
 msgid "Most of them. Read the reason under each one you missed."
 msgstr "Більшість. Прочитай пояснення до тих, що не вдалися."
 
+msgid "Most question words with <0>-gi</0> or <1>-ki</1> mean some: <2>keegi</2>, somebody; <3>midagi</3>, something; <4>kuhugi</4>, to somewhere."
+msgstr "Більшість питальних слів з <0>-gi</0> чи <1>-ki</1> означають «-сь»: <2>keegi</2> — «хтось»; <3>midagi</3> — «щось»; <4>kuhugi</4> — «кудись»."
+
 msgid "My keys are somewhere here."
 msgstr "Мої ключі десь тут."
 
@@ -296,13 +293,13 @@ msgid "Nothing is <0>ei … midagi</0>; <1>mida</1> alone asks what."
 msgstr "«Нічого» — це <0>ei … midagi</0>; саме <1>mida</1> питає «що»."
 
 msgid "On its own, nobody is <et>mitte keegi</et>."
-msgstr "Окремо «ніхто» — це <et>mitte keegi</et>."
+msgstr "Одним словом «ніхто» — це <et>mitte keegi</et>."
 
 msgid "On the table"
 msgstr "На столі"
 
-msgid "One exception: after <0>ei ole</0>, <1>keegi</1> takes the partitive, as <2>kassi</2> does in <3>Mul pole kassi</3> in lesson {partitive}."
-msgstr "Один виняток: після <0>ei ole</0> слово <1>keegi</1> стоїть у партитиві, як <2>kassi</2> в <3>Mul pole kassi</3> з уроку {partitive}."
+msgid "One exception: when <0>ei ole</0> says nobody is there, <1>keegi</1> takes the partitive, as <2>kassi</2> does in <3>Mul pole kassi</3> in lesson {partitive}: <4>Kodus ei ole kedagi</4>."
+msgstr "Один виняток: коли <0>ei ole</0> каже, що десь нікого немає, <1>keegi</1> стоїть у партитиві, як <2>kassi</2> в <3>Mul pole kassi</3> з уроку {partitive}: <4>Kodus ei ole kedagi</4>."
 
 msgid "Peeter"
 msgstr "Пеетер"
@@ -325,8 +322,8 @@ msgstr "Ще раз прочитай правило вище й спробуй �
 msgid "Read What to remember at the end, then try again."
 msgstr "Прочитай «Що запам’ятати» наприкінці й спробуй знову."
 
-msgid "Rewrite each sentence with <0>ei</0>, so it says nobody or nothing."
-msgstr "Перепиши кожне речення з <0>ei</0>, щоб воно казало «ніхто» чи «нічого»."
+msgid "Rewrite each sentence with <0>ei</0>, so it says nobody, nothing or nowhere."
+msgstr "Перепиши кожне речення з <0>ei</0>, щоб воно казало «ніхто», «нічого» чи «нікуди»."
 
 msgid "She isn’t going anywhere."
 msgstr "Вона нікуди не йде."
@@ -335,10 +332,10 @@ msgid "Six mistakes to catch"
 msgstr "Шість помилок"
 
 msgid "some time"
-msgstr "якось згодом"
+msgstr "у якийсь момент"
 
 msgid "Some time is <et>millalgi</et>."
-msgstr "«Якось» — це <et>millalgi</et>."
+msgstr "«У якийсь момент» — це <et>millalgi</et>."
 
 msgid "somebody"
 msgstr "хтось"
@@ -385,8 +382,8 @@ msgstr "«Десь» — це <et>kuskil</et>."
 msgid "somewhere, anywhere"
 msgstr "десь, де-небудь"
 
-msgid "Take a question word and add <0>-gi</0>, and it means some: <1>mida</1>, what, becomes <2/>, something; <3>kuhu</3>, where to, becomes <4/>, to somewhere. <5>Kes</5>, who, is the odd one: <6/>, somebody."
-msgstr "Візьми питальне слово й додай <0>-gi</0> — воно означатиме «-сь»: <1>mida</1> — «що» — стає <2/> — «щось»; <3>kuhu</3> — «куди» — стає <4/> — «кудись». <5>Kes</5> — «хто» — особливе: <6/> — «хтось»."
+msgid "Take most question words and add <0>-gi</0>, and they mean some: <1>mida</1>, what, becomes <2/>, something; <3>kuhu</3>, where to, becomes <4/>, to somewhere. <5>Kes</5>, who, is the odd one: <6/>, somebody."
+msgstr "Візьми майже будь-яке питальне слово й додай <0>-gi</0> — воно означатиме «-сь»: <1>mida</1> — «що» — стає <2/> — «щось»; <3>kuhu</3> — «куди» — стає <4/> — «кудись». <5>Kes</5> — «хто» — особливе: <6/> — «хтось»."
 
 msgid "Tap the lines above once more, then try again."
 msgstr "Ще раз торкнися рядків вище й спробуй знову."
@@ -416,7 +413,7 @@ msgid "to whom"
 msgstr "кому"
 
 msgid "Two don’t follow the pattern, so learn them as words: <0/>, somewhere, and <1/>, ever. <2/>, when, does: <3/>, some time. Tap a line to hear it."
-msgstr "Два слова не за цим зразком, тож запам’ятай їх окремо: <0/> — «десь» і <1/> — «колись». <2/> — «коли» — за зразком: <3/> — «якось». Торкнися рядка, щоб послухати."
+msgstr "Два слова не за цим зразком, тож запам’ятай їх окремо: <0/> — «десь» і <1/> — «колись». <2/> — «коли» — за зразком: <3/> — «у якийсь момент». Торкнися рядка, щоб послухати."
 
 msgid "Type the form that means what the cue says."
 msgstr "Напиши форму, яка означає те, що в підказці."
@@ -442,11 +439,11 @@ msgstr "Що вони робитимуть увечері?"
 msgid "when"
 msgstr "коли"
 
+msgid "When <et>ei ole</et> says nobody is there, <et>keegi</et> takes the partitive: <et>Kodus ei ole kedagi</et>."
+msgstr "Коли <et>ei ole</et> каже, що нікого немає, <et>keegi</et> стоїть у партитиві: <et>Kodus ei ole kedagi</et>."
+
 msgid "Where are the keys?"
 msgstr "Де ключі?"
-
-msgid "where from"
-msgstr "звідки"
 
 msgid "where to"
 msgstr "куди"

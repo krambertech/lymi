@@ -461,7 +461,12 @@ export const KUSIMUSED_ASKED = [
   {
     word: "millal",
     reply: "Nad töötavad homme.",
-    answers: ["Millal nad töötavad?", "Millal nemad töötavad?", "Kes töötab homme?"],
+    answers: [
+      "Millal nad töötavad?",
+      "Millal nemad töötavad?",
+      "Kes töötab homme?",
+      "Kes homme töötab?",
+    ],
   },
   {
     word: "miks",
@@ -511,6 +516,8 @@ export const KUSIMUSED_ASKED = [
       "Kui palju kohvi nemad joovad?",
       "Kui palju nemad kohvi joovad?",
       "Kui palju nemad joovad kohvi?",
+      "Kes joob palju kohvi?",
+      "Kes palju kohvi joob?",
       "Mis nad joovad?",
       "Mida nad joovad?",
       "Mis nemad joovad?",

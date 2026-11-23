@@ -2181,14 +2181,21 @@ export const WHEN_SORT = [
 ] as const;
 
 export const WHEN_SPANS = [
-  { id: "paev", one: "päev", ago: "päev tagasi", in: "päeva pärast" },
-  { id: "nadal", one: "nädal", ago: "nädal tagasi", in: "nädala pärast" },
-  { id: "aasta", one: "aasta", ago: "aasta tagasi", in: "aasta pärast" },
-  { id: "kaks-paeva", one: "kaks päeva", ago: "kaks päeva tagasi", in: "kahe päeva pärast" },
+  { id: "paev", one: "päev", ago: "päev tagasi", eest: "päeva eest", in: "päeva pärast" },
+  { id: "nadal", one: "nädal", ago: "nädal tagasi", eest: "nädala eest", in: "nädala pärast" },
+  { id: "aasta", one: "aasta", ago: "aasta tagasi", eest: "aasta eest", in: "aasta pärast" },
+  {
+    id: "kaks-paeva",
+    one: "kaks päeva",
+    ago: "kaks päeva tagasi",
+    eest: "kahe päeva eest",
+    in: "kahe päeva pärast",
+  },
   {
     id: "kolm-nadalat",
     one: "kolm nädalat",
     ago: "kolm nädalat tagasi",
+    eest: "kolme nädala eest",
     in: "kolme nädala pärast",
   },
 ] as const;
@@ -2261,6 +2268,7 @@ export const WHEN_TRANSLATE = [
       "Ma tulen nädala pärast.",
       "Mina tulen nädala pärast.",
       "Nädala pärast tulen ma.",
+      "Nädala pärast ma tulen.",
       "Tulen nädala pärast.",
     ],
   },
@@ -2272,6 +2280,7 @@ export const WHEN_TRANSLATE = [
       "Jaan oli kaks päeva tagasi siin.",
       "Jaan oli siin kahe päeva eest.",
       "Kahe päeva eest oli Jaan siin.",
+      "Jaan oli kahe päeva eest siin.",
     ],
   },
   {
@@ -2484,14 +2493,14 @@ export const ORDER_NO = [
 ] as const;
 
 export const ORDER_HEARD = [
-  { said: "Täna lähen ma Tartusse.", also: ["Ma lähen täna Tartusse."] },
-  { said: "Hommikul joob Mari kohvi.", also: ["Mari joob hommikul kohvi."] },
-  { said: "Tartus elab Kati.", also: ["Kati elab Tartus."] },
-  { said: "Kus sa elad?", also: [] },
-  { said: "Laupäeval läheme me ujuma.", also: ["Me läheme laupäeval ujuma."] },
-  { said: "Täna ma ei tööta.", also: ["Ma ei tööta täna."] },
-  { said: "Homme pean ma tööle minema.", also: ["Ma pean homme tööle minema."] },
-  { said: "Millal sa tuled?", also: [] },
+  { said: "Täna lähen ma Tartusse." },
+  { said: "Hommikul joob Mari kohvi." },
+  { said: "Tartus elab Kati." },
+  { said: "Kus sa elad?" },
+  { said: "Laupäeval läheme me ujuma." },
+  { said: "Täna ma ei tööta." },
+  { said: "Homme pean ma tööle minema." },
+  { said: "Millal sa tuled?" },
 ] as const;
 
 export const ORDER_MEANING = [
@@ -2507,6 +2516,7 @@ export const ORDER_MEANING = [
       "Homme pean ma tööle minema.",
       "Ma pean homme tööle minema.",
       "Homme pean ma minema tööle.",
+      "Homme pean minema tööle.",
       "Homme ma pean tööle minema.",
     ],
   },
@@ -2536,8 +2546,10 @@ export const ORDER_MEANING = [
 
 const ORDER_REWRITE_MORE: Record<string, readonly string[]> = {
   tana: ["Täna ma lähen Tartusse."],
+  hommikul: ["Hommikul Mari joob kohvi."],
+  laupaeval: ["Laupäeval Jaan töötab."],
   ohtul: ["Õhtul me oleme kodus."],
-  homme: ["Homme pean ma minema tööle.", "Homme ma pean tööle minema."],
+  homme: ["Homme pean ma minema tööle.", "Homme ma pean tööle minema.", "Homme pean minema tööle."],
 };
 
 export const ORDER_REWRITE = ORDER_PAIRS.map(({ id, plain, front, first }) => ({
@@ -2574,7 +2586,14 @@ export const ORDER_TRANSLATE = [
     ],
   },
   { id: "tana-ei-too", answers: ["Täna me ei tööta.", "Me ei tööta täna.", "Täna ei tööta me."] },
-  { id: "hommikul-joob", answers: ["Hommikul joob Mari kohvi.", "Mari joob hommikul kohvi."] },
+  {
+    id: "hommikul-joob",
+    answers: [
+      "Hommikul joob Mari kohvi.",
+      "Mari joob hommikul kohvi.",
+      "Hommikul Mari joob kohvi.",
+    ],
+  },
   {
     id: "laupaeval-teed",
     answers: [

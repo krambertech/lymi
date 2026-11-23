@@ -1,5 +1,9 @@
 import { msg } from "@lingui/core/macro";
+import { ORDER_TRANSLATE } from "../../../lib/learn/clips";
 import type { DrillBank } from "../../../lib/learn/drill";
+
+const orderAnswers = (id: (typeof ORDER_TRANSLATE)[number]["id"]) =>
+  (ORDER_TRANSLATE.find((item) => item.id === id) as (typeof ORDER_TRANSLATE)[number]).answers;
 
 const SECOND = msg`The verb usually comes second; when a time or place starts the sentence, the person usually follows the verb: <et>Täna lähen ma</et>.`;
 const QUESTION = msg`In a question, the short pronoun comes right after the question word: <et>Kus sa elad?</et>`;
@@ -31,7 +35,7 @@ export const DRILLS: DrillBank = {
       rule: "front",
       from: "Mari joob hommikul kohvi.",
       cue: START,
-      answers: ["Hommikul joob Mari kohvi."],
+      answers: ["Hommikul joob Mari kohvi.", "Hommikul Mari joob kohvi."],
       say: "Hommikul joob Mari kohvi.",
       explain: SECOND,
     },
@@ -41,7 +45,7 @@ export const DRILLS: DrillBank = {
       rule: "front",
       from: "Jaan töötab laupäeval.",
       cue: START,
-      answers: ["Laupäeval töötab Jaan."],
+      answers: ["Laupäeval töötab Jaan.", "Laupäeval Jaan töötab."],
       say: "Laupäeval töötab Jaan.",
       explain: SECOND,
     },
@@ -60,13 +64,7 @@ export const DRILLS: DrillBank = {
       id: "front-today-tartu",
       rule: "front",
       prompt: msg`Today I’m going to Tartu.`,
-      answers: [
-        "Täna lähen ma Tartusse.",
-        "Täna lähen Tartusse.",
-        "Ma lähen täna Tartusse.",
-        "Mina lähen täna Tartusse.",
-        "Täna ma lähen Tartusse.",
-      ],
+      answers: orderAnswers("tana-tartusse"),
       say: "Täna lähen ma Tartusse.",
       explain: SECOND,
     },
@@ -92,7 +90,7 @@ export const DRILLS: DrillBank = {
       id: "question-kus-elad",
       rule: "question",
       prompt: msg`Where do you live? (To a friend.)`,
-      answers: ["Kus sa elad?", "Kus sina elad?"],
+      answers: orderAnswers("kus-elad"),
       say: "Kus sa elad?",
       explain: QUESTION,
     },
@@ -117,12 +115,7 @@ export const DRILLS: DrillBank = {
       id: "question-saturday",
       rule: "question",
       prompt: msg`What are you doing on Saturday? (To a friend.)`,
-      answers: [
-        "Mida sa laupäeval teed?",
-        "Mida sa teed laupäeval?",
-        "Mis sa laupäeval teed?",
-        "Mis sa teed laupäeval?",
-      ],
+      answers: orderAnswers("laupaeval-teed"),
       say: "Mida sa laupäeval teed?",
       explain: QUESTION,
     },
@@ -155,6 +148,7 @@ export const DRILLS: DrillBank = {
         "Homme pean tööle minema.",
         "Homme pean ma minema tööle.",
         "Homme ma pean tööle minema.",
+        "Homme pean minema tööle.",
       ],
       say: "Homme pean ma tööle minema.",
       explain: TWO,
@@ -164,12 +158,7 @@ export const DRILLS: DrillBank = {
       id: "two-homme-tootama",
       rule: "two",
       prompt: msg`Tomorrow I have to work.`,
-      answers: [
-        "Homme pean ma töötama.",
-        "Homme pean töötama.",
-        "Ma pean homme töötama.",
-        "Homme ma pean töötama.",
-      ],
+      answers: orderAnswers("homme-tootama"),
       say: "Homme pean ma töötama.",
       explain: TWO,
     },
@@ -209,7 +198,7 @@ export const DRILLS: DrillBank = {
       id: "no-today",
       rule: "no",
       prompt: msg`Today we’re not working.`,
-      answers: ["Täna me ei tööta.", "Me ei tööta täna.", "Täna ei tööta me."],
+      answers: orderAnswers("tana-ei-too"),
       say: "Täna me ei tööta.",
       explain: NO,
     },

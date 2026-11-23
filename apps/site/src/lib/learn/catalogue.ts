@@ -349,7 +349,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian word order: the verb comes second`,
         et: "Täna lähen ma",
         minutes: 16,
-        blurb: msg`A free Estonian lesson on word order: the verb in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one last, and where ei goes. Every sentence is read aloud.`,
+        blurb: msg`A free Estonian lesson on word order: the verb in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud.`,
       },
       { name: msg`Adjective agreement`, et: "Suures majas" },
       { name: msg`Comparatives and superlatives`, et: "Suurem, kõige suurem" },

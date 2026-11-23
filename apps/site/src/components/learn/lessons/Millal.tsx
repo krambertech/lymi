@@ -441,7 +441,7 @@ export function MillalLesson() {
           base: span.one,
           gloss: i18n._(SPAN_GLOSS[span.id]),
           cue: i18n._(SPAN_MEANS[span.id][way]),
-          answers: [span[way]],
+          answers: way === "ago" ? [span.ago, span.eest] : [span.in],
           src: src(span[way]),
           pair: [way, `${span.id}-${way}`] as const,
           explain:
@@ -621,12 +621,13 @@ export function MillalLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    For something that happens again and again, put <span lang="et">-ti</span> on
-                    the genitive: <span lang="et">hommiku</span>, so <Word w="hommikuti" />, in the
-                    mornings; <Word w="õhtuti" />, in the evenings. At night is{" "}
-                    <span lang="et">öösiti</span>. Days ending in <span lang="et">päev</span> take{" "}
-                    <span lang="et">-iti</span>: <span lang="et">laupäeviti</span>, on Saturdays.
-                    Tap a line to hear it.
+                    For something that happens again and again, usually put{" "}
+                    <span lang="et">-ti</span> on the genitive: <span lang="et">hommiku</span>, so{" "}
+                    <Word w="hommikuti" />, in the mornings; <Word w="õhtuti" />, in the evenings.
+                    At night is <span lang="et">öösiti</span>. Days ending in{" "}
+                    <span lang="et">päev</span> and the seasons take <span lang="et">-iti</span>:{" "}
+                    <span lang="et">laupäeviti</span>, on Saturdays; <span lang="et">suviti</span>,{" "}
+                    <span lang="et">talviti</span>, in summer, in winter. Tap a line to hear it.
                   </Trans>
                 </p>
               </Prose>

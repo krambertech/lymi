@@ -1,5 +1,9 @@
 import { msg } from "@lingui/core/macro";
+import { WHEN_TRANSLATE } from "../../../lib/learn/clips";
 import type { DrillBank } from "../../../lib/learn/drill";
+
+const whenAnswers = (id: (typeof WHEN_TRANSLATE)[number]["id"]) =>
+  (WHEN_TRANSLATE.find((item) => item.id === id) as (typeof WHEN_TRANSLATE)[number]).answers;
 
 const L = msg`A day, a part of the day or a season takes <et>-l</et>: <et>hommikul</et>, <et>suvel</et>.`;
 const S = msg`A month takes <et>-s</et>: <et>mais</et>, <et>juulis</et>.`;
@@ -24,12 +28,7 @@ export const DRILLS: DrillBank = {
       id: "when-hommikul",
       rule: "when",
       prompt: msg`I work in the morning.`,
-      answers: [
-        "Ma töötan hommikul.",
-        "Mina töötan hommikul.",
-        "Hommikul töötan ma.",
-        "Hommikul ma töötan.",
-      ],
+      answers: whenAnswers("hommikul"),
       say: "Ma töötan hommikul.",
       explain: L,
     },
@@ -113,12 +112,7 @@ export const DRILLS: DrillBank = {
       id: "span-in-a-week",
       rule: "span",
       prompt: msg`I’ll come in a week.`,
-      answers: [
-        "Ma tulen nädala pärast.",
-        "Mina tulen nädala pärast.",
-        "Nädala pärast tulen ma.",
-        "Tulen nädala pärast.",
-      ],
+      answers: whenAnswers("nadala-parast"),
       say: "Ma tulen nädala pärast.",
       explain: IN,
     },
@@ -140,6 +134,9 @@ export const DRILLS: DrillBank = {
         "Mina olin Tallinnas kolm nädalat tagasi.",
         "Kolm nädalat tagasi olin ma Tallinnas.",
         "Ma olin kolm nädalat tagasi Tallinnas.",
+        "Ma olin Tallinnas kolme nädala eest.",
+        "Kolme nädala eest olin ma Tallinnas.",
+        "Ma olin kolme nädala eest Tallinnas.",
       ],
       say: "Ma olin Tallinnas kolm nädalat tagasi.",
       explain: AGO,
@@ -170,12 +167,7 @@ export const DRILLS: DrillBank = {
       id: "around-after-work",
       rule: "around",
       prompt: msg`After work I go home.`,
-      answers: [
-        "Ma lähen pärast tööd koju.",
-        "Pärast tööd lähen ma koju.",
-        "Pärast tööd ma lähen koju.",
-        "Pärast tööd lähen koju.",
-      ],
+      answers: whenAnswers("parast-tood"),
       say: "Ma lähen pärast tööd koju.",
       explain: AROUND,
     },
@@ -235,7 +227,7 @@ export const DRILLS: DrillBank = {
       id: "from-monday-friday",
       rule: "from",
       prompt: msg`The shop is open from Monday to Friday.`,
-      answers: ["Pood on avatud esmaspäevast reedeni.", "Pood on esmaspäevast reedeni avatud."],
+      answers: whenAnswers("esmaspaevast"),
       say: "Pood on avatud esmaspäevast reedeni.",
       explain: FROM,
     },

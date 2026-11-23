@@ -172,8 +172,8 @@ msgstr "Fix the sentence"
 msgid "For a month"
 msgstr "For a month"
 
-msgid "For something that happens again and again, put <0>-ti</0> on the genitive: <1>hommiku</1>, so <2/>, in the mornings; <3/>, in the evenings. At night is <4>öösiti</4>. Days ending in <5>päev</5> take <6>-iti</6>: <7>laupäeviti</7>, on Saturdays. Tap a line to hear it."
-msgstr "For something that happens again and again, put <0>-ti</0> on the genitive: <1>hommiku</1>, so <2/>, in the mornings; <3/>, in the evenings. At night is <4>öösiti</4>. Days ending in <5>päev</5> take <6>-iti</6>: <7>laupäeviti</7>, on Saturdays. Tap a line to hear it."
+msgid "For something that happens again and again, usually put <0>-ti</0> on the genitive: <1>hommiku</1>, so <2/>, in the mornings; <3/>, in the evenings. At night is <4>öösiti</4>. Days ending in <5>päev</5> and the seasons take <6>-iti</6>: <7>laupäeviti</7>, on Saturdays; <8>suviti</8>, <9>talviti</9>, in summer, in winter. Tap a line to hear it."
+msgstr "For something that happens again and again, usually put <0>-ti</0> on the genitive: <1>hommiku</1>, so <2/>, in the mornings; <3/>, in the evenings. At night is <4>öösiti</4>. Days ending in <5>päev</5> and the seasons take <6>-iti</6>: <7>laupäeviti</7>, on Saturdays; <8>suviti</8>, <9>talviti</9>, in summer, in winter. Tap a line to hear it."
 
 msgid "For two days"
 msgstr "For two days"

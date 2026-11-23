@@ -13,17 +13,20 @@ msgstr "<0>Ei</0> стоїть просто перед дієсловом, то�
 msgid "<0>Ei</0> goes right before the verb."
 msgstr "<0>Ei</0> стоїть просто перед дієсловом."
 
-msgid "<0>Läheme</0> takes second place, and <1>ujuma</1> goes last."
-msgstr "<0>Läheme</0> стоїть на другому місці, а <1>ujuma</1> — у кінці."
+msgid "<0>Läheme</0> takes second place, and here <1>ujuma</1> goes last, the usual place."
+msgstr "<0>Läheme</0> стає на друге місце, а <1>ujuma</1> тут іде в кінець — на звичне місце."
 
 msgid "<0>Ma lähen täna Tartusse</0> is I’m going to Tartu today. Start it with <1>täna</1> instead, and the verb stays in second place while the person moves after it: <2/> <3>Tartusse</3>."
 msgstr "<0>Ma lähen täna Tartusse</0> — «я сьогодні їду в Тарту». Почни речення з <1>täna</1>, і дієслово лишиться на другому місці, а підмет — той, хто діє, — перейде за нього: <2/> <3>Tartusse</3>."
 
-msgid "<0>Pean</0> takes second place, and the other verb, <1>minema</1>, goes last."
-msgstr "<0>Pean</0> стоїть на другому місці, а інше дієслово, <1>minema</1>, — у кінці."
+msgid "<0>Minema</0> sits in second place, where the first verb, <1>pean</1>, belongs."
+msgstr "<0>Minema</0> стоїть на другому місці, а там має бути перше дієслово, <1>pean</1>."
 
-msgid "<0>Tahan</0> takes second place, and <1>lugeda</1> goes last."
-msgstr "<0>Tahan</0> стоїть на другому місці, а <1>lugeda</1> — у кінці."
+msgid "<0>Pean</0> takes second place, and here the other verb, <1>minema</1>, goes last, the usual place."
+msgstr "<0>Pean</0> стає на друге місце, а інше дієслово, <1>minema</1>, тут іде в кінець — на звичне місце."
+
+msgid "<0>Tahan</0> takes second place, and here <1>lugeda</1> goes last, the usual place."
+msgstr "<0>Tahan</0> стає на друге місце, а <1>lugeda</1> тут іде в кінець — на звичне місце."
 
 msgid "16 minutes"
 msgstr "16 хвилин"
@@ -211,8 +214,8 @@ msgstr "Вона питає про неділю, а <0>ei</0> стоїть пр�
 msgid "She asks about the evening, and the verb comes second."
 msgstr "Вона питає про вечір, а дієслово стоїть другим."
 
-msgid "She asks about tomorrow, and the second verb goes last."
-msgstr "Вона питає про завтра, а друге дієслово йде в кінець."
+msgid "She asks about tomorrow, and <0>minema</0> sits in second place, where <1>pean</1> belongs."
+msgstr "Вона питає про завтра, а <0>minema</0> стоїть на другому місці, де має бути <1>pean</1>."
 
 msgid "So a statement says <0>Täna lähen ma</0>, and a question says <1>Millal sa lähed?</1> Tap a line to hear it."
 msgstr "Тож у твердженні — <0>Täna lähen ma</0>, а в питанні — <1>Millal sa lähed?</1> Торкнися рядка, щоб послухати."
@@ -249,9 +252,6 @@ msgstr "Те саме з місцем чи словом часу з уроку {
 
 msgid "The second"
 msgstr "На другому"
-
-msgid "The second verb goes last, after the place."
-msgstr "Друге дієслово йде в кінець, після місця."
 
 msgid "The third"
 msgstr "На третьому"
@@ -307,8 +307,8 @@ msgstr "Завтра ми не прийдемо."
 msgid "Two verbs: <et>pean … minema</et>"
 msgstr "Два дієслова: <et>pean … minema</et>"
 
-msgid "Two verbs: the second goes last"
-msgstr "Два дієслова: друге — у кінці"
+msgid "Two verbs: the second usually goes last"
+msgstr "Два дієслова: друге зазвичай у кінці"
 
 msgid "Until one"
 msgstr "До першої"
@@ -337,8 +337,8 @@ msgstr "Що Пеетер робить у суботу зранку?"
 msgid "What does Peeter want to do on Sunday?"
 msgstr "Що Пеетер хоче робити в неділю?"
 
-msgid "What subject is the exam in? Write it as Liisa says it."
-msgstr "З якого предмета іспит? Напиши так, як каже Лііса."
+msgid "What exam is it? Write the language as Liisa says it."
+msgstr "Який іспит? Напиши мову так, як каже Лііса."
 
 msgid "What the sentence starts with"
 msgstr "З чого починається речення"

@@ -160,14 +160,14 @@ function useContent() {
       ),
       "homme-pean": (
         <Trans>
-          <span lang="et">Pean</span> takes second place, and the other verb,{" "}
-          <span lang="et">minema</span>, goes last.
+          <span lang="et">Pean</span> takes second place, and here the other verb,{" "}
+          <span lang="et">minema</span>, goes last, the usual place.
         </Trans>
       ),
       "ohtul-tahan": (
         <Trans>
-          <span lang="et">Tahan</span> takes second place, and <span lang="et">lugeda</span> goes
-          last.
+          <span lang="et">Tahan</span> takes second place, and here <span lang="et">lugeda</span>{" "}
+          goes last, the usual place.
         </Trans>
       ),
       "homme-ei-tule": (
@@ -184,8 +184,8 @@ function useContent() {
       ),
       "laupaeval-ujuma": (
         <Trans>
-          <span lang="et">Läheme</span> takes second place, and <span lang="et">ujuma</span> goes
-          last.
+          <span lang="et">Läheme</span> takes second place, and here <span lang="et">ujuma</span>{" "}
+          goes last, the usual place.
         </Trans>
       ),
     };
@@ -196,8 +196,8 @@ function useContent() {
       explain: meaningWhy[id],
     }));
 
-    const heard: OrderItem[] = ORDER_HEARD.map(({ said, also }) => ({
-      answers: [said, ...also],
+    const heard: OrderItem[] = ORDER_HEARD.map(({ said }) => ({
+      answers: [said],
       src: src(said),
       explain: meaning(said, i18n),
     }));
@@ -219,11 +219,21 @@ function useContent() {
           { line: ORDER_DIALOGUE["d-sina-1"], right: true },
           {
             line: "Homme minema pean ma tööle.",
-            why: <Trans>The second verb goes last, after the place.</Trans>,
+            why: (
+              <Trans>
+                <span lang="et">Minema</span> sits in second place, where the first verb,{" "}
+                <span lang="et">pean</span>, belongs.
+              </Trans>
+            ),
           },
           {
             line: "Eile minema pidin ma tööle.",
-            why: <Trans>She asks about tomorrow, and the second verb goes last.</Trans>,
+            why: (
+              <Trans>
+                She asks about tomorrow, and <span lang="et">minema</span> sits in second place,
+                where <span lang="et">pean</span> belongs.
+              </Trans>
+            ),
           },
         ],
       },
@@ -371,8 +381,8 @@ function useContent() {
       {
         id: "exam",
         kind: "short",
-        ask: t`What subject is the exam in? Write it as Liisa says it.`,
-        answers: ["eesti keele", "eesti keel"],
+        ask: t`What exam is it? Write the language as Liisa says it.`,
+        answers: ["eesti keele", "eesti keel", "eesti"],
         line: 29,
       },
     ];
@@ -536,7 +546,7 @@ export function SonajargLesson() {
         },
         {
           id: "two-verbs",
-          title: t`Two verbs: the second goes last`,
+          title: t`Two verbs: the second usually goes last`,
           children: (
             <>
               <Prose>

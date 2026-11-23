@@ -29,23 +29,47 @@ msgstr "<0>P suletud</0> on a sign: closed on Sunday."
 msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 
-msgid "2 quizzes"
-msgstr "2 quizzes"
+msgid "<et>Homme</et> is tomorrow: the day after today."
+msgstr "<et>Homme</et> is tomorrow: the day after today."
 
-msgid "8 minutes"
-msgstr "8 minutes"
+msgid "<et>Reede</et> is the one day without <et>päev</et>; <et>laupäev</et> and <et>pühapäev</et> have names of their own."
+msgstr "<et>Reede</et> is the one day without <et>päev</et>; <et>laupäev</et> and <et>pühapäev</et> have names of their own."
+
+msgid "<et>Täna on</et> says what day it is today, <et>homme on</et> what day it is tomorrow; the day’s name usually comes after."
+msgstr "<et>Täna on</et> says what day it is today, <et>homme on</et> what day it is tomorrow; the day’s name usually comes after."
+
+msgid "15 minutes"
+msgstr "15 minutes"
+
+msgid "4 quizzes, a matching game and a passage"
+msgstr "4 quizzes, a matching game and a passage"
 
 msgid "A shop’s opening hours"
 msgstr "A shop’s opening hours"
 
+msgid "All eight, each day and each word right."
+msgstr "All eight, each day and each word right."
+
 msgid "All of them. You can count the week forward."
 msgstr "All of them. You can count the week forward."
+
+msgid "All seven sentences right."
+msgstr "All seven sentences right."
 
 msgid "All seven. You know the week by ear."
 msgstr "All seven. You know the week by ear."
 
 msgid "Also “other”."
 msgstr "Also “other”."
+
+msgid "At home"
+msgstr "At home"
+
+msgid "At work"
+msgstr "At work"
+
+msgid "Before and after today"
+msgstr "Before and after today"
 
 msgid "Borrowed from Low German or Old Swedish."
 msgstr "Borrowed from Low German or Old Swedish."
@@ -92,20 +116,53 @@ msgstr "Good. Say the week through in your head before you pick."
 msgid "Hear a day"
 msgstr "Hear a day"
 
+msgid "Hear the sentence and write it. Inside a sentence, day names take a small letter."
+msgstr "Hear the sentence and write it. Inside a sentence, day names take a small letter."
+
 msgid "holy; a holiday"
 msgstr "holy; a holiday"
+
+msgid "In town"
+msgstr "In town"
+
+msgid "Jaan is at work today."
+msgstr "Jaan is at work today."
+
+msgid "Jaan is at work tomorrow."
+msgstr "Jaan is at work tomorrow."
+
+msgid "Jaan tells Mari what day it is and where he is this week."
+msgstr "Jaan tells Mari what day it is and where he is this week."
 
 msgid "Listen and pick the day. Most of them end the same way, so listen to how each one starts."
 msgstr "Listen and pick the day. Most of them end the same way, so listen to how each one starts."
 
+msgid "Listen: Jaan’s week"
+msgstr "Listen: Jaan’s week"
+
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
+
+msgid "Listening: Jaan’s week"
+msgstr "Listening: Jaan’s week"
+
+msgid "Match each word with what it means."
+msgstr "Match each word with what it means."
+
+msgid "Match the words"
+msgstr "Match the words"
 
 msgid "Monday"
 msgstr "Monday"
 
 msgid "Most of them. Listen to how the ones you missed start."
 msgstr "Most of them. Listen to how the ones you missed start."
+
+msgid "Nearly. Hear the ones you missed below, then try again with Slower."
+msgstr "Nearly. Hear the ones you missed below, then try again with Slower."
+
+msgid "Nearly. In the ones you missed, check <0>täna</0> or <1>homme</1> and the day’s name."
+msgstr "Nearly. In the ones you missed, check <0>täna</0> or <1>homme</1> and the day’s name."
 
 msgid "On a door or a sign."
 msgstr "On a door or a sign."
@@ -124,6 +181,9 @@ msgstr "One letter a day"
 
 msgid "open"
 msgstr "open"
+
+msgid "Pick a day to be today in the panel above, read what tomorrow is, then try again."
+msgstr "Pick a day to be today in the panel above, read what tomorrow is, then try again."
 
 msgid "Play {sentence}"
 msgstr "Play {sentence}"
@@ -149,6 +209,9 @@ msgstr "Seven days"
 msgid "Six days end in <0>päev</0>, day. <1>Reede</1> doesn’t."
 msgstr "Six days end in <0>päev</0>, day. <1>Reede</1> doesn’t."
 
+msgid "Six days end in <et>päev</et>, so listen to how each one starts."
+msgstr "Six days end in <et>päev</et>, so listen to how each one starts."
+
 msgid "Sunday"
 msgstr "Sunday"
 
@@ -158,8 +221,14 @@ msgstr "Tap a day"
 msgid "Tap a letter"
 msgstr "Tap a letter"
 
+msgid "The day after"
+msgstr "The day after"
+
 msgid "the day after tomorrow"
 msgstr "the day after tomorrow"
+
+msgid "The day after tomorrow is Saturday."
+msgstr "The day after tomorrow is Saturday."
 
 msgid "the day before yesterday"
 msgstr "the day before yesterday"
@@ -167,8 +236,11 @@ msgstr "the day before yesterday"
 msgid "The days as letters"
 msgstr "The days as letters"
 
-msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Day names start with a small letter, like any other word."
-msgstr "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Day names start with a small letter, like any other word."
+msgid "The days by ear"
+msgstr "The days by ear"
+
+msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Inside a sentence, day names take a small letter, like any other word."
+msgstr "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Inside a sentence, day names take a small letter, like any other word."
 
 msgid "The first day of the week."
 msgstr "The first day of the week."
@@ -181,6 +253,9 @@ msgstr "The first four count: <0/> is the first day, <1/> the second, <2/> the t
 
 msgid "The first four count: <0>esmaspäev</0> is the first day, and <1>neljapäev</1> the fourth."
 msgstr "The first four count: <0>esmaspäev</0> is the first day, and <1>neljapäev</1> the fourth."
+
+msgid "The first four count: <et>esmaspäev</et> is the first day, <et>neljapäev</et> the fourth."
+msgstr "The first four count: <et>esmaspäev</et> is the first day, <et>neljapäev</et> the fourth."
 
 msgid "The fourth day of the week."
 msgstr "The fourth day of the week."
@@ -203,8 +278,8 @@ msgstr "The third day of the week."
 msgid "The third day. You can hear <0/>, three, from lesson {numbers}."
 msgstr "The third day. You can hear <0/>, three, from lesson {numbers}."
 
-msgid "The week starts on <0>esmaspäev</0>. Day names start with a small letter."
-msgstr "The week starts on <0>esmaspäev</0>. Day names start with a small letter."
+msgid "The week starts on <0>esmaspäev</0>. Day names take a small letter unless they start a sentence."
+msgstr "The week starts on <0>esmaspäev</0>. Day names take a small letter unless they start a sentence."
 
 msgid "three"
 msgstr "three"
@@ -224,11 +299,44 @@ msgstr "Today is"
 msgid "Today is Monday."
 msgstr "Today is Monday."
 
+msgid "Today is Saturday."
+msgstr "Today is Saturday."
+
+msgid "Today is Sunday."
+msgstr "Today is Sunday."
+
+msgid "Today is Thursday."
+msgstr "Today is Thursday."
+
+msgid "Today is Tuesday."
+msgstr "Today is Tuesday."
+
+msgid "Today is Wednesday."
+msgstr "Today is Wednesday."
+
 msgid "Today, tomorrow, yesterday"
 msgstr "Today, tomorrow, yesterday"
 
 msgid "tomorrow"
 msgstr "tomorrow"
+
+msgid "Tomorrow is Friday."
+msgstr "Tomorrow is Friday."
+
+msgid "Tomorrow is Monday."
+msgstr "Tomorrow is Monday."
+
+msgid "Tomorrow is Saturday."
+msgstr "Tomorrow is Saturday."
+
+msgid "Tomorrow is Sunday."
+msgstr "Tomorrow is Sunday."
+
+msgid "Tomorrow is Thursday."
+msgstr "Tomorrow is Thursday."
+
+msgid "Tomorrow is Tuesday."
+msgstr "Tomorrow is Tuesday."
 
 msgid "Tuesday"
 msgstr "Tuesday"
@@ -239,14 +347,35 @@ msgstr "Wednesday"
 msgid "week"
 msgstr "week"
 
+msgid "What day is it the day after tomorrow?"
+msgstr "What day is it the day after tomorrow?"
+
 msgid "What day is it today?"
 msgstr "What day is it today?"
+
+msgid "What day it is"
+msgstr "What day it is"
+
+msgid "Where is Jaan the day after tomorrow?"
+msgstr "Where is Jaan the day after tomorrow?"
 
 msgid "Which day did you hear?"
 msgstr "Which day did you hear?"
 
 msgid "Which day is tomorrow?"
 msgstr "Which day is tomorrow?"
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "Write the sentence"
+msgstr "Write the sentence"
+
+msgid "Write what day it is today or tomorrow. Both take <0>on</0> and the day."
+msgstr "Write what day it is today or tomorrow. Both take <0>on</0> and the day."
+
+msgid "Write what you hear"
+msgstr "Write what you hear"
 
 msgid "yesterday"
 msgstr "yesterday"

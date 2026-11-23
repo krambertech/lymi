@@ -4,15 +4,25 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
-import { clipId, clipUrl, WEEK } from "../../../lib/learn/clips";
+import {
+  clipId,
+  clipUrl,
+  dayAnswers,
+  dayTranslations,
+  PAEVAD_PASSAGE,
+  WEEK,
+} from "../../../lib/learn/clips";
 import { type Day, dayChoices, weekDay } from "../../../lib/learn/days";
 import { playSound, usePlaying } from "../../../lib/learn/player";
-import { shuffledRun } from "../../../lib/learn/quiz";
+import { eachPairFirst, shuffledRun } from "../../../lib/learn/quiz";
 import { Chips, Keys, Panel } from "../Explore";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
+import { Match, type MatchPair } from "../Match";
 import { OpeningHours } from "../OpeningHours";
+import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
 import { PlayButton, Playing } from "../Sound";
 import { Word } from "../Word";
 
@@ -235,6 +245,28 @@ function DoorSign() {
   );
 }
 
+const WRITTEN_DAYS: readonly Day[] = [
+  "teisipäev",
+  "neljapäev",
+  "kolmapäev",
+  "laupäev",
+  "pühapäev",
+  "reede",
+  "esmaspäev",
+];
+
+const TRANSLATED: readonly { said: string; prompt: MessageDescriptor }[] = [
+  { said: "Täna on teisipäev.", prompt: msg`Today is Tuesday.` },
+  { said: "Homme on teisipäev.", prompt: msg`Tomorrow is Tuesday.` },
+  { said: "Täna on neljapäev.", prompt: msg`Today is Thursday.` },
+  { said: "Homme on reede.", prompt: msg`Tomorrow is Friday.` },
+  { said: "Täna on laupäev.", prompt: msg`Today is Saturday.` },
+  { said: "Homme on pühapäev.", prompt: msg`Tomorrow is Sunday.` },
+  { said: "Täna on kolmapäev.", prompt: msg`Today is Wednesday.` },
+  { said: "Homme on neljapäev.", prompt: msg`Tomorrow is Thursday.` },
+  { said: "Ülehomme on laupäev.", prompt: msg`The day after tomorrow is Saturday.` },
+];
+
 const RELATIVE = [
   { word: "üleeile", shift: -2 },
   { word: "eile", shift: -1 },
@@ -432,20 +464,105 @@ export function PaevadLesson() {
     [tomorrowItem],
   );
 
+  const writtenItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
+    () =>
+      WRITTEN_DAYS.map((each) => ({
+        kind: "dictation" as const,
+        id: `write-${clipId(each)}`,
+        src: src(`${each === "esmaspäev" ? "Homme" : "Täna"} on ${each}.`),
+        answers: dayAnswers(`${each === "esmaspäev" ? "Homme" : "Täna"} on ${each}.`),
+        pair: [each, each] as const,
+      })),
+    [],
+  );
+
+  const translatedItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
+    () =>
+      TRANSLATED.map(({ said, prompt }) => ({
+        kind: "translate" as const,
+        id: `translate-${clipId(said)}`,
+        prompt: i18n._(prompt),
+        src: src(said),
+        answers: dayTranslations(said),
+        pair: [said.split(" ")[0] as string, said] as const,
+      })),
+    [i18n],
+  );
+
+  const relativePairs = useMemo<MatchPair[]>(
+    () =>
+      [
+        { word: "täna", means: t`today` },
+        { word: "homme", means: t`tomorrow` },
+        { word: "eile", means: t`yesterday` },
+        { word: "ülehomme", means: t`the day after tomorrow` },
+        { word: "üleeile", means: t`the day before yesterday` },
+      ].map(({ word, means }) => ({ id: word, left: word, right: means, src: src(word) })),
+    [t],
+  );
+
+  const passageQuestions = useMemo<PassageQuestion[]>(
+    () => [
+      {
+        id: "today",
+        ask: t`What day is it today?`,
+        options: [
+          { id: "wed", label: i18n._(MEANINGS.kolmapäev) },
+          { id: "thu", label: i18n._(MEANINGS.neljapäev) },
+          { id: "fri", label: i18n._(MEANINGS.reede) },
+        ],
+        answer: "wed",
+        line: 1,
+      },
+      { id: "work", kind: "truefalse", ask: t`Jaan is at work today.`, answer: true, line: 2 },
+      {
+        id: "work-tomorrow",
+        kind: "truefalse",
+        ask: t`Jaan is at work tomorrow.`,
+        answer: false,
+        line: 4,
+      },
+      {
+        id: "town",
+        ask: t`Where is Jaan the day after tomorrow?`,
+        options: [
+          { id: "work", label: t`At work` },
+          { id: "home", label: t`At home` },
+          { id: "town", label: t`In town` },
+        ],
+        answer: "town",
+        line: 6,
+      },
+      {
+        id: "after-tomorrow",
+        ask: t`What day is it the day after tomorrow?`,
+        options: [
+          { id: "thu", label: i18n._(MEANINGS.neljapäev) },
+          { id: "sat", label: i18n._(MEANINGS.laupäev) },
+          { id: "fri", label: i18n._(MEANINGS.reede) },
+        ],
+        answer: "fri",
+        line: 5,
+      },
+    ],
+    [t, i18n],
+  );
+
   return (
     <LessonView
       slug={SLUG}
       glossary={GLOSSARY}
       sub={<Trans>The seven days, the four that count, and how to say what day it is.</Trans>}
       facts={[
-        <Trans key="m">8 minutes</Trans>,
-        <Trans key="q">2 quizzes</Trans>,
+        <Trans key="m">15 minutes</Trans>,
+        <Trans key="q">4 quizzes, a matching game and a passage</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[...WEEK, "päev", "nädal", "täna", "homme", "eile", "ülehomme", "üleeile"]}
       recap={[
         <Trans key="1">
-          The week starts on <b lang="et">esmaspäev</b>. Day names start with a small letter.
+          The week starts on <b lang="et">esmaspäev</b>. Day names take a small letter unless they
+          start a sentence.
         </Trans>,
         <Trans key="2">
           Six days end in <b lang="et">päev</b>, day. <b lang="et">Reede</b> doesn’t.
@@ -472,8 +589,8 @@ export function PaevadLesson() {
                 <p>
                   <Trans>
                     The Estonian week, <Word w="nädal" />, starts on Monday. Six of its days end in{" "}
-                    <Word w="päev" />, day. <Word w="Reede" />, Friday, is the one that doesn’t. Day
-                    names start with a small letter, like any other word.
+                    <Word w="päev" />, day. <Word w="Reede" />, Friday, is the one that doesn’t.
+                    Inside a sentence, day names take a small letter, like any other word.
                   </Trans>
                 </p>
                 <p>
@@ -641,6 +758,120 @@ export function PaevadLesson() {
                 both={(item) => [item.src, src(`Homme on ${item.answer}.`)]}
                 recall={(item) => ({ label: `${item.today} → ${item.answer}`, src: item.src })}
                 round={(props) => <ChoiceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "which-day",
+          title: t`Before and after today`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>Match each word with what it means.</Trans>
+                </p>
+              </Prose>
+              <Match id="match-days" title={<Trans>Match the words</Trans>} pairs={relativePairs} />
+            </>
+          ),
+        },
+        {
+          id: "write",
+          title: t`Write what you hear`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Hear the sentence and write it. Inside a sentence, day names take a small
+                    letter.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="write-days"
+                title={<Trans>Write the sentence</Trans>}
+                items={writtenItems}
+                rounds={7}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All seven sentences right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>
+                      Nearly. Hear the ones you missed below, then try again with Slower.
+                    </Trans>
+                  ) : (
+                    <Trans>Play the week above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "translate",
+          title: t`Write it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write what day it is today or tomorrow. Both take <b lang="et">on</b> and the
+                    day.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="translate-days"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={translatedItems}
+                rounds={9}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All eight, each day and each word right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>
+                      Nearly. In the ones you missed, check <span lang="et">täna</span> or{" "}
+                      <span lang="et">homme</span> and the day’s name.
+                    </Trans>
+                  ) : (
+                    <Trans>
+                      Pick a day to be today in the panel above, read what tomorrow is, then try
+                      again.
+                    </Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listening: Jaan’s week`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>Jaan tells Mari what day it is and where he is this week.</Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="jaan-week"
+                title={<Trans>Listen: Jaan’s week</Trans>}
+                clip="p-jaan"
+                sentences={PAEVAD_PASSAGE}
+                questions={passageQuestions}
               />
             </>
           ),

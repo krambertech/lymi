@@ -14,7 +14,6 @@ export const KNOWN_ISSUES: Readonly<Record<string, readonly string[]>> = {
     "mina-sina-tema",
     "numbrid",
     "olevik",
-    "paev-tallinnas",
   ],
   /** A quiz whose options for an answer never change, so the set names the answer. */
   "option-sets": ["eitus", "kell", "kusimused", "mina-sina-tema"],
@@ -27,7 +26,7 @@ export const KNOWN_ISSUES: Readonly<Record<string, readonly string[]>> = {
    * A quiz, dialogue or passage whose answer is the option sharing the most words with the others:
    * each wrong reply changes one thing about the right one.
    */
-  "majority-option": ["kaskiv", "paev-tallinnas", "tutvumine"],
+  "majority-option": ["kaskiv", "tutvumine"],
   /**
    * A dialogue's replies or a passage's questions, or a quiz's options in Ukrainian or Russian, that
    * a length rule answers better than chance.

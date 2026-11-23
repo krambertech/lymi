@@ -7,6 +7,30 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
+msgid "<0>Eurot</0> or <1>maksab</1> makes the number a price."
+msgstr "<0>Eurot</0> or <1>maksab</1> makes the number a price."
+
+msgid "<0>Kell on</0> before the number makes it a time."
+msgstr "<0>Kell on</0> before the number makes it a time."
+
+msgid "<0>Pool</0> looks ahead: <1>pool kümme</1> is 9:30, and it’s ten."
+msgstr "<0>Pool</0> looks ahead: <1>pool kümme</1> is 9:30, and it’s ten."
+
+msgid "<0>Pool</0> looks ahead: <1>pool üksteist</1> is 10:30, and it’s ten."
+msgstr "<0>Pool</0> looks ahead: <1>pool üksteist</1> is 10:30, and it’s ten."
+
+msgid "<et>Avatud</et> is open and <et>suletud</et> closed, as on a door."
+msgstr "<et>Avatud</et> is open and <et>suletud</et> closed, as on a door."
+
+msgid "<et>Ei</et> comes before the verb, and the verb usually drops its ending: <et>ei tööta</et>. With <et>on</et> it’s <et>ei ole</et>."
+msgstr "<et>Ei</et> comes before the verb, and the verb usually drops its ending: <et>ei tööta</et>. With <et>on</et> it’s <et>ei ole</et>."
+
+msgid "<et>Eurot</et> or <et>maksab</et> makes the number a price."
+msgstr "<et>Eurot</et> or <et>maksab</et> makes the number a price."
+
+msgid "<et>Kell on</et> before the number makes it a time."
+msgstr "<et>Kell on</et> before the number makes it a time."
+
 msgid "€13"
 msgstr "€13"
 
@@ -16,11 +40,11 @@ msgstr "€2"
 msgid "€3"
 msgstr "€3"
 
-msgid "12 minutes"
-msgstr "12 minutes"
+msgid "10 exercises"
+msgstr "10 exercises"
 
-msgid "5 exercises"
-msgstr "5 exercises"
+msgid "20 minutes"
+msgstr "20 minutes"
 
 msgid "A café’s opening hours"
 msgstr "A café’s opening hours"
@@ -28,26 +52,44 @@ msgstr "A café’s opening hours"
 msgid "A command, from istuma, to sit."
 msgstr "A command, from istuma, to sit."
 
+msgid "A day’s name, or <0>täna on</0> and <1>homme on</1>, says what day it is."
+msgstr "A day’s name, or <0>täna on</0> and <1>homme on</1>, says what day it is."
+
+msgid "A day’s name, or <et>täna on</et> and <et>homme on</et>, says what day it is."
+msgstr "A day’s name, or <et>täna on</et> and <et>homme on</et>, says what day it is."
+
 msgid "A message from Mari"
 msgstr "A message from Mari"
+
+msgid "A number alone doesn’t say what it counts: <0>kaksteist</0> can be the time or a price. Listen to each line and put it under the question it answers."
+msgstr "A number alone doesn’t say what it counts: <0>kaksteist</0> can be the time or a price. Listen to each line and put it under the question it answers."
 
 msgid "A sign shortens each day to its first letter, as in lesson {days}. Hours use the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
 msgstr "A sign shortens each day to its first letter, as in lesson {days}. Hours use the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
 
+msgid "A time usually takes <et>kell</et> and the number: <et>kell kümme</et>, at ten."
+msgstr "A time usually takes <et>kell</et> and the number: <et>kell kümme</et>, at ten."
+
 msgid "A voice message from Jaan"
 msgstr "A voice message from Jaan"
 
-msgid "After a number from two up, euro becomes eurot."
-msgstr "After a number from two up, euro becomes eurot."
+msgid "After <0>ei</0>, the verb usually drops its ending: <1>ei tööta</1>."
+msgstr "After <0>ei</0>, the verb usually drops its ending: <1>ei tööta</1>."
 
-msgid "After ei, the verb drops its ending: ei joo."
-msgstr "After ei, the verb drops its ending: ei joo."
+msgid "After a number from two up, euro usually becomes eurot: kaks eurot."
+msgstr "After a number from two up, euro usually becomes eurot: kaks eurot."
 
-msgid "After ei, the verb drops its ending: ei tööta."
-msgstr "After ei, the verb drops its ending: ei tööta."
+msgid "All six sentences right."
+msgstr "All six sentences right."
 
-msgid "Answer no with <0>ei</0> and the verb without its ending: <1>Ei, ma ei tööta</1>, no, I don’t work."
-msgstr "Answer no with <0>ei</0> and the verb without its ending: <1>Ei, ma ei tööta</1>, no, I don’t work."
+msgid "All six, every sentence right."
+msgstr "All six, every sentence right."
+
+msgid "Answer no with <0>ei</0> and the verb, usually without its ending: <1>Ei, ma ei tööta</1>, no, I don’t work."
+msgstr "Answer no with <0>ei</0> and the verb, usually without its ending: <1>Ei, ma ei tööta</1>, no, I don’t work."
+
+msgid "Answers her question with <0>jah</0> or <1>ei</1>."
+msgstr "Answers her question with <0>jah</0> or <1>ei</1>."
 
 msgid "At 10:00"
 msgstr "At 10:00"
@@ -55,11 +97,17 @@ msgstr "At 10:00"
 msgid "At 10:30"
 msgstr "At 10:30"
 
-msgid "At 11:00"
-msgstr "At 11:00"
-
 msgid "At 11:30"
 msgstr "At 11:30"
+
+msgid "At 12:30"
+msgstr "At 12:30"
+
+msgid "At 13:30"
+msgstr "At 13:30"
+
+msgid "At 14:30"
+msgstr "At 14:30"
 
 msgid "At 16:00"
 msgstr "At 16:00"
@@ -121,6 +169,9 @@ msgstr "closed"
 msgid "costs"
 msgstr "costs"
 
+msgid "Days and signs"
+msgstr "Days and signs"
+
 msgid "eleven"
 msgstr "eleven"
 
@@ -151,11 +202,23 @@ msgstr "half past ten, 10:30"
 msgid "How are you?"
 msgstr "How are you?"
 
+msgid "how much"
+msgstr "how much"
+
 msgid "How much is a coffee?"
 msgstr "How much is a coffee?"
 
+msgid "How much it costs"
+msgstr "How much it costs"
+
+msgid "I don’t work tomorrow."
+msgstr "I don’t work tomorrow."
+
 msgid "I wait, I’m waiting"
 msgstr "I wait, I’m waiting"
+
+msgid "I’m at the market at twelve."
+msgstr "I’m at the market at twelve."
 
 msgid "in a café"
 msgstr "in a café"
@@ -175,14 +238,35 @@ msgstr "In Tartu"
 msgid "in town"
 msgstr "in town"
 
-msgid "It’s Saturday, half past ten, and you don’t work on Sundays. Mari speaks first; pick what you say back."
-msgstr "It’s Saturday, half past ten, and you don’t work on Sundays. Mari speaks first; pick what you say back."
+msgid "It costs twelve euros."
+msgstr "It costs twelve euros."
+
+msgid "It costs two euros."
+msgstr "It costs two euros."
+
+msgid "It’s Saturday, ten o’clock, and you don’t work on Sundays. Mari speaks first; pick what you say back."
+msgstr "It’s Saturday, ten o’clock, and you don’t work on Sundays. Mari speaks first; pick what you say back."
+
+msgid "It’s ten o’clock."
+msgstr "It’s ten o’clock."
+
+msgid "Jaan"
+msgstr "Jaan"
+
+msgid "Jaan asks about Sunday."
+msgstr "Jaan asks about Sunday."
+
+msgid "Jaan works tomorrow."
+msgstr "Jaan works tomorrow."
 
 msgid "Jaan, another friend, leaves you a voice message. Listen for where he is and when."
 msgstr "Jaan, another friend, leaves you a voice message. Listen for where he is and when."
 
-msgid "Kell on kümme: it’s ten. Kell kümme: at ten."
-msgstr "Kell on kümme: it’s ten. Kell kümme: at ten."
+msgid "Kell on kolm: it’s three. Kell kolm: at three."
+msgstr "Kell on kolm: it’s three. Kell kolm: at three."
+
+msgid "Listen: a plan for tomorrow"
+msgstr "Listen: a plan for tomorrow"
 
 msgid "Listen: Jaan’s plans"
 msgstr "Listen: Jaan’s plans"
@@ -196,8 +280,29 @@ msgstr "Ma olen, sa oled, ta on."
 msgid "Mari"
 msgstr "Mari"
 
+msgid "Mari asks if Jaan works tomorrow."
+msgstr "Mari asks if Jaan works tomorrow."
+
+msgid "Mari calls Jaan"
+msgstr "Mari calls Jaan"
+
+msgid "Mari calls Jaan to make a plan. Listen for the days, the times and the places."
+msgstr "Mari calls Jaan to make a plan. Listen for the days, the times and the places."
+
+msgid "Mari doesn’t work today."
+msgstr "Mari doesn’t work today."
+
 msgid "Mari writes"
 msgstr "Mari writes"
+
+msgid "Mari’s message on Friday ended with a question: <0>Kas sa oled homme linnas?</0> Write her a short reply as if it were still Friday, then compare it with a model and tick what yours does. Nothing is marked for you here."
+msgstr "Mari’s message on Friday ended with a question: <0>Kas sa oled homme linnas?</0> Write her a short reply as if it were still Friday, then compare it with a model and tick what yours does. Nothing is marked for you here."
+
+msgid "Nearly. Hear the ones you missed below, then try again with Slower."
+msgstr "Nearly. Hear the ones you missed below, then try again with Slower."
+
+msgid "Nearly. In the ones you missed, check <0>kell</0> for a time, <1>maksab … eurot</1> for a price, and <2>ei</2> before the verb."
+msgstr "Nearly. In the ones you missed, check <0>kell</0> for a time, <1>maksab … eurot</1> for a price, and <2>ei</2> before the verb."
 
 msgid "No, it’s closed"
 msgstr "No, it’s closed"
@@ -205,8 +310,11 @@ msgstr "No, it’s closed"
 msgid "no; not"
 msgstr "no; not"
 
-msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
-msgstr "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
+msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number. After <2>Mari ja mina</2>, Mari and I, the verb takes the same form as after <3>me</3>, we."
+msgstr "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number. After <2>Mari ja mina</2>, Mari and I, the verb takes the same form as after <3>me</3>, we."
+
+msgid "Numbers, times and days in sentences you know. Read a sign and a message, follow a voice message and a phone call, write in Estonian, and talk with Mari at the café."
+msgstr "Numbers, times and days in sentences you know. Read a sign and a message, follow a voice message and a phone call, write in Estonian, and talk with Mari at the café."
 
 msgid "On a door or a sign."
 msgstr "On a door or a sign."
@@ -220,11 +328,11 @@ msgstr "open"
 msgid "Opening hours on a door"
 msgstr "Opening hours on a door"
 
+msgid "Play the lines below once more, then try again."
+msgstr "Play the lines below once more, then try again."
+
 msgid "Pool looks ahead: halfway to eleven."
 msgstr "Pool looks ahead: halfway to eleven."
-
-msgid "Pool looks ahead: pool kümme is 9:30."
-msgstr "Pool looks ahead: pool kümme is 9:30."
 
 msgid "Pool neli: halfway to four, 3:30."
 msgstr "Pool neli: halfway to four, 3:30."
@@ -232,8 +340,8 @@ msgstr "Pool neli: halfway to four, 3:30."
 msgid "Pühapäev with the ending that says when, as in esmaspäeval."
 msgstr "Pühapäev with the ending that says when, as in esmaspäeval."
 
-msgid "Read a café sign and a text message, follow a voice message, fill in a plan for Saturday and answer a friend at a café: numbers, times and days in sentences you know."
-msgstr "Read a café sign and a text message, follow a voice message, fill in a plan for Saturday and answer a friend at a café: numbers, times and days in sentences you know."
+msgid "Read Mari’s message once more, then try again."
+msgstr "Read Mari’s message once more, then try again."
 
 msgid "Read opening hours: <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00, and <1>suletud</1> is closed."
 msgstr "Read opening hours: <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00, and <1>suletud</1> is closed."
@@ -241,23 +349,44 @@ msgstr "Read opening hours: <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:
 msgid "Read the sign on a café in Tallinn, then answer."
 msgstr "Read the sign on a café in Tallinn, then answer."
 
+msgid "Reply to Mari"
+msgstr "Reply to Mari"
+
 msgid "Saturday"
 msgstr "Saturday"
 
 msgid "Say a price with <0>maksab</0>: <1>Kohv maksab kolm eurot</1>, coffee costs three euros."
 msgstr "Say a price with <0>maksab</0>: <1>Kohv maksab kolm eurot</1>, coffee costs three euros."
 
-msgid "Say when with <0>kell</0> and a number: <1>Ma joon kell kümme kohvi</1>, I drink coffee at ten. Pool looks ahead, so <2>pool üksteist</2> is 10:30."
-msgstr "Say when with <0>kell</0> and a number: <1>Ma joon kell kümme kohvi</1>, I drink coffee at ten. Pool looks ahead, so <2>pool üksteist</2> is 10:30."
+msgid "Say when with <0>kell</0> and a number: <1>Ma joon kell kümme kohvi</1>, I drink coffee at ten. <2>Pool</2> looks ahead, so <3>pool üksteist</3> is 10:30."
+msgstr "Say when with <0>kell</0> and a number: <1>Ma joon kell kümme kohvi</1>, I drink coffee at ten. <2>Pool</2> looks ahead, so <3>pool üksteist</3> is 10:30."
 
 msgid "Say where with <0>-s</0> or <1>-l</1>, and when with <2>täna</2>, <3>homme</3> or a day’s name with <4>-l</4>: <5>Pühapäeval olen kodus</5>, on Sunday I’m at home."
 msgstr "Say where with <0>-s</0> or <1>-l</1>, and when with <2>täna</2>, <3>homme</3> or a day’s name with <4>-l</4>: <5>Pühapäeval olen kodus</5>, on Sunday I’m at home."
+
+msgid "Saying a price"
+msgstr "Saying a price"
+
+msgid "Saying no with <et>ei</et>"
+msgstr "Saying no with <et>ei</et>"
+
+msgid "Says a time with <0>kell</0>."
+msgstr "Says a time with <0>kell</0>."
+
+msgid "Says something you don’t do, with <0>ei</0>."
+msgstr "Says something you don’t do, with <0>ei</0>."
+
+msgid "Says where, with <0>-s</0> or <1>-l</1> on the place."
+msgstr "Says where, with <0>-s</0> or <1>-l</1> on the place."
 
 msgid "Sina as the one something is done to: Ma ootan sind, I’m waiting for you."
 msgstr "Sina as the one something is done to: Ma ootan sind, I’m waiting for you."
 
 msgid "sit down"
 msgstr "sit down"
+
+msgid "Six short lines: two times, a price, a day, a no and a sign. Write each one as you hear it, numbers in words."
+msgstr "Six short lines: two times, a price, a day, a no and a sign. Write each one as you hear it, numbers in words."
 
 msgid "Sunday"
 msgstr "Sunday"
@@ -271,20 +400,44 @@ msgstr "ten"
 msgid "That says where you live. Mari asked how you are."
 msgstr "That says where you live. Mari asked how you are."
 
-msgid "That’s the time. Mari asked how you are."
-msgstr "That’s the time. Mari asked how you are."
+msgid "That’s a price. Mari asked how you are."
+msgstr "That’s a price. Mari asked how you are."
+
+msgid "The café is open."
+msgstr "The café is open."
 
 msgid "The plural of sõber."
 msgstr "The plural of sõber."
 
+msgid "Three to five sentences: answer her question, say something you don’t do, and say where you are and when."
+msgstr "Three to five sentences: answer her question, say something you don’t do, and say where you are and when."
+
+msgid "Time, price or day"
+msgstr "Time, price or day"
+
+msgid "Time, price or day?"
+msgstr "Time, price or day?"
+
+msgid "Times with <et>kell</et>"
+msgstr "Times with <et>kell</et>"
+
 msgid "to be"
 msgstr "to be"
+
+msgid "To say the day, use <et>täna on</et>, <et>homme on</et> or <et>ülehomme on</et> and its name, with a small letter."
+msgstr "To say the day, use <et>täna on</et>, <et>homme on</et> or <et>ülehomme on</et> and its name, with a small letter."
+
+msgid "To say what something costs, use <et>maksab</et>; after a number from two up, <et>euro</et> usually becomes <et>eurot</et>."
+msgstr "To say what something costs, use <et>maksab</et>; after a number from two up, <et>euro</et> usually becomes <et>eurot</et>."
 
 msgid "today"
 msgstr "today"
 
 msgid "Today is Saturday, so tomorrow is Sunday."
 msgstr "Today is Saturday, so tomorrow is Sunday."
+
+msgid "Today is Saturday."
+msgstr "Today is Saturday."
 
 msgid "tomorrow"
 msgstr "tomorrow"
@@ -295,17 +448,29 @@ msgstr "Turg, market, takes -l by habit."
 msgid "twelve"
 msgstr "twelve"
 
-msgid "Üksteist is 11:00, and it’s half past ten."
-msgstr "Üksteist is 11:00, and it’s half past ten."
+msgid "We drink coffee at eleven."
+msgstr "We drink coffee at eleven."
+
+msgid "what day"
+msgstr "what day"
 
 msgid "What day is it tomorrow?"
 msgstr "What day is it tomorrow?"
 
+msgid "What day it is"
+msgstr "What day it is"
+
 msgid "What does Mari write?"
 msgstr "What does Mari write?"
 
-msgid "When does his bus get to Tallinn?"
-msgstr "When does his bus get to Tallinn?"
+msgid "what time"
+msgstr "what time"
+
+msgid "What time it is"
+msgstr "What time it is"
+
+msgid "When does his bus arrive?"
+msgstr "When does his bus arrive?"
 
 msgid "When does it close on Thursday?"
 msgstr "When does it close on Thursday?"
@@ -313,11 +478,17 @@ msgstr "When does it close on Thursday?"
 msgid "When does it open on Saturday?"
 msgstr "When does it open on Saturday?"
 
+msgid "When does Jaan come to the market?"
+msgstr "When does Jaan come to the market?"
+
 msgid "When does Mari have coffee tomorrow?"
 msgstr "When does Mari have coffee tomorrow?"
 
 msgid "When is the café open?"
 msgstr "When is the café open?"
+
+msgid "Where is Jaan at eleven tomorrow?"
+msgstr "Where is Jaan at eleven tomorrow?"
 
 msgid "Where is Jaan on Sunday?"
 msgstr "Where is Jaan on Sunday?"
@@ -325,14 +496,38 @@ msgstr "Where is Jaan on Sunday?"
 msgid "Where is Jaan today?"
 msgstr "Where is Jaan today?"
 
+msgid "Where is Jaan when Mari calls?"
+msgstr "Where is Jaan when Mari calls?"
+
 msgid "Where is Mari at twelve tomorrow?"
 msgstr "Where is Mari at twelve tomorrow?"
 
-msgid "Where will he wait for you?"
-msgstr "Where will he wait for you?"
+msgid "Where will he be tomorrow?"
+msgstr "Where will he be tomorrow?"
 
-msgid "With ma, the verb ends in -n: ma joon."
-msgstr "With ma, the verb ends in -n: ma joon."
+msgid "Which question does it answer?"
+msgstr "Which question does it answer?"
+
+msgid "With <0>ma</0>, the verb ends in <1>-n</1>: <2>ma joon</2>."
+msgstr "With <0>ma</0>, the verb ends in <1>-n</1>: <2>ma joon</2>."
+
+msgid "With <0>ma</0>, the verb ends in <1>-n</1>: <2>ma joon</2>. <3>Jood</3> goes with <4>sa</4>."
+msgstr "With <0>ma</0>, the verb ends in <1>-n</1>: <2>ma joon</2>. <3>Jood</3> goes with <4>sa</4>."
+
+msgid "Write back to Mari"
+msgstr "Write back to Mari"
+
+msgid "Write each sentence in Estonian, numbers in words. Here a time takes <0>kell</0>; what something costs takes <1>maksab</1>, and <2>eurot</2> after a number from two up."
+msgstr "Write each sentence in Estonian, numbers in words. Here a time takes <0>kell</0>; what something costs takes <1>maksab</1>, and <2>eurot</2> after a number from two up."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "Write the sentence"
+msgstr "Write the sentence"
+
+msgid "Write what you hear"
+msgstr "Write what you hear"
 
 msgid "Yes, from 10:00 to 16:00"
 msgstr "Yes, from 10:00 to 16:00"

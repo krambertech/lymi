@@ -273,12 +273,30 @@ export const PAEVAD_WORDS = [
   "esmaspäeval",
 ] as const;
 
+export const PAEVAD_PASSAGE = [
+  "Tere, Mari!",
+  "Täna on kolmapäev.",
+  "Ma olen täna tööl.",
+  "Homme on neljapäev.",
+  "Ma olen homme kodus.",
+  "Ülehomme on reede.",
+  "Ma olen ülehomme linnas.",
+] as const;
+
 /** What day it is, and the day after: “Täna on reede.” “Homme on laupäev.” */
 export const PAEVAD_SENTENCES = [
   "Mis päev täna on?",
   ...WEEK.map((day) => `Täna on ${day}.`),
   ...WEEK.map((day) => `Homme on ${day}.`),
+  "Ülehomme on laupäev.",
 ];
+
+export const dayAnswers = (said: string): [string, ...string[]] => [said];
+
+export const dayTranslations = (said: string): [string, ...string[]] => {
+  const [when = "", , day = ""] = said.replace(/\.$/, "").split(" ");
+  return [said, `${day.charAt(0).toUpperCase()}${day.slice(1)} on ${when.toLowerCase()}.`];
+};
 /** The negation lesson's present-tense verbs, each by its stem: the I form of the present without its -n. */
 export const NEGATION_VERBS = [
   { inf: "lugema", stem: "loe" },
@@ -1890,6 +1908,44 @@ export const KASKIV_MORE = [
   { one: "Ära loe!", more: "Ärge lugege!" },
 ] as const;
 
+export const KASKIV_CLASS = [
+  "Tere!",
+  "Istuge, palun.",
+  "Kuulake!",
+  "Jaan, ära räägi!",
+  "Mari, loe raamatut, palun!",
+  "Kati, oota!",
+  "Vaadake siia!",
+  "Aitäh!",
+] as const;
+
+export const KASKIV_TURNED: readonly {
+  from: string;
+  to: string;
+  kind: "dont" | "more";
+  answers: readonly [string, ...string[]];
+}[] = [
+  { from: "Loe!", to: "Ära loe!", kind: "dont", answers: ["Ära loe!"] },
+  { from: "Oota!", to: "Ära oota!", kind: "dont", answers: ["Ära oota!"] },
+  { from: "Söö!", to: "Ära söö!", kind: "dont", answers: ["Ära söö!"] },
+  { from: "Joo!", to: "Ära joo!", kind: "dont", answers: ["Ära joo!"] },
+  { from: "Tule siia!", to: "Tulge siia!", kind: "more", answers: ["Tulge siia!", "Siia tulge!"] },
+  { from: "Vaata!", to: "Vaadake!", kind: "more", answers: ["Vaadake!"] },
+  { from: "Kuula!", to: "Kuulake!", kind: "more", answers: ["Kuulake!"] },
+  { from: "Ära istu!", to: "Ärge istuge!", kind: "more", answers: ["Ärge istuge!"] },
+];
+
+export const KASKIV_TYPED: readonly {
+  verb: string;
+  ma: string;
+  stem: string;
+  answers: readonly [string, ...string[]];
+}[] = [
+  ...KASKIV_STEMS.filter(({ verb }) => verb !== "lugema"),
+  { verb: "kuulama", ma: "kuulan", stem: "kuula" },
+  { verb: "vaatama", ma: "vaatan", stem: "vaata" },
+].map((each) => ({ ...each, answers: [each.stem, `${each.stem}!`] }));
+
 /** Words and lines the commands lesson says outside its lists. */
 export const KASKIV_WORDS = ["palun", "ära", "siia", "Ma lähen.", "Mine!", "Ärge oodake!"] as const;
 
@@ -2429,7 +2485,7 @@ export const TALLINN_PASSAGES = {
     "Tere, see on Jaan!",
     "Ma olen täna Tartus, aga homme olen Tallinnas.",
     "Minu buss on Tallinnas kell pool üksteist.",
-    "Ma ootan sind kohvikus.",
+    "Ma olen homme kohvikus.",
     "Pühapäeval olen kodus.",
   ],
   saturday: [
@@ -2437,7 +2493,7 @@ export const TALLINN_PASSAGES = {
     "Ma ei tööta.",
     "Ma olen Tallinnas.",
     "Mari ja Jaan on minu sõbrad.",
-    "Me joome kell kümme kohvikus kohvi.",
+    "Mari ja mina joome kell kümme kohvikus kohvi.",
     "Kohv maksab kolm eurot.",
   ],
 } as const;
@@ -2449,7 +2505,7 @@ export const TALLINN_DIALOGUE = {
   "d-mari-2": { text: "Hästi! Istu! Kas sa jood kohvi?", voice: "second" },
   "d-sina-2": "Jah, ma joon kohvi.",
   "d-mari-3": { text: "Mis kell on?", voice: "second" },
-  "d-sina-3": "Kell on pool üksteist.",
+  "d-sina-3": "Kell on kümme.",
   "d-mari-4": { text: "Kas sa töötad homme?", voice: "second" },
   "d-sina-4": "Ei, homme on pühapäev.",
 } as const satisfies Record<string, Clip>;
@@ -2489,10 +2545,146 @@ export const TALLINN_WORDS = [
   "Kuidas läheb?",
 ] as const;
 
+export const TALLINN_TALK: Conversation = {
+  turns: [
+    { voice: "second", text: ["Tere, Jaan!", "Mis sa täna teed?"] },
+    { voice: "third", text: "Täna on reede ja ma olen tööl." },
+    { voice: "second", text: "Kas sa töötad homme?" },
+    { voice: "third", text: ["Ei, homme ma ei tööta.", "Kell üksteist olen kohvikus."] },
+    { voice: "second", text: "Ma olen kell kaksteist turul." },
+    { voice: "third", text: "Hästi, ma tulen kell pool üks!" },
+    { voice: "second", text: "Ja pühapäeval?" },
+    { voice: "third", text: "Pühapäeval olen kodus." },
+  ],
+};
+
+export const TALLINN_SORTED = [
+  { w: "Kell on pool üksteist.", bin: "kell" },
+  { w: "Kolm eurot.", bin: "hind" },
+  { w: "Täna on reede.", bin: "paev" },
+  { w: "See maksab neli eurot.", bin: "hind" },
+  { w: "Kell on kaksteist.", bin: "kell" },
+  { w: "Reede.", bin: "paev" },
+  { w: "Kaksteist eurot.", bin: "hind" },
+  { w: "Homme on laupäev.", bin: "paev" },
+  { w: "Kell on kolm.", bin: "kell" },
+] as const;
+
+export const dictated = (said: string): [string, ...string[]] => [said];
+
+export const TALLINN_HEARD = [
+  { kind: "kell", said: "Kell on pool kaksteist." },
+  { kind: "hind", said: "See maksab kuus eurot." },
+  { kind: "paev", said: "Ülehomme on pühapäev." },
+  { kind: "ei", said: "Täna ma ei tööta." },
+  { kind: "kell", said: "Ma olen kell üksteist kodus." },
+  { kind: "paev", said: "Kohvik on suletud." },
+] as const;
+
+export const TALLINN_DRILL_HEARD = [
+  "Minu buss on kell kümme.",
+  "Pühapäeval ma ei tööta.",
+  "See maksab viis eurot.",
+] as const;
+
+export const TALLINN_TRANSLATED = [
+  { kind: "kell", answers: ["Kell on kümme."] },
+  { kind: "hind", answers: ["See maksab kaks eurot.", "Maksab kaks eurot."] },
+  { kind: "paev", answers: dayTranslations("Täna on laupäev.") },
+  {
+    kind: "ei",
+    answers: [
+      "Homme ma ei tööta.",
+      "Ma ei tööta homme.",
+      "Ma homme ei tööta.",
+      "Mina homme ei tööta.",
+      "Mina ei tööta homme.",
+      "Homme mina ei tööta.",
+      "Homme ei tööta mina.",
+      "Homme ei tööta ma.",
+    ],
+  },
+  {
+    kind: "kell",
+    answers: [
+      "Ma olen kell kaksteist turul.",
+      "Kell kaksteist ma olen turul.",
+      "Kell kaksteist mina olen turul.",
+      "Ma olen turul kell kaksteist.",
+      "Kell kaksteist olen ma turul.",
+      "Kell kaksteist olen turul.",
+      "Mina olen kell kaksteist turul.",
+      "Mina olen turul kell kaksteist.",
+      "Kell kaksteist olen mina turul.",
+      "Ma kell kaksteist olen turul.",
+      "Mina kell kaksteist olen turul.",
+      "Olen kell kaksteist turul.",
+      "Olen turul kell kaksteist.",
+      "Turul olen kell kaksteist.",
+      "Turul olen ma kell kaksteist.",
+      "Turul olen mina kell kaksteist.",
+      "Turul ma olen kell kaksteist.",
+      "Turul mina olen kell kaksteist.",
+    ],
+  },
+  {
+    kind: "kell",
+    answers: [
+      "Me joome kell üksteist kohvi.",
+      "Kell üksteist me joome kohvi.",
+      "Kell üksteist meie joome kohvi.",
+      "Me joome kohvi kell üksteist.",
+      "Kell üksteist joome me kohvi.",
+      "Kell üksteist joome kohvi.",
+      "Meie joome kell üksteist kohvi.",
+      "Meie joome kohvi kell üksteist.",
+      "Kell üksteist joome meie kohvi.",
+      "Me kell üksteist joome kohvi.",
+      "Meie kell üksteist joome kohvi.",
+      "Joome kell üksteist kohvi.",
+      "Joome kohvi kell üksteist.",
+      "Kohvi joome kell üksteist.",
+      "Kohvi joome me kell üksteist.",
+      "Kohvi joome meie kell üksteist.",
+      "Kohvi me joome kell üksteist.",
+      "Kohvi meie joome kell üksteist.",
+    ],
+  },
+] as const;
+
+export const TALLINN_DRILL_TRANSLATED = [
+  { kind: "paev", answers: ["Kohvik on avatud."] },
+  { kind: "hind", answers: ["See maksab kaksteist eurot.", "Maksab kaksteist eurot."] },
+  {
+    kind: "ei",
+    answers: [
+      "Mari ei tööta täna.",
+      "Täna Mari ei tööta.",
+      "Mari täna ei tööta.",
+      "Täna ei tööta Mari.",
+    ],
+  },
+] as const;
+
+export const TALLINN_REPLY = [
+  "Tere, Mari!",
+  "Jah, ma olen homme linnas.",
+  "Ma ei tööta.",
+  "Kell kümme olen kohvikus.",
+  "Pühapäeval olen kodus.",
+] as const;
+
 const TALLINN_CLIPS: Record<string, Clip> = {
   ...words(TALLINN_WORDS),
+  ...words(TALLINN_SORTED.map(({ w }) => w)),
+  ...words(TALLINN_HEARD.map(({ said }) => said)),
+  ...words(TALLINN_DRILL_HEARD),
+  ...words(TALLINN_TRANSLATED.map(({ answers }) => answers[0])),
+  ...words(TALLINN_DRILL_TRANSLATED.map(({ answers }) => answers[0])),
+  "d-plan": TALLINN_TALK,
+  "p-reply": { sentences: TALLINN_REPLY },
   "p-mari": { sentences: TALLINN_PASSAGES.mari, voice: "second" },
-  "p-jaan": { sentences: TALLINN_PASSAGES.jaan },
+  "p-jaan": { sentences: TALLINN_PASSAGES.jaan, voice: "third" },
   "p-saturday": { sentences: TALLINN_PASSAGES.saturday },
   ...TALLINN_DIALOGUE,
 };
@@ -12484,7 +12676,11 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...words([...KELL_DRILLED, ...KELL_HEARD, ...KELL_WRITTEN].map(timeSentence)),
     "p-mari": { sentences: KELL_PASSAGE, voice: "third" },
   },
-  paevad: { ...words(PAEVAD_WORDS), ...words(PAEVAD_SENTENCES) },
+  paevad: {
+    ...words(PAEVAD_WORDS),
+    ...words(PAEVAD_SENTENCES),
+    "p-jaan": { sentences: PAEVAD_PASSAGE, voice: "main" },
+  },
   tutvumine: {
     ...words(TUTVUMINE_WORDS),
     ...TUTVUMINE_ANSWERING,
@@ -12517,6 +12713,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
       ...KASKIV_WORDS,
     ]),
     ...KASKIV_DIALOGUE,
+    "p-class": { sentences: KASKIV_CLASS, voice: "fourth" },
   },
   "paev-tallinnas": TALLINN_CLIPS,
   modaalverbid: MODAL_CLIPS,

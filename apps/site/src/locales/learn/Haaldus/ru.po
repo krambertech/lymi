@@ -40,11 +40,20 @@ msgstr "Удвоенная буква звучит дольше, и с ней п
 msgid "A few words break the rule: <0/>, thank you, puts the stress on its second half."
 msgstr "Несколько слов нарушают правило: в <0/>, «спасибо», ударение падает на вторую половину."
 
+msgid "a footprint"
+msgstr "след"
+
+msgid "a footprint, a track"
+msgstr "след, отпечаток ноги"
+
 msgid "a hen"
 msgstr "курица"
 
 msgid "a hundred"
 msgstr "сто"
+
+msgid "a leg; a foot"
+msgstr "нога; ступня"
 
 msgid "A pear"
 msgstr "Грушу"
@@ -87,12 +96,6 @@ msgstr "Обратно домой"
 
 msgid "basket"
 msgstr "корзина"
-
-msgid "bed"
-msgstr "кровать"
-
-msgid "bucket handle"
-msgstr "дужка ведра"
 
 msgid "carry!"
 msgstr "неси!"
@@ -147,9 +150,6 @@ msgstr "От tuul — ветер."
 
 msgid "Go back to the vowels and the pairs above, then try again."
 msgstr "Вернись к гласным и парам выше, а потом попробуй ещё раз."
-
-msgid "handle, as on a bucket"
-msgstr "дужка, как у ведра"
 
 msgid "He should carry it home."
 msgstr "Он должен отнести это домой."

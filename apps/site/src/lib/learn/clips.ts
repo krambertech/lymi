@@ -103,8 +103,8 @@ export const HAALDUS_WORDS = [
   "üks",
   "kõrv",
   "korv",
-  "säng",
-  "sang",
+  "jälg",
+  "jalg",
   "tüli",
   "tuli",
   "sada",
@@ -136,7 +136,7 @@ export const HAALDUS_WORDS = [
 
 export const HAALDUS_APART = [
   { first: "uks", second: "üks", kind: "vowel" },
-  { first: "säng", second: "sang", kind: "vowel" },
+  { first: "jälg", second: "jalg", kind: "vowel" },
   { first: "tuli", second: "tüli", kind: "vowel" },
   { first: "sada", second: "saada", kind: "length" },
   { first: "kooli", second: "koli", kind: "length" },

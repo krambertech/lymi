@@ -89,6 +89,9 @@ msgstr "{left, plural, one {# запитання на повторення} few 
 msgid "{lessonCount, plural, one {# lesson, coming soon} other {# lessons, coming soon}}"
 msgstr "{lessonCount, plural, one {# урок, скоро} few {# уроки, скоро} many {# уроків, скоро} other {# уроку, скоро}}"
 
+msgid "{letters, plural, one {Not right: # letter differs.} other {Not right: # letters differ.}}"
+msgstr "{letters, plural, one {Неправильно: відрізняється # літера.} few {Неправильно: відрізняються # літери.} many {Неправильно: відрізняються # літер.} other {Неправильно: відрізняються # літери.}}"
+
 msgid "{more, plural, one {and # more} other {and # more}}"
 msgstr "{more, plural, one {і ще #} few {і ще #} many {і ще #} other {і ще #}}"
 
@@ -2051,6 +2054,9 @@ msgstr "Запитання не завантажилися. Перевір з’
 
 msgid "The right sentence"
 msgstr "Правильне речення"
+
+msgid "The right word"
+msgstr "Правильне слово"
 
 msgid "The same conversation with Mari’s lines heard, not shown; each can be read on request."
 msgstr "Та сама розмова, але репліки Марі лише чути; кожну можна відкрити й прочитати."

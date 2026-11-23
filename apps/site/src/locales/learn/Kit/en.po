@@ -89,6 +89,9 @@ msgstr "{left, plural, one {# question to review} other {# questions to review}}
 msgid "{lessonCount, plural, one {# lesson, coming soon} other {# lessons, coming soon}}"
 msgstr "{lessonCount, plural, one {# lesson, coming soon} other {# lessons, coming soon}}"
 
+msgid "{letters, plural, one {Not right: # letter differs.} other {Not right: # letters differ.}}"
+msgstr "{letters, plural, one {Not right: # letter differs.} other {Not right: # letters differ.}}"
+
 msgid "{more, plural, one {and # more} other {and # more}}"
 msgstr "{more, plural, one {and # more} other {and # more}}"
 
@@ -2051,6 +2054,9 @@ msgstr "The questions didn’t load. Check your connection and try again."
 
 msgid "The right sentence"
 msgstr "The right sentence"
+
+msgid "The right word"
+msgstr "The right word"
 
 msgid "The same conversation with Mari’s lines heard, not shown; each can be read on request."
 msgstr "The same conversation with Mari’s lines heard, not shown; each can be read on request."

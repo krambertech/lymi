@@ -40,11 +40,20 @@ msgstr "Подвоєна літера звучить довше, і з нею в
 msgid "A few words break the rule: <0/>, thank you, puts the stress on its second half."
 msgstr "Кілька слів порушують правило: у <0/>, «дякую», наголос падає на другу половину."
 
+msgid "a footprint"
+msgstr "слід"
+
+msgid "a footprint, a track"
+msgstr "слід, відбиток ноги"
+
 msgid "a hen"
 msgstr "курка"
 
 msgid "a hundred"
 msgstr "сто"
+
+msgid "a leg; a foot"
+msgstr "нога; ступня"
 
 msgid "A pear"
 msgstr "Грушу"
@@ -87,12 +96,6 @@ msgstr "Назад додому"
 
 msgid "basket"
 msgstr "кошик"
-
-msgid "bed"
-msgstr "ліжко"
-
-msgid "bucket handle"
-msgstr "дужка відра"
 
 msgid "carry!"
 msgstr "неси!"
@@ -147,9 +150,6 @@ msgstr "Від tuul — вітер."
 
 msgid "Go back to the vowels and the pairs above, then try again."
 msgstr "Повернися до голосних і пар вище, а тоді спробуй ще раз."
-
-msgid "handle, as on a bucket"
-msgstr "дужка, як у відра"
 
 msgid "He should carry it home."
 msgstr "Він має віднести його додому."

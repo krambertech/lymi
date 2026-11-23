@@ -54,16 +54,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "haaldus/sa2ng": {
-    "text": "säng",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "haaldus/sang": {
-    "text": "sang",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "haaldus/tu2li": {
     "text": "tüli",
     "model": "eleven_v4",
@@ -10837,11 +10827,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "haaldus/sa2ng-sang": {
-    "text": "Säng, sang.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "haaldus/ja": {
     "text": "ja",
     "model": "eleven_v4",
@@ -12371,6 +12356,21 @@
   },
   "jargarvud/ema-su2nnipa2ev-on-kaheteistku2mnendal-aprillil": {
     "text": "Ema sünnipäev on kaheteistkümnendal aprillil.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "haaldus/ja2lg": {
+    "text": "jälg",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "haaldus/jalg": {
+    "text": "jalg",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "haaldus/ja2lg-jalg": {
+    "text": "Jälg, jalg.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

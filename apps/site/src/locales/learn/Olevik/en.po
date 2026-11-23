@@ -104,6 +104,9 @@ msgstr "He or she speaks Estonian."
 msgid "He or she works from home."
 msgstr "He or she works from home."
 
+msgid "He speaks Estonian."
+msgstr "He speaks Estonian."
+
 msgid "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
 msgstr "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
 
@@ -227,6 +230,9 @@ msgstr "Rewrite the sentence for the pronoun shown. The verb takes that pronounâ
 msgid "Same stem as the -ma infinitive"
 msgstr "Same stem as the -ma infinitive"
 
+msgid "She works at home."
+msgstr "She works at home."
+
 msgid "Six endings"
 msgstr "Six endings"
 
@@ -318,6 +324,9 @@ msgstr "They eat at home."
 msgid "they live"
 msgstr "they live"
 
+msgid "They live in Tallinn."
+msgstr "They live in Tallinn."
+
 msgid "They love you."
 msgstr "They love you."
 
@@ -399,11 +408,14 @@ msgstr "Which form did you hear?"
 msgid "Which verbs change their stem"
 msgstr "Which verbs change their stem"
 
-msgid "with {to}"
-msgstr "with {to}"
-
 msgid "With <et>{pronoun}</et>, the ending is <et>-{ending}</et>."
 msgstr "With <et>{pronoun}</et>, the ending is <et>-{ending}</et>."
+
+msgid "with <et>{to}</et>"
+msgstr "with <et>{to}</et>"
+
+msgid "You all speak very well."
+msgstr "You all speak very well."
 
 msgid "you are"
 msgstr "you are"

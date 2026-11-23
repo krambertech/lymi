@@ -89,6 +89,9 @@ msgstr "{left, plural, one {# вопрос на повторение} few {# в�
 msgid "{lessonCount, plural, one {# lesson, coming soon} other {# lessons, coming soon}}"
 msgstr "{lessonCount, plural, one {# урок, скоро} few {# урока, скоро} many {# уроков, скоро} other {# урока, скоро}}"
 
+msgid "{letters, plural, one {Not right: # letter differs.} other {Not right: # letters differ.}}"
+msgstr "{letters, plural, one {Неверно: отличается # буква.} few {Неверно: отличаются # буквы.} many {Неверно: отличаются # букв.} other {Неверно: отличаются # буквы.}}"
+
 msgid "{more, plural, one {and # more} other {and # more}}"
 msgstr "{more, plural, one {и ещё #} few {и ещё #} many {и ещё #} other {и ещё #}}"
 
@@ -2051,6 +2054,9 @@ msgstr "Вопросы не загрузились. Проверь соедин�
 
 msgid "The right sentence"
 msgstr "Верное предложение"
+
+msgid "The right word"
+msgstr "Верное слово"
 
 msgid "The same conversation with Mari’s lines heard, not shown; each can be read on request."
 msgstr "Тот же разговор, но реплики Мари только слышно; каждую можно открыть и прочитать."

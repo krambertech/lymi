@@ -104,6 +104,9 @@ msgstr "Він чи вона говорить естонською."
 msgid "He or she works from home."
 msgstr "Він чи вона працює вдома."
 
+msgid "He speaks Estonian."
+msgstr "Він розмовляє естонською."
+
 msgid "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
 msgstr "Послухай речення й обери дієслово з нього. Варіанти відрізняються лише закінченням, тож слухай кінець дієслова."
 
@@ -227,6 +230,9 @@ msgstr "Перепиши речення для вказаного займенн
 msgid "Same stem as the -ma infinitive"
 msgstr "Основа як в інфінітиві на -ma"
 
+msgid "She works at home."
+msgstr "Вона працює вдома."
+
 msgid "Six endings"
 msgstr "Шість закінчень"
 
@@ -318,6 +324,9 @@ msgstr "Вони їдять удома."
 msgid "they live"
 msgstr "вони живуть"
 
+msgid "They live in Tallinn."
+msgstr "Вони живуть у Таллінні."
+
 msgid "They love you."
 msgstr "Вони тебе люблять."
 
@@ -399,11 +408,14 @@ msgstr "Яку форму ти чуєш?"
 msgid "Which verbs change their stem"
 msgstr "Які дієслова змінюють основу"
 
-msgid "with {to}"
-msgstr "з {to}"
-
 msgid "With <et>{pronoun}</et>, the ending is <et>-{ending}</et>."
 msgstr "З <et>{pronoun}</et> — закінчення <et>-{ending}</et>."
+
+msgid "with <et>{to}</et>"
+msgstr "з <et>{to}</et>"
+
+msgid "You all speak very well."
+msgstr "Ви всі дуже добре розмовляєте."
 
 msgid "you are"
 msgstr "ти є"

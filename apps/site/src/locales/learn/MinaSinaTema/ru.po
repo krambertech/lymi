@@ -242,9 +242,6 @@ msgstr "Выбери окончание, которое подходит к ме
 msgid "Play {word}"
 msgstr "Воспроизвести {word}"
 
-msgid "Play each sentence slower, then try again."
-msgstr "Послушай каждое предложение медленнее, а потом попробуй ещё раз."
-
 msgid "Pronouns"
 msgstr "Местоимения"
 
@@ -389,6 +386,9 @@ msgstr "уставший"
 
 msgid "to be"
 msgstr "быть"
+
+msgid "Try again, and tap Slower before you write each sentence."
+msgstr "Попробуй ещё раз и перед каждым предложением нажми «Медленнее»."
 
 msgid "Type the form"
 msgstr "Напиши форму"

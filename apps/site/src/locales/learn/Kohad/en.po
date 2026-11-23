@@ -301,11 +301,11 @@ msgstr "Nearly. Check the verb’s ending in the ones you missed."
 msgid "Nearly. Check which ending each place takes."
 msgstr "Nearly. Check which ending each place takes."
 
+msgid "Nearly. Hear the ones you missed below, then try again with Slower."
+msgstr "Nearly. Hear the ones you missed below, then try again with Slower."
+
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Nearly. Play the ones you missed once more."
-
-msgid "Nearly. Play the ones you missed slower."
-msgstr "Nearly. Play the ones you missed slower."
 
 msgid "Now answer <0/> six ways: tap a place."
 msgstr "Now answer <0/> six ways: tap a place."
@@ -336,9 +336,6 @@ msgstr "Places to work"
 
 msgid "Places with -l"
 msgstr "Places with -l"
-
-msgid "Play each sentence slower, then try again."
-msgstr "Play each sentence slower, then try again."
 
 msgid "Read both endings above once more, then try again."
 msgstr "Read both endings above once more, then try again."
@@ -420,6 +417,9 @@ msgstr "They’re at work."
 
 msgid "town, city"
 msgstr "town, city"
+
+msgid "Try again, and tap Slower before you write each sentence."
+msgstr "Try again, and tap Slower before you write each sentence."
 
 msgid "Type the place"
 msgstr "Type the place"

@@ -301,11 +301,11 @@ msgstr "Майже. Там, де була помилка, перевір зак�
 msgid "Nearly. Check which ending each place takes."
 msgstr "Майже. Перевір, яке закінчення має кожне місце."
 
+msgid "Nearly. Hear the ones you missed below, then try again with Slower."
+msgstr "Майже. Послухай нижче ті, де була помилка, а тоді спробуй ще раз із кнопкою «Повільніше»."
+
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Майже. Переслухай ті, де були помилки."
-
-msgid "Nearly. Play the ones you missed slower."
-msgstr "Майже. Послухай повільніше ті, де була помилка."
 
 msgid "Now answer <0/> six ways: tap a place."
 msgstr "А тепер дай шість відповідей на <0/>: торкнись місця."
@@ -336,9 +336,6 @@ msgstr "Де працювати"
 
 msgid "Places with -l"
 msgstr "Місця з -l"
-
-msgid "Play each sentence slower, then try again."
-msgstr "Послухай кожне речення повільніше, а тоді спробуй ще раз."
 
 msgid "Read both endings above once more, then try again."
 msgstr "Ще раз перечитай про обидва закінчення вище, а потім спробуй знову."
@@ -420,6 +417,9 @@ msgstr "Вони на роботі."
 
 msgid "town, city"
 msgstr "місто"
+
+msgid "Try again, and tap Slower before you write each sentence."
+msgstr "Спробуй ще раз і перед кожним реченням натисни «Повільніше»."
 
 msgid "Type the place"
 msgstr "Напиши місце"

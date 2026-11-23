@@ -163,14 +163,14 @@ msgstr "Fine, thanks. And you?"
 msgid "Five sentences. Switch to Question and watch what changes."
 msgstr "Five sentences. Switch to Question and watch what changes."
 
-msgid "For fun."
-msgstr "For fun."
+msgid "For fun"
+msgstr "For fun"
 
-msgid "For his family."
-msgstr "For his family."
+msgid "For his family"
+msgstr "For his family"
 
-msgid "For work."
-msgstr "For work."
+msgid "For work"
+msgstr "For work"
 
 msgid "from, by birth"
 msgstr "from, by birth"
@@ -322,11 +322,11 @@ msgstr "Nearly. Check the question word and the verb’s ending."
 msgid "Nearly. Check whether each one asks for yes or no."
 msgstr "Nearly. Check whether each one asks for yes or no."
 
+msgid "Nearly. Hear the ones you missed below, then try again with Slower."
+msgstr "Nearly. Hear the ones you missed below, then try again with Slower."
+
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Nearly. Play the ones you missed once more."
-
-msgid "Nearly. Play the ones you missed slower."
-msgstr "Nearly. Play the ones you missed slower."
 
 msgid "No, he or she isn’t."
 msgstr "No, he or she isn’t."

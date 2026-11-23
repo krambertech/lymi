@@ -914,9 +914,11 @@ export function KohadLesson() {
                   share === 1 ? (
                     <Trans>All six, every word right.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Nearly. Play the ones you missed slower.</Trans>
+                    <Trans>
+                      Nearly. Hear the ones you missed below, then try again with Slower.
+                    </Trans>
                   ) : (
-                    <Trans>Play each sentence slower, then try again.</Trans>
+                    <Trans>Try again, and tap Slower before you write each sentence.</Trans>
                   )
                 }
                 recall={sentenceRecall}

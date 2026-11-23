@@ -163,14 +163,14 @@ msgstr "Хорошо, спасибо. А у тебя?"
 msgid "Five sentences. Switch to Question and watch what changes."
 msgstr "Пять предложений. Переключи на «Вопрос» и посмотри, что изменится."
 
-msgid "For fun."
-msgstr "Для удовольствия."
+msgid "For fun"
+msgstr "Для удовольствия"
 
-msgid "For his family."
-msgstr "Ради семьи."
+msgid "For his family"
+msgstr "Ради семьи"
 
-msgid "For work."
-msgstr "Из-за работы."
+msgid "For work"
+msgstr "Из-за работы"
 
 msgid "from, by birth"
 msgstr "родом из"
@@ -322,11 +322,11 @@ msgstr "Почти. Проверь вопросительное слово и о
 msgid "Nearly. Check whether each one asks for yes or no."
 msgstr "Почти. Проверь, ждёт ли вопрос ответа «да» или «нет»."
 
+msgid "Nearly. Hear the ones you missed below, then try again with Slower."
+msgstr "Почти. Послушай ниже те, где была ошибка, а потом попробуй ещё раз с кнопкой «Медленнее»."
+
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Почти. Переслушай те, где были ошибки."
-
-msgid "Nearly. Play the ones you missed slower."
-msgstr "Почти. Послушай медленнее те, где была ошибка."
 
 msgid "No, he or she isn’t."
 msgstr "Нет, его или её нет."

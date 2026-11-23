@@ -163,14 +163,14 @@ msgstr "Добре, дякую. А в тебе?"
 msgid "Five sentences. Switch to Question and watch what changes."
 msgstr "П’ять речень. Перемкни на «Питання» й подивись, що зміниться."
 
-msgid "For fun."
-msgstr "Для задоволення."
+msgid "For fun"
+msgstr "Для задоволення"
 
-msgid "For his family."
-msgstr "Через родину."
+msgid "For his family"
+msgstr "Через родину"
 
-msgid "For work."
-msgstr "Заради роботи."
+msgid "For work"
+msgstr "Заради роботи"
 
 msgid "from, by birth"
 msgstr "родом з"
@@ -322,11 +322,11 @@ msgstr "Майже. Перевір питальне слово й закінче
 msgid "Nearly. Check whether each one asks for yes or no."
 msgstr "Майже. Перевір, чи чекає питання відповіді «так» чи «ні»."
 
+msgid "Nearly. Hear the ones you missed below, then try again with Slower."
+msgstr "Майже. Послухай нижче ті, де була помилка, а тоді спробуй ще раз із кнопкою «Повільніше»."
+
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Майже. Переслухай ті, де були помилки."
-
-msgid "Nearly. Play the ones you missed slower."
-msgstr "Майже. Послухай повільніше ті, де була помилка."
 
 msgid "No, he or she isn’t."
 msgstr "Ні, його чи її немає."

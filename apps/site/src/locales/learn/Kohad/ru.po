@@ -301,11 +301,11 @@ msgstr "Почти. Там, где была ошибка, проверь око�
 msgid "Nearly. Check which ending each place takes."
 msgstr "Почти. Проверь, какое окончание берёт каждое место."
 
+msgid "Nearly. Hear the ones you missed below, then try again with Slower."
+msgstr "Почти. Послушай ниже те, где была ошибка, а потом попробуй ещё раз с кнопкой «Медленнее»."
+
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Почти. Переслушай те, где были ошибки."
-
-msgid "Nearly. Play the ones you missed slower."
-msgstr "Почти. Послушай медленнее те, где была ошибка."
 
 msgid "Now answer <0/> six ways: tap a place."
 msgstr "А теперь дай шесть ответов на <0/>: нажми на место."
@@ -336,9 +336,6 @@ msgstr "Где работать"
 
 msgid "Places with -l"
 msgstr "Места с -l"
-
-msgid "Play each sentence slower, then try again."
-msgstr "Послушай каждое предложение медленнее, а потом попробуй ещё раз."
 
 msgid "Read both endings above once more, then try again."
 msgstr "Ещё раз перечитай про оба окончания выше, а потом попробуй снова."
@@ -420,6 +417,9 @@ msgstr "Они на работе."
 
 msgid "town, city"
 msgstr "город"
+
+msgid "Try again, and tap Slower before you write each sentence."
+msgstr "Попробуй ещё раз и перед каждым предложением нажми «Медленнее»."
 
 msgid "Type the place"
 msgstr "Напиши место"

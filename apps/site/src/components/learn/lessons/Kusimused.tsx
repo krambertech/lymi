@@ -556,9 +556,9 @@ export function KusimusedLesson() {
         id: "why",
         ask: t`Why is Jaan learning Estonian?`,
         options: [
-          { id: "fun", label: t`For fun.` },
-          { id: "work", label: t`For work.` },
-          { id: "school", label: t`For his family.` },
+          { id: "fun", label: t`For fun` },
+          { id: "work", label: t`For work` },
+          { id: "school", label: t`For his family` },
         ],
         answer: "work",
         line: 10,
@@ -798,7 +798,9 @@ export function KusimusedLesson() {
                   share === 1 ? (
                     <Trans>All seven, each question word right.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Nearly. Play the ones you missed slower.</Trans>
+                    <Trans>
+                      Nearly. Hear the ones you missed below, then try again with Slower.
+                    </Trans>
                   ) : (
                     <Trans>Tap the question words above once more, then try again.</Trans>
                   )

@@ -3329,6 +3329,132 @@ export const SOBRAGA_PASSAGES = {
 } as const;
 
 /** The words of “With, without, until, as” with a card, each heard on its own. */
+export const SOBRAGA_TRANSLATE = [
+  {
+    id: "sobraga",
+    answers: withPronouns([
+      "Ma tulen sõbraga.",
+      "Ma tulen koos sõbraga.",
+      "Ma tulen sõbraga koos.",
+      "Sõbraga tulen ma.",
+    ]),
+  },
+  {
+    id: "suhkruta",
+    answers: withPronouns([
+      "Ma joon teed suhkruta.",
+      "Ma joon teed ilma suhkruta.",
+      "Ma joon suhkruta teed.",
+      "Ma joon ilma suhkruta teed.",
+    ]),
+  },
+  {
+    id: "kuueni",
+    answers: [
+      "Mari töötab kella kuueni.",
+      "Mari töötab kuueni.",
+      "Mari töötab kuni kella kuueni.",
+      "Mari töötab kuni kuueni.",
+      "Kella kuueni töötab Mari.",
+    ],
+  },
+  {
+    id: "opetajana",
+    answers: ["Jaan töötab õpetajana.", "Jaan töötab õpetajaks.", "Õpetajana töötab Jaan."],
+  },
+  {
+    id: "bussiga",
+    answers: withPronouns([
+      "Me läheme bussiga Tartusse.",
+      "Me läheme Tartusse bussiga.",
+      "Me sõidame bussiga Tartusse.",
+      "Me sõidame Tartusse bussiga.",
+      "Bussiga läheme me Tartusse.",
+      "Tartusse läheme me bussiga.",
+    ]),
+  },
+  {
+    id: "lapsena",
+    answers: withPronouns([
+      "Lapsena elasin ma Tartus.",
+      "Ma elasin lapsena Tartus.",
+      "Ma elasin Tartus lapsena.",
+      "Lapsena ma elasin Tartus.",
+      "Tartus elasin ma lapsena.",
+    ]),
+  },
+] as const;
+
+export const SOBRAGA_FIX = [
+  { id: "fix-piimata", wrong: "Ma joon kohvi piimaga.", answers: ["Ma joon kohvi piimata."] },
+  { id: "fix-emaga", wrong: "Ma räägin emana.", answers: ["Ma räägin emaga."] },
+  { id: "fix-viieni", wrong: "Ma töötan kella viiega.", answers: ["Ma töötan kella viieni."] },
+  {
+    id: "fix-opetajana",
+    wrong: "Mari töötab õpetaja.",
+    answers: ["Mari töötab õpetajana.", "Mari töötab õpetajaks."],
+  },
+  { id: "fix-sobraga", wrong: "Jaan tuleb sõberga.", answers: ["Jaan tuleb sõbraga."] },
+  { id: "fix-poeni", wrong: "Buss läheb poodini.", answers: ["Buss läheb poeni."] },
+] as const;
+
+export const SOBRAGA_DRILLED = ["Ma olen praegu rahata.", "Ma töötan kella neljani."] as const;
+
+export const SOBRAGA_TALK: Conversation = {
+  turns: [
+    {
+      voice: "second",
+      text: ["Tere, Kati!", "Kas sa tuled laupäeval kohvikusse?", "Mari tuleb ka."],
+      say: "[cheerful] Tere, Kati! Kas sa tuled laupäeval kohvikusse? Mari tuleb ka.",
+    },
+    {
+      voice: "main",
+      text: ["Tere, Jaan!", "Laupäeval ma ei saa.", "Ma lähen rongiga Tartusse."],
+    },
+    { voice: "second", text: ["Rongiga?", "Miks sa autoga ei lähe?"] },
+    {
+      voice: "main",
+      text: ["Ma olen praegu autota.", "Ja rongis saab lugeda ja kohvi juua."],
+    },
+    { voice: "second", text: ["Kellega sa lähed?"] },
+    {
+      voice: "main",
+      text: ["Õega.", "Lapsena elasime Pärnus.", "Nüüd elab ta Tartus ja töötab seal arstina."],
+    },
+    { voice: "second", text: ["Arstina?", "Tore!", "Kas ta töötab ka laupäeval?"] },
+    {
+      voice: "main",
+      text: ["Jah, haiglas kella kaheni.", "Siis läheme koos linna ja sööme kohvikus."],
+    },
+    { voice: "second", text: ["Kui kaua te Tartus olete?"] },
+    { voice: "main", text: ["Pühapäeva õhtuni.", "Siis tuleme bussiga tagasi."] },
+    {
+      voice: "second",
+      text: ["Aga esmaspäeval?", "Ma töötan kella neljani.", "Siis olen vaba."],
+    },
+    {
+      voice: "main",
+      text: ["Esmaspäeval saan.", "Ma tulen kell viis.", "Kellega Mari tuleb?"],
+    },
+    {
+      voice: "second",
+      text: ["Vennaga.", "Aga ma olen praegu rahata."],
+      say: "Vennaga. [sighs] Aga ma olen praegu rahata.",
+    },
+    {
+      voice: "main",
+      text: ["Pole midagi, ma maksan.", "Sa jood kohvi piimata, jah?"],
+      say: "[laughs] Pole midagi, ma maksan. Sa jood kohvi piimata, jah?",
+    },
+    {
+      voice: "second",
+      text: ["Jah, piimata, aga suhkruga.", "Ja Mari joob teed sidruniga."],
+    },
+    { voice: "main", text: ["Hästi.", "Nägemiseni, Jaan!"] },
+    { voice: "second", text: ["Nägemiseni!", "Head teed!"] },
+  ],
+};
+
 export const SOBRAGA_WORDS = [
   "sõbraga",
   "emaga",
@@ -3380,9 +3506,13 @@ const SOBRAGA_CLIPS: Record<string, Clip> = {
     ...SOBRAGA_CHAINS.flatMap(({ steps }) => steps),
     ...SOBRAGA_FORMS.map(({ genitive, ending }) => `${genitive}${ending}`),
     ...SOBRAGA_WORDS,
+    ...SOBRAGA_TRANSLATE.map(({ answers }) => answers[0]),
+    ...SOBRAGA_FIX.map(({ answers }) => answers[0]),
+    ...SOBRAGA_DRILLED,
   ]),
   "p-cafe": { sentences: SOBRAGA_PASSAGES.cafe, voice: "second" },
   "p-kati": { sentences: SOBRAGA_PASSAGES.kati },
+  "c-talk": SOBRAGA_TALK,
 };
 
 export const PRONOUN_CASES = [

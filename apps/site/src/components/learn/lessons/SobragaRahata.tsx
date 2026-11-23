@@ -8,9 +8,12 @@ import {
   clipUrl,
   SOBRAGA_AS,
   SOBRAGA_CHAINS,
+  SOBRAGA_FIX,
   SOBRAGA_FORMS,
   SOBRAGA_MATCH,
   SOBRAGA_PASSAGES,
+  SOBRAGA_TALK,
+  SOBRAGA_TRANSLATE,
   SOBRAGA_UNTIL,
   SOBRAGA_WITH,
   SOBRAGA_WITHOUT,
@@ -18,14 +21,16 @@ import {
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, ListenRows, Panel } from "../Explore";
+import { type FixItem, FixRound, fixRecall } from "../FixRound";
 import { type FormItem, FormRound, formRecall } from "../FormRound";
 import { type GapItem, GapPassage } from "../GapPassage";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
 import { Match, type MatchPair } from "../Match";
 import { Morph, type MorphChain } from "../Morph";
-import { type PassageQuestion, Reading } from "../Passage";
+import { Listening, type PassageQuestion, Reading } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
 import { Playing } from "../Sound";
 import { Word } from "../Word";
 
@@ -110,6 +115,24 @@ const GLOSSARY: Glossary = {
   mul: { en: msg`mul on: I have`, note: msg`Mul on aega: I have time.` },
   aega: { en: msg`time`, note: msg`The partitive of aeg, time.` },
   kolmeni: { en: msg`until three`, note: msg`From kolm, three; its genitive is kolme.` },
+};
+
+const TRANSLATE_PROMPTS: Record<(typeof SOBRAGA_TRANSLATE)[number]["id"], MessageDescriptor> = {
+  sobraga: msg`I’m coming with a friend.`,
+  suhkruta: msg`I drink tea without sugar.`,
+  kuueni: msg`Mari works until six.`,
+  opetajana: msg`Jaan works as a teacher.`,
+  bussiga: msg`We’re going to Tartu by bus.`,
+  lapsena: msg`As a child, I lived in Tartu.`,
+};
+
+const FIX_PROMPTS: Record<(typeof SOBRAGA_FIX)[number]["id"], MessageDescriptor> = {
+  "fix-piimata": msg`I drink coffee without milk.`,
+  "fix-emaga": msg`I’m talking with Mum.`,
+  "fix-viieni": msg`I work until five.`,
+  "fix-opetajana": msg`Mari works as a teacher.`,
+  "fix-sobraga": msg`Jaan is coming with a friend.`,
+  "fix-poeni": msg`The bus goes as far as the shop.`,
 };
 
 /** Every form in the lesson that carries one of the four endings, to light its ending. */
@@ -415,7 +438,7 @@ const KATI_GAPS: readonly GapItem[] = [
 ];
 
 function useContent() {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const why: Record<string, ReactNode> = {
     arstina: (
       <Trans>
@@ -492,7 +515,140 @@ function useContent() {
       line: 5,
     },
   ];
-  return { gaps, cafe };
+  const sentences: SentenceItem[] = SOBRAGA_TRANSLATE.map(({ id, answers }) => ({
+    kind: "translate",
+    id,
+    prompt: i18n._(TRANSLATE_PROMPTS[id]),
+    answers,
+    src: src(answers[0]),
+  }));
+  const fixWhy: Record<(typeof SOBRAGA_FIX)[number]["id"], ReactNode> = {
+    "fix-piimata": (
+      <Trans>
+        Without is <span lang="et">-ta</span>: <span lang="et">piimata</span>.{" "}
+        <span lang="et">Piimaga</span> is with milk.
+      </Trans>
+    ),
+    "fix-emaga": (
+      <Trans>
+        With someone is <span lang="et">-ga</span>: <span lang="et">emaga</span>.{" "}
+        <span lang="et">-na</span> is as, in a role.
+      </Trans>
+    ),
+    "fix-viieni": (
+      <Trans>
+        Until is <span lang="et">-ni</span>: <span lang="et">kella viieni</span>.
+      </Trans>
+    ),
+    "fix-opetajana": (
+      <Trans>
+        Works as is usually <span lang="et">-na</span>: <span lang="et">töötab õpetajana</span>.
+      </Trans>
+    ),
+    "fix-sobraga": (
+      <Trans>
+        The ending goes on the genitive <span lang="et">sõbra</span>, not on{" "}
+        <span lang="et">sõber</span>: <span lang="et">sõbraga</span>.
+      </Trans>
+    ),
+    "fix-poeni": (
+      <Trans>
+        The genitive of <span lang="et">pood</span> is <span lang="et">poe</span>, so as far as the
+        shop is <span lang="et">poeni</span>.
+      </Trans>
+    ),
+  };
+  const fix: FixItem[] = SOBRAGA_FIX.map(({ id, wrong, answers }) => ({
+    kind: "fix",
+    id,
+    wrong,
+    answers,
+    src: src(answers[0]),
+    prompt: i18n._(FIX_PROMPTS[id]),
+    explain: fixWhy[id],
+  }));
+  const talk: PassageQuestion[] = [
+    {
+      id: "how-there",
+      ask: t`How is Kati getting to Tartu?`,
+      options: [
+        { id: "car", label: t`By car` },
+        { id: "train", label: t`By train` },
+        { id: "bus", label: t`By bus` },
+      ],
+      answer: "train",
+      line: 5,
+    },
+    {
+      id: "car",
+      kind: "truefalse",
+      ask: t`Kati has her car at the moment.`,
+      answer: false,
+      line: 8,
+    },
+    {
+      id: "with-whom",
+      kind: "short",
+      ask: t`Who is Kati going with? Write it as she says it.`,
+      answers: ["õega"],
+      line: 11,
+    },
+    {
+      id: "children",
+      kind: "truefalse",
+      ask: t`As children, Kati and her sister lived in Tartu.`,
+      answer: false,
+      line: 12,
+    },
+    {
+      id: "sister",
+      ask: t`What does Kati’s sister do?`,
+      options: [
+        { id: "doctor", label: t`She works as a doctor` },
+        { id: "teacher", label: t`She works as a teacher` },
+        { id: "cook", label: t`She works as a cook` },
+      ],
+      answer: "doctor",
+      line: 13,
+    },
+    {
+      id: "until",
+      kind: "short",
+      ask: t`Until when are they in Tartu? Write it as Kati says it.`,
+      answers: ["pühapäeva õhtuni", "pühapäevani"],
+      line: 20,
+    },
+    {
+      id: "back",
+      ask: t`How are they coming back?`,
+      options: [
+        { id: "car", label: t`By car` },
+        { id: "train", label: t`By train` },
+        { id: "bus", label: t`By bus` },
+      ],
+      answer: "bus",
+      line: 21,
+    },
+    {
+      id: "money",
+      kind: "truefalse",
+      ask: t`Jaan has no money on him right now.`,
+      answer: true,
+      line: 29,
+    },
+    {
+      id: "coffee",
+      ask: t`How does Jaan take his coffee?`,
+      options: [
+        { id: "sugar", label: t`No milk, but sugar` },
+        { id: "milk", label: t`Milk, but no sugar` },
+        { id: "neither", label: t`Neither milk nor sugar` },
+      ],
+      answer: "sugar",
+      line: 32,
+    },
+  ];
+  return { gaps, cafe, sentences, fix, talk };
 }
 
 export function SobragaRahataLesson() {
@@ -675,8 +831,8 @@ export function SobragaRahataLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">14 minutes</Trans>,
-        <Trans key="q">3 quizzes, a message to read and one to fill in</Trans>,
+        <Trans key="m">22 minutes</Trans>,
+        <Trans key="q">5 quizzes, a message to read, one to fill in and a conversation</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -695,8 +851,8 @@ export function SobragaRahataLesson() {
       ]}
       recap={[
         <Trans key="1">
-          <b lang="et">-ga</b> is with, and by for how you travel: <b lang="et">sõbraga</b>, with a
-          friend; <b lang="et">bussiga</b>, by bus. <b lang="et">Kellega?</b> asks with whom.
+          <b lang="et">-ga</b> is with, and usually by for how you travel: <b lang="et">sõbraga</b>,
+          with a friend; <b lang="et">bussiga</b>, by bus. <b lang="et">Kellega?</b> asks with whom.
         </Trans>,
         <Trans key="2">
           <b lang="et">-ta</b> is without: <b lang="et">kohv piimata</b>, coffee without milk.{" "}
@@ -731,9 +887,9 @@ export function SobragaRahataLesson() {
                 </p>
                 <p>
                   <Trans>
-                    The same ending says how you travel, so by bus is <Word w="bussiga" />. To ask
-                    with whom, put it on <Word w="kelle" />, whose: <Word w="Kellega?" /> Tap a line
-                    to hear it.
+                    The same ending usually says how you travel, so by bus is <Word w="bussiga" />.
+                    To ask with whom, put it on <Word w="kelle" />, whose: <Word w="Kellega?" /> Tap
+                    a line to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -936,6 +1092,74 @@ export function SobragaRahataLesson() {
           ),
         },
         {
+          id: "write",
+          title: t`Write it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write each sentence in Estonian. Find the word that needs an ending, then put
+                    the ending on its genitive.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="write-endings"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={content.sentences}
+                rounds={content.sentences.length}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six sentences.</Trans>
+                  ) : share >= 0.6 ? (
+                    <Trans>Most of them. Check the ending in the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Read What to remember at the end, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "mistakes",
+          title: t`Six mistakes to catch`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each sentence should say what the line above it says, and one word is wrong. Tap
+                    it, then type it right.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="fix-endings"
+                title={<Trans>Fix the sentence</Trans>}
+                items={content.fix}
+                rounds={content.fix.length}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six found and fixed.</Trans>
+                  ) : share >= 0.6 ? (
+                    <Trans>Most of them. Read the reason under each one you missed.</Trans>
+                  ) : (
+                    <Trans>Read What to remember at the end, then try again.</Trans>
+                  )
+                }
+                recall={fixRecall}
+                round={(props) => <FixRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
           id: "cafe",
           title: t`Ordering at a café`,
           quiz: true,
@@ -980,6 +1204,32 @@ export function SobragaRahataLesson() {
                 gaps={content.gaps}
                 mode="pick"
                 clip="p-kati"
+              />
+            </>
+          ),
+        },
+        {
+          id: "talk",
+          title: t`Plans for the weekend`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Jaan calls Kati to ask her to the café. You can play the call twice, so read the
+                    questions first.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="kati-and-jaan"
+                title={<Trans>Listen: Kati and Jaan</Trans>}
+                clip="c-talk"
+                turns={SOBRAGA_TALK.turns}
+                names={{ main: t`Kati`, second: t`Jaan` }}
+                questions={content.talk}
+                plays={2}
               />
             </>
           ),

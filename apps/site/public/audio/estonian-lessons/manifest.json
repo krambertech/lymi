@@ -26168,5 +26168,192 @@
     "text": "Ülehomme on laupäev.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-tulen-so3braga": {
+    "text": "Ma tulen sõbraga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/mari-to2o2tab-kella-kuueni": {
+    "text": "Mari töötab kella kuueni.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/jaan-to2o2tab-o3petajana": {
+    "text": "Jaan töötab õpetajana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/me-la2heme-bussiga-tartusse": {
+    "text": "Me läheme bussiga Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/lapsena-elasin-ma-tartus": {
+    "text": "Lapsena elasin ma Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-joon-kohvi-piimata": {
+    "text": "Ma joon kohvi piimata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/jaan-tuleb-so3braga": {
+    "text": "Jaan tuleb sõbraga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-olen-praegu-rahata": {
+    "text": "Ma olen praegu rahata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-to2o2tan-kella-neljani": {
+    "text": "Ma töötan kella neljani.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/c-talk": {
+    "text": "Tere, Kati! Kas sa tuled laupäeval kohvikusse? Mari tuleb ka. Tere, Jaan! Laupäeval ma ei saa. Ma lähen rongiga Tartusse. Rongiga? Miks sa autoga ei lähe? Ma olen praegu autota. Ja rongis saab lugeda ja kohvi juua. Kellega sa lähed? Õega. Lapsena elasime Pärnus. Nüüd elab ta Tartus ja töötab seal arstina. Arstina? Tore! Kas ta töötab ka laupäeval? Jah, haiglas kella kaheni. Siis läheme koos linna ja sööme kohvikus. Kui kaua te Tartus olete? Pühapäeva õhtuni. Siis tuleme bussiga tagasi. Aga esmaspäeval? Ma töötan kella neljani. Siis olen vaba. Esmaspäeval saan. Ma tulen kell viis. Kellega Mari tuleb? Vennaga. Aga ma olen praegu rahata. Pole midagi, ma maksan. Sa jood kohvi piimata, jah? Jah, piimata, aga suhkruga. Ja Mari joob teed sidruniga. Hästi. Nägemiseni, Jaan! Nägemiseni! Head teed!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Kati!",
+          "Kas sa tuled laupäeval kohvikusse?",
+          "Mari tuleb ka."
+        ],
+        "say": "[cheerful] Tere, Kati! Kas sa tuled laupäeval kohvikusse? Mari tuleb ka."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Jaan!",
+          "Laupäeval ma ei saa.",
+          "Ma lähen rongiga Tartusse."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Rongiga?",
+          "Miks sa autoga ei lähe?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma olen praegu autota.",
+          "Ja rongis saab lugeda ja kohvi juua."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kellega sa lähed?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Õega.",
+          "Lapsena elasime Pärnus.",
+          "Nüüd elab ta Tartus ja töötab seal arstina."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Arstina?",
+          "Tore!",
+          "Kas ta töötab ka laupäeval?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, haiglas kella kaheni.",
+          "Siis läheme koos linna ja sööme kohvikus."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kui kaua te Tartus olete?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Pühapäeva õhtuni.",
+          "Siis tuleme bussiga tagasi."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Aga esmaspäeval?",
+          "Ma töötan kella neljani.",
+          "Siis olen vaba."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Esmaspäeval saan.",
+          "Ma tulen kell viis.",
+          "Kellega Mari tuleb?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Vennaga.",
+          "Aga ma olen praegu rahata."
+        ],
+        "say": "Vennaga. [sighs] Aga ma olen praegu rahata."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Pole midagi, ma maksan.",
+          "Sa jood kohvi piimata, jah?"
+        ],
+        "say": "[laughs] Pole midagi, ma maksan. Sa jood kohvi piimata, jah?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, piimata, aga suhkruga.",
+          "Ja Mari joob teed sidruniga."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hästi.",
+          "Nägemiseni, Jaan!"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Nägemiseni!",
+          "Head teed!"
+        ]
+      }
+    ]
+  },
+  "sobraga-rahata/ma-joon-teed-suhkruta": {
+    "text": "Ma joon teed suhkruta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/buss-la2heb-poeni": {
+    "text": "Buss läheb poeni.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

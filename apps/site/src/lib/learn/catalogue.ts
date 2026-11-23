@@ -323,8 +323,8 @@ export const STAGES: readonly Stage[] = [
         name: msg`With, without, until, as`,
         title: msg`With, without, until and as in Estonian`,
         et: "Sõbraga, rahata",
-        minutes: 14,
-        blurb: msg`A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive. Every sentence is read aloud.`,
+        minutes: 22,
+        blurb: msg`A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive, with sentences to write and fix and a phone call to follow. Every sentence is read aloud.`,
       },
       {
         slug: "asesonad",

@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
-msgid "<0/> can only mean I am, so <1/> can go. <2/> means both he or she is and they are, so <3/> or <4/> has to stay."
-msgstr "<0/> can only mean I am, so <1/> can go. <2/> means both he or she is and they are, so <3/> or <4/> has to stay."
+msgid "<0/> can only mean I am, so <1/> can go. <2/> means both he or she is and they are, so <3/> or <4/> usually has to stay."
+msgstr "<0/> can only mean I am, so <1/> can go. <2/> means both he or she is and they are, so <3/> or <4/> usually has to stay."
 
 msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 msgstr "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
@@ -22,11 +22,11 @@ msgstr "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/>
 msgid "<0>Olen, oled, oleme, olete</0>: the ending says who."
 msgstr "<0>Olen, oled, oleme, olete</0>: the ending says who."
 
-msgid "<0>On</0> has no ending, so only <1>ta</1> or <2>nad</2> says who."
-msgstr "<0>On</0> has no ending, so only <1>ta</1> or <2>nad</2> says who."
+msgid "<0>On</0> has no ending, so here only <1>ta</1> or <2>nad</2> says who."
+msgstr "<0>On</0> has no ending, so here only <1>ta</1> or <2>nad</2> says who."
 
-msgid "<0>On</0> is both he or she is and they are. Only the pronoun tells them apart."
-msgstr "<0>On</0> is both he or she is and they are. Only the pronoun tells them apart."
+msgid "<0>On</0> is both he or she is and they are. Usually only the pronoun tells them apart."
+msgstr "<0>On</0> is both he or she is and they are. Usually only the pronoun tells them apart."
 
 msgid "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and polite you to one person."
 msgstr "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and polite you to one person."
@@ -51,8 +51,8 @@ msgstr "<et>Olen</et> can only be I am."
 msgid "<et>Olete</et> can only be you are, to more than one, or polite you are."
 msgstr "<et>Olete</et> can only be you are, to more than one, or polite you are."
 
-msgid "<et>On</et> has no ending, so <et>ta</et> stays."
-msgstr "<et>On</et> has no ending, so <et>ta</et> stays."
+msgid "<et>On</et> has no ending, so <et>ta</et> usually stays."
+msgstr "<et>On</et> has no ending, so <et>ta</et> usually stays."
 
 msgid "<et>On</et> with <et>nad</et>: they are."
 msgstr "<et>On</et> with <et>nad</et>: they are."
@@ -90,17 +90,17 @@ msgstr "and"
 msgid "Answers"
 msgstr "Answers"
 
+msgid "As the subject, each pronoun has two forms. Usually say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
+msgstr "As the subject, each pronoun has two forms. Usually say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
+
 msgid "at home"
 msgstr "at home"
 
-msgid "Because the ending already says who, the pronoun can go. Both lines below mean I’m Mari. A sentence can drop the pronoun, but not the verb."
-msgstr "Because the ending already says who, the pronoun can go. Both lines below mean I’m Mari. A sentence can drop the pronoun, but not the verb."
+msgid "Because the ending already says who, the pronoun can go. Both lines below mean I’m Mari. A sentence can drop the pronoun, but usually not the verb."
+msgstr "Because the ending already says who, the pronoun can go. Both lines below mean I’m Mari. A sentence can drop the pronoun, but usually not the verb."
 
 msgid "Can the pronoun go?"
 msgstr "Can the pronoun go?"
-
-msgid "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
-msgstr "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
 
 msgid "Each round gives a pronoun, <0/> and a word. Change <1>olema</1> to the form for that pronoun and write the sentence: <2>ma · olema · valmis</2> is <3/>."
 msgstr "Each round gives a pronoun, <0/> and a word. Change <1>olema</1> to the form for that pronoun and write the sentence: <2>ma · olema · valmis</2> is <3/>."
@@ -108,8 +108,8 @@ msgstr "Each round gives a pronoun, <0/> and a word. Change <1>olema</1> to the 
 msgid "Endings of olema"
 msgstr "Endings of olema"
 
-msgid "Estonian has six words for people, and each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you’ll hear most. Tap any word."
-msgstr "Estonian has six words for people, and each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you’ll hear most. Tap any word."
+msgid "Estonian has six words for people, and as the subject each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you’ll hear most. Tap any word."
+msgstr "Estonian has six words for people, and as the subject each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you’ll hear most. Tap any word."
 
 msgid "Fill the ending"
 msgstr "Fill the ending"
@@ -260,8 +260,8 @@ msgstr "Say the long form when the pronoun carries the stress: when it stands al
 msgid "Sentences with <et>olema</et>"
 msgstr "Sentences with <et>olema</et>"
 
-msgid "Setting two people side by side takes the long forms: <0/>"
-msgstr "Setting two people side by side takes the long forms: <0/>"
+msgid "Setting two people side by side usually takes the long forms: <0/>"
+msgstr "Setting two people side by side usually takes the long forms: <0/>"
 
 msgid "She’s a teacher."
 msgstr "She’s a teacher."
@@ -297,8 +297,8 @@ msgstr "Short for tema."
 msgid "Six pronouns, two forms"
 msgstr "Six pronouns, two forms"
 
-msgid "Six words for people, each with a long and a short form, and olema, to be, whose ending tells you who."
-msgstr "Six words for people, each with a long and a short form, and olema, to be, whose ending tells you who."
+msgid "Six words for people, each with a long and a short form, and olema, to be, whose ending usually tells you who."
+msgstr "Six words for people, each with a long and a short form, and olema, to be, whose ending usually tells you who."
 
 msgid "Someone else, a man or a woman: one word for both."
 msgstr "Someone else, a man or a woman: one word for both."
@@ -330,9 +330,6 @@ msgstr "The ending for te: you, to more than one; polite you."
 msgid "The ending says who, so the pronoun can go."
 msgstr "The ending says who, so the pronoun can go."
 
-msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
-msgstr "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
-
 msgid "The forms of <et>olema</et>"
 msgstr "The forms of <et>olema</et>"
 
@@ -345,8 +342,8 @@ msgstr "The people you’re talking to, or one person, politely."
 msgid "The pronoun can go"
 msgstr "The pronoun can go"
 
-msgid "The pronoun stays"
-msgstr "The pronoun stays"
+msgid "The pronoun usually stays"
+msgstr "The pronoun usually stays"
 
 msgid "The short form is ma."
 msgstr "The short form is ma."
@@ -416,6 +413,9 @@ msgstr "What does Liis say about Peeter?"
 
 msgid "When the pronoun can go"
 msgstr "When the pronoun can go"
+
+msgid "Where the ending tells who, the pronoun can go: <0>Olen Mari.</0>"
+msgstr "Where the ending tells who, the pronoun can go: <0>Olen Mari.</0>"
 
 msgid "Which ending?"
 msgstr "Which ending?"

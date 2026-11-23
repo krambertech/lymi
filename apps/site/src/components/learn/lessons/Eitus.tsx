@@ -22,6 +22,7 @@ import {
   PERSON_ENDINGS,
   type Person,
   verbSentence,
+  withLongPronoun,
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst } from "../../../lib/learn/quiz";
@@ -208,7 +209,7 @@ function PersonFlip() {
         <FlipNote
           mode={mode}
           title={<Trans>Six endings</Trans>}
-          tip={<Trans>Each person has its own: -n, -d, -b, -me, -te, -vad.</Trans>}
+          tip={<Trans>Each person usually has its own: -n, -d, -b, -me, -te, -vad.</Trans>}
         />
       )}
     </Panel>
@@ -292,7 +293,7 @@ function OlemaFlip() {
       {mode === "yes" ? (
         <FlipNote
           mode={mode}
-          title={<Trans>The form says who</Trans>}
+          title={<Trans>The form mostly says who</Trans>}
           tip={
             <Trans>
               <span lang="et">Olen</span> for I, <span lang="et">oled</span> for you,{" "}
@@ -306,7 +307,8 @@ function OlemaFlip() {
           title={<Trans>One form for everyone</Trans>}
           tip={
             <Trans>
-              Every form of <span lang="et">olema</span> becomes <span lang="et">ei ole</span>.
+              Every present form of <span lang="et">olema</span> becomes{" "}
+              <span lang="et">ei ole</span>.
             </Trans>
           }
         />
@@ -524,7 +526,7 @@ export function EitusLesson() {
         from: yes,
         cue: t`make it no`,
         src: src(no),
-        answers: [no],
+        answers: [no, withLongPronoun(no)],
         pair: [person, no] as const,
       })),
     [t],
@@ -542,11 +544,11 @@ export function EitusLesson() {
         explain:
           kind === "verb" ? (
             <Trans>
-              After <span lang="et">ei</span>, the verb drops its ending.
+              In the present, the verb after <span lang="et">ei</span> drops its ending.
             </Trans>
           ) : (
             <Trans>
-              After <span lang="et">ei</span>, <span lang="et">olema</span> is always{" "}
+              In the present, after <span lang="et">ei</span>, <span lang="et">olema</span> is{" "}
               <span lang="et">ole</span>.
             </Trans>
           ),
@@ -666,14 +668,15 @@ export function EitusLesson() {
       ]}
       recap={[
         <Trans key="1">
-          Put <b lang="et">ei</b> before the verb: <b lang="et">ma ei loe</b>, I don’t read.
+          To say not, you usually put <b lang="et">ei</b> before the verb:{" "}
+          <b lang="et">ma ei loe</b>, I don’t read.
         </Trans>,
         <Trans key="2">
-          After <b lang="et">ei</b> comes the I form of the present without its -n:{" "}
+          In the present, after <b lang="et">ei</b> comes the I form without its -n:{" "}
           <b lang="et">loen</b>, <b lang="et">ei loe</b>.
         </Trans>,
         <Trans key="3">
-          The no is the same for every person: <b lang="et">ma ei loe</b>,{" "}
+          <b lang="et">Ei</b> is the same for every person: <b lang="et">ma ei loe</b>,{" "}
           <b lang="et">nad ei loe</b>.
         </Trans>,
         <Trans key="4">
@@ -693,9 +696,10 @@ export function EitusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    To say not, put <Word w="ei" /> before the verb. <Word w="Ma loen" /> is I read,
-                    and <Word w="Ma ei loe" /> is I don’t read. The verb loses its ending, and{" "}
-                    <Word w="ei" /> is the same whoever you’re talking about.
+                    To say not, you usually put <Word w="ei" /> before the verb.{" "}
+                    <Word w="Ma loen" /> is I read, and <Word w="Ma ei loe" /> is I don’t read. The
+                    verb loses its ending, and <Word w="ei" /> is the same whoever you’re talking
+                    about.
                   </Trans>
                 </p>
                 <p>

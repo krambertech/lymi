@@ -20,7 +20,7 @@ const MEANS: Partial<Record<Place["place"], MessageDescriptor>> = {
 };
 
 const IN = msg`Most towns, countries and buildings: <et>-s</et>.`;
-const ON = msg`On something, at work, at the market, and names ending in <et>-maa</et>: <et>-l</et>.`;
+const ON = msg`Usually <et>-l</et>: on something, at work, at the market, and names ending in <et>-maa</et>.`;
 
 const placeOf = (place: Place["place"]) =>
   KOHAD_PLACES.find((each) => each.place === place) as Place;
@@ -47,7 +47,17 @@ const TRANSLATED: readonly {
   also: readonly string[];
 }[] = [
   { index: 7, prompt: msg`Jaan lives in Pärnu.`, also: [] },
-  { index: 9, prompt: msg`They study in Tartu.`, also: ["Nemad õpivad Tartus."] },
+  {
+    index: 9,
+    prompt: msg`They study in Tartu.`,
+    also: [
+      "Nemad õpivad Tartus.",
+      "Tartus nad õpivad.",
+      "Tartus nemad õpivad.",
+      "Tartus õpivad nad.",
+      "Tartus õpivad nemad.",
+    ],
+  },
   { index: 8, prompt: msg`The picture is on the wall.`, also: [] },
   { index: 1, prompt: msg`Dad is at the market.`, also: [] },
 ];

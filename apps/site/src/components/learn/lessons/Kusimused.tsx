@@ -93,12 +93,18 @@ const QUESTION_WORDS: readonly {
   q: Id;
   a: Id;
 }[] = [
-  { word: "kes", means: msg`who`, asks: msg`Asks about a person.`, q: "q-kes", a: "a-kes" },
-  { word: "mis", means: msg`what`, asks: msg`Asks about a thing.`, q: "q-mis", a: "a-mis" },
+  { word: "kes", means: msg`who`, asks: msg`Usually asks about a person.`, q: "q-kes", a: "a-kes" },
+  { word: "mis", means: msg`what`, asks: msg`Usually asks about a thing.`, q: "q-mis", a: "a-mis" },
   { word: "kus", means: msg`where`, asks: msg`Asks about a place.`, q: "q-kus", a: "a-kus" },
   { word: "millal", means: msg`when`, asks: msg`Asks about a time.`, q: "q-millal", a: "a-millal" },
   { word: "miks", means: msg`why`, asks: msg`Asks for a reason.`, q: "q-miks", a: "a-miks" },
-  { word: "kuidas", means: msg`how`, asks: msg`Asks how it’s done.`, q: "q-kuidas", a: "a-kuidas" },
+  {
+    word: "kuidas",
+    means: msg`how`,
+    asks: msg`Asks how, or how things are.`,
+    q: "q-kuidas",
+    a: "a-kuidas",
+  },
   {
     word: "kui palju",
     means: msg`how much, how many`,
@@ -183,7 +189,7 @@ const MATCHED: readonly { word: QuestionWord; about: MessageDescriptor }[] = [
   { word: "kus", about: msg`a place` },
   { word: "millal", about: msg`a time` },
   { word: "miks", about: msg`a reason` },
-  { word: "kuidas", about: msg`how it’s done` },
+  { word: "kuidas", about: msg`how, or how things are` },
 ];
 
 const capital = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
@@ -191,7 +197,7 @@ const capital = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 const GLOSSARY: Glossary = {
   kas: {
     en: msg`turns a sentence into a yes-or-no question`,
-    note: msg`It has no meaning of its own, like a spoken question mark.`,
+    note: msg`At the start of a question it has no meaning of its own, like a spoken question mark.`,
   },
   kes: { en: msg`who` },
   mis: { en: msg`what` },
@@ -331,7 +337,7 @@ function KasSwitch() {
       </ul>
       <p aria-live="polite" className="text-md text-ink-secondary">
         {asking
-          ? t`Kas in front, a question mark at the end. Every other word stays put.`
+          ? t`Kas in front, a question mark at the end. Here every other word stays put.`
           : t`Five sentences. Switch to Question and watch what changes.`}
       </p>
     </Panel>
@@ -602,19 +608,20 @@ export function KusimusedLesson() {
       ]}
       recap={[
         <Trans key="1">
-          Put <b lang="et">kas</b> in front of a sentence to ask yes or no. Nothing else moves:{" "}
-          <b lang="et">Kas sa elad Tallinnas?</b>
+          Put <b lang="et">kas</b> in front of a sentence to ask yes or no. Usually nothing else
+          moves: <b lang="et">Kas sa elad Tallinnas?</b>
         </Trans>,
         <Trans key="2">
           Answer <b lang="et">jah</b> or <b lang="et">ei</b>. When the question has olema, the no is{" "}
-          <b lang="et">ei ole</b>. If you don’t know, say <b lang="et">Ma ei tea.</b>
+          <b lang="et">ei ole</b> or <b lang="et">pole</b>. If you don’t know, say{" "}
+          <b lang="et">Ma ei tea.</b>
         </Trans>,
         <Trans key="3">
-          A question word goes first, and the part you ask about drops out:{" "}
+          A question word usually goes first, and the part you ask about drops out:{" "}
           <b lang="et">Kus sa elad?</b>
         </Trans>,
         <Trans key="4">
-          <b lang="et">Kes</b> asks about people, <b lang="et">mis</b> about things.
+          <b lang="et">Kes</b> usually asks about people, <b lang="et">mis</b> about things.
         </Trans>,
         <Trans key="5">
           Learn three questions whole: <b lang="et">Mis su nimi on? Kuidas läheb?</b> and{" "}
@@ -637,17 +644,17 @@ export function KusimusedLesson() {
                 </p>
                 <p>
                   <Trans>
-                    English adds do or swaps words round. Estonian adds kas and leaves every other
-                    word where it was. Try it on five sentences.
+                    English adds do or swaps words round. Estonian adds kas and usually leaves every
+                    other word where it was. Try it on five sentences.
                   </Trans>
                 </p>
               </Prose>
               <KasSwitch />
               <Aside>
                 <Trans>
-                  In a kas question your voice falls at the end, as in a statement: kas already says
-                  it’s a question. In speech you’ll also hear <Word w="või" /> at the end instead, a
-                  bit like “right?”: <Word w="Sa elad Tallinnas või?" />
+                  In a kas question your voice usually falls at the end, as in a statement: kas
+                  already says it’s a question. In speech you’ll also hear <Word w="või" /> at the
+                  end instead, a bit like “right?”: <Word w="Sa elad Tallinnas või?" />
                 </Trans>
               </Aside>
             </>
@@ -710,7 +717,7 @@ export function KusimusedLesson() {
               <AskWords />
               <Aside>
                 <Trans>
-                  <Word w="Kes" /> asks about people and <Word w="mis" /> about things:{" "}
+                  <Word w="Kes" /> usually asks about people and <Word w="mis" /> about things:{" "}
                   <Word w="Kes see on?" /> Who is that? <Word w="Mis see on?" /> What is that?
                 </Trans>
               </Aside>
@@ -726,8 +733,8 @@ export function KusimusedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a question and pick its question word. It always comes first, so listen to
-                    the start.
+                    Hear a question and pick its question word. In these questions it comes first,
+                    so listen to the start.
                   </Trans>
                 </p>
               </Prose>
@@ -888,7 +895,7 @@ export function KusimusedLesson() {
                   <Trans>
                     Each round gives an answer. Write the question it answers: start with the
                     question word, and when the answer says <span lang="et">ma</span>, ask with{" "}
-                    <span lang="et">sa</span>.
+                    <span lang="et">sa</span> (or <span lang="et">te</span> to be polite).
                   </Trans>
                 </p>
               </Prose>
@@ -922,9 +929,9 @@ export function KusimusedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    A question answered with yes or no starts with <Word w="kas" />. A question that
-                    wants a place, a person or a thing starts with its question word instead, never
-                    with both. Write each question in Estonian.
+                    A question answered with yes or no usually starts with <Word w="kas" />. A
+                    question that wants a place, a person or a thing starts with its question word
+                    instead, not with both. Write each question in Estonian.
                   </Trans>
                 </p>
               </Prose>

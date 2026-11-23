@@ -32,7 +32,7 @@ const heard = ({ word, answers }: Asked): ChoiceDrill => {
     answer: option(word),
     ...(slip ? { slip: option(slip) } : {}),
     wrong: WORDS.filter((each) => each !== word && each !== slip).map(option),
-    explain: msg`The question word comes first: <et>${word}</et>.`,
+    explain: msg`The question word usually comes first: <et>${word}</et>.`,
   };
 };
 
@@ -43,7 +43,7 @@ const asked = ({ word, reply, answers }: Asked): SentenceDrill => ({
   reply,
   say: answers[0],
   answers,
-  explain: msg`Start with the question word for what you ask about, and leave that part out; when the answer says <et>ma</et>, ask with <et>sa</et>.`,
+  explain: msg`Start with the question word for what you ask about, and leave that part out; when the answer says <et>ma</et>, ask with <et>sa</et> (or <et>te</et> to be polite).`,
 });
 
 const MEANS: readonly MessageDescriptor[] = [
@@ -57,8 +57,8 @@ const MEANS: readonly MessageDescriptor[] = [
   msg`What are you reading?`,
 ];
 
-const KAS = msg`A yes-or-no question starts with <et>kas</et>.`;
-const WORD = msg`A question word replaces <et>kas</et>; never use both.`;
+const KAS = msg`A yes-or-no question usually starts with <et>kas</et>.`;
+const WORD = msg`A question word replaces <et>kas</et>, so a question usually starts with one or the other.`;
 
 const translated = (index: number): SentenceDrill => {
   const { kind, answers } = KUSIMUSED_TRANSLATED[index] as (typeof KUSIMUSED_TRANSLATED)[number];
@@ -82,8 +82,8 @@ const made = (from: string, index: number): SentenceDrill => {
     from,
     cue: msg`make it a yes-or-no question`,
     say: answers[0],
-    answers: [answers[0]],
-    explain: msg`Put <et>kas</et> in front; every other word stays where it was.`,
+    answers,
+    explain: msg`Put <et>kas</et> in front; the other words can stay where they were.`,
   };
 };
 

@@ -254,8 +254,8 @@ msgstr "Бесплатный урок эстонского о личных ме�
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, minutes past and to, and writing the time in words. Every time is read aloud."
 msgstr "Бесплатный урок эстонского о том, как сказать, который час: целые часы, pool, veerand и kolmveerand, которые называют следующий час, минуты до и после, а также как написать время словами. Каждый пример озвучен."
 
-msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud."
-msgstr "Бесплатный урок эстонского произношения: девять гласных с õ, ä, ö и ü, ударение на первом слоге и то, как удвоенная буква меняет слово. Каждое слово озвучено."
+msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
+msgstr "Бесплатный урок эстонского произношения: девять гласных с õ, ä, ö и ü, ударение, обычно на первом слоге, и то, как удвоенная буква может изменить слово. Каждое слово озвучено."
 
 msgid "A free lesson on Estonian modal verbs: oskan for what you know how to do, saan for what nothing stops you doing, võin and tohin for what is allowed, pean, tuleb and mul on vaja for what you have to do, and how to say can’t, mustn’t and don’t have to. Every sentence is read aloud."
 msgstr "Бесплатный урок о модальных глаголах в эстонском языке: oskan — когда умеешь, saan — когда ничто не мешает, võin и tohin — когда можно, pean, tuleb и mul on vaja — когда надо, и как сказать «не могу», «нельзя» и «не обязательно». Каждое предложение можно послушать."
@@ -287,8 +287,8 @@ msgstr "Бесплатный урок эстонского о трёх внеш�
 msgid "A free lesson on saying “I have” in Estonian: mul, sul, tal, meil, teil and neil on, names with -l such as Maril on, the question kellel on?, mul on vaja for I need, and how to answer with jah, on or ei ole. Every sentence is read aloud."
 msgstr "Бесплатный урок о том, как сказать «у меня есть» по-эстонски: mul, sul, tal, meil, teil и neil on, имена с -l, например Maril on, вопрос kellel on?, mul on vaja — «мне нужно» — и ответы jah, on и ei ole. Каждое предложение озвучено."
 
-msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
-msgstr "Бесплатный урок эстонского о том, как сказать, где ты: -s значит «в» (Tallinnas, koolis), -l — «на» (laual, tööl), какие места получают какое окончание и как ответить на kus, «где». Каждое предложение озвучено."
+msgid "A free lesson on saying where you are in Estonian: -s, usually for in (Tallinnas, koolis), -l, usually for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о том, как сказать, где ты: -s обычно значит «в» (Tallinnas, koolis), -l — «на» (laual, tööl), какие места получают какое окончание и как ответить на kus, «где». Каждое предложение озвучено."
 
 msgid "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
 msgstr "Бесплатный урок об эстонских формах на -ma, -mas и -mast: lähen ujuma (иду плавать), olen ujumas (на плавании) и tulen ujumast (возвращаюсь с плавания). Они отвечают на kuhu?, kus? и kust?, как и названия мест. А ещё — когда говорить lähen, käin или tulen. Каждое предложение озвучено."

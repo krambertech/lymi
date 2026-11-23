@@ -249,6 +249,10 @@ msgstr "Только на слух, без микрофона"
 msgid "Listening: in class"
 msgstr "На слух: на уроке"
 
+msgctxt "in class"
+msgid "Look here"
+msgstr "Посмотреть сюда"
+
 msgid "Look."
 msgstr "Смотри."
 
@@ -329,9 +333,6 @@ msgstr "Говорите помедленнее, пожалуйста. Неск�
 
 msgid "Speak."
 msgstr "Говори."
-
-msgid "Stand up"
-msgstr "Встать"
 
 msgid "Study."
 msgstr "Учись."

@@ -31,6 +31,7 @@ export function useLift<T>({
   onDrop: (value: T, x: number, y: number) => void;
 }) {
   const drag = useRef<Lift<T> | null>(null);
+  const pressed = useRef({ x: 0, y: 0 });
   const [lift, setLift] = useState<Lift<T> | null>(null);
   const end = () => {
     drag.current = null;
@@ -42,6 +43,7 @@ export function useLift<T>({
     event.preventDefault();
     const box = event.currentTarget.getBoundingClientRect();
     event.currentTarget.setPointerCapture(event.pointerId);
+    pressed.current = { x: event.clientX, y: event.clientY };
     drag.current = {
       value,
       x: event.clientX,
@@ -56,7 +58,8 @@ export function useLift<T>({
     onPointerMove: (event: PointerEvent<HTMLElement>) => {
       const now = drag.current;
       if (!now) return;
-      const moved = now.moved || Math.hypot(event.clientX - now.x, event.clientY - now.y) > 6;
+      const { x, y } = pressed.current;
+      const moved = now.moved || Math.hypot(event.clientX - x, event.clientY - y) > 6;
       drag.current = { ...now, x: event.clientX, y: event.clientY, moved };
       setLift(drag.current);
       if (moved) onMove?.(now.value, event.clientX, event.clientY);

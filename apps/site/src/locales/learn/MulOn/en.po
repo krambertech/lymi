@@ -264,8 +264,8 @@ msgstr "I need money."
 msgid "I’m a teacher."
 msgstr "I’m a teacher."
 
-msgid "In a yes sentence, one thing you can count stays in its first form, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
-msgstr "In a yes sentence, one thing you can count stays in its first form, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
+msgid "In a yes sentence, one thing you can count stays in its nominative, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
+msgstr "In a yes sentence, one thing you can count stays in its nominative, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
 
 msgid "In Kas sul on aega? and Mul pole aega, time takes this form."
 msgstr "In Kas sul on aega? and Mul pole aega, time takes this form."
@@ -465,8 +465,8 @@ msgstr "The owner takes <0>-l</0>: <1>mul, sul, tal, meil, teil, neil</1>. A nam
 msgid "The teacher has a book."
 msgstr "The teacher has a book."
 
-msgid "The verb is <0>on</0> whoever has the thing, and in a yes sentence one thing you can count stays in its first form: <1>Meil on maja.</1>"
-msgstr "The verb is <0>on</0> whoever has the thing, and in a yes sentence one thing you can count stays in its first form: <1>Meil on maja.</1>"
+msgid "The verb is <0>on</0> whoever has the thing, and in a yes sentence one thing you can count stays in its nominative: <1>Meil on maja.</1>"
+msgstr "The verb is <0>on</0> whoever has the thing, and in a yes sentence one thing you can count stays in its nominative: <1>Meil on maja.</1>"
 
 msgid "they"
 msgstr "they"

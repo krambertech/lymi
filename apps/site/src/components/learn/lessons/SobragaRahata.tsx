@@ -114,6 +114,21 @@ const GLOSSARY: Glossary = {
   tuleme: { en: msg`we’re coming`, note: msg`From tulema, to come.` },
   mul: { en: msg`mul on: I have`, note: msg`Mul on aega: I have time.` },
   aega: { en: msg`time`, note: msg`The partitive of aeg, time.` },
+  "head teed!": { en: msg`have a good trip`, show: "Head teed!" },
+  õega: { en: msg`with my sister`, note: msg`From õde, sister; its genitive is õe.` },
+  vennaga: { en: msg`with my brother`, note: msg`From vend, brother; its genitive is venna.` },
+  haiglas: { en: msg`in a hospital`, note: msg`From haigla, hospital.` },
+  rongis: { en: msg`on the train`, note: msg`From rong, train.` },
+  saab: {
+    en: msg`you can, one can`,
+    note: msg`From saama. Rongis saab lugeda: you can read on the train.`,
+  },
+  juua: { en: msg`to drink`, note: msg`The -da infinitive of jooma.` },
+  maksan: { en: msg`I’ll pay`, note: msg`From maksma, to pay.` },
+  "pole midagi": { en: msg`never mind, no problem`, show: "Pole midagi" },
+  "kui kaua": { en: msg`how long`, show: "Kui kaua" },
+  vaba: { en: msg`free` },
+  tagasi: { en: msg`back` },
   kolmeni: { en: msg`until three`, note: msg`From kolm, three; its genitive is kolme.` },
 };
 
@@ -537,7 +552,7 @@ function useContent() {
     ),
     "fix-viieni": (
       <Trans>
-        Until is <span lang="et">-ni</span>: <span lang="et">kella viieni</span>.
+        Until a time is <span lang="et">-ni</span>: <span lang="et">kella viieni</span>.
       </Trans>
     ),
     "fix-opetajana": (
@@ -824,7 +839,7 @@ export function SobragaRahataLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          For with, without, until and as in a role, Estonian adds an ending:{" "}
+          For with, without, until and as in a role, Estonian usually adds an ending:{" "}
           <span lang="et">-ga</span>, <span lang="et">-ta</span>, <span lang="et">-ni</span> or{" "}
           <span lang="et">-na</span>. Each goes on the genitive: <span lang="et">sõbraga</span> is
           with a friend, and <span lang="et">rahata</span> is without money.

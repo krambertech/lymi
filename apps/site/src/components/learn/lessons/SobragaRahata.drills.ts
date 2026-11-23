@@ -10,7 +10,7 @@ const fixAnswers = (id: (typeof SOBRAGA_FIX)[number]["id"]) =>
 const WITH = msg`With is <et>-ga</et> on the genitive: <et>sõber</et>, <et>sõbra</et>, <et>sõbraga</et>.`;
 const BY = msg`How you travel usually takes <et>-ga</et> too: <et>bussiga</et>, by bus.`;
 const WITHOUT = msg`Without is <et>-ta</et> on the genitive: <et>piimata</et>, without milk.`;
-const UNTIL = msg`Until, or as far as, is <et>-ni</et> on the genitive: <et>kella viieni</et>, <et>Tartuni</et>.`;
+const UNTIL = msg`Until a time, or as far as a place, is <et>-ni</et> on the genitive: <et>kella viieni</et>, <et>Tartuni</et>.`;
 const AS = msg`Works as is usually <et>-na</et> on the genitive: <et>töötab arstina</et>.`;
 
 export const DRILLS: DrillBank = {
@@ -199,7 +199,7 @@ export const DRILLS: DrillBank = {
       rule: "ni",
       answers: ["Homseni!"],
       say: "Homseni!",
-      explain: msg`See you tomorrow is <et>Homseni!</et>, word for word until tomorrow.`,
+      explain: msg`<et>Homseni!</et> is see you tomorrow; word for word, “until tomorrow”.`,
     },
 
     {

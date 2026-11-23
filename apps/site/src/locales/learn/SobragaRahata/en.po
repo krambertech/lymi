@@ -62,6 +62,9 @@ msgstr "<0>-ta</0> on the genitive."
 msgid "<0>Kokk</0> has the genitive <1>koka</1>, so as a cook is <2>kokana</2>."
 msgstr "<0>Kokk</0> has the genitive <1>koka</1>, so as a cook is <2>kokana</2>."
 
+msgid "<et>Homseni!</et> is see you tomorrow; word for word, “until tomorrow”."
+msgstr "<et>Homseni!</et> is see you tomorrow; word for word, “until tomorrow”."
+
 msgid "22 minutes"
 msgstr "22 minutes"
 
@@ -155,6 +158,9 @@ msgstr "as far as the shop"
 msgid "As: <et>arstina</et>, <et>lapsena</et>"
 msgstr "As: <et>arstina</et>, <et>lapsena</et>"
 
+msgid "back"
+msgstr "back"
+
 msgid "Before a -ta form, to stress the without."
 msgstr "Before a -ta form, to stress the without."
 
@@ -230,8 +236,8 @@ msgstr "for me, to me"
 msgid "For three hours"
 msgstr "For three hours"
 
-msgid "For with, without, until and as in a role, Estonian adds an ending: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> or <3>-na</3>. Each goes on the genitive: <4>sõbraga</4> is with a friend, and <5>rahata</5> is without money."
-msgstr "For with, without, until and as in a role, Estonian adds an ending: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> or <3>-na</3>. Each goes on the genitive: <4>sõbraga</4> is with a friend, and <5>rahata</5> is without money."
+msgid "For with, without, until and as in a role, Estonian usually adds an ending: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> or <3>-na</3>. Each goes on the genitive: <4>sõbraga</4> is with a friend, and <5>rahata</5> is without money."
+msgstr "For with, without, until and as in a role, Estonian usually adds an ending: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> or <3>-na</3>. Each goes on the genitive: <4>sõbraga</4> is with a friend, and <5>rahata</5> is without money."
 
 msgid "four"
 msgstr "four"
@@ -239,11 +245,17 @@ msgstr "four"
 msgid "Four endings, four meanings"
 msgstr "Four endings, four meanings"
 
+msgid "free"
+msgstr "free"
+
 msgid "friend"
 msgstr "friend"
 
 msgid "friend’s, of a friend"
 msgstr "friend’s, of a friend"
+
+msgid "From haigla, hospital."
+msgstr "From haigla, hospital."
 
 msgid "From jooma, to drink."
 msgstr "From jooma, to drink."
@@ -254,6 +266,12 @@ msgstr "From kolm, three; its genitive is kolme."
 msgid "From laps, child; its genitive is lapse."
 msgstr "From laps, child; its genitive is lapse."
 
+msgid "From maksma, to pay."
+msgstr "From maksma, to pay."
+
+msgid "From õde, sister; its genitive is õe."
+msgstr "From õde, sister; its genitive is õe."
+
 msgid "From piim, milk."
 msgstr "From piim, milk."
 
@@ -262,6 +280,9 @@ msgstr "From raha, money."
 
 msgid "From rong, train."
 msgstr "From rong, train."
+
+msgid "From saama. Rongis saab lugeda: you can read on the train."
+msgstr "From saama. Rongis saab lugeda: you can read on the train."
 
 msgid "From sidrun, lemon."
 msgstr "From sidrun, lemon."
@@ -275,6 +296,9 @@ msgstr "From three"
 msgid "From tulema, to come."
 msgstr "From tulema, to come."
 
+msgid "From vend, brother; its genitive is venna."
+msgstr "From vend, brother; its genitive is venna."
+
 msgid "genitive"
 msgstr "genitive"
 
@@ -283,6 +307,9 @@ msgstr "goodbye"
 
 msgid "Goodbye."
 msgstr "Goodbye."
+
+msgid "have a good trip"
+msgstr "have a good trip"
 
 msgid "Her job: <0>-na</0>, as a doctor."
 msgstr "Her job: <0>-na</0>, as a doctor."
@@ -298,6 +325,9 @@ msgstr "How does Mari want her coffee?"
 
 msgid "How is Kati getting to Tartu?"
 msgstr "How is Kati getting to Tartu?"
+
+msgid "how long"
+msgstr "how long"
 
 msgid "How long can Mari stay?"
 msgstr "How long can Mari stay?"
@@ -326,6 +356,9 @@ msgstr "I have my car today."
 msgid "I work until five."
 msgstr "I work until five."
 
+msgid "I’ll pay"
+msgstr "I’ll pay"
+
 msgid "I’m coming with a friend."
 msgstr "I’m coming with a friend."
 
@@ -334,6 +367,9 @@ msgstr "I’m talking with Mum."
 
 msgid "in a café"
 msgstr "in a café"
+
+msgid "in a hospital"
+msgstr "in a hospital"
 
 msgid "In an order: mulle üks kohv, a coffee for me."
 msgstr "In an order: mulle üks kohv, a coffee for me."
@@ -459,6 +495,9 @@ msgstr "Nearly. Play the ones you missed and listen to the ending."
 msgid "Neither milk nor sugar"
 msgstr "Neither milk nor sugar"
 
+msgid "never mind, no problem"
+msgstr "never mind, no problem"
+
 msgid "No milk, but sugar"
 msgstr "No milk, but sugar"
 
@@ -476,6 +515,9 @@ msgstr "On the genitive: <0>suhkru</0>, <1>suhkruga</1>."
 
 msgid "On the same genitive: <0>suhkru</0>, <1>suhkruta</1>."
 msgstr "On the same genitive: <0>suhkru</0>, <1>suhkruta</1>."
+
+msgid "on the train"
+msgstr "on the train"
 
 msgid "Ordering at a café"
 msgstr "Ordering at a café"
@@ -500,9 +542,6 @@ msgstr "school"
 
 msgid "see you tomorrow"
 msgstr "see you tomorrow"
-
-msgid "See you tomorrow is <et>Homseni!</et>, word for word until tomorrow."
-msgstr "See you tomorrow is <et>Homseni!</et>, word for word until tomorrow."
 
 msgid "See you tomorrow."
 msgstr "See you tomorrow."
@@ -557,6 +596,9 @@ msgstr "Tea with sugar and no lemon"
 
 msgid "Tea without lemon, please."
 msgstr "Tea without lemon, please."
+
+msgid "The -da infinitive of jooma."
+msgstr "The -da infinitive of jooma."
 
 msgid "The bus goes as far as Tartu."
 msgstr "The bus goes as far as Tartu."
@@ -639,11 +681,20 @@ msgstr "The short form for into, from pood."
 msgid "time"
 msgstr "time"
 
+msgid "to drink"
+msgstr "to drink"
+
 msgid "train"
 msgstr "train"
 
 msgid "Two goodbyes end in <0>-ni</0> too. <1/> is see you tomorrow, and <2/> is goodbye. Tap a line to hear it."
 msgstr "Two goodbyes end in <0>-ni</0> too. <1/> is see you tomorrow, and <2/> is goodbye. Tap a line to hear it."
+
+msgid "Until a time is <0>-ni</0>: <1>kella viieni</1>."
+msgstr "Until a time is <0>-ni</0>: <1>kella viieni</1>."
+
+msgid "Until a time, or as far as a place, is <et>-ni</et> on the genitive: <et>kella viieni</et>, <et>Tartuni</et>."
+msgstr "Until a time, or as far as a place, is <et>-ni</et> on the genitive: <et>kella viieni</et>, <et>Tartuni</et>."
 
 msgid "Until and as far as"
 msgstr "Until and as far as"
@@ -653,9 +704,6 @@ msgstr "Until and as far as: <et>kella viieni</et>"
 
 msgid "until five o’clock"
 msgstr "until five o’clock"
-
-msgid "Until is <0>-ni</0>: <1>kella viieni</1>."
-msgstr "Until is <0>-ni</0>: <1>kella viieni</1>."
 
 msgid "until three"
 msgstr "until three"
@@ -668,9 +716,6 @@ msgstr "Until when are they in Tartu? Write it as Kati says it."
 
 msgid "Until when: <0>-ni</0>, until four."
 msgstr "Until when: <0>-ni</0>, until four."
-
-msgid "Until, or as far as, is <et>-ni</et> on the genitive: <et>kella viieni</et>, <et>Tartuni</et>."
-msgstr "Until, or as far as, is <et>-ni</et> on the genitive: <et>kella viieni</et>, <et>Tartuni</et>."
 
 msgid "wants"
 msgstr "wants"
@@ -738,6 +783,12 @@ msgstr "With milk"
 
 msgid "with Mum"
 msgstr "with Mum"
+
+msgid "with my brother"
+msgstr "with my brother"
+
+msgid "with my sister"
+msgstr "with my sister"
 
 msgid "With or without"
 msgstr "With or without"
@@ -830,6 +881,9 @@ msgstr "Write each sentence in Estonian. Find the word that needs an ending, the
 
 msgid "Write it in Estonian"
 msgstr "Write it in Estonian"
+
+msgid "you can, one can"
+msgstr "you can, one can"
 
 msgid "You’ll also hear <0/> before the word: <1/>, without sugar. <2>Ilma</2> stresses the without, and the ending stays."
 msgstr "You’ll also hear <0/> before the word: <1/>, without sugar. <2>Ilma</2> stresses the without, and the ending stays."

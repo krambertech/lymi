@@ -3337,6 +3337,8 @@ export const SOBRAGA_TRANSLATE = [
       "Ma tulen koos sõbraga.",
       "Ma tulen sõbraga koos.",
       "Sõbraga tulen ma.",
+      "Koos sõbraga tulen ma.",
+      "Sõbraga koos tulen ma.",
     ]),
   },
   {
@@ -3356,11 +3358,17 @@ export const SOBRAGA_TRANSLATE = [
       "Mari töötab kuni kella kuueni.",
       "Mari töötab kuni kuueni.",
       "Kella kuueni töötab Mari.",
+      "Kuueni töötab Mari.",
     ],
   },
   {
     id: "opetajana",
-    answers: ["Jaan töötab õpetajana.", "Jaan töötab õpetajaks.", "Õpetajana töötab Jaan."],
+    answers: [
+      "Jaan töötab õpetajana.",
+      "Jaan töötab õpetajaks.",
+      "Õpetajana töötab Jaan.",
+      "Õpetajaks töötab Jaan.",
+    ],
   },
   {
     id: "bussiga",
@@ -3371,6 +3379,8 @@ export const SOBRAGA_TRANSLATE = [
       "Me sõidame Tartusse bussiga.",
       "Bussiga läheme me Tartusse.",
       "Tartusse läheme me bussiga.",
+      "Bussiga sõidame me Tartusse.",
+      "Tartusse sõidame me bussiga.",
     ]),
   },
   {
@@ -3381,6 +3391,8 @@ export const SOBRAGA_TRANSLATE = [
       "Ma elasin Tartus lapsena.",
       "Lapsena ma elasin Tartus.",
       "Tartus elasin ma lapsena.",
+      "Tartus ma elasin lapsena.",
+      "Lapsena elasin Tartus.",
     ]),
   },
 ] as const;

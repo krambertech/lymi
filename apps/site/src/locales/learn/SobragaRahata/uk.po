@@ -62,11 +62,14 @@ msgstr "Родовий відмінок плюс <0>-ta</0>."
 msgid "<0>Kokk</0> has the genitive <1>koka</1>, so as a cook is <2>kokana</2>."
 msgstr "Родовий відмінок від <0>kokk</0> — <1>koka</1>, тож «кухарем» — це <2>kokana</2>."
 
+msgid "<et>Homseni!</et> is see you tomorrow; word for word, “until tomorrow”."
+msgstr "<et>Homseni!</et> — це «до завтра»; дослівно «до завтрашнього»."
+
 msgid "22 minutes"
 msgstr "22 хвилини"
 
 msgid "5 quizzes, a message to read, one to fill in and a conversation"
-msgstr "5 вправ, повідомлення, щоб прочитати, ще одне, щоб заповнити, і розмова"
+msgstr "5 вправ, повідомлення для читання, ще одне з пропусками й розмова"
 
 msgid "A coffee with milk, please."
 msgstr "Каву з молоком, будь ласка."
@@ -135,7 +138,7 @@ msgid "As a doctor, as a child"
 msgstr "Лікарем, дитиною"
 
 msgid "As children, Kati and her sister lived in Tartu."
-msgstr "Коли Каті й сестра були дітьми, вони жили в Тарту."
+msgstr "У дитинстві Каті з сестрою жили в Тарту."
 
 msgid "as far as Tartu"
 msgstr "аж до Тарту"
@@ -154,6 +157,9 @@ msgstr "аж до магазину"
 
 msgid "As: <et>arstina</et>, <et>lapsena</et>"
 msgstr "Ким, у ролі: <et>arstina</et>, <et>lapsena</et>"
+
+msgid "back"
+msgstr "назад"
 
 msgid "Before a -ta form, to stress the without."
 msgstr "Перед формою на -ta, щоб підсилити «без»."
@@ -186,7 +192,7 @@ msgid "by train"
 msgstr "поїздом"
 
 msgid "By train"
-msgstr "Потягом"
+msgstr "Поїздом"
 
 msgid "child"
 msgstr "дитина"
@@ -230,8 +236,8 @@ msgstr "мені"
 msgid "For three hours"
 msgstr "Три години"
 
-msgid "For with, without, until and as in a role, Estonian adds an ending: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> or <3>-na</3>. Each goes on the genitive: <4>sõbraga</4> is with a friend, and <5>rahata</5> is without money."
-msgstr "Там, де українська каже «з (кимось чи чимось)», «без», «аж до» чи «як» (у ролі), естонська додає закінчення: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> або <3>-na</3>. Кожне додається до родового відмінка: <4>sõbraga</4> — з другом, а <5>rahata</5> — без грошей."
+msgid "For with, without, until and as in a role, Estonian usually adds an ending: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> or <3>-na</3>. Each goes on the genitive: <4>sõbraga</4> is with a friend, and <5>rahata</5> is without money."
+msgstr "Там, де українська каже «з (кимось чи чимось)», «без», «аж до» чи «як» (у ролі), естонська зазвичай додає закінчення: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> або <3>-na</3>. Кожне додається до родового відмінка: <4>sõbraga</4> — з другом, а <5>rahata</5> — без грошей."
 
 msgid "four"
 msgstr "чотири"
@@ -239,11 +245,17 @@ msgstr "чотири"
 msgid "Four endings, four meanings"
 msgstr "Чотири закінчення, чотири значення"
 
+msgid "free"
+msgstr "вільний"
+
 msgid "friend"
 msgstr "друг, подруга"
 
 msgid "friend’s, of a friend"
 msgstr "друга"
+
+msgid "From haigla, hospital."
+msgstr "Від haigla, «лікарня»."
 
 msgid "From jooma, to drink."
 msgstr "Від jooma, пити."
@@ -254,6 +266,12 @@ msgstr "Від kolm, «три»; родовий відмінок — kolme."
 msgid "From laps, child; its genitive is lapse."
 msgstr "Від laps, «дитина»; родовий відмінок — lapse."
 
+msgid "From maksma, to pay."
+msgstr "Від maksma, «платити»."
+
+msgid "From õde, sister; its genitive is õe."
+msgstr "Від õde, «сестра»; родовий — õe."
+
 msgid "From piim, milk."
 msgstr "Від piim, «молоко»."
 
@@ -262,6 +280,9 @@ msgstr "Від raha, «гроші»."
 
 msgid "From rong, train."
 msgstr "Від rong, «поїзд»."
+
+msgid "From saama. Rongis saab lugeda: you can read on the train."
+msgstr "Від saama. Rongis saab lugeda — у поїзді можна читати."
 
 msgid "From sidrun, lemon."
 msgstr "Від sidrun, «лимон»."
@@ -275,6 +296,9 @@ msgstr "Від третьої"
 msgid "From tulema, to come."
 msgstr "Від tulema, «приходити»."
 
+msgid "From vend, brother; its genitive is venna."
+msgstr "Від vend, «брат»; родовий — venna."
+
 msgid "genitive"
 msgstr "родовий відмінок"
 
@@ -283,6 +307,9 @@ msgstr "до побачення"
 
 msgid "Goodbye."
 msgstr "До побачення."
+
+msgid "have a good trip"
+msgstr "щасливої дороги"
 
 msgid "Her job: <0>-na</0>, as a doctor."
 msgstr "Її робота: <0>-na</0>, лікаркою."
@@ -299,6 +326,9 @@ msgstr "Яку каву хоче Марі?"
 msgid "How is Kati getting to Tartu?"
 msgstr "Чим Каті їде до Тарту?"
 
+msgid "how long"
+msgstr "як довго"
+
 msgid "How long can Mari stay?"
 msgstr "Скільки часу Марі може побути?"
 
@@ -306,7 +336,7 @@ msgid "How she gets to work: <0>-ga</0>, by train."
 msgstr "Чим вона їде на роботу: <0>-ga</0>, поїздом."
 
 msgid "How you travel usually takes <et>-ga</et> too: <et>bussiga</et>, by bus."
-msgstr "Те, чим їдеш, теж зазвичай бере <et>-ga</et>: <et>bussiga</et> — автобусом."
+msgstr "Транспорт теж зазвичай отримує <et>-ga</et>: <et>bussiga</et> — автобусом."
 
 msgid "I don’t have my car today."
 msgstr "Сьогодні я без машини."
@@ -326,6 +356,9 @@ msgstr "Сьогодні я на машині."
 msgid "I work until five."
 msgstr "Я працюю до п’ятої."
 
+msgid "I’ll pay"
+msgstr "я заплачу"
+
 msgid "I’m coming with a friend."
 msgstr "Я прийду з другом."
 
@@ -334,6 +367,9 @@ msgstr "Я розмовляю з мамою."
 
 msgid "in a café"
 msgstr "у кав’ярні"
+
+msgid "in a hospital"
+msgstr "у лікарні"
 
 msgid "In an order: mulle üks kohv, a coffee for me."
 msgstr "У замовленні: mulle üks kohv — мені одну каву."
@@ -382,7 +418,7 @@ msgid "Kati"
 msgstr "Каті"
 
 msgid "Kati has her car at the moment."
-msgstr "Зараз у Каті є машина."
+msgstr "Зараз Каті на машині."
 
 msgid "Kati is a doctor."
 msgstr "Каті — лікарка."
@@ -439,10 +475,10 @@ msgid "money"
 msgstr "гроші"
 
 msgid "Most of them. Check the ending in the ones you missed."
-msgstr "Більшість. Перевір закінчення там, де помилився."
+msgstr "Більшість. Перевір закінчення там, де була помилка."
 
 msgid "Most of them. Read the reason under each one you missed."
-msgstr "Більшість. Прочитай пояснення під кожним, де помилився."
+msgstr "Більшість. Прочитай пояснення під кожним реченням із помилкою."
 
 msgid "Mul on aega: I have time."
 msgstr "Mul on aega — у мене є час."
@@ -458,6 +494,9 @@ msgstr "Майже. Переслухай ті, де були помилки, і 
 
 msgid "Neither milk nor sugar"
 msgstr "Без молока й без цукру"
+
+msgid "never mind, no problem"
+msgstr "нічого страшного"
 
 msgid "No milk, but sugar"
 msgstr "Без молока, але з цукром"
@@ -476,6 +515,9 @@ msgstr "Родовий відмінок плюс закінчення: <0>suhkru
 
 msgid "On the same genitive: <0>suhkru</0>, <1>suhkruta</1>."
 msgstr "Той самий родовий відмінок плюс закінчення: <0>suhkru</0>, <1>suhkruta</1>."
+
+msgid "on the train"
+msgstr "у поїзді"
 
 msgid "Ordering at a café"
 msgstr "Замовлення в кав’ярні"
@@ -501,9 +543,6 @@ msgstr "школа"
 msgid "see you tomorrow"
 msgstr "до завтра"
 
-msgid "See you tomorrow is <et>Homseni!</et>, word for word until tomorrow."
-msgstr "«До завтра» — це <et>Homseni!</et>, дослівно «аж до завтра»."
-
 msgid "See you tomorrow."
 msgstr "До завтра."
 
@@ -511,13 +550,13 @@ msgid "She doesn’t drink milk, so <0>-ta</0>: without milk."
 msgstr "Вона не п’є молока, тож <0>-ta</0>: без молока."
 
 msgid "She works as a cook"
-msgstr "Вона працює кухарем"
+msgstr "Вона працює кухаркою"
 
 msgid "She works as a doctor"
-msgstr "Вона працює лікарем"
+msgstr "Вона працює лікаркою"
 
 msgid "She works as a teacher"
-msgstr "Вона працює вчителем"
+msgstr "Вона працює вчителькою"
 
 msgid "shop"
 msgstr "магазин"
@@ -558,11 +597,14 @@ msgstr "Чай з цукром і без лимона"
 msgid "Tea without lemon, please."
 msgstr "Чай без лимона, будь ласка."
 
+msgid "The -da infinitive of jooma."
+msgstr "Інфінітив на -da від jooma."
+
 msgid "The bus goes as far as Tartu."
 msgstr "Автобус їде аж до Тарту."
 
 msgid "The bus goes as far as the shop."
-msgstr "Автобус їде аж до крамниці."
+msgstr "Автобус їде аж до магазину."
 
 msgid "The ending goes on the genitive <0>sõbra</0>, not on <1>sõber</1>: <2>sõbraga</2>."
 msgstr "Закінчення додається до родового <0>sõbra</0>, а не до <1>sõber</1>: <2>sõbraga</2>."
@@ -571,7 +613,7 @@ msgid "The ending goes on the genitive <et>sõbra</et>: <et>sõbraga</et>."
 msgstr "Закінчення додається до родового <et>sõbra</et>: <et>sõbraga</et>."
 
 msgid "The genitive of <0>pood</0> is <1>poe</1>, so as far as the shop is <2>poeni</2>."
-msgstr "Родовий від <0>pood</0> — <1>poe</1>, тож «аж до крамниці» — це <2>poeni</2>."
+msgstr "Родовий від <0>pood</0> — <1>poe</1>, тож «аж до магазину» — це <2>poeni</2>."
 
 msgid "The genitive of <et>kokk</et> is <et>koka</et>, so <et>kokana</et>."
 msgstr "Родовий від <et>kokk</et> — <et>koka</et>, тож <et>kokana</et>."
@@ -639,11 +681,20 @@ msgstr "Коротка форма «у», від pood."
 msgid "time"
 msgstr "час"
 
+msgid "to drink"
+msgstr "пити"
+
 msgid "train"
-msgstr "потяг"
+msgstr "поїзд"
 
 msgid "Two goodbyes end in <0>-ni</0> too. <1/> is see you tomorrow, and <2/> is goodbye. Tap a line to hear it."
 msgstr "На <0>-ni</0> закінчуються й два прощання, теж із «до»: <1/> — «до завтра», а <2/> — «до побачення». Торкнися рядка, щоб його почути."
+
+msgid "Until a time is <0>-ni</0>: <1>kella viieni</1>."
+msgstr "«До» якогось часу — це <0>-ni</0>: <1>kella viieni</1>."
+
+msgid "Until a time, or as far as a place, is <et>-ni</et> on the genitive: <et>kella viieni</et>, <et>Tartuni</et>."
+msgstr "«До» якогось часу чи місця — це <et>-ni</et>, доданий до родового: <et>kella viieni</et>, <et>Tartuni</et>."
 
 msgid "Until and as far as"
 msgstr "До якого часу і докуди"
@@ -654,9 +705,6 @@ msgstr "До якогось часу чи місця: <et>kella viieni</et>"
 msgid "until five o’clock"
 msgstr "до п’ятої години"
 
-msgid "Until is <0>-ni</0>: <1>kella viieni</1>."
-msgstr "«До» — це <0>-ni</0>: <1>kella viieni</1>."
-
 msgid "until three"
 msgstr "до третьої"
 
@@ -664,13 +712,10 @@ msgid "Until three"
 msgstr "До третьої"
 
 msgid "Until when are they in Tartu? Write it as Kati says it."
-msgstr "До коли вони будуть у Тарту? Напиши так, як каже Каті."
+msgstr "До якого часу вони будуть у Тарту? Напиши так, як каже Каті."
 
 msgid "Until when: <0>-ni</0>, until four."
 msgstr "До котрої: <0>-ni</0>, до четвертої."
-
-msgid "Until, or as far as, is <et>-ni</et> on the genitive: <et>kella viieni</et>, <et>Tartuni</et>."
-msgstr "«До», у часі чи в просторі, — це <et>-ni</et> на родовому: <et>kella viieni</et>, <et>Tartuni</et>."
 
 msgid "wants"
 msgstr "хоче"
@@ -722,10 +767,10 @@ msgid "with a friend"
 msgstr "з другом"
 
 msgid "With and by: <et>sõbraga</et>, <et>bussiga</et>"
-msgstr "З кимось і чим: <et>sõbraga</et>, <et>bussiga</et>"
+msgstr "З ким і чим: <et>sõbraga</et>, <et>bussiga</et>"
 
 msgid "With is <et>-ga</et> on the genitive: <et>sõber</et>, <et>sõbra</et>, <et>sõbraga</et>."
-msgstr "«З» — це <et>-ga</et> на родовому: <et>sõber</et>, <et>sõbra</et>, <et>sõbraga</et>."
+msgstr "«З» — це <et>-ga</et>, доданий до родового: <et>sõber</et>, <et>sõbra</et>, <et>sõbraga</et>."
 
 msgid "with lemon"
 msgstr "з лимоном"
@@ -738,6 +783,12 @@ msgstr "З молоком"
 
 msgid "with Mum"
 msgstr "з мамою"
+
+msgid "with my brother"
+msgstr "з братом"
+
+msgid "with my sister"
+msgstr "із сестрою"
 
 msgid "With or without"
 msgstr "З чи без"
@@ -758,7 +809,7 @@ msgid "With the clock from lesson {clock} it means until: <0/>, until five. Lear
 msgstr "Коли йдеться про години (урок {clock}), воно означає «до котрої»: <0/> — до п’ятої. Поки запам’ятай це як фразу: «від» і «до» з годинами розбирає урок {times}."
 
 msgid "With whom is <et>-ga</et> on <et>kelle</et>, whose: <et>kellega</et>."
-msgstr "«З ким» — це <et>-ga</et> на <et>kelle</et>, «чий»: <et>kellega</et>."
+msgstr "«З ким» — це <et>-ga</et>, доданий до <et>kelle</et>, «чий»: <et>kellega</et>."
 
 msgid "with whom?"
 msgstr "з ким?"
@@ -777,7 +828,7 @@ msgid "Without is <0>-ta</0>: <1>piimata</1>. <2>Piimaga</2> is with milk."
 msgstr "«Без» — це <0>-ta</0>: <1>piimata</1>. <2>Piimaga</2> — з молоком."
 
 msgid "Without is <et>-ta</et> on the genitive: <et>piimata</et>, without milk."
-msgstr "«Без» — це <et>-ta</et> на родовому: <et>piimata</et> — без молока."
+msgstr "«Без» — це <et>-ta</et>, доданий до родового: <et>piimata</et> — без молока."
 
 msgid "without lemon"
 msgstr "без лимона"
@@ -823,13 +874,16 @@ msgid "Works as is usually <0>-na</0>: <1>töötab õpetajana</1>."
 msgstr "«Працює кимось» — зазвичай <0>-na</0>: <1>töötab õpetajana</1>."
 
 msgid "Works as is usually <et>-na</et> on the genitive: <et>töötab arstina</et>."
-msgstr "«Працює кимось» — зазвичай <et>-na</et> на родовому: <et>töötab arstina</et>."
+msgstr "«Працює кимось» — зазвичай <et>-na</et>, доданий до родового: <et>töötab arstina</et>."
 
 msgid "Write each sentence in Estonian. Find the word that needs an ending, then put the ending on its genitive."
 msgstr "Напиши кожне речення естонською. Знайди слово, якому потрібне закінчення, і додай його до родового."
 
 msgid "Write it in Estonian"
 msgstr "Напиши естонською"
+
+msgid "you can, one can"
+msgstr "можна"
 
 msgid "You’ll also hear <0/> before the word: <1/>, without sugar. <2>Ilma</2> stresses the without, and the ending stays."
 msgstr "Ще можна почути <0/> перед словом: <1/> — без цукру. <2>Ilma</2> підсилює «без», а закінчення лишається."

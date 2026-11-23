@@ -7,6 +7,9 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
+msgid "<0/> can only mean I am, so <1/> can go. <2/> means both he or she is and they are, so <3/> or <4/> usually has to stay."
+msgstr "<0/> может значить только «я есть», так что <1/> можно опустить. <2/> значит и «он или она есть», и «они есть», поэтому <3/> или <4/> обычно должно остаться."
+
 msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 msgstr "<0/> не имеет окончания и подходит и для «он или она», и для «они». Поэтому <1/> — неправильный глагол: у других глаголов окончание есть и здесь, об этом — в уроке {regularVerbs}."
 
@@ -16,38 +19,97 @@ msgstr "<0/> значит и «он», и «она»: у эстонских ме
 msgid "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> is you are. Tap an ending."
 msgstr "<0/> значит «быть». Его окончание меняется по лицам: <1/> — «я есть», <2/> — «ты есть». Нажми на окончание."
 
-msgid "<0>On</0> is both he or she is and they are. Only the pronoun tells them apart."
-msgstr "<0>On</0> — и «он или она есть», и «они есть». Различить их можно только по местоимению."
+msgid "<0>Olen, oled, oleme, olete</0>: the ending says who."
+msgstr "<0>Olen, oled, oleme, olete</0>: окончание уже показывает, кто это."
+
+msgid "<0>On</0> has no ending, so here only <1>ta</1> or <2>nad</2> says who."
+msgstr "У <0>on</0> нет окончания, поэтому здесь о ком речь, показывает только <1>ta</1> или <2>nad</2>."
+
+msgid "<0>On</0> is both he or she is and they are. Usually only the pronoun tells them apart."
+msgstr "<0>On</0> — и «он или она есть», и «они есть». Различить их обычно можно только по местоимению."
 
 msgid "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and polite you to one person."
 msgstr "<0>Ta</0> — и «он», и «она». <1>Te</1> — «вы» нескольким людям и вежливое «Вы» одному."
 
-msgid "10 minutes"
-msgstr "10 минут"
+#. placeholder {0}: capital(long)
+msgid "<et>{0} {verb}</et>; the short form is <et>{short} {verb}</et>."
+msgstr "<et>{0} {verb}</et>; краткая форма — <et>{short} {verb}</et>."
 
-msgid "2 quizzes"
-msgstr "2 теста"
+#. placeholder {0}: capital(pronoun)
+msgid "<et>{0}</et> takes <et>{verb}</et>."
+msgstr "<et>{0}</et>: форма <et>{verb}</et>."
+
+msgid "<et>Oled</et> can only be you are, to one person."
+msgstr "<et>Oled</et> — это только «ты есть»."
+
+msgid "<et>Oleme</et> can only be we are."
+msgstr "<et>Oleme</et> — это только «мы есть»."
+
+msgid "<et>Olen</et> can only be I am."
+msgstr "<et>Olen</et> — это только «я есть»."
+
+msgid "<et>Olete</et> can only be you are, to more than one, or polite you are."
+msgstr "<et>Olete</et> — это только «вы есть», нескольким людям или вежливо."
+
+msgid "<et>On</et> has no ending, so <et>ta</et> usually stays."
+msgstr "У <et>on</et> нет окончания, поэтому <et>ta</et> обычно остаётся."
+
+msgid "<et>On</et> with <et>nad</et>: they are."
+msgstr "<et>On</et> с <et>nad</et>: «они есть»."
+
+msgid "<et>On</et> with <et>ta</et>: he or she is."
+msgstr "<et>On</et> с <et>ta</et>: «он или она есть»."
+
+msgid "<et>Te olete</et>: you are, to more than one; <et>õpetajad</et> is more than one teacher."
+msgstr "<et>Te olete</et>: «вы есть», нескольким людям; <et>õpetajad</et> — несколько учителей."
+
+msgid "15 minutes"
+msgstr "15 минут"
+
+msgid "5 quizzes, a sort and a passage"
+msgstr "5 тестов, сортировка и текст"
 
 msgid "All of them. You can hear who it’s about."
 msgstr "Все верно. Ты слышишь, о ком речь."
 
+msgid "All six sentences, each with the right form."
+msgstr "Все шесть предложений, и в каждом верная форма."
+
+msgid "All six, each with the right form of <0>olema</0>."
+msgstr "Все шесть, и каждый раз верная форма <0>olema</0>."
+
+msgid "All six, every word in place."
+msgstr "Все шесть, каждое слово на месте."
+
 msgid "All six. Every ending was right."
 msgstr "Все шесть. Каждое окончание верное."
+
+msgid "and"
+msgstr "и"
 
 msgid "Answers"
 msgstr "Варианты ответа"
 
-msgid "Because the ending already says who, the pronoun can go. Both lines below mean I’m Mari. A sentence can drop the pronoun, but not the verb."
-msgstr "Окончание уже говорит, кто это, поэтому местоимение можно опустить. Обе строки ниже значат «Я Mari». По-русски в настоящем времени опускают «есть», а в эстонском предложении наоборот: без местоимения можно, без глагола — нет."
+msgid "As the subject, each pronoun has two forms. Usually say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
+msgstr "В роли подлежащего у каждого местоимения две формы. Обычно говори краткую, <0>ma</0>, а полную, <1>mina</1>, оставь для выделения."
 
-msgid "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
-msgstr "У каждого местоимения две формы. Говори краткую, <0>ma</0>, а полную, <1>mina</1>, оставь для выделения."
+msgid "at home"
+msgstr "дома"
+
+msgid "Because the ending already says who, the pronoun can go. Both lines below mean I’m Mari. A sentence can drop the pronoun, but usually not the verb."
+msgstr "Окончание уже говорит, кто это, поэтому местоимение можно опустить. Обе строки ниже значат «Я Mari». По-русски в настоящем времени опускают «есть», а в эстонском предложении наоборот: без местоимения можно, без глагола — обычно нет."
+
+msgid "Can the pronoun go?"
+msgstr "Можно ли опустить местоимение?"
+
+msgid "Each round gives a pronoun, <0/> and a word. Change <1>olema</1> to the form for that pronoun and write the sentence: <2>ma · olema · valmis</2> is <3/>."
+msgstr "В каждом раунде есть местоимение, <0/> и слово. Поставь <1>olema</1> в форму для этого местоимения и напиши предложение: <2>ma · olema · valmis</2> — это <3/>."
 
 msgid "Endings of olema"
 msgstr "Окончания olema"
 
-msgid "Estonian has six words for people, and each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you’ll hear most. Tap any word."
-msgstr "В эстонском шесть личных местоимений, и у каждого есть полная и краткая форма с одним значением. <0/> и <1/> — это «я». Краткую, выделенную цветом, ты будешь слышать чаще всего. Нажми на любое слово."
+msgid "Estonian has six words for people, and as the subject each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you’ll hear most. Tap any word."
+msgstr "В эстонском шесть личных местоимений, и в роли подлежащего у каждого есть полная и краткая форма с одним значением. <0/> и <1/> — это «я». Краткую, выделенную цветом, ты будешь слышать чаще всего. Нажми на любое слово."
 
 msgid "Fill the ending"
 msgstr "Вставь окончание"
@@ -55,6 +117,9 @@ msgstr "Вставь окончание"
 msgctxt "pronoun form"
 msgid "Form"
 msgstr "Форма"
+
+msgid "friends"
+msgstr "друзья"
 
 msgid "Go back to the endings above, then try again."
 msgstr "Вернись к окончаниям выше и попробуй ещё раз."
@@ -74,8 +139,20 @@ msgstr "Он устал или она устала."
 msgid "he or she is; they are"
 msgstr "он или она есть; они есть"
 
+msgid "He’s a teacher."
+msgstr "Он учитель."
+
+msgid "He’s at home."
+msgstr "Он дома."
+
+msgid "He’s tired."
+msgstr "Он устал."
+
 msgid "Hear a sentence and pick who it’s about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
 msgstr "Послушай предложение и выбери, о ком оно. Где местоимения нет, слушай конец глагола. С <0/> отличить <1/> от <2/> можно только по местоимению."
+
+msgid "Hear a sentence and write it. Some have no pronoun, so write only what you hear."
+msgstr "Послушай предложение и напиши его. В некоторых нет местоимения, так что пиши только то, что слышишь."
 
 msgid "I"
 msgstr "я"
@@ -95,14 +172,26 @@ msgstr "Я Mari."
 msgid "I’m ready."
 msgstr "Я готов (готова)."
 
+msgid "Liis and Peeter are friends."
+msgstr "Лийс и Пеэтер — друзья."
+
+msgid "Liis says who she is, who Peeter is, and where Mari and Jaan are. Listen for the pronoun and the form of <0/>."
+msgstr "Лийс рассказывает, кто она, кто Пеэтер и где Мари и Яан. Слушай местоимение и форму <0/>."
+
 msgid "Listen first."
 msgstr "Сначала послушай."
 
 msgid "Listen to the end of the verb. Try the table above, then come back."
 msgstr "Слушай конец глагола. Поиграй со столом выше и возвращайся."
 
+msgid "Listen: Liis introduces people"
+msgstr "Аудирование: Лийс рассказывает, кто есть кто"
+
 msgid "Listening only, no microphone"
 msgstr "Только на слух, без микрофона"
+
+msgid "Listening: Liis introduces people"
+msgstr "На слух: Лийс рассказывает, кто есть кто"
 
 msgctxt "pronoun form"
 msgid "Long"
@@ -111,17 +200,29 @@ msgstr "Полная"
 msgid "Long forms, because the two people are set side by side."
 msgstr "Полные формы, потому что двух людей противопоставляют."
 
+msgid "Make a sentence"
+msgstr "Составь предложение"
+
+msgid "Mari and Jaan are at school."
+msgstr "Мари и Яан в школе."
+
 msgid "More than one"
 msgstr "Несколько человек"
 
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Почти все. Переслушай ещё раз те, где были ошибки."
 
+msgid "Nearly. Check the form of <0>olema</0> in the ones you missed."
+msgstr "Почти. Проверь форму <0>olema</0> там, где была ошибка."
+
 msgid "Nearly. Tap the endings above once more."
 msgstr "Почти. Ещё раз понажимай окончания выше."
 
 msgid "No ending. Ta on and nad on: he or she is, they are."
 msgstr "Без окончания. Ta on и nad on: «он или она есть», «они есть»."
+
+msgid "Now type the form of <0/> for each pronoun. A long pronoun takes the same form as its short one."
+msgstr "Теперь напиши форму <0/> для каждого местоимения. С полным местоимением у <0/> та же форма, что и с кратким."
 
 msgid "Olema, to be"
 msgstr "Olema, быть"
@@ -144,14 +245,32 @@ msgstr "Воспроизвести {word}"
 msgid "Pronouns"
 msgstr "Местоимения"
 
+msgid "Put each sentence where it belongs. Tap a sentence to hear it."
+msgstr "Разложи предложения по группам. Нажми на предложение, чтобы его послушать."
+
+msgid "ready"
+msgstr "готов"
+
 msgid "Round the table"
 msgstr "За столом"
 
 msgid "Say the long form when the pronoun carries the stress: when it stands alone, or when you set one person against another. <0/>"
 msgstr "Полную форму говорят, когда местоимение под ударением: когда оно стоит само по себе или когда одного человека противопоставляют другому. <0/>"
 
-msgid "Setting two people side by side takes the long forms: <0/>"
-msgstr "Когда двух людей противопоставляют, говорят полные формы: <0/>"
+msgid "Sentences with <et>olema</et>"
+msgstr "Предложения с <et>olema</et>"
+
+msgid "Setting two people side by side usually takes the long forms: <0/>"
+msgstr "Когда двух людей противопоставляют, обычно говорят полные формы: <0/>"
+
+msgid "She’s a teacher."
+msgstr "Она учительница."
+
+msgid "She’s at home."
+msgstr "Она дома."
+
+msgid "She’s tired."
+msgstr "Она устала."
 
 msgctxt "pronoun form"
 msgid "Short"
@@ -178,8 +297,8 @@ msgstr "Сокращение от tema."
 msgid "Six pronouns, two forms"
 msgstr "Шесть местоимений, две формы"
 
-msgid "Six words for people, each with a long and a short form, and olema, to be, whose ending tells you who."
-msgstr "Шесть личных местоимений, у каждого полная и краткая форма, и глагол olema, «быть», по окончанию которого понятно, о ком речь."
+msgid "Six words for people, each with a long and a short form, and olema, to be, whose ending usually tells you who."
+msgstr "Шесть личных местоимений, у каждого полная и краткая форма, и глагол olema, «быть», по окончанию которого обычно понятно, о ком речь."
 
 msgid "Someone else, a man or a woman: one word for both."
 msgstr "Кто-то другой, мужчина или женщина: одно слово для обоих."
@@ -189,6 +308,12 @@ msgstr "Нажми на слово или на человека"
 
 msgid "Tap an ending"
 msgstr "Нажми на окончание"
+
+msgid "teacher"
+msgstr "учитель"
+
+msgid "teachers"
+msgstr "учителя"
 
 msgid "The ending for ma, I."
 msgstr "Окончание для ma, «я»."
@@ -202,14 +327,23 @@ msgstr "Окончание для sa, «ты»."
 msgid "The ending for te: you, to more than one; polite you."
 msgstr "Окончание для te: «вы» нескольким людям и вежливое «Вы»."
 
-msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
-msgstr "Окончание говорит, кто это, поэтому местоимение можно опустить: <0>Olen Mari.</0>"
+msgid "The ending says who, so the pronoun can go."
+msgstr "Окончание говорит, кто это, поэтому местоимение можно опустить."
+
+msgid "The forms of <et>olema</et>"
+msgstr "Формы <et>olema</et>"
 
 msgid "The forms of olema, to be: <0>olen, oled, on, oleme, olete, on</0>."
 msgstr "Формы olema, «быть»: <0>olen, oled, on, oleme, olete, on</0>."
 
 msgid "The people you’re talking to, or one person, politely."
 msgstr "Люди, с которыми ты говоришь, или один человек, если вежливо."
+
+msgid "The pronoun can go"
+msgstr "Местоимение можно опустить"
+
+msgid "The pronoun usually stays"
+msgstr "Местоимение обычно остаётся"
 
 msgid "The short form is ma."
 msgstr "Краткая форма: ma."
@@ -244,8 +378,20 @@ msgstr "Они дома."
 msgid "They’re tired."
 msgstr "Они устали."
 
+msgid "tired"
+msgstr "уставший"
+
 msgid "to be"
 msgstr "быть"
+
+msgid "Try again, and tap Slower before you write each sentence."
+msgstr "Попробуй ещё раз и перед каждым предложением нажми «Медленнее»."
+
+msgid "Type the form"
+msgstr "Напиши форму"
+
+msgid "Type the forms above once more, then try again."
+msgstr "Ещё раз напиши формы выше, а потом попробуй снова."
 
 msgid "we"
 msgstr "мы"
@@ -259,14 +405,38 @@ msgstr "Мы друзья."
 msgid "We’re ready."
 msgstr "Мы готовы."
 
+msgid "What does Liis say about herself?"
+msgstr "Что Лийс говорит о себе?"
+
+msgid "What does Liis say about Peeter?"
+msgstr "Что Лийс говорит о Пеэтере?"
+
+msgid "When the pronoun can go"
+msgstr "Когда местоимение можно опустить"
+
+msgid "Where the ending tells who, the pronoun can go: <0>Olen Mari.</0>"
+msgstr "Когда окончание говорит, кто это, местоимение можно опустить: <0>Olen Mari.</0>"
+
 msgid "Which ending?"
 msgstr "Какое окончание?"
 
 msgid "Who is it about?"
 msgstr "О ком это?"
 
+msgid "Who the sentence is about"
+msgstr "О ком предложение"
+
 msgid "Who? Me!"
 msgstr "Кто? Я!"
+
+msgid "without the pronoun"
+msgstr "без местоимения"
+
+msgid "Write the sentence"
+msgstr "Напиши предложение"
+
+msgid "Write what you hear"
+msgstr "Напиши, что слышишь"
 
 msgid "you"
 msgstr "ты"

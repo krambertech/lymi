@@ -51,15 +51,15 @@ export const STAGES: readonly Stage[] = [
         name: msg`Pronunciation`,
         title: msg`Estonian pronunciation`,
         et: "Hääldus",
-        minutes: 10,
-        blurb: msg`A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud.`,
+        minutes: 15,
+        blurb: msg`A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud.`,
       },
       {
         slug: "mina-sina-tema",
         name: msg`Personal pronouns and “to be”`,
         title: msg`Estonian personal pronouns and “to be”`,
         et: "Mina, sina, tema",
-        minutes: 10,
+        minutes: 15,
         blurb: msg`A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud.`,
       },
       {
@@ -67,7 +67,7 @@ export const STAGES: readonly Stage[] = [
         name: msg`Present tense`,
         title: msg`Estonian present tense`,
         et: "Ma loen",
-        minutes: 10,
+        minutes: 15,
         blurb: msg`A free lesson on Estonian verbs in the present tense: the -ma infinitive, the stem, and the six endings -n, -d, -b, -me, -te and -vad on ten everyday verbs. Every sentence is read aloud.`,
       },
       {
@@ -75,7 +75,7 @@ export const STAGES: readonly Stage[] = [
         name: msg`Negation`,
         title: msg`How to say no in Estonian`,
         et: "Ei ole",
-        minutes: 8,
+        minutes: 15,
         blurb: msg`A free lesson on Estonian negation in the present tense: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud.`,
       },
       {
@@ -83,7 +83,7 @@ export const STAGES: readonly Stage[] = [
         name: msg`Questions`,
         title: msg`Asking questions in Estonian`,
         et: "Kas? Mis? Kus?",
-        minutes: 10,
+        minutes: 15,
         blurb: msg`A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and three everyday questions to learn whole. Every sentence is read aloud.`,
       },
       {
@@ -91,8 +91,8 @@ export const STAGES: readonly Stage[] = [
         name: msg`Saying where: -s and -l`,
         title: msg`In, on and at in Estonian: -s and -l`,
         et: "Tallinnas, Tartus",
-        minutes: 8,
-        blurb: msg`A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud.`,
+        minutes: 15,
+        blurb: msg`A free lesson on saying where you are in Estonian: -s, usually for in (Tallinnas, koolis), -l, usually for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud.`,
       },
       {
         slug: "tutvumine",

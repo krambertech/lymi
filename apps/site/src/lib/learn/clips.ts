@@ -3123,6 +3123,9 @@ export const CMP_TRANSLATE = [
       "Minu tuba on sama suur kui sinu oma.",
       "Mu tuba on sama suur kui su oma.",
       "Minu tuba on sama suur nagu sinu tuba.",
+      "Mu tuba on sama suur nagu su tuba.",
+      "Minu tuba on sama suur nagu sinu oma.",
+      "Mu tuba on sama suur nagu su oma.",
     ],
   },
   {
@@ -3145,8 +3148,8 @@ export const CMP_FIX = [
   { id: "fix-parem", wrong: "Kohv on heam kui tee.", answers: ["Kohv on parem kui tee."] },
   {
     id: "fix-vaiksem",
-    wrong: "Tartu on väikesem kui Tallinn.",
-    answers: ["Tartu on väiksem kui Tallinn."],
+    wrong: "Tartu on väikem kui Tallinn.",
+    answers: ["Tartu on väiksem kui Tallinn.", "Tartu on väikesem kui Tallinn."],
   },
   {
     id: "fix-koige",

@@ -322,7 +322,7 @@ function useContent() {
         ask: t`Where does Jaan’s brother work?`,
         options: [
           { id: "cafe", label: t`In a new café` },
-          { id: "shop", label: t`In a shop` },
+          { id: "shop", label: t`In a big shop` },
           { id: "market", label: t`At the market` },
         ],
         answer: "cafe",

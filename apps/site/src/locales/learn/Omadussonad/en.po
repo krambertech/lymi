@@ -201,6 +201,9 @@ msgstr "In a big car, with a big car"
 msgid "in a big house"
 msgstr "in a big house"
 
+msgid "In a big shop"
+msgstr "In a big shop"
+
 msgid "in a good café"
 msgstr "in a good café"
 
@@ -212,9 +215,6 @@ msgstr "In a new café"
 
 msgid "in a new house"
 msgstr "in a new house"
-
-msgid "In a shop"
-msgstr "In a shop"
 
 msgid "In a shop: both words take <0>-s</0>, <1>väikeses poes</1>."
 msgstr "In a shop: both words take <0>-s</0>, <1>väikeses poes</1>."

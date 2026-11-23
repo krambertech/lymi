@@ -201,6 +201,9 @@ msgstr "В большой машине, на большой машине"
 msgid "in a big house"
 msgstr "в большом доме"
 
+msgid "In a big shop"
+msgstr "В большом магазине"
+
 msgid "in a good café"
 msgstr "в хорошем кафе"
 
@@ -212,9 +215,6 @@ msgstr "В новом кафе"
 
 msgid "in a new house"
 msgstr "в новом доме"
-
-msgid "In a shop"
-msgstr "В магазине"
 
 msgid "In a shop: both words take <0>-s</0>, <1>väikeses poes</1>."
 msgstr "В магазине: оба слова получают <0>-s</0>, <1>väikeses poes</1>."
@@ -361,7 +361,7 @@ msgid "Pick a phrase, then tap its forms. The question word beside each form is 
 msgstr "Выбери словосочетание и нажми на его формы. Вопросительное слово рядом с каждой формой — это вопрос, на который отвечает падеж."
 
 msgid "Pick the phrase the cue asks for."
-msgstr "Выбери словосочетание, которое требует подсказка."
+msgstr "Выбери словосочетание по подсказке."
 
 msgid "Read What to remember at the end, then try again."
 msgstr "Прочитай «Что запомнить» в конце и попробуй снова."

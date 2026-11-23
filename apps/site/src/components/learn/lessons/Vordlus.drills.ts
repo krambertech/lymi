@@ -8,14 +8,17 @@ const ST = msg`Without <et>kui</et>, the thing you compare with takes <et>-st</e
 const MOST = msg`For the biggest, put <et>kõige</et> before the comparative: <et>kõige suurem</et>.`;
 const SAME = msg`As big as is <et>sama suur kui</et>.`;
 const GOOD = msg`Good, better, best: <et>hea</et>, <et>parem</et>, <et>kõige parem</et> or <et>parim</et>.`;
-const SMALL = msg`The genitive <et>väikese</et> drops an e before <et>-m</et>: <et>väiksem</et>.`;
+const SMALL = msg`The <et>-m</et> goes on the genitive <et>väikese</et>, which usually drops an e: <et>väiksem</et>.`;
 const WITH_ST = msg`with -st, without kui`;
 
 export const DRILLS: DrillBank = {
   rules: {
     build: { label: msg`Bigger: <et>suurem</et>, <et>uuem</et>`, section: "bigger" },
     than: { label: msg`Than: <et>kui</et> or <et>-st</et>`, section: "than" },
-    most: { label: msg`The biggest: <et>kõige suurem</et>`, section: "most" },
+    most: {
+      label: msg`The biggest, as big as: <et>kõige suurem</et>, <et>sama suur kui</et>`,
+      section: "most",
+    },
     own: { label: msg`Better, smaller: <et>parem</et>, <et>väiksem</et>`, section: "own-words" },
   },
   items: [
@@ -73,6 +76,11 @@ export const DRILLS: DrillBank = {
         "Minu kass on vanem kui su kass.",
         "Minu kass on vanem kui sinu oma.",
         "Mu kass on su kassist vanem.",
+        "Minu kass on su kassist vanem.",
+        "Mu kass on sinu kassist vanem.",
+        "Mu kass on vanem kui su oma.",
+        "Mu kass on vanem kui sinu oma.",
+        "Minu kass on vanem kui su oma.",
       ],
       say: "Minu kass on vanem kui sinu kass.",
       explain: VANEM,
@@ -173,6 +181,8 @@ export const DRILLS: DrillBank = {
         "Tallinn on Eesti suurim linn.",
         "Tallinn on kõige suurem linn Eestis.",
         "Tallinn on Eestis kõige suurem linn.",
+        "Tallinn on Eestis suurim linn.",
+        "Tallinn on suurim linn Eestis.",
       ],
       say: "Tallinn on Eesti kõige suurem linn.",
       explain: MOST,
@@ -199,7 +209,7 @@ export const DRILLS: DrillBank = {
       id: "most-vanem",
       rule: "most",
       prompt: msg`Jaan is the oldest.`,
-      answers: ["Jaan on kõige vanem."],
+      answers: ["Jaan on kõige vanem.", "Jaan on vanim."],
       say: "Jaan on kõige vanem.",
       explain: MOST,
     },
@@ -214,6 +224,9 @@ export const DRILLS: DrillBank = {
         "Minu tuba on sama suur kui sinu oma.",
         "Mu tuba on sama suur kui su oma.",
         "Minu tuba on sama suur nagu sinu tuba.",
+        "Mu tuba on sama suur nagu su tuba.",
+        "Minu tuba on sama suur nagu sinu oma.",
+        "Mu tuba on sama suur nagu su oma.",
       ],
       say: "Minu tuba on sama suur kui sinu tuba.",
       explain: SAME,
@@ -248,7 +261,7 @@ export const DRILLS: DrillBank = {
       base: "väike",
       gloss: msg`small`,
       cue: { et: "Tartu on … kui Tallinn." },
-      answers: ["väiksem"],
+      answers: ["väiksem", "väikesem"],
       say: "Tartu on väiksem kui Tallinn.",
       explain: SMALL,
     },
@@ -270,8 +283,8 @@ export const DRILLS: DrillBank = {
       kind: "fix",
       id: "own-fix-vaiksem",
       rule: "own",
-      wrong: "Minu tuba on väikesem kui sinu tuba.",
-      answers: ["Minu tuba on väiksem kui sinu tuba."],
+      wrong: "Minu tuba on väikem kui sinu tuba.",
+      answers: ["Minu tuba on väiksem kui sinu tuba.", "Minu tuba on väikesem kui sinu tuba."],
       say: "Minu tuba on väiksem kui sinu tuba.",
       explain: SMALL,
     },

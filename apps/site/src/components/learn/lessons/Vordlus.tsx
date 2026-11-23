@@ -166,8 +166,8 @@ function useContent() {
       ),
       "fix-vaiksem": (
         <Trans>
-          The genitive <span lang="et">väikese</span> drops an e before <span lang="et">-m</span>:{" "}
-          <span lang="et">väiksem</span>.
+          The <span lang="et">-m</span> goes on the genitive <span lang="et">väikese</span>, which
+          usually drops an e: <span lang="et">väiksem</span>.
         </Trans>
       ),
       "fix-koige": (
@@ -326,7 +326,7 @@ export function VordlusLesson() {
         base,
         gloss: i18n._(MAKE_GLOSS[id]),
         cue: t`comparative`,
-        answers: [answer],
+        answers: id === "vaiksem" ? [answer, "väikesem"] : [answer],
         src: src(answer),
         pair: [kind, id] as const,
         explain:
@@ -336,8 +336,8 @@ export function VordlusLesson() {
             </Trans>
           ) : kind === "drop" ? (
             <Trans>
-              The genitive <span lang="et">väikese</span> drops an e before{" "}
-              <span lang="et">-m</span>: <span lang="et">väiksem</span>.
+              The <span lang="et">-m</span> goes on the genitive <span lang="et">väikese</span>,
+              which usually drops an e: <span lang="et">väiksem</span>.
             </Trans>
           ) : kind === "three" ? (
             <Trans>
@@ -416,9 +416,9 @@ export function VordlusLesson() {
           genitive’s a usually becomes e: <b lang="et">vana, vanem</b>.
         </Trans>,
         <Trans key="2">
-          Than is <b lang="et">kui</b>, or the thing you compare with, with <b lang="et">-st</b>,
-          before the comparative: <b lang="et">suurem kui Tartu</b>, <b lang="et">Tartust suurem</b>
-          .
+          Than is <b lang="et">kui</b>: <b lang="et">suurem kui Tartu</b>. Or leave out{" "}
+          <b lang="et">kui</b> and give the thing you compare with <b lang="et">-st</b>, before the
+          comparative: <b lang="et">Tartust suurem</b>.
         </Trans>,
         <Trans key="3">
           For the biggest, put <b lang="et">kõige</b> before the comparative:{" "}
@@ -456,7 +456,7 @@ export function VordlusLesson() {
                   <Trans>
                     Some words change more. Two common ones: good, <span lang="et">hea</span>,
                     becomes <Word w="parem" />, a word of its own, and small,{" "}
-                    <span lang="et">väike</span>, drops an e from its genitive{" "}
+                    <span lang="et">väike</span>, usually drops an e from its genitive{" "}
                     <span lang="et">väikese</span>: <span lang="et">väiksem</span>. Pick a word and
                     tap its forms.
                   </Trans>

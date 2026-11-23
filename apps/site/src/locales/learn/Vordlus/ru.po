@@ -289,8 +289,8 @@ msgstr "маленький"
 msgid "smaller"
 msgstr "меньше"
 
-msgid "Some words change more. Two common ones: good, <0>hea</0>, becomes <1/>, a word of its own, and small, <2>väike</2>, drops an e from its genitive <3>väikese</3>: <4>väiksem</4>. Pick a word and tap its forms."
-msgstr "Некоторые слова меняются сильнее. Вот два частых: «хороший», <0>hea</0>, становится <1/> — это отдельное слово, а «маленький», <2>väike</2>, теряет e из родительного <3>väikese</3>: <4>väiksem</4>. Выбери слово и нажми на его формы."
+msgid "Some words change more. Two common ones: good, <0>hea</0>, becomes <1/>, a word of its own, and small, <2>väike</2>, usually drops an e from its genitive <3>väikese</3>: <4>väiksem</4>. Pick a word and tap its forms."
+msgstr "Некоторые слова меняются сильнее. Вот два частых: «хороший», <0>hea</0>, становится <1/> — это отдельное слово, а «маленький», <2>väike</2>, обычно теряет e из родительного <3>väikese</3>: <4>väiksem</4>. Выбери слово и нажми на его формы."
 
 msgid "Tallinn is a big town."
 msgstr "Таллин — большой город."
@@ -316,8 +316,8 @@ msgstr "Тарту старше Таллина."
 msgid "Tartu is smaller than Tallinn."
 msgstr "Тарту меньше Таллина."
 
-msgid "Than is <0>kui</0>, or the thing you compare with, with <1>-st</1>, before the comparative: <2>suurem kui Tartu</2>, <3>Tartust suurem</3>."
-msgstr "«Чем» — это <0>kui</0>, или то, с чем сравниваешь, с <1>-st</1> перед сравнительной степенью: <2>suurem kui Tartu</2>, <3>Tartust suurem</3>."
+msgid "Than is <0>kui</0>: <1>suurem kui Tartu</1>. Or leave out <2>kui</2> and give the thing you compare with <3>-st</3>, before the comparative: <4>Tartust suurem</4>."
+msgstr "«Чем» — это <0>kui</0>: <1>suurem kui Tartu</1>. Или убери <2>kui</2>, добавь к тому, с чем сравниваешь, <3>-st</3> и поставь его перед сравнительной степенью: <4>Tartust suurem</4>."
 
 msgid "Than is <0>kui</0>. <1>Nagu</1> means like."
 msgstr "«Чем» — это <0>kui</0>. <1>Nagu</1> значит «как, словно»."
@@ -337,6 +337,12 @@ msgstr "Чем: <et>kui</et> или <et>-st</et>"
 msgid "Than: two ways"
 msgstr "Чем: два способа"
 
+msgid "The <0>-m</0> goes on the genitive <1>väikese</1>, which usually drops an e: <2>väiksem</2>."
+msgstr "<0>-m</0> добавляется к родительному <1>väikese</1>, который обычно теряет e: <2>väiksem</2>."
+
+msgid "The <et>-m</et> goes on the genitive <et>väikese</et>, which usually drops an e: <et>väiksem</et>."
+msgstr "<et>-m</et> добавляется к родительному <et>väikese</et>, который обычно теряет e: <et>väiksem</et>."
+
 msgid "the best"
 msgstr "самый лучший"
 
@@ -346,17 +352,11 @@ msgstr "самый большой"
 msgid "The biggest"
 msgstr "Самый большой"
 
-msgid "The biggest: <et>kõige suurem</et>"
-msgstr "Самый большой: <et>kõige suurem</et>"
+msgid "The biggest, as big as: <et>kõige suurem</et>, <et>sama suur kui</et>"
+msgstr "Самый большой, такой же: <et>kõige suurem</et>, <et>sama suur kui</et>"
 
 msgid "The comparative of hea, good."
 msgstr "Сравнительная степень от hea, «хороший»."
-
-msgid "The genitive <0>väikese</0> drops an e before <1>-m</1>: <2>väiksem</2>."
-msgstr "Родительный <0>väikese</0> перед <1>-m</1> теряет e: <2>väiksem</2>."
-
-msgid "The genitive <et>väikese</et> drops an e before <et>-m</et>: <et>väiksem</et>."
-msgstr "Родительный <et>väikese</et> перед <et>-m</et> теряет e: <et>väiksem</et>."
 
 msgid "The genitive of <et>kallis</et> is <et>kalli</et>, so more expensive is <et>kallim</et>."
 msgstr "Родительный от <et>kallis</et> — <et>kalli</et>, так что «дороже» — <et>kallim</et>."

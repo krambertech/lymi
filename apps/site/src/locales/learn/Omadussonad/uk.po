@@ -201,6 +201,9 @@ msgstr "У великій машині, великою машиною"
 msgid "in a big house"
 msgstr "у великому будинку"
 
+msgid "In a big shop"
+msgstr "У великому магазині"
+
 msgid "in a good café"
 msgstr "у хорошій кав’ярні"
 
@@ -212,9 +215,6 @@ msgstr "У новій кав’ярні"
 
 msgid "in a new house"
 msgstr "у новому будинку"
-
-msgid "In a shop"
-msgstr "У магазині"
 
 msgid "In a shop: both words take <0>-s</0>, <1>väikeses poes</1>."
 msgstr "У магазині: обидва слова отримують <0>-s</0>, <1>väikeses poes</1>."

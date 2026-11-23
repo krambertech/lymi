@@ -3605,7 +3605,14 @@ export const OBJECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Mina ei ostnud piletit.",
     "Ei ostnud piletit.",
   ],
-  "Ma ootan sõpra.": ["Ma ootan sõpra.", "Mina ootan sõpra.", "Ootan sõpra."],
+  "Ma ootan sõpra.": [
+    "Ma ootan sõpra.",
+    "Mina ootan sõpra.",
+    "Ootan sõpra.",
+    "Ma ootan sõbrannat.",
+    "Mina ootan sõbrannat.",
+    "Ootan sõbrannat.",
+  ],
   "Ma otsin võtit.": [
     "Ma otsin võtit.",
     "Ma otsin oma võtit.",
@@ -3637,6 +3644,8 @@ export const OBJECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Söön supi ära.",
     "Mina söön supi ära.",
     "Ma söön kogu supi ära.",
+    "Söön kogu supi ära.",
+    "Mina söön kogu supi ära.",
   ],
   "Ma ei teinud tööd.": [
     "Ma ei teinud tööd.",
@@ -3654,7 +3663,12 @@ export const OBJECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Ärge jooge vett ära!",
   ],
   "Ära osta leiba!": ["Ära osta leiba!", "Ärge ostke leiba!"],
-  "Loe raamat läbi!": ["Loe raamat läbi!", "Lugege raamat läbi!"],
+  "Loe raamat läbi!": [
+    "Loe raamat läbi!",
+    "Lugege raamat läbi!",
+    "Loe raamat lõpuni!",
+    "Lugege raamat lõpuni!",
+  ],
   "Ära söö suppi!": [
     "Ära söö suppi!",
     "Ära söö suppi ära!",

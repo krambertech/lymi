@@ -3,11 +3,11 @@ import { OBJECT_ANSWERS } from "../../../lib/learn/clips";
 import type { ChoiceDrill, DrillBank, DrillOption } from "../../../lib/learn/drill";
 
 const SOME = msg`Some of it: the partitive.`;
-const WHOLE = msg`The whole thing: the genitive.`;
+const WHOLE = msg`The whole thing: for a noun, usually the genitive.`;
 const NOT_DONE = msg`Going on, not said to be finished: the partitive.`;
-const DONE = msg`Finished, all of it: the genitive with <et>läbi</et> or <et>ära</et>.`;
+const DONE = msg`Finished, all of it: for a noun, usually the genitive with <et>läbi</et> or <et>ära</et>.`;
 const AFTER_EI = msg`After <et>ei</et>, the partitive.`;
-const COMMAND = msg`A command for the whole thing: the nominative.`;
+const COMMAND = msg`A command for a whole noun: usually the nominative.`;
 const DONT = msg`<et>Ära</et> before the verb is a no, so the partitive.`;
 
 const BREAD: Record<string, DrillOption> = {
@@ -272,7 +272,7 @@ export const DRILLS: DrillBank = {
       kind: "dictation",
       id: "dictate-eat-up",
       rule: "command",
-      answers: ["Söö supp ära!", "Sööge supp ära!"],
+      answers: ["Söö supp ära!"],
       say: "Söö supp ära!",
       explain: COMMAND,
     },

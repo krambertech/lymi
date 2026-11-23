@@ -232,6 +232,9 @@ msgstr "a foot"
 msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the partitive. Every word is read aloud."
 msgstr "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the partitive. Every word is read aloud."
 
+msgid "A free Estonian lesson on adjectives with nouns: suures majas and uut raamatut, where the adjective takes the noun’s case, suure autoga with -ga, -ta, -ni and -na, and suured majad in the plural. Every sentence is read aloud."
+msgstr "A free Estonian lesson on adjectives with nouns: suures majas and uut raamatut, where the adjective takes the noun’s case, suure autoga with -ga, -ta, -ni and -na, and suured majad in the plural. Every sentence is read aloud."
+
 msgid "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive. Every sentence is read aloud."
 msgstr "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive. Every sentence is read aloud."
 
@@ -641,6 +644,9 @@ msgstr "Estonian"
 
 msgid "Estonian -ma, -mas and -mast: going, being and coming back"
 msgstr "Estonian -ma, -mas and -mast: going, being and coming back"
+
+msgid "Estonian adjectives: agreeing with the noun"
+msgstr "Estonian adjectives: agreeing with the noun"
 
 msgid "Estonian conversation practice: meeting someone"
 msgstr "Estonian conversation practice: meeting someone"

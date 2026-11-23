@@ -29,6 +29,12 @@ export const ALLOWED_NEAR_PAIRS: readonly {
       "The options are the three question words, each the answer twice in six rounds; the learner hears tööl or töölt alone and tells kus from kust by that ending.",
   },
   {
+    lesson: "omadussonad",
+    quiz: "new-town",
+    reason:
+      "Each gap asks which form the adjective takes before the noun: the genitive (vana autoga) against the -s form (uues linnas) is the lesson.",
+  },
+  {
     lesson: "mul-on",
     quiz: "maris-note",
     reason: "-l against the bare form is the lesson: Emal against Ema, Jaanil against Jaan.",

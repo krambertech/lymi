@@ -15211,5 +15211,420 @@
     "text": "Laupäeval ma ei tööta.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/suur": {
+    "text": "suur",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/va2ike": {
+    "text": "väike",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/uus": {
+    "text": "uus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/vana": {
+    "text": "vana",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/hea": {
+    "text": "hea",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ilus": {
+    "text": "ilus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/soe": {
+    "text": "soe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/suures-majas": {
+    "text": "suures majas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/suure-autoga": {
+    "text": "suure autoga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/uut-raamatut": {
+    "text": "uut raamatut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/suured-majad": {
+    "text": "suured majad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/suur-maja": {
+    "text": "suur maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/suure-maja": {
+    "text": "suure maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/suurt-maja": {
+    "text": "suurt maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/suure-majaga": {
+    "text": "suure majaga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/va2ike-tuba": {
+    "text": "väike tuba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/va2ikese-toa": {
+    "text": "väikese toa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/va2ikest-tuba": {
+    "text": "väikest tuba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/va2ikeses-toas": {
+    "text": "väikeses toas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/va2ikese-toaga": {
+    "text": "väikese toaga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/uus-raamat": {
+    "text": "uus raamat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/uue-raamatu": {
+    "text": "uue raamatu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/uues-raamatus": {
+    "text": "uues raamatus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/uue-raamatuga": {
+    "text": "uue raamatuga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/uue": {
+    "text": "uue",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/uut": {
+    "text": "uut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/va2ikese": {
+    "text": "väikese",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/va2ikest": {
+    "text": "väikest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ilusa": {
+    "text": "ilusa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ilusat": {
+    "text": "ilusat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/head": {
+    "text": "head",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ma-elan-suures-majas": {
+    "text": "Ma elan suures majas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/kass-magab-va2ikeses-toas": {
+    "text": "Kass magab väikeses toas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ma-loen-uut-raamatut": {
+    "text": "Ma loen uut raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/me-istume-vanas-kohvikus": {
+    "text": "Me istume vanas kohvikus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/mul-on-kaks-suurt-kassi": {
+    "text": "Mul on kaks suurt kassi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/jaan-elab-ilusas-linnas": {
+    "text": "Jaan elab ilusas linnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ma-so3idan-suure-autoga": {
+    "text": "Ma sõidan suure autoga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/mari-tuleb-uue-so3braga": {
+    "text": "Mari tuleb uue sõbraga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ma-joon-kohvi-sooja-piimaga": {
+    "text": "Ma joon kohvi sooja piimaga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ta-to2o2tab-hea-arstina": {
+    "text": "Ta töötab hea arstina.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/siin-on-suured-majad": {
+    "text": "Siin on suured majad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/laual-on-uued-raamatud": {
+    "text": "Laual on uued raamatud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/need-on-head-so3brad": {
+    "text": "Need on head sõbrad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/me-elame-vanas-linnas": {
+    "text": "Me elame vanas linnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/me-istume-heas-kohvikus": {
+    "text": "Me istume heas kohvikus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ma-ei-na2e-ilusat-linna": {
+    "text": "Ma ei näe ilusat linna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/kass-magab-suures-autos": {
+    "text": "Kass magab suures autos.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/mari-elab-uues-majas": {
+    "text": "Mari elab uues majas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/me-istume-soojas-toas": {
+    "text": "Me istume soojas toas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/jaan-to2o2tab-va2ikeses-poes": {
+    "text": "Jaan töötab väikeses poes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/jaan-tuleb-uue-autoga": {
+    "text": "Jaan tuleb uue autoga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/mari-elab-ilusas-linnas": {
+    "text": "Mari elab ilusas linnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ma-istun-vanas-kohvikus": {
+    "text": "Ma istun vanas kohvikus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ta-tuleb-hea-so3braga": {
+    "text": "Ta tuleb hea sõbraga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/mari-elab-va2ikeses-linnas": {
+    "text": "Mari elab väikeses linnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/p-message": {
+    "text": "Tere, Kati! Ma elan nüüd uues linnas. Minu korter on suures majas. Ma töötan väikeses poes. Ma sõidan tööle vana autoga. Mul on kaks head sõpra.",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "omadussonad/c-talk": {
+    "text": "Tere, Jaan! Kus sa eile olid? Tere, Kati! Ma olin Tartus. Mu vend elab nüüd seal, ühes vanas majas. Vanas majas? Kas see on suur maja? Ei, see on väike maja, aga väga ilus. Tal on kolm väikest tuba ja üks suur tuba. Ja kus ta töötab? Ta töötab uues kohvikus. Kohvik on vanas linnas, suure turu kõrval. Ta sõidab tööle vana autoga. Vana autoga? Kas see on hea auto? Jah, väga hea. See on vana, aga ilus auto. Mina sõidan tööle uue bussiga. Buss on soe ja hea. Ja mis sa õhtul teed? Ma loen uut raamatut. See on suur raamat, aga väga hea. Kas sa tahad ka lugeda? Jah! Mul on homme vaba päev. Hästi. Ma ootan sind homme väikeses kohvikus, kell kuus. Seal on hea kohv ja soe piim. Väikeses kohvikus? Kas see on sinu maja kõrval? Jah, minu maja kõrval. Nägemiseni! Hästi. Homme kell kuus väikeses kohvikus!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Kus sa eile olid?"
+        ],
+        "say": "[cheerful] Tere, Jaan! Kus sa eile olid?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Kati!",
+          "Ma olin Tartus.",
+          "Mu vend elab nüüd seal, ühes vanas majas."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Vanas majas?",
+          "Kas see on suur maja?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, see on väike maja, aga väga ilus.",
+          "Tal on kolm väikest tuba ja üks suur tuba."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja kus ta töötab?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ta töötab uues kohvikus.",
+          "Kohvik on vanas linnas, suure turu kõrval.",
+          "Ta sõidab tööle vana autoga."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Vana autoga?",
+          "Kas see on hea auto?"
+        ],
+        "say": "[curious] Vana autoga? Kas see on hea auto?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, väga hea.",
+          "See on vana, aga ilus auto."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mina sõidan tööle uue bussiga.",
+          "Buss on soe ja hea."
+        ],
+        "say": "[laughs] Mina sõidan tööle uue bussiga. Buss on soe ja hea."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja mis sa õhtul teed?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ma loen uut raamatut.",
+          "See on suur raamat, aga väga hea.",
+          "Kas sa tahad ka lugeda?"
+        ],
+        "say": "Ma loen uut raamatut. See on suur raamat, aga väga hea. [curious] Kas sa tahad ka lugeda?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah!",
+          "Mul on homme vaba päev."
+        ],
+        "say": "[pleased] Jah! Mul on homme vaba päev."
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Hästi.",
+          "Ma ootan sind homme väikeses kohvikus, kell kuus.",
+          "Seal on hea kohv ja soe piim."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Väikeses kohvikus?",
+          "Kas see on sinu maja kõrval?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, minu maja kõrval.",
+          "Nägemiseni!"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hästi.",
+          "Homme kell kuus väikeses kohvikus!"
+        ]
+      }
+    ]
+  },
+  "omadussonad/meil-on-kolm-va2ikest-tuba": {
+    "text": "Meil on kolm väikest tuba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

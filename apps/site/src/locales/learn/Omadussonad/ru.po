@@ -1,0 +1,477 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 11:49+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "<0/> is big, and <1>suur maja</1> is a big house. When the noun takes a case, the adjective takes it as well: <2/>, in a big house; <3/>, a new book after a verb such as <4>loen</4>."
+msgstr "<0/> — «большой», а <1>suur maja</1> — «большой дом». Когда существительное стоит в каком-то падеже, прилагательное стоит в нём тоже: <2/> — «в большом доме»; <3/> — «новую книгу», после глагола вроде <4>loen</4>."
+
+msgid "<et>Uus</et> builds on its genitive <et>uue</et>: <et>uues majas</et>."
+msgstr "<et>Uus</et> строит форму на своём родительном <et>uue</et>: <et>uues majas</et>."
+
+msgid "<et>Väike</et> builds on its genitive <et>väikese</et>: <et>väikeses toas</et>."
+msgstr "<et>Väike</et> строит форму на своём родительном <et>väikese</et>: <et>väikeses toas</et>."
+
+msgid "16 minutes"
+msgstr "16 минут"
+
+msgid "5 exercises, 3 of them typed, and a conversation"
+msgstr "5 упражнений, в 3 из них нужно писать, и разговор"
+
+msgid "a beautiful town"
+msgstr "красивый город"
+
+msgid "a big house"
+msgstr "большой дом"
+
+msgid "a good doctor"
+msgstr "хороший врач"
+
+msgid "a good friend"
+msgstr "хороший друг"
+
+msgid "a new book"
+msgstr "новая книга"
+
+msgid "A new book"
+msgstr "Новую книгу"
+
+msgid "a new house"
+msgstr "новый дом"
+
+msgid "a small room"
+msgstr "маленькая комната"
+
+msgid "Adjectives"
+msgstr "Прилагательные"
+
+msgid "Adjectives change like nouns"
+msgstr "Прилагательные меняются, как существительные"
+
+msgid "After a number, both words take the partitive: <0>kaks head sõpra</0>."
+msgstr "После числа оба слова стоят в партитиве: <0>kaks head sõpra</0>."
+
+msgid "After a number, both words take the partitive: <0>kaks suurt kassi</0>."
+msgstr "После числа оба слова стоят в партитиве: <0>kaks suurt kassi</0>."
+
+msgid "After a number, both words take the partitive: <et>kaks suurt kassi</et>."
+msgstr "После числа оба слова стоят в партитиве: <et>kaks suurt kassi</et>."
+
+msgid "After a number, the adjective is in the partitive as well: <0>kaks suurt kassi</0>."
+msgstr "После числа прилагательное тоже стоит в партитиве: <0>kaks suurt kassi</0>."
+
+msgid "All eight: both words with -s, the noun alone with -ga."
+msgstr "Все восемь: с -s — оба слова, с -ga — только существительное."
+
+msgid "All of them, the adjective in the noun’s case every time."
+msgstr "Все, и каждый раз прилагательное в падеже существительного."
+
+msgid "All six found and fixed."
+msgstr "Все шесть найдены и исправлены."
+
+msgid "All six, every adjective in its form."
+msgstr "Все шесть, каждое прилагательное в своей форме."
+
+msgid "An adjective has the same three forms as a noun, from lesson {forms}, and builds its cases on the genitive: <0>uus, uue, uut</0>, so in a new house is <1>uues majas</1>. Pick a word and tap its forms."
+msgstr "У прилагательного те же три формы, что и у существительного, из урока {forms}, и падежи оно строит на родительном: <0>uus, uue, uut</0>, так что «в новом доме» — <1>uues majas</1>. Выбери слово и нажми на его формы."
+
+msgid "An adjective takes the noun’s case and number: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
+msgstr "Прилагательное стоит в падеже и числе существительного: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
+
+msgid "An adjective takes the noun’s case: <0>suur maja</0>, a big house, but <1>suures majas</1>, in a big house. With <2>-ga</2>, <3>-ta</3>, <4>-ni</4> and <5>-na</5>, only the noun takes the ending: <6>suure autoga</6>."
+msgstr "Прилагательное стоит в падеже существительного: <0>suur maja</0> — «большой дом», но <1>suures majas</1> — «в большом доме». С <2>-ga</2>, <3>-ta</3>, <4>-ni</4> и <5>-na</5> окончание берёт только существительное: <6>suure autoga</6>."
+
+msgid "An old Estonian book"
+msgstr "Старую эстонскую книгу"
+
+msgid "An old house in Tartu"
+msgstr "Старый дом в Тарту"
+
+msgid "An old letter"
+msgstr "Старое письмо"
+
+msgid "as a good doctor"
+msgstr "как хороший врач"
+
+msgid "At the market"
+msgstr "На рынке"
+
+msgid "beautiful"
+msgstr "красивый"
+
+msgid "big"
+msgstr "большой"
+
+msgid "big houses"
+msgstr "большие дома"
+
+msgid "Big houses"
+msgstr "Большие дома"
+
+msgid "Both words in the partitive: <0>uut raamatut</0>."
+msgstr "Оба слова в партитиве: <0>uut raamatut</0>."
+
+msgid "Both words in the partitive."
+msgstr "Оба слова в партитиве."
+
+msgid "Both words take <0>-s</0>, each on its own genitive."
+msgstr "Оба слова берут <0>-s</0>, каждое на своём родительном."
+
+msgid "Both words take the same case."
+msgstr "Оба слова стоят в одном падеже."
+
+msgid "Both words, one case"
+msgstr "Два слова, один падеж"
+
+msgid "Both words, one case: <et>suures majas</et>"
+msgstr "Два слова, один падеж: <et>suures majas</et>"
+
+msgid "by a big car"
+msgstr "на большой машине"
+
+msgid "by a big car, with a big car"
+msgstr "на большой машине, с большой машиной"
+
+msgid "Fill the gaps"
+msgstr "Заполни пропуски"
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
+
+#. placeholder {0}: phrase.forms[0]
+msgid "Forms of {0}"
+msgstr "Формы {0}"
+
+msgid "Four endings from lesson {withLesson} work differently: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> and <3>-na</3>. Only the noun takes them, and the adjective stays in the genitive: <4/>, by a big car."
+msgstr "Четыре окончания из урока {withLesson} работают иначе: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> и <3>-na</3>. Их берёт только существительное, а прилагательное остаётся в родительном: <4/> — «на большой машине»."
+
+msgid "genitive"
+msgstr "родительный падеж"
+
+msgid "Genitive"
+msgstr "Родительный"
+
+msgid "good"
+msgstr "хороший"
+
+msgid "He or she works as a good doctor."
+msgstr "Он или она работает хорошим врачом."
+
+msgid "Here are big houses."
+msgstr "Здесь большие дома."
+
+msgid "How does the brother get to work? Write it as Jaan says it."
+msgstr "Как брат добирается на работу? Напиши так, как говорит Яан."
+
+msgid "How many small rooms are there?"
+msgstr "Сколько там маленьких комнат?"
+
+msgid "I drink coffee with warm milk."
+msgstr "Я пью кофе с тёплым молоком."
+
+msgid "I drive a big car."
+msgstr "Я езжу на большой машине."
+
+msgid "I have two big cats."
+msgstr "У меня две большие кошки."
+
+msgid "I live in a big house."
+msgstr "Я живу в большом доме."
+
+msgid "I’m reading a new book."
+msgstr "Я читаю новую книгу."
+
+msgid "In"
+msgstr "Через"
+
+msgid "in a beautiful town"
+msgstr "в красивом городе"
+
+msgid "in a big car"
+msgstr "в большой машине"
+
+msgid "In a big car, by a big car"
+msgstr "В большой машине, на большой машине"
+
+msgid "in a big house"
+msgstr "в большом доме"
+
+msgid "in a good café"
+msgstr "в хорошем кафе"
+
+msgid "In a house: both words take <0>-s</0>, <1>suures majas</1>."
+msgstr "В доме: оба слова берут <0>-s</0>, <1>suures majas</1>."
+
+msgid "In a new café"
+msgstr "В новом кафе"
+
+msgid "in a new house"
+msgstr "в новом доме"
+
+msgid "In a shop"
+msgstr "В магазине"
+
+msgid "In a shop: both words take <0>-s</0>, <1>väikeses poes</1>."
+msgstr "В магазине: оба слова берут <0>-s</0>, <1>väikeses poes</1>."
+
+msgid "in a small shop"
+msgstr "в маленьком магазине"
+
+msgid "In a town: both words take <0>-s</0>, <1>uues linnas</1>."
+msgstr "В городе: оба слова берут <0>-s</0>, <1>uues linnas</1>."
+
+msgid "in a warm room"
+msgstr "в тёплой комнате"
+
+msgid "in an old town"
+msgstr "в старом городе"
+
+msgid "In each sentence, one adjective is in the wrong form. Tap it, then type it right."
+msgstr "В каждом предложении одно прилагательное в неправильной форме. Нажми на него, потом напиши правильно."
+
+msgid "In Narva"
+msgstr "В Нарве"
+
+msgid "In Pärnu"
+msgstr "В Пярну"
+
+msgid "In Tartu"
+msgstr "В Тарту"
+
+msgid "In the plural from lesson {plural}, the adjective takes <0>-d</0> as well: <1/>, big houses. Tap a line to hear it."
+msgstr "Во множественном числе из урока {plural} прилагательное тоже берёт <0>-d</0>: <1/> — «большие дома». Нажми на строку, чтобы послушать."
+
+msgid "In the plural, the adjective takes <et>-d</et> as well: <et>uued raamatud</et>."
+msgstr "Во множественном числе прилагательное тоже берёт <et>-d</et>: <et>uued raamatud</et>."
+
+msgid "in the small room"
+msgstr "в маленькой комнате"
+
+msgid "It builds the case on its own genitive: <0>uus, uue, uues</0>; <1>väike, väikese, väikeses</1>."
+msgstr "Падеж оно строит на своём родительном: <0>uus, uue, uues</0>; <1>väike, väikese, väikeses</1>."
+
+msgid "Its genitive is sooja."
+msgstr "Родительный — sooja."
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan is coming in a new car."
+msgstr "Яан приедет на новой машине."
+
+msgid "Jaan lives in a beautiful town."
+msgstr "Яан живёт в красивом городе."
+
+msgid "Jaan tells Kati about his brother’s house in Tartu."
+msgstr "Яан рассказывает Кати о доме своего брата в Тарту."
+
+msgid "Jaan works tomorrow."
+msgstr "Завтра Яан работает."
+
+msgid "Jaan’s brother lives in a new house."
+msgstr "Брат Яана живёт в новом доме."
+
+msgid "Kati"
+msgstr "Кати"
+
+msgid "Kati goes to work by bus."
+msgstr "Кати ездит на работу на автобусе."
+
+msgid "Listen: Kati and Jaan"
+msgstr "Послушай: Кати и Яан"
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Many new books: the adjective is plural as well, <0>uued raamatud</0>."
+msgstr "Много новых книг: прилагательное тоже во множественном числе, <0>uued raamatud</0>."
+
+msgid "Many: <et>suured majad</et>"
+msgstr "Много: <et>suured majad</et>"
+
+msgid "Many: both words in the plural."
+msgstr "Много: оба слова во множественном числе."
+
+msgid "Mari is coming with a new friend."
+msgstr "Мари придёт с новым другом."
+
+msgid "Mari lives in a beautiful town."
+msgstr "Мари живёт в красивом городе."
+
+msgid "Mari lives in a small town."
+msgstr "Мари живёт в маленьком городе."
+
+msgid "Mari writes to Kati about her new town. Pick the adjective for each gap: the noun after it says which form it takes."
+msgstr "Мари пишет Кати о своём новом городе. Выбери прилагательное для каждого пропуска: существительное после него подскажет форму."
+
+msgid "Mari’s new town"
+msgstr "Новый город Мари"
+
+msgid "Most of them. Check that the adjective took the ending as well."
+msgstr "Большинство. Проверь, есть ли окончание и у прилагательного."
+
+msgid "Most of them. Check the adjective in the ones you missed."
+msgstr "Большинство. Проверь прилагательное в тех, что не получились."
+
+msgid "Most of them. Look at the noun’s ending before you pick."
+msgstr "Большинство. Прежде чем выбрать, посмотри на окончание существительного."
+
+msgid "Most of them. Read the reason under each one you missed."
+msgstr "Большинство. Прочитай пояснения к тем, что не получились."
+
+msgid "new"
+msgstr "новый"
+
+msgid "nominative"
+msgstr "именительный"
+
+msgid "Nominative"
+msgstr "Именительный"
+
+msgid "Now type each phrase in the form the cue asks for."
+msgstr "Теперь напиши каждое словосочетание в форме, которую требует подсказка."
+
+msgid "old"
+msgstr "старый"
+
+msgid "Only the noun takes -ga; the adjective stays in the genitive."
+msgstr "-ga берёт только существительное; прилагательное остаётся в родительном."
+
+msgid "Only the noun: <et>suure autoga</et>"
+msgstr "Только существительное: <et>suure autoga</et>"
+
+msgid "partitive"
+msgstr "партитив"
+
+msgid "Partitive"
+msgstr "Партитив"
+
+msgid "Phrase"
+msgstr "Словосочетание"
+
+msgid "Pick a phrase, then tap its forms. The question word beside each one is the case it answers."
+msgstr "Выбери словосочетание и нажми на его формы. Вопросительное слово рядом показывает, на какой вопрос отвечает падеж."
+
+msgid "Pick the phrase the cue asks for."
+msgstr "Выбери словосочетание, которое требует подсказка."
+
+msgid "Read What to remember at the end, then try again."
+msgstr "Прочитай «Что запомнить» в конце и попробуй снова."
+
+msgid "Six mistakes to catch"
+msgstr "Шесть ошибок"
+
+msgid "small, little"
+msgstr "маленький"
+
+msgid "So it is <0>suures autos</0>, in a big car, but <1>suure autoga</1>, by a big car. Tap a line to hear it."
+msgstr "Так что <0>suures autos</0> — «в большой машине», но <1>suure autoga</1> — «на большой машине». Нажми на строку, чтобы послушать."
+
+msgid "Tap a form"
+msgstr "Коснись формы"
+
+msgid "Tap the forms in the table once more, then try again."
+msgstr "Ещё раз послушай формы в таблице, а потом попробуй снова."
+
+msgid "Tap the lines above once more, then try again."
+msgstr "Ещё раз нажми на строки выше и попробуй снова."
+
+msgid "Ten"
+msgstr "Десять"
+
+msgid "The adjective takes <0>-s</0> as well: <1>suures majas</1>."
+msgstr "Прилагательное тоже берёт <0>-s</0>: <1>suures majas</1>."
+
+msgid "The adjective takes <0>-s</0> on its genitive <1>väikese</1>: <2>väikeses toas</2>."
+msgstr "Прилагательное берёт <0>-s</0> на своём родительном <1>väikese</1>: <2>väikeses toas</2>."
+
+msgid "The adjective takes the noun’s case"
+msgstr "Прилагательное в падеже существительного"
+
+msgid "The adjective takes the noun’s case: <et>suures majas</et>, <et>uut raamatut</et>."
+msgstr "Прилагательное стоит в падеже существительного: <et>suures majas</et>, <et>uut raamatut</et>."
+
+msgid "The adjective’s own stem: <et>uus, uue, uut</et>"
+msgstr "Собственная основа прилагательного: <et>uus, uue, uut</et>"
+
+msgid "The cat sleeps in the small room."
+msgstr "Кошка спит в маленькой комнате."
+
+msgid "There are new books on the table."
+msgstr "На столе новые книги."
+
+msgid "These are good friends."
+msgstr "Это хорошие друзья."
+
+msgid "Three"
+msgstr "Три"
+
+msgid "Two"
+msgstr "Две"
+
+msgid "warm"
+msgstr "тёплый"
+
+msgid "We have three small rooms."
+msgstr "У нас три маленькие комнаты."
+
+msgid "We’re sitting in an old café."
+msgstr "Мы сидим в старом кафе."
+
+msgid "What is Kati reading?"
+msgstr "Что читает Кати?"
+
+msgid "Where does Jaan’s brother work?"
+msgstr "Где работает брат Яана?"
+
+msgid "Where was Jaan yesterday?"
+msgstr "Где Яан был вчера?"
+
+msgid "Where will Kati wait for Jaan? Write it as she says it."
+msgstr "Где Кати будет ждать Яана? Напиши так, как она говорит."
+
+msgid "With"
+msgstr "С"
+
+msgid "With -ga: only the noun"
+msgstr "С -ga: только существительное"
+
+msgid "With <0>-ga</0>, <1>-ta</1>, <2>-ni</2> and <3>-na</3>, only the noun takes the ending, and the adjective stays in the genitive: <4>suure autoga</4>."
+msgstr "С <0>-ga</0>, <1>-ta</1>, <2>-ni</2> и <3>-na</3> окончание берёт только существительное, а прилагательное остаётся в родительном: <4>suure autoga</4>."
+
+msgid "With <0>-ga</0>, <1>-ta</1>, <2>-ni</2> or <3>-na</3>, only the noun takes the ending; the adjective stays in the genitive."
+msgstr "С <0>-ga</0>, <1>-ta</1>, <2>-ni</2> или <3>-na</3> окончание берёт только существительное; прилагательное остаётся в родительном."
+
+msgid "With <0>-ga</0>, only the noun takes it; the adjective stays in the genitive: <1>suure autoga</1>."
+msgstr "С <0>-ga</0> его берёт только существительное; прилагательное остаётся в родительном: <1>suure autoga</1>."
+
+msgid "With <0>-ga</0>, the adjective stays in the genitive: <1>vana autoga</1>."
+msgstr "С <0>-ga</0> прилагательное остаётся в родительном: <1>vana autoga</1>."
+
+msgid "With <0>-s</0>, both words take the ending."
+msgstr "С <0>-s</0> окончание берут оба слова."
+
+msgid "With <et>-ga</et>, <et>-ta</et>, <et>-ni</et> or <et>-na</et>, only the noun takes the ending: <et>suure autoga</et>."
+msgstr "С <et>-ga</et>, <et>-ta</et>, <et>-ni</et> или <et>-na</et> окончание берёт только существительное: <et>suure autoga</et>."
+
+msgid "with a good friend"
+msgstr "с хорошим другом"
+
+msgid "with a new friend"
+msgstr "с новым другом"
+
+msgid "with warm milk"
+msgstr "с тёплым молоком"
+
+msgid "Write each sentence in Estonian."
+msgstr "Напиши каждое предложение по-эстонски."
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"
+
+msgid "You’ll hear it and see what the adjective does."
+msgstr "Услышишь форму и увидишь, что делает прилагательное."

@@ -2743,6 +2743,315 @@ const ORDER_CLIPS: Record<string, Clip> = {
   "c-talk": ORDER_TALK,
 };
 
+export const ADJ_PHRASES = [
+  {
+    id: "suur-maja",
+    forms: ["suur maja", "suure maja", "suurt maja", "suures majas", "suure majaga"],
+  },
+  {
+    id: "vaike-tuba",
+    forms: ["väike tuba", "väikese toa", "väikest tuba", "väikeses toas", "väikese toaga"],
+  },
+  {
+    id: "uus-raamat",
+    forms: ["uus raamat", "uue raamatu", "uut raamatut", "uues raamatus", "uue raamatuga"],
+  },
+] as const;
+
+export const ADJ_AGREE = [
+  "Ma elan suures majas.",
+  "Kass magab väikeses toas.",
+  "Ma loen uut raamatut.",
+  "Me istume vanas kohvikus.",
+  "Mul on kaks suurt kassi.",
+  "Jaan elab ilusas linnas.",
+] as const;
+
+export const ADJ_STEMS = [
+  { id: "uus", steps: ["uus", "uue", "uut"] },
+  { id: "vaike", steps: ["väike", "väikese", "väikest"] },
+  { id: "ilus", steps: ["ilus", "ilusa", "ilusat"] },
+  { id: "hea", steps: ["hea", "hea", "head"] },
+] as const;
+
+export const ADJ_GENITIVE = [
+  "Ma sõidan suure autoga.",
+  "Mari tuleb uue sõbraga.",
+  "Ma joon kohvi sooja piimaga.",
+  "Ta töötab hea arstina.",
+] as const;
+
+export const ADJ_PLURAL = [
+  "Siin on suured majad.",
+  "Laual on uued raamatud.",
+  "Need on head sõbrad.",
+] as const;
+
+export const ADJ_MAKE = [
+  {
+    id: "suures-majas",
+    way: "s",
+    base: "suur maja",
+    answer: "suures majas",
+    said: "Ma elan suures majas.",
+  },
+  {
+    id: "vaikeses-toas",
+    way: "s",
+    base: "väike tuba",
+    answer: "väikeses toas",
+    said: "Kass magab väikeses toas.",
+  },
+  {
+    id: "vanas-linnas",
+    way: "s",
+    base: "vana linn",
+    answer: "vanas linnas",
+    said: "Me elame vanas linnas.",
+  },
+  {
+    id: "heas-kohvikus",
+    way: "s",
+    base: "hea kohvik",
+    answer: "heas kohvikus",
+    said: "Me istume heas kohvikus.",
+  },
+  {
+    id: "uut-raamatut",
+    way: "partitive",
+    base: "uus raamat",
+    answer: "uut raamatut",
+    said: "Ma loen uut raamatut.",
+  },
+  {
+    id: "suurt-kassi",
+    way: "partitive",
+    base: "suur kass",
+    answer: "suurt kassi",
+    said: "Mul on kaks suurt kassi.",
+  },
+  {
+    id: "ilusat-linna",
+    way: "partitive",
+    base: "ilus linn",
+    answer: "ilusat linna",
+    said: "Ma ei näe ilusat linna.",
+  },
+  {
+    id: "suured-majad",
+    way: "plural",
+    base: "suur maja",
+    answer: "suured majad",
+    said: "Siin on suured majad.",
+  },
+] as const;
+
+export const ADJ_WHICH = [
+  {
+    id: "suure-autoga",
+    way: "ga",
+    base: "suur auto",
+    answer: "suure autoga",
+    options: ["suure autoga", "suurega autoga", "suures autoga"],
+    said: "Ma sõidan suure autoga.",
+  },
+  {
+    id: "uue-sobraga",
+    way: "ga",
+    base: "uus sõber",
+    answer: "uue sõbraga",
+    options: ["uuega sõbraga", "uue sõbraga", "uues sõbraga"],
+    said: "Mari tuleb uue sõbraga.",
+  },
+  {
+    id: "sooja-piimaga",
+    way: "ga",
+    base: "soe piim",
+    answer: "sooja piimaga",
+    options: ["soojas piimaga", "soojaga piimaga", "sooja piimaga"],
+    said: "Ma joon kohvi sooja piimaga.",
+  },
+  {
+    id: "hea-arstina",
+    way: "ga",
+    base: "hea arst",
+    answer: "hea arstina",
+    options: ["hea arstina", "heana arstina", "heas arstina"],
+    said: "Ta töötab hea arstina.",
+  },
+  {
+    id: "suures-autos",
+    way: "s",
+    base: "suur auto",
+    answer: "suures autos",
+    options: ["suure autos", "suures autos", "suurega autos"],
+    said: "Kass magab suures autos.",
+  },
+  {
+    id: "uues-majas",
+    way: "s",
+    base: "uus maja",
+    answer: "uues majas",
+    options: ["uue majas", "uuega majas", "uues majas"],
+    said: "Mari elab uues majas.",
+  },
+  {
+    id: "soojas-toas",
+    way: "s",
+    base: "soe tuba",
+    answer: "soojas toas",
+    options: ["soojas toas", "sooja toas", "soojaga toas"],
+    said: "Me istume soojas toas.",
+  },
+  {
+    id: "vaikeses-poes",
+    way: "s",
+    base: "väike pood",
+    answer: "väikeses poes",
+    options: ["väikese poes", "väikeses poes", "väikesega poes"],
+    said: "Jaan töötab väikeses poes.",
+  },
+] as const;
+
+export const ADJ_MESSAGE = [
+  "Tere, Kati!",
+  "Ma elan nüüd uues linnas.",
+  "Minu korter on suures majas.",
+  "Ma töötan väikeses poes.",
+  "Ma sõidan tööle vana autoga.",
+  "Mul on kaks head sõpra.",
+] as const;
+
+export const ADJ_TRANSLATE = [
+  {
+    id: "suures-majas",
+    answers: ["Ma elan suures majas.", "Mina elan suures majas.", "Elan suures majas."],
+  },
+  { id: "uue-autoga", answers: ["Jaan tuleb uue autoga."] },
+  {
+    id: "uut-raamatut",
+    answers: ["Ma loen uut raamatut.", "Mina loen uut raamatut.", "Loen uut raamatut."],
+  },
+  { id: "kaks-suurt", answers: ["Mul on kaks suurt kassi.", "Minul on kaks suurt kassi."] },
+  { id: "ilusas-linnas", answers: ["Mari elab ilusas linnas."] },
+  { id: "head-sobrad", answers: ["Need on head sõbrad."] },
+] as const;
+
+export const ADJ_FIX = [
+  { id: "fix-suures", wrong: "Ma elan suur majas.", answers: ["Ma elan suures majas."] },
+  { id: "fix-suure", wrong: "Ma sõidan suurega autoga.", answers: ["Ma sõidan suure autoga."] },
+  { id: "fix-suurt", wrong: "Mul on kaks suur kassi.", answers: ["Mul on kaks suurt kassi."] },
+  { id: "fix-uut", wrong: "Ma loen uus raamatut.", answers: ["Ma loen uut raamatut."] },
+  { id: "fix-vaikeses", wrong: "Kass magab väike toas.", answers: ["Kass magab väikeses toas."] },
+  { id: "fix-uued", wrong: "Laual on uus raamatud.", answers: ["Laual on uued raamatud."] },
+] as const;
+
+export const ADJ_TALK: Conversation = {
+  turns: [
+    {
+      voice: "second",
+      text: ["Tere, Jaan!", "Kus sa eile olid?"],
+      say: "[cheerful] Tere, Jaan! Kus sa eile olid?",
+    },
+    {
+      voice: "main",
+      text: ["Tere, Kati!", "Ma olin Tartus.", "Mu vend elab nüüd seal, ühes vanas majas."],
+    },
+    { voice: "second", text: ["Vanas majas?", "Kas see on suur maja?"] },
+    {
+      voice: "main",
+      text: ["Ei, see on väike maja, aga väga ilus.", "Tal on kolm väikest tuba ja üks suur tuba."],
+    },
+    { voice: "second", text: ["Ja kus ta töötab?"] },
+    {
+      voice: "main",
+      text: [
+        "Ta töötab uues kohvikus.",
+        "Kohvik on vanas linnas, suure turu kõrval.",
+        "Ta sõidab tööle vana autoga.",
+      ],
+    },
+    {
+      voice: "second",
+      text: ["Vana autoga?", "Kas see on hea auto?"],
+      say: "[curious] Vana autoga? Kas see on hea auto?",
+    },
+    { voice: "main", text: ["Jah, väga hea.", "See on vana, aga ilus auto."] },
+    {
+      voice: "second",
+      text: ["Mina sõidan tööle uue bussiga.", "Buss on soe ja hea."],
+      say: "[laughs] Mina sõidan tööle uue bussiga. Buss on soe ja hea.",
+    },
+    { voice: "main", text: ["Ja mis sa õhtul teed?"] },
+    {
+      voice: "second",
+      text: [
+        "Ma loen uut raamatut.",
+        "See on suur raamat, aga väga hea.",
+        "Kas sa tahad ka lugeda?",
+      ],
+      say: "Ma loen uut raamatut. See on suur raamat, aga väga hea. [curious] Kas sa tahad ka lugeda?",
+    },
+    {
+      voice: "main",
+      text: ["Jah!", "Mul on homme vaba päev."],
+      say: "[pleased] Jah! Mul on homme vaba päev.",
+    },
+    {
+      voice: "second",
+      text: [
+        "Hästi.",
+        "Ma ootan sind homme väikeses kohvikus, kell kuus.",
+        "Seal on hea kohv ja soe piim.",
+      ],
+    },
+    { voice: "main", text: ["Väikeses kohvikus?", "Kas see on sinu maja kõrval?"] },
+    { voice: "second", text: ["Jah, minu maja kõrval.", "Nägemiseni!"] },
+    { voice: "main", text: ["Hästi.", "Homme kell kuus väikeses kohvikus!"] },
+  ],
+};
+
+export const ADJ_WORDS = [
+  "suur",
+  "väike",
+  "uus",
+  "vana",
+  "hea",
+  "ilus",
+  "soe",
+  "suures majas",
+  "suure autoga",
+  "uut raamatut",
+  "suured majad",
+  ...ADJ_PHRASES.flatMap(({ forms }) => forms),
+  ...ADJ_STEMS.flatMap(({ steps }) => steps),
+] as const;
+
+export const ADJ_DRILL = [
+  "Ma istun vanas kohvikus.",
+  "Ta tuleb hea sõbraga.",
+  "Meil on kolm väikest tuba.",
+  "Mari elab väikeses linnas.",
+] as const;
+
+const ADJ_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...new Set([
+      ...ADJ_WORDS,
+      ...ADJ_AGREE,
+      ...ADJ_GENITIVE,
+      ...ADJ_PLURAL,
+      ...ADJ_MAKE.map(({ said }) => said),
+      ...ADJ_WHICH.map(({ said }) => said),
+      ...ADJ_TRANSLATE.map(({ answers }) => answers[0]),
+      ...ADJ_FIX.map(({ answers }) => answers[0]),
+      ...ADJ_DRILL,
+    ]),
+  ]),
+  "p-message": { sentences: ADJ_MESSAGE, voice: "third" },
+  "c-talk": ADJ_TALK,
+};
+
 /** A noun's three forms in a dictionary's order: first, second, third. */
 export type NounForms = readonly [string, string, string];
 
@@ -4755,6 +5064,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   jargarvud: JARGARVUD_CLIPS,
   millal: WHEN_CLIPS,
   sonajarg: ORDER_CLIPS,
+  omadussonad: ADJ_CLIPS,
   "mul-on": {
     ...words([
       ...MUL_ON_WORDS,

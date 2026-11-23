@@ -363,7 +363,7 @@ const NOUN_USES = [
     form: "genitive",
     label: msg`Before words like “under”`,
     tip: msg`Usually, when such a word stands after the noun.`,
-    taught: { et: "Kass ja kast" },
+    taught: { slug: "peal-all-taga" },
     examples: [
       { et: "Kass on *kasti* all.", meaning: msg`The cat is under the box.` },
       { et: "Auto on *maja* ees.", meaning: msg`The car is in front of the house.` },

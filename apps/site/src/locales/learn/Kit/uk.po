@@ -275,6 +275,9 @@ msgstr "Безкоштовний урок про естонські числа: 
 msgid "A free lesson on Estonian ordinal numbers and dates: esimene, teine, kolmas and how the rest are built from the genitive, the months, asking mis kuupäev täna on?, writing 21. november, and -l for on a date or a floor (viiendal mail, kolmandal korrusel). Every sentence is read aloud."
 msgstr "Безкоштовний урок про порядкові числівники й дати в естонській мові: esimene, teine, kolmas і як решту утворюють від родового відмінка, назви місяців, питання mis kuupäev täna on?, запис 21. november і -l, щоб сказати «якого числа» чи «на якому поверсі» (viiendal mail, kolmandal korrusel). Кожне речення озвучене."
 
+msgid "A free lesson on Estonian postpositions of place: peal, all, taga, ees, kõrval and sees (on, under, behind, in front of, next to, inside), the genitive before them (laua peal, poe ees), their kuhu and kust forms (peale, pealt; taha, tagant; sisse, seest) and juures for a person’s place. Every sentence is read aloud."
+msgstr "Безкоштовний урок про естонські післяйменники місця: peal, all, taga, ees, kõrval і sees (на, під, за, перед, поруч, всередині), родовий відмінок перед ними (laua peal, poe ees), їхні форми для kuhu і kust (peale, pealt; taha, tagant; sisse, seest) і juures — «у когось». Кожне речення озвучене."
+
 msgid "A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and three everyday questions to learn whole. Every sentence is read aloud."
 msgstr "Безкоштовний урок про питання в естонській: kas для питань «так чи ні», відповіді jah і ei, питальні слова kes, mis, kus, millal, miks, kuidas і kui palju та три повсякденні питання, які вчать цілими. Кожне речення озвучене."
 
@@ -730,6 +733,9 @@ msgstr "Відмінки множини в естонській мові"
 
 msgid "Estonian plural partitive"
 msgstr "Партитив множини в естонській мові"
+
+msgid "Estonian postpositions: on, under, behind"
+msgstr "Естонські післяйменники: на, під, за"
 
 msgid "Estonian practice: last weekend and next week"
 msgstr "Практика естонської: минулі вихідні й наступний тиждень"

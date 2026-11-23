@@ -275,6 +275,9 @@ msgstr "Бесплатный урок об эстонских числах: от
 msgid "A free lesson on Estonian ordinal numbers and dates: esimene, teine, kolmas and how the rest are built from the genitive, the months, asking mis kuupäev täna on?, writing 21. november, and -l for on a date or a floor (viiendal mail, kolmandal korrusel). Every sentence is read aloud."
 msgstr "Бесплатный урок о порядковых числительных и датах в эстонском языке: esimene, teine, kolmas и как остальные образуются от родительного падежа, названия месяцев, вопрос mis kuupäev täna on?, запись 21. november и -l, чтобы сказать «какого числа» или «на каком этаже» (viiendal mail, kolmandal korrusel). Каждое предложение озвучено."
 
+msgid "A free lesson on Estonian postpositions of place: peal, all, taga, ees, kõrval and sees (on, under, behind, in front of, next to, inside), the genitive before them (laua peal, poe ees), their kuhu and kust forms (peale, pealt; taha, tagant; sisse, seest) and juures for a person’s place. Every sentence is read aloud."
+msgstr "Бесплатный урок об эстонских послелогах места: peal, all, taga, ees, kõrval и sees (на, под, за, перед, рядом, внутри), родительный падеж перед ними (laua peal, poe ees), их формы для kuhu и kust (peale, pealt; taha, tagant; sisse, seest) и juures — «у кого-то». Каждое предложение озвучено."
+
 msgid "A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and three everyday questions to learn whole. Every sentence is read aloud."
 msgstr "Бесплатный урок о вопросах в эстонском: kas для вопросов «да или нет», ответы jah и ei, вопросительные слова kes, mis, kus, millal, miks, kuidas и kui palju и три повседневных вопроса, которые учат целиком. Каждое предложение озвучено."
 
@@ -730,6 +733,9 @@ msgstr "Падежи множественного числа в эстонско
 
 msgid "Estonian plural partitive"
 msgstr "Партитив множественного числа в эстонском языке"
+
+msgid "Estonian postpositions: on, under, behind"
+msgstr "Эстонские послелоги: на, под, за"
 
 msgid "Estonian practice: last weekend and next week"
 msgstr "Практика эстонского: прошлые выходные и следующая неделя"

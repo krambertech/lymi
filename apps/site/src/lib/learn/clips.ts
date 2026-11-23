@@ -594,6 +594,63 @@ export const OUTER_SENTENCES = {
   "p-kusin-isalt": "Ma küsin isalt.",
 } as const;
 
+export const OUTER_TYPED = [
+  { place: "laud", way: "kuhu" },
+  { place: "töö", way: "kust" },
+  { place: "turg", way: "kus" },
+  { place: "Saaremaa", way: "kuhu" },
+  { place: "laud", way: "kust" },
+  { place: "töö", way: "kuhu" },
+  { place: "turg", way: "kust" },
+  { place: "Saaremaa", way: "kus" },
+] as const satisfies readonly {
+  place: (typeof OUTER_PLACES)[number]["place"];
+  way: "kus" | "kuhu" | "kust";
+}[];
+
+export const OUTER_SAY = [
+  { id: "toole", said: "Ma lähen tööle.", also: ["Lähen tööle.", "Mina lähen tööle."] },
+  { id: "turult", said: "Ma tulen turult.", also: ["Tulen turult.", "Mina tulen turult."] },
+  { id: "lauale", said: "Kass hüppab lauale.", also: ["Kass hüppab laua peale."] },
+  { id: "emale", said: "Ma helistan emale.", also: ["Helistan emale.", "Mina helistan emale."] },
+  { id: "isalt", said: "Ma küsin isalt.", also: ["Küsin isalt.", "Mina küsin isalt."] },
+  {
+    id: "saaremaal",
+    said: "Me elame Saaremaal.",
+    also: ["Meie elame Saaremaal.", "Elame Saaremaal."],
+  },
+] as const;
+
+export const OUTER_FIX = [
+  { id: "toole", wrong: "Ma lähen tööl.", right: "Ma lähen tööle.", also: [] },
+  { id: "turult", wrong: "Ma tulen turul.", right: "Ma tulen turult.", also: [] },
+  { id: "laual", wrong: "Kass on lauale.", right: "Kass on laual.", also: [] },
+  { id: "emale", wrong: "Ma helistan emal.", right: "Ma helistan emale.", also: [] },
+  { id: "emalt", wrong: "Ma küsin emal.", right: "Ma küsin emalt.", also: [] },
+  { id: "turule", wrong: "Ma lähen turusse.", right: "Ma lähen turule.", also: [] },
+] as const;
+
+export const OUTER_TALK = {
+  turns: [
+    { voice: "fourth", text: ["Tere, Mari!", "Kus sa oled?"] },
+    { voice: "third", text: "Ma olen turul." },
+    { voice: "fourth", text: "Kas sa lähed täna tööle?" },
+    { voice: "third", text: ["Ei, täna on laupäev.", "Ma lähen turult koju."] },
+    { voice: "fourth", text: "Kas sa helistad emale?" },
+    { voice: "third", text: ["Jah, ma helistan emale.", "Aga sina?"] },
+    {
+      voice: "fourth",
+      text: "Ma lähen homme Saaremaale.",
+      say: "[happy] Ma lähen homme Saaremaale.",
+    },
+    { voice: "third", text: "Kas su ema elab Saaremaal?" },
+    {
+      voice: "fourth",
+      text: ["Jah, ema elab Saaremaal.", "Ma tulen esmaspäeval Saaremaalt tagasi.", "Head aega!"],
+    },
+  ],
+} as const satisfies Conversation;
+
 /** The gap passage: a Saturday with Mari, every gap filled. */
 export const OUTER_PASSAGE = [
   "Täna on laupäev ja Mari ei lähe tööle.",
@@ -3440,6 +3497,93 @@ export const INNER_PLACES = [
   { place: "kodu", kus: "kodus", kuhu: "koju", kust: "kodust" },
 ] as const;
 
+export const INNER_TYPED: readonly {
+  place: (typeof INNER_PLACES)[number]["place"];
+  way: "kus" | "kuhu" | "kust";
+  also: readonly string[];
+}[] = [
+  { place: "Tallinn", way: "kuhu", also: ["Tallinna"] },
+  { place: "haigla", way: "kust", also: [] },
+  { place: "kontor", way: "kus", also: [] },
+  { place: "kohvik", way: "kuhu", also: [] },
+  { place: "Pärnu", way: "kust", also: [] },
+  { place: "maja", way: "kuhu", also: [] },
+  { place: "kodu", way: "kuhu", also: ["kodusse"] },
+  { place: "pood", way: "kust", also: [] },
+];
+
+export const INNER_SAY = [
+  { id: "tartusse", said: "Ma lähen Tartusse.", also: ["Lähen Tartusse.", "Mina lähen Tartusse."] },
+  {
+    id: "parit",
+    said: "Kust sa pärit oled?",
+    also: [
+      "Kust sa oled pärit?",
+      "Kust te pärit olete?",
+      "Kust te olete pärit?",
+      "Kust sina pärit oled?",
+      "Kust sina oled pärit?",
+      "Kust oled pärit?",
+      "Kust olete pärit?",
+      "Kust sa oled?",
+      "Kust te olete?",
+      "Kust sina oled?",
+      "Kust oled?",
+      "Kust olete?",
+    ],
+  },
+  { id: "poest", said: "Ma tulen poest.", also: ["Tulen poest.", "Mina tulen poest."] },
+  { id: "majja", said: "Kass läheb majja.", also: ["Kass läheb majasse."] },
+  {
+    id: "linna",
+    said: "Me läheme linna.",
+    also: [
+      "Me läheme linnasse.",
+      "Meie läheme linna.",
+      "Läheme linna.",
+      "Läheme linnasse.",
+      "Meie läheme linnasse.",
+    ],
+  },
+  {
+    id: "eestist",
+    said: "Ma olen pärit Eestist.",
+    also: [
+      "Ma olen Eestist pärit.",
+      "Olen pärit Eestist.",
+      "Mina olen pärit Eestist.",
+      "Ma olen Eestist.",
+      "Olen Eestist pärit.",
+      "Mina olen Eestist pärit.",
+      "Olen Eestist.",
+      "Mina olen Eestist.",
+    ],
+  },
+] as const;
+
+export const INNER_FIX = [
+  { id: "tartusse", wrong: "Ma lähen Tartus.", right: "Ma lähen Tartusse.", also: [] },
+  { id: "poest", wrong: "Ma tulen poes.", right: "Ma tulen poest.", also: [] },
+  { id: "soomest", wrong: "Ma olen pärit Soomes.", right: "Ma olen pärit Soomest.", also: [] },
+  { id: "majas", wrong: "Kass on majja.", right: "Kass on majas.", also: [] },
+  { id: "koju", wrong: "Me läheme kodus.", right: "Me läheme koju.", also: ["Me läheme kodusse."] },
+  { id: "kodus", wrong: "Ma olen kodust.", right: "Ma olen kodus.", also: [] },
+] as const;
+
+export const INNER_TALK = {
+  turns: [
+    { voice: "third", text: ["Tere, Jaan!", "Kust sa tuled?"] },
+    { voice: "fourth", text: "Ma tulen haiglast.", say: "[tired] Ma tulen haiglast." },
+    { voice: "third", text: "Kuhu sa lähed?" },
+    { voice: "fourth", text: ["Ma lähen koju.", "Aga sina?"] },
+    { voice: "third", text: "Ma lähen poodi ja kohvikusse." },
+    { voice: "fourth", text: "Kas sa oled homme Tallinnas?" },
+    { voice: "third", text: ["Ei, homme lähen Tartusse.", "Mu ema elab Tartus."] },
+    { voice: "fourth", text: "Kas sa oled pärit Tartust?" },
+    { voice: "third", text: ["Ei, ma olen pärit Pärnust.", "Head aega!"] },
+  ],
+} as const satisfies Conversation;
+
 /** The sentences of the lesson on in, into and out of. */
 export const INNER_SENTENCES = {
   "s-majas": "Kass on majas.",
@@ -4554,6 +4698,9 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ]),
     ...OUTER_SENTENCES,
     "p-saturday": { sentences: OUTER_PASSAGE },
+    ...words(OUTER_SAY.map(({ said }) => said)),
+    ...words(OUTER_FIX.map(({ right }) => right)),
+    "c-call": OUTER_TALK,
   },
   "sobraga-rahata": SOBRAGA_CLIPS,
   asesonad: PRONOUN_CLIPS,
@@ -4590,6 +4737,9 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...words(INNER_WORDS),
     ...INNER_SENTENCES,
     ...INNER_DIALOGUE,
+    ...words(INNER_SAY.map(({ said }) => said)),
+    ...words(INNER_FIX.map(({ right }) => right)),
+    "c-street": INNER_TALK,
   },
   meeldima: MEELDIMA_CLIPS,
   "verbi-pohivormid": {

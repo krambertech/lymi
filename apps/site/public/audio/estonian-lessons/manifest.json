@@ -14943,5 +14943,231 @@
         ]
       }
     ]
+  },
+  "laual-lauale-laualt/ma-la2hen-to2o2le": {
+    "text": "Ma lähen tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/ma-tulen-turult": {
+    "text": "Ma tulen turult.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/kass-hu2ppab-lauale": {
+    "text": "Kass hüppab lauale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/ma-helistan-emale": {
+    "text": "Ma helistan emale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/ma-ku2sin-isalt": {
+    "text": "Ma küsin isalt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/me-elame-saaremaal": {
+    "text": "Me elame Saaremaal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/kass-on-laual": {
+    "text": "Kass on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/ma-ku2sin-emalt": {
+    "text": "Ma küsin emalt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/ma-la2hen-turule": {
+    "text": "Ma lähen turule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/c-call": {
+    "text": "Tere, Mari! Kus sa oled? Ma olen turul. Kas sa lähed täna tööle? Ei, täna on laupäev. Ma lähen turult koju. Kas sa helistad emale? Jah, ma helistan emale. Aga sina? Ma lähen homme Saaremaale. Kas su ema elab Saaremaal? Jah, ema elab Saaremaal. Ma tulen esmaspäeval Saaremaalt tagasi. Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Mari!",
+          "Kus sa oled?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ma olen turul."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas sa lähed täna tööle?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, täna on laupäev.",
+          "Ma lähen turult koju."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas sa helistad emale?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, ma helistan emale.",
+          "Aga sina?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma lähen homme Saaremaale."
+        ],
+        "say": "[happy] Ma lähen homme Saaremaale."
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas su ema elab Saaremaal?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, ema elab Saaremaal.",
+          "Ma tulen esmaspäeval Saaremaalt tagasi.",
+          "Head aega!"
+        ]
+      }
+    ]
+  },
+  "majas-majja-majast/ma-la2hen-tartusse": {
+    "text": "Ma lähen Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kust-sa-pa2rit-oled": {
+    "text": "Kust sa pärit oled?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/ma-tulen-poest": {
+    "text": "Ma tulen poest.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kass-la2heb-majja": {
+    "text": "Kass läheb majja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/me-la2heme-linna": {
+    "text": "Me läheme linna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/ma-olen-pa2rit-eestist": {
+    "text": "Ma olen pärit Eestist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/ma-olen-pa2rit-soomest": {
+    "text": "Ma olen pärit Soomest.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kass-on-majas": {
+    "text": "Kass on majas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/me-la2heme-koju": {
+    "text": "Me läheme koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/ma-olen-kodus": {
+    "text": "Ma olen kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/c-street": {
+    "text": "Tere, Jaan! Kust sa tuled? Ma tulen haiglast. Kuhu sa lähed? Ma lähen koju. Aga sina? Ma lähen poodi ja kohvikusse. Kas sa oled homme Tallinnas? Ei, homme lähen Tartusse. Mu ema elab Tartus. Kas sa oled pärit Tartust? Ei, ma olen pärit Pärnust. Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Jaan!",
+          "Kust sa tuled?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma tulen haiglast."
+        ],
+        "say": "[tired] Ma tulen haiglast."
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kuhu sa lähed?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma lähen koju.",
+          "Aga sina?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ma lähen poodi ja kohvikusse."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas sa oled homme Tallinnas?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, homme lähen Tartusse.",
+          "Mu ema elab Tartus."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas sa oled pärit Tartust?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, ma olen pärit Pärnust.",
+          "Head aega!"
+        ]
+      }
+    ]
   }
 }

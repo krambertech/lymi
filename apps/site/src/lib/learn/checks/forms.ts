@@ -126,6 +126,7 @@ function estonianText(element: Element): string {
     .map((child) => {
       if (!isElement(child)) return child.text;
       if (child.lang !== "et" || child.tag === "svg") return " ";
+      if (child.attrs["aria-hidden"] === "true") return "";
       const text = estonianText(child);
       return apart || BLOCKS.has(child.tag) ? ` ${text} ` : text;
     })

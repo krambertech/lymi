@@ -72,7 +72,9 @@ const written = (said: string): SentenceDrill => ({
   rule: "sentence",
   say: said,
   answers: [said],
-  explain: msg`Six days end in <et>päev</et>, so listen to how each one starts.`,
+  explain: said.includes("reede")
+    ? OWN
+    : msg`Six days end in <et>päev</et>, so listen to how each one starts.`,
 });
 
 export const DRILLS: DrillBank = {

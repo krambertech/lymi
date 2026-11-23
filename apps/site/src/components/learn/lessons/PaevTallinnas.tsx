@@ -209,7 +209,7 @@ function useContent() {
       options: [
         { id: "eleven-thirty", label: t`At 11:30` },
         { id: "ten-thirty", label: t`At 10:30` },
-        { id: "nine-thirty", label: t`At 9:30` },
+        { id: "twelve-thirty", label: t`At 12:30` },
       ],
       answer: "ten-thirty",
       line: 2,
@@ -291,10 +291,11 @@ function useContent() {
         },
         { line: said("d-sina-3"), right: true },
         {
-          line: "Kell on üksteist.",
+          line: "Kell on pool kümme.",
           why: (
             <Trans>
-              <span lang="et">Üksteist</span> is 11:00, and it’s ten.
+              <span lang="et">Pool</span> looks ahead: <span lang="et">pool kümme</span> is 9:30,
+              and it’s ten.
             </Trans>
           ),
         },

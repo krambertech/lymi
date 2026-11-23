@@ -13,11 +13,11 @@ msgstr "С <0>eurot</0> или <1>maksab</1> число становится ц�
 msgid "<0>Kell on</0> before the number makes it a time."
 msgstr "<0>Kell on</0> перед числом означает время."
 
+msgid "<0>Pool</0> looks ahead: <1>pool kümme</1> is 9:30, and it’s ten."
+msgstr "<0>Pool</0> смотрит вперёд: <1>pool kümme</1> — это 9:30, а сейчас десять."
+
 msgid "<0>Pool</0> looks ahead: <1>pool üksteist</1> is 10:30, and it’s ten."
 msgstr "<0>Pool</0> смотрит вперёд: <1>pool üksteist</1> — это 10:30, а сейчас десять."
-
-msgid "<0>Üksteist</0> is 11:00, and it’s ten."
-msgstr "<0>Üksteist</0> — это 11:00, а сейчас десять."
 
 msgid "<et>Avatud</et> is open and <et>suletud</et> closed, as on a door."
 msgstr "<et>Avatud</et> — открыто, <et>suletud</et> — закрыто, как на двери."
@@ -123,9 +123,6 @@ msgstr "В 18:00"
 
 msgid "At 9:00"
 msgstr "В 9:00"
-
-msgid "At 9:30"
-msgstr "В 9:30"
 
 msgid "at home"
 msgstr "дома"

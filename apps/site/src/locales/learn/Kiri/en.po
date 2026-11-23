@@ -1,0 +1,449 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 16:43+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0>Helistama</0> asks <1>kellele?</1>, to whom: <2>teile</2>."
+msgstr "<0>Helistama</0> asks <1>kellele?</1>, to whom: <2>teile</2>."
+
+msgid "<0>Lugupidamisega</0> is formal. To a friend, end with <1>Kallistades</1> or just your name."
+msgstr "<0>Lugupidamisega</0> is formal. To a friend, end with <1>Kallistades</1> or just your name."
+
+msgid "<0>Ootama</0> usually takes the partitive: <1>teid</1>."
+msgstr "<0>Ootama</0> usually takes the partitive: <1>teid</1>."
+
+msgid "<0>Ootama</0> usually takes the partitive: <1>vastust</1>."
+msgstr "<0>Ootama</0> usually takes the partitive: <1>vastust</1>."
+
+msgid "<0>Teiega</0> is with you: you’d wait together. <1>Ootama</1> usually takes the partitive: <2>teid</2>."
+msgstr "<0>Teiega</0> is with you: you’d wait together. <1>Ootama</1> usually takes the partitive: <2>teid</2>."
+
+msgid "<et>Helistama</et> asks <et>kellele?</et>, to whom: <et>teile</et>."
+msgstr "<et>Helistama</et> asks <et>kellele?</et>, to whom: <et>teile</et>."
+
+msgid "<et>Kas oleks võimalik …?</et> asks politely without naming anyone."
+msgstr "<et>Kas oleks võimalik …?</et> asks politely without naming anyone."
+
+msgid "<et>Ootama</et> usually takes the partitive: <et>vastust</et>."
+msgstr "<et>Ootama</et> usually takes the partitive: <et>vastust</et>."
+
+msgid "<et>Pärast</et> before a word takes the partitive: <et>pärast kella viit</et>."
+msgstr "<et>Pärast</et> before a word takes the partitive: <et>pärast kella viit</et>."
+
+msgid "25 minutes"
+msgstr "25 minutes"
+
+msgid "7 exercises"
+msgstr "7 exercises"
+
+msgid "A message to a landlord, a school or a doctor usually uses <0>te</0> and the would form from lesson {conditional}. These phrases carry most of it."
+msgstr "A message to a landlord, a school or a doctor usually uses <0>te</0> and the would form from lesson {conditional}. These phrases carry most of it."
+
+msgid "A noisy neighbour"
+msgstr "A noisy neighbour"
+
+msgid "A polite request can also be <et>palun</et> with the <et>te</et> command: <et>helistage</et>."
+msgstr "A polite request can also be <et>palun</et> with the <et>te</et> command: <et>helistage</et>."
+
+msgid "A polite request: <et>te</et> and the would form, <et>kas te saaksite …?</et>"
+msgstr "A polite request: <et>te</et> and the would form, <et>kas te saaksite …?</et>"
+
+msgid "After <0>kolm</0>, the partitive singular: <1>kolm päeva</1>."
+msgstr "After <0>kolm</0>, the partitive singular: <1>kolm päeva</1>."
+
+msgid "After <et>kolm</et>, the partitive singular: <et>kolm päeva</et>."
+msgstr "After <et>kolm</et>, the partitive singular: <et>kolm päeva</et>."
+
+msgid "All day on Wednesday"
+msgstr "All day on Wednesday"
+
+msgid "All seven, each ready for a message."
+msgstr "All seven, each ready for a message."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "Ask politely for an electrician."
+msgstr "Ask politely for an electrician."
+
+msgid "Ask with the would form and <0>te</0>: <1>Kas te saaksite meistri saata?</1>"
+msgstr "Ask with the would form and <0>te</0>: <1>Kas te saaksite meistri saata?</1>"
+
+msgid "Asking politely"
+msgstr "Asking politely"
+
+msgid "At the weekend"
+msgstr "At the weekend"
+
+msgid "broken"
+msgstr "broken"
+
+msgid "Check the message"
+msgstr "Check the message"
+
+msgid "Come round on Monday morning, before work"
+msgstr "Come round on Monday morning, before work"
+
+msgid "Could you send a repair person?"
+msgstr "Could you send a repair person?"
+
+msgid "Could you send a repair person? (to Mrs Tamm)"
+msgstr "Could you send a repair person? (to Mrs Tamm)"
+
+msgid "Each line from a message has one word in the wrong form. Tap it, then type it right."
+msgstr "Each line from a message has one word in the wrong form. Tap it, then type it right."
+
+msgid "Each verb after <0>ma</0> or <1>te</1> has its ending: <2>olen</2>, <3>saaksite</3>."
+msgstr "Each verb after <0>ma</0> or <1>te</1> has its ending: <2>olen</2>, <3>saaksite</3>."
+
+msgid "End with thanks and a sign-off: <0>Aitäh ette!</0> Then <1>Lugupidamisega</1> with no comma, and your name on the next line."
+msgstr "End with thanks and a sign-off: <0>Aitäh ette!</0> Then <1>Lugupidamisega</1> with no comma, and your name on the next line."
+
+msgid "Estonian can say it in the present, with <0>juba</0>: already."
+msgstr "Estonian can say it in the present, with <0>juba</0>: already."
+
+msgid "Estonian can say it in the present, with <et>juba</et>."
+msgstr "Estonian can say it in the present, with <et>juba</et>."
+
+msgid "Fill the gaps"
+msgstr "Fill the gaps"
+
+msgid "Fix the kitchen tap himself"
+msgstr "Fix the kitchen tap himself"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "For <0>te</0>, the would form ends in <1>-te</1>: <2>saaksite</2>."
+msgstr "For <0>te</0>, the would form ends in <1>-te</1>: <2>saaksite</2>."
+
+msgid "For <et>te</et>, the would form ends in <et>-te</et>: <et>saaksite</et>."
+msgstr "For <et>te</et>, the would form ends in <et>-te</et>: <et>saaksite</et>."
+
+msgid "Greet Mr Saar by name."
+msgstr "Greet Mr Saar by name."
+
+msgid "How long has the water been dripping? Write it as Kati does."
+msgstr "How long has the water been dripping? Write it as Kati does."
+
+msgid "How should Mrs Tamm get in touch?"
+msgstr "How should Mrs Tamm get in touch?"
+
+msgid "How warm is the room at night? Write the number as Jaan says it."
+msgstr "How warm is the room at night? Write the number as Jaan says it."
+
+msgid "I’m at home after five."
+msgstr "I’m at home after five."
+
+msgid "I’m at home on Monday after five."
+msgstr "I’m at home on Monday after five."
+
+msgid "I’m at home on Monday."
+msgstr "I’m at home on Monday."
+
+msgid "I’m at work until four."
+msgstr "I’m at work until four."
+
+msgid "I’m writing to you because the kitchen tap is broken."
+msgstr "I’m writing to you because the kitchen tap is broken."
+
+msgid "It asks with the would form, such as <0>saaksite</0>."
+msgstr "It asks with the would form, such as <0>saaksite</0>."
+
+msgid "It ends with thanks and <0>Lugupidamisega</0>."
+msgstr "It ends with thanks and <0>Lugupidamisega</0>."
+
+msgid "It says what is broken and since when."
+msgstr "It says what is broken and since when."
+
+msgid "It says when you’re at home: the days or times."
+msgstr "It says when you’re at home: the days or times."
+
+msgid "It starts with <0>Tere</0> and his name."
+msgstr "It starts with <0>Tere</0> and his name."
+
+msgid "Jaan"
+msgstr "Jaan"
+
+msgid "Jaan has to pay the repair person."
+msgstr "Jaan has to pay the repair person."
+
+msgid "Jaan phones his landlady"
+msgstr "Jaan phones his landlady"
+
+msgid "Jaan tried to fix the radiator himself."
+msgstr "Jaan tried to fix the radiator himself."
+
+msgid "Jaan’s radiator is cold. He phones Mrs Tamm."
+msgstr "Jaan’s radiator is cold. He phones Mrs Tamm."
+
+msgid "Kati tells a friend"
+msgstr "Kati tells a friend"
+
+msgid "Kati tried to fix the tap herself."
+msgstr "Kati tried to fix the tap herself."
+
+msgid "Kati writes"
+msgstr "Kati writes"
+
+msgid "Kati writes to a friend about the tap. Drag a word into each gap, or tap one to fill the open gap. Three of the words belong nowhere."
+msgstr "Kati writes to a friend about the tap. Drag a word into each gap, or tap one to fill the open gap. Three of the words belong nowhere."
+
+msgid "Kati writes to her landlady"
+msgstr "Kati writes to her landlady"
+
+msgid "Kati’s kitchen tap has broken. Read her message to the landlady, Mrs Tamm, then answer the questions."
+msgstr "Kati’s kitchen tap has broken. Read her message to the landlady, Mrs Tamm, then answer the questions."
+
+msgid "Katki minema is to break: kraan on katki läinud, the tap has broken."
+msgstr "Katki minema is to break: kraan on katki läinud, the tap has broken."
+
+msgid "landlord, landlady"
+msgstr "landlord, landlady"
+
+msgid "letter, message"
+msgstr "letter, message"
+
+msgid "Listen: Mrs Tamm and Jaan"
+msgstr "Listen: Mrs Tamm and Jaan"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Literally “the one who gives for rent”: üürile andma is to rent out."
+msgstr "Literally “the one who gives for rent”: üürile andma is to rent out."
+
+msgid "Mrs Tamm"
+msgstr "Mrs Tamm"
+
+msgid "Nearly. Listen to the phrases above once more."
+msgstr "Nearly. Listen to the phrases above once more."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Nearly. Read the reason under each one you got wrong."
+
+msgid "Now write your own. Nothing marks it: once you’ve written it, compare it with a model and tick what yours does."
+msgstr "Now write your own. Nothing marks it: once you’ve written it, compare it with a model and tick what yours does."
+
+msgid "On a day is usually <0>-l</0>: <1>esmaspäeval</1>."
+msgstr "On a day is usually <0>-l</0>: <1>esmaspäeval</1>."
+
+msgid "On a day is usually <et>-l</et>: <et>esmaspäeval</et>."
+msgstr "On a day is usually <et>-l</et>: <et>esmaspäeval</et>."
+
+msgid "On Friday"
+msgstr "On Friday"
+
+msgid "On Monday and Tuesday after five"
+msgstr "On Monday and Tuesday after five"
+
+msgid "On Thursday at four, after work"
+msgstr "On Thursday at four, after work"
+
+msgid "On Thursday at two"
+msgstr "On Thursday at two"
+
+msgid "One person, so the singular: <0>tänulik</0>."
+msgstr "One person, so the singular: <0>tänulik</0>."
+
+msgid "One person, so the singular: <et>tänulik</et>."
+msgstr "One person, so the singular: <et>tänulik</et>."
+
+msgid "Open with the reason, close with thanks: <et>Kirjutan teile, sest …</et>, <et>Aitäh ette!</et>"
+msgstr "Open with the reason, close with thanks: <et>Kirjutan teile, sest …</et>, <et>Aitäh ette!</et>"
+
+msgid "Opening and closing"
+msgstr "Opening and closing"
+
+msgid "Our kitchen tap is broken."
+msgstr "Our kitchen tap is broken."
+
+msgid "Pay the rent for the whole month"
+msgstr "Pay the rent for the whole month"
+
+msgid "Phone in the evening"
+msgstr "Phone in the evening"
+
+msgid "Phrases for a message"
+msgstr "Phrases for a message"
+
+msgid "Please phone me in the evening."
+msgstr "Please phone me in the evening."
+
+msgid "Please write to me afterwards."
+msgstr "Please write to me afterwards."
+
+msgid "politely"
+msgstr "politely"
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "Repair person"
+msgstr "Repair person"
+
+msgid "repair person, craftsman"
+msgstr "repair person, craftsman"
+
+msgid "Say what is broken, and since when."
+msgstr "Say what is broken, and since when."
+
+msgid "Say when you’re at home."
+msgstr "Say when you’re at home."
+
+msgid "Say when, on which days: <0>Ma olen kodus esmaspäeval pärast kella viit.</0>"
+msgstr "Say when, on which days: <0>Ma olen kodus esmaspäeval pärast kella viit.</0>"
+
+msgid "Send Mrs Tamm a message"
+msgstr "Send Mrs Tamm a message"
+
+msgid "Start with a greeting and the reason: <0>Tere, proua Tamm!</0> <1>Kirjutan teile, sest …</1>"
+msgstr "Start with a greeting and the reason: <0>Tere, proua Tamm!</0> <1>Kirjutan teile, sest …</1>"
+
+msgid "Talk: the repair person"
+msgstr "Talk: the repair person"
+
+msgid "tap, faucet"
+msgstr "tap, faucet"
+
+msgid "Thank him and sign off."
+msgstr "Thank him and sign off."
+
+msgid "Thank you in advance!"
+msgstr "Thank you in advance!"
+
+msgid "That sounds like an order. Ask with the would form: <0>saaksite</0>."
+msgstr "That sounds like an order. Ask with the would form: <0>saaksite</0>."
+
+msgid "That’s too cold, sorry."
+msgstr "That’s too cold, sorry."
+
+msgid "The <0>-nud</0> form of <1>minema</1> is <2>läinud</2>."
+msgstr "The <0>-nud</0> form of <1>minema</1> is <2>läinud</2>."
+
+msgid "The <et>-nud</et> form of <et>minema</et> is <et>läinud</et>."
+msgstr "The <et>-nud</et> form of <et>minema</et> is <et>läinud</et>."
+
+msgid "The bathroom light"
+msgstr "The bathroom light"
+
+msgid "The bathroom light doesn’t work at all."
+msgstr "The bathroom light doesn’t work at all."
+
+msgid "The front door won’t lock"
+msgstr "The front door won’t lock"
+
+msgid "The kitchen tap"
+msgstr "The kitchen tap"
+
+msgid "The kitchen tap drips too."
+msgstr "The kitchen tap drips too."
+
+msgid "The light in your bathroom stopped working last night. Write about 50 words to your landlord, Mr Saar."
+msgstr "The light in your bathroom stopped working last night. Write about 50 words to your landlord, Mr Saar."
+
+msgid "The living-room radiator is cold"
+msgstr "The living-room radiator is cold"
+
+msgid "The lock"
+msgstr "The lock"
+
+msgid "The repair person calls"
+msgstr "The repair person calls"
+
+msgid "The repair person phones you. Pick what you say back. A wrong reply says why, then you hear the right one."
+msgstr "The repair person phones you. Pick what you say back. A wrong reply says why, then you hear the right one."
+
+msgid "The right form in a message"
+msgstr "The right form in a message"
+
+msgid "The tap is in the kitchen, and the <0>-nud</0> form of <1>minema</1> is <2>läinud</2>."
+msgstr "The tap is in the kitchen, and the <0>-nud</0> form of <1>minema</1> is <2>läinud</2>."
+
+msgid "The water has been dripping for three days."
+msgstr "The water has been dripping for three days."
+
+msgid "The would form asks politely: <0>saaksite</0>."
+msgstr "The would form asks politely: <0>saaksite</0>."
+
+msgid "to drip"
+msgstr "to drip"
+
+msgid "to repair, to fix"
+msgstr "to repair, to fix"
+
+msgid "To say you haven’t done it, <0>ei ole</0> takes the <1>-nud</1> form: <2>parandanud</2>."
+msgstr "To say you haven’t done it, <0>ei ole</0> takes the <1>-nud</1> form: <2>parandanud</2>."
+
+msgid "Vesi tilgub, the water drips."
+msgstr "Vesi tilgub, the water drips."
+
+msgid "What does Kati write?"
+msgstr "What does Kati write?"
+
+msgid "What has broken?"
+msgstr "What has broken?"
+
+msgid "What will Jaan do on Friday?"
+msgstr "What will Jaan do on Friday?"
+
+msgid "When is Kati at home?"
+msgstr "When is Kati at home?"
+
+msgid "When will the repair person come?"
+msgstr "When will the repair person come?"
+
+msgid "Where it is broken: <et>meie köögis</et>."
+msgstr "Where it is broken: <et>meie köögis</et>."
+
+msgid "Who can let the repair person in on Wednesday? Write the name."
+msgstr "Who can let the repair person in on Wednesday? Write the name."
+
+msgid "Who says it?"
+msgstr "Who says it?"
+
+msgid "Who will let the repair person in? Write the name."
+msgstr "Who will let the repair person in? Write the name."
+
+msgid "Why does Jaan phone?"
+msgstr "Why does Jaan phone?"
+
+msgid "Would it be possible to come tomorrow?"
+msgstr "Would it be possible to come tomorrow?"
+
+msgid "Write a short message to your landlord: what’s broken, a polite request, when you’re home. Read one, hear a phone call, then write your own."
+msgstr "Write a short message to your landlord: what’s broken, a polite request, when you’re home. Read one, hear a phone call, then write your own."
+
+msgid "Write back by email or post"
+msgstr "Write back by email or post"
+
+msgid "Write each line in Estonian."
+msgstr "Write each line in Estonian."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "Write to your landlord"
+msgstr "Write to your landlord"
+
+msgid "Yes, that suits me."
+msgstr "Yes, that suits me."
+
+msgid "You haven’t touched the tap."
+msgstr "You haven’t touched the tap."
+
+msgid "You’re at work in the mornings."
+msgstr "You’re at work in the mornings."
+
+msgid "Your kitchen tap is broken and you haven’t touched it. You’re at work in the mornings, and you’ll wait for him to come."
+msgstr "Your kitchen tap is broken and you haven’t touched it. You’re at work in the mornings, and you’ll wait for him to come."
+
+msgid "Your message"
+msgstr "Your message"
+
+msgid "Yours sincerely"
+msgstr "Yours sincerely"

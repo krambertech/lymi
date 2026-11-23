@@ -302,6 +302,9 @@ msgstr "A free lesson on saying where you are in Estonian: -s, usually for in (T
 msgid "A free lesson on suggesting and allowing in Estonian: let’s, usually the present’s me form without me (teeme, vaatame; minema gives lähme), lähme with the -ma infinitive (lähme ujuma), and las, usually with the present (las ta tuleb, las ma aitan). Every sentence is read aloud."
 msgstr "A free lesson on suggesting and allowing in Estonian: let’s, usually the present’s me form without me (teeme, vaatame; minema gives lähme), lähme with the -ma infinitive (lähme ujuma), and las, usually with the present (las ta tuleb, las ma aitan). Every sentence is read aloud."
 
+msgid "A free lesson on the case many Estonian verbs ask for: ootama keda (ootan sind), rääkima kellest (räägin sinust), helistama kellele (helistan sulle), kohtuma kellega (kohtun sinuga) and küsima kellelt (küsin sinult), where English and Estonian disagree. Every sentence is read aloud."
+msgstr "A free lesson on the case many Estonian verbs ask for: ootama keda (ootan sind), rääkima kellest (räägin sinust), helistama kellele (helistan sulle), kohtuma kellega (kohtun sinuga) and küsima kellelt (küsin sinult), where English and Estonian disagree. Every sentence is read aloud."
+
 msgid "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
 
@@ -764,6 +767,9 @@ msgstr "Estonian reading and listening practice: a day in Tallinn"
 msgid "Estonian total and partial object"
 msgstr "Estonian total and partial object"
 
+msgid "Estonian writing practice: a message to the landlord"
+msgstr "Estonian writing practice: a message to the landlord"
+
 msgid "Every word has a group. Check when you’re ready."
 msgstr "Every word has a group. Check when you’re ready."
 
@@ -842,6 +848,9 @@ msgstr "Free Estonian practice for beginners: read opening hours and a message, 
 
 msgid "Free Estonian practice in the past and the future: read about a friend’s weekend and write back, say what you did and didn’t do (olin, ei läinud), what you will do (homme lähen, hakkan õppima, kavatsen tulla), fix verbs in the wrong form, and follow a conversation you can play twice. Every sentence is read aloud."
 msgstr "Free Estonian practice in the past and the future: read about a friend’s weekend and write back, say what you did and didn’t do (olin, ei läinud), what you will do (homme lähen, hakkan õppima, kavatsen tulla), fix verbs in the wrong form, and follow a conversation you can play twice. Every sentence is read aloud."
+
+msgid "Free Estonian writing practice: read a message to a landlady, learn the phrases for a polite message (kas te saaksite, aitäh ette, lugupidamisega), follow a phone call about a cold radiator, then write your own message and compare it with a model. Every sentence is read aloud."
+msgstr "Free Estonian writing practice: read a message to a landlady, learn the phrases for a polite message (kas te saaksite, aitäh ette, lugupidamisega), follow a phone call about a cold radiator, then write your own message and compare it with a model. Every sentence is read aloud."
 
 msgid "friend"
 msgstr "friend"
@@ -2441,6 +2450,9 @@ msgstr "Where the cat is"
 
 msgid "Which case a verb takes"
 msgstr "Which case a verb takes"
+
+msgid "Which case an Estonian verb takes"
+msgstr "Which case an Estonian verb takes"
 
 msgid "Which language do they speak?"
 msgstr "Which language do they speak?"

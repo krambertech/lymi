@@ -302,6 +302,9 @@ msgstr "Бесплатный урок эстонского о том, как с�
 msgid "A free lesson on suggesting and allowing in Estonian: let’s, usually the present’s me form without me (teeme, vaatame; minema gives lähme), lähme with the -ma infinitive (lähme ujuma), and las, usually with the present (las ta tuleb, las ma aitan). Every sentence is read aloud."
 msgstr "Бесплатный урок о том, как предлагать и разрешать по-эстонски: «давай» — обычно форма настоящего времени для me без me (teeme, vaatame; от minema — lähme), lähme с инфинитивом на -ma (lähme ujuma) и las, обычно с настоящим временем (las ta tuleb, las ma aitan). Каждое предложение озвучено."
 
+msgid "A free lesson on the case many Estonian verbs ask for: ootama keda (ootan sind), rääkima kellest (räägin sinust), helistama kellele (helistan sulle), kohtuma kellega (kohtun sinuga) and küsima kellelt (küsin sinult), where English and Estonian disagree. Every sentence is read aloud."
+msgstr "Бесплатный урок о падеже, которого требуют многие эстонские глаголы: ootama keda (ootan sind), rääkima kellest (räägin sinust), helistama kellele (helistan sulle), kohtuma kellega (kohtun sinuga) и küsima kellelt (küsin sinult), а также о том, где эстонский говорит не так, как русский. Каждое предложение озвучено."
+
 msgid "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
 msgstr "Бесплатный урок об эстонских формах на -ma, -mas и -mast: lähen ujuma (иду плавать), olen ujumas (на плавании) и tulen ujumast (возвращаюсь с плавания). Они отвечают на kuhu?, kus? и kust?, как и названия мест. А ещё — когда говорить lähen, käin или tulen. Каждое предложение озвучено."
 
@@ -764,6 +767,9 @@ msgstr "Эстонский язык: чтение и аудирование. Д�
 msgid "Estonian total and partial object"
 msgstr "Полный и частичный объект в эстонском языке"
 
+msgid "Estonian writing practice: a message to the landlord"
+msgstr "Эстонский язык: практика письма. Письмо арендодателю"
+
 msgid "Every word has a group. Check when you’re ready."
 msgstr "Все слова в группах. Можно проверять."
 
@@ -842,6 +848,9 @@ msgstr "Бесплатная практика эстонского для нач
 
 msgid "Free Estonian practice in the past and the future: read about a friend’s weekend and write back, say what you did and didn’t do (olin, ei läinud), what you will do (homme lähen, hakkan õppima, kavatsen tulla), fix verbs in the wrong form, and follow a conversation you can play twice. Every sentence is read aloud."
 msgstr "Бесплатная практика эстонского в прошедшем и будущем: прочитай о выходных подруги и ответь, скажи, что ты делал и чего не делал (olin, ei läinud), что будешь делать (homme lähen, hakkan õppima, kavatsen tulla), исправь глаголы в неверной форме и пойми разговор, который можно прослушать дважды. Каждое предложение озвучено."
+
+msgid "Free Estonian writing practice: read a message to a landlady, learn the phrases for a polite message (kas te saaksite, aitäh ette, lugupidamisega), follow a phone call about a cold radiator, then write your own message and compare it with a model. Every sentence is read aloud."
+msgstr "Бесплатная практика письма на эстонском: прочитай письмо хозяйке квартиры, выучи фразы для вежливого письма (kas te saaksite, aitäh ette, lugupidamisega), послушай телефонный разговор о холодной батарее, а потом напиши своё письмо и сравни его с образцом. Каждое предложение озвучено."
 
 msgid "friend"
 msgstr "друг, подруга"
@@ -2441,6 +2450,9 @@ msgstr "Где кот"
 
 msgid "Which case a verb takes"
 msgstr "Какой падеж нужен глаголу"
+
+msgid "Which case an Estonian verb takes"
+msgstr "Какой падеж нужен эстонскому глаголу"
 
 msgid "Which language do they speak?"
 msgstr "На каком языке они говорят?"

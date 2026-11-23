@@ -1,0 +1,540 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 16:34+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0>-ga</0>: with someone."
+msgstr "<0>-ga</0>: з кимось."
+
+msgid "<0>-le</0>: to someone, telling them."
+msgstr "<0>-le</0>: комусь, тобто розповідаєш."
+
+msgid "<0>-st</0>: about someone."
+msgstr "<0>-st</0>: про когось."
+
+msgid "<0>Aitama</0> usually takes the partitive: <1>sind</1>."
+msgstr "<0>Aitama</0> зазвичай бере партитив, хоч українською «допомагаю тобі»: <1>sind</1>."
+
+msgid "<0>Helistama</0> and <1>vastama</1> go to someone: <2>-le</2>."
+msgstr "<0>Helistama</0> і <1>vastama</1> питають «кому?», як і українською: <2>-le</2>."
+
+msgid "<0>Hoolima</0> and <1>aru saama</1> take <2>-st</2>."
+msgstr "<0>Hoolima</0> і <1>aru saama</1> беруть <2>-st</2>."
+
+msgid "<0>Hoolima</0> takes <1>-st</1>: <2>sinust</2>."
+msgstr "<0>Hoolima</0> бере <1>-st</1>: <2>sinust</2>."
+
+msgid "<0>Kohtuma</0> and <1>abielluma</1> take <2>-ga</2>, with."
+msgstr "<0>Kohtuma</0> і <1>abielluma</1> беруть <2>-ga</2>, «з кимось»."
+
+msgid "<0>Kohtuma</0> takes <1>-ga</1>, not <2>-le</2>: <3>sinuga</3>."
+msgstr "<0>Kohtuma</0> бере <1>-ga</1>, а не <2>-le</2>: <3>sinuga</3>."
+
+msgid "<0>Ootama, aitama, armastama</0> and <1>tänama</1> usually take the partitive: <2>ma tänan sind</2>."
+msgstr "<0>Ootama, aitama, armastama</0> і <1>tänama</1> зазвичай беруть партитив: <2>ma tänan sind</2>, хоч українською «дякую тобі»."
+
+msgid "<0>Ootama</0> and <1>aitama</1> usually take the partitive."
+msgstr "<0>Ootama</0> і <1>aitama</1> зазвичай беруть партитив."
+
+msgid "<0>Ootama</0> usually takes the partitive: <1>seda</1>."
+msgstr "<0>Ootama</0> зазвичай бере партитив: <1>seda</1>."
+
+msgid "<0>Ootan sind</0>, <1>räägin sinust</1>, <2>helistan sulle</2>: many verbs ask for a set case, and a dictionary tells you which."
+msgstr "<0>Ootan sind</0>, <1>räägin sinust</1>, <2>helistan sulle</2>: багато дієслів вимагають певного відмінка, і словник підкаже, якого."
+
+msgid "<0>Sellest</0> is about it. <1>Ootama</1> usually takes the partitive: <2>seda</2>."
+msgstr "<0>Sellest</0> — це «про це». <1>Ootama</1> зазвичай бере партитив: <2>seda</2>."
+
+msgid "<0>Sinust</0> is about you. You answer to someone: <1>sulle</1>."
+msgstr "<0>Sinust</0> — це «про тебе». А відповідають комусь: <1>sulle</1>."
+
+msgid "<0>Tänama</0> takes the partitive: <1>sind</1>."
+msgstr "<0>Tänama</0> бере партитив, хоч українською «дякую тобі»: <1>sind</1>."
+
+msgid "<et>-st</et>, <et>-le</et>, <et>-ga</et> or <et>-lt</et>"
+msgstr "<et>-st</et>, <et>-le</et>, <et>-ga</et> чи <et>-lt</et>"
+
+msgid "<et>Aitama</et> usually takes the partitive: <et>sind</et>."
+msgstr "<et>Aitama</et> зазвичай бере партитив, хоч українською «допомагаю тобі»: <et>sind</et>."
+
+msgid "<et>Aru saama</et> asks <et>kellest?</et>: <et>sinust</et>."
+msgstr "<et>Aru saama</et> питає <et>kellest?</et>, хоч українською «розумію тебе»: <et>sinust</et>."
+
+msgid "<et>Helistama</et> asks <et>kellele?</et>: <et>emale</et>."
+msgstr "<et>Helistama</et> питає <et>kellele?</et>: <et>emale</et>."
+
+msgid "<et>Helistama</et> asks <et>kellele?</et>: <et>sulle</et>."
+msgstr "<et>Helistama</et> питає <et>kellele?</et>: <et>sulle</et>."
+
+msgid "<et>Hoolima</et> asks <et>kellest?</et>: <et>sõbrast</et>."
+msgstr "<et>Hoolima</et> питає <et>kellest?</et>: <et>sõbrast</et>."
+
+msgid "<et>Hoolima</et> asks <et>kellest?</et>: <et>vennast</et>."
+msgstr "<et>Hoolima</et> питає <et>kellest?</et>: <et>vennast</et>."
+
+msgid "<et>Hoolima</et> takes <et>-st</et>: <et>sinust</et>."
+msgstr "<et>Hoolima</et> бере <et>-st</et>: <et>sinust</et>."
+
+msgid "<et>Kohtuma</et> asks <et>kellega?</et>: <et>Jaaniga</et>."
+msgstr "<et>Kohtuma</et> питає <et>kellega?</et>: <et>Jaaniga</et>."
+
+msgid "<et>Ootama</et>, <et>aitama</et>, <et>armastama</et> and <et>tänama</et> usually take the partitive."
+msgstr "<et>Ootama</et>, <et>aitama</et>, <et>armastama</et> і <et>tänama</et> зазвичай беруть партитив."
+
+msgid "<et>Rääkima</et>: <et>-st</et> about someone, <et>-le</et> telling someone, <et>-ga</et> with someone."
+msgstr "<et>Rääkima</et>: <et>-st</et> — про когось, <et>-le</et> — розповідати комусь, <et>-ga</et> — з кимось."
+
+msgid "<et>Tänama</et> takes the partitive: <et>sind</et>."
+msgstr "<et>Tänama</et> бере партитив, хоч українською «дякую тобі»: <et>sind</et>."
+
+msgid "<et>Unistama</et> asks <et>millest?</et>: <et>puhkusest</et>."
+msgstr "<et>Unistama</et> питає <et>millest?</et>: <et>puhkusest</et>."
+
+msgid "<et>Vastama</et> asks <et>kellele?</et>: <et>õpetajale</et>."
+msgstr "<et>Vastama</et> питає <et>kellele?</et>: <et>õpetajale</et>."
+
+msgid "22 minutes"
+msgstr "22 хвилини"
+
+msgid "8 exercises"
+msgstr "8 вправ"
+
+msgid "A colleague from work"
+msgstr "Колега з роботи"
+
+msgid "a name"
+msgstr "ім’я"
+
+msgid "A wedding in July"
+msgstr "Весілля в липні"
+
+msgid "About whom"
+msgstr "Про кого"
+
+msgid "about whom, from whom"
+msgstr "про кого, з кого"
+
+msgid "about you"
+msgstr "про тебе"
+
+msgid "About, to or with"
+msgstr "Про когось, комусь чи з кимось"
+
+msgid "All eight, typed in full."
+msgstr "Усі вісім, написані повністю."
+
+msgid "All seven, each with the case its verb needs."
+msgstr "Усі сім, кожне з відмінком, якого вимагає дієслово."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All six: you heard the ending every time."
+msgstr "Усі шість: ти щоразу чув закінчення."
+
+msgid "All ten: the verb told you every time."
+msgstr "Усі десять: дієслово щоразу підказувало форму."
+
+msgid "brother"
+msgstr "брат"
+
+msgid "Can I ask you something?"
+msgstr "Можна в тебе дещо спитати?"
+
+msgid "Don’t tell Peeter!"
+msgstr "Не розповідай Пеетерові!"
+
+msgid "Each sentence has a gap for you or me. The verb decides its form. Pick it, then hear the sentence."
+msgstr "У кожному реченні є пропуск для «ти» або «я». Форму визначає дієслово. Обери її, потім послухай речення."
+
+msgid "Each sentence has one word in the wrong case. Tap it, then type it right."
+msgstr "У кожному реченні одне слово стоїть не в тому відмінку. Натисни на нього, потім напиши правильно."
+
+msgid "English and Estonian often disagree: you meet with someone, <0>kohtun sinuga</0>, phone to someone, <1>helistan sulle</1>, and ask from someone, <2>küsin sinult</2>."
+msgstr "Часто естонська каже так само, як українська: зустрічаєшся з кимось, <0>kohtun sinuga</0>, дзвониш комусь, <1>helistan sulle</1>, питаєш у когось, <2>küsin sinult</2>. Але «дякую тобі» й «допомагаю тобі» естонською — партитив."
+
+msgid "English meets someone; <0>kohtuma</0> meets with someone: <1>Jaaniga</1>."
+msgstr "Як і українською, з <0>kohtuma</0> зустрічаються з кимось: <1>Jaaniga</1>."
+
+msgid "English meets someone; <et>kohtuma</et> meets with someone: <et>Jaaniga</et>."
+msgstr "Як і українською, з <et>kohtuma</et> зустрічаються з кимось: <et>Jaaniga</et>."
+
+msgid "English puts most objects straight after the verb: I phone you, I meet you, I ask you. In Estonian, many verbs ask for a set case, and the question the verb answers names it: <0/>, <1/>, <2/>, <3/>, <4/>."
+msgstr "В українській дієслово теж вимагає свого відмінка: «чекаю кого?», «дзвоню кому?», «зустрічаюся з ким?». В естонській так само, і який це відмінок, підказує питання до дієслова: <0/>, <1/>, <2/>, <3/>, <4/>. Інколи відмінок не такий, як в українській."
+
+msgid "Fix the case"
+msgstr "Виправ відмінок"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "friend"
+msgstr "друг, подруга"
+
+msgid "From someone is usually <0>-lt</0>: <1>küsin sinult</1>, <2>sain sinult</2>."
+msgstr "«Від когось» — зазвичай <0>-lt</0>: <1>küsin sinult</1>, <2>sain sinult</2>."
+
+msgid "from whom"
+msgstr "від кого, у кого"
+
+msgid "From whom"
+msgstr "Від кого"
+
+msgid "Her mother, about the party"
+msgstr "Мама, щодо свята"
+
+msgid "holiday"
+msgstr "відпустка"
+
+msgid "I can help you in the shop."
+msgstr "Я можу допомогти тобі в магазині."
+
+msgid "I don’t understand you."
+msgstr "Я тебе не розумію."
+
+msgid "I thank you for the help."
+msgstr "Я дякую тобі за допомогу."
+
+msgid "I, me"
+msgstr "я, мене"
+
+msgid "I’ll phone you on Friday."
+msgstr "Я подзвоню тобі в п’ятницю."
+
+msgid "I’ll phone you tomorrow."
+msgstr "Я подзвоню тобі завтра."
+
+msgid "I’ll write to him today."
+msgstr "Я напишу йому сьогодні."
+
+msgid "I’m talking about you."
+msgstr "Я говорю про тебе."
+
+msgid "I’m talking with you."
+msgstr "Я говорю з тобою."
+
+msgid "I’m telling you."
+msgstr "Я розповідаю тобі."
+
+msgid "I’m waiting for you."
+msgstr "Я чекаю на тебе."
+
+msgid "I’ve always dreamt of the piano."
+msgstr "Я завжди мріяв про піаніно."
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan is talking about Peeter."
+msgstr "Яан говорить про Пеетера."
+
+msgid "Jaan is talking with Peeter."
+msgstr "Яан говорить з Пеетером."
+
+msgid "Jaan is telling Peeter."
+msgstr "Яан розповідає Пеетерові."
+
+msgid "Jaan remembers Liisa."
+msgstr "Яан пам’ятає Лійсу."
+
+msgid "Kadri"
+msgstr "Кадрі"
+
+msgid "Kadri calls you about meeting. Pick what you say back. A wrong reply says why, then you hear the right one."
+msgstr "Кадрі дзвонить тобі, щоб домовитися про зустріч. Обери, що відповісти. Неправильна відповідь пояснить помилку, а потім ти почуєш правильну."
+
+msgid "Kati, Mari’s friend"
+msgstr "Каті, подруга Марі"
+
+msgid "Kinds of verb"
+msgstr "Типи дієслів"
+
+msgid "Learn a verb with its question: <0>ootama keda?</0>, <1>rääkima kellest?</1>, <2>helistama kellele?</2>, <3>kohtuma kellega?</3>, <4>küsima kellelt?</4>"
+msgstr "Вчи дієслово разом із його питанням: <0>ootama keda?</0>, <1>rääkima kellest?</1>, <2>helistama kellele?</2>, <3>kohtuma kellega?</3>, <4>küsima kellelt?</4>"
+
+msgid "Lesson {object} showed that on their own, <0>ootama</0>, <1>aitama</1> and <2>armastama</2> take the partitive. With <3>ära</3>, <4>ootama</4> can take the genitive: <5>ootan su ära</5>. A dictionary gives each verb’s question, so learn the two together."
+msgstr "Урок {object} показав, що самі по собі <0>ootama</0>, <1>aitama</1> і <2>armastama</2> беруть партитив. З <3>ära</3> дієслово <4>ootama</4> може взяти генітив: <5>ootan su ära</5>. Словник подає питання до кожного дієслова, тож вивчай їх разом."
+
+msgid "Liisa"
+msgstr "Лійса"
+
+msgid "Listen: Mari and Jaan"
+msgstr "Послухай: Марі та Яан"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Mari"
+msgstr "Марі"
+
+msgid "Mari cares about her brother."
+msgstr "Марі піклується про свого брата."
+
+msgid "Mari has never met Liisa."
+msgstr "Марі ніколи не зустрічалася з Лійсою."
+
+msgid "Mari is talking about her mother."
+msgstr "Марі говорить про маму."
+
+msgid "Mari is talking with her mother."
+msgstr "Марі говорить з мамою."
+
+msgid "Mari is telling her mother."
+msgstr "Марі розповідає мамі."
+
+msgid "Mari tells Jaan that her brother is getting married."
+msgstr "Марі розповідає Яанові, що її брат одружується."
+
+msgid "Match each verb with the question it answers."
+msgstr "З’єднай кожне дієслово з питанням, на яке воно відповідає."
+
+msgid "mother"
+msgstr "мама"
+
+msgid "Nearly. Ask each verb’s question again."
+msgstr "Майже. Ще раз постав питання до кожного дієслова."
+
+msgid "Nearly. Check the ending in the ones you got wrong."
+msgstr "Майже. Перевір закінчення там, де є помилка."
+
+msgid "Nearly. Look at the verb in the ones you got wrong."
+msgstr "Майже. Подивися на дієслово там, де є помилка."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Майже. Ще раз послухай ті, де є помилка."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Майже. Прочитай пояснення під кожною помилкою."
+
+msgid "Now with names and nouns. Each round gives a word and a sentence with a gap. Type the form the verb needs."
+msgstr "Тепер з іменами та іменниками. У кожному раунді — слово і речення з пропуском. Напиши форму, якої вимагає дієслово."
+
+msgid "One verb can change its meaning with the case: <0>räägin sinust</0>, about you; <1>räägin sulle</1>, I tell you; <2>räägin sinuga</2>, with you. So can <3>laenama</3>: <4>laenan sinult</4>, I borrow from you; <5>laenan sulle</5>, I lend you."
+msgstr "Від відмінка може залежати значення дієслова: <0>räägin sinust</0> — «говорю про тебе»; <1>räägin sulle</1> — «розповідаю тобі»; <2>räägin sinuga</2> — «говорю з тобою». Так само з <3>laenama</3>, як з українським «позичати»: <4>laenan sinult</4> — «позичаю в тебе»; <5>laenan sulle</5> — «позичаю тобі»."
+
+msgid "Peeter"
+msgstr "Пеетер"
+
+msgid "Peeter, her brother"
+msgstr "Пеетер, її брат"
+
+msgid "Pick a question and tap the sentences. The pronoun forms come from lesson {pronouns}."
+msgstr "Обери питання й натискай речення. Форми займенників пояснює урок {pronouns}."
+
+msgid "Pick the case"
+msgstr "Обери відмінок"
+
+msgid "Plans with Kadri"
+msgstr "Плани з Кадрі"
+
+msgid "Play the sentences you missed once more, then try again."
+msgstr "Ще раз послухай речення, де помилився, а тоді спробуй знову."
+
+msgid "Question"
+msgstr "Питання"
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Що запам’ятати» нижче, потім спробуй знову."
+
+msgid "sister"
+msgstr "сестра"
+
+msgid "Talk: meeting tomorrow"
+msgstr "Розмова: зустріч завтра"
+
+msgid "Tap a form"
+msgstr "Торкнися форми"
+
+msgid "Tap the sentences in the table once more, then try again."
+msgstr "Ще раз послухай речення в таблиці, потім спробуй знову."
+
+msgid "teacher"
+msgstr "учитель, учителька"
+
+msgid "The -lt case: küsin sinult, I ask you."
+msgstr "Відмінок на -lt: küsin sinult — я питаю в тебе."
+
+msgid "The <0>-ga</0> case, with: <1>ma kohtun sinuga</1>. Question: <2>kellega?</2>"
+msgstr "Відмінок на <0>-ga</0>, «з кимось»: <1>ma kohtun sinuga</1>. Питання: <2>kellega?</2>"
+
+msgid "The <0>-le</0> case, to: <1>ma helistan sulle</1>. Question: <2>kellele?</2>"
+msgstr "Відмінок на <0>-le</0>, «комусь»: <1>ma helistan sulle</1>. Питання: <2>kellele?</2>"
+
+msgid "The <0>-lt</0> case, off or from someone: <1>ma küsin sinult</1>. Question: <2>kellelt?</2>"
+msgstr "Відмінок на <0>-lt</0>, «від когось» чи «у когось»: <1>ma küsin sinult</1>. Питання: <2>kellelt?</2>"
+
+msgid "The <0>-st</0> case, about or from: <1>ma räägin sinust</1>. Question: <2>kellest?</2>"
+msgstr "Відмінок на <0>-st</0>, «про» чи «від»: <1>ma räägin sinust</1>. Питання: <2>kellest?</2>"
+
+msgid "The partitive of kes: Keda sa ootad?"
+msgstr "Партитив від kes: Keda sa ootad?"
+
+#. placeholder {0}: item.said.replace(/\.$/, "")
+msgid "The verb decides the case: <0>{0}</0>."
+msgstr "Дієслово визначає відмінок: <0>{0}</0>."
+
+msgid "The wedding is in Tallinn."
+msgstr "Весілля буде в Таллінні."
+
+msgid "to answer"
+msgstr "відповідати"
+
+msgid "to ask"
+msgstr "питати"
+
+msgid "To ask someone something, <et>küsima</et> asks <et>kellelt?</et>: <et>õelt</et>."
+msgstr "Коли щось питаєш у когось, <et>küsima</et> питає <et>kellelt?</et>: <et>õelt</et>."
+
+msgid "to borrow, to lend"
+msgstr "позичати"
+
+msgid "to care about"
+msgstr "піклуватися, дбати"
+
+msgid "to dream of"
+msgstr "мріяти"
+
+msgid "to get"
+msgstr "отримувати"
+
+msgid "to help"
+msgstr "допомагати"
+
+msgid "to love"
+msgstr "любити, кохати"
+
+msgid "to marry"
+msgstr "одружуватися"
+
+msgid "to meet"
+msgstr "зустрічатися"
+
+msgid "to phone"
+msgstr "дзвонити"
+
+msgid "to talk, to tell"
+msgstr "говорити, розповідати"
+
+msgid "to tell, to say"
+msgstr "казати, сказати"
+
+msgid "to thank"
+msgstr "дякувати"
+
+msgid "to understand"
+msgstr "розуміти"
+
+msgid "to wait for"
+msgstr "чекати"
+
+msgid "to whom"
+msgstr "кому"
+
+msgid "To whom"
+msgstr "Кому"
+
+msgid "to write"
+msgstr "писати"
+
+msgid "Type the form"
+msgstr "Напиши форму"
+
+msgid "Usually the partitive: <0>ma ootan sind</0>. Question: <1>keda?</1>"
+msgstr "Зазвичай партитив: <0>ma ootan sind</0>. Питання: <1>keda?</1>"
+
+msgid "Verb"
+msgstr "Дієслово"
+
+msgid "Verbs and the case they take"
+msgstr "Дієслова і їхні відмінки"
+
+msgid "Verbs that ask for a case"
+msgstr "Дієслова, що вимагають відмінка"
+
+msgid "Verbs that take the partitive"
+msgstr "Дієслова з партитивом"
+
+msgid "We met Jaan."
+msgstr "Ми зустрілися з Яаном."
+
+msgid "What did Mari and Liisa talk about all evening? Write it as Mari says it."
+msgstr "Про що Марі й Лійса говорили весь вечір? Напиши так, як каже Марі."
+
+msgid "What does it mean?"
+msgstr "Що це означає?"
+
+msgid "Where will Mari and Jaan meet? Write it as Mari says it."
+msgstr "Де зустрінуться Марі та Яан? Напиши так, як каже Марі."
+
+msgid "Which form of the pronoun?"
+msgstr "Яка форма займенника?"
+
+msgid "Which question?"
+msgstr "Яке питання?"
+
+msgid "Who is Peeter marrying?"
+msgstr "З ким одружується Пеетер?"
+
+msgid "Who phoned Mari yesterday?"
+msgstr "Хто вчора подзвонив Марі?"
+
+msgid "Who says it?"
+msgstr "Хто це каже?"
+
+msgid "Who will Mari ask about the present?"
+msgstr "У кого Марі спитає про подарунок?"
+
+msgid "whom"
+msgstr "кого"
+
+msgid "Whom"
+msgstr "Кого"
+
+msgid "With “you”"
+msgstr "З формою «ти»"
+
+msgid "With a person, <0>rääkima</0> takes three cases, each with its own meaning: about someone, telling someone, or talking with someone. Hear a sentence, then pick what it means."
+msgstr "Після <0>rääkima</0> людина може стояти в трьох відмінках, і в кожного своє значення: говорити про когось, розповідати комусь або говорити з кимось. Послухай речення й обери, що воно означає."
+
+msgid "with whom"
+msgstr "з ким"
+
+msgid "With whom"
+msgstr "З ким"
+
+msgid "Write each sentence in Estonian. Ask the verb’s question first, then choose the form."
+msgstr "Напиши кожне речення естонською. Спершу постав питання до дієслова, потім обери форму."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "you"
+msgstr "ти"
+
+msgid "You answer to someone: <0>sulle</0>."
+msgstr "Відповідають комусь, як і українською: <0>sulle</0>."
+
+msgid "You ask from someone: <0>sinult</0>."
+msgstr "Питають у когось: <0>sinult</0>."
+
+msgid "You ask from someone: <et>sinult</et>."
+msgstr "Питають у когось: <et>sinult</et>."
+
+msgid "You got Kadri’s letter, you’d gladly meet her, and you can’t wait to hear about her job."
+msgstr "Ти отримав листа від Кадрі, охоче з нею зустрінешся і дуже хочеш почути про її роботу."
+
+msgid "You meet with someone: <0>sinuga</0>."
+msgstr "Зустрічаються з кимось, як і українською: <0>sinuga</0>."
+
+msgid "You meet with someone: <et>sinuga</et>."
+msgstr "Зустрічаються з кимось, як і українською: <et>sinuga</et>."
+
+msgid "You phone to someone: <0>sulle</0>."
+msgstr "Дзвонять комусь, як і українською: <0>sulle</0>."
+
+msgid "You phone to someone: <et>sulle</et>."
+msgstr "Дзвонять комусь, як і українською: <et>sulle</et>."

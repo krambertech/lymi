@@ -8,22 +8,25 @@ const chunk = (
   moduleIds: string[],
   imports: string[] = [],
   entry: string | null = null,
+  dynamicImports: string[] = [],
 ) => ({
   type: "chunk" as const,
   fileName,
   moduleIds,
   imports,
+  dynamicImports,
   isEntry: !!entry,
   facadeModuleId: entry,
 });
 
 const site = "/repo/apps/site/src";
-const bundle = (homeImports: string[]) => ({
+const bundle = (homeImports: string[], homeLazy: string[] = []) => ({
   "home.js": chunk(
     "home.js",
     [`${site}/components/islands/LandingPage.tsx`],
     homeImports,
     `${site}/components/islands/LandingPage.tsx`,
+    homeLazy,
   ),
   "shared.js": chunk("shared.js", [`${site}/components/Button.tsx`], []),
   "deep.js": chunk("deep.js", [`${site}/components/Explore.tsx`], ["lesson.js"]),
@@ -45,6 +48,11 @@ describe("the lessons stay off every other page", () => {
   it("finds lesson code and lesson catalogs, however deep the import", () => {
     for (const chunkName of ["lesson.js", "deep.js", "uk.js"])
       expect(leakedLessonChunks(bundle([chunkName])), chunkName).toHaveLength(1);
+  });
+
+  it("finds lesson code a page would load later, on demand", () => {
+    expect(leakedLessonChunks(bundle([], ["lesson.js"]))).toHaveLength(1);
+    expect(leakedLessonChunks(bundle(["shared.js"], ["deep.js"]))).toHaveLength(1);
   });
 
   it("each built lesson has a file and each file a built lesson", () => {

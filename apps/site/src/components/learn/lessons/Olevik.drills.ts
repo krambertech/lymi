@@ -74,7 +74,7 @@ const heard = (name: Verb["verb"], ending: Ending, wrong: readonly Ending[]): Ch
   };
 };
 
-const STEM = msg`The ending goes on the stem of the I form, not of the -ma form.`;
+const STEM = msg`The ending goes on the stem of the I form, not of the -ma infinitive.`;
 const ENDING = msg`The ending goes with the pronoun at the start of the sentence.`;
 
 const fixed = ({ wrong, said, kind }: (typeof PRESENT_FIXES)[number]): FixDrill => ({

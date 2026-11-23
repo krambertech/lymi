@@ -22,8 +22,8 @@ msgstr "<0>Pool</0> смотрит вперёд: <1>pool üksteist</1> — эт�
 msgid "<et>Avatud</et> is open and <et>suletud</et> closed, as on a door."
 msgstr "<et>Avatud</et> — открыто, <et>suletud</et> — закрыто, как на двери."
 
-msgid "<et>Ei</et> comes before the verb, and the verb drops its ending: <et>ei tööta</et>."
-msgstr "<et>Ei</et> стоит перед глаголом, а глагол теряет окончание: <et>ei tööta</et>."
+msgid "<et>Ei</et> comes before the verb, and the verb usually drops its ending: <et>ei tööta</et>. With <et>on</et> it’s <et>ei ole</et>."
+msgstr "<et>Ei</et> стоит перед глаголом, а глагол обычно теряет окончание: <et>ei tööta</et>. Вместо <et>on</et> говорят <et>ei ole</et>."
 
 msgid "<et>Eurot</et> or <et>maksab</et> makes the number a price."
 msgstr "С <et>eurot</et> или <et>maksab</et> число становится ценой."
@@ -67,17 +67,17 @@ msgstr "Само число не говорит, что это: <0>kaksteist</0>
 msgid "A sign shortens each day to its first letter, as in lesson {days}. Hours use the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
 msgstr "На табличке каждый день обозначен первой буквой, как в уроке {days}. Время — в 24-часовом формате. <0>E–R 9–18</0> — с понедельника по пятницу, с 9:00 до 18:00. <1/> — закрыто."
 
-msgid "A time takes <et>kell</et> and the number: <et>kell kümme</et>, at ten."
-msgstr "Время называют с <et>kell</et> и числом: <et>kell kümme</et> — в десять."
+msgid "A time usually takes <et>kell</et> and the number: <et>kell kümme</et>, at ten."
+msgstr "Время обычно называют с <et>kell</et> и числом: <et>kell kümme</et> — в десять."
 
 msgid "A voice message from Jaan"
 msgstr "Голосовое сообщение от Яана"
 
-msgid "After <0>ei</0>, the verb drops its ending: <1>ei tööta</1>."
-msgstr "После <0>ei</0> глагол теряет окончание: <1>ei tööta</1>."
+msgid "After <0>ei</0>, the verb usually drops its ending: <1>ei tööta</1>."
+msgstr "После <0>ei</0> глагол обычно теряет окончание: <1>ei tööta</1>."
 
-msgid "After a number from two up, euro becomes eurot."
-msgstr "После чисел от двух и больше euro становится eurot."
+msgid "After a number from two up, euro usually becomes eurot: kaks eurot."
+msgstr "После чисел от двух и больше euro обычно становится eurot: kaks eurot."
 
 msgid "All six sentences right."
 msgstr "Все шесть предложений верны."
@@ -85,8 +85,8 @@ msgstr "Все шесть предложений верны."
 msgid "All six, every sentence right."
 msgstr "Все шесть, каждое предложение верно."
 
-msgid "Answer no with <0>ei</0> and the verb without its ending: <1>Ei, ma ei tööta</1>, no, I don’t work."
-msgstr "Говори «нет» словом <0>ei</0> и глаголом без окончания: <1>Ei, ma ei tööta</1>, нет, я не работаю."
+msgid "Answer no with <0>ei</0> and the verb, usually without its ending: <1>Ei, ma ei tööta</1>, no, I don’t work."
+msgstr "Говори «нет» словом <0>ei</0> и глаголом, обычно без окончания: <1>Ei, ma ei tööta</1>, нет, я не работаю."
 
 msgid "Answers her question with <0>jah</0> or <1>ei</1>."
 msgstr "Ответ на её вопрос с <0>jah</0> или <1>ei</1>."
@@ -427,8 +427,8 @@ msgstr "быть"
 msgid "To say the day, use <et>täna on</et>, <et>homme on</et> or <et>ülehomme on</et> and its name, with a small letter."
 msgstr "Чтобы назвать день, говори <et>täna on</et>, <et>homme on</et> или <et>ülehomme on</et> и название дня со строчной буквы."
 
-msgid "To say what something costs, use <et>maksab</et>; after a number from two up, <et>euro</et> becomes <et>eurot</et>."
-msgstr "Чтобы сказать, сколько что-то стоит, используй <et>maksab</et>; после числа от двух <et>euro</et> становится <et>eurot</et>."
+msgid "To say what something costs, use <et>maksab</et>; after a number from two up, <et>euro</et> usually becomes <et>eurot</et>."
+msgstr "Чтобы сказать, сколько что-то стоит, используй <et>maksab</et>; после числа от двух <et>euro</et> обычно становится <et>eurot</et>."
 
 msgid "today"
 msgstr "сегодня"
@@ -517,8 +517,8 @@ msgstr "С <0>ma</0> глагол оканчивается на <1>-n</1>: <2>ma
 msgid "Write back to Mari"
 msgstr "Напиши Мари"
 
-msgid "Write each sentence in Estonian, numbers in words. A time takes <0>kell</0>; what something costs takes <1>maksab</1>, and <2>eurot</2> after a number from two up."
-msgstr "Напиши каждое предложение по-эстонски, числа — словами. Время называют с <0>kell</0>, а сколько что-то стоит — с <1>maksab</1> и <2>eurot</2> после числа от двух."
+msgid "Write each sentence in Estonian, numbers in words. Here a time takes <0>kell</0>; what something costs takes <1>maksab</1>, and <2>eurot</2> after a number from two up."
+msgstr "Напиши каждое предложение по-эстонски, числа — словами. Здесь время называют с <0>kell</0>, а сколько что-то стоит — с <1>maksab</1> и <2>eurot</2> после числа от двух."
 
 msgid "Write it in Estonian"
 msgstr "Напиши по-эстонски"

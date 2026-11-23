@@ -1,6 +1,6 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import { clipId, dayAnswers, WEEK } from "../../../lib/learn/clips";
+import { clipId, dayAnswers, dayTranslations, WEEK } from "../../../lib/learn/clips";
 import type { ChoiceDrill, DrillBank, SentenceDrill } from "../../../lib/learn/drill";
 
 type Day = (typeof WEEK)[number];
@@ -62,8 +62,8 @@ const translated = (said: string): SentenceDrill => ({
   rule: "sentence",
   prompt: PROMPTS[said] as MessageDescriptor,
   say: said,
-  answers: dayAnswers(said),
-  explain: msg`<et>Täna on</et> says what day it is today, <et>homme on</et> what day it is tomorrow; the day’s name comes after.`,
+  answers: dayTranslations(said),
+  explain: msg`<et>Täna on</et> says what day it is today, <et>homme on</et> what day it is tomorrow; the day’s name usually comes after.`,
 });
 
 const written = (said: string): SentenceDrill => ({

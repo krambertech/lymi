@@ -35,8 +35,8 @@ msgstr "<et>Homme</et> is tomorrow: the day after today."
 msgid "<et>Reede</et> is the one day without <et>päev</et>; <et>laupäev</et> and <et>pühapäev</et> have names of their own."
 msgstr "<et>Reede</et> is the one day without <et>päev</et>; <et>laupäev</et> and <et>pühapäev</et> have names of their own."
 
-msgid "<et>Täna on</et> says what day it is today, <et>homme on</et> what day it is tomorrow; the day’s name comes after."
-msgstr "<et>Täna on</et> says what day it is today, <et>homme on</et> what day it is tomorrow; the day’s name comes after."
+msgid "<et>Täna on</et> says what day it is today, <et>homme on</et> what day it is tomorrow; the day’s name usually comes after."
+msgstr "<et>Täna on</et> says what day it is today, <et>homme on</et> what day it is tomorrow; the day’s name usually comes after."
 
 msgid "15 minutes"
 msgstr "15 minutes"
@@ -116,8 +116,8 @@ msgstr "Good. Say the week through in your head before you pick."
 msgid "Hear a day"
 msgstr "Hear a day"
 
-msgid "Hear the sentence and write it. Day names start with a small letter."
-msgstr "Hear the sentence and write it. Day names start with a small letter."
+msgid "Hear the sentence and write it. Inside a sentence, day names take a small letter."
+msgstr "Hear the sentence and write it. Inside a sentence, day names take a small letter."
 
 msgid "holy; a holiday"
 msgstr "holy; a holiday"
@@ -236,8 +236,8 @@ msgstr "The days as letters"
 msgid "The days by ear"
 msgstr "The days by ear"
 
-msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Day names start with a small letter, like any other word."
-msgstr "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Day names start with a small letter, like any other word."
+msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Inside a sentence, day names take a small letter, like any other word."
+msgstr "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Inside a sentence, day names take a small letter, like any other word."
 
 msgid "The first day of the week."
 msgstr "The first day of the week."
@@ -275,8 +275,8 @@ msgstr "The third day of the week."
 msgid "The third day. You can hear <0/>, three, from lesson {numbers}."
 msgstr "The third day. You can hear <0/>, three, from lesson {numbers}."
 
-msgid "The week starts on <0>esmaspäev</0>. Day names start with a small letter."
-msgstr "The week starts on <0>esmaspäev</0>. Day names start with a small letter."
+msgid "The week starts on <0>esmaspäev</0>. Day names take a small letter unless they start a sentence."
+msgstr "The week starts on <0>esmaspäev</0>. Day names take a small letter unless they start a sentence."
 
 msgid "three"
 msgstr "three"

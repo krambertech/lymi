@@ -35,8 +35,8 @@ msgstr "<et>Homme</et> — это завтра: день после сегодн
 msgid "<et>Reede</et> is the one day without <et>päev</et>; <et>laupäev</et> and <et>pühapäev</et> have names of their own."
 msgstr "<et>Reede</et> — единственный день без <et>päev</et>; у <et>laupäev</et> и <et>pühapäev</et> свои названия."
 
-msgid "<et>Täna on</et> says what day it is today, <et>homme on</et> what day it is tomorrow; the day’s name comes after."
-msgstr "<et>Täna on</et> говорит, какой день сегодня, <et>homme on</et> — какой завтра; название дня идёт после них."
+msgid "<et>Täna on</et> says what day it is today, <et>homme on</et> what day it is tomorrow; the day’s name usually comes after."
+msgstr "<et>Täna on</et> говорит, какой день сегодня, <et>homme on</et> — какой завтра; название дня обычно идёт после них."
 
 msgid "15 minutes"
 msgstr "15 минут"
@@ -116,8 +116,8 @@ msgstr "Хорошо. Прежде чем выбрать, проговори н�
 msgid "Hear a day"
 msgstr "День на слух"
 
-msgid "Hear the sentence and write it. Day names start with a small letter."
-msgstr "Послушай предложение и напиши его. Дни недели пишут со строчной буквы."
+msgid "Hear the sentence and write it. Inside a sentence, day names take a small letter."
+msgstr "Послушай предложение и напиши его. Внутри предложения дни недели пишут со строчной буквы."
 
 msgid "holy; a holiday"
 msgstr "святой; праздник"
@@ -236,8 +236,8 @@ msgstr "Дни буквами"
 msgid "The days by ear"
 msgstr "Дни на слух"
 
-msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Day names start with a small letter, like any other word."
-msgstr "Эстонская неделя, <0/>, начинается с понедельника, как и у нас. Шесть дней заканчиваются на <1/>, день. <2/>, пятница, — исключение. Как и в русском, дни недели пишут со строчной буквы."
+msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Inside a sentence, day names take a small letter, like any other word."
+msgstr "Эстонская неделя, <0/>, начинается с понедельника, как и у нас. Шесть дней заканчиваются на <1/>, день. <2/>, пятница, — исключение. Как и в русском, внутри предложения дни недели пишут со строчной буквы."
 
 msgid "The first day of the week."
 msgstr "Первый день недели."
@@ -275,8 +275,8 @@ msgstr "Третий день недели."
 msgid "The third day. You can hear <0/>, three, from lesson {numbers}."
 msgstr "Третий день. Слышно <0/>, три, из урока {numbers}."
 
-msgid "The week starts on <0>esmaspäev</0>. Day names start with a small letter."
-msgstr "Неделя начинается с <0>esmaspäev</0>. Дни недели пишут со строчной буквы."
+msgid "The week starts on <0>esmaspäev</0>. Day names take a small letter unless they start a sentence."
+msgstr "Неделя начинается с <0>esmaspäev</0>. Дни недели пишут со строчной буквы, если они не в начале предложения."
 
 msgid "three"
 msgstr "три"

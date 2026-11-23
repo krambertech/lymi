@@ -288,6 +288,11 @@ export const PAEVAD_SENTENCES = [
 ];
 
 export const dayAnswers = (said: string): [string, ...string[]] => [said];
+
+export const dayTranslations = (said: string): [string, ...string[]] => {
+  const [when = "", , day = ""] = said.replace(/\.$/, "").split(" ");
+  return [said, `${day.charAt(0).toUpperCase()}${day.slice(1)} on ${when.toLowerCase()}.`];
+};
 /** The negation lesson's present-tense verbs, each by its stem: the I form of the present without its -n. */
 export const NEGATION_VERBS = [
   { inf: "lugema", stem: "loe" },
@@ -1595,7 +1600,7 @@ export const KASKIV_TURNED: readonly {
   { from: "Oota!", to: "Ära oota!", kind: "dont", answers: ["Ära oota!"] },
   { from: "Söö!", to: "Ära söö!", kind: "dont", answers: ["Ära söö!"] },
   { from: "Joo!", to: "Ära joo!", kind: "dont", answers: ["Ära joo!"] },
-  { from: "Tule siia!", to: "Tulge siia!", kind: "more", answers: ["Tulge siia!"] },
+  { from: "Tule siia!", to: "Tulge siia!", kind: "more", answers: ["Tulge siia!", "Siia tulge!"] },
   { from: "Vaata!", to: "Vaadake!", kind: "more", answers: ["Vaadake!"] },
   { from: "Kuula!", to: "Kuulake!", kind: "more", answers: ["Kuulake!"] },
   { from: "Ära istu!", to: "Ärge istuge!", kind: "more", answers: ["Ärge istuge!"] },
@@ -2113,7 +2118,7 @@ export const TALLINN_DRILL_HEARD = [
 export const TALLINN_TRANSLATED = [
   { kind: "kell", answers: ["Kell on kümme."] },
   { kind: "hind", answers: ["See maksab kaks eurot.", "Maksab kaks eurot."] },
-  { kind: "paev", answers: dayAnswers("Täna on laupäev.") },
+  { kind: "paev", answers: dayTranslations("Täna on laupäev.") },
   {
     kind: "ei",
     answers: [
@@ -2139,6 +2144,8 @@ export const TALLINN_TRANSLATED = [
       "Mina olen kell kaksteist turul.",
       "Mina olen turul kell kaksteist.",
       "Kell kaksteist olen mina turul.",
+      "Ma kell kaksteist olen turul.",
+      "Mina kell kaksteist olen turul.",
       "Olen kell kaksteist turul.",
       "Olen turul kell kaksteist.",
       "Turul olen kell kaksteist.",
@@ -2160,6 +2167,8 @@ export const TALLINN_TRANSLATED = [
       "Meie joome kell üksteist kohvi.",
       "Meie joome kohvi kell üksteist.",
       "Kell üksteist joome meie kohvi.",
+      "Me kell üksteist joome kohvi.",
+      "Meie kell üksteist joome kohvi.",
       "Joome kell üksteist kohvi.",
       "Joome kohvi kell üksteist.",
       "Kohvi joome kell üksteist.",

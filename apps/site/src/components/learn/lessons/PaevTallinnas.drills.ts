@@ -14,10 +14,10 @@ import type { ChoiceDrill, DrillBank, DrillOption, SentenceDrill } from "../../.
 type Kind = "kell" | "hind" | "paev" | "ei";
 
 const WHY: Record<Kind, MessageDescriptor> = {
-  kell: msg`A time takes <et>kell</et> and the number: <et>kell kümme</et>, at ten.`,
-  hind: msg`To say what something costs, use <et>maksab</et>; after a number from two up, <et>euro</et> becomes <et>eurot</et>.`,
+  kell: msg`A time usually takes <et>kell</et> and the number: <et>kell kümme</et>, at ten.`,
+  hind: msg`To say what something costs, use <et>maksab</et>; after a number from two up, <et>euro</et> usually becomes <et>eurot</et>.`,
   paev: msg`To say the day, use <et>täna on</et>, <et>homme on</et> or <et>ülehomme on</et> and its name, with a small letter.`,
-  ei: msg`<et>Ei</et> comes before the verb, and the verb drops its ending: <et>ei tööta</et>.`,
+  ei: msg`<et>Ei</et> comes before the verb, and the verb usually drops its ending: <et>ei tööta</et>. With <et>on</et> it’s <et>ei ole</et>.`,
 };
 
 const WHICH: Record<Exclude<Kind, "ei">, MessageDescriptor> = {

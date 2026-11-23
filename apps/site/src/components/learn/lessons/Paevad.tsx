@@ -4,7 +4,14 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { LESSONS } from "../../../lib/learn/catalogue";
-import { clipId, clipUrl, dayAnswers, PAEVAD_PASSAGE, WEEK } from "../../../lib/learn/clips";
+import {
+  clipId,
+  clipUrl,
+  dayAnswers,
+  dayTranslations,
+  PAEVAD_PASSAGE,
+  WEEK,
+} from "../../../lib/learn/clips";
 import { type Day, dayChoices, weekDay } from "../../../lib/learn/days";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffledRun } from "../../../lib/learn/quiz";
@@ -475,7 +482,7 @@ export function PaevadLesson() {
         id: `translate-${clipId(said)}`,
         prompt: i18n._(prompt),
         src: src(said),
-        answers: dayAnswers(said),
+        answers: dayTranslations(said),
         pair: [said.split(" ")[0] as string, said] as const,
       })),
     [i18n],
@@ -542,7 +549,8 @@ export function PaevadLesson() {
       words={[...WEEK, "päev", "nädal", "täna", "homme", "eile", "ülehomme", "üleeile"]}
       recap={[
         <Trans key="1">
-          The week starts on <b lang="et">esmaspäev</b>. Day names start with a small letter.
+          The week starts on <b lang="et">esmaspäev</b>. Day names take a small letter unless they
+          start a sentence.
         </Trans>,
         <Trans key="2">
           Six days end in <b lang="et">päev</b>, day. <b lang="et">Reede</b> doesn’t.
@@ -569,8 +577,8 @@ export function PaevadLesson() {
                 <p>
                   <Trans>
                     The Estonian week, <Word w="nädal" />, starts on Monday. Six of its days end in{" "}
-                    <Word w="päev" />, day. <Word w="Reede" />, Friday, is the one that doesn’t. Day
-                    names start with a small letter, like any other word.
+                    <Word w="päev" />, day. <Word w="Reede" />, Friday, is the one that doesn’t.
+                    Inside a sentence, day names take a small letter, like any other word.
                   </Trans>
                 </p>
                 <p>
@@ -766,7 +774,8 @@ export function PaevadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear the sentence and write it. Day names start with a small letter.
+                    Hear the sentence and write it. Inside a sentence, day names take a small
+                    letter.
                   </Trans>
                 </p>
               </Prose>

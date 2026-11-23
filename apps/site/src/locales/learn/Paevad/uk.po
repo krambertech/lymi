@@ -35,8 +35,8 @@ msgstr "<et>Homme</et> — це завтра: день після сьогодн
 msgid "<et>Reede</et> is the one day without <et>päev</et>; <et>laupäev</et> and <et>pühapäev</et> have names of their own."
 msgstr "<et>Reede</et> — єдиний день без <et>päev</et>; <et>laupäev</et> і <et>pühapäev</et> мають власні назви."
 
-msgid "<et>Täna on</et> says what day it is today, <et>homme on</et> what day it is tomorrow; the day’s name comes after."
-msgstr "<et>Täna on</et> каже, який день сьогодні, <et>homme on</et> — який завтра; назва дня йде після них."
+msgid "<et>Täna on</et> says what day it is today, <et>homme on</et> what day it is tomorrow; the day’s name usually comes after."
+msgstr "<et>Täna on</et> каже, який день сьогодні, <et>homme on</et> — який завтра; назва дня зазвичай іде після них."
 
 msgid "15 minutes"
 msgstr "15 хвилин"
@@ -116,8 +116,8 @@ msgstr "Добре. Перш ніж обрати, проговори тижде�
 msgid "Hear a day"
 msgstr "День на слух"
 
-msgid "Hear the sentence and write it. Day names start with a small letter."
-msgstr "Послухай речення й напиши його. Назви днів пишуть з малої літери."
+msgid "Hear the sentence and write it. Inside a sentence, day names take a small letter."
+msgstr "Послухай речення й напиши його. Усередині речення назви днів пишуть з малої літери."
 
 msgid "holy; a holiday"
 msgstr "святий; свято"
@@ -236,8 +236,8 @@ msgstr "Дні літерами"
 msgid "The days by ear"
 msgstr "Дні на слух"
 
-msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Day names start with a small letter, like any other word."
-msgstr "Естонський тиждень, <0/>, починається з понеділка, як і в нас. Шість днів закінчуються на <1/>, день. <2/>, п’ятниця, — виняток. Як і в українській, назви днів пишуть з малої літери."
+msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Inside a sentence, day names take a small letter, like any other word."
+msgstr "Естонський тиждень, <0/>, починається з понеділка, як і в нас. Шість днів закінчуються на <1/>, день. <2/>, п’ятниця, — виняток. Як і в українській, усередині речення назви днів пишуть з малої літери."
 
 msgid "The first day of the week."
 msgstr "Перший день тижня."
@@ -275,8 +275,8 @@ msgstr "Третій день тижня."
 msgid "The third day. You can hear <0/>, three, from lesson {numbers}."
 msgstr "Третій день. Чути <0/>, три, з уроку {numbers}."
 
-msgid "The week starts on <0>esmaspäev</0>. Day names start with a small letter."
-msgstr "Тиждень починається з <0>esmaspäev</0>. Назви днів пишуть з малої літери."
+msgid "The week starts on <0>esmaspäev</0>. Day names take a small letter unless they start a sentence."
+msgstr "Тиждень починається з <0>esmaspäev</0>. Назви днів пишуть з малої літери, якщо вони не на початку речення."
 
 msgid "three"
 msgstr "три"

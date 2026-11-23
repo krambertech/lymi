@@ -71,7 +71,10 @@ const GLOSSARY: Glossary = {
     note: msg`Pool looks ahead: halfway to eleven.`,
   },
   maksab: { en: msg`costs`, note: msg`From maksma, to cost; also to pay.` },
-  eurot: { en: msg`euros`, note: msg`After a number from two up, euro becomes eurot.` },
+  eurot: {
+    en: msg`euros`,
+    note: msg`After a number from two up, euro usually becomes eurot: kaks eurot.`,
+  },
   buss: { en: msg`bus` },
   ootan: { en: msg`I wait, I’m waiting`, note: msg`From ootama, to wait.` },
   sind: {
@@ -314,7 +317,7 @@ function useContent() {
           line: "Ei, ma ei töötan.",
           why: (
             <Trans>
-              After <span lang="et">ei</span>, the verb drops its ending:{" "}
+              After <span lang="et">ei</span>, the verb usually drops its ending:{" "}
               <span lang="et">ei tööta</span>.
             </Trans>
           ),
@@ -494,7 +497,7 @@ export function PaevTallinnasLesson() {
           : <b lang="et">Pühapäeval olen kodus</b>, on Sunday I’m at home.
         </Trans>,
         <Trans key="5">
-          Answer no with <b lang="et">ei</b> and the verb without its ending:{" "}
+          Answer no with <b lang="et">ei</b> and the verb, usually without its ending:{" "}
           <b lang="et">Ei, ma ei tööta</b>, no, I don’t work.
         </Trans>,
       ]}
@@ -674,7 +677,7 @@ export function PaevTallinnasLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Write each sentence in Estonian, numbers in words. A time takes{" "}
+                    Write each sentence in Estonian, numbers in words. Here a time takes{" "}
                     <b lang="et">kell</b>; what something costs takes <b lang="et">maksab</b>, and{" "}
                     <b lang="et">eurot</b> after a number from two up.
                   </Trans>

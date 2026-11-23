@@ -1,0 +1,506 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 10:23+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0>Armastama</0> takes the partitive, so many birds are <1>linde</1>."
+msgstr "Після <0>armastama</0> іде партитив, тому «птахів» — <1>linde</1>."
+
+msgid "<0>Ootama</0> takes the partitive, so many friends are <1>sõpru</1>."
+msgstr "Після <0>ootama</0> іде партитив, тому «друзів» — <1>sõpru</1>."
+
+msgid "20 minutes"
+msgstr "20 хвилин"
+
+msgid "8 exercises"
+msgstr "8 вправ"
+
+msgid "A long vowel shortens and takes <0>-id</0>: <1>puu, puid</1>."
+msgstr "Довга голосна скорочується і додається <0>-id</0>: <1>puu, puid</1>."
+
+msgid "A long vowel shortens and takes <et>-id</et>: <et>puid</et>."
+msgstr "Довга голосна скорочується і додається <et>-id</et>: <et>puid</et>."
+
+msgid "a lot of apples"
+msgstr "багато яблук"
+
+msgid "a lot of books"
+msgstr "багато книжок"
+
+msgid "a lot of children"
+msgstr "багато дітей"
+
+msgid "a lot of friends"
+msgstr "багато друзів"
+
+msgid "a lot, many"
+msgstr "багато"
+
+msgid "A number takes the singular partitive. Some or many takes the plural partitive."
+msgstr "Після числа — партитив однини. «Трохи» чи «багато» — партитив множини."
+
+msgid "A number, many or the ones you mean"
+msgstr "Число, багато чи конкретні"
+
+msgid "A vowel"
+msgstr "Голосна"
+
+msgid "Adds <0>-id</0>: <1>raamatuid, puid</1>."
+msgstr "Додає <0>-id</0>: <1>raamatuid, puid</1>."
+
+msgid "Adds <0>-sid</0>: <1>autosid</1>."
+msgstr "Додає <0>-sid</0>: <1>autosid</1>."
+
+msgid "Adds <et>-id</et>: <et>raamatuid</et>."
+msgstr "Додає <et>-id</et>: <et>raamatuid</et>."
+
+msgid "Adds <et>-sid</et>: <et>autosid</et>."
+msgstr "Додає <et>-sid</et>: <et>autosid</et>."
+
+msgid "After <0>ei</0> and after verbs such as <1>armastama</1>, the plural partitive too: <2>Mul ei ole autosid. Ma armastan linde.</2>"
+msgstr "Після <0>ei</0> і після дієслів на кшталт <1>armastama</1> — теж партитив множини: <2>Mul ei ole autosid. Ma armastan linde.</2>"
+
+msgid "After <0>ei</0>, many takes the plural partitive."
+msgstr "Після <0>ei</0> кілька речей — партитив множини."
+
+msgid "After <0>palju</0>, many, the plural partitive."
+msgstr "Після <0>palju</0>, «багато», — партитив множини."
+
+msgid "After <0>palju</0>, the plural partitive."
+msgstr "Після <0>palju</0> — партитив множини."
+
+msgid "After <et>ei</et> and partitive verbs"
+msgstr "Після <et>ei</et> і дієслів з партитивом"
+
+msgid "After <et>ei</et> or a partitive verb, many takes the plural partitive."
+msgstr "Після <et>ei</et> чи дієслова з партитивом кілька речей — партитив множини."
+
+msgid "After a number"
+msgstr "Після числа"
+
+msgid "After a number from two up, the singular partitive stays: <0>kaks raamatut</0>. The ones you mean take the plural nominative: <1>raamatud</1>."
+msgstr "Після числа від двох лишається партитив однини: <0>kaks raamatut</0>. Конкретні речі — називний множини: <1>raamatud</1>."
+
+msgid "After a number from two up, the singular partitive."
+msgstr "Після числа від двох — партитив однини."
+
+msgid "After a number, the singular partitive."
+msgstr "Після числа — партитив однини."
+
+msgid "After the market"
+msgstr "Після ринку"
+
+msgid "All eight, typed in full."
+msgstr "Усі вісім, написані повністю."
+
+msgid "All nine. You told a number from many and from the ones you mean."
+msgstr "Усі дев’ять. Ти відрізнив число від «багато» і від конкретних речей."
+
+msgid "All of them, done: the plural nominative."
+msgstr "Усі, і дію завершено: називний множини."
+
+msgid "All seven, each noun in the form its meaning needs."
+msgstr "Усі сім: кожен іменник у формі, якої вимагає зміст."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "apple"
+msgstr "яблуко"
+
+msgid "Apples"
+msgstr "Яблука"
+
+msgid "birds"
+msgstr "птахи"
+
+msgid "book"
+msgstr "книга"
+
+msgid "books"
+msgstr "книжки"
+
+msgid "café"
+msgstr "кав’ярня"
+
+msgid "car"
+msgstr "машина"
+
+msgid "Carrots"
+msgstr "Морква"
+
+msgid "cars"
+msgstr "машини"
+
+msgid "Changes the last vowel: <0>maju, koole</0>."
+msgstr "Змінює останню голосну: <0>maju, koole</0>."
+
+msgid "Changes the last vowel: <et>koole</et>."
+msgstr "Змінює останню голосну: <et>koole</et>."
+
+msgid "Changes the last vowel: <et>maju</et>."
+msgstr "Змінює останню голосну: <et>maju</et>."
+
+msgid "Changes the last vowel: <et>õunu</et>."
+msgstr "Змінює останню голосну: <et>õunu</et>."
+
+msgid "child"
+msgstr "дитина"
+
+msgid "cinema"
+msgstr "кінотеатр"
+
+msgid "Drag a word into each gap, or tap one to fill the open gap. Two of the words belong nowhere."
+msgstr "Перетягни слово в кожен пропуск або натисни на нього, щоб заповнити відкритий пропуск. Два слова зайві."
+
+msgid "Each round gives a word with its genitive and partitive, as a dictionary lists them, and a sentence. Type the plural partitive."
+msgstr "У кожному раунді — слово з родовим і партитивом, як у словнику, і речення. Напиши партитив множини."
+
+msgid "Each sentence has one noun in the wrong form. Tap it, then type it right."
+msgstr "У кожному реченні один іменник у неправильній формі. Натисни на нього, потім напиши правильно."
+
+msgid "Ending in a vowel"
+msgstr "На голосну"
+
+msgid "Fill the gaps"
+msgstr "Заповни пропуски"
+
+msgid "Fix the noun"
+msgstr "Виправ іменник"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "flowers"
+msgstr "квіти"
+
+msgid "Four"
+msgstr "Чотири"
+
+msgid "friend"
+msgstr "друг"
+
+msgid "house"
+msgstr "будинок"
+
+msgid "houses"
+msgstr "будинки"
+
+msgid "How many guests is Jaan expecting?"
+msgstr "Скільки гостей чекає Яан?"
+
+msgid "How many roses did Mari buy? Write the number as she says it."
+msgstr "Скільки троянд купила Марі? Напиши число так, як вона каже."
+
+msgid "I bought some apples."
+msgstr "Я купив яблук."
+
+msgid "I bought some flowers."
+msgstr "Я купила квіти."
+
+msgid "I bought the apples."
+msgstr "Я купив ці яблука."
+
+msgid "I don’t have any cars."
+msgstr "У мене немає машин."
+
+msgid "I have a lot of books."
+msgstr "У мене багато книжок."
+
+msgid "I have a lot of friends."
+msgstr "У мене багато друзів."
+
+msgid "I have guests tomorrow."
+msgstr "Завтра в мене гості."
+
+msgid "I have two children."
+msgstr "У мене двоє дітей."
+
+msgid "I have two friends."
+msgstr "У мене двоє друзів."
+
+msgid "I love birds."
+msgstr "Я люблю птахів."
+
+msgid "I love flowers."
+msgstr "Я люблю квіти."
+
+msgid "I only have four chairs."
+msgstr "У мене лише чотири стільці."
+
+msgid "I’ll bring them tomorrow morning."
+msgstr "Я принесу їх завтра вранці."
+
+msgid "I’ll make you a cake."
+msgstr "Я спечу тобі торт."
+
+msgid "In a sentence"
+msgstr "У реченні"
+
+msgid "It ends in <0>-id</0> (<1>raamatuid</1>), <2>-sid</2> (<3>autosid</3>) or a changed last vowel (<4>maju, koole</4>). Learn it with each word."
+msgstr "Він закінчується на <0>-id</0> (<1>raamatuid</1>), <2>-sid</2> (<3>autosid</3>) або змінену останню голосну (<4>maju, koole</4>). Учи його з кожним словом."
+
+msgid "It’s Mari’s mother’s birthday."
+msgstr "У мами Марі день народження."
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan asks Mari what she bought at the market."
+msgstr "Яан питає Марі, що вона купила на ринку."
+
+msgid "Kati’s birthday"
+msgstr "День народження Каті"
+
+msgid "Kinds of ending"
+msgstr "Види закінчень"
+
+msgid "land, country"
+msgstr "земля, країна"
+
+msgid "Lesson {partitive} used the partitive after a number: <0/>, two books. For some or many things you don’t count, Estonian uses the partitive’s plural: <1/>, a lot of books."
+msgstr "В уроці {partitive} партитив ішов після числа: <0/>, дві книжки. Для частини чи багатьох речей, які не рахують, естонська бере партитив множини: <1/>, багато книжок."
+
+msgid "Listen: Jaan and Mari"
+msgstr "Послухай: Яан і Марі"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Long vowel"
+msgstr "Довга голосна"
+
+msgid "Longer words"
+msgstr "Довші слова"
+
+msgid "Make the plural partitive"
+msgstr "Утвори партитив множини"
+
+msgid "Many short words swap the last vowel of the genitive for <0>-u</0>, <1>-e</1> or <2>-i</2>: <3>maja, maju</3>; <4>kooli, koole</4>; <5>lapse, lapsi</5>."
+msgstr "Багато коротких слів міняють останню голосну родового на <0>-u</0>, <1>-e</1> чи <2>-i</2>: <3>maja, maju</3>; <4>kooli, koole</4>; <5>lapse, lapsi</5>."
+
+msgid "Many words of two or more syllables add <0>-id</0> to the genitive: <1>raamatu, raamatuid</1>; <2>õpiku, õpikuid</2>."
+msgstr "Багато слів із двох і більше складів додають <0>-id</0> до родового: <1>raamatu, raamatuid</1>; <2>õpiku, õpikuid</2>."
+
+msgid "Many words that end in a vowel add <0>-sid</0> to the genitive: <1>auto, autosid</1>."
+msgstr "Багато слів на голосну додають <0>-sid</0> до родового: <1>auto, autosid</1>."
+
+msgid "Mari"
+msgstr "Марі"
+
+msgid "mother"
+msgstr "мама"
+
+msgid "Nearly. Compare the right sentence under each one you missed."
+msgstr "Майже. Порівняй правильне речення під кожним пропущеним."
+
+msgid "Nearly. Look at the noun in the ones you missed."
+msgstr "Майже. Подивися на іменник у тих, що пропустив."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Майже. Ще раз послухай ті, що пропустив."
+
+msgid "Nearly. Switch through the kinds in the table for the ones you missed."
+msgstr "Майже. Для пропущених перемкни види в таблиці."
+
+msgid "Nominative"
+msgstr "Називний"
+
+msgid "Partitive, many"
+msgstr "Партитив, кілька"
+
+msgid "Partitive, one"
+msgstr "Партитив, один"
+
+msgid "Pick the form for each gap, then hear the sentence."
+msgstr "Вибери форму для кожного пропуску, потім послухай речення."
+
+msgid "Plural partitive"
+msgstr "Партитив множини"
+
+msgid "Potatoes"
+msgstr "Картоплю"
+
+msgid "Put each plural partitive in the bin of its ending."
+msgstr "Розклади форми партитива множини за закінченнями."
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Що запам’ятати» нижче, потім спробуй знову."
+
+msgid "road, tea"
+msgstr "дорога, чай"
+
+msgid "say no"
+msgstr "із запереченням"
+
+msgid "school"
+msgstr "школа"
+
+msgid "schools"
+msgstr "школи"
+
+msgid "Short words"
+msgstr "Короткі слова"
+
+msgid "Singular and plural partitive"
+msgstr "Партитив однини і множини"
+
+msgid "Six"
+msgstr "Шість"
+
+msgid "Six more words, none of them in this lesson yet. Match each with its plural partitive."
+msgstr "Ще шість слів, яких у цьому уроці ще не було. З’єднай кожне з його партитивом множини."
+
+msgid "Some or many"
+msgstr "Частина чи багато"
+
+msgid "Some or many things you don’t count take the plural partitive: <0>Mul on palju raamatuid. Poes on õunu.</0>"
+msgstr "Частина чи багато речей, які не рахують, — партитив множини: <0>Mul on palju raamatuid. Poes on õunu.</0>"
+
+msgid "Some or many, not counted: the plural partitive."
+msgstr "Частина чи багато, без рахунку: партитив множини."
+
+msgid "Switch through the kinds in the table, then try again."
+msgstr "Перемкни всі види в таблиці, потім спробуй знову."
+
+msgid "Tap a form"
+msgstr "Натисни на форму"
+
+msgid "Tap across the first table once more, then try again."
+msgstr "Ще раз пройдися по першій таблиці, потім спробуй знову."
+
+msgid "Tap across the table’s rows once more, then try again."
+msgstr "Ще раз пройдися по рядках таблиці, потім спробуй знову."
+
+msgid "textbook"
+msgstr "підручник"
+
+msgid "the apples"
+msgstr "ці яблука"
+
+msgid "the books"
+msgstr "ці книжки"
+
+msgid "the children"
+msgstr "ці діти"
+
+msgid "The children are at home."
+msgstr "Діти вдома."
+
+msgid "The endings <et>-id</et>, <et>-sid</et> and a vowel"
+msgstr "Закінчення <et>-id</et>, <et>-sid</et> і голосна"
+
+msgid "the friends"
+msgstr "ці друзі"
+
+msgid "The ones you mean"
+msgstr "Конкретні"
+
+msgid "The ones you mean, counted as a whole, take the plural of lesson {plural}: <0/>, the books. Tap across each row."
+msgstr "Конкретні речі, усі разом, стоять у множині з уроку {plural}: <0/>, ці книжки. Пройдися по кожному рядку."
+
+msgid "The ones you mean, the subject: the plural nominative."
+msgstr "Конкретні, і це підмет: називний множини."
+
+msgid "The ones you mean: the plural nominative."
+msgstr "Конкретні: називний множини."
+
+msgid "The partitive for more than one: some or many things you don’t count, after a no, and after verbs that take the partitive. How it differs from <0>kaks raamatut</0> and <1>raamatud</1>, and how to build it."
+msgstr "Партитив для кількох: частина чи багато речей без рахунку, після заперечення і після дієслів з партитивом. Чим він відрізняється від <0>kaks raamatut</0> і <1>raamatud</1> і як його утворити."
+
+msgid "The plural partitive does every job the partitive does, for many: things that are there, after <0>ei</0>, and after verbs such as <1>armastama</1>. Lesson {object}’s whole and part works for many too: some apples, or all the apples."
+msgstr "Партитив множини робить те саме, що й партитив, тільки для кількох: те, що є, після <0>ei</0> і після дієслів на кшталт <1>armastama</1>. Ціле і частина з уроку {object} теж працюють для кількох: трохи яблук чи всі яблука."
+
+msgid "The plural partitive for some or many"
+msgstr "Партитив множини для частини чи багатьох"
+
+msgid "The plural partitive is built on the genitive or the partitive, in one of three ways: <0>-id</0>, <1>-sid</1>, or a changed last vowel. Pick a kind and tap the forms."
+msgstr "Партитив множини утворюється від родового чи партитива одним із трьох способів: <0>-id</0>, <1>-sid</1> або зміна останньої голосної. Вибери вид і натискай форми."
+
+msgid "The plural partitive of auto."
+msgstr "Партитив множини від auto."
+
+msgid "The plural partitive of kool."
+msgstr "Партитив множини від kool."
+
+msgid "The plural partitive of lill."
+msgstr "Партитив множини від lill."
+
+msgid "The plural partitive of lind."
+msgstr "Партитив множини від lind."
+
+msgid "The plural partitive of maja."
+msgstr "Партитив множини від maja."
+
+msgid "The plural partitive of raamat."
+msgstr "Партитив множини від raamat."
+
+msgid "The roses are for Mari’s mother."
+msgstr "Троянди для мами Марі."
+
+msgid "There are apples in the shop."
+msgstr "У магазині є яблука."
+
+msgid "There were tomatoes at the market today."
+msgstr "Сьогодні на ринку були помідори."
+
+msgid "These are the ones you mean, so the plural nominative."
+msgstr "Ідеться про конкретні речі, тому називний множини."
+
+msgid "Three endings"
+msgstr "Три закінчення"
+
+msgid "tree"
+msgstr "дерево"
+
+msgid "Two"
+msgstr "Двох"
+
+msgid "two apples"
+msgstr "два яблука"
+
+msgid "two books"
+msgstr "дві книжки"
+
+msgid "two children"
+msgstr "двоє дітей"
+
+msgid "two friends"
+msgstr "двоє друзів"
+
+msgid "Two, many and the ones you mean"
+msgstr "Два, багато і конкретні"
+
+msgid "Two, many or the ones you mean"
+msgstr "Два, багато чи конкретні"
+
+msgid "Two, many or the ones you mean?"
+msgstr "Два, багато чи конкретні?"
+
+msgid "Type the form"
+msgstr "Напиши форму"
+
+msgid "What did Mari buy two kilos of?"
+msgstr "Чого Марі купила два кілограми?"
+
+msgid "Which ending?"
+msgstr "Яке закінчення?"
+
+msgid "Which plural partitive?"
+msgstr "Який партитив множини?"
+
+msgid "Which way a word goes isn’t always clear from it, and some words have two forms. A dictionary lists the plural partitive, so learn it with the word. Stems follow the genitive, as lesson {gradation} explains: <0>sõber, sõbra, sõpru</0>."
+msgstr "Зі слова не завжди видно, яким способом воно піде, а деякі слова мають дві форми. Словник подає партитив множини, тож учи його разом зі словом. Основа змінюється так, як пояснює урок {gradation}: <0>sõber, sõbra, sõpru</0>."
+
+msgid "Who says it?"
+msgstr "Хто це каже?"
+
+msgid "Write each sentence in Estonian. Decide first: a number, some or many, a no, or the ones you mean."
+msgstr "Напиши кожне речення естонською. Спершу виріши: число, частина чи багато, заперечення чи конкретні речі."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"

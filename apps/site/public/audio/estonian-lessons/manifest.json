@@ -11817,5 +11817,632 @@
     "text": "oodata",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/palju": {
+    "text": "palju",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/su2nnipa2ev": {
+    "text": "sünnipäev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ku2lalisi": {
+    "text": "külalisi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/lilli": {
+    "text": "lilli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kooke": {
+    "text": "kooke",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/banaane": {
+    "text": "banaane",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/linde": {
+    "text": "linde",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/raamat": {
+    "text": "raamat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/raamatut": {
+    "text": "raamatut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/raamatuid": {
+    "text": "raamatuid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o3pik": {
+    "text": "õpik",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o3pikut": {
+    "text": "õpikut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o3pikuid": {
+    "text": "õpikuid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kohvik": {
+    "text": "kohvik",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kohvikut": {
+    "text": "kohvikut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kohvikuid": {
+    "text": "kohvikuid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/auto": {
+    "text": "auto",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/autot": {
+    "text": "autot",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/autosid": {
+    "text": "autosid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kino": {
+    "text": "kino",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kinot": {
+    "text": "kinot",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kinosid": {
+    "text": "kinosid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ema": {
+    "text": "ema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/emasid": {
+    "text": "emasid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/maja": {
+    "text": "maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/maju": {
+    "text": "maju",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o3un": {
+    "text": "õun",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o3una": {
+    "text": "õuna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o3unu": {
+    "text": "õunu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kool": {
+    "text": "kool",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kooli": {
+    "text": "kooli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/koole": {
+    "text": "koole",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/laps": {
+    "text": "laps",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/last": {
+    "text": "last",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/lapsi": {
+    "text": "lapsi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/maa": {
+    "text": "maa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/maad": {
+    "text": "maad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/maid": {
+    "text": "maid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/puu": {
+    "text": "puu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/puud": {
+    "text": "puud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/puid": {
+    "text": "puid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/tee": {
+    "text": "tee",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/teed": {
+    "text": "teed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/teid": {
+    "text": "teid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kaks-raamatut": {
+    "text": "kaks raamatut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/palju-raamatuid": {
+    "text": "palju raamatuid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/raamatud": {
+    "text": "raamatud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kaks-o3una": {
+    "text": "kaks õuna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/palju-o3unu": {
+    "text": "palju õunu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o3unad": {
+    "text": "õunad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kaks-so3pra": {
+    "text": "kaks sõpra",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/palju-so3pru": {
+    "text": "palju sõpru",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/so3brad": {
+    "text": "sõbrad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kaks-last": {
+    "text": "kaks last",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/palju-lapsi": {
+    "text": "palju lapsi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/lapsed": {
+    "text": "lapsed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/mul-on-palju-raamatuid": {
+    "text": "Mul on palju raamatuid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/poes-on-o3unu": {
+    "text": "Poes on õunu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/mul-ei-ole-autosid": {
+    "text": "Mul ei ole autosid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ma-armastan-linde": {
+    "text": "Ma armastan linde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ma-ostsin-o3unu": {
+    "text": "Ma ostsin õunu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ma-ostsin-o3unad": {
+    "text": "Ma ostsin õunad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/mul-on-kaks-raamatut": {
+    "text": "Mul on kaks raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kus-mu-raamatud-on": {
+    "text": "Kus mu raamatud on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/neil-on-kaks-last": {
+    "text": "Neil on kaks last.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/neil-on-palju-lapsi": {
+    "text": "Neil on palju lapsi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kus-lapsed-on": {
+    "text": "Kus lapsed on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/tal-on-kaks-so3pra": {
+    "text": "Tal on kaks sõpra.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/tal-on-palju-so3pru": {
+    "text": "Tal on palju sõpru.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kus-ta-so3brad-on": {
+    "text": "Kus ta sõbrad on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ta2naval-on-palju-autosid": {
+    "text": "Tänaval on palju autosid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/siin-on-vanu-maju": {
+    "text": "Siin on vanu maju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/tallinnas-on-palju-koole": {
+    "text": "Tallinnas on palju koole.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/pargis-on-palju-puid": {
+    "text": "Pargis on palju puid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/mul-on-palju-so3pru": {
+    "text": "Mul on palju sõpru.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/neil-ei-ole-lapsi": {
+    "text": "Neil ei ole lapsi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kass": {
+    "text": "kass",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/kasse": {
+    "text": "kasse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/pood": {
+    "text": "pood",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/poode": {
+    "text": "poode",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ta2di": {
+    "text": "tädi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ta2disid": {
+    "text": "tädisid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/tomat": {
+    "text": "tomat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/tomateid": {
+    "text": "tomateid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o2o2": {
+    "text": "öö",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/o2id": {
+    "text": "öid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/so3na": {
+    "text": "sõna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/so3nu": {
+    "text": "sõnu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/mul-ei-ole-lapsi": {
+    "text": "Mul ei ole lapsi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/laual-on-palju-o3unu": {
+    "text": "Laual on palju õunu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ma-ootan-so3pru": {
+    "text": "Ma ootan sõpru.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ma-ostsin-kaks-o3una": {
+    "text": "Ma ostsin kaks õuna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/mul-on-kaks-last": {
+    "text": "Mul on kaks last.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/lapsed-on-kodus": {
+    "text": "Lapsed on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/tal-ei-ole-autosid": {
+    "text": "Tal ei ole autosid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/ma-armastan-lilli": {
+    "text": "Ma armastan lilli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/mul-on-kaks-so3pra": {
+    "text": "Mul on kaks sõpra.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/p-party": {
+    "text": "Täna on Kati sünnipäev. Ta ostis poest õunu ja banaane. Külalisi tuleb palju. Kati sõbrad toovad lilli. Lapsed söövad kooke.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatuid-maju/c-market": {
+    "text": "Tere, Mari! Kas sa käisid turul? Jah, käisin. Ma ostsin õunu, porgandeid ja kaks kilo kartuleid. Kas turul oli ka tomateid? Ei, tomateid täna ei olnud. Aga seal oli palju lilli. Kas sa ostsid lilli ka? Jah, ma ostsin viis roosi. Need on emale. Kas su emal on sünnipäev? Ei, ta lihtsalt armastab lilli. Tal on aias palju roose, aga praegu ei ole. Mul on homme külalised. Ma pean veel leiba ja juustu ostma. Mitu külalist sul tuleb? Kuus. Minu sõbrad ja nende lapsed. Kuus inimest! Mida sa neile teed? Ma teen suppi ja ostan kooke. Lapsed armastavad kooke. Kas sul on piisavalt toole? Ei, mul on ainult neli tooli. Kas sa saad mulle kaks tooli laenata? Muidugi. Ma toon need homme hommikul. Aitäh! Ma teen sulle kooki. Kas sul on ka taldrikuid ja tasse? Jah, neid on mul palju. Tule homme kell kuus!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Mari!",
+          "Kas sa käisid turul?"
+        ],
+        "say": "[cheerful] Tere, Mari! Kas sa käisid turul?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, käisin.",
+          "Ma ostsin õunu, porgandeid ja kaks kilo kartuleid."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas turul oli ka tomateid?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, tomateid täna ei olnud.",
+          "Aga seal oli palju lilli."
+        ],
+        "say": "[sighs] Ei, tomateid täna ei olnud. Aga seal oli palju lilli."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas sa ostsid lilli ka?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, ma ostsin viis roosi.",
+          "Need on emale."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas su emal on sünnipäev?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, ta lihtsalt armastab lilli.",
+          "Tal on aias palju roose, aga praegu ei ole."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mul on homme külalised.",
+          "Ma pean veel leiba ja juustu ostma."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mitu külalist sul tuleb?"
+        ],
+        "say": "[curious] Mitu külalist sul tuleb?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kuus.",
+          "Minu sõbrad ja nende lapsed."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kuus inimest!",
+          "Mida sa neile teed?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma teen suppi ja ostan kooke.",
+          "Lapsed armastavad kooke."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sul on piisavalt toole?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, mul on ainult neli tooli.",
+          "Kas sa saad mulle kaks tooli laenata?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Muidugi.",
+          "Ma toon need homme hommikul."
+        ],
+        "say": "[laughs] Muidugi. Ma toon need homme hommikul."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh!",
+          "Ma teen sulle kooki."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sul on ka taldrikuid ja tasse?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, neid on mul palju.",
+          "Tule homme kell kuus!"
+        ]
+      }
+    ]
   }
 }

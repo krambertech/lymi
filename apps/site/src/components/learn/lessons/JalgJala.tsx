@@ -262,7 +262,8 @@ const ROOM_GAPS: GapItem[] = [
 function useContent() {
   const { t, i18n } = useLingui();
   return useMemo(() => {
-    const usual = (["double", "soft", "gone", "blend"] as const).flatMap((kind) =>
+    type Noun = { word: string; of: string; part: string };
+    const usual = (["double", "soft", "gone", "blend"] as const).flatMap((kind): readonly Noun[] =>
       GRADATION_KINDS[kind].slice(0, 2),
     );
     const grade: GradeItem[] = usual.flatMap((noun, i) =>

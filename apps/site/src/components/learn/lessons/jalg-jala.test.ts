@@ -19,7 +19,9 @@ describe("consonant gradation lesson", () => {
 
   it("puts “strong” and “weak” in both places after the first round of “Strong or weak?”", () => {
     const items = (["double", "soft", "gone", "blend"] as const)
-      .flatMap((kind) => GRADATION_KINDS[kind].slice(0, 2))
+      .flatMap((kind): readonly { word: string; of: string; part: string }[] =>
+        GRADATION_KINDS[kind].slice(0, 2),
+      )
       .flatMap((noun) =>
         (["weak", "strong"] as const).map((answer) => ({
           answer,

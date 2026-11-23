@@ -3151,6 +3151,222 @@ const GRADATION_CLIPS: Record<string, Clip> = {
   "c-new-flat": GRADATION_CONVERSATION,
 };
 
+export const PLURAL_PART_KINDS = {
+  id: [
+    { word: "raamat", of: "raamatu", part: "raamatut", many: "raamatuid" },
+    { word: "õpik", of: "õpiku", part: "õpikut", many: "õpikuid" },
+    { word: "kohvik", of: "kohviku", part: "kohvikut", many: "kohvikuid" },
+  ],
+  sid: [
+    { word: "auto", of: "auto", part: "autot", many: "autosid" },
+    { word: "kino", of: "kino", part: "kinot", many: "kinosid" },
+    { word: "ema", of: "ema", part: "ema", many: "emasid" },
+  ],
+  vowel: [
+    { word: "maja", of: "maja", part: "maja", many: "maju" },
+    { word: "õun", of: "õuna", part: "õuna", many: "õunu" },
+    { word: "kool", of: "kooli", part: "kooli", many: "koole" },
+    { word: "laps", of: "lapse", part: "last", many: "lapsi" },
+  ],
+  long: [
+    { word: "maa", of: "maa", part: "maad", many: "maid" },
+    { word: "puu", of: "puu", part: "puud", many: "puid" },
+    { word: "tee", of: "tee", part: "teed", many: "teid" },
+  ],
+} as const;
+
+export const PLURAL_PART_THREE = [
+  { word: "raamat", two: "kaks raamatut", many: "palju raamatuid", the: "raamatud" },
+  { word: "õun", two: "kaks õuna", many: "palju õunu", the: "õunad" },
+  { word: "sõber", two: "kaks sõpra", many: "palju sõpru", the: "sõbrad" },
+  { word: "laps", two: "kaks last", many: "palju lapsi", the: "lapsed" },
+] as const;
+
+export const PLURAL_PART_USES = [
+  "Mul on palju raamatuid.",
+  "Poes on õunu.",
+  "Mul ei ole autosid.",
+  "Ma armastan linde.",
+  "Ma ostsin õunu.",
+  "Ma ostsin õunad.",
+] as const;
+
+export const PLURAL_PART_GAPS = [
+  { id: "raamat-two", noun: "raamat", before: "Mul on kaks", after: ".", answer: "raamatut" },
+  { id: "raamat-many", noun: "raamat", before: "Mul on palju", after: ".", answer: "raamatuid" },
+  { id: "raamat-where", noun: "raamat", before: "Kus mu", after: "on?", answer: "raamatud" },
+  { id: "laps-two", noun: "laps", before: "Neil on kaks", after: ".", answer: "last" },
+  { id: "laps-many", noun: "laps", before: "Neil on palju", after: ".", answer: "lapsi" },
+  { id: "laps-where", noun: "laps", before: "Kus", after: "on?", answer: "lapsed" },
+  { id: "sober-two", noun: "sõber", before: "Tal on kaks", after: ".", answer: "sõpra" },
+  { id: "sober-many", noun: "sõber", before: "Tal on palju", after: ".", answer: "sõpru" },
+  { id: "sober-where", noun: "sõber", before: "Kus ta", after: "on?", answer: "sõbrad" },
+] as const;
+
+export const PLURAL_PART_FORMS = {
+  raamat: ["raamatut", "raamatuid", "raamatud"],
+  laps: ["last", "lapsi", "lapsed"],
+  sõber: ["sõpra", "sõpru", "sõbrad"],
+} as const;
+
+export const pluralGapSaid = (gap: { before: string; answer: string; after: string }) =>
+  `${gap.before} ${gap.answer}${/^[.!?]$/.test(gap.after) ? "" : " "}${gap.after}`;
+
+export const PLURAL_PART_FORM_QUIZ = [
+  { word: "raamat", said: "Mul on palju raamatuid.", answer: "raamatuid", cue: "Mul on palju …" },
+  { word: "auto", said: "Tänaval on palju autosid.", answer: "autosid", cue: "Tänaval on palju …" },
+  { word: "maja", said: "Siin on vanu maju.", answer: "maju", cue: "Siin on vanu …" },
+  { word: "õun", said: "Poes on õunu.", answer: "õunu", cue: "Poes on …" },
+  { word: "kool", said: "Tallinnas on palju koole.", answer: "koole", cue: "Tallinnas on palju …" },
+  { word: "puu", said: "Pargis on palju puid.", answer: "puid", cue: "Pargis on palju …" },
+  { word: "sõber", said: "Mul on palju sõpru.", answer: "sõpru", cue: "Mul on palju …" },
+  { word: "laps", said: "Neil ei ole lapsi.", answer: "lapsi", cue: "Neil ei ole …" },
+] as const;
+
+export const PLURAL_PART_SORT = [
+  { w: "raamatuid", bin: "id" },
+  { w: "õpikuid", bin: "id" },
+  { w: "puid", bin: "id" },
+  { w: "autosid", bin: "sid" },
+  { w: "kinosid", bin: "sid" },
+  { w: "emasid", bin: "sid" },
+  { w: "maju", bin: "vowel" },
+  { w: "õunu", bin: "vowel" },
+  { w: "koole", bin: "vowel" },
+] as const;
+
+export const PLURAL_PART_MATCH = [
+  { word: "kass", many: "kasse" },
+  { word: "pood", many: "poode" },
+  { word: "tädi", many: "tädisid" },
+  { word: "tomat", many: "tomateid" },
+  { word: "öö", many: "öid" },
+  { word: "sõna", many: "sõnu" },
+] as const;
+
+export const PLURAL_PART_FIXES = [
+  { wrong: "Mul on palju raamatut.", right: "Mul on palju raamatuid." },
+  { wrong: "Mul on kaks raamatuid.", right: "Mul on kaks raamatut." },
+  { wrong: "Mul ei ole lapsed.", right: "Mul ei ole lapsi." },
+  { wrong: "Ma armastan lindud.", right: "Ma armastan linde." },
+  { wrong: "Laual on palju õunad.", right: "Laual on palju õunu." },
+  { wrong: "Ma ootan sõbrad.", right: "Ma ootan sõpru." },
+  { wrong: "Ma ostsin kaks õunu.", right: "Ma ostsin kaks õuna." },
+] as const;
+
+export const PLURAL_PART_TRANSLATE = [
+  "Mul on palju raamatuid.",
+  "Mul on kaks last.",
+  "Lapsed on kodus.",
+  "Poes on õunu.",
+  "Ma ostsin õunad.",
+  "Mul ei ole autosid.",
+  "Ma armastan linde.",
+] as const;
+
+export const PLURAL_PART_PARTY = [
+  "Täna on Kati sünnipäev.",
+  "Ta ostis poest õunu ja banaane.",
+  "Külalisi tuleb palju.",
+  "Kati sõbrad toovad lilli.",
+  "Lapsed söövad kooke.",
+] as const;
+
+export const PLURAL_PART_CONVERSATION: Conversation = {
+  turns: [
+    {
+      voice: "main",
+      text: ["Tere, Mari!", "Kas sa käisid turul?"],
+      say: "[cheerful] Tere, Mari! Kas sa käisid turul?",
+    },
+    {
+      voice: "second",
+      text: ["Jah, käisin.", "Ma ostsin õunu, porgandeid ja kaks kilo kartuleid."],
+    },
+    { voice: "main", text: "Kas turul oli ka tomateid?" },
+    {
+      voice: "second",
+      text: ["Ei, tomateid täna ei olnud.", "Aga seal oli palju lilli."],
+      say: "[sighs] Ei, tomateid täna ei olnud. Aga seal oli palju lilli.",
+    },
+    { voice: "main", text: "Kas sa ostsid lilli ka?" },
+    {
+      voice: "second",
+      text: ["Jah, ma ostsin viis roosi.", "Need on emale."],
+    },
+    { voice: "main", text: "Kas su emal on sünnipäev?" },
+    {
+      voice: "second",
+      text: ["Ei, ta lihtsalt armastab lilli.", "Tal on aias palju roose, aga praegu ei ole."],
+    },
+    { voice: "main", text: ["Mul on homme külalised.", "Ma pean veel leiba ja juustu ostma."] },
+    {
+      voice: "second",
+      text: "Mitu külalist sul tuleb?",
+      say: "[curious] Mitu külalist sul tuleb?",
+    },
+    {
+      voice: "main",
+      text: ["Kuus.", "Minu sõbrad ja nende lapsed."],
+    },
+    { voice: "second", text: ["Kuus inimest!", "Mida sa neile teed?"] },
+    {
+      voice: "main",
+      text: ["Ma teen suppi ja ostan kooke.", "Lapsed armastavad kooke."],
+    },
+    { voice: "second", text: "Kas sul on piisavalt toole?" },
+    {
+      voice: "main",
+      text: ["Ei, mul on ainult neli tooli.", "Kas sa saad mulle kaks tooli laenata?"],
+    },
+    {
+      voice: "second",
+      text: ["Muidugi.", "Ma toon need homme hommikul."],
+      say: "[laughs] Muidugi. Ma toon need homme hommikul.",
+    },
+    { voice: "main", text: ["Aitäh!", "Ma teen sulle kooki."] },
+    { voice: "second", text: "Kas sul on ka taldrikuid ja tasse?" },
+    { voice: "main", text: ["Jah, neid on mul palju.", "Tule homme kell kuus!"] },
+  ],
+};
+
+export const PLURAL_PART_WORDS = [
+  "palju",
+  "sünnipäev",
+  "külalisi",
+  "lilli",
+  "kooke",
+  "banaane",
+  "linde",
+] as const;
+
+export const PLURAL_PART_DRILL = [
+  "Mul on palju sõpru.",
+  "Tal ei ole autosid.",
+  "Ma armastan lilli.",
+  "Mul on kaks sõpra.",
+] as const;
+
+const PLURAL_PART_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...PLURAL_PART_WORDS,
+    ...Object.values(PLURAL_PART_KINDS).flatMap((nouns) =>
+      nouns.flatMap((noun) => [noun.word, noun.part, noun.many]),
+    ),
+    ...PLURAL_PART_THREE.flatMap(({ two, many, the }) => [two, many, the]),
+    ...PLURAL_PART_USES,
+    ...PLURAL_PART_GAPS.map(pluralGapSaid),
+    ...PLURAL_PART_FORM_QUIZ.map(({ said }) => said),
+    ...PLURAL_PART_SORT.map(({ w }) => w),
+    ...PLURAL_PART_MATCH.flatMap((noun) => [noun.word, noun.many]),
+    ...PLURAL_PART_FIXES.map(({ right }) => right),
+    ...PLURAL_PART_TRANSLATE,
+    ...PLURAL_PART_DRILL,
+  ]),
+  "p-party": { sentences: PLURAL_PART_PARTY },
+  "c-market": PLURAL_PART_CONVERSATION,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -3310,6 +3526,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   osastav: OSASTAV_CLIPS,
   "jalg-jala": GRADATION_CLIPS,
   "raamatut-voi-raamatu": OBJECT_CLIPS,
+  "raamatuid-maju": PLURAL_PART_CLIPS,
   lihtminevik: PAST_CLIPS,
   kit: KIT_CLIPS,
 };

@@ -784,7 +784,7 @@ export function RaamatutVoiRaamatuLesson() {
   const future = LESSONS.find((lesson) => lesson.et === "Hakkan õppima")?.n;
   const pastNo = LESSONS.find((lesson) => lesson.et === "Ma ei läinud")?.n;
   const gradation = lessonBySlug("jalg-jala")?.n;
-  const pluralPartitive = LESSONS.find((lesson) => lesson.et === "Raamatuid, maju")?.n;
+  const pluralPartitive = lessonBySlug("raamatuid-maju")?.n;
   const pronouns = LESSONS.find((lesson) => lesson.et === "Mind, mulle, minuga")?.n;
 
   const rowsOf = (texts: readonly string[]): RowItem[] =>

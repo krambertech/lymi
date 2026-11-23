@@ -155,8 +155,8 @@ msgstr "Most of them. Listen to how the ones you missed start."
 msgid "Nearly. Check <0>täna</0> and <1>homme</1> in the ones you missed."
 msgstr "Nearly. Check <0>täna</0> and <1>homme</1> in the ones you missed."
 
-msgid "Nearly. Play the ones you missed slower."
-msgstr "Nearly. Play the ones you missed slower."
+msgid "Nearly. Hear the ones you missed below, then try again with Slower."
+msgstr "Nearly. Hear the ones you missed below, then try again with Slower."
 
 msgid "On a door or a sign."
 msgstr "On a door or a sign."

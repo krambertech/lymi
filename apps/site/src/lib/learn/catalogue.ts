@@ -123,7 +123,7 @@ export const STAGES: readonly Stage[] = [
         name: msg`Days of the week`,
         title: msg`Days of the week in Estonian`,
         et: "Esmaspäev, teisipäev",
-        minutes: 8,
+        minutes: 15,
         blurb: msg`A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud.`,
       },
       {
@@ -131,7 +131,7 @@ export const STAGES: readonly Stage[] = [
         name: msg`Commands`,
         title: msg`Estonian imperative: giving commands`,
         et: "Istu! Ära istu!",
-        minutes: 10,
+        minutes: 15,
         blurb: msg`A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud.`,
       },
       {
@@ -139,8 +139,8 @@ export const STAGES: readonly Stage[] = [
         name: msg`Practice: a day in Tallinn`,
         title: msg`Estonian reading and listening practice: a day in Tallinn`,
         et: "Päev Tallinnas",
-        minutes: 12,
-        blurb: msg`Free Estonian practice for beginners: read opening hours and a message, follow a voice message with times and days, fill in a plan for Saturday and talk with a friend at a café. Every sentence is read aloud.`,
+        minutes: 20,
+        blurb: msg`Free Estonian practice for beginners: read opening hours and a message, follow a voice message and a phone call with times and days, write what you hear, fill in a plan for Saturday, talk with a friend at a café and write back. Every sentence is read aloud.`,
       },
     ],
   },

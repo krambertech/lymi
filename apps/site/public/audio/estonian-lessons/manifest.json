@@ -4150,7 +4150,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "paev-tallinnas/reede": {
-    "text": "reede",
+    "text": "Reede.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -11530,5 +11530,186 @@
     "text": "Tere! Istuge, palun. Kuulake! Jaan, ära räägi! Mari, loe raamatut, palun! Kati, oota! Vaadake siia! Aitäh!",
     "model": "eleven_v4",
     "voice": "0cuaFlR2we1Gl3woPjeJ"
+  },
+  "paev-tallinnas/kell-on-pool-u2ksteist": {
+    "text": "Kell on pool üksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kolm-eurot": {
+    "text": "Kolm eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/ta2na-on-laupa2ev": {
+    "text": "Täna on laupäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kohv-maksab-kaks-eurot": {
+    "text": "Kohv maksab kaks eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kell-on-kaksteist": {
+    "text": "Kell on kaksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kaksteist-eurot": {
+    "text": "Kaksteist eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/homme-on-pu2hapa2ev": {
+    "text": "Homme on pühapäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kell-on-kolm": {
+    "text": "Kell on kolm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kell-on-pool-kaksteist": {
+    "text": "Kell on pool kaksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kohv-maksab-neli-eurot": {
+    "text": "Kohv maksab neli eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/homme-on-reede": {
+    "text": "Homme on reede.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/ta2na-ma-ei-to2o2ta": {
+    "text": "Täna ma ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/ma-olen-kell-u2ksteist-kodus": {
+    "text": "Ma olen kell üksteist kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kohvik-on-suletud": {
+    "text": "Kohvik on suletud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/minu-buss-on-kell-ku2mme": {
+    "text": "Minu buss on kell kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/pu2hapa2eval-ma-ei-to2o2ta": {
+    "text": "Pühapäeval ma ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kell-on-ku2mme": {
+    "text": "Kell on kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/homme-ma-ei-to2o2ta": {
+    "text": "Homme ma ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/ma-olen-kell-kaksteist-turul": {
+    "text": "Ma olen kell kaksteist turul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/me-joome-kell-u2ksteist-kohvi": {
+    "text": "Me joome kell üksteist kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kohvik-on-avatud": {
+    "text": "Kohvik on avatud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/mari-ei-to2o2ta-ta2na": {
+    "text": "Mari ei tööta täna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/d-plan": {
+    "text": "Tere, Jaan! Mida sa täna teed? Täna on reede ja ma olen tööl. Kas sa töötad homme? Ei, homme ma ei tööta. Kell kümme olen turul. Ma olen kell kaksteist kohvikus. Hästi, ma tulen kell kaksteist! Ja pühapäeval? Pühapäeval olen kodus.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Mida sa täna teed?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Täna on reede ja ma olen tööl."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sa töötad homme?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, homme ma ei tööta.",
+          "Kell kümme olen turul."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ma olen kell kaksteist kohvikus."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hästi, ma tulen kell kaksteist!"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja pühapäeval?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Pühapäeval olen kodus."
+        ]
+      }
+    ]
+  },
+  "paev-tallinnas/p-reply": {
+    "text": "Tere, Mari! Jah, ma olen homme linnas. Ma ei tööta. Kell üksteist olen kohvikus. Pühapäeval olen kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/see-maksab-viis-eurot": {
+    "text": "See maksab viis eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/see-maksab-kaksteist-eurot": {
+    "text": "See maksab kaksteist eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

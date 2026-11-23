@@ -7,6 +7,15 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: uk\n"
 
+msgid "<et>Ei</et> comes before the verb, and the verb drops its ending: <et>ei tööta</et>."
+msgstr "<et>Ei</et> стоїть перед дієсловом, а дієслово втрачає закінчення: <et>ei tööta</et>."
+
+msgid "<et>Eurot</et> or <et>maksab</et> makes the number a price."
+msgstr "З <et>eurot</et> чи <et>maksab</et> число стає ціною."
+
+msgid "<et>Kell on</et> before the number makes it a time."
+msgstr "<et>Kell on</et> перед числом робить його часом."
+
 msgid "€13"
 msgstr "13 €"
 
@@ -16,11 +25,11 @@ msgstr "2 €"
 msgid "€3"
 msgstr "3 €"
 
-msgid "12 minutes"
-msgstr "12 хвилин"
+msgid "10 exercises"
+msgstr "10 вправ"
 
-msgid "5 exercises"
-msgstr "5 вправ"
+msgid "20 minutes"
+msgstr "20 хвилин"
 
 msgid "A café’s opening hours"
 msgstr "Години роботи кав’ярні"
@@ -28,11 +37,26 @@ msgstr "Години роботи кав’ярні"
 msgid "A command, from istuma, to sit."
 msgstr "Так кажуть, коли просять сісти; від istuma, сідати."
 
+msgid "A day says <et>täna on</et> or <et>homme on</et> and the day, with a small letter."
+msgstr "День кажуть так: <et>täna on</et> чи <et>homme on</et> і назва дня з малої літери."
+
+msgid "A day’s name, or <et>täna on</et> and <et>homme on</et>, says what day it is."
+msgstr "Назва дня або <et>täna on</et> і <et>homme on</et> кажуть, який сьогодні день."
+
 msgid "A message from Mari"
 msgstr "Повідомлення від Марі"
 
+msgid "A number alone doesn’t say what it counts: <0>kaksteist</0> can be the time or a price. Listen to each line and put it under the question it answers."
+msgstr "Саме число не каже, що воно рахує: <0>kaksteist</0> може бути і часом, і ціною. Послухай кожен рядок і постав його під питання, на яке він відповідає."
+
+msgid "A price takes <et>maksab</et>, and after a number from two up, <et>euro</et> becomes <et>eurot</et>."
+msgstr "Ціну кажуть із <et>maksab</et>, а після числа від двох <et>euro</et> стає <et>eurot</et>."
+
 msgid "A sign shortens each day to its first letter, as in lesson {days}. Hours use the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
 msgstr "На табличці кожен день позначено першою літерою, як в уроці {days}. Час — у 24-годинному форматі. <0>E–R 9–18</0> — з понеділка до п’ятниці, з 9:00 до 18:00. <1/> — зачинено."
+
+msgid "A time takes <et>kell</et> and the number: <et>kell kümme</et>, at ten."
+msgstr "Час кажуть із <et>kell</et> і числом: <et>kell kümme</et> — о десятій."
 
 msgid "A voice message from Jaan"
 msgstr "Голосове повідомлення від Яана"
@@ -46,8 +70,17 @@ msgstr "Після ei дієслово втрачає закінчення: ei j
 msgid "After ei, the verb drops its ending: ei tööta."
 msgstr "Після ei дієслово втрачає закінчення: ei tööta."
 
+msgid "All six, every sentence right."
+msgstr "Усі шість, кожне речення правильне."
+
+msgid "All six, every word right."
+msgstr "Усі шість, кожне слово правильне."
+
 msgid "Answer no with <0>ei</0> and the verb without its ending: <1>Ei, ma ei tööta</1>, no, I don’t work."
 msgstr "Кажи «ні» словом <0>ei</0> й дієсловом без закінчення: <1>Ei, ma ei tööta</1>, ні, я не працюю."
+
+msgid "Answers her question with <0>jah</0> or <1>ei</1>."
+msgstr "Відповідь на її питання з <0>jah</0> чи <1>ei</1>."
 
 msgid "At 10:00"
 msgstr "О 10:00"
@@ -69,6 +102,9 @@ msgstr "О 18:00"
 
 msgid "At 9:00"
 msgstr "О 9:00"
+
+msgid "At eleven"
+msgstr "Об одинадцятій"
 
 msgid "at home"
 msgstr "вдома"
@@ -118,8 +154,14 @@ msgstr "годинник; година"
 msgid "closed"
 msgstr "зачинено"
 
+msgid "Coffee costs two euros."
+msgstr "Кава коштує два євро."
+
 msgid "costs"
 msgstr "коштує"
+
+msgid "Days and signs"
+msgstr "Дні й вивіски"
 
 msgid "eleven"
 msgstr "одинадцять"
@@ -148,14 +190,29 @@ msgstr "пів, половина"
 msgid "half past ten, 10:30"
 msgstr "пів на одинадцяту, 10:30"
 
+msgid "Has a sentence with <0>ei</0> and the verb without its ending."
+msgstr "Речення з <0>ei</0> і дієсловом без закінчення."
+
 msgid "How are you?"
 msgstr "Як справи?"
+
+msgid "how much"
+msgstr "скільки"
 
 msgid "How much is a coffee?"
 msgstr "Скільки коштує кава?"
 
+msgid "How much it costs"
+msgstr "Скільки це коштує"
+
+msgid "I don’t work tomorrow."
+msgstr "Завтра я не працюю."
+
 msgid "I wait, I’m waiting"
 msgstr "я чекаю"
+
+msgid "I’m at the market at twelve."
+msgstr "О дванадцятій я на ринку."
 
 msgid "in a café"
 msgstr "у кав’ярні"
@@ -175,14 +232,35 @@ msgstr "У Тарту"
 msgid "in town"
 msgstr "у місті"
 
+msgid "It costs twelve euros."
+msgstr "Це коштує дванадцять євро."
+
 msgid "It’s Saturday, half past ten, and you don’t work on Sundays. Mari speaks first; pick what you say back."
 msgstr "Субота, пів на одинадцяту, а в неділю ти не працюєш. Марі говорить першою; вибирай, що відповісти."
+
+msgid "It’s ten o’clock."
+msgstr "Зараз десята година."
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan is at home on Sunday."
+msgstr "У неділю Яан удома."
+
+msgid "Jaan works tomorrow."
+msgstr "Яан завтра працює."
 
 msgid "Jaan, another friend, leaves you a voice message. Listen for where he is and when."
 msgstr "Яан, ще один друг, надсилає тобі голосове повідомлення. Слухай, де він буде і коли."
 
 msgid "Kell on kümme: it’s ten. Kell kümme: at ten."
 msgstr "Kell on kümme: зараз десята. Kell kümme: о десятій."
+
+msgid "Listen to Jaan’s voice message once more, then try again."
+msgstr "Ще раз послухай голосове повідомлення від Яана, а тоді спробуй знову."
+
+msgid "Listen: a plan for tomorrow"
+msgstr "На слух: план на завтра"
 
 msgid "Listen: Jaan’s plans"
 msgstr "Слухання: плани Яана"
@@ -196,8 +274,29 @@ msgstr "Ma olen, sa oled, ta on."
 msgid "Mari"
 msgstr "Марі"
 
+msgid "Mari calls Jaan"
+msgstr "Марі дзвонить Яану"
+
+msgid "Mari calls Jaan to make a plan. Listen for the days, the times and the places."
+msgstr "Марі дзвонить Яану, щоб домовитися. Слухай дні, час і місця."
+
+msgid "Mari doesn’t work today."
+msgstr "Марі сьогодні не працює."
+
+msgid "Mari is at the market at twelve."
+msgstr "О дванадцятій Марі на ринку."
+
 msgid "Mari writes"
 msgstr "Марі пише"
+
+msgid "Mari’s message ended with a question: <0>Kas sa oled homme linnas?</0> Write her a short reply, then compare it with a model and tick what yours does. Nothing is marked for you here."
+msgstr "Повідомлення Марі закінчилося питанням: <0>Kas sa oled homme linnas?</0> Напиши їй коротку відповідь, а тоді порівняй її зі зразком і познач, що в ній є. Тут ніхто не оцінює за тебе."
+
+msgid "Nearly. Check the word after the number in the ones you missed."
+msgstr "Майже. Там, де була помилка, перевір слово після числа."
+
+msgid "Nearly. Hear the ones you missed below, then try again with Slower."
+msgstr "Майже. Послухай нижче ті, де була помилка, а тоді спробуй ще раз із кнопкою «Повільніше»."
 
 msgid "No, it’s closed"
 msgstr "Ні, зачинено"
@@ -232,8 +331,11 @@ msgstr "Pool neli: пів на четверту, 3:30."
 msgid "Pühapäev with the ending that says when, as in esmaspäeval."
 msgstr "Pühapäev із закінченням, яке відповідає на питання «коли», як у esmaspäeval."
 
-msgid "Read a café sign and a text message, follow a voice message, fill in a plan for Saturday and answer a friend at a café: numbers, times and days in sentences you know."
-msgstr "Прочитай табличку на дверях кав’ярні й повідомлення, зрозумій голосове, заповни план на суботу й відповідай подрузі в кав’ярні: числа, час і дні в знайомих реченнях."
+msgid "Read a café sign and a text message, follow a voice message and a phone call, write what you hear, fill in a plan for Saturday, answer a friend at a café and write back to Mari: numbers, times and days in sentences you know."
+msgstr "Прочитай вивіску кав’ярні й повідомлення, послухай голосове повідомлення й телефонну розмову, запиши почуте, заповни план на суботу, відповідай подрузі в кав’ярні й напиши Марі: числа, час і дні в реченнях, які ти вже знаєш."
+
+msgid "Read Mari’s message once more, then try again."
+msgstr "Ще раз прочитай повідомлення від Марі, а тоді спробуй знову."
 
 msgid "Read opening hours: <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00, and <1>suletud</1> is closed."
 msgstr "Читай години роботи: <0>E–R 9–18</0> — з понеділка до п’ятниці, з 9:00 до 18:00, а <1>suletud</1> — зачинено."
@@ -241,11 +343,17 @@ msgstr "Читай години роботи: <0>E–R 9–18</0> — з пон�
 msgid "Read the sign on a café in Tallinn, then answer."
 msgstr "Прочитай табличку на дверях кав’ярні в Таллінні й дай відповіді."
 
+msgid "Reply to Mari"
+msgstr "Відповідь Марі"
+
 msgid "Saturday"
 msgstr "Субота"
 
 msgid "Say a price with <0>maksab</0>: <1>Kohv maksab kolm eurot</1>, coffee costs three euros."
 msgstr "Ціну називай словом <0>maksab</0>: <1>Kohv maksab kolm eurot</1>, кава коштує три євро."
+
+msgid "Say it in Estonian"
+msgstr "Скажи естонською"
 
 msgid "Say when with <0>kell</0> and a number: <1>Ma joon kell kümme kohvi</1>, I drink coffee at ten. Pool looks ahead, so <2>pool üksteist</2> is 10:30."
 msgstr "Час називай словом <0>kell</0> і числом: <1>Ma joon kell kümme kohvi</1>, я п’ю каву о десятій. Pool дивиться вперед, тож <2>pool üksteist</2> — це 10:30, пів на одинадцяту."
@@ -253,17 +361,35 @@ msgstr "Час називай словом <0>kell</0> і числом: <1>Ma jo
 msgid "Say where with <0>-s</0> or <1>-l</1>, and when with <2>täna</2>, <3>homme</3> or a day’s name with <4>-l</4>: <5>Pühapäeval olen kodus</5>, on Sunday I’m at home."
 msgstr "Місце називай закінченням <0>-s</0> або <1>-l</1>, а коли — словами <2>täna</2>, <3>homme</3> або назвою дня з <4>-l</4>: <5>Pühapäeval olen kodus</5>, у неділю я вдома."
 
+msgid "Saying a price"
+msgstr "Ціна"
+
+msgid "Saying no with <et>ei</et>"
+msgstr "Заперечення з <et>ei</et>"
+
+msgid "Says a time with <0>kell</0>."
+msgstr "Час із <0>kell</0>."
+
+msgid "Says where, with <0>-s</0> or <1>-l</1> on the place."
+msgstr "Де ти, з <0>-s</0> чи <1>-l</1> у назві місця."
+
 msgid "Sina as the one something is done to: Ma ootan sind, I’m waiting for you."
 msgstr "Sina, коли дія спрямована на тебе: Ma ootan sind, я чекаю на тебе."
 
 msgid "sit down"
 msgstr "сідай"
 
+msgid "Six short lines from a day in town: a time, a price, a day and a sign. Write each one as you hear it."
+msgstr "Шість коротких рядків із дня в місті: час, ціна, день і вивіска. Запиши кожен так, як чуєш."
+
 msgid "Sunday"
 msgstr "Неділя"
 
 msgid "Talk: coffee with Mari"
 msgstr "Розмова: кава з Марі"
+
+msgid "Telling the time"
+msgstr "Котра година"
 
 msgid "ten"
 msgstr "десять"
@@ -274,8 +400,23 @@ msgstr "Це про те, де ти живеш. Марі спитала, як у
 msgid "That’s the time. Mari asked how you are."
 msgstr "Це про те, котра година. Марі спитала, як у тебе справи."
 
+msgid "The café is open."
+msgstr "Кав’ярня відчинена."
+
 msgid "The plural of sõber."
 msgstr "Множина від sõber."
+
+msgid "Three to five sentences: answer her question, say something you don’t do, and say where you are and when."
+msgstr "Три–п’ять речень: відповідай на її питання, скажи, чого ти не робиш, і де ти будеш і коли."
+
+msgid "Thursday"
+msgstr "Четвер"
+
+msgid "Time, price or day"
+msgstr "Час, ціна чи день"
+
+msgid "Time, price or day?"
+msgstr "Час, ціна чи день?"
 
 msgid "to be"
 msgstr "бути"
@@ -285,6 +426,9 @@ msgstr "сьогодні"
 
 msgid "Today is Saturday, so tomorrow is Sunday."
 msgstr "Сьогодні субота, тож завтра неділя."
+
+msgid "Today is Saturday."
+msgstr "Сьогодні субота."
 
 msgid "tomorrow"
 msgstr "завтра"
@@ -298,11 +442,29 @@ msgstr "дванадцять"
 msgid "Üksteist is 11:00, and it’s half past ten."
 msgstr "Üksteist — це 11:00, а зараз пів на одинадцяту."
 
+msgid "We drink coffee at eleven."
+msgstr "Ми п’ємо каву об одинадцятій."
+
+msgid "what day"
+msgstr "який день"
+
+msgid "What day is it today?"
+msgstr "Який сьогодні день?"
+
 msgid "What day is it tomorrow?"
 msgstr "Який завтра день?"
 
+msgid "What day it is"
+msgstr "Який сьогодні день"
+
 msgid "What does Mari write?"
 msgstr "Що пише Марі?"
+
+msgid "what time"
+msgstr "котра година"
+
+msgid "What time it is"
+msgstr "Котра година"
 
 msgid "When does his bus get to Tallinn?"
 msgstr "Коли його автобус приїде до Таллінна?"
@@ -313,11 +475,17 @@ msgstr "О котрій кав’ярня зачиняється в четвер
 msgid "When does it open on Saturday?"
 msgstr "О котрій кав’ярня відчиняється в суботу?"
 
+msgid "When does Jaan come to the café?"
+msgstr "Коли Яан прийде в кав’ярню?"
+
 msgid "When does Mari have coffee tomorrow?"
 msgstr "Коли Марі завтра п’є каву?"
 
 msgid "When is the café open?"
 msgstr "Коли кав’ярня відчинена?"
+
+msgid "Where is Jaan at ten tomorrow?"
+msgstr "Де Яан буде завтра о десятій?"
 
 msgid "Where is Jaan on Sunday?"
 msgstr "Де Яан у неділю?"
@@ -331,8 +499,26 @@ msgstr "Де Марі завтра о дванадцятій?"
 msgid "Where will he wait for you?"
 msgstr "Де він на тебе чекатиме?"
 
+msgid "Which question does it answer?"
+msgstr "На яке питання це відповідь?"
+
 msgid "With ma, the verb ends in -n: ma joon."
 msgstr "З ma дієслово закінчується на -n: ma joon."
+
+msgid "Write back to Mari"
+msgstr "Відповідь Марі"
+
+msgid "Write each sentence in Estonian. A time takes <0>kell</0>, a price takes <1>maksab</1> and <2>eurot</2>."
+msgstr "Напиши кожне речення естонською. Час кажуть із <0>kell</0>, ціну — з <1>maksab</1> і <2>eurot</2>."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "Write the sentence"
+msgstr "Напиши речення"
+
+msgid "Write what you hear"
+msgstr "Напиши, що чуєш"
 
 msgid "Yes, from 10:00 to 16:00"
 msgstr "Так, з 10:00 до 16:00"

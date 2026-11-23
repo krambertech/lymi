@@ -801,7 +801,9 @@ export function PaevadLesson() {
                   share === 1 ? (
                     <Trans>All seven, every day spelled right.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Nearly. Play the ones you missed slower.</Trans>
+                    <Trans>
+                      Nearly. Hear the ones you missed below, then try again with Slower.
+                    </Trans>
                   ) : (
                     <Trans>Play the week above once more, then try again.</Trans>
                   )

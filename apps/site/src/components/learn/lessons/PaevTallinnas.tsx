@@ -1,16 +1,43 @@
+import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { lessonBySlug } from "../../../lib/learn/catalogue";
-import { TALLINN_DIALOGUE, TALLINN_PASSAGES } from "../../../lib/learn/clips";
+import {
+  clipId,
+  clipUrl,
+  TALLINN_DIALOGUE,
+  TALLINN_HEARD,
+  TALLINN_PASSAGES,
+  TALLINN_REPLY,
+  TALLINN_SORTED,
+  TALLINN_TALK,
+  TALLINN_TRANSLATED,
+} from "../../../lib/learn/clips";
+import { eachPairFirst } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { type GapItem, GapPassage } from "../GapPassage";
 import type { Glossary } from "../lesson-context";
 import { LessonView, Prose } from "../LessonView";
 import { OpeningHours } from "../OpeningHours";
 import { Listening, type PassageQuestion, PassageQuestions, Reading } from "../Passage";
+import { Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
+import { Sort, type SortBin, type SortItem } from "../Sort";
 import { Word } from "../Word";
+import { Writing } from "../Writing";
 
 const SLUG = "paev-tallinnas";
+
+const src = (text: string) => clipUrl(SLUG, clipId(text));
+
+const TRANSLATED_MEANS: readonly MessageDescriptor[] = [
+  msg`It’s ten o’clock.`,
+  msg`Coffee costs two euros.`,
+  msg`Today is Saturday.`,
+  msg`I don’t work tomorrow.`,
+  msg`I’m at the market at twelve.`,
+  msg`We drink coffee at eleven.`,
+];
 
 const GLOSSARY: Glossary = {
   kohvik: { en: msg`café` },
@@ -78,7 +105,7 @@ const SATURDAY_GAPS: readonly GapItem[] = [
 ];
 
 function useContent() {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   // Questions keep their answers in a fixed order, so each right answer sits in its own place.
   const sign: PassageQuestion[] = [
     {
@@ -250,7 +277,76 @@ function useContent() {
       ],
     },
   ];
-  return { sign, message, voice, cafe };
+  const plan: PassageQuestion[] = [
+    {
+      id: "today",
+      ask: t`What day is it today?`,
+      options: [
+        { id: "thursday", label: t`Thursday` },
+        { id: "friday", label: t`Friday` },
+        { id: "saturday", label: t`Saturday` },
+      ],
+      answer: "friday",
+      line: 2,
+    },
+    { id: "works", kind: "truefalse", ask: t`Jaan works tomorrow.`, answer: false, line: 4 },
+    {
+      id: "ten",
+      ask: t`Where is Jaan at ten tomorrow?`,
+      options: [
+        { id: "work", label: t`At work` },
+        { id: "cafe", label: t`In a café` },
+        { id: "market", label: t`At the market` },
+      ],
+      answer: "market",
+      line: 5,
+    },
+    {
+      id: "meet",
+      ask: t`When does Jaan come to the café?`,
+      options: [
+        { id: "ten", label: t`At ten` },
+        { id: "twelve", label: t`At twelve` },
+        { id: "eleven", label: t`At eleven` },
+      ],
+      answer: "twelve",
+      line: 7,
+    },
+    {
+      id: "mari-market",
+      kind: "truefalse",
+      ask: t`Mari is at the market at twelve.`,
+      answer: false,
+      line: 6,
+    },
+    { id: "sunday", kind: "truefalse", ask: t`Jaan is at home on Sunday.`, answer: true, line: 9 },
+  ];
+  const bins: SortBin[] = [
+    { id: "kell", label: "Mis kell on?", hint: t`what time` },
+    { id: "hind", label: "Kui palju?", hint: t`how much` },
+    { id: "paev", label: "Mis päev?", hint: t`what day` },
+  ];
+  const sorted: SortItem[] = TALLINN_SORTED.map(({ w, bin }) => ({ w, bin }));
+  const heard: (SentenceItem & { pair: readonly [string, string] })[] = TALLINN_HEARD.map(
+    ({ kind, said }) => ({
+      kind: "dictation" as const,
+      id: `write-${clipId(said)}`,
+      src: src(said),
+      answers: [said],
+      pair: [kind, said] as const,
+    }),
+  );
+  const translated: (SentenceItem & { pair: readonly [string, string] })[] = TALLINN_TRANSLATED.map(
+    ({ kind, answers }, i) => ({
+      kind: "translate" as const,
+      id: `translate-${clipId(answers[0])}`,
+      prompt: i18n._(TRANSLATED_MEANS[i] as MessageDescriptor),
+      src: src(answers[0]),
+      answers,
+      pair: [kind, answers[0]] as const,
+    }),
+  );
+  return { sign, message, voice, cafe, plan, bins, sorted, heard, translated };
 }
 
 export function PaevTallinnasLesson() {
@@ -264,13 +360,14 @@ export function PaevTallinnasLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Read a café sign and a text message, follow a voice message, fill in a plan for Saturday
-          and answer a friend at a café: numbers, times and days in sentences you know.
+          Read a café sign and a text message, follow a voice message and a phone call, write what
+          you hear, fill in a plan for Saturday, answer a friend at a café and write back to Mari:
+          numbers, times and days in sentences you know.
         </Trans>
       }
       facts={[
-        <Trans key="m">12 minutes</Trans>,
-        <Trans key="q">5 exercises</Trans>,
+        <Trans key="m">20 minutes</Trans>,
+        <Trans key="q">10 exercises</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -381,6 +478,29 @@ export function PaevTallinnasLesson() {
           ),
         },
         {
+          id: "which",
+          title: t`Time, price or day?`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    A number alone doesn’t say what it counts: <b lang="et">kaksteist</b> can be the
+                    time or a price. Listen to each line and put it under the question it answers.
+                  </Trans>
+                </p>
+              </Prose>
+              <Sort
+                id="sort-numbers"
+                title={<Trans>Which question does it answer?</Trans>}
+                bins={content.bins}
+                items={content.sorted}
+              />
+            </>
+          ),
+        },
+        {
           id: "voice",
           title: t`A voice message from Jaan`,
           quiz: true,
@@ -400,6 +520,102 @@ export function PaevTallinnasLesson() {
                 clip="p-jaan"
                 sentences={TALLINN_PASSAGES.jaan}
                 questions={content.voice}
+              />
+            </>
+          ),
+        },
+        {
+          id: "plan",
+          title: t`Mari calls Jaan`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Mari calls Jaan to make a plan. Listen for the days, the times and the places.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="mari-calls"
+                title={<Trans>Listen: a plan for tomorrow</Trans>}
+                clip="d-plan"
+                turns={TALLINN_TALK.turns}
+                names={{ second: t`Mari`, main: t`Jaan` }}
+                questions={content.plan}
+              />
+            </>
+          ),
+        },
+        {
+          id: "write",
+          title: t`Write what you hear`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Six short lines from a day in town: a time, a price, a day and a sign. Write
+                    each one as you hear it.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="write-heard"
+                title={<Trans>Write the sentence</Trans>}
+                items={content.heard}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, every word right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>
+                      Nearly. Hear the ones you missed below, then try again with Slower.
+                    </Trans>
+                  ) : (
+                    <Trans>Listen to Jaan’s voice message once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "translate",
+          title: t`Say it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write each sentence in Estonian. A time takes <b lang="et">kell</b>, a price
+                    takes <b lang="et">maksab</b> and <b lang="et">eurot</b>.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="translate-day"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={content.translated}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, every sentence right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check the word after the number in the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Read Mari’s message once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
               />
             </>
           ),
@@ -455,6 +671,73 @@ export function PaevTallinnasLesson() {
                 }
                 them={t`Mari`}
                 turns={content.cafe}
+              />
+            </>
+          ),
+        },
+        {
+          id: "reply",
+          title: t`Write back to Mari`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Mari’s message ended with a question: <b lang="et">Kas sa oled homme linnas?</b>{" "}
+                    Write her a short reply, then compare it with a model and tick what yours does.
+                    Nothing is marked for you here.
+                  </Trans>
+                </p>
+              </Prose>
+              <Writing
+                id="reply-to-mari"
+                title={<Trans>Reply to Mari</Trans>}
+                prompt={
+                  <Trans>
+                    Three to five sentences: answer her question, say something you don’t do, and
+                    say where you are and when.
+                  </Trans>
+                }
+                model={TALLINN_REPLY}
+                src={clipUrl(SLUG, "p-reply")}
+                checks={[
+                  {
+                    id: "answer",
+                    label: (
+                      <Trans>
+                        Answers her question with <span lang="et">jah</span> or{" "}
+                        <span lang="et">ei</span>.
+                      </Trans>
+                    ),
+                  },
+                  {
+                    id: "no",
+                    label: (
+                      <Trans>
+                        Has a sentence with <span lang="et">ei</span> and the verb without its
+                        ending.
+                      </Trans>
+                    ),
+                  },
+                  {
+                    id: "time",
+                    label: (
+                      <Trans>
+                        Says a time with <span lang="et">kell</span>.
+                      </Trans>
+                    ),
+                  },
+                  {
+                    id: "place",
+                    label: (
+                      <Trans>
+                        Says where, with <span lang="et">-s</span> or <span lang="et">-l</span> on
+                        the place.
+                      </Trans>
+                    ),
+                  },
+                ]}
               />
             </>
           ),

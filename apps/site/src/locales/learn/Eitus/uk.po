@@ -22,6 +22,9 @@ msgstr "<0>Ei ole</0> одним словом"
 msgid "<0>Ei</0> before the verb, and the ending is gone: <1>ei {stem}</1>."
 msgstr "<0>Ei</0> перед дієсловом, а закінчення зникло: <1>ei {stem}</1>."
 
+msgid "<0>Ei</0> is the same for every person: <1>ma ei loe</1>, <2>nad ei loe</2>."
+msgstr "<0>Ei</0> однакове для всіх осіб: <1>ma ei loe</1>, <2>nad ei loe</2>."
+
 msgid "<0>Ei</0>, and the verb without its ending."
 msgstr "<0>Ei</0> і дієслово без закінчення."
 
@@ -31,14 +34,23 @@ msgstr "<0>Olen</0> для «я», <1>oled</1> для «ти», <2>on</2> для
 msgid "<0>Pole</0> means the same as <1>ei ole</1>. You’ll hear both."
 msgstr "<0>Pole</0> означає те саме, що <1>ei ole</1>. Почуєш обидва."
 
-msgid "2 quizzes"
-msgstr "2 тести"
+msgid "<et>Ei ole</et> and <et>pole</et>"
+msgstr "<et>Ei ole</et> і <et>pole</et>"
 
-msgid "8 minutes"
-msgstr "8 хвилин"
+msgid "<et>Ei</et> and the verb without its ending"
+msgstr "<et>Ei</et> і дієслово без закінчення"
 
-msgid "After <0>ei</0> comes the I form of the present without its -n: <1>loen</1>, <2>ei loe</2>."
-msgstr "Після <0>ei</0> іде форма першої особи однини теперішнього часу без -n: <1>loen</1>, <2>ei loe</2>."
+msgid "<et>Ei</et>, then the verb from the question without its ending."
+msgstr "<et>Ei</et>, а потім дієслово з питання без закінчення."
+
+msgid "15 minutes"
+msgstr "15 хвилин"
+
+msgid "6 quizzes and a conversation"
+msgstr "6 тестів і розмова"
+
+msgid "A yes keeps the verb’s ending."
+msgstr "У ствердженні дієслово зберігає закінчення."
 
 msgid "All of them. <0>Ei</0>, and the ending goes."
 msgstr "Усі. <0>Ei</0>, і закінчення зникає."
@@ -46,8 +58,23 @@ msgstr "Усі. <0>Ei</0>, і закінчення зникає."
 msgid "All of them. <0>Ei</0>, then the verb from the question."
 msgstr "Усі. <0>Ei</0>, а за ним дієслово з питання."
 
+msgid "All six, each found and fixed."
+msgstr "Усі шість: кожну помилку знайдено й виправлено."
+
+msgid "All six, each with <0>ei</0> and no ending."
+msgstr "Усі шість, кожне з <0>ei</0> і без закінчення."
+
+msgid "All six, each without its ending."
+msgstr "Усі шість, кожне без закінчення."
+
+msgid "All six, every yes and every no."
+msgstr "Усі шість, і кожне «так», і кожне «ні»."
+
 msgid "am not, is not, are not"
 msgstr "не бути: я не, він не, вони не"
+
+msgid "answer no with the verb"
+msgstr "відповідай «ні» з дієсловом"
 
 msgid "Answering no"
 msgstr "Як відповісти «ні»"
@@ -66,6 +93,9 @@ msgstr "Ти читаєш?"
 
 msgid "Are you tired?"
 msgstr "Ти втомився (втомилася)?"
+
+msgid "Coffee"
+msgstr "Каву"
 
 msgid "Do you study?"
 msgstr "Ти вчишся?"
@@ -91,8 +121,11 @@ msgstr "не говорю, не говорить тощо"
 msgid "don’t work, doesn’t work"
 msgstr "не працюю, не працює тощо"
 
-msgid "Each person has its own: -n, -d, -b, -me, -te, -vad."
-msgstr "У кожної особи своє: -n, -d, -b, -me, -te, -vad."
+msgid "Each person usually has its own: -n, -d, -b, -me, -te, -vad."
+msgstr "Зазвичай у кожної особи своє: -n, -d, -b, -me, -te, -vad."
+
+msgid "Each round shows a verb with its ending, such as <0>teevad</0>. Type the form that follows <1>ei</1>: drop the ending, so <2>teevad</2> becomes <3>ei tee</3>."
+msgstr "У кожному раунді є дієслово із закінченням, як-от <0>teevad</0>. Напиши форму, що йде після <1>ei</1>: відкинь закінчення, і <2>teevad</2> стає <3>ei tee</3>."
 
 msgid "Ei before the verb"
 msgstr "Ei перед дієсловом"
@@ -103,17 +136,44 @@ msgstr "Ei ole і pole"
 msgid "Ei ole in one word."
 msgstr "Ei ole одним словом."
 
-msgid "Every form of <0>olema</0> becomes <1>ei ole</1>."
-msgstr "Кожна форма <0>olema</0> стає <1>ei ole</1>."
+msgid "Every present form of <0>olema</0> becomes <1>ei ole</1>."
+msgstr "Кожна форма <0>olema</0> в теперішньому часі стає <1>ei ole</1>."
+
+msgid "Fix the no"
+msgstr "Виправ заперечення"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
 
 msgid "Flip the six lines above once more, then come back."
 msgstr "Ще раз перемкни шість рядків вище й повертайся."
+
+msgid "Flip the six lines at the top and the <0>olema</0> lines once more, then try again."
+msgstr "Ще раз перемкни шість рядків на початку уроку й рядки з <0>olema</0>, а тоді спробуй знову."
+
+msgid "Flip the six lines at the top once more, then try again."
+msgstr "Ще раз перемкни шість рядків на початку уроку, а тоді спробуй знову."
 
 msgid "From lugema, to read."
 msgstr "Від lugema, «читати»."
 
 msgid "From rääkima, to speak."
 msgstr "Від rääkima, «говорити»."
+
+msgid "He doesn’t speak."
+msgstr "Він не говорить."
+
+msgid "He speaks."
+msgstr "Він говорить."
+
+msgid "He’s a teacher."
+msgstr "Він учитель."
+
+msgid "He’s busy."
+msgstr "Він зайнятий."
+
+msgid "He’s tired."
+msgstr "Він утомився."
 
 msgid "Hear a sentence, then pick how to say its no."
 msgstr "Послухай речення й обери, як сказати його із запереченням."
@@ -136,11 +196,17 @@ msgstr "я не читаю"
 msgid "I don’t speak Estonian"
 msgstr "я не говорю естонською"
 
+msgid "I don’t study."
+msgstr "Я не вчуся."
+
 msgid "I read"
 msgstr "я читаю"
 
 msgid "I speak"
 msgstr "я говорю"
+
+msgid "I study."
+msgstr "Я вчуся."
 
 msgid "I’m not tired"
 msgstr "я не втомився (не втомилася)"
@@ -148,11 +214,29 @@ msgstr "я не втомився (не втомилася)"
 msgid "I’m tired"
 msgstr "я втомився (втомилася)"
 
+msgid "In each sentence one word is wrong: a verb that keeps its ending after <0>ei</0>, or a form of <1>olema</1> other than <2>ole</2>. Tap the wrong word, then type it right."
+msgstr "У кожному реченні одне слово хибне: дієслово, що зберегло закінчення після <0>ei</0>, або форма <1>olema</1>, відмінна від <2>ole</2>. Натисни на хибне слово, а тоді напиши його правильно."
+
 msgid "In some verbs the stem changes: <0/>, but <1/>. Start from the I form of the present, not the -ma infinitive, and the no follows: <2/>."
 msgstr "У деяких дієсловах основа змінюється: <0/>, але <1/>. Бери форму першої особи однини теперішнього часу, а не інфінітив на -ma, і заперечення вийде саме: <2/>."
 
 msgid "In the present tense, put <0>ei</0> before the verb and drop its ending. It’s the same for every person, so no is easier than yes."
 msgstr "У теперішньому часі постав <0>ei</0> перед дієсловом і прибери закінчення. Для всіх осіб це однаково, тож «ні» сказати легше, ніж «так»."
+
+msgid "In the present, after <0>ei</0> comes the I form without its -n: <1>loen</1>, <2>ei loe</2>."
+msgstr "У теперішньому часі після <0>ei</0> іде форма першої особи однини без -n: <1>loen</1>, <2>ei loe</2>."
+
+msgid "In the present, after <0>ei</0>, <1>olema</1> is <2>ole</2>."
+msgstr "У теперішньому часі після <0>ei</0> дієслово <1>olema</1> має форму <2>ole</2>."
+
+msgid "In the present, after <et>ei</et>, <et>olema</et> is <et>ole</et>. <et>Pole</et> is <et>ei ole</et> in one word."
+msgstr "У теперішньому часі після <et>ei</et> дієслово <et>olema</et> має форму <et>ole</et>. <et>Pole</et> — це <et>ei ole</et> одним словом."
+
+msgid "In the present, the verb after <0>ei</0> drops its ending."
+msgstr "У теперішньому часі дієслово після <0>ei</0> втрачає закінчення."
+
+msgid "In the present, the verb after <et>ei</et> drops its ending."
+msgstr "У теперішньому часі дієслово після <et>ei</et> втрачає закінчення."
 
 msgid "Is he or she at home?"
 msgstr "Він чи вона вдома?"
@@ -160,14 +244,47 @@ msgstr "Він чи вона вдома?"
 msgid "Its I form in the present is loen."
 msgstr "Форма першої особи однини теперішнього часу: loen."
 
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan is reading."
+msgstr "Яан читає."
+
+msgid "Listen: Mari’s questions"
+msgstr "Слухання: питання Марі"
+
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"
+
+msgid "Listening: Mari’s questions"
+msgstr "На слух: питання Марі"
+
+msgid "make it no"
+msgstr "перетвори на заперечення"
 
 msgid "Make it no"
 msgstr "Із «так» у «ні»"
 
+msgid "Mari"
+msgstr "Марі"
+
+msgid "Mari asks Jaan three questions. Listen to how he answers each, and to what he says after it."
+msgstr "Марі ставить Яанові три питання. Слухай, як він відповідає на кожне і що каже після відповіді."
+
+msgid "Nearly. Check that the whole ending went, <0>-vad</0> and <1>-te</1> too."
+msgstr "Майже. Перевір, чи відпало все закінчення, і <0>-vad</0>, і <1>-te</1>."
+
+msgid "Nearly. Check the verb in the ones you missed."
+msgstr "Майже. Там, де була помилка, перевір дієслово."
+
+msgid "Nearly. Check whether each one meant yes or no."
+msgstr "Майже. Перевір, де було «так», а де «ні»."
+
 msgid "Nearly. Listen for the verb in the question."
 msgstr "Майже. Прислухайся до дієслова в питанні."
+
+msgid "Nearly. Look at the word right after <0>ei</0>."
+msgstr "Майже. Подивися на слово одразу після <0>ei</0>."
 
 msgid "Nearly. Watch for endings that stay after <0>ei</0>."
 msgstr "Майже. Стеж, щоб після <0>ei</0> не лишалося закінчення."
@@ -199,6 +316,12 @@ msgstr "Одна форма для всіх"
 msgid "One sentence to keep from today: <0/>."
 msgstr "Речення, яке варто запам’ятати вже сьогодні: <0/>."
 
+msgid "Peeter is at home."
+msgstr "Пеетер удома."
+
+msgid "Peeter is working."
+msgstr "Пеетер працює."
+
 #. placeholder {0}: bare(no)
 #. placeholder {0}: bare(yes)
 msgid "Play {0}"
@@ -210,11 +333,20 @@ msgstr "Відтворити {ask}"
 msgid "Play {said}"
 msgstr "Відтворити {said}"
 
-msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
-msgstr "Став <0>ei</0> перед дієсловом: <1>ma ei loe</1>, я не читаю."
+msgid "Rewrite each sentence as a no. Put <0>ei</0> before the verb and drop its ending. In these sentences the rest stays the same: <1>Mari armastab kohvi</1> becomes <2>Mari ei armasta kohvi</2>."
+msgstr "Перепиши кожне речення як заперечення. Постав <0>ei</0> перед дієсловом і відкинь закінчення. У цих реченнях решта не змінюється: <1>Mari armastab kohvi</1> стає <2>Mari ei armasta kohvi</2>."
+
+msgid "Rewrite the sentence"
+msgstr "Перепиши речення"
 
 msgid "Say no"
 msgstr "Відповідай «ні»"
+
+msgid "She doesn’t drink."
+msgstr "Вона не п’є."
+
+msgid "She drinks."
+msgstr "Вона п’є."
 
 msgid "Six endings"
 msgstr "Шість закінчень"
@@ -222,11 +354,11 @@ msgstr "Шість закінчень"
 msgid "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
 msgstr "Перемкни <0/> на <1/>, і всі шість речень стануть заперечними. Натисни рядок, щоб послухати."
 
-msgid "The form says who"
-msgstr "Форма каже, хто"
+msgid "Tea"
+msgstr "Чай"
 
-msgid "The no is the same for every person: <0>ma ei loe</0>, <1>nad ei loe</1>."
-msgstr "Заперечення однакове для всіх осіб: <0>ma ei loe</0>, <1>nad ei loe</1>."
+msgid "The form mostly says who"
+msgstr "Форма здебільшого каже, хто"
 
 msgid "The no of olema, to be."
 msgstr "Заперечення olema, «бути»."
@@ -267,8 +399,11 @@ msgstr "любити, кохати"
 msgid "to read"
 msgstr "читати"
 
-msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
-msgstr "Щоб сказати «не», постав <0/> перед дієсловом. <1/> — «я читаю», а <2/> — «я не читаю». Дієслово втрачає закінчення, а <3/> однакове, хоч би про кого йшлося."
+msgid "To say not, you usually put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
+msgstr "Щоб сказати «не», зазвичай ставлять <0/> перед дієсловом. <1/> — «я читаю», а <2/> — «я не читаю». Дієслово втрачає закінчення, а <3/> однакове, хоч би про кого йшлося."
+
+msgid "To say not, you usually put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
+msgstr "Щоб сказати «не», зазвичай ставлять <0>ei</0> перед дієсловом: <1>ma ei loe</1>, я не читаю."
 
 msgid "to speak"
 msgstr "говорити"
@@ -279,11 +414,35 @@ msgstr "чекати"
 msgid "to work"
 msgstr "працювати"
 
+msgid "Turn it into a no"
+msgstr "Перетвори на заперечення"
+
 msgid "turns a sentence into a yes-or-no question"
 msgstr "робить із речення питання «так чи ні»"
 
+msgid "Type the form after <0>ei</0>"
+msgstr "Напиши форму після <0>ei</0>"
+
+msgid "Type the form after ei"
+msgstr "Напиши форму після ei"
+
 msgid "Verb"
 msgstr "Дієслово"
+
+msgid "Water"
+msgstr "Воду"
+
+msgid "What does Jaan drink?"
+msgstr "Що п’є Яан?"
+
+msgid "What does Jaan say about himself?"
+msgstr "Що Яан каже про себе?"
+
+msgid "Write each sentence in Estonian: a yes keeps the verb’s ending, and a no takes <0>ei</0> and drops it."
+msgstr "Напиши кожне речення естонською: у ствердженні дієслово зберігає закінчення, а в запереченні з’являється <0>ei</0>, і закінчення відпадає."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
 
 msgid "yes"
 msgstr "так"
@@ -294,5 +453,17 @@ msgstr "У «так» шість закінчень, які треба вивч�
 msgid "Yes or no"
 msgstr "Так чи ні"
 
+msgid "You all read."
+msgstr "Ви читаєте."
+
+msgid "You aren’t waiting."
+msgstr "Ти не чекаєш."
+
+msgid "You don’t read (to more than one)."
+msgstr "Ви не читаєте (звертаючись до кількох)."
+
 msgid "You’ll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
 msgstr "Часто його кажуть одним словом, <0/>, і це рівно те саме, що <1/>. Спробуй усі три."
+
+msgid "You’re waiting."
+msgstr "Ти чекаєш."

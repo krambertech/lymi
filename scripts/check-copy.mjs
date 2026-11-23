@@ -13,7 +13,6 @@ const PROSE = [
   "apps/site/src/content/*.mdx",
   "apps/mobile/store/listing/*.md",
 ];
-const LESSONS = ["apps/site/src/components/learn/*", "apps/site/src/lib/learn/*"];
 
 export const RULES = [
   {
@@ -147,17 +146,9 @@ function proseProblems(file) {
     });
 }
 
-function siteMessages() {
-  const lessons = words(tracked(LESSONS).map(read).join("\n"));
-  return readCatalog(read(CATALOG)).filter((id) => {
-    const probe = words(id).slice(0, 60);
-    return probe.length === 0 || !lessons.includes(probe);
-  });
-}
-
 export function check(files) {
   if (files.length > 0) return files.flatMap(proseProblems);
-  const messages = siteMessages();
+  const messages = readCatalog(read(CATALOG));
   return [
     ...messages.flatMap((text) => phraseProblems(CATALOG, text)),
     ...sloganProblems(messages),

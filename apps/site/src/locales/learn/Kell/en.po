@@ -1,0 +1,248 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "{past} minutes past {struck}."
+msgstr "{past} minutes past {struck}."
+
+msgid "<0/> means half, and it looks ahead. <1/> is halfway to four, so it’s 3:30, not 4:30."
+msgstr "<0/> means half, and it looks ahead. <1/> is halfway to four, so it’s 3:30, not 4:30."
+
+msgid "<0>Pool</0>, <1>veerand</1> and <2>kolmveerand</2> name the hour that’s coming: <3>pool neli</3> is 3:30."
+msgstr "<0>Pool</0>, <1>veerand</1> and <2>kolmveerand</2> name the hour that’s coming: <3>pool neli</3> is 3:30."
+
+msgid "<0>Veerand neli</0> is a quarter of the way to four, 3:15. <1>Kolmveerand neli</1> is three quarters, 3:45."
+msgstr "<0>Veerand neli</0> is a quarter of the way to four, 3:15. <1>Kolmveerand neli</1> is three quarters, 3:45."
+
+msgid "12 minutes"
+msgstr "12 minutes"
+
+msgid "3 quizzes"
+msgstr "3 quizzes"
+
+msgid "A clock"
+msgstr "A clock"
+
+#. placeholder {0}: timeDigits(time)
+msgid "A clock at {0}"
+msgstr "A clock at {0}"
+
+msgid "A clock at {right}"
+msgstr "A clock at {right}"
+
+msgid "a quarter"
+msgstr "a quarter"
+
+msgid "A quarter of the way to {next}."
+msgstr "A quarter of the way to {next}."
+
+msgid "After a number from two up, minut becomes minutit."
+msgstr "After a number from two up, minut becomes minutit."
+
+msgid "after; in, as in “in ten minutes”"
+msgstr "after; in, as in “in ten minutes”"
+
+msgid "Also a bell."
+msgstr "Also a bell."
+
+msgid "An hour earlier"
+msgstr "An hour earlier"
+
+msgid "An hour later"
+msgstr "An hour later"
+
+msgid "Ask <0>Mis kell on?</0> The answer is <1>kell on</1> and the hour: <2>kell on kolm</2>."
+msgstr "Ask <0>Mis kell on?</0> The answer is <1>kell on</1> and the hour: <2>kell on kolm</2>."
+
+msgid "Ask the time and understand the answer. Halves and quarters count toward the hour that’s coming."
+msgstr "Ask the time and understand the answer. Halves and quarters count toward the hour that’s coming."
+
+msgid "Before the hour, say how long until the next one. <0/> is, word for word, “in ten minutes, four”: 3:50."
+msgstr "Before the hour, say how long until the next one. <0/> is, word for word, “in ten minutes, four”: 3:50."
+
+msgid "clock, watch; o’clock"
+msgstr "clock, watch; o’clock"
+
+msgid "Drag the minute hand or pick the minutes, then tap play to hear the time. The hour a time is named after lights up."
+msgstr "Drag the minute hand or pick the minutes, then tap play to hear the time. The hour a time is named after lights up."
+
+msgid "Each clock fills in the part of the hour that has gone. Tap one to hear it."
+msgstr "Each clock fills in the part of the hour that has gone. Tap one to hear it."
+
+msgid "Every one, by ear."
+msgstr "Every one, by ear."
+
+msgid "half"
+msgstr "half"
+
+msgid "Half hours"
+msgstr "Half hours"
+
+msgid "half past three, 3:30"
+msgstr "half past three, 3:30"
+
+msgid "Half past: pool"
+msgstr "Half past: pool"
+
+msgid "Halfway to {next}."
+msgstr "Halfway to {next}."
+
+msgid "Here the number changes shape: <0>viis</0> becomes <1>viie</1>, <2>kümme</2> becomes <3>kümne</3>, <4>kakskümmend</4> becomes <5>kahekümne</5>. Learn these three as set phrases for now. Lesson {genitive} explains the form."
+msgstr "Here the number changes shape: <0>viis</0> becomes <1>viie</1>, <2>kümme</2> becomes <3>kümne</3>, <4>kakskümmend</4> becomes <5>kahekümne</5>. Learn these three as set phrases for now. Lesson {genitive} explains the form."
+
+msgid "Hour"
+msgstr "Hour"
+
+msgid "In {ahead} minutes it’s {next}."
+msgstr "In {ahead} minutes it’s {next}."
+
+msgid "It’s {digits}: <0>{words}</0>."
+msgstr "It’s {digits}: <0>{words}</0>."
+
+msgid "It’s {right}: <0>{words}</0> is halfway to {next}."
+msgstr "It’s {right}: <0>{words}</0> is halfway to {next}."
+
+msgid "It’s three o’clock."
+msgstr "It’s three o’clock."
+
+msgid "Kolm, three, and veerand, a quarter."
+msgstr "Kolm, three, and veerand, a quarter."
+
+msgid "Kümme minutit kolm läbi: 3:10."
+msgstr "Kümme minutit kolm läbi: 3:10."
+
+msgid "Kümne is the form kümme takes before minuti pärast."
+msgstr "Kümne is the form kümme takes before minuti pärast."
+
+msgid "Kümne minuti pärast neli: in ten minutes it’s four, 3:50."
+msgstr "Kümne minuti pärast neli: in ten minutes it’s four, 3:50."
+
+msgid "Listen and pick the clock. The others are an hour out, or another time named after the same hour, such as 3:15 and 3:45."
+msgstr "Listen and pick the clock. The others are an hour out, or another time named after the same hour, such as 3:15 and 3:45."
+
+msgid "Listen and type the time in digits, such as 3:30 or 3.30."
+msgstr "Listen and type the time in digits, such as 3:30 or 3.30."
+
+msgid "Listen for pool, veerand, kolmveerand, läbi or pärast. Each tells you which hour to count from."
+msgstr "Listen for pool, veerand, kolmveerand, läbi or pärast. Each tells you which hour to count from."
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Minute hand"
+msgstr "Minute hand"
+
+msgid "minutes"
+msgstr "minutes"
+
+msgid "Minutes"
+msgstr "Minutes"
+
+msgid "Minutes past count from the hour that has struck: <0>kümme minutit kolm läbi</0>, 3:10. Minutes to count down to the next: <1>kümne minuti pärast neli</1>, 3:50."
+msgstr "Minutes past count from the hour that has struck: <0>kümme minutit kolm läbi</0>, 3:10. Minutes to count down to the next: <1>kümne minuti pärast neli</1>, 3:50."
+
+msgid "Minutes past: läbi"
+msgstr "Minutes past: läbi"
+
+msgid "Minutes to: pärast"
+msgstr "Minutes to: pärast"
+
+msgid "Most of them. Play the ones you missed once more."
+msgstr "Most of them. Play the ones you missed once more."
+
+msgid "On the hour"
+msgstr "On the hour"
+
+msgid "On the hour: the number alone."
+msgstr "On the hour: the number alone."
+
+msgid "Other minutes, up to twenty past, count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, the form after a number; lesson {partitive} explains it."
+msgstr "Other minutes, up to twenty past, count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, the form after a number; lesson {partitive} explains it."
+
+#. placeholder {0}: timeDigits(time)
+#. placeholder {1}: timeWords(time)
+msgid "Play {0}, {1}"
+msgstr "Play {0}, {1}"
+
+msgid "Play {digits}"
+msgstr "Play {digits}"
+
+msgid "Pool names the coming hour, so the hour you hear is one ahead. Listen for the hour, then step back half an hour."
+msgstr "Pool names the coming hour, so the hour you hear is one ahead. Listen for the hour, then step back half an hour."
+
+msgid "Pool neli: halfway to four, 3:30."
+msgstr "Pool neli: halfway to four, 3:30."
+
+msgid "quarter past three, 3:15"
+msgstr "quarter past three, 3:15"
+
+msgid "quarter to four, 3:45"
+msgstr "quarter to four, 3:45"
+
+msgid "Quarters look ahead too. <0/> is a quarter, so <1/> is a quarter of the way to four: 3:15. <2/> is three quarters, so <3/> is 3:45."
+msgstr "Quarters look ahead too. <0/> is a quarter, so <1/> is a quarter of the way to four: 3:15. <2/> is three quarters, so <3/> is 3:45."
+
+msgid "Quarters: veerand and kolmveerand"
+msgstr "Quarters: veerand and kolmveerand"
+
+msgid "ten past three, 3:10"
+msgstr "ten past three, 3:10"
+
+msgid "ten to four, 3:50"
+msgstr "ten to four, 3:50"
+
+msgid "The hour you hear is the one that’s coming. Tap a few and listen."
+msgstr "The hour you hear is the one that’s coming. Tap a few and listen."
+
+msgid "The hours"
+msgstr "The hours"
+
+msgid "The hours are the numbers from lesson {numbers}. Tap one to hear it."
+msgstr "The hours are the numbers from lesson {numbers}. Tap one to hear it."
+
+msgid "three quarters"
+msgstr "three quarters"
+
+msgid "Three quarters of the way to {next}."
+msgstr "Three quarters of the way to {next}."
+
+msgid "through; past"
+msgstr "through; past"
+
+msgid "Times"
+msgstr "Times"
+
+msgid "To ask the time, say <0/> Word for word, it’s “what clock is?” The answer starts with <1/> too: <2/>, it’s three o’clock."
+msgstr "To ask the time, say <0/> Word for word, it’s “what clock is?” The answer starts with <1/> too: <2/>, it’s three o’clock."
+
+msgid "Turn the clock"
+msgstr "Turn the clock"
+
+msgid "Type the time"
+msgstr "Type the time"
+
+msgid "Type the time you hear"
+msgstr "Type the time you hear"
+
+msgid "Veerand neli: a quarter of the way to four, 3:15."
+msgstr "Veerand neli: a quarter of the way to four, 3:15."
+
+msgid "What time is it?"
+msgstr "What time is it?"
+
+msgid "Which clock did you hear?"
+msgstr "Which clock did you hear?"
+
+msgid "Which clock?"
+msgstr "Which clock?"
+
+msgid "Which half hour?"
+msgstr "Which half hour?"
+
+msgid "Word for word: “what clock is?”"
+msgstr "Word for word: “what clock is?”"

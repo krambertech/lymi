@@ -1,0 +1,419 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "-sse means into or to"
+msgstr "-sse means into or to"
+
+msgid "-st means out of or from"
+msgstr "-st means out of or from"
+
+msgid "<0>Koolis</0> says where you are. To say where from, use <1>-st</1>: <2>koolist</2>."
+msgstr "<0>Koolis</0> says where you are. To say where from, use <1>-st</1>: <2>koolist</2>."
+
+msgid "<0>Koolisse</0> says where to: you’d be coming to school. She asked where from."
+msgstr "<0>Koolisse</0> says where to: you’d be coming to school. She asked where from."
+
+msgid "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>?"
+msgstr "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>?"
+
+msgid "<0>Pärnus</0> says in Pärnu. <1>Pärit</1> takes the form for where from: <2>Pärnust</2>."
+msgstr "<0>Pärnus</0> says in Pärnu. <1>Pärit</1> takes the form for where from: <2>Pärnust</2>."
+
+msgid "<0>Pärnusse</0> says to Pärnu. <1>Pärit</1> takes the form for where from: <2>Pärnust</2>."
+msgstr "<0>Pärnusse</0> says to Pärnu. <1>Pärit</1> takes the form for where from: <2>Pärnust</2>."
+
+msgid "<0>Poes</0> says where you are. After <1>lähen</1>, say where to: <2>poodi</2>."
+msgstr "<0>Poes</0> says where you are. After <1>lähen</1>, say where to: <2>poodi</2>."
+
+msgid "<0>Poes</0> says you’re in the shop. She asked where you’re going."
+msgstr "<0>Poes</0> says you’re in the shop. She asked where you’re going."
+
+msgid "<0>Tartust</0> says from Tartu. You’re going to Tartu: <1>Tartusse</1>."
+msgstr "<0>Tartust</0> says from Tartu. You’re going to Tartu: <1>Tartusse</1>."
+
+msgid "10 minutes"
+msgstr "10 minutes"
+
+msgid "2 quizzes and a conversation"
+msgstr "2 quizzes and a conversation"
+
+msgid "A cat and a house"
+msgstr "A cat and a house"
+
+msgid "After <0>lähen</0>, say where to: <1>Tartusse</1>. <2>Tartus</2> is where you are."
+msgstr "After <0>lähen</0>, say where to: <1>Tartusse</1>. <2>Tartus</2> is where you are."
+
+msgid "All of them. You told <0>-s</0>, <1>-sse</1> and <2>-st</2> apart every time."
+msgstr "All of them. You told <0>-s</0>, <1>-sse</1> and <2>-st</2> apart every time."
+
+msgid "All three go on the same stem: <0>haiglas, haiglasse, haiglast</0>."
+msgstr "All three go on the same stem: <0>haiglas, haiglasse, haiglast</0>."
+
+msgid "Asks where someone or something is going."
+msgstr "Asks where someone or something is going."
+
+msgid "at home"
+msgstr "at home"
+
+msgid "at school, in a school"
+msgstr "at school, in a school"
+
+msgid "at the office"
+msgstr "at the office"
+
+msgid "at work"
+msgstr "at work"
+
+msgid "café"
+msgstr "café"
+
+msgid "cat"
+msgstr "cat"
+
+msgid "Come home!"
+msgstr "Come home!"
+
+msgid "English puts in, into or out of before the place. Estonian changes the end of the place instead. Tap a form to watch the cat move and hear the sentence."
+msgstr "English puts in, into or out of before the place. Estonian changes the end of the place instead. Tap a form to watch the cat move and hear the sentence."
+
+msgid "Estonian asks three questions about a place, <0>kus</0>, <1>kuhu</1> and <2>kust</2>, and answers each with its own ending: <3>majas, majja, majast</3>."
+msgstr "Estonian asks three questions about a place, <0>kus</0>, <1>kuhu</1> and <2>kust</2>, and answers each with its own ending: <3>majas, majja, majast</3>."
+
+msgid "For <0/>, <1/> and <2/>, the short form is the third form a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. Two words have a short form of their own: <4/> for <5/>, <6/> for <7/>."
+msgstr "For <0/>, <1/> and <2/>, the short form is the third form a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. Two words have a short form of their own: <4/> for <5/>, <6/> for <7/>."
+
+msgid "Four places, each with a form for kus, kuhu and kust"
+msgstr "Four places, each with a form for kus, kuhu and kust"
+
+msgid "from Estonia"
+msgstr "from Estonia"
+
+msgid "from Finland"
+msgstr "from Finland"
+
+msgid "from home"
+msgstr "from home"
+
+msgid "from Pärnu"
+msgstr "from Pärnu"
+
+msgid "from school"
+msgstr "from school"
+
+msgid "from Tallinn"
+msgstr "from Tallinn"
+
+msgid "from Tartu"
+msgstr "from Tartu"
+
+msgid "from the café"
+msgstr "from the café"
+
+msgid "from the hospital"
+msgstr "from the hospital"
+
+msgid "from the office"
+msgstr "from the office"
+
+msgid "from the shop"
+msgstr "from the shop"
+
+msgid "from town"
+msgstr "from town"
+
+msgid "from Ukraine"
+msgstr "from Ukraine"
+
+msgid "from, by birth"
+msgstr "from, by birth"
+
+msgid "Hear a place on its own and pick the question it answers. Only its ending tells you: <0>-s</0>, <1>-sse</1> or <2>-st</2>."
+msgstr "Hear a place on its own and pick the question it answers. Only its ending tells you: <0>-s</0>, <1>-sse</1> or <2>-st</2>."
+
+msgid "home"
+msgstr "home"
+
+msgid "Home, <0/>, has a short form of its own: <1/> when you go there. Then <2/> when you’re there, <3/> when you leave."
+msgstr "Home, <0/>, has a short form of its own: <1/> when you go there. Then <2/> when you’re there, <3/> when you leave."
+
+msgid "home, to home"
+msgstr "home, to home"
+
+msgid "hospital"
+msgstr "hospital"
+
+msgid "house"
+msgstr "house"
+
+msgid "I’m at home."
+msgstr "I’m at home."
+
+msgid "I’m coming from home."
+msgstr "I’m coming from home."
+
+msgid "I’m coming from school."
+msgstr "I’m coming from school."
+
+msgid "I’m coming from the shop."
+msgstr "I’m coming from the shop."
+
+msgid "I’m from Estonia."
+msgstr "I’m from Estonia."
+
+msgid "I’m from Finland."
+msgstr "I’m from Finland."
+
+msgid "I’m from Tallinn."
+msgstr "I’m from Tallinn."
+
+msgid "I’m from Ukraine."
+msgstr "I’m from Ukraine."
+
+msgid "I’m going to school."
+msgstr "I’m going to school."
+
+msgid "I’m going to Tartu."
+msgstr "I’m going to Tartu."
+
+msgid "I’m going to the hospital."
+msgstr "I’m going to the hospital."
+
+msgid "I’m going to the shop."
+msgstr "I’m going to the shop."
+
+msgid "in a café"
+msgstr "in a café"
+
+msgid "in a hospital"
+msgstr "in a hospital"
+
+msgid "in Pärnu"
+msgstr "in Pärnu"
+
+msgid "in Tallinn"
+msgstr "in Tallinn"
+
+msgid "in Tartu"
+msgstr "in Tartu"
+
+msgid "in the house"
+msgstr "in the house"
+
+msgid "in the shop"
+msgstr "in the shop"
+
+msgid "in town"
+msgstr "in town"
+
+msgid "into the house"
+msgstr "into the house"
+
+msgid "Kus with a t on the end."
+msgstr "Kus with a t on the end."
+
+msgid "Lesson {places} taught <0/>, where, and its <1>-s</1>: <2/> Estonian asks two more questions about a place. <3/> asks where to: <4/> <5/> asks where from: <6/>"
+msgstr "Lesson {places} taught <0/>, where, and its <1>-s</1>: <2/> Estonian asks two more questions about a place. <3/> asks where to: <4/> <5/> asks where from: <6/>"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Ma olen pärit… is I’m from…"
+msgstr "Ma olen pärit… is I’m from…"
+
+msgid "Mari"
+msgstr "Mari"
+
+msgid "Mari asks <0/>, <1/> and <2/>. Answer each with the form that fits its question."
+msgstr "Mari asks <0/>, <1/> and <2/>. Answer each with the form that fits its question."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "out of the house"
+msgstr "out of the house"
+
+msgid "Pärnu"
+msgstr "Pärnu"
+
+msgid "Pärnu, a town by the sea"
+msgstr "Pärnu, a town by the sea"
+
+msgid "Places that take <0>-l</0>, such as <1/>, have three forms of their own. Lesson {onto} teaches them."
+msgstr "Places that take <0>-l</0>, such as <1/>, have three forms of their own. Lesson {onto} teaches them."
+
+msgid "Put each form under the question it answers. The short forms count too: <0/> and <1/> answer <2/>."
+msgstr "Put each form under the question it answers. The short forms count too: <0/> and <1/> answer <2/>."
+
+msgid "school"
+msgstr "school"
+
+msgid "shop"
+msgstr "shop"
+
+msgid "Short forms for where to"
+msgstr "Short forms for where to"
+
+msgid "Short forms of everyday words"
+msgstr "Short forms of everyday words"
+
+msgid "So a place has a form for each question, all three on the same stem. Tap a form to hear it."
+msgstr "So a place has a form for each question, all three on the same stem. Tap a form to hear it."
+
+msgid "Some everyday words also have a short form for where to, with no <0>-sse</0>: <1/> <2/>"
+msgstr "Some everyday words also have a short form for where to, with no <0>-sse</0>: <1/> <2/>"
+
+msgid "Some everyday words have a short form for where to: <0>kooli, poodi, linna, majja, koju</0>."
+msgstr "Some everyday words have a short form for where to: <0>kooli, poodi, linna, majja, koju</0>."
+
+msgid "Sort by question"
+msgstr "Sort by question"
+
+msgid "Sort the forms"
+msgstr "Sort the forms"
+
+msgid "Talk: in the street"
+msgstr "Talk: in the street"
+
+msgid "Tallinn, the capital"
+msgstr "Tallinn, the capital"
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap a form to hear the answer."
+msgstr "Tap a form to hear the answer."
+
+msgid "Tap a place to hear the answer."
+msgstr "Tap a place to hear the answer."
+
+msgid "Tap the forms in the table above once more, then try again."
+msgstr "Tap the forms in the table above once more, then try again."
+
+msgid "Tartu"
+msgstr "Tartu"
+
+msgid "Tartu, a university town"
+msgstr "Tartu, a university town"
+
+msgid "The <0>-sse</0> forms are right too: <1/>, <2/>, <3/>, <4/>. <5/>, <6/>, <7/>, <8/> and <9/> have only the <10>-sse</10> form: <11/>, <12/>. So when you don’t know a short form, <13>-sse</13> is the safe choice."
+msgstr "The <0>-sse</0> forms are right too: <1/>, <2/>, <3/>, <4/>. <5/>, <6/>, <7/>, <8/> and <9/> have only the <10>-sse</10> form: <11/>, <12/>. So when you don’t know a short form, <13>-sse</13> is the safe choice."
+
+msgid "The cat comes out of the house."
+msgstr "The cat comes out of the house."
+
+msgid "The cat goes into the house."
+msgstr "The cat goes into the house."
+
+msgid "The cat is in the house."
+msgstr "The cat is in the house."
+
+msgid "Three questions about a place"
+msgstr "Three questions about a place"
+
+msgid "Three questions, three endings: <0>kus?</0> <1>-s</1> for in, <2>kuhu?</2> <3>-sse</3> for into, <4>kust?</4> <5>-st</5> for out of: <6>Tartus, Tartusse, Tartust</6>."
+msgstr "Three questions, three endings: <0>kus?</0> <1>-s</1> for in, <2>kuhu?</2> <3>-sse</3> for into, <4>kust?</4> <5>-st</5> for out of: <6>Tartus, Tartusse, Tartust</6>."
+
+msgid "to Pärnu"
+msgstr "to Pärnu"
+
+msgid "To say into or to, put <0>-sse</0> where the <1>-s</1> was: <2/>, <3/>; <4/>, <5/>. Ask with <6/>."
+msgstr "To say into or to, put <0>-sse</0> where the <1>-s</1> was: <2/>, <3/>; <4/>, <5/>. Ask with <6/>."
+
+msgid "To say out of or from, swap the <0>-s</0> for <1>-st</1>: <2/>, <3/>. The rest of the word stays as it was: <4/>, <5/>."
+msgstr "To say out of or from, swap the <0>-s</0> for <1>-st</1>: <2/>, <3/>. The rest of the word stays as it was: <4/>, <5/>."
+
+msgid "to school"
+msgstr "to school"
+
+msgid "to Tallinn"
+msgstr "to Tallinn"
+
+msgid "to Tartu"
+msgstr "to Tartu"
+
+msgid "to the café"
+msgstr "to the café"
+
+msgid "to the hospital"
+msgstr "to the hospital"
+
+msgid "to the office"
+msgstr "to the office"
+
+msgid "to the shop"
+msgstr "to the shop"
+
+msgid "to town"
+msgstr "to town"
+
+msgid "town, city"
+msgstr "town, city"
+
+msgid "We’re going to town."
+msgstr "We’re going to town."
+
+msgid "When you don’t know a short form, use <0>-sse</0>: it is right for every place in this lesson."
+msgstr "When you don’t know a short form, use <0>-sse</0>: it is right for every place in this lesson."
+
+msgid "where"
+msgstr "where"
+
+msgid "Where are you coming from?"
+msgstr "Where are you coming from?"
+
+msgid "Where are you from?"
+msgstr "Where are you from?"
+
+msgid "Where are you going?"
+msgstr "Where are you going?"
+
+msgid "where from"
+msgstr "where from"
+
+msgid "Where from?"
+msgstr "Where from?"
+
+msgid "Where something comes from takes <0>-st</0>: <1>kodust</1>."
+msgstr "Where something comes from takes <0>-st</0>: <1>kodust</1>."
+
+msgid "Where something goes takes <0>-sse</0> or a short form: <1>Tartusse, koju</1>."
+msgstr "Where something goes takes <0>-sse</0> or a short form: <1>Tartusse, koju</1>."
+
+msgid "Where something is takes <0>-s</0>: <1>kodus</1>."
+msgstr "Where something is takes <0>-s</0>: <1>kodus</1>."
+
+msgid "Where the cat is and goes"
+msgstr "Where the cat is and goes"
+
+msgid "where to"
+msgstr "where to"
+
+msgid "Where to?"
+msgstr "Where to?"
+
+msgid "Where you’re from"
+msgstr "Where you’re from"
+
+msgid "Where you’re from takes <0>-st</0>: <1>Ma olen pärit Ukrainast.</1>"
+msgstr "Where you’re from takes <0>-st</0>: <1>Ma olen pärit Ukrainast.</1>"
+
+msgid "Where?"
+msgstr "Where?"
+
+msgid "Which question the place answers"
+msgstr "Which question the place answers"
+
+msgid "You meet Mari on your way from school to the shop. You’re from Pärnu, and tomorrow you’re going to Tartu."
+msgstr "You meet Mari on your way from school to the shop. You’re from Pärnu, and tomorrow you’re going to Tartu."
+
+msgid "You met <0/> in lesson {questions}. After <1/>, the country or town takes <2>-st</2>. Tap a place to hear the answer."
+msgstr "You met <0/> in lesson {questions}. After <1/>, the country or town takes <2>-st</2>. Tap a place to hear the answer."
+
+msgid "You’ll hear it and see what it means."
+msgstr "You’ll hear it and see what it means."

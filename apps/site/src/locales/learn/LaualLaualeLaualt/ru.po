@@ -1,0 +1,378 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "-le means onto or to, -lt off or from"
+msgstr "-le отвечает на «куда?», -lt — на «откуда?»"
+
+msgid "-le or -sse"
+msgstr "-le или -sse"
+
+msgid "<0/> takes <1>-l</1>, as lesson {places} showed for names ending in <2>-maa</2>. So it takes <3>-le</3> and <4>-lt</4> too: <5/>, <6/>."
+msgstr "<0/> употребляется с <1>-l</1>, как урок {places} показал для названий на <2>-maa</2>. Значит, и <3>-le</3> с <4>-lt</4>: <5/>, <6/>."
+
+msgid "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>"
+msgstr "<0>Kus</0>, <1>kuhu</1> или <2>kust</2>"
+
+msgid "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>?"
+msgstr "<0>Kus</0>, <1>kuhu</1> или <2>kust</2>?"
+
+msgid "10 minutes"
+msgstr "10 минут"
+
+msgid "2 quizzes and a story to fill in"
+msgstr "2 теста и история с пропусками"
+
+msgid "A cat and a table"
+msgstr "Кот и стол"
+
+msgid "A place that takes <0>-l</0> takes <1>-le</1> for where to; one that takes <2>-s</2> takes <3>-sse</3> or a short form: <4>tööle</4> but <5>kooli</5>. Every place in this lesson works this way."
+msgstr "Место с <0>-l</0> на «куда?» получает <1>-le</1>, а место с <2>-s</2> — <3>-sse</3> или короткую форму: <4>tööle</4>, но <5>kooli</5>. Так работает каждое место в этом уроке."
+
+msgid "A shop takes <0>-s</0>, not <1>-l</1>: <2>poes</2>, in the shop."
+msgstr "Магазин — это <0>-s</0>, а не <1>-l</1>: <2>poes</2>, в магазине."
+
+msgid "A shop takes <0>-s</0>, so from it takes <1>-st</1>: <2>poest</2>."
+msgstr "Магазин — это <0>-s</0>, поэтому «из магазина» — <1>-st</1>: <2>poest</2>."
+
+msgid "After <0/>, the person you call takes <1>-le</1>. After <2/>, the person you ask takes <3>-lt</3>: <4/> is word for word “I ask from Mum”. A word whose stem changes, as in lesson {stems}, takes the ending on its stem: <5/>."
+msgstr "После <0/> тот, кому звонишь, получает <1>-le</1>. После <2/> тот, у кого спрашиваешь, получает <3>-lt</3>: <4/> — дословно «спрашиваю от мамы». Если основа слова меняется, как в уроке {stems}, окончание присоединяется к основе: <5/>."
+
+msgid "After <0>helistama</0> and <1>küsima</1>, the person takes <2>-le</2> or <3>-lt</3>: <4>Ma helistan emale. Ma küsin emalt</4>, word for word “I ask from Mum”."
+msgstr "После <0>helistama</0> и <1>küsima</1> человек получает <2>-le</2> или <3>-lt</3>: <4>Ma helistan emale. Ma küsin emalt</4>, дословно «спрашиваю от мамы»."
+
+msgid "After <0>läheb</0>, goes, the place answers <1>kuhu</1>, so the market takes <2>-le</2>: <3>turule</3>."
+msgstr "После <0>läheb</0>, «идёт», место отвечает на <1>kuhu</1>, поэтому рынок получает <2>-le</2>: <3>turule</3>."
+
+msgid "All of them. You heard the ending of every form."
+msgstr "Все. Ни одной ошибки в окончаниях."
+
+msgid "All three endings go on the same stem: <0/>, <1/>, <2/>. Tap a form in the table to hear it."
+msgstr "Все три окончания присоединяются к одной и той же основе: <0/>, <1/>, <2/>. Нажми на форму в таблице, чтобы её услышать."
+
+msgid "All three endings go on the same stem: <0>turul, turule, turult</0>."
+msgstr "Все три окончания присоединяются к одной и той же основе: <0>turul, turule, turult</0>."
+
+msgid "Asks where someone or something is going."
+msgstr "Спрашивает, куда кто-то или что-то идёт."
+
+msgid "at school, in a school"
+msgstr "в школе"
+
+msgid "at the market"
+msgstr "на рынке"
+
+msgid "at work"
+msgstr "на работе"
+
+msgctxt "kass, the cat on the table"
+msgid "cat"
+msgstr "кот"
+
+msgid "Fill each gap with the form that fits. Some places take <0>-l</0>, some <1>-s</1>, and one gap is a person. Hear the whole story at the end."
+msgstr "Заполни каждый пропуск подходящей формой. Одни места употребляются с <0>-l</0>, другие — с <1>-s</1>, а в одном пропуске — человек. В конце послушай всю историю."
+
+msgid "Fill the gaps"
+msgstr "Заполни пропуски"
+
+msgid "For the table, the answer to <0/> ends in <1>-le</1>: <2/> The answer to <3/> ends in <4>-lt</4>: <5/> The cat lands on the floor, so <6/> takes <7>-le</7>."
+msgstr "Для стола ответ на <0/> оканчивается на <1>-le</1>: <2/> Ответ на <3/> — на <4>-lt</4>: <5/> Кот приземляется на пол, поэтому <6/> получает <7>-le</7>."
+
+msgid "from Mum"
+msgstr "от мамы"
+
+msgid "from Saaremaa"
+msgstr "с острова Сааремаа"
+
+msgid "from the market"
+msgstr "с рынка"
+
+msgid "from work"
+msgstr "с работы"
+
+msgid "Hear a form on its own and pick the question it answers. Listen to its last sounds: <0>-l</0>, <1>-le</1> or <2>-lt</2>."
+msgstr "Послушай форму отдельно и выбери вопрос, на который она отвечает. Слушай последние звуки: <0>-l</0>, <1>-le</1> или <2>-lt</2>."
+
+msgid "Helistama takes -le: helistan emale."
+msgstr "Helistama требует -le: helistan emale."
+
+msgid "hospital"
+msgstr "больница"
+
+msgid "Hüppama with the ta ending."
+msgstr "Hüppama с окончанием для ta."
+
+msgid "I ask"
+msgstr "я спрашиваю"
+
+msgid "I call, I phone"
+msgstr "я звоню"
+
+msgid "I, you and the other pronouns have their own forms for to and from. Lesson {pronouns} teaches them."
+msgstr "У местоимений «я», «ты» и других свои формы для «кому» и «от кого». О них — в уроке {pronouns}."
+
+msgid "I’ll ask Dad."
+msgstr "Я спрошу у папы."
+
+msgid "I’ll ask Mum."
+msgstr "Я спрошу у мамы."
+
+msgid "I’m calling a friend."
+msgstr "Я звоню другу."
+
+msgid "I’m calling Mum."
+msgstr "Я звоню маме."
+
+msgid "I’m coming from the market."
+msgstr "Я иду с рынка."
+
+msgid "I’m coming from work."
+msgstr "Я иду с работы."
+
+msgid "I’m going to the market."
+msgstr "Я иду на рынок."
+
+msgid "I’m going to work, but Mari is going to school."
+msgstr "Я иду на работу, а Мари — в школу."
+
+msgid "I’m going to work."
+msgstr "Я иду на работу."
+
+msgid "in a hospital"
+msgstr "в больнице"
+
+msgid "in Tartu"
+msgstr "в Тарту"
+
+msgid "in the shop"
+msgstr "в магазине"
+
+msgid "jumps"
+msgstr "прыгает"
+
+msgid "Kus with a t on the end."
+msgstr "Kus с t на конце."
+
+msgid "Küsima takes -lt: küsin emalt."
+msgstr "Küsima требует -lt: küsin emalt."
+
+msgid "Lesson {have} put <0>-l</0> on a person to say who has something: <1/> After some verbs a person takes <2>-le</2> or <3>-lt</3> instead."
+msgstr "В уроке {have} <0>-l</0> показывало, у кого что-то есть: <1/> После некоторых глаголов человек вместо этого получает <2>-le</2> или <3>-lt</3>."
+
+msgid "Lesson {places} taught <0>-l</0> for on and at: <1/> Lesson {inner} paired <2>-s</2> with <3>-sse</3> and <4>-st</4>, for “where to” and “where from”. <5>-l</5> has a pair of its own: <6>-le</6> and <7>-lt</7>."
+msgstr "В уроке {places} было <0>-l</0> — «на»: <1/> В уроке {inner} у <2>-s</2> появилась пара: <3>-sse</3> и <4>-st</4> — для «куда?» и «откуда?». У <5>-l</5> есть своя пара: <6>-le</6> и <7>-lt</7>."
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Mari’s Saturday"
+msgstr "Суббота Мари"
+
+msgid "market"
+msgstr "рынок"
+
+msgid "Mum has a cat."
+msgstr "У мамы есть кот."
+
+msgid "Mum is coming from work, but Dad is coming from school."
+msgstr "Мама идёт с работы, а папа — из школы."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Почти. Переслушай те, где были ошибки."
+
+msgid "off the table"
+msgstr "со стола"
+
+msgctxt "a place's form that answers kust"
+msgid "off, from"
+msgstr "с (откуда?)"
+
+msgctxt "the island, where"
+msgid "on Saaremaa"
+msgstr "на острове Сааремаа"
+
+msgid "on the floor"
+msgstr "на полу"
+
+msgid "on the table"
+msgstr "на столе"
+
+msgctxt "a place's form that answers kus"
+msgid "on, at"
+msgstr "на (где?)"
+
+msgid "On, onto and off the table"
+msgstr "На стол, на столе, со стола"
+
+msgid "onto the floor"
+msgstr "на пол"
+
+msgid "onto the table"
+msgstr "на стол"
+
+msgctxt "a place's form that answers kuhu"
+msgid "onto, to"
+msgstr "на (куда?)"
+
+msgid "or a short form"
+msgstr "или короткая форма"
+
+msgid "Places that take <0>-l</0> answer <1>kus</1>, <2>kuhu</2> and <3>kust</3> with <4>-l</4>, <5>-le</5> and <6>-lt</6>: <7>laual, lauale, laualt</7>."
+msgstr "Места с <0>-l</0> отвечают на <1>kus</1>, <2>kuhu</2> и <3>kust</3> окончаниями <4>-l</4>, <5>-le</5> и <6>-lt</6>: <7>laual, lauale, laualt</7>."
+
+msgid "places with -l"
+msgstr "места с -l"
+
+msgid "Põrand, floor, with -l."
+msgstr "Põrand, пол, с -l."
+
+msgid "Põrand, floor, with -le."
+msgstr "Põrand, пол, с -le."
+
+msgid "Put <0>-le</0> or <1>-lt</1> where the <2>-l</2> was: <3/>, <4/>, <5/>. Ask with <6/> and <7/>, as you do for places with <8>-s</8>."
+msgstr "Поставь <0>-le</0> или <1>-lt</1> на место <2>-l</2>: <3/>, <4/>, <5/>. Спрашивай <6/> и <7/>, как и про места с <8>-s</8>."
+
+msgid "Put each place under the ending it takes for where to. Think of where first: <0/>, so <1/>."
+msgstr "Разложи места по окончанию для «куда?». Сначала вспомни форму для «где?»: <0/>, значит <1/>."
+
+msgid "Saaremaa"
+msgstr "Сааремаа"
+
+msgid "Saaremaa, Estonia’s largest island"
+msgstr "Сааремаа, самый большой остров Эстонии"
+
+msgid "school"
+msgstr "школа"
+
+msgid "She comes home from the market, so <0>-lt</0>: <1>turult</1>."
+msgstr "Она идёт домой с рынка, поэтому <0>-lt</0>: <1>turult</1>."
+
+msgid "shop"
+msgstr "магазин"
+
+msgid "So one English “to” can be <0>-le</0> or a short form, even in one sentence. Tap a sentence to hear it."
+msgstr "Для слов этого урока подскажет русский: «на работу» и «на рынок» — это <0>-le</0>, а «в школу» и «в больницу» — нет. Это лишь подсказка, не правило: Германия в эстонском ведёт себя как Сааремаа, хотя мы говорим «в Германию». Нажми на предложение, чтобы его услышать."
+
+msgid "Sõber, friend: -le goes on its stem sõbra-."
+msgstr "Sõber, друг: -le присоединяется к основе sõbra-."
+
+msgid "table"
+msgstr "стол"
+
+msgid "Tap a form to hear it and see what its ending says."
+msgstr "Нажми на форму, чтобы услышать её и увидеть, что значит её окончание."
+
+msgid "Tap the forms in the table once more, then try again."
+msgstr "Ещё раз послушай формы в таблице, а потом попробуй снова."
+
+msgid "Tartu, a university town"
+msgstr "Тарту, университетский город"
+
+msgid "Tartu, the hospital, the school and the shop take <0>-s</0>, so <1>-sse</1> or a short form: <2>Tartusse, kooli</2>."
+msgstr "Тарту, больница, школа и магазин употребляются с <0>-s</0>, поэтому <1>-sse</1> или короткая форма: <2>Tartusse, kooli</2>."
+
+msgid "The cat is on the table."
+msgstr "Кошка на столе."
+
+msgid "The cat jumps off the table onto the floor."
+msgstr "Кот прыгает со стола на пол."
+
+msgid "The cat jumps onto the table."
+msgstr "Кот прыгает на стол."
+
+msgid "The ending for “where to” follows the ending for “where”. A place with <0>-l</0> takes <1>-le</1>: <2/>, <3/>. A place with <4>-s</4> takes <5>-sse</5> or a short form, as lesson {inner} showed: <6/>, <7/>. Every place in this lesson works this way."
+msgstr "Окончание для «куда?» зависит от окончания для «где?». Место с <0>-l</0> получает <1>-le</1>: <2/>, <3/>. Место с <4>-s</4> получает <5>-sse</5> или короткую форму, как показал урок {inner}: <6/>, <7/>. Так работает каждое место в этом уроке."
+
+msgid "The person you call takes <0>-le</0>: <1>emale</1>."
+msgstr "Тот, кому звонишь, получает <0>-le</0>: <1>emale</1>."
+
+msgid "The verb is the same both ways, so only the ending says which way the cat goes. Tap a form to watch it and hear the sentence."
+msgstr "Глагол в обоих предложениях один и тот же, поэтому направление показывает только окончание. Нажми на форму, чтобы увидеть прыжок и услышать предложение."
+
+msgid "Three places, each in three forms"
+msgstr "Три места, каждое в трёх формах"
+
+msgid "Three questions, three endings: <0>kus?</0> <1>-l</1> for on and at, <2>kuhu?</2> <3>-le</3> for onto and to, <4>kust?</4> <5>-lt</5> for off and from: <6>laual, lauale, laualt</6>."
+msgstr "Три вопроса — три окончания: <0>kus?</0> <1>-l</1> — где, <2>kuhu?</2> <3>-le</3> — куда, <4>kust?</4> <5>-lt</5> — откуда: <6>laual, lauale, laualt</6>."
+
+msgid "to a friend"
+msgstr "другу"
+
+msgid "To and from a person"
+msgstr "Кому и от кого"
+
+msgid "to Mum"
+msgstr "маме"
+
+msgctxt "the island, where to"
+msgid "to Saaremaa"
+msgstr "на остров Сааремаа"
+
+msgid "to school"
+msgstr "в школу"
+
+msgid "to Tartu"
+msgstr "в Тарту"
+
+msgid "to the hospital"
+msgstr "в больницу"
+
+msgid "to the market"
+msgstr "на рынок"
+
+msgid "to the shop"
+msgstr "в магазин"
+
+msgctxt "the place: going to work"
+msgid "to work"
+msgstr "на работу"
+
+msgid "where"
+msgstr "где"
+
+msgid "Where are you coming from?"
+msgstr "Откуда ты идёшь?"
+
+msgid "Where are you going?"
+msgstr "Куда ты идёшь?"
+
+msgid "where from"
+msgstr "откуда"
+
+msgid "Where something comes from: <0>-lt</0> says off it or from it."
+msgstr "Откуда что-то движется: <0>-lt</0> — это «с чего»: со стола, с работы."
+
+msgid "Where something goes: <0>-le</0> says onto it or to it."
+msgstr "Куда что-то движется: <0>-le</0> — это «на что»: на стол, на работу."
+
+msgid "Where something is: <0>-l</0> says on it or at it."
+msgstr "Где что-то находится: <0>-l</0> — это «на чём»: на столе, на работе."
+
+msgid "Where the cat is and goes"
+msgstr "Где кот и куда он идёт"
+
+msgid "where to"
+msgstr "куда"
+
+msgid "Where to: <0>-le</0> or <1>-sse</1>?"
+msgstr "Куда: <0>-le</0> или <1>-sse</1>?"
+
+msgid "Which question the form answers"
+msgstr "На какой вопрос отвечает форма"
+
+msgid "work"
+msgstr "работа"
+
+msgid "Work takes <0>-l</0>, so going there takes <1>-le</1>: <2>tööle</2>."
+msgstr "«На работе» — это <0>-l</0>, поэтому «на работу» — <1>-le</1>: <2>tööle</2>."
+
+msgid "work, job"
+msgstr "работа"
+
+msgid "Work, the market, the table and names ending in <0>-maa</0> take <1>-l</1>, so <2>-le</2>: <3>turule</3>."
+msgstr "Работа, рынок, стол и названия на <0>-maa</0> употребляются с <1>-l</1>, поэтому <2>-le</2>: <3>turule</3>."

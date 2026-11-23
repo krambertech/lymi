@@ -1,12 +1,11 @@
-import { KitDemo } from "../learn/KitDemo";
-import { Island } from "./Island";
+import { kitLocale } from "../../lib/learn/kit-locale";
+import { LearnPage } from "../learn/learn-page";
 
-/** The lesson kit's practice parts, in the language the page's `?lang=` asks for. */
 export default function LessonKitPage() {
-  const lang = new URLSearchParams(window.location.search).get("lang");
+  const locale = kitLocale();
   return (
-    <Island locale={lang === "uk" || lang === "ru" ? lang : "en"}>
-      <KitDemo />
-    </Island>
+    <div lang={locale}>
+      <LearnPage target={{ kind: "kit" }} locale={locale} />
+    </div>
   );
 }

@@ -37,7 +37,7 @@ Fill the planned entry in place in `catalogue.ts`; never add a second one.
 - `title`: the heading and search title, with "Estonian" in it or the phrase people search, such as "Estonian present tense" or "How to say no in Estonian".
 - `minutes`, and `blurb`: one sentence for search that names what the lesson covers and ends "Every sentence is read aloud." when it is.
 
-Add the lesson to `LESSON_VIEWS` in `apps/site/src/components/islands/LearnLessonPage.tsx`, on its own line. Refer to another lesson's number through `lessonBySlug(slug)` when it is built; look a planned one up by its `et`, and check the number renders.
+The lesson's file is its slug in PascalCase, and exports `<File>Lesson`; the page finds it by that name. Refer to another lesson's number through `lessonBySlug(slug)` when it is built; look a planned one up by its `et`, and check the number renders.
 
 ## 4. Write the lesson
 
@@ -79,7 +79,7 @@ Done when extract reports 0 missing in `uk` and `ru` and every new line reads as
 
 ## 8. Get a cold copy review
 
-Your own reading is anchored on what you meant. Give a subagent only the lesson file, `apps/site/src/locales/uk.po`, `apps/site/src/locales/ru.po` and [the copy rules](references/copy.md), with no plan, notes or reasoning of yours, and ask it to list every English, Ukrainian and Russian line of this lesson that breaks a rule, each with its rewrite. Fix every finding or record in the PR why the line stays. Run it again on the fixed lines until a round finds nothing new.
+Your own reading is anchored on what you meant. Give a subagent only the lesson file, its `uk.po` and `ru.po` in `apps/site/src/locales/learn/<File>/` and [the copy rules](references/copy.md), with no plan, notes or reasoning of yours, and ask it to list every English, Ukrainian and Russian line of this lesson that breaks a rule, each with its rewrite. Fix every finding or record in the PR why the line stays. Run it again on the fixed lines until a round finds nothing new.
 
 ## 9. Drive every section
 

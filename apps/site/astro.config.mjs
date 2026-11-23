@@ -4,6 +4,7 @@ import { lingui, linguiTransformerBabelPreset } from "@lingui/vite-plugin";
 import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
+import { lessonIsolation } from "./lesson-isolation.mjs";
 
 export default defineConfig({
   site: "https://lymi.app",
@@ -26,6 +27,7 @@ export default defineConfig({
     },
     plugins: [
       tailwindcss(),
+      lessonIsolation(),
       lingui({ failOnMissing: true }),
       babel({ include: [/\/src\/.*\.tsx?(\?.*)?$/], presets: [linguiTransformerBabelPreset()] }),
     ],

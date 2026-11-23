@@ -1,0 +1,438 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0/> is the same for one and many, so with it only the noun changes: <1/> <2/> Switch between One and Many, and tap a sentence to hear it."
+msgstr "<0/> не залежить від числа, тож із ним змінюється лише іменник: <1/> <2/> Перемикай між «Один» і «Багато» й торкайся речення, щоб його почути."
+
+msgid "<0>Ema ja isa</0> are two people, like <1>nad</1>, so the verb ends in <2>-vad</2>."
+msgstr "<0>Ema ja isa</0> — це двоє людей, як <1>nad</1>, тому дієслово закінчується на <2>-vad</2>."
+
+msgid "<0>Kass</0> is one cat, like <1>ta</1>, so the verb ends in <2>-b</2>: <3>magab</3>."
+msgstr "<0>Kass</0> — це один кіт, як <1>ta</1>, тому дієслово закінчується на <2>-b</2>: <3>magab</3>."
+
+msgid "<0>kassi</0> + <1>d</1> = <2>kassid</2>"
+msgstr "<0>kassi</0> + <1>d</1> = <2>kassid</2>"
+
+msgid "<0>Kodu</0> is one home, so the adjective has no <1>-d</1>: <2>väike</2>."
+msgstr "<0>Kodu</0> — це один дім, тому прикметник без <1>-d</1>: <2>väike</2>."
+
+msgid "<0>Lapsed</0> is plural, so the verb takes the form of <1>nad</1>: <2>õpivad</2>."
+msgstr "<0>Lapsed</0> — множина, тому дієслово стоїть у формі для <1>nad</1>: <2>õpivad</2>."
+
+msgid "<0>Suured</0> ends in <1>-d</1>, so there is more than one room: <2>toad</2>."
+msgstr "<0>Suured</0> закінчується на <1>-d</1>, тож кімнат більше ніж одна: <2>toad</2>."
+
+msgid "<0>Ta</0> is one cat, so the adjective has no <1>-d</1>, like <2>ilus</2>."
+msgstr "<0>Ta</0> — це один кіт, тому прикметник без <1>-d</1>, як <2>ilus</2>."
+
+msgid "12 minutes"
+msgstr "12 хвилин"
+
+msgid "2 quizzes and a passage with gaps"
+msgstr "2 тести й текст із пропусками"
+
+msgid "a beautiful room"
+msgstr "гарна кімната"
+
+msgid "a big house"
+msgstr "великий будинок"
+
+#. placeholder {0}: ending("-d")
+msgid "A dictionary gives a noun in three forms, as lesson {forms} shows. The second form is the genitive from lesson {genitive}. To say more than one, add {0} to it: <0/>, <1/>, so <2/>, cats."
+msgstr "Словник подає іменник у трьох формах, про це розповідає урок {forms}. Друга форма — це родовий відмінок, про нього розповідає урок {genitive}. Щоб сказати «більше ніж один», додай до неї {0}: <0/>, <1/>, звідси <2/> — коти."
+
+msgid "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. Two adjectives come from the section above, <0/>, small, and <1/>, beautiful. One verb is new: <2/>, to sleep."
+msgstr "Родина пише про свій дім у Тарту. Обери слово для кожного пропуску: слова навколо підкажуть, один чи багато. Два прикметники — з попереднього розділу: <0/> — маленький і <1/> — гарний. Одне дієслово нове: <2/> — спати."
+
+msgid "A friend is waiting."
+msgstr "Друг чекає."
+
+msgid "a good friend"
+msgstr "добрий друг"
+
+msgid "a new book"
+msgstr "нова книжка"
+
+#. placeholder {0}: ending("-b")
+#. placeholder {1}: ending("-vad")
+msgid "A plural noun takes the same verb form as <0/>, they, from lesson {present}. One child reading is <1/>, with the {0} of <2>ta</2>. Children reading is <3/>, with the {1} of <4>nad</4>."
+msgstr "З іменником у множині дієслово має ту саму форму, що й із <0/> — «вони»; ці форми показує урок {present}. Одна дитина читає — <1/>, із {0}, як у <2>ta</2>. Діти читають — <3/>, із {1}, як у <4>nad</4>."
+
+msgid "A plural noun takes the verb form of <0>nad</0>: <1>Lapsed loevad.</1> <2>On</2> stays <3>on</3>."
+msgstr "З іменником у множині дієслово стоїть у формі для <0>nad</0>: <1>Lapsed loevad.</1> <2>On</2> так і лишається <3>on</3>."
+
+msgid "a small cat"
+msgstr "маленький кіт"
+
+#. placeholder {0}: ending("-d")
+msgid "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Pick a word, then tap each form to see what changes."
+msgstr "Додавай {0} до другої форми, <0>poe</0>, а не до <1>pood</1>: <2>poed</2>. Обери слово й торкайся кожної форми, щоб побачити, що змінюється."
+
+msgid "Adjective and noun in the first form."
+msgstr "Прикметник та іменник у першій формі."
+
+msgid "Adjectives take -d too"
+msgstr "Прикметники теж закінчуються на -d"
+
+msgid "After <0>on</0> it’s the same: <1/> <2/> Switch between One and Many, and tap a line to hear it."
+msgstr "Після <0>on</0> так само: <1/> <2/> Перемикай між «Один» і «Багато» й торкайся рядка, щоб його почути."
+
+msgid "After a number from two up, Estonian keeps the noun singular, in the partitive from lesson {partitive}: <0/>, two cats, not <1>kaks kassid</1>."
+msgstr "Після числа від двох іменник в естонській лишається в однині, у партитиві, про який розповідає урок {partitive}: <0/> — два коти, а не <1>kaks kassid</1>."
+
+msgid "After a number from two up, the partitive."
+msgstr "Після числа від двох — партитив."
+
+msgid "All six plurals right."
+msgstr "Усі шість форм множини правильні."
+
+msgid "All six right: you told one from many every time."
+msgstr "Усі шість правильно: один і багато жодного разу не переплутано."
+
+msgid "An adjective before a plural noun is plural too, built the same way: <0/>, <1/>, <2/>. A big house is <3/>, and big houses are <4/>."
+msgstr "Прикметник перед іменником у множині теж стоїть у множині й утворюється так само: <0/>, <1/>, <2/>. Великий будинок — <3/>, а великі будинки — <4/>."
+
+#. placeholder {0}: ending("-d")
+msgid "An adjective takes {0} too, before the noun or after <0>on</0>: <1>suured majad; Majad on suured.</1>"
+msgstr "Прикметник теж закінчується на {0} — і перед іменником, і після <0>on</0>: <1>suured majad; Majad on suured.</1>"
+
+msgid "an old town"
+msgstr "старе місто"
+
+msgid "and"
+msgstr "і, та"
+
+msgid "As in poes, in the shop."
+msgstr "Як у poes — у магазині."
+
+msgid "At home"
+msgstr "Удома"
+
+msgid "beautiful"
+msgstr "гарний"
+
+msgid "beautiful rooms"
+msgstr "гарні кімнати"
+
+msgid "big"
+msgstr "великий"
+
+msgid "big houses"
+msgstr "великі будинки"
+
+msgid "big, of more than one"
+msgstr "великі (про кілька)"
+
+msgid "book"
+msgstr "книжка"
+
+msgid "books"
+msgstr "книжки"
+
+msgid "Both take <0>-d</0>"
+msgstr "Обидва закінчуються на <0>-d</0>"
+
+msgid "car"
+msgstr "машина"
+
+msgid "cars"
+msgstr "машини"
+
+msgid "cat"
+msgstr "кіт"
+
+msgid "cats"
+msgstr "коти"
+
+msgid "child"
+msgstr "дитина"
+
+msgid "children"
+msgstr "діти"
+
+msgid "door"
+msgstr "двері"
+
+msgid "doors"
+msgstr "двері (кілька)"
+
+msgid "Each word is its second form plus <0>-d</0>."
+msgstr "Кожне слово — це його друга форма плюс <0>-d</0>."
+
+msgid "Fill the gaps"
+msgstr "Заповни пропуски"
+
+msgid "friend"
+msgstr "друг, подруга"
+
+msgid "friends"
+msgstr "друзі"
+
+msgid "Friends are waiting."
+msgstr "Друзі чекають."
+
+msgid "good friends"
+msgstr "добрі друзі"
+
+msgid "Hear a noun’s first and second forms, then type its plural. Build it on the second form."
+msgstr "Послухай першу й другу форми іменника, а потім введи його множину. Утворюй її від другої форми."
+
+msgid "Hear a sentence and pick what it says. Listen to the end of the noun and of the verb."
+msgstr "Послухай речення й обери, що воно означає. Прислухайся до кінця іменника й дієслова."
+
+msgid "Hearing one or many"
+msgstr "Один чи багато: на слух"
+
+msgid "house"
+msgstr "будинок"
+
+msgid "houses"
+msgstr "будинки"
+
+msgid "is, are"
+msgstr "є"
+
+msgid "Kass, kassi: a vowel appears at the end."
+msgstr "Kass, kassi: у кінці з’являється голосний."
+
+msgid "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on that second form, so the change shows again: <2/>, shops."
+msgstr "Урок {stems} показав іменники, основа яких змінюється перед закінченням: <0/> стає <1/>. Множина утворюється від цієї другої форми, тож зміна є і в ній: <2/> — магазини."
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Making the plural"
+msgstr "Як утворити множину"
+
+msgid "man"
+msgstr "чоловік"
+
+msgctxt "plural"
+msgid "Many"
+msgstr "Багато"
+
+msgid "Many: the verb form of <0>nad</0>"
+msgstr "Багато: форма дієслова для <0>nad</0>"
+
+msgid "men"
+msgstr "чоловіки"
+
+msgid "Mother and father are working."
+msgstr "Мама й тато працюють."
+
+msgid "Nearly. For the ones you missed, start from the second form."
+msgstr "Майже. Там, де була помилка, почни з другої форми."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Майже. Переслухай ті, де були помилки."
+
+msgid "new books"
+msgstr "нові книжки"
+
+msgid "old towns"
+msgstr "старі міста"
+
+msgctxt "plural"
+msgid "One"
+msgstr "Один"
+
+msgid "One or many"
+msgstr "Один чи багато"
+
+msgid "One or many?"
+msgstr "Один чи багато?"
+
+msgid "One: the verb form of <0>ta</0>"
+msgstr "Один: форма дієслова для <0>ta</0>"
+
+#. placeholder {0}: noun.many
+msgid "Play {0}"
+msgstr "Відтворити {0}"
+
+msgid "river"
+msgstr "річка"
+
+msgid "rivers"
+msgstr "річки"
+
+msgid "room"
+msgstr "кімната"
+
+msgid "rooms"
+msgstr "кімнати"
+
+msgid "school"
+msgstr "школа"
+
+msgid "schools"
+msgstr "школи"
+
+msgid "second form"
+msgstr "друга форма"
+
+msgid "shop"
+msgstr "магазин"
+
+msgid "shops"
+msgstr "магазини"
+
+msgid "small"
+msgstr "маленький"
+
+msgid "small cats"
+msgstr "маленькі коти"
+
+msgid "Ta magab, nad magavad: he or she sleeps, they sleep."
+msgstr "Ta magab, nad magavad — він або вона спить, вони сплять."
+
+msgid "Tap the One and Many sentences above once more, then try again."
+msgstr "Ще раз торкнися речень «Один» і «Багато» вище, а потім спробуй знову."
+
+msgid "Tap the rows above once more, then try again."
+msgstr "Ще раз торкнися рядків вище, а потім спробуй знову."
+
+msgid "The b drops and the u becomes o."
+msgstr "b зникає, а u стає o."
+
+msgid "The cat is at home."
+msgstr "Кіт удома."
+
+msgid "The cats are at home."
+msgstr "Коти вдома."
+
+msgid "The child is reading."
+msgstr "Дитина читає."
+
+msgid "The children are reading."
+msgstr "Діти читають."
+
+msgid "The e drops and an a comes in."
+msgstr "Зникає e, а з’являється a."
+
+msgid "The ee shortens, the s becomes h, and an e comes in."
+msgstr "Довге ee коротшає, s стає h, і з’являється e."
+
+msgid "The first form"
+msgstr "Перша форма"
+
+msgid "The form a dictionary lists first."
+msgstr "Форма, яку словник подає першою."
+
+msgid "The g drops and the i becomes e."
+msgstr "Зникає g, а i стає e."
+
+msgid "The house is big."
+msgstr "Будинок великий."
+
+msgid "The houses are big."
+msgstr "Будинки великі."
+
+msgid "The man is working."
+msgstr "Чоловік працює."
+
+msgid "The men are working."
+msgstr "Чоловіки працюють."
+
+msgid "The n becomes s."
+msgstr "Замість n стоїть s."
+
+msgid "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
+msgstr "Іменник закінчується на <0>-d</0>, дієслово — на <1>-vad</1>. <2>On</2> не змінюється."
+
+msgid "The od drops and an e comes in."
+msgstr "Зникає od, а з’являється e."
+
+#. placeholder {0}: ending("-d")
+msgid "The plural is the second form plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
+msgstr "Множина — це друга форма плюс {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
+
+msgid "The plural keeps the stem change"
+msgstr "Множина зберігає зміну основи"
+
+msgid "The plural keeps the stem change of the second form: <0>pood, poe → poed; tuba, toa → toad</0>."
+msgstr "Множина зберігає зміну основи, яка є в другій формі: <0>pood, poe → poed; tuba, toa → toad</0>."
+
+msgid "The same for ta and nad."
+msgstr "Однаково для ta і nad."
+
+msgid "The second form and -d"
+msgstr "Друга форма й -d"
+
+msgid "The second form and <0>-d</0>"
+msgstr "Друга форма й <0>-d</0>"
+
+msgid "the second form of kass"
+msgstr "друга форма слова kass"
+
+msgid "the second form of pood"
+msgstr "друга форма слова pood"
+
+msgid "the second form of suur"
+msgstr "друга форма слова suur"
+
+msgid "The second form plus -d."
+msgstr "Друга форма плюс -d."
+
+msgid "The teacher is speaking."
+msgstr "Учитель говорить."
+
+msgid "The teachers are speaking."
+msgstr "Учителі говорять."
+
+msgid "The verb ends in <0>-b</0>, or is <1>on</1>."
+msgstr "Дієслово з <0>-b</0> на кінці або <1>on</1>."
+
+msgid "The verb with a plural noun"
+msgstr "Дієслово з іменником у множині"
+
+msgid "The woman is drinking coffee."
+msgstr "Жінка п’є каву."
+
+msgid "The women are drinking coffee."
+msgstr "Жінки п’ють каву."
+
+msgid "they"
+msgstr "вони"
+
+msgid "To say more than one, add <0>-d</0> to a noun’s second form: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5> The big cats are eating."
+msgstr "Щоб сказати «більше ніж один», додай <0>-d</0> до другої форми іменника: <1>kass, kassi</1> дає <2>kassid</2> — коти. До прикметника теж додається <3>-d</3>, а дієслово стоїть у формі для <4>nad</4>: <5>Suured kassid söövad.</5> Великі коти їдять."
+
+msgid "to sleep"
+msgstr "спати"
+
+msgid "town, city"
+msgstr "місто"
+
+msgid "towns, cities"
+msgstr "міста"
+
+msgid "two cats"
+msgstr "два коти"
+
+msgid "Two people joined by <0/> count as many too, so the verb takes the form of <1>nad</1>: <2/>"
+msgstr "Двоє людей, з’єднаних <0/>, — це теж багато, тож дієслово стоїть у формі для <1>nad</1>: <2/>"
+
+msgid "Two people joined by <0>ja</0> take the verb form of <1>nad</1> too: <2>Ema ja isa töötavad.</2>"
+msgstr "Із двома людьми, з’єднаними <0>ja</0>, дієслово теж стоїть у формі для <1>nad</1>: <2>Ema ja isa töötavad.</2>"
+
+msgid "Type the plural"
+msgstr "Введи множину"
+
+#. placeholder {0}: ending("-d")
+msgid "When the second form is the same as the first, only the {0} is new: <0/> gives <1/>. Switch between One and Many, and tap a word to hear it."
+msgstr "Коли друга форма така сама, як перша, нове лише {0}: <0/> дає <1/>. Перемикай між «Один» і «Багато» й торкайся слова, щоб його почути."
+
+msgid "woman"
+msgstr "жінка"
+
+msgid "women"
+msgstr "жінки"
+
+msgid "Words"
+msgstr "Слова"

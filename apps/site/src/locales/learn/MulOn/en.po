@@ -1,0 +1,556 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "-⁠l form"
+msgstr "-⁠l form"
+
+msgid "<0/> is the <1>-l</1> form of <2/>. That ending says on or at in lesson {places}, as in <3/>. You have met one already: <4/> In it, <5/> is “at you”."
+msgstr "<0/> is the <1>-l</1> form of <2/>. That ending says on or at in lesson {places}, as in <3/>. You have met one already: <4/> In it, <5/> is “at you”."
+
+msgid "<0/> means needed. I need help is <1/> Word for word, that’s “at me is needed help”. Ask with <2>kas</2>, as before."
+msgstr "<0/> means needed. I need help is <1/> Word for word, that’s “at me is needed help”. Ask with <2>kas</2>, as before."
+
+msgid "<0>Mul on vaja</0> is I need: <1>Mul on vaja abi.</1>"
+msgstr "<0>Mul on vaja</0> is I need: <1>Mul on vaja abi.</1>"
+
+msgid "12 minutes"
+msgstr "12 minutes"
+
+msgid "2 quizzes, a note to fill in and a conversation"
+msgstr "2 quizzes, a note to fill in and a conversation"
+
+msgid "a man’s name"
+msgstr "a man’s name"
+
+msgid "A name or a noun takes the same <0>-l</0>. <1/> Mari has a cat. <2/> Mum has a question."
+msgstr "A name or a noun takes the same <0>-l</0>. <1/> Mari has a cat. <2/> Mum has a question."
+
+msgid "a woman’s name"
+msgstr "a woman’s name"
+
+msgid "After <0>pole</0> or <1>ei ole</1>, a thing changes form too, and lesson {partitive} teaches that form. For now, answer no with <2>Ei ole</2> or <3>Pole</3> alone. Learn one phrase whole: <4/> It means I don’t have time."
+msgstr "After <0>pole</0> or <1>ei ole</1>, a thing changes form too, and lesson {partitive} teaches that form. For now, answer no with <2>Ei ole</2> or <3>Pole</3> alone. Learn one phrase whole: <4/> It means I don’t have time."
+
+msgid "After meil the verb is on, as after every -⁠l form."
+msgstr "After meil the verb is on, as after every -⁠l form."
+
+msgid "All of them. You heard who has it in every sentence."
+msgstr "All of them. You heard who has it in every sentence."
+
+msgid "All of them. You told am from have every time."
+msgstr "All of them. You told am from have every time."
+
+msgid "Am or have?"
+msgstr "Am or have?"
+
+msgid "An -⁠l form plays in a sentence; a long form plays on its own."
+msgstr "An -⁠l form plays in a sentence; a long form plays on its own."
+
+msgid "Answer no with the forms lesson {negation} uses for not: <0/> or <1/>"
+msgstr "Answer no with the forms lesson {negation} uses for not: <0/> or <1/>"
+
+msgid "Ask with <0>kas</0> or <1>kellel</1>, and answer with <2>Jah, on</2> or <3>Ei ole</3>."
+msgstr "Ask with <0>kas</0> or <1>kellel</1>, and answer with <2>Jah, on</2> or <3>Ei ole</3>."
+
+msgid "Asking and answering"
+msgstr "Asking and answering"
+
+msgid "at a friend"
+msgstr "at a friend"
+
+msgid "at Dad"
+msgstr "at Dad"
+
+msgid "at him or her"
+msgstr "at him or her"
+
+msgid "at him or her, for emphasis"
+msgstr "at him or her, for emphasis"
+
+msgid "at Jaan"
+msgstr "at Jaan"
+
+msgid "at Mari"
+msgstr "at Mari"
+
+msgid "at me"
+msgstr "at me"
+
+msgid "at me, for emphasis"
+msgstr "at me, for emphasis"
+
+msgid "at Mum"
+msgstr "at Mum"
+
+msgid "at the teacher"
+msgstr "at the teacher"
+
+msgid "at them"
+msgstr "at them"
+
+msgid "at them, for emphasis"
+msgstr "at them, for emphasis"
+
+msgid "at us"
+msgstr "at us"
+
+msgid "at you, for emphasis"
+msgstr "at you, for emphasis"
+
+msgid "at you, to more than one; polite"
+msgstr "at you, to more than one; polite"
+
+msgid "at you, to one person"
+msgstr "at you, to one person"
+
+msgid "car"
+msgstr "car"
+
+msgid "cat"
+msgstr "cat"
+
+msgid "dad"
+msgstr "dad"
+
+msgid "Dad has a dog."
+msgstr "Dad has a dog."
+
+msgid "Do you have a book?"
+msgstr "Do you have a book?"
+
+msgid "Do you have a car?"
+msgstr "Do you have a car?"
+
+msgid "Do you have a car? To more than one, or polite."
+msgstr "Do you have a car? To more than one, or polite."
+
+msgid "Do you have a question? To more than one, or polite."
+msgstr "Do you have a question? To more than one, or polite."
+
+msgid "Do you have time?"
+msgstr "Do you have time?"
+
+msgid "Do you need help?"
+msgstr "Do you need help?"
+
+msgid "dog"
+msgstr "dog"
+
+msgid "Each pronoun has its <0>-l</0> form. Tap one to hear it in a sentence."
+msgstr "Each pronoun has its <0>-l</0> form. Tap one to hear it in a sentence."
+
+msgid "Each pronoun took -⁠l, and every verb is on."
+msgstr "Each pronoun took -⁠l, and every verb is on."
+
+msgid "Emal on auto: Mum has a car. Ema on auto would say Mum is a car."
+msgstr "Emal on auto: Mum has a car. Ema on auto would say Mum is a car."
+
+msgid "Emal on: Mum has."
+msgstr "Emal on: Mum has."
+
+msgid "Estonian has no everyday verb for have. To say I have a cat, it says <0/> Word for word, that’s “at me is a cat”."
+msgstr "Estonian has no everyday verb for have. To say I have a cat, it says <0/> Word for word, that’s “at me is a cat”."
+
+msgid "Estonian says I have as “at me is”: <0>Mul on kass.</0>"
+msgstr "Estonian says I have as “at me is”: <0>Mul on kass.</0>"
+
+msgid "Fill the gaps"
+msgstr "Fill the gaps"
+
+msgid "Fine, thanks. And you?"
+msgstr "Fine, thanks. And you?"
+
+msgid "Flip the switch above once more, then try again."
+msgstr "Flip the switch above once more, then try again."
+
+msgid "For emphasis"
+msgstr "For emphasis"
+
+msgid "friend"
+msgstr "friend"
+
+msgid "genitive"
+msgstr "genitive"
+
+msgid "he or she"
+msgstr "he or she"
+
+msgid "He or she has a child."
+msgstr "He or she has a child."
+
+msgid "He or she has a dog."
+msgstr "He or she has a dog."
+
+msgid "He or she has a good friend."
+msgstr "He or she has a good friend."
+
+msgid "He or she has a good teacher."
+msgstr "He or she has a good teacher."
+
+msgid "He or she is a child."
+msgstr "He or she is a child."
+
+msgid "He or she is a good friend."
+msgstr "He or she is a good friend."
+
+msgid "He or she is a good teacher."
+msgstr "He or she is a good teacher."
+
+msgid "Hear a sentence and pick what it means: being something, or having it. Between <0>ta on</0> and <1>tal on</1>, only the <2>-l</2> differs."
+msgstr "Hear a sentence and pick what it means: being something, or having it. Between <0>ta on</0> and <1>tal on</1>, only the <2>-l</2> differs."
+
+msgid "Hear a sentence and pick who has the thing. Listen to the first word, or to the word after <0/> in a question. <1>Mul</1> and <2>meil</2>, <3>sul</3> and <4>teil</4>, <5>tal</5> and <6>neil</6> differ by a sound or two."
+msgstr "Hear a sentence and pick who has the thing. Listen to the first word, or to the word after <0/> in a question. <1>Mul</1> and <2>meil</2>, <3>sul</3> and <4>teil</4>, <5>tal</5> and <6>neil</6> differ by a sound or two."
+
+msgid "Hearing who has it"
+msgstr "Hearing who has it"
+
+msgid "help"
+msgstr "help"
+
+msgid "house"
+msgstr "house"
+
+msgid "How to say I have in Estonian: <0>mul on</0>, word for word “at me is”, with the owner in the <1>-l</1> form and the verb <2>on</2> whoever has it."
+msgstr "How to say I have in Estonian: <0>mul on</0>, word for word “at me is”, with the owner in the <1>-l</1> form and the verb <2>on</2> whoever has it."
+
+msgid "I"
+msgstr "I"
+
+msgctxt "being or having"
+msgid "I am"
+msgstr "I am"
+
+msgid "I am a cat is <0/> I have a cat is <1/> In the second, the cat is what “is”, so the verb is <2>on</2> whoever has it: <3>mul on, sul on, meil on</3>."
+msgstr "I am a cat is <0/> I have a cat is <1/> In the second, the cat is what “is”, so the verb is <2>on</2> whoever has it: <3>mul on, sul on, meil on</3>."
+
+msgid "I am a cat."
+msgstr "I am a cat."
+
+msgid "I am or I have"
+msgstr "I am or I have"
+
+msgid "I do."
+msgstr "I do."
+
+msgid "I don’t have time."
+msgstr "I don’t have time."
+
+msgctxt "being or having"
+msgid "I have"
+msgstr "I have"
+
+msgid "I have a cat."
+msgstr "I have a cat."
+
+msgid "I have a question."
+msgstr "I have a question."
+
+msgid "I have a teacher."
+msgstr "I have a teacher."
+
+msgid "I need help."
+msgstr "I need help."
+
+msgid "I need money."
+msgstr "I need money."
+
+msgid "I’m a teacher."
+msgstr "I’m a teacher."
+
+msgid "In a yes sentence, one thing you can count stays in its first form, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
+msgstr "In a yes sentence, one thing you can count stays in its first form, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
+
+msgid "In Kas sul on aega? and Mul pole aega, time takes this form."
+msgstr "In Kas sul on aega? and Mul pole aega, time takes this form."
+
+msgid "Isal on: Dad has."
+msgstr "Isal on: Dad has."
+
+msgid "Jaan does."
+msgstr "Jaan does."
+
+msgid "Jaan has a car."
+msgstr "Jaan has a car."
+
+msgid "Jaan on auto says Jaan is a car. For Jaan has a car, say Jaanil on auto."
+msgstr "Jaan on auto says Jaan is a car. For Jaan has a car, say Jaanil on auto."
+
+msgid "Jaan on minu sõber: Jaan is my friend. Jaanil on minu sõber would say Jaan has my friend."
+msgstr "Jaan on minu sõber: Jaan is my friend. Jaanil on minu sõber would say Jaan has my friend."
+
+msgid "Jaan’s"
+msgstr "Jaan’s"
+
+msgid "Jaanil on koer: Jaan has a dog. Jaan on koer would say Jaan is a dog."
+msgstr "Jaanil on koer: Jaan has a dog. Jaan on koer would say Jaan is a dog."
+
+msgid "Jaanil on: Jaan has."
+msgstr "Jaanil on: Jaan has."
+
+msgid "Jah says yes, and ma pole says I am not. For no time, say Ei, mul pole."
+msgstr "Jah says yes, and ma pole says I am not. For no time, say Ei, mul pole."
+
+msgid "Jah, olen answers Kas sa oled? The answer to Kas sul on? is Jah, on."
+msgstr "Jah, olen answers Kas sa oled? The answer to Kas sul on? is Jah, on."
+
+msgid "Kas sul on? Do you have? The verb stays on for sul too."
+msgstr "Kas sul on? Do you have? The verb stays on for sul too."
+
+msgid "Liis"
+msgstr "Liis"
+
+msgid "Liis shares a flat with you and needs a hand. She speaks first; pick what you say back."
+msgstr "Liis shares a flat with you and needs a hand. She speaks first; pick what you say back."
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Ma pole says I am not. For having, it’s mul pole."
+msgstr "Ma pole says I am not. For having, it’s mul pole."
+
+msgid "makes a yes-or-no question"
+msgstr "makes a yes-or-no question"
+
+msgid "Mari has a cat."
+msgstr "Mari has a cat."
+
+msgid "Mari wrote about who has what. Pick the word for each gap, then hear the whole note."
+msgstr "Mari wrote about who has what. Pick the word for each gap, then hear the whole note."
+
+msgid "Mari’s note"
+msgstr "Mari’s note"
+
+msgid "Maril on: Mari has."
+msgstr "Maril on: Mari has."
+
+msgid "Me elame Tartus: we live in Tartu. The -⁠l form goes with on, not with other verbs."
+msgstr "Me elame Tartus: we live in Tartu. The -⁠l form goes with on, not with other verbs."
+
+msgid "Meil on: we have."
+msgstr "Meil on: we have."
+
+msgid "Mina olen Mari: I am Mari. Mina takes olen; on goes with mul."
+msgstr "Mina olen Mari: I am Mari. Mina takes olen; on goes with mul."
+
+msgid "Minu ema on õpetaja: my mum is a teacher. Minu emal on õpetaja would say she has one."
+msgstr "Minu ema on õpetaja: my mum is a teacher. Minu emal on õpetaja would say she has one."
+
+msgid "money"
+msgstr "money"
+
+msgid "Mul on kass: I have a cat. Ma would need olen and say I am a cat."
+msgstr "Mul on kass: I have a cat. Ma would need olen and say I am a cat."
+
+msgid "Mul on vaja: I need."
+msgstr "Mul on vaja: I need."
+
+msgid "Mul on: I have."
+msgstr "Mul on: I have."
+
+msgid "mum"
+msgstr "mum"
+
+msgid "Mum has a question."
+msgstr "Mum has a question."
+
+msgid "My friend has a house."
+msgstr "My friend has a house."
+
+msgid "Names and nouns"
+msgstr "Names and nouns"
+
+msgid "Names and nouns with -⁠l"
+msgstr "Names and nouns with -⁠l"
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "needed"
+msgstr "needed"
+
+msgid "Neil on: they have."
+msgstr "Neil on: they have."
+
+msgid "No, I don’t."
+msgstr "No, I don’t."
+
+msgid "on the table"
+msgstr "on the table"
+
+msgid "Õpetajal on: the teacher has."
+msgstr "Õpetajal on: the teacher has."
+
+msgid "Put <0/> in front to ask: <1/> Answer yes with <2/> It’s <3>on</3>, not <4>olen</4>, because the car is what “is”."
+msgstr "Put <0/> in front to ask: <1/> Answer yes with <2/> It’s <3>on</3>, not <4>olen</4>, because the car is what “is”."
+
+msgid "question"
+msgstr "question"
+
+msgid "Saying what you need"
+msgstr "Saying what you need"
+
+msgid "She asked whether you have time, not what you have."
+msgstr "She asked whether you have time, not what you have."
+
+msgid "Sina means you. To say that you have it, answer Minul."
+msgstr "Sina means you. To say that you have it, answer Minul."
+
+msgid "Sinul says that Liis has it."
+msgstr "Sinul says that Liis has it."
+
+msgid "Sõbral on: a friend has."
+msgstr "Sõbral on: a friend has."
+
+msgid "Sul on auto says that Liis has a car. You don’t have one, so answer Ei ole."
+msgstr "Sul on auto says that Liis has a car. You don’t have one, so answer Ei ole."
+
+msgid "Sul on: you have."
+msgstr "Sul on: you have."
+
+msgid "Switch to I have and watch the start of each line."
+msgstr "Switch to I have and watch the start of each line."
+
+msgid "Tal on: he or she has."
+msgstr "Tal on: he or she has."
+
+msgid "Talk: at home"
+msgstr "Talk: at home"
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap the six forms above once more, then try again."
+msgstr "Tap the six forms above once more, then try again."
+
+msgid "teacher"
+msgstr "teacher"
+
+msgid "Teil on: you have."
+msgstr "Teil on: you have."
+
+msgid "The -⁠l form of kes, who."
+msgstr "The -⁠l form of kes, who."
+
+msgid "The <0>-l</0> goes on the genitive, the form lesson {genitive} uses for whose. <1/> becomes <2/>, so Jaan has a car is <3/> Pick a word and tap each step."
+msgstr "The <0>-l</0> goes on the genitive, the form lesson {genitive} uses for whose. <1/> becomes <2/>, so Jaan has a car is <3/> Pick a word and tap each step."
+
+msgid "The genitive of Jaan."
+msgstr "The genitive of Jaan."
+
+msgid "The genitive, the form for whose."
+msgstr "The genitive, the form for whose."
+
+msgid "The long form of mul."
+msgstr "The long form of mul."
+
+msgid "The long form of neil."
+msgstr "The long form of neil."
+
+msgid "The long form of sul."
+msgstr "The long form of sul."
+
+msgid "The long form of tal."
+msgstr "The long form of tal."
+
+msgid "The owner takes <0>-l</0>: <1>mul, sul, tal, meil, teil, neil</1>. A name or noun adds it to its genitive: <2>Maril, Jaanil, emal</2>."
+msgstr "The owner takes <0>-l</0>: <1>mul, sul, tal, meil, teil, neil</1>. A name or noun adds it to its genitive: <2>Maril, Jaanil, emal</2>."
+
+msgid "The teacher has a book."
+msgstr "The teacher has a book."
+
+msgid "The verb is <0>on</0> whoever has the thing, and in a yes sentence one thing you can count stays in its first form: <1>Meil on maja.</1>"
+msgstr "The verb is <0>on</0> whoever has the thing, and in a yes sentence one thing you can count stays in its first form: <1>Meil on maja.</1>"
+
+msgid "they"
+msgstr "they"
+
+msgid "They have a child."
+msgstr "They have a child."
+
+msgid "They have a house in Pärnu."
+msgstr "They have a house in Pärnu."
+
+msgid "time"
+msgstr "time"
+
+msgid "To ask who has something, use <0/>, the <1>-l</1> form of <2/>, who. Answer with the owner alone, and for yourself with the long form <3/>."
+msgstr "To ask who has something, use <0/>, the <1>-l</1> form of <2/>, who. Answer with the owner alone, and for yourself with the long form <3/>."
+
+msgid "To stress who has it, use the long forms: <0/>, <1/>, <2/> and <3/>. They work like the long pronouns lesson {pronouns} teaches, such as <4>mina</4> for <5>ma</5>. <6/> and <7/> have no long form."
+msgstr "To stress who has it, use the long forms: <0/>, <1/>, <2/> and <3/>. They work like the long pronouns lesson {pronouns} teaches, such as <4>mina</4> for <5>ma</5>. <6/> and <7/> have no long form."
+
+msgid "we"
+msgstr "we"
+
+msgid "We have a home in Tartu."
+msgstr "We have a home in Tartu."
+
+msgid "We have a house."
+msgstr "We have a house."
+
+msgid "who"
+msgstr "who"
+
+msgid "Who has a car?"
+msgstr "Who has a car?"
+
+msgid "Who has a question?"
+msgstr "Who has a question?"
+
+msgid "Who has it"
+msgstr "Who has it"
+
+msgid "Who has it: the -⁠l form"
+msgstr "Who has it: the -⁠l form"
+
+msgid "Who has it?"
+msgstr "Who has it?"
+
+msgid "who has; at whom"
+msgstr "who has; at whom"
+
+msgid "Word for word: “well, thanks. But at you?”"
+msgstr "Word for word: “well, thanks. But at you?”"
+
+msgid "Word for word: “yes, is”."
+msgstr "Word for word: “yes, is”."
+
+msgid "Yes, I do."
+msgstr "Yes, I do."
+
+msgid "you"
+msgstr "you"
+
+msgid "You are a teacher."
+msgstr "You are a teacher."
+
+msgid "You have a car."
+msgstr "You have a car."
+
+msgid "You have a good friend."
+msgstr "You have a good friend."
+
+msgid "You have a good teacher. To more than one, or polite."
+msgstr "You have a good teacher. To more than one, or polite."
+
+msgid "You have a teacher."
+msgstr "You have a teacher."
+
+msgid "You share a flat with Liis. You don’t have a car, but Jaan does."
+msgstr "You share a flat with Liis. You don’t have a car, but Jaan does."
+
+msgid "you, to more than one; polite"
+msgstr "you, to more than one; polite"
+
+msgid "You’re a good friend."
+msgstr "You’re a good friend."
+
+msgid "You’re a good teacher. Polite, to one person."
+msgstr "You’re a good teacher. Polite, to one person."

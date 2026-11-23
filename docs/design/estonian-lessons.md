@@ -25,6 +25,14 @@ Each surface means one thing, so a learner can tell from the surface alone wheth
 
 Each stage has a hue (`hue` in the catalogue). A lesson sets it as `--h` on `.learn`, and `learn.css` derives the tray and the lesson's ink from it. Inside a quiz the hue marks only what the learner acts on: Listen, the chosen chip, the band behind the quiz's title. The quiz's round dots sit on a white pill so green and red never land on the hue. A `Scene` drawing has its own pigments, for cardboard, a roof, a lit room and the cat, set beside the hue in `learn.css` (`--scene-*`): they paint an illustration, not an interface, so they stay out of the design tokens. Inside a quiz the drawing's ground turns grey, and only the places to tap carry the hue.
 
+## Loading
+
+The lessons cost every other page nothing. Only the hub, a lesson's page and the kit page import lesson code, and each loads its own part: `LearnPage` in `components/learn/learn-page.tsx` imports the lesson whose file is its slug in PascalCase (`mina-sina-tema` is `MinaSinaTema.tsx`), with its catalog in the reader's language. The page's frontmatter calls `prepareLearnPage` first, so the lesson is ready before the server renders it.
+
+When a lesson's code or catalog can't load, such as just after a deploy replaced it, the page keeps the article the server rendered and `LearnReload` offers to reload it. Its two lines live in the site's catalog, because the lesson's own may be what failed.
+
+Each lesson has its own Lingui catalogs in `apps/site/src/locales/learn/<File>/`, the kit, hub and course names share `locales/learn/Kit/`, and the site's own catalogs hold no lesson text. `apps/site/lingui.config.ts` finds a new lesson by its file. `lesson-isolation.mjs` fails the site's build when a page outside the lessons would load a module or catalog of theirs, and `pnpm i18n:check` fails when a lesson's line is in the site's catalog.
+
 ## Components
 
 The parts live in `apps/site/src/components/learn`. A new lesson reaches for these before writing markup of its own.

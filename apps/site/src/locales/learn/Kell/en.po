@@ -86,14 +86,8 @@ msgstr "Ask <0>Mis kell on?</0> The answer is <1>kell on</1> and the hour: <2>ke
 msgid "Ask the time and understand the answer. Halves and quarters count toward the hour that’s coming."
 msgstr "Ask the time and understand the answer. Halves and quarters count toward the hour that’s coming."
 
-msgid "At home"
-msgstr "At home"
-
 msgid "at six; six o’clock"
 msgstr "at six; six o’clock"
-
-msgid "At work"
-msgstr "At work"
 
 msgid "Before the hour, say how long until the next one. <0/> is, word for word, “in ten minutes, four”: 3:50."
 msgstr "Before the hour, say how long until the next one. <0/> is, word for word, “in ten minutes, four”: 3:50."
@@ -143,16 +137,8 @@ msgstr "Hour"
 msgid "In {ahead} minutes it’s {next}."
 msgstr "In {ahead} minutes it’s {next}."
 
-msgid "In a café"
-msgstr "In a café"
-
 msgid "in words"
 msgstr "in words"
-
-#. placeholder {0}: timeDigits(time)
-#. placeholder {1}: timeWords(time)
-msgid "It’s {0}: <0>{1}</0>."
-msgstr "It’s {0}: <0>{1}</0>."
 
 msgid "It’s {digits}: <0>{words}</0>."
 msgstr "It’s {digits}: <0>{words}</0>."
@@ -345,8 +331,8 @@ msgstr "When do they drink coffee?"
 msgid "When do they wait for the bus?"
 msgstr "When do they wait for the bus?"
 
-msgid "Where is Mari at three?"
-msgstr "Where is Mari at three?"
+msgid "When is Mari at home?"
+msgstr "When is Mari at home?"
 
 msgid "Which clock did you hear?"
 msgstr "Which clock did you hear?"

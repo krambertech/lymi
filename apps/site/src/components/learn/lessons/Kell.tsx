@@ -613,6 +613,8 @@ export function KellLesson() {
           label: timeDigits(each),
         }));
         const turn = i % 3;
+        const digits = timeDigits(time);
+        const words = timeWords(time);
         return {
           src: timeSrc(time),
           answer: timeClip(time),
@@ -620,7 +622,7 @@ export function KellLesson() {
           options: [...three.slice(turn), ...three.slice(0, turn)],
           explain: (
             <Trans>
-              It’s {timeDigits(time)}: <b lang="et">{timeWords(time)}</b>.
+              It’s {digits}: <b lang="et">{words}</b>.
             </Trans>
           ),
         };
@@ -656,13 +658,13 @@ export function KellLesson() {
       { id: "work", kind: "truefalse", ask: t`Mari is at home now.`, answer: false, line: 2 },
       {
         id: "home",
-        ask: t`Where is Mari at three?`,
+        ask: t`When is Mari at home?`,
         options: [
-          { id: "home", label: t`At home` },
-          { id: "work", label: t`At work` },
-          { id: "cafe", label: t`In a café` },
+          { id: "200", label: "2:00" },
+          { id: "300", label: "3:00" },
+          { id: "330", label: "3:30" },
         ],
-        answer: "home",
+        answer: "300",
         line: 3,
       },
       {

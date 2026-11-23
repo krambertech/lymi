@@ -302,6 +302,9 @@ msgstr "Безкоштовний урок естонської про те, як
 msgid "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
 msgstr "Безкоштовний урок про естонські форми на -ma, -mas і -mast: lähen ujuma (іду плавати), olen ujumas (на плаванні) і tulen ujumast (повертаюся з плавання). Вони відповідають на kuhu?, kus? і kust?, як і назви місць. А ще — коли казати lähen, käin чи tulen. Кожне речення озвучене."
 
+msgid "A free lesson on the Estonian conditional, the would form: -ks with the person endings (ma läheksin, sa läheksid, ta läheks), ei läheks for every person, polite requests (ma tahaksin kohvi, kas sa saaksid aidata?) and if clauses (kui mul oleks aega, läheksin kinno). Every sentence is read aloud."
+msgstr "Безкоштовний урок про умовний спосіб в естонській: -ks з особовими закінченнями (ma läheksin, sa läheksid, ta läheks), ei läheks для всіх осіб, ввічливі прохання (ma tahaksin kohvi, kas sa saaksid aidata?) і речення з «якби» (kui mul oleks aega, läheksin kinno). Кожне речення озвучене."
+
 msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
 msgstr "Безкоштовний урок про дні тижня естонською: сім назв, чотири з числами всередині, однолітерні позначення в годинах роботи, а ще täna, homme і eile. Кожне слово озвучене."
 
@@ -670,6 +673,9 @@ msgstr "Естонська"
 
 msgid "Estonian -ma, -mas and -mast: going, being and coming back"
 msgstr "Естонські форми на -ma, -mas і -mast: іду, там, повертаюся"
+
+msgid "Estonian conditional mood"
+msgstr "Умовний спосіб в естонській мові"
 
 msgid "Estonian consonant gradation"
 msgstr "Чергування приголосних в естонській мові"

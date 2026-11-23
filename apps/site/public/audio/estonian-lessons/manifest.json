@@ -13482,6 +13482,573 @@
       }
     ]
   },
+  "laheksin/kui": {
+    "text": "kui",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/hea-meelega": {
+    "text": "hea meelega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/la2heksin": {
+    "text": "läheksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/tahaksin": {
+    "text": "tahaksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/oleks": {
+    "text": "oleks",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/loen": {
+    "text": "loen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/loeksin": {
+    "text": "loeksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/la2hen": {
+    "text": "lähen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/olen": {
+    "text": "olen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/oleksin": {
+    "text": "oleksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/teen": {
+    "text": "teen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/teeksin": {
+    "text": "teeksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/tahan": {
+    "text": "tahan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/saan": {
+    "text": "saan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/saaksin": {
+    "text": "saaksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/vo3in": {
+    "text": "võin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/vo3iksin": {
+    "text": "võiksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/so2o2n": {
+    "text": "söön",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/so2o2ksin": {
+    "text": "sööksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/elan": {
+    "text": "elan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/elaksin": {
+    "text": "elaksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-la2heksin": {
+    "text": "Ma läheksin.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/sa-la2heksid": {
+    "text": "Sa läheksid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ta-la2heks": {
+    "text": "Ta läheks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/me-la2heksime": {
+    "text": "Me läheksime.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/te-la2heksite": {
+    "text": "Te läheksite.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/nad-la2heksid": {
+    "text": "Nad läheksid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/sa-loeksid": {
+    "text": "Sa loeksid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/me-oleksime": {
+    "text": "Me oleksime.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/nad-teeksid": {
+    "text": "Nad teeksid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-tahaksin": {
+    "text": "Ma tahaksin.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/te-saaksite": {
+    "text": "Te saaksite.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-so2o2ksin": {
+    "text": "Ma sööksin.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ta-elaks": {
+    "text": "Ta elaks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-la2heksin-kinno": {
+    "text": "Ma läheksin kinno.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/mul-on-aega": {
+    "text": "Mul on aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/mul-oleks-aega": {
+    "text": "Mul oleks aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/mul-oli-aega": {
+    "text": "Mul oli aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ta-ostab-auto": {
+    "text": "Ta ostab auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ta-ostaks-auto": {
+    "text": "Ta ostaks auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ta-ostis-auto": {
+    "text": "Ta ostis auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/me-so2o2me-kooki": {
+    "text": "Me sööme kooki.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/me-so2o2ksime-kooki": {
+    "text": "Me sööksime kooki.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/me-so3ime-kooki": {
+    "text": "Me sõime kooki.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/teeksid": {
+    "text": "teeksid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/on": {
+    "text": "on",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/teeb": {
+    "text": "teeb",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-tahaksin-kohvi": {
+    "text": "Ma tahaksin kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/kas-sa-saaksid-mind-aidata": {
+    "text": "Kas sa saaksid mind aidata?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/kas-te-vo3iksite-seda-korrata": {
+    "text": "Kas te võiksite seda korrata?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/kui-mul-oleks-aega-la2heksin-ma-kinno": {
+    "text": "Kui mul oleks aega, läheksin ma kinno.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/kui-ilm-oleks-ilus-so3idaksime-mere-a2a2rde": {
+    "text": "Kui ilm oleks ilus, sõidaksime mere äärde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/kui-ma-oleksin-rikas-ostaksin-maja": {
+    "text": "Kui ma oleksin rikas, ostaksin maja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/nad-ostaksid-maja": {
+    "text": "Nad ostaksid maja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/me-elaksime-tartus": {
+    "text": "Me elaksime Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/kas-sa-loeksid-seda-raamatut": {
+    "text": "Kas sa loeksid seda raamatut?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/kui-oleks-soe-ujuksime-me-meres": {
+    "text": "Kui oleks soe, ujuksime me meres.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-ei-la2heks-kinno": {
+    "text": "Ma ei läheks kinno.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/me-la2heksime-homme-kinno": {
+    "text": "Me läheksime homme kinno.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ta-la2heks-koju": {
+    "text": "Ta läheks koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/te-loeksite-seda-raamatut": {
+    "text": "Te loeksite seda raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/d-teenindaja-1": {
+    "text": "Tere õhtust! Mida te sooviksite?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "laheksin/d-sina-1": {
+    "text": "Ma tahaksin üht teed, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/d-teenindaja-2": {
+    "text": "Kas te sooviksite ka midagi süüa?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "laheksin/d-sina-2": {
+    "text": "Jah, ma võtaksin ühe võileiva.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/d-teenindaja-3": {
+    "text": "Kas te istuksite akna all või terrassil?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "laheksin/d-sina-3": {
+    "text": "Ma istuksin hea meelega terrassil.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/d-teenindaja-4": {
+    "text": "Hästi. Ma toon teie tee kohe.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "laheksin/c-holiday": {
+    "text": "Jaan, mida sa teeksid, kui sul oleks terve kuu puhkust? Hea küsimus! Ma sõidaksin kindlasti Jaapanisse. Jaapanisse? Miks just sinna? Ma tahaksin näha vanu templeid ja süüa päris jaapani toitu. Ja ma õpiksin natuke jaapani keelt. Kui kaua sa seal oleksid? Ma oleksin seal kolm nädalat. Viimasel nädalal sõidaksin ma mägedesse. Jaapani keel on väga raske. Kas sa suudaksid seda õppida? Natuke kindlasti. Aga ma ei räägiks seda kunagi nii hästi kui eesti keelt. Sa räägid eesti keelt juba päris hästi. Aitäh! Aga sina? Mida sina teeksid? Mina ei sõidaks kuhugi kaugele. Ma elaksin terve kuu maal, vanaema juures. Maal? Kas sul ei oleks igav? Ei, mitte üldse. Ma loeksin raamatuid, käiksin metsas ja ujuksin järves. Hommikuti magaksin ma kaua. See kõlab hästi. Aga kui ilm oleks halb? Siis ma istuksin köögis ja küpsetaksin vanaemaga kooke. Me räägiksime tundide kaupa. Kui mul oleks vanaema maal, teeksin ma sama. Minu vanavanemad elavad Tallinnas. Siis sa võiksid tulla minuga kaasa. Vanaemale meeldivad külalised. Tõesti? Ma tuleksin hea meelega! Kas ma saaksin aias aidata? Muidugi. Aias on alati tööd. Sa võiksid kartuleid kaevata. Ma oleksin parem kokk kui aednik. Ma võiksin iga päev süüa teha. Suurepärane! Siis sööksime me iga päev head toitu. Aga Jaapan jääb minu unistuseks. Võib-olla saaksime järgmisel aastal koos Jaapanisse sõita. See oleks väga tore! Aga enne peaksime natuke raha koguma. Lennupiletid on kallid. Õige. Ma ei ostaks enam iga päev kohvikust kohvi. See oleks sinu jaoks väga raske!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jaan, mida sa teeksid, kui sul oleks terve kuu puhkust?"
+        ],
+        "say": "[curious] Jaan, mida sa teeksid, kui sul oleks terve kuu puhkust?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hea küsimus!",
+          "Ma sõidaksin kindlasti Jaapanisse."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jaapanisse?",
+          "Miks just sinna?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma tahaksin näha vanu templeid ja süüa päris jaapani toitu.",
+          "Ja ma õpiksin natuke jaapani keelt."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kui kaua sa seal oleksid?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma oleksin seal kolm nädalat.",
+          "Viimasel nädalal sõidaksin ma mägedesse."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jaapani keel on väga raske.",
+          "Kas sa suudaksid seda õppida?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Natuke kindlasti.",
+          "Aga ma ei räägiks seda kunagi nii hästi kui eesti keelt."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Sa räägid eesti keelt juba päris hästi."
+        ],
+        "say": "[laughs] Sa räägid eesti keelt juba päris hästi."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh!",
+          "Aga sina?",
+          "Mida sina teeksid?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mina ei sõidaks kuhugi kaugele.",
+          "Ma elaksin terve kuu maal, vanaema juures."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Maal?",
+          "Kas sul ei oleks igav?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, mitte üldse.",
+          "Ma loeksin raamatuid, käiksin metsas ja ujuksin järves.",
+          "Hommikuti magaksin ma kaua."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "See kõlab hästi.",
+          "Aga kui ilm oleks halb?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Siis ma istuksin köögis ja küpsetaksin vanaemaga kooke.",
+          "Me räägiksime tundide kaupa."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kui mul oleks vanaema maal, teeksin ma sama.",
+          "Minu vanavanemad elavad Tallinnas."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Siis sa võiksid tulla minuga kaasa.",
+          "Vanaemale meeldivad külalised."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tõesti?",
+          "Ma tuleksin hea meelega!",
+          "Kas ma saaksin aias aidata?"
+        ],
+        "say": "[surprised] Tõesti? Ma tuleksin hea meelega! Kas ma saaksin aias aidata?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Muidugi.",
+          "Aias on alati tööd.",
+          "Sa võiksid kartuleid kaevata."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma oleksin parem kokk kui aednik.",
+          "Ma võiksin iga päev süüa teha."
+        ],
+        "say": "[laughs] Ma oleksin parem kokk kui aednik. Ma võiksin iga päev süüa teha."
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Suurepärane!",
+          "Siis sööksime me iga päev head toitu."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aga Jaapan jääb minu unistuseks."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Võib-olla saaksime järgmisel aastal koos Jaapanisse sõita."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "See oleks väga tore!"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Aga enne peaksime natuke raha koguma.",
+          "Lennupiletid on kallid."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Õige.",
+          "Ma ei ostaks enam iga päev kohvikust kohvi."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "See oleks sinu jaoks väga raske!"
+        ],
+        "say": "[laughs] See oleks sinu jaoks väga raske!"
+      }
+    ]
+  },
+  "laheksin/sa-ei-la2heks": {
+    "text": "Sa ei läheks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ta-ei-la2heks": {
+    "text": "Ta ei läheks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/me-ei-la2heks": {
+    "text": "Me ei läheks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/te-ei-la2heks": {
+    "text": "Te ei läheks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/nad-ei-la2heks": {
+    "text": "Nad ei läheks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-ei-la2heks": {
+    "text": "Ma ei läheks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "jargarvud/o2": {
     "text": "teine",
     "model": "eleven_v4",
@@ -16590,6 +17157,21 @@
         ]
       }
     ]
+  },
+  "laheksin/ma-tulen-koju": {
+    "text": "Ma tulen koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-tuleksin-koju": {
+    "text": "Ma tuleksin koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laheksin/ma-tulin-koju": {
+    "text": "Ma tulin koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "tulevik/tulevik": {
     "text": "tulevik",

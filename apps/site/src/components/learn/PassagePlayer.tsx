@@ -186,7 +186,7 @@ export function PassagePlayer({ passage, label }: { passage: PassageControl; lab
           aria-valuenow={sentenceNumber}
           aria-valuetext={t`Sentence ${sentenceNumber} of ${sentenceCount}, ${time}`}
           onKeyDown={(event) => onSentenceKey(event, passage)}
-          className="relative flex h-10 gap-1.5 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--ring)"
+          className="relative flex h-10 gap-1.5 rounded-sm [contain:inline-size] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--ring)"
         >
           <span
             aria-hidden="true"

@@ -3,8 +3,10 @@ import { describe, expect, it } from "vitest";
 import { LANGUAGES_QUESTIONS, TEACHERS_QUESTIONS } from "../components/landing/faq";
 import { pageI18n } from "./i18n";
 import {
+  changelogPost,
   deckBreadcrumbs,
   deckStructuredData,
+  examBreadcrumbs,
   exploreStructuredData,
   faqPage,
   marketingPage,
@@ -65,7 +67,12 @@ describe("deckStructuredData", () => {
         { "@type": "CreativeWork", name: "Keeleklikk", url: "https://www.keeleklikk.ee/" },
         { "@type": "CreativeWork", name: "A teacher" },
       ],
-      isPartOf: { "@type": "WebSite", name: "Lymi", url: "https://lymi.app/" },
+      isPartOf: {
+        "@type": "WebSite",
+        "@id": "https://lymi.app/#website",
+        name: "Lymi",
+        url: "https://lymi.app/",
+      },
     });
   });
 
@@ -198,7 +205,7 @@ describe("marketingPage", () => {
   });
 
   it("names the product as free and the same entity on every page", () => {
-    const [app, faq] = marketingPage({
+    const [app, page, faq] = marketingPage({
       name: "Lymi for language learning",
       description: "Keep the words.",
       path: "/languages",
@@ -208,11 +215,20 @@ describe("marketingPage", () => {
     expect(app).toMatchObject({
       "@type": "SoftwareApplication",
       "@id": "https://lymi.app/#app",
-      url: "https://lymi.app/languages",
+      url: "https://lymi.app/",
       isAccessibleForFree: true,
       offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     });
+    expect(page).toMatchObject({
+      "@type": "WebPage",
+      "@id": "https://lymi.app/languages",
+      description: "Keep the words.",
+      about: { "@id": "https://lymi.app/#app" },
+    });
     expect(faq).toMatchObject({ "@type": "FAQPage" });
+
+    const [other] = marketingPage({ name: "n", description: "d", path: "/teachers", i18n });
+    expect(other).toEqual(app);
   });
 
   it("declares the organization and the site on the homepage only", () => {
@@ -227,6 +243,7 @@ describe("marketingPage", () => {
       "Organization",
       "WebSite",
       "SoftwareApplication",
+      "WebPage",
     ]);
     expect(home[1]).toMatchObject({ publisher: { "@id": "https://lymi.app/#organization" } });
   });
@@ -238,6 +255,29 @@ describe("marketingPage", () => {
       path: "/languages/estonian",
       i18n,
     });
-    expect(data.map((entry) => entry["@type"])).toEqual(["SoftwareApplication"]);
+    expect(data.map((entry) => entry["@type"])).toEqual(["SoftwareApplication", "WebPage"]);
+  });
+});
+
+describe("examBreadcrumbs", () => {
+  it("leads from the translated hub to the exam", () => {
+    const data = examBreadcrumbs("uk", "Підготовка", { name: "HSK", path: "/uk/exams/hsk" });
+    expect(data.itemListElement.map(({ name, item }) => [name, item])).toEqual([
+      ["Підготовка", "https://lymi.app/uk/exams"],
+      ["HSK", "https://lymi.app/uk/exams/hsk"],
+    ]);
+  });
+});
+
+describe("changelogPost", () => {
+  it("dates the update at its own address", () => {
+    const date = new Date("2026-10-11T12:00:00Z");
+    expect(changelogPost({ slug: "welcome", title: "t", summary: "s", date }, "ru")).toMatchObject({
+      "@type": "BlogPosting",
+      url: "https://lymi.app/ru/changelog/welcome",
+      headline: "t",
+      datePublished: "2026-10-11T12:00:00.000Z",
+      inLanguage: "ru",
+    });
   });
 });

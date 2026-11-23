@@ -1,6 +1,9 @@
 import { PAGES } from "../components/docs/nav";
+import { COMPARE_KEYS, COMPARE_PAGES } from "../components/landing/compare-pages";
+import { LANDING_BLURB } from "../components/landing/landing-copy";
 import { EXAMS, examPath } from "./exams";
 import { pageI18n } from "./i18n";
+import { localizedPath } from "./routes";
 
 const SITE = "https://lymi.app";
 const PRODUCT = "https://my.lymi.app";
@@ -26,14 +29,18 @@ export function llmsTxt(): string {
     (exam) =>
       `- [${i18n._(exam.name)}](${SITE}${examPath(exam, "en")}): ${clause(i18n._(exam.summary))}.`,
   );
+  const compare = COMPARE_KEYS.map((key) => {
+    const { name, page } = COMPARE_PAGES[key];
+    return `- [Lymi vs ${name}](${SITE}${localizedPath(page, "en")}): where each app is ahead, who should stay with ${name}, and how to bring your decks to Lymi.`;
+  });
   const docs = PAGES.map((page) => `- [${page.title}](${SITE}${page.to}): ${clause(page.blurb)}.`);
 
   return [
     "# Lymi",
     "",
-    "> Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and Lymi decides when you see it again. Free to use.",
+    `> ${i18n._(LANDING_BLURB)}`,
     "",
-    "Cards hold a term, its meaning, an example and how it is said. Lymi schedules each review with FSRS. An assistant can add cards over MCP or the HTTP API. Activity names the app that wrote them; only fields filled by Lymi’s own AI carry an AI badge. Decks can be published, joined by a link, imported from Anki, Mochi, Noji, Pleco, Quizlet or a Lymi file, and exported as an Anki package or a Lymi file. Lymi is free to use.",
+    "Cards hold a term, its meaning, an example and how it is said. Lymi schedules each review with FSRS. An assistant can add cards over MCP or the HTTP API. Activity names the app that wrote them; only fields filled by Lymi’s own AI carry an AI badge. Decks can be published, joined by a link, imported from Anki, Mochi, Noji, Pleco, Quizlet or a Lymi file, and exported as an Anki package or a Lymi file. Lymi runs in the browser and has apps for iPhone, Android and Mac. Lymi is free to use.",
     "",
     "## Pages",
     "",
@@ -60,9 +67,16 @@ export function llmsTxt(): string {
     `- [Spanish](${SITE}/languages/spanish): learning Spanish with a native Spanish voice on every card, every noun with its el or la, and free decks for the top 100 verbs, the 1000 most common words and each level from A1 to B1.`,
     `- [Ukrainian](${SITE}/languages/ukrainian): learning Ukrainian with the stress marked until you know the word, a native Ukrainian voice, an AI that writes Ukrainian rather than Russian, and free decks from the alphabet to A2.`,
     `- [Documentation](${SITE}/docs): guides, the MCP setup, the API reference and the import guides.`,
+    `- [Download](${SITE}/download): Lymi for iPhone, Android and Mac.`,
     `- [Changelog](${SITE}/changelog): new features and improvements in Lymi.`,
     `- [Privacy](${SITE}/privacy): what Lymi stores and who can read it.`,
     `- [Support](${SITE}/support): sign-in, connected apps, API keys and data requests.`,
+    "",
+    "## Compared with other apps",
+    "",
+    "Each page dates its facts about the other app and names their sources.",
+    "",
+    ...compare,
     "",
     "## Exam pages",
     "",

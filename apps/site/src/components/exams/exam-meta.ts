@@ -5,6 +5,8 @@ import { pageI18n } from "../../lib/i18n";
 import type { Locale } from "../../lib/routes";
 import { branded, DESCRIPTION_MAX, firstThatFits, TITLE_MAX } from "../../lib/seo-text";
 
+export const EXAMS_NAME = msg`Exam prep`;
+
 type Listed = Pick<PublicDeckSummary, "cardCount">;
 
 /** The exam page's title: its heading where that fits, else the exam's name and its free cards. */

@@ -501,7 +501,7 @@ export const PRONOUN_DRILLED = [
 
 export const PRONOUN_HEARD = [
   { said: "Olen kodus.", who: "ma" },
-  { said: "Ma olen valmis.", who: "ma" },
+  { said: "Ma olen väsinud.", who: "ma" },
   { said: "Sa oled kodus.", who: "sa" },
   { said: "Sa oled õpetaja.", who: "sa" },
   { said: "Ta on õpetaja.", who: "ta" },

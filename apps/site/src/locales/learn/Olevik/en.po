@@ -263,6 +263,9 @@ msgstr "Tap an ending"
 msgid "Tea"
 msgstr "Tea"
 
+msgid "Teaching Estonian"
+msgstr "Teaching Estonian"
+
 msgid "Ten everyday verbs, the stem each one builds on, and six endings that say who does it."
 msgstr "Ten everyday verbs, the stem each one builds on, and six endings that say who does it."
 
@@ -362,9 +365,6 @@ msgstr "Type the form"
 
 msgid "Verbs"
 msgstr "Verbs"
-
-msgid "Waiting for the bus"
-msgstr "Waiting for the bus"
 
 msgid "Water"
 msgstr "Water"

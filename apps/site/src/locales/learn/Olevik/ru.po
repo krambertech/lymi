@@ -159,7 +159,7 @@ msgid "Jaan says where he lives and works, and what he and Mari do. Listen to th
 msgstr "Яан рассказывает, где живёт и работает и что делают он и Мари. Слушай конец каждого глагола, чтобы услышать, кто это делает."
 
 msgid "Learning Estonian"
-msgstr "Учит эстонский"
+msgstr "Изучает эстонский"
 
 msgid "Listen to the very end of the verb, then try again."
 msgstr "Слушай самый конец глагола и попробуй ещё раз."
@@ -263,6 +263,9 @@ msgstr "Нажми на окончание"
 msgid "Tea"
 msgstr "Чай"
 
+msgid "Teaching Estonian"
+msgstr "Преподаёт эстонский"
+
 msgid "Ten everyday verbs, the stem each one builds on, and six endings that say who does it."
 msgstr "Десять повседневных глаголов, основа каждого из них и шесть окончаний, которые говорят, кто действует."
 
@@ -362,9 +365,6 @@ msgstr "Напиши форму"
 
 msgid "Verbs"
 msgstr "Глаголы"
-
-msgid "Waiting for the bus"
-msgstr "Ждёт автобус"
 
 msgid "Water"
 msgstr "Воду"

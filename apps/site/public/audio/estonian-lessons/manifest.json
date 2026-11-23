@@ -10862,11 +10862,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "mina-sina-tema/ma-olen-valmis": {
-    "text": "Ma olen valmis.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "mina-sina-tema/nad-on-va2sinud": {
     "text": "Nad on väsinud.",
     "model": "eleven_v4",
@@ -10889,6 +10884,11 @@
   },
   "mina-sina-tema/o3petaja": {
     "text": "õpetaja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/ma-olen-va2sinud": {
+    "text": "Ma olen väsinud.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

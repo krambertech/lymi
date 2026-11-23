@@ -599,7 +599,7 @@ export function OlevikLesson() {
         id: "mari",
         ask: t`What is Mari doing?`,
         options: [
-          { id: "bus", label: t`Waiting for the bus` },
+          { id: "teach", label: t`Teaching Estonian` },
           { id: "estonian", label: t`Learning Estonian` },
           { id: "book", label: t`Reading a book` },
         ],

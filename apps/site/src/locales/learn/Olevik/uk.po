@@ -263,6 +263,9 @@ msgstr "Натисни закінчення"
 msgid "Tea"
 msgstr "Чай"
 
+msgid "Teaching Estonian"
+msgstr "Викладає естонську"
+
 msgid "Ten everyday verbs, the stem each one builds on, and six endings that say who does it."
 msgstr "Десять щоденних дієслів, основа кожного з них і шість закінчень, які кажуть, хто діє."
 
@@ -362,9 +365,6 @@ msgstr "Напиши форму"
 
 msgid "Verbs"
 msgstr "Дієслова"
-
-msgid "Waiting for the bus"
-msgstr "Чекає на автобус"
 
 msgid "Water"
 msgstr "Воду"

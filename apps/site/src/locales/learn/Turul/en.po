@@ -88,8 +88,8 @@ msgstr "After an amount, the partitive: <0>kilo kohvi</0>."
 msgid "After an amount, the partitive."
 msgstr "After an amount, the partitive."
 
-msgid "All six found and fixed."
-msgstr "All six found and fixed."
+msgid "All seven found and fixed."
+msgstr "All seven found and fixed."
 
 msgid "All six written right."
 msgstr "All six written right."
@@ -157,6 +157,9 @@ msgstr "coffee"
 msgid "coming from the market"
 msgstr "coming from the market"
 
+msgid "Coming from there takes <0>turult</0>."
+msgstr "Coming from there takes <0>turult</0>."
+
 msgid "Coming from there takes <et>turult</et>."
 msgstr "Coming from there takes <et>turult</et>."
 
@@ -166,8 +169,8 @@ msgstr "costs"
 msgid "Drag a word from below Liis’s answer into each gap, or tap a word to put it in the open gap. Some words are spare. The gaps test the infinitive after <0>tahan</0> or <1>pean</1>, where someone is, an amount, the ending after <2>me</2>, and <3>meeldib</3> or <4>meeldivad</4>."
 msgstr "Drag a word from below Liis’s answer into each gap, or tap a word to put it in the open gap. Some words are spare. The gaps test the infinitive after <0>tahan</0> or <1>pean</1>, where someone is, an amount, the ending after <2>me</2>, and <3>meeldib</3> or <4>meeldivad</4>."
 
-msgid "Each sentence has one wrong word. Tap it, then write it right."
-msgstr "Each sentence has one wrong word. Tap it, then write it right."
+msgid "Each sentence has one word in the wrong form. Tap it, then write the right form."
+msgstr "Each sentence has one word in the wrong form. Tap it, then write the right form."
 
 msgid "euro"
 msgstr "euro"
@@ -354,8 +357,8 @@ msgstr "That says you like cheese. She asked what you’d like to buy."
 msgid "The -da or -ma infinitive after another verb"
 msgstr "The -da or -ma infinitive after another verb"
 
-msgid "The genitive of turg."
-msgstr "The genitive of turg."
+msgid "The form of turg before another noun, as in turu õunad."
+msgstr "The form of turg before another noun, as in turu õunad."
 
 msgid "The partitive after an amount or a number"
 msgstr "The partitive after an amount or a number"

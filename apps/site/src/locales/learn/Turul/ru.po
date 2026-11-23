@@ -88,8 +88,8 @@ msgstr "После слова количества — партитив: <0>kilo
 msgid "After an amount, the partitive."
 msgstr "После слова количества — партитив."
 
-msgid "All six found and fixed."
-msgstr "Все шесть найдены и исправлены."
+msgid "All seven found and fixed."
+msgstr "Все семь найдены и исправлены."
 
 msgid "All six written right."
 msgstr "Все шесть написаны правильно."
@@ -157,6 +157,9 @@ msgstr "кофе"
 msgid "coming from the market"
 msgstr "идти с рынка"
 
+msgid "Coming from there takes <0>turult</0>."
+msgstr "Идти оттуда — <0>turult</0>."
+
 msgid "Coming from there takes <et>turult</et>."
 msgstr "Идти оттуда — <et>turult</et>."
 
@@ -166,8 +169,8 @@ msgstr "стоит"
 msgid "Drag a word from below Liis’s answer into each gap, or tap a word to put it in the open gap. Some words are spare. The gaps test the infinitive after <0>tahan</0> or <1>pean</1>, where someone is, an amount, the ending after <2>me</2>, and <3>meeldib</3> or <4>meeldivad</4>."
 msgstr "Перетащи в каждый пропуск слово из-под ответа Лийс или нажми на слово, чтобы поставить его в открытый пропуск. Некоторые слова лишние. Пропуски проверяют инфинитив после <0>tahan</0> или <1>pean</1>, где кто-то находится, количество, окончание после <2>me</2> и <3>meeldib</3> или <4>meeldivad</4>."
 
-msgid "Each sentence has one wrong word. Tap it, then write it right."
-msgstr "В каждом предложении одно неверное слово. Нажми на него, а потом напиши правильно."
+msgid "Each sentence has one word in the wrong form. Tap it, then write the right form."
+msgstr "В каждом предложении одно слово стоит в неверной форме. Нажми на него и напиши правильную форму."
 
 msgid "euro"
 msgstr "евро"
@@ -354,8 +357,8 @@ msgstr "Так ты говоришь, что тебе нравится сыр. �
 msgid "The -da or -ma infinitive after another verb"
 msgstr "Инфинитив на -da или -ma после другого глагола"
 
-msgid "The genitive of turg."
-msgstr "Родительный падеж от turg."
+msgid "The form of turg before another noun, as in turu õunad."
+msgstr "Форма turg перед существительным, как в turu õunad."
 
 msgid "The partitive after an amount or a number"
 msgstr "Партитив после слова количества или числа"

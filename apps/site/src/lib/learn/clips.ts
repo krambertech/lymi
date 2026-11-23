@@ -2967,6 +2967,7 @@ export const MARKET_FIX = [
   { id: "meeldib", wrong: "Mulle meeldib õunad.", right: "Mulle meeldivad õunad." },
   { id: "euro", wrong: "Leib maksab kaks euro.", right: "Leib maksab kaks eurot." },
   { id: "turul", wrong: "Ma lähen täna turul.", right: "Ma lähen täna turule." },
+  { id: "turult", wrong: "Ma tulen turul koju.", right: "Ma tulen turult koju." },
 ] as const;
 
 export const MARKET_DIALOGUE = {

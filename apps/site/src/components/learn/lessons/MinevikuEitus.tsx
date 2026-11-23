@@ -443,7 +443,7 @@ function weekendQuestions(i18n: I18n): PassageQuestion[] {
       kind: "short",
       id: "who-came",
       ask: label(msg`Who came from Tartu? Write one or two words in Estonian.`),
-      answers: ["ema", "minu ema", "tema ema", "Jaani ema"],
+      answers: ["ema", "minu ema", "tema ema", "ta ema", "Jaani ema"],
       line: 5,
     },
     {

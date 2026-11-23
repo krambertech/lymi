@@ -44,7 +44,10 @@ const GLOSSARY: Glossary = {
   turule: { en: msg`to the market` },
   turul: { en: msg`at the market` },
   turult: { en: msg`from the market` },
-  turu: { en: msg`of the market`, note: msg`The genitive of turg.` },
+  turu: {
+    en: msg`of the market`,
+    note: msg`The form of turg before another noun, as in turu õunad.`,
+  },
   "turu õunad": { en: msg`apples from the market` },
   õunad: { en: msg`apples` },
   "kilo juustu": { en: msg`a kilo of cheese`, note: msg`After an amount, the partitive.` },
@@ -144,15 +147,16 @@ const SAY_PROMPTS: Record<(typeof MARKET_SAY)[number]["id"], MessageDescriptor> 
 const SAY_ALSO: Record<(typeof MARKET_SAY)[number]["id"], readonly string[]> = {
   juustu: ["Mul on kilo juustu vaja."],
   maksab: ["Mis see maksab?"],
-  ounad: [],
+  ounad: ["Õunad meeldivad mulle.", "Minule meeldivad õunad."],
   turule: ["Ma tahan minna turule.", "Mina tahan turule minna.", "Tahan turule minna."],
   kodus: [
     "Pean kell kaksteist kodus olema.",
+    "Ma pean kell 12 kodus olema.",
     "Kell kaksteist pean ma kodus olema.",
     "Ma pean kodus olema kell kaksteist.",
     "Mina pean kell kaksteist kodus olema.",
   ],
-  leib: [],
+  leib: ["Leib maksab 2 eurot."],
 };
 
 export function sayItems(i18n: I18n): SentenceItem[] {
@@ -194,6 +198,11 @@ const FIX_WHY: Record<(typeof MARKET_FIX)[number]["id"], ReactNode> = {
   turul: (
     <Trans>
       Going there takes <Et>turule</Et>; <Et>turul</Et> is being there.
+    </Trans>
+  ),
+  turult: (
+    <Trans>
+      Coming from there takes <Et>turult</Et>.
     </Trans>
   ),
 };
@@ -624,17 +633,19 @@ export function TurulLesson() {
             <>
               <Prose>
                 <p>
-                  <Trans>Each sentence has one wrong word. Tap it, then write it right.</Trans>
+                  <Trans>
+                    Each sentence has one word in the wrong form. Tap it, then write the right form.
+                  </Trans>
                 </p>
               </Prose>
               <Quiz
                 id="fix-market"
                 title={<Trans>Find and fix the mistake</Trans>}
                 items={fixItems()}
-                rounds={6}
+                rounds={7}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All six found and fixed.</Trans>
+                    <Trans>All seven found and fixed.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Most of them. Look again at the ones you missed.</Trans>
                   ) : (

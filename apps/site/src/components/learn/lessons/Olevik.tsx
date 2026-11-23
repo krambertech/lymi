@@ -8,16 +8,24 @@ import {
   clipId,
   clipUrl,
   PRESENT_ENDINGS,
+  PRESENT_FIXES,
+  PRESENT_PASSAGE,
   PRESENT_SENTENCES,
+  PRESENT_TURNED,
   PRESENT_VERBS,
   presentWithPronoun,
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Keys, ListenRows, Panel } from "../Explore";
+import { type FixItem, FixRound, fixRecall } from "../FixRound";
+import { type FormItem, FormRound, formRecall } from "../FormRound";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
+import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, type GapItem, GapRound, Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
+import { type SortBin, type SortItem, Sort } from "../Sort";
 import { Playing } from "../Sound";
 import { Word } from "../Word";
 
@@ -214,6 +222,34 @@ export const SENTENCES: readonly Sentence[] = [
   },
 ];
 
+/** Verb and person to type, two per ending, keyed by the ending; stems that change among them. */
+export const TYPED: readonly { verb: Verb["verb"]; ending: Ending }[] = [
+  { verb: "lugema", ending: "n" },
+  { verb: "elama", ending: "n" },
+  { verb: "õppima", ending: "d" },
+  { verb: "ootama", ending: "d" },
+  { verb: "rääkima", ending: "b" },
+  { verb: "töötama", ending: "b" },
+  { verb: "tegema", ending: "me" },
+  { verb: "jooma", ending: "me" },
+  { verb: "sööma", ending: "te" },
+  { verb: "armastama", ending: "te" },
+  { verb: "lugema", ending: "vad" },
+  { verb: "elama", ending: "vad" },
+];
+
+/** Verbs to sort by whether the stem is the -ma form without -ma. */
+const STEM_SORT: readonly Verb["verb"][] = [
+  "elama",
+  "lugema",
+  "töötama",
+  "õppima",
+  "ootama",
+  "rääkima",
+  "sööma",
+  "tegema",
+];
+
 const GLOSSARY: Glossary = {
   ...Object.fromEntries(
     PRESENT_VERBS.map((each) => {
@@ -226,6 +262,9 @@ const GLOSSARY: Glossary = {
     PRESENT_ENDINGS.map(({ ending }) => [`ela${ending}`, { en: ENDING_TIPS[ending].elama }]),
   ),
   olema: { en: msg`to be` },
+  juba: { en: msg`already` },
+  loevad: { en: msg`they read`, note: msg`From lugema: stem loe-, as in ma loen.` },
+  "nad elavad tallinnas": { en: msg`They live in Tallinn.`, show: "Nad elavad Tallinnas." },
   olen: { en: msg`I am` },
   oled: { en: msg`you are` },
   oleme: { en: msg`we are` },
@@ -426,6 +465,171 @@ export function OlevikLesson() {
     [i18n],
   );
 
+  const formItems = useMemo<(FormItem & { pair: readonly [string, string] })[]>(
+    () =>
+      TYPED.map(({ verb: name, ending }) => {
+        const verb = verbOf(name);
+        const person = PRESENT_ENDINGS.find((each) => each.ending === ending) as Person;
+        const form = `${verb.stem}${ending}`;
+        const mine = `${verb.stem}n`;
+        return {
+          base: verb.verb,
+          gloss: (
+            <Trans>
+              {i18n._(MEANS[verb.verb])}, <span lang="et">ma {mine}</span>
+            </Trans>
+          ),
+          cue: person.pronoun,
+          cueLang: "et",
+          answers: [form],
+          src: saidSrc(person, verb),
+          said: said(person, verb),
+          pair: [ending, verb.verb] as const,
+          explain: i18n._(ENDING_TIPS[ending].tip),
+        };
+      }),
+    [i18n],
+  );
+
+  const sortBins = useMemo<SortBin[]>(
+    () => [
+      {
+        id: "same",
+        label: t`Same stem as the -ma form`,
+        lang: i18n.locale,
+        rule: (
+          <Trans>
+            Take off -ma: <span lang="et">elama, ela-, elan</span>.
+          </Trans>
+        ),
+      },
+      {
+        id: "changed",
+        label: t`The stem changes`,
+        lang: i18n.locale,
+        rule: (
+          <Trans>
+            The I form shows the stem: <span lang="et">lugema, loen</span>.
+          </Trans>
+        ),
+      },
+    ],
+    [t, i18n],
+  );
+  const sortItems = useMemo<SortItem[]>(
+    () =>
+      STEM_SORT.map((name) => {
+        const verb = verbOf(name);
+        const same = verb.verb === `${verb.stem}ma`;
+        const mine = `${verb.stem}n`;
+        return {
+          w: verb.verb,
+          bin: same ? "same" : "changed",
+          src: wordSrc(`Ma ${mine}`),
+          why: (
+            <span lang="et">
+              {verb.verb}, ma {mine}
+            </span>
+          ),
+        };
+      }),
+    [],
+  );
+
+  const fixItems = useMemo<(FixItem & { pair: readonly [string, string] })[]>(
+    () =>
+      PRESENT_FIXES.map(({ wrong, said: right, kind }) => ({
+        kind: "fix" as const,
+        id: `fix-${clipId(wrong)}`,
+        wrong,
+        answers: [right],
+        src: wordSrc(right),
+        pair: [kind, wrong] as const,
+        explain:
+          kind === "stem" ? (
+            <Trans>The ending goes on the stem of the I form, not of the -ma form.</Trans>
+          ) : (
+            <Trans>The ending goes with the pronoun at the start of the sentence.</Trans>
+          ),
+      })),
+    [],
+  );
+
+  const turnedItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
+    () =>
+      PRESENT_TURNED.map(({ from, to, said: turned }) => {
+        const rest = turned.slice(turned.indexOf(" ") + 1);
+        const long = { ma: "Mina", sa: "Sina", ta: "Tema", me: "Meie", te: "Teie", nad: "Nemad" }[
+          to
+        ];
+        const dropped =
+          to === "ta" || to === "nad" ? [] : [`${rest.charAt(0).toUpperCase()}${rest.slice(1)}`];
+        return {
+          kind: "rewrite" as const,
+          id: `turn-${clipId(turned)}`,
+          from: PRESENT_SENTENCES[from],
+          cue: <span lang="et">{to}</span>,
+          src: wordSrc(turned),
+          answers: [turned, `${long} ${rest}`, ...dropped] as [string, ...string[]],
+          pair: [to, turned] as const,
+        };
+      }),
+    [],
+  );
+
+  const passageQuestions = useMemo<PassageQuestion[]>(
+    () => [
+      {
+        id: "work",
+        ask: t`Where does Jaan work?`,
+        options: [
+          { id: "home", label: t`At home` },
+          { id: "office", label: t`In an office` },
+          { id: "cafe", label: t`In a café` },
+        ],
+        answer: "home",
+        line: 1,
+      },
+      {
+        id: "tartu",
+        kind: "truefalse",
+        ask: t`Jaan lives in Tartu.`,
+        answer: false,
+        line: 1,
+      },
+      {
+        id: "mari",
+        ask: t`What is Mari doing?`,
+        options: [
+          { id: "bus", label: t`Waiting for the bus` },
+          { id: "estonian", label: t`Learning Estonian` },
+          { id: "work", label: t`Working from home` },
+        ],
+        answer: "estonian",
+        line: 2,
+      },
+      {
+        id: "well",
+        kind: "truefalse",
+        ask: t`Mari speaks well.`,
+        answer: true,
+        line: 3,
+      },
+      {
+        id: "drink",
+        ask: t`What do they drink?`,
+        options: [
+          { id: "water", label: t`Water` },
+          { id: "tea", label: t`Tea` },
+          { id: "coffee", label: t`Coffee` },
+        ],
+        answer: "coffee",
+        line: 4,
+      },
+    ],
+    [t],
+  );
+
   return (
     <LessonView
       slug={SLUG}
@@ -436,8 +640,8 @@ export function OlevikLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">10 minutes</Trans>,
-        <Trans key="q">2 quizzes</Trans>,
+        <Trans key="m">15 minutes</Trans>,
+        <Trans key="q">5 quizzes, a sort and a passage</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={PRESENT_VERBS.map((each) => each.verb)}
@@ -635,6 +839,164 @@ export function OlevikLesson() {
                 recall={(item) => ({ label: item.form, src: item.src })}
                 order={heardRun}
                 round={(props) => <ChoiceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "type",
+          title: t`Type the form`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each round gives a verb with its I form and a pronoun. Take the stem from the I
+                    form and type the form for that pronoun: <b lang="et">lugema, ma loen</b>, so
+                    with <span lang="et">nad</span> it is <Word w="loevad" />.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="type-present"
+                title={<Trans>Type the form</Trans>}
+                items={formItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six. You put every ending on the right stem.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Pick those verbs in the table above once more.</Trans>
+                  ) : (
+                    <Trans>Go back to the table above, then try again.</Trans>
+                  )
+                }
+                recall={formRecall}
+                order={eachPairFirst}
+                round={(props) => <FormRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "stems",
+          title: t`Which verbs change their stem`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Two rules give the stem. For most verbs, take off -ma: <Word w="elama" />,{" "}
+                    <Word w="elan" />. For some, the stem changes, and only the I form shows it:{" "}
+                    <Word w="lugema" />, <Word w="ma loen" />.
+                  </Trans>
+                </p>
+                <p>
+                  <Trans>Sort the verbs. Tap one to hear its I form.</Trans>
+                </p>
+              </Prose>
+              <Sort
+                id="sort-stems"
+                title={<Trans>Does the stem change?</Trans>}
+                bins={sortBins}
+                items={sortItems}
+              />
+            </>
+          ),
+        },
+        {
+          id: "fix",
+          title: t`Fix the verb`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each sentence has one wrong verb: a stem made from the -ma form, or an ending
+                    that belongs to another pronoun. Tap the wrong word, then type it right.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="fix-present"
+                title={<Trans>Fix the sentence</Trans>}
+                items={fixItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, each found and fixed.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check the stem and the pronoun in the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Sort the verbs above once more, then try again.</Trans>
+                  )
+                }
+                recall={fixRecall}
+                order={eachPairFirst}
+                round={(props) => <FixRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "turn",
+          title: t`Say it about someone else`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Rewrite the sentence for the pronoun shown. The verb takes that pronoun’s
+                    ending, and the rest stays: <b lang="et">Ma elan Tallinnas</b> with{" "}
+                    <span lang="et">nad</span> is <Word w="Nad elavad Tallinnas" />.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="turn-present"
+                title={<Trans>Rewrite the sentence</Trans>}
+                items={turnedItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, each verb with its pronoun’s ending.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Tap the endings at the top once more.</Trans>
+                  ) : (
+                    <Trans>Go back to the endings at the top, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listening: Jaan and Mari`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Jaan says where he lives and works, and what he and Mari do. Listen to the end
+                    of each verb to hear who does it.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="jaan-and-mari"
+                title={<Trans>Listen: Jaan and Mari</Trans>}
+                clip="p-jaan"
+                sentences={PRESENT_PASSAGE}
+                questions={passageQuestions}
               />
             </>
           ),

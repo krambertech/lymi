@@ -7,6 +7,9 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
+msgid "<0/> can only mean I am, so <1/> can go. <2/> is he or she is and they are, so <3/> or <4/> has to stay."
+msgstr "<0/> can only mean I am, so <1/> can go. <2/> is he or she is and they are, so <3/> or <4/> has to stay."
+
 msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 msgstr "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 
@@ -16,32 +19,94 @@ msgstr "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also
 msgid "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> is you are. Tap an ending."
 msgstr "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> is you are. Tap an ending."
 
+msgid "<0>Olen, oled, oleme, olete</0>: the ending says who."
+msgstr "<0>Olen, oled, oleme, olete</0>: the ending says who."
+
+msgid "<0>On</0> has no ending, so only <1>ta</1> or <2>nad</2> says who."
+msgstr "<0>On</0> has no ending, so only <1>ta</1> or <2>nad</2> says who."
+
 msgid "<0>On</0> is both he or she is and they are. Only the pronoun tells them apart."
 msgstr "<0>On</0> is both he or she is and they are. Only the pronoun tells them apart."
 
 msgid "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and polite you to one person."
 msgstr "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and polite you to one person."
 
-msgid "10 minutes"
-msgstr "10 minutes"
+#. placeholder {0}: capital(long)
+msgid "<et>{0} {verb}</et>, short <et>{short} {verb}</et>."
+msgstr "<et>{0} {verb}</et>, short <et>{short} {verb}</et>."
 
-msgid "2 quizzes"
-msgstr "2 quizzes"
+#. placeholder {0}: capital(pronoun)
+msgid "<et>{0}</et> takes <et>{verb}</et>."
+msgstr "<et>{0}</et> takes <et>{verb}</et>."
+
+msgid "<et>Oled</et> can only be you are, to one person."
+msgstr "<et>Oled</et> can only be you are, to one person."
+
+msgid "<et>Oleme</et> can only be we are."
+msgstr "<et>Oleme</et> can only be we are."
+
+msgid "<et>Olen</et> can only be I am."
+msgstr "<et>Olen</et> can only be I am."
+
+msgid "<et>Olete</et> can only be you are, to more than one."
+msgstr "<et>Olete</et> can only be you are, to more than one."
+
+msgid "<et>On</et> has no ending, so <et>ta</et> stays."
+msgstr "<et>On</et> has no ending, so <et>ta</et> stays."
+
+msgid "<et>On</et> with <et>nad</et>: they are."
+msgstr "<et>On</et> with <et>nad</et>: they are."
+
+msgid "<et>On</et> with <et>ta</et>: he or she is."
+msgstr "<et>On</et> with <et>ta</et>: he or she is."
+
+msgid "<et>Te olete</et>: you are, to more than one."
+msgstr "<et>Te olete</et>: you are, to more than one."
+
+msgid "15 minutes"
+msgstr "15 minutes"
+
+msgid "5 quizzes, a sort and a passage"
+msgstr "5 quizzes, a sort and a passage"
+
+msgid "A pronoun with its <et>olema</et>"
+msgstr "A pronoun with its <et>olema</et>"
 
 msgid "All of them. You can hear who it’s about."
 msgstr "All of them. You can hear who it’s about."
 
+msgid "All six forms of <0>olema</0>, typed right."
+msgstr "All six forms of <0>olema</0>, typed right."
+
+msgid "All six sentences, each with the right form."
+msgstr "All six sentences, each with the right form."
+
+msgid "All six, every word in place."
+msgstr "All six, every word in place."
+
 msgid "All six. Every ending was right."
 msgstr "All six. Every ending was right."
+
+msgid "and"
+msgstr "and"
 
 msgid "Answers"
 msgstr "Answers"
 
+msgid "at home"
+msgstr "at home"
+
 msgid "Because the ending already says who, the pronoun can go. Both lines below mean I’m Mari. A sentence can drop the pronoun, but not the verb."
 msgstr "Because the ending already says who, the pronoun can go. Both lines below mean I’m Mari. A sentence can drop the pronoun, but not the verb."
 
+msgid "Can the pronoun go?"
+msgstr "Can the pronoun go?"
+
 msgid "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
 msgstr "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
+
+msgid "Each round gives a pronoun, <0/> and a word. Put <1>olema</1> in its form and write the sentence: <2>ma · olema · kodus</2> is <3/>."
+msgstr "Each round gives a pronoun, <0/> and a word. Put <1>olema</1> in its form and write the sentence: <2>ma · olema · kodus</2> is <3/>."
 
 msgid "Endings of olema"
 msgstr "Endings of olema"
@@ -55,6 +120,9 @@ msgstr "Fill the ending"
 msgctxt "pronoun form"
 msgid "Form"
 msgstr "Form"
+
+msgid "friends"
+msgstr "friends"
 
 msgid "Go back to the endings above, then try again."
 msgstr "Go back to the endings above, then try again."
@@ -74,8 +142,20 @@ msgstr "He or she is tired."
 msgid "he or she is; they are"
 msgstr "he or she is; they are"
 
+msgid "He’s a teacher."
+msgstr "He’s a teacher."
+
+msgid "He’s at home."
+msgstr "He’s at home."
+
+msgid "He’s tired."
+msgstr "He’s tired."
+
 msgid "Hear a sentence and pick who it’s about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
 msgstr "Hear a sentence and pick who it’s about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
+
+msgid "Hear a sentence and write it. Some have no pronoun, so write only what you hear."
+msgstr "Hear a sentence and write it. Some have no pronoun, so write only what you hear."
 
 msgid "I"
 msgstr "I"
@@ -95,14 +175,26 @@ msgstr "I’m Mari."
 msgid "I’m ready."
 msgstr "I’m ready."
 
+msgid "Liis and Peeter are friends."
+msgstr "Liis and Peeter are friends."
+
+msgid "Liis says who she is, who Peeter is, and where Mari and Jaan are. Listen for the pronoun and the form of <0/>."
+msgstr "Liis says who she is, who Peeter is, and where Mari and Jaan are. Listen for the pronoun and the form of <0/>."
+
 msgid "Listen first."
 msgstr "Listen first."
 
 msgid "Listen to the end of the verb. Try the table above, then come back."
 msgstr "Listen to the end of the verb. Try the table above, then come back."
 
+msgid "Listen: Liis and her friends"
+msgstr "Listen: Liis and her friends"
+
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
+
+msgid "Listening: Liis and her friends"
+msgstr "Listening: Liis and her friends"
 
 msgctxt "pronoun form"
 msgid "Long"
@@ -111,17 +203,29 @@ msgstr "Long"
 msgid "Long forms, because the two people are set side by side."
 msgstr "Long forms, because the two people are set side by side."
 
+msgid "Make a sentence"
+msgstr "Make a sentence"
+
+msgid "Mari and Jaan are at school."
+msgstr "Mari and Jaan are at school."
+
 msgid "More than one"
 msgstr "More than one"
 
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Most of them. Play the ones you missed once more."
 
+msgid "Nearly. Check the form of <0>olema</0> in the ones you missed."
+msgstr "Nearly. Check the form of <0>olema</0> in the ones you missed."
+
 msgid "Nearly. Tap the endings above once more."
 msgstr "Nearly. Tap the endings above once more."
 
 msgid "No ending. Ta on and nad on: he or she is, they are."
 msgstr "No ending. Ta on and nad on: he or she is, they are."
+
+msgid "Now type the form of <0/> for each pronoun, long or short. The long one takes the same form: <1/>, <2/>."
+msgstr "Now type the form of <0/> for each pronoun, long or short. The long one takes the same form: <1/>, <2/>."
 
 msgid "Olema, to be"
 msgstr "Olema, to be"
@@ -141,8 +245,17 @@ msgstr "Pick the ending that goes with the pronoun, then hear the sentence."
 msgid "Play {word}"
 msgstr "Play {word}"
 
+msgid "Play each sentence slower, then try again."
+msgstr "Play each sentence slower, then try again."
+
 msgid "Pronouns"
 msgstr "Pronouns"
+
+msgid "Put each sentence where it belongs. Tap a sentence to hear it."
+msgstr "Put each sentence where it belongs. Tap a sentence to hear it."
+
+msgid "ready"
+msgstr "ready"
 
 msgid "Round the table"
 msgstr "Round the table"
@@ -152,6 +265,15 @@ msgstr "Say the long form when the pronoun carries the stress: when it stands al
 
 msgid "Setting two people side by side takes the long forms: <0/>"
 msgstr "Setting two people side by side takes the long forms: <0/>"
+
+msgid "She’s a teacher."
+msgstr "She’s a teacher."
+
+msgid "She’s at home all day."
+msgstr "She’s at home all day."
+
+msgid "She’s tired."
+msgstr "She’s tired."
 
 msgctxt "pronoun form"
 msgid "Short"
@@ -190,6 +312,12 @@ msgstr "Tap a word or a person"
 msgid "Tap an ending"
 msgstr "Tap an ending"
 
+msgid "teacher"
+msgstr "teacher"
+
+msgid "teachers"
+msgstr "teachers"
+
 msgid "The ending for ma, I."
 msgstr "The ending for ma, I."
 
@@ -202,14 +330,26 @@ msgstr "The ending for sa, you."
 msgid "The ending for te: you, to more than one; polite you."
 msgstr "The ending for te: you, to more than one; polite you."
 
+msgid "The ending says who, so the pronoun can go."
+msgstr "The ending says who, so the pronoun can go."
+
 msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 msgstr "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
+
+msgid "The forms of <et>olema</et>"
+msgstr "The forms of <et>olema</et>"
 
 msgid "The forms of olema, to be: <0>olen, oled, on, oleme, olete, on</0>."
 msgstr "The forms of olema, to be: <0>olen, oled, on, oleme, olete, on</0>."
 
 msgid "The people you’re talking to, or one person, politely."
 msgstr "The people you’re talking to, or one person, politely."
+
+msgid "The pronoun can go"
+msgstr "The pronoun can go"
+
+msgid "The pronoun stays"
+msgstr "The pronoun stays"
 
 msgid "The short form is ma."
 msgstr "The short form is ma."
@@ -244,8 +384,17 @@ msgstr "They’re at home."
 msgid "They’re tired."
 msgstr "They’re tired."
 
+msgid "tired"
+msgstr "tired"
+
 msgid "to be"
 msgstr "to be"
+
+msgid "Type the form"
+msgstr "Type the form"
+
+msgid "Type the forms above once more, then try again."
+msgstr "Type the forms above once more, then try again."
 
 msgid "we"
 msgstr "we"
@@ -259,14 +408,35 @@ msgstr "We’re friends."
 msgid "We’re ready."
 msgstr "We’re ready."
 
+msgid "What does Liis do?"
+msgstr "What does Liis do?"
+
+msgid "What does Liis say about Peeter?"
+msgstr "What does Liis say about Peeter?"
+
+msgid "When the pronoun can go"
+msgstr "When the pronoun can go"
+
 msgid "Which ending?"
 msgstr "Which ending?"
 
 msgid "Who is it about?"
 msgstr "Who is it about?"
 
+msgid "Who the sentence is about"
+msgstr "Who the sentence is about"
+
 msgid "Who? Me!"
 msgstr "Who? Me!"
+
+msgid "without the pronoun"
+msgstr "without the pronoun"
+
+msgid "Write the sentence"
+msgstr "Write the sentence"
+
+msgid "Write what you hear"
+msgstr "Write what you hear"
 
 msgid "you"
 msgstr "you"

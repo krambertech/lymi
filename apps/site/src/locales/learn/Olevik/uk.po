@@ -7,11 +7,25 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: uk\n"
 
-msgid "10 minutes"
-msgstr "10 хвилин"
+#. placeholder {0}: i18n._(MEANS[verb.verb])
+msgid "{0}, <0>ma {mine}</0>"
+msgstr "{0}, <0>ma {mine}</0>"
 
-msgid "2 quizzes"
-msgstr "2 тести"
+#. placeholder {0}: verb.stem
+msgid "<et>{name}, ma {mine}</et>: the stem is <et>{0}-</et>, and <et>{pronoun}</et> takes <et>-{ending}</et>."
+msgstr "<et>{name}, ma {mine}</et>: основа <et>{0}-</et>, а з <et>{pronoun}</et> — закінчення <et>-{ending}</et>."
+
+msgid "<et>{pronoun}</et> takes <et>-{ending}</et>."
+msgstr "З <et>{pronoun}</et> — закінчення <et>-{ending}</et>."
+
+msgid "<et>{to}</et> takes its own ending."
+msgstr "З <et>{to}</et> — своє закінчення."
+
+msgid "15 minutes"
+msgstr "15 хвилин"
+
+msgid "5 quizzes, a sort and a passage"
+msgstr "5 тестів, сортування й текст"
 
 msgid "A dictionary lists a verb in its -ma form: <0/>, to live. Take off -ma and you have the stem, <1>ela-</1>. The ending goes on the stem: <2/>, I live."
 msgstr "У словнику дієслово стоїть у формі на -ma: <0/>, «жити». Відкинь -ma, і залишиться основа <1>ela-</1>. Закінчення додається до основи: <2/>, «я живу»."
@@ -22,14 +36,41 @@ msgstr "У словнику дієслово стоїть у формі на -ma
 msgid "All of them. You hear who does it."
 msgstr "Усі. Ти чуєш, хто це робить."
 
+msgid "All six, each found and fixed."
+msgstr "Усі шість: кожну помилку знайдено й виправлено."
+
+msgid "All six, each verb with its pronoun’s ending."
+msgstr "Усі шість, і в кожному дієслові закінчення свого займенника."
+
 msgid "All six. You matched every pronoun with its ending."
 msgstr "Усі шість. Кожен займенник — зі своїм закінченням."
+
+msgid "All six. You put every ending on the right stem."
+msgstr "Усі шість. Кожне закінчення стоїть на правильній основі."
+
+msgid "already"
+msgstr "вже"
 
 msgid "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
 msgstr "Як і в olema, закінчення вже каже, хто це, тому ma, sa, me і te часто пропускають: <0/>. Щоб протиставити двох людей, бери повні займенники з уроку {pronouns}: <1/>."
 
+msgid "At home"
+msgstr "Вдома"
+
+msgid "Coffee"
+msgstr "Каву"
+
+msgid "Does the stem change?"
+msgstr "Чи змінюється основа?"
+
 msgid "Each pronoun has its ending: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, so <1>elan, elad, elab, elame, elate, elavad</1>."
 msgstr "У кожного займенника своє закінчення: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, звідси <1>elan, elad, elab, elame, elate, elavad</1>."
+
+msgid "Each round gives a verb with its I form and a pronoun. Take the stem from the I form and type the form for that pronoun: <0>lugema, ma loen</0>, so with <1>nad</1> it is <2/>."
+msgstr "У кожному раунді є дієслово з формою для «я» і займенник. Візьми основу з форми для «я» й напиши форму для цього займенника: <0>lugema, ma loen</0>, тож із <1>nad</1> буде <2/>."
+
+msgid "Each sentence has one wrong verb: a stem made from the -ma form, or an ending that belongs to another pronoun. Tap the wrong word, then type it right."
+msgstr "У кожному реченні одне дієслово з помилкою: основа взята з форми на -ma або закінчення належить іншому займеннику. Натисни на хибне слово, а тоді напиши його правильно."
 
 msgid "Endings of elama"
 msgstr "Закінчення elama"
@@ -40,8 +81,23 @@ msgstr "В естонській один теперішній час. <0/> оз�
 msgid "Fill the ending"
 msgstr "Встав закінчення"
 
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "Fix the verb"
+msgstr "Виправ дієслово"
+
+msgid "From lugema: stem loe-, as in ma loen."
+msgstr "Від lugema: основа loe-, як у ma loen."
+
 msgid "Go back to the endings above, then try again."
 msgstr "Повернися до закінчень вище й спробуй ще раз."
+
+msgid "Go back to the endings at the top, then try again."
+msgstr "Повернися до закінчень на початку уроку, а тоді спробуй ще раз."
+
+msgid "Go back to the table above, then try again."
+msgstr "Повернися до таблиці вище, а тоді спробуй ще раз."
 
 msgid "he or she is; they are"
 msgstr "він чи вона є; вони є"
@@ -57,6 +113,9 @@ msgstr "Він чи вона працює вдома."
 
 msgid "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
 msgstr "Послухай речення й обери дієслово з нього. Варіанти відрізняються лише закінченням, тож слухай кінець дієслова."
+
+msgid "Hearing who does it"
+msgstr "Почути, хто це робить"
 
 msgid "Here they are on <0/>, to live. The two new ones are in colour. Tap an ending."
 msgstr "Ось вони на дієслові <0/>, «жити». Два нові виділено кольором. Натисни закінчення."
@@ -88,20 +147,44 @@ msgstr "Я вчу естонську."
 msgid "I’m reading a book."
 msgstr "Я читаю книжку."
 
+msgid "In a café"
+msgstr "У кав’ярні"
+
+msgid "In an office"
+msgstr "В офісі"
+
 msgid "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
 msgstr "В уроці {pronouns} було дієслово <0/>, «бути»: <1/>, <2/>, <3/>, <4/>. Більшість дієслів мають ті самі закінчення. А там, де в olema стоїть <5/>, у них два власні: <6>-b</6> для «він чи вона» і <7>-vad</7> для «вони»."
 
 msgid "In some verbs the stem changes: <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don’t need the rule for that yet. Learn each verb with its I form: <3>lugema, loen</3>. Take off -n and the rest is the stem. In lesson {verbForms} you’ll add a third form, <4>lugeda</4>."
 msgstr "У деяких дієсловах основа змінюється: <0/>, «читати», має основу <1>loe-</1>, тому «я читаю» буде <2/>. Правило для цього поки не потрібне. Запам’ятовуй кожне дієслово разом із формою для «я»: <3>lugema, loen</3>. Відкинь -n, і решта буде основою. В уроці {verbForms} додаси третю форму, <4>lugeda</4>."
 
+msgid "Jaan lives in Tartu."
+msgstr "Яан живе в Тарту."
+
+msgid "Jaan says where he lives and works, and what he and Mari do. Listen to the end of each verb to hear who does it."
+msgstr "Яан розповідає, де живе й працює і що роблять він і Марі. Слухай кінець кожного дієслова, щоб почути, хто це робить."
+
+msgid "Learning Estonian"
+msgstr "Учить естонську"
+
 msgid "Listen to the very end of the verb, then try again."
 msgstr "Слухай кінець дієслова до останнього звуку й спробуй ще раз."
+
+msgid "Listen: Jaan and Mari"
+msgstr "Слухання: Яан і Марі"
 
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"
 
+msgid "Listening: Jaan and Mari"
+msgstr "На слух: Яан і Марі"
+
 msgid "Long forms, because the two people are set side by side."
 msgstr "Повні форми, бо двох людей протиставлено."
+
+msgid "Mari speaks well."
+msgstr "Марі добре розмовляє."
 
 msgid "More than one"
 msgstr "Кілька людей"
@@ -109,8 +192,17 @@ msgstr "Кілька людей"
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Майже всі. Переслухай ще раз ті, де були помилки."
 
+msgid "Nearly. Check the stem and the pronoun in the ones you missed."
+msgstr "Майже. Там, де була помилка, перевір основу й займенник."
+
+msgid "Nearly. Pick those verbs in the table above once more."
+msgstr "Майже. Ще раз вибери ці дієслова в таблиці вище."
+
 msgid "Nearly. Tap the endings above once more."
 msgstr "Майже. Ще раз понатискай закінчення вище."
+
+msgid "Nearly. Tap the endings at the top once more."
+msgstr "Майже. Ще раз понатискай закінчення на початку уроку."
 
 msgid "No ma: the ending -n already says I."
 msgstr "Без ma: закінчення -n уже каже «я»."
@@ -130,11 +222,29 @@ msgstr "Обери закінчення, яке пасує до займенни
 msgid "Play {text}"
 msgstr "Відтворити {text}"
 
+msgid "Rewrite the sentence"
+msgstr "Перепиши речення"
+
+msgid "Rewrite the sentence for the pronoun shown. The verb takes that pronoun’s ending, and the rest stays: <0>Ma elan Tallinnas</0> with <1>nad</1> is <2/>."
+msgstr "Перепиши речення для вказаного займенника. Дієслово бере закінчення цього займенника, а решта не змінюється: <0>Ma elan Tallinnas</0> із <1>nad</1> — це <2/>."
+
+msgid "Same stem as the -ma form"
+msgstr "Основа як у формі на -ma"
+
+msgid "Say it about someone else"
+msgstr "Про когось іншого"
+
 msgid "Six endings"
 msgstr "Шість закінчень"
 
 msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Деякі основи змінюються: <0>lugema, loen</0>. Запам’ятовуй кожне дієслово з формою для «я»."
+
+msgid "Sort the verbs above once more, then try again."
+msgstr "Ще раз розклади дієслова вище, а тоді спробуй знову."
+
+msgid "Sort the verbs. Tap one to hear its I form."
+msgstr "Розклади дієслова. Натисни на дієслово, щоб почути форму для «я»."
 
 msgid "Stem {stem}-: ma {form}."
 msgstr "Основа {stem}-: ma {form}."
@@ -145,14 +255,26 @@ msgstr "Основа і закінчення"
 msgid "Stems such as <0>loe-</0> and <1>räägi-</1> lose or change a consonant inside the word. Lesson {gradation} explains the rule, called consonant gradation."
 msgstr "Такі основи, як <0>loe-</0> і <1>räägi-</1>, втрачають або змінюють приголосний усередині слова. Це правило, чергування приголосних, пояснює урок {gradation}."
 
+msgid "Stems that change"
+msgstr "Основи, що змінюються"
+
+msgid "Take off -ma: <0>elama, ela-, elan</0>."
+msgstr "Відкинь -ma: <0>elama, ela-, elan</0>."
+
 msgid "Tallinnas ends in -s, which means in; lesson {where} explains that ending. Keelt and raamatut are in the partitive, a form an object often takes, which lesson {partitive} explains. For now, learn them as phrases."
 msgstr "Tallinnas закінчується на -s, що означає «у, в»; це закінчення пояснює урок {where}. Keelt і raamatut стоять у партитиві, формі, яку часто має додаток; її пояснює урок {partitive}. Поки що вчи їх як готові фрази."
 
 msgid "Tap an ending"
 msgstr "Натисни закінчення"
 
+msgid "Tea"
+msgstr "Чай"
+
 msgid "Ten everyday verbs, the stem each one builds on, and six endings that say who does it."
 msgstr "Десять щоденних дієслів, основа кожного з них і шість закінчень, які кажуть, хто діє."
+
+msgid "The ending for each pronoun"
+msgstr "Закінчення для кожного займенника"
 
 msgid "The ending for ma, I."
 msgstr "Закінчення для ma, «я»."
@@ -172,14 +294,32 @@ msgstr "Закінчення для ta, «він чи вона». В olema ту�
 msgid "The ending for te: you, to more than one; polite you."
 msgstr "Закінчення для te: «ви» до кількох людей і ввічливе «Ви»."
 
+msgid "The ending goes on the stem of the I form, not of the -ma form."
+msgstr "Закінчення стає на основу форми для «я», а не форми на -ma."
+
+msgid "The ending goes with the pronoun at the start of the sentence."
+msgstr "Закінчення залежить від займенника на початку речення."
+
 msgid "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>"
 msgstr "Закінчення каже, хто це, тому ma, sa, me і te можна пропустити: <0>Elan Tallinnas.</0>"
+
+msgid "The I form shows the stem: <0>lugema, loen</0>."
+msgstr "Основу видно з форми для «я»: <0>lugema, loen</0>."
+
+msgid "The stem changes"
+msgstr "Основа змінюється"
 
 msgid "They eat at home."
 msgstr "Вони їдять удома."
 
 msgid "they live"
 msgstr "вони живуть"
+
+msgid "They live in Tallinn."
+msgstr "Вони живуть у Таллінні."
+
+msgid "they read"
+msgstr "вони читають"
 
 msgid "They’re drinking coffee."
 msgstr "Вони п’ють каву."
@@ -217,8 +357,20 @@ msgstr "чекати"
 msgid "to work"
 msgstr "працювати"
 
+msgid "Two rules give the stem. For most verbs, take off -ma: <0/>, <1/>. For some, the stem changes, and only the I form shows it: <2/>, <3/>."
+msgstr "Основу дають два правила. У більшості дієслів відкинь -ma: <0/>, <1/>. У деяких основа змінюється, і видно це лише з форми для «я»: <2/>, <3/>."
+
+msgid "Type the form"
+msgstr "Напиши форму"
+
 msgid "Verbs"
 msgstr "Дієслова"
+
+msgid "Waiting for the bus"
+msgstr "Чекає на автобус"
+
+msgid "Water"
+msgstr "Воду"
 
 msgid "we are"
 msgstr "ми є"
@@ -232,11 +384,29 @@ msgstr "Ми чекаємо на автобус."
 msgid "What are you doing?"
 msgstr "Що ти робиш?"
 
+msgid "What do they drink?"
+msgstr "Що вони п’ють?"
+
+msgid "What is Mari doing?"
+msgstr "Що робить Марі?"
+
+msgid "Where does Jaan work?"
+msgstr "Де працює Яан?"
+
 msgid "Which ending?"
 msgstr "Яке закінчення?"
 
 msgid "Which form did you hear?"
 msgstr "Яку форму ти чуєш?"
+
+msgid "Which verbs change their stem"
+msgstr "Які дієслова змінюють основу"
+
+msgid "with {to}"
+msgstr "із {to}"
+
+msgid "Working from home"
+msgstr "Працює з дому"
 
 msgid "you are"
 msgstr "ти є"

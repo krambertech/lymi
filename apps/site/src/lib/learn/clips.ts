@@ -133,6 +133,41 @@ export const HAALDUS_WORDS = [
   "Eesti",
 ] as const;
 
+/** Two words said one after the other: the same word twice, or a pair that differs in a vowel or in length. */
+export const HAALDUS_APART = [
+  { first: "kõrv", second: "korv", kind: "vowel" },
+  { first: "uks", second: "üks", kind: "vowel" },
+  { first: "säng", second: "sang", kind: "vowel" },
+  { first: "tuli", second: "tüli", kind: "vowel" },
+  { first: "sada", second: "saada", kind: "length" },
+  { first: "kooli", second: "koli", kind: "length" },
+  { first: "kana", second: "kanna", kind: "length" },
+  { first: "tuule", second: "tule", kind: "length" },
+  { first: "tüli", second: "tüli", kind: "same" },
+  { first: "kanna", second: "kanna", kind: "same" },
+  { first: "korv", second: "korv", kind: "same" },
+  { first: "saada", second: "saada", kind: "same" },
+] as const;
+
+export type ApartKind = (typeof HAALDUS_APART)[number]["kind"];
+
+export const apartSaid = ({ first, second }: { first: string; second: string }) =>
+  `${capital(first)}, ${second}.`;
+
+/** Jaan and his mother: a short exchange built from the lesson's words. */
+export const HAALDUS_TALK: Conversation = {
+  turns: [
+    { voice: "third", text: "Tere, Jaan!" },
+    { voice: "main", text: "Tere, ema!" },
+    { voice: "third", text: ["Tule linna.", "Kanna korv kooli."] },
+    { voice: "main", text: "Korv kooli? Jah." },
+    { voice: "third", text: "Aitäh!" },
+  ],
+};
+
+/** Sentences from the exchange, each recorded on its own for writing down. */
+export const HAALDUS_SENTENCES = ["Jaan", "Tule linna.", "Kanna korv kooli."] as const;
+
 /** The numbers the numbers lesson says on their own. */
 export const SPOKEN_NUMBERS: readonly number[] = [
   ...Array.from({ length: 101 }, (_, n) => n),
@@ -441,6 +476,45 @@ export const PRONOUN_SENTENCES = {
   "s-nad-vasinud": "Nad on väsinud.",
 } as const;
 
+/** Sentences to make from a pronoun, olema and a word: the lesson asks the first six, the drill the rest. */
+export const PRONOUN_BUILT = [
+  { pronoun: "ma", word: "kodus", said: "Ma olen kodus." },
+  { pronoun: "sa", word: "õpetaja", said: "Sa oled õpetaja." },
+  { pronoun: "ta", word: "kodus", said: "Ta on kodus." },
+  { pronoun: "me", word: "väsinud", said: "Me oleme väsinud." },
+  { pronoun: "te", word: "valmis", said: "Te olete valmis." },
+  { pronoun: "nad", word: "õpetajad", said: "Nad on õpetajad." },
+  { pronoun: "ma", word: "õpetaja", said: "Ma olen õpetaja." },
+  { pronoun: "sa", word: "kodus", said: "Sa oled kodus." },
+  { pronoun: "ta", word: "valmis", said: "Ta on valmis." },
+  { pronoun: "me", word: "kodus", said: "Me oleme kodus." },
+  { pronoun: "te", word: "väsinud", said: "Te olete väsinud." },
+  { pronoun: "nad", word: "valmis", said: "Nad on valmis." },
+] as const;
+
+/** The lesson's sentences a drill plays, recorded again under ids from their text. */
+export const PRONOUN_DRILLED = [
+  "s-olen-kodus",
+  "s-oled-tubli",
+  "s-ta-opetaja",
+  "s-oleme-valmis",
+  "s-olete-tublid",
+  "s-nad-kodus",
+  "s-ta-vasinud",
+  "s-te-opetajad",
+  "c-olen-mari",
+] as const satisfies readonly (keyof typeof PRONOUN_SENTENCES)[];
+
+/** Liis says who she and her friends are. */
+export const PRONOUN_PASSAGE = [
+  "Tere! Mina olen Liis.",
+  "Ma olen õpetaja.",
+  "Tema on Peeter.",
+  "Ta on väsinud.",
+  "Me oleme sõbrad.",
+  "Mari ja Jaan on kodus.",
+] as const;
+
 /** The verbs of the present-tense lesson: the -ma form and the stem the endings go on. */
 export const PRESENT_VERBS = [
   { verb: "elama", stem: "ela" },
@@ -486,6 +560,42 @@ export const PRESENT_SENTENCES = {
   "s-soovad-kodus": "Nad söövad kodus.",
   "c-mina-joon": "Mina joon kohvi, tema joob vett.",
 } as const;
+
+/** A present sentence said about someone else: what the rewrite asks for, by the person it turns to. */
+export const PRESENT_TURNED = [
+  { from: "s-elan-tallinnas", to: "nad", said: "Nad elavad Tallinnas." },
+  { from: "s-opin-eesti", to: "sa", said: "Sa õpid eesti keelt." },
+  { from: "s-loen-raamatut", to: "me", said: "Me loeme raamatut." },
+  { from: "s-raagib-eesti", to: "nad", said: "Nad räägivad eesti keelt." },
+  { from: "s-ootame-bussi", to: "ta", said: "Ta ootab bussi." },
+  { from: "s-tootab-kodus", to: "me", said: "Me töötame kodus." },
+  { from: "s-joovad-kohvi", to: "ta", said: "Ta joob kohvi." },
+  { from: "s-soovad-kodus", to: "te", said: "Te sööte kodus." },
+] as const;
+
+/**
+ * Sentences as learners write them, each with one wrong verb: a stem made from the -ma form, or an
+ * ending carried over from another person.
+ */
+export const PRESENT_FIXES = [
+  { wrong: "Ma lugen raamatut.", said: "Ma loen raamatut.", kind: "stem" },
+  { wrong: "Ma õppin eesti keelt.", said: "Ma õpin eesti keelt.", kind: "stem" },
+  { wrong: "Ma rääkin eesti keelt.", said: "Ma räägin eesti keelt.", kind: "stem" },
+  { wrong: "Nad elab Tallinnas.", said: "Nad elavad Tallinnas.", kind: "ending" },
+  { wrong: "Ta räägivad eesti keelt.", said: "Ta räägib eesti keelt.", kind: "ending" },
+  { wrong: "Me ootavad bussi.", said: "Me ootame bussi.", kind: "ending" },
+  { wrong: "Te räägid väga hästi.", said: "Te räägite väga hästi.", kind: "ending" },
+  { wrong: "Ta töötavad kodus.", said: "Ta töötab kodus.", kind: "ending" },
+] as const;
+
+/** Jaan says where he lives and works, and what he and Mari do. */
+export const PRESENT_PASSAGE = [
+  "Tere! Mina olen Jaan.",
+  "Ma elan Tallinnas ja töötan kodus.",
+  "Mari õpib eesti keelt.",
+  "Ta räägib juba väga hästi.",
+  "Me joome kohvi ja räägime eesti keelt.",
+] as const;
 
 /**
  * The places of the lesson on -s and -l: each word as a learner meets it, and whole in the form
@@ -2709,7 +2819,12 @@ const OSASTAV_CLIPS: Record<string, Clip> = {
 };
 
 export const CLIPS: Record<string, Record<string, Clip>> = {
-  haaldus: words(HAALDUS_WORDS),
+  haaldus: {
+    ...words(HAALDUS_WORDS),
+    ...words(HAALDUS_APART.map(apartSaid)),
+    ...words(HAALDUS_SENTENCES),
+    "d-ema": HAALDUS_TALK,
+  },
   numbrid: {
     ...Object.fromEntries(SPOKEN_NUMBERS.map((n) => [numberClip(n), numberWords(n)])),
     ...NUMBER_SENTENCES,
@@ -2757,6 +2872,9 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
       ]),
     ),
     ...PRONOUN_SENTENCES,
+    ...words(PRONOUN_BUILT.map(({ said }) => said)),
+    ...words(PRONOUN_DRILLED.map((id) => PRONOUN_SENTENCES[id])),
+    "p-liis": { sentences: PRONOUN_PASSAGE, voice: "second" },
   },
   olevik: {
     ...words([
@@ -2775,6 +2893,10 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
       ),
     ),
     ...PRESENT_SENTENCES,
+    ...words(PRESENT_TURNED.map(({ said }) => said)),
+    ...words(PRESENT_FIXES.map(({ said }) => said)),
+    ...words(["loevad"]),
+    "p-jaan": { sentences: PRESENT_PASSAGE },
   },
   kell: {
     ...words(KELL_WORDS),

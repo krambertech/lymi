@@ -2182,6 +2182,9 @@ msgstr "Напиши вопрос"
 msgid "Type the sentence"
 msgstr "Напиши предложение"
 
+msgid "Type the word"
+msgstr "Напиши слово"
+
 msgid "under"
 msgstr "под"
 
@@ -2409,6 +2412,9 @@ msgstr "Напиши вопрос к этому ответу."
 
 msgid "Write the sentence you hear."
 msgstr "Напиши предложение, которое слышишь."
+
+msgid "Write the word you hear."
+msgstr "Напиши слово, которое слышишь."
 
 msgid "Write what you hear"
 msgstr "Напиши, что слышишь"

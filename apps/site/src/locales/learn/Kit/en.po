@@ -2182,6 +2182,9 @@ msgstr "Type the question"
 msgid "Type the sentence"
 msgstr "Type the sentence"
 
+msgid "Type the word"
+msgstr "Type the word"
+
 msgid "under"
 msgstr "under"
 
@@ -2409,6 +2412,9 @@ msgstr "Write the question this answers."
 
 msgid "Write the sentence you hear."
 msgstr "Write the sentence you hear."
+
+msgid "Write the word you hear."
+msgstr "Write the word you hear."
 
 msgid "Write what you hear"
 msgstr "Write what you hear"

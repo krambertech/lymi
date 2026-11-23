@@ -3068,6 +3068,61 @@ export const MITMUS_WORDS = [
   "Ema ja isa töötavad.",
 ] as const;
 
+export const MITMUS_SORT = [
+  { one: "maja", many: "majad", bin: "same" },
+  { one: "auto", many: "autod", bin: "same" },
+  { one: "kass", many: "kassid", bin: "same" },
+  { one: "linn", many: "linnad", bin: "same" },
+  { one: "uks", many: "uksed", bin: "same" },
+  { one: "pood", many: "poed", bin: "changed" },
+  { one: "tuba", many: "toad", bin: "changed" },
+  { one: "jõgi", many: "jõed", bin: "changed" },
+  { one: "mees", many: "mehed", bin: "changed" },
+  { one: "sõber", many: "sõbrad", bin: "changed" },
+] as const;
+
+export const MITMUS_SAY = [
+  { id: "lapsed", said: "Lapsed loevad.", also: [] },
+  { id: "kassid", said: "Kassid on kodus.", also: [] },
+  { id: "toad", said: "Toad on suured.", also: [] },
+  {
+    id: "tootavad",
+    said: "Ema ja isa töötavad Tallinnas.",
+    also: ["Isa ja ema töötavad Tallinnas."],
+  },
+  { id: "sobrad", said: "Sõbrad ootavad.", also: [] },
+  {
+    id: "uued",
+    said: "Uued raamatud on laual.",
+    also: ["Laual on uued raamatud.", "Uued raamatud on laua peal."],
+  },
+] as const;
+
+export const MITMUS_FIX = [
+  { id: "loevad", wrong: "Lapsed loeb.", right: "Lapsed loevad." },
+  { id: "poed", wrong: "Poodid on suured.", right: "Poed on suured." },
+  { id: "tootavad", wrong: "Ema ja isa töötab.", right: "Ema ja isa töötavad." },
+  { id: "joovad", wrong: "Naised joob kohvi.", right: "Naised joovad kohvi." },
+  { id: "suured", wrong: "Majad on suur.", right: "Majad on suured." },
+  { id: "sobrad", wrong: "Sõberid ootavad.", right: "Sõbrad ootavad." },
+] as const;
+
+export const MITMUS_TALK = {
+  turns: [
+    { voice: "fourth", text: "Mari, kus su lapsed on?" },
+    { voice: "third", text: ["Lapsed on koolis.", "Nad õpivad."] },
+    { voice: "fourth", text: "Ja su kassid?" },
+    { voice: "third", text: "Kassid magavad kodus.", say: "[laughs] Kassid magavad kodus." },
+    { voice: "fourth", text: "Kus su sõbrad elavad?" },
+    { voice: "third", text: ["Sõbrad elavad Tallinnas.", "Nad töötavad haiglas."] },
+    { voice: "fourth", text: "Kas Tallinna poed on suured?" },
+    { voice: "third", text: "Jah, poed on suured ja ilusad." },
+    { voice: "fourth", text: "Ja Tartu poed?" },
+    { voice: "third", text: "Tartu poed on väikesed." },
+    { voice: "fourth", text: ["Aitäh!", "Head aega!"] },
+  ],
+} as const satisfies Conversation;
+
 const MITMUS_CLIPS: Record<string, Clip> = {
   ...words([
     ...[...MITMUS_SAME, ...MITMUS_CHANGED].flatMap((noun) => [
@@ -3080,7 +3135,10 @@ const MITMUS_CLIPS: Record<string, Clip> = {
     ...MITMUS_ADJECTIVES.flatMap(({ one, many }) => [one, many]),
     ...MITMUS_WORDS,
   ]),
+  ...words(MITMUS_SAY.map(({ said }) => said)),
+  ...words(MITMUS_FIX.map(({ right }) => right)),
   "p-home": { sentences: MITMUS_PASSAGE },
+  "c-friends": MITMUS_TALK,
 };
 
 /**
@@ -3609,6 +3667,56 @@ export const OSASTAV_WORDS = [
   "Ma loen raamatut.",
 ] as const;
 
+export const OSASTAV_SAY = [
+  { id: "kassi", said: "Mul on kaks kassi.", also: ["Minul on kaks kassi.", "Mul on 2 kassi."] },
+  {
+    id: "tass",
+    said: "Tass kohvi, palun.",
+    also: ["Üks tass kohvi, palun.", "Palun tass kohvi.", "Palun üks tass kohvi."],
+  },
+  { id: "leiba", said: "Laual pole leiba.", also: ["Laual ei ole leiba."] },
+  {
+    id: "last",
+    said: "Mitu last sul on?",
+    also: [
+      "Mitu last sinul on?",
+      "Mitu last teil on?",
+      "Kui mitu last sul on?",
+      "Mitu last on sul?",
+      "Mitu last on teil?",
+    ],
+  },
+  { id: "vett", said: "Ta joob vett.", also: ["Tema joob vett."] },
+  { id: "eurot", said: "Leib maksab kolm eurot.", also: ["Leib maksab 3 eurot."] },
+] as const;
+
+export const OSASTAV_FIX = [
+  { id: "kassi", wrong: "Mul on kaks kass.", right: "Mul on kaks kassi." },
+  { id: "kohvi", wrong: "Ma joon kohv.", right: "Ma joon kohvi." },
+  { id: "leiba", wrong: "Laual pole leib.", right: "Laual pole leiba." },
+  { id: "tass", wrong: "Tass kohv, palun.", right: "Tass kohvi, palun." },
+  { id: "kass", wrong: "Meil on üks kassi.", right: "Meil on üks kass." },
+  { id: "last", wrong: "Mitu laps sul on?", right: "Mitu last sul on?" },
+] as const;
+
+export const OSASTAV_TALK = {
+  turns: [
+    { voice: "third", text: "Jaan, kas meil on piima?" },
+    { voice: "fourth", text: ["Ei, meil pole piima.", "Aga meil on vett."] },
+    { voice: "third", text: "Kas meil on leiba?" },
+    { voice: "fourth", text: ["Meil pole leiba.", "Meil on natuke juustu."] },
+    { voice: "third", text: ["Hästi.", "Ma lähen poodi."] },
+    { voice: "fourth", text: "Mul on vaja kohvi.", say: "[hopeful] Mul on vaja kohvi." },
+    { voice: "third", text: "Kui palju?" },
+    { voice: "fourth", text: "Kilo kohvi." },
+    { voice: "third", text: "Ja leiba?" },
+    { voice: "fourth", text: "Jah, üks leib." },
+    { voice: "third", text: "Kas sul on raha?" },
+    { voice: "fourth", text: "Mul on kümme eurot." },
+    { voice: "third", text: ["Aitäh!", "Head aega!"] },
+  ],
+} as const satisfies Conversation;
+
 const OSASTAV_CLIPS: Record<string, Clip> = {
   ...words([
     ...OSASTAV_COUNT.numbers.flatMap((number) =>
@@ -3623,8 +3731,11 @@ const OSASTAV_CLIPS: Record<string, Clip> = {
     ...OSASTAV_FOOD_QUIZ.map(({ said }) => said),
     ...OSASTAV_WORDS,
   ]),
+  ...words(OSASTAV_SAY.map(({ said }) => said)),
+  ...words(OSASTAV_FIX.map(({ right }) => right)),
   "p-market": { sentences: OSASTAV_PASSAGES.market },
   "p-jaan": { sentences: OSASTAV_PASSAGES.jaan },
+  "c-shopping": OSASTAV_TALK,
 };
 
 export const PAST_NO_PERSONS = ["ma", "sa", "ta", "me", "te", "nad"] as const;

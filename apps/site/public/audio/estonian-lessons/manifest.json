@@ -14743,5 +14743,205 @@
     "text": "Ei, mul pole homme aega.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/toad-on-suured": {
+    "text": "Toad on suured.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/ema-ja-isa-to2o2tavad-tallinnas": {
+    "text": "Ema ja isa töötavad Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/uued-raamatud-on-laual": {
+    "text": "Uued raamatud on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/poed-on-suured": {
+    "text": "Poed on suured.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/c-friends": {
+    "text": "Mari, kus su lapsed on? Lapsed on koolis. Nad õpivad. Ja su kassid? Kassid magavad kodus. Kus su sõbrad elavad? Sõbrad elavad Tallinnas. Nad töötavad haiglas. Kas Tallinna poed on suured? Jah, poed on suured ja ilusad. Ja Tartu poed? Tartu poed on väikesed. Aitäh! Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mari, kus su lapsed on?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Lapsed on koolis.",
+          "Nad õpivad."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ja su kassid?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kassid magavad kodus."
+        ],
+        "say": "[laughs] Kassid magavad kodus."
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kus su sõbrad elavad?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Sõbrad elavad Tallinnas.",
+          "Nad töötavad haiglas."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas Tallinna poed on suured?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, poed on suured ja ilusad."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ja Tartu poed?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tartu poed on väikesed."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Aitäh!",
+          "Head aega!"
+        ]
+      }
+    ]
+  },
+  "osastav/mul-on-kaks-kassi": {
+    "text": "Mul on kaks kassi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/tass-kohvi-palun": {
+    "text": "Tass kohvi, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/leib-maksab-kolm-eurot": {
+    "text": "Leib maksab kolm eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/c-shopping": {
+    "text": "Jaan, kas meil on piima? Ei, meil pole piima. Aga meil on vett. Kas meil on leiba? Meil pole leiba. Meil on natuke juustu. Hästi. Ma lähen poodi. Mul on vaja kohvi. Kui palju? Kilo kohvi. Ja leiba? Jah, üks leib. Kas sul on raha? Mul on kümme eurot. Aitäh! Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jaan, kas meil on piima?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei, meil pole piima.",
+          "Aga meil on vett."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas meil on leiba?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Meil pole leiba.",
+          "Meil on natuke juustu."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hästi.",
+          "Ma lähen poodi."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mul on vaja kohvi."
+        ],
+        "say": "[hopeful] Mul on vaja kohvi."
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kui palju?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kilo kohvi."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ja leiba?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, üks leib."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas sul on raha?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mul on kümme eurot."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Aitäh!",
+          "Head aega!"
+        ]
+      }
+    ]
   }
 }

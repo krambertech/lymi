@@ -10,8 +10,8 @@ msgstr ""
 msgid "{v}, as in {word}"
 msgstr "{v}, як у {word}"
 
-msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
-msgstr "<0/> — це сто, а <1/> — «надішли». Подвоєна літера — це довший звук, і з ним виходить інше слово. З приголосними так само: <2/> — курка, а <3/> — «неси» (до однієї людини)."
+msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it can make a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
+msgstr "<0/> — це сто, а <1/> — «надішли». Подвоєна літера — це довший звук, і з ним може вийти інше слово. З приголосними так само: <2/> — курка, а <3/> — «неси» (до однієї людини)."
 
 msgid "<et>Linna</et>, into town, has a double n; <et>lina</et> is linen."
 msgstr "<et>Linna</et>, «у місто», пишеться з подвійним n; <et>lina</et> — це льон."
@@ -34,8 +34,8 @@ msgstr "Інша довгота"
 msgid "A different vowel"
 msgstr "Інша голосна"
 
-msgid "A double letter is longer, and it makes a different word."
-msgstr "Подвоєна літера звучить довше, і з нею виходить інше слово."
+msgid "A double letter is longer, and it can make a different word."
+msgstr "Подвоєна літера звучить довше, і з нею може вийти інше слово."
 
 msgid "A few words break the rule: <0/>, thank you, puts the stress on its second half."
 msgstr "Кілька слів порушують правило: у <0/>, «дякую», наголос падає на другу половину."
@@ -127,8 +127,8 @@ msgstr "столиця Естонії"
 msgid "Estonian also has a third, extra-long length, and the spelling doesn’t always show it. <0>Linna</0> means both “of the town” and “into the town”, and the second is held longer."
 msgstr "В естонській є ще й третій ступінь довготи, наддовгий, і на письмі його видно не завжди. <0>Linna</0> означає і «міста», і «в місто», і в другому значенні звук тягнеться довше."
 
-msgid "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read a new word aloud."
-msgstr "Естонською пишуть так, як вимовляють. Кожну літеру читаєш, і кожна звучить однаково, де б не стояла. Знаючи літери, ти прочитаєш уголос і нове слово."
+msgid "Estonian is spelled almost the way it sounds. You say every letter, and each one usually keeps its sound wherever it stands. Once you know the letters, you can read most new words aloud."
+msgstr "Естонською пишуть майже так, як вимовляють. Кожну літеру читаєш, і зазвичай вона звучить однаково, де б не стояла. Знаючи літери, ти прочитаєш уголос більшість нових слів."
 
 msgid "father"
 msgstr "батько"
@@ -157,8 +157,8 @@ msgstr "Він має віднести його додому."
 msgid "hello"
 msgstr "привіт"
 
-msgid "How Estonian sounds: nine vowels, letters that always sound the same, and length that changes the word."
-msgstr "Як звучить естонська: дев’ять голосних, літери, що завжди звучать однаково, і довгота, яка змінює слово."
+msgid "How Estonian sounds: nine vowels, letters that almost always sound the same, and length that changes the word."
+msgstr "Як звучить естонська: дев’ять голосних, літери, що майже завжди звучать однаково, і довгота, яка змінює слово."
 
 msgid "I"
 msgstr "я"
@@ -253,8 +253,8 @@ msgstr "Дев’ять голосних"
 msgid "No English sound is like it. Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 msgstr "В українській такого звуку немає. Найближче до нього російське «ы», трохи схоже й українське «и». Скажи «о», потім розтягни губи, а язик залиш на місці."
 
-msgid "Now write the word. Use the keys under the field to type õ, ä, ö and ü. A vowel without its marks makes another word, so it counts as wrong."
-msgstr "Тепер напиши слово. Набрати õ, ä, ö та ü можна кнопками під полем. Без значків виходить інше слово, тож відповідь не зарахується."
+msgid "Now write the word. Use the keys under the field to type õ, ä, ö and ü. Here a vowel without its marks makes another word, so it counts as wrong."
+msgstr "Тепер напиши слово. Набрати õ, ä, ö та ü можна кнопками під полем. Тут без значків виходить інше слово, тож відповідь не зарахується."
 
 msgid "Õ or o, ä or a, ü or u"
 msgstr "Õ чи o, ä чи a, ü чи u"
@@ -311,9 +311,6 @@ msgstr "Ще раз вибери кожну пару вище й послуха�
 msgid "Raamat, book, and kogu, collection."
 msgstr "Raamat — книга, kogu — збірка."
 
-msgid "Read it as it’s written"
-msgstr "Читай, як написано"
-
 msgid "road; tea"
 msgstr "дорога; чай"
 
@@ -333,8 +330,8 @@ msgstr "Те саме слово, голосна чи довгота?"
 msgid "Say e with rounded lips, as in German “schön”."
 msgstr "Скажи «е», округливши губи, як у німецькому «schön»."
 
-msgid "Say every letter the way it’s written."
-msgstr "Вимовляй кожну літеру так, як написано."
+msgid "Say every letter, and usually the way it’s written."
+msgstr "Вимовляй кожну літеру, і зазвичай так, як написано."
 
 msgid "Say i with rounded lips, as in German “über” or French “tu”."
 msgstr "Скажи «і», округливши губи, як у німецькому «über» чи французькому «tu»."
@@ -360,11 +357,8 @@ msgstr "Напиши, що чуєш"
 msgid "spider"
 msgstr "павук"
 
-msgid "Stress falls on the <0>first syllable</0>. Tap a word to hear it."
-msgstr "Наголос падає на <0>перший склад</0>. Натисни на слово, щоб його почути."
-
-msgid "Stress the first syllable."
-msgstr "Наголошуй перший склад."
+msgid "Stress usually falls on the <0>first syllable</0>. Tap a word to hear it."
+msgstr "Наголос зазвичай падає на <0>перший склад</0>. Натисни на слово, щоб його почути."
 
 msgid "Tap a vowel"
 msgstr "Натисни на голосну"
@@ -405,6 +399,12 @@ msgstr "робить із речення питання «так чи ні»"
 msgid "uncle"
 msgstr "дядько"
 
+msgid "Usually read as written"
+msgstr "Зазвичай читай, як написано"
+
+msgid "Usually stress the first syllable."
+msgstr "Зазвичай наголошуй перший склад."
+
 msgid "Vowel or length"
 msgstr "Голосна чи довгота"
 
@@ -438,8 +438,8 @@ msgstr "вікно"
 msgid "Write one letter or two"
 msgstr "Напиши одну літеру чи дві"
 
-msgid "Write the whole word this time. A long sound is written with two letters: <0/>, <1/>."
-msgstr "Цього разу напиши слово повністю. Довгий звук пишеться двома літерами: <0/>, <1/>."
+msgid "Write the whole word this time. In these words, a long sound is written with two letters: <0/>, <1/>."
+msgstr "Цього разу напиши слово повністю. У цих словах довгий звук пишеться двома літерами: <0/>, <1/>."
 
 msgid "Write the word"
 msgstr "Напиши слово"

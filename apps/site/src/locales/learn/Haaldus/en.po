@@ -10,8 +10,8 @@ msgstr ""
 msgid "{v}, as in {word}"
 msgstr "{v}, as in {word}"
 
-msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
-msgstr "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
+msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it can make a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
+msgstr "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it can make a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
 
 msgid "<et>Linna</et>, into town, has a double n; <et>lina</et> is linen."
 msgstr "<et>Linna</et>, into town, has a double n; <et>lina</et> is linen."
@@ -34,8 +34,8 @@ msgstr "A different length"
 msgid "A different vowel"
 msgstr "A different vowel"
 
-msgid "A double letter is longer, and it makes a different word."
-msgstr "A double letter is longer, and it makes a different word."
+msgid "A double letter is longer, and it can make a different word."
+msgstr "A double letter is longer, and it can make a different word."
 
 msgid "A few words break the rule: <0/>, thank you, puts the stress on its second half."
 msgstr "A few words break the rule: <0/>, thank you, puts the stress on its second half."
@@ -127,8 +127,8 @@ msgstr "Estonia’s capital"
 msgid "Estonian also has a third, extra-long length, and the spelling doesn’t always show it. <0>Linna</0> means both “of the town” and “into the town”, and the second is held longer."
 msgstr "Estonian also has a third, extra-long length, and the spelling doesn’t always show it. <0>Linna</0> means both “of the town” and “into the town”, and the second is held longer."
 
-msgid "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read a new word aloud."
-msgstr "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read a new word aloud."
+msgid "Estonian is spelled almost the way it sounds. You say every letter, and each one usually keeps its sound wherever it stands. Once you know the letters, you can read most new words aloud."
+msgstr "Estonian is spelled almost the way it sounds. You say every letter, and each one usually keeps its sound wherever it stands. Once you know the letters, you can read most new words aloud."
 
 msgid "father"
 msgstr "father"
@@ -157,8 +157,8 @@ msgstr "He should carry it home."
 msgid "hello"
 msgstr "hello"
 
-msgid "How Estonian sounds: nine vowels, letters that always sound the same, and length that changes the word."
-msgstr "How Estonian sounds: nine vowels, letters that always sound the same, and length that changes the word."
+msgid "How Estonian sounds: nine vowels, letters that almost always sound the same, and length that changes the word."
+msgstr "How Estonian sounds: nine vowels, letters that almost always sound the same, and length that changes the word."
 
 msgid "I"
 msgstr "I"
@@ -253,8 +253,8 @@ msgstr "Nine vowels"
 msgid "No English sound is like it. Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 msgstr "No English sound is like it. Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 
-msgid "Now write the word. Use the keys under the field to type õ, ä, ö and ü. A vowel without its marks makes another word, so it counts as wrong."
-msgstr "Now write the word. Use the keys under the field to type õ, ä, ö and ü. A vowel without its marks makes another word, so it counts as wrong."
+msgid "Now write the word. Use the keys under the field to type õ, ä, ö and ü. Here a vowel without its marks makes another word, so it counts as wrong."
+msgstr "Now write the word. Use the keys under the field to type õ, ä, ö and ü. Here a vowel without its marks makes another word, so it counts as wrong."
 
 msgid "Õ or o, ä or a, ü or u"
 msgstr "Õ or o, ä or a, ü or u"
@@ -311,9 +311,6 @@ msgstr "Pick each pair above again and hear which word is longer."
 msgid "Raamat, book, and kogu, collection."
 msgstr "Raamat, book, and kogu, collection."
 
-msgid "Read it as it’s written"
-msgstr "Read it as it’s written"
-
 msgid "road; tea"
 msgstr "road; tea"
 
@@ -333,8 +330,8 @@ msgstr "Same word, vowel or length?"
 msgid "Say e with rounded lips, as in German “schön”."
 msgstr "Say e with rounded lips, as in German “schön”."
 
-msgid "Say every letter the way it’s written."
-msgstr "Say every letter the way it’s written."
+msgid "Say every letter, and usually the way it’s written."
+msgstr "Say every letter, and usually the way it’s written."
 
 msgid "Say i with rounded lips, as in German “über” or French “tu”."
 msgstr "Say i with rounded lips, as in German “über” or French “tu”."
@@ -360,11 +357,8 @@ msgstr "Spell what you hear"
 msgid "spider"
 msgstr "spider"
 
-msgid "Stress falls on the <0>first syllable</0>. Tap a word to hear it."
-msgstr "Stress falls on the <0>first syllable</0>. Tap a word to hear it."
-
-msgid "Stress the first syllable."
-msgstr "Stress the first syllable."
+msgid "Stress usually falls on the <0>first syllable</0>. Tap a word to hear it."
+msgstr "Stress usually falls on the <0>first syllable</0>. Tap a word to hear it."
 
 msgid "Tap a vowel"
 msgstr "Tap a vowel"
@@ -405,6 +399,12 @@ msgstr "turns a sentence into a yes-or-no question"
 msgid "uncle"
 msgstr "uncle"
 
+msgid "Usually read as written"
+msgstr "Usually read as written"
+
+msgid "Usually stress the first syllable."
+msgstr "Usually stress the first syllable."
+
 msgid "Vowel or length"
 msgstr "Vowel or length"
 
@@ -438,8 +438,8 @@ msgstr "window"
 msgid "Write one letter or two"
 msgstr "Write one letter or two"
 
-msgid "Write the whole word this time. A long sound is written with two letters: <0/>, <1/>."
-msgstr "Write the whole word this time. A long sound is written with two letters: <0/>, <1/>."
+msgid "Write the whole word this time. In these words, a long sound is written with two letters: <0/>, <1/>."
+msgstr "Write the whole word this time. In these words, a long sound is written with two letters: <0/>, <1/>."
 
 msgid "Write the word"
 msgstr "Write the word"

@@ -17,8 +17,8 @@ msgstr "15 минут"
 msgid "5 quizzes, a sort and a passage"
 msgstr "5 тестов, сортировка и текст"
 
-msgid "A dictionary lists a verb in its -ma infinitive: <0/>, to live. Take off -ma and you have the stem, <1>ela-</1>. The ending goes on the stem: <2/>, I live."
-msgstr "В словаре глагол стоит в инфинитиве на -ma: <0/>, «жить». Отбрось -ma, и останется основа <1>ela-</1>. Окончание добавляется к основе: <2/>, «я живу»."
+msgid "A dictionary lists a verb in its -ma infinitive: <0/>, to live. For this verb and many others, take off -ma and you have the stem, <1>ela-</1>. The ending goes on the stem: <2/>, I live."
+msgstr "В словаре глагол стоит в инфинитиве на -ma: <0/>, «жить». У этого и многих других глаголов, если отбросить -ma, останется основа: <1>ela-</1>. Окончание добавляется к основе: <2/>, «я живу»."
 
 msgid "A dictionary lists a verb in its -ma infinitive: <0>elama</0>, to live. The endings go on its stem, <1>ela-</1>."
 msgstr "В словаре глагол стоит в инфинитиве на -ma: <0>elama</0>, «жить». Окончания добавляются к основе, <1>ela-</1>."
@@ -53,8 +53,8 @@ msgstr "Кофе"
 msgid "Does the stem change?"
 msgstr "Меняется ли основа?"
 
-msgid "Each pronoun has its ending: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, so <1>elan, elad, elab, elame, elate, elavad</1>."
-msgstr "У каждого местоимения своё окончание: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, отсюда <1>elan, elad, elab, elame, elate, elavad</1>."
+msgid "Each pronoun has its ending: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, so <1>elan, elad, elab, elame, elate, elavad</1>. Olema is the exception: <2>on</2> for <3>ta</3> and <4>nad</4>."
+msgstr "У каждого местоимения своё окончание: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, отсюда <1>elan, elad, elab, elame, elate, elavad</1>. Исключение — olema: <2>on</2> для <3>ta</3> и <4>nad</4>."
 
 msgid "Each round gives a verb and a pronoun, and the verb’s I form unless the pronoun is <0>ma</0>. Take the stem from the I form and type the form for that pronoun: <1>lugema, ma loen</1>, so with <2>nad</2> it is <3/>."
 msgstr "В каждом раунде есть глагол и местоимение, а если местоимение не <0>ma</0>, то и форма для «я». Возьми основу из формы для «я» и напиши форму для этого местоимения: <1>lugema, ma loen</1>, значит, с <2>nad</2> будет <3/>."
@@ -65,8 +65,8 @@ msgstr "В каждом предложении один глагол с ошиб
 msgid "Endings of elama"
 msgstr "Окончания elama"
 
-msgid "Estonian has one present tense. <0/> means both I read and I’m reading, and the rest of the sentence tells you which. Tap a sentence to hear it."
-msgstr "В эстонском одно настоящее время. <0/> значит и «я читаю» вообще, и «я читаю сейчас», а что именно, видно из остального предложения. Нажми на предложение, чтобы его услышать."
+msgid "Estonian has one present tense. <0/> means both I read and I’m reading, and context tells you which. Tap a sentence to hear it."
+msgstr "В эстонском одно настоящее время. <0/> значит и «я читаю» вообще, и «я читаю сейчас», а что именно, понятно из контекста. Нажми на предложение, чтобы его услышать."
 
 msgid "Fill the ending"
 msgstr "Вставь окончание"
@@ -299,8 +299,8 @@ msgstr "Окончание для te: «вы» нескольким людям �
 msgid "The ending goes on the stem of the I form, not of the -ma infinitive."
 msgstr "Окончание добавляется к основе формы для «я», а не инфинитива на -ma."
 
-msgid "The ending goes with the pronoun at the start of the sentence."
-msgstr "Окончание зависит от местоимения в начале предложения."
+msgid "The ending goes with the subject, here the pronoun at the start of the sentence."
+msgstr "Окончание зависит от подлежащего, здесь — от местоимения в начале предложения."
 
 msgid "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>"
 msgstr "Окончание говорит, кто это, поэтому ma, sa, me и te можно опустить: <0>Elan Tallinnas.</0>"

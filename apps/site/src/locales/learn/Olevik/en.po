@@ -17,8 +17,8 @@ msgstr "15 minutes"
 msgid "5 quizzes, a sort and a passage"
 msgstr "5 quizzes, a sort and a passage"
 
-msgid "A dictionary lists a verb in its -ma infinitive: <0/>, to live. Take off -ma and you have the stem, <1>ela-</1>. The ending goes on the stem: <2/>, I live."
-msgstr "A dictionary lists a verb in its -ma infinitive: <0/>, to live. Take off -ma and you have the stem, <1>ela-</1>. The ending goes on the stem: <2/>, I live."
+msgid "A dictionary lists a verb in its -ma infinitive: <0/>, to live. For this verb and many others, take off -ma and you have the stem, <1>ela-</1>. The ending goes on the stem: <2/>, I live."
+msgstr "A dictionary lists a verb in its -ma infinitive: <0/>, to live. For this verb and many others, take off -ma and you have the stem, <1>ela-</1>. The ending goes on the stem: <2/>, I live."
 
 msgid "A dictionary lists a verb in its -ma infinitive: <0>elama</0>, to live. The endings go on its stem, <1>ela-</1>."
 msgstr "A dictionary lists a verb in its -ma infinitive: <0>elama</0>, to live. The endings go on its stem, <1>ela-</1>."
@@ -53,8 +53,8 @@ msgstr "Coffee"
 msgid "Does the stem change?"
 msgstr "Does the stem change?"
 
-msgid "Each pronoun has its ending: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, so <1>elan, elad, elab, elame, elate, elavad</1>."
-msgstr "Each pronoun has its ending: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, so <1>elan, elad, elab, elame, elate, elavad</1>."
+msgid "Each pronoun has its ending: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, so <1>elan, elad, elab, elame, elate, elavad</1>. Olema is the exception: <2>on</2> for <3>ta</3> and <4>nad</4>."
+msgstr "Each pronoun has its ending: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, so <1>elan, elad, elab, elame, elate, elavad</1>. Olema is the exception: <2>on</2> for <3>ta</3> and <4>nad</4>."
 
 msgid "Each round gives a verb and a pronoun, and the verb’s I form unless the pronoun is <0>ma</0>. Take the stem from the I form and type the form for that pronoun: <1>lugema, ma loen</1>, so with <2>nad</2> it is <3/>."
 msgstr "Each round gives a verb and a pronoun, and the verb’s I form unless the pronoun is <0>ma</0>. Take the stem from the I form and type the form for that pronoun: <1>lugema, ma loen</1>, so with <2>nad</2> it is <3/>."
@@ -65,8 +65,8 @@ msgstr "Each sentence has one wrong verb: a stem made from the -ma infinitive, o
 msgid "Endings of elama"
 msgstr "Endings of elama"
 
-msgid "Estonian has one present tense. <0/> means both I read and I’m reading, and the rest of the sentence tells you which. Tap a sentence to hear it."
-msgstr "Estonian has one present tense. <0/> means both I read and I’m reading, and the rest of the sentence tells you which. Tap a sentence to hear it."
+msgid "Estonian has one present tense. <0/> means both I read and I’m reading, and context tells you which. Tap a sentence to hear it."
+msgstr "Estonian has one present tense. <0/> means both I read and I’m reading, and context tells you which. Tap a sentence to hear it."
 
 msgid "Fill the ending"
 msgstr "Fill the ending"
@@ -299,8 +299,8 @@ msgstr "The ending for te: you, to more than one; polite you."
 msgid "The ending goes on the stem of the I form, not of the -ma infinitive."
 msgstr "The ending goes on the stem of the I form, not of the -ma infinitive."
 
-msgid "The ending goes with the pronoun at the start of the sentence."
-msgstr "The ending goes with the pronoun at the start of the sentence."
+msgid "The ending goes with the subject, here the pronoun at the start of the sentence."
+msgstr "The ending goes with the subject, here the pronoun at the start of the sentence."
 
 msgid "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>"
 msgstr "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>"

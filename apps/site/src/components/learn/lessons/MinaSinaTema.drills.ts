@@ -1,6 +1,12 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import { capital, PRONOUN_BUILT, PRONOUN_SENTENCES, PRONOUNS } from "../../../lib/learn/clips";
+import {
+  capital,
+  PRONOUN_BUILT,
+  PRONOUN_SENTENCES,
+  PRONOUNS,
+  pronounOrders,
+} from "../../../lib/learn/clips";
 import type {
   ChoiceDrill,
   DrillBank,
@@ -75,31 +81,30 @@ const heard = ({ id, who, why }: (typeof WHO)[number]): ChoiceDrill => ({
 
 const DROP = msg`The ending says who, so the pronoun can go.`;
 
-const dropped = (id: string, from: string, said: string): SentenceDrill => ({
-  kind: "rewrite",
-  id: `drop-${id}`,
-  rule: "drop",
-  from,
-  cue: msg`without the pronoun`,
-  say: said,
-  answers: [said],
-  explain: DROP,
-});
+const dropped = (id: string, from: string, said: string): SentenceDrill => {
+  const [verb = "", ...words] = said.slice(0, -1).split(" ");
+  return {
+    kind: "rewrite",
+    id: `drop-${id}`,
+    rule: "drop",
+    from,
+    cue: msg`without the pronoun`,
+    say: said,
+    answers: [said, `${capital(words.join(" "))} ${verb.toLowerCase()}${said.slice(-1)}`],
+    explain: DROP,
+  };
+};
 
 const built = (index: number): SentenceDrill => {
   const { pronoun, word, said } = PRONOUN_BUILT[index] as (typeof PRONOUN_BUILT)[number];
-  const { long, verb } = person(pronoun);
-  const rest = said.slice(said.indexOf(" ") + 1);
+  const { verb } = person(pronoun);
   return {
     kind: "build",
     id: `make-${pronoun}-${word.normalize("NFD").replace(/[^a-z]/g, "")}`,
     rule: "build",
     words: [pronoun, "olema", word],
     say: said,
-    answers:
-      verb === "on"
-        ? [said, `${capital(long)} ${rest}`]
-        : [said, `${capital(long)} ${rest}`, capital(rest)],
+    answers: pronounOrders(said),
     explain: msg`<et>${capital(pronoun)}</et> takes <et>${verb}</et>.`,
   };
 };
@@ -120,7 +125,7 @@ export const DRILLS: DrillBank = {
       rule: "who",
       say: PRONOUN_SENTENCES["s-ta-vasinud"],
       answers: [PRONOUN_SENTENCES["s-ta-vasinud"]],
-      explain: msg`<et>On</et> has no ending, so <et>ta</et> stays.`,
+      explain: msg`<et>On</et> has no ending, so <et>ta</et> usually stays.`,
     },
     {
       kind: "dictation",

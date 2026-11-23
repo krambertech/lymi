@@ -534,6 +534,8 @@ export const KUSIMUSED_ASKED = [
       "Kui palju kohvi nemad joovad?",
       "Kui palju nemad kohvi joovad?",
       "Kui palju nemad joovad kohvi?",
+      "Kui palju nad joovad?",
+      "Kui palju nemad joovad?",
       "Kes joob palju kohvi?",
       "Kes palju kohvi joob?",
       "Mis nad joovad?",

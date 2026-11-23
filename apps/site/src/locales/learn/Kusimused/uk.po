@@ -98,7 +98,7 @@ msgid "Ask the question"
 msgstr "Постав питання"
 
 msgid "ask with kas"
-msgstr "запитай із kas"
+msgstr "спитай словом kas"
 
 msgid "Asks about a person."
 msgstr "Питає про людину."

@@ -56,7 +56,7 @@ msgid "Ask with <0>kus</0>, and answer with a sentence or the place alone: <1>Ku
 msgstr "Спрашивай словом <0>kus</0>, а отвечай предложением или одним словом: <1>Kus sa elad? Tartus.</1>"
 
 msgid "Ask with <et>kus</et> and leave out the place; <et>me</et> in the answer is <et>te</et> in the question."
-msgstr "Спрашивай с <et>kus</et> и не называй место; <et>me</et> в ответе — это <et>te</et> в вопросе."
+msgstr "Спрашивай словом <et>kus</et> и не называй место; <et>me</et> в ответе — это <et>te</et> в вопросе."
 
 msgid "Asking where with <et>kus</et>"
 msgstr "Вопрос «где» с <et>kus</et>"

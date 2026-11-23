@@ -2043,6 +2043,9 @@ export const TALLINN_SORTED = [
   { w: "Kell on kolm.", bin: "kell" },
 ] as const;
 
+/** What a dictation in “A day in Tallinn” and its drill accepts: only the sentence heard. */
+export const dictated = (said: string): [string, ...string[]] => [said];
+
 export const TALLINN_HEARD = [
   { kind: "kell", said: "Kell on pool kaksteist." },
   { kind: "hind", said: "See maksab kuus eurot." },
@@ -2061,7 +2064,7 @@ export const TALLINN_DRILL_HEARD = [
 export const TALLINN_TRANSLATED = [
   { kind: "kell", answers: ["Kell on kümme."] },
   { kind: "hind", answers: ["See maksab kaks eurot.", "Maksab kaks eurot."] },
-  { kind: "paev", answers: ["Täna on laupäev."] },
+  { kind: "paev", answers: dayAnswers("Täna on laupäev.") },
   {
     kind: "ei",
     answers: [
@@ -2091,6 +2094,7 @@ export const TALLINN_TRANSLATED = [
       "Turul olen ma kell kaksteist.",
       "Turul olen mina kell kaksteist.",
       "Turul ma olen kell kaksteist.",
+      "Turul mina olen kell kaksteist.",
     ],
   },
   {
@@ -2107,6 +2111,11 @@ export const TALLINN_TRANSLATED = [
       "Kell üksteist joome meie kohvi.",
       "Joome kell üksteist kohvi.",
       "Joome kohvi kell üksteist.",
+      "Kohvi joome kell üksteist.",
+      "Kohvi joome me kell üksteist.",
+      "Kohvi joome meie kell üksteist.",
+      "Kohvi me joome kell üksteist.",
+      "Kohvi meie joome kell üksteist.",
     ],
   },
 ] as const;

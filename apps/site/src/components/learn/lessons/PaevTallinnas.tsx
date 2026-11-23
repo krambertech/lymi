@@ -5,6 +5,7 @@ import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
+  dictated,
   TALLINN_DIALOGUE,
   TALLINN_HEARD,
   TALLINN_PASSAGES,
@@ -409,7 +410,7 @@ function useContent() {
       kind: "dictation" as const,
       id: `write-${clipId(said)}`,
       src: src(said),
-      answers: [said],
+      answers: dictated(said),
       pair: [kind, said] as const,
     }),
   );

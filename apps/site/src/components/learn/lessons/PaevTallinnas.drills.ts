@@ -2,6 +2,7 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import {
   clipId,
+  dictated,
   TALLINN_DRILL_HEARD,
   TALLINN_DRILL_TRANSLATED,
   TALLINN_HEARD,
@@ -15,7 +16,7 @@ type Kind = "kell" | "hind" | "paev" | "ei";
 const WHY: Record<Kind, MessageDescriptor> = {
   kell: msg`A time takes <et>kell</et> and the number: <et>kell kümme</et>, at ten.`,
   hind: msg`A price takes <et>maksab</et>, and after a number from two up, <et>euro</et> becomes <et>eurot</et>.`,
-  paev: msg`To say the day, use <et>täna on</et> or <et>homme on</et> and its name, with a small letter.`,
+  paev: msg`To say the day, use <et>täna on</et>, <et>homme on</et> or <et>ülehomme on</et> and its name, with a small letter.`,
   ei: msg`<et>Ei</et> comes before the verb, and the verb drops its ending: <et>ei tööta</et>.`,
 };
 
@@ -52,7 +53,7 @@ const written = ({ kind, said }: { kind: Kind; said: string }): SentenceDrill =>
   id: `write-${clipId(said)}`,
   rule: kind,
   say: said,
-  answers: [said],
+  answers: dictated(said),
   explain: explained(kind, said),
 });
 

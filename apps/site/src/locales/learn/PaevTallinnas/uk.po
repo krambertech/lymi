@@ -430,8 +430,8 @@ msgstr "Час, ціна чи день?"
 msgid "to be"
 msgstr "бути"
 
-msgid "To say the day, use <et>täna on</et> or <et>homme on</et> and its name, with a small letter."
-msgstr "Щоб назвати день, кажи <et>täna on</et> чи <et>homme on</et> і назву дня з малої літери."
+msgid "To say the day, use <et>täna on</et>, <et>homme on</et> or <et>ülehomme on</et> and its name, with a small letter."
+msgstr "Щоб назвати день, кажи <et>täna on</et>, <et>homme on</et> чи <et>ülehomme on</et> і назву дня з малої літери."
 
 msgid "today"
 msgstr "сьогодні"
@@ -542,7 +542,7 @@ msgid "You meet Mari at the café and answer her in Estonian. If you pick a wron
 msgstr "Ти зустрічаєш Марі в кав’ярні й відповідаєш їй естонською. Якщо вибереш неправильну відповідь, побачиш чому, а тоді почуєш правильну."
 
 msgid "Your friend Mari sends you a message. Read it and answer the questions. Once you’ve answered, tap a word to see what it means."
-msgstr "Твоя подруга Марі надсилає тобі повідомлення. Прочитай його й дай відповіді. Коли відповіси, торкнися слова, щоб побачити, що воно означає."
+msgstr "Твоя подруга Марі надсилає тобі повідомлення. Прочитай його й дай відповіді. Коли відповіси, натисни на слово, щоб побачити, що воно означає."
 
 msgid "Your Saturday"
 msgstr "Твоя субота"

@@ -242,19 +242,19 @@ export function HaaldusLesson() {
     const why: Record<ApartKind, (first: string, second: string) => ReactNode> = {
       same: (first) => (
         <Trans>
-          <Word w={first} /> {meaning(first)}, said twice
+          Said twice: <Word w={first} /> {meaning(first)}
         </Trans>
       ),
       vowel: (first, second) => (
         <Trans>
-          <Word w={first} /> {meaning(first)} · <Word w={second} /> {meaning(second)}: one vowel
-          changes.
+          One vowel changes: <Word w={first} /> {meaning(first)} · <Word w={second} />{" "}
+          {meaning(second)}
         </Trans>
       ),
       length: (first, second) => (
         <Trans>
-          <Word w={first} /> {meaning(first)} · <Word w={second} /> {meaning(second)}: one sound is
-          held longer.
+          One sound is held longer: <Word w={first} /> {meaning(first)} · <Word w={second} />{" "}
+          {meaning(second)}
         </Trans>
       ),
     };
@@ -666,7 +666,7 @@ export function HaaldusLesson() {
                 <p>
                   <Trans>
                     Vowels and length both change the word. <Word w="Kõrv" /> and <Word w="korv" />{" "}
-                    differ in a vowel; <Word w="kana" /> and <Word w="kanna" /> in how long a sound
+                    differ in a vowel; <Word w="lina" /> and <Word w="linna" /> in how long a sound
                     is held.
                   </Trans>
                 </p>
@@ -679,7 +679,7 @@ export function HaaldusLesson() {
               </Prose>
               <Quiz
                 id="vowel-or-length"
-                title={<Trans>How do they differ?</Trans>}
+                title={<Trans>Same word, vowel or length?</Trans>}
                 items={apartItems}
                 rounds={9}
                 verdict={(share) =>
@@ -707,10 +707,10 @@ export function HaaldusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Jaan’s mother asks him for something. Two words are new: the name{" "}
-                    <Word w="Jaan" /> and <Word w="ja" />, “and”. Listen for the vowels and the long
-                    sounds: they tell <Word w="korv" /> from <Word w="kõrv" /> and{" "}
-                    <Word w="kooli" /> from <Word w="koli" />.
+                    Jaan’s mother asks him for something. Three words are new: the name{" "}
+                    <Word w="Jaan" />, <Word w="ja" />, “and”, and <Word w="jah" />, “yes”. Listen
+                    for the vowels and the long sounds: they tell <Word w="korv" /> from{" "}
+                    <Word w="kõrv" /> and <Word w="kooli" /> from <Word w="koli" />.
                   </Trans>
                 </p>
               </Prose>

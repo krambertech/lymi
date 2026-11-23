@@ -38,9 +38,6 @@ msgstr "Все шесть. Каждое местоимение — со свои
 msgid "All six. You put every ending on the right stem."
 msgstr "Все шесть. Каждое окончание добавлено к верной основе."
 
-msgid "already"
-msgstr "уже"
-
 msgid "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
 msgstr "Как и у olema, окончание уже говорит, кто это, поэтому ma, sa, me и te часто опускают: <0/>. Чтобы противопоставить двух людей, бери полные местоимения из урока {pronouns}: <1/>."
 

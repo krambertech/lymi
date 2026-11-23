@@ -238,8 +238,6 @@ export const TYPED: readonly { verb: Verb["verb"]; ending: Ending }[] = [
 ];
 
 const STEM_SORT: readonly Verb["verb"][] = [
-  "elama",
-  "lugema",
   "töötama",
   "õppima",
   "ootama",
@@ -260,7 +258,6 @@ const GLOSSARY: Glossary = {
     PRESENT_ENDINGS.map(({ ending }) => [`ela${ending}`, { en: ENDING_TIPS[ending].elama }]),
   ),
   olema: { en: msg`to be` },
-  juba: { en: msg`already` },
   loevad: { en: msg`they read`, note: msg`From lugema: stem loe-, as in ma loen.` },
   "nad elavad tallinnas": { en: msg`They live in Tallinn.`, show: "Nad elavad Tallinnas." },
   olen: { en: msg`I am` },

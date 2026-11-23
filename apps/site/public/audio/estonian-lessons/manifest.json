@@ -10543,11 +10543,6 @@
       "kit/d-sina-4"
     ]
   },
-  "haaldus/ko3rv-korv": {
-    "text": "Kõrv, korv.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "haaldus/uks-u2ks": {
     "text": "Uks, üks.",
     "model": "eleven_v4",
@@ -10565,11 +10560,6 @@
   },
   "haaldus/kooli-koli": {
     "text": "Kooli, koli.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "haaldus/kana-kanna": {
-    "text": "Kana, kanna.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -10853,7 +10843,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "olevik/p-jaan": {
-    "text": "Tere! Mina olen Jaan. Ma elan Tallinnas ja töötan kodus. Mari õpib eesti keelt. Ta räägib juba väga hästi. Me joome kohvi ja räägime eesti keelt.",
+    "text": "Tere! Mina olen Jaan. Ma elan Tallinnas ja töötan kodus. Mari õpib eesti keelt. Ta räägib väga hästi. Me joome kohvi ja räägime eesti keelt.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },

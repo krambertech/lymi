@@ -38,9 +38,6 @@ msgstr "Усі шість. Кожен займенник — зі своїм з�
 msgid "All six. You put every ending on the right stem."
 msgstr "Усі шість. Кожне закінчення додано до правильної основи."
 
-msgid "already"
-msgstr "вже"
-
 msgid "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
 msgstr "Як і в olema, закінчення вже каже, хто це, тому ma, sa, me і te часто пропускають: <0/>. Щоб протиставити двох людей, бери повні займенники з уроку {pronouns}: <1/>."
 

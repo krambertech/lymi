@@ -38,9 +38,6 @@ msgstr "All six. You matched every pronoun with its ending."
 msgid "All six. You put every ending on the right stem."
 msgstr "All six. You put every ending on the right stem."
 
-msgid "already"
-msgstr "already"
-
 msgid "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
 msgstr "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
 

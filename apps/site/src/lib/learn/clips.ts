@@ -134,13 +134,11 @@ export const HAALDUS_WORDS = [
 ] as const;
 
 export const HAALDUS_APART = [
-  { first: "kõrv", second: "korv", kind: "vowel" },
   { first: "uks", second: "üks", kind: "vowel" },
   { first: "säng", second: "sang", kind: "vowel" },
   { first: "tuli", second: "tüli", kind: "vowel" },
   { first: "sada", second: "saada", kind: "length" },
   { first: "kooli", second: "koli", kind: "length" },
-  { first: "kana", second: "kanna", kind: "length" },
   { first: "tuule", second: "tule", kind: "length" },
   { first: "tüli", second: "tüli", kind: "same" },
   { first: "kanna", second: "kanna", kind: "same" },
@@ -584,7 +582,7 @@ export const PRESENT_PASSAGE = [
   "Tere! Mina olen Jaan.",
   "Ma elan Tallinnas ja töötan kodus.",
   "Mari õpib eesti keelt.",
-  "Ta räägib juba väga hästi.",
+  "Ta räägib väga hästi.",
   "Me joome kohvi ja räägime eesti keelt.",
 ] as const;
 

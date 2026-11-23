@@ -147,7 +147,7 @@ const GLOSSARY: Glossary = {
   kodus: { en: msg`at home` },
   sõbrad: { en: msg`friends` },
   ja: { en: msg`and` },
-  "ma olen kodus": { en: msg`I’m at home.`, show: "Ma olen kodus." },
+  "ma olen valmis": { en: msg`I’m ready.`, show: "Ma olen valmis.", clip: "s-ma-valmis" },
   "mina olen liis ja tema on peeter": {
     en: msg`I’m Liis, and he’s Peeter.`,
     note: msg`Long forms, because the two people are set side by side.`,
@@ -1052,8 +1052,8 @@ export function MinaSinaTemaLesson() {
                   <Trans>
                     Each round gives a pronoun, <Word w="olema" /> and a word. Change{" "}
                     <span lang="et">olema</span> to the form for that pronoun and write the
-                    sentence: <span lang="et">ma · olema · kodus</span> is{" "}
-                    <Word w="Ma olen kodus" />.
+                    sentence: <span lang="et">ma · olema · valmis</span> is{" "}
+                    <Word w="Ma olen valmis" />.
                   </Trans>
                 </p>
               </Prose>

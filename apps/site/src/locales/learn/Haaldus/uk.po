@@ -10,20 +10,6 @@ msgstr ""
 msgid "{v}, as in {word}"
 msgstr "{v}, як у {word}"
 
-#. placeholder {0}: meaning(first)
-#. placeholder {1}: meaning(second)
-msgid "<0/> {0} · <1/> {1}: one sound is held longer."
-msgstr "<0/> {0} · <1/> {1}: один звук тягнеться довше."
-
-#. placeholder {0}: meaning(first)
-#. placeholder {1}: meaning(second)
-msgid "<0/> {0} · <1/> {1}: one vowel changes."
-msgstr "<0/> {0} · <1/> {1}: змінюється одна голосна."
-
-#. placeholder {0}: meaning(first)
-msgid "<0/> {0}, said twice"
-msgstr "<0/> {0}, двічі"
-
 msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
 msgstr "<0/> — це сто, а <1/> — «надішли». Подвоєна літера — це довший звук, і з ним виходить інше слово. З приголосними так само: <2/> — курка, а <3/> — «неси» (до однієї людини)."
 
@@ -171,9 +157,6 @@ msgstr "Він має віднести його додому."
 msgid "hello"
 msgstr "привіт"
 
-msgid "How do they differ?"
-msgstr "Чим вони різняться?"
-
 msgid "How Estonian sounds: nine vowels, letters that always sound the same, and length that changes the word."
 msgstr "Як звучить естонська: дев’ять голосних, літери, що завжди звучать однаково, і довгота, яка змінює слово."
 
@@ -198,8 +181,8 @@ msgstr "Яан каже, що віднесе."
 msgid "Jaan, a man’s name"
 msgstr "Яан, чоловіче ім’я"
 
-msgid "Jaan’s mother asks him for something. Two words are new: the name <0/> and <1/>, “and”. Listen for the vowels and the long sounds: they tell <2/> from <3/> and <4/> from <5/>."
-msgstr "Мама про щось просить Яана. Нових слів два: ім’я <0/> і <1/>, «і». Слухай голосні й довгі звуки: саме вони відрізняють <2/> від <3/> і <4/> від <5/>."
+msgid "Jaan’s mother asks him for something. Three words are new: the name <0/>, <1/>, “and”, and <2/>, “yes”. Listen for the vowels and the long sounds: they tell <3/> from <4/> and <5/> from <6/>."
+msgstr "Мама про щось просить Яана. Нових слів три: ім’я <0/>, <1/>, «і», та <2/>, «так». Слухай голосні й довгі звуки: саме вони відрізняють <3/> від <4/> і <5/> від <6/>."
 
 msgid "junk"
 msgstr "мотлох"
@@ -303,8 +286,18 @@ msgstr "Одна літера чи дві? Послухай і заповни п
 msgid "One sound is held longer, and that makes another word."
 msgstr "Один звук тягнеться довше, і виходить інше слово."
 
+#. placeholder {0}: meaning(first)
+#. placeholder {1}: meaning(second)
+msgid "One sound is held longer: <0/> {0} · <1/> {1}"
+msgstr "Один звук тягнеться довше: <0/> {0} · <1/> {1}"
+
 msgid "One vowel changes, and the word with it."
 msgstr "Змінюється одна голосна, а з нею й слово."
+
+#. placeholder {0}: meaning(first)
+#. placeholder {1}: meaning(second)
+msgid "One vowel changes: <0/> {0} · <1/> {1}"
+msgstr "Змінюється одна голосна: <0/> {0} · <1/> {1}"
 
 msgid "One word for both."
 msgstr "Одне слово з обома значеннями."
@@ -329,6 +322,13 @@ msgstr "Так кажуть одній людині, від kandma. А ще «п
 
 msgid "Said to one person."
 msgstr "Так кажуть одній людині."
+
+#. placeholder {0}: meaning(first)
+msgid "Said twice: <0/> {0}"
+msgstr "Двічі: <0/> {0}"
+
+msgid "Same word, vowel or length?"
+msgstr "Те саме слово, голосна чи довгота?"
 
 msgid "Say e with rounded lips, as in German “schön”."
 msgstr "Скажи «е», округливши губи, як у німецькому «schön»."

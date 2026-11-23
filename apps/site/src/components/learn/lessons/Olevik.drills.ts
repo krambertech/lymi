@@ -111,7 +111,7 @@ export const DRILLS: DrillBank = {
     stem: { label: msg`Stems that change`, section: "stems" },
   },
   items: [
-    typed("ending", "elama", "vad"),
+    typed("ending", "ootama", "vad"),
     typed("ending", "töötama", "b"),
     typed("ending", "ootama", "te"),
     typed("ending", "armastama", "d"),

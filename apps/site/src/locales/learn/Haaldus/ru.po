@@ -10,20 +10,6 @@ msgstr ""
 msgid "{v}, as in {word}"
 msgstr "{v}, как в {word}"
 
-#. placeholder {0}: meaning(first)
-#. placeholder {1}: meaning(second)
-msgid "<0/> {0} · <1/> {1}: one sound is held longer."
-msgstr "<0/> {0} · <1/> {1}: один звук тянется дольше."
-
-#. placeholder {0}: meaning(first)
-#. placeholder {1}: meaning(second)
-msgid "<0/> {0} · <1/> {1}: one vowel changes."
-msgstr "<0/> {0} · <1/> {1}: меняется одна гласная."
-
-#. placeholder {0}: meaning(first)
-msgid "<0/> {0}, said twice"
-msgstr "<0/> {0}, дважды"
-
 msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
 msgstr "<0/> — это сто, а <1/> — «отправь». Удвоенная буква — это более долгий звук, и с ним получается другое слово. С согласными так же: <2/> — курица, а <3/> — «неси» (одному человеку)."
 
@@ -171,9 +157,6 @@ msgstr "Он должен отнести её домой."
 msgid "hello"
 msgstr "привет"
 
-msgid "How do they differ?"
-msgstr "Чем они различаются?"
-
 msgid "How Estonian sounds: nine vowels, letters that always sound the same, and length that changes the word."
 msgstr "Как звучит эстонский: девять гласных, буквы, которые всегда звучат одинаково, и долгота, которая меняет слово."
 
@@ -198,8 +181,8 @@ msgstr "Яан говорит, что отнесёт."
 msgid "Jaan, a man’s name"
 msgstr "Яан, мужское имя"
 
-msgid "Jaan’s mother asks him for something. Two words are new: the name <0/> and <1/>, “and”. Listen for the vowels and the long sounds: they tell <2/> from <3/> and <4/> from <5/>."
-msgstr "Мама о чём-то просит Яана. Новых слов два: имя <0/> и <1/>, «и». Слушай гласные и долгие звуки: именно они отличают <2/> от <3/> и <4/> от <5/>."
+msgid "Jaan’s mother asks him for something. Three words are new: the name <0/>, <1/>, “and”, and <2/>, “yes”. Listen for the vowels and the long sounds: they tell <3/> from <4/> and <5/> from <6/>."
+msgstr "Мама о чём-то просит Яана. Новых слов три: имя <0/>, а ещё <1/> — «и» и <2/> — «да». Слушай гласные и долгие звуки: именно они отличают <3/> от <4/> и <5/> от <6/>."
 
 msgid "junk"
 msgstr "хлам"
@@ -303,8 +286,18 @@ msgstr "Одна буква или две? Послушай и заполни п
 msgid "One sound is held longer, and that makes another word."
 msgstr "Один звук тянется дольше, и получается другое слово."
 
+#. placeholder {0}: meaning(first)
+#. placeholder {1}: meaning(second)
+msgid "One sound is held longer: <0/> {0} · <1/> {1}"
+msgstr "Один звук тянется дольше: <0/> {0} · <1/> {1}"
+
 msgid "One vowel changes, and the word with it."
 msgstr "Меняется одна гласная, а с ней и слово."
+
+#. placeholder {0}: meaning(first)
+#. placeholder {1}: meaning(second)
+msgid "One vowel changes: <0/> {0} · <1/> {1}"
+msgstr "Меняется одна гласная: <0/> {0} · <1/> {1}"
 
 msgid "One word for both."
 msgstr "Одно слово с обоими значениями."
@@ -329,6 +322,13 @@ msgstr "Так говорят одному человеку, от kandma. А е�
 
 msgid "Said to one person."
 msgstr "Так говорят одному человеку."
+
+#. placeholder {0}: meaning(first)
+msgid "Said twice: <0/> {0}"
+msgstr "Дважды: <0/> {0}"
+
+msgid "Same word, vowel or length?"
+msgstr "То же слово, гласная или долгота?"
 
 msgid "Say e with rounded lips, as in German “schön”."
 msgstr "Скажи «э», округлив губы, как в немецком «schön»."

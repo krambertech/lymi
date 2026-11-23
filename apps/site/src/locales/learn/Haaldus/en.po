@@ -10,20 +10,6 @@ msgstr ""
 msgid "{v}, as in {word}"
 msgstr "{v}, as in {word}"
 
-#. placeholder {0}: meaning(first)
-#. placeholder {1}: meaning(second)
-msgid "<0/> {0} · <1/> {1}: one sound is held longer."
-msgstr "<0/> {0} · <1/> {1}: one sound is held longer."
-
-#. placeholder {0}: meaning(first)
-#. placeholder {1}: meaning(second)
-msgid "<0/> {0} · <1/> {1}: one vowel changes."
-msgstr "<0/> {0} · <1/> {1}: one vowel changes."
-
-#. placeholder {0}: meaning(first)
-msgid "<0/> {0}, said twice"
-msgstr "<0/> {0}, said twice"
-
 msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
 msgstr "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
 
@@ -171,9 +157,6 @@ msgstr "He should carry it home."
 msgid "hello"
 msgstr "hello"
 
-msgid "How do they differ?"
-msgstr "How do they differ?"
-
 msgid "How Estonian sounds: nine vowels, letters that always sound the same, and length that changes the word."
 msgstr "How Estonian sounds: nine vowels, letters that always sound the same, and length that changes the word."
 
@@ -198,8 +181,8 @@ msgstr "Jaan says he will."
 msgid "Jaan, a man’s name"
 msgstr "Jaan, a man’s name"
 
-msgid "Jaan’s mother asks him for something. Two words are new: the name <0/> and <1/>, “and”. Listen for the vowels and the long sounds: they tell <2/> from <3/> and <4/> from <5/>."
-msgstr "Jaan’s mother asks him for something. Two words are new: the name <0/> and <1/>, “and”. Listen for the vowels and the long sounds: they tell <2/> from <3/> and <4/> from <5/>."
+msgid "Jaan’s mother asks him for something. Three words are new: the name <0/>, <1/>, “and”, and <2/>, “yes”. Listen for the vowels and the long sounds: they tell <3/> from <4/> and <5/> from <6/>."
+msgstr "Jaan’s mother asks him for something. Three words are new: the name <0/>, <1/>, “and”, and <2/>, “yes”. Listen for the vowels and the long sounds: they tell <3/> from <4/> and <5/> from <6/>."
 
 msgid "junk"
 msgstr "junk"
@@ -303,8 +286,18 @@ msgstr "One letter or two? Listen, then fill the gap."
 msgid "One sound is held longer, and that makes another word."
 msgstr "One sound is held longer, and that makes another word."
 
+#. placeholder {0}: meaning(first)
+#. placeholder {1}: meaning(second)
+msgid "One sound is held longer: <0/> {0} · <1/> {1}"
+msgstr "One sound is held longer: <0/> {0} · <1/> {1}"
+
 msgid "One vowel changes, and the word with it."
 msgstr "One vowel changes, and the word with it."
+
+#. placeholder {0}: meaning(first)
+#. placeholder {1}: meaning(second)
+msgid "One vowel changes: <0/> {0} · <1/> {1}"
+msgstr "One vowel changes: <0/> {0} · <1/> {1}"
 
 msgid "One word for both."
 msgstr "One word for both."
@@ -329,6 +322,13 @@ msgstr "Said to one person, from kandma. Also “of the heel”, from kand."
 
 msgid "Said to one person."
 msgstr "Said to one person."
+
+#. placeholder {0}: meaning(first)
+msgid "Said twice: <0/> {0}"
+msgstr "Said twice: <0/> {0}"
+
+msgid "Same word, vowel or length?"
+msgstr "Same word, vowel or length?"
 
 msgid "Say e with rounded lips, as in German “schön”."
 msgstr "Say e with rounded lips, as in German “schön”."

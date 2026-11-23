@@ -102,8 +102,8 @@ msgstr "Чи можна опустити займенник?"
 msgid "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
 msgstr "У кожного займенника дві форми. Кажи коротку, <0>ma</0>, а повну, <1>mina</1>, залиш для наголосу."
 
-msgid "Each round gives a pronoun, <0/> and a word. Change <1>olema</1> to the form for that pronoun and write the sentence: <2>ma · olema · kodus</2> is <3/>."
-msgstr "У кожному раунді є займенник, <0/> і слово. Постав <1>olema</1> у форму для цього займенника й напиши речення: <2>ma · olema · kodus</2> — це <3/>."
+msgid "Each round gives a pronoun, <0/> and a word. Change <1>olema</1> to the form for that pronoun and write the sentence: <2>ma · olema · valmis</2> is <3/>."
+msgstr "У кожному раунді є займенник, <0/> і слово. Постав <1>olema</1> у форму для цього займенника й напиши речення: <2>ma · olema · valmis</2> — це <3/>."
 
 msgid "Endings of olema"
 msgstr "Закінчення olema"
@@ -222,7 +222,7 @@ msgid "No ending. Ta on and nad on: he or she is, they are."
 msgstr "Без закінчення. Ta on і nad on: «він чи вона є», «вони є»."
 
 msgid "Now type the form of <0/> for each pronoun. A long pronoun takes the same verb: <1/>, <2/>."
-msgstr "Тепер напиши форму <0/> для кожного займенника, у повній чи короткій формі. З повною формою дієслово те саме: <1/>, <2/>."
+msgstr "Тепер напиши форму <0/> для кожного займенника. З повним займенником дієслово те саме: <1/>, <2/>."
 
 msgid "Olema, to be"
 msgstr "Olema, бути"

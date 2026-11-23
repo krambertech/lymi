@@ -754,10 +754,10 @@ export function LaheksinLesson() {
               <ListenRows items={rowsOf(COND_POLITE)} />
               <Aside>
                 <Trans>
-                  In speech you’ll often hear the form for <b lang="et">ta</b> with{" "}
-                  <b lang="et">ma</b> too: <b lang="et">ma tahaks</b>, <b lang="et">ma läheks</b>.
-                  In careful writing, <b lang="et">tahaksin</b> and <b lang="et">läheksin</b> are
-                  more usual.
+                  Both forms are correct for every person: <b lang="et">ma tahaksin</b> or{" "}
+                  <b lang="et">ma tahaks</b>, <b lang="et">me läheksime</b> or{" "}
+                  <b lang="et">me läheks</b>. The short one, like the form for <b lang="et">ta</b>,
+                  is common in speech.
                 </Trans>
               </Aside>
               <Prose>

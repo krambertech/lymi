@@ -18,6 +18,16 @@ export const ALLOWED_COPY: readonly { rule: "tell" | "uk" | "ru"; text: string; 
     { rule: "tell", text: "Perfect tenses", reason: "The lesson's name (copy.md)." },
     { rule: "tell", text: "Perfect and pluperfect", reason: "The lesson's name: the tenses." },
     { rule: "tell", text: "Let’s and let them", reason: "The lesson's name: lähme and las." },
+    {
+      rule: "tell",
+      text: "Let’s",
+      reason: "The let's form the lahme-las lesson teaches: lähme, teeme.",
+    },
+    {
+      rule: "tell",
+      text: "let’s",
+      reason: "The let's form the lahme-las lesson teaches: lähme, teeme.",
+    },
     { rule: "tell", text: "Perfect", reason: "A tense's name on the kit's Timeline." },
     {
       rule: "tell",

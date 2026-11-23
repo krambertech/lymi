@@ -1,0 +1,481 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 14:34+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "<0>-takse</0> or <1>-akse</1>: people do it now."
+msgstr "<0>-takse</0> или <1>-akse</1>: люди делают это сейчас."
+
+msgid "<0>-ti</0> or <1>-di</1>: people did it."
+msgstr "<0>-ti</0> или <1>-di</1>: люди это делали."
+
+#. placeholder {0}: item.done
+msgid "<0>{0}</0>: <1>-tud</1> becomes <2>-takse</2>, <3>-dud</3> becomes <4>-dakse</4>."
+msgstr "<0>{0}</0>: <1>-tud</1> становится <2>-takse</2>, <3>-dud</3> становится <4>-dakse</4>."
+
+#. placeholder {0}: item.done
+msgid "<0>{0}</0>: <1>-tud</1> becomes <2>-ti</2>, <3>-dud</3> becomes <4>-di</4>."
+msgstr "<0>{0}</0>: <1>-tud</1> становится <2>-ti</2>, <3>-dud</3> становится <4>-di</4>."
+
+msgid "<0>Ei</0> and a form in <1>-ta</1> or <2>-da</2>: people don’t."
+msgstr "<0>Ei</0> и форма на <1>-ta</1> или <2>-da</2>: люди не делают."
+
+msgid "<0>Eile</0> is the past: <1>räägiti</1>."
+msgstr "<0>Eile</0> — это прошлое: <1>räägiti</1>."
+
+msgid "<0>Minema</0> is one to learn by heart: <1>minnakse</1>."
+msgstr "<0>Minema</0> нужно выучить наизусть: <1>minnakse</1>."
+
+msgid "<0>Tegema</0> is one to learn by heart: <1>tehakse</1>."
+msgstr "<0>Tegema</0> нужно выучить наизусть: <1>tehakse</1>."
+
+msgid "<et>Räägiti</et>: people spoke it, in the past."
+msgstr "<et>Räägiti</et>: на нём говорили, в прошлом."
+
+msgid "22 minutes"
+msgstr "22 минуты"
+
+msgid "7 exercises"
+msgstr "7 упражнений"
+
+msgid "A few take <0>-akse</0> for “people do”, often with a new stem: <1>tehakse, süüakse, minnakse</1>. Their past still follows the rule: <2>tehti, söödi, mindi</2>."
+msgstr "Несколько глаголов имеют в настоящем времени <0>-akse</0>, часто с новой основой: <1>tehakse, süüakse, minnakse</1>. Их прошедшее время всё равно по правилу: <2>tehti, söödi, mindi</2>."
+
+msgid "A person is named, so the verb takes that person’s form."
+msgstr "Лицо названо, поэтому глагол стоит в форме этого лица."
+
+msgid "A person, or people in general"
+msgstr "Конкретное лицо или люди вообще"
+
+msgid "A whole thing that will get done takes the nominative: <0>uus kool ehitatakse</0>, a new school will be built. While it is going on, for some of something, or after <1>ei</1>, it’s partitive: <2>uut kooli ehitatakse</2>, <3>poes müüakse leiba</3>, <4>poes ei müüda leiba</4>."
+msgstr "Целое, что будет сделано, стоит в именительном: <0>uus kool ehitatakse</0>, новую школу построят. Пока действие идёт, для части чего-то или после <1>ei</1> — партитив: <2>uut kooli ehitatakse</2>, <3>poes müüakse leiba</3>, <4>poes ei müüda leiba</4>."
+
+msgid "After <0>ei</0>, the <1>-tud</1> form with <2>-ta</2>: <3>suitsetatud, ei suitsetata</3>."
+msgstr "После <0>ei</0> — форма на <1>-tud</1> с <2>-ta</2>: <3>suitsetatud, ei suitsetata</3>."
+
+msgid "All eight, typed in full."
+msgstr "Все восемь, написаны полностью."
+
+msgid "All nine: you can tell a person from people in general."
+msgstr "Все девять: ты отличаешь конкретное лицо от людей вообще."
+
+msgid "All seven, each with the impersonal."
+msgstr "Все семь, каждое с безличной формой."
+
+msgid "All six found and fixed."
+msgstr "Все шесть найдены и исправлены."
+
+msgid "All six, each with the right no."
+msgstr "Все шесть, каждое с правильным отрицанием."
+
+msgid "All six: you heard now, past and no each time."
+msgstr "Все шесть: каждый раз ты слышал настоящее, прошлое и отрицание."
+
+msgid "Anna"
+msgstr "Анна"
+
+msgid "Anna is new in Estonia. She asks Jaan what people do at Midsummer."
+msgstr "Анна недавно в Эстонии. Она спрашивает Яана, что делают на Иванов день."
+
+msgid "At his grandmother’s on Saaremaa"
+msgstr "У бабушки на Сааремаа"
+
+msgid "At Midsummer, people make a bonfire."
+msgstr "На Иванов день разжигают костёр."
+
+msgid "Beer and kvass"
+msgstr "Пиво и квас"
+
+msgid "bonfire"
+msgstr "костёр"
+
+msgid "Bread is sold here."
+msgstr "Здесь продают хлеб."
+
+msgid "Bread is sold in the shop."
+msgstr "В магазине продают хлеб."
+
+msgid "Build it from the <0>-tud</0> form, usually like this: <1>-tud, -takse, -ti</1> and <2>-dud, -dakse, -di</2>. <3>Räägitud, räägitakse, räägiti.</3>"
+msgstr "Образуй её от формы на <0>-tud</0>, обычно так: <1>-tud, -takse, -ti</1> и <2>-dud, -dakse, -di</2>. <3>Räägitud, räägitakse, räägiti.</3>"
+
+msgid "Building the impersonal"
+msgstr "Образование безличной формы"
+
+msgid "Built from the -tud form"
+msgstr "От формы на -tud"
+
+msgid "custom, tradition"
+msgstr "обычай, традиция"
+
+msgid "Done"
+msgstr "Сделано"
+
+msgid "Each round gives a sentence. Write it as a no."
+msgstr "В каждом раунде — предложение. Напиши его с отрицанием."
+
+msgid "Each round gives a verb and its <0>-tud</0> form. Type “people do” or “people did”, as the cue asks."
+msgstr "В каждом раунде — глагол и его форма на <0>-tud</0>. Напиши «люди делают» или «люди делали», как просит подсказка."
+
+msgid "Each sentence has one verb in the wrong form. Tap it, then type it right."
+msgstr "В каждом предложении один глагол в неправильной форме. Нажми на него и напиши правильно."
+
+msgid "Each verb has a form in <0>-tud</0> or <1>-dud</1>: done. <2>Räägitud</2> is spoken, as in <3>sellest on räägitud</3>, people have talked about it. Swap its ending, and you have “people do” and “people did”. Tap each form in the table to hear it."
+msgstr "У каждого глагола есть форма на <0>-tud</0> или <1>-dud</1>: сделано. <2>Räägitud</2> — сказано, как в <3>sellest on räägitud</3>, об этом говорили. Замени окончание — и получишь «люди делают» и «люди делали». Нажми каждую форму в таблице, чтобы её услышать."
+
+msgid "Estonian is spoken here."
+msgstr "Здесь говорят по-эстонски."
+
+msgid "Estonian is spoken in Estonia."
+msgstr "В Эстонии говорят по-эстонски."
+
+msgid "Estonian isn’t spoken here."
+msgstr "Здесь не говорят по-эстонски."
+
+msgid "Estonian was spoken here."
+msgstr "Здесь говорили по-эстонски."
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
+
+msgid "Fix the verb"
+msgstr "Исправь глагол"
+
+msgid "For “people do”, <0>-tud</0> becomes <1>-takse</1> and <2>-dud</2> becomes <3>-dakse</3>. For “people did”, they become <4>-ti</4> and <5>-di</5>."
+msgstr "Для «люди делают» <0>-tud</0> становится <1>-takse</1>, а <2>-dud</2> — <3>-dakse</3>. Для «люди делали» они становятся <4>-ti</4> и <5>-di</5>."
+
+msgid "From the <et>-tud</et> form: <et>-takse</et> or <et>-dakse</et> for “people do”, <et>-ti</et> or <et>-di</et> for “people did”."
+msgstr "От формы на <et>-tud</et>: <et>-takse</et> или <et>-dakse</et> для «люди делают», <et>-ti</et> или <et>-di</et> для «люди делали»."
+
+msgid "Hear a sentence, then pick what it means. Listen for <0>ei</0>, and for the ending."
+msgstr "Послушай предложение и выбери, что оно значит. Слушай, есть ли <0>ei</0>, и какое окончание."
+
+msgid "holiday, feast"
+msgstr "праздник"
+
+msgid "I’d love to come."
+msgstr "Я с удовольствием приду."
+
+msgid "In Tallinn"
+msgstr "В Таллине"
+
+msgid "In Tartu, at a friend’s summer house"
+msgstr "В Тарту, на даче у друга"
+
+msgid "In the country, people make kvass at home."
+msgstr "В деревне квас делают дома."
+
+msgid "in the old days"
+msgstr "раньше, в старину"
+
+msgid "In the past, <0>ei</0> and the <1>-tud</1> form."
+msgstr "В прошлом — <0>ei</0> и форма на <1>-tud</1>."
+
+msgid "In the past, <0>ei</0> takes the <1>-tud</1> form: <2>räägitud</2>."
+msgstr "В прошлом после <0>ei</0> — форма на <1>-tud</1>: <2>räägitud</2>."
+
+msgid "In the past: <et>ei</et> and the <et>-tud</et> form."
+msgstr "В прошлом: <et>ei</et> и форма на <et>-tud</et>."
+
+msgid "Is kvass made at home?"
+msgstr "Квас делают дома?"
+
+msgid "is spoken, people speak"
+msgstr "говорят"
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Juice"
+msgstr "Сок"
+
+msgid "Kinds of verb"
+msgstr "Типы глаголов"
+
+msgid "Learn by heart"
+msgstr "Наизусть"
+
+msgid "Lesson {perfect} built the perfect with <0>-nud</0>, for a named person: <1>ma olen lugenud</1>. The <2>-tud</2> form does the same with nobody named: <3>raamat on loetud</3>, the book has been read."
+msgstr "Урок {perfect} строил перфект с <0>-nud</0> для названного лица: <1>ma olen lugenud</1>. Форма на <2>-tud</2> делает то же, когда никто не назван: <3>raamat on loetud</3>, книга прочитана."
+
+msgid "Listen: Anna and Jaan"
+msgstr "Послушай: Анна и Яан"
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Midsummer Day, 24 June"
+msgstr "Иванов день, 24 июня"
+
+msgid "Midsummer in Estonia"
+msgstr "Иванов день в Эстонии"
+
+msgid "Nearly. Check the ending in the ones you got wrong."
+msgstr "Почти. Проверь окончание там, где ошибка."
+
+msgid "Nearly. Check the verb in the ones you got wrong."
+msgstr "Почти. Проверь глагол там, где ошибка."
+
+msgid "Nearly. Check whether each one is now or past."
+msgstr "Почти. Проверь, где настоящее, а где прошлое."
+
+msgid "Nearly. Look for a person before the gap, and for the time."
+msgstr "Почти. Ищи в предложении лицо и время."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Почти. Ещё раз послушай те, где ошибка."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Почти. Прочитай объяснение под каждой ошибкой."
+
+msgid "No person is named, and it happened in the past: people did."
+msgstr "Лицо не названо, и это было в прошлом: люди делали."
+
+msgid "No person is named, and it isn’t past: people do."
+msgstr "Лицо не названо, и это не прошлое: люди делают."
+
+msgid "No person is named, so the impersonal."
+msgstr "Лицо не названо, поэтому безличная форма."
+
+msgid "No person is named: <0>räägitakse</0>."
+msgstr "Лицо не названо: <0>räägitakse</0>."
+
+msgid "No person named"
+msgstr "Без названного лица"
+
+msgid "No repairs are done here."
+msgstr "Здесь не делают ремонт."
+
+msgid "No smoking here."
+msgstr "Здесь не курят."
+
+msgid "Now, <0>ei</0> and the <1>-tud</1> form with <2>-ta</2>, or <3>-dud</3> with <4>-da</4>."
+msgstr "Сейчас — <0>ei</0> и форма на <1>-tud</1> с <2>-ta</2>, или <3>-dud</3> с <4>-da</4>."
+
+msgid "Now, put <0>ei</0> before the <1>-tud</1> form and change <2>-tud</2> to <3>-ta</3>, <4>-dud</4> to <5>-da</5>: <6>räägitud, ei räägita</6>; <7>tehtud, ei tehta</7>; <8>söödud, ei sööda</8>. In the past, <9>ei</9> takes the <10>-tud</10> form: <11>ei räägitud</11>."
+msgstr "Сейчас поставь <0>ei</0> перед формой на <1>-tud</1> и замени <2>-tud</2> на <3>-ta</3>, <4>-dud</4> на <5>-da</5>: <6>räägitud, ei räägita</6>; <7>tehtud, ei tehta</7>; <8>söödud, ei sööda</8>. В прошлом после <9>ei</9> — форма на <10>-tud</10>: <11>ei räägitud</11>."
+
+msgid "Now: <et>ei</et> and the <et>-tud</et> form, with <et>-ta</et> for <et>-tud</et> and <et>-da</et> for <et>-dud</et>: <et>müüdud, ei müüda</et>."
+msgstr "Сейчас: <et>ei</et> и форма на <et>-tud</et>, с <et>-ta</et> вместо <et>-tud</et> и <et>-da</et> вместо <et>-dud</et>: <et>müüdud, ei müüda</et>."
+
+msgid "Nowhere: they stay in town"
+msgstr "Никуда: остаются в городе"
+
+msgid "On Midsummer night, people go to bed early."
+msgstr "В Иванову ночь ложатся спать рано."
+
+msgid "One to learn by heart: “people do” doesn’t follow the <et>-tud</et> rule: <et>tehtud, tehakse</et>."
+msgstr "Нужно выучить наизусть: «люди делают» не следует правилу <et>-tud</et>: <et>tehtud, tehakse</et>."
+
+msgid "People ate fish here."
+msgstr "Здесь ели рыбу."
+
+msgid "People did"
+msgstr "Люди делали"
+
+msgid "people did it"
+msgstr "люди делали"
+
+msgid "People do"
+msgstr "Люди делают"
+
+msgid "people do it"
+msgstr "люди делают"
+
+msgid "People don’t eat fish here."
+msgstr "Здесь не едят рыбу."
+
+msgid "People don’t work on Sundays."
+msgstr "В воскресенье не работают."
+
+msgid "People don’t work then."
+msgstr "Тогда не работают."
+
+msgid "People eat fish here."
+msgstr "Здесь едят рыбу."
+
+msgid "People smoke here."
+msgstr "Здесь курят."
+
+msgid "People smoked here."
+msgstr "Здесь курили."
+
+msgid "Play the sentences you missed once more, then try again."
+msgstr "Ещё раз послушай предложения, где ошибся, а потом попробуй снова."
+
+msgid "Räägitud, with -takse for -tud."
+msgstr "Räägitud, с -takse вместо -tud."
+
+msgid "Read the sections above once more, then try again."
+msgstr "Ещё раз прочитай разделы выше, а потом попробуй снова."
+
+msgid "Read the start of this section once more, then try again."
+msgstr "Ещё раз прочитай начало этого раздела, а потом попробуй снова."
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай ниже «Что запомнить», а потом попробуй снова."
+
+msgid "Regular"
+msgstr "По правилу"
+
+msgid "Repairs are being done here."
+msgstr "Здесь делают ремонт."
+
+msgid "Repairs were done here."
+msgstr "Здесь делали ремонт."
+
+msgid "Say it with no"
+msgstr "Скажи с отрицанием"
+
+msgid "say no"
+msgstr "скажи «нет»"
+
+msgid "Saying no"
+msgstr "Отрицание"
+
+msgid "Someone opens it, but nobody is named: <0>avatakse</0>."
+msgstr "Кто-то его открывает, но никто не назван: <0>avatakse</0>."
+
+msgid "Sometimes it doesn’t matter who does something. <0/> means people speak, or is spoken: no person is named. Estonian uses this form far more than English uses “is done”."
+msgstr "Иногда неважно, кто что-то делает. <0/> значит «говорят»: лицо не названо. Эстонский пользуется этой формой гораздо чаще, чем русский — неопределённо-личными предложениями."
+
+msgid "Tap a form"
+msgstr "Нажми на форму"
+
+msgid "Tap each form in the table once more, then try again."
+msgstr "Ещё раз нажми каждую форму в таблице, а потом попробуй снова."
+
+msgid "The impersonal names no person: <0>Eestis räägitakse eesti keelt.</0> English often says it with “is done” or “people do”."
+msgstr "Безличная форма не называет лица: <0>Eestis räägitakse eesti keelt.</0> По-русски это часто «говорят»."
+
+msgid "The impersonal: what people do, or what is done, with no person named. <0>Eestis räägitakse eesti keelt.</0>"
+msgstr "Безличная форма: что люди делают или что делается, когда лицо не названо. <0>Eestis räägitakse eesti keelt.</0>"
+
+msgid "The school doesn’t build anything; people build it: <0>ehitatakse</0>."
+msgstr "Школа ничего не строит, её строят: <0>ehitatakse</0>."
+
+msgid "The school doesn’t build anything; people build it: <et>ehitatakse</et>."
+msgstr "Школа ничего не строит, её строят: <et>ehitatakse</et>."
+
+msgid "The shop opens at nine."
+msgstr "Магазин открывают в девять."
+
+msgid "These don’t follow the rule for “people do”: the ending is <0>-akse</0>, and the stem often changes too: <1>söödud, süüakse</1>. “People did” still follows the rule: <2>tehtud, tehti</2>."
+msgstr "Эти глаголы не следуют правилу для «люди делают»: окончание <0>-akse</0>, и основа часто тоже меняется: <1>söödud, süüakse</1>. «Люди делали» всё равно по правилу: <2>tehtud, tehti</2>."
+
+msgid "This house was built in 1920."
+msgstr "Этот дом построили в 1920 году."
+
+msgid "This year the party is at my summer house."
+msgstr "В этом году праздник у меня на даче."
+
+msgid "Three impersonal forms of eight verbs"
+msgstr "Три безличные формы восьми глаголов"
+
+msgid "to build"
+msgstr "строить"
+
+msgid "to come"
+msgstr "приходить"
+
+msgid "to do, to make"
+msgstr "делать"
+
+msgid "to drink"
+msgstr "пить"
+
+msgid "to eat"
+msgstr "есть"
+
+msgid "to get"
+msgstr "получать"
+
+msgid "to go"
+msgstr "идти, ехать"
+
+msgid "to hear"
+msgstr "слышать"
+
+msgid "to live"
+msgstr "жить"
+
+msgid "to open"
+msgstr "открывать"
+
+msgid "to put"
+msgstr "класть, ставить"
+
+msgid "to read"
+msgstr "читать"
+
+msgid "To say no now: <0>ei</0> and the <1>-tud</1> form with <2>-ta</2> or <3>-da</3>: <4>ei räägita, ei tehta</4>. In the past: <5>ei</5> and the <6>-tud</6> form: <7>ei räägitud</7>."
+msgstr "Отрицание сейчас: <0>ei</0> и форма на <1>-tud</1> с <2>-ta</2> или <3>-da</3>: <4>ei räägita, ei tehta</4>. В прошлом: <5>ei</5> и форма на <6>-tud</6>: <7>ei räägitud</7>."
+
+msgid "to see"
+msgstr "видеть"
+
+msgid "to sell"
+msgstr "продавать"
+
+msgid "to sing"
+msgstr "петь"
+
+msgid "to speak"
+msgstr "говорить"
+
+msgid "To the country"
+msgstr "В деревню"
+
+msgid "To the sea, to swim all night"
+msgstr "На море, плавать всю ночь"
+
+msgid "to wait"
+msgstr "ждать"
+
+msgid "Towns are full of people on Midsummer Eve."
+msgstr "Накануне Иванова дня в городах полно людей."
+
+msgid "Type the impersonal form"
+msgstr "Напиши безличную форму"
+
+msgid "What did people look for in the forest in the old days? Write it as Jaan says it."
+msgstr "Что раньше искали в лесу? Напиши так, как говорит Яан."
+
+msgid "What do people drink?"
+msgstr "Что пьют?"
+
+msgid "What does it mean?"
+msgstr "Что это значит?"
+
+msgid "What does jumping over the fire bring? Write it as Jaan says it."
+msgstr "Что приносит прыжок через костёр? Напиши так, как говорит Яан."
+
+msgid "When a person is named, the verb takes that person’s form: <0>Mari räägib</0>. When nobody is, the impersonal: <1>siin räägitakse</1>. Read the whole sentence: is a person named, and is it past?"
+msgstr "Когда лицо названо, глагол стоит в его форме: <0>Mari räägib</0>. Когда никто не назван — безличная форма: <1>siin räägitakse</1>. Читай всё предложение: названо ли лицо и прошлое ли это?"
+
+msgid "Where do people go on Midsummer Eve?"
+msgstr "Куда едут накануне Иванова дня?"
+
+msgid "Where was Jaan last Midsummer?"
+msgstr "Где был Яан в прошлый Иванов день?"
+
+msgid "Which form?"
+msgstr "Какая форма?"
+
+msgid "Who says it?"
+msgstr "Кто это говорит?"
+
+msgid "Will I be invited too?"
+msgstr "Меня тоже пригласят?"
+
+msgid "Wine"
+msgstr "Вино"
+
+msgid "Write each sentence in Estonian. English says “is done” or “people do”; Estonian uses one form for both."
+msgstr "Напиши каждое предложение по-эстонски. По-русски здесь бывают разные обороты, а в эстонском одна форма."
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"

@@ -139,8 +139,8 @@ msgstr "Do you live in Tallinn?"
 msgid "Do you speak Estonian?"
 msgstr "Do you speak Estonian?"
 
-msgid "Each round gives an answer. Write the question it answers: start with the question word, and give the verb the ending for the person you ask."
-msgstr "Each round gives an answer. Write the question it answers: start with the question word, and give the verb the ending for the person you ask."
+msgid "Each round gives an answer. Write the question it answers: start with the question word, and when the answer says <0>ma</0>, ask with <1>sa</1>."
+msgstr "Each round gives an answer. Write the question it answers: start with the question word, and when the answer says <0>ma</0>, ask with <1>sa</1>."
 
 msgid "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
 msgstr "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
@@ -359,8 +359,8 @@ msgstr "Question words"
 msgid "Short for sinu."
 msgstr "Short for sinu."
 
-msgid "Start with <et>{word}</et>, and give the verb the ending for the person you ask."
-msgstr "Start with <et>{word}</et>, and give the verb the ending for the person you ask."
+msgid "Start with <et>{word}</et>; when the answer says <et>ma</et>, ask with <et>sa</et>."
+msgstr "Start with <et>{word}</et>; when the answer says <et>ma</et>, ask with <et>sa</et>."
 
 msgid "Statement"
 msgstr "Statement"

@@ -47,7 +47,7 @@ msgid "All six, each with the right ending."
 msgstr "Все шесть, каждое с верным окончанием."
 
 msgid "All six, every word right."
-msgstr "Все шесть, все слова верно."
+msgstr "Все шесть, каждое слово написано верно."
 
 msgid "Answering where with a place"
 msgstr "Как ответить, где"
@@ -460,8 +460,8 @@ msgstr "Кто в Тарту?"
 msgid "work"
 msgstr "работа"
 
-msgid "Write each sentence in Estonian. A town, a country or a building takes <0>-s</0>. Something on a surface takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
-msgstr "Напиши каждое предложение по-эстонски. Город, страна или здание получают <0>-s</0>. То, что на чём-то, получает <1>-l</1>, как и работа, рынок и названия на <2>-maa</2>."
+msgid "Write each sentence in Estonian. A town, a country or a building takes <0>-s</0>. A surface takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
+msgstr "Напиши каждое предложение по-эстонски. Город, страна или здание получают <0>-s</0>. Поверхность получает <1>-l</1>, как и работа, рынок и названия на <2>-maa</2>."
 
 msgid "Write it in Estonian"
 msgstr "Напиши по-эстонски"

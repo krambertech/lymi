@@ -139,8 +139,8 @@ msgstr "Ты живёшь в Таллине?"
 msgid "Do you speak Estonian?"
 msgstr "Ты говоришь по-эстонски?"
 
-msgid "Each round gives an answer. Write the question it answers: start with the question word, and give the verb the ending for the person you ask."
-msgstr "В каждом раунде есть ответ. Напиши к нему вопрос: начни с вопросительного слова и поставь глагол в форму для того, кого спрашиваешь."
+msgid "Each round gives an answer. Write the question it answers: start with the question word, and when the answer says <0>ma</0>, ask with <1>sa</1>."
+msgstr "В каждом раунде есть ответ. Напиши к нему вопрос: начни с вопросительного слова, а если в ответе <0>ma</0>, спрашивай через <1>sa</1>."
 
 msgid "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
 msgstr "По-русски вопрос часто задают одной интонацией. В эстонском нужно слово kas, а все остальные слова остаются на своих местах. Попробуй на пяти предложениях."
@@ -359,8 +359,8 @@ msgstr "Вопросительные слова"
 msgid "Short for sinu."
 msgstr "Сокращение от sinu."
 
-msgid "Start with <et>{word}</et>, and give the verb the ending for the person you ask."
-msgstr "Начни с <et>{word}</et> и поставь глагол в форму для того, кого спрашиваешь."
+msgid "Start with <et>{word}</et>; when the answer says <et>ma</et>, ask with <et>sa</et>."
+msgstr "Начни с <et>{word}</et>; если в ответе <et>ma</et>, спрашивай через <et>sa</et>."
 
 msgid "Statement"
 msgstr "Утверждение"

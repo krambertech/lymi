@@ -977,7 +977,7 @@ export function KohadLesson() {
                     <b lang="et" className="whitespace-nowrap">
                       -s
                     </b>
-                    . Something on a surface takes{" "}
+                    . A surface takes{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -l
                     </b>

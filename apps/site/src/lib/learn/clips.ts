@@ -418,8 +418,23 @@ export const KUSIMUSED_WORDS = [
 ] as const;
 
 export const KUSIMUSED_ASKED = [
-  { word: "kes", reply: "See on Jaan.", answers: ["Kes see on?", "Kes ta on?"] },
-  { word: "mis", reply: "See on raamat.", answers: ["Mis see on?"] },
+  { word: "kes", reply: "Mari elab Tartus.", answers: ["Kes elab Tartus?"] },
+  {
+    word: "mis",
+    reply: "Ma joon kohvi.",
+    answers: [
+      "Mis sa jood?",
+      "Mida sa jood?",
+      "Mis te joote?",
+      "Mida te joote?",
+      "Mis sina jood?",
+      "Mida sina jood?",
+      "Mis teie joote?",
+      "Mida teie joote?",
+      "Mis jood?",
+      "Mida jood?",
+    ],
+  },
   {
     word: "kus",
     reply: "Ma töötan Tartus.",
@@ -429,6 +444,7 @@ export const KUSIMUSED_ASKED = [
       "Kus sina töötad?",
       "Kus teie töötate?",
       "Kus töötad?",
+      "Kus töötate?",
     ],
   },
   {
@@ -440,6 +456,7 @@ export const KUSIMUSED_ASKED = [
       "Millal sina töötad?",
       "Millal teie töötate?",
       "Millal töötad?",
+      "Millal töötate?",
     ],
   },
   {
@@ -452,6 +469,10 @@ export const KUSIMUSED_ASKED = [
       "Miks te õpite eesti keelt?",
       "Miks sina eesti keelt õpid?",
       "Miks sina õpid eesti keelt?",
+      "Miks teie eesti keelt õpite?",
+      "Miks eesti keelt õpid?",
+      "Miks õpid eesti keelt?",
+      "Miks eesti keelt õpite?",
     ],
   },
   {
@@ -464,6 +485,10 @@ export const KUSIMUSED_ASKED = [
       "Kuidas te räägite eesti keelt?",
       "Kuidas sina eesti keelt räägid?",
       "Kuidas sina räägid eesti keelt?",
+      "Kuidas teie eesti keelt räägite?",
+      "Kuidas eesti keelt räägid?",
+      "Kuidas räägid eesti keelt?",
+      "Kuidas eesti keelt räägite?",
     ],
   },
   {
@@ -474,10 +499,12 @@ export const KUSIMUSED_ASKED = [
       "Kui palju sa kohvi jood?",
       "Kui palju sa jood kohvi?",
       "Kui palju kohvi te joote?",
-      "Kui palju kohvi sina jood?",
       "Kui palju te kohvi joote?",
       "Kui palju te joote kohvi?",
+      "Kui palju kohvi sina jood?",
       "Kui palju kohvi teie joote?",
+      "Kui palju kohvi jood?",
+      "Kui palju kohvi joote?",
     ],
   },
 ] as const;
@@ -526,7 +553,20 @@ export const KUSIMUSED_TRANSLATED = [
       "Kas jood kohvi?",
     ],
   },
-  { kind: "word", answers: ["Mis sa loed?", "Mida sa loed?", "Mis te loete?", "Mida te loete?"] },
+  {
+    kind: "word",
+    answers: [
+      "Mis sa loed?",
+      "Mida sa loed?",
+      "Mis te loete?",
+      "Mida te loete?",
+      "Mis sina loed?",
+      "Mida sina loed?",
+      "Mida teie loete?",
+      "Mis loed?",
+      "Mida loed?",
+    ],
+  },
 ] as const;
 
 export const KUSIMUSED_TALK: Conversation = {
@@ -840,34 +880,20 @@ export const KOHAD_TYPED = [
 
 export const KOHAD_ASKED = [
   {
-    reply: "Ma töötan haiglas.",
-    answers: [
-      "Kus sa töötad?",
-      "Kus te töötate?",
-      "Kus sina töötad?",
-      "Kus teie töötate?",
-      "Kus töötad?",
-      "Kus töötate?",
-    ],
+    reply: "Jaan töötab haiglas.",
+    answers: ["Kus Jaan töötab?", "Kus töötab Jaan?", "Kus ta töötab?", "Kus tema töötab?"],
   },
-  {
-    reply: "Ma elan Tartus.",
-    answers: [
-      "Kus sa elad?",
-      "Kus te elate?",
-      "Kus sina elad?",
-      "Kus teie elate?",
-      "Kus elad?",
-      "Kus elate?",
-    ],
-  },
-  { reply: "Ta on kodus.", answers: ["Kus ta on?", "Kus tema on?"] },
+  { reply: "Nad elavad Tartus.", answers: ["Kus nad elavad?", "Kus nemad elavad?"] },
+  { reply: "Ema on kodus.", answers: ["Kus ema on?", "Kus on ema?", "Kus ta on?", "Kus tema on?"] },
   {
     reply: "Mari töötab koolis.",
     answers: ["Kus Mari töötab?", "Kus töötab Mari?", "Kus ta töötab?", "Kus tema töötab?"],
   },
-  { reply: "Me elame Saaremaal.", answers: ["Kus te elate?", "Kus teie elate?", "Kus elate?"] },
-  { reply: "Nad on turul.", answers: ["Kus nad on?", "Kus nemad on?"] },
+  {
+    reply: "Me elame Saaremaal.",
+    answers: ["Kus te elate?", "Kus teie elate?", "Kus elate?"],
+  },
+  { reply: "Ta õpib Tallinnas.", answers: ["Kus ta õpib?", "Kus tema õpib?"] },
 ] as const;
 
 export const KOHAD_WRITTEN = [

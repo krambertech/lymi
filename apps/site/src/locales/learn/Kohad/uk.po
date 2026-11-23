@@ -299,7 +299,7 @@ msgid "Nearly. Check the verb’s ending in the ones you missed."
 msgstr "Майже. Там, де була помилка, перевір закінчення дієслова."
 
 msgid "Nearly. Check which ending each place takes."
-msgstr "Майже. Перевір, яке закінчення бере кожне місце."
+msgstr "Майже. Перевір, яке закінчення має кожне місце."
 
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Майже. Переслухай ті, де були помилки."
@@ -460,8 +460,8 @@ msgstr "Хто в Тарту?"
 msgid "work"
 msgstr "робота"
 
-msgid "Write each sentence in Estonian. A town, a country or a building takes <0>-s</0>. Something on a surface takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
-msgstr "Напиши кожне речення естонською. Місто, країна чи будівля беруть <0>-s</0>. Те, що на чомусь, бере <1>-l</1>, як і робота, ринок і назви на <2>-maa</2>."
+msgid "Write each sentence in Estonian. A town, a country or a building takes <0>-s</0>. A surface takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
+msgstr "Напиши кожне речення естонською. Місто, країна чи будівля мають <0>-s</0>. Поверхня має <1>-l</1>, як і робота, ринок і назви на <2>-maa</2>."
 
 msgid "Write it in Estonian"
 msgstr "Напиши естонською"

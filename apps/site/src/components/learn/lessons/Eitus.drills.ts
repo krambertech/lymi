@@ -83,7 +83,13 @@ const answered = ({ ask, answer }: (typeof NO_ANSWERS)[number]): SentenceDrill =
   const tail = rest.slice(1).join(" ");
   const full = (form: string) => [
     `Ei, ${who} ${form}.`,
-    ...(tail ? [`Ei, ${who} ${form} ${tail}.`] : []),
+    `${who.charAt(0).toUpperCase()}${who.slice(1)} ${form}.`,
+    ...(tail
+      ? [
+          `Ei, ${who} ${form} ${tail}.`,
+          `${who.charAt(0).toUpperCase()}${who.slice(1)} ${form} ${tail}.`,
+        ]
+      : []),
   ];
   return {
     kind: "rewrite",
@@ -94,8 +100,8 @@ const answered = ({ ask, answer }: (typeof NO_ANSWERS)[number]): SentenceDrill =
     say: answer,
     answers:
       verb === "ole"
-        ? [answer, "Pole.", ...full("ei ole"), ...full("pole")]
-        : [answer, ...full(`ei ${verb}`)],
+        ? [answer, "Pole.", "Ei.", ...full("ei ole"), ...full("pole")]
+        : [answer, "Ei.", ...full(`ei ${verb}`)],
     explain: msg`<et>Ei</et>, then the verb from the question without its ending.`,
   };
 };

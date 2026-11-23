@@ -888,7 +888,8 @@ export function KusimusedLesson() {
                 <p>
                   <Trans>
                     Each round gives an answer. Write the question it answers: start with the
-                    question word, and give the verb the ending for the person you ask.
+                    question word, and when the answer says <span lang="et">ma</span>, ask with{" "}
+                    <span lang="et">sa</span>.
                   </Trans>
                 </p>
               </Prose>

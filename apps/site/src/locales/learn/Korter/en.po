@@ -1,0 +1,536 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 19:01+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0>Kööki</0> is where you go; where something is, ask <1>Kus on köök?</1>"
+msgstr "<0>Kööki</0> is where you go; where something is, ask <1>Kus on köök?</1>"
+
+msgid "20 minutes"
+msgstr "20 minutes"
+
+msgid "400 euros"
+msgstr "400 euros"
+
+msgid "400 euros a month"
+msgstr "400 euros a month"
+
+msgid "450 euros"
+msgstr "450 euros"
+
+msgid "450 euros a month"
+msgstr "450 euros a month"
+
+msgid "500 euros a month"
+msgstr "500 euros a month"
+
+msgid "6 exercises, 3 of them typed, a conversation and a message"
+msgstr "6 exercises, 3 of them typed, a conversation and a message"
+
+msgid "600 euros"
+msgstr "600 euros"
+
+msgid "a balcony"
+msgstr "a balcony"
+
+msgid "a bathroom"
+msgstr "a bathroom"
+
+msgid "a bed"
+msgstr "a bed"
+
+msgid "a bedroom"
+msgstr "a bedroom"
+
+msgid "a bus stop"
+msgstr "a bus stop"
+
+msgid "a cooker"
+msgstr "a cooker"
+
+msgid "a flat"
+msgstr "a flat"
+
+msgid "A flat advert"
+msgstr "A flat advert"
+
+msgid "a flat, an apartment"
+msgstr "a flat, an apartment"
+
+msgid "a kitchen"
+msgstr "a kitchen"
+
+msgid "a lift"
+msgstr "a lift"
+
+msgid "a month; six"
+msgstr "a month; six"
+
+msgid "A park"
+msgstr "A park"
+
+msgid "A river"
+msgstr "A river"
+
+msgid "a teacher"
+msgstr "a teacher"
+
+msgid "a washing machine"
+msgstr "a washing machine"
+
+msgid "advert"
+msgstr "advert"
+
+msgid "After <0>ei ole</0>, the partitive: <1>kassi</1>."
+msgstr "After <0>ei ole</0>, the partitive: <1>kassi</1>."
+
+msgid "After <0>ei ole</0>, the partitive: <1>lifti</1>."
+msgstr "After <0>ei ole</0>, the partitive: <1>lifti</1>."
+
+msgid "After <0>ei ole</0>, the partitive: <1>Majas ei ole lifti</1>."
+msgstr "After <0>ei ole</0>, the partitive: <1>Majas ei ole lifti</1>."
+
+msgid "After <0>kaks</0>, the partitive: <1>kaks kassi</1>. And the advert says no cats."
+msgstr "After <0>kaks</0>, the partitive: <1>kaks kassi</1>. And the advert says no cats."
+
+msgid "After <0>tahan</0>, the <1>-da</1> infinitive: <2>kolida</2>."
+msgstr "After <0>tahan</0>, the <1>-da</1> infinitive: <2>kolida</2>."
+
+msgid "After <et>ei ole</et>, the partitive: <et>Majas ei ole lifti</et>."
+msgstr "After <et>ei ole</et>, the partitive: <et>Majas ei ole lifti</et>."
+
+msgid "After <et>ei ole</et>: <et>lifti</et>"
+msgstr "After <et>ei ole</et>: <et>lifti</et>"
+
+msgid "After <et>tahan</et>, the <et>-da</et> infinitive: <et>kolida</et>, <et>vaadata</et>."
+msgstr "After <et>tahan</et>, the <et>-da</et> infinitive: <et>kolida</et>, <et>vaadata</et>."
+
+msgid "Aken, a window; after a number, akent."
+msgstr "Aken, a window; after a number, akent."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six written right."
+msgstr "All six written right."
+
+msgid "an advert"
+msgstr "an advert"
+
+msgid "An advert for a flat"
+msgstr "An advert for a flat"
+
+msgid "Any time"
+msgstr "Any time"
+
+msgid "As in lesson {places}, where something is and where it goes take different endings. Put each word in its group. Tap a word to hear it."
+msgstr "As in lesson {places}, where something is and where it goes take different endings. Put each word in its group. Tap a word to hear it."
+
+msgid "Asks one question about the flat."
+msgstr "Asks one question about the flat."
+
+msgid "Asks to come and see the flat, with a day."
+msgstr "Asks to come and see the flat, with a day."
+
+msgid "boxes"
+msgstr "boxes"
+
+msgid "Can I come and see the flat tomorrow?"
+msgstr "Can I come and see the flat tomorrow?"
+
+msgid "Come into the kitchen!"
+msgstr "Come into the kitchen!"
+
+msgid "Coming to do something takes the <0>-ma</0> infinitive: <1>vaatama tulla</1>."
+msgstr "Coming to do something takes the <0>-ma</0> infinitive: <1>vaatama tulla</1>."
+
+msgid "Coming to do something takes the <et>-ma</et> infinitive: <et>vaatama tulla</et>."
+msgstr "Coming to do something takes the <et>-ma</et> infinitive: <et>vaatama tulla</et>."
+
+msgid "Drag a word into each gap, or tap a word to put it in the open gap. Some words are spare. The gaps test <0>-na</0> for a job, the partitive after <1>ei ole</1>, the <2>-ma</2> infinitive, <3>sisse</3> from lesson {particles} and where something is."
+msgstr "Drag a word into each gap, or tap a word to put it in the open gap. Some words are spare. The gaps test <0>-na</0> for a job, the partitive after <1>ei ole</1>, the <2>-ma</2> infinitive, <3>sisse</3> from lesson {particles} and where something is."
+
+msgid "Each sentence should say what the line above it says, and one word is wrong. Tap it, then type it right."
+msgstr "Each sentence should say what the line above it says, and one word is wrong. Tap it, then type it right."
+
+msgid "far"
+msgstr "far"
+
+msgid "fifth"
+msgstr "fifth"
+
+msgid "Fill the gaps: Jaan’s message"
+msgstr "Fill the gaps: Jaan’s message"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "for me"
+msgstr "for me"
+
+msgid "From a date takes <0>-st</0> on both words: <1>esimesest detsembrist</1>."
+msgstr "From a date takes <0>-st</0> on both words: <1>esimesest detsembrist</1>."
+
+msgid "From January"
+msgstr "From January"
+
+msgid "from the balcony"
+msgstr "from the balcony"
+
+msgid "From the first of December"
+msgstr "From the first of December"
+
+msgid "Going into usually takes <0>-sse</0>: <1>korterisse</1>."
+msgstr "Going into usually takes <0>-sse</0>: <1>korterisse</1>."
+
+msgid "Greet Mari, say who you are, ask to come and see the flat on a day you name, ask one question about the flat, and thank her."
+msgstr "Greet Mari, say who you are, ask to come and see the flat on a day you name, ask one question about the flat, and thank her."
+
+msgid "Greets Mari."
+msgstr "Greets Mari."
+
+msgid "His brother"
+msgstr "His brother"
+
+msgid "How many minutes is the small flat from the centre by bus? Write the number in Estonian."
+msgstr "How many minutes is the small flat from the centre by bus? Write the number in Estonian."
+
+msgid "How many rooms does the flat have?"
+msgstr "How many rooms does the flat have?"
+
+msgid "How much is the flat in the centre?"
+msgstr "How much is the flat in the centre?"
+
+msgid "How much is the rent?"
+msgstr "How much is the rent?"
+
+msgid "I don’t have a cat."
+msgstr "I don’t have a cat."
+
+msgid "I live on the fourth floor."
+msgstr "I live on the fourth floor."
+
+msgid "I want to move in on Friday."
+msgstr "I want to move in on Friday."
+
+msgid "I want to move in."
+msgstr "I want to move in."
+
+msgid "I work as a teacher in Tartu."
+msgstr "I work as a teacher in Tartu."
+
+msgid "I’m going into the flat."
+msgstr "I’m going into the flat."
+
+msgid "I’m in the kitchen."
+msgstr "I’m in the kitchen."
+
+msgid "In an advert, eurot kuus is euros a month."
+msgstr "In an advert, eurot kuus is euros a month."
+
+msgid "in the city centre"
+msgstr "in the city centre"
+
+msgid "In the evening, after six"
+msgstr "In the evening, after six"
+
+msgid "In the morning"
+msgstr "In the morning"
+
+msgid "Is there a lift in the building?"
+msgstr "Is there a lift in the building?"
+
+msgid "It is noisy in Annelinn."
+msgstr "It is noisy in Annelinn."
+
+msgid "Jaan"
+msgstr "Jaan"
+
+msgid "Jaan comes to see the flat, and Mari, the owner, shows him round. If you pick a wrong reply, you see why, then hear the right one."
+msgstr "Jaan comes to see the flat, and Mari, the owner, shows him round. If you pick a wrong reply, you see why, then hear the right one."
+
+msgid "Jaan has seen two flats, and his friend Liis calls him. Read the questions first. You can play the recording twice, as in the A2 exam."
+msgstr "Jaan has seen two flats, and his friend Liis calls him. Read the questions first. You can play the recording twice, as in the A2 exam."
+
+msgid "Jaan is looking for a <0/>, a flat, in Tartu. Read the advert, then answer the questions. Once you check your answers, tap a word to open its card."
+msgstr "Jaan is looking for a <0/>, a flat, in Tartu. Read the advert, then answer the questions. Once you check your answers, tap a word to open its card."
+
+msgid "Jaan saw two flats today."
+msgstr "Jaan saw two flats today."
+
+msgid "Jaan writes to the owner"
+msgstr "Jaan writes to the owner"
+
+msgid "Jõgi, a river; here the object of näeb."
+msgstr "Jõgi, a river; here the object of näeb."
+
+msgid "Kaks tuba: two rooms."
+msgstr "Kaks tuba: two rooms."
+
+msgid "Kast, a box; after a number, kasti."
+msgstr "Kast, a box; after a number, kasti."
+
+msgid "Kuulutus as the object of nägin."
+msgstr "Kuulutus as the object of nägin."
+
+msgid "Lift after ei ole."
+msgstr "Lift after ei ole."
+
+msgid "Liis"
+msgstr "Liis"
+
+msgid "Listen: Jaan and Liis"
+msgstr "Listen: Jaan and Liis"
+
+msgid "Listen: two flats"
+msgstr "Listen: two flats"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Looking round the flat"
+msgstr "Looking round the flat"
+
+msgid "Mari"
+msgstr "Mari"
+
+msgid "Mari Tamm writes"
+msgstr "Mari Tamm writes"
+
+msgid "Most of them. Read the ones you missed once more."
+msgstr "Most of them. Read the ones you missed once more."
+
+msgid "Most of them. Read the reason under each one you missed."
+msgstr "Most of them. Read the reason under each one you missed."
+
+msgid "Moving in is <0>sisse kolima</0>, moving out <1>välja kolima</1>."
+msgstr "Moving in is <0>sisse kolima</0>, moving out <1>välja kolima</1>."
+
+msgid "Moving in is <0>sisse kolima</0>; <1>välja</1> would be moving out."
+msgstr "Moving in is <0>sisse kolima</0>; <1>välja</1> would be moving out."
+
+msgid "Now"
+msgstr "Now"
+
+msgid "Now write your own message to Mari, about 30 words. Then compare it with the model and tick what yours does."
+msgstr "Now write your own message to Mari, about 30 words. Then compare it with the model and tick what yours does."
+
+msgid "On a date takes <0>-l</0>: <1>esimesel detsembril</1>."
+msgstr "On a date takes <0>-l</0>: <1>esimesel detsembril</1>."
+
+msgid "On a floor takes <0>-l</0> on both words: <1>kolmandal korrusel</1>."
+msgstr "On a floor takes <0>-l</0> on both words: <1>kolmandal korrusel</1>."
+
+msgid "On a floor takes <et>-l</et> on both words: <et>kolmandal korrusel</et>."
+msgstr "On a floor takes <et>-l</et> on both words: <et>kolmandal korrusel</et>."
+
+msgid "On a floor: <0>kolmandal korrusel</0>, both words with <1>-l</1>."
+msgstr "On a floor: <0>kolmandal korrusel</0>, both words with <1>-l</1>."
+
+msgid "On a floor: <et>kolmandal korrusel</et>"
+msgstr "On a floor: <et>kolmandal korrusel</et>"
+
+msgid "One"
+msgstr "One"
+
+msgid "only, not until"
+msgstr "only, not until"
+
+msgid "quiet"
+msgstr "quiet"
+
+msgid "Read a flat advert, write to the owner, look round the flat, and follow a call about two flats. Then write a short message of your own."
+msgstr "Read a flat advert, write to the owner, look round the flat, and follow a call about two flats. Then write a short message of your own."
+
+msgid "Read the advert once more, then try again."
+msgstr "Read the advert once more, then try again."
+
+msgid "Read What to remember at the end, then try again."
+msgstr "Read What to remember at the end, then try again."
+
+msgid "rent"
+msgstr "rent"
+
+msgid "river"
+msgstr "river"
+
+msgid "Says who you are."
+msgstr "Says who you are."
+
+msgid "She asks when you move in, not out."
+msgstr "She asks when you move in, not out."
+
+msgid "She asks you in, so you go <0>sisse</0>, not out."
+msgstr "She asks you in, so you go <0>sisse</0>, not out."
+
+msgid "Smaller is <0>väiksem</0>, from <1>väike</1>."
+msgstr "Smaller is <0>väiksem</0>, from <1>väike</1>."
+
+msgid "suits"
+msgstr "suits"
+
+msgid "Talk: looking round the flat"
+msgstr "Talk: looking round the flat"
+
+msgid "Thanks her and signs."
+msgstr "Thanks her and signs."
+
+msgid "That says goodbye, and you have only just come."
+msgstr "That says goodbye, and you have only just come."
+
+msgid "The flat has no balcony."
+msgstr "The flat has no balcony."
+
+msgid "The flat is free from the first of December."
+msgstr "The flat is free from the first of December."
+
+msgid "The flat is new."
+msgstr "The flat is new."
+
+msgid "The flat is on the third floor."
+msgstr "The flat is on the third floor."
+
+msgid "The kitchen is small but new."
+msgstr "The kitchen is small but new."
+
+msgid "The kitchen is smaller than the room."
+msgstr "The kitchen is smaller than the room."
+
+msgid "The one in Annelinn"
+msgstr "The one in Annelinn"
+
+msgid "The one in the city centre"
+msgstr "The one in the city centre"
+
+msgid "The owner"
+msgstr "The owner"
+
+msgid "The station"
+msgstr "The station"
+
+msgid "There is no lift in the building."
+msgstr "There is no lift in the building."
+
+msgid "They’re the same size"
+msgstr "They’re the same size"
+
+msgid "Three"
+msgstr "Three"
+
+msgid "to look"
+msgstr "to look"
+
+msgid "to someone’s aid, to help"
+msgstr "to someone’s aid, to help"
+
+msgid "to the owner"
+msgstr "to the owner"
+
+msgid "to the railway station"
+msgstr "to the railway station"
+
+msgid "too"
+msgstr "too"
+
+msgid "Two"
+msgstr "Two"
+
+msgid "two-room"
+msgstr "two-room"
+
+msgid "What can you see from its balcony?"
+msgstr "What can you see from its balcony?"
+
+msgid "When is the small flat free?"
+msgstr "When is the small flat free?"
+
+msgid "When should you call?"
+msgstr "When should you call?"
+
+msgid "where"
+msgstr "where"
+
+msgid "Where or where to: <et>köögis</et>, <et>kööki</et>"
+msgstr "Where or where to: <et>köögis</et>, <et>kööki</et>"
+
+msgid "Where something goes usually takes <et>-sse</et> or a short form, or <et>-le</et> onto a balcony: <et>korterisse</et>, <et>kööki</et>, <et>rõdule</et>."
+msgstr "Where something goes usually takes <et>-sse</et> or a short form, or <et>-le</et> onto a balcony: <et>korterisse</et>, <et>kööki</et>, <et>rõdule</et>."
+
+msgid "Where something is takes the plain form: <0>Kus on köök?</0> And the room is big."
+msgstr "Where something is takes the plain form: <0>Kus on köök?</0> And the room is big."
+
+msgid "Where something is usually takes <0>-s</0>: <1>köögis</1>."
+msgstr "Where something is usually takes <0>-s</0>: <1>köögis</1>."
+
+msgid "Where something is usually takes <et>-s</et>, or <et>-l</et> on a balcony: <et>köögis</et>, <et>rõdul</et>."
+msgstr "Where something is usually takes <et>-s</et>, or <et>-l</et> on a balcony: <et>köögis</et>, <et>rõdul</et>."
+
+msgid "Where something is, <0>köögis</0>; where it goes, <1>kööki</1> or <2>korterisse</2>."
+msgstr "Where something is, <0>köögis</0>; where it goes, <1>kööki</1> or <2>korterisse</2>."
+
+msgid "Where something is: usually <0>-s</0>, or <1>-l</1> on a balcony: <2>köögis</2>, <3>rõdul</3>."
+msgstr "Where something is: usually <0>-s</0>, or <1>-l</1> on a balcony: <2>köögis</2>, <3>rõdul</3>."
+
+msgid "where to"
+msgstr "where to"
+
+msgid "Where to: usually <0>-sse</0> or a short form, or <1>-le</1> onto a balcony: <2>korterisse</2>, <3>kööki</3>, <4>rõdule</4>."
+msgstr "Where to: usually <0>-sse</0> or a short form, or <1>-le</1> onto a balcony: <2>korterisse</2>, <3>kööki</3>, <4>rõdule</4>."
+
+msgid "Where, or where to"
+msgstr "Where, or where to"
+
+msgid "Where, or where to?"
+msgstr "Where, or where to?"
+
+msgid "Which flat is bigger?"
+msgstr "Which flat is bigger?"
+
+msgid "Which floor is the flat on? Write it as the advert does."
+msgstr "Which floor is the flat on? Write it as the advert does."
+
+msgid "Which floor is the small flat on? Write it as Jaan says it."
+msgstr "Which floor is the small flat on? Write it as Jaan says it."
+
+msgid "Which infinitive: <et>tahan kolida</et>, <et>tulen vaatama</et>"
+msgstr "Which infinitive: <et>tahan kolida</et>, <et>tulen vaatama</et>"
+
+msgid "which of the two"
+msgstr "which of the two"
+
+msgid "Who will Jaan call tomorrow?"
+msgstr "Who will Jaan call tomorrow?"
+
+msgid "windows"
+msgstr "windows"
+
+msgid "Working as is usually <et>-na</et>: <et>õpetajana</et>."
+msgstr "Working as is usually <et>-na</et>: <et>õpetajana</et>."
+
+msgid "Working as usually takes <0>-na</0>: <1>õpetajana</1>."
+msgstr "Working as usually takes <0>-na</0>: <1>õpetajana</1>."
+
+msgid "Working as: <et>õpetajana</et>"
+msgstr "Working as: <et>õpetajana</et>"
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "Write to Mari"
+msgstr "Write to Mari"
+
+msgid "Write to the owner"
+msgstr "Write to the owner"
+
+msgid "Write what you’d say about a flat."
+msgstr "Write what you’d say about a flat."
+
+msgid "You are Jaan. You have no pets and want to move in on the first of December."
+msgstr "You are Jaan. You have no pets and want to move in on the first of December."
+
+msgid "You can keep a cat in the flat."
+msgstr "You can keep a cat in the flat."

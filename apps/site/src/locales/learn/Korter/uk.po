@@ -1,0 +1,536 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 19:01+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0>Kööki</0> is where you go; where something is, ask <1>Kus on köök?</1>"
+msgstr "<0>Kööki</0> — це куди йдуть; про те, де щось є, питай <1>Kus on köök?</1>"
+
+msgid "20 minutes"
+msgstr "20 хвилин"
+
+msgid "400 euros"
+msgstr "400 євро"
+
+msgid "400 euros a month"
+msgstr "400 євро на місяць"
+
+msgid "450 euros"
+msgstr "450 євро"
+
+msgid "450 euros a month"
+msgstr "450 євро на місяць"
+
+msgid "500 euros a month"
+msgstr "500 євро на місяць"
+
+msgid "6 exercises, 3 of them typed, a conversation and a message"
+msgstr "6 вправ, у 3 треба писати, розмова і повідомлення"
+
+msgid "600 euros"
+msgstr "600 євро"
+
+msgid "a balcony"
+msgstr "балкон"
+
+msgid "a bathroom"
+msgstr "ванна кімната"
+
+msgid "a bed"
+msgstr "ліжко"
+
+msgid "a bedroom"
+msgstr "спальня"
+
+msgid "a bus stop"
+msgstr "автобусна зупинка"
+
+msgid "a cooker"
+msgstr "плита"
+
+msgid "a flat"
+msgstr "квартира"
+
+msgid "A flat advert"
+msgstr "Оголошення про квартиру"
+
+msgid "a flat, an apartment"
+msgstr "квартира"
+
+msgid "a kitchen"
+msgstr "кухня"
+
+msgid "a lift"
+msgstr "ліфт"
+
+msgid "a month; six"
+msgstr "на місяць; шість"
+
+msgid "A park"
+msgstr "Парк"
+
+msgid "A river"
+msgstr "Річку"
+
+msgid "a teacher"
+msgstr "учитель"
+
+msgid "a washing machine"
+msgstr "пральна машина"
+
+msgid "advert"
+msgstr "оголошення"
+
+msgid "After <0>ei ole</0>, the partitive: <1>kassi</1>."
+msgstr "Після <0>ei ole</0> — партитив: <1>kassi</1>."
+
+msgid "After <0>ei ole</0>, the partitive: <1>lifti</1>."
+msgstr "Після <0>ei ole</0> — партитив: <1>lifti</1>."
+
+msgid "After <0>ei ole</0>, the partitive: <1>Majas ei ole lifti</1>."
+msgstr "Після <0>ei ole</0> — партитив: <1>Majas ei ole lifti</1>."
+
+msgid "After <0>kaks</0>, the partitive: <1>kaks kassi</1>. And the advert says no cats."
+msgstr "Після <0>kaks</0> — партитив: <1>kaks kassi</1>. І в оголошенні сказано: без котів."
+
+msgid "After <0>tahan</0>, the <1>-da</1> infinitive: <2>kolida</2>."
+msgstr "Після <0>tahan</0> — інфінітив на <1>-da</1>: <2>kolida</2>."
+
+msgid "After <et>ei ole</et>, the partitive: <et>Majas ei ole lifti</et>."
+msgstr "Після <et>ei ole</et> — партитив: <et>Majas ei ole lifti</et>."
+
+msgid "After <et>ei ole</et>: <et>lifti</et>"
+msgstr "Після <et>ei ole</et>: <et>lifti</et>"
+
+msgid "After <et>tahan</et>, the <et>-da</et> infinitive: <et>kolida</et>, <et>vaadata</et>."
+msgstr "Після <et>tahan</et> — інфінітив на <et>-da</et>: <et>kolida</et>, <et>vaadata</et>."
+
+msgid "Aken, a window; after a number, akent."
+msgstr "Aken — вікно; після числа — akent."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All six written right."
+msgstr "Усі шість написано правильно."
+
+msgid "an advert"
+msgstr "оголошення"
+
+msgid "An advert for a flat"
+msgstr "Оголошення про квартиру"
+
+msgid "Any time"
+msgstr "Будь-коли"
+
+msgid "As in lesson {places}, where something is and where it goes take different endings. Put each word in its group. Tap a word to hear it."
+msgstr "Як в уроці {places}, «де» і «куди» мають різні закінчення. Розклади слова по групах. Торкнися слова, щоб послухати."
+
+msgid "Asks one question about the flat."
+msgstr "Ставить одне питання про квартиру."
+
+msgid "Asks to come and see the flat, with a day."
+msgstr "Просить дозволу прийти подивитися квартиру й називає день."
+
+msgid "boxes"
+msgstr "коробки"
+
+msgid "Can I come and see the flat tomorrow?"
+msgstr "Можна мені завтра прийти подивитися квартиру?"
+
+msgid "Come into the kitchen!"
+msgstr "Заходь на кухню!"
+
+msgid "Coming to do something takes the <0>-ma</0> infinitive: <1>vaatama tulla</1>."
+msgstr "Прийти щось зробити — це інфінітив на <0>-ma</0>: <1>vaatama tulla</1>."
+
+msgid "Coming to do something takes the <et>-ma</et> infinitive: <et>vaatama tulla</et>."
+msgstr "Прийти щось зробити — це інфінітив на <et>-ma</et>: <et>vaatama tulla</et>."
+
+msgid "Drag a word into each gap, or tap a word to put it in the open gap. Some words are spare. The gaps test <0>-na</0> for a job, the partitive after <1>ei ole</1>, the <2>-ma</2> infinitive, <3>sisse</3> from lesson {particles} and where something is."
+msgstr "Перетягни слово в кожен пропуск або торкнися слова, щоб вставити його у відкритий пропуск. Деякі слова зайві. Пропуски перевіряють <0>-na</0> для професії, партитив після <1>ei ole</1>, інфінітив на <2>-ma</2>, <3>sisse</3> з уроку {particles} і те, де щось є."
+
+msgid "Each sentence should say what the line above it says, and one word is wrong. Tap it, then type it right."
+msgstr "Кожне речення має казати те саме, що й рядок над ним, але одне слово в ньому неправильне. Торкнися його, а потім напиши правильно."
+
+msgid "far"
+msgstr "далеко"
+
+msgid "fifth"
+msgstr "п’ятий"
+
+msgid "Fill the gaps: Jaan’s message"
+msgstr "Заповни пропуски: повідомлення Яана"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "for me"
+msgstr "для мене"
+
+msgid "From a date takes <0>-st</0> on both words: <1>esimesest detsembrist</1>."
+msgstr "«Від» якоїсь дати — це <0>-st</0> на обох словах: <1>esimesest detsembrist</1>."
+
+msgid "From January"
+msgstr "З січня"
+
+msgid "from the balcony"
+msgstr "з балкона"
+
+msgid "From the first of December"
+msgstr "З першого грудня"
+
+msgid "Going into usually takes <0>-sse</0>: <1>korterisse</1>."
+msgstr "«Усередину» зазвичай — це <0>-sse</0>: <1>korterisse</1>."
+
+msgid "Greet Mari, say who you are, ask to come and see the flat on a day you name, ask one question about the flat, and thank her."
+msgstr "Привітайся з Марі, скажи, хто ти, попроси дозволу прийти подивитися квартиру в названий тобою день, постав одне питання про квартиру й подякуй."
+
+msgid "Greets Mari."
+msgstr "Вітається з Марі."
+
+msgid "His brother"
+msgstr "Свого брата"
+
+msgid "How many minutes is the small flat from the centre by bus? Write the number in Estonian."
+msgstr "Скільки хвилин автобусом від маленької квартири до центру? Напиши число естонською."
+
+msgid "How many rooms does the flat have?"
+msgstr "Скільки кімнат у квартирі?"
+
+msgid "How much is the flat in the centre?"
+msgstr "Скільки коштує квартира в центрі?"
+
+msgid "How much is the rent?"
+msgstr "Яка орендна плата?"
+
+msgid "I don’t have a cat."
+msgstr "У мене немає кота."
+
+msgid "I live on the fourth floor."
+msgstr "Я живу на четвертому поверсі."
+
+msgid "I want to move in on Friday."
+msgstr "Я хочу в’їхати в п’ятницю."
+
+msgid "I want to move in."
+msgstr "Я хочу в’їхати."
+
+msgid "I work as a teacher in Tartu."
+msgstr "Я працюю вчителем у Тарту."
+
+msgid "I’m going into the flat."
+msgstr "Я заходжу в квартиру."
+
+msgid "I’m in the kitchen."
+msgstr "Я на кухні."
+
+msgid "In an advert, eurot kuus is euros a month."
+msgstr "В оголошенні eurot kuus — це «євро на місяць»."
+
+msgid "in the city centre"
+msgstr "у центрі міста"
+
+msgid "In the evening, after six"
+msgstr "Увечері, після шостої"
+
+msgid "In the morning"
+msgstr "Зранку"
+
+msgid "Is there a lift in the building?"
+msgstr "У будинку є ліфт?"
+
+msgid "It is noisy in Annelinn."
+msgstr "В Аннелінні шумно."
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan comes to see the flat, and Mari, the owner, shows him round. If you pick a wrong reply, you see why, then hear the right one."
+msgstr "Яан приходить подивитися квартиру, і власниця Марі все йому показує. Якщо вибереш неправильну відповідь, побачиш чому, а потім почуєш правильну."
+
+msgid "Jaan has seen two flats, and his friend Liis calls him. Read the questions first. You can play the recording twice, as in the A2 exam."
+msgstr "Яан подивився дві квартири, і йому телефонує подруга Ліїс. Спершу прочитай питання. Запис можна прослухати двічі, як на іспиті A2."
+
+msgid "Jaan is looking for a <0/>, a flat, in Tartu. Read the advert, then answer the questions. Once you check your answers, tap a word to open its card."
+msgstr "Яан шукає <0/> — квартиру — у Тарту. Прочитай оголошення й дай відповіді на питання. Коли перевіриш відповіді, торкнися слова, щоб відкрити його картку."
+
+msgid "Jaan saw two flats today."
+msgstr "Сьогодні Яан подивився дві квартири."
+
+msgid "Jaan writes to the owner"
+msgstr "Яан пише власниці"
+
+msgid "Jõgi, a river; here the object of näeb."
+msgstr "Jõgi — річка; тут це додаток до näeb."
+
+msgid "Kaks tuba: two rooms."
+msgstr "Kaks tuba — дві кімнати."
+
+msgid "Kast, a box; after a number, kasti."
+msgstr "Kast — коробка; після числа — kasti."
+
+msgid "Kuulutus as the object of nägin."
+msgstr "Kuulutus як додаток до nägin."
+
+msgid "Lift after ei ole."
+msgstr "Lift після ei ole."
+
+msgid "Liis"
+msgstr "Ліїс"
+
+msgid "Listen: Jaan and Liis"
+msgstr "Слухання: Яан і Ліїс"
+
+msgid "Listen: two flats"
+msgstr "На слух: дві квартири"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Looking round the flat"
+msgstr "Огляд квартири"
+
+msgid "Mari"
+msgstr "Марі"
+
+msgid "Mari Tamm writes"
+msgstr "Пише Марі Тамм"
+
+msgid "Most of them. Read the ones you missed once more."
+msgstr "Більшість. Перечитай ті, що не вдалися."
+
+msgid "Most of them. Read the reason under each one you missed."
+msgstr "Більшість. Прочитай пояснення під кожною помилкою."
+
+msgid "Moving in is <0>sisse kolima</0>, moving out <1>välja kolima</1>."
+msgstr "«В’їхати» — це <0>sisse kolima</0>, «виїхати» — <1>välja kolima</1>."
+
+msgid "Moving in is <0>sisse kolima</0>; <1>välja</1> would be moving out."
+msgstr "«В’їхати» — це <0>sisse kolima</0>; з <1>välja</1> вийшло б «виїхати»."
+
+msgid "Now"
+msgstr "Зараз"
+
+msgid "Now write your own message to Mari, about 30 words. Then compare it with the model and tick what yours does."
+msgstr "Тепер напиши Марі власне повідомлення, приблизно на 30 слів. Потім порівняй його із взірцем і познач, що є у твоєму."
+
+msgid "On a date takes <0>-l</0>: <1>esimesel detsembril</1>."
+msgstr "Дата — це <0>-l</0>: <1>esimesel detsembril</1>."
+
+msgid "On a floor takes <0>-l</0> on both words: <1>kolmandal korrusel</1>."
+msgstr "«На поверсі» — це <0>-l</0> на обох словах: <1>kolmandal korrusel</1>."
+
+msgid "On a floor takes <et>-l</et> on both words: <et>kolmandal korrusel</et>."
+msgstr "«На поверсі» — це <et>-l</et> на обох словах: <et>kolmandal korrusel</et>."
+
+msgid "On a floor: <0>kolmandal korrusel</0>, both words with <1>-l</1>."
+msgstr "На поверсі: <0>kolmandal korrusel</0>, обидва слова з <1>-l</1>."
+
+msgid "On a floor: <et>kolmandal korrusel</et>"
+msgstr "На поверсі: <et>kolmandal korrusel</et>"
+
+msgid "One"
+msgstr "Одна"
+
+msgid "only, not until"
+msgstr "лише, не раніше ніж"
+
+msgid "quiet"
+msgstr "тихо"
+
+msgid "Read a flat advert, write to the owner, look round the flat, and follow a call about two flats. Then write a short message of your own."
+msgstr "Прочитай оголошення про квартиру, напиши власниці, оглянь квартиру й послухай розмову про дві квартири. А потім напиши власне коротке повідомлення."
+
+msgid "Read the advert once more, then try again."
+msgstr "Прочитай оголошення ще раз і спробуй знову."
+
+msgid "Read What to remember at the end, then try again."
+msgstr "Прочитай «Що запам’ятати» наприкінці й спробуй знову."
+
+msgid "rent"
+msgstr "орендна плата"
+
+msgid "river"
+msgstr "річку"
+
+msgid "Says who you are."
+msgstr "Каже, хто ти."
+
+msgid "She asks when you move in, not out."
+msgstr "Вона питає, коли ти в’їдеш, а не виїдеш."
+
+msgid "She asks you in, so you go <0>sisse</0>, not out."
+msgstr "Вона запрошує зайти, тож ти йдеш <0>sisse</0>, а не назовні."
+
+msgid "Smaller is <0>väiksem</0>, from <1>väike</1>."
+msgstr "«Менший» — це <0>väiksem</0>, від <1>väike</1>."
+
+msgid "suits"
+msgstr "підходить"
+
+msgid "Talk: looking round the flat"
+msgstr "Розмова: огляд квартири"
+
+msgid "Thanks her and signs."
+msgstr "Дякує й підписується."
+
+msgid "That says goodbye, and you have only just come."
+msgstr "Це прощання, а ти щойно прийшов."
+
+msgid "The flat has no balcony."
+msgstr "У квартирі немає балкона."
+
+msgid "The flat is free from the first of December."
+msgstr "Квартира вільна з першого грудня."
+
+msgid "The flat is new."
+msgstr "Квартира нова."
+
+msgid "The flat is on the third floor."
+msgstr "Квартира на третьому поверсі."
+
+msgid "The kitchen is small but new."
+msgstr "Кухня маленька, але нова."
+
+msgid "The kitchen is smaller than the room."
+msgstr "Кухня менша за кімнату."
+
+msgid "The one in Annelinn"
+msgstr "Та, що в Аннелінні"
+
+msgid "The one in the city centre"
+msgstr "Та, що в центрі"
+
+msgid "The owner"
+msgstr "Власниці"
+
+msgid "The station"
+msgstr "Вокзал"
+
+msgid "There is no lift in the building."
+msgstr "У будинку немає ліфта."
+
+msgid "They’re the same size"
+msgstr "Вони однакові"
+
+msgid "Three"
+msgstr "Три"
+
+msgid "to look"
+msgstr "дивитися"
+
+msgid "to someone’s aid, to help"
+msgstr "на допомогу"
+
+msgid "to the owner"
+msgstr "власникові"
+
+msgid "to the railway station"
+msgstr "на вокзал"
+
+msgid "too"
+msgstr "занадто"
+
+msgid "Two"
+msgstr "Дві"
+
+msgid "two-room"
+msgstr "двокімнатна"
+
+msgid "What can you see from its balcony?"
+msgstr "Що видно з її балкона?"
+
+msgid "When is the small flat free?"
+msgstr "Коли маленька квартира вільна?"
+
+msgid "When should you call?"
+msgstr "Коли телефонувати?"
+
+msgid "where"
+msgstr "де"
+
+msgid "Where or where to: <et>köögis</et>, <et>kööki</et>"
+msgstr "Де чи куди: <et>köögis</et>, <et>kööki</et>"
+
+msgid "Where something goes usually takes <et>-sse</et> or a short form, or <et>-le</et> onto a balcony: <et>korterisse</et>, <et>kööki</et>, <et>rõdule</et>."
+msgstr "«Куди» зазвичай — це <et>-sse</et> або коротка форма, а на балкон — <et>-le</et>: <et>korterisse</et>, <et>kööki</et>, <et>rõdule</et>."
+
+msgid "Where something is takes the plain form: <0>Kus on köök?</0> And the room is big."
+msgstr "Про те, де щось є, питають із початковою формою: <0>Kus on köök?</0> І кімната велика."
+
+msgid "Where something is usually takes <0>-s</0>: <1>köögis</1>."
+msgstr "«Де» зазвичай — це <0>-s</0>: <1>köögis</1>."
+
+msgid "Where something is usually takes <et>-s</et>, or <et>-l</et> on a balcony: <et>köögis</et>, <et>rõdul</et>."
+msgstr "«Де» зазвичай — це <et>-s</et>, а на балконі — <et>-l</et>: <et>köögis</et>, <et>rõdul</et>."
+
+msgid "Where something is, <0>köögis</0>; where it goes, <1>kööki</1> or <2>korterisse</2>."
+msgstr "Де щось є — <0>köögis</0>; куди воно йде — <1>kööki</1> або <2>korterisse</2>."
+
+msgid "Where something is: usually <0>-s</0>, or <1>-l</1> on a balcony: <2>köögis</2>, <3>rõdul</3>."
+msgstr "Де щось є: зазвичай <0>-s</0>, а на балконі — <1>-l</1>: <2>köögis</2>, <3>rõdul</3>."
+
+msgid "where to"
+msgstr "куди"
+
+msgid "Where to: usually <0>-sse</0> or a short form, or <1>-le</1> onto a balcony: <2>korterisse</2>, <3>kööki</3>, <4>rõdule</4>."
+msgstr "Куди: зазвичай <0>-sse</0> або коротка форма, а на балкон — <1>-le</1>: <2>korterisse</2>, <3>kööki</3>, <4>rõdule</4>."
+
+msgid "Where, or where to"
+msgstr "Де чи куди"
+
+msgid "Where, or where to?"
+msgstr "Де чи куди?"
+
+msgid "Which flat is bigger?"
+msgstr "Яка квартира більша?"
+
+msgid "Which floor is the flat on? Write it as the advert does."
+msgstr "На якому поверсі квартира? Напиши так, як в оголошенні."
+
+msgid "Which floor is the small flat on? Write it as Jaan says it."
+msgstr "На якому поверсі маленька квартира? Напиши так, як каже Яан."
+
+msgid "Which infinitive: <et>tahan kolida</et>, <et>tulen vaatama</et>"
+msgstr "Який інфінітив: <et>tahan kolida</et>, <et>tulen vaatama</et>"
+
+msgid "which of the two"
+msgstr "котрий із двох"
+
+msgid "Who will Jaan call tomorrow?"
+msgstr "Кому Яан подзвонить завтра?"
+
+msgid "windows"
+msgstr "вікна"
+
+msgid "Working as is usually <et>-na</et>: <et>õpetajana</et>."
+msgstr "«Працює як» — це зазвичай <et>-na</et>: <et>õpetajana</et>."
+
+msgid "Working as usually takes <0>-na</0>: <1>õpetajana</1>."
+msgstr "«Працює як» — це зазвичай <0>-na</0>: <1>õpetajana</1>."
+
+msgid "Working as: <et>õpetajana</et>"
+msgstr "Працює як: <et>õpetajana</et>"
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "Write to Mari"
+msgstr "Напиши Марі"
+
+msgid "Write to the owner"
+msgstr "Напиши власниці"
+
+msgid "Write what you’d say about a flat."
+msgstr "Напиши, що можна сказати про квартиру."
+
+msgid "You are Jaan. You have no pets and want to move in on the first of December."
+msgstr "Ти — Яан. У тебе немає тварин, і ти хочеш в’їхати першого грудня."
+
+msgid "You can keep a cat in the flat."
+msgstr "У квартирі можна тримати кота."

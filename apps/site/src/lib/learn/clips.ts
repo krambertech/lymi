@@ -8911,6 +8911,252 @@ const PV_CLIPS: Record<string, Clip> = {
   "c-talk": PV_TALK,
 };
 
+export const FLAT_PASSAGES = {
+  advert: [
+    "Kahetoaline korter Tartu kesklinnas.",
+    "Korter on kolmandal korrusel ja majas on lift.",
+    "Maja on vana, aga korter on uus ja ilus.",
+    "Suures toas on kaks suurt akent ja väike rõdu.",
+    "Väiksem tuba on magamistuba.",
+    "Toad on soojad ja valged.",
+    "Köök on väike, aga seal on pesumasin.",
+    "Korteris on ka vannituba.",
+    "Üür on nelisada viiskümmend eurot kuus.",
+    "Korter on vaba esimesest detsembrist.",
+    "Pood on maja kõrval ja bussipeatus on maja ees.",
+    "Bussiga on rongijaama viis minutit.",
+    "Kass või koer ei saa korteris elada.",
+    "Korter sobib hästi ühele või kahele inimesele.",
+    "Helistage õhtul pärast kella kuut!",
+    "Mari Tamm, telefon 5555 1234.",
+  ],
+  reply: [
+    "Tere, Mari!",
+    "Mina olen Jaan ja ma nägin teie kuulutust.",
+    "Korter meeldib mulle väga.",
+    "Ma töötan Tartus õpetajana.",
+    "Mul ei ole kassi ega koera.",
+    "Kas ma võin homme korterit vaatama tulla?",
+    "Ma tahan sisse kolida esimesel detsembril.",
+    "Kas köögis on ka pliit?",
+    "Aitäh!",
+  ],
+} as const;
+
+export const FLAT_SORT = [
+  { w: "korteris", bin: "kus" },
+  { w: "korterisse", bin: "kuhu" },
+  { w: "köögis", bin: "kus" },
+  { w: "kööki", bin: "kuhu" },
+  { w: "toas", bin: "kus" },
+  { w: "tuppa", bin: "kuhu" },
+  { w: "rõdul", bin: "kus" },
+  { w: "rõdule", bin: "kuhu" },
+] as const;
+
+export const FLAT_SAY = [
+  { id: "korrusel", answers: ["Korter on kolmandal korrusel."] },
+  { id: "lift", answers: ["Kas majas on lift?", "Kas maja on liftiga?"] },
+  {
+    id: "uur",
+    answers: [
+      "Kui palju on üür?",
+      "Kui suur on üür?",
+      "Mis on üür?",
+      "Kui palju üür maksab?",
+      "Kui palju maksab üür?",
+      "Kui suur üür on?",
+      "Kui palju üür on?",
+    ],
+  },
+  {
+    id: "kolida",
+    answers: withPronouns([
+      "Ma tahan reedel sisse kolida.",
+      "Reedel tahan ma sisse kolida.",
+      "Reedel ma tahan sisse kolida.",
+      "Ma tahan sisse kolida reedel.",
+      "Ma tahan reedel kolida sisse.",
+    ]),
+  },
+  {
+    id: "kook",
+    answers: ["Köök on väike, aga uus.", "Köök on väike, kuid uus."],
+  },
+  {
+    id: "vaatama",
+    answers: withPronouns([
+      "Kas ma võin homme korterit vaatama tulla?",
+      "Kas ma võin homme tulla korterit vaatama?",
+      "Kas ma saan homme korterit vaatama tulla?",
+      "Kas ma saan homme tulla korterit vaatama?",
+      "Kas võin homme tulla korterit vaatama?",
+      "Kas ma võin korterit homme vaatama tulla?",
+      "Kas ma võin tulla homme korterit vaatama?",
+    ]),
+  },
+] as const;
+
+export const FLAT_FIX = [
+  {
+    id: "kolmandal",
+    wrong: "Korter on kolmas korrusel.",
+    answers: ["Korter on kolmandal korrusel."],
+  },
+  { id: "lifti", wrong: "Majas ei ole lift.", answers: ["Majas ei ole lifti."] },
+  { id: "kolida", wrong: "Ma tahan sisse kolima.", answers: ["Ma tahan sisse kolida."] },
+  {
+    id: "vaiksem",
+    wrong: "Köök on väikem kui tuba.",
+    answers: ["Köök on väiksem kui tuba.", "Köök on väikesem kui tuba."],
+  },
+  {
+    id: "esimesest",
+    wrong: "Korter on vaba esimene detsembrist.",
+    answers: ["Korter on vaba esimesest detsembrist."],
+  },
+  { id: "korterisse", wrong: "Ma lähen korteris.", answers: ["Ma lähen korterisse."] },
+] as const;
+
+export const FLAT_DIALOGUE = {
+  "d-mari-1": { text: "Tere! Tulge sisse!", voice: "second" },
+  "d-sina-1": "Tere! Aitäh.",
+  "d-mari-2": { text: "See on suur tuba. Siin on kaks akent.", voice: "second" },
+  "d-sina-2": "Tuba on väga ilus. Kus on köök?",
+  "d-mari-3": { text: "Köök on seal. Kas teil on kass?", voice: "second" },
+  "d-sina-3": "Ei, mul ei ole kassi.",
+  "d-mari-4": { text: "Hea. Millal te tahate sisse kolida?", voice: "second" },
+  "d-sina-4": "Esimesel detsembril.",
+} as const;
+
+export const FLAT_MESSAGE = [
+  "Tere, Mari!",
+  "Mina olen Jaan.",
+  "Ma nägin teie kuulutust.",
+  "Kas ma võin homme kell kuus korterit vaatama tulla?",
+  "Kas majas on lift?",
+  "Aitäh!",
+  "Jaan.",
+] as const;
+
+export const FLAT_TALK: Conversation = {
+  turns: [
+    { voice: "second", text: ["Tere, Jaan!", "Kas sa käisid täna korterit vaatamas?"] },
+    {
+      voice: "main",
+      text: [
+        "Tere, Liis!",
+        "Jah, ma käisin kahes korteris.",
+        "Üks on kesklinnas ja teine Annelinnas.",
+      ],
+    },
+    { voice: "second", text: ["Tore!", "Kumb on parem?"] },
+    {
+      voice: "main",
+      text: [
+        "Kesklinnas on korter suurem ja ilusam.",
+        "Seal on kaks tuba ja suur köök.",
+        "Köögis on ka pesumasin.",
+      ],
+    },
+    { voice: "second", text: ["Kui palju see maksab?"] },
+    { voice: "main", text: ["Kuussada eurot.", "See on minu jaoks liiga kallis."] },
+    { voice: "second", text: ["Kas seal on ka rõdu?"] },
+    {
+      voice: "main",
+      text: [
+        "Jah, ja rõdult näeb jõge.",
+        "See meeldib mulle väga.",
+        "Aga kesklinnas ei ole vaikne.",
+      ],
+    },
+    { voice: "second", text: ["Ja teine korter?"] },
+    {
+      voice: "main",
+      text: [
+        "Teine on väiksem, ainult üks tuba ja väike köök.",
+        "Aga see on palju odavam, nelisada eurot.",
+      ],
+    },
+    { voice: "second", text: ["Kas see on kesklinnast kaugel?"] },
+    { voice: "main", text: ["Bussiga kakskümmend minutit.", "Bussipeatus on maja ees."] },
+    { voice: "second", text: ["See pole palju.", "Kas seal on vaikne?"] },
+    { voice: "main", text: ["Jah, väga vaikne.", "Maja kõrval on park."] },
+    { voice: "second", text: ["Mis korrusel see on?"] },
+    { voice: "main", text: ["Viiendal korrusel, aga majas on lift."] },
+    { voice: "second", text: ["Ja millal sa saad sisse kolida?"] },
+    {
+      voice: "main",
+      text: [
+        "Väike korter on vaba esimesest detsembrist.",
+        "Suur korter on vaba alles jaanuarist.",
+      ],
+    },
+    {
+      voice: "second",
+      text: ["Siis on väike korter parem.", "Ja odavam ka!", "Sa ei vaja suurt korterit."],
+    },
+    { voice: "main", text: ["Jah.", "Homme helistan ma omanikule."] },
+    { voice: "second", text: ["Kas ma tulen siis appi?"] },
+    {
+      voice: "main",
+      text: [
+        "Jah, palun!",
+        "Mul on ainult kaks kasti ja voodi.",
+        "Esimesel detsembril tõusen ma vara üles ja kolin sisse.",
+      ],
+    },
+    { voice: "second", text: ["Hästi.", "Ma võtan oma auto kaasa."] },
+    { voice: "main", text: ["Aitäh!", "Õhtul läheme välja sööma."] },
+  ],
+};
+
+export const FLAT_WORDS = [
+  "korter",
+  "tuba",
+  "köök",
+  "rõdu",
+  "üür",
+  "lift",
+  "kesklinnas",
+  "sisse kolima",
+] as const;
+
+export const FLAT_DRILL = [
+  "Ma lähen korterisse.",
+  "Kass on rõdul.",
+  "Kass läheb rõdule.",
+  "Ma olen köögis.",
+  "Tule kööki!",
+  "Mul ei ole kassi.",
+  "Korteris ei ole rõdu.",
+  "Mari elab teisel korrusel.",
+  "Ma elan neljandal korrusel.",
+  "Korter on viiendal korrusel.",
+  "Ma tahan korterit vaadata.",
+  "Ma tulen homme korterit vaatama.",
+  "Ma töötan Tartus õpetajana.",
+  "Jaan töötab arstina.",
+  "Mari töötab poes müüjana.",
+] as const;
+
+const FLAT_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...new Set([
+      ...FLAT_WORDS,
+      ...FLAT_SORT.map(({ w }) => w),
+      ...FLAT_SAY.map(({ answers }) => answers[0]),
+      ...FLAT_FIX.map(({ answers }) => answers[0]),
+      ...FLAT_DRILL,
+    ]),
+  ]),
+  "p-advert": { sentences: FLAT_PASSAGES.advert, voice: "third" },
+  "p-reply": { sentences: FLAT_PASSAGES.reply, voice: "main" },
+  ...FLAT_DIALOGUE,
+  "p-message": { sentences: FLAT_MESSAGE, voice: "main" },
+  "c-talk": FLAT_TALK,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: {
     ...words(HAALDUS_WORDS),
@@ -9071,6 +9317,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   saav: TRA_CLIPS,
   keegi: GI_CLIPS,
   "ules-valja-ara": PV_CLIPS,
+  korter: FLAT_CLIPS,
   "mul-on": {
     ...words([
       ...MUL_ON_WORDS,

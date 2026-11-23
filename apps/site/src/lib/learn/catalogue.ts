@@ -398,7 +398,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 18,
         blurb: msg`A free Estonian lesson on verbs with a small word for direction: üles tõusma, välja minema, sisse tulema, ära minema, tagasi tulema and kaasa võtma; välja or väljas for where to or where; where the small word usually goes; and ära twice in Ära mine ära, don’t go away. Every sentence is read aloud.`,
       },
-      { name: msg`Practice: looking for a flat`, et: "Korter" },
+      {
+        slug: "korter",
+        name: msg`Practice: looking for a flat`,
+        title: msg`Estonian practice: looking for a flat`,
+        et: "Korter",
+        minutes: 20,
+        blurb: msg`Free Estonian practice for finding a flat: read an advert, write to the owner, sort where from where to, fix the mistakes learners make, look round a flat, follow a 90-second call about two flats heard twice, and write your own message. Every sentence is read aloud.`,
+      },
     ],
   },
   {

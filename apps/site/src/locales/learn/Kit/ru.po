@@ -2567,3 +2567,21 @@ msgstr "Твоё предложение"
 
 msgid "Your text"
 msgstr "Твой текст"
+
+msgid "{letters, plural, one {Not right: # letter differs.} other {Not right: # letters differ.}}"
+msgstr "{letters, plural, one {Неверно: отличается # буква.} few {Неверно: отличаются # буквы.} many {Неверно: отличаются # букв.} other {Неверно: отличаются # буквы.}}"
+
+msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
+msgstr "Бесплатный урок эстонского произношения: девять гласных с õ, ä, ö и ü, ударение, обычно на первом слоге, и то, как удвоенная буква может изменить слово. Каждое слово озвучено."
+
+msgid "A free lesson on saying where you are in Estonian: -s, usually for in (Tallinnas, koolis), -l, usually for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о том, как сказать, где ты: -s обычно значит «в» (Tallinnas, koolis), -l — «на» (laual, tööl), какие места получают какое окончание и как ответить на kus, «где». Каждое предложение озвучено."
+
+msgid "The right word"
+msgstr "Верное слово"
+
+msgid "Type the word"
+msgstr "Напиши слово"
+
+msgid "Write the word you hear."
+msgstr "Напиши слово, которое слышишь."

@@ -673,9 +673,9 @@ export function KellLesson() {
         id: "coffee",
         ask: t`When do they drink coffee?`,
         options: [
-          { id: "515", label: "5:15" },
+          { id: "315", label: "3:15" },
           { id: "445", label: "4:45" },
-          { id: "545", label: "5:45" },
+          { id: "345", label: "3:45" },
           { id: "415", label: "4:15" },
         ],
         answer: "415",

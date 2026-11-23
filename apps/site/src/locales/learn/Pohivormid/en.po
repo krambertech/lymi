@@ -7,6 +7,9 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
+msgid "-s and -l on the genitive"
+msgstr "-s and -l on the genitive"
+
 msgid "<0>-ne</0> becomes <1>-se</1>, then <2>-st</2>."
 msgstr "<0>-ne</0> becomes <1>-se</1>, then <2>-st</2>."
 
@@ -18,6 +21,11 @@ msgstr "<0>-us</0> becomes <1>-use</1>, then <2>-ust</2>."
 
 msgid "<0>-us</0> takes <1>-t</1>."
 msgstr "<0>-us</0> takes <1>-t</1>."
+
+#. placeholder {0}: forms[1]
+#. placeholder {1}: forms[0]
+msgid "<0>{0}</0> is the genitive of <1>{1}</1>, and the ending goes on it."
+msgstr "<0>{0}</0> is the genitive of <1>{1}</1>, and the ending goes on it."
 
 msgid "<0>Last</0> is the partitive, so it comes after <1>lapse</1>."
 msgstr "<0>Last</0> is the partitive, so it comes after <1>lapse</1>."
@@ -31,11 +39,25 @@ msgstr "<0>Poe</0> is the genitive. The partitive has the <1>d</1> back: <2>pood
 msgid "<0>Sõnaveeb</0>, the free dictionary of the Institute of the Estonian Language, lists them under <1>Sõnavormid</1>, word forms. Search for a word and scroll to that table: its left column holds the three forms, top to bottom. The right column is the plural."
 msgstr "<0>Sõnaveeb</0>, the free dictionary of the Institute of the Estonian Language, lists them under <1>Sõnavormid</1>, word forms. Search for a word and scroll to that table: its left column holds the three forms, top to bottom. The right column is the plural."
 
-msgid "12 minutes"
-msgstr "12 minutes"
+msgid "<et>-ne</et> becomes <et>-st</et>."
+msgstr "<et>-ne</et> becomes <et>-st</et>."
 
-msgid "2 quizzes and a conversation"
-msgstr "2 quizzes and a conversation"
+msgid "<et>-us</et> takes <et>-t</et>."
+msgstr "<et>-us</et> takes <et>-t</et>."
+
+#. placeholder {0}: forms[1]
+#. placeholder {1}: forms[0]
+msgid "<et>{0}</et> is the genitive of <et>{1}</et>, and the ending goes on it."
+msgstr "<et>{0}</et> is the genitive of <et>{1}</et>, and the ending goes on it."
+
+msgid "20 minutes"
+msgstr "20 minutes"
+
+msgid "7 exercises"
+msgstr "7 exercises"
+
+msgid "A dictionary gives <et>{entry}</et>."
+msgstr "A dictionary gives <et>{entry}</et>."
 
 msgid "A dictionary gives a noun in three forms, always in the same order: <0>kool, kooli, kooli</0>."
 msgstr "A dictionary gives a noun in three forms, always in the same order: <0>kool, kooli, kooli</0>."
@@ -46,11 +68,29 @@ msgstr "A final vowel doesn’t promise matching forms, though. <0/>, car, ends 
 msgid "A noun has three forms"
 msgstr "A noun has three forms"
 
+msgid "A noun’s three forms"
+msgstr "A noun’s three forms"
+
+msgid "A one-syllable word ending in a long vowel takes <0>-d</0>."
+msgstr "A one-syllable word ending in a long vowel takes <0>-d</0>."
+
+msgid "A one-syllable word ending in a long vowel takes <et>-d</et>."
+msgstr "A one-syllable word ending in a long vowel takes <et>-d</et>."
+
+msgid "A one-syllable word ending in a long vowel: the genitive is the same, the partitive adds <0>-d</0>."
+msgstr "A one-syllable word ending in a long vowel: the genitive is the same, the partitive adds <0>-d</0>."
+
 msgid "A one-syllable word that ends in a long vowel, such as <0/>, work, keeps its genitive the same and adds <1>-d</1> for the partitive: <2>töö, töö, tööd</2>."
 msgstr "A one-syllable word that ends in a long vowel, such as <0/>, work, keeps its genitive the same and adds <1>-d</1> for the partitive: <2>töö, töö, tööd</2>."
 
 msgid "A printed dictionary puts them on one line instead: <0>pood poe poodi</0>."
 msgstr "A printed dictionary puts them on one line instead: <0>pood poe poodi</0>."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six written right."
+msgstr "All six written right."
 
 msgid "All six. You typed the partitive right every time."
 msgstr "All six. You typed the partitive right every time."
@@ -58,11 +98,32 @@ msgstr "All six. You typed the partitive right every time."
 msgid "All three forms are the same."
 msgstr "All three forms are the same."
 
+msgid "And the word laps?"
+msgstr "And the word laps?"
+
+msgid "And the word maja?"
+msgstr "And the word maja?"
+
+msgid "And the word töö?"
+msgstr "And the word töö?"
+
 msgid "answer"
 msgstr "answer"
 
+msgid "as in <0>poe</0>"
+msgstr "as in <0>poe</0>"
+
+msgid "as in <0>poodi</0>"
+msgstr "as in <0>poodi</0>"
+
+msgid "at home"
+msgstr "at home"
+
 msgid "at school, in a school"
 msgstr "at school, in a school"
+
+msgid "At the end, Mari praises Jaan."
+msgstr "At the end, Mari praises Jaan."
 
 msgid "book"
 msgstr "book"
@@ -76,8 +137,14 @@ msgstr "child"
 msgid "door"
 msgstr "door"
 
+msgid "Each line gives a noun’s three forms, and one of them is wrong. Tap it, then write the right form."
+msgstr "Each line gives a noun’s three forms, and one of them is wrong. Tap it, then write the right form."
+
 msgid "Each round shows a new word. Type its partitive."
 msgstr "Each round shows a new word. Type its partitive."
+
+msgid "Each word below is the genitive or the partitive of a noun from this lesson. Put each in its group. Tap a word to hear it."
+msgstr "Each word below is the genitive or the partitive of a noun from this lesson. Put each in its group. Tap a word to hear it."
 
 msgid "Endings that tell you the partitive"
 msgstr "Endings that tell you the partitive"
@@ -85,14 +152,23 @@ msgstr "Endings that tell you the partitive"
 msgid "exercise"
 msgstr "exercise"
 
+msgid "Find and fix the wrong form"
+msgstr "Find and fix the wrong form"
+
 msgid "Finding the forms in a dictionary"
 msgstr "Finding the forms in a dictionary"
+
+msgid "Fix the forms"
+msgstr "Fix the forms"
 
 msgid "Genitive"
 msgstr "Genitive"
 
 msgid "Genitive and partitive"
 msgstr "Genitive and partitive"
+
+msgid "Genitive or partitive?"
+msgstr "Genitive or partitive?"
 
 msgctxt "kodu: the place you live"
 msgid "home"
@@ -110,8 +186,20 @@ msgstr "In <0>kool, kooli, kooli</0> the genitive and partitive are the same wor
 msgid "In the genitive, <0>ee</0> shortens and <1>s</1> becomes <2>h</2>; the partitive ends in <3>-st</3>."
 msgstr "In the genitive, <0>ee</0> shortens and <1>s</1> becomes <2>h</2>; the partitive ends in <3>-st</3>."
 
+msgid "in the house"
+msgstr "in the house"
+
+msgid "in the room"
+msgstr "in the room"
+
+msgid "in town"
+msgstr "in town"
+
 msgid "Its genitive and partitive are the same."
 msgstr "Its genitive and partitive are the same."
+
+msgid "Jaan gets every word right the first time."
+msgstr "Jaan gets every word right the first time."
 
 msgid "land, country"
 msgstr "land, country"
@@ -125,6 +213,12 @@ msgstr "Lesson {stems} showed letters dropping or changing before an ending: <0/
 msgid "Like <0>küsimus</0>, <1>vastus</1> has a genitive in <2>-use</2>: <3>vastuse</3>."
 msgstr "Like <0>küsimus</0>, <1>vastus</1> has a genitive in <2>-use</2>: <3>vastuse</3>."
 
+msgid "Listen: Jaan in class"
+msgstr "Listen: Jaan in class"
+
+msgid "Listen: Mari asks Jaan"
+msgstr "Listen: Mari asks Jaan"
+
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
 
@@ -137,11 +231,23 @@ msgstr "man"
 msgid "Mari"
 msgstr "Mari"
 
+msgid "Mari asks Jaan about four words."
+msgstr "Mari asks Jaan about four words."
+
+msgid "Mari is Jaan’s teacher. In class she asks him for the forms of a few words. Read the questions, then listen."
+msgstr "Mari is Jaan’s teacher. In class she asks him for the forms of a few words. Read the questions, then listen."
+
 msgid "market"
 msgstr "market"
 
 msgid "Match each word with its genitive and partitive. A wrong pair counts against you, so look for the letters that change."
 msgstr "Match each word with its genitive and partitive. A wrong pair counts against you, so look for the letters that change."
+
+msgid "Most of them. Look again at the ones you missed."
+msgstr "Most of them. Look again at the ones you missed."
+
+msgid "Most of them. Read the ones you missed once more."
+msgstr "Most of them. Read the ones you missed once more."
 
 msgid "Most words in <0>-ne</0> or <1>-us</1> end their partitive in <2>-st</2>, and a one-syllable word ending in a long vowel adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
 msgstr "Most words in <0>-ne</0> or <1>-us</1> end their partitive in <2>-st</2>, and a one-syllable word ending in a long vowel adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
@@ -155,11 +261,8 @@ msgstr "Nominative"
 msgid "On <0>Sõnaveeb</0>, the three forms are the left column under <1>Sõnavormid</1>."
 msgstr "On <0>Sõnaveeb</0>, the three forms are the left column under <1>Sõnavormid</1>."
 
-msgid "One syllable ending in a long vowel takes <0>-d</0>."
-msgstr "One syllable ending in a long vowel takes <0>-d</0>."
-
-msgid "One syllable ending in a long vowel: the genitive is the same, the partitive adds <0>-d</0>."
-msgstr "One syllable ending in a long vowel: the genitive is the same, the partitive adds <0>-d</0>."
+msgid "on the table"
+msgstr "on the table"
 
 msgid "Other words don’t show their partitive, so learn all three together: <0>pood, poe, poodi</0>."
 msgstr "Other words don’t show their partitive, so learn all three together: <0>pood, poe, poodi</0>."
@@ -217,11 +320,38 @@ msgstr "Tap a form"
 msgid "Tap a word"
 msgstr "Tap a word"
 
+msgid "Tap through the words above once more, then try again."
+msgstr "Tap through the words above once more, then try again."
+
+msgid "Telling the genitive from the partitive"
+msgstr "Telling the genitive from the partitive"
+
 msgid "Ten nouns in their three forms"
 msgstr "Ten nouns in their three forms"
 
+msgid "The book is on the table."
+msgstr "The book is on the table."
+
+msgid "The car is at home."
+msgstr "The car is at home."
+
+msgid "The child is at school."
+msgstr "The child is at school."
+
+msgid "The child is at the market."
+msgstr "The child is at the market."
+
+msgid "The child is in the car."
+msgstr "The child is in the car."
+
+msgid "The genitive"
+msgstr "The genitive"
+
 msgid "The genitive and partitive of {first}."
 msgstr "The genitive and partitive of {first}."
+
+msgid "The genitive comes second in a dictionary, and <0>-s</0> and <1>-l</1> go on it: <2>pood, poe, poodi</2>."
+msgstr "The genitive comes second in a dictionary, and <0>-s</0> and <1>-l</1> go on it: <2>pood, poe, poodi</2>."
 
 msgid "The genitive drops the <0>d</0> and one <1>o</1>; the partitive has them back."
 msgstr "The genitive drops the <0>d</0> and one <1>o</1>; the partitive has them back."
@@ -231,6 +361,9 @@ msgstr "The genitive drops the <0>d</0>; the partitive has it back."
 
 msgid "The genitive drops the <0>g</0>; the partitive has it back."
 msgstr "The genitive drops the <0>g</0>; the partitive has it back."
+
+msgid "The genitive is the form <0>-s</0> and <1>-l</1> go on: <2>linn, linna</2> gives <3/>, in town. Write each sentence in Estonian."
+msgstr "The genitive is the form <0>-s</0> and <1>-l</1> go on: <2>linn, linna</2> gives <3/>, in town. Write each sentence in Estonian."
 
 msgid "The genitive is the one <0>-s</0> and <1>-l</1> go on: <2>kooli</2> gives <3>koolis</3>."
 msgstr "The genitive is the one <0>-s</0> and <1>-l</1> go on: <2>kooli</2> gives <3>koolis</3>."
@@ -250,6 +383,18 @@ msgstr "The left column, top to bottom: the nominative, the genitive and the par
 msgid "the main forms: a word’s nominative, genitive and partitive"
 msgstr "the main forms: a word’s nominative, genitive and partitive"
 
+msgid "The man is at the door."
+msgstr "The man is at the door."
+
+msgid "The man is in the house."
+msgstr "The man is in the house."
+
+msgid "The man is in town."
+msgstr "The man is in town."
+
+msgid "The nominative"
+msgstr "The nominative"
+
 msgid "The nominative is the word on its own. The genitive is what lesson {stems} called the stem: put <0>-s</0> on it and you have <1/>. Lesson {genitive} shows what the genitive means by itself, and lesson {partitive} what the partitive is for."
 msgstr "The nominative is the word on its own. The genitive is what lesson {stems} called the stem: put <0>-s</0> on it and you have <1/>. Lesson {genitive} shows what the genitive means by itself, and lesson {partitive} what the partitive is for."
 
@@ -262,8 +407,14 @@ msgstr "The order is nominative, genitive, partitive, so <0>vastuse</0> comes be
 msgid "The order is nominative, genitive, partitive. <0>Poe</0>, the one without the <1>d</1>, comes second."
 msgstr "The order is nominative, genitive, partitive. <0>Poe</0>, the one without the <1>d</1>, comes second."
 
+msgid "The partitive"
+msgstr "The partitive"
+
 msgid "The partitive adds <0>-t</0>."
 msgstr "The partitive adds <0>-t</0>."
+
+msgid "The partitive comes last in a dictionary: <0>pood, poe, poodi</0>."
+msgstr "The partitive comes last in a dictionary: <0>pood, poe, poodi</0>."
 
 msgid "The partitive drops the <0>k</0> and ends in <1>-st</1>."
 msgstr "The partitive drops the <0>k</0> and ends in <1>-st</1>."
@@ -283,6 +434,15 @@ msgstr "The partitive of <0>{first}</0>."
 msgid "The partitive of <0>laps</0> ends in <1>-st</1>: <2>last</2>."
 msgstr "The partitive of <0>laps</0> ends in <1>-st</1>: <2>last</2>."
 
+msgid "The woman is at the shop."
+msgstr "The woman is at the shop."
+
+msgid "The woman is at work."
+msgstr "The woman is at work."
+
+msgid "The woman is in the room."
+msgstr "The woman is in the room."
+
 msgid "To ask for a word’s forms, Estonian says <0>Mis on sõna … põhivormid?</0>, with the word in the gap. <1/> means word. Answer with all three, in order."
 msgstr "To ask for a word’s forms, Estonian says <0>Mis on sõna … põhivormid?</0>, with the word in the gap. <1/> means word. Answer with all three, in order."
 
@@ -295,6 +455,18 @@ msgstr "tree"
 msgid "Type the partitive"
 msgstr "Type the partitive"
 
+msgid "Very good!"
+msgstr "Very good!"
+
+msgid "We’re in town."
+msgstr "We’re in town."
+
+msgid "What are the main forms of the word raamat?"
+msgstr "What are the main forms of the word raamat?"
+
+msgid "What is the first word Mari says after his mistake? Write it in Estonian."
+msgstr "What is the first word Mari says after his mistake? Write it in Estonian."
+
 msgid "When the partitive is the same as the genitive"
 msgstr "When the partitive is the same as the genitive"
 
@@ -303,6 +475,12 @@ msgstr "When the partitive takes letters back"
 
 msgid "Which forms go together?"
 msgstr "Which forms go together?"
+
+msgid "Which word does Jaan get wrong? Write it in Estonian."
+msgstr "Which word does Jaan get wrong? Write it in Estonian."
+
+msgid "Which word does Mari ask about first? Write it in Estonian."
+msgstr "Which word does Mari ask about first? Write it in Estonian."
 
 msgid "Why a dictionary gives every Estonian noun in three forms, where to find them, and which endings tell you the partitive."
 msgstr "Why a dictionary gives every Estonian noun in three forms, where to find them, and which endings tell you the partitive."
@@ -327,6 +505,9 @@ msgstr "Words whose partitive takes letters back"
 
 msgid "work, job"
 msgstr "work, job"
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
 
 msgid "You’ll hear it and see how it changes from the nominative."
 msgstr "You’ll hear it and see how it changes from the nominative."

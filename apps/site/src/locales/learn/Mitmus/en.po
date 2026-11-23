@@ -31,11 +31,17 @@ msgstr "<0>Suured</0> ends in <1>-d</1>, so there is more than one room: <2>toad
 msgid "<0>Ta</0> is one cat, so the adjective has no <1>-d</1>, like <2>ilus</2>."
 msgstr "<0>Ta</0> is one cat, so the adjective has no <1>-d</1>, like <2>ilus</2>."
 
-msgid "12 minutes"
-msgstr "12 minutes"
+#. placeholder {0}: noun.one
+#. placeholder {1}: noun.second
+#. placeholder {2}: noun.many
+msgid "<et>{0}, {1}</et>: the plural is <et>{2}</et>."
+msgstr "<et>{0}, {1}</et>: the plural is <et>{2}</et>."
 
-msgid "2 quizzes and a passage with gaps"
-msgstr "2 quizzes and a passage with gaps"
+msgid "20 minutes"
+msgstr "20 minutes"
+
+msgid "7 exercises"
+msgstr "7 exercises"
 
 msgid "a beautiful room"
 msgstr "a beautiful room"
@@ -43,12 +49,18 @@ msgstr "a beautiful room"
 msgid "a big house"
 msgstr "a big house"
 
+msgid "A change inside"
+msgstr "A change inside"
+
+msgid "A change inside or not?"
+msgstr "A change inside or not?"
+
 #. placeholder {0}: ending("-d")
 msgid "A dictionary gives a noun in three forms, as lesson {forms} shows. The second of them is the genitive from lesson {genitive}. To say more than one, add {0} to it: <0/>, <1/>, so <2/>, cats."
 msgstr "A dictionary gives a noun in three forms, as lesson {forms} shows. The second of them is the genitive from lesson {genitive}. To say more than one, add {0} to it: <0/>, <1/>, so <2/>, cats."
 
-msgid "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. Two adjectives come from the section above, <0/>, small, and <1/>, beautiful. One verb is new: <2/>, to sleep."
-msgstr "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. Two adjectives come from the section above, <0/>, small, and <1/>, beautiful. One verb is new: <2/>, to sleep."
+msgid "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. Two adjectives come from the adjectives section above, <0/>, small, and <1/>, beautiful. One verb is new: <2/>, to sleep."
+msgstr "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. Two adjectives come from the adjectives section above, <0/>, small, and <1/>, beautiful. One verb is new: <2/>, to sleep."
 
 msgid "A friend is waiting."
 msgstr "A friend is waiting."
@@ -64,8 +76,14 @@ msgstr "a new book"
 msgid "A plural noun takes the same verb form as <0/>, they, from lesson {present}. One child reading is <1/>, with the {0} of <2>ta</2>. Children reading is <3/>, with the {1} of <4>nad</4>."
 msgstr "A plural noun takes the same verb form as <0/>, they, from lesson {present}. One child reading is <1/>, with the {0} of <2>ta</2>. Children reading is <3/>, with the {1} of <4>nad</4>."
 
+msgid "A plural noun takes the verb form of <0>nad</0>: <1>joovad</1>."
+msgstr "A plural noun takes the verb form of <0>nad</0>: <1>joovad</1>."
+
 msgid "A plural noun takes the verb form of <0>nad</0>: <1>Lapsed loevad.</1> <2>On</2> stays <3>on</3>."
 msgstr "A plural noun takes the verb form of <0>nad</0>: <1>Lapsed loevad.</1> <2>On</2> stays <3>on</3>."
+
+msgid "A plural noun takes the verb form of <0>nad</0>: <1>loevad</1>."
+msgstr "A plural noun takes the verb form of <0>nad</0>: <1>loevad</1>."
 
 msgid "a small cat"
 msgstr "a small cat"
@@ -80,8 +98,14 @@ msgstr "Adjective and noun in the nominative."
 msgid "Adjectives take -d too"
 msgstr "Adjectives take -d too"
 
+msgid "Adjectives with many"
+msgstr "Adjectives with many"
+
 msgid "After <0>on</0> it’s the same: <1/> <2/> Switch between One and Many, and tap a line to hear it."
 msgstr "After <0>on</0> it’s the same: <1/> <2/> Switch between One and Many, and tap a line to hear it."
+
+msgid "After <0>on</0>, the adjective takes <1>-d</1> too: <2>suured</2>."
+msgstr "After <0>on</0>, the adjective takes <1>-d</1> too: <2>suured</2>."
 
 msgid "After a number from two up, Estonian keeps the noun singular, in the partitive from lesson {partitive}: <0/>, two cats, not <1>kaks kassid</1>."
 msgstr "After a number from two up, Estonian keeps the noun singular, in the partitive from lesson {partitive}: <0/>, two cats, not <1>kaks kassid</1>."
@@ -89,11 +113,17 @@ msgstr "After a number from two up, Estonian keeps the noun singular, in the par
 msgid "After a number from two up, the partitive."
 msgstr "After a number from two up, the partitive."
 
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
 msgid "All six plurals right."
 msgstr "All six plurals right."
 
 msgid "All six right: you told one from many every time."
 msgstr "All six right: you told one from many every time."
+
+msgid "All six written right."
+msgstr "All six written right."
 
 msgid "An adjective before a plural noun is plural too, built the same way: <0/>, <1/>, <2/>. A big house is <3/>, and big houses are <4/>."
 msgstr "An adjective before a plural noun is plural too, built the same way: <0/>, <1/>, <2/>. A big house is <3/>, and big houses are <4/>."
@@ -102,14 +132,26 @@ msgstr "An adjective before a plural noun is plural too, built the same way: <0/
 msgid "An adjective takes {0} too, before the noun or after <0>on</0>: <1>suured majad; Majad on suured.</1>"
 msgstr "An adjective takes {0} too, before the noun or after <0>on</0>: <1>suured majad; Majad on suured.</1>"
 
+msgid "An adjective takes <et>-d</et> too, before the noun or after <et>on</et>."
+msgstr "An adjective takes <et>-d</et> too, before the noun or after <et>on</et>."
+
 msgid "an old town"
 msgstr "an old town"
 
 msgid "and"
 msgstr "and"
 
+msgid "as in <0>kass, kassid</0>"
+msgstr "as in <0>kass, kassid</0>"
+
+msgid "as in <0>pood, poed</0>"
+msgstr "as in <0>pood, poed</0>"
+
 msgid "As in poes, in the shop."
 msgstr "As in poes, in the shop."
+
+msgid "At a school"
+msgstr "At a school"
 
 msgid "At home"
 msgstr "At home"
@@ -156,17 +198,29 @@ msgstr "child"
 msgid "children"
 msgstr "children"
 
+msgid "Compare each noun with its plural. Did a letter inside drop or change, as in <0>tuba, toad</0>, or does the plural start with the whole noun, as in <1>kass, kassid</1>? Tap a word to hear the plural."
+msgstr "Compare each noun with its plural. Did a letter inside drop or change, as in <0>tuba, toad</0>, or does the plural start with the whole noun, as in <1>kass, kassid</1>? Tap a word to hear the plural."
+
 msgid "door"
 msgstr "door"
 
 msgid "doors"
 msgstr "doors"
 
+msgid "Each sentence is about more than one, and one word in it is in the wrong form: a noun, a verb or an adjective. Tap it, then write the right form."
+msgstr "Each sentence is about more than one, and one word in it is in the wrong form: a noun, a verb or an adjective. Tap it, then write the right form."
+
 msgid "Each word is its genitive plus <0>-d</0>."
 msgstr "Each word is its genitive plus <0>-d</0>."
 
 msgid "Fill the gaps"
 msgstr "Fill the gaps"
+
+msgid "Find and fix the mistake"
+msgstr "Find and fix the mistake"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
 
 msgid "friend"
 msgstr "friend"
@@ -179,6 +233,9 @@ msgstr "Friends are waiting."
 
 msgid "genitive"
 msgstr "genitive"
+
+msgid "Go through the sections above once more, then try again."
+msgstr "Go through the sections above once more, then try again."
 
 msgid "good friends"
 msgstr "good friends"
@@ -198,8 +255,29 @@ msgstr "house"
 msgid "houses"
 msgstr "houses"
 
+msgid "In a hospital"
+msgstr "In a hospital"
+
+msgid "In a shop"
+msgstr "In a shop"
+
+msgid "In Pärnu"
+msgstr "In Pärnu"
+
+msgid "In Tallinn"
+msgstr "In Tallinn"
+
+msgid "In Tartu"
+msgstr "In Tartu"
+
 msgid "is, are"
 msgstr "is, are"
+
+msgid "It’s about more than one."
+msgstr "It’s about more than one."
+
+msgid "Jaan asks Mari about her family and friends. Read the questions, then listen."
+msgstr "Jaan asks Mari about her family and friends. Read the questions, then listen."
 
 msgid "Kass, kassi: a vowel appears at the end."
 msgstr "Kass, kassi: a vowel appears at the end."
@@ -207,8 +285,17 @@ msgstr "Kass, kassi: a vowel appears at the end."
 msgid "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on the genitive, so the change shows again: <2/>, shops."
 msgstr "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on the genitive, so the change shows again: <2/>, shops."
 
+msgid "Listen: Jaan and Mari"
+msgstr "Listen: Jaan and Mari"
+
+msgid "Listen: where everyone is"
+msgstr "Listen: where everyone is"
+
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
+
+msgid "Make it many"
+msgstr "Make it many"
 
 msgid "Making the plural"
 msgstr "Making the plural"
@@ -226,8 +313,17 @@ msgstr "Many: the verb form of <0>nad</0>"
 msgid "men"
 msgstr "men"
 
+msgid "Most of them. Look again at the ones you missed."
+msgstr "Most of them. Look again at the ones you missed."
+
+msgid "Most of them. Read the ones you missed once more."
+msgstr "Most of them. Read the ones you missed once more."
+
 msgid "Mother and father are working."
 msgstr "Mother and father are working."
+
+msgid "Mum and Dad work in Tallinn."
+msgstr "Mum and Dad work in Tallinn."
 
 msgid "Nearly. For the ones you missed, start from the genitive."
 msgstr "Nearly. For the ones you missed, start from the genitive."
@@ -237,6 +333,12 @@ msgstr "Nearly. Play the ones you missed once more."
 
 msgid "new books"
 msgstr "new books"
+
+msgid "No change inside"
+msgstr "No change inside"
+
+msgid "Nothing changes inside: the genitive gains a vowel or nothing, then <0>-d</0>."
+msgstr "Nothing changes inside: the genitive gains a vowel or nothing, then <0>-d</0>."
 
 msgid "old towns"
 msgstr "old towns"
@@ -257,6 +359,12 @@ msgstr "One: the verb form of <0>ta</0>"
 #. placeholder {0}: noun.many
 msgid "Play {0}"
 msgstr "Play {0}"
+
+msgid "plural"
+msgstr "plural"
+
+msgid "Plurals that change inside"
+msgstr "Plurals that change inside"
 
 msgid "river"
 msgstr "river"
@@ -306,6 +414,9 @@ msgstr "The cat is at home."
 msgid "The cats are at home."
 msgstr "The cats are at home."
 
+msgid "The cats are at school."
+msgstr "The cats are at school."
+
 msgid "The child is reading."
 msgstr "The child is reading."
 
@@ -320,6 +431,9 @@ msgstr "The ee shortens, the s becomes h, and an e comes in."
 
 msgid "The form a dictionary lists first."
 msgstr "The form a dictionary lists first."
+
+msgid "The friends are waiting."
+msgstr "The friends are waiting."
 
 msgid "The g drops and the i becomes e."
 msgstr "The g drops and the i becomes e."
@@ -357,6 +471,9 @@ msgstr "The men are working."
 msgid "The n becomes s."
 msgstr "The n becomes s."
 
+msgid "The new books are on the table."
+msgstr "The new books are on the table."
+
 msgid "The nominative"
 msgstr "The nominative"
 
@@ -370,14 +487,41 @@ msgstr "The od drops and an e comes in."
 msgid "The plural is the genitive plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
 msgstr "The plural is the genitive plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
 
+msgid "The plural is the genitive plus <0>-d</0>: <1>pood, poe → poed</1>."
+msgstr "The plural is the genitive plus <0>-d</0>: <1>pood, poe → poed</1>."
+
+msgid "The plural is the genitive plus <0>-d</0>: <1>sõber, sõbra → sõbrad</1>."
+msgstr "The plural is the genitive plus <0>-d</0>: <1>sõber, sõbra → sõbrad</1>."
+
+msgid "The plural is the genitive plus <et>-d</et>."
+msgstr "The plural is the genitive plus <et>-d</et>."
+
+msgid "The plural keeps the genitive’s change inside."
+msgstr "The plural keeps the genitive’s change inside."
+
+msgid "The plural keeps the genitive’s change: <0>pood, poe → poed</0>."
+msgstr "The plural keeps the genitive’s change: <0>pood, poe → poed</0>."
+
 msgid "The plural keeps the stem change"
 msgstr "The plural keeps the stem change"
 
 msgid "The plural keeps the stem change of the genitive: <0>pood, poe → poed; tuba, toa → toad</0>."
 msgstr "The plural keeps the stem change of the genitive: <0>pood, poe → poed; tuba, toa → toad</0>."
 
+msgid "The plural: the genitive plus -d"
+msgstr "The plural: the genitive plus -d"
+
+msgid "The rooms are big."
+msgstr "The rooms are big."
+
 msgid "The same for ta and nad."
 msgstr "The same for ta and nad."
+
+msgid "The shops in Tallinn are big."
+msgstr "The shops in Tallinn are big."
+
+msgid "The shops in Tartu are big."
+msgstr "The shops in Tartu are big."
 
 msgid "The teacher is speaking."
 msgstr "The teacher is speaking."
@@ -390,6 +534,9 @@ msgstr "The verb ends in <0>-b</0>, or is <1>on</1>."
 
 msgid "The verb with a plural noun"
 msgstr "The verb with a plural noun"
+
+msgid "The verb with many"
+msgstr "The verb with many"
 
 msgid "The woman is drinking coffee."
 msgstr "The woman is drinking coffee."
@@ -421,12 +568,30 @@ msgstr "Two people joined by <0/> count as many too, so the verb takes the form 
 msgid "Two people joined by <0>ja</0> take the verb form of <1>nad</1> too: <2>Ema ja isa töötavad.</2>"
 msgstr "Two people joined by <0>ja</0> take the verb form of <1>nad</1> too: <2>Ema ja isa töötavad.</2>"
 
+msgid "Two people joined by <0>ja</0> take the verb form of <1>nad</1>: <2>töötavad</2>."
+msgstr "Two people joined by <0>ja</0> take the verb form of <1>nad</1>: <2>töötavad</2>."
+
 msgid "Type the plural"
 msgstr "Type the plural"
 
 #. placeholder {0}: ending("-d")
 msgid "When the genitive is the same as the nominative, only the {0} is new: <0/> gives <1/>. Switch between One and Many, and tap a word to hear it."
 msgstr "When the genitive is the same as the nominative, only the {0} is new: <0/> gives <1/>. Switch between One and Many, and tap a word to hear it."
+
+msgid "Where are Mari’s children? Write the place in Estonian, with its ending."
+msgstr "Where are Mari’s children? Write the place in Estonian, with its ending."
+
+msgid "Where do Mari’s friends live?"
+msgstr "Where do Mari’s friends live?"
+
+msgid "Where do the friends work?"
+msgstr "Where do the friends work?"
+
+msgid "Which plurals change inside"
+msgstr "Which plurals change inside"
+
+msgid "With more than one person or thing, the verb takes the form of <et>nad</et>; <et>on</et> stays <et>on</et>."
+msgstr "With more than one person or thing, the verb takes the form of <et>nad</et>; <et>on</et> stays <et>on</et>."
 
 msgid "woman"
 msgstr "woman"
@@ -436,3 +601,9 @@ msgstr "women"
 
 msgid "Words"
 msgstr "Words"
+
+msgid "Write each sentence in Estonian. Each is about more than one person or thing."
+msgstr "Write each sentence in Estonian. Each is about more than one person or thing."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"

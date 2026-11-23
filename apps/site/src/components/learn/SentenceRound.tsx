@@ -217,9 +217,7 @@ export function SentenceResult({ item, typed }: { item: SentenceItem; typed: str
         )}
       </div>
       <SentenceVerdict marked={marked} word={word} />
-      {marked.verdict !== "right" && (
-        <RightSentence marked={marked} src={shownSrc} word={word} />
-      )}
+      {marked.verdict !== "right" && <RightSentence marked={marked} src={shownSrc} word={word} />}
       <OtherForm marked={marked} />
       {item.explain && <p className="text-md text-ink-secondary">{item.explain}</p>}
       <AlsoRight marked={marked} accepted={item.answers} src={shownSrc ? undefined : src} />

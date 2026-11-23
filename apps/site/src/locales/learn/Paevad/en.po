@@ -227,6 +227,9 @@ msgstr "The day after"
 msgid "the day after tomorrow"
 msgstr "the day after tomorrow"
 
+msgid "The day after tomorrow is Saturday."
+msgstr "The day after tomorrow is Saturday."
+
 msgid "the day before yesterday"
 msgstr "the day before yesterday"
 
@@ -343,6 +346,9 @@ msgstr "Wednesday"
 
 msgid "week"
 msgstr "week"
+
+msgid "What day is it the day after tomorrow?"
+msgstr "What day is it the day after tomorrow?"
 
 msgid "What day is it today?"
 msgstr "What day is it today?"

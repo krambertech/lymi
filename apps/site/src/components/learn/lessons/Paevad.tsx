@@ -264,6 +264,7 @@ const TRANSLATED: readonly { said: string; prompt: MessageDescriptor }[] = [
   { said: "Homme on pühapäev.", prompt: msg`Tomorrow is Sunday.` },
   { said: "Täna on kolmapäev.", prompt: msg`Today is Wednesday.` },
   { said: "Homme on neljapäev.", prompt: msg`Tomorrow is Thursday.` },
+  { said: "Ülehomme on laupäev.", prompt: msg`The day after tomorrow is Saturday.` },
 ];
 
 const RELATIVE = [
@@ -531,6 +532,17 @@ export function PaevadLesson() {
         ],
         answer: "town",
         line: 6,
+      },
+      {
+        id: "after-tomorrow",
+        ask: t`What day is it the day after tomorrow?`,
+        options: [
+          { id: "thu", label: i18n._(MEANINGS.neljapäev) },
+          { id: "sat", label: i18n._(MEANINGS.laupäev) },
+          { id: "fri", label: i18n._(MEANINGS.reede) },
+        ],
+        answer: "fri",
+        line: 5,
       },
     ],
     [t, i18n],
@@ -820,7 +832,7 @@ export function PaevadLesson() {
                 id="translate-days"
                 title={<Trans>Write it in Estonian</Trans>}
                 items={translatedItems}
-                rounds={8}
+                rounds={9}
                 verdict={(share) =>
                   share === 1 ? (
                     <Trans>All eight, each day and each word right.</Trans>

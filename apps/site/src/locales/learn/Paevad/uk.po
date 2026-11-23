@@ -227,6 +227,9 @@ msgstr "Наступний день"
 msgid "the day after tomorrow"
 msgstr "післязавтра"
 
+msgid "The day after tomorrow is Saturday."
+msgstr "Післязавтра субота."
+
 msgid "the day before yesterday"
 msgstr "позавчора"
 
@@ -343,6 +346,9 @@ msgstr "Середа"
 
 msgid "week"
 msgstr "тиждень"
+
+msgid "What day is it the day after tomorrow?"
+msgstr "Який день буде післязавтра?"
 
 msgid "What day is it today?"
 msgstr "Який сьогодні день?"

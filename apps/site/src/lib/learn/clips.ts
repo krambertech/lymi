@@ -287,6 +287,7 @@ export const PAEVAD_SENTENCES = [
   "Mis päev täna on?",
   ...WEEK.map((day) => `Täna on ${day}.`),
   ...WEEK.map((day) => `Homme on ${day}.`),
+  "Ülehomme on laupäev.",
 ];
 
 export const dayAnswers = (said: string): [string, ...string[]] => [said];

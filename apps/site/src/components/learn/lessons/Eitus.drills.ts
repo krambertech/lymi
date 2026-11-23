@@ -96,21 +96,26 @@ const answered = ({ ask, answer }: (typeof NO_ANSWERS)[number]): SentenceDrill =
     id: `answer-${clipId(ask)}`,
     rule: "answer",
     from: ask,
-    cue: msg`answer no`,
+    cue: msg`answer no with the verb`,
     say: answer,
     answers:
       verb === "ole"
         ? [
             answer,
             "Pole.",
+            "Ei, ei ole.",
+            "Ei, pole.",
             ...full("ei ole"),
             ...full("pole"),
-            ...(tail ? [`Ei ole ${tail}.`, `Pole ${tail}.`] : []),
+            ...(tail
+              ? [`Ei ole ${tail}.`, `Pole ${tail}.`, `Ei, ei ole ${tail}.`, `Ei, pole ${tail}.`]
+              : []),
           ]
         : [
             answer,
+            `Ei, ei ${verb}.`,
             ...full(`ei ${verb}`),
-            ...(tail ? [`Ei ${verb} ${tail}.`] : []),
+            ...(tail ? [`Ei ${verb} ${tail}.`, `Ei, ei ${verb} ${tail}.`] : []),
             ...(asked === "te"
               ? [`Ei, ma ei ${verb}.`, `Ma ei ${verb}.`, `Ei, mina ei ${verb}.`, `Mina ei ${verb}.`]
               : []),

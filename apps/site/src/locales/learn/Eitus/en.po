@@ -73,8 +73,8 @@ msgstr "All six, every yes and every no."
 msgid "am not, is not, are not"
 msgstr "am not, is not, are not"
 
-msgid "answer no"
-msgstr "answer no"
+msgid "answer no with the verb"
+msgstr "answer no with the verb"
 
 msgid "Answering no"
 msgstr "Answering no"

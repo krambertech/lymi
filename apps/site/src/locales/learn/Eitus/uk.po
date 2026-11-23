@@ -73,8 +73,8 @@ msgstr "Усі шість, і кожне «так», і кожне «ні»."
 msgid "am not, is not, are not"
 msgstr "не бути: я не, він не, вони не"
 
-msgid "answer no"
-msgstr "відповідай «ні»"
+msgid "answer no with the verb"
+msgstr "відповідай «ні» з дієсловом"
 
 msgid "Answering no"
 msgstr "Як відповісти «ні»"

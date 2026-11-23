@@ -348,24 +348,24 @@ export const NO_ANSWERS = [
 ] as const;
 
 export const NEGATION_TURNED = [
-  { yes: "Ma loen raamatut.", no: "Ma ei loe raamatut.", person: "ma" },
+  { yes: "Ma elan Tallinnas.", no: "Ma ei ela Tallinnas.", person: "ma" },
   { yes: "Sa õpid eesti keelt.", no: "Sa ei õpi eesti keelt.", person: "sa" },
   { yes: "Ta räägib eesti keelt.", no: "Ta ei räägi eesti keelt.", person: "ta" },
   { yes: "Me ootame bussi.", no: "Me ei oota bussi.", person: "me" },
   { yes: "Te töötate kodus.", no: "Te ei tööta kodus.", person: "te" },
   { yes: "Nad joovad kohvi.", no: "Nad ei joo kohvi.", person: "nad" },
-  { yes: "Ma elan Tallinnas.", no: "Ma ei ela Tallinnas.", person: "ma" },
+  { yes: "Ma loen raamatut.", no: "Ma ei loe raamatut.", person: "ma" },
   { yes: "Nad söövad kodus.", no: "Nad ei söö kodus.", person: "nad" },
 ] as const;
 
 export const NEGATION_FIXES = [
-  { wrong: "Ma ei loen raamatut.", said: "Ma ei loe raamatut.", kind: "verb" },
+  { wrong: "Ma ei elan Tallinnas.", said: "Ma ei ela Tallinnas.", kind: "verb" },
   { wrong: "Ta ei räägib eesti keelt.", said: "Ta ei räägi eesti keelt.", kind: "verb" },
   { wrong: "Nad ei joovad kohvi.", said: "Nad ei joo kohvi.", kind: "verb" },
   { wrong: "Me ei ootame bussi.", said: "Me ei oota bussi.", kind: "verb" },
   { wrong: "Sa ei õpid eesti keelt.", said: "Sa ei õpi eesti keelt.", kind: "verb" },
   { wrong: "Ta ei on kodus.", said: "Ta ei ole kodus.", kind: "olema" },
-  { wrong: "Ma ei olen väsinud.", said: "Ma ei ole väsinud.", kind: "olema" },
+  { wrong: "Me ei oleme kodus.", said: "Me ei ole kodus.", kind: "olema" },
   { wrong: "Nad ei on õpetajad.", said: "Nad ei ole õpetajad.", kind: "olema" },
 ] as const;
 
@@ -505,6 +505,8 @@ export const KUSIMUSED_ASKED = [
       "Kui palju nad kohvi joovad?",
       "Kui palju nad joovad kohvi?",
       "Kui palju kohvi nemad joovad?",
+      "Kui palju nemad kohvi joovad?",
+      "Kui palju nemad joovad kohvi?",
       "Mis nad joovad?",
       "Mida nad joovad?",
       "Mis nemad joovad?",
@@ -522,6 +524,7 @@ export const KUSIMUSED_TRANSLATED = [
       "Kas elate Tartus?",
       "Kas te Tartus elate?",
       "Kas teie Tartus elate?",
+      "Kas Tartus elate?",
     ],
   },
   {
@@ -556,12 +559,21 @@ export const KUSIMUSED_TRANSLATED = [
       "Kas töötate kodus?",
       "Kas sa kodus töötad?",
       "Kas te kodus töötate?",
+      "Kas sina kodus töötad?",
+      "Kas teie kodus töötate?",
+      "Kas kodus töötad?",
+      "Kas kodus töötate?",
     ],
   },
-  { kind: "word", answers: ["Kus ta on?", "Kus tema on?"] },
+  { kind: "word", answers: ["Kus ta on?", "Kus tema on?", "Kus on ta?", "Kus on tema?"] },
   {
     kind: "kas",
-    answers: ["Kas nad joovad kohvi?", "Kas nemad joovad kohvi?", "Kas nad kohvi joovad?"],
+    answers: [
+      "Kas nad joovad kohvi?",
+      "Kas nemad joovad kohvi?",
+      "Kas nad kohvi joovad?",
+      "Kas nemad kohvi joovad?",
+    ],
   },
   {
     kind: "word",
@@ -897,7 +909,17 @@ export const KOHAD_ASKED = [
     answers: ["Kus Jaan töötab?", "Kus töötab Jaan?", "Kus ta töötab?", "Kus tema töötab?"],
   },
   { reply: "Nad elavad Tartus.", answers: ["Kus nad elavad?", "Kus nemad elavad?"] },
-  { reply: "Ema on kodus.", answers: ["Kus ema on?", "Kus on ema?", "Kus ta on?", "Kus tema on?"] },
+  {
+    reply: "Isa on kontoris.",
+    answers: [
+      "Kus isa on?",
+      "Kus on isa?",
+      "Kus ta on?",
+      "Kus tema on?",
+      "Kus on ta?",
+      "Kus on tema?",
+    ],
+  },
   {
     reply: "Mari töötab koolis.",
     answers: ["Kus Mari töötab?", "Kus töötab Mari?", "Kus ta töötab?", "Kus tema töötab?"],
@@ -3121,6 +3143,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
       ...NO_ANSWERS.flatMap(({ ask, answer }) => [ask, answer]),
       ...NEGATION_PHRASES,
       ...NEGATION_TURNED.map(({ no }) => no),
+      ...NEGATION_FIXES.map(({ said }) => said),
     ]),
     "d-mari": NEGATION_TALK,
   },

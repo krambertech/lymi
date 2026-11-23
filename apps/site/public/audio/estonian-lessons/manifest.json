@@ -11134,11 +11134,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "kohad/kus-ema-on": {
-    "text": "Kus ema on?",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "kohad/kus-ta-o3pib": {
     "text": "Kus ta õpib?",
     "model": "eleven_v4",
@@ -11196,6 +11191,16 @@
   },
   "kusimused/kas-te-elate-tartus": {
     "text": "Kas te elate Tartus?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohad/kus-isa-on": {
+    "text": "Kus isa on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/me-ei-ole-kodus": {
+    "text": "Me ei ole kodus.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

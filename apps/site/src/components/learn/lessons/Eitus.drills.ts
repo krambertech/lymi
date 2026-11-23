@@ -1,6 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import {
+  capital,
   clipId,
   endingOf,
   NEGATION_FIXES,
@@ -75,22 +76,19 @@ const olema = (row: (typeof OLEMA_ROWS)[number]): SentenceDrill => {
 };
 
 const ANSWERER: Record<string, string> = { sa: "ma", te: "me", ta: "ta", nad: "nad" };
+const LONG: Record<string, string> = { ma: "mina", me: "meie", ta: "tema", nad: "nemad" };
 
 const answered = ({ ask, answer }: (typeof NO_ANSWERS)[number]): SentenceDrill => {
   const [, asked = "", ...rest] = ask.replace(/\?$/, "").split(" ");
   const who = ANSWERER[asked] ?? "ma";
   const verb = answer.replace(/^Ei /, "").replace(/\.$/, "");
   const tail = rest.slice(1).join(" ");
-  const full = (form: string) => [
-    `Ei, ${who} ${form}.`,
-    `${who.charAt(0).toUpperCase()}${who.slice(1)} ${form}.`,
-    ...(tail
-      ? [
-          `Ei, ${who} ${form} ${tail}.`,
-          `${who.charAt(0).toUpperCase()}${who.slice(1)} ${form} ${tail}.`,
-        ]
-      : []),
-  ];
+  const full = (form: string) =>
+    [who, LONG[who] ?? who].flatMap((pronoun) => [
+      `Ei, ${pronoun} ${form}.`,
+      `${capital(pronoun)} ${form}.`,
+      ...(tail ? [`Ei, ${pronoun} ${form} ${tail}.`, `${capital(pronoun)} ${form} ${tail}.`] : []),
+    ]);
   return {
     kind: "rewrite",
     id: `answer-${clipId(ask)}`,
@@ -107,7 +105,8 @@ const answered = ({ ask, answer }: (typeof NO_ANSWERS)[number]): SentenceDrill =
             ...full(`ei ${verb}`),
             ...(asked === "te" ? [`Ei, ma ei ${verb}.`, `Ma ei ${verb}.`] : []),
           ],
-    explain: msg`<et>Ei</et>, then the verb from the question without its ending.`,
+    explain:
+      verb === "ole" ? OLE : msg`<et>Ei</et>, then the verb from the question without its ending.`,
   };
 };
 
@@ -121,7 +120,7 @@ const YES_NO: readonly {
 }[] = [
   {
     id: "yes-loete",
-    prompt: msg`You all read.`,
+    prompt: msg`You read (to more than one).`,
     stem: "loe",
     person: "te",
     no: false,
@@ -129,7 +128,7 @@ const YES_NO: readonly {
   },
   {
     id: "no-loete",
-    prompt: msg`You all don’t read.`,
+    prompt: msg`You don’t read (to more than one).`,
     stem: "loe",
     person: "te",
     no: true,

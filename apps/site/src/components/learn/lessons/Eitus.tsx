@@ -398,7 +398,7 @@ export const AFTER_EI: readonly (readonly [(typeof FLIP_STEMS)[number], Person])
   ["loe", "me"],
   ["loe", "te"],
   ["tööta", "te"],
-  ["räägi", "ma"],
+  ["tööta", "ma"],
   ["söö", "ma"],
 ];
 
@@ -409,7 +409,13 @@ const YES_OR_NO: readonly {
   yes: MessageDescriptor;
   no: MessageDescriptor;
 }[] = [
-  { stem: "oota", person: "sa", long: "Sina", yes: msg`You wait.`, no: msg`You don’t wait.` },
+  {
+    stem: "oota",
+    person: "sa",
+    long: "Sina",
+    yes: msg`You’re waiting.`,
+    no: msg`You aren’t waiting.`,
+  },
   { stem: "joo", person: "ta", long: "Tema", yes: msg`She drinks.`, no: msg`She doesn’t drink.` },
   { stem: "õpi", person: "ma", long: "Mina", yes: msg`I study.`, no: msg`I don’t study.` },
 ];
@@ -990,7 +996,10 @@ export function EitusLesson() {
                       Nearly. Look at the word right after <span lang="et">ei</span>.
                     </Trans>
                   ) : (
-                    <Trans>Flip the six lines at the top and the <span lang="et">olema</span> lines once more, then try again.</Trans>
+                    <Trans>
+                      Flip the six lines at the top and the <span lang="et">olema</span> lines once
+                      more, then try again.
+                    </Trans>
                   )
                 }
                 recall={fixRecall}

@@ -515,7 +515,7 @@ export function KohadLesson() {
         options: [
           { id: "home", label: t`At home` },
           { id: "market", label: t`At the market` },
-          { id: "work", label: t`At work` },
+          { id: "tartu", label: t`In Tartu` },
         ],
         answer: "home",
         line: 3,

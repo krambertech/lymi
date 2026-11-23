@@ -85,9 +85,6 @@ msgstr "в офисе"
 msgid "at work"
 msgstr "на работе"
 
-msgid "At work"
-msgstr "На работе"
-
 msgid "café"
 msgstr "кафе"
 
@@ -237,6 +234,9 @@ msgstr "в Таллине"
 
 msgid "in Tartu"
 msgstr "в Тарту"
+
+msgid "In Tartu"
+msgstr "В Тарту"
 
 msgid "In Tartu."
 msgstr "В Тарту."

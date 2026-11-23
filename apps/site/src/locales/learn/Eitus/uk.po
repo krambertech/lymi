@@ -450,17 +450,17 @@ msgstr "У «так» шість закінчень, які треба вивч�
 msgid "Yes or no"
 msgstr "Так чи ні"
 
-msgid "You all don’t read."
-msgstr "Ви не читаєте."
-
-msgid "You all read."
-msgstr "Ви читаєте."
-
-msgid "You don’t wait."
+msgid "You aren’t waiting."
 msgstr "Ти не чекаєш."
 
-msgid "You wait."
-msgstr "Ти чекаєш."
+msgid "You don’t read (to more than one)."
+msgstr "Ви не читаєте."
+
+msgid "You read (to more than one)."
+msgstr "Ви читаєте."
 
 msgid "You’ll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
 msgstr "Часто його кажуть одним словом, <0/>, і це рівно те саме, що <1/>. Спробуй усі три."
+
+msgid "You’re waiting."
+msgstr "Ти чекаєш."

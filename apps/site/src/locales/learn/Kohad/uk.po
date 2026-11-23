@@ -85,9 +85,6 @@ msgstr "в офісі"
 msgid "at work"
 msgstr "на роботі"
 
-msgid "At work"
-msgstr "На роботі"
-
 msgid "café"
 msgstr "кав’ярня"
 
@@ -137,7 +134,7 @@ msgid "He or she studies at school."
 msgstr "Він або вона вчиться в школі."
 
 msgid "He’s studying at school."
-msgstr "Він вчиться в школі."
+msgstr "Він учиться в школі."
 
 msgid "Hear a sentence and pick the place. Listen for the word that ends in <0>-s</0>."
 msgstr "Послухай речення й обери місце. Слухай слово, яке закінчується на <0>-s</0>."
@@ -237,6 +234,9 @@ msgstr "у Таллінні"
 
 msgid "in Tartu"
 msgstr "у Тарту"
+
+msgid "In Tartu"
+msgstr "У Тарту"
 
 msgid "In Tartu."
 msgstr "У Тарту."

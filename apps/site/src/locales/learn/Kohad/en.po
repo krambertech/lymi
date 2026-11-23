@@ -85,9 +85,6 @@ msgstr "at the office"
 msgid "at work"
 msgstr "at work"
 
-msgid "At work"
-msgstr "At work"
-
 msgid "café"
 msgstr "café"
 
@@ -237,6 +234,9 @@ msgstr "in Tallinn"
 
 msgid "in Tartu"
 msgstr "in Tartu"
+
+msgid "In Tartu"
+msgstr "In Tartu"
 
 msgid "In Tartu."
 msgstr "In Tartu."

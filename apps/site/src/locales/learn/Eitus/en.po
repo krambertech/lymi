@@ -450,17 +450,17 @@ msgstr "Yes has six endings to learn, and no has none. That makes the no the eas
 msgid "Yes or no"
 msgstr "Yes or no"
 
-msgid "You all don’t read."
-msgstr "You all don’t read."
-
-msgid "You all read."
-msgstr "You all read."
-
-msgid "You don’t wait."
+msgid "You aren’t waiting."
 msgstr "You don’t wait."
 
-msgid "You wait."
-msgstr "You wait."
+msgid "You don’t read (to more than one)."
+msgstr "You all don’t read."
+
+msgid "You read (to more than one)."
+msgstr "You all read."
 
 msgid "You’ll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
 msgstr "You’ll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
+
+msgid "You’re waiting."
+msgstr "You wait."

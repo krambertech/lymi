@@ -481,13 +481,14 @@ export function TutvumineLesson() {
   );
 
   const translatedItems: (SentenceItem & { pair: readonly [string, string] })[] =
-    TUTVUMINE_TRANSLATED.map(({ kind, answers }, i) => ({
+    TUTVUMINE_TRANSLATED.map((each, i) => ({
       kind: "translate" as const,
-      id: `translate-${clipId(answers[0])}`,
+      id: `translate-${clipId(each.answers[0])}`,
       prompt: i18n._(TRANSLATED_MEANS[i] as (typeof TRANSLATED_MEANS)[number]),
-      src: src(answers[0]),
-      answers,
-      pair: [kind, answers[0]] as const,
+      src: src(each.answers[0]),
+      answers: each.answers,
+      ...("confusable" in each ? { confusable: each.confusable } : {}),
+      pair: [each.kind, each.answers[0]] as const,
     }));
 
   const talkQuestions: PassageQuestion[] = [

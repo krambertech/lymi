@@ -945,6 +945,153 @@ const PAST_CLIPS: Record<string, Clip> = {
   ...PAST_DIALOGUE,
 };
 
+/*
+ * The future lesson, “Hakkan õppima”. EKI's Eesti keele käsiraamat (SÜ 26, SÜ 27) and Erelt's
+ * Estonian Language (p. 104): no future form, the present with a time word, hakkama with the -ma
+ * form, and saama with the -ma form discouraged. Forms checked in Sõnaveeb on 21 November 2026.
+ */
+
+/** Time words on a line, each with a sentence; the verb is the same from today on. */
+export const FUTURE_TIMELINE = [
+  { id: "yesterday", et: "eile", at: -1, sentences: [["Eile läksin Tartusse.", "läks|in"]] },
+  { id: "today", et: "täna", at: 0, sentences: [["Täna lähen Tartusse.", "lähe|n"]] },
+  { id: "tomorrow", et: "homme", at: 1, sentences: [["Homme lähen Tartusse.", "lähe|n"]] },
+  {
+    id: "next-week",
+    et: "järgmisel nädalal",
+    at: 2,
+    sentences: [
+      ["Järgmisel nädalal lähen Tartusse.", "lähe|n"],
+      ["Järgmisel nädalal hakkan Tartus õppima.", "hakka|n", "õppi|ma"],
+    ],
+  },
+] as const;
+
+/** Hakkama for each person, each in a sentence whose second verb is `form`, `|` before -ma. */
+export const FUTURE_HAKKAMA = [
+  { lead: "hakkan", said: "Ma hakkan Tartus elama.", form: "ela|ma" },
+  { lead: "hakkad", said: "Kas sa hakkad kodus töötama?", form: "tööta|ma" },
+  { lead: "hakkab", said: "Homme hakkab vihma sadama.", form: "sada|ma" },
+  { lead: "hakkame", said: "Me hakkame eesti keelt rääkima.", form: "rääki|ma" },
+  { lead: "hakkate", said: "Millal te hakkate sööma?", form: "söö|ma" },
+  { lead: "hakkavad", said: "Lapsed hakkavad mängima.", form: "mängi|ma" },
+] as const;
+
+/** The sentences to build: every order a teacher accepts, and the present as the spare tile. */
+export const FUTURE_BUILD = [
+  { answers: ["Ma hakkan palju lugema."], spare: ["loen"] },
+  {
+    answers: [
+      "Järgmisel nädalal hakkame eesti keelt õppima.",
+      "Eesti keelt hakkame järgmisel nädalal õppima.",
+    ],
+    spare: ["õpime"],
+  },
+  {
+    answers: ["Kati hakkab poes töötama.", "Poes hakkab Kati töötama."],
+    spare: ["töötab"],
+    tiles: ["Kati", "hakkab", "poes", "töötama"],
+  },
+] as const;
+
+/** The verbs of “Which form follows?”: hakkan and three more with -ma, kavatsen and plaanin with -da. */
+export const FUTURE_SORT = [
+  { lead: "hakkan", takes: "ma" },
+  { lead: "kavatsen", takes: "da" },
+  { lead: "plaanin", takes: "da" },
+  { lead: "pean", takes: "ma" },
+  { lead: "tahan", takes: "da" },
+  { lead: "lähen", takes: "ma" },
+  { lead: "oskan", takes: "da" },
+  { lead: "jään", takes: "ma" },
+] as const satisfies readonly { lead: string; takes: Takes }[];
+
+/**
+ * One sentence in the past, now and later, for “Past, now or later?”. Later is a time word with
+ * the present, hakkama or kavatsema, so no one cue gives it away.
+ */
+export const FUTURE_WHEN = [
+  { verb: "olema", past: "Eile olin tööl.", now: "Ma olen tööl.", later: "Homme olen tööl." },
+  {
+    verb: "elama",
+    past: "Ta elas Tallinnas.",
+    now: "Ta elab Tallinnas.",
+    later: "Ta hakkab Tallinnas elama.",
+  },
+  {
+    verb: "jooma",
+    past: "Me jõime kohvi.",
+    now: "Me joome kohvi.",
+    later: "Ülehomme joome kohvi.",
+  },
+  {
+    verb: "lugema",
+    past: "Nad lugesid raamatut.",
+    now: "Nad loevad raamatut.",
+    later: "Nad hakkavad raamatut lugema.",
+  },
+  {
+    verb: "sööma",
+    past: "Eile sõime kodus.",
+    now: "Me sööme kodus.",
+    later: "Järgmisel nädalal sööme kodus.",
+  },
+  {
+    verb: "õppima",
+    past: "Ta õppis eesti keelt.",
+    now: "Ta õpib eesti keelt.",
+    later: "Ta kavatseb eesti keelt õppida.",
+  },
+  {
+    verb: "töötama",
+    past: "Ma töötasin kodus.",
+    now: "Ma töötan kodus.",
+    later: "Homme töötan kodus.",
+  },
+] as const;
+
+/** Kati asks about your plans: her lines in the second voice, the learner's in the main one. */
+export const FUTURE_DIALOGUE = {
+  "d-kati-1": { text: "Tere! Mida sa homme teed?", voice: "second" },
+  "d-sina-1": "Homme lähen Tallinnasse.",
+  "d-kati-2": { text: "Mida sa Tallinnas teed?", voice: "second" },
+  "d-sina-2": "Ma hakkan Tallinnas töötama.",
+  "d-kati-3": { text: "Millal sa Tartusse tuled?", voice: "second" },
+  "d-sina-3": "Ma kavatsen järgmisel nädalal tulla.",
+} as const satisfies Record<string, Clip>;
+
+/** The words and sentences of the future lesson with a card, each heard on its own. */
+export const FUTURE_WORDS = [
+  "tulevik",
+  "homme",
+  "täna",
+  "ülehomme",
+  "järgmisel nädalal",
+  "eelmisel nädalal",
+  "Homme lähen Tartusse.",
+  "Täna lähen Tartusse.",
+  "Homme saab olema külm.",
+  "Homme on külm.",
+  "hakkama",
+  "hakkan",
+  "kavatsema",
+  "kavatsen",
+  "plaanima",
+  "plaanin",
+  "Ma kavatsen järgmisel nädalal Tallinnasse minna.",
+  "Mida sa plaanid homme teha?",
+  ...FUTURE_SORT.map(({ lead }) => lead),
+] as const;
+
+const FUTURE_CLIPS: Record<string, Clip> = {
+  ...words(FUTURE_WORDS),
+  ...words(FUTURE_TIMELINE.flatMap(({ sentences }) => sentences.map(([sentence]) => sentence))),
+  ...words(FUTURE_HAKKAMA.map(({ said }) => said)),
+  ...words(FUTURE_BUILD.map(({ answers }) => answers[0])),
+  ...words(FUTURE_WHEN.flatMap(({ past, now, later }) => [past, now, later])),
+  ...FUTURE_DIALOGUE,
+};
+
 /** How a verb's -da form ends: -da, -ta, -la, -na, or a short -a. */
 export type DaPattern = "da" | "ta" | "la" | "na" | "a";
 
@@ -1743,5 +1890,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   },
   osastav: OSASTAV_CLIPS,
   lihtminevik: PAST_CLIPS,
+  tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,
 };

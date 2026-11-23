@@ -410,7 +410,7 @@ const COMMAND_VERB_MEANS: Record<string, MessageDescriptor> = {
   ootama: msg`to wait`,
   sööma: msg`to eat`,
   jooma: msg`to drink`,
-  õppima: msg`to study`,
+  õppima: msg`to learn, to study`,
   istuma: msg`to sit down`,
   kuulama: msg`to listen`,
   vaatama: msg`to look`,
@@ -424,7 +424,7 @@ const ONE_OR_MORE = [
   "Oota!",
   "Istuge!",
   "Loe!",
-  "Kuulake!",
+  "Ärge oodake!",
 ] as const;
 
 export function KaskivLesson() {
@@ -605,7 +605,7 @@ export function KaskivLesson() {
         id: "first",
         ask: t`What should everyone do first?`,
         options: [
-          { id: "listen", label: t`Listen` },
+          { id: "listen", label: t({ message: "Listen", context: "in class" }) },
           { id: "sit", label: t`Sit down` },
           { id: "stand", label: t`Stand up` },
         ],

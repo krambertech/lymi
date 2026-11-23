@@ -55,7 +55,7 @@ msgid "A command to one person is the stem alone. To more than one, or politely,
 msgstr "Наказ одній людині — це сама основа. Кільком людям або на «ви» він закінчується на <0>-ge</0> чи <1>-ke</1>. Розсортуй накази; торкнись наказу, щоб його почути."
 
 msgid "A teacher starts the class. Listen to who is told to do what."
-msgstr "Учителька починає урок. Послухай, кому що треба зробити."
+msgstr "Учитель починає урок. Послухай, кому що треба зробити."
 
 msgid "All of them. You told <0>ära</0> from <1>ei</1> every time."
 msgstr "Усі. У кожному реченні <0>ära</0> й <1>ei</1> розрізнено правильно."
@@ -230,8 +230,9 @@ msgstr "Яан має говорити."
 msgid "Kati"
 msgstr "Каті"
 
+msgctxt "in class"
 msgid "Listen"
-msgstr "Слухати"
+msgstr "Послухати"
 
 msgid "Listen: in class"
 msgstr "Слухання: на уроці"
@@ -408,7 +409,7 @@ msgid "to more than one"
 msgstr "кільком людям"
 
 msgid "To more than one"
-msgstr "Кільком людям"
+msgstr "До кількох людей"
 
 msgid "To more than one person"
 msgstr "До кількох людей"
@@ -442,9 +443,6 @@ msgstr "сідати"
 
 msgid "to speak"
 msgstr "говорити"
-
-msgid "to study"
-msgstr "вчитися"
 
 msgid "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the ma form from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
 msgstr "Щоб сказати одній людині, що робити, естонська бере основу дієслова й нічого до неї не додає. Візьми форму з ma з уроку {present} і прибери <0>-n</0>. <1/> — це «я читаю», а <2/> просить одну людину читати."

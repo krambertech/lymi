@@ -230,6 +230,7 @@ msgstr "Jaan should talk."
 msgid "Kati"
 msgstr "Kati"
 
+msgctxt "in class"
 msgid "Listen"
 msgstr "Listen"
 
@@ -442,9 +443,6 @@ msgstr "to sit down"
 
 msgid "to speak"
 msgstr "to speak"
-
-msgid "to study"
-msgstr "to study"
 
 msgid "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the ma form from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
 msgstr "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the ma form from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."

@@ -100,7 +100,7 @@ const SATURDAY_GAPS: readonly GapItem[] = [
   { id: "ei", before: "Täna on laupäev. Ma", after: "tööta.", answer: "ei" },
   { id: "olen", before: "Ma", after: "Tallinnas.", answer: "olen" },
   { id: "on", before: "Mari ja Jaan", after: "minu sõbrad.", answer: "on" },
-  { id: "joome", before: "Me", after: "kell kümme kohvikus kohvi.", answer: "joome" },
+  { id: "joome", before: "Mari ja mina", after: "kell kümme kohvikus kohvi.", answer: "joome" },
   { id: "eurot", before: "Kohv maksab kolm", after: ".", answer: "eurot" },
 ];
 
@@ -279,14 +279,14 @@ function useContent() {
   ];
   const plan: PassageQuestion[] = [
     {
-      id: "today",
-      ask: t`What day is it today?`,
+      id: "now",
+      ask: t`Where is Jaan when Mari calls?`,
       options: [
-        { id: "thursday", label: t`Thursday` },
-        { id: "friday", label: t`Friday` },
-        { id: "saturday", label: t`Saturday` },
+        { id: "work", label: t`At work` },
+        { id: "cafe", label: t`In a café` },
+        { id: "home", label: t`At home` },
       ],
-      answer: "friday",
+      answer: "work",
       line: 2,
     },
     { id: "works", kind: "truefalse", ask: t`Jaan works tomorrow.`, answer: false, line: 4 },
@@ -585,8 +585,8 @@ export function PaevTallinnasLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Six short lines from a day in town: two times, a price, a day, a no and a sign.
-                    Write each one as you hear it.
+                    Six short lines: two times, a price, a day, a no and a sign. Write each one as
+                    you hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -603,7 +603,7 @@ export function PaevTallinnasLesson() {
                       Nearly. Hear the ones you missed below, then try again with Slower.
                     </Trans>
                   ) : (
-                    <Trans>Listen to Jaan’s voice message once more, then try again.</Trans>
+                    <Trans>Play the lines below once more, then try again.</Trans>
                   )
                 }
                 recall={sentenceRecall}

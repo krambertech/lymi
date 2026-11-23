@@ -46,14 +46,11 @@ msgstr "Часы работы кафе"
 msgid "A command, from istuma, to sit."
 msgstr "Так говорят, когда просят сесть; от istuma, садиться."
 
-msgid "A day says <et>täna on</et> or <et>homme on</et> and the day, with a small letter."
-msgstr "День называют так: <et>täna on</et> или <et>homme on</et> и название дня с маленькой буквы."
-
 msgid "A day’s name, or <0>täna on</0> and <1>homme on</1>, says what day it is."
-msgstr "Название дня или <0>täna on</0> и <1>homme on</1> говорят, какой сегодня день."
+msgstr "Название дня или <0>täna on</0> и <1>homme on</1> называют день."
 
 msgid "A day’s name, or <et>täna on</et> and <et>homme on</et>, says what day it is."
-msgstr "Название дня или <et>täna on</et> и <et>homme on</et> говорят, какой сегодня день."
+msgstr "Название дня или <et>täna on</et> и <et>homme on</et> называют день."
 
 msgid "A message from Mari"
 msgstr "Сообщение от Мари"
@@ -265,9 +262,6 @@ msgstr "Яан, ещё один друг, присылает тебе голос
 msgid "Kell on kümme: it’s ten. Kell kümme: at ten."
 msgstr "Kell on kümme: сейчас десять. Kell kümme: в десять."
 
-msgid "Listen to Jaan’s voice message once more, then try again."
-msgstr "Ещё раз послушай голосовое сообщение от Яана, а потом попробуй снова."
-
 msgid "Listen: a plan for tomorrow"
 msgstr "Аудирование: план на завтра"
 
@@ -327,6 +321,9 @@ msgstr "открыто"
 
 msgid "Opening hours on a door"
 msgstr "Часы работы на двери"
+
+msgid "Play the lines below once more, then try again."
+msgstr "Ещё раз послушай строки ниже, а потом попробуй снова."
 
 msgid "Pool looks ahead: halfway to eleven."
 msgstr "Pool смотрит вперёд: половина одиннадцатого."
@@ -388,8 +385,8 @@ msgstr "Sina, когда действие направлено на тебя: Ma
 msgid "sit down"
 msgstr "садись"
 
-msgid "Six short lines from a day in town: two times, a price, a day, a no and a sign. Write each one as you hear it."
-msgstr "Шесть коротких строк из дня в городе: дважды время, цена, день, отрицание и табличка на двери. Запиши каждую так, как слышишь."
+msgid "Six short lines: two times, a price, a day, a no and a sign. Write each one as you hear it."
+msgstr "Шесть коротких строк: дважды время, цена, день, отрицание и табличка на двери. Запиши каждую так, как слышишь."
 
 msgid "Sunday"
 msgstr "Воскресенье"
@@ -418,9 +415,6 @@ msgstr "Множественное число от sõber."
 msgid "Three to five sentences: answer her question, say something you don’t do, and say where you are and when."
 msgstr "Три–пять предложений: ответь на её вопрос, скажи, чего ты не делаешь, и где ты будешь и когда."
 
-msgid "Thursday"
-msgstr "Четверг"
-
 msgid "Time, price or day"
 msgstr "Время, цена или день"
 
@@ -429,6 +423,9 @@ msgstr "Время, цена или день?"
 
 msgid "to be"
 msgstr "быть"
+
+msgid "To say the day, use <et>täna on</et> or <et>homme on</et> and its name, with a small letter."
+msgstr "Чтобы назвать день, говори <et>täna on</et> или <et>homme on</et> и название дня с маленькой буквы."
 
 msgid "today"
 msgstr "сегодня"
@@ -457,14 +454,11 @@ msgstr "Мы пьём кофе в одиннадцать."
 msgid "what day"
 msgstr "какой день"
 
-msgid "What day is it today?"
-msgstr "Какой сегодня день?"
-
 msgid "What day is it tomorrow?"
 msgstr "Какой завтра день?"
 
 msgid "What day it is"
-msgstr "Какой сегодня день"
+msgstr "Какой день"
 
 msgid "What does Mari write?"
 msgstr "Что пишет Мари?"
@@ -501,6 +495,9 @@ msgstr "Где Яан в воскресенье?"
 
 msgid "Where is Jaan today?"
 msgstr "Где Яан сегодня?"
+
+msgid "Where is Jaan when Mari calls?"
+msgstr "Где Яан, когда Мари звонит?"
 
 msgid "Where is Mari at twelve tomorrow?"
 msgstr "Где Мари завтра в двенадцать?"

@@ -1908,7 +1908,7 @@ export const TALLINN_PASSAGES = {
     "Ma ei tööta.",
     "Ma olen Tallinnas.",
     "Mari ja Jaan on minu sõbrad.",
-    "Me joome kell kümme kohvikus kohvi.",
+    "Mari ja mina joome kell kümme kohvikus kohvi.",
     "Kohv maksab kolm eurot.",
   ],
 } as const;
@@ -2059,7 +2059,7 @@ export const TALLINN_REPLY = [
   "Tere, Mari!",
   "Jah, ma olen homme linnas.",
   "Ma ei tööta.",
-  "Kell üksteist olen kohvikus.",
+  "Kell kümme olen kohvikus.",
   "Pühapäeval olen kodus.",
 ] as const;
 

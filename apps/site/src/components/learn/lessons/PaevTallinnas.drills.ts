@@ -15,7 +15,7 @@ type Kind = "kell" | "hind" | "paev" | "ei";
 const WHY: Record<Kind, MessageDescriptor> = {
   kell: msg`A time takes <et>kell</et> and the number: <et>kell kümme</et>, at ten.`,
   hind: msg`A price takes <et>maksab</et>, and after a number from two up, <et>euro</et> becomes <et>eurot</et>.`,
-  paev: msg`A day says <et>täna on</et> or <et>homme on</et> and the day, with a small letter.`,
+  paev: msg`To say the day, use <et>täna on</et> or <et>homme on</et> and its name, with a small letter.`,
   ei: msg`<et>Ei</et> comes before the verb, and the verb drops its ending: <et>ei tööta</et>.`,
 };
 

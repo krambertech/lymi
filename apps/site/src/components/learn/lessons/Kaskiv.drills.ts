@@ -15,7 +15,7 @@ const MEANS: Record<string, MessageDescriptor> = {
   ootama: msg`to wait`,
   sööma: msg`to eat`,
   jooma: msg`to drink`,
-  õppima: msg`to study`,
+  õppima: msg`to learn, to study`,
   kuulama: msg`to listen`,
   vaatama: msg`to look`,
 };
@@ -98,12 +98,14 @@ export const DRILLS: DrillBank = {
   },
   items: [
     ...TYPED.map(typed),
-    ...KASKIV_FLIP.map(dont),
+    ...KASKIV_FLIP.filter((stem) => stem !== "istu").map(dont),
     heard("istu", false),
     heard("istu", true),
     heard("loe", false),
     heard("loe", true),
-    ...KASKIV_MORE.slice(0, 6).map(more),
+    heard("oota", false),
+    heard("oota", true),
+    ...[1, 3, 4, 6].map((i) => more(KASKIV_MORE[i] as (typeof KASKIV_MORE)[number])),
     {
       kind: "dictation",
       id: "write-raagi-aeglasemalt",

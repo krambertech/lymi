@@ -461,8 +461,8 @@ export function PaevadLesson() {
       WRITTEN_DAYS.map((each) => ({
         kind: "dictation" as const,
         id: `write-${clipId(each)}`,
-        src: src(`Täna on ${each}.`),
-        answers: [`Täna on ${each}.`],
+        src: src(`${each === "esmaspäev" ? "Homme" : "Täna"} on ${each}.`),
+        answers: [`${each === "esmaspäev" ? "Homme" : "Täna"} on ${each}.`],
         pair: [each, each] as const,
       })),
     [],
@@ -510,7 +510,7 @@ export function PaevadLesson() {
       {
         id: "thursday",
         kind: "truefalse",
-        ask: t`Tomorrow is Tuesday.`,
+        ask: t`Tomorrow is Friday.`,
         answer: false,
         line: 3,
       },
@@ -788,7 +788,7 @@ export function PaevadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear what day it is and write the sentence. Day names start with a small letter.
+                    Hear the sentence and write it. Day names start with a small letter.
                   </Trans>
                 </p>
               </Prose>
@@ -824,7 +824,8 @@ export function PaevadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Say what day it is today or tomorrow. Both take <b lang="et">on</b> and the day.
+                    Write what day it is today or tomorrow. Both take <b lang="et">on</b> and the
+                    day.
                   </Trans>
                 </p>
               </Prose>

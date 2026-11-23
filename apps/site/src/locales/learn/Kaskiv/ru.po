@@ -55,7 +55,7 @@ msgid "A command to one person is the stem alone. To more than one, or politely,
 msgstr "Команда одному человеку — это просто основа. Нескольким людям или на «вы» она оканчивается на <0>-ge</0> или <1>-ke</1>. Рассортируй команды; нажми на команду, чтобы её услышать."
 
 msgid "A teacher starts the class. Listen to who is told to do what."
-msgstr "Учительница начинает урок. Послушай, кому что нужно сделать."
+msgstr "Учитель начинает урок. Послушай, кому что нужно сделать."
 
 msgid "All of them. You told <0>ära</0> from <1>ei</1> every time."
 msgstr "Все. В каждом предложении <0>ära</0> и <1>ei</1> различены верно."
@@ -230,8 +230,9 @@ msgstr "Яан должен говорить."
 msgid "Kati"
 msgstr "Кати"
 
+msgctxt "in class"
 msgid "Listen"
-msgstr "Слушать"
+msgstr "Послушать"
 
 msgid "Listen: in class"
 msgstr "Аудирование: на уроке"
@@ -369,7 +370,7 @@ msgid "The stem alone"
 msgstr "Только основа"
 
 msgid "The stem alone: one person."
-msgstr "Одна основа без окончания: один человек."
+msgstr "Только основа: один человек."
 
 msgid "The stem doesn’t change: <0>istu</0>, <1>ära istu</1>."
 msgstr "Основа не меняется: <0>istu</0>, <1>ära istu</1>."
@@ -442,9 +443,6 @@ msgstr "садиться"
 
 msgid "to speak"
 msgstr "говорить"
-
-msgid "to study"
-msgstr "учиться"
 
 msgid "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the ma form from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
 msgstr "Чтобы сказать одному человеку, что делать, эстонский берёт основу глагола и ничего к ней не добавляет. Возьми форму с ma из урока {present} и убери <0>-n</0>. <1/> — это «я читаю», а <2/> просит одного человека читать."

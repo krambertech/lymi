@@ -72,9 +72,7 @@ const written = (said: string): SentenceDrill => ({
   rule: "sentence",
   say: said,
   answers: [said],
-  explain: said.endsWith("?")
-    ? msg`<et>Mis päev täna on?</et> asks what day it is; <et>on</et> comes last.`
-    : msg`Day names start with a small letter inside a sentence.`,
+  explain: msg`Day names start with a small letter inside a sentence.`,
 });
 
 export const DRILLS: DrillBank = {
@@ -97,7 +95,7 @@ export const DRILLS: DrillBank = {
     written("Täna on reede."),
     written("Homme on neljapäev."),
     written("Homme on pühapäev."),
-    written("Mis päev täna on?"),
+    written("Homme on teisipäev."),
     written("Täna on laupäev."),
   ],
 };

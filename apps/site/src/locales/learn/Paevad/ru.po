@@ -35,9 +35,6 @@ msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2> — сегодня, завтр�
 msgid "<et>Homme</et> is tomorrow: the day after today."
 msgstr "<et>Homme</et> — это завтра: день после сегодняшнего."
 
-msgid "<et>Mis päev täna on?</et> asks what day it is; <et>on</et> comes last."
-msgstr "<et>Mis päev täna on?</et> спрашивает, какой сегодня день; <et>on</et> стоит в конце."
-
 msgid "<et>Reede</et> is the one day without <et>päev</et>; <et>laupäev</et> and <et>pühapäev</et> have names of their own."
 msgstr "<et>Reede</et> — единственный день без <et>päev</et>; у <et>laupäev</et> и <et>pühapäev</et> свои названия."
 
@@ -119,8 +116,8 @@ msgstr "Хорошо. Прежде чем выбрать, проговори н�
 msgid "Hear a day"
 msgstr "День на слух"
 
-msgid "Hear what day it is and write the sentence. Day names start with a small letter."
-msgstr "Послушай, какой сегодня день, и напиши предложение. Дни недели пишут с маленькой буквы."
+msgid "Hear the sentence and write it. Day names start with a small letter."
+msgstr "Послушай предложение и напиши его. Дни недели пишут с маленькой буквы."
 
 msgid "holy; a holiday"
 msgstr "святой; праздник"
@@ -199,9 +196,6 @@ msgstr "Суббота"
 
 msgid "Say the week through with the strip above, then try again."
 msgstr "Проговори неделю по дням выше, а потом попробуй снова."
-
-msgid "Say what day it is today or tomorrow. Both take <0>on</0> and the day."
-msgstr "Скажи, какой день сегодня или завтра. В обоих предложениях есть <0>on</0> и день."
 
 msgid "second"
 msgstr "второй"
@@ -370,6 +364,9 @@ msgstr "Напиши по-эстонски"
 
 msgid "Write the sentence"
 msgstr "Напиши предложение"
+
+msgid "Write what day it is today or tomorrow. Both take <0>on</0> and the day."
+msgstr "Напиши, какой день сегодня или завтра. В обоих предложениях есть <0>on</0> и день."
 
 msgid "Write what you hear"
 msgstr "Напиши, что слышишь"

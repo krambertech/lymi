@@ -3680,6 +3680,368 @@ const MARKET_CLIPS: Record<string, Clip> = {
   "c-stall": MARKET_TALK,
 };
 
+export const FUTURE_TIMELINE = [
+  { id: "yesterday", et: "eile", at: -1, sentences: [["Eile läksin Tartusse.", "läks|in"]] },
+  { id: "today", et: "täna", at: 0, sentences: [["Täna lähen Tartusse.", "lähe|n"]] },
+  { id: "tomorrow", et: "homme", at: 1, sentences: [["Homme lähen Tartusse.", "lähe|n"]] },
+  {
+    id: "next-week",
+    et: "järgmisel nädalal",
+    at: 2,
+    sentences: [
+      ["Järgmisel nädalal lähen Tartusse.", "lähe|n"],
+      ["Järgmisel nädalal hakkan Tartus õppima.", "hakka|n", "õppi|ma"],
+    ],
+  },
+] as const;
+
+export const FUTURE_HAKKAMA = [
+  { lead: "hakkan", said: "Ma hakkan Tartus elama.", form: "ela|ma" },
+  { lead: "hakkad", said: "Kas sa hakkad kodus töötama?", form: "tööta|ma" },
+  { lead: "hakkab", said: "Homme hakkab vihma sadama.", form: "sada|ma" },
+  { lead: "hakkame", said: "Me hakkame eesti keelt rääkima.", form: "rääki|ma" },
+  { lead: "hakkate", said: "Millal te hakkate sööma?", form: "söö|ma" },
+  { lead: "hakkavad", said: "Lapsed hakkavad mängima.", form: "mängi|ma" },
+] as const;
+
+export const FUTURE_BUILD = [
+  { answers: ["Ma hakkan palju lugema."], spare: ["loen"] },
+  {
+    answers: [
+      "Järgmisel nädalal hakkame eesti keelt õppima.",
+      "Eesti keelt hakkame järgmisel nädalal õppima.",
+    ],
+    spare: ["õpime"],
+  },
+  {
+    answers: ["Kati hakkab poes töötama.", "Poes hakkab Kati töötama."],
+    spare: ["töötab"],
+    tiles: ["Kati", "hakkab", "poes", "töötama"],
+  },
+] as const;
+
+export const FUTURE_SORT = [
+  { lead: "hakkan", takes: "ma" },
+  { lead: "kavatsen", takes: "da" },
+  { lead: "plaanin", takes: "da" },
+  { lead: "pean", takes: "ma" },
+  { lead: "tahan", takes: "da" },
+  { lead: "lähen", takes: "ma" },
+  { lead: "oskan", takes: "da" },
+  { lead: "jään", takes: "ma" },
+] as const satisfies readonly { lead: string; takes: Takes }[];
+
+export const FUTURE_WHEN = [
+  { verb: "olema", past: "Eile olin tööl.", now: "Ma olen tööl.", later: "Homme olen tööl." },
+  {
+    verb: "elama",
+    past: "Ta elas Tallinnas.",
+    now: "Ta elab Tallinnas.",
+    later: "Ta hakkab Tallinnas elama.",
+  },
+  {
+    verb: "jooma",
+    past: "Me jõime kohvi.",
+    now: "Me joome kohvi.",
+    later: "Ülehomme joome kohvi.",
+  },
+  {
+    verb: "lugema",
+    past: "Nad lugesid raamatut.",
+    now: "Nad loevad raamatut.",
+    later: "Nad hakkavad raamatut lugema.",
+  },
+  {
+    verb: "sööma",
+    past: "Eile sõime kodus.",
+    now: "Me sööme kodus.",
+    later: "Järgmisel nädalal sööme kodus.",
+  },
+  {
+    verb: "õppima",
+    past: "Ta õppis eesti keelt.",
+    now: "Ta õpib eesti keelt.",
+    later: "Homme õpib ta eesti keelt.",
+  },
+  {
+    verb: "töötama",
+    past: "Ma töötasin kodus.",
+    now: "Ma töötan kodus.",
+    later: "Homme töötan kodus.",
+  },
+] as const;
+
+export const FUTURE_DIALOGUE = {
+  "d-kati-1": { text: "Tere! Mida sa homme teed?", voice: "second" },
+  "d-sina-1": "Homme lähen Tallinnasse.",
+  "d-kati-2": { text: "Mida sa Tallinnas teed?", voice: "second" },
+  "d-sina-2": "Ma hakkan Tallinnas töötama.",
+  "d-kati-3": { text: "Millal sa Tartusse tuled?", voice: "second" },
+  "d-sina-3": "Ma kavatsen järgmisel nädalal tulla.",
+} as const satisfies Record<string, Clip>;
+
+export const FUTURE_WORDS = [
+  "tulevik",
+  "homme",
+  "täna",
+  "ülehomme",
+  "järgmisel nädalal",
+  "eelmisel nädalal",
+  "Homme lähen Tartusse.",
+  "Täna lähen Tartusse.",
+  "Homme saab olema külm.",
+  "Homme on külm.",
+  "hakkama",
+  "hakkan",
+  "kavatsema",
+  "kavatsen",
+  "plaanima",
+  "plaanin",
+  "Ma kavatsen järgmisel nädalal Tallinnasse minna.",
+  "Mida sa plaanid homme teha?",
+  ...FUTURE_SORT.map(({ lead }) => lead),
+] as const;
+
+export const FUTURE_REWRITE = [
+  { id: "lugema", from: "Ma loen palju.", to: "Ma hakkan palju lugema." },
+  { id: "oppima", from: "Me õpime eesti keelt.", to: "Me hakkame eesti keelt õppima." },
+  { id: "tootama", from: "Ta töötab Tallinnas.", to: "Ta hakkab Tallinnas töötama." },
+  { id: "elama", from: "Sa elad Tartus.", to: "Sa hakkad Tartus elama." },
+  { id: "raakima", from: "Nad räägivad eesti keelt.", to: "Nad hakkavad eesti keelt rääkima." },
+  { id: "sooma", from: "Te sööte kodus.", to: "Te hakkate kodus sööma." },
+] as const;
+
+export const FUTURE_FIX = [
+  { id: "tootada", wrong: "Ma hakkan kodus töötada.", right: "Ma hakkan kodus töötama." },
+  {
+    id: "minema",
+    wrong: "Ma kavatsen Tallinnasse minema.",
+    right: "Ma kavatsen Tallinnasse minna.",
+  },
+  { id: "laksin", wrong: "Homme läksin Tartusse.", right: "Homme lähen Tartusse." },
+  {
+    id: "hakkab",
+    wrong: "Nad hakkab eesti keelt õppima.",
+    right: "Nad hakkavad eesti keelt õppima.",
+  },
+  { id: "soome", wrong: "Me hakkame kodus sööme.", right: "Me hakkame kodus sööma." },
+  { id: "tulema", wrong: "Ta plaanib homme tulema.", right: "Ta plaanib homme tulla." },
+] as const;
+
+export const FUTURE_TALK = {
+  turns: [
+    {
+      voice: "third",
+      text: "Tere, Jaan! Mida sa järgmisel nädalal teed?",
+      say: "[curious] Tere, Jaan! Mida sa järgmisel nädalal teed?",
+    },
+    { voice: "main", text: ["Esmaspäeval hakkan Tallinnas töötama.", "Seal hakkan ka elama."] },
+    {
+      voice: "third",
+      text: ["Tallinnas?", "Aga sinu kass?"],
+      say: "[surprised] Tallinnas? Aga sinu kass?",
+    },
+    {
+      voice: "main",
+      text: "Kass tuleb ka Tallinnasse.",
+      say: "[laughs] Kass tuleb ka Tallinnasse.",
+    },
+    { voice: "third", text: "Kas sa hakkad Tallinnas eesti keelt õppima?" },
+    {
+      voice: "main",
+      text: ["Jah, ma hakkan iga päev eesti keelt õppima.", "Ma tahan tööl eesti keelt rääkida."],
+    },
+    { voice: "third", text: "Millal sa Tartusse tuled?" },
+    { voice: "main", text: ["Ma kavatsen reedel tulla.", "Laupäeval olen Tartus."] },
+    { voice: "third", text: ["Laupäeval lähen turule.", "Kas sa tuled ka?"] },
+    { voice: "main", text: ["Jah, ma tulen.", "Kell kümme?"] },
+    { voice: "third", text: ["Kell kümme on hea.", "Kell üksteist joome kohvikus kohvi."] },
+    { voice: "main", text: "Aga pühapäeval pean ma Tallinnas olema." },
+    { voice: "third", text: "Miks?" },
+    { voice: "main", text: "Esmaspäeval hakkan kell kaheksa töötama." },
+    { voice: "third", text: ["Hästi.", "Head aega!"] },
+    { voice: "main", text: "Head aega!" },
+  ],
+} as const satisfies Conversation;
+
+export const FUTURE_DRILL = [
+  "Homme töötan kodus.",
+  "Järgmisel nädalal läheme Tartusse.",
+  "Nad hakkavad õppima.",
+  "Sa hakkad töötama.",
+  "Me hakkame Tartus elama.",
+  "Ta hakkab palju lugema.",
+  "Me hakkame kodus töötama.",
+  "Ma hakkan eesti keelt rääkima.",
+  "Ma kavatsen Tallinnasse minna.",
+  "Mida sa plaanid homme teha?",
+  "Me kavatseme eesti keelt õppida.",
+  "Ta plaanib homme tulla.",
+  "Nad hakkavad Tartus elama.",
+  "Ma hakkan Tartus elama.",
+  "Ma kavatsen Tartusse minna.",
+] as const;
+
+const FUTURE_CLIPS: Record<string, Clip> = {
+  ...words(FUTURE_WORDS),
+  ...words(FUTURE_TIMELINE.flatMap(({ sentences }) => sentences.map(([sentence]) => sentence))),
+  ...words(FUTURE_HAKKAMA.map(({ said }) => said)),
+  ...words(FUTURE_BUILD.map(({ answers }) => answers[0])),
+  ...words(FUTURE_WHEN.flatMap(({ past, now, later }) => [past, now, later])),
+  ...words(FUTURE_REWRITE.map(({ to }) => to)),
+  ...words(FUTURE_FIX.map(({ right }) => right)),
+  ...words(FUTURE_DRILL),
+  ...FUTURE_DIALOGUE,
+  "c-plans": FUTURE_TALK,
+};
+
+export const WEEKEND_PASSAGES = {
+  kati: [
+    "Tere, Mari!",
+    "Eelmisel nädalavahetusel olin ma Tartus.",
+    "Minu ema elab seal.",
+    "Laupäeval käisin turul ja ostsin juustu ja leiba.",
+    "Kell kuus olin kohvikus ja jõin kohvi.",
+    "Pühapäeval ma ei läinud linna.",
+    "Ma olin kodus ja lugesin raamatut.",
+    "Järgmisel nädalal hakkan ma Tallinnas töötama.",
+    "Esmaspäeval lähen Tallinnasse.",
+    "Ma kavatsen seal elada.",
+    "Kas sa tuled järgmisel nädalavahetusel Tallinnasse?",
+    "Me võime seal turule minna.",
+  ],
+  mari: [
+    "Tere, Kati!",
+    "Laupäeval olin ma kodus ja ma ei läinud linna.",
+    "Kodus lugesin raamatut.",
+    "Pühapäeval ma ei olnud kodus.",
+    "Järgmisel nädalal hakkan ma eesti keelt õppima.",
+    "Jah, ma tulen Tallinnasse!",
+    "Ma kavatsen laupäeval turule minna.",
+  ],
+} as const;
+
+export const WEEKEND_SORT = [
+  { w: "olin kodus", bin: "past" },
+  { w: "ma ei läinud", bin: "past" },
+  { w: "käisin turul", bin: "past" },
+  { w: "ei teinud", bin: "past" },
+  { w: "hakkan õppima", bin: "later" },
+  { w: "homme lähen", bin: "later" },
+  { w: "kavatsen tulla", bin: "later" },
+  { w: "järgmisel nädalal", bin: "later" },
+] as const;
+
+export const WEEKEND_SAY = [
+  { id: "tartus", said: "Eelmisel nädalavahetusel olin ma Tartus." },
+  { id: "toole", said: "Ma ei läinud tööle." },
+  { id: "tallinnasse", said: "Järgmisel nädalal lähen ma Tallinnasse." },
+  { id: "oppima", said: "Ma hakkan eesti keelt õppima." },
+  { id: "kodus", said: "Eile sõime kodus." },
+  { id: "raamatut", said: "Ta ei lugenud raamatut." },
+] as const;
+
+export const WEEKEND_FIX = [
+  {
+    id: "kaisin",
+    wrong: "Eelmisel nädalal ma ei käisin turul.",
+    right: "Eelmisel nädalal ma ei käinud turul.",
+  },
+  { id: "olin", wrong: "Homme ma olin kodus.", right: "Homme ma olen kodus." },
+  { id: "lahen", wrong: "Eile ma lähen tööle.", right: "Eile ma läksin tööle." },
+  {
+    id: "tootada",
+    wrong: "Järgmisel nädalal hakkan ma töötada.",
+    right: "Järgmisel nädalal hakkan ma töötama.",
+  },
+  { id: "olid", wrong: "Ta ei olid kodus.", right: "Ta ei olnud kodus." },
+  { id: "soime", wrong: "Pühapäeval me ei sõime kodus.", right: "Pühapäeval me ei söönud kodus." },
+] as const;
+
+export const WEEKEND_DIALOGUE = {
+  "d-mari-1": { text: "Tere! Mida sa nädalavahetusel tegid?", voice: "second" },
+  "d-sina-1": "Ma olin nädalavahetusel Tartus.",
+  "d-mari-2": { text: "Kas sa käisid ka turul?", voice: "second" },
+  "d-sina-2": "Ei, ma ei käinud.",
+  "d-mari-3": { text: "Mida sa järgmisel nädalal teed?", voice: "second" },
+  "d-sina-3": "Ma hakkan Tallinnas töötama.",
+} as const satisfies Record<string, Clip>;
+
+export const WEEKEND_TALK = {
+  turns: [
+    {
+      voice: "third",
+      text: "Tere, Jaan! Kuidas nädalavahetus oli?",
+      say: "[cheerful] Tere, Jaan! Kuidas nädalavahetus oli?",
+    },
+    {
+      voice: "main",
+      text: ["Hea!", "Laupäeval käisin ujumas.", "Vesi oli külm.", "Pühapäeval olin kodus."],
+    },
+    { voice: "third", text: "Kas sa käisid ka turul?" },
+    { voice: "main", text: ["Ei, ma ei käinud.", "Mul polnud aega."] },
+    { voice: "third", text: ["Mina käisin turul.", "Ma ostsin juustu ja leiba."] },
+    { voice: "main", text: "Kui palju juust maksis?" },
+    { voice: "third", text: "Kilo maksis kümme eurot." },
+    { voice: "main", text: "Mida sa järgmisel nädalal teed?" },
+    {
+      voice: "third",
+      text: ["Järgmisel nädalal hakkan ma eesti keelt õppima.", "Kolmapäeval ja reedel kell kuus."],
+    },
+    { voice: "main", text: ["Tore!", "Mina lähen esmaspäeval Tallinnasse."] },
+    { voice: "third", text: "Millal sa Tartusse tuled?" },
+    { voice: "main", text: ["Ma kavatsen reedel tulla.", "Laupäeval olen kodus."] },
+    {
+      voice: "third",
+      text: ["Hästi.", "Tule laupäeval meile!"],
+      say: "Hästi. [warmly] Tule laupäeval meile!",
+    },
+    { voice: "main", text: ["Jah, hea meelega!", "Mis kell?"] },
+    { voice: "third", text: ["Kell neli.", "Head aega!"] },
+  ],
+} as const satisfies Conversation;
+
+export const WEEKEND_DRILL = [
+  "Eile olin kodus.",
+  "Laupäeval käisin turul.",
+  "Me sõime kohvikus.",
+  "Eile ta luges raamatut.",
+  "Eile ma olin kodus.",
+  "Eelmisel laupäeval me käisime turul.",
+  "Eile ma ei läinud tööle.",
+  "Me ei käinud turul.",
+  "Nad ei olnud kodus.",
+  "Sa ei söönud kodus.",
+  "Homme lähen Tartusse.",
+  "Järgmisel nädalal hakkan õppima.",
+  "Ma kavatsen tulla.",
+  "Me hakkame Tallinnas elama.",
+  "Ma ei lugenud raamatut.",
+  "Homme ma lähen tööle.",
+] as const;
+
+export const WEEKEND_WORDS = [
+  "nädalavahetus",
+  "nädalavahetusel",
+  "eelmisel nädalavahetusel",
+  "järgmisel nädalavahetusel",
+  "eelmisel nädalal",
+  "järgmisel nädalal",
+  "hea meelega",
+] as const;
+
+const WEEKEND_CLIPS: Record<string, Clip> = {
+  ...words(WEEKEND_WORDS),
+  ...words(WEEKEND_SORT.map(({ w }) => w)),
+  ...words(WEEKEND_SAY.map(({ said }) => said)),
+  ...words(WEEKEND_FIX.map(({ right }) => right)),
+  ...words(WEEKEND_DRILL),
+  "p-kati": { sentences: WEEKEND_PASSAGES.kati, voice: "third" },
+  "p-mari": { sentences: WEEKEND_PASSAGES.mari, voice: "second" },
+  ...WEEKEND_DIALOGUE,
+  "c-weekend": WEEKEND_TALK,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -3842,5 +4204,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   turul: MARKET_CLIPS,
   lihtminevik: PAST_CLIPS,
   "mineviku-eitus": PAST_NO_CLIPS,
+  tulevik: FUTURE_CLIPS,
+  nadalavahetusel: WEEKEND_CLIPS,
   kit: KIT_CLIPS,
 };

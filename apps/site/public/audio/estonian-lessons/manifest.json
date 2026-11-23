@@ -13390,5 +13390,887 @@
     "text": "Kohv maksab kolm eurot.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/tulevik": {
+    "text": "tulevik",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/homme": {
+    "text": "homme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ta2na": {
+    "text": "täna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/u2lehomme": {
+    "text": "ülehomme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ja2rgmisel-na2dalal": {
+    "text": "järgmisel nädalal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/eelmisel-na2dalal": {
+    "text": "eelmisel nädalal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/homme-la2hen-tartusse": {
+    "text": "Homme lähen Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ta2na-la2hen-tartusse": {
+    "text": "Täna lähen Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/homme-saab-olema-ku2lm": {
+    "text": "Homme saab olema külm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/homme-on-ku2lm": {
+    "text": "Homme on külm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/hakkama": {
+    "text": "hakkama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/hakkan": {
+    "text": "hakkan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/kavatsema": {
+    "text": "kavatsema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/kavatsen": {
+    "text": "kavatsen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/plaanima": {
+    "text": "plaanima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/plaanin": {
+    "text": "plaanin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ma-kavatsen-ja2rgmisel-na2dalal-tallinnasse-minna": {
+    "text": "Ma kavatsen järgmisel nädalal Tallinnasse minna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/mida-sa-plaanid-homme-teha": {
+    "text": "Mida sa plaanid homme teha?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/pean": {
+    "text": "pean",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/tahan": {
+    "text": "tahan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/la2hen": {
+    "text": "lähen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/oskan": {
+    "text": "oskan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ja2a2n": {
+    "text": "jään",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/eile-la2ksin-tartusse": {
+    "text": "Eile läksin Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ja2rgmisel-na2dalal-la2hen-tartusse": {
+    "text": "Järgmisel nädalal lähen Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ja2rgmisel-na2dalal-hakkan-tartus-o3ppima": {
+    "text": "Järgmisel nädalal hakkan Tartus õppima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ma-hakkan-tartus-elama": {
+    "text": "Ma hakkan Tartus elama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/kas-sa-hakkad-kodus-to2o2tama": {
+    "text": "Kas sa hakkad kodus töötama?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/me-hakkame-eesti-keelt-ra2a2kima": {
+    "text": "Me hakkame eesti keelt rääkima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/millal-te-hakkate-so2o2ma": {
+    "text": "Millal te hakkate sööma?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/lapsed-hakkavad-ma2ngima": {
+    "text": "Lapsed hakkavad mängima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ma-hakkan-palju-lugema": {
+    "text": "Ma hakkan palju lugema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ja2rgmisel-na2dalal-hakkame-eesti-keelt-o3ppima": {
+    "text": "Järgmisel nädalal hakkame eesti keelt õppima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/eile-olin-to2o2l": {
+    "text": "Eile olin tööl.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ma-olen-to2o2l": {
+    "text": "Ma olen tööl.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/homme-olen-to2o2l": {
+    "text": "Homme olen tööl.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ta-elas-tallinnas": {
+    "text": "Ta elas Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ta-elab-tallinnas": {
+    "text": "Ta elab Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ta-hakkab-tallinnas-elama": {
+    "text": "Ta hakkab Tallinnas elama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/me-jo3ime-kohvi": {
+    "text": "Me jõime kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/me-joome-kohvi": {
+    "text": "Me joome kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/u2lehomme-joome-kohvi": {
+    "text": "Ülehomme joome kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/nad-lugesid-raamatut": {
+    "text": "Nad lugesid raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/nad-loevad-raamatut": {
+    "text": "Nad loevad raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/nad-hakkavad-raamatut-lugema": {
+    "text": "Nad hakkavad raamatut lugema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/eile-so3ime-kodus": {
+    "text": "Eile sõime kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/me-so2o2me-kodus": {
+    "text": "Me sööme kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ja2rgmisel-na2dalal-so2o2me-kodus": {
+    "text": "Järgmisel nädalal sööme kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ta-o3ppis-eesti-keelt": {
+    "text": "Ta õppis eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ta-o3pib-eesti-keelt": {
+    "text": "Ta õpib eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ma-to2o2tasin-kodus": {
+    "text": "Ma töötasin kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ma-to2o2tan-kodus": {
+    "text": "Ma töötan kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/homme-to2o2tan-kodus": {
+    "text": "Homme töötan kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/d-kati-1": {
+    "text": "Tere! Mida sa homme teed?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "tulevik/d-sina-1": {
+    "text": "Homme lähen Tallinnasse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/d-kati-2": {
+    "text": "Mida sa Tallinnas teed?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "tulevik/d-sina-2": {
+    "text": "Ma hakkan Tallinnas töötama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/d-kati-3": {
+    "text": "Millal sa Tartusse tuled?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "tulevik/d-sina-3": {
+    "text": "Ma kavatsen järgmisel nädalal tulla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/me-hakkame-eesti-keelt-o3ppima": {
+    "text": "Me hakkame eesti keelt õppima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ta-hakkab-tallinnas-to2o2tama": {
+    "text": "Ta hakkab Tallinnas töötama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/sa-hakkad-tartus-elama": {
+    "text": "Sa hakkad Tartus elama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/nad-hakkavad-eesti-keelt-ra2a2kima": {
+    "text": "Nad hakkavad eesti keelt rääkima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/te-hakkate-kodus-so2o2ma": {
+    "text": "Te hakkate kodus sööma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ma-hakkan-kodus-to2o2tama": {
+    "text": "Ma hakkan kodus töötama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ma-kavatsen-tallinnasse-minna": {
+    "text": "Ma kavatsen Tallinnasse minna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/nad-hakkavad-eesti-keelt-o3ppima": {
+    "text": "Nad hakkavad eesti keelt õppima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/me-hakkame-kodus-so2o2ma": {
+    "text": "Me hakkame kodus sööma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ta-plaanib-homme-tulla": {
+    "text": "Ta plaanib homme tulla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ja2rgmisel-na2dalal-la2heme-tartusse": {
+    "text": "Järgmisel nädalal läheme Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/nad-hakkavad-o3ppima": {
+    "text": "Nad hakkavad õppima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/sa-hakkad-to2o2tama": {
+    "text": "Sa hakkad töötama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ta-hakkab-palju-lugema": {
+    "text": "Ta hakkab palju lugema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/me-hakkame-kodus-to2o2tama": {
+    "text": "Me hakkame kodus töötama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ma-hakkan-eesti-keelt-ra2a2kima": {
+    "text": "Ma hakkan eesti keelt rääkima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/me-kavatseme-eesti-keelt-o3ppida": {
+    "text": "Me kavatseme eesti keelt õppida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/nad-hakkavad-tartus-elama": {
+    "text": "Nad hakkavad Tartus elama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/c-plans": {
+    "text": "Tere, Jaan! Mida sa järgmisel nädalal teed? Esmaspäeval hakkan Tallinnas töötama. Seal hakkan ka elama. Tallinnas? Aga sinu kass? Kass tuleb ka Tallinnasse. Kas sa hakkad Tallinnas eesti keelt õppima? Jah, ma hakkan iga päev eesti keelt õppima. Ma tahan tööl eesti keelt rääkida. Millal sa Tartusse tuled? Ma kavatsen reedel tulla. Laupäeval olen Tartus. Laupäeval lähen turule. Kas sa tuled ka? Jah, ma tulen. Kell kümme? Kell kümme on hea. Kell üksteist joome kohvikus kohvi. Aga pühapäeval pean ma Tallinnas olema. Miks? Esmaspäeval hakkan kell kaheksa töötama. Hästi. Head aega! Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Jaan! Mida sa järgmisel nädalal teed?"
+        ],
+        "say": "[curious] Tere, Jaan! Mida sa järgmisel nädalal teed?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Esmaspäeval hakkan Tallinnas töötama.",
+          "Seal hakkan ka elama."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tallinnas?",
+          "Aga sinu kass?"
+        ],
+        "say": "[surprised] Tallinnas? Aga sinu kass?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kass tuleb ka Tallinnasse."
+        ],
+        "say": "[laughs] Kass tuleb ka Tallinnasse."
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas sa hakkad Tallinnas eesti keelt õppima?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, ma hakkan iga päev eesti keelt õppima.",
+          "Ma tahan tööl eesti keelt rääkida."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Millal sa Tartusse tuled?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma kavatsen reedel tulla.",
+          "Laupäeval olen Tartus."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Laupäeval lähen turule.",
+          "Kas sa tuled ka?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, ma tulen.",
+          "Kell kümme?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kell kümme on hea.",
+          "Kell üksteist joome kohvikus kohvi."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aga pühapäeval pean ma Tallinnas olema."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Miks?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Esmaspäeval hakkan kell kaheksa töötama."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hästi.",
+          "Head aega!"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Head aega!"
+        ]
+      }
+    ]
+  },
+  "tulevik/homme-hakkab-vihma-sadama": {
+    "text": "Homme hakkab vihma sadama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/kati-hakkab-poes-to2o2tama": {
+    "text": "Kati hakkab poes töötama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/me-hakkame-tartus-elama": {
+    "text": "Me hakkame Tartus elama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/ma-kavatsen-tartusse-minna": {
+    "text": "Ma kavatsen Tartusse minna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/na2dalavahetus": {
+    "text": "nädalavahetus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/na2dalavahetusel": {
+    "text": "nädalavahetusel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/eelmisel-na2dalavahetusel": {
+    "text": "eelmisel nädalavahetusel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/ja2rgmisel-na2dalavahetusel": {
+    "text": "järgmisel nädalavahetusel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/eelmisel-na2dalal": {
+    "text": "eelmisel nädalal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/ja2rgmisel-na2dalal": {
+    "text": "järgmisel nädalal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/hea-meelega": {
+    "text": "hea meelega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/olin-kodus": {
+    "text": "olin kodus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/ma-ei-la2inud": {
+    "text": "ma ei läinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/ka2isin-turul": {
+    "text": "käisin turul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/ei-teinud": {
+    "text": "ei teinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/hakkan-o3ppima": {
+    "text": "hakkan õppima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/homme-la2hen": {
+    "text": "homme lähen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/kavatsen-tulla": {
+    "text": "kavatsen tulla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/eelmisel-na2dalavahetusel-olin-ma-tartus": {
+    "text": "Eelmisel nädalavahetusel olin ma Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/ma-ei-la2inud-to2o2le": {
+    "text": "Ma ei läinud tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/ja2rgmisel-na2dalal-la2hen-ma-tallinnasse": {
+    "text": "Järgmisel nädalal lähen ma Tallinnasse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/ma-hakkan-eesti-keelt-o3ppima": {
+    "text": "Ma hakkan eesti keelt õppima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/eile-so3ime-kodus": {
+    "text": "Eile sõime kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/ta-ei-lugenud-raamatut": {
+    "text": "Ta ei lugenud raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/eelmisel-na2dalal-ma-ei-ka2inud-turul": {
+    "text": "Eelmisel nädalal ma ei käinud turul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/homme-ma-olen-kodus": {
+    "text": "Homme ma olen kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/eile-ma-la2ksin-to2o2le": {
+    "text": "Eile ma läksin tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/ja2rgmisel-na2dalal-hakkan-ma-to2o2tama": {
+    "text": "Järgmisel nädalal hakkan ma töötama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/ta-ei-olnud-kodus": {
+    "text": "Ta ei olnud kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/eile-olin-kodus": {
+    "text": "Eile olin kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/laupa2eval-ka2isin-turul": {
+    "text": "Laupäeval käisin turul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/me-so3ime-kohvikus": {
+    "text": "Me sõime kohvikus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/eile-ta-luges-raamatut": {
+    "text": "Eile ta luges raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/eile-ma-olin-kodus": {
+    "text": "Eile ma olin kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/eile-ma-ei-la2inud-to2o2le": {
+    "text": "Eile ma ei läinud tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/me-ei-ka2inud-turul": {
+    "text": "Me ei käinud turul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/nad-ei-olnud-kodus": {
+    "text": "Nad ei olnud kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/sa-ei-so2o2nud-kodus": {
+    "text": "Sa ei söönud kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/homme-la2hen-tartusse": {
+    "text": "Homme lähen Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/ja2rgmisel-na2dalal-hakkan-o3ppima": {
+    "text": "Järgmisel nädalal hakkan õppima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/ma-kavatsen-tulla": {
+    "text": "Ma kavatsen tulla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/me-hakkame-tallinnas-elama": {
+    "text": "Me hakkame Tallinnas elama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/ma-ei-lugenud-raamatut": {
+    "text": "Ma ei lugenud raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/homme-ma-la2hen-to2o2le": {
+    "text": "Homme ma lähen tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/p-kati": {
+    "text": "Tere, Mari! Eelmisel nädalavahetusel olin ma Tartus. Minu ema elab seal. Laupäeval käisin turul ja ostsin juustu ja leiba. Kell kuus olin kohvikus ja jõin kohvi. Pühapäeval ma ei läinud linna. Ma olin kodus ja lugesin raamatut. Järgmisel nädalal hakkan ma Tallinnas töötama. Esmaspäeval lähen Tallinnasse. Ma kavatsen seal elada. Kas sa tuled järgmisel nädalavahetusel Tallinnasse? Me võime seal turule minna.",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "nadalavahetusel/p-mari": {
+    "text": "Tere, Kati! Laupäeval olin ma kodus ja ma ei läinud linna. Kodus lugesin raamatut. Pühapäeval ma ei olnud kodus. Järgmisel nädalal hakkan ma eesti keelt õppima. Jah, ma tulen Tallinnasse! Ma kavatsen laupäeval turule minna.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "nadalavahetusel/d-mari-1": {
+    "text": "Tere! Mida sa nädalavahetusel tegid?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "nadalavahetusel/d-sina-1": {
+    "text": "Ma olin nädalavahetusel Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/d-mari-2": {
+    "text": "Kas sa käisid ka turul?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "nadalavahetusel/d-sina-2": {
+    "text": "Ei, ma ei käinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/d-mari-3": {
+    "text": "Mida sa järgmisel nädalal teed?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "nadalavahetusel/d-sina-3": {
+    "text": "Ma hakkan Tallinnas töötama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/c-weekend": {
+    "text": "Tere, Jaan! Kuidas nädalavahetus oli? Hea! Laupäeval käisin ujumas. Vesi oli külm. Pühapäeval olin kodus. Kas sa käisid ka turul? Ei, ma ei käinud. Mul polnud aega. Mina käisin turul. Ma ostsin juustu ja leiba. Kui palju juust maksis? Kilo maksis kümme eurot. Mida sa järgmisel nädalal teed? Järgmisel nädalal hakkan ma eesti keelt õppima. Kolmapäeval ja reedel kell kuus. Tore! Mina lähen esmaspäeval Tallinnasse. Millal sa Tartusse tuled? Ma kavatsen reedel tulla. Laupäeval olen kodus. Hästi. Tule laupäeval meile! Jah, hea meelega! Mis kell? Kell neli. Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Jaan! Kuidas nädalavahetus oli?"
+        ],
+        "say": "[cheerful] Tere, Jaan! Kuidas nädalavahetus oli?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hea!",
+          "Laupäeval käisin ujumas.",
+          "Vesi oli külm.",
+          "Pühapäeval olin kodus."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas sa käisid ka turul?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, ma ei käinud.",
+          "Mul polnud aega."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mina käisin turul.",
+          "Ma ostsin juustu ja leiba."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kui palju juust maksis?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kilo maksis kümme eurot."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mida sa järgmisel nädalal teed?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Järgmisel nädalal hakkan ma eesti keelt õppima.",
+          "Kolmapäeval ja reedel kell kuus."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tore!",
+          "Mina lähen esmaspäeval Tallinnasse."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Millal sa Tartusse tuled?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma kavatsen reedel tulla.",
+          "Laupäeval olen kodus."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hästi.",
+          "Tule laupäeval meile!"
+        ],
+        "say": "Hästi. [warmly] Tule laupäeval meile!"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, hea meelega!",
+          "Mis kell?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kell neli.",
+          "Head aega!"
+        ]
+      }
+    ]
+  },
+  "nadalavahetusel/pu2hapa2eval-me-ei-so2o2nud-kodus": {
+    "text": "Pühapäeval me ei söönud kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "nadalavahetusel/eelmisel-laupa2eval-me-ka2isime-turul": {
+    "text": "Eelmisel laupäeval me käisime turul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tulevik/homme-o3pib-ta-eesti-keelt": {
+    "text": "Homme õpib ta eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

@@ -7515,8 +7515,6 @@ export const LETS_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Las mina aitan sind.",
     "Las ma aitan teid.",
     "Las mina aitan teid.",
-    "Las aitan sind.",
-    "Las aitan teid.",
     "Las ma sind aitan.",
     "Lase mul sind aidata.",
     "Lubage mul teid aidata.",

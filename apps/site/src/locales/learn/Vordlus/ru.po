@@ -1,0 +1,458 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 12:06+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "<0>Ilusa</0> has three syllables, so its a stays: <1>ilusam</1>."
+msgstr "В <0>ilusa</0> три слога, поэтому a остаётся: <1>ilusam</1>."
+
+msgid "18 minutes"
+msgstr "18 минут"
+
+msgid "6 exercises, 4 of them typed, and a conversation"
+msgstr "6 упражнений, в 4 из них нужно писать, и разговор"
+
+msgid "A bigger desk and a newer computer"
+msgstr "Стол побольше и компьютер поновее"
+
+msgid "A bigger office and more money"
+msgstr "Кабинет побольше и зарплата повыше"
+
+msgid "A comparative is usually the genitive with <0>-m</0>: <1>suur, suure, suurem</1>; <2>uus, uue, uuem</2>. A two-syllable genitive’s a usually becomes e: <3>vana, vanem</3>."
+msgstr "Сравнительная степень — это обычно родительный с <0>-m</0>: <1>suur, suure, suurem</1>; <2>uus, uue, uuem</2>. Конечное a двусложного родительного обычно меняется на e: <3>vana, vanem</3>."
+
+msgid "A comparative is usually the genitive with <et>-m</et>: <et>suur</et>, <et>suure</et>, <et>suurem</et>; <et>uus</et>, <et>uue</et>, <et>uuem</et>."
+msgstr "Сравнительная степень — это обычно родительный с <et>-m</et>: <et>suur</et>, <et>suure</et>, <et>suurem</et>; <et>uus</et>, <et>uue</et>, <et>uuem</et>."
+
+msgid "A comparative usually takes the noun’s case, like any adjective from lesson {agree}: <0>suuremas majas</0>, in a bigger house."
+msgstr "Сравнительная степень обычно стоит в падеже существительного, как любое прилагательное из урока {agree}: <0>suuremas majas</0> — «в большем доме»."
+
+msgid "Add <0>-m</0> to the genitive <1>{gen}</1>: <2>{answer}</2>."
+msgstr "Добавь <0>-m</0> к родительному <1>{gen}</1>: <2>{answer}</2>."
+
+msgid "Add <0>-m</0> to the genitive <1>väikese</1>, and the e after k usually drops: <2>väiksem</2>."
+msgstr "Добавь <0>-m</0> к родительному <1>väikese</1>, и e после k обычно выпадает: <2>väiksem</2>."
+
+msgid "Add <et>-m</et> to the genitive <et>väikese</et>, and the e after k usually drops: <et>väiksem</et>."
+msgstr "Добавь <et>-m</et> к родительному <et>väikese</et>, и e после k обычно выпадает: <et>väiksem</et>."
+
+msgid "adjective"
+msgstr "прилагательное"
+
+msgid "Adjectives"
+msgstr "Прилагательные"
+
+msgid "After <0>kõige</0> comes the comparative: <1>kõige suurem</1>."
+msgstr "После <0>kõige</0> идёт сравнительная степень: <1>kõige suurem</1>."
+
+msgid "After a comparative: suurem kui, bigger than."
+msgstr "После сравнительной степени: suurem kui — «больше, чем»."
+
+msgid "All eight comparatives."
+msgstr "Все восемь форм сравнительной степени."
+
+msgid "All six found and fixed."
+msgstr "Все шесть найдены и исправлены."
+
+msgid "All six sentences."
+msgstr "Все шесть предложений."
+
+msgid "All six, by the ending and by <0>kõige</0>."
+msgstr "Все шесть — по окончанию и по <0>kõige</0>."
+
+msgid "All six, with <0>-st</0> before the comparative."
+msgstr "Все шесть — с <0>-st</0> перед сравнительной степенью."
+
+msgid "As big as is <0/> and the adjective, then <1>kui</1> or <2>nagu</2>: <3>sama suur kui</3>. Tap a line to hear it."
+msgstr "«Такой же большой, как» — это <0/> и прилагательное, а потом <1>kui</1> или <2>nagu</2>: <3>sama suur kui</3>. Нажми на строку, чтобы послушать."
+
+msgid "As big as is <et>sama suur kui</et>, or <et>sama suur nagu</et>."
+msgstr "«Такой же большой, как» — это <et>sama suur kui</et> или <et>sama suur nagu</et>."
+
+msgid "At her work"
+msgstr "У неё на работе"
+
+msgid "beautiful"
+msgstr "красивый"
+
+msgid "Before <0>-m</0>, the a of a two-syllable genitive usually becomes e: <1>{answer}</1>."
+msgstr "Перед <0>-m</0> конечное a двусложного родительного обычно меняется на e: <1>{answer}</1>."
+
+msgid "better"
+msgstr "лучше"
+
+msgid "Better is a word of its own: <0>parem</0>."
+msgstr "«Лучше» — отдельное слово: <0>parem</0>."
+
+msgid "Better, smaller: <et>parem</et>, <et>väiksem</et>"
+msgstr "Лучше, меньше: <et>parem</et>, <et>väiksem</et>"
+
+msgid "big"
+msgstr "большой"
+
+msgid "Big, bigger"
+msgstr "Большой, больше"
+
+msgid "Big, bigger or the biggest?"
+msgstr "Большой, больше или самый большой?"
+
+msgid "bigger"
+msgstr "больше"
+
+msgid "Bigger is <0>suurem</0>: usually the genitive with <1>-m</1>. Than is <2>kui</2>, and the biggest is <3>kõige suurem</3>."
+msgstr "«Больше» — это <0>suurem</0>: обычно родительный с <1>-m</1>. «Чем» — это <2>kui</2>, а «самый большой» — <3>kõige suurem</3>."
+
+msgid "Bigger: <et>suurem</et>, <et>uuem</et>"
+msgstr "Больше: <et>suurem</et>, <et>uuem</et>"
+
+msgid "Bigger: usually -m on the genitive"
+msgstr "Больше: обычно -m к родительному"
+
+msgid "Cheap is <et>odav</et>, genitive <et>odava</et>. It has three syllables, so the a stays: <et>odavam</et>."
+msgstr "«Дешёвый» — <et>odav</et>, родительный <et>odava</et>. В нём три слога, поэтому a остаётся: <et>odavam</et>."
+
+msgid "Coffee is more expensive than tea."
+msgstr "Кофе дороже чая."
+
+msgid "cold"
+msgstr "холодный"
+
+msgid "Colder than is the comparative with <0>kui</0>: <1>külmem kui eile</1>."
+msgstr "«Холоднее, чем» — это сравнительная степень с <0>kui</0>: <1>külmem kui eile</1>."
+
+msgid "comparative"
+msgstr "сравнительная степень"
+
+msgid "expensive"
+msgstr "дорогой"
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
+
+msgid "For the biggest, put <0>kõige</0> before the comparative: <1/>, the biggest; <2/>, the best. Word for word, <3>kõige</3> is “of all”. The best also has a short form: <4/>."
+msgstr "Чтобы сказать «самый большой», поставь <0>kõige</0> перед сравнительной степенью: <1/> — «самый большой»; <2/> — «самый лучший». Дословно <3>kõige</3> — «из всех». У «самый лучший» есть и короткая форма: <4/> — «лучший»."
+
+msgid "For the biggest, put <0>kõige</0> before the comparative: <1>kõige suurem</1>."
+msgstr "Чтобы сказать «самый большой», поставь <0>kõige</0> перед сравнительной степенью: <1>kõige suurem</1>."
+
+msgid "For the biggest, put <et>kõige</et> before the comparative: <et>kõige suurem</et>."
+msgstr "Чтобы сказать «самый большой», поставь <et>kõige</et> перед сравнительной степенью: <et>kõige suurem</et>."
+
+msgid "genitive"
+msgstr "родительный"
+
+msgid "good"
+msgstr "хороший"
+
+msgid "Good, better, best"
+msgstr "Хороший, лучше, самый лучший"
+
+msgid "Good, better, best: <0>hea, parem, kõige parem</0> or <1>parim</1>. Small, smaller: <2>väike, väiksem</2>."
+msgstr "Хороший, лучше, самый лучший: <0>hea, parem, kõige parem</0> или <1>parim</1>. Маленький, меньше: <2>väike, väiksem</2>."
+
+msgid "Good, better, best: <et>hea</et>, <et>parem</et>, <et>kõige parem</et> or <et>parim</et>."
+msgstr "Хороший, лучше, самый лучший: <et>hea</et>, <et>parem</et>, <et>kõige parem</et> или <et>parim</et>."
+
+msgid "Hear a sentence and pick what it says, such as big, bigger or the biggest."
+msgstr "Послушай предложение и выбери, что в нём сказано, например: большой, больше или самый большой."
+
+msgid "How much did a coffee cost in Tartu? Write the number as Mari says it."
+msgstr "Сколько стоил кофе в Тарту? Напиши число так, как говорит Мари."
+
+msgid "In a week"
+msgstr "Через неделю"
+
+msgid "In each sentence, one word is wrong. Tap it, then type it right."
+msgstr "В каждом предложении одно слово неправильное. Нажми на него, а потом напиши правильно."
+
+msgid "In the old town"
+msgstr "В старом городе"
+
+msgid "It’s cheaper and quieter"
+msgstr "Она дешевле и тише"
+
+msgid "It’s colder today than yesterday."
+msgstr "Сегодня холоднее, чем вчера."
+
+msgid "It’s nearer the sea"
+msgstr "Она ближе к морю"
+
+msgid "It’s newer and warmer"
+msgstr "Она новее и теплее"
+
+msgid "It’s warmer today than yesterday."
+msgstr "Сегодня теплее, чем вчера."
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan is old."
+msgstr "Яан старый."
+
+msgid "Jaan is older than Mari."
+msgstr "Яан старше Мари."
+
+msgid "Jaan is the oldest."
+msgstr "Яан самый старший."
+
+msgid "Listen to the pairs above once more, then try again."
+msgstr "Ещё раз послушай пары выше и попробуй снова."
+
+msgid "Listen: Mari and Jaan"
+msgstr "Послушай: Мари и Яан"
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Mari"
+msgstr "Мари"
+
+msgid "Mari has moved from Tartu to Tallinn. Jaan asks how she likes it."
+msgstr "Мари переехала из Тарту в Таллин. Яан спрашивает, как ей там."
+
+msgid "Mari is my best friend."
+msgstr "Мари — моя лучшая подруга."
+
+msgid "Mari is younger than Kati."
+msgstr "Мари младше Кати."
+
+msgid "Mari says Tallinn is bigger than Tartu."
+msgstr "Мари говорит, что Таллин больше Тарту."
+
+msgid "Mari’s new flat is bigger than her old one."
+msgstr "Новая квартира Мари больше старой."
+
+msgid "Match each form with what it means."
+msgstr "Сопоставь каждую форму с её значением."
+
+msgid "Most of them. Check the <0>-st</0> form and where it goes."
+msgstr "Большинство. Проверь форму с <0>-st</0> и где она стоит."
+
+msgid "Most of them. Check the comparative in the ones you missed."
+msgstr "Большинство. Проверь сравнительную степень в тех, что не получились."
+
+msgid "Most of them. Find the genitive first, then usually add <0>-m</0>."
+msgstr "Большинство. Сначала найди родительный, потом обычно добавь <0>-m</0>."
+
+msgid "Most of them. Listen for <0>-m</0> and for <1>kõige</1>."
+msgstr "Большинство. Прислушайся к <0>-m</0> и к <1>kõige</1>."
+
+msgid "Most of them. Read the reason under each one you missed."
+msgstr "Большинство. Прочитай пояснения к тем, что не получились."
+
+msgid "My car is newer than your car."
+msgstr "Моя машина новее твоей."
+
+msgid "My cat is older than your cat."
+msgstr "Мой кот старше твоего кота."
+
+msgid "My room is as big as your room."
+msgstr "Моя комната такая же большая, как твоя."
+
+msgid "My room is bigger than your room."
+msgstr "Моя комната больше твоей."
+
+msgid "new"
+msgstr "новый"
+
+msgid "Next summer"
+msgstr "Следующим летом"
+
+msgid "Next to her home"
+msgstr "Рядом с её домом"
+
+msgid "Now type the comparative of each adjective."
+msgstr "Теперь напиши сравнительную степень каждого прилагательного."
+
+msgid "old"
+msgstr "старый"
+
+msgid "older"
+msgstr "старше"
+
+msgid "Read What to remember at the end, then try again."
+msgstr "Прочитай «Что запомнить» в конце и попробуй снова."
+
+msgid "Rewrite each sentence with <0>-st</0> instead of <1>kui</1>."
+msgstr "Перепиши каждое предложение с <0>-st</0> вместо <1>kui</1>."
+
+msgid "Sama suur kui: as big as."
+msgstr "Sama suur kui — «такой же большой, как»."
+
+msgid "Shorter days and a much nicer boss"
+msgstr "День покороче и начальник получше"
+
+msgid "Six mistakes to catch"
+msgstr "Шесть ошибок"
+
+msgid "small"
+msgstr "маленький"
+
+msgid "smaller"
+msgstr "меньше"
+
+msgid "Some words change more. Good, <0>hea</0>, becomes <1/>, a word of its own. Small, <2>väike</2>, usually drops an e from its genitive <3>väikese</3>: <4>väiksem</4>. Pick a word and tap its forms."
+msgstr "Некоторые слова меняются сильнее. «Хороший», <0>hea</0>, становится <1/> — это отдельное слово. «Маленький», <2>väike</2>, обычно теряет e из родительного <3>väikese</3>: <4>väiksem</4>. Выбери слово и нажми на его формы."
+
+msgid "Tallinn is a big city."
+msgstr "Таллин — большой город."
+
+msgid "Tallinn is bigger than Tartu."
+msgstr "Таллин больше Тарту."
+
+msgid "Tallinn is the biggest city in Estonia."
+msgstr "Таллин — самый большой город Эстонии."
+
+msgid "Tallinn or Tartu?"
+msgstr "Таллин или Тарту?"
+
+msgid "Tap the lines above once more, then try again."
+msgstr "Ещё раз нажми на строки выше и попробуй снова."
+
+msgid "Tap the words above once more, then try again."
+msgstr "Ещё раз нажми на слова выше, а потом попробуй снова."
+
+msgid "Tartu is older than Tallinn."
+msgstr "Тарту старше Таллина."
+
+msgid "Tartu is smaller than Tallinn."
+msgstr "Тарту меньше Таллина."
+
+msgid "Than is <0>kui</0>: <1>suurem kui Tartu</1>. Or leave out <2>kui</2> and give the thing you compare with <3>-st</3>, usually before the comparative: <4>Tartust suurem</4>."
+msgstr "«Чем» — это <0>kui</0>: <1>suurem kui Tartu</1>. Или убери <2>kui</2>, добавь к тому, с чем сравниваешь, <3>-st</3> и обычно ставь его перед сравнительной степенью: <4>Tartust suurem</4>."
+
+msgid "Than is <0>kui</0>. <1>Nagu</1> means like."
+msgstr "«Чем» — это <0>kui</0>. <1>Nagu</1> значит «как, словно»."
+
+msgid "Than is <et>kui</et>: <et>suurem kui Tartu</et>."
+msgstr "«Чем» — это <et>kui</et>: <et>suurem kui Tartu</et>."
+
+msgid "Than is <et>kui</et>. <et>Nagu</et> means like."
+msgstr "«Чем» — это <et>kui</et>. <et>Nagu</et> значит «как, словно»."
+
+msgid "than; as"
+msgstr "чем; как"
+
+msgid "Than: <et>kui</et> or <et>-st</et>"
+msgstr "Чем: <et>kui</et> или <et>-st</et>"
+
+msgid "Than: two ways"
+msgstr "Чем: два способа"
+
+msgid "the best"
+msgstr "самый лучший"
+
+msgid "the biggest"
+msgstr "самый большой"
+
+msgid "The biggest"
+msgstr "Самый большой"
+
+msgid "The biggest, as big as: <et>kõige suurem</et>, <et>sama suur kui</et>"
+msgstr "Самый большой, такой же: <et>kõige suurem</et>, <et>sama suur kui</et>"
+
+msgid "The comparative of hea, good."
+msgstr "Сравнительная степень от hea, «хороший»."
+
+msgid "The genitive of <et>kallis</et> is <et>kalli</et>, so more expensive is <et>kallim</et>."
+msgstr "Родительный от <et>kallis</et> — <et>kalli</et>, так что «дороже» — <et>kallim</et>."
+
+msgid "The genitive of <et>külm</et> is <et>külma</et>; before <et>-m</et> its a becomes e: <et>külmem</et>."
+msgstr "Родительный от <et>külm</et> — <et>külma</et>; перед <et>-m</et> его a меняется на e: <et>külmem</et>."
+
+msgid "The genitive of <et>uus</et> is <et>uue</et>, so newer is <et>uuem</et>."
+msgstr "Родительный от <et>uus</et> — <et>uue</et>, так что «новее» — <et>uuem</et>."
+
+msgid "The genitive of <et>vana</et> is <et>vana</et>; before <et>-m</et> its a becomes e: <et>vanem</et>."
+msgstr "Родительный от <et>vana</et> — <et>vana</et>; перед <et>-m</et> его a меняется на e: <et>vanem</et>."
+
+msgid "the oldest"
+msgstr "самый старший"
+
+msgid "the same"
+msgstr "тот же"
+
+msgid "The short form of kõige parem."
+msgstr "Короткая форма от kõige parem."
+
+msgid "The thing you compare with takes <0>-st</0> and usually goes before the comparative."
+msgstr "То, с чем сравниваешь, получает <0>-st</0> и обычно стоит перед сравнительной степенью."
+
+msgid "There is a second way to say than. Leave out <0>kui</0>, put the thing you compare with, usually before the comparative, and give it <1>-st</1> from lesson {into}: <2/>. Both mean the same."
+msgstr "«Чем» можно сказать и иначе. Убери <0>kui</0>, поставь то, с чем сравниваешь, обычно перед сравнительной степенью и добавь к нему <1>-st</1> из урока {into}: <2/>. Оба варианта значат одно и то же."
+
+msgid "This café is better."
+msgstr "Это кафе лучше."
+
+msgid "This café is good."
+msgstr "Это кафе хорошее."
+
+msgid "This is the best café."
+msgstr "Это самое лучшее кафе."
+
+msgid "This one is its own word: <0>{answer}</0>."
+msgstr "Это отдельное слово: <0>{answer}</0>."
+
+msgid "To say bigger, you usually take the adjective’s genitive from lesson {forms} and add <0>-m</0>: <1>suur</1>, <2>suure</2>, <3/>. This form is the comparative. Than is <4/>: <5/>."
+msgstr "Чтобы сказать «больше», обычно берут родительный прилагательного из урока {forms} и добавляют <0>-m</0>: <1>suur</1>, <2>suure</2>, <3/>. Эта форма — сравнительная степень. «Чем» — это <4/>: <5/>."
+
+msgid "Tomorrow"
+msgstr "Завтра"
+
+msgid "Until five"
+msgstr "До пяти"
+
+msgid "Until seven"
+msgstr "До семи"
+
+msgid "Until six"
+msgstr "До шести"
+
+msgid "Until when does Mari work now?"
+msgstr "До скольких Мари теперь работает?"
+
+msgid "What does it mean?"
+msgstr "Что это значит?"
+
+msgid "What is better about the new flat?"
+msgstr "Чем новая квартира лучше?"
+
+msgid "What is better at Mari’s new job?"
+msgstr "Что лучше на новой работе Мари?"
+
+msgid "When is Jaan coming to Tallinn?"
+msgstr "Когда Яан приедет в Таллин?"
+
+msgid "When the genitive has two syllables and ends in a, the a usually becomes e: <0>vana, vana, vanem</0>; <1>külm, külma, külmem</1>."
+msgstr "Если в родительном два слога и он оканчивается на a, это a обычно меняется на e: <0>vana, vana, vanem</0>; <1>külm, külma, külmem</1>."
+
+msgid "Where is the best café?"
+msgstr "Где самое лучшее кафе?"
+
+msgid "Who is Mari’s best friend? Write the name."
+msgstr "Кто лучшая подруга Мари? Напиши имя."
+
+msgid "with -st, without kui"
+msgstr "с -st, без kui"
+
+msgid "with <0>-st</0>, without <1>kui</1>"
+msgstr "с <0>-st</0>, без <1>kui</1>"
+
+msgid "Without <0>kui</0>"
+msgstr "Без <0>kui</0>"
+
+msgid "Without <0>kui</0>, the thing you compare with takes <1>-st</1>: <2>Tartust</2>."
+msgstr "Без <0>kui</0> то, с чем сравниваешь, получает <1>-st</1>: <2>Tartust</2>."
+
+msgid "Without <et>kui</et>, the thing you compare with takes <et>-st</et> and usually goes before the comparative: <et>Tartust suurem</et>."
+msgstr "Без <et>kui</et> то, с чем сравниваешь, получает <et>-st</et> и обычно стоит перед сравнительной степенью: <et>Tartust suurem</et>."
+
+msgid "Write each sentence in Estonian."
+msgstr "Напиши каждое предложение по-эстонски."
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"

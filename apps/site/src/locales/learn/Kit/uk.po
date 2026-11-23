@@ -239,6 +239,12 @@ msgstr "нога"
 msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the partitive. Every word is read aloud."
 msgstr "Безкоштовний урок естонської про три основні форми іменника, põhivormid (kool, kooli, kooli; pood, poe, poodi): як їх подають словник і Sõnaveeb і як більшість слів на -ne та -us, а також односкладові слова на довгу голосну, підказують партитив. Кожне слово озвучене."
 
+msgid "A free Estonian lesson on adjectives with nouns: suures majas and uut raamatut, where the adjective usually takes the noun’s case, suure autoga with -ga, -ta, -ni and -na, and suured majad in the plural. Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про прикметники з іменниками: suures majas і uut raamatut, де прикметник зазвичай стоїть у відмінку іменника, suure autoga з -ga, -ta, -ni і -na та suured majad у множині. Кожне речення озвучене."
+
+msgid "A free Estonian lesson on comparing: suurem and uuem built on the genitive, suurem kui Tartu and Tartust suurem, kõige suurem for the biggest, sama suur kui for as big as, and two odd ones, hea, parem, parim and väike, väiksem. Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про порівняння: suurem і uuem, утворені від родового, suurem kui Tartu і Tartust suurem, kõige suurem — «найбільший», sama suur kui — «такий самий великий, як», і два особливі слова: hea, parem, parim та väike, väiksem. Кожне речення озвучене."
+
 msgid "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про чотири відмінкові закінчення: -ga — «з» і «чим» (sõbraga, bussiga), -ta — «без» (piimata), -ni — «аж до» (kella viieni, Tartuni) і -na — «як», у ролі (arstina). Усі вони додаються до родового відмінка. Кожне речення озвучене."
 
@@ -688,6 +694,12 @@ msgstr "Естонська"
 
 msgid "Estonian -ma, -mas and -mast: going, being and coming back"
 msgstr "Естонські форми на -ma, -mas і -mast: іду, там, повертаюся"
+
+msgid "Estonian adjectives: agreeing with the noun"
+msgstr "Естонські прикметники: узгодження з іменником"
+
+msgid "Estonian comparatives and superlatives"
+msgstr "Естонські ступені порівняння прикметників"
 
 msgid "Estonian conditional mood"
 msgstr "Умовний спосіб в естонській мові"

@@ -4416,6 +4416,601 @@ const ORDER_CLIPS: Record<string, Clip> = {
   "c-talk": ORDER_TALK,
 };
 
+export const ADJ_PHRASES = [
+  {
+    id: "suur-maja",
+    forms: ["suur maja", "suure maja", "suurt maja", "suures majas", "suure majaga"],
+  },
+  {
+    id: "vaike-tuba",
+    forms: ["väike tuba", "väikese toa", "väikest tuba", "väikeses toas", "väikese toaga"],
+  },
+  {
+    id: "uus-raamat",
+    forms: ["uus raamat", "uue raamatu", "uut raamatut", "uues raamatus", "uue raamatuga"],
+  },
+] as const;
+
+export const ADJ_AGREE = [
+  "Ma elan suures majas.",
+  "Kass magab väikeses toas.",
+  "Ma loen uut raamatut.",
+  "Me istume vanas kohvikus.",
+  "Mul on kaks suurt kassi.",
+  "Jaan elab ilusas linnas.",
+] as const;
+
+export const ADJ_STEMS = [
+  { id: "uus", steps: ["uus", "uue", "uut"] },
+  { id: "vaike", steps: ["väike", "väikese", "väikest"] },
+  { id: "ilus", steps: ["ilus", "ilusa", "ilusat"] },
+  { id: "hea", steps: ["hea", "hea", "head"] },
+] as const;
+
+export const ADJ_GENITIVE = [
+  "Ma sõidan suure autoga.",
+  "Mari tuleb uue sõbraga.",
+  "Ma joon kohvi sooja piimaga.",
+  "Väikese lapsena elasin ma Tartus.",
+] as const;
+
+export const ADJ_PLURAL = [
+  "Need on suured majad.",
+  "Need on uued raamatud.",
+  "Need on head sõbrad.",
+] as const;
+
+export const ADJ_MAKE = [
+  {
+    id: "suures-majas",
+    way: "s",
+    base: "suur maja",
+    answer: "suures majas",
+    said: "Ma elan suures majas.",
+  },
+  {
+    id: "vaikeses-toas",
+    way: "s",
+    base: "väike tuba",
+    answer: "väikeses toas",
+    said: "Kass magab väikeses toas.",
+  },
+  {
+    id: "vanas-linnas",
+    way: "s",
+    base: "vana linn",
+    answer: "vanas linnas",
+    said: "Me elame vanas linnas.",
+  },
+  {
+    id: "heas-kohvikus",
+    way: "s",
+    base: "hea kohvik",
+    answer: "heas kohvikus",
+    said: "Me istume heas kohvikus.",
+  },
+  {
+    id: "uut-raamatut",
+    way: "partitive",
+    base: "uus raamat",
+    answer: "uut raamatut",
+    said: "Ma loen uut raamatut.",
+  },
+  {
+    id: "suurt-kassi",
+    way: "partitive",
+    base: "suur kass",
+    answer: "suurt kassi",
+    said: "Mul on kaks suurt kassi.",
+  },
+  {
+    id: "uut-autot",
+    way: "partitive",
+    base: "uus auto",
+    answer: "uut autot",
+    said: "Mul ei ole uut autot.",
+  },
+  {
+    id: "suured-majad",
+    way: "plural",
+    base: "suur maja",
+    answer: "suured majad",
+    said: "Need on suured majad.",
+  },
+] as const;
+
+export const ADJ_WHICH = [
+  {
+    id: "suure-autoga",
+    way: "ga",
+    base: "suur auto",
+    answer: "suure autoga",
+    options: ["suure autoga", "suur autoga", "suures autoga"],
+    said: "Ma sõidan suure autoga.",
+  },
+  {
+    id: "uue-sobraga",
+    way: "ga",
+    base: "uus sõber",
+    answer: "uue sõbraga",
+    options: ["uus sõbraga", "uue sõbraga", "uues sõbraga"],
+    said: "Mari tuleb uue sõbraga.",
+  },
+  {
+    id: "sooja-piimaga",
+    way: "ga",
+    base: "soe piim",
+    answer: "sooja piimaga",
+    options: ["soojas piimaga", "soe piimaga", "sooja piimaga"],
+    said: "Ma joon kohvi sooja piimaga.",
+  },
+  {
+    id: "vaikese-lapsena",
+    way: "ga",
+    base: "väike laps",
+    answer: "väikese lapsena",
+    options: ["väikese lapsena", "väike lapsena", "väikeses lapsena"],
+    said: "Väikese lapsena elasin ma Tartus.",
+  },
+  {
+    id: "suures-autos",
+    way: "s",
+    base: "suur auto",
+    answer: "suures autos",
+    options: ["suure autos", "suures autos", "suur autos"],
+    said: "Kass magab suures autos.",
+  },
+  {
+    id: "uues-majas",
+    way: "s",
+    base: "uus maja",
+    answer: "uues majas",
+    options: ["uue majas", "uus majas", "uues majas"],
+    said: "Mari elab uues majas.",
+  },
+  {
+    id: "soojas-toas",
+    way: "s",
+    base: "soe tuba",
+    answer: "soojas toas",
+    options: ["soojas toas", "sooja toas", "soe toas"],
+    said: "Me istume soojas toas.",
+  },
+  {
+    id: "vaikeses-poes",
+    way: "s",
+    base: "väike pood",
+    answer: "väikeses poes",
+    options: ["väikese poes", "väikeses poes", "väike poes"],
+    said: "Jaan töötab väikeses poes.",
+  },
+] as const;
+
+export const ADJ_MESSAGE = [
+  "Tere, Kati!",
+  "Ma elan nüüd uues linnas.",
+  "Minu korter on suures majas.",
+  "Ma töötan väikeses poes.",
+  "Ma sõidan tööle vana autoga.",
+  "Mul on kaks head sõpra.",
+] as const;
+
+export const ADJ_TRANSLATE = [
+  {
+    id: "suures-majas",
+    answers: withPronouns([
+      "Ma elan suures majas.",
+      "Suures majas elan ma.",
+      "Ma elan ühes suures majas.",
+    ]),
+  },
+  { id: "uue-autoga", answers: ["Jaan sõidab uue autoga."] },
+  {
+    id: "uut-raamatut",
+    answers: withPronouns(["Ma loen uut raamatut."]),
+  },
+  { id: "kaks-suurt", answers: ["Mul on kaks suurt kassi.", "Minul on kaks suurt kassi."] },
+  { id: "ilusas-linnas", answers: ["Mari elab ilusas linnas."] },
+  { id: "head-sobrad", answers: ["Need on head sõbrad."] },
+] as const;
+
+export const ADJ_FIX = [
+  { id: "fix-suures", wrong: "Ma elan suur majas.", answers: ["Ma elan suures majas."] },
+  { id: "fix-suure", wrong: "Ma sõidan suurega autoga.", answers: ["Ma sõidan suure autoga."] },
+  { id: "fix-suurt", wrong: "Mul on kaks suur kassi.", answers: ["Mul on kaks suurt kassi."] },
+  { id: "fix-uut", wrong: "Ma loen uus raamatut.", answers: ["Ma loen uut raamatut."] },
+  { id: "fix-vaikeses", wrong: "Kass magab väike toas.", answers: ["Kass magab väikeses toas."] },
+  { id: "fix-uued", wrong: "Need on uus raamatud.", answers: ["Need on uued raamatud."] },
+] as const;
+
+export const ADJ_TALK: Conversation = {
+  turns: [
+    {
+      voice: "second",
+      text: ["Tere, Jaan!", "Kus sa eile olid?"],
+      say: "[cheerful] Tere, Jaan! Kus sa eile olid?",
+    },
+    {
+      voice: "main",
+      text: ["Tere, Kati!", "Ma olin Tartus.", "Mu vend elab nüüd seal, ühes vanas majas."],
+    },
+    { voice: "second", text: ["Vanas majas?", "Kas see on suur maja?"] },
+    {
+      voice: "main",
+      text: [
+        "Ei, see on väike maja, aga väga ilus.",
+        "Majas on kolm väikest tuba ja üks suur tuba.",
+      ],
+    },
+    { voice: "second", text: ["Ja kus ta töötab?"] },
+    {
+      voice: "main",
+      text: [
+        "Ta töötab uues kohvikus.",
+        "Kohvik on ilusas pargis, suure turu kõrval.",
+        "Ta sõidab tööle vana autoga.",
+      ],
+    },
+    {
+      voice: "second",
+      text: ["Vana autoga?", "Kas see on hea auto?"],
+      say: "[curious] Vana autoga? Kas see on hea auto?",
+    },
+    { voice: "main", text: ["Jah, väga hea.", "See on vana, aga ilus auto."] },
+    {
+      voice: "second",
+      text: ["Mina sõidan tööle uue bussiga.", "Buss on soe ja hea."],
+      say: "[laughs] Mina sõidan tööle uue bussiga. Buss on soe ja hea.",
+    },
+    { voice: "main", text: ["Ja mis sa õhtul teed?"] },
+    {
+      voice: "second",
+      text: [
+        "Ma loen uut raamatut.",
+        "See on suur raamat, aga väga hea.",
+        "Kas sa tahad ka lugeda?",
+      ],
+      say: "Ma loen uut raamatut. See on suur raamat, aga väga hea. [curious] Kas sa tahad ka lugeda?",
+    },
+    {
+      voice: "main",
+      text: ["Jah!", "Mul on homme vaba päev."],
+      say: "[pleased] Jah! Mul on homme vaba päev.",
+    },
+    {
+      voice: "second",
+      text: [
+        "Hästi.",
+        "Ma ootan sind homme väikeses kohvikus, kell kuus.",
+        "Seal on hea kohv ja soe piim.",
+      ],
+    },
+    { voice: "main", text: ["Väikeses kohvikus?", "Kas see on sinu maja kõrval?"] },
+    { voice: "second", text: ["Jah, minu maja kõrval.", "Nägemiseni!"] },
+    { voice: "main", text: ["Hästi.", "Homme kell kuus väikeses kohvikus!"] },
+  ],
+};
+
+export const ADJ_WORDS = [
+  "suur",
+  "väike",
+  "uus",
+  "vana",
+  "hea",
+  "ilus",
+  "soe",
+  "suures majas",
+  "suure autoga",
+  "uut raamatut",
+  "suured majad",
+  ...ADJ_PHRASES.flatMap(({ forms }) => forms),
+  ...ADJ_STEMS.flatMap(({ steps }) => steps),
+] as const;
+
+export const ADJ_DRILL = [
+  "Ma istun vanas kohvikus.",
+  "Ta tuleb hea sõbraga.",
+  "Meil on kolm väikest tuba.",
+  "Mari elab väikeses linnas.",
+  "Need on ilusad linnad.",
+] as const;
+
+const ADJ_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...new Set([
+      ...ADJ_WORDS,
+      ...ADJ_AGREE,
+      ...ADJ_GENITIVE,
+      ...ADJ_PLURAL,
+      ...ADJ_MAKE.map(({ said }) => said),
+      ...ADJ_WHICH.map(({ said }) => said),
+      ...ADJ_TRANSLATE.map(({ answers }) => answers[0]),
+      ...ADJ_FIX.map(({ answers }) => answers[0]),
+      ...ADJ_DRILL,
+    ]),
+  ]),
+  "p-message": { sentences: ADJ_MESSAGE, voice: "third" },
+  "c-talk": ADJ_TALK,
+};
+
+export const CMP_CHAINS = [
+  { id: "suur", steps: ["suur", "suure", "suurem"] },
+  { id: "uus", steps: ["uus", "uue", "uuem"] },
+  { id: "kallis", steps: ["kallis", "kalli", "kallim"] },
+  { id: "vana", steps: ["vana", "vana", "vanem"] },
+  { id: "vaike", steps: ["väike", "väikese", "väiksem"] },
+  { id: "hea", steps: ["hea", "hea", "parem"] },
+] as const;
+
+export const CMP_THAN = [
+  "Tallinn on suurem kui Tartu.",
+  "Minu auto on uuem kui sinu auto.",
+  "Kohv on kallim kui tee.",
+  "Tartu on väiksem kui Tallinn.",
+  "Täna on soojem kui eile.",
+] as const;
+
+export const CMP_ST = [
+  {
+    kui: "Tallinn on suurem kui Tartu.",
+    st: "Tallinn on Tartust suurem.",
+    answers: ["Tallinn on Tartust suurem.", "Tallinn on suurem Tartust."],
+  },
+  {
+    kui: "Jaan on vanem kui Mari.",
+    st: "Jaan on Marist vanem.",
+    answers: ["Jaan on Marist vanem.", "Jaan on vanem Marist."],
+  },
+  {
+    kui: "Kohv on kallim kui tee.",
+    st: "Kohv on teest kallim.",
+    answers: ["Kohv on teest kallim.", "Kohv on kallim teest."],
+  },
+  {
+    kui: "Minu tuba on suurem kui sinu tuba.",
+    st: "Minu tuba on sinu toast suurem.",
+    answers: [
+      "Minu tuba on sinu toast suurem.",
+      "Minu tuba on sinu omast suurem.",
+      "Minu tuba on suurem sinu toast.",
+      "Minu tuba on suurem sinu omast.",
+    ],
+  },
+  {
+    kui: "Mari on noorem kui Kati.",
+    st: "Mari on Katist noorem.",
+    answers: ["Mari on Katist noorem.", "Mari on noorem Katist."],
+  },
+  {
+    kui: "Tartu on vanem kui Tallinn.",
+    st: "Tartu on Tallinnast vanem.",
+    answers: ["Tartu on Tallinnast vanem.", "Tartu on vanem Tallinnast."],
+  },
+] as const;
+
+export const CMP_MOST = [
+  "Tallinn on Eesti kõige suurem linn.",
+  "See on kõige parem kohvik.",
+  "Jaan on kõige vanem.",
+  "Mari on minu parim sõber.",
+  "Minu tuba on sama suur kui sinu tuba.",
+] as const;
+
+export const CMP_MAKE = [
+  { id: "suurem", kind: "plain", base: "suur", answer: "suurem" },
+  { id: "vanem", kind: "a-to-e", base: "vana", answer: "vanem" },
+  { id: "kulmem", kind: "a-to-e", base: "külm", answer: "külmem" },
+  { id: "uuem", kind: "stem", base: "uus", answer: "uuem" },
+  { id: "kallim", kind: "stem", base: "kallis", answer: "kallim" },
+  { id: "ilusam", kind: "three", base: "ilus", answer: "ilusam" },
+  { id: "parem", kind: "own", base: "hea", answer: "parem" },
+  { id: "vaiksem", kind: "drop", base: "väike", answer: "väiksem" },
+] as const;
+
+export const CMP_HEARD = [
+  { said: "Tallinn on suur linn.", word: "suur", kind: "plain" },
+  { said: "Tallinn on suurem kui Tartu.", word: "suur", kind: "more" },
+  { said: "Tallinn on Eesti kõige suurem linn.", word: "suur", kind: "most" },
+  { said: "Jaan on vana.", word: "vana", kind: "plain" },
+  { said: "Jaan on vanem kui Mari.", word: "vana", kind: "more" },
+  { said: "Jaan on kõige vanem.", word: "vana", kind: "most" },
+  { said: "See kohvik on hea.", word: "hea", kind: "plain" },
+  { said: "See kohvik on parem.", word: "hea", kind: "more" },
+  { said: "See on kõige parem kohvik.", word: "hea", kind: "most" },
+] as const;
+
+export const CMP_TRANSLATE = [
+  {
+    id: "suurem-kui",
+    answers: [
+      "Tallinn on suurem kui Tartu.",
+      "Tallinn on Tartust suurem.",
+      "Tallinn on suurem Tartust.",
+      "Tallinn on suurem linn kui Tartu.",
+    ],
+  },
+  {
+    id: "kallim",
+    answers: ["Kohv on kallim kui tee.", "Kohv on teest kallim.", "Kohv on kallim teest."],
+  },
+  {
+    id: "koige-parem",
+    answers: [
+      "See on kõige parem kohvik.",
+      "See on parim kohvik.",
+      "See kohvik on kõige parem.",
+      "See kohvik on parim.",
+    ],
+  },
+  {
+    id: "vanem",
+    answers: ["Jaan on vanem kui Mari.", "Jaan on Marist vanem.", "Jaan on vanem Marist."],
+  },
+  {
+    id: "sama-suur",
+    answers: [
+      "Minu tuba on sama suur kui sinu tuba.",
+      "Mu tuba on sama suur kui su tuba.",
+      "Minu tuba on sama suur kui sinu oma.",
+      "Mu tuba on sama suur kui su oma.",
+      "Minu tuba on sama suur nagu sinu tuba.",
+      "Mu tuba on sama suur nagu su tuba.",
+      "Minu tuba on sama suur nagu sinu oma.",
+      "Mu tuba on sama suur nagu su oma.",
+      "Mu tuba on sama suur kui sinu tuba.",
+      "Minu tuba on sama suur kui su tuba.",
+      "Mu tuba on sama suur kui sinu oma.",
+      "Minu tuba on sama suur kui su oma.",
+      "Mu tuba on sama suur nagu sinu tuba.",
+      "Minu tuba on sama suur nagu su tuba.",
+      "Mu tuba on sama suur nagu sinu oma.",
+      "Minu tuba on sama suur nagu su oma.",
+      "Minu tuba on sama suur kui teie tuba.",
+      "Minu tuba on sama suur kui teie oma.",
+      "Minu tuba on sama suur nagu teie tuba.",
+      "Minu tuba on sama suur nagu teie oma.",
+      "Mu tuba on sama suur kui teie tuba.",
+      "Mu tuba on sama suur kui teie oma.",
+      "Mu tuba on sama suur nagu teie tuba.",
+      "Mu tuba on sama suur nagu teie oma.",
+    ],
+  },
+  {
+    id: "parim-sober",
+    answers: [
+      "Mari on minu parim sõber.",
+      "Mari on mu parim sõber.",
+      "Mari on minu kõige parem sõber.",
+      "Mari on mu kõige parem sõber.",
+      "Minu parim sõber on Mari.",
+      "Mu parim sõber on Mari.",
+      "Minu kõige parem sõber on Mari.",
+      "Mu kõige parem sõber on Mari.",
+    ],
+  },
+] as const;
+
+export const CMP_FIX = [
+  {
+    id: "fix-kui",
+    wrong: "Tallinn on suurem nagu Tartu.",
+    answers: ["Tallinn on suurem kui Tartu."],
+  },
+  { id: "fix-parem", wrong: "Kohv on heam kui tee.", answers: ["Kohv on parem kui tee."] },
+  {
+    id: "fix-vaiksem",
+    wrong: "Tartu on väikem kui Tallinn.",
+    answers: ["Tartu on väiksem kui Tallinn.", "Tartu on väikesem kui Tallinn."],
+  },
+  {
+    id: "fix-koige",
+    wrong: "Tallinn on Eesti kõige suur linn.",
+    answers: ["Tallinn on Eesti kõige suurem linn."],
+  },
+  { id: "fix-tartust", wrong: "Tallinn on Tartu suurem.", answers: ["Tallinn on Tartust suurem."] },
+  { id: "fix-kulmem", wrong: "Täna on külm kui eile.", answers: ["Täna on külmem kui eile."] },
+] as const;
+
+export const CMP_TALK: Conversation = {
+  turns: [
+    {
+      voice: "main",
+      text: ["Tere, Mari!", "Kuidas sulle Tallinn meeldib?"],
+      say: "[cheerful] Tere, Mari! Kuidas sulle Tallinn meeldib?",
+    },
+    {
+      voice: "second",
+      text: ["Tere, Jaan!", "Tallinn on ilus, aga palju suurem kui Tartu."],
+    },
+    { voice: "main", text: ["Ja korter?", "Kas see on suurem kui sinu vana korter?"] },
+    {
+      voice: "second",
+      text: [
+        "Ei, uus korter on väiksem.",
+        "Aga see on uuem ja soojem.",
+        "Tartus oli mul talvel väga külm.",
+      ],
+      say: "Ei, uus korter on väiksem. Aga see on uuem ja soojem. [laughs] Tartus oli mul talvel väga külm.",
+    },
+    { voice: "main", text: "Kas Tallinnas on kõik kallim?" },
+    {
+      voice: "second",
+      text: [
+        "Jah, korter on kallim ja kohv on ka kallim.",
+        "Tartus maksis kohv kaks eurot, siin kolm eurot.",
+      ],
+    },
+    {
+      voice: "main",
+      text: ["Kolm eurot!", "Aga kas kohv on ka parem?"],
+      say: "[surprised] Kolm eurot! Aga kas kohv on ka parem?",
+    },
+    {
+      voice: "second",
+      text: [
+        "Jah, minu maja kõrval on Tallinna kõige parem kohvik.",
+        "Ma joon seal iga päev kohvi.",
+      ],
+    },
+    { voice: "main", text: ["Ja töö?", "Kas uus töö on parem kui vana?"] },
+    {
+      voice: "second",
+      text: [
+        "Jah, palju parem.",
+        "Mul on seal suurem laud ja uuem arvuti.",
+        "Aga ma töötan kella üheksast kella kuueni.",
+      ],
+    },
+    { voice: "main", text: ["Tartus töötasid sa kella viieni.", "Kas Tartu oli parem?"] },
+    {
+      voice: "second",
+      text: ["Natuke.", "Tartu on vanem ja väiksem linn.", "Aga Tallinnas on mu parim sõber Kati."],
+      say: "[sighs] Natuke. Tartu on vanem ja väiksem linn. Aga Tallinnas on mu parim sõber Kati.",
+    },
+    {
+      voice: "main",
+      text: ["Hästi.", "Ma tulen nädala pärast Tallinna.", "Siis joome kõige paremat kohvi!"],
+    },
+  ],
+};
+
+export const CMP_WORDS = [
+  "suurem",
+  "kõige suurem",
+  "parem",
+  "kõige parem",
+  "parim",
+  "kui",
+  "sama",
+  "Tallinn on suurem kui Tartu",
+  "Tallinn on Tartust suurem",
+  ...CMP_CHAINS.flatMap(({ steps }) => steps),
+  ...CMP_MAKE.map(({ answer }) => answer),
+] as const;
+
+export const CMP_DRILL = [
+  "Minu kass on vanem kui sinu kass.",
+  "Tee on odavam kui kohv.",
+  "Tallinn on palju suurem kui Tartu.",
+  "Minu tuba on väiksem kui sinu tuba.",
+] as const;
+
+const CMP_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...new Set([
+      ...CMP_WORDS,
+      ...CMP_THAN,
+      ...CMP_ST.flatMap(({ kui, st }) => [kui, st]),
+      ...CMP_MOST,
+      ...CMP_HEARD.map(({ said }) => said),
+      ...CMP_TRANSLATE.map(({ answers }) => answers[0]),
+      ...CMP_FIX.map(({ answers }) => answers[0]),
+      ...CMP_DRILL,
+    ]),
+  ]),
+  "c-talk": CMP_TALK,
+};
+
 /** A noun's three forms in a dictionary's order: first, second, third. */
 export type NounForms = readonly [string, string, string];
 
@@ -11217,6 +11812,8 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   jargarvud: JARGARVUD_CLIPS,
   millal: WHEN_CLIPS,
   sonajarg: ORDER_CLIPS,
+  omadussonad: ADJ_CLIPS,
+  vordlus: CMP_CLIPS,
   "mul-on": {
     ...words([
       ...MUL_ON_WORDS,

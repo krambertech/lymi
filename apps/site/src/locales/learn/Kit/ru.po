@@ -239,6 +239,12 @@ msgstr "нога"
 msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the partitive. Every word is read aloud."
 msgstr "Бесплатный урок эстонского о трёх основных формах существительного, põhivormid (kool, kooli, kooli; pood, poe, poodi): как их приводят словарь и Sõnaveeb и как большинство слов на -ne и -us, а также односложные слова на долгую гласную, подсказывают партитив. Каждое слово озвучено."
 
+msgid "A free Estonian lesson on adjectives with nouns: suures majas and uut raamatut, where the adjective usually takes the noun’s case, suure autoga with -ga, -ta, -ni and -na, and suured majad in the plural. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о прилагательных с существительными: suures majas и uut raamatut, где прилагательное обычно стоит в падеже существительного, suure autoga с -ga, -ta, -ni и -na и suured majad во множественном числе. Каждое предложение озвучено."
+
+msgid "A free Estonian lesson on comparing: suurem and uuem built on the genitive, suurem kui Tartu and Tartust suurem, kõige suurem for the biggest, sama suur kui for as big as, and two odd ones, hea, parem, parim and väike, väiksem. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о сравнении: suurem и uuem, образованные от родительного, suurem kui Tartu и Tartust suurem, kõige suurem — «самый большой», sama suur kui — «такой же большой, как», и два особых слова: hea, parem, parim и väike, väiksem. Каждое предложение озвучено."
+
 msgid "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о четырёх падежных окончаниях: -ga — «с» и «на чём» (sõbraga, bussiga), -ta — «без» (piimata), -ni — «до самого» (kella viieni, Tartuni) и -na — «как», в роли (arstina). Все они добавляются к родительному падежу. Каждое предложение озвучено."
 
@@ -688,6 +694,12 @@ msgstr "Эстонский"
 
 msgid "Estonian -ma, -mas and -mast: going, being and coming back"
 msgstr "Эстонские формы на -ma, -mas и -mast: иду, там, возвращаюсь"
+
+msgid "Estonian adjectives: agreeing with the noun"
+msgstr "Эстонские прилагательные: согласование по падежу"
+
+msgid "Estonian comparatives and superlatives"
+msgstr "Эстонские степени сравнения прилагательных"
 
 msgid "Estonian conditional mood"
 msgstr "Условное наклонение в эстонском языке"

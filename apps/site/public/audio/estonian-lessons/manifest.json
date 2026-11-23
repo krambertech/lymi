@@ -24398,5 +24398,794 @@
     "text": "Laupäeval ma ei tööta.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/suur": {
+    "text": "suur",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/va2ike": {
+    "text": "väike",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/uus": {
+    "text": "uus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/vana": {
+    "text": "vana",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/hea": {
+    "text": "hea",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ilus": {
+    "text": "ilus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/soe": {
+    "text": "soe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/suures-majas": {
+    "text": "suures majas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/suure-autoga": {
+    "text": "suure autoga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/uut-raamatut": {
+    "text": "uut raamatut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/suured-majad": {
+    "text": "suured majad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/suur-maja": {
+    "text": "suur maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/suure-maja": {
+    "text": "suure maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/suurt-maja": {
+    "text": "suurt maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/suure-majaga": {
+    "text": "suure majaga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/va2ike-tuba": {
+    "text": "väike tuba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/va2ikese-toa": {
+    "text": "väikese toa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/va2ikest-tuba": {
+    "text": "väikest tuba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/va2ikeses-toas": {
+    "text": "väikeses toas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/va2ikese-toaga": {
+    "text": "väikese toaga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/uus-raamat": {
+    "text": "uus raamat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/uue-raamatu": {
+    "text": "uue raamatu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/uues-raamatus": {
+    "text": "uues raamatus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/uue-raamatuga": {
+    "text": "uue raamatuga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/uue": {
+    "text": "uue",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/uut": {
+    "text": "uut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/va2ikese": {
+    "text": "väikese",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/va2ikest": {
+    "text": "väikest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ilusa": {
+    "text": "ilusa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ilusat": {
+    "text": "ilusat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/head": {
+    "text": "head",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ma-elan-suures-majas": {
+    "text": "Ma elan suures majas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/kass-magab-va2ikeses-toas": {
+    "text": "Kass magab väikeses toas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ma-loen-uut-raamatut": {
+    "text": "Ma loen uut raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/me-istume-vanas-kohvikus": {
+    "text": "Me istume vanas kohvikus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/mul-on-kaks-suurt-kassi": {
+    "text": "Mul on kaks suurt kassi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/jaan-elab-ilusas-linnas": {
+    "text": "Jaan elab ilusas linnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ma-so3idan-suure-autoga": {
+    "text": "Ma sõidan suure autoga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/mari-tuleb-uue-so3braga": {
+    "text": "Mari tuleb uue sõbraga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ma-joon-kohvi-sooja-piimaga": {
+    "text": "Ma joon kohvi sooja piimaga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/need-on-head-so3brad": {
+    "text": "Need on head sõbrad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/me-elame-vanas-linnas": {
+    "text": "Me elame vanas linnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/me-istume-heas-kohvikus": {
+    "text": "Me istume heas kohvikus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/kass-magab-suures-autos": {
+    "text": "Kass magab suures autos.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/mari-elab-uues-majas": {
+    "text": "Mari elab uues majas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/me-istume-soojas-toas": {
+    "text": "Me istume soojas toas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/jaan-to2o2tab-va2ikeses-poes": {
+    "text": "Jaan töötab väikeses poes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/mari-elab-ilusas-linnas": {
+    "text": "Mari elab ilusas linnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ma-istun-vanas-kohvikus": {
+    "text": "Ma istun vanas kohvikus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ta-tuleb-hea-so3braga": {
+    "text": "Ta tuleb hea sõbraga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/mari-elab-va2ikeses-linnas": {
+    "text": "Mari elab väikeses linnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/p-message": {
+    "text": "Tere, Kati! Ma elan nüüd uues linnas. Minu korter on suures majas. Ma töötan väikeses poes. Ma sõidan tööle vana autoga. Mul on kaks head sõpra.",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "omadussonad/c-talk": {
+    "text": "Tere, Jaan! Kus sa eile olid? Tere, Kati! Ma olin Tartus. Mu vend elab nüüd seal, ühes vanas majas. Vanas majas? Kas see on suur maja? Ei, see on väike maja, aga väga ilus. Majas on kolm väikest tuba ja üks suur tuba. Ja kus ta töötab? Ta töötab uues kohvikus. Kohvik on ilusas pargis, suure turu kõrval. Ta sõidab tööle vana autoga. Vana autoga? Kas see on hea auto? Jah, väga hea. See on vana, aga ilus auto. Mina sõidan tööle uue bussiga. Buss on soe ja hea. Ja mis sa õhtul teed? Ma loen uut raamatut. See on suur raamat, aga väga hea. Kas sa tahad ka lugeda? Jah! Mul on homme vaba päev. Hästi. Ma ootan sind homme väikeses kohvikus, kell kuus. Seal on hea kohv ja soe piim. Väikeses kohvikus? Kas see on sinu maja kõrval? Jah, minu maja kõrval. Nägemiseni! Hästi. Homme kell kuus väikeses kohvikus!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Kus sa eile olid?"
+        ],
+        "say": "[cheerful] Tere, Jaan! Kus sa eile olid?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Kati!",
+          "Ma olin Tartus.",
+          "Mu vend elab nüüd seal, ühes vanas majas."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Vanas majas?",
+          "Kas see on suur maja?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, see on väike maja, aga väga ilus.",
+          "Majas on kolm väikest tuba ja üks suur tuba."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja kus ta töötab?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ta töötab uues kohvikus.",
+          "Kohvik on ilusas pargis, suure turu kõrval.",
+          "Ta sõidab tööle vana autoga."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Vana autoga?",
+          "Kas see on hea auto?"
+        ],
+        "say": "[curious] Vana autoga? Kas see on hea auto?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, väga hea.",
+          "See on vana, aga ilus auto."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mina sõidan tööle uue bussiga.",
+          "Buss on soe ja hea."
+        ],
+        "say": "[laughs] Mina sõidan tööle uue bussiga. Buss on soe ja hea."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja mis sa õhtul teed?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ma loen uut raamatut.",
+          "See on suur raamat, aga väga hea.",
+          "Kas sa tahad ka lugeda?"
+        ],
+        "say": "Ma loen uut raamatut. See on suur raamat, aga väga hea. [curious] Kas sa tahad ka lugeda?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah!",
+          "Mul on homme vaba päev."
+        ],
+        "say": "[pleased] Jah! Mul on homme vaba päev."
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Hästi.",
+          "Ma ootan sind homme väikeses kohvikus, kell kuus.",
+          "Seal on hea kohv ja soe piim."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Väikeses kohvikus?",
+          "Kas see on sinu maja kõrval?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, minu maja kõrval.",
+          "Nägemiseni!"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hästi.",
+          "Homme kell kuus väikeses kohvikus!"
+        ]
+      }
+    ]
+  },
+  "omadussonad/meil-on-kolm-va2ikest-tuba": {
+    "text": "Meil on kolm väikest tuba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/need-on-suured-majad": {
+    "text": "Need on suured majad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/need-on-uued-raamatud": {
+    "text": "Need on uued raamatud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/jaan-so3idab-uue-autoga": {
+    "text": "Jaan sõidab uue autoga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/suurem": {
+    "text": "suurem",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/ko3ige-suurem": {
+    "text": "kõige suurem",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/parem": {
+    "text": "parem",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/ko3ige-parem": {
+    "text": "kõige parem",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/parim": {
+    "text": "parim",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/kui": {
+    "text": "kui",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/sama": {
+    "text": "sama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tallinn-on-suurem-kui-tartu": {
+    "text": "Tallinn on suurem kui Tartu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tallinn-on-tartust-suurem": {
+    "text": "Tallinn on Tartust suurem.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/suur": {
+    "text": "suur",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/suure": {
+    "text": "suure",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/uus": {
+    "text": "uus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/uue": {
+    "text": "uue",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/uuem": {
+    "text": "uuem",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/kallis": {
+    "text": "kallis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/kalli": {
+    "text": "kalli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/kallim": {
+    "text": "kallim",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/va2ike": {
+    "text": "väike",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/va2ikese": {
+    "text": "väikese",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/va2iksem": {
+    "text": "väiksem",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/hea": {
+    "text": "hea",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/vanem": {
+    "text": "vanem",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/ku2lmem": {
+    "text": "külmem",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/ilusam": {
+    "text": "ilusam",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/minu-auto-on-uuem-kui-sinu-auto": {
+    "text": "Minu auto on uuem kui sinu auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/kohv-on-kallim-kui-tee": {
+    "text": "Kohv on kallim kui tee.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tartu-on-va2iksem-kui-tallinn": {
+    "text": "Tartu on väiksem kui Tallinn.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/ta2na-on-soojem-kui-eile": {
+    "text": "Täna on soojem kui eile.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/jaan-on-vanem-kui-mari": {
+    "text": "Jaan on vanem kui Mari.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/jaan-on-marist-vanem": {
+    "text": "Jaan on Marist vanem.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/kohv-on-teest-kallim": {
+    "text": "Kohv on teest kallim.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/minu-tuba-on-suurem-kui-sinu-tuba": {
+    "text": "Minu tuba on suurem kui sinu tuba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/minu-tuba-on-sinu-toast-suurem": {
+    "text": "Minu tuba on sinu toast suurem.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/mari-on-noorem-kui-kati": {
+    "text": "Mari on noorem kui Kati.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/mari-on-katist-noorem": {
+    "text": "Mari on Katist noorem.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tartu-on-vanem-kui-tallinn": {
+    "text": "Tartu on vanem kui Tallinn.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tartu-on-tallinnast-vanem": {
+    "text": "Tartu on Tallinnast vanem.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tallinn-on-eesti-ko3ige-suurem-linn": {
+    "text": "Tallinn on Eesti kõige suurem linn.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/see-on-ko3ige-parem-kohvik": {
+    "text": "See on kõige parem kohvik.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/jaan-on-ko3ige-vanem": {
+    "text": "Jaan on kõige vanem.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/mari-on-minu-parim-so3ber": {
+    "text": "Mari on minu parim sõber.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/minu-tuba-on-sama-suur-kui-sinu-tuba": {
+    "text": "Minu tuba on sama suur kui sinu tuba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tallinn-on-suur-linn": {
+    "text": "Tallinn on suur linn.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/jaan-on-vana": {
+    "text": "Jaan on vana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/see-kohvik-on-hea": {
+    "text": "See kohvik on hea.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/see-kohvik-on-parem": {
+    "text": "See kohvik on parem.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/kohv-on-parem-kui-tee": {
+    "text": "Kohv on parem kui tee.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/ta2na-on-ku2lmem-kui-eile": {
+    "text": "Täna on külmem kui eile.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/minu-kass-on-vanem-kui-sinu-kass": {
+    "text": "Minu kass on vanem kui sinu kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tee-on-odavam-kui-kohv": {
+    "text": "Tee on odavam kui kohv.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tallinn-on-palju-suurem-kui-tartu": {
+    "text": "Tallinn on palju suurem kui Tartu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/minu-tuba-on-va2iksem-kui-sinu-tuba": {
+    "text": "Minu tuba on väiksem kui sinu tuba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/c-talk": {
+    "text": "Tere, Mari! Kuidas sulle Tallinn meeldib? Tere, Jaan! Tallinn on ilus, aga palju suurem kui Tartu. Ja korter? Kas see on suurem kui sinu vana korter? Ei, uus korter on väiksem. Aga see on uuem ja soojem. Tartus oli mul talvel väga külm. Kas Tallinnas on kõik kallim? Jah, korter on kallim ja kohv on ka kallim. Tartus maksis kohv kaks eurot, siin kolm eurot. Kolm eurot! Aga kas kohv on ka parem? Jah, minu maja kõrval on Tallinna kõige parem kohvik. Ma joon seal iga päev kohvi. Ja töö? Kas uus töö on parem kui vana? Jah, palju parem. Mul on seal suurem laud ja uuem arvuti. Aga ma töötan kella üheksast kella kuueni. Tartus töötasid sa kella viieni. Kas Tartu oli parem? Natuke. Tartu on vanem ja väiksem linn. Aga Tallinnas on mu parim sõber Kati. Hästi. Ma tulen nädala pärast Tallinna. Siis joome kõige paremat kohvi!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Mari!",
+          "Kuidas sulle Tallinn meeldib?"
+        ],
+        "say": "[cheerful] Tere, Mari! Kuidas sulle Tallinn meeldib?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Tallinn on ilus, aga palju suurem kui Tartu."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja korter?",
+          "Kas see on suurem kui sinu vana korter?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, uus korter on väiksem.",
+          "Aga see on uuem ja soojem.",
+          "Tartus oli mul talvel väga külm."
+        ],
+        "say": "Ei, uus korter on väiksem. Aga see on uuem ja soojem. [laughs] Tartus oli mul talvel väga külm."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas Tallinnas on kõik kallim?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, korter on kallim ja kohv on ka kallim.",
+          "Tartus maksis kohv kaks eurot, siin kolm eurot."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kolm eurot!",
+          "Aga kas kohv on ka parem?"
+        ],
+        "say": "[surprised] Kolm eurot! Aga kas kohv on ka parem?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, minu maja kõrval on Tallinna kõige parem kohvik.",
+          "Ma joon seal iga päev kohvi."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja töö?",
+          "Kas uus töö on parem kui vana?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, palju parem.",
+          "Mul on seal suurem laud ja uuem arvuti.",
+          "Aga ma töötan kella üheksast kella kuueni."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tartus töötasid sa kella viieni.",
+          "Kas Tartu oli parem?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Natuke.",
+          "Tartu on vanem ja väiksem linn.",
+          "Aga Tallinnas on mu parim sõber Kati."
+        ],
+        "say": "[sighs] Natuke. Tartu on vanem ja väiksem linn. Aga Tallinnas on mu parim sõber Kati."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hästi.",
+          "Ma tulen nädala pärast Tallinna.",
+          "Siis joome kõige paremat kohvi!"
+        ]
+      }
+    ]
+  },
+  "omadussonad/va2ikese-lapsena-elasin-ma-tartus": {
+    "text": "Väikese lapsena elasin ma Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/need-on-ilusad-linnad": {
+    "text": "Need on ilusad linnad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/vana": {
+    "text": "vana",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/mul-ei-ole-uut-autot": {
+    "text": "Mul ei ole uut autot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

@@ -17,6 +17,7 @@ import {
   COND_REWRITE,
   COND_SORT,
   COND_VERBS,
+  COND_ANSWERS,
 } from "../../../lib/learn/clips";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
@@ -34,11 +35,6 @@ import { Word } from "../Word";
 
 const SLUG = "laheksin";
 
-const REWRITE_ALSO: Record<string, readonly string[]> = {
-  "Ma tahaksin kohvi.": ["Tahaksin kohvi."],
-  "Ma läheksin kinno.": ["Läheksin kinno."],
-  "Ma ei läheks.": ["Mina ei läheks."],
-};
 const src = (text: string) => clipUrl(SLUG, clipId(text));
 
 const VERBS: Record<string, MessageDescriptor> = {
@@ -260,7 +256,7 @@ function useContent() {
       from: item.from,
       cue: cues[item.cue],
       src: src(item.to),
-      answers: [item.to, ...(REWRITE_ALSO[item.to] ?? [])],
+      answers: COND_ANSWERS[item.to] ?? [item.to],
       explain:
         item.to === "Ma ei läheks." ? (
           <Trans>
@@ -279,12 +275,7 @@ function useContent() {
         id: "like-coffee",
         prompt: t`I’d like a coffee, please.`,
         src: src("Ma tahaksin kohvi."),
-        answers: [
-          "Ma tahaksin kohvi.",
-          "Ma tahaksin kohvi, palun.",
-          "Tahaksin kohvi.",
-          "Tahaksin kohvi, palun.",
-        ],
+        answers: COND_ANSWERS["Ma tahaksin kohvi."],
         pair: ["polite", "like-coffee"],
       },
       {
@@ -292,14 +283,7 @@ function useContent() {
         id: "could-help",
         prompt: t`Could you help me?`,
         src: src("Kas sa saaksid mind aidata?"),
-        answers: [
-          "Kas sa saaksid mind aidata?",
-          "Kas te saaksite mind aidata?",
-          "Kas sa võiksid mind aidata?",
-          "Kas te võiksite mind aidata?",
-          "Saaksid sa mind aidata?",
-          "Kas sa saaksid mulle appi tulla?",
-        ],
+        answers: COND_ANSWERS["Kas sa saaksid mind aidata?"],
         pair: ["polite", "could-help"],
       },
       {
@@ -307,11 +291,7 @@ function useContent() {
         id: "if-time",
         prompt: t`If I had time, I’d go to the cinema.`,
         src: src("Kui mul oleks aega, läheksin ma kinno."),
-        answers: [
-          "Kui mul oleks aega, läheksin ma kinno.",
-          "Kui mul oleks aega, ma läheksin kinno.",
-          "Kui mul oleks aega, läheksin kinno.",
-        ],
+        answers: COND_ANSWERS["Kui mul oleks aega, läheksin ma kinno."],
         pair: ["if", "if-time"],
         explain: <Trans>An imagined if: both halves take the would form.</Trans>,
       },
@@ -320,7 +300,7 @@ function useContent() {
         id: "would-not-go",
         prompt: t`I wouldn’t go.`,
         src: src("Ma ei läheks."),
-        answers: ["Ma ei läheks.", "Mina ei läheks."],
+        answers: COND_ANSWERS["Ma ei läheks."],
         pair: ["no", "would-not-go"],
       },
       {
@@ -328,7 +308,7 @@ function useContent() {
         id: "live-tartu",
         prompt: t`We would live in Tartu.`,
         src: src("Me elaksime Tartus."),
-        answers: ["Me elaksime Tartus.", "Meie elaksime Tartus.", "Elaksime Tartus."],
+        answers: COND_ANSWERS["Me elaksime Tartus."],
         pair: ["would", "live-tartu"],
       },
       {
@@ -336,11 +316,7 @@ function useContent() {
         id: "read-book",
         prompt: t`Would you read this book?`,
         src: src("Kas sa loeksid seda raamatut?"),
-        answers: [
-          "Kas sa loeksid seda raamatut?",
-          "Kas te loeksite seda raamatut?",
-          "Loeksid sa seda raamatut?",
-        ],
+        answers: COND_ANSWERS["Kas sa loeksid seda raamatut?"],
         pair: ["would", "read-book"],
       },
       {
@@ -348,12 +324,7 @@ function useContent() {
         id: "if-warm",
         prompt: t`If it were warm, we would swim in the sea.`,
         src: src("Kui oleks soe, ujuksime me meres."),
-        answers: [
-          "Kui oleks soe, ujuksime me meres.",
-          "Kui oleks soe, me ujuksime meres.",
-          "Kui oleks soe, ujuksime meres.",
-          "Kui ilm oleks soe, ujuksime me meres.",
-        ],
+        answers: COND_ANSWERS["Kui oleks soe, ujuksime me meres."],
         pair: ["if", "if-warm"],
       },
     ];

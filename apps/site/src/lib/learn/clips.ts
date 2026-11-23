@@ -4249,6 +4249,56 @@ export const COND_CONVERSATION: Conversation = {
 
 export const COND_WORDS = ["kui", "hea meelega", "läheksin", "tahaksin", "oleks"] as const;
 
+export const COND_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Ma tahaksin kohvi.": [
+    "Ma tahaksin kohvi.",
+    "Ma tahaksin kohvi, palun.",
+    "Tahaksin kohvi.",
+    "Tahaksin kohvi, palun.",
+    "Mina tahaksin kohvi.",
+    "Mina tahaksin kohvi, palun.",
+  ],
+  "Kas sa saaksid mind aidata?": [
+    "Kas sa saaksid mind aidata?",
+    "Kas te saaksite mind aidata?",
+    "Kas sa võiksid mind aidata?",
+    "Kas te võiksite mind aidata?",
+    "Saaksid sa mind aidata?",
+    "Kas sa saaksid mulle appi tulla?",
+  ],
+  "Kui mul oleks aega, läheksin ma kinno.": [
+    "Kui mul oleks aega, läheksin ma kinno.",
+    "Kui mul oleks aega, ma läheksin kinno.",
+    "Kui mul oleks aega, läheksin kinno.",
+    "Ma läheksin kinno, kui mul oleks aega.",
+    "Läheksin kinno, kui mul oleks aega.",
+  ],
+  "Ma ei läheks.": ["Ma ei läheks.", "Mina ei läheks.", "Ei läheks."],
+  "Me elaksime Tartus.": ["Me elaksime Tartus.", "Meie elaksime Tartus.", "Elaksime Tartus."],
+  "Kas sa loeksid seda raamatut?": [
+    "Kas sa loeksid seda raamatut?",
+    "Kas te loeksite seda raamatut?",
+    "Loeksid sa seda raamatut?",
+    "Kas sina loeksid seda raamatut?",
+  ],
+  "Kui oleks soe, ujuksime me meres.": [
+    "Kui oleks soe, ujuksime me meres.",
+    "Kui oleks soe, me ujuksime meres.",
+    "Kui oleks soe, ujuksime meres.",
+    "Kui ilm oleks soe, ujuksime me meres.",
+    "Me ujuksime meres, kui oleks soe.",
+    "Ujuksime meres, kui oleks soe.",
+  ],
+  "Ma läheksin kinno.": ["Ma läheksin kinno.", "Läheksin kinno.", "Mina läheksin kinno."],
+  "Nad ostaksid maja.": ["Nad ostaksid maja.", "Nemad ostaksid maja."],
+  "Kas te võiksite seda korrata?": [
+    "Kas te võiksite seda korrata?",
+    "Kas sa võiksid seda korrata?",
+    "Kas te saaksite seda korrata?",
+    "Kas sa saaksid seda korrata?",
+  ],
+};
+
 const COND_CLIPS: Record<string, Clip> = {
   ...words([
     ...COND_WORDS,

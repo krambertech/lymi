@@ -280,6 +280,9 @@ msgstr "A free lesson on Estonian’s three “on” cases, the adessive, allati
 msgid "A free lesson on saying “I have” in Estonian: mul, sul, tal, meil, teil and neil on, names with -l such as Maril on, the question kellel on?, mul on vaja for I need, and how to answer with jah, on or ei ole. Every sentence is read aloud."
 msgstr "A free lesson on saying “I have” in Estonian: mul, sul, tal, meil, teil and neil on, names with -l such as Maril on, the question kellel on?, mul on vaja for I need, and how to answer with jah, on or ei ole. Every sentence is read aloud."
 
+msgid "A free lesson on saying no in the Estonian past tense: ei and the -nud form (ma ei läinud, ei olnud, polnud), the same for every person, how the -nud form comes from the -da infinitive, the five forms to learn whole, and answering a question with no. Every sentence is read aloud."
+msgstr "A free lesson on saying no in the Estonian past tense: ei and the -nud form (ma ei läinud, ei olnud, polnud), the same for every person, how the -nud form comes from the -da infinitive, the five forms to learn whole, and answering a question with no. Every sentence is read aloud."
+
 msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
 msgstr "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
 
@@ -672,6 +675,9 @@ msgstr "Estonian personal pronouns in every case"
 msgid "Estonian plural"
 msgstr "Estonian plural"
 
+msgid "Estonian practice: shopping at the market"
+msgstr "Estonian practice: shopping at the market"
+
 msgid "Estonian present tense"
 msgstr "Estonian present tense"
 
@@ -750,6 +756,9 @@ msgstr "Free Estonian conversation practice for beginners: say your name, where 
 
 msgid "Free Estonian decks in Lymi"
 msgstr "Free Estonian decks in Lymi"
+
+msgid "Free Estonian practice at the market: read a friend’s message and answer it, say what you need and what it costs (kilo juustu, kaks eurot), choose between the -da and -ma infinitive after tahan and pean, fix the mistakes learners make, buy cheese at a stall and follow a conversation heard twice. Every sentence is read aloud."
+msgstr "Free Estonian practice at the market: read a friend’s message and answer it, say what you need and what it costs (kilo juustu, kaks eurot), choose between the -da and -ma infinitive after tahan and pean, fix the mistakes learners make, buy cheese at a stall and follow a conversation heard twice. Every sentence is read aloud."
 
 msgid "Free Estonian practice for beginners: read opening hours and a message, follow a voice message with times and days, fill in a plan for Saturday and talk with a friend at a café. Every sentence is read aloud."
 msgstr "Free Estonian practice for beginners: read opening hours and a message, follow a voice message with times and days, fill in a plan for Saturday and talk with a friend at a café. Every sentence is read aloud."
@@ -895,6 +904,9 @@ msgstr "How to say “I like” in Estonian"
 
 msgid "How to say no in Estonian"
 msgstr "How to say no in Estonian"
+
+msgid "How to say no in the past in Estonian"
+msgstr "How to say no in the past in Estonian"
 
 msgid "I"
 msgstr "I"

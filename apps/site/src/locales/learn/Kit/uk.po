@@ -280,6 +280,9 @@ msgstr "Безкоштовний урок естонської про три з�
 msgid "A free lesson on saying “I have” in Estonian: mul, sul, tal, meil, teil and neil on, names with -l such as Maril on, the question kellel on?, mul on vaja for I need, and how to answer with jah, on or ei ole. Every sentence is read aloud."
 msgstr "Безкоштовний урок про те, як сказати «у мене є» естонською: mul, sul, tal, meil, teil і neil on, імена з -l, як-от Maril on, питання kellel on?, mul on vaja — «мені потрібно» — і відповіді jah, on та ei ole. Кожне речення озвучене."
 
+msgid "A free lesson on saying no in the Estonian past tense: ei and the -nud form (ma ei läinud, ei olnud, polnud), the same for every person, how the -nud form comes from the -da infinitive, the five forms to learn whole, and answering a question with no. Every sentence is read aloud."
+msgstr "Безкоштовний урок про заперечення в минулому часі естонської: ei і форма на -nud (ma ei läinud, ei olnud, polnud), однакова для всіх осіб, як форма на -nud утворюється від інфінітива на -da, п’ять форм, які вчать напам’ять, і як відповісти «ні» на запитання. Кожне речення озвучене."
+
 msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про те, як сказати, де ти: -s означає «в» (Tallinnas, koolis), -l — «на» (laual, tööl), які місця мають яке закінчення і як відповісти на kus, «де». Кожне речення озвучене."
 
@@ -672,6 +675,9 @@ msgstr "Відмінювання особових займенників в ес
 msgid "Estonian plural"
 msgstr "Множина в естонській мові"
 
+msgid "Estonian practice: shopping at the market"
+msgstr "Практика естонської: покупки на ринку"
+
 msgid "Estonian present tense"
 msgstr "Теперішній час в естонській мові"
 
@@ -750,6 +756,9 @@ msgstr "Безкоштовна розмовна практика естонсь�
 
 msgid "Free Estonian decks in Lymi"
 msgstr "Безкоштовні естонські колоди в Lymi"
+
+msgid "Free Estonian practice at the market: read a friend’s message and answer it, say what you need and what it costs (kilo juustu, kaks eurot), choose between the -da and -ma infinitive after tahan and pean, fix the mistakes learners make, buy cheese at a stall and follow a conversation heard twice. Every sentence is read aloud."
+msgstr "Безкоштовна практика естонської на ринку: прочитай повідомлення подруги й дай відповідь, скажи, що тобі потрібно і скільки це коштує (kilo juustu, kaks eurot), вибери інфінітив на -da чи на -ma після tahan і pean, виправ типові помилки, купи сир біля прилавка й зрозумій розмову, яку можна прослухати двічі. Кожне речення озвучене."
 
 msgid "Free Estonian practice for beginners: read opening hours and a message, follow a voice message with times and days, fill in a plan for Saturday and talk with a friend at a café. Every sentence is read aloud."
 msgstr "Безкоштовна практика естонської для початківців: прочитай години роботи й повідомлення, зрозумій голосове повідомлення, де йдеться про час і дні, заповни план на суботу й поговори з подругою в кав’ярні. Кожне речення озвучене."
@@ -895,6 +904,9 @@ msgstr "Як сказати «мені подобається» естонськ
 
 msgid "How to say no in Estonian"
 msgstr "Як сказати «ні» естонською"
+
+msgid "How to say no in the past in Estonian"
+msgstr "Як сказати «ні» в минулому часі естонською"
 
 msgid "I"
 msgstr "я"

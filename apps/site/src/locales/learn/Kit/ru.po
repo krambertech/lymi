@@ -34,6 +34,10 @@ msgstr "«Иметь»"
 msgid "“To like” and feelings"
 msgstr "«Нравиться» и чувства"
 
+#. placeholder {0}: exam.left
+msgid "{0, plural, =0 {No plays left} one {# play left} other {# plays left}}"
+msgstr "{0, plural, =0 {Прослушиваний не осталось} one {Осталось # прослушивание} few {Осталось # прослушивания} many {Осталось # прослушиваний} other {Осталось # прослушивания}}"
+
 #. placeholder {0}: slips.length
 msgid "{0, plural, one {# of them has a slip in spelling.} other {# of them have a slip in spelling.}}"
 msgstr "{0, plural, one {В # из них есть описка.} few {В # из них есть описка.} many {В # из них есть описка.} other {В # из них есть описка.}}"
@@ -73,6 +77,9 @@ msgstr "{next, plural, one {Ещё #} few {Ещё #} many {Ещё #} other {Ещ
 
 msgid "{off, plural, one {Not right: # word differs.} other {Not right: # words differ.}}"
 msgstr "{off, plural, one {Неверно: отличается # слово.} few {Неверно: отличаются # слова.} many {Неверно: отличаются # слов.} other {Неверно: отличаются # слова.}}"
+
+msgid "{plays, plural, one {Read the questions first. You can play the recording once, without pausing or going back.} other {Read the questions first. You can play the recording # times, without pausing or going back.}}"
+msgstr "{plays, plural, one {Сначала прочитай вопросы. Запись можно прослушать # раз, без пауз и перемотки.} few {Сначала прочитай вопросы. Запись можно прослушать # раза, без пауз и перемотки.} many {Сначала прочитай вопросы. Запись можно прослушать # раз, без пауз и перемотки.} other {Сначала прочитай вопросы. Запись можно прослушать # раза, без пауз и перемотки.}}"
 
 msgid "{position} of {count}"
 msgstr "{position} из {count}"
@@ -150,6 +157,9 @@ msgstr "<0>Kooli</0> — в школу, <1>koolis</1> — в школе."
 
 msgid "<0>Linna</0> is to town, with a double n; <1>lina</1> is linen."
 msgstr "<0>Linna</0>, с двойным n, — в город, а <1>lina</1> — лён."
+
+msgid "5 s"
+msgstr "5 с"
 
 msgid "A cat and a cardboard box"
 msgstr "Кот и картонная коробка"
@@ -243,6 +253,9 @@ msgstr "Бесплатный урок о трёх основных формах 
 
 msgid "A free lesson on which Estonian verbs take the -da form after them and which take the -ma form: tahan lugeda but pean lugema, with võin, saan, oskan, tohin, proovin, armastan and mulle meeldib on one side and hakkan, lähen, tule and jään on the other. Every sentence is read aloud."
 msgstr "Бесплатный урок о том, после каких эстонских глаголов идёт форма на -da, а после каких — на -ma: tahan lugeda, но pean lugema. Форму на -da требуют ещё võin, saan, oskan, tohin, proovin, armastan и mulle meeldib, форму на -ma — hakkan, lähen, tule и jään. Каждое предложение озвучено."
+
+msgid "A longer conversation"
+msgstr "Разговор подлиннее"
 
 msgid "a lot, much"
 msgstr "много"
@@ -342,6 +355,9 @@ msgstr "на рынке"
 
 msgid "at work"
 msgstr "на работе"
+
+msgid "Back 5 seconds"
+msgstr "Назад на 5 секунд"
 
 msgid "behind"
 msgstr "сзади"
@@ -492,6 +508,10 @@ msgstr "Все слова в группах. Можно проверять."
 
 msgid "Every word is in its group."
 msgstr "Каждое слово в своей группе."
+
+msgctxt "the statement is false"
+msgid "False"
+msgstr "Неверно"
 
 msgid "Fill every gap first."
 msgstr "Сначала заполни все пропуски."
@@ -646,6 +666,12 @@ msgstr "Я уже поел."
 msgid "I read"
 msgstr "я читаю"
 
+msgid "I read a lot."
+msgstr "Я много читаю."
+
+msgid "I’m a doctor."
+msgstr "Я врач."
+
 msgid "I’m a teacher."
 msgstr "Я учитель."
 
@@ -657,6 +683,9 @@ msgstr "Я собираюсь есть."
 
 msgid "I’m going to school."
 msgstr "Я иду в школу."
+
+msgid "I’m reading a book."
+msgstr "Я читаю книгу."
 
 msgid "Illative"
 msgstr "Иллатив"
@@ -755,6 +784,27 @@ msgstr "Правильно: <0>{expected}</0>."
 msgid "It’s spelled like this"
 msgstr "Пишется так"
 
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan and Mari speak Estonian to each other."
+msgstr "Яан и Мари говорят между собой по-эстонски."
+
+msgid "Jaan is a teacher."
+msgstr "Яан — учитель."
+
+msgid "Jaan lives in Tartu."
+msgstr "Яан живёт в Тарту."
+
+msgid "Jaan’s doctor"
+msgstr "Врач Яана"
+
+msgid "Jaan’s friend"
+msgstr "Подруга Яана"
+
+msgid "Jaan’s sister"
+msgstr "Сестра Яана"
+
 msgid "Kodu is home; kodus, at home."
 msgstr "Kodu — дом; kodus — дома."
 
@@ -794,11 +844,20 @@ msgstr "Слушай сколько хочешь, а потом отвечай."
 msgid "Listen first."
 msgstr "Сначала послушай."
 
+msgid "Listen: Jaan and Mari"
+msgstr "Аудирование: Яан и Мари"
+
 msgid "Listen: meet Jaan"
 msgstr "Аудирование: знакомство с Яаном"
 
 msgid "Listening"
 msgstr "Аудирование"
+
+msgid "Listening with a conversation: who speaks when, sentence by sentence, five seconds back and a slower speed. Its questions are pick of three, true or false, one or two words, and matching."
+msgstr "Аудирование с разговором: видно, кто когда говорит, можно идти по предложениям, возвращаться на пять секунд и слушать медленнее. Вопросы: выбор из трёх, верно или неверно, одно или два слова и соответствия."
+
+msgid "Listening, exam mode"
+msgstr "Аудирование, как на экзамене"
 
 msgid "Listening: a short passage as one recording, every question at once with lettered answers, one Check, then the text."
 msgstr "Аудирование: короткий текст одной записью, все вопросы сразу с ответами под буквами, одна проверка, а потом текст."
@@ -823,6 +882,9 @@ msgstr "Образуй форму"
 
 msgid "Mari"
 msgstr "Мари"
+
+msgid "Mari is a doctor."
+msgstr "Мари — врач."
 
 msgid "Mari writes"
 msgstr "Мари пишет"
@@ -866,6 +928,9 @@ msgstr "Несколько человек"
 msgid "music"
 msgstr "музыка"
 
+msgid "My brother listens to music."
+msgstr "Мой брат слушает музыку."
+
 msgid "Nearly right, a double letter"
 msgstr "Почти верно, двойная буква"
 
@@ -892,6 +957,9 @@ msgstr "Отрицание"
 
 msgid "Next"
 msgstr "Дальше"
+
+msgid "Next sentence"
+msgstr "Следующее предложение"
 
 msgid "next to"
 msgstr "рядом"
@@ -973,6 +1041,9 @@ msgstr "На чём, на что, с чего"
 
 msgid "One"
 msgstr "Один"
+
+msgid "One or two words"
+msgstr "Одно или два слова"
 
 msgid "One word is wrong. Tap it, then write it right."
 msgstr "Одно слово неверное. Нажми на него и напиши правильно."
@@ -1076,11 +1147,23 @@ msgstr "Воспроизвести <0>{form}</0>"
 msgid "Play <0>{sentence}</0>"
 msgstr "Воспроизвести <0>{sentence}</0>"
 
+msgid "Play again"
+msgstr "Воспроизвести ещё раз"
+
+msgid "Play from {name}’s turn"
+msgstr "Воспроизвести с этой реплики, {name}"
+
+msgid "Play from here"
+msgstr "Воспроизвести отсюда"
+
 msgid "Play what {name} said"
 msgstr "Воспроизвести реплику: {name}"
 
 msgid "Play your line: {line}"
 msgstr "Воспроизвести твою реплику: {line}"
+
+msgid "Playing"
+msgstr "Воспроизводится"
 
 msgid "Pluperfect"
 msgstr "Давнопрошедшее"
@@ -1242,8 +1325,17 @@ msgstr "Разделы"
 msgid "See how you did"
 msgstr "Посмотреть результат"
 
+msgid "Sentence {number} of {count}, {speaker}, {time}"
+msgstr "Предложение {number} из {count}, {speaker}, {time}"
+
+msgid "Sentence {number} of {count}, {time}"
+msgstr "Предложение {number} из {count}, {time}"
+
 msgid "Sentence {sentenceNumber} of {sentenceCount}, {time}"
 msgstr "Предложение {sentenceNumber} из {sentenceCount}, {time}"
+
+msgid "Sentence before"
+msgstr "Предыдущее предложение"
 
 msgid "She’s a doctor"
 msgstr "Она врач"
@@ -1280,6 +1372,9 @@ msgstr "Скоро"
 
 msgid "Sort"
 msgstr "Разложи по группам"
+
+msgid "Speed"
+msgstr "Скорость"
 
 msgid "Start"
 msgstr "Начать"
@@ -1416,6 +1511,9 @@ msgstr "Кот на коробке."
 msgid "The cat is under the box."
 msgstr "Кот под коробкой."
 
+msgid "The conversation"
+msgstr "Разговор"
+
 msgid "The Estonian genitive case: my, your and whose"
 msgstr "Родительный падеж в эстонском языке: мой, твой, чей"
 
@@ -1478,6 +1576,9 @@ msgstr "Верное предложение"
 
 msgid "The same conversation with Mari’s lines heard, not shown; each can be read on request."
 msgstr "Тот же разговор, но реплики Мари только слышно; каждую можно открыть и прочитать."
+
+msgid "The same recording as an exam plays it: twice, with no pausing or going back, and the questions to read first. No text after Check."
+msgstr "Та же запись, как на экзамене: дважды, без пауз и перемотки, а вопросы можно прочитать заранее. После проверки текст не показывается."
 
 msgid "The same table for a verb: persons down, tenses across."
 msgstr "Та же таблица для глагола: лица в строках, времена в столбцах."
@@ -1542,6 +1643,10 @@ msgstr "Завтра я буду есть дома."
 msgid "Tööl, at work, takes -l like a market does."
 msgstr "Tööl, на работе, берёт -l, как и рынок."
 
+msgctxt "the statement is true"
+msgid "True"
+msgstr "Верно"
+
 msgid "Try again"
 msgstr "Попробовать ещё раз"
 
@@ -1602,6 +1707,12 @@ msgstr "Кем работает Мари?"
 msgid "What does Peeter do instead of reading?"
 msgstr "Что делает Пеэтер вместо чтения?"
 
+msgid "What does Peeter listen to?"
+msgstr "Что слушает Пеэтер?"
+
+msgid "What is the name of Mari’s brother?"
+msgstr "Как зовут брата Мари?"
+
 msgid "What should <0>{wrongWord}</0> be?"
 msgstr "Как должно быть вместо <0>{wrongWord}</0>?"
 
@@ -1638,8 +1749,20 @@ msgstr "Какой падеж нужен глаголу"
 msgid "Which language do they speak?"
 msgstr "На каком языке они говорят?"
 
+msgid "Which town does Mari live in? Write it as she says it."
+msgstr "В каком городе живёт Мари? Напиши так, как она говорит."
+
+msgid "Who is Mari?"
+msgstr "Кто такая Мари?"
+
 msgid "Who is Peeter?"
 msgstr "Кто такой Пеэтер?"
+
+msgid "Who lives where?"
+msgstr "Кто где живёт?"
+
+msgid "Who says it?"
+msgstr "Кто это говорит?"
 
 msgid "With, without, until and as in Estonian"
 msgstr "«С», «без», «до» и «как» по-эстонски"

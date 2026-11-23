@@ -70,7 +70,7 @@ List every clip in `clips.ts`: the lesson's shared data as exports, and an entry
 env PATH="$HOME/.nvm/versions/node/v$(cat .nvmrc)/bin:$PATH" ELEVENLABS_API_KEY="$(sed -n 's/^ELEVENLABS_API_KEY=//p' "$(git rev-parse --path-format=absolute --git-common-dir)/../apps/web/.dev.vars")" pnpm --filter @lymi/site lesson:audio
 ```
 
-Run it from the repository root, where `.nvmrc` names the Node it needs. The key goes from the main checkout's `apps/web/.dev.vars` into the command's environment only; never print it, echo it or write it to a file. The script records only new or changed clips, so a re-run is free. Done when it reports what you added and `pnpm --filter @lymi/site test` passes, since `clips.test.ts` checks the manifest against `CLIPS` and every mp3, and the lesson checks in `src/lib/learn/checks/` hold the lesson to the review rules the checklists mark **(checked)**. Each failure names the file, the rule and the fix; never add a new lesson to `known-issues.ts`.
+Run it with `--dry-run` first, which needs no key and lists what would be sent and how many characters. Run it from the repository root, where `.nvmrc` names the Node it needs. The key goes from the main checkout's `apps/web/.dev.vars` into the command's environment only; never print it, echo it or write it to a file. The script records only new or changed clips, so a re-run is free. Done when it reports what you added and `pnpm --filter @lymi/site test` passes, since `clips.test.ts` checks the manifest against `CLIPS` and every mp3, and the lesson checks in `src/lib/learn/checks/` hold the lesson to the review rules the checklists mark **(checked)**. Each failure names the file, the rule and the fix; never add a new lesson to `known-issues.ts`.
 
 ## 7. Translate
 

@@ -7,6 +7,7 @@ import { Dialogue, type DialogueTurn } from "./Dialogue";
 import { type FormItem, FormRound, formRecall } from "./FormRound";
 import { type GapItem, GapPassage } from "./GapPassage";
 import { KitExplorers } from "./KitExplorers";
+import { KitListening } from "./KitListening";
 import { KitSentences } from "./KitSentences";
 import { LearnLayout } from "./LearnLayout";
 import { type Glossary, LessonContext } from "./lesson-context";
@@ -370,6 +371,7 @@ export function KitDemo() {
                 questions={content.listening}
               />
             </Part>
+            <KitListening Part={Part} />
             <Part
               id="gaps-pick"
               title={t`Gaps, one at a time`}

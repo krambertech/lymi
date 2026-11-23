@@ -23,7 +23,7 @@ import { shuffle } from "../../lib/learn/quiz";
 import { Button } from "../Button";
 import { SectionContext, useLesson } from "./lesson-context";
 import { fromKeyboard, targetAt, useLift } from "./lift";
-import { PassagePlayer, usePassage } from "./Passage";
+import { PassagePlayer, usePassage } from "./PassagePlayer";
 import { Feedback, QuizCard, ResultDots } from "./Quiz";
 
 /** One gap in a passage: the text before and after it, and the word that fills it. */

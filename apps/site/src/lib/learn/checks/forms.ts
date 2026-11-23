@@ -56,6 +56,11 @@ export function lessonForms(page: Rendered): Map<string, string> {
       for (const word of (props.spare as string[] | undefined) ?? [])
         add(word, `gaps "${String(props.id)}" spare`);
     }
+    if (part === "Listening" || part === "Reading")
+      for (const question of props.questions as { kind?: string; answers?: string[] }[])
+        if (question.kind === "short")
+          for (const answer of question.answers ?? [])
+            add(answer, `short answer in "${String(props.id)}"`);
     if (part === "Quiz") {
       for (const { item } of writtenItems([{ part, props }]))
         for (const text of writtenTexts(item)) add(text, `quiz "${String(props.id)}"`);

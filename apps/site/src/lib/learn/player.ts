@@ -9,8 +9,10 @@ import { useSyncExternalStore } from "react";
  * play once a tap has started it, so a later clip in a sequence still plays after the tap is past.
  */
 let element: HTMLAudioElement | null = null;
+export type SoundEnd = "ended" | "cut" | "failed";
+
 /** Ends the clip playing now: resolves its promise and clears its mark. */
-let finish: (() => void) | null = null;
+let finish: ((end: SoundEnd) => void) | null = null;
 /** Bumped by every sound started from outside a sequence, so a running sequence knows to stop. */
 let turn = 0;
 let playingKey: string | null = null;
@@ -27,7 +29,11 @@ export function stopSound(): void {
     playingKey = null;
     emit();
   }
-  end?.();
+  end?.("cut");
+}
+
+export function setSoundRate(key: string, rate: number): void {
+  if (element && playingKey === key) element.playbackRate = rate;
 }
 
 /** Plays `src`, marked as `key`, and resolves when it ends or fails. `onFrame` gets its current time. */
@@ -37,15 +43,16 @@ export function playSound(
   onFrame?: (seconds: number) => void,
   /** Where to start, in seconds. */
   from = 0,
-): Promise<void> {
+  rate = 1,
+): Promise<SoundEnd> {
   turn += 1;
-  return start(src, key, onFrame, from);
+  return start(src, key, onFrame, from, rate);
 }
 
 export const SLOW_RATE = 0.75;
 export const slowKey = (src: string) => `${src}#slow`;
 
-export function playSlowly(src: string): Promise<void> {
+export function playSlowly(src: string): Promise<SoundEnd> {
   turn += 1;
   return start(src, slowKey(src), undefined, 0, SLOW_RATE);
 }
@@ -56,7 +63,7 @@ function start(
   onFrame?: (seconds: number) => void,
   from = 0,
   rate = 1,
-): Promise<void> {
+): Promise<SoundEnd> {
   stopSound();
   element ??= new Audio();
   const sound = element;
@@ -75,7 +82,7 @@ function start(
       onFrame?.(sound.currentTime);
       if (!over) frame = requestAnimationFrame(tick);
     };
-    const done = () => {
+    const done = (end: SoundEnd) => {
       if (over) return;
       over = true;
       cancelAnimationFrame(frame);
@@ -89,18 +96,18 @@ function start(
         playingKey = null;
         emit();
       }
-      resolve();
+      resolve(end);
     };
     finish = done;
-    sound.onended = done;
-    sound.onerror = done;
+    sound.onended = () => done("ended");
+    sound.onerror = () => done("failed");
     // A pause from outside the page (the lock screen, a call) ends the clip too. It is listened for
     // only once this clip plays, so the pause that stopped the clip before it can't end this one.
     sound.onplaying = () => {
-      sound.onpause = done;
+      sound.onpause = () => done(sound.ended ? "ended" : "cut");
     };
     if (onFrame) sound.onplay = () => (frame = requestAnimationFrame(tick));
-    sound.play().catch(done);
+    sound.play().catch(() => done("failed"));
   });
 }
 

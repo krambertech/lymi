@@ -33,35 +33,58 @@ export function timingUrl(lesson: string, id: string): string {
 }
 
 /**
- * The two voices a lesson records with: `main` is the product's Estonian voice, `second` the other
- * speaker in a dialogue.
+ * The voices a lesson records with: `main` is the product's Estonian voice, `second` the other
+ * speaker in a dialogue; the design doc's Sound section says who `third` and `fourth` are.
  */
-export type LessonVoice = "main" | "second";
+export type LessonVoice = "main" | "second" | "third" | "fourth";
+
+export interface ConversationTurn {
+  voice: LessonVoice;
+  text: string | readonly string[];
+  say?: string;
+}
+
+export interface Conversation {
+  turns: readonly ConversationTurn[];
+  clips?: readonly string[];
+}
+
+export interface Passage {
+  sentences: readonly string[];
+  voice?: LessonVoice;
+}
 
 /**
- * A clip: a word or sentence in the main voice; a line in a chosen voice; or a passage, several
- * sentences recorded as one take, with the time each sentence starts saved beside it.
+ * A clip: a word or sentence in the main voice; a line in a chosen voice; a passage, several
+ * sentences recorded as one take; or a conversation, its turns recorded together as a dialogue.
  */
-export type Clip =
-  | string
-  | { text: string; voice: LessonVoice }
-  | { sentences: readonly string[]; voice?: LessonVoice };
+export type Clip = string | { text: string; voice: LessonVoice } | Passage | Conversation;
+
+export function turnSentences(turn: ConversationTurn): readonly string[] {
+  return typeof turn.text === "string" ? [turn.text] : turn.text;
+}
 
 /** What a clip says, as it is sent to be recorded. */
 export function clipText(clip: Clip): string {
   if (typeof clip === "string") return clip;
-  return "text" in clip ? clip.text : clip.sentences.join(" ");
+  return "text" in clip ? clip.text : clipSentences(clip).join(" ");
 }
 
-export function clipVoice(clip: Clip): LessonVoice {
+export function clipVoice(clip: Exclude<Clip, Conversation>): LessonVoice {
   return typeof clip === "string" ? "main" : (clip.voice ?? "main");
 }
 
 /** A passage is one take whose sentences are timed. */
-export function isPassage(
-  clip: Clip,
-): clip is { sentences: readonly string[]; voice?: LessonVoice } {
+export function isPassage(clip: Clip): clip is Passage {
   return typeof clip !== "string" && "sentences" in clip;
+}
+
+export function isConversation(clip: Clip): clip is Conversation {
+  return typeof clip !== "string" && "turns" in clip;
+}
+
+export function clipSentences(clip: Passage | Conversation): readonly string[] {
+  return isConversation(clip) ? clip.turns.flatMap(turnSentences) : clip.sentences;
 }
 
 const words = (list: readonly string[]) =>
@@ -1108,7 +1131,19 @@ export const KIT_DIALOGUE = {
   "d-sina-4": "Head aega!",
 } as const satisfies Record<string, Clip>;
 
+export const KIT_CONVERSATION: Conversation = {
+  turns: [
+    { voice: "main", text: KIT_PASSAGES.jaan },
+    { voice: "second", text: KIT_PASSAGES.mari },
+    { voice: "main", text: "Ma loen raamatut." },
+    { voice: "second", text: KIT_DIALOGUE["d-mari-4"].text },
+    { voice: "main", text: KIT_DIALOGUE["d-sina-4"] },
+  ],
+  clips: ["kit/p-jaan", "kit/p-mari", "olevik/s-loen-raamatut", "kit/d-mari-4", "kit/d-sina-4"],
+};
+
 const KIT_CLIPS: Record<string, Clip> = {
+  "c-jaan-mari": KIT_CONVERSATION,
   "p-jaan": { sentences: KIT_PASSAGES.jaan },
   "p-mari": { sentences: KIT_PASSAGES.mari, voice: "second" },
   "p-peeter": { sentences: KIT_PASSAGES.peeter },

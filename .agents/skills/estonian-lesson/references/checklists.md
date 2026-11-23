@@ -39,6 +39,8 @@ What does the learner do here?
 │   └── find the wrong word and write it right → FixRound
 └── Use the rule in context, once it is taught
     ├── understand a passage by ear → Listening
+    │   ├── two or more speakers, or over 30 seconds → Listening with turns
+    │   └── a checkpoint or an exam paper → Listening with plays={2}
     ├── the same by eye, for a longer text → Reading
     ├── one rule, gap by gap → GapPassage mode="pick"
     ├── several rules in one text → GapPassage mode="drag"
@@ -56,6 +58,9 @@ At 375 px a `GapRound` sentence of 12 characters fits and 14 does not, and its a
 - **(checked) No option is another plus a letter or two.** Offered kool, kooli and koolis, a learner picks the middle one and is right without hearing it (#1248). This holds for `ChoiceRound`, `GapRound`, a lesson's own pick rounds and `GapPassage` in `pick` mode. Show the cue outside the options, such as kool above the choices and the endings as the options. Where telling two such forms apart is the point, as Ma ei õpi against Ma ei õpin, list the quiz in `ALLOWED_NEAR_PAIRS` in `checks/allowed-quizzes.ts` with the reason.
 - **(checked) The answer's place gives nothing away, round by round.** The check runs each quiz 200 times as the page opens, its first round pinned to the server's, and 200 times after Try again. In every round after the pinned one, the answer must land in every place and no place may take more than twice its share (three in four with two options). A fixed option order under `eachPairFirst` made each round's answer the place no earlier round used (#1249). Shuffle each round's options in the order function after the first round (`heardRun` in `Kaskiv.tsx`).
 - **(checked) A learner who doesn't listen scores at chance.** Over the simulated runs of each quiz with three options or more, a gap passage's gaps, a dialogue's replies and a listening or reading part's questions, "pick the longest", "pick the shortest", "pick the middle length", "pick the one with no one-letter neighbour", "pick the one sharing the most leading letters with a word heard", "pick the one sharing the most words with the others" and "pick the one sharing the most letters at its ends with the others" each score at most chance plus 25 points, in English, Ukrainian and Russian alike. A dialogue or question set needs three such rounds to count. When each wrong reply changes one thing about the right one, as Ma ostsid and Ma ostan beside Ma ostsin, the right one is the option most like the rest (#1257, #1259, #1261); add a wrong option that changes both, or wrong options that change different words. Answers that are always the longest give a passage's questions away in the same way (#1259). Loete among lugete and lugege is the only option without a one-letter neighbour, so it gives itself away (#1249). Hearing poes, pood is the only option that starts po-, so no one needs the stem rule (#1245). The leading-letters rule skips rounds whose clip says the answer as written, where matching what is heard is the task. Where a rule is the lesson, as the form without its ending after ei, list the quiz in `ALLOWED_STRATEGIES` in `checks/allowed-quizzes.ts` with the reason.
+- **(checked) A passage's questions can be answered from it.** In `Listening` and `Reading`, every answer is one of its options, every `line` is a sentence of the text, a part's true or false statements are not all the same, a match's statements don't all share an answer, a typed answer is one or two words, and its first accepted form is in the sentence it names, word for word. Each of two or more speakers has a name in `names`.
+- **(checked) A conversation's `say` is its `text` plus audio tags.** Nothing else differs, no turn shows a tag, and no turn is over 2,000 characters.
+- **Statements and matches follow the recording's order,** as exam papers do, and say the fact in other words than the recording. A match with spare options can't be finished by what is left over.
 - **(checked) A gap passage's answers move between places.** No place holds two-thirds or more of a `pick` passage's answers, unless an even split can't do better, as two of three gaps with two options.
 - **(checked) Nothing random or dated renders on the server.** Show a placeholder until the browser knows the value, or the page flashes Monday before today.
 - **Give the quiz `recall`** so its score lists the words to hear again.
@@ -110,6 +115,7 @@ Drive the lesson in Playwright at 1280 and 375 px, light and night (`colorScheme
 - Every key, chip, switch, line and play button.
 - The drill from Start to its result and Ten more, with a miss and its return; the warm-up and the review page with the clock moved a day.
 - Every quiz: the Listen-first nudge, right and wrong picks, Hear both, the score, and Try again.
+- A conversation: play, pause, a tap on a speaker's line, the sentence before and after, five seconds back, both speeds, and a turn's button in the text. In exam mode: a play cut short by another sound, the last play, and Try again.
 - What to remember, the words card opened, and the links to the previous and next lessons.
 - At 375 px, measure every element's right edge against the viewport. `scrollWidth` alone misses clipping inside an `overflow-hidden` card. No check does this yet: the site has no browser test of lessons.
 
@@ -133,5 +139,5 @@ Lessons land in parallel, so a second lesson conflicts in the same shared files.
 2. `catalogue.ts`: keep main's order and every other lesson's filled fields. Your entry keeps its fields wherever main moved it, and no planned line for the same lesson is left behind.
 3. `clips.ts` and `apps/site/public/audio/estonian-lessons/manifest.json`: keep both sides' entries.
 4. The `.po` files: your lesson's catalogs are its own, so a conflict is only in `locales/learn/Kit/`, for the course names. Take main's version, run `pnpm i18n:extract`, then fill your entry's uk and ru lines again.
-5. Run `lesson:audio`. It records nothing; a clip it records means a text changed, so find out which before going on.
+5. Run `lesson:audio --dry-run`. It records nothing; a clip it lists means a text changed, so find out which before going on.
 6. Run the site's typecheck and tests, commit the merge and push.

@@ -1,83 +1,128 @@
-// Records the Estonian lessons' clips with ElevenLabs: the product's Estonian voice, and a second
-// voice for the other speaker in a dialogue. Only clips whose text, model or voice changed are
-// recorded; clips no lesson uses are removed. A passage is recorded as one take, and the time each
-// of its sentences starts is saved beside it. Every new clip is brought to one loudness with ffmpeg,
-// so two voices in a dialogue play at the same level.
-// Requires ELEVENLABS_API_KEY and ffmpeg. Run with `pnpm --filter @lymi/site lesson:audio`.
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import {
   existsSync,
   mkdirSync,
+  mkdtempSync,
   readdirSync,
   readFileSync,
   renameSync,
+  rmSync,
   unlinkSync,
   writeFileSync,
 } from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { parseArgs } from "node:util";
 import { nativeSpeechVoice } from "../../web/src/server/ai/speech-voices.ts";
-import { CLIPS, clipText, clipVoice, isPassage } from "../src/lib/learn/clips.ts";
+import { CLIPS, clipText, isPassage, turnSentences } from "../src/lib/learn/clips.ts";
+import {
+  clipProblems,
+  conversationTiming,
+  dialogueBody,
+  dialoguePart,
+  isTimed,
+  joinFilter,
+  LIBRARY_VOICES,
+  planRecording,
+  sentenceStarts,
+  soundSpan,
+  spokenText,
+  tooManyCharacters,
+} from "../src/lib/learn/recording.ts";
+
+const { values: flags } = parseArgs({
+  args: process.argv.slice(2).filter((arg) => arg !== "--"),
+  options: {
+    "dry-run": { type: "boolean", default: false },
+    "max-characters": { type: "string", default: "20000" },
+  },
+});
+const mostCharacters = Number(flags["max-characters"]);
+if (!Number.isInteger(mostCharacters) || mostCharacters < 0)
+  throw new Error("--max-characters takes a whole number.");
 
 const site = join(dirname(fileURLToPath(import.meta.url)), "..");
 const root = join(site, "public/audio/estonian-lessons");
+const responses = join(site, ".lesson-audio/dialogue");
 const manifestPath = join(root, "manifest.json");
-const key = process.env.ELEVENLABS_API_KEY?.trim();
-if (!key) throw new Error("Set ELEVENLABS_API_KEY to record lesson audio.");
-
 const main = nativeSpeechVoice("et")?.voice;
 if (!main) throw new Error("The product has no Estonian voice.");
-const VOICES = {
-  main,
-  // “Liis - Entrepreneur” in ElevenLabs' library: a native Estonian speaker. With language_code
-  // "et" her Estonian transcribed back word for word. Mari in the dialogues.
-  second: "WtzwR2kNGVNuaTGaYLfK",
+const studio = {
+  model: process.env.ELEVENLABS_SPEECH_MODEL?.trim() || "eleven_v4",
+  voices: { main, ...LIBRARY_VOICES },
 };
-const model = process.env.ELEVENLABS_SPEECH_MODEL?.trim() || "eleven_v4";
 const LOUDNESS = "loudnorm=I=-18:TP=-1.5:LRA=11";
 const manifest = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, "utf8")) : {};
-const next = {};
-// Saved after every clip, so a run that fails partway doesn't pay for the same clips again.
+
+const problems = clipProblems(CLIPS);
+if (problems.length) throw new Error(`Fix clips.ts before recording:\n${problems.join("\n")}`);
+
+const plan = planRecording({
+  clips: CLIPS,
+  manifest,
+  hasFile: (path) => existsSync(join(root, path)),
+  studio,
+});
+
+const unused = Object.entries(CLIPS).flatMap(([lesson, clips]) => {
+  const folder = join(root, lesson);
+  if (!existsSync(folder)) return [];
+  return readdirSync(folder)
+    .filter((file) => {
+      const base = file.replace(/\.(mp3|json)$/, "");
+      if (file === base) return false;
+      const clip = clips[base];
+      return clip === undefined || (file.endsWith(".json") && !isTimed(clip));
+    })
+    .map((file) => join(lesson, file));
+});
+
+for (const { name, characters } of plan.sent) console.log(`record ${name}: ${characters}`);
+for (const job of plan.jobs) if (job.kind === "join") console.log(`join ${job.name}`);
+for (const file of unused) console.log(`remove ${file}`);
+console.log(
+  `${plan.jobs.filter((job) => job.kind !== "join").length} to record, ${plan.characters} characters; ${plan.unchanged} unchanged.`,
+);
+const refusal = tooManyCharacters(plan, mostCharacters);
+if (flags["dry-run"]) {
+  if (refusal) console.log(refusal);
+  process.exit(0);
+}
+if (refusal) throw new Error(refusal);
+
+const key = process.env.ELEVENLABS_API_KEY?.trim();
+if (plan.sent.length && !key) throw new Error("Set ELEVENLABS_API_KEY to record lesson audio.");
+if (plan.jobs.length)
+  for (const tool of ["ffmpeg", "ffprobe"]) {
+    try {
+      execFileSync(tool, ["-version"], { stdio: "ignore" });
+    } catch {
+      throw new Error(
+        `Install ffmpeg (with ${tool}) to record lesson audio: it evens out loudness.`,
+      );
+    }
+  }
+
 const saved = { ...manifest };
 const save = (data) => writeFileSync(manifestPath, `${JSON.stringify(data, null, 2)}\n`);
-let recorded = 0;
+const ffmpeg = (...args) =>
+  execFileSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", ...args]);
 
-// Checked before anything is recorded, so a missing tool never costs a paid recording.
-for (const tool of ["ffmpeg", "ffprobe"]) {
-  try {
-    execFileSync(tool, ["-version"], { stdio: "ignore" });
-  } catch {
-    throw new Error(`Install ffmpeg (with ${tool}) to record lesson audio: it evens out loudness.`);
-  }
-}
-
-/** A recording's length in seconds, read from the file itself. */
-function length(file) {
-  const seconds = execFileSync(
+function seconds(file) {
+  const read = execFileSync(
     "ffprobe",
     ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", file],
     { encoding: "utf8" },
   );
-  return Math.round(Number(seconds) * 100) / 100;
+  return Number(read);
 }
+
+const length = (file) => Math.round(seconds(file) * 100) / 100;
 
 function normalize(file) {
   const out = `${file}.tmp.mp3`;
-  execFileSync("ffmpeg", [
-    "-hide_banner",
-    "-loglevel",
-    "error",
-    "-y",
-    "-i",
-    file,
-    "-af",
-    LOUDNESS,
-    "-ar",
-    "44100",
-    "-b:a",
-    "64k",
-    out,
-  ]);
+  ffmpeg("-i", file, "-af", LOUDNESS, "-ar", "44100", "-b:a", "64k", out);
   renameSync(out, file);
 }
 
@@ -89,71 +134,135 @@ async function speak(name, voice, text, timed) {
       headers: { "xi-api-key": key, "content-type": "application/json" },
       body: JSON.stringify({
         text,
-        model_id: model,
+        model_id: studio.model,
         language_code: "et",
         voice_settings: { stability: 1 },
       }),
     },
   );
   if (!response.ok) throw new Error(`${name}: ElevenLabs answered ${response.status}`);
-  if (!timed) return { audio: Buffer.from(await response.arrayBuffer()) };
+  if (!timed) return { audio: Buffer.from(await response.arrayBuffer()), starts: [] };
   const body = await response.json();
-  return { audio: Buffer.from(body.audio_base64, "base64"), alignment: body.alignment };
+  return {
+    audio: Buffer.from(body.audio_base64, "base64"),
+    starts: body.alignment.character_start_times_seconds,
+  };
 }
 
-/** When each sentence starts, from the characters' start times, and how long the file lasts. */
-function timing(sentences, text, alignment, file) {
-  const starts = alignment.character_start_times_seconds;
-  let from = 0;
-  const marks = sentences.map((sentence) => {
-    const at = text.indexOf(sentence, from);
-    from = at + sentence.length;
-    return Math.round((starts[at] ?? 0) * 100) / 100;
+async function recordTake(job) {
+  const file = join(root, `${job.name}.mp3`);
+  const spoken = spokenText(clipText(job.clip));
+  const passage = isPassage(job.clip);
+  const { audio, starts } = await speak(job.name, job.identity.voice, spoken, passage);
+  writeFileSync(file, audio);
+  normalize(file);
+  if (passage) {
+    const marks = sentenceStarts(job.clip.sentences, spoken, starts);
+    writeFileSync(
+      join(root, `${job.name}.json`),
+      `${JSON.stringify({ marks, duration: length(file) })}\n`,
+    );
+  }
+}
+
+async function talk(name, turns) {
+  const response = await fetch(
+    "https://api.elevenlabs.io/v1/text-to-dialogue/with-timestamps?output_format=mp3_44100_128",
+    {
+      method: "POST",
+      headers: { "xi-api-key": key, "content-type": "application/json" },
+      body: JSON.stringify(dialogueBody(turns, studio)),
+    },
+  );
+  if (!response.ok) throw new Error(`${name}: ElevenLabs answered ${response.status}`);
+  const body = await response.json();
+  mkdirSync(responses, { recursive: true });
+  writeFileSync(join(responses, `${name.replaceAll(/[ /]/g, "-")}.json`), JSON.stringify(body));
+  return body;
+}
+
+async function recordDialogue(job, work) {
+  const parts = [];
+  for (const [i, turns] of job.requests.entries()) {
+    const body = await talk(`${job.name} ${i + 1} of ${job.requests.length}`, turns);
+    const file = join(work, `${i}.mp3`);
+    writeFileSync(file, Buffer.from(body.audio_base64, "base64"));
+    parts.push({ file, ...dialoguePart(turns, body) });
+  }
+  return parts;
+}
+
+const recordedParts = (job) =>
+  job.clips.map((name, i) => {
+    const turn = job.clip.turns[i];
+    const sentences = turnSentences(turn);
+    const timing = join(root, `${name}.json`);
+    return {
+      file: join(root, `${name}.mp3`),
+      starts: sentences.length > 1 ? JSON.parse(readFileSync(timing, "utf8")).marks : [0],
+      speakers: sentences.map(() => turn.voice),
+    };
   });
-  marks[0] = 0;
-  return { marks, duration: length(file) };
+
+function spanOf(file) {
+  const { stderr } = spawnSync(
+    "ffmpeg",
+    ["-hide_banner", "-i", file, "-af", "silencedetect=noise=-45dB:d=0.05", "-f", "null", "-"],
+    { encoding: "utf8" },
+  );
+  return soundSpan(stderr, seconds(file));
 }
 
-for (const [lesson, clips] of Object.entries(CLIPS)) {
-  mkdirSync(join(root, lesson), { recursive: true });
-  for (const [id, clip] of Object.entries(clips)) {
-    const name = `${lesson}/${id}`;
-    const text = clipText(clip);
-    const voice = VOICES[clipVoice(clip)];
-    const identity = { text, model, voice };
-    next[name] = identity;
-    const file = join(root, `${name}.mp3`);
-    const timingFile = join(root, `${name}.json`);
-    const passage = isPassage(clip);
-    if (
-      existsSync(file) &&
-      (!passage || existsSync(timingFile)) &&
-      JSON.stringify(manifest[name]) === JSON.stringify(identity)
-    )
-      continue;
-    // A full stop keeps a short word from being read as a fragment.
-    const spoken = /[.!?]$/.test(text) ? text : `${text}.`;
-    const { audio, alignment } = await speak(name, voice, spoken, passage);
-    writeFileSync(file, audio);
-    normalize(file);
-    if (passage)
-      writeFileSync(
-        timingFile,
-        `${JSON.stringify(timing(clip.sentences, spoken, alignment, file))}\n`,
-      );
-    saved[name] = identity;
-    save(saved);
-    recorded += 1;
-    console.log(`${name}: ${text}`);
-  }
-  for (const file of readdirSync(join(root, lesson))) {
-    const base = file.replace(/\.(mp3|json)$/, "");
-    if (file === base) continue;
-    const clip = clips[base];
-    if (!next[`${lesson}/${base}`] || (file.endsWith(".json") && !(clip && isPassage(clip))))
-      unlinkSync(join(root, lesson, file));
+function joinParts(name, parts, work) {
+  const joined = parts.map(({ file, starts, speakers }, i) => {
+    const span = spanOf(file);
+    const level = join(work, `${i}.wav`);
+    const trim = `atrim=${span.from}:${span.to},asetpts=PTS-STARTPTS`;
+    ffmpeg("-i", file, "-af", `${trim},${LOUDNESS}`, "-ar", "44100", "-ac", "1", level);
+    return { level, starts, speakers, span, length: seconds(level) };
+  });
+  const out = join(work, "joined.mp3");
+  ffmpeg(
+    ...joined.flatMap(({ level }) => ["-i", level]),
+    "-filter_complex",
+    joinFilter(joined.length),
+    "-map",
+    "[out]",
+    "-ar",
+    "44100",
+    "-b:a",
+    "64k",
+    out,
+  );
+  writeFileSync(join(root, `${name}.mp3`), readFileSync(out));
+  writeFileSync(join(root, `${name}.json`), `${JSON.stringify(conversationTiming(joined))}\n`);
+}
+
+async function makeConversation(job) {
+  const work = mkdtempSync(join(tmpdir(), "lesson-audio-"));
+  try {
+    const parts = job.kind === "join" ? recordedParts(job) : await recordDialogue(job, work);
+    joinParts(job.name, parts, work);
+  } finally {
+    rmSync(work, { recursive: true, force: true });
   }
 }
 
-save(next);
-console.log(`${recorded} recorded, ${Object.keys(next).length - recorded} unchanged.`);
+for (const lesson of Object.keys(CLIPS)) mkdirSync(join(root, lesson), { recursive: true });
+for (const job of plan.jobs) {
+  if (job.kind === "take") await recordTake(job);
+  else await makeConversation(job);
+  saved[job.name] = job.identity;
+  save(saved);
+  console.log(`${job.name}: ${clipText(job.clip)}`);
+}
+for (const file of unused) unlinkSync(join(root, file));
+const order = new Set([...Object.keys(manifest), ...Object.keys(plan.identities)]);
+save(
+  Object.fromEntries(
+    [...order]
+      .filter((name) => name in plan.identities)
+      .map((name) => [name, plan.identities[name]]),
+  ),
+);
+console.log(`${plan.jobs.length} made, ${plan.unchanged} unchanged.`);

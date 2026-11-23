@@ -34,6 +34,10 @@ msgstr "“To have”"
 msgid "“To like” and feelings"
 msgstr "“To like” and feelings"
 
+#. placeholder {0}: exam.left
+msgid "{0, plural, =0 {No plays left} one {# play left} other {# plays left}}"
+msgstr "{0, plural, =0 {No plays left} one {# play left} other {# plays left}}"
+
 #. placeholder {0}: slips.length
 msgid "{0, plural, one {# of them has a slip in spelling.} other {# of them have a slip in spelling.}}"
 msgstr "{0, plural, one {# of them has a slip in spelling.} other {# of them have a slip in spelling.}}"
@@ -73,6 +77,9 @@ msgstr "{next, plural, one {# more} other {# more}}"
 
 msgid "{off, plural, one {Not right: # word differs.} other {Not right: # words differ.}}"
 msgstr "{off, plural, one {Not right: # word differs.} other {Not right: # words differ.}}"
+
+msgid "{plays, plural, one {Read the questions first. You can play the recording once, without pausing or going back.} other {Read the questions first. You can play the recording # times, without pausing or going back.}}"
+msgstr "{plays, plural, one {Read the questions first. You can play the recording once, without pausing or going back.} other {Read the questions first. You can play the recording # times, without pausing or going back.}}"
 
 msgid "{position} of {count}"
 msgstr "{position} of {count}"
@@ -150,6 +157,9 @@ msgstr "<0>Kooli</0> is to school; <1>koolis</1> is at school."
 
 msgid "<0>Linna</0> is to town, with a double n; <1>lina</1> is linen."
 msgstr "<0>Linna</0> is to town, with a double n; <1>lina</1> is linen."
+
+msgid "5 s"
+msgstr "5 s"
 
 msgid "A cat and a cardboard box"
 msgstr "A cat and a cardboard box"
@@ -243,6 +253,9 @@ msgstr "A free lesson on the three forms of an Estonian verb, lugema, lugeda and
 
 msgid "A free lesson on which Estonian verbs take the -da form after them and which take the -ma form: tahan lugeda but pean lugema, with võin, saan, oskan, tohin, proovin, armastan and mulle meeldib on one side and hakkan, lähen, tule and jään on the other. Every sentence is read aloud."
 msgstr "A free lesson on which Estonian verbs take the -da form after them and which take the -ma form: tahan lugeda but pean lugema, with võin, saan, oskan, tohin, proovin, armastan and mulle meeldib on one side and hakkan, lähen, tule and jään on the other. Every sentence is read aloud."
+
+msgid "A longer conversation"
+msgstr "A longer conversation"
 
 msgid "a lot, much"
 msgstr "a lot, much"
@@ -342,6 +355,9 @@ msgstr "at the market"
 
 msgid "at work"
 msgstr "at work"
+
+msgid "Back 5 seconds"
+msgstr "Back 5 seconds"
 
 msgid "behind"
 msgstr "behind"
@@ -492,6 +508,10 @@ msgstr "Every word has a group. Check when you’re ready."
 
 msgid "Every word is in its group."
 msgstr "Every word is in its group."
+
+msgctxt "the statement is false"
+msgid "False"
+msgstr "False"
 
 msgid "Fill every gap first."
 msgstr "Fill every gap first."
@@ -646,6 +666,12 @@ msgstr "I have already eaten."
 msgid "I read"
 msgstr "I read"
 
+msgid "I read a lot."
+msgstr "I read a lot."
+
+msgid "I’m a doctor."
+msgstr "I’m a doctor."
+
 msgid "I’m a teacher."
 msgstr "I’m a teacher."
 
@@ -657,6 +683,9 @@ msgstr "I’m going to eat."
 
 msgid "I’m going to school."
 msgstr "I’m going to school."
+
+msgid "I’m reading a book."
+msgstr "I’m reading a book."
 
 msgid "Illative"
 msgstr "Illative"
@@ -755,6 +784,27 @@ msgstr "It was <0>{expected}</0>."
 msgid "It’s spelled like this"
 msgstr "It’s spelled like this"
 
+msgid "Jaan"
+msgstr "Jaan"
+
+msgid "Jaan and Mari speak Estonian to each other."
+msgstr "Jaan and Mari speak Estonian to each other."
+
+msgid "Jaan is a teacher."
+msgstr "Jaan is a teacher."
+
+msgid "Jaan lives in Tartu."
+msgstr "Jaan lives in Tartu."
+
+msgid "Jaan’s doctor"
+msgstr "Jaan’s doctor"
+
+msgid "Jaan’s friend"
+msgstr "Jaan’s friend"
+
+msgid "Jaan’s sister"
+msgstr "Jaan’s sister"
+
 msgid "Kodu is home; kodus, at home."
 msgstr "Kodu is home; kodus, at home."
 
@@ -794,11 +844,20 @@ msgstr "Listen as many times as you like, then answer."
 msgid "Listen first."
 msgstr "Listen first."
 
+msgid "Listen: Jaan and Mari"
+msgstr "Listen: Jaan and Mari"
+
 msgid "Listen: meet Jaan"
 msgstr "Listen: meet Jaan"
 
 msgid "Listening"
 msgstr "Listening"
+
+msgid "Listening with a conversation: who speaks when, sentence by sentence, five seconds back and a slower speed. Its questions are pick of three, true or false, one or two words, and matching."
+msgstr "Listening with a conversation: who speaks when, sentence by sentence, five seconds back and a slower speed. Its questions are pick of three, true or false, one or two words, and matching."
+
+msgid "Listening, exam mode"
+msgstr "Listening, exam mode"
 
 msgid "Listening: a short passage as one recording, every question at once with lettered answers, one Check, then the text."
 msgstr "Listening: a short passage as one recording, every question at once with lettered answers, one Check, then the text."
@@ -823,6 +882,9 @@ msgstr "Make the form"
 
 msgid "Mari"
 msgstr "Mari"
+
+msgid "Mari is a doctor."
+msgstr "Mari is a doctor."
 
 msgid "Mari writes"
 msgstr "Mari writes"
@@ -866,6 +928,9 @@ msgstr "More than one"
 msgid "music"
 msgstr "music"
 
+msgid "My brother listens to music."
+msgstr "My brother listens to music."
+
 msgid "Nearly right, a double letter"
 msgstr "Nearly right, a double letter"
 
@@ -892,6 +957,9 @@ msgstr "Negation"
 
 msgid "Next"
 msgstr "Next"
+
+msgid "Next sentence"
+msgstr "Next sentence"
 
 msgid "next to"
 msgstr "next to"
@@ -973,6 +1041,9 @@ msgstr "On, onto, off"
 
 msgid "One"
 msgstr "One"
+
+msgid "One or two words"
+msgstr "One or two words"
 
 msgid "One word is wrong. Tap it, then write it right."
 msgstr "One word is wrong. Tap it, then write it right."
@@ -1076,11 +1147,23 @@ msgstr "Play <0>{form}</0>"
 msgid "Play <0>{sentence}</0>"
 msgstr "Play <0>{sentence}</0>"
 
+msgid "Play again"
+msgstr "Play again"
+
+msgid "Play from {name}’s turn"
+msgstr "Play from {name}’s turn"
+
+msgid "Play from here"
+msgstr "Play from here"
+
 msgid "Play what {name} said"
 msgstr "Play what {name} said"
 
 msgid "Play your line: {line}"
 msgstr "Play your line: {line}"
+
+msgid "Playing"
+msgstr "Playing"
 
 msgid "Pluperfect"
 msgstr "Pluperfect"
@@ -1242,8 +1325,17 @@ msgstr "Sections"
 msgid "See how you did"
 msgstr "See how you did"
 
+msgid "Sentence {number} of {count}, {speaker}, {time}"
+msgstr "Sentence {number} of {count}, {speaker}, {time}"
+
+msgid "Sentence {number} of {count}, {time}"
+msgstr "Sentence {number} of {count}, {time}"
+
 msgid "Sentence {sentenceNumber} of {sentenceCount}, {time}"
 msgstr "Sentence {sentenceNumber} of {sentenceCount}, {time}"
+
+msgid "Sentence before"
+msgstr "Sentence before"
 
 msgid "She’s a doctor"
 msgstr "She’s a doctor"
@@ -1280,6 +1372,9 @@ msgstr "Soon"
 
 msgid "Sort"
 msgstr "Sort"
+
+msgid "Speed"
+msgstr "Speed"
 
 msgid "Start"
 msgstr "Start"
@@ -1416,6 +1511,9 @@ msgstr "The cat is on the box."
 msgid "The cat is under the box."
 msgstr "The cat is under the box."
 
+msgid "The conversation"
+msgstr "The conversation"
+
 msgid "The Estonian genitive case: my, your and whose"
 msgstr "The Estonian genitive case: my, your and whose"
 
@@ -1478,6 +1576,9 @@ msgstr "The right sentence"
 
 msgid "The same conversation with Mari’s lines heard, not shown; each can be read on request."
 msgstr "The same conversation with Mari’s lines heard, not shown; each can be read on request."
+
+msgid "The same recording as an exam plays it: twice, with no pausing or going back, and the questions to read first. No text after Check."
+msgstr "The same recording as an exam plays it: twice, with no pausing or going back, and the questions to read first. No text after Check."
 
 msgid "The same table for a verb: persons down, tenses across."
 msgstr "The same table for a verb: persons down, tenses across."
@@ -1542,6 +1643,10 @@ msgstr "Tomorrow I’ll eat at home."
 msgid "Tööl, at work, takes -l like a market does."
 msgstr "Tööl, at work, takes -l like a market does."
 
+msgctxt "the statement is true"
+msgid "True"
+msgstr "True"
+
 msgid "Try again"
 msgstr "Try again"
 
@@ -1602,6 +1707,12 @@ msgstr "What does Mari do?"
 msgid "What does Peeter do instead of reading?"
 msgstr "What does Peeter do instead of reading?"
 
+msgid "What does Peeter listen to?"
+msgstr "What does Peeter listen to?"
+
+msgid "What is the name of Mari’s brother?"
+msgstr "What is the name of Mari’s brother?"
+
 msgid "What should <0>{wrongWord}</0> be?"
 msgstr "What should <0>{wrongWord}</0> be?"
 
@@ -1638,8 +1749,20 @@ msgstr "Which case a verb takes"
 msgid "Which language do they speak?"
 msgstr "Which language do they speak?"
 
+msgid "Which town does Mari live in? Write it as she says it."
+msgstr "Which town does Mari live in? Write it as she says it."
+
+msgid "Who is Mari?"
+msgstr "Who is Mari?"
+
 msgid "Who is Peeter?"
 msgstr "Who is Peeter?"
+
+msgid "Who lives where?"
+msgstr "Who lives where?"
+
+msgid "Who says it?"
+msgstr "Who says it?"
 
 msgid "With, without, until and as in Estonian"
 msgstr "With, without, until and as in Estonian"

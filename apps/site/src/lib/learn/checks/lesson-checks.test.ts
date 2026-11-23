@@ -12,8 +12,9 @@ import { createElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { LearnPage, prepareLearnPage } from "../../../components/learn/learn-page";
-import { CLIPS, clipText, isPassage } from "../clips";
+import { CLIPS, clipSentences, clipText, isConversation, isPassage } from "../clips";
 import { gapLine } from "../passage";
+import type { PassageQuestion } from "../questions";
 import { shuffledRun } from "../quiz";
 import { SENTENCE_KINDS } from "../sentences";
 import VERIFIED from "../verified-forms.json";
@@ -42,6 +43,7 @@ import {
   type Slug,
   where,
 } from "./lessons";
+import { nameProblems, questionProblems } from "./questions";
 import { recording, resetRecording } from "./record";
 import { repeatedIds, sentenceProblems, writtenItems } from "./sentences";
 
@@ -344,7 +346,8 @@ interface DialogueProps {
 
 interface QuestionsProps {
   id: string;
-  questions: readonly { options: readonly { id: string; label: unknown }[]; answer: string }[];
+  clip?: string;
+  questions: readonly PassageQuestion[];
 }
 
 const unitsBySlug = new Map<string, PickUnit[]>();
@@ -389,6 +392,7 @@ function pickUnits(slug: Slug, locale: CheckLocale): PickUnit[] {
     if (part === "Listening" || part === "Reading") {
       const { id, questions } = props as unknown as QuestionsProps;
       const asked = questions
+        .filter((question) => question.kind === undefined || question.kind === "pick")
         .map((question) => pickRound(question as unknown as Record<string, unknown>, locale))
         .filter((round) => round !== undefined);
       units.push({ kind: "questions", id, first: [asked], later: [] });
@@ -506,6 +510,25 @@ function reachableClips(slug: Slug): Map<string, Reach> {
   return reach;
 }
 
+function askedProblems(part: string, props: Record<string, unknown>, at: string): string[] {
+  if (part !== "Listening" && part !== "Reading") return [];
+  const { questions } = props as unknown as QuestionsProps;
+  const shown = ("turns" in props ? { turns: props.turns } : props) as unknown as Parameters<
+    typeof clipSentences
+  >[0];
+  return [
+    ...questionProblems(questions, clipSentences(shown)),
+    ...(isConversation(shown)
+      ? [...nameProblems(shown, props.names as Parameters<typeof nameProblems>[1])]
+      : []),
+  ].map((problem) => `${at}: ${part} "${String(props.id)}": ${problem}.`);
+}
+
+const spokenLines = (clip: Parameters<typeof clipSentences>[0]) =>
+  isConversation(clip)
+    ? clip.turns.map((turn) => `${turn.voice}: ${[turn.text].flat().join(" ")}`).join("\n")
+    : clip.sentences.join(" ");
+
 const percent = (share: number) => `${Math.round(share * 100)}%`;
 
 /** The rules that find the answer as the option most like the rest. */
@@ -546,6 +569,21 @@ describe("the kit page", () => {
         ...repeatedIds(items),
       ],
       SENTENCE_RULE,
+    );
+  });
+
+  it("asks questions its recordings and texts can answer", async () => {
+    await prepareLearnPage({ kind: "kit" }, "en");
+    resetRecording();
+    renderToStaticMarkup(createElement(LearnPage, { target: { kind: "kit" }, locale: "en" }));
+    const parts = [...recording.parts];
+    resetRecording();
+    expect(parts.filter(({ part }) => part === "Listening").length).toBeGreaterThan(1);
+    expectNone(
+      parts.flatMap(({ part, props }) =>
+        askedProblems(part, props, "apps/site/src/components/learn/KitListening.tsx"),
+      ),
+      "Questions match what was said (checklists.md#quizzes)",
     );
   });
 });
@@ -872,11 +910,13 @@ describe.each(SLUGS)("lesson %s", (slug) => {
       }
       if ((part === "Listening" || part === "Reading") && props.clip) {
         const recordedClip = clip(props.clip);
-        const sentences = props.sentences as string[];
+        const shownClip = (
+          "turns" in props ? { turns: props.turns } : { sentences: props.sentences }
+        ) as Parameters<typeof clipSentences>[0];
         if (
           !recordedClip ||
-          !isPassage(recordedClip) ||
-          recordedClip.sentences.join(" ") !== sentences.join(" ")
+          !(isPassage(recordedClip) || isConversation(recordedClip)) ||
+          spokenLines(recordedClip) !== spokenLines(shownClip)
         )
           problems.push(
             `${at}: ${part} "${String(props.id)}" shows sentences its clip ${String(props.clip)} doesn't say. Fix: pass the clip's own sentences (TUTVUMINE_PASSAGES.kati) rather than a copy.`,
@@ -898,8 +938,8 @@ describe.each(SLUGS)("lesson %s", (slug) => {
         }
     }
     for (const [id, each] of Object.entries(CLIPS[slug] ?? {}))
-      if (isPassage(each))
-        for (const sentence of each.sentences)
+      if (isPassage(each) || isConversation(each))
+        for (const sentence of clipSentences(each))
           if (!/[.!?…»”"]$/.test(sentence.trim()))
             problems.push(
               `apps/site/src/lib/learn/clips.ts: passage ${slug}/${id} has a sentence without a full stop: “${sentence}”. Fix: end it with . ! or ?, and give a last gap after: ".".`,
@@ -920,6 +960,15 @@ describe.each(SLUGS)("lesson %s", (slug) => {
         ...repeatedIds(items).map((problem) => `${where(slug)}: ${problem}`),
       ],
       SENTENCE_RULE,
+    );
+  });
+
+  it("asks questions its recordings and texts can answer", () => {
+    expectNone(
+      rendered(slug, "en").recording.parts.flatMap(({ part, props }) =>
+        askedProblems(part, props, where(slug, `id="${String(props.id)}"`, `<${part}`)),
+      ),
+      "Questions match what was said (checklists.md#quizzes)",
     );
   });
 

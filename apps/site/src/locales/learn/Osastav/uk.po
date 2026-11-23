@@ -34,14 +34,14 @@ msgstr "<0>{text}</0>, {0}"
 msgid "<0>{text}</0>, {0}; its partitive is <1>maja</1> too, so it looks the same."
 msgstr "<0>{text}</0>, {0}; партитив теж <1>maja</1>, тому слово не змінюється."
 
-msgid "<et>Sul on auto</et>: with <et>on</et>, the nominative."
-msgstr "<et>Sul on auto</et>: з <et>on</et> — називний."
+msgid "<et>Sul on auto</et>: one car, counted, with <et>on</et>, so the nominative."
+msgstr "<et>Sul on auto</et>: одна машина, її рахують, з <et>on</et> — називний."
 
 msgid "<et>Sul pole autot</et>: with <et>pole</et>, the partitive."
 msgstr "<et>Sul pole autot</et>: з <et>pole</et> — партитив."
 
-msgid "<et>Tal on laps</et>: with <et>on</et>, the nominative."
-msgstr "<et>Tal on laps</et>: з <et>on</et> — називний."
+msgid "<et>Tal on laps</et>: one child, counted, with <et>on</et>, so the nominative."
+msgstr "<et>Tal on laps</et>: одна дитина, її рахують, з <et>on</et> — називний."
 
 msgid "<et>Tal pole last</et>: with <et>pole</et>, the partitive."
 msgstr "<et>Tal pole last</et>: з <et>pole</et> — партитив."
@@ -64,14 +64,20 @@ msgstr "7 €"
 msgid "€8"
 msgstr "8 €"
 
-msgid "16 minutes"
-msgstr "16 хвилин"
+msgid "22 minutes"
+msgstr "22 хвилини"
 
-msgid "6 exercises"
-msgstr "6 вправ"
+msgid "9 exercises"
+msgstr "9 вправ"
+
+msgid "A counted thing that is there keeps its nominative: <0>Turul on kohvik</0>."
+msgstr "Те, що є і що рахують поштучно, лишається в називному: <0>Turul on kohvik</0>."
 
 msgid "a cup of coffee"
 msgstr "чашка кави"
+
+msgid "A cup of coffee, please."
+msgstr "Чашку кави, будь ласка."
 
 msgid "a glass of water"
 msgstr "склянка води"
@@ -97,6 +103,12 @@ msgstr "Голосове повідомлення з ринку"
 msgid "Aeg, aja, aega."
 msgstr "Aeg, aja, aega."
 
+msgid "After <0>mitu</0>, the partitive: <1>mitu last</1>."
+msgstr "Після <0>mitu</0> — партитив: <1>mitu last</1>."
+
+msgid "After <0>pole</0>, what isn’t there takes the partitive: <1>leiba</1>."
+msgstr "Після <0>pole</0> те, чого немає, стоїть у партитиві: <1>leiba</1>."
+
 msgid "After <0>pole</0>, what isn’t there takes the partitive."
 msgstr "Після <0>pole</0> те, чого немає, стоїть у партитиві."
 
@@ -119,7 +131,7 @@ msgid "After <et>pole</et> or <et>ei ole</et>, what isn’t there takes the part
 msgstr "Після <et>pole</et> чи <et>ei ole</et> те, чого немає, стоїть у партитиві."
 
 msgid "After <et>üks</et> on its own, the nominative."
-msgstr "Лише <et>üks</et> — отже, називний."
+msgstr "Після самого <et>üks</et> — називний."
 
 msgid "After a number from two up"
 msgstr "Після числа від двох"
@@ -130,6 +142,9 @@ msgstr "Після числа від двох іменник стоїть у п�
 msgid "After a number from two up, or <et>mitu</et>, the partitive."
 msgstr "Після числа від двох або <et>mitu</et> — партитив."
 
+msgid "After a number from two up, the partitive: <0>kaks kassi</0>."
+msgstr "Після числа від двох — партитив: <0>kaks kassi</0>."
+
 msgid "After a number from two up, the partitive: <0>seitse eurot</0>."
 msgstr "Після числа від двох — партитив: <0>seitse eurot</0>."
 
@@ -138,6 +153,9 @@ msgstr "Після слів кількості"
 
 msgid "After an amount, the partitive: <0>kilo juustu</0>."
 msgstr "Після слова кількості — партитив: <0>kilo juustu</0>."
+
+msgid "After an amount, the partitive: <0>tass kohvi</0>."
+msgstr "Після слова кількості — партитив: <0>tass kohvi</0>."
 
 msgid "After an amount, the partitive."
 msgstr "Після слова кількості — партитив."
@@ -150,6 +168,12 @@ msgstr "Усі чотири: ти розрізняєш пропуск після
 
 msgid "All seven, typed in full."
 msgstr "Усі сім набрані повністю."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All six written right."
+msgstr "Усі шість написано правильно."
 
 msgid "All six, typed in full."
 msgstr "Усі шість набрані повністю."
@@ -177,6 +201,12 @@ msgstr "книжка"
 
 msgid "bread"
 msgstr "хліб"
+
+msgid "Bread"
+msgstr "Хліб"
+
+msgid "Bread costs three euros."
+msgstr "Хліб коштує три євро."
 
 msgid "café"
 msgstr "кав’ярня"
@@ -214,8 +244,14 @@ msgstr "У кожному раунді — число. Обери форму і�
 msgid "Each round shows a sentence with a gap. Pick the form that fills it. Is the gap after <0>pole</0>, or at the start of the sentence?"
 msgstr "У кожному раунді — речення з пропуском. Обери форму, яка туди підходить. Пропуск стоїть після <0>pole</0> чи на початку речення?"
 
+msgid "Each sentence has one noun in the wrong form. Tap it, then write the right form."
+msgstr "У кожному реченні один іменник у неправильній формі. Торкнися його, а потім напиши правильну форму."
+
 msgid "euro"
 msgstr "євро"
+
+msgid "Find and fix the mistake"
+msgstr "Знайди й виправ помилку"
 
 msgid "Five"
 msgstr "П’ять"
@@ -244,6 +280,9 @@ msgstr "п’ять будинків"
 msgid "five tables"
 msgstr "п’ять столів"
 
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
 msgid "Food and drink"
 msgstr "Їжа й напої"
 
@@ -255,6 +294,9 @@ msgstr "Від tahtma, хотіти."
 
 msgid "glass"
 msgstr "склянка"
+
+msgid "Go through the sections above once more, then try again."
+msgstr "Ще раз переглянь розділи вище, а потім спробуй знову."
 
 msgid "He or she doesn’t have a child."
 msgstr "У нього чи в неї немає дитини."
@@ -280,6 +322,12 @@ msgstr "Скільки у вас котів?"
 msgid "How many children do you have?"
 msgstr "Скільки в тебе дітей?"
 
+msgid "How much cheese is there? Write it in Estonian."
+msgstr "Скільки вдома сиру? Напиши естонською."
+
+msgid "How much coffee does Jaan need? Write it in Estonian."
+msgstr "Скільки кави потрібно Яану? Напиши естонською."
+
 msgid "How much does it cost?"
 msgstr "Скільки це коштує?"
 
@@ -297,6 +345,9 @@ msgstr "Я п’ю каву."
 
 msgid "I have a cat."
 msgstr "У мене є кіт."
+
+msgid "I have two cats."
+msgstr "У мене два коти."
 
 msgid "I have two children."
 msgstr "У мене двоє дітей."
@@ -331,6 +382,9 @@ msgstr "немає"
 msgid "It works the same for a place: <0/> Tap the sentences in each column."
 msgstr "Так само і з місцем: <0/> Українською схоже: «немає хліба», а не «немає хліб». Торкайся речень у кожному стовпці."
 
+msgid "Jaan has ten euros."
+msgstr "У Яана десять євро."
+
 msgid "Jaan leaves you a voice message from the market. Listen for the prices and for what there isn’t."
 msgstr "Яан надіслав тобі голосове з ринку. Слухай ціни й те, чого немає."
 
@@ -352,8 +406,14 @@ msgstr "Laps, lapse, last."
 msgid "Leib, leiva, leiba."
 msgstr "Leib, leiva, leiba."
 
+msgid "Listen: a shopping list"
+msgstr "Слухання: список покупок"
+
 msgid "Listen: Jaan at the market"
 msgstr "Слухання: Яан на ринку"
+
+msgid "Listen: Mari and Jaan at home"
+msgstr "Слухання: Марі та Яан удома"
 
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"
@@ -363,6 +423,9 @@ msgstr "мало"
 
 msgid "Maja, maja, maja: all three forms look alike."
 msgstr "Maja, maja, maja: усі три форми однакові."
+
+msgid "Mari and Jaan check what they have at home. With <0>on</0>, food or drink you have some of, uncounted, takes the partitive too: <1>meil on vett</1>. Read the questions, then listen."
+msgstr "Марі та Яан перевіряють, що в них є вдома. І з <0>on</0> їжу чи напій, яких не рахують, ставлять у партитив: <1>meil on vett</1>. Прочитай запитання, а потім послухай."
 
 msgid "Mari goes to the market on Saturday. Pick the nominative or partitive for each gap. The partitive follows a number from two up, an amount or <0>pole</0>, and marks food or drink someone eats, drinks or wants."
 msgstr "У суботу Марі йде на ринок. Обери для кожного пропуску називний або партитив. Партитив стоїть після числа від двох, після слова кількості й після <0>pole</0>, а також для того, що їдять, п’ють чи хочуть."
@@ -378,6 +441,12 @@ msgstr "Молоко"
 
 msgid "money"
 msgstr "гроші"
+
+msgid "Most of them. Look again at the ones you missed."
+msgstr "Майже всі. Ще раз поглянь на ті, де була помилка."
+
+msgid "Most of them. Read the ones you missed once more."
+msgstr "Майже всі. Ще раз прочитай ті, де була помилка."
 
 msgid "Nearly. Compare the last row of the table once more."
 msgstr "Майже. Ще раз порівняй останній рядок таблиці."
@@ -456,6 +525,9 @@ msgstr "Шість іменників після одного, двох і п’
 
 msgid "Some partitives change more than an ending: <0/> becomes <1/>, and <2/> becomes <3/>. So learn each noun with its partitive, as the dictionary lists it."
 msgstr "У деяких слів партитив змінює більше, ніж закінчення: <0/> стає <1/>, а <2/> — <3/>. Тож вивчай кожен іменник разом із партитивом, як подає словник."
+
+msgid "Someone drinks some of it, so the partitive: <0>kohvi</0>."
+msgstr "Каву п’ють, не рахуючи, тому партитив: <0>kohvi</0>."
 
 msgid "Someone eats, drinks or wants some of it, uncounted, so the partitive."
 msgstr "Це їдять, п’ють чи хочуть, не рахуючи, тому партитив."
@@ -553,11 +625,14 @@ msgstr "Коротка форма від ei ole."
 msgid "The table isn’t in the room."
 msgstr "Стола немає в кімнаті."
 
+msgid "There’s a loaf of bread on the table."
+msgstr "На столі є хлібина."
+
 msgid "There’s a table in the room."
 msgstr "У кімнаті є стіл."
 
-msgid "There’s bread on the table."
-msgstr "На столі є хліб."
+msgid "There’s milk at home."
+msgstr "Удома є молоко."
 
 msgid "There’s no bread on the table."
 msgstr "На столі немає хліба."
@@ -582,6 +657,15 @@ msgstr "троє дітей"
 
 msgid "time"
 msgstr "час"
+
+msgid "To the market"
+msgstr "На ринок"
+
+msgid "To the shop"
+msgstr "У магазин"
+
+msgid "To work"
+msgstr "На роботу"
 
 msgid "Two"
 msgstr "Два"
@@ -634,8 +718,8 @@ msgstr "У нас один кіт."
 msgid "What does Jaan ask you?"
 msgstr "Про що тебе питає Яан?"
 
-msgid "What is there keeps its nominative: <0>Turul on kohvik</0>."
-msgstr "Те, що є, лишається в називному: <0>Turul on kohvik</0>."
+msgid "What is there at home?"
+msgstr "Що є вдома?"
 
 msgid "What isn’t there today?"
 msgstr "Чого сьогодні немає?"
@@ -646,6 +730,9 @@ msgstr "Те, що їдять, п’ють чи хочуть, не рахуюч�
 msgid "When Estonian uses a noun’s partitive: after a number from two up, after an amount, after <0>pole</0>, and for some of the food and drink someone eats, drinks or wants."
 msgstr "Коли в естонській іменник стоїть у партитиві: після числа від двох, після слова кількості, після <0>pole</0> і для їжі й напоїв, які їдять, п’ють чи хочуть, не рахуючи."
 
+msgid "Where is Mari going?"
+msgstr "Куди йде Марі?"
+
 msgid "Where you are"
 msgstr "Де ти"
 
@@ -654,6 +741,12 @@ msgstr "Яка форма заповнює пропуск?"
 
 msgid "Which form follows the number?"
 msgstr "Яка форма йде після числа?"
+
+msgid "Write each sentence in Estonian. After a number from two up, an amount, <0>mitu</0> or <1>pole</1>, and for food or drink someone eats, drinks or wants, the partitive."
+msgstr "Напиши кожне речення естонською. Після числа від двох, слова кількості, <0>mitu</0> чи <1>pole</1>, а також для їжі й напоїв, які їдять, п’ють чи хочуть, не рахуючи, — партитив."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
 
 msgid "You can also say <0/> It means the same: <1>pole</1> is the short form of <2>ei ole</2>. A sentence that starts with the thing keeps its nominative: <3/>"
 msgstr "Можна сказати й <0/> Це те саме: <1>pole</1> — коротка форма від <2>ei ole</2>. Якщо речення починається з самої речі, вона лишається в називному, хоч українською й кажемо «кота немає на столі»: <3/>"

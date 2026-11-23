@@ -16,11 +16,17 @@ msgstr "<0/> — це вдома. А тепер дай шість відпові
 msgid "<0/> is the town; <1/> is in Tallinn. Estonian says in with an ending, not a word in front: it puts <2>-s</2> on the end of the name. I live in Tallinn is <3/>"
 msgstr "<0/> — це місто, а <1/> — у Таллінні. В естонській «в» — не окреме слово, а закінчення: до кінця назви додають <2>-s</2>. «Я живу в Таллінні» — це <3/>"
 
-msgid "2 quizzes"
-msgstr "2 тести"
+msgid "<et>-l</et>, on or at"
+msgstr "<et>-l</et>, «на» або «біля»"
 
-msgid "8 minutes"
-msgstr "8 хвилин"
+msgid "<et>-s</et>, in"
+msgstr "<et>-s</et>, «у»"
+
+msgid "15 minutes"
+msgstr "15 хвилин"
+
+msgid "6 quizzes and a voice message"
+msgstr "6 тестів і голосове повідомлення"
 
 msgid "A market takes <0>-l</0> by habit: <1/>, at the market. So do names ending in <2>-maa</2>: <3/>, on Saaremaa, and <4/>, in Germany, though English says in there. A few towns and districts take <5>-l</5> as well, such as <6/> and <7/>."
 msgstr "Ринок має <0>-l</0> за традицією: <1/>, на ринку. Так само й назви на <2>-maa</2>: <3/>, на Сааремаа, і навіть <4/>, у Німеччині, хоч українською тут кажемо «в». Ще <5>-l</5> мають деякі міста й райони, як-от <6/> і <7/>."
@@ -31,14 +37,38 @@ msgstr "Усі. У кожному реченні місце вибране пр�
 msgid "All of them. You picked the right ending every time."
 msgstr "Усі. Щоразу закінчення вибране правильно."
 
+msgid "All six questions, each with <0>kus</0> and the right verb."
+msgstr "Усі шість запитань, кожне з <0>kus</0> і правильним дієсловом."
+
+msgid "All six, each place with its ending."
+msgstr "Усі шість, кожне місце зі своїм закінченням."
+
+msgid "All six, each with the right ending."
+msgstr "Усі шість, кожне з правильним закінченням."
+
+msgid "All six, every word in place."
+msgstr "Усі шість, кожне слово на місці."
+
 msgid "Answering where with a place"
 msgstr "Як відповісти, де"
+
+msgid "Ask where"
+msgstr "Запитай «де»"
 
 msgid "Ask with <0>kus</0>, and answer with a sentence or the place alone: <1>Kus sa elad? Tartus.</1>"
 msgstr "Питай словом <0>kus</0>, а відповідай реченням або одним словом: <1>Kus sa elad? Tartus.</1>"
 
+msgid "Ask with <et>kus</et> and leave out the place."
+msgstr "Питай із <et>kus</et> і не називай місця."
+
+msgid "Asking where with <et>kus</et>"
+msgstr "Запитання «де» з <et>kus</et>"
+
 msgid "at home"
 msgstr "вдома"
+
+msgid "At home"
+msgstr "Удома"
 
 msgid "at school, in a school"
 msgstr "у школі"
@@ -46,17 +76,29 @@ msgstr "у школі"
 msgid "at the market"
 msgstr "на ринку"
 
+msgid "At the market"
+msgstr "На ринку"
+
 msgid "at the office"
 msgstr "в офісі"
 
 msgid "at work"
 msgstr "на роботі"
 
+msgid "At work"
+msgstr "На роботі"
+
 msgid "café"
 msgstr "кав’ярня"
 
 msgid "Each name took -s, and the -s says in. Tallinn took an extra a before it."
 msgstr "До кожної назви додалося -s, і це -s означає «в». До Tallinn перед ним додалося ще й a."
+
+msgid "Each round gives a place and asks <0/>, where. Type the place with <1>-s</1> or <2>-l</2>. Each of these takes its ending with no other change."
+msgstr "У кожному раунді є місце й запитання <0/>, «де». Напиши місце із <1>-s</1> або <2>-l</2>. Усі ці слова просто додають закінчення, більше нічого не змінюється."
+
+msgid "Each round gives an answer. Write the question it answers, starting with <0/>. Leave out the place: that is what you ask about."
+msgstr "У кожному раунді є відповідь. Напиши запитання до неї, почавши з <0/>. Місця не називай: саме про нього ти й питаєш."
 
 msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 msgstr "У кожному раунді — місце. Обери закінчення, а потім послухай речення. Більшість міст, будівель і країн мають <0>-s</0>; робота, ринок і назви на <1>-maa</1> мають <2>-l</2>."
@@ -88,8 +130,17 @@ msgstr "Він або вона живе у Фінляндії."
 msgid "He or she studies at school."
 msgstr "Він або вона вчиться в школі."
 
+msgid "He’s studying at school."
+msgstr "Він навчається в школі."
+
 msgid "Hear a sentence and pick the place. Listen for the word that ends in <0>-s</0>."
 msgstr "Послухай речення й обери місце. Слухай слово, яке закінчується на <0>-s</0>."
+
+msgid "Hear a sentence and write it. Listen for the last sound of the place: <0>-s</0> or <1>-l</1>."
+msgstr "Послухай речення й напиши його. Слухай останній звук місця: <0>-s</0> чи <1>-l</1>."
+
+msgid "Hear the questions and answers above once more, then try again."
+msgstr "Ще раз послухай запитання й відповіді вище, а тоді спробуй знову."
 
 msgid "Hearing the place"
 msgstr "Місце на слух"
@@ -142,8 +193,20 @@ msgstr "Я на роботі."
 msgid "in a café"
 msgstr "у кав’ярні"
 
+msgid "In a café"
+msgstr "У кафе"
+
 msgid "in a hospital"
 msgstr "у лікарні"
+
+msgid "In a hospital"
+msgstr "У лікарні"
+
+msgid "In a school canteen"
+msgstr "У шкільній їдальні"
+
+msgid "In a town, a country or a building: <et>-s</et>."
+msgstr "У місті, країні чи будівлі: <et>-s</et>."
 
 msgid "in Estonia"
 msgstr "в Естонії"
@@ -184,8 +247,14 @@ msgstr "в Україні"
 msgid "It works the same for towns, buildings and most countries. Try it on three countries and three towns."
 msgstr "Так само з містами, будівлями й більшістю країн. Спробуй на трьох країнах і трьох містах."
 
+msgid "Jaan"
+msgstr "Яан"
+
 msgid "Jaan lives in Pärnu."
 msgstr "Яан живе в Пярну."
+
+msgid "Kati’s mum"
+msgstr "Мама Каті"
 
 msgid "Lasnamäe, a district of Tallinn"
 msgstr "Ласнамяе, район Таллінна"
@@ -193,14 +262,29 @@ msgstr "Ласнамяе, район Таллінна"
 msgid "Learn each place together with its ending: <0>Tallinn, Tallinnas</0>."
 msgstr "Вчи кожне місце одразу із закінченням: <0>Tallinn, Tallinnas</0>."
 
+msgid "Listen: a message from Mari"
+msgstr "Слухання: повідомлення від Марі"
+
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"
+
+msgid "Listening: a message from Mari"
+msgstr "На слух: повідомлення від Марі"
 
 msgid "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which vowel is hard to guess for now. So learn each place together with its <1>-s</1> form: <2/>, <3/>; <4/>, <5/>. Lesson {stems} shows where the vowel comes from."
 msgstr "У багатьох слів, як у Tallinn, перед <0>-s</0> з’являється голосна, і яку саме, поки що вгадати важко. Тож вчи кожне місце одразу з <1>-s</1>: <2/>, <3/>; <4/>, <5/>. Звідки береться голосна, пояснює урок {stems}."
 
+msgid "Mari is at work today."
+msgstr "Марі сьогодні на роботі."
+
+msgid "Mari leaves Kati a voice message about where everyone is today. Listen for each place and its ending."
+msgstr "Марі надсилає Каті голосове повідомлення про те, хто де сьогодні. Слухай кожне місце та його закінчення."
+
 msgid "Mari works in a hospital."
 msgstr "Марі працює в лікарні."
+
+msgid "Mari’s mum"
+msgstr "Мама Марі"
 
 msgid "market"
 msgstr "ринок"
@@ -208,14 +292,29 @@ msgstr "ринок"
 msgid "Mum is at the market."
 msgstr "Мама на ринку."
 
+msgid "Nearly. Check the place’s ending in the ones you missed."
+msgstr "Майже. Там, де була помилка, перевір закінчення місця."
+
+msgid "Nearly. Check the verb’s ending in the ones you missed."
+msgstr "Майже. Там, де була помилка, перевір закінчення дієслова."
+
+msgid "Nearly. Check which ending each place takes."
+msgstr "Майже. Перевір, яке закінчення бере кожне місце."
+
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Майже. Переслухай ті, де були помилки."
+
+msgid "Nearly. Play the ones you missed slower."
+msgstr "Майже. Послухай повільніше ті, де була помилка."
 
 msgid "office"
 msgstr "офіс"
 
 msgid "on Saaremaa"
 msgstr "на Сааремаа"
+
+msgid "On something, at work, at the market, and names ending in <et>-maa</et>: <et>-l</et>."
+msgstr "На чомусь, на роботі, на ринку й назви на <et>-maa</et>: <et>-l</et>."
 
 msgid "on the table"
 msgstr "на столі"
@@ -234,6 +333,9 @@ msgstr "Де працювати"
 
 msgid "Places with -l"
 msgstr "Місця з -l"
+
+msgid "Play each sentence slower, then try again."
+msgstr "Послухай кожне речення повільніше, а тоді спробуй ще раз."
 
 msgid "Read both endings above once more, then try again."
 msgstr "Ще раз перечитай про обидва закінчення вище, а потім спробуй знову."
@@ -310,6 +412,9 @@ msgstr "Вони працюють в офісі."
 msgid "town, city"
 msgstr "місто"
 
+msgid "Type the place"
+msgstr "Напиши місце"
+
 msgid "Ukraine"
 msgstr "Україна"
 
@@ -337,14 +442,38 @@ msgstr "Де ти живеш?"
 msgid "Where do you work?"
 msgstr "Де ти працюєш?"
 
+msgid "Where does Mari work?"
+msgstr "Де працює Марі?"
+
 msgid "Where is he or she?"
 msgstr "Де він або вона?"
+
+msgid "Where is Jaan?"
+msgstr "Де Яан?"
 
 msgid "Which place?"
 msgstr "Яке місце?"
 
+msgid "Who is at the market?"
+msgstr "Хто на ринку?"
+
 msgid "work"
 msgstr "робота"
+
+msgid "Write each sentence in Estonian. The place takes <0>-s</0> for in, and <1>-l</1> for on, at work and at the market."
+msgstr "Напиши кожне речення естонською. Місце бере <0>-s</0> у значенні «в», а <1>-l</1> — у значенні «на», зокрема «на роботі» й «на ринку»."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "Write the question"
+msgstr "Напиши запитання"
+
+msgid "Write the sentence"
+msgstr "Напиши речення"
+
+msgid "Write what you hear"
+msgstr "Напиши, що чуєш"
 
 msgid "You all work in an office."
 msgstr "Ви працюєте в офісі."

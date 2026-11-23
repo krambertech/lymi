@@ -25,11 +25,20 @@ msgstr "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-n
 msgid "<0>Kes</0> asks about people, <1>mis</1> about things."
 msgstr "<0>Kes</0> asks about people, <1>mis</1> about things."
 
-msgid "10 minutes"
-msgstr "10 minutes"
+msgid "<et>Kas</et> or a question word"
+msgstr "<et>Kas</et> or a question word"
 
-msgid "2 quizzes"
-msgstr "2 quizzes"
+msgid "<et>Kes</et>, who, not <et>kus</et>, where."
+msgstr "<et>Kes</et>, who, not <et>kus</et>, where."
+
+msgid "<et>Kus</et>, where, not <et>kes</et>, who."
+msgstr "<et>Kus</et>, where, not <et>kes</et>, who."
+
+msgid "15 minutes"
+msgstr "15 minutes"
+
+msgid "5 quizzes, a matching game and a conversation"
+msgstr "5 quizzes, a matching game and a conversation"
 
 msgid "a little"
 msgstr "a little"
@@ -37,8 +46,35 @@ msgstr "a little"
 msgid "A little."
 msgstr "A little."
 
+msgid "a person"
+msgstr "a person"
+
+msgid "a place"
+msgstr "a place"
+
+msgid "A question answered with yes or no starts with <0/>. A question that wants a place, a person or a thing starts with its question word instead, never with both. Write each question in Estonian."
+msgstr "A question answered with yes or no starts with <0/>. A question that wants a place, a person or a thing starts with its question word instead, never with both. Write each question in Estonian."
+
 msgid "A question word goes first, and the part you ask about drops out: <0>Kus sa elad?</0>"
 msgstr "A question word goes first, and the part you ask about drops out: <0>Kus sa elad?</0>"
+
+msgid "A question word replaces <et>kas</et>; never use both."
+msgstr "A question word replaces <et>kas</et>; never use both."
+
+msgid "a reason"
+msgstr "a reason"
+
+msgid "a thing"
+msgstr "a thing"
+
+msgid "a time"
+msgstr "a time"
+
+msgid "A yes-or-no question starts with <et>kas</et>."
+msgstr "A yes-or-no question starts with <et>kas</et>."
+
+msgid "All eight, each with <0>kas</0> or its question word."
+msgstr "All eight, each with <0>kas</0> or its question word."
 
 msgid "All of them. You can hear what a question asks."
 msgstr "All of them. You can hear what a question asks."
@@ -46,11 +82,20 @@ msgstr "All of them. You can hear what a question asks."
 msgid "All of them. You matched every answer to its question."
 msgstr "All of them. You matched every answer to its question."
 
+msgid "All seven questions, each with the right word."
+msgstr "All seven questions, each with the right word."
+
+msgid "All seven, each question word right."
+msgstr "All seven, each question word right."
+
 msgid "Answer <0>jah</0> or <1>ei</1>. When the question has olema, the no is <2>ei ole</2>. If you don’t know, say <3>Ma ei tea.</3>"
 msgstr "Answer <0>jah</0> or <1>ei</1>. When the question has olema, the no is <2>ei ole</2>. If you don’t know, say <3>Ma ei tea.</3>"
 
 msgid "Are they working today?"
 msgstr "Are they working today?"
+
+msgid "ask with kas"
+msgstr "ask with kas"
 
 msgid "Asks about a person."
 msgstr "Asks about a person."
@@ -91,26 +136,56 @@ msgstr "Do you live in Tallinn?"
 msgid "Do you speak Estonian?"
 msgstr "Do you speak Estonian?"
 
+msgid "Each round gives an answer. Write the question it answers: start with the question word, then the verb in the form for the person you ask."
+msgstr "Each round gives an answer. Write the question it answers: start with the question word, then the verb in the form for the person you ask."
+
 msgid "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
 msgstr "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
+
+msgid "Estonia"
+msgstr "Estonia"
 
 msgid "Fine, thanks. And you?"
 msgstr "Fine, thanks. And you?"
 
+msgid "Finland"
+msgstr "Finland"
+
 msgid "Five sentences. Switch to Question and watch what changes."
 msgstr "Five sentences. Switch to Question and watch what changes."
+
+msgid "For his friends"
+msgstr "For his friends"
+
+msgid "For his studies"
+msgstr "For his studies"
 
 msgid "from, by birth"
 msgstr "from, by birth"
 
+msgid "Go back to the <0>kas</0> switch at the top, then try again."
+msgstr "Go back to the <0>kas</0> switch at the top, then try again."
+
 msgid "He or she is at home."
 msgstr "He or she is at home."
+
+msgid "He works in Tartu."
+msgstr "He works in Tartu."
 
 msgid "Hear a question and pick its question word. It always comes first, so listen to the start."
 msgstr "Hear a question and pick its question word. It always comes first, so listen to the start."
 
+msgid "Hear a question and write it. <0/> and <1/>, <2/> and <3/> differ by a sound or two, so listen to the start."
+msgstr "Hear a question and write it. <0/> and <1/>, <2/> and <3/> differ by a sound or two, so listen to the start."
+
 msgid "Hear a question, then pick the answer that fits. A kas question takes yes, no or I don’t know; a question word wants what it asks about, such as a place for kus or a time for millal."
 msgstr "Hear a question, then pick the answer that fits. A kas question takes yes, no or I don’t know; a question word wants what it asks about, such as a place for kus or a time for millal."
+
+msgid "Hearing the question word"
+msgstr "Hearing the question word"
+
+msgid "His name"
+msgstr "His name"
 
 msgid "how"
 msgstr "how"
@@ -123,6 +198,9 @@ msgstr "How are you learning Estonian?"
 
 msgid "How does he or she speak Estonian?"
 msgstr "How does he or she speak Estonian?"
+
+msgid "how much"
+msgstr "how much"
 
 msgid "How much coffee do you drink?"
 msgstr "How much coffee do you drink?"
@@ -166,11 +244,20 @@ msgstr "In Tallinn."
 msgid "in Tartu"
 msgstr "in Tartu"
 
+msgid "Is he at home?"
+msgstr "Is he at home?"
+
 msgid "Is he or she at home?"
 msgstr "Is he or she at home?"
 
 msgid "It has no meaning of its own, like a spoken question mark."
 msgstr "It has no meaning of its own, like a spoken question mark."
+
+msgid "Jaan"
+msgstr "Jaan"
+
+msgid "Jaan lives in Tallinn."
+msgstr "Jaan lives in Tallinn."
 
 msgid "Jah, ei, ei ole"
 msgstr "Jah, ei, ei ole"
@@ -181,6 +268,15 @@ msgstr "Kas in front, a question mark at the end. Every other word stays put."
 msgid "Kas makes a question"
 msgstr "Kas makes a question"
 
+msgid "Kas or a question word"
+msgstr "Kas or a question word"
+
+msgid "Kati"
+msgstr "Kati"
+
+msgid "Kati and Jaan meet for the first time and ask each other questions. Listen for the question words."
+msgstr "Kati and Jaan meet for the first time and ask each other questions. Listen for the question words."
+
 msgid "Kus with its -s swapped for -st, “out of”."
 msgstr "Kus with its -s swapped for -st, “out of”."
 
@@ -190,17 +286,38 @@ msgstr "Learn three questions whole: <0>Mis su nimi on? Kuidas läheb?</0> and <
 msgid "Listen to the first word. Kas wants yes or no; a question word wants what it asks about."
 msgstr "Listen to the first word. Kas wants yes or no; a question word wants what it asks about."
 
+msgid "Listen: Kati meets Jaan"
+msgstr "Listen: Kati meets Jaan"
+
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
+
+msgid "Listening: Kati meets Jaan"
+msgstr "Listening: Kati meets Jaan"
 
 msgid "Ma olen pärit… is I’m from…"
 msgstr "Ma olen pärit… is I’m from…"
 
+msgid "Match each question word with what it asks about. Tap a word, then its meaning."
+msgstr "Match each question word with what it asks about. Tap a word, then its meaning."
+
+msgid "Match the question words"
+msgstr "Match the question words"
+
 msgid "My name is Mari."
 msgstr "My name is Mari."
 
+msgid "Nearly. Check the question word and the verb’s ending."
+msgstr "Nearly. Check the question word and the verb’s ending."
+
+msgid "Nearly. Check whether each one asks for yes or no."
+msgstr "Nearly. Check whether each one asks for yes or no."
+
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Nearly. Play the ones you missed once more."
+
+msgid "Nearly. Play the ones you missed slower."
+msgstr "Nearly. Play the ones you missed slower."
 
 msgid "No, he or she isn’t."
 msgstr "No, he or she isn’t."
@@ -230,6 +347,9 @@ msgstr "Play {question}"
 msgid "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
 msgstr "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
 
+msgid "Put <et>kas</et> in front; every other word stays where it was."
+msgstr "Put <et>kas</et> in front; every other word stays where it was."
+
 msgid "Question"
 msgstr "Question"
 
@@ -238,6 +358,9 @@ msgstr "Question words"
 
 msgid "Short for sinu."
 msgstr "Short for sinu."
+
+msgid "Start with <et>{word}</et>, then the verb for the person you ask."
+msgstr "Start with <et>{word}</et>, then the verb for the person you ask."
 
 msgid "Statement"
 msgstr "Statement"
@@ -256,6 +379,12 @@ msgstr "That’s a book."
 
 msgid "That’s Jaan."
 msgstr "That’s Jaan."
+
+msgid "The question word comes first: <et>{word}</et>."
+msgstr "The question word comes first: <et>{word}</et>."
+
+msgid "the way"
+msgstr "the way"
 
 msgid "There are seven to start with. Tap one to hear it in a question."
 msgstr "There are seven to start with. Tap one to hear it in a question."
@@ -281,6 +410,9 @@ msgstr "Tomorrow."
 msgid "turns a sentence into a yes-or-no question"
 msgstr "turns a sentence into a yes-or-no question"
 
+msgid "Ukraine"
+msgstr "Ukraine"
+
 msgid "well, fine"
 msgstr "well, fine"
 
@@ -295,6 +427,12 @@ msgstr "What are you reading?"
 
 msgid "What does it ask?"
 msgstr "What does it ask?"
+
+msgid "What does Kati ask first?"
+msgstr "What does Kati ask first?"
+
+msgid "What each word asks about"
+msgstr "What each word asks about"
 
 msgid "What is that?"
 msgstr "What is that?"
@@ -332,6 +470,18 @@ msgstr "Where does he or she work?"
 msgid "where from"
 msgstr "where from"
 
+msgid "Where he is from and why"
+msgstr "Where he is from and why"
+
+msgid "Where he lives and works"
+msgstr "Where he lives and works"
+
+msgid "Where is he?"
+msgstr "Where is he?"
+
+msgid "Where is Jaan from?"
+msgstr "Where is Jaan from?"
+
 msgid "Which answer fits?"
 msgstr "Which answer fits?"
 
@@ -364,6 +514,21 @@ msgstr "Why are you waiting?"
 
 msgid "Why is he or she learning Estonian?"
 msgstr "Why is he or she learning Estonian?"
+
+msgid "Why is Jaan learning Estonian?"
+msgstr "Why is Jaan learning Estonian?"
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "Write the question"
+msgstr "Write the question"
+
+msgid "Write the question you hear"
+msgstr "Write the question you hear"
+
+msgid "Writing the question for an answer"
+msgstr "Writing the question for an answer"
 
 msgid "yes"
 msgstr "yes"

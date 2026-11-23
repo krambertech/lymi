@@ -347,6 +347,39 @@ export const NO_ANSWERS = [
   },
 ] as const;
 
+export const NEGATION_TURNED = [
+  { yes: "Ma loen raamatut.", no: "Ma ei loe raamatut.", person: "ma" },
+  { yes: "Sa õpid eesti keelt.", no: "Sa ei õpi eesti keelt.", person: "sa" },
+  { yes: "Ta räägib eesti keelt.", no: "Ta ei räägi eesti keelt.", person: "ta" },
+  { yes: "Me ootame bussi.", no: "Me ei oota bussi.", person: "me" },
+  { yes: "Te töötate kodus.", no: "Te ei tööta kodus.", person: "te" },
+  { yes: "Nad joovad kohvi.", no: "Nad ei joo kohvi.", person: "nad" },
+  { yes: "Ma elan Tallinnas.", no: "Ma ei ela Tallinnas.", person: "ma" },
+  { yes: "Nad söövad kodus.", no: "Nad ei söö kodus.", person: "nad" },
+] as const;
+
+export const NEGATION_FIXES = [
+  { wrong: "Ma ei loen raamatut.", said: "Ma ei loe raamatut.", kind: "verb" },
+  { wrong: "Ta ei räägib eesti keelt.", said: "Ta ei räägi eesti keelt.", kind: "verb" },
+  { wrong: "Nad ei joovad kohvi.", said: "Nad ei joo kohvi.", kind: "verb" },
+  { wrong: "Me ei ootame bussi.", said: "Me ei oota bussi.", kind: "verb" },
+  { wrong: "Sa ei õpid eesti keelt.", said: "Sa ei õpi eesti keelt.", kind: "verb" },
+  { wrong: "Ta ei on kodus.", said: "Ta ei ole kodus.", kind: "olema" },
+  { wrong: "Ma ei olen väsinud.", said: "Ma ei ole väsinud.", kind: "olema" },
+  { wrong: "Nad ei on õpetajad.", said: "Nad ei ole õpetajad.", kind: "olema" },
+] as const;
+
+export const NEGATION_TALK: Conversation = {
+  turns: [
+    { voice: "second", text: "Kas sa loed?" },
+    { voice: "main", text: ["Ei, ma ei loe.", "Ma olen väsinud."] },
+    { voice: "second", text: "Kas sa jood kohvi?" },
+    { voice: "main", text: ["Ei joo.", "Ma joon vett."] },
+    { voice: "second", text: "Kas Peeter on kodus?" },
+    { voice: "main", text: ["Pole.", "Ta töötab."] },
+  ],
+};
+
 /** Other things the negation lesson says: answers, and a sentence worth keeping. */
 export const NEGATION_PHRASES = [
   "Ei.",
@@ -383,6 +416,80 @@ export const KUSIMUSED_WORDS = [
   "su",
   "sinu",
 ] as const;
+
+export const KUSIMUSED_ASKED = [
+  { word: "kes", reply: "See on Jaan.", answers: ["Kes see on?", "Kes ta on?"] },
+  { word: "mis", reply: "See on raamat.", answers: ["Mis see on?"] },
+  {
+    word: "kus",
+    reply: "Ma elan Tallinnas.",
+    answers: ["Kus sa elad?", "Kus te elate?", "Kus sina elad?", "Kus teie elate?", "Kus elad?"],
+  },
+  {
+    word: "millal",
+    reply: "Ma töötan homme.",
+    answers: ["Millal sa töötad?", "Millal te töötate?", "Millal sina töötad?"],
+  },
+  {
+    word: "miks",
+    reply: "Ma õpin eesti keelt, sest ma elan Tallinnas.",
+    answers: [
+      "Miks sa eesti keelt õpid?",
+      "Miks sa õpid eesti keelt?",
+      "Miks te eesti keelt õpite?",
+      "Miks te õpite eesti keelt?",
+    ],
+  },
+  {
+    word: "kuidas",
+    reply: "Ma räägin eesti keelt hästi.",
+    answers: [
+      "Kuidas sa eesti keelt räägid?",
+      "Kuidas sa räägid eesti keelt?",
+      "Kuidas te eesti keelt räägite?",
+      "Kuidas te räägite eesti keelt?",
+    ],
+  },
+  {
+    word: "kui palju",
+    reply: "Ma joon palju kohvi.",
+    answers: ["Kui palju kohvi sa jood?", "Kui palju sa kohvi jood?", "Kui palju sa jood kohvi?"],
+  },
+] as const;
+
+export const KUSIMUSED_TRANSLATED = [
+  {
+    kind: "kas",
+    answers: ["Kas sa elad Tallinnas?", "Kas te elate Tallinnas?", "Kas sina elad Tallinnas?"],
+  },
+  { kind: "word", answers: ["Kus sa elad?", "Kus te elate?", "Kus sina elad?", "Kus elad?"] },
+  {
+    kind: "kas",
+    answers: [
+      "Kas sa räägid eesti keelt?",
+      "Kas te räägite eesti keelt?",
+      "Kas sina räägid eesti keelt?",
+    ],
+  },
+  { kind: "word", answers: ["Kes räägib eesti keelt?"] },
+  { kind: "kas", answers: ["Kas ta on kodus?", "Kas tema on kodus?"] },
+  { kind: "word", answers: ["Kus ta on?", "Kus tema on?"] },
+  { kind: "kas", answers: ["Kas sa jood kohvi?", "Kas te joote kohvi?", "Kas sina jood kohvi?"] },
+  { kind: "word", answers: ["Mis sa loed?", "Mida sa loed?", "Mis te loete?", "Mida te loete?"] },
+] as const;
+
+export const KUSIMUSED_TALK: Conversation = {
+  turns: [
+    { voice: "second", text: ["Tere!", "Mis su nimi on?"] },
+    { voice: "main", text: ["Minu nimi on Jaan.", "Aga sinu?"] },
+    { voice: "second", text: ["Kati.", "Kust sa pärit oled?"] },
+    { voice: "main", text: "Ma olen pärit Ukrainast." },
+    { voice: "second", text: "Kas sa elad Tallinnas?" },
+    { voice: "main", text: "Ei, ma elan Tartus." },
+    { voice: "second", text: "Miks sa eesti keelt õpid?" },
+    { voice: "main", text: "Sest ma töötan Tartus." },
+  ],
+};
 
 /** The questions lesson's sentences: statements, questions and their answers. */
 export const KUSIMUSED_SENTENCES = {
@@ -666,6 +773,54 @@ export const KOHAD_SENTENCES = {
   "g-koolis": "Ta on koolis.",
   "g-kontoris": "Nad töötavad kontoris.",
 } as const;
+
+export const KOHAD_TYPED = [
+  "Eesti",
+  "Soome",
+  "Tartu",
+  "Pärnu",
+  "kodu",
+  "haigla",
+  "Ukraina",
+  "töö",
+  "Saaremaa",
+  "Saksamaa",
+] as const;
+
+export const KOHAD_ASKED = [
+  {
+    reply: "Ma töötan haiglas.",
+    answers: ["Kus sa töötad?", "Kus te töötate?", "Kus sina töötad?"],
+  },
+  { reply: "Ma elan Tartus.", answers: ["Kus sa elad?", "Kus te elate?", "Kus sina elad?"] },
+  { reply: "Ta on kodus.", answers: ["Kus ta on?", "Kus tema on?"] },
+  { reply: "Mari töötab koolis.", answers: ["Kus Mari töötab?"] },
+  { reply: "Me elame Saaremaal.", answers: ["Kus te elate?", "Kus teie elate?"] },
+  { reply: "Nad on turul.", answers: ["Kus nad on?", "Kus nemad on?"] },
+] as const;
+
+export const KOHAD_WRITTEN = [
+  "Ma elan Tartus.",
+  "Ema on turul.",
+  "Me elame Eestis.",
+  "Ma olen tööl.",
+  "Raamat on laual.",
+  "Ta õpib koolis.",
+  "Mari töötab haiglas.",
+  "Jaan elab Pärnus.",
+  "Pilt on seinal.",
+  "Nad õpivad Tartus.",
+] as const;
+
+export const KOHAD_MESSAGE = [
+  "Tere, Kati!",
+  "Ma olen täna tööl.",
+  "Ma töötan haiglas.",
+  "Jaan on kodus.",
+  "Ema on turul.",
+  "Isa on Tartus.",
+  "Kus sina oled?",
+] as const;
 
 /**
  * The places of the lesson on -l, -le and -lt, each in the forms that answer kus, kuhu and kust.
@@ -2832,31 +2987,44 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...Object.fromEntries(SPOKEN_NUMBERS.map((n) => [numberClip(n), numberWords(n)])),
     ...NUMBER_SENTENCES,
   },
-  eitus: words([
-    ...FLIP_STEMS.flatMap((stem) =>
-      PERSON_ENDINGS.flatMap(([person]) => [
+  eitus: {
+    ...words([
+      ...FLIP_STEMS.flatMap((stem) =>
+        PERSON_ENDINGS.flatMap(([person]) => [
+          verbSentence(person, stem, false),
+          verbSentence(person, stem, true),
+        ]),
+      ),
+      ...NEGATION_VERBS.flatMap(({ stem }) => [
+        verbSentence("ma", stem, false),
+        verbSentence("ma", stem, true),
+      ]),
+      ...NO_QUIZ.flatMap(([stem, person]) => [
         verbSentence(person, stem, false),
         verbSentence(person, stem, true),
       ]),
-    ),
-    ...NEGATION_VERBS.flatMap(({ stem }) => [
-      verbSentence("ma", stem, false),
-      verbSentence("ma", stem, true),
+      ...OLEMA_ROWS.flatMap((row) =>
+        (["yes", "ei ole", "pole"] as const).map((mode) => olemaSentence(row, mode)),
+      ),
+      ...NO_ANSWERS.flatMap(({ ask, answer }) => [ask, answer]),
+      ...NEGATION_PHRASES,
+      ...NEGATION_TURNED.map(({ no }) => no),
     ]),
-    ...NO_QUIZ.flatMap(([stem, person]) => [
-      verbSentence(person, stem, false),
-      verbSentence(person, stem, true),
-    ]),
-    ...OLEMA_ROWS.flatMap((row) =>
-      (["yes", "ei ole", "pole"] as const).map((mode) => olemaSentence(row, mode)),
-    ),
-    ...NO_ANSWERS.flatMap(({ ask, answer }) => [ask, answer]),
-    ...NEGATION_PHRASES,
-  ]),
-  kusimused: { ...words(KUSIMUSED_WORDS), ...KUSIMUSED_SENTENCES },
+    "d-mari": NEGATION_TALK,
+  },
+  kusimused: {
+    ...words(KUSIMUSED_WORDS),
+    ...KUSIMUSED_SENTENCES,
+    ...words(KUSIMUSED_ASKED.map(({ answers }) => answers[0])),
+    ...words(KUSIMUSED_TRANSLATED.map(({ answers }) => answers[0])),
+    "d-kati": KUSIMUSED_TALK,
+  },
   kohad: {
     ...words(["kus", ...KOHAD_PLACES.flatMap(({ place, where }) => [place, where])]),
     ...KOHAD_SENTENCES,
+    ...words(KOHAD_ASKED.map(({ answers }) => answers[0])),
+    ...words(KOHAD_WRITTEN),
+    "p-mari": { sentences: KOHAD_MESSAGE, voice: "third" },
   },
   "mina-sina-tema": {
     ...words([

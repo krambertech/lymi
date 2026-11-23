@@ -5,13 +5,25 @@ import { clsx } from "clsx";
 import { CornerDownRight } from "lucide-react";
 import { useMemo, useState } from "react";
 import { lessonBySlug } from "../../../lib/learn/catalogue";
-import { clipId, clipUrl, KOHAD_PLACES, KOHAD_SENTENCES } from "../../../lib/learn/clips";
+import {
+  clipId,
+  clipUrl,
+  KOHAD_ASKED,
+  KOHAD_MESSAGE,
+  KOHAD_PLACES,
+  KOHAD_SENTENCES,
+  KOHAD_TYPED,
+  KOHAD_WRITTEN,
+} from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, type KeyItem, Keys, Panel } from "../Explore";
+import { type FormItem, FormRound, formRecall } from "../FormRound";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
+import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, type GapItem, GapRound, Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
 import { PlayMark } from "../Sound";
 import { Word } from "../Word";
 
@@ -67,6 +79,17 @@ const PLACE_MEANS: Record<Place["place"] | Where, MessageDescriptor> = {
   Lasnamäe: msg`Lasnamäe, a district of Tallinn`,
   Lasnamäel: msg`in Lasnamäe`,
 };
+
+const WRITTEN: readonly { means: MessageDescriptor; also: readonly string[] }[] = [
+  { means: msg`I live in Tartu.`, also: ["Mina elan Tartus.", "Elan Tartus."] },
+  { means: msg`Mum is at the market.`, also: [] },
+  { means: msg`We live in Estonia.`, also: ["Meie elame Eestis.", "Elame Eestis."] },
+  { means: msg`I’m at work.`, also: ["Mina olen tööl.", "Olen tööl."] },
+  { means: msg`The book is on the table.`, also: [] },
+  { means: msg`He’s studying at school.`, also: ["Tema õpib koolis."] },
+];
+
+const endingKey = (sentence: string) => (/l\.$/.test(sentence) ? "l" : "s");
 
 /** What each sentence means, in the reader's language. */
 const MEANS: Record<Id, MessageDescriptor> = {
@@ -407,6 +430,111 @@ export function KohadLesson() {
     [i18n],
   );
 
+  const typedItems = useMemo<(FormItem & { pair: readonly [string, string] })[]>(
+    () =>
+      KOHAD_TYPED.map((place) => {
+        const { where } = KOHAD_PLACES.find((each) => each.place === place) as Place;
+        return {
+          base: place,
+          gloss: i18n._(PLACE_MEANS[place]),
+          cue: "kus?",
+          cueLang: "et",
+          answers: [where],
+          src: wordSrc(where),
+          explain: i18n._(PLACE_MEANS[where]),
+          pair: [where.slice(-1), place] as const,
+        };
+      }),
+    [i18n],
+  );
+
+  const writtenItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
+    () =>
+      KOHAD_WRITTEN.slice(4).map((sentence) => ({
+        kind: "dictation" as const,
+        id: `write-${clipId(sentence)}`,
+        src: wordSrc(sentence),
+        answers: [sentence],
+        pair: [endingKey(sentence), sentence] as const,
+      })),
+    [],
+  );
+
+  const askedItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
+    () =>
+      KOHAD_ASKED.map(({ reply, answers }) => ({
+        kind: "ask" as const,
+        id: `ask-${clipId(reply)}`,
+        reply,
+        src: wordSrc(answers[0]),
+        answers,
+        pair: [reply, reply] as const,
+      })),
+    [],
+  );
+
+  const translatedItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
+    () =>
+      WRITTEN.map(({ means, also }, i) => {
+        const sentence = KOHAD_WRITTEN[i] as string;
+        return {
+          kind: "translate" as const,
+          id: `translate-${clipId(sentence)}`,
+          prompt: i18n._(means),
+          src: wordSrc(sentence),
+          answers: [sentence, ...also],
+          pair: [endingKey(sentence), sentence] as const,
+        };
+      }),
+    [i18n],
+  );
+
+  const messageQuestions = useMemo<PassageQuestion[]>(
+    () => [
+      {
+        id: "work",
+        kind: "truefalse",
+        ask: t`Mari is at work today.`,
+        answer: true,
+        line: 1,
+      },
+      {
+        id: "job",
+        ask: t`Where does Mari work?`,
+        options: [
+          { id: "cafe", label: t`In a café` },
+          { id: "hospital", label: t`In a hospital` },
+          { id: "canteen", label: t`In a school canteen` },
+        ],
+        answer: "hospital",
+        line: 2,
+      },
+      {
+        id: "jaan-where",
+        ask: t`Where is Jaan?`,
+        options: [
+          { id: "home", label: t`At home` },
+          { id: "market", label: t`At the market` },
+          { id: "work", label: t`At work` },
+        ],
+        answer: "home",
+        line: 3,
+      },
+      {
+        id: "market",
+        ask: t`Who is at the market?`,
+        options: [
+          { id: "kati", label: t`Kati’s mum` },
+          { id: "mum", label: t`Mari’s mum` },
+          { id: "jaan", label: t`Jaan` },
+        ],
+        answer: "mum",
+        line: 4,
+      },
+    ],
+    [t],
+  );
+
   return (
     <LessonView
       slug={SLUG}
@@ -425,8 +553,8 @@ export function KohadLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">8 minutes</Trans>,
-        <Trans key="q">2 quizzes</Trans>,
+        <Trans key="m">15 minutes</Trans>,
+        <Trans key="q">6 quizzes and a voice message</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -711,6 +839,193 @@ export function KohadLesson() {
                 recall={(item) => ({ label: item.where, src: wordSrc(item.where) })}
                 order={eachPairFirst}
                 round={(props) => <GapRound {...props} listen="after" />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "type",
+          title: t`Type the place`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each round gives a place and asks <Word w="kus" />, where. Type the place with{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -s
+                    </b>{" "}
+                    or{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -l
+                    </b>
+                    . Each of these takes its ending with no other change.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="type-place"
+                title={<Trans>Type the place</Trans>}
+                items={typedItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, each with the right ending.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check which ending each place takes.</Trans>
+                  ) : (
+                    <Trans>Read both endings above once more, then try again.</Trans>
+                  )
+                }
+                recall={formRecall}
+                order={eachPairFirst}
+                round={(props) => <FormRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "write",
+          title: t`Write what you hear`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Hear a sentence and write it. Listen for the last sound of the place:{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -s
+                    </b>{" "}
+                    or{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -l
+                    </b>
+                    .
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="write-places"
+                title={<Trans>Write the sentence</Trans>}
+                items={writtenItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, every word in place.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Play the ones you missed slower.</Trans>
+                  ) : (
+                    <Trans>Play each sentence slower, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "ask",
+          title: t`Ask where`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each round gives an answer. Write the question it answers, starting with{" "}
+                    <Word w="kus" />. Leave out the place: that is what you ask about.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="ask-where"
+                title={<Trans>Write the question</Trans>}
+                items={askedItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>
+                      All six questions, each with <span lang="et">kus</span> and the right verb.
+                    </Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check the verb’s ending in the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Hear the questions and answers above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "translate",
+          title: t`Write it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write each sentence in Estonian. The place takes{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -s
+                    </b>{" "}
+                    for in, and{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -l
+                    </b>{" "}
+                    for on, at work and at the market.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="translate-places"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={translatedItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, each place with its ending.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check the place’s ending in the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Read both endings above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listening: a message from Mari`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Mari leaves Kati a voice message about where everyone is today. Listen for each
+                    place and its ending.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="mari-message"
+                title={<Trans>Listen: a message from Mari</Trans>}
+                clip="p-mari"
+                sentences={KOHAD_MESSAGE}
+                questions={messageQuestions}
               />
             </>
           ),

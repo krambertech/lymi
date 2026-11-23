@@ -10,6 +10,9 @@ import {
   clipUrl,
   endingOf,
   FLIP_STEMS,
+  NEGATION_FIXES,
+  NEGATION_TALK,
+  NEGATION_TURNED,
   NEGATION_VERBS,
   NO_ANSWERS,
   NO_QUIZ,
@@ -21,10 +24,15 @@ import {
   verbSentence,
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
+import { eachPairFirst } from "../../../lib/learn/quiz";
 import { Chips, Panel } from "../Explore";
+import { type FixItem, FixRound, fixRecall } from "../FixRound";
+import { type FormItem, FormRound, formRecall } from "../FormRound";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
+import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
 import { PlayButton, Playing } from "../Sound";
 import { Word } from "../Word";
 
@@ -379,6 +387,34 @@ function placed<T>(list: readonly T[], i: number): T[] {
   return [...list.slice(turn), ...list.slice(0, turn)];
 }
 
+export const AFTER_EI: readonly (readonly [(typeof FLIP_STEMS)[number], Person])[] = [
+  ["loe", "nad"],
+  ["söö", "nad"],
+  ["räägi", "sa"],
+  ["tööta", "sa"],
+  ["tööta", "ta"],
+  ["räägi", "ta"],
+  ["söö", "me"],
+  ["loe", "me"],
+  ["loe", "te"],
+  ["tööta", "te"],
+  ["räägi", "ma"],
+  ["söö", "ma"],
+];
+
+const YES_OR_NO: readonly {
+  stem: (typeof FLIP_STEMS)[number];
+  person: Person;
+  long: string;
+  yes: MessageDescriptor;
+  no: MessageDescriptor;
+}[] = [
+  { stem: "loe", person: "ma", long: "Mina", yes: msg`I read.`, no: msg`I don’t read.` },
+  { stem: "tööta", person: "ta", long: "Tema", yes: msg`She works.`, no: msg`She doesn’t work.` },
+  { stem: "söö", person: "nad", long: "Nemad", yes: msg`They eat.`, no: msg`They don’t eat.` },
+  { stem: "räägi", person: "me", long: "Meie", yes: msg`We talk.`, no: msg`We don’t talk.` },
+];
+
 interface PairedItem extends ChoiceItem {
   said: string;
   /** The sound of the right answer, played after the question under “Hear both”. */
@@ -453,6 +489,139 @@ export function EitusLesson() {
     [i18n],
   );
 
+  const formItems = useMemo<(FormItem & { pair: readonly [string, string] })[]>(
+    () =>
+      AFTER_EI.map(([stem, person]) => ({
+        base: `${stem}${endingOf(person)}`,
+        gloss: i18n._(MEANS[stem] as MessageDescriptor),
+        cue: "ei …",
+        cueLang: "et",
+        answers: [stem],
+        src: src(verbSentence(person, stem, true)),
+        said: verbSentence(person, stem, true),
+        pair: [person, `${stem}-${person}`] as const,
+        explain: (
+          <>
+            <span lang="et" className="font-medium text-ink">
+              {bare(verbSentence(person, stem, false))} → {verbSentence(person, stem, true)}
+            </span>
+          </>
+        ),
+      })),
+    [i18n],
+  );
+
+  const turnedItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
+    () =>
+      NEGATION_TURNED.slice(0, 6).map(({ yes, no, person }) => ({
+        kind: "rewrite" as const,
+        id: `no-${clipId(no)}`,
+        from: yes,
+        cue: t`say no`,
+        src: src(no),
+        answers: [no],
+        pair: [person, no] as const,
+      })),
+    [t],
+  );
+
+  const fixItems = useMemo<(FixItem & { pair: readonly [string, string] })[]>(
+    () =>
+      NEGATION_FIXES.map(({ wrong, said, kind }) => ({
+        kind: "fix" as const,
+        id: `fix-${clipId(wrong)}`,
+        wrong,
+        answers: [said],
+        src: src(said),
+        pair: [kind, wrong] as const,
+        explain:
+          kind === "verb" ? (
+            <Trans>
+              After <span lang="et">ei</span>, the verb drops its ending.
+            </Trans>
+          ) : (
+            <Trans>
+              After <span lang="et">ei</span>, <span lang="et">olema</span> is always{" "}
+              <span lang="et">ole</span>.
+            </Trans>
+          ),
+      })),
+    [],
+  );
+
+  const yesNoItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
+    () =>
+      YES_OR_NO.flatMap(({ stem, person, long, yes, no }) => {
+        const said = (mode: boolean) => verbSentence(person, stem, mode);
+        const rest = (text: string) => text.slice(text.indexOf(" "));
+        const dropped = (text: string) =>
+          person === "ta" || person === "nad"
+            ? []
+            : [`${rest(text).trim().charAt(0).toUpperCase()}${rest(text).trim().slice(1)}`];
+        return [false, true].map((mode) => {
+          const text = said(mode);
+          return {
+            kind: "translate" as const,
+            id: `${mode ? "no" : "yes"}-${stem}-${person}`,
+            prompt: i18n._(mode ? no : yes),
+            src: src(text),
+            answers: [text, `${long}${rest(text)}`, ...(mode ? [] : dropped(text))],
+            pair: [mode ? "no" : "yes", text] as const,
+          };
+        });
+      }),
+    [i18n],
+  );
+
+  const talkQuestions = useMemo<PassageQuestion[]>(
+    () => [
+      {
+        id: "reading",
+        kind: "truefalse",
+        ask: t`Jaan is reading.`,
+        answer: false,
+        line: 1,
+      },
+      {
+        id: "why",
+        ask: t`What does Jaan say about himself?`,
+        options: [
+          { id: "busy", label: t`He’s busy.` },
+          { id: "tired", label: t`He’s tired.` },
+          { id: "teacher", label: t`He’s a teacher.` },
+        ],
+        answer: "tired",
+        line: 2,
+      },
+      {
+        id: "drink",
+        ask: t`What does Jaan drink?`,
+        options: [
+          { id: "coffee", label: t`Coffee` },
+          { id: "tea", label: t`Green tea` },
+          { id: "water", label: t`Water` },
+        ],
+        answer: "water",
+        line: 5,
+      },
+      {
+        id: "home",
+        kind: "truefalse",
+        ask: t`Peeter is at home.`,
+        answer: false,
+        line: 7,
+      },
+      {
+        id: "working",
+        kind: "truefalse",
+        ask: t`Peeter is at work.`,
+        answer: true,
+        line: 8,
+      },
+    ],
+    [t],
+  );
+
   return (
     <LessonView
       slug={SLUG}
@@ -464,8 +633,8 @@ export function EitusLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">8 minutes</Trans>,
-        <Trans key="q">2 quizzes</Trans>,
+        <Trans key="m">15 minutes</Trans>,
+        <Trans key="q">6 quizzes and a conversation</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -602,6 +771,42 @@ export function EitusLesson() {
           ),
         },
         {
+          id: "type",
+          title: t`Type the form after ei`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each round gives a verb as it is said with a pronoun. Type the form that follows{" "}
+                    <span lang="et">ei</span>: take off the ending, as <b lang="et">elavad</b>{" "}
+                    becomes <b lang="et">ei ela</b>.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="type-after-ei"
+                title={<Trans>Type the form after ei</Trans>}
+                items={formItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, each without its ending.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check which ending each one dropped.</Trans>
+                  ) : (
+                    <Trans>Flip the six lines at the top once more, then try again.</Trans>
+                  )
+                }
+                recall={formRecall}
+                order={eachPairFirst}
+                round={(props) => <FormRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
           id: "ole",
           title: t`Ei ole and pole`,
           children: (
@@ -706,6 +911,142 @@ export function EitusLesson() {
                 both={(item) => [item.src, item.reply]}
                 recall={(item) => ({ label: item.said, src: item.reply })}
                 round={(props) => <ChoiceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "rewrite",
+          title: t`Say it with no`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Rewrite each sentence as a no. Put <span lang="et">ei</span> before the verb and
+                    drop its ending; the rest stays. <b lang="et">Ta töötab kodus</b> becomes{" "}
+                    <b lang="et">Ta ei tööta kodus</b>.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="rewrite-no"
+                title={<Trans>Rewrite the sentence</Trans>}
+                items={turnedItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>
+                      All six, each with <span lang="et">ei</span> and no ending.
+                    </Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check the verb in the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Flip the six lines at the top once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "fix",
+          title: t`Fix the no`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    In each sentence one word is wrong: a verb that keeps its ending after{" "}
+                    <span lang="et">ei</span>, or a form of <span lang="et">olema</span> other than{" "}
+                    <span lang="et">ole</span>. Tap the wrong word, then type it right.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="fix-no"
+                title={<Trans>Fix the sentence</Trans>}
+                items={fixItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, each found and fixed.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>
+                      Nearly. Look at the word right after <span lang="et">ei</span>.
+                    </Trans>
+                  ) : (
+                    <Trans>Go back to the two switches above, then try again.</Trans>
+                  )
+                }
+                recall={fixRecall}
+                order={eachPairFirst}
+                round={(props) => <FixRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "yes-or-no",
+          title: t`Yes or no`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Now the meaning decides. Write each sentence in Estonian: a yes keeps the verb’s
+                    ending, and a no takes <span lang="et">ei</span> and drops it.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="yes-or-no"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={yesNoItems}
+                rounds={8}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All eight, every yes and every no.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check whether each one meant yes or no.</Trans>
+                  ) : (
+                    <Trans>Flip the six lines at the top once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listening: Mari’s questions`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Mari asks Jaan three questions. Listen to how he answers each, and to what he
+                    says after it.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="mari-asks"
+                title={<Trans>Listen: Mari’s questions</Trans>}
+                clip="d-mari"
+                turns={NEGATION_TALK.turns}
+                names={{ second: t`Mari`, main: t`Jaan` }}
+                questions={talkQuestions}
               />
             </>
           ),

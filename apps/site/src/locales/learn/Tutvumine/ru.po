@@ -7,6 +7,15 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
+msgid "<0>Kas</0> asks yes or no: the answer starts with <1>jah</1> or <2>ei</2>."
+msgstr "<0>Kas</0> спрашивает «да или нет»: ответ начинается с <1>jah</1> или <2>ei</2>."
+
+msgid "<0>Kes</0> asks who, so a person answers it."
+msgstr "<0>Kes</0> спрашивает «кто», поэтому ответ — человек."
+
+msgid "<0>Kus</0> asks where, so a place answers it."
+msgstr "<0>Kus</0> спрашивает «где», поэтому ответ — место."
+
 msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> спрашивает, откуда ты, а не где живёшь."
 
@@ -92,13 +101,13 @@ msgid "Ask a yes-or-no question with <0>kas</0>, and any other with a question w
 msgstr "Вопрос «да или нет» начинай с <0>kas</0>, а любой другой — с вопросительного слова: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
 
 msgid "Ask the question"
-msgstr "Спроси"
+msgstr "Задай вопрос"
 
 msgid "Asking Mari"
 msgstr "Вопросы к Мари"
 
 msgid "Asking questions"
-msgstr "Вопросы"
+msgstr "Как задавать вопросы"
 
 msgid "Asks Mari a question."
 msgstr "Есть вопрос к Мари."
@@ -117,6 +126,9 @@ msgstr "кофе"
 
 msgid "Coffee"
 msgstr "Кофе"
+
+msgid "Do you live in Tallinn?"
+msgstr "Ты живёшь в Таллине?"
 
 msgid "Do you speak Estonian?"
 msgstr "Ты говоришь по-эстонски?"
@@ -177,6 +189,9 @@ msgstr "я живу"
 
 msgid "I work"
 msgstr "я работаю"
+
+msgid "I’m Andres."
+msgstr "Я Андрес."
 
 msgid "I’m not at home."
 msgstr "Меня нет дома."
@@ -378,6 +393,9 @@ msgstr "Где ты живёшь?"
 
 msgid "Where do you work?"
 msgstr "Где ты работаешь?"
+
+msgid "Where does he work?"
+msgstr "Где он работает?"
 
 msgid "Where does Jaan work?"
 msgstr "Где работает Яан?"

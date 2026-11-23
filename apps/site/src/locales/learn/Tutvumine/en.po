@@ -7,6 +7,15 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
+msgid "<0>Kas</0> asks yes or no: the answer starts with <1>jah</1> or <2>ei</2>."
+msgstr "<0>Kas</0> asks yes or no: the answer starts with <1>jah</1> or <2>ei</2>."
+
+msgid "<0>Kes</0> asks who, so a person answers it."
+msgstr "<0>Kes</0> asks who, so a person answers it."
+
+msgid "<0>Kus</0> asks where, so a place answers it."
+msgstr "<0>Kus</0> asks where, so a place answers it."
+
 msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> asks where you’re from, not where you live."
 
@@ -118,6 +127,9 @@ msgstr "coffee"
 msgid "Coffee"
 msgstr "Coffee"
 
+msgid "Do you live in Tallinn?"
+msgstr "Do you live in Tallinn?"
+
 msgid "Do you speak Estonian?"
 msgstr "Do you speak Estonian?"
 
@@ -177,6 +189,9 @@ msgstr "I live"
 
 msgid "I work"
 msgstr "I work"
+
+msgid "I’m Andres."
+msgstr "I’m Andres."
 
 msgid "I’m not at home."
 msgstr "I’m not at home."
@@ -378,6 +393,9 @@ msgstr "Where do you live?"
 
 msgid "Where do you work?"
 msgstr "Where do you work?"
+
+msgid "Where does he work?"
+msgstr "Where does he work?"
 
 msgid "Where does Jaan work?"
 msgstr "Where does Jaan work?"

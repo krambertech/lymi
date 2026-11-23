@@ -1227,6 +1227,8 @@ export const TUTVUMINE_ASKED = [
       "Kas teie räägite eesti keelt?",
       "Kas räägid eesti keelt?",
       "Kas räägite eesti keelt?",
+      "Sa räägid eesti keelt või?",
+      "Te räägite eesti keelt või?",
     ],
   },
   {
@@ -1239,6 +1241,8 @@ export const TUTVUMINE_ASKED = [
       "Kas teie olete õpetaja?",
       "Kas oled õpetaja?",
       "Kas olete õpetaja?",
+      "Sa oled õpetaja või?",
+      "Te olete õpetaja või?",
     ],
   },
   {
@@ -1280,24 +1284,19 @@ export const TUTVUMINE_TRANSLATED = [
   {
     kind: "ask",
     answers: [
-      "Kas sa räägid eesti keelt?",
-      "Kas te räägite eesti keelt?",
-      "Kas sina räägid eesti keelt?",
-      "Kas teie räägite eesti keelt?",
-      "Kas räägid eesti keelt?",
-      "Kas räägite eesti keelt?",
+      "Kas sa elad Tallinnas?",
+      "Kas te elate Tallinnas?",
+      "Kas sina elad Tallinnas?",
+      "Kas teie elate Tallinnas?",
+      "Kas elad Tallinnas?",
+      "Kas elate Tallinnas?",
+      "Kas sa Tallinnas elad?",
+      "Kas te Tallinnas elate?",
     ],
   },
   {
     kind: "kus",
-    answers: [
-      "Kus sa töötad?",
-      "Kus te töötate?",
-      "Kus sina töötad?",
-      "Kus teie töötate?",
-      "Kus töötad?",
-      "Kus töötate?",
-    ],
+    answers: ["Kus ta töötab?", "Kus tema töötab?"],
   },
 ] as const;
 

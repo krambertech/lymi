@@ -108,7 +108,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian numbers`,
         et: "Üks, kaks, kolm",
         minutes: 15,
-        blurb: msg`A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud.`,
+        blurb: msg`A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, numbers that sound alike, and numbers heard in prices, ages and phone numbers. Every number is read aloud.`,
       },
       {
         slug: "kell",

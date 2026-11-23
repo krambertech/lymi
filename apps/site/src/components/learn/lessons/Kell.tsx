@@ -19,6 +19,7 @@ import {
   timeParts,
   timeSentence,
   timeWords,
+  timeWordsAlso,
   withMinute,
 } from "../../../lib/learn/estonian-time";
 import { playSound, usePlaying } from "../../../lib/learn/player";
@@ -597,7 +598,10 @@ export function KellLesson() {
       IN_WORDS.map((time) => ({
         base: timeDigits(time),
         cue: t`in words`,
-        answers: [timeWords(time), `kell on ${timeWords(time)}`],
+        answers: [timeWords(time), ...timeWordsAlso(time)].flatMap((words) => [
+          words,
+          `kell on ${words}`,
+        ]) as [string, ...string[]],
         src: timeSrc(time),
         said: timeSentence(time),
         pair: [kindOf(time), timeClip(time)] as const,

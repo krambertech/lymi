@@ -11522,5 +11522,15 @@
     "text": "Ma ei ole kodus.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kas-sa-elad-tallinnas": {
+    "text": "Kas sa elad Tallinnas?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kus-ta-to2o2tab": {
+    "text": "Kus ta töötab?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

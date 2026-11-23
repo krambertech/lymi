@@ -414,8 +414,8 @@ const TRANSLATED_MEANS = [
   msg`I’m not at home.`,
   msg`We live in Tallinn.`,
   msg`They’re at work.`,
-  msg`Do you speak Estonian?`,
-  msg`Where do you work?`,
+  msg`Do you live in Tallinn?`,
+  msg`Where does he work?`,
 ] as const;
 
 const SORTED: readonly { w: string; bin: string }[] = [
@@ -435,9 +435,37 @@ export function TutvumineLesson() {
   const src = (text: string) => clipUrl(SLUG, clipId(text));
 
   const sortBins: SortBin[] = [
-    { id: "kas", label: "Kas …?", hint: t`yes or no` },
-    { id: "kus", label: "Kus …?", hint: t`where` },
-    { id: "kes", label: "Kes …?", hint: t`who` },
+    {
+      id: "kas",
+      label: "Kas …?",
+      hint: t`yes or no`,
+      rule: (
+        <Trans>
+          <b lang="et">Kas</b> asks yes or no: the answer starts with <b lang="et">jah</b> or{" "}
+          <b lang="et">ei</b>.
+        </Trans>
+      ),
+    },
+    {
+      id: "kus",
+      label: "Kus …?",
+      hint: t`where`,
+      rule: (
+        <Trans>
+          <b lang="et">Kus</b> asks where, so a place answers it.
+        </Trans>
+      ),
+    },
+    {
+      id: "kes",
+      label: "Kes …?",
+      hint: t`who`,
+      rule: (
+        <Trans>
+          <b lang="et">Kes</b> asks who, so a person answers it.
+        </Trans>
+      ),
+    },
   ];
   const sortItems: SortItem[] = SORTED.map(({ w, bin }) => ({ w, bin }));
 

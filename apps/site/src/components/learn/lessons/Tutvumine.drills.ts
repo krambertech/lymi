@@ -33,8 +33,8 @@ const MEANS = [
   msg`I’m not at home.`,
   msg`We live in Tallinn.`,
   msg`They’re at work.`,
-  msg`Do you speak Estonian?`,
-  msg`Where do you work?`,
+  msg`Do you live in Tallinn?`,
+  msg`Where does he work?`,
 ] as const;
 
 const asked = ({ kind, reply, answers }: (typeof TUTVUMINE_ASKED)[number]): SentenceDrill => ({
@@ -60,10 +60,17 @@ const translated = (
   explain: WHY[kind] as MessageDescriptor,
 });
 
+const FIX_MEANS: Record<string, MessageDescriptor> = {
+  "Kas sa räägib eesti keelt?": msg`Do you speak Estonian?`,
+  "Kus sa elab?": msg`Where do you live?`,
+  "Mina on Andres.": msg`I’m Andres.`,
+};
+
 const fixed = ({ wrong, said, kind }: (typeof TUTVUMINE_FIXES)[number]): FixDrill => ({
   kind: "fix",
   id: `fix-${clipId(wrong)}`,
   rule: RULE[kind] as string,
+  ...(FIX_MEANS[wrong] ? { prompt: FIX_MEANS[wrong] } : {}),
   wrong,
   say: said,
   answers: [said],

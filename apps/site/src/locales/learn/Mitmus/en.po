@@ -44,8 +44,8 @@ msgid "a big house"
 msgstr "a big house"
 
 #. placeholder {0}: ending("-d")
-msgid "A dictionary gives a noun in three forms, as lesson {forms} shows. The second form is the genitive from lesson {genitive}. To say more than one, add {0} to it: <0/>, <1/>, so <2/>, cats."
-msgstr "A dictionary gives a noun in three forms, as lesson {forms} shows. The second form is the genitive from lesson {genitive}. To say more than one, add {0} to it: <0/>, <1/>, so <2/>, cats."
+msgid "A dictionary gives a noun in three forms, as lesson {forms} shows. The second of them is the genitive from lesson {genitive}. To say more than one, add {0} to it: <0/>, <1/>, so <2/>, cats."
+msgstr "A dictionary gives a noun in three forms, as lesson {forms} shows. The second of them is the genitive from lesson {genitive}. To say more than one, add {0} to it: <0/>, <1/>, so <2/>, cats."
 
 msgid "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. Two adjectives come from the section above, <0/>, small, and <1/>, beautiful. One verb is new: <2/>, to sleep."
 msgstr "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. Two adjectives come from the section above, <0/>, small, and <1/>, beautiful. One verb is new: <2/>, to sleep."
@@ -71,11 +71,11 @@ msgid "a small cat"
 msgstr "a small cat"
 
 #. placeholder {0}: ending("-d")
-msgid "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Pick a word, then tap each form to see what changes."
-msgstr "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Pick a word, then tap each form to see what changes."
+msgid "Add the {0} to the genitive, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Pick a word, then tap each form to see what changes."
+msgstr "Add the {0} to the genitive, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Pick a word, then tap each form to see what changes."
 
-msgid "Adjective and noun in the first form."
-msgstr "Adjective and noun in the first form."
+msgid "Adjective and noun in the nominative."
+msgstr "Adjective and noun in the nominative."
 
 msgid "Adjectives take -d too"
 msgstr "Adjectives take -d too"
@@ -162,8 +162,8 @@ msgstr "door"
 msgid "doors"
 msgstr "doors"
 
-msgid "Each word is its second form plus <0>-d</0>."
-msgstr "Each word is its second form plus <0>-d</0>."
+msgid "Each word is its genitive plus <0>-d</0>."
+msgstr "Each word is its genitive plus <0>-d</0>."
 
 msgid "Fill the gaps"
 msgstr "Fill the gaps"
@@ -177,11 +177,14 @@ msgstr "friends"
 msgid "Friends are waiting."
 msgstr "Friends are waiting."
 
+msgid "genitive"
+msgstr "genitive"
+
 msgid "good friends"
 msgstr "good friends"
 
-msgid "Hear a noun’s first and second forms, then type its plural. Build it on the second form."
-msgstr "Hear a noun’s first and second forms, then type its plural. Build it on the second form."
+msgid "Hear a noun’s nominative and genitive, then type its plural. Build it on the genitive."
+msgstr "Hear a noun’s nominative and genitive, then type its plural. Build it on the genitive."
 
 msgid "Hear a sentence and pick what it says. Listen to the end of the noun and of the verb."
 msgstr "Hear a sentence and pick what it says. Listen to the end of the noun and of the verb."
@@ -201,8 +204,8 @@ msgstr "is, are"
 msgid "Kass, kassi: a vowel appears at the end."
 msgstr "Kass, kassi: a vowel appears at the end."
 
-msgid "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on that second form, so the change shows again: <2/>, shops."
-msgstr "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on that second form, so the change shows again: <2/>, shops."
+msgid "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on that genitive, so the change shows again: <2/>, shops."
+msgstr "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on that genitive, so the change shows again: <2/>, shops."
 
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
@@ -226,8 +229,8 @@ msgstr "men"
 msgid "Mother and father are working."
 msgstr "Mother and father are working."
 
-msgid "Nearly. For the ones you missed, start from the second form."
-msgstr "Nearly. For the ones you missed, start from the second form."
+msgid "Nearly. For the ones you missed, start from the genitive."
+msgstr "Nearly. For the ones you missed, start from the genitive."
 
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Nearly. Play the ones you missed once more."
@@ -273,9 +276,6 @@ msgstr "school"
 msgid "schools"
 msgstr "schools"
 
-msgid "second form"
-msgstr "second form"
-
 msgid "shop"
 msgstr "shop"
 
@@ -318,14 +318,29 @@ msgstr "The e drops and an a comes in."
 msgid "The ee shortens, the s becomes h, and an e comes in."
 msgstr "The ee shortens, the s becomes h, and an e comes in."
 
-msgid "The first form"
-msgstr "The first form"
-
 msgid "The form a dictionary lists first."
 msgstr "The form a dictionary lists first."
 
 msgid "The g drops and the i becomes e."
 msgstr "The g drops and the i becomes e."
+
+msgid "The genitive and -d"
+msgstr "The genitive and -d"
+
+msgid "The genitive and <0>-d</0>"
+msgstr "The genitive and <0>-d</0>"
+
+msgid "the genitive of kass"
+msgstr "the genitive of kass"
+
+msgid "the genitive of pood"
+msgstr "the genitive of pood"
+
+msgid "the genitive of suur"
+msgstr "the genitive of suur"
+
+msgid "The genitive plus -d."
+msgstr "The genitive plus -d."
 
 msgid "The house is big."
 msgstr "The house is big."
@@ -342,6 +357,9 @@ msgstr "The men are working."
 msgid "The n becomes s."
 msgstr "The n becomes s."
 
+msgid "The nominative"
+msgstr "The nominative"
+
 msgid "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
 msgstr "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
 
@@ -349,35 +367,17 @@ msgid "The od drops and an e comes in."
 msgstr "The od drops and an e comes in."
 
 #. placeholder {0}: ending("-d")
-msgid "The plural is the second form plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
-msgstr "The plural is the second form plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
+msgid "The plural is the genitive plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
+msgstr "The plural is the genitive plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
 
 msgid "The plural keeps the stem change"
 msgstr "The plural keeps the stem change"
 
-msgid "The plural keeps the stem change of the second form: <0>pood, poe → poed; tuba, toa → toad</0>."
-msgstr "The plural keeps the stem change of the second form: <0>pood, poe → poed; tuba, toa → toad</0>."
+msgid "The plural keeps the stem change of the genitive: <0>pood, poe → poed; tuba, toa → toad</0>."
+msgstr "The plural keeps the stem change of the genitive: <0>pood, poe → poed; tuba, toa → toad</0>."
 
 msgid "The same for ta and nad."
 msgstr "The same for ta and nad."
-
-msgid "The second form and -d"
-msgstr "The second form and -d"
-
-msgid "The second form and <0>-d</0>"
-msgstr "The second form and <0>-d</0>"
-
-msgid "the second form of kass"
-msgstr "the second form of kass"
-
-msgid "the second form of pood"
-msgstr "the second form of pood"
-
-msgid "the second form of suur"
-msgstr "the second form of suur"
-
-msgid "The second form plus -d."
-msgstr "The second form plus -d."
 
 msgid "The teacher is speaking."
 msgstr "The teacher is speaking."
@@ -400,8 +400,8 @@ msgstr "The women are drinking coffee."
 msgid "they"
 msgstr "they"
 
-msgid "To say more than one, add <0>-d</0> to a noun’s second form: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5> The big cats are eating."
-msgstr "To say more than one, add <0>-d</0> to a noun’s second form: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5> The big cats are eating."
+msgid "To say more than one, add <0>-d</0> to a noun’s genitive: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5> The big cats are eating."
+msgstr "To say more than one, add <0>-d</0> to a noun’s genitive: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5> The big cats are eating."
 
 msgid "to sleep"
 msgstr "to sleep"
@@ -425,8 +425,8 @@ msgid "Type the plural"
 msgstr "Type the plural"
 
 #. placeholder {0}: ending("-d")
-msgid "When the second form is the same as the first, only the {0} is new: <0/> gives <1/>. Switch between One and Many, and tap a word to hear it."
-msgstr "When the second form is the same as the first, only the {0} is new: <0/> gives <1/>. Switch between One and Many, and tap a word to hear it."
+msgid "When the genitive is the same as the nominative, only the {0} is new: <0/> gives <1/>. Switch between One and Many, and tap a word to hear it."
+msgstr "When the genitive is the same as the nominative, only the {0} is new: <0/> gives <1/>. Switch between One and Many, and tap a word to hear it."
 
 msgid "woman"
 msgstr "woman"

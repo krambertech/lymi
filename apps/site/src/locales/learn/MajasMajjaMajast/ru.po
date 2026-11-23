@@ -85,8 +85,8 @@ msgstr "Русский различает это предлогом и паде�
 msgid "Estonian asks three questions about a place, <0>kus</0>, <1>kuhu</1> and <2>kust</2>, and answers each with its own ending: <3>majas, majja, majast</3>."
 msgstr "Эстонский задаёт о месте три вопроса — <0>kus</0>, <1>kuhu</1> и <2>kust</2>, то есть где, куда и откуда, — и на каждый отвечает своим окончанием: <3>majas, majja, majast</3>."
 
-msgid "For <0/>, <1/> and <2/>, the short form is the third form a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. Two words have a short form of their own: <4/> for <5/>, <6/> for <7/>."
-msgstr "У <0/>, <1/> и <2/> короткая форма — это третья форма из словаря, её показывает урок {threeForms}: <3>pood, poe, poodi</3>. У двух слов своя короткая форма: <4/> от <5/>, <6/> от <7/>."
+msgid "For <0/>, <1/> and <2/>, the short form is the partitive a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. Two words have a short form of their own: <4/> for <5/>, <6/> for <7/>."
+msgstr "У <0/>, <1/> и <2/> короткая форма — это партитив из словаря, как показывает урок {threeForms}: <3>pood, poe, poodi</3>. У двух слов своя короткая форма: <4/> от <5/>, <6/> от <7/>."
 
 msgid "Four places, each with a form for kus, kuhu and kust"
 msgstr "Четыре места, у каждого форма для kus, kuhu и kust"

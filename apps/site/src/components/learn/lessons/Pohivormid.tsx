@@ -72,26 +72,26 @@ const TABLE = NOUN_FORMS.slice(0, 10);
 /** The words the dictionary card can show. */
 const ENTRY_WORDS: readonly First[] = ["pood", "mees", "raamat", "uks"];
 
-/** The nouns whose second and third forms are the same word. */
+/** The nouns whose genitive and partitive are the same word. */
 const SAME: readonly First[] = ["kool", "linn", "maja", "kodu", "sõna"];
 
-/** The nouns whose third form has back what the second dropped. */
+/** The nouns whose partitive has back what the second dropped. */
 const BACK: readonly First[] = ["pood", "tuba", "laud", "turg"];
 
-/** The nouns whose ending gives the third form away. */
+/** The nouns whose ending gives the partitive away. */
 const TELLING: readonly First[] = ["naine", "küsimus", "töö"];
 
-/** The match: words to pair with their second and third forms. pood is the card’s example above it. */
+/** The match: words to pair with their genitive and partitive. pood is the card’s example above it. */
 export const MATCHED: readonly First[] = ["raamat", "auto", "uks", "mees", "naine", "laps"];
 
 function gloss(first: First | TypedFirst, form: string, forms: NounForms) {
   const [, two, three] = forms;
   const note =
     form === two && form === three
-      ? msg`The second and third form of ${first}.`
+      ? msg`The genitive and partitive of ${first}.`
       : form === two
-        ? msg`The second form of ${first}.`
-        : msg`The third form of ${first}.`;
+        ? msg`The genitive of ${first}.`
+        : msg`The partitive of ${first}.`;
   return { en: MEANS[first], note };
 }
 
@@ -101,7 +101,7 @@ const ALL_FORMS: readonly NounForms[] = [
 ];
 
 const GLOSSARY: Glossary = {
-  // Each later form first, so a word that is also a first form, as tuba is, keeps its own meaning.
+  // Each later form first, so a word that is also a nominative, as tuba is, keeps its own meaning.
   ...Object.fromEntries(
     ALL_FORMS.flatMap((forms) => {
       const first = forms[0] as First | TypedFirst;
@@ -114,11 +114,11 @@ const GLOSSARY: Glossary = {
   ...Object.fromEntries(
     ALL_FORMS.map((forms) => [forms[0], { en: MEANS[forms[0] as First | TypedFirst] }]),
   ),
-  põhivormid: { en: msg`the main forms: a word’s first, second and third form` },
+  põhivormid: { en: msg`the main forms: a word’s nominative, genitive and partitive` },
   koolis: { en: msg`at school, in a school` },
 };
 
-/** The letters a form shares with the first form, then `|` before the rest, which Paradigm lights. */
+/** The letters a form shares with the nominative, then `|` before the rest, which Paradigm lights. */
 function litFrom(first: string, form: string): string {
   let shared = 0;
   while (shared < first.length && first[shared] === form[shared]) shared++;
@@ -130,21 +130,21 @@ function FormTable({ notes }: { notes: Record<string, ReactNode> }) {
   const { t, i18n } = useLingui();
   const slotName = (slot: number, first: string) =>
     slot === 0 ? (
-      <Trans>The first form: the word itself.</Trans>
+      <Trans>The nominative: the word itself.</Trans>
     ) : slot === 1 ? (
       <Trans>
-        The second form of <b lang="et">{first}</b>.
+        The genitive of <b lang="et">{first}</b>.
       </Trans>
     ) : (
       <Trans>
-        The third form of <b lang="et">{first}</b>.
+        The partitive of <b lang="et">{first}</b>.
       </Trans>
     );
   return (
     <Panel>
       <Paradigm
         label={t`Ten nouns in their three forms`}
-        columns={[t`First`, t`Second`, t`Third`]}
+        columns={[t`Nominative`, t`Genitive`, t`Partitive`]}
         rows={TABLE.map((forms) => ({
           id: forms[0],
           label: i18n._(MEANS[forms[0]]),
@@ -160,7 +160,7 @@ function FormTable({ notes }: { notes: Record<string, ReactNode> }) {
         }))}
         empty={{
           title: t`Tap a form`,
-          tip: t`You’ll hear it and see how it changes from the first.`,
+          tip: t`You’ll hear it and see how it changes from the nominative.`,
         }}
       />
     </Panel>
@@ -222,8 +222,8 @@ function EntryCard() {
       </div>
       <p className="text-md text-ink-secondary">
         <Trans>
-          The left column, top to bottom: the first, second and third form. Pick another word and
-          watch how they change.
+          The left column, top to bottom: the nominative, the genitive and the partitive. Pick
+          another word and watch how they change.
         </Trans>
       </p>
     </Panel>
@@ -239,33 +239,34 @@ export function PohivormidLesson() {
   const partitive = lessonBySlug("osastav")?.n;
 
   const notes: Record<string, ReactNode> = {
-    kool: <Trans>Its second and third forms are the same.</Trans>,
+    kool: <Trans>Its genitive and partitive are the same.</Trans>,
     pood: (
       <Trans>
-        The second drops the <b lang="et">d</b> and one <b lang="et">o</b>; the third has them back.
+        The genitive drops the <b lang="et">d</b> and one <b lang="et">o</b>; the partitive has them
+        back.
       </Trans>
     ),
     raamat: (
       <Trans>
-        The third is the second with <b lang="et">-t</b>.
+        The partitive is the genitive with <b lang="et">-t</b>.
       </Trans>
     ),
     maja: <Trans>All three forms are the same.</Trans>,
     auto: (
       <Trans>
-        The third adds <b lang="et">-t</b>.
+        The partitive adds <b lang="et">-t</b>.
       </Trans>
     ),
-    linn: <Trans>Its second and third forms are the same.</Trans>,
+    linn: <Trans>Its genitive and partitive are the same.</Trans>,
     uks: (
       <Trans>
-        The third drops the <b lang="et">k</b> and ends in <b lang="et">-st</b>.
+        The partitive drops the <b lang="et">k</b> and ends in <b lang="et">-st</b>.
       </Trans>
     ),
     mees: (
       <Trans>
-        In the second, <b lang="et">ee</b> shortens and <b lang="et">s</b> becomes{" "}
-        <b lang="et">h</b>; the third ends in <b lang="et">-st</b>.
+        In the genitive, <b lang="et">ee</b> shortens and <b lang="et">s</b> becomes{" "}
+        <b lang="et">h</b>; the partitive ends in <b lang="et">-st</b>.
       </Trans>
     ),
     naine: (
@@ -275,23 +276,23 @@ export function PohivormidLesson() {
     ),
     laps: (
       <Trans>
-        The third drops the <b lang="et">p</b> and ends in <b lang="et">-st</b>.
+        The partitive drops the <b lang="et">p</b> and ends in <b lang="et">-st</b>.
       </Trans>
     ),
     tuba: (
       <Trans>
-        The second loses the <b lang="et">b</b> and the <b lang="et">u</b> turns into{" "}
-        <b lang="et">o</b>; the third is the first again.
+        The genitive loses the <b lang="et">b</b> and the <b lang="et">u</b> turns into{" "}
+        <b lang="et">o</b>; the partitive is the nominative again.
       </Trans>
     ),
     laud: (
       <Trans>
-        The second drops the <b lang="et">d</b>; the third has it back.
+        The genitive drops the <b lang="et">d</b>; the partitive has it back.
       </Trans>
     ),
     turg: (
       <Trans>
-        The second drops the <b lang="et">g</b>; the third has it back.
+        The genitive drops the <b lang="et">g</b>; the partitive has it back.
       </Trans>
     ),
     küsimus: (
@@ -301,7 +302,7 @@ export function PohivormidLesson() {
     ),
     töö: (
       <Trans>
-        One syllable ending in a long vowel: the second is the same, the third adds{" "}
+        One syllable ending in a long vowel: the genitive is the same, the partitive adds{" "}
         <b lang="et">-d</b>.
       </Trans>
     ),
@@ -360,7 +361,7 @@ export function PohivormidLesson() {
     return POHIVORMID_TYPED.map(({ forms, pattern }) => ({
       base: forms[0],
       gloss: i18n._(MEANS[forms[0]]),
-      cue: t`Third form`,
+      cue: t`Partitive`,
       answers: [forms[2]],
       src: entrySrc(forms),
       explain: RULES[pattern],
@@ -379,7 +380,7 @@ export function PohivormidLesson() {
           line: "Pood, poe, poe.",
           why: (
             <Trans>
-              <b lang="et">Poe</b> is the second form. The third has the <b lang="et">d</b> back:{" "}
+              <b lang="et">Poe</b> is the genitive. The partitive has the <b lang="et">d</b> back:{" "}
               <b lang="et">poodi</b>.
             </Trans>
           ),
@@ -389,8 +390,8 @@ export function PohivormidLesson() {
           line: "Pood, poodi, poe.",
           why: (
             <Trans>
-              The order is first, second, third. <b lang="et">Poe</b>, the one without the{" "}
-              <b lang="et">d</b>, comes second.
+              The order is nominative, genitive, partitive. <b lang="et">Poe</b>, the one without
+              the <b lang="et">d</b>, comes second.
             </Trans>
           ),
         },
@@ -406,7 +407,7 @@ export function PohivormidLesson() {
           line: "Laps, lapse, lapse.",
           why: (
             <Trans>
-              The third form of <b lang="et">laps</b> ends in <b lang="et">-st</b>:{" "}
+              The partitive of <b lang="et">laps</b> ends in <b lang="et">-st</b>:{" "}
               <b lang="et">last</b>.
             </Trans>
           ),
@@ -415,7 +416,7 @@ export function PohivormidLesson() {
           line: "Laps, last, lapse.",
           why: (
             <Trans>
-              <b lang="et">Last</b> is the third form, so it comes after <b lang="et">lapse</b>.
+              <b lang="et">Last</b> is the partitive, so it comes after <b lang="et">lapse</b>.
             </Trans>
           ),
         },
@@ -430,8 +431,8 @@ export function PohivormidLesson() {
           line: "Maja, majas, maja.",
           why: (
             <Trans>
-              <b lang="et">Majas</b> means in the house: the second form with <b lang="et">-s</b>.
-              The second form itself is <b lang="et">maja</b>.
+              <b lang="et">Majas</b> means in the house: the genitive with <b lang="et">-s</b>. The
+              genitive itself is <b lang="et">maja</b>.
             </Trans>
           ),
         },
@@ -447,7 +448,7 @@ export function PohivormidLesson() {
           line: "Vastus, vastus, vastust.",
           why: (
             <Trans>
-              Like <b lang="et">küsimus</b>, <b lang="et">vastus</b> has a second form in{" "}
+              Like <b lang="et">küsimus</b>, <b lang="et">vastus</b> has a genitive in{" "}
               <b lang="et">-use</b>: <b lang="et">vastuse</b>.
             </Trans>
           ),
@@ -456,7 +457,7 @@ export function PohivormidLesson() {
           line: "Vastus, vastust, vastuse.",
           why: (
             <Trans>
-              The order is first, second, third, so <b lang="et">vastuse</b> comes before{" "}
+              The order is nominative, genitive, partitive, so <b lang="et">vastuse</b> comes before{" "}
               <b lang="et">vastust</b>.
             </Trans>
           ),
@@ -473,7 +474,7 @@ export function PohivormidLesson() {
       sub={
         <Trans>
           Why a dictionary gives every Estonian noun in three forms, where to find them, and which
-          endings tell you the third.
+          endings tell you the partitive.
         </Trans>
       }
       facts={[
@@ -506,7 +507,7 @@ export function PohivormidLesson() {
           <b lang="et">kool, kooli, kooli</b>.
         </Trans>,
         <Trans key="2">
-          The second form is the one{" "}
+          The genitive is the one{" "}
           <b lang="et" className="whitespace-nowrap">
             -s
           </b>{" "}
@@ -529,7 +530,7 @@ export function PohivormidLesson() {
           <b lang="et" className="whitespace-nowrap">
             -us
           </b>{" "}
-          end their third form in{" "}
+          end their partitive in{" "}
           <b lang="et" className="whitespace-nowrap">
             -st
           </b>
@@ -540,7 +541,7 @@ export function PohivormidLesson() {
           : <b lang="et">naist, küsimust, tööd</b>.
         </Trans>,
         <Trans key="5">
-          Other words don’t show their third form, so learn all three together:{" "}
+          Other words don’t show their partitive, so learn all three together:{" "}
           <b lang="et">pood, poe, poodi</b>.
         </Trans>,
       ]}
@@ -556,19 +557,19 @@ export function PohivormidLesson() {
                     Look up <Word w="kool" />, school, and a dictionary gives you three words:{" "}
                     <b lang="et">kool, kooli, kooli</b>. Every noun is listed this way, in the same
                     order. Most of its other forms are built on one of the three. Estonian calls
-                    them <Word w="põhivormid" />, the main forms. This course calls them the first,
-                    second and third form.
+                    them <Word w="põhivormid" />, the main forms. This course calls them by their
+                    case names: the nominative, the genitive and the partitive.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    The first is the word on its own. The second is what lesson {stems} called the
-                    stem: put{" "}
+                    The nominative is the word on its own. The genitive is what lesson {stems}{" "}
+                    called the stem: put{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -s
                     </b>{" "}
-                    on it and you have <Word w="koolis" />. Lesson {genitive} shows what the second
-                    form means by itself, and lesson {partitive} what the third is for.
+                    on it and you have <Word w="koolis" />. Lesson {genitive} shows what the
+                    genitive means by itself, and lesson {partitive} what the partitive is for.
                   </Trans>
                 </p>
               </Prose>
@@ -609,7 +610,7 @@ export function PohivormidLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Match each word with its second and third forms. A wrong pair counts against
+                    Match each word with its genitive and partitive. A wrong pair counts against
                     you, so look for the letters that change.
                   </Trans>
                 </p>
@@ -619,8 +620,8 @@ export function PohivormidLesson() {
                 title={<Trans>Which forms go together?</Trans>}
                 pairs={pairs}
                 columns={[
-                  <Trans key="f">First form</Trans>,
-                  <Trans key="o">Second and third</Trans>,
+                  <Trans key="f">Nominative</Trans>,
+                  <Trans key="o">Genitive and partitive</Trans>,
                 ]}
               />
             </>
@@ -628,13 +629,13 @@ export function PohivormidLesson() {
         },
         {
           id: "same",
-          title: t`When the third form is the same as the second`,
+          title: t`When the partitive is the same as the genitive`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    In <b lang="et">kool, kooli, kooli</b> the second and third forms are the same
+                    In <b lang="et">kool, kooli, kooli</b> the genitive and partitive are the same
                     word. Many short words work this way, such as <Word w="linn" />, town. In some
                     words ending in a vowel all three match: <Word w="maja" />, house, is{" "}
                     <b lang="et">maja, maja, maja</b>.
@@ -643,7 +644,7 @@ export function PohivormidLesson() {
               </Prose>
               <Panel>
                 <Keys
-                  label={t`Words whose second and third forms match`}
+                  label={t`Words whose genitive and partitive match`}
                   items={keysOf(SAME)}
                   columns={5}
                   phoneColumns={2}
@@ -656,7 +657,7 @@ export function PohivormidLesson() {
               <Aside>
                 <Trans>
                   A final vowel doesn’t promise matching forms, though. <Word w="auto" />, car, ends
-                  in a vowel like <Word w="maja" />, but its third form is <Word w="autot" />. And{" "}
+                  in a vowel like <Word w="maja" />, but its partitive is <Word w="autot" />. And{" "}
                   <Word w="raamat" />, book, goes <b lang="et">raamatu, raamatut</b>. The dictionary
                   settles it.
                 </Trans>
@@ -666,22 +667,21 @@ export function PohivormidLesson() {
         },
         {
           id: "back",
-          title: t`When the third form takes letters back`,
+          title: t`When the partitive takes letters back`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
                     Lesson {stems} showed letters dropping or changing before an ending:{" "}
-                    <Word w="pood" /> becomes <Word w="poe" />. That change is the second form. In
-                    these words the third form has the first form’s letters back: <Word w="poodi" />
-                    .
+                    <Word w="pood" /> becomes <Word w="poe" />. That change is the genitive. In
+                    these words the partitive has the nominative’s letters back: <Word w="poodi" />.
                   </Trans>
                 </p>
               </Prose>
               <Panel>
                 <Keys
-                  label={t`Words whose third form takes letters back`}
+                  label={t`Words whose partitive takes letters back`}
                   items={keysOf(BACK)}
                   columns={4}
                   phoneColumns={2}
@@ -694,7 +694,7 @@ export function PohivormidLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Learn the vowel at the end of the third form along with the word:{" "}
+                    Learn the vowel at the end of the partitive along with the word:{" "}
                     <b lang="et">poodi, lauda, turgu</b>.
                   </Trans>
                 </p>
@@ -704,22 +704,22 @@ export function PohivormidLesson() {
         },
         {
           id: "endings",
-          title: t`Endings that tell you the third form`,
+          title: t`Endings that tell you the partitive`,
           quiz: true,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    Some words give their third form away. Most words ending in{" "}
+                    Some words give their partitive away. Most words ending in{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -ne
                     </b>{" "}
-                    have a second form in{" "}
+                    have a genitive in{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -se
                     </b>{" "}
-                    and a third in{" "}
+                    and a partitive in{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -st
                     </b>
@@ -735,17 +735,17 @@ export function PohivormidLesson() {
                 <p>
                   <Trans>
                     A one-syllable word that ends in a long vowel, such as <Word w="töö" />, work,
-                    keeps its second form the same and adds{" "}
+                    keeps its genitive the same and adds{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -d
                     </b>{" "}
-                    for the third: <b lang="et">töö, töö, tööd</b>.
+                    for the partitive: <b lang="et">töö, töö, tööd</b>.
                   </Trans>
                 </p>
               </Prose>
               <Panel>
                 <Keys
-                  label={t`Words whose ending tells the third form`}
+                  label={t`Words whose ending tells the partitive`}
                   items={keysOf(TELLING)}
                   columns={3}
                   phoneColumns={2}
@@ -761,7 +761,7 @@ export function PohivormidLesson() {
                   <b lang="et" className="whitespace-nowrap">
                     -s
                   </b>{" "}
-                  also end their third form in{" "}
+                  also end their partitive in{" "}
                   <b lang="et" className="whitespace-nowrap">
                     -st
                   </b>
@@ -772,17 +772,17 @@ export function PohivormidLesson() {
               </Aside>
               <Prose>
                 <p>
-                  <Trans>Each round shows a new word. Type its third form.</Trans>
+                  <Trans>Each round shows a new word. Type its partitive.</Trans>
                 </p>
               </Prose>
               <Quiz
                 id="third-form"
-                title={<Trans>Type the third form</Trans>}
+                title={<Trans>Type the partitive</Trans>}
                 items={thirdItems}
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All six. You typed the third form right every time.</Trans>
+                    <Trans>All six. You typed the partitive right every time.</Trans>
                   ) : share >= 0.6 ? (
                     <Trans>Nearly. Hear the ones you missed with all three forms.</Trans>
                   ) : (

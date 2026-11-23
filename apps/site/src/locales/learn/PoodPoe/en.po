@@ -50,8 +50,8 @@ msgstr "A dictionary gives the stem second: <0>pood, poe</0>. Learn a noun as th
 msgid "A dictionary gives the stem second. Learn each noun as that pair: <0>pood, poe</0>."
 msgstr "A dictionary gives the stem second. Learn each noun as that pair: <0>pood, poe</0>."
 
-msgid "A dictionary lists a third form too: <0>pood, poe, poodi</0>. Lesson {forms} teaches all three."
-msgstr "A dictionary lists a third form too: <0>pood, poe, poodi</0>. Lesson {forms} teaches all three."
+msgid "A dictionary lists a third form too, the partitive: <0>pood, poe, poodi</0>. Lesson {forms} teaches all three."
+msgstr "A dictionary lists a third form too, the partitive: <0>pood, poe, poodi</0>. Lesson {forms} teaches all three."
 
 msgid "A final vowel is no guarantee: <0>tuba</0> ends in one too, and its stem is <1>toa</1>. The dictionary pair settles it: <2>kodu, kodu</2> but <3>tuba, toa</3>."
 msgstr "A final vowel is no guarantee: <0>tuba</0> ends in one too, and its stem is <1>toa</1>. The dictionary pair settles it: <2>kodu, kodu</2> but <3>tuba, toa</3>."
@@ -324,8 +324,8 @@ msgstr "the word"
 msgid "The word"
 msgstr "The word"
 
-msgid "The word doesn’t show which vowel it gains: <0/>, <1/>; <2/>, <3/>. The dictionary’s second form does."
-msgstr "The word doesn’t show which vowel it gains: <0/>, <1/>; <2/>, <3/>. The dictionary’s second form does."
+msgid "The word doesn’t show which vowel it gains: <0/>, <1/>; <2/>, <3/>. The dictionary’s genitive does."
+msgstr "The word doesn’t show which vowel it gains: <0/>, <1/>; <2/>, <3/>. The dictionary’s genitive does."
 
 msgid "The word, its stem or the stem with an ending"
 msgstr "The word, its stem or the stem with an ending"

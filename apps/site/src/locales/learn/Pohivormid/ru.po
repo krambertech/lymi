@@ -19,14 +19,14 @@ msgstr "<0>-us</0> становится <1>-use</1>, а затем <2>-ust</2>."
 msgid "<0>-us</0> takes <1>-t</1>."
 msgstr "<0>-us</0> получает <1>-t</1>."
 
-msgid "<0>Last</0> is the third form, so it comes after <1>lapse</1>."
-msgstr "<0>Last</0> — третья форма, поэтому она идёт после <1>lapse</1>."
+msgid "<0>Last</0> is the partitive, so it comes after <1>lapse</1>."
+msgstr "<0>Last</0> — партитив, поэтому он идёт после <1>lapse</1>."
 
-msgid "<0>Majas</0> means in the house: the second form with <1>-s</1>. The second form itself is <2>maja</2>."
-msgstr "<0>Majas</0> значит «в доме»: это вторая форма с <1>-s</1>. А сама вторая форма — <2>maja</2>."
+msgid "<0>Majas</0> means in the house: the genitive with <1>-s</1>. The genitive itself is <2>maja</2>."
+msgstr "<0>Majas</0> значит «в доме»: это родительный с <1>-s</1>. А сам родительный — <2>maja</2>."
 
-msgid "<0>Poe</0> is the second form. The third has the <1>d</1> back: <2>poodi</2>."
-msgstr "<0>Poe</0> — вторая форма. В третьей <1>d</1> возвращается: <2>poodi</2>."
+msgid "<0>Poe</0> is the genitive. The partitive has the <1>d</1> back: <2>poodi</2>."
+msgstr "<0>Poe</0> — родительный. В партитиве <1>d</1> возвращается: <2>poodi</2>."
 
 msgid "<0>Sõnaveeb</0>, the free dictionary of the Institute of the Estonian Language, lists them under <1>Sõnavormid</1>, word forms. Search for a word and scroll to that table: its left column holds the three forms, top to bottom. The right column is the plural."
 msgstr "В <0>Sõnaveeb</0>, бесплатном словаре Института эстонского языка, они стоят в таблице <1>Sõnavormid</1> — «формы слова». Найди слово и пролистай до этой таблицы: в левом столбце сверху вниз три формы. Правый столбец — это множественное число."
@@ -40,20 +40,20 @@ msgstr "2 теста и разговор"
 msgid "A dictionary gives a noun in three forms, always in the same order: <0>kool, kooli, kooli</0>."
 msgstr "Словарь приводит существительное в трёх формах, всегда в одном и том же порядке: <0>kool, kooli, kooli</0>."
 
-msgid "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a vowel like <1/>, but its third form is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
-msgstr "Но гласная на конце ещё ничего не гарантирует. <0/> («машина») оканчивается на гласную, как и <1/>, но третья форма у него <2/>. А у <3/> («книга») — <4>raamatu, raamatut</4>. Решает словарь."
+msgid "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a vowel like <1/>, but its partitive is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
+msgstr "Но гласная на конце ещё ничего не гарантирует. <0/> («машина») оканчивается на гласную, как и <1/>, но партитив у него <2/>. А у <3/> («книга») — <4>raamatu, raamatut</4>. Решает словарь."
 
 msgid "A noun has three forms"
 msgstr "У существительного три формы"
 
-msgid "A one-syllable word that ends in a long vowel, such as <0/>, work, keeps its second form the same and adds <1>-d</1> for the third: <2>töö, töö, tööd</2>."
-msgstr "У односложного слова, которое оканчивается на долгую гласную, например <0/> («работа»), вторая форма такая же, а для третьей добавляется <1>-d</1>: <2>töö, töö, tööd</2>."
+msgid "A one-syllable word that ends in a long vowel, such as <0/>, work, keeps its genitive the same and adds <1>-d</1> for the partitive: <2>töö, töö, tööd</2>."
+msgstr "У односложного слова, которое оканчивается на долгую гласную, например <0/> («работа»), родительный такой же, а в партитиве добавляется <1>-d</1>: <2>töö, töö, tööd</2>."
 
 msgid "A printed dictionary puts them on one line instead: <0>pood poe poodi</0>."
 msgstr "Бумажный словарь приводит их в одну строку: <0>pood poe poodi</0>."
 
-msgid "All six. You typed the third form right every time."
-msgstr "Все шесть. Третья форма каждый раз верная."
+msgid "All six. You typed the partitive right every time."
+msgstr "Все шесть. Партитив каждый раз верный."
 
 msgid "All three forms are the same."
 msgstr "Все три формы одинаковые."
@@ -76,11 +76,11 @@ msgstr "ребёнок"
 msgid "door"
 msgstr "дверь"
 
-msgid "Each round shows a new word. Type its third form."
-msgstr "В каждом раунде — новое слово. Напиши его третью форму."
+msgid "Each round shows a new word. Type its partitive."
+msgstr "В каждом раунде — новое слово. Напиши его партитив."
 
-msgid "Endings that tell you the third form"
-msgstr "Окончания, которые подсказывают третью форму"
+msgid "Endings that tell you the partitive"
+msgstr "Окончания, которые подсказывают партитив"
 
 msgid "exercise"
 msgstr "упражнение"
@@ -88,11 +88,11 @@ msgstr "упражнение"
 msgid "Finding the forms in a dictionary"
 msgstr "Где искать формы в словаре"
 
-msgid "First"
-msgstr "Первая"
+msgid "Genitive"
+msgstr "Родительный"
 
-msgid "First form"
-msgstr "Первая форма"
+msgid "Genitive and partitive"
+msgstr "Родительный и партитив"
 
 msgctxt "kodu: the place you live"
 msgid "home"
@@ -104,32 +104,32 @@ msgstr "лошадь"
 msgid "house"
 msgstr "дом"
 
-msgid "In <0>kool, kooli, kooli</0> the second and third forms are the same word. Many short words work this way, such as <1/>, town. In some words ending in a vowel all three match: <2/>, house, is <3>maja, maja, maja</3>."
-msgstr "В <0>kool, kooli, kooli</0> вторая и третья формы одинаковые. Так ведут себя многие короткие слова, например <1/> («город»). А в некоторых словах на гласную совпадают все три: <2/> («дом») — это <3>maja, maja, maja</3>."
+msgid "In <0>kool, kooli, kooli</0> the genitive and partitive are the same word. Many short words work this way, such as <1/>, town. In some words ending in a vowel all three match: <2/>, house, is <3>maja, maja, maja</3>."
+msgstr "В <0>kool, kooli, kooli</0> родительный и партитив одинаковые. Так ведут себя многие короткие слова, например <1/> («город»). А в некоторых словах на гласную совпадают все три: <2/> («дом») — это <3>maja, maja, maja</3>."
 
-msgid "In the second, <0>ee</0> shortens and <1>s</1> becomes <2>h</2>; the third ends in <3>-st</3>."
-msgstr "Во второй форме <0>ee</0> сокращается, а <1>s</1> становится <2>h</2>; третья оканчивается на <3>-st</3>."
+msgid "In the genitive, <0>ee</0> shortens and <1>s</1> becomes <2>h</2>; the partitive ends in <3>-st</3>."
+msgstr "В родительном <0>ee</0> сокращается, а <1>s</1> становится <2>h</2>; партитив оканчивается на <3>-st</3>."
 
-msgid "Its second and third forms are the same."
-msgstr "Вторая и третья формы одинаковые."
+msgid "Its genitive and partitive are the same."
+msgstr "Родительный и партитив одинаковые."
 
 msgid "land, country"
 msgstr "земля, страна"
 
-msgid "Learn the vowel at the end of the third form along with the word: <0>poodi, lauda, turgu</0>."
-msgstr "Гласную на конце третьей формы запоминай вместе со словом: <0>poodi, lauda, turgu</0>."
+msgid "Learn the vowel at the end of the partitive along with the word: <0>poodi, lauda, turgu</0>."
+msgstr "Гласную на конце партитива запоминай вместе со словом: <0>poodi, lauda, turgu</0>."
 
-msgid "Lesson {stems} showed letters dropping or changing before an ending: <0/> becomes <1/>. That change is the second form. In these words the third form has the first form’s letters back: <2/>."
-msgstr "В уроке {stems} буквы перед окончанием выпадали или менялись: <0/> становится <1/>. Такая перемена — это и есть вторая форма. А в этих словах третья форма возвращает буквы первой: <2/>."
+msgid "Lesson {stems} showed letters dropping or changing before an ending: <0/> becomes <1/>. That change is the genitive. In these words the partitive has the nominative’s letters back: <2/>."
+msgstr "В уроке {stems} буквы перед окончанием выпадали или менялись: <0/> становится <1/>. Такая перемена — это и есть родительный. А в этих словах партитив возвращает буквы именительного: <2/>."
 
-msgid "Like <0>küsimus</0>, <1>vastus</1> has a second form in <2>-use</2>: <3>vastuse</3>."
-msgstr "Как и у <0>küsimus</0>, вторая форма <1>vastus</1> оканчивается на <2>-use</2>: <3>vastuse</3>."
+msgid "Like <0>küsimus</0>, <1>vastus</1> has a genitive in <2>-use</2>: <3>vastuse</3>."
+msgstr "Как и у <0>küsimus</0>, родительный <1>vastus</1> оканчивается на <2>-use</2>: <3>vastuse</3>."
 
 msgid "Listening only, no microphone"
 msgstr "Только на слух, без микрофона"
 
-msgid "Look up <0/>, school, and a dictionary gives you three words: <1>kool, kooli, kooli</1>. Every noun is listed this way, in the same order. Most of its other forms are built on one of the three. Estonian calls them <2/>, the main forms. This course calls them the first, second and third form."
-msgstr "Найди в словаре <0/> («школа»), и увидишь три слова: <1>kool, kooli, kooli</1>. Так приводится каждое существительное, всегда в одном и том же порядке. Большинство других его форм образуется от одной из этих трёх. По-эстонски они называются <2/>, «основные формы». В этом курсе мы называем их первой, второй и третьей формой."
+msgid "Look up <0/>, school, and a dictionary gives you three words: <1>kool, kooli, kooli</1>. Every noun is listed this way, in the same order. Most of its other forms are built on one of the three. Estonian calls them <2/>, the main forms. This course calls them by their case names: the nominative, the genitive and the partitive."
+msgstr "Найди в словаре <0/> («школа»), и увидишь три слова: <1>kool, kooli, kooli</1>. Так приводится каждое существительное, всегда в одном и том же порядке. Большинство других его форм образуется от одной из этих трёх. По-эстонски они называются <2/>, «основные формы». В этом курсе мы называем их по падежам: именительный, родительный и партитив."
 
 msgid "man"
 msgstr "мужчина"
@@ -140,14 +140,17 @@ msgstr "Мари"
 msgid "market"
 msgstr "рынок"
 
-msgid "Match each word with its second and third forms. A wrong pair counts against you, so look for the letters that change."
-msgstr "Соедини каждое слово с его второй и третьей формой. Неверная пара идёт в минус, так что присматривайся, какие буквы меняются."
+msgid "Match each word with its genitive and partitive. A wrong pair counts against you, so look for the letters that change."
+msgstr "Соедини каждое слово с его родительным и партитивом. Неверная пара идёт в минус, так что присматривайся, какие буквы меняются."
 
-msgid "Most words in <0>-ne</0> or <1>-us</1> end their third form in <2>-st</2>, and a one-syllable word ending in a long vowel adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
-msgstr "У большинства слов на <0>-ne</0> и <1>-us</1> третья форма оканчивается на <2>-st</2>, а односложное слово, которое оканчивается на долгую гласную, добавляет <3>-d</3>: <4>naist, küsimust, tööd</4>."
+msgid "Most words in <0>-ne</0> or <1>-us</1> end their partitive in <2>-st</2>, and a one-syllable word ending in a long vowel adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
+msgstr "У большинства слов на <0>-ne</0> и <1>-us</1> партитив оканчивается на <2>-st</2>, а односложное слово, которое оканчивается на долгую гласную, добавляет <3>-d</3>: <4>naist, küsimust, tööd</4>."
 
 msgid "Nearly. Hear the ones you missed with all three forms."
 msgstr "Почти. Переслушай те, где были ошибки, со всеми тремя формами."
+
+msgid "Nominative"
+msgstr "Именительный"
 
 msgid "On <0>Sõnaveeb</0>, the three forms are the left column under <1>Sõnavormid</1>."
 msgstr "В <0>Sõnaveeb</0> три формы — это левый столбец таблицы <1>Sõnavormid</1>."
@@ -155,11 +158,14 @@ msgstr "В <0>Sõnaveeb</0> три формы — это левый столбе
 msgid "One syllable ending in a long vowel takes <0>-d</0>."
 msgstr "Один слог с долгой гласной на конце получает <0>-d</0>."
 
-msgid "One syllable ending in a long vowel: the second is the same, the third adds <0>-d</0>."
-msgstr "Один слог с долгой гласной на конце: вторая форма такая же, третья добавляет <0>-d</0>."
+msgid "One syllable ending in a long vowel: the genitive is the same, the partitive adds <0>-d</0>."
+msgstr "Один слог с долгой гласной на конце: родительный такой же, партитив добавляет <0>-d</0>."
 
-msgid "Other words don’t show their third form, so learn all three together: <0>pood, poe, poodi</0>."
-msgstr "По остальным словам третью форму не угадать, так что учи все три вместе: <0>pood, poe, poodi</0>."
+msgid "Other words don’t show their partitive, so learn all three together: <0>pood, poe, poodi</0>."
+msgstr "По остальным словам партитив не угадать, так что учи все три вместе: <0>pood, poe, poodi</0>."
+
+msgid "Partitive"
+msgstr "Партитив"
 
 msgid "person"
 msgstr "человек"
@@ -186,12 +192,6 @@ msgstr "комната"
 msgid "school"
 msgstr "школа"
 
-msgid "Second"
-msgstr "Вторая"
-
-msgid "Second and third"
-msgstr "Вторая и третья"
-
 msgid "shop"
 msgstr "магазин"
 
@@ -199,11 +199,11 @@ msgctxt "grammatical number"
 msgid "Singular"
 msgstr "Единственное"
 
-msgid "Some short words ending in <0>-s</0> also end their third form in <1>-st</1>, but each changes in its own way: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Learn all three forms of those."
-msgstr "У некоторых коротких слов на <0>-s</0> третья форма тоже оканчивается на <1>-st</1>, но каждое меняется по-своему: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Такие слова запоминай сразу в трёх формах."
+msgid "Some short words ending in <0>-s</0> also end their partitive in <1>-st</1>, but each changes in its own way: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Learn all three forms of those."
+msgstr "У некоторых коротких слов на <0>-s</0> партитив тоже оканчивается на <1>-st</1>, но каждое меняется по-своему: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Такие слова запоминай сразу в трёх формах."
 
-msgid "Some words give their third form away. Most words ending in <0>-ne</0> have a second form in <1>-se</1> and a third in <2>-st</2>: <3/>, <4/>, <5/>. Most words ending in <6>-us</6> do the same: <7/>, question, goes <8>küsimuse, küsimust</8>."
-msgstr "Некоторые слова сами подсказывают третью форму. У большинства слов на <0>-ne</0> вторая форма оканчивается на <1>-se</1>, а третья — на <2>-st</2>: <3/>, <4/>, <5/>. Большинство слов на <6>-us</6> ведут себя так же: <7/> («вопрос») — <8>küsimuse, küsimust</8>."
+msgid "Some words give their partitive away. Most words ending in <0>-ne</0> have a genitive in <1>-se</1> and a partitive in <2>-st</2>: <3/>, <4/>, <5/>. Most words ending in <6>-us</6> do the same: <7/>, question, goes <8>küsimuse, küsimust</8>."
+msgstr "Некоторые слова сами подсказывают партитив. У большинства слов на <0>-ne</0> родительный оканчивается на <1>-se</1>, а партитив — на <2>-st</2>: <3/>, <4/>, <5/>. Большинство слов на <6>-us</6> ведут себя так же: <7/> («вопрос») — <8>küsimuse, küsimust</8>."
 
 msgid "table"
 msgstr "стол"
@@ -220,74 +220,68 @@ msgstr "Нажми на слово"
 msgid "Ten nouns in their three forms"
 msgstr "Десять существительных в трёх формах"
 
-msgid "The first form: the word itself."
-msgstr "Первая форма: само слово."
+msgid "The genitive and partitive of {first}."
+msgstr "Родительный и партитив слова {first}."
 
-msgid "The first is the word on its own. The second is what lesson {stems} called the stem: put <0>-s</0> on it and you have <1/>. Lesson {genitive} shows what the second form means by itself, and lesson {partitive} what the third is for."
-msgstr "Первая — это слово само по себе. Вторая — то, что урок {stems} назвал основой: добавь к ней <0>-s</0>, и получится <1/>. Что значит вторая форма сама по себе, рассказывает урок {genitive}, а зачем нужна третья — урок {partitive}."
+msgid "The genitive drops the <0>d</0> and one <1>o</1>; the partitive has them back."
+msgstr "В родительном выпадают <0>d</0> и одно <1>o</1>, в партитиве они возвращаются."
 
-msgid "The left column, top to bottom: the first, second and third form. Pick another word and watch how they change."
-msgstr "Левый столбец сверху вниз: первая, вторая и третья форма. Выбери другое слово и посмотри, как они меняются."
+msgid "The genitive drops the <0>d</0>; the partitive has it back."
+msgstr "В родительном <0>d</0> выпадает, в партитиве возвращается."
 
-msgid "the main forms: a word’s first, second and third form"
-msgstr "основные формы: первая, вторая и третья форма слова"
+msgid "The genitive drops the <0>g</0>; the partitive has it back."
+msgstr "В родительном <0>g</0> выпадает, в партитиве возвращается."
 
-msgid "The order is first, second, third, so <0>vastuse</0> comes before <1>vastust</1>."
-msgstr "Порядок такой: первая, вторая, третья, поэтому <0>vastuse</0> идёт перед <1>vastust</1>."
+msgid "The genitive is the one <0>-s</0> and <1>-l</1> go on: <2>kooli</2> gives <3>koolis</3>."
+msgstr "Именно ко родительном добавляют <0>-s</0> и <1>-l</1>: из <2>kooli</2> получается <3>koolis</3>."
 
-msgid "The order is first, second, third. <0>Poe</0>, the one without the <1>d</1>, comes second."
-msgstr "Порядок такой: первая, вторая, третья. <0>Poe</0>, форма без <1>d</1>, идёт второй."
+msgid "The genitive loses the <0>b</0> and the <1>u</1> turns into <2>o</2>; the partitive is the nominative again."
+msgstr "В родительном <0>b</0> исчезает, а <1>u</1> становится <2>o</2>; партитив снова такой же, как именительный."
 
-msgid "The second and third form of {first}."
-msgstr "Вторая и третья форма слова {first}."
+msgid "The genitive of {first}."
+msgstr "Родительный слова {first}."
 
-msgid "The second drops the <0>d</0> and one <1>o</1>; the third has them back."
-msgstr "Во второй форме выпадают <0>d</0> и одно <1>o</1>, в третьей они возвращаются."
+msgid "The genitive of <0>{first}</0>."
+msgstr "Родительный слова <0>{first}</0>."
 
-msgid "The second drops the <0>d</0>; the third has it back."
-msgstr "Во второй форме <0>d</0> выпадает, в третьей возвращается."
+msgid "The left column, top to bottom: the nominative, the genitive and the partitive. Pick another word and watch how they change."
+msgstr "Левый столбец сверху вниз: именительный, родительный и партитив. Выбери другое слово и посмотри, как они меняются."
 
-msgid "The second drops the <0>g</0>; the third has it back."
-msgstr "Во второй форме <0>g</0> выпадает, в третьей возвращается."
+msgid "the main forms: a word’s nominative, genitive and partitive"
+msgstr "основные формы: именительный, родительный и партитив слова"
 
-msgid "The second form is the one <0>-s</0> and <1>-l</1> go on: <2>kooli</2> gives <3>koolis</3>."
-msgstr "Именно ко второй форме добавляют <0>-s</0> и <1>-l</1>: из <2>kooli</2> получается <3>koolis</3>."
+msgid "The nominative is the word on its own. The genitive is what lesson {stems} called the stem: put <0>-s</0> on it and you have <1/>. Lesson {genitive} shows what the genitive means by itself, and lesson {partitive} what the partitive is for."
+msgstr "Именительный — это слово само по себе. Родительный — то, что урок {stems} назвал основой: добавь к нему <0>-s</0>, и получится <1/>. Что значит родительный сам по себе, рассказывает урок {genitive}, а зачем нужен партитив — урок {partitive}."
 
-msgid "The second form of {first}."
-msgstr "Вторая форма слова {first}."
+msgid "The nominative: the word itself."
+msgstr "Именительный: само слово."
 
-msgid "The second form of <0>{first}</0>."
-msgstr "Вторая форма слова <0>{first}</0>."
+msgid "The order is nominative, genitive, partitive, so <0>vastuse</0> comes before <1>vastust</1>."
+msgstr "Порядок такой: именительный, родительный, партитив, поэтому <0>vastuse</0> идёт перед <1>vastust</1>."
 
-msgid "The second loses the <0>b</0> and the <1>u</1> turns into <2>o</2>; the third is the first again."
-msgstr "Во второй форме <0>b</0> исчезает, а <1>u</1> становится <2>o</2>; третья снова такая же, как первая."
+msgid "The order is nominative, genitive, partitive. <0>Poe</0>, the one without the <1>d</1>, comes second."
+msgstr "Порядок такой: именительный, родительный, партитив. <0>Poe</0>, форма без <1>d</1>, идёт второй."
 
-msgid "The third adds <0>-t</0>."
-msgstr "Третья добавляет <0>-t</0>."
+msgid "The partitive adds <0>-t</0>."
+msgstr "Партитив добавляет <0>-t</0>."
 
-msgid "The third drops the <0>k</0> and ends in <1>-st</1>."
-msgstr "В третьей <0>k</0> выпадает, а окончание — <1>-st</1>."
+msgid "The partitive drops the <0>k</0> and ends in <1>-st</1>."
+msgstr "В партитиве <0>k</0> выпадает, а окончание — <1>-st</1>."
 
-msgid "The third drops the <0>p</0> and ends in <1>-st</1>."
-msgstr "В третьей <0>p</0> выпадает, а окончание — <1>-st</1>."
+msgid "The partitive drops the <0>p</0> and ends in <1>-st</1>."
+msgstr "В партитиве <0>p</0> выпадает, а окончание — <1>-st</1>."
 
-msgid "The third form of {first}."
-msgstr "Третья форма слова {first}."
+msgid "The partitive is the genitive with <0>-t</0>."
+msgstr "Партитив — это родительный с <0>-t</0>."
 
-msgid "The third form of <0>{first}</0>."
-msgstr "Третья форма слова <0>{first}</0>."
+msgid "The partitive of {first}."
+msgstr "Партитив слова {first}."
 
-msgid "The third form of <0>laps</0> ends in <1>-st</1>: <2>last</2>."
-msgstr "Третья форма <0>laps</0> оканчивается на <1>-st</1>: <2>last</2>."
+msgid "The partitive of <0>{first}</0>."
+msgstr "Партитив слова <0>{first}</0>."
 
-msgid "The third is the second with <0>-t</0>."
-msgstr "Третья — это вторая с <0>-t</0>."
-
-msgid "Third"
-msgstr "Третья"
-
-msgid "Third form"
-msgstr "Третья форма"
+msgid "The partitive of <0>laps</0> ends in <1>-st</1>: <2>last</2>."
+msgstr "Партитив <0>laps</0> оканчивается на <1>-st</1>: <2>last</2>."
 
 msgid "To ask for a word’s forms, Estonian says <0>Mis on sõna … põhivormid?</0>, with the word in the gap. <1/> means word. Answer with all three, in order."
 msgstr "Чтобы спросить о формах слова, по-эстонски говорят <0>Mis on sõna … põhivormid?</0>, а на место пропуска ставят слово. <1/> значит «слово». Отвечай всеми тремя формами, по порядку."
@@ -298,20 +292,20 @@ msgstr "город"
 msgid "tree"
 msgstr "дерево"
 
-msgid "Type the third form"
-msgstr "Напиши третью форму"
+msgid "Type the partitive"
+msgstr "Напиши партитив"
 
-msgid "When the third form is the same as the second"
-msgstr "Когда третья форма такая же, как вторая"
+msgid "When the partitive is the same as the genitive"
+msgstr "Когда партитив такой же, как родительный"
 
-msgid "When the third form takes letters back"
-msgstr "Когда третья форма возвращает буквы"
+msgid "When the partitive takes letters back"
+msgstr "Когда партитив возвращает буквы"
 
 msgid "Which forms go together?"
 msgstr "Какие формы идут вместе?"
 
-msgid "Why a dictionary gives every Estonian noun in three forms, where to find them, and which endings tell you the third."
-msgstr "Почему словарь даёт каждое эстонское существительное в трёх формах, где их найти и какие окончания подсказывают третью."
+msgid "Why a dictionary gives every Estonian noun in three forms, where to find them, and which endings tell you the partitive."
+msgstr "Почему словарь даёт каждое эстонское существительное в трёх формах, где их найти и какие окончания подсказывают партитив."
 
 msgid "woman"
 msgstr "женщина"
@@ -322,20 +316,20 @@ msgstr "слово"
 msgid "Word to look up"
 msgstr "Слово для поиска"
 
-msgid "Words whose ending tells the third form"
-msgstr "Слова, окончание которых подсказывает третью форму"
+msgid "Words whose ending tells the partitive"
+msgstr "Слова, окончание которых подсказывает партитив"
 
-msgid "Words whose second and third forms match"
-msgstr "Слова с одинаковой второй и третьей формой"
+msgid "Words whose genitive and partitive match"
+msgstr "Слова с одинаковыми родительным и партитивом"
 
-msgid "Words whose third form takes letters back"
-msgstr "Слова, у которых третья форма возвращает буквы"
+msgid "Words whose partitive takes letters back"
+msgstr "Слова, у которых партитив возвращает буквы"
 
 msgid "work, job"
 msgstr "работа"
 
-msgid "You’ll hear it and see how it changes from the first."
-msgstr "Услышишь её и увидишь, как она меняется по сравнению с первой."
+msgid "You’ll hear it and see how it changes from the nominative."
+msgstr "Услышишь её и увидишь, чем она отличается от именительного."
 
 msgid "You’ll hear its three forms."
 msgstr "Услышишь три его формы."

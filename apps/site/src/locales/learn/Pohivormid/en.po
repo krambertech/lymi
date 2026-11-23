@@ -19,14 +19,14 @@ msgstr "<0>-us</0> becomes <1>-use</1>, then <2>-ust</2>."
 msgid "<0>-us</0> takes <1>-t</1>."
 msgstr "<0>-us</0> takes <1>-t</1>."
 
-msgid "<0>Last</0> is the third form, so it comes after <1>lapse</1>."
-msgstr "<0>Last</0> is the third form, so it comes after <1>lapse</1>."
+msgid "<0>Last</0> is the partitive, so it comes after <1>lapse</1>."
+msgstr "<0>Last</0> is the partitive, so it comes after <1>lapse</1>."
 
-msgid "<0>Majas</0> means in the house: the second form with <1>-s</1>. The second form itself is <2>maja</2>."
-msgstr "<0>Majas</0> means in the house: the second form with <1>-s</1>. The second form itself is <2>maja</2>."
+msgid "<0>Majas</0> means in the house: the genitive with <1>-s</1>. The genitive itself is <2>maja</2>."
+msgstr "<0>Majas</0> means in the house: the genitive with <1>-s</1>. The genitive itself is <2>maja</2>."
 
-msgid "<0>Poe</0> is the second form. The third has the <1>d</1> back: <2>poodi</2>."
-msgstr "<0>Poe</0> is the second form. The third has the <1>d</1> back: <2>poodi</2>."
+msgid "<0>Poe</0> is the genitive. The partitive has the <1>d</1> back: <2>poodi</2>."
+msgstr "<0>Poe</0> is the genitive. The partitive has the <1>d</1> back: <2>poodi</2>."
 
 msgid "<0>Sõnaveeb</0>, the free dictionary of the Institute of the Estonian Language, lists them under <1>Sõnavormid</1>, word forms. Search for a word and scroll to that table: its left column holds the three forms, top to bottom. The right column is the plural."
 msgstr "<0>Sõnaveeb</0>, the free dictionary of the Institute of the Estonian Language, lists them under <1>Sõnavormid</1>, word forms. Search for a word and scroll to that table: its left column holds the three forms, top to bottom. The right column is the plural."
@@ -40,20 +40,20 @@ msgstr "2 quizzes and a conversation"
 msgid "A dictionary gives a noun in three forms, always in the same order: <0>kool, kooli, kooli</0>."
 msgstr "A dictionary gives a noun in three forms, always in the same order: <0>kool, kooli, kooli</0>."
 
-msgid "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a vowel like <1/>, but its third form is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
-msgstr "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a vowel like <1/>, but its third form is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
+msgid "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a vowel like <1/>, but its partitive is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
+msgstr "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a vowel like <1/>, but its partitive is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
 
 msgid "A noun has three forms"
 msgstr "A noun has three forms"
 
-msgid "A one-syllable word that ends in a long vowel, such as <0/>, work, keeps its second form the same and adds <1>-d</1> for the third: <2>töö, töö, tööd</2>."
-msgstr "A one-syllable word that ends in a long vowel, such as <0/>, work, keeps its second form the same and adds <1>-d</1> for the third: <2>töö, töö, tööd</2>."
+msgid "A one-syllable word that ends in a long vowel, such as <0/>, work, keeps its genitive the same and adds <1>-d</1> for the partitive: <2>töö, töö, tööd</2>."
+msgstr "A one-syllable word that ends in a long vowel, such as <0/>, work, keeps its genitive the same and adds <1>-d</1> for the partitive: <2>töö, töö, tööd</2>."
 
 msgid "A printed dictionary puts them on one line instead: <0>pood poe poodi</0>."
 msgstr "A printed dictionary puts them on one line instead: <0>pood poe poodi</0>."
 
-msgid "All six. You typed the third form right every time."
-msgstr "All six. You typed the third form right every time."
+msgid "All six. You typed the partitive right every time."
+msgstr "All six. You typed the partitive right every time."
 
 msgid "All three forms are the same."
 msgstr "All three forms are the same."
@@ -76,11 +76,11 @@ msgstr "child"
 msgid "door"
 msgstr "door"
 
-msgid "Each round shows a new word. Type its third form."
-msgstr "Each round shows a new word. Type its third form."
+msgid "Each round shows a new word. Type its partitive."
+msgstr "Each round shows a new word. Type its partitive."
 
-msgid "Endings that tell you the third form"
-msgstr "Endings that tell you the third form"
+msgid "Endings that tell you the partitive"
+msgstr "Endings that tell you the partitive"
 
 msgid "exercise"
 msgstr "exercise"
@@ -88,11 +88,11 @@ msgstr "exercise"
 msgid "Finding the forms in a dictionary"
 msgstr "Finding the forms in a dictionary"
 
-msgid "First"
-msgstr "First"
+msgid "Genitive"
+msgstr "Genitive"
 
-msgid "First form"
-msgstr "First form"
+msgid "Genitive and partitive"
+msgstr "Genitive and partitive"
 
 msgctxt "kodu: the place you live"
 msgid "home"
@@ -104,32 +104,32 @@ msgstr "horse"
 msgid "house"
 msgstr "house"
 
-msgid "In <0>kool, kooli, kooli</0> the second and third forms are the same word. Many short words work this way, such as <1/>, town. In some words ending in a vowel all three match: <2/>, house, is <3>maja, maja, maja</3>."
-msgstr "In <0>kool, kooli, kooli</0> the second and third forms are the same word. Many short words work this way, such as <1/>, town. In some words ending in a vowel all three match: <2/>, house, is <3>maja, maja, maja</3>."
+msgid "In <0>kool, kooli, kooli</0> the genitive and partitive are the same word. Many short words work this way, such as <1/>, town. In some words ending in a vowel all three match: <2/>, house, is <3>maja, maja, maja</3>."
+msgstr "In <0>kool, kooli, kooli</0> the genitive and partitive are the same word. Many short words work this way, such as <1/>, town. In some words ending in a vowel all three match: <2/>, house, is <3>maja, maja, maja</3>."
 
-msgid "In the second, <0>ee</0> shortens and <1>s</1> becomes <2>h</2>; the third ends in <3>-st</3>."
-msgstr "In the second, <0>ee</0> shortens and <1>s</1> becomes <2>h</2>; the third ends in <3>-st</3>."
+msgid "In the genitive, <0>ee</0> shortens and <1>s</1> becomes <2>h</2>; the partitive ends in <3>-st</3>."
+msgstr "In the genitive, <0>ee</0> shortens and <1>s</1> becomes <2>h</2>; the partitive ends in <3>-st</3>."
 
-msgid "Its second and third forms are the same."
-msgstr "Its second and third forms are the same."
+msgid "Its genitive and partitive are the same."
+msgstr "Its genitive and partitive are the same."
 
 msgid "land, country"
 msgstr "land, country"
 
-msgid "Learn the vowel at the end of the third form along with the word: <0>poodi, lauda, turgu</0>."
-msgstr "Learn the vowel at the end of the third form along with the word: <0>poodi, lauda, turgu</0>."
+msgid "Learn the vowel at the end of the partitive along with the word: <0>poodi, lauda, turgu</0>."
+msgstr "Learn the vowel at the end of the partitive along with the word: <0>poodi, lauda, turgu</0>."
 
-msgid "Lesson {stems} showed letters dropping or changing before an ending: <0/> becomes <1/>. That change is the second form. In these words the third form has the first form’s letters back: <2/>."
-msgstr "Lesson {stems} showed letters dropping or changing before an ending: <0/> becomes <1/>. That change is the second form. In these words the third form has the first form’s letters back: <2/>."
+msgid "Lesson {stems} showed letters dropping or changing before an ending: <0/> becomes <1/>. That change is the genitive. In these words the partitive has the nominative’s letters back: <2/>."
+msgstr "Lesson {stems} showed letters dropping or changing before an ending: <0/> becomes <1/>. That change is the genitive. In these words the partitive has the nominative’s letters back: <2/>."
 
-msgid "Like <0>küsimus</0>, <1>vastus</1> has a second form in <2>-use</2>: <3>vastuse</3>."
-msgstr "Like <0>küsimus</0>, <1>vastus</1> has a second form in <2>-use</2>: <3>vastuse</3>."
+msgid "Like <0>küsimus</0>, <1>vastus</1> has a genitive in <2>-use</2>: <3>vastuse</3>."
+msgstr "Like <0>küsimus</0>, <1>vastus</1> has a genitive in <2>-use</2>: <3>vastuse</3>."
 
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
 
-msgid "Look up <0/>, school, and a dictionary gives you three words: <1>kool, kooli, kooli</1>. Every noun is listed this way, in the same order. Most of its other forms are built on one of the three. Estonian calls them <2/>, the main forms. This course calls them the first, second and third form."
-msgstr "Look up <0/>, school, and a dictionary gives you three words: <1>kool, kooli, kooli</1>. Every noun is listed this way, in the same order. Most of its other forms are built on one of the three. Estonian calls them <2/>, the main forms. This course calls them the first, second and third form."
+msgid "Look up <0/>, school, and a dictionary gives you three words: <1>kool, kooli, kooli</1>. Every noun is listed this way, in the same order. Most of its other forms are built on one of the three. Estonian calls them <2/>, the main forms. This course calls them by their case names: the nominative, the genitive and the partitive."
+msgstr "Look up <0/>, school, and a dictionary gives you three words: <1>kool, kooli, kooli</1>. Every noun is listed this way, in the same order. Most of its other forms are built on one of the three. Estonian calls them <2/>, the main forms. This course calls them by their case names: the nominative, the genitive and the partitive."
 
 msgid "man"
 msgstr "man"
@@ -140,14 +140,17 @@ msgstr "Mari"
 msgid "market"
 msgstr "market"
 
-msgid "Match each word with its second and third forms. A wrong pair counts against you, so look for the letters that change."
-msgstr "Match each word with its second and third forms. A wrong pair counts against you, so look for the letters that change."
+msgid "Match each word with its genitive and partitive. A wrong pair counts against you, so look for the letters that change."
+msgstr "Match each word with its genitive and partitive. A wrong pair counts against you, so look for the letters that change."
 
-msgid "Most words in <0>-ne</0> or <1>-us</1> end their third form in <2>-st</2>, and a one-syllable word ending in a long vowel adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
-msgstr "Most words in <0>-ne</0> or <1>-us</1> end their third form in <2>-st</2>, and a one-syllable word ending in a long vowel adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
+msgid "Most words in <0>-ne</0> or <1>-us</1> end their partitive in <2>-st</2>, and a one-syllable word ending in a long vowel adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
+msgstr "Most words in <0>-ne</0> or <1>-us</1> end their partitive in <2>-st</2>, and a one-syllable word ending in a long vowel adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
 
 msgid "Nearly. Hear the ones you missed with all three forms."
 msgstr "Nearly. Hear the ones you missed with all three forms."
+
+msgid "Nominative"
+msgstr "Nominative"
 
 msgid "On <0>Sõnaveeb</0>, the three forms are the left column under <1>Sõnavormid</1>."
 msgstr "On <0>Sõnaveeb</0>, the three forms are the left column under <1>Sõnavormid</1>."
@@ -155,11 +158,14 @@ msgstr "On <0>Sõnaveeb</0>, the three forms are the left column under <1>Sõnav
 msgid "One syllable ending in a long vowel takes <0>-d</0>."
 msgstr "One syllable ending in a long vowel takes <0>-d</0>."
 
-msgid "One syllable ending in a long vowel: the second is the same, the third adds <0>-d</0>."
-msgstr "One syllable ending in a long vowel: the second is the same, the third adds <0>-d</0>."
+msgid "One syllable ending in a long vowel: the genitive is the same, the partitive adds <0>-d</0>."
+msgstr "One syllable ending in a long vowel: the genitive is the same, the partitive adds <0>-d</0>."
 
-msgid "Other words don’t show their third form, so learn all three together: <0>pood, poe, poodi</0>."
-msgstr "Other words don’t show their third form, so learn all three together: <0>pood, poe, poodi</0>."
+msgid "Other words don’t show their partitive, so learn all three together: <0>pood, poe, poodi</0>."
+msgstr "Other words don’t show their partitive, so learn all three together: <0>pood, poe, poodi</0>."
+
+msgid "Partitive"
+msgstr "Partitive"
 
 msgid "person"
 msgstr "person"
@@ -186,12 +192,6 @@ msgstr "room"
 msgid "school"
 msgstr "school"
 
-msgid "Second"
-msgstr "Second"
-
-msgid "Second and third"
-msgstr "Second and third"
-
 msgid "shop"
 msgstr "shop"
 
@@ -199,11 +199,11 @@ msgctxt "grammatical number"
 msgid "Singular"
 msgstr "Singular"
 
-msgid "Some short words ending in <0>-s</0> also end their third form in <1>-st</1>, but each changes in its own way: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Learn all three forms of those."
-msgstr "Some short words ending in <0>-s</0> also end their third form in <1>-st</1>, but each changes in its own way: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Learn all three forms of those."
+msgid "Some short words ending in <0>-s</0> also end their partitive in <1>-st</1>, but each changes in its own way: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Learn all three forms of those."
+msgstr "Some short words ending in <0>-s</0> also end their partitive in <1>-st</1>, but each changes in its own way: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Learn all three forms of those."
 
-msgid "Some words give their third form away. Most words ending in <0>-ne</0> have a second form in <1>-se</1> and a third in <2>-st</2>: <3/>, <4/>, <5/>. Most words ending in <6>-us</6> do the same: <7/>, question, goes <8>küsimuse, küsimust</8>."
-msgstr "Some words give their third form away. Most words ending in <0>-ne</0> have a second form in <1>-se</1> and a third in <2>-st</2>: <3/>, <4/>, <5/>. Most words ending in <6>-us</6> do the same: <7/>, question, goes <8>küsimuse, küsimust</8>."
+msgid "Some words give their partitive away. Most words ending in <0>-ne</0> have a genitive in <1>-se</1> and a partitive in <2>-st</2>: <3/>, <4/>, <5/>. Most words ending in <6>-us</6> do the same: <7/>, question, goes <8>küsimuse, küsimust</8>."
+msgstr "Some words give their partitive away. Most words ending in <0>-ne</0> have a genitive in <1>-se</1> and a partitive in <2>-st</2>: <3/>, <4/>, <5/>. Most words ending in <6>-us</6> do the same: <7/>, question, goes <8>küsimuse, küsimust</8>."
 
 msgid "table"
 msgstr "table"
@@ -220,74 +220,68 @@ msgstr "Tap a word"
 msgid "Ten nouns in their three forms"
 msgstr "Ten nouns in their three forms"
 
-msgid "The first form: the word itself."
-msgstr "The first form: the word itself."
+msgid "The genitive and partitive of {first}."
+msgstr "The genitive and partitive of {first}."
 
-msgid "The first is the word on its own. The second is what lesson {stems} called the stem: put <0>-s</0> on it and you have <1/>. Lesson {genitive} shows what the second form means by itself, and lesson {partitive} what the third is for."
-msgstr "The first is the word on its own. The second is what lesson {stems} called the stem: put <0>-s</0> on it and you have <1/>. Lesson {genitive} shows what the second form means by itself, and lesson {partitive} what the third is for."
+msgid "The genitive drops the <0>d</0> and one <1>o</1>; the partitive has them back."
+msgstr "The genitive drops the <0>d</0> and one <1>o</1>; the partitive has them back."
 
-msgid "The left column, top to bottom: the first, second and third form. Pick another word and watch how they change."
-msgstr "The left column, top to bottom: the first, second and third form. Pick another word and watch how they change."
+msgid "The genitive drops the <0>d</0>; the partitive has it back."
+msgstr "The genitive drops the <0>d</0>; the partitive has it back."
 
-msgid "the main forms: a word’s first, second and third form"
-msgstr "the main forms: a word’s first, second and third form"
+msgid "The genitive drops the <0>g</0>; the partitive has it back."
+msgstr "The genitive drops the <0>g</0>; the partitive has it back."
 
-msgid "The order is first, second, third, so <0>vastuse</0> comes before <1>vastust</1>."
-msgstr "The order is first, second, third, so <0>vastuse</0> comes before <1>vastust</1>."
+msgid "The genitive is the one <0>-s</0> and <1>-l</1> go on: <2>kooli</2> gives <3>koolis</3>."
+msgstr "The genitive is the one <0>-s</0> and <1>-l</1> go on: <2>kooli</2> gives <3>koolis</3>."
 
-msgid "The order is first, second, third. <0>Poe</0>, the one without the <1>d</1>, comes second."
-msgstr "The order is first, second, third. <0>Poe</0>, the one without the <1>d</1>, comes second."
+msgid "The genitive loses the <0>b</0> and the <1>u</1> turns into <2>o</2>; the partitive is the nominative again."
+msgstr "The genitive loses the <0>b</0> and the <1>u</1> turns into <2>o</2>; the partitive is the nominative again."
 
-msgid "The second and third form of {first}."
-msgstr "The second and third form of {first}."
+msgid "The genitive of {first}."
+msgstr "The genitive of {first}."
 
-msgid "The second drops the <0>d</0> and one <1>o</1>; the third has them back."
-msgstr "The second drops the <0>d</0> and one <1>o</1>; the third has them back."
+msgid "The genitive of <0>{first}</0>."
+msgstr "The genitive of <0>{first}</0>."
 
-msgid "The second drops the <0>d</0>; the third has it back."
-msgstr "The second drops the <0>d</0>; the third has it back."
+msgid "The left column, top to bottom: the nominative, the genitive and the partitive. Pick another word and watch how they change."
+msgstr "The left column, top to bottom: the nominative, the genitive and the partitive. Pick another word and watch how they change."
 
-msgid "The second drops the <0>g</0>; the third has it back."
-msgstr "The second drops the <0>g</0>; the third has it back."
+msgid "the main forms: a word’s nominative, genitive and partitive"
+msgstr "the main forms: a word’s nominative, genitive and partitive"
 
-msgid "The second form is the one <0>-s</0> and <1>-l</1> go on: <2>kooli</2> gives <3>koolis</3>."
-msgstr "The second form is the one <0>-s</0> and <1>-l</1> go on: <2>kooli</2> gives <3>koolis</3>."
+msgid "The nominative is the word on its own. The genitive is what lesson {stems} called the stem: put <0>-s</0> on it and you have <1/>. Lesson {genitive} shows what the genitive means by itself, and lesson {partitive} what the partitive is for."
+msgstr "The nominative is the word on its own. The genitive is what lesson {stems} called the stem: put <0>-s</0> on it and you have <1/>. Lesson {genitive} shows what the genitive means by itself, and lesson {partitive} what the partitive is for."
 
-msgid "The second form of {first}."
-msgstr "The second form of {first}."
+msgid "The nominative: the word itself."
+msgstr "The nominative: the word itself."
 
-msgid "The second form of <0>{first}</0>."
-msgstr "The second form of <0>{first}</0>."
+msgid "The order is nominative, genitive, partitive, so <0>vastuse</0> comes before <1>vastust</1>."
+msgstr "The order is nominative, genitive, partitive, so <0>vastuse</0> comes before <1>vastust</1>."
 
-msgid "The second loses the <0>b</0> and the <1>u</1> turns into <2>o</2>; the third is the first again."
-msgstr "The second loses the <0>b</0> and the <1>u</1> turns into <2>o</2>; the third is the first again."
+msgid "The order is nominative, genitive, partitive. <0>Poe</0>, the one without the <1>d</1>, comes second."
+msgstr "The order is nominative, genitive, partitive. <0>Poe</0>, the one without the <1>d</1>, comes second."
 
-msgid "The third adds <0>-t</0>."
-msgstr "The third adds <0>-t</0>."
+msgid "The partitive adds <0>-t</0>."
+msgstr "The partitive adds <0>-t</0>."
 
-msgid "The third drops the <0>k</0> and ends in <1>-st</1>."
-msgstr "The third drops the <0>k</0> and ends in <1>-st</1>."
+msgid "The partitive drops the <0>k</0> and ends in <1>-st</1>."
+msgstr "The partitive drops the <0>k</0> and ends in <1>-st</1>."
 
-msgid "The third drops the <0>p</0> and ends in <1>-st</1>."
-msgstr "The third drops the <0>p</0> and ends in <1>-st</1>."
+msgid "The partitive drops the <0>p</0> and ends in <1>-st</1>."
+msgstr "The partitive drops the <0>p</0> and ends in <1>-st</1>."
 
-msgid "The third form of {first}."
-msgstr "The third form of {first}."
+msgid "The partitive is the genitive with <0>-t</0>."
+msgstr "The partitive is the genitive with <0>-t</0>."
 
-msgid "The third form of <0>{first}</0>."
-msgstr "The third form of <0>{first}</0>."
+msgid "The partitive of {first}."
+msgstr "The partitive of {first}."
 
-msgid "The third form of <0>laps</0> ends in <1>-st</1>: <2>last</2>."
-msgstr "The third form of <0>laps</0> ends in <1>-st</1>: <2>last</2>."
+msgid "The partitive of <0>{first}</0>."
+msgstr "The partitive of <0>{first}</0>."
 
-msgid "The third is the second with <0>-t</0>."
-msgstr "The third is the second with <0>-t</0>."
-
-msgid "Third"
-msgstr "Third"
-
-msgid "Third form"
-msgstr "Third form"
+msgid "The partitive of <0>laps</0> ends in <1>-st</1>: <2>last</2>."
+msgstr "The partitive of <0>laps</0> ends in <1>-st</1>: <2>last</2>."
 
 msgid "To ask for a word’s forms, Estonian says <0>Mis on sõna … põhivormid?</0>, with the word in the gap. <1/> means word. Answer with all three, in order."
 msgstr "To ask for a word’s forms, Estonian says <0>Mis on sõna … põhivormid?</0>, with the word in the gap. <1/> means word. Answer with all three, in order."
@@ -298,20 +292,20 @@ msgstr "town, city"
 msgid "tree"
 msgstr "tree"
 
-msgid "Type the third form"
-msgstr "Type the third form"
+msgid "Type the partitive"
+msgstr "Type the partitive"
 
-msgid "When the third form is the same as the second"
-msgstr "When the third form is the same as the second"
+msgid "When the partitive is the same as the genitive"
+msgstr "When the partitive is the same as the genitive"
 
-msgid "When the third form takes letters back"
-msgstr "When the third form takes letters back"
+msgid "When the partitive takes letters back"
+msgstr "When the partitive takes letters back"
 
 msgid "Which forms go together?"
 msgstr "Which forms go together?"
 
-msgid "Why a dictionary gives every Estonian noun in three forms, where to find them, and which endings tell you the third."
-msgstr "Why a dictionary gives every Estonian noun in three forms, where to find them, and which endings tell you the third."
+msgid "Why a dictionary gives every Estonian noun in three forms, where to find them, and which endings tell you the partitive."
+msgstr "Why a dictionary gives every Estonian noun in three forms, where to find them, and which endings tell you the partitive."
 
 msgid "woman"
 msgstr "woman"
@@ -322,20 +316,20 @@ msgstr "word"
 msgid "Word to look up"
 msgstr "Word to look up"
 
-msgid "Words whose ending tells the third form"
-msgstr "Words whose ending tells the third form"
+msgid "Words whose ending tells the partitive"
+msgstr "Words whose ending tells the partitive"
 
-msgid "Words whose second and third forms match"
-msgstr "Words whose second and third forms match"
+msgid "Words whose genitive and partitive match"
+msgstr "Words whose genitive and partitive match"
 
-msgid "Words whose third form takes letters back"
-msgstr "Words whose third form takes letters back"
+msgid "Words whose partitive takes letters back"
+msgstr "Words whose partitive takes letters back"
 
 msgid "work, job"
 msgstr "work, job"
 
-msgid "You’ll hear it and see how it changes from the first."
-msgstr "You’ll hear it and see how it changes from the first."
+msgid "You’ll hear it and see how it changes from the nominative."
+msgstr "You’ll hear it and see how it changes from the nominative."
 
 msgid "You’ll hear its three forms."
 msgstr "You’ll hear its three forms."

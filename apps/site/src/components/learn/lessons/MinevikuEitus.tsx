@@ -858,8 +858,14 @@ export function MinevikuEitusLesson() {
                   <Trans>
                     With yes, the ending changes with the person: <b lang="et">lugesin</b>,{" "}
                     <b lang="et">lugesid</b>, <b lang="et">luges</b>. With no, all six share one
-                    form: <Word w="ma ei lugenud" />, <Word w="nad ei lugenud" />. The pronoun says
-                    who, as in the present.
+                    form:{" "}
+                    <Nowrap>
+                      <Word w="ma ei lugenud" />,
+                    </Nowrap>{" "}
+                    <Nowrap>
+                      <Word w="nad ei lugenud" />.
+                    </Nowrap>{" "}
+                    The pronoun says who, as in the present.
                   </Trans>
                 </p>
                 <p>
@@ -890,7 +896,15 @@ export function MinevikuEitusLesson() {
                   <Trans>
                     Most verbs build the <End>nud</End> form on the <End>da</End> infinitive from
                     lesson {verbForms}. Take off <End>da</End> and add <End>nud</End>:{" "}
-                    <Word w="elada" />, <Word w="elanud" />; <Word w="lugeda" />,{" "}
+                    <Nowrap>
+                      <Word w="elada" />,
+                    </Nowrap>{" "}
+                    <Nowrap>
+                      <Word w="elanud" />;
+                    </Nowrap>{" "}
+                    <Nowrap>
+                      <Word w="lugeda" />,
+                    </Nowrap>{" "}
                     <Nowrap>
                       <Word w="lugenud" />.
                     </Nowrap>
@@ -983,8 +997,19 @@ export function MinevikuEitusLesson() {
                   <Trans>
                     <Word w="Minema" /> and the four verbs in lesson {verbForms} whose <End>da</End>{" "}
                     infinitive ends in a bare <End>a</End> don’t follow that rule. Learn their{" "}
-                    <End>nud</End> forms as they are: <Word w="läinud" />, <Word w="teinud" />,{" "}
-                    <Word w="näinud" />, <Word w="söönud" />,{" "}
+                    <End>nud</End> forms as they are:{" "}
+                    <Nowrap>
+                      <Word w="läinud" />,
+                    </Nowrap>{" "}
+                    <Nowrap>
+                      <Word w="teinud" />,
+                    </Nowrap>{" "}
+                    <Nowrap>
+                      <Word w="näinud" />,
+                    </Nowrap>{" "}
+                    <Nowrap>
+                      <Word w="söönud" />,
+                    </Nowrap>{" "}
                     <Nowrap>
                       <Word w="joonud" />.
                     </Nowrap>

@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: uk\n"
 
-msgid "<0/> and the four verbs in lesson {verbForms} whose <1>da</1> infinitive ends in a bare <2>a</2> don’t follow that rule. Learn their <3>nud</3> forms as they are: <4/>, <5/>, <6/>, <7/>, <8><9/>.</8>"
-msgstr "<0/> і чотири дієслова з уроку {verbForms}, у яких інфінітив на <1>da</1> закінчується просто на <2>a</2>, цього правила не дотримуються. Їхні форми на <3>nud</3> запам’ятай як є: <4/>, <5/>, <6/>, <7/>, <8><9/>.</8>"
+msgid "<0/> and the four verbs in lesson {verbForms} whose <1>da</1> infinitive ends in a bare <2>a</2> don’t follow that rule. Learn their <3>nud</3> forms as they are: <4><5/>,</4> <6><7/>,</6> <8><9/>,</8> <10><11/>,</10> <12><13/>.</12>"
+msgstr "<0/> і чотири дієслова з уроку {verbForms}, у яких інфінітив на <1>da</1> закінчується просто на <2>a</2>, цього правила не дотримуються. Їхні форми на <3>nud</3> запам’ятай як є: <4><5/>,</4> <6><7/>,</6> <8><9/>,</8> <10><11/>,</10> <12><13/>.</12>"
 
 msgid "<0/> has a one-word form, <1/>, as <2>ei ole</2> has <3>pole</3>: <4><5/>.</4> Both mean the same."
 msgstr "<0/> можна сказати й одним словом, <1/>, як <2>ei ole</2> — <3>pole</3>: <4><5/>.</4> Значення те саме."
@@ -376,8 +376,8 @@ msgstr "Більшість правильно. Ще раз поглянь на �
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Більшість правильно. Переслухай ще раз ті, де були помилки."
 
-msgid "Most verbs build the <0>nud</0> form on the <1>da</1> infinitive from lesson {verbForms}. Take off <2>da</2> and add <3>nud</3>: <4/>, <5/>; <6/>, <7><8/>.</7>"
-msgstr "Більшість дієслів утворює форму на <0>nud</0> від інфінітива на <1>da</1> з уроку {verbForms}. Відкинь <2>da</2> і додай <3>nud</3>: <4/>, <5/>; <6/>, <7><8/>.</7>"
+msgid "Most verbs build the <0>nud</0> form on the <1>da</1> infinitive from lesson {verbForms}. Take off <2>da</2> and add <3>nud</3>: <4><5/>,</4> <6><7/>;</6> <8><9/>,</8> <10><11/>.</10>"
+msgstr "Більшість дієслів утворює форму на <0>nud</0> від інфінітива на <1>da</1> з уроку {verbForms}. Відкинь <2>da</2> і додай <3>nud</3>: <4><5/>,</4> <6><7/>;</6> <8><9/>,</8> <10><11/>.</10>"
 
 msgid "Mul pole aega, in the past."
 msgstr "Mul pole aega в минулому."
@@ -721,8 +721,8 @@ msgstr "У запереченні — <0>ei</0> і форма на <1>nud</1>, �
 msgid "with no, in the past"
 msgstr "у запереченні, у минулому"
 
-msgid "With yes, the ending changes with the person: <0>lugesin</0>, <1>lugesid</1>, <2>luges</2>. With no, all six share one form: <3/>, <4/>. The pronoun says who, as in the present."
-msgstr "У ствердженні закінчення залежить від особи: <0>lugesin</0>, <1>lugesid</1>, <2>luges</2>. У запереченні в усіх шести одна форма: <3/>, <4/>. Хто саме — показує займенник, як і в теперішньому часі."
+msgid "With yes, the ending changes with the person: <0>lugesin</0>, <1>lugesid</1>, <2>luges</2>. With no, all six share one form: <3><4/>,</3> <5><6/>.</5> The pronoun says who, as in the present."
+msgstr "У ствердженні закінчення залежить від особи: <0>lugesin</0>, <1>lugesid</1>, <2>luges</2>. У запереченні в усіх шести одна форма: <3><4/>,</3> <5><6/>.</5> Хто саме — показує займенник, як і в теперішньому часі."
 
 msgid "With yes, the ending changes with the person."
 msgstr "У ствердженні закінчення залежить від особи."

@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
-msgid "<0/> and the four verbs in lesson {verbForms} whose <1>da</1> infinitive ends in a bare <2>a</2> don’t follow that rule. Learn their <3>nud</3> forms as they are: <4/>, <5/>, <6/>, <7/>, <8><9/>.</8>"
-msgstr "<0/> and the four verbs in lesson {verbForms} whose <1>da</1> infinitive ends in a bare <2>a</2> don’t follow that rule. Learn their <3>nud</3> forms as they are: <4/>, <5/>, <6/>, <7/>, <8><9/>.</8>"
+msgid "<0/> and the four verbs in lesson {verbForms} whose <1>da</1> infinitive ends in a bare <2>a</2> don’t follow that rule. Learn their <3>nud</3> forms as they are: <4><5/>,</4> <6><7/>,</6> <8><9/>,</8> <10><11/>,</10> <12><13/>.</12>"
+msgstr "<0/> and the four verbs in lesson {verbForms} whose <1>da</1> infinitive ends in a bare <2>a</2> don’t follow that rule. Learn their <3>nud</3> forms as they are: <4><5/>,</4> <6><7/>,</6> <8><9/>,</8> <10><11/>,</10> <12><13/>.</12>"
 
 msgid "<0/> has a one-word form, <1/>, as <2>ei ole</2> has <3>pole</3>: <4><5/>.</4> Both mean the same."
 msgstr "<0/> has a one-word form, <1/>, as <2>ei ole</2> has <3>pole</3>: <4><5/>.</4> Both mean the same."
@@ -376,8 +376,8 @@ msgstr "Most of them. Look again at the ones you missed."
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Most of them. Play the ones you missed once more."
 
-msgid "Most verbs build the <0>nud</0> form on the <1>da</1> infinitive from lesson {verbForms}. Take off <2>da</2> and add <3>nud</3>: <4/>, <5/>; <6/>, <7><8/>.</7>"
-msgstr "Most verbs build the <0>nud</0> form on the <1>da</1> infinitive from lesson {verbForms}. Take off <2>da</2> and add <3>nud</3>: <4/>, <5/>; <6/>, <7><8/>.</7>"
+msgid "Most verbs build the <0>nud</0> form on the <1>da</1> infinitive from lesson {verbForms}. Take off <2>da</2> and add <3>nud</3>: <4><5/>,</4> <6><7/>;</6> <8><9/>,</8> <10><11/>.</10>"
+msgstr "Most verbs build the <0>nud</0> form on the <1>da</1> infinitive from lesson {verbForms}. Take off <2>da</2> and add <3>nud</3>: <4><5/>,</4> <6><7/>;</6> <8><9/>,</8> <10><11/>.</10>"
 
 msgid "Mul pole aega, in the past."
 msgstr "Mul pole aega, in the past."
@@ -721,8 +721,8 @@ msgstr "With no, <0>ei</0> and the <1>nud</1> form, the same for every person."
 msgid "with no, in the past"
 msgstr "with no, in the past"
 
-msgid "With yes, the ending changes with the person: <0>lugesin</0>, <1>lugesid</1>, <2>luges</2>. With no, all six share one form: <3/>, <4/>. The pronoun says who, as in the present."
-msgstr "With yes, the ending changes with the person: <0>lugesin</0>, <1>lugesid</1>, <2>luges</2>. With no, all six share one form: <3/>, <4/>. The pronoun says who, as in the present."
+msgid "With yes, the ending changes with the person: <0>lugesin</0>, <1>lugesid</1>, <2>luges</2>. With no, all six share one form: <3><4/>,</3> <5><6/>.</5> The pronoun says who, as in the present."
+msgstr "With yes, the ending changes with the person: <0>lugesin</0>, <1>lugesid</1>, <2>luges</2>. With no, all six share one form: <3><4/>,</3> <5><6/>.</5> The pronoun says who, as in the present."
 
 msgid "With yes, the ending changes with the person."
 msgstr "With yes, the ending changes with the person."

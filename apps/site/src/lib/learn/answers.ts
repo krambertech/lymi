@@ -221,8 +221,10 @@ export function lettersOff(marked: MarkedAnswer): number {
   return letterDistance(typed.join(" "), answerWords(marked.accepted).join(" "));
 }
 
+export const ALSO_RIGHT_SHOWN = 3;
+
 export const otherAnswers = (marked: MarkedAnswer, accepted: readonly string[]): string[] =>
-  accepted.filter((sentence) => !sameAnswer(sentence, marked.accepted));
+  accepted.filter((sentence) => !sameAnswer(sentence, marked.accepted)).slice(0, ALSO_RIGHT_SHOWN);
 
 export interface SingleChange {
   at: number;

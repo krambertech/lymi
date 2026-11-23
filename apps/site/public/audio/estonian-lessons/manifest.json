@@ -15377,5 +15377,902 @@
     "text": "Homme õpib ta eesti keelt.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/c-call": {
+    "text": "Tere, Mari! Kus sa oled? Tere, Jaan! Ma olen poes. Aga sina? Ma olen kodus. Ma olen toas ja loen. Kus Kati on? Kati on koolis. Ema on turul. Ja isa? Isa on tööl. Ta töötab täna Tartus. Kas minu raamat on laual? Ei, raamat on aknal. Aitäh! Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Mari!",
+          "Kus sa oled?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Jaan!",
+          "Ma olen poes.",
+          "Aga sina?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma olen kodus.",
+          "Ma olen toas ja loen."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kus Kati on?"
+        ],
+        "say": "[curious] Kus Kati on?"
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kati on koolis.",
+          "Ema on turul."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ja isa?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Isa on tööl.",
+          "Ta töötab täna Tartus."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas minu raamat on laual?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei, raamat on aknal."
+        ],
+        "say": "[laughs] Ei, raamat on aknal."
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Aitäh!",
+          "Head aega!"
+        ]
+      }
+    ]
+  },
+  "pohivormid/laps-on-koolis": {
+    "text": "Laps on koolis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/mees-on-majas": {
+    "text": "Mees on majas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/naine-on-toas": {
+    "text": "Naine on toas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/raamat-on-laual": {
+    "text": "Raamat on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/me-oleme-linnas": {
+    "text": "Me oleme linnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/auto-on-kodus": {
+    "text": "Auto on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/mees-on-linnas": {
+    "text": "Mees on linnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/naine-on-poes": {
+    "text": "Naine on poes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/laps-on-autos": {
+    "text": "Laps on autos.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/mees-on-uksel": {
+    "text": "Mees on uksel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/laps-on-turul": {
+    "text": "Laps on turul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/naine-on-to2o2l": {
+    "text": "Naine on tööl.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/c-class": {
+    "text": "Tere, Jaan! Mis on sõna raamat põhivormid? Raamat, raamatu, raamatut. Väga hea! Ja sõna laps? Laps, lapse, lapse. Ei, laps, lapse, last. Last. Aitäh! Ja sõna maja? Maja, maja, maja. Väga hea, Jaan!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Mis on sõna raamat põhivormid?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Raamat, raamatu, raamatut."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Väga hea!",
+          "Ja sõna laps?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Laps, lapse, lapse."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, laps, lapse, last."
+        ],
+        "say": "[gently] Ei, laps, lapse, last."
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Last.",
+          "Aitäh!"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja sõna maja?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Maja, maja, maja."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Väga hea, Jaan!"
+        ],
+        "say": "[warmly] Väga hea, Jaan!"
+      }
+    ]
+  },
+  "pohivormid/linnas": {
+    "text": "linnas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/minu": {
+    "text": "minu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/sinu": {
+    "text": "sinu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/tema": {
+    "text": "tema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/meie": {
+    "text": "meie",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/nende": {
+    "text": "nende",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/kas-sul-on-auto": {
+    "text": "Kas sul on auto?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/maril-on-ku2simus": {
+    "text": "Maril on küsimus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/meil-pole-aega": {
+    "text": "Meil pole aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/kellel-on-koer": {
+    "text": "Kellel on koer?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/mul-on-vaja-abi": {
+    "text": "Mul on vaja abi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/kas-sul-on-aega": {
+    "text": "Kas sul on aega?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/mul-ei-ole-aega": {
+    "text": "Mul ei ole aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/c-car": {
+    "text": "Tere, Jaan! Kas sul on täna aega? Jah, on. Miks? Mul on vaja abi. Kas sul on auto? Ei ole. Aga minu isal on auto. Kas sinu isal on täna aega? Ei, isal pole aega. Ta on tööl. Aga Kati? Kas Katil on auto? Jah, Katil on auto. Ja tal on aega. Väga hea! Aitäh!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Jaan!",
+          "Kas sul on täna aega?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, on.",
+          "Miks?"
+        ],
+        "say": "Jah, on. [curious] Miks?"
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mul on vaja abi.",
+          "Kas sul on auto?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei ole.",
+          "Aga minu isal on auto."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas sinu isal on täna aega?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei, isal pole aega.",
+          "Ta on tööl."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Aga Kati?",
+          "Kas Katil on auto?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, Katil on auto.",
+          "Ja tal on aega."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Väga hea!",
+          "Aitäh!"
+        ],
+        "say": "[relieved] Väga hea! Aitäh!"
+      }
+    ]
+  },
+  "omastav/see-on-jaani-raamat": {
+    "text": "See on Jaani raamat.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/kelle-kohv-see-on": {
+    "text": "Kelle kohv see on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/minu-vend-elab-tallinnas": {
+    "text": "Minu vend elab Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/nende-kass-on-kodus": {
+    "text": "Nende kass on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/mari-kohvik-on-tartus": {
+    "text": "Mari kohvik on Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/meie-o3petaja-nimi-on-kati": {
+    "text": "Meie õpetaja nimi on Kati.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/minu-nimi-on-kati": {
+    "text": "Minu nimi on Kati.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/nende-kass-on-pa2rnus": {
+    "text": "Nende kass on Pärnus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/jaani-kass-on-kodus": {
+    "text": "Jaani kass on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/see-on-poe-uks": {
+    "text": "See on poe uks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/ma-elan-tallinnas": {
+    "text": "Ma elan Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/c-photo": {
+    "text": "Jaan, kelle pilt see on? See on minu pilt. Kes see on? See on minu vend Martin. Ta elab Tartus. Ja kelle kass see on? See on Martini kass. Kassi nimi on Miisu. Kas see on teie maja? Ei, see on minu ema maja. Ta elab Pärnus. Ja kelle auto see on? See on minu auto!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jaan, kelle pilt see on?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "See on minu pilt."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kes see on?"
+        ],
+        "say": "[curious] Kes see on?"
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "See on minu vend Martin.",
+          "Ta elab Tartus."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ja kelle kass see on?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "See on Martini kass.",
+          "Kassi nimi on Miisu."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas see on teie maja?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei, see on minu ema maja.",
+          "Ta elab Pärnus."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ja kelle auto see on?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "See on minu auto!"
+        ],
+        "say": "[laughs] See on minu auto!"
+      }
+    ]
+  },
+  "mul-on/mul-pole-aega": {
+    "text": "Mul pole aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/ei-mul-pole-homme-aega": {
+    "text": "Ei, mul pole homme aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/toad-on-suured": {
+    "text": "Toad on suured.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/ema-ja-isa-to2o2tavad-tallinnas": {
+    "text": "Ema ja isa töötavad Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/uued-raamatud-on-laual": {
+    "text": "Uued raamatud on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/poed-on-suured": {
+    "text": "Poed on suured.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/c-friends": {
+    "text": "Mari, kus su lapsed on? Lapsed on koolis. Nad õpivad. Ja su kassid? Kassid magavad kodus. Kus su sõbrad elavad? Sõbrad elavad Tallinnas. Nad töötavad haiglas. Kas Tallinna poed on suured? Jah, poed on suured ja ilusad. Ja Tartu poed? Tartu poed on väikesed. Aitäh! Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mari, kus su lapsed on?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Lapsed on koolis.",
+          "Nad õpivad."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ja su kassid?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kassid magavad kodus."
+        ],
+        "say": "[laughs] Kassid magavad kodus."
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kus su sõbrad elavad?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Sõbrad elavad Tallinnas.",
+          "Nad töötavad haiglas."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas Tallinna poed on suured?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, poed on suured ja ilusad."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ja Tartu poed?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tartu poed on väikesed."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Aitäh!",
+          "Head aega!"
+        ]
+      }
+    ]
+  },
+  "osastav/mul-on-kaks-kassi": {
+    "text": "Mul on kaks kassi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/tass-kohvi-palun": {
+    "text": "Tass kohvi, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/leib-maksab-kolm-eurot": {
+    "text": "Leib maksab kolm eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/c-shopping": {
+    "text": "Jaan, kas meil on piima? Ei, meil pole piima. Aga meil on vett. Kas meil on leiba? Meil pole leiba. Meil on natuke juustu. Hästi. Ma lähen poodi. Mul on vaja kohvi. Kui palju? Kilo kohvi. Ja leiba? Jah, üks leib. Kas sul on raha? Mul on kümme eurot. Aitäh! Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jaan, kas meil on piima?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei, meil pole piima.",
+          "Aga meil on vett."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas meil on leiba?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Meil pole leiba.",
+          "Meil on natuke juustu."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hästi.",
+          "Ma lähen poodi."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mul on vaja kohvi."
+        ],
+        "say": "[hopeful] Mul on vaja kohvi."
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kui palju?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kilo kohvi."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ja leiba?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, üks leib."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas sul on raha?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mul on kümme eurot."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Aitäh!",
+          "Head aega!"
+        ]
+      }
+    ]
+  },
+  "laual-lauale-laualt/ma-la2hen-to2o2le": {
+    "text": "Ma lähen tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/ma-tulen-turult": {
+    "text": "Ma tulen turult.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/kass-hu2ppab-lauale": {
+    "text": "Kass hüppab lauale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/ma-helistan-emale": {
+    "text": "Ma helistan emale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/ma-ku2sin-isalt": {
+    "text": "Ma küsin isalt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/me-elame-saaremaal": {
+    "text": "Me elame Saaremaal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/kass-on-laual": {
+    "text": "Kass on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/ma-ku2sin-emalt": {
+    "text": "Ma küsin emalt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/ma-la2hen-turule": {
+    "text": "Ma lähen turule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/c-call": {
+    "text": "Tere, Mari! Kus sa oled? Ma olen turul. Kas sa lähed täna tööle? Ei, täna on laupäev. Ma lähen turult koju. Kas sa helistad emale? Jah, ma helistan emale. Aga sina? Ma lähen homme Saaremaale. Kas su ema elab Saaremaal? Jah, ema elab Saaremaal. Ma tulen esmaspäeval Saaremaalt tagasi. Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Mari!",
+          "Kus sa oled?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ma olen turul."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas sa lähed täna tööle?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, täna on laupäev.",
+          "Ma lähen turult koju."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas sa helistad emale?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, ma helistan emale.",
+          "Aga sina?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma lähen homme Saaremaale."
+        ],
+        "say": "[happy] Ma lähen homme Saaremaale."
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas su ema elab Saaremaal?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, ema elab Saaremaal.",
+          "Ma tulen esmaspäeval Saaremaalt tagasi.",
+          "Head aega!"
+        ]
+      }
+    ]
+  },
+  "majas-majja-majast/ma-la2hen-tartusse": {
+    "text": "Ma lähen Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kust-sa-pa2rit-oled": {
+    "text": "Kust sa pärit oled?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/ma-tulen-poest": {
+    "text": "Ma tulen poest.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kass-la2heb-majja": {
+    "text": "Kass läheb majja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/me-la2heme-linna": {
+    "text": "Me läheme linna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/ma-olen-pa2rit-eestist": {
+    "text": "Ma olen pärit Eestist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/ma-olen-pa2rit-soomest": {
+    "text": "Ma olen pärit Soomest.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kass-on-majas": {
+    "text": "Kass on majas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/me-la2heme-koju": {
+    "text": "Me läheme koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/ma-olen-kodus": {
+    "text": "Ma olen kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/c-street": {
+    "text": "Tere, Jaan! Kust sa tuled? Ma tulen haiglast. Kuhu sa lähed? Ma lähen koju. Aga sina? Ma lähen poodi ja kohvikusse. Kas sa oled homme Tallinnas? Ei, homme lähen Tartusse. Mu ema elab Tartus. Kas sa oled pärit Tartust? Ei, ma olen pärit Pärnust. Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Jaan!",
+          "Kust sa tuled?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma tulen haiglast."
+        ],
+        "say": "[tired] Ma tulen haiglast."
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kuhu sa lähed?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma lähen koju.",
+          "Aga sina?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ma lähen poodi ja kohvikusse."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas sa oled homme Tallinnas?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, homme lähen Tartusse.",
+          "Mu ema elab Tartus."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas sa oled pärit Tartust?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, ma olen pärit Pärnust.",
+          "Head aega!"
+        ]
+      }
+    ]
   }
 }

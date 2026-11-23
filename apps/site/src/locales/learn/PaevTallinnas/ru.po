@@ -431,7 +431,7 @@ msgid "to be"
 msgstr "быть"
 
 msgid "To say the day, use <et>täna on</et> or <et>homme on</et> and its name, with a small letter."
-msgstr "Чтобы назвать день, говори <et>täna on</et> или <et>homme on</et> и название дня с маленькой буквы."
+msgstr "Чтобы назвать день, говори <et>täna on</et> или <et>homme on</et> и название дня со строчной буквы."
 
 msgid "today"
 msgstr "сегодня"
@@ -475,8 +475,8 @@ msgstr "который час"
 msgid "What time it is"
 msgstr "Который час"
 
-msgid "When does his bus get to Tallinn?"
-msgstr "Когда его автобус приедет в Таллин?"
+msgid "When does his bus arrive?"
+msgstr "Когда приедет его автобус?"
 
 msgid "When does it close on Thursday?"
 msgstr "Во сколько кафе закрывается в четверг?"

@@ -205,7 +205,7 @@ function useContent() {
     },
     {
       id: "bus",
-      ask: t`When does his bus get to Tallinn?`,
+      ask: t`When does his bus arrive?`,
       options: [
         { id: "eleven-thirty", label: t`At 11:30` },
         { id: "ten-thirty", label: t`At 10:30` },

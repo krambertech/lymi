@@ -475,8 +475,8 @@ msgstr "котра година"
 msgid "What time it is"
 msgstr "Котра година"
 
-msgid "When does his bus get to Tallinn?"
-msgstr "Коли його автобус приїде до Таллінна?"
+msgid "When does his bus arrive?"
+msgstr "Коли приїде його автобус?"
 
 msgid "When does it close on Thursday?"
 msgstr "О котрій кав’ярня зачиняється в четвер?"

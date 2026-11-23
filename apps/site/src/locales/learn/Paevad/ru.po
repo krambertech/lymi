@@ -117,7 +117,7 @@ msgid "Hear a day"
 msgstr "День на слух"
 
 msgid "Hear the sentence and write it. Day names start with a small letter."
-msgstr "Послушай предложение и напиши его. Дни недели пишут с маленькой буквы."
+msgstr "Послушай предложение и напиши его. Дни недели пишут со строчной буквы."
 
 msgid "holy; a holiday"
 msgstr "святой; праздник"

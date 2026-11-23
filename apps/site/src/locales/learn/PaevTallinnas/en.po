@@ -475,8 +475,8 @@ msgstr "what time"
 msgid "What time it is"
 msgstr "What time it is"
 
-msgid "When does his bus get to Tallinn?"
-msgstr "When does his bus get to Tallinn?"
+msgid "When does his bus arrive?"
+msgstr "When does his bus arrive?"
 
 msgid "When does it close on Thursday?"
 msgstr "When does it close on Thursday?"

@@ -42,17 +42,29 @@ export function playSound(
   return start(src, key, onFrame, from);
 }
 
+export const SLOW_RATE = 0.75;
+export const slowKey = (src: string) => `${src}#slow`;
+
+export function playSlowly(src: string): Promise<void> {
+  turn += 1;
+  return start(src, slowKey(src), undefined, 0, SLOW_RATE);
+}
+
 function start(
   src: string,
   key: string,
   onFrame?: (seconds: number) => void,
   from = 0,
+  rate = 1,
 ): Promise<void> {
   stopSound();
   element ??= new Audio();
   const sound = element;
+  sound.preservesPitch = true;
+  sound.defaultPlaybackRate = rate;
   // The same clip again keeps its loaded audio, unless loading it failed: then it loads anew.
   if (!sound.src.endsWith(src) || sound.error) sound.src = src;
+  sound.playbackRate = rate;
   sound.currentTime = from;
   playingKey = key;
   emit();

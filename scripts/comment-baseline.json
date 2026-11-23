@@ -659,7 +659,7 @@
   "apps/site/src/components/Lantern.tsx": 13,
   "apps/site/src/components/learn/Dialogue.tsx": 22,
   "apps/site/src/components/learn/Explore.tsx": 21,
-  "apps/site/src/components/learn/FormRound.tsx": 24,
+  "apps/site/src/components/learn/FormRound.tsx": 22,
   "apps/site/src/components/learn/GapPassage.tsx": 29,
   "apps/site/src/components/learn/HubView.tsx": 2,
   "apps/site/src/components/learn/KitDemo.tsx": 3,

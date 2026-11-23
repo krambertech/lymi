@@ -3,8 +3,9 @@ import { ArrowRight, X } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { morph } from "../../lib/learn/forms";
 import { playSound } from "../../lib/learn/player";
-import { ESTONIAN_LETTERS, formMatches, insertAt, onlyMarksDiffer } from "../../lib/learn/practice";
+import { formMatches, onlyMarksDiffer } from "../../lib/learn/practice";
 import { Button } from "../Button";
+import { LetterKeys, useLetters } from "./LetterKeys";
 import { Answer, Feedback, type RoundProps } from "./Quiz";
 import { PlayButton } from "./Sound";
 
@@ -79,35 +80,6 @@ function Change({ base, form, src }: { base: string; form: string; src?: string 
   );
 }
 
-/** Keys for õ ä ö ü š ž under a field, for keyboards without them. They keep the field focused. */
-function LetterKeys({ onLetter }: { onLetter: (letter: string) => void }) {
-  const { t } = useLingui();
-  return (
-    <fieldset className="m-0 flex min-w-0 flex-wrap gap-1.5 border-0 p-0">
-      <legend className="sr-only">{t`Estonian letters`}</legend>
-      {ESTONIAN_LETTERS.map((letter) => (
-        <button
-          key={letter}
-          type="button"
-          // A press must not take focus from the field, or a phone's keyboard closes.
-          onPointerDown={(event) => event.preventDefault()}
-          onClick={() => onLetter(letter)}
-          className="learn-key grid h-11 min-w-11 cursor-pointer place-items-center rounded-tile bg-plate px-2 text-xl font-semibold hoverable:hover:bg-plate-hover"
-        >
-          <span aria-hidden="true" lang="et">
-            {letter}
-          </span>
-          <span className="sr-only">
-            <Trans>
-              Type <span lang="et">{letter}</span>
-            </Trans>
-          </span>
-        </button>
-      ))}
-    </fieldset>
-  );
-}
-
 /**
  * A word and a cue; the learner types the form or picks it. Once answered, the word and its form
  * stand side by side with the changed letters lit, and the form plays.
@@ -138,20 +110,7 @@ export function FormRound({ item, state, heard, answer, autoplay }: RoundProps<F
     answer(typed, formMatches(typed, item.answers));
     if (item.src) void playSound(item.src);
   };
-  const type = (letter: string) => {
-    const field = input.current;
-    const next = insertAt(
-      value,
-      letter,
-      field?.selectionStart ?? null,
-      field?.selectionEnd ?? null,
-    );
-    setValue(next.value);
-    requestAnimationFrame(() => {
-      field?.focus({ preventScroll: true });
-      field?.setSelectionRange(next.caret, next.caret);
-    });
-  };
+  const type = useLetters(input, value, setValue);
 
   return (
     <>

@@ -127,6 +127,13 @@ describe("analytics privacy contract", () => {
         "browser",
       ),
     ).toBeNull();
+    expect(
+      eventProperties(
+        "learn_quiz_finished",
+        { lesson: "kohad", quiz: "write", right: 6, total: 8, slips: 2 },
+        "browser",
+      ),
+    ).toEqual({ lesson: "kohad", quiz: "write", right: 6, total: 8, slips: 2 });
     // A quiz id is never a learner's words or a free label.
     expect(
       eventProperties(

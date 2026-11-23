@@ -42,7 +42,24 @@ try {
   }
 }
 rmSync(dir, { recursive: true, force: true });
+
+function writeNearForms() {
+  const wrote = spawnSync(
+    "pnpm",
+    ["exec", "vitest", "run", "src/lib/learn/near-forms.test.ts", "-u"],
+    {
+      cwd: site,
+      env: { ...process.env, CI: "" },
+      stdio: "ignore",
+    },
+  );
+  if (wrote.status === 0) return;
+  console.error("near-forms.json wasn't written. Run the near-forms test to see why.");
+  process.exit(1);
+}
+
 if (missing.length === 0) {
+  writeNearForms();
   console.log("Every Estonian form in the lessons is already checked.");
   process.exit(0);
 }
@@ -101,6 +118,7 @@ const sorted = Object.fromEntries(
   Object.entries(list).sort(([a], [b]) => a.localeCompare(b, "et")),
 );
 writeFileSync(listPath, `${JSON.stringify(sorted, null, 2)}\n`);
+writeNearForms();
 console.log(`Added ${added} form${added === 1 ? "" : "s"} Sõnaveeb confirms.`);
 if (unknown.length) {
   console.log(

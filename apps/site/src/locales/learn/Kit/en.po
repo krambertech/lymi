@@ -34,6 +34,10 @@ msgstr "“To have”"
 msgid "“To like” and feelings"
 msgstr "“To like” and feelings"
 
+#. placeholder {0}: slips.length
+msgid "{0, plural, one {# of them has a slip in spelling.} other {# of them have a slip in spelling.}}"
+msgstr "{0, plural, one {# of them has a slip in spelling.} other {# of them have a slip in spelling.}}"
+
 #. placeholder {0}: state.mistakes
 msgid "{0, plural, one {# wrong try} other {# wrong tries}}"
 msgstr "{0, plural, one {# wrong try} other {# wrong tries}}"
@@ -66,6 +70,9 @@ msgstr "{more, plural, one {and # more} other {and # more}}"
 
 msgid "{next, plural, one {# more} other {# more}}"
 msgstr "{next, plural, one {# more} other {# more}}"
+
+msgid "{off, plural, one {Not right: # word differs.} other {Not right: # words differ.}}"
+msgstr "{off, plural, one {Not right: # word differs.} other {Not right: # words differ.}}"
 
 msgid "{position} of {count}"
 msgstr "{position} of {count}"
@@ -135,6 +142,15 @@ msgstr "<0>{before}</0> blank <1>{after}</1>"
 msgid "<0>{plannedCount}</0> planned, A1 to B1"
 msgstr "<0>{plannedCount}</0> planned, A1 to B1"
 
+msgid "<0>{triedWord}</0> is right in this sentence."
+msgstr "<0>{triedWord}</0> is right in this sentence."
+
+msgid "<0>Kooli</0> is to school; <1>koolis</1> is at school."
+msgstr "<0>Kooli</0> is to school; <1>koolis</1> is at school."
+
+msgid "<0>Linna</0> is to town, with a double n; <1>lina</1> is linen."
+msgstr "<0>Linna</0> is to town, with a double n; <1>lina</1> is linen."
+
 msgid "A cat and a cardboard box"
 msgstr "A cat and a cardboard box"
 
@@ -146,6 +162,9 @@ msgstr "A conversation in two voices: the learner picks each reply. Shown first,
 
 msgid "A drawing on the tray: pressing a place, on a key or on the drawing, moves the cat there and plays the sentence."
 msgstr "A drawing on the tray: pressing a place, on a key or on the drawing, moves the cat there and plays the sentence."
+
+msgid "A fixed sentence, marked"
+msgstr "A fixed sentence, marked"
 
 msgid "a foot"
 msgstr "a foot"
@@ -246,6 +265,12 @@ msgstr "A right answer brings a question back after 1, 3, 7 and then 21 days. A 
 msgid "a room"
 msgstr "a room"
 
+msgid "A sentence in the reader’s language to write in Estonian. Every accepted sentence counts, and the others show once it is checked."
+msgstr "A sentence in the reader’s language to write in Estonian. Every accepted sentence counts, and the others show once it is checked."
+
+msgid "A sentence to hear, again or slower, and type. Case, commas and the mark at the end don’t count; the answer shows which words differ."
+msgstr "A sentence to hear, again or slower, and type. Case, commas and the mark at the end don’t count; the answer shows which words differ."
+
 msgid "a shop"
 msgstr "a shop"
 
@@ -261,8 +286,17 @@ msgstr "A word and a cue; type the form, with keys for õ ä ö ü š ž, or pic
 msgid "A word turning into its forms: the letters it drops are struck, the ones it gains are lit."
 msgstr "A word turning into its forms: the letters it drops are struck, the ones it gains are lit."
 
+msgid "A written sentence, marked"
+msgstr "A written sentence, marked"
+
+msgid "about many"
+msgstr "about many"
+
 msgid "Adjective agreement"
 msgstr "Adjective agreement"
+
+msgid "After a number from two up, the word takes its third form: <0>kolm kassi</0>."
+msgstr "After a number from two up, the word takes its third form: <0>kolm kassi</0>."
 
 msgid "After ei the verb drops its ending: ei ela."
 msgstr "After ei the verb drops its ending: ei ela."
@@ -275,6 +309,18 @@ msgstr "All lessons"
 
 msgid "Also right:"
 msgstr "Also right:"
+
+msgid "An Estonian answer; the learner writes the question it answers."
+msgstr "An Estonian answer; the learner writes the question it answers."
+
+msgid "An Estonian sentence and a cue, such as in the past, say no or about many; the learner writes the new sentence."
+msgstr "An Estonian sentence and a cue, such as in the past, say no or about many; the learner writes the new sentence."
+
+msgid "An Estonian sentence with one wrong word, as learners write it. The learner taps the word, then types the right form; finding and fixing are marked apart."
+msgstr "An Estonian sentence with one wrong word, as learners write it. The learner taps the word, then types the right form; finding and fixing are marked apart."
+
+msgid "Another form"
+msgstr "Another form"
 
 msgid "Answer every question first."
 msgstr "Answer every question first."
@@ -357,6 +403,9 @@ msgstr "Dialogue"
 msgid "Dialogue, sound only"
 msgstr "Dialogue, sound only"
 
+msgid "Dictionary words to make into a sentence, with a cue when the tense isn’t the present."
+msgstr "Dictionary words to make into a sentence, with a cue when the tense isn’t the present."
+
 msgid "doctor"
 msgstr "doctor"
 
@@ -374,6 +423,9 @@ msgstr "Drill"
 
 msgid "Due today"
 msgstr "Due today"
+
+msgid "Each way an answer can come out: right, nearly right, another form, words that differ, and the wrong order."
+msgstr "Each way an answer can come out: right, nearly right, another form, words that differ, and the wrong order."
 
 msgid "Ei before the bare verb says not: ei loe."
 msgstr "Ei before the bare verb says not: ei loe."
@@ -395,6 +447,9 @@ msgstr "Estonian conversation practice: meeting someone"
 
 msgid "Estonian grammar lessons"
 msgstr "Estonian grammar lessons"
+
+msgid "Estonian has both <0>{typed}</0> and <1>{right}</1>, and they don’t mean the same."
+msgstr "Estonian has both <0>{typed}</0> and <1>{right}</1>, and they don’t mean the same."
 
 msgid "Estonian imperative: giving commands"
 msgstr "Estonian imperative: giving commands"
@@ -447,11 +502,29 @@ msgstr "Fill the gap"
 msgid "Fill the gaps"
 msgstr "Fill the gaps"
 
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "Fixed, but not found first"
+msgstr "Fixed, but not found first"
+
 msgid "Form"
 msgstr "Form"
 
 msgid "Forms of maja"
 msgstr "Forms of maja"
+
+msgid "Found and fixed"
+msgstr "Found and fixed"
+
+msgid "Found and fixed, found and nearly fixed, found and not fixed, and fixed only after another word was tapped."
+msgstr "Found and fixed, found and nearly fixed, found and not fixed, and fixed only after another word was tapped."
+
+msgid "Found, nearly fixed"
+msgstr "Found, nearly fixed"
+
+msgid "Found, not fixed"
+msgstr "Found, not fixed"
 
 msgid "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
 msgstr "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
@@ -573,11 +646,17 @@ msgstr "I have already eaten."
 msgid "I read"
 msgstr "I read"
 
+msgid "I’m a teacher."
+msgstr "I’m a teacher."
+
 msgid "I’m eating now."
 msgstr "I’m eating now."
 
 msgid "I’m going to eat."
 msgstr "I’m going to eat."
+
+msgid "I’m going to school."
+msgstr "I’m going to school."
 
 msgid "Illative"
 msgstr "Illative"
@@ -590,6 +669,9 @@ msgstr "in a room"
 
 msgid "in a shop"
 msgstr "in a shop"
+
+msgid "In a town takes <0>-s</0>: <1>Tallinnas</1>."
+msgstr "In a town takes <0>-s</0>: <1>Tallinnas</1>."
 
 msgid "in front"
 msgstr "in front"
@@ -614,6 +696,9 @@ msgstr "in the house"
 
 msgid "In the house: -s, and -des for more than one."
 msgstr "In the house: -s, and -des for more than one."
+
+msgid "in the past"
+msgstr "in the past"
 
 msgid "In the past"
 msgstr "In the past"
@@ -648,6 +733,9 @@ msgstr "Into and out of in Estonian: -sse and -st"
 msgid "into the house"
 msgstr "into the house"
 
+msgid "Into the house is <0>majja</0>, with a double j."
+msgstr "Into the house is <0>majja</0>, with a double j."
+
 msgid "Into the house. Majja doubles the j; majasse means the same."
 msgstr "Into the house. Majja doubles the j; majasse means the same."
 
@@ -663,6 +751,9 @@ msgstr "It was <0>{0}</0>"
 
 msgid "It was <0>{expected}</0>."
 msgstr "It was <0>{expected}</0>."
+
+msgid "It’s spelled like this"
+msgstr "It’s spelled like this"
 
 msgid "Kodu is home; kodus, at home."
 msgstr "Kodu is home; kodus, at home."
@@ -721,6 +812,12 @@ msgstr "Longer sentences"
 msgid "Lugema now and in the past"
 msgstr "Lugema now and in the past"
 
+msgid "Make a sentence"
+msgstr "Make a sentence"
+
+msgid "Make a sentence from these words."
+msgstr "Make a sentence from these words."
+
 msgid "Make the form"
 msgstr "Make the form"
 
@@ -754,6 +851,9 @@ msgstr "Mina takes -n: loen."
 msgid "Mina, I, takes olen."
 msgstr "Mina, I, takes olen."
 
+msgid "Missing: <0>{right}</0>."
+msgstr "Missing: <0>{right}</0>."
+
 msgid "More are on the way."
 msgstr "More are on the way."
 
@@ -765,6 +865,27 @@ msgstr "More than one"
 
 msgid "music"
 msgstr "music"
+
+msgid "Nearly right, a double letter"
+msgstr "Nearly right, a double letter"
+
+msgid "Nearly right, marks"
+msgstr "Nearly right, marks"
+
+msgid "Nearly right: a letter should be double."
+msgstr "Nearly right: a letter should be double."
+
+msgid "Nearly right: a letter should be single."
+msgstr "Nearly right: a letter should be single."
+
+msgid "Nearly right: only the letters with marks are off."
+msgstr "Nearly right: only the letters with marks are off."
+
+msgid "Nearly right: two letters are off."
+msgstr "Nearly right: two letters are off."
+
+msgid "Nearly right."
+msgstr "Nearly right."
 
 msgid "Negation"
 msgstr "Negation"
@@ -789,6 +910,9 @@ msgstr "Nominative"
 
 msgid "Not a pair."
 msgstr "Not a pair."
+
+msgid "Not needed here: <0>{typed}</0>."
+msgstr "Not needed here: <0>{typed}</0>."
 
 msgid "Not this one."
 msgstr "Not this one."
@@ -849,6 +973,9 @@ msgstr "On, onto, off"
 
 msgid "One"
 msgstr "One"
+
+msgid "One word is wrong. Tap it, then write it right."
+msgstr "One word is wrong. Tap it, then write it right."
 
 msgid "Onto and off in Estonian: -le and -lt"
 msgstr "Onto and off in Estonian: -le and -lt"
@@ -946,6 +1073,9 @@ msgstr "Play <0>{0}</0>"
 msgid "Play <0>{form}</0>"
 msgstr "Play <0>{form}</0>"
 
+msgid "Play <0>{sentence}</0>"
+msgstr "Play <0>{sentence}</0>"
+
 msgid "Play what {name} said"
 msgstr "Play what {name} said"
 
@@ -1042,6 +1172,15 @@ msgstr "Reported speech"
 msgid "Review"
 msgstr "Review"
 
+msgid "Rewrite the sentence"
+msgstr "Rewrite the sentence"
+
+msgid "Rewrite the sentence."
+msgstr "Rewrite the sentence."
+
+msgid "Right"
+msgstr "Right"
+
 msgid "right answer"
 msgstr "right answer"
 
@@ -1066,6 +1205,9 @@ msgstr "Say it"
 
 msgid "Say it in Estonian:"
 msgstr "Say it in Estonian:"
+
+msgid "say no"
+msgstr "say no"
 
 msgid "Say what you can, must and like to do, where you are going, what you did yesterday and what you will do tomorrow."
 msgstr "Say what you can, must and like to do, where you are going, what you did yesterday and what you will do tomorrow."
@@ -1124,6 +1266,12 @@ msgstr "Sina is you: this says “You are Jaan.”"
 msgid "Skip"
 msgstr "Skip"
 
+msgid "slip in spelling"
+msgstr "slip in spelling"
+
+msgid "Slower"
+msgstr "Slower"
+
 msgid "Somebody, nobody: -gi and -ki"
 msgstr "Somebody, nobody: -gi and -ki"
 
@@ -1180,6 +1328,9 @@ msgstr "Tap a word to add it; drag or use the arrow keys to move it."
 
 msgid "Tap a word, then its group, or drag it there."
 msgstr "Tap a word, then its group, or drag it there."
+
+msgid "Tap another word."
+msgstr "Tap another word."
 
 msgid "Tap one side, then its match on the other."
 msgstr "Tap one side, then its match on the other."
@@ -1271,6 +1422,9 @@ msgstr "The Estonian genitive case: my, your and whose"
 msgid "The Estonian partitive case: after numbers, amounts and negation"
 msgstr "The Estonian partitive case: after numbers, amounts and negation"
 
+msgid "The form isn’t <0>{wrote}</0>."
+msgstr "The form isn’t <0>{wrote}</0>."
+
 msgid "The future"
 msgstr "The future"
 
@@ -1286,8 +1440,8 @@ msgstr "The g drops and the u becomes o: loe-, plus -n for ma."
 msgid "The genitive case"
 msgstr "The genitive case"
 
-msgid "The lesson kit’s parts for practice after a rule is taught: listening, a passage with gaps, reading, a dialogue, sorting, matching, building a sentence and making a form. docs/design/estonian-lessons.md says when to use each."
-msgstr "The lesson kit’s parts for practice after a rule is taught: listening, a passage with gaps, reading, a dialogue, sorting, matching, building a sentence and making a form. docs/design/estonian-lessons.md says when to use each."
+msgid "The lesson kit’s parts for practice after a rule is taught: listening, a passage with gaps, reading, a dialogue, sorting, matching, building a sentence, making a form, writing a sentence and fixing one. docs/design/estonian-lessons.md says when to use each."
+msgstr "The lesson kit’s parts for practice after a rule is taught: listening, a passage with gaps, reading, a dialogue, sorting, matching, building a sentence, making a form, writing a sentence and fixing one. docs/design/estonian-lessons.md says when to use each."
 
 msgid "The lessons are free and need no account. Your progress stays in this browser."
 msgstr "The lessons are free and need no account. Your progress stays in this browser."
@@ -1313,8 +1467,14 @@ msgstr "The partitive of muusika."
 msgid "The passage"
 msgstr "The passage"
 
+msgid "The past of <0>joob</0> is <1>jõi</1>."
+msgstr "The past of <0>joob</0> is <1>jõi</1>."
+
 msgid "The questions didn’t load. Check your connection and try again."
 msgstr "The questions didn’t load. Check your connection and try again."
+
+msgid "The right sentence"
+msgstr "The right sentence"
 
 msgid "The same conversation with Mari’s lines heard, not shown; each can be read on request."
 msgstr "The same conversation with Mari’s lines heard, not shown; each can be read on request."
@@ -1324,6 +1484,9 @@ msgstr "The same table for a verb: persons down, tenses across."
 
 msgid "The same with a house: the cat walks in, sits inside, and comes out."
 msgstr "The same with a house: the cat walks in, sits inside, and comes out."
+
+msgid "The sentence"
+msgstr "The sentence"
 
 msgid "The three forms of a noun"
 msgstr "The three forms of a noun"
@@ -1342,6 +1505,15 @@ msgstr "The translative case"
 
 msgid "The verb stays second, whichever word comes first."
 msgstr "The verb stays second, whichever word comes first."
+
+msgid "The words are right, but they go in another order."
+msgstr "The words are right, but they go in another order."
+
+msgid "The wrong order"
+msgstr "The wrong order"
+
+msgid "The wrong word was <0>{wrongWord}</0>; you tapped another one first."
+msgstr "The wrong word was <0>{wrongWord}</0>; you tapped another one first."
 
 msgid "they"
 msgstr "they"
@@ -1385,6 +1557,12 @@ msgstr "Type the form"
 msgid "Type the number"
 msgstr "Type the number"
 
+msgid "Type the question"
+msgstr "Type the question"
+
+msgid "Type the sentence"
+msgstr "Type the sentence"
+
 msgid "under"
 msgstr "under"
 
@@ -1406,6 +1584,9 @@ msgstr "We live in Estonia."
 msgid "we speak"
 msgstr "we speak"
 
+msgid "We’re at home."
+msgstr "We’re at home."
+
 msgid "What did you read?"
 msgstr "What did you read?"
 
@@ -1420,6 +1601,9 @@ msgstr "What does Mari do?"
 
 msgid "What does Peeter do instead of reading?"
 msgstr "What does Peeter do instead of reading?"
+
+msgid "What should <0>{wrongWord}</0> be?"
+msgstr "What should <0>{wrongWord}</0> be?"
 
 msgid "What to remember"
 msgstr "What to remember"
@@ -1499,8 +1683,29 @@ msgstr "Words into two or three groups, tapped or dragged, checked together; a w
 msgid "Words that change inside, the object’s case, and new tenses and moods. You know every word by now, so only the rule is new."
 msgstr "Words that change inside, the object’s case, and new tenses and moods. You know every word by now, so only the rule is new."
 
+msgid "Words that differ"
+msgstr "Words that differ"
+
 msgid "work"
 msgstr "work"
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "Write it in Estonian."
+msgstr "Write it in Estonian."
+
+msgid "Write the question"
+msgstr "Write the question"
+
+msgid "Write the question this answers."
+msgstr "Write the question this answers."
+
+msgid "Write the sentence you hear."
+msgstr "Write the sentence you hear."
+
+msgid "Write what you hear"
+msgstr "Write what you hear"
 
 msgid "Yes, she is"
 msgstr "Yes, she is"
@@ -1514,8 +1719,23 @@ msgstr "you"
 msgid "You are Jaan, a doctor from Tartu. Mari speaks first; pick what you say back."
 msgstr "You are Jaan, a doctor from Tartu. Mari speaks first; pick what you say back."
 
+msgid "You found the wrong word."
+msgstr "You found the wrong word."
+
 msgid "You live in Tartu."
 msgstr "You live in Tartu."
+
+msgid "You wrote <0>{typed}</0>. It’s <1>{right}</1>."
+msgstr "You wrote <0>{typed}</0>. It’s <1>{right}</1>."
+
+msgid "You wrote <0>{wrote}</0>."
+msgstr "You wrote <0>{wrote}</0>."
+
+msgid "You wrote the right form."
+msgstr "You wrote the right form."
+
+msgid "You wrote:"
+msgstr "You wrote:"
 
 msgid "you, more than one"
 msgstr "you, more than one"

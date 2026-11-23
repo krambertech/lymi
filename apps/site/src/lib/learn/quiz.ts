@@ -3,7 +3,14 @@
  * A round can't be answered before its sound has played.
  */
 export type QuizState =
-  | { status: "asking"; round: number; rounds: number; heard: boolean; results: readonly boolean[] }
+  | {
+      status: "asking";
+      round: number;
+      rounds: number;
+      heard: boolean;
+      results: readonly boolean[];
+      slips: readonly number[];
+    }
   | {
       status: "answered";
       round: number;
@@ -11,17 +18,23 @@ export type QuizState =
       picked: string;
       right: boolean;
       results: readonly boolean[];
+      slips: readonly number[];
     }
-  | { status: "finished"; rounds: number; results: readonly boolean[] };
+  | {
+      status: "finished";
+      rounds: number;
+      results: readonly boolean[];
+      slips: readonly number[];
+    };
 
 export type QuizEvent =
   | { type: "heard" }
-  | { type: "answered"; picked: string; right: boolean }
+  | { type: "answered"; picked: string; right: boolean; slip?: boolean }
   | { type: "next" }
   | { type: "restarted" };
 
 export function startQuiz(rounds: number): QuizState {
-  return { status: "asking", round: 0, rounds, heard: false, results: [] };
+  return { status: "asking", round: 0, rounds, heard: false, results: [], slips: [] };
 }
 
 export function quizReducer(state: QuizState, event: QuizEvent): QuizState {
@@ -37,11 +50,17 @@ export function quizReducer(state: QuizState, event: QuizEvent): QuizState {
         picked: event.picked,
         right: event.right,
         results: [...state.results, event.right],
+        slips: event.right && event.slip ? [...state.slips, state.round] : state.slips,
       };
     case "next":
       if (state.status !== "answered") return state;
       if (state.round + 1 >= state.rounds)
-        return { status: "finished", rounds: state.rounds, results: state.results };
+        return {
+          status: "finished",
+          rounds: state.rounds,
+          results: state.results,
+          slips: state.slips,
+        };
       // The next round's sound plays as it opens, so it counts as heard.
       return {
         status: "asking",
@@ -49,6 +68,7 @@ export function quizReducer(state: QuizState, event: QuizEvent): QuizState {
         rounds: state.rounds,
         heard: true,
         results: state.results,
+        slips: state.slips,
       };
     case "restarted":
       return startQuiz(state.rounds);

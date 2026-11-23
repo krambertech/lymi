@@ -29,7 +29,14 @@ What does the learner do here?
 │   │   └── the sound says it → GapRound listen="after"
 │   ├── type what was heard, such as numbers or times → TypedRound
 │   ├── make a form from a word and a cue (case, person, stem) → FormRound; options to pick
-│   └── put words of a sentence in order → OrderRound; meaning once the words are known
+│   ├── put words of a sentence in order → OrderRound; meaning once the words are known
+│   ├── write a whole sentence → SentenceRound
+│   │   ├── heard → kind "dictation"
+│   │   ├── from its meaning → kind "translate"
+│   │   ├── from another sentence and one change → kind "rewrite"
+│   │   ├── the question to an answer → kind "ask"
+│   │   └── from dictionary words → kind "build"
+│   └── find the wrong word and write it right → FixRound
 └── Use the rule in context, once it is taught
     ├── understand a passage by ear → Listening
     ├── the same by eye, for a longer text → Reading
@@ -53,6 +60,7 @@ At 375 px a `GapRound` sentence of 12 characters fits and 14 does not, and its a
 - **(checked) Nothing random or dated renders on the server.** Show a placeholder until the browser knows the value, or the page flashes Monday before today.
 - **Give the quiz `recall`** so its score lists the words to hear again.
 - **Typed answers accept every reasonable spelling,** such as `3,50 €`, `€3.50` and `5-2-0-9-4`, with cases in `quiz.test.ts`.
+- **(checked) Written sentences can be marked fairly.** For `SentenceRound` and `FixRound`: every word of every accepted sentence is in `verified-forms.json`, an item's clip says its first answer, a fix's `wrong` differs from each answer in exactly one word and the same one, and no item id repeats in the lesson, except the same item asked again in a drill. The wrong word of a fix may be any form. By hand: list every order and pronoun a teacher accepts, and give `confusable` each real word a missing mark or a single letter would make, such as tool for tööl.
 - **(checked) Each quiz, gap passage, dialogue, listening and reading part has a fixed id** of lowercase letters, digits and hyphens, unique in the lesson.
 - **Feedback and notes hold in every case.** "After a number, minut becomes minutit" is wrong after üks; it says "from two up".
 

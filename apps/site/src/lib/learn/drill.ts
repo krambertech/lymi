@@ -164,7 +164,7 @@ export function settledCount(run: DrillRun): number {
 }
 
 export function runQuizState(run: Exclude<DrillRun, { status: "finished" }>): QuizState {
-  const shared = { round: run.turn, rounds: run.items.length, results: [] };
+  const shared = { round: run.turn, rounds: run.items.length, results: [], slips: [] };
   return run.status === "asking"
     ? { ...shared, status: "asking", heard: run.heard }
     : { ...shared, status: "answered", picked: run.picked, right: run.right };

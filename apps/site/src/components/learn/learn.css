@@ -191,6 +191,10 @@
   border-style: dashed;
   background: var(--danger-soft);
 }
+.learn-answer[data-mark="slip"] {
+  border-color: var(--success);
+  background: var(--plate);
+}
 /* An answer picked but not yet checked, in the stage's hue: nothing is marked until Check. */
 .learn-answer.learn-chosen {
   border-color: var(--form);

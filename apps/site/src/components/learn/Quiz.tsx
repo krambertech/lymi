@@ -1,7 +1,7 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { captureAnalytics } from "@lymi/client/analytics";
 import { clsx } from "clsx";
-import { ArrowRight, Check, Ear, RotateCcw, Sparkles, X } from "lucide-react";
+import { ArrowRight, Check, Ear, RotateCcw, Sparkles, SpellCheck, X } from "lucide-react";
 import {
   Fragment,
   type ReactNode,
@@ -103,7 +103,7 @@ export interface RoundProps<Item> {
   state: QuizState;
   /** The round's sound has been played. */
   heard: () => void;
-  answer: (picked: string, right: boolean) => void;
+  answer: (picked: string, right: boolean, slip?: boolean) => void;
   /** The round opened by itself from Next, so its sound should play now. */
   autoplay: boolean;
 }
@@ -167,6 +167,7 @@ export function Quiz<Item>({
       quiz: id,
       right: rightCount(state),
       total,
+      ...(state.slips.length > 0 ? { slips: state.slips.length } : {}),
     });
     if (section) finishSection(section);
   }, [finished, state, slug, id, total, section, finishSection]);
@@ -181,7 +182,7 @@ export function Quiz<Item>({
       if (restarted.current || lost)
         // A typed round's field comes first, so a phone opens its keyboard.
         bodyRef.current
-          ?.querySelector<HTMLElement>("input:not([readonly]), button")
+          ?.querySelector<HTMLElement>("input:not([readonly]), textarea:not([readonly]), button")
           ?.focus({ preventScroll: true });
       restarted.current = false;
       advanced.current = false;
@@ -194,9 +195,11 @@ export function Quiz<Item>({
     state.status === "finished"
       ? t`${right} of ${total} right`
       : state.status === "answered"
-        ? state.right
-          ? t`Right.`
-          : t`Not this one.`
+        ? !state.right
+          ? t`Not this one.`
+          : state.slips.includes(state.round)
+            ? t`Nearly right.`
+            : t`Right.`
         : "";
   const roundNumber = state.status === "finished" ? total : state.round + 1;
 
@@ -232,6 +235,7 @@ export function Quiz<Item>({
               total={total}
               verdict={verdict}
               results={state.results}
+              slips={state.slips}
               recalled={list.slice(0, total).map((item) => recall?.(item))}
             />
             <Button
@@ -257,7 +261,8 @@ export function Quiz<Item>({
                   item,
                   state,
                   heard: () => dispatch({ type: "heard" }),
-                  answer: (picked, right) => dispatch({ type: "answered", picked, right }),
+                  answer: (picked, right, slip = false) =>
+                    dispatch({ type: "answered", picked, right, slip }),
                   autoplay,
                 })}
               </Fragment>
@@ -341,12 +346,14 @@ export function Score({
   total,
   verdict,
   results,
+  slips = [],
   recalled,
 }: {
   right: number;
   total: number;
   verdict?: ((share: number) => ReactNode) | undefined;
   results: readonly boolean[];
+  slips?: readonly number[];
   recalled: readonly (Recall | undefined)[];
 }) {
   const words = (
@@ -354,6 +361,15 @@ export function Score({
       <Trans>
         {right} of {total} right
       </Trans>
+      {slips.length > 0 && (
+        <span className="mt-0.5 block text-md font-normal text-ink-secondary">
+          <Plural
+            value={slips.length}
+            one="# of them has a slip in spelling."
+            other="# of them have a slip in spelling."
+          />
+        </span>
+      )}
       {verdict && (
         <span className="mt-0.5 block text-md font-normal text-ink-secondary">
           {verdict(right / total)}
@@ -361,18 +377,28 @@ export function Score({
       )}
     </p>
   );
-  return <ScoreWords share={right / total} results={results} recalled={recalled} words={words} />;
+  return (
+    <ScoreWords
+      full={right === total && slips.length === 0}
+      results={results}
+      slips={slips}
+      recalled={recalled}
+      words={words}
+    />
+  );
 }
 
 /** The run's words as chips to hear again, the missed ones marked, with a mark for a full score. */
 function ScoreWords({
-  share,
+  full,
   results,
+  slips,
   recalled,
   words,
 }: {
-  share: number;
+  full: boolean;
   results: readonly boolean[];
+  slips: readonly number[];
   recalled: readonly (Recall | undefined)[];
   words: ReactNode;
 }) {
@@ -382,10 +408,10 @@ function ScoreWords({
         <span
           className={clsx(
             "learn-pop grid size-11 shrink-0 place-items-center rounded-full",
-            share === 1 ? "bg-success text-plate" : "bg-(--tray) text-(--form)",
+            full ? "bg-success text-plate" : "bg-(--tray) text-(--form)",
           )}
         >
-          {share === 1 ? (
+          {full ? (
             <Sparkles aria-hidden="true" className="size-5.5" />
           ) : (
             <Ear aria-hidden="true" className="size-5.5" />
@@ -398,7 +424,10 @@ function ScoreWords({
           word ? (
             // oxlint-disable-next-line react/no-array-index-key -- one chip per round, in order
             <li key={i} className="learn-pop" style={{ animationDelay: `${i * 60}ms` }}>
-              <RecallChip word={word} ok={results[i] === true} />
+              <RecallChip
+                word={word}
+                mark={results[i] !== true ? "wrong" : slips.includes(i) ? "slip" : "right"}
+              />
             </li>
           ) : null,
         )}
@@ -407,8 +436,11 @@ function ScoreWords({
   );
 }
 
-function RecallChip({ word, ok }: { word: Recall; ok: boolean }) {
+const RECALL_ICONS = { right: Check, slip: SpellCheck, wrong: X } as const;
+
+function RecallChip({ word, mark }: { word: Recall; mark: "right" | "slip" | "wrong" }) {
   const { src } = word;
+  const Icon = RECALL_ICONS[mark];
   const playing = usePlaying(src ?? "");
   const Tag = src ? "button" : "span";
   return (
@@ -416,19 +448,24 @@ function RecallChip({ word, ok }: { word: Recall; ok: boolean }) {
       {...(src ? { type: "button" as const, onClick: () => void playSound(src) } : {})}
       className={clsx(
         "inline-flex items-center gap-1.5 rounded-full border py-1 ps-2 pe-3 text-md font-medium transition-colors duration-150",
-        ok
-          ? "border-success/40 bg-success-soft text-ink"
-          : "border-dashed border-danger bg-danger-soft text-ink",
+        mark === "right" && "border-success/40 bg-success-soft text-ink",
+        mark === "slip" && "border-success bg-plate text-ink",
+        mark === "wrong" && "border-dashed border-danger bg-danger-soft text-ink",
         src && "cursor-pointer",
         playing && "ring-2 ring-(--form)",
       )}
     >
-      {ok ? (
-        <Check aria-hidden="true" className="size-3.5 text-success" strokeWidth={3} />
-      ) : (
-        <X aria-hidden="true" className="size-3.5 text-danger" strokeWidth={3} />
-      )}
+      <Icon
+        aria-hidden="true"
+        className={clsx("size-3.5", mark === "wrong" ? "text-danger" : "text-success")}
+        strokeWidth={mark === "slip" ? 2.25 : 3}
+      />
       <span lang="et">{word.label}</span>
+      {mark === "slip" && (
+        <span className="sr-only">
+          <Trans>slip in spelling</Trans>
+        </span>
+      )}
     </Tag>
   );
 }
@@ -437,6 +474,7 @@ function Dots({ state, total }: { state: QuizState; total: number }) {
   return (
     <ResultDots
       results={state.results}
+      slips={state.slips}
       now={state.status === "finished" ? -1 : state.round}
       total={total}
     />
@@ -446,10 +484,12 @@ function Dots({ state, total }: { state: QuizState; total: number }) {
 /** A dot per round on a white pill: green right, red wrong, ringed for the one now. */
 export function ResultDots({
   results,
+  slips = [],
   now,
   total,
 }: {
   results: readonly (boolean | undefined)[];
+  slips?: readonly number[];
   /** The round being answered, or -1. */
   now: number;
   total: number;
@@ -467,7 +507,13 @@ export function ResultDots({
             key={i}
             className={clsx(
               "size-2 rounded-full transition-colors duration-200",
-              result === true ? "bg-success" : result === false ? "bg-danger" : "bg-edge-strong",
+              result === true
+                ? slips.includes(i)
+                  ? "ring-2 ring-success ring-inset"
+                  : "bg-success"
+                : result === false
+                  ? "bg-danger"
+                  : "bg-edge-strong",
               result === undefined &&
                 i === now &&
                 "bg-ink-faint outline-2 outline-offset-2 outline-ink-muted",

@@ -11,9 +11,11 @@ import { I18nProvider } from "@lingui/react";
 import { createElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { LearnPage, prepareLearnPage } from "../../../components/learn/learn-page";
 import { CLIPS, clipText, isPassage } from "../clips";
 import { gapLine } from "../passage";
 import { shuffledRun } from "../quiz";
+import { SENTENCE_KINDS } from "../sentences";
 import VERIFIED from "../verified-forms.json";
 import { ALLOWED_NEAR_PAIRS, ALLOWED_STRATEGIES } from "./allowed-quizzes";
 import { formsIn, lessonForms, VERIFIED_FORMS_PATH } from "./forms";
@@ -41,6 +43,7 @@ import {
   where,
 } from "./lessons";
 import { recording, resetRecording } from "./record";
+import { repeatedIds, sentenceProblems, writtenItems } from "./sentences";
 
 /**
  * Every `Object.fromEntries` the lesson modules make while they load. A glossary built from a list
@@ -107,6 +110,10 @@ vi.mock("../player", async (importOriginal) => {
     },
     playInTurn: (items: readonly { src: string }[]) => {
       recording.played.push(...items.map((item) => item.src));
+      return Promise.resolve();
+    },
+    playSlowly: (src: string) => {
+      recording.played.push(src);
       return Promise.resolve();
     },
     // Never settles: a press only needs to show which clip it asks for.
@@ -520,6 +527,29 @@ const roundsKey = (unit: PickUnit) =>
     [...unit.first, ...unit.later].flat().map((round) => [round.options, round.answer]),
   );
 
+const SENTENCE_KNOWN = { verified: VERIFIED as Record<string, string>, clipSays: heardText };
+const SENTENCE_RULE = "Written sentences can be marked fairly (checklists.md#quizzes)";
+
+describe("the kit page", () => {
+  it.each(LOCALES)("shows written sentences that can be marked fairly, in %s", async (locale) => {
+    await prepareLearnPage({ kind: "kit" }, locale);
+    resetRecording();
+    renderToStaticMarkup(createElement(LearnPage, { target: { kind: "kit" }, locale }));
+    const items = writtenItems(recording.parts);
+    resetRecording();
+    expect(new Set(items.map(({ item }) => item.kind))).toEqual(
+      new Set([...SENTENCE_KINDS, "fix"]),
+    );
+    expectNone(
+      [
+        ...items.flatMap(({ item }) => sentenceProblems(item, SENTENCE_KNOWN)),
+        ...repeatedIds(items),
+      ],
+      SENTENCE_RULE,
+    );
+  });
+});
+
 describe.each(SLUGS)("lesson %s", (slug) => {
   // Simulating every pick quiz's runs is the slow part, and pickUnits caches it. Warming it here,
   // with its own timeout, keeps a loaded CI runner from timing out whichever test comes first.
@@ -875,6 +905,22 @@ describe.each(SLUGS)("lesson %s", (slug) => {
               `apps/site/src/lib/learn/clips.ts: passage ${slug}/${id} has a sentence without a full stop: “${sentence}”. Fix: end it with . ! or ?, and give a last gap after: ".".`,
             );
     expectNone(problems, "Shown text and recorded text match (#1241, #1242)");
+  });
+
+  it("can mark its written sentences fairly", () => {
+    const items = writtenItems(rendered(slug, "en").recording.parts);
+    expectNone(
+      [
+        ...items.flatMap(({ quiz, item }) =>
+          sentenceProblems(item, SENTENCE_KNOWN).map(
+            (problem) =>
+              `${where(slug, `id: "${item.id}"`, `id="${quiz}"`)}: quiz "${quiz}", ${problem}`,
+          ),
+        ),
+        ...repeatedIds(items).map((problem) => `${where(slug)}: ${problem}`),
+      ],
+      SENTENCE_RULE,
+    );
   });
 
   it("uses only Estonian forms checked in Sõnaveeb", () => {

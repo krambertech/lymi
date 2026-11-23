@@ -34,6 +34,10 @@ msgstr "«Мати»"
 msgid "“To like” and feelings"
 msgstr "«Подобатися» і почуття"
 
+#. placeholder {0}: slips.length
+msgid "{0, plural, one {# of them has a slip in spelling.} other {# of them have a slip in spelling.}}"
+msgstr "{0, plural, one {У # з них є описка.} few {У # з них є описка.} many {У # з них є описка.} other {У # з них є описка.}}"
+
 #. placeholder {0}: state.mistakes
 msgid "{0, plural, one {# wrong try} other {# wrong tries}}"
 msgstr "{0, plural, one {# хибна спроба} few {# хибні спроби} many {# хибних спроб} other {# хибної спроби}}"
@@ -66,6 +70,9 @@ msgstr "{more, plural, one {і ще #} few {і ще #} many {і ще #} other {�
 
 msgid "{next, plural, one {# more} other {# more}}"
 msgstr "{next, plural, one {Ще #} few {Ще #} many {Ще #} other {Ще #}}"
+
+msgid "{off, plural, one {Not right: # word differs.} other {Not right: # words differ.}}"
+msgstr "{off, plural, one {Неправильно: відрізняється # слово.} few {Неправильно: відрізняються # слова.} many {Неправильно: відрізняються # слів.} other {Неправильно: відрізняються # слова.}}"
 
 msgid "{position} of {count}"
 msgstr "{position} з {count}"
@@ -135,6 +142,15 @@ msgstr "<0>{before}</0> пропуск <1>{after}</1>"
 msgid "<0>{plannedCount}</0> planned, A1 to B1"
 msgstr "Заплановано: <0>{plannedCount}</0>, від A1 до B1"
 
+msgid "<0>{triedWord}</0> is right in this sentence."
+msgstr "<0>{triedWord}</0> у цьому реченні правильне."
+
+msgid "<0>Kooli</0> is to school; <1>koolis</1> is at school."
+msgstr "<0>Kooli</0> — до школи, <1>koolis</1> — у школі."
+
+msgid "<0>Linna</0> is to town, with a double n; <1>lina</1> is linen."
+msgstr "<0>Linna</0>, з подвоєним n, — у місто, а <1>lina</1> — льон."
+
 msgid "A cat and a cardboard box"
 msgstr "Кіт і картонна коробка"
 
@@ -146,6 +162,9 @@ msgstr "Розмова у два голоси: учень обирає кожн�
 
 msgid "A drawing on the tray: pressing a place, on a key or on the drawing, moves the cat there and plays the sentence."
 msgstr "Малюнок на підкладці: натискання на місце, на клавіші чи на малюнку, переносить туди кота й програє речення."
+
+msgid "A fixed sentence, marked"
+msgstr "Виправлене речення з оцінкою"
 
 msgid "a foot"
 msgstr "нога"
@@ -246,6 +265,12 @@ msgstr "Після правильної відповіді запитання п
 msgid "a room"
 msgstr "кімната"
 
+msgid "A sentence in the reader’s language to write in Estonian. Every accepted sentence counts, and the others show once it is checked."
+msgstr "Речення мовою читача, яке треба написати естонською. Зараховується кожен правильний варіант, а решту видно після перевірки."
+
+msgid "A sentence to hear, again or slower, and type. Case, commas and the mark at the end don’t count; the answer shows which words differ."
+msgstr "Речення, яке можна почути ще раз або повільніше, а потім написати. Великі літери, коми й розділовий знак у кінці не враховуються; відповідь показує, які слова відрізняються."
+
 msgid "a shop"
 msgstr "крамниця"
 
@@ -261,8 +286,17 @@ msgstr "Слово й підказка: введи форму, з клавіша
 msgid "A word turning into its forms: the letters it drops are struck, the ones it gains are lit."
 msgstr "Слово перетворюється на свої форми: літери, які воно втрачає, закреслені, а нові підсвічені."
 
+msgid "A written sentence, marked"
+msgstr "Написане речення з оцінкою"
+
+msgid "about many"
+msgstr "про багатьох"
+
 msgid "Adjective agreement"
 msgstr "Узгодження прикметників"
+
+msgid "After a number from two up, the word takes its third form: <0>kolm kassi</0>."
+msgstr "Після числа від двох і більше слово стоїть у третій формі: <0>kolm kassi</0>."
 
 msgid "After ei the verb drops its ending: ei ela."
 msgstr "Після ei дієслово втрачає закінчення: ei ela."
@@ -275,6 +309,18 @@ msgstr "Усі уроки"
 
 msgid "Also right:"
 msgstr "Теж правильно:"
+
+msgid "An Estonian answer; the learner writes the question it answers."
+msgstr "Відповідь естонською; учень пише запитання до неї."
+
+msgid "An Estonian sentence and a cue, such as in the past, say no or about many; the learner writes the new sentence."
+msgstr "Естонське речення й підказка: у минулому, заперечення або про багатьох; учень пише нове речення."
+
+msgid "An Estonian sentence with one wrong word, as learners write it. The learner taps the word, then types the right form; finding and fixing are marked apart."
+msgstr "Естонське речення з одним неправильним словом, як його пишуть учні. Учень торкається слова й пише правильну форму; пошук і виправлення оцінюються окремо."
+
+msgid "Another form"
+msgstr "Інша форма"
 
 msgid "Answer every question first."
 msgstr "Спершу дай відповідь на всі питання."
@@ -357,6 +403,9 @@ msgstr "Діалог"
 msgid "Dialogue, sound only"
 msgstr "Діалог лише на слух"
 
+msgid "Dictionary words to make into a sentence, with a cue when the tense isn’t the present."
+msgstr "Слова зі словника, з яких треба скласти речення; якщо час не теперішній, є підказка."
+
 msgid "doctor"
 msgstr "лікар"
 
@@ -374,6 +423,9 @@ msgstr "Тренування"
 
 msgid "Due today"
 msgstr "На сьогодні"
+
+msgid "Each way an answer can come out: right, nearly right, another form, words that differ, and the wrong order."
+msgstr "Усі можливі результати: правильно, майже правильно, інша форма, інші слова та інший порядок."
 
 msgid "Ei before the bare verb says not: ei loe."
 msgstr "Ei перед дієсловом без закінчення означає «не»: ei loe."
@@ -395,6 +447,9 @@ msgstr "Розмовна практика естонської: знайомст
 
 msgid "Estonian grammar lessons"
 msgstr "Уроки естонської граматики"
+
+msgid "Estonian has both <0>{typed}</0> and <1>{right}</1>, and they don’t mean the same."
+msgstr "В естонській є і <0>{typed}</0>, і <1>{right}</1>, і значать вони різне."
 
 msgid "Estonian imperative: giving commands"
 msgstr "Наказовий спосіб в естонській мові"
@@ -447,11 +502,29 @@ msgstr "Заповни пропуск"
 msgid "Fill the gaps"
 msgstr "Заповни пропуски"
 
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "Fixed, but not found first"
+msgstr "Виправлено, але знайдено не одразу"
+
 msgid "Form"
 msgstr "Форма"
 
 msgid "Forms of maja"
 msgstr "Форми maja"
+
+msgid "Found and fixed"
+msgstr "Знайдено й виправлено"
+
+msgid "Found and fixed, found and nearly fixed, found and not fixed, and fixed only after another word was tapped."
+msgstr "Знайдено й виправлено; знайдено й майже виправлено; знайдено, але не виправлено; виправлено, але спершу вибрано інше слово."
+
+msgid "Found, nearly fixed"
+msgstr "Знайдено, майже виправлено"
+
+msgid "Found, not fixed"
+msgstr "Знайдено, не виправлено"
 
 msgid "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
 msgstr "Безкоштовна розмовна практика естонської для початківців: скажи, як тебе звати, звідки ти, де живеш і працюєш, відповідай на запитання «так чи ні» і став власні. Кожна розмова й кожен текст озвучені."
@@ -573,11 +646,17 @@ msgstr "Я вже поїв."
 msgid "I read"
 msgstr "я читаю"
 
+msgid "I’m a teacher."
+msgstr "Я вчитель."
+
 msgid "I’m eating now."
 msgstr "Зараз я їм."
 
 msgid "I’m going to eat."
 msgstr "Я збираюся їсти."
+
+msgid "I’m going to school."
+msgstr "Я йду до школи."
 
 msgid "Illative"
 msgstr "Ілатив"
@@ -590,6 +669,9 @@ msgstr "у кімнаті"
 
 msgid "in a shop"
 msgstr "у крамниці"
+
+msgid "In a town takes <0>-s</0>: <1>Tallinnas</1>."
+msgstr "«У місті» — це <0>-s</0>: <1>Tallinnas</1>."
 
 msgid "in front"
 msgstr "попереду"
@@ -614,6 +696,9 @@ msgstr "у будинку"
 
 msgid "In the house: -s, and -des for more than one."
 msgstr "У будинку: -s, а для кількох -des."
+
+msgid "in the past"
+msgstr "у минулому"
 
 msgid "In the past"
 msgstr "У минулому"
@@ -648,6 +733,9 @@ msgstr "Куди і звідки естонською: -sse і -st"
 msgid "into the house"
 msgstr "у будинок"
 
+msgid "Into the house is <0>majja</0>, with a double j."
+msgstr "«У дім» — <0>majja</0>, з подвоєним j."
+
 msgid "Into the house. Majja doubles the j; majasse means the same."
 msgstr "У будинок. У majja j подвоюється; majasse означає те саме."
 
@@ -663,6 +751,9 @@ msgstr "Правильно: <0>{0}</0>"
 
 msgid "It was <0>{expected}</0>."
 msgstr "Правильно: <0>{expected}</0>."
+
+msgid "It’s spelled like this"
+msgstr "Пишеться так"
 
 msgid "Kodu is home; kodus, at home."
 msgstr "Kodu — дім; kodus — удома."
@@ -721,6 +812,12 @@ msgstr "Складні речення"
 msgid "Lugema now and in the past"
 msgstr "Lugema зараз і в минулому"
 
+msgid "Make a sentence"
+msgstr "Склади речення"
+
+msgid "Make a sentence from these words."
+msgstr "Склади речення з цих слів."
+
 msgid "Make the form"
 msgstr "Утвори форму"
 
@@ -754,6 +851,9 @@ msgstr "Mina бере -n: loen."
 msgid "Mina, I, takes olen."
 msgstr "Mina, я, бере olen."
 
+msgid "Missing: <0>{right}</0>."
+msgstr "Бракує: <0>{right}</0>."
+
 msgid "More are on the way."
 msgstr "Нові вже в роботі."
 
@@ -765,6 +865,27 @@ msgstr "Кілька людей"
 
 msgid "music"
 msgstr "музика"
+
+msgid "Nearly right, a double letter"
+msgstr "Майже правильно, подвоєна літера"
+
+msgid "Nearly right, marks"
+msgstr "Майже правильно, позначки"
+
+msgid "Nearly right: a letter should be double."
+msgstr "Майже правильно: одну літеру треба подвоїти."
+
+msgid "Nearly right: a letter should be single."
+msgstr "Майже правильно: одну літеру не треба подвоювати."
+
+msgid "Nearly right: only the letters with marks are off."
+msgstr "Майже правильно: помилка лише в літерах із позначками."
+
+msgid "Nearly right: two letters are off."
+msgstr "Майже правильно: помилка у двох літерах."
+
+msgid "Nearly right."
+msgstr "Майже правильно."
 
 msgid "Negation"
 msgstr "Заперечення"
@@ -789,6 +910,9 @@ msgstr "Називний"
 
 msgid "Not a pair."
 msgstr "Не пара."
+
+msgid "Not needed here: <0>{typed}</0>."
+msgstr "Тут зайве: <0>{typed}</0>."
 
 msgid "Not this one."
 msgstr "Не це."
@@ -849,6 +973,9 @@ msgstr "На чому, на що, з чого"
 
 msgid "One"
 msgstr "Один"
+
+msgid "One word is wrong. Tap it, then write it right."
+msgstr "Одне слово неправильне. Торкнись його й напиши правильно."
 
 msgid "Onto and off in Estonian: -le and -lt"
 msgstr "На стіл і зі столу: -le і -lt естонською"
@@ -946,6 +1073,9 @@ msgstr "Відтворити <0>{0}</0>"
 msgid "Play <0>{form}</0>"
 msgstr "Відтворити <0>{form}</0>"
 
+msgid "Play <0>{sentence}</0>"
+msgstr "Відтворити <0>{sentence}</0>"
+
 msgid "Play what {name} said"
 msgstr "Відтворити репліку: {name}"
 
@@ -1042,6 +1172,15 @@ msgstr "Непряма мова"
 msgid "Review"
 msgstr "Повторення"
 
+msgid "Rewrite the sentence"
+msgstr "Перепиши речення"
+
+msgid "Rewrite the sentence."
+msgstr "Перепиши речення."
+
+msgid "Right"
+msgstr "Правильно"
+
 msgid "right answer"
 msgstr "правильна відповідь"
 
@@ -1066,6 +1205,9 @@ msgstr "Сказати"
 
 msgid "Say it in Estonian:"
 msgstr "Скажи естонською:"
+
+msgid "say no"
+msgstr "заперечення"
 
 msgid "Say what you can, must and like to do, where you are going, what you did yesterday and what you will do tomorrow."
 msgstr "Розкажи, що вмієш, мусиш і любиш робити, куди йдеш, як минув учорашній день і які плани на завтра."
@@ -1124,6 +1266,12 @@ msgstr "Sina — це ти: тут сказано «Ти Яан»."
 msgid "Skip"
 msgstr "Пропустити"
 
+msgid "slip in spelling"
+msgstr "описка"
+
+msgid "Slower"
+msgstr "Повільніше"
+
 msgid "Somebody, nobody: -gi and -ki"
 msgstr "Хтось, ніхто: -gi і -ki"
 
@@ -1180,6 +1328,9 @@ msgstr "Торкнися слова, щоб додати його; перетя�
 
 msgid "Tap a word, then its group, or drag it there."
 msgstr "Торкнися слова, потім його групи, або перетягни його туди."
+
+msgid "Tap another word."
+msgstr "Торкнись іншого слова."
 
 msgid "Tap one side, then its match on the other."
 msgstr "Торкнися одного боку, потім його пари з іншого."
@@ -1271,6 +1422,9 @@ msgstr "Родовий відмінок в естонській мові: мій
 msgid "The Estonian partitive case: after numbers, amounts and negation"
 msgstr "Партитив в естонській мові: після чисел, слів кількості й у запереченні"
 
+msgid "The form isn’t <0>{wrote}</0>."
+msgstr "Форма не <0>{wrote}</0>."
+
 msgid "The future"
 msgstr "Майбутнє"
 
@@ -1286,8 +1440,8 @@ msgstr "g зникає, а u стає o: loe-, плюс -n для ma."
 msgid "The genitive case"
 msgstr "Родовий відмінок"
 
-msgid "The lesson kit’s parts for practice after a rule is taught: listening, a passage with gaps, reading, a dialogue, sorting, matching, building a sentence and making a form. docs/design/estonian-lessons.md says when to use each."
-msgstr "Частини набору уроків для практики після правила: слухання, текст із пропусками, читання, діалог, групи, пари, складання речення й утворення форми. Коли яку брати, описано в docs/design/estonian-lessons.md."
+msgid "The lesson kit’s parts for practice after a rule is taught: listening, a passage with gaps, reading, a dialogue, sorting, matching, building a sentence, making a form, writing a sentence and fixing one. docs/design/estonian-lessons.md says when to use each."
+msgstr "Частини набору для вправ після правила: слухання, текст із пропусками, читання, діалог, сортування, пари, складання речення, утворення форми, написання речення та виправлення. Коли яку брати, пояснює docs/design/estonian-lessons.md."
 
 msgid "The lessons are free and need no account. Your progress stays in this browser."
 msgstr "Уроки безкоштовні й не потребують акаунта. Твій прогрес зберігається в цьому браузері."
@@ -1313,8 +1467,14 @@ msgstr "Партитив від muusika."
 msgid "The passage"
 msgstr "Текст"
 
+msgid "The past of <0>joob</0> is <1>jõi</1>."
+msgstr "Минуле від <0>joob</0> — <1>jõi</1>."
+
 msgid "The questions didn’t load. Check your connection and try again."
 msgstr "Запитання не завантажилися. Перевір з’єднання і спробуй ще раз."
+
+msgid "The right sentence"
+msgstr "Правильне речення"
 
 msgid "The same conversation with Mari’s lines heard, not shown; each can be read on request."
 msgstr "Та сама розмова, але репліки Марі лише чути; кожну можна відкрити й прочитати."
@@ -1324,6 +1484,9 @@ msgstr "Та сама таблиця для дієслова: особи в ря
 
 msgid "The same with a house: the cat walks in, sits inside, and comes out."
 msgstr "Те саме з будинком: кіт заходить, сидить усередині й виходить."
+
+msgid "The sentence"
+msgstr "Речення"
 
 msgid "The three forms of a noun"
 msgstr "Три основні форми іменника"
@@ -1342,6 +1505,15 @@ msgstr "Транслатив"
 
 msgid "The verb stays second, whichever word comes first."
 msgstr "Дієслово лишається другим, хоч би яке слово стояло першим."
+
+msgid "The words are right, but they go in another order."
+msgstr "Слова правильні, але порядок інший."
+
+msgid "The wrong order"
+msgstr "Інший порядок"
+
+msgid "The wrong word was <0>{wrongWord}</0>; you tapped another one first."
+msgstr "Неправильне слово — <0>{wrongWord}</0>; спершу вибрано інше."
 
 msgid "they"
 msgstr "вони"
@@ -1385,6 +1557,12 @@ msgstr "Введи форму"
 msgid "Type the number"
 msgstr "Введи число"
 
+msgid "Type the question"
+msgstr "Напиши запитання"
+
+msgid "Type the sentence"
+msgstr "Напиши речення"
+
 msgid "under"
 msgstr "під"
 
@@ -1406,6 +1584,9 @@ msgstr "Ми живемо в Естонії."
 msgid "we speak"
 msgstr "ми говоримо"
 
+msgid "We’re at home."
+msgstr "Ми вдома."
+
 msgid "What did you read?"
 msgstr "Що ти прочитав?"
 
@@ -1420,6 +1601,9 @@ msgstr "Ким працює Марі?"
 
 msgid "What does Peeter do instead of reading?"
 msgstr "Що робить Пеетер замість читання?"
+
+msgid "What should <0>{wrongWord}</0> be?"
+msgstr "Як має бути замість <0>{wrongWord}</0>?"
 
 msgid "What to remember"
 msgstr "Що запам’ятати"
@@ -1499,8 +1683,29 @@ msgstr "Слова у дві-три групи, дотиком або перет
 msgid "Words that change inside, the object’s case, and new tenses and moods. You know every word by now, so only the rule is new."
 msgstr "Слова, що змінюються всередині, відмінок додатка, нові часи й способи. Усі слова ти вже знаєш, тож нове тут лише правило."
 
+msgid "Words that differ"
+msgstr "Інші слова"
+
 msgid "work"
 msgstr "робота"
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "Write it in Estonian."
+msgstr "Напиши естонською."
+
+msgid "Write the question"
+msgstr "Напиши запитання"
+
+msgid "Write the question this answers."
+msgstr "Напиши запитання до цієї відповіді."
+
+msgid "Write the sentence you hear."
+msgstr "Напиши речення, яке чуєш."
+
+msgid "Write what you hear"
+msgstr "Напиши, що чуєш"
 
 msgid "Yes, she is"
 msgstr "Так"
@@ -1514,8 +1719,23 @@ msgstr "ти"
 msgid "You are Jaan, a doctor from Tartu. Mari speaks first; pick what you say back."
 msgstr "Ти Яан, лікар із Тарту. Марі говорить першою; обирай, що відповісти."
 
+msgid "You found the wrong word."
+msgstr "Неправильне слово знайдено."
+
 msgid "You live in Tartu."
 msgstr "Ти живеш у Тарту."
+
+msgid "You wrote <0>{typed}</0>. It’s <1>{right}</1>."
+msgstr "У тебе <0>{typed}</0>, а треба <1>{right}</1>."
+
+msgid "You wrote <0>{wrote}</0>."
+msgstr "Твоя відповідь: <0>{wrote}</0>."
+
+msgid "You wrote the right form."
+msgstr "Форма правильна."
+
+msgid "You wrote:"
+msgstr "Твоя відповідь:"
 
 msgid "you, more than one"
 msgstr "ви"

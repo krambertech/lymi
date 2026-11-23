@@ -485,6 +485,7 @@ export const analyticsEvents = {
       )
       .max(10)
       .optional(),
+    slips: z.number().int().min(1).max(50).optional(),
   }),
   learn_lesson_finished: z.object({
     lesson: z

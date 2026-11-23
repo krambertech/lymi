@@ -114,6 +114,7 @@ interface RunBase {
   queue: readonly Ruled[];
   owed: Readonly<Record<string, number>>;
   first: Readonly<Record<string, boolean>>;
+  ready: Readonly<Record<string, number>>;
   turn: number;
   repeats: boolean;
 }
@@ -134,28 +135,58 @@ export interface RunStart {
 }
 
 export function startRun({ items, repeats }: RunStart): DrillRun {
-  const base: RunBase = { items, queue: items.slice(1), owed: {}, first: {}, turn: 0, repeats };
+  const base: RunBase = {
+    items,
+    queue: items.slice(1),
+    owed: {},
+    first: {},
+    ready: {},
+    turn: 0,
+    repeats,
+  };
   const now = items[0];
   return now ? { ...base, status: "asking", now, heard: false } : { ...base, status: "finished" };
 }
 
 function nextTurn(run: Extract<DrillRun, { status: "answered" }>): DrillRun {
   const { status: _status, now, picked: _picked, right: _right, ...base } = run;
+  const turn = base.turn + 1;
   const at = Math.min(RETURNS_AFTER, base.queue.length);
-  const queue = base.owed[now.id]
-    ? [...base.queue.slice(0, at), now, ...base.queue.slice(at)]
-    : base.queue;
-  const place = nextInTurn(queue, now);
+  const owes = Boolean(base.owed[now.id]);
+  const queue = owes ? [...base.queue.slice(0, at), now, ...base.queue.slice(at)] : base.queue;
+  const ready = owes ? { ...base.ready, [now.id]: turn + at } : base.ready;
+  const place = nextReady(queue, ready, turn, now);
   const next = queue[place];
   if (!next) return { ...base, status: "finished" };
   return {
     ...base,
     status: "asking",
     queue: queue.filter((_, i) => i !== place),
-    turn: base.turn + 1,
+    ready,
+    turn,
     now: next,
     heard: true,
   };
+}
+
+function nextReady(
+  queue: readonly Ruled[],
+  ready: Readonly<Record<string, number>>,
+  turn: number,
+  last: Ruled,
+): number {
+  const open = queue
+    .map((each, i) => ({ each, i }))
+    .filter(({ each }) => (ready[each.id] ?? 0) <= turn);
+  if (!open.length) return nextInTurn(queue, last);
+  return (
+    open[
+      nextInTurn(
+        open.map(({ each }) => each),
+        last,
+      )
+    ]?.i ?? 0
+  );
 }
 
 export function drillReducer(run: DrillRun, event: DrillEvent): DrillRun {

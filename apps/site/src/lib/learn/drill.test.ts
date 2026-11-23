@@ -14,6 +14,8 @@ import {
 } from "./drill";
 import { interleave, type Ruled } from "./review";
 
+const RETURNS = 3;
+
 const bank = (size: number, rules: number): Ruled[] =>
   interleave(Array.from({ length: size }, (_, i) => ({ id: `i-${i}`, rule: `r-${i % rules}` })));
 
@@ -34,7 +36,10 @@ function play(items: readonly Ruled[], isRight: (id: string) => boolean, repeats
     const { id, rule } = (run as Extract<DrillRun, { status: "asking" }>).now;
     const right = isRight(id);
     const onlyOneLeft = run.queue.length === 0;
-    const anotherRuleLeft = run.queue.some((each) => each.rule !== rule);
+    const { queue, ready, turn } = run;
+    const anotherRuleLeft = queue.some(
+      (each) => each.rule !== rule && (ready[each.id] ?? 0) <= turn,
+    );
     asked.push({ id, rule, right, onlyOneLeft, anotherRuleLeft });
     run = drillReducer(run, { type: "answered", picked: id, right });
     run = drillReducer(run, { type: "next" });
@@ -91,7 +96,25 @@ describe("a drill run", () => {
     expect((places[1] ?? 0) - (places[0] ?? 0)).toBeGreaterThan(2);
   });
 
-  it("asks the same rule twice in a row only when no other rule is left", () => {
+  it("keeps a miss three questions away when the other questions share a rule", () => {
+    const items: Ruled[] = [
+      { id: "a", rule: "one" },
+      ...Array.from({ length: 6 }, (_, i) => ({ id: `b-${i}`, rule: "two" })),
+    ];
+    let missed = false;
+    const { asked } = play(items, (id) => {
+      if (id !== "a" || missed) return true;
+      missed = true;
+      return false;
+    });
+    const places = asked.flatMap(({ id }, i) => (id === "a" ? [i] : []));
+    expect(places).toHaveLength(3);
+    places.slice(1).forEach((place, i) => {
+      expect(place - (places[i] ?? 0)).toBeGreaterThan(RETURNS);
+    });
+  });
+
+  it("asks the same rule twice in a row only when no other rule is ready", () => {
     for (let seed = 1; seed <= 400; seed++) {
       const random = seeded(seed);
       const { asked } = play(bank(4 + (seed % 9), 2 + (seed % 4)), () => random() > 0.3);

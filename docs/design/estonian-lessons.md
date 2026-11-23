@@ -172,7 +172,7 @@ A lesson's bank in `components/learn/lessons/<File>.drills.ts` is data with no J
 - A bank uses only its lesson's clips and forms already in `verified-forms.json`.
 - An id is renamed only when the question is a different one. Answers to an item that is gone are dropped the next time its bank loads.
 
-A run (`drillReducer`) asks ten questions and never the same rule twice in a row while another is left. A missed question waits three others, or fewer when fewer are left, and leaves the run once it is right twice; it is asked twice in a row only when it is the last one left. A set takes what is due first, then what the learner has not met, then what they met longest ago.
+A run (`drillReducer`) asks ten questions. A missed question waits for three others, or fewer when fewer are left. Among the questions free to ask, the run never takes the same rule twice in a row while another rule is free. A missed question leaves the run once it is right twice; it is asked twice in a row only when it is the last one left. A set takes what is due first, then what the learner has not met, then what they met longest ago.
 
 A run on the server would differ from the browser's, so nothing of it renders there: a drill is a Start button until it is pressed.
 

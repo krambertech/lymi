@@ -107,7 +107,7 @@ const heard = (
 export const DRILLS: DrillBank = {
   rules: {
     nud: { label: msg`The <et>-nud</et> form from the -da infinitive`, section: "from-da" },
-    whole: { label: msg`The five <et>-nud</et> forms to learn by heart`, section: "whole" },
+    whole: { label: msg`The <et>-nud</et> forms to learn by heart`, section: "whole" },
     person: { label: msg`One form for every person`, section: "persons" },
     when: { label: msg`No, now and in the past`, section: "when" },
   },
@@ -132,12 +132,20 @@ export const DRILLS: DrillBank = {
       "Me ei teinud tööd.",
       msg`<et>Tegema</et> gives <et>teinud</et>: the g becomes i.`,
     ),
-    translate(
-      "nainud",
-      msg`You (one person) didn’t see the cat.`,
-      "Sa ei näinud kassi.",
-      msg`<et>Nägema</et> gives <et>näinud</et>, as <et>tegema</et> gives <et>teinud</et>.`,
-    ),
+    {
+      ...translate(
+        "nainud",
+        msg`You didn’t see the cat.`,
+        "Sa ei näinud kassi.",
+        msg`<et>Nägema</et> gives <et>näinud</et>, as <et>tegema</et> gives <et>teinud</et>.`,
+      ),
+      answers: [
+        "Sa ei näinud kassi.",
+        "Sina ei näinud kassi.",
+        "Te ei näinud kassi.",
+        "Teie ei näinud kassi.",
+      ],
+    },
     translate(
       "soonud",
       msg`They didn’t eat any bread.`,

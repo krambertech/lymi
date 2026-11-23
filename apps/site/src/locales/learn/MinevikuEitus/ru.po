@@ -251,7 +251,7 @@ msgid "I"
 msgstr "я"
 
 msgid "I didn’t do any work."
-msgstr "Я не сделал (не сделала) работу."
+msgstr "Я не делал (не делала) никакой работы."
 
 msgid "I didn’t drink any water."
 msgstr "Я не пил (не пила) воды."
@@ -340,7 +340,7 @@ msgstr "На прошлой неделе, вчера и сегодня"
 msgid "Learn five by heart: <0>läinud, teinud, näinud, söönud, joonud</0>. <1>Tahtma</1> keeps its t: <2>tahtnud</2>."
 msgstr "Пять форм запомни: <0>läinud, teinud, näinud, söönud, joonud</0>. <1>Tahtma</1> сохраняет своё t: <2>tahtnud</2>."
 
-msgid "Lesson {past} taught the past with yes, where each person has its own ending: <0/>, I worked. With no, the person ending goes: <1/>, I didn’t work. Tap a time on the line to hear its sentence."
+msgid "Lesson {past} taught the past with yes, where each person has its own ending: <0/>, I worked. With no, there is no person ending: <1/>, I didn’t work. Tap a time on the line to hear its sentence."
 msgstr "В уроке {past} было прошедшее время без отрицания, с отдельным окончанием для каждого лица: <0/>, «я работал (работала)». С отрицанием личного окончания нет: <1/>, «я не работал (не работала)». Нажми на время на линии, чтобы услышать предложение."
 
 msgid "Listen: Kati and Jaan’s weekend"
@@ -367,8 +367,8 @@ msgstr "Мари не пришла домой."
 msgid "Mari isn’t coming home."
 msgstr "Мари не идёт домой."
 
-msgid "Most of them. Check the verbs you missed against the table above."
-msgstr "Большинство верно. Сверь глаголы, где были ошибки, с таблицей выше."
+msgid "Most of them. Check the -nud forms you missed in the sections above."
+msgstr "Большинство верно. Сверь формы на -nud, где были ошибки, с разделами выше."
 
 msgid "Most of them. Look again at the ones you missed."
 msgstr "Большинство верно. Ещё раз посмотри на те, где была ошибка."
@@ -382,9 +382,6 @@ msgstr "Mul pole aega в прошлом."
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Почти. Переслушай те, где были ошибки."
 
-msgid "No now, yes and no in the past"
-msgstr "«Нет» сейчас, «да» и «нет» в прошлом"
-
 msgid "no, for every person"
 msgstr "«нет», для всех лиц"
 
@@ -396,6 +393,9 @@ msgstr "«Нет» сейчас"
 
 msgid "No, now and in the past"
 msgstr "«Нет» сейчас и в прошлом"
+
+msgid "No, now; yes and no, in the past"
+msgstr "«Нет» сейчас, «да» и «нет» в прошлом"
 
 msgid "not; no"
 msgstr "не; нет"
@@ -532,8 +532,8 @@ msgstr "Форма на <0>nud</0> образуется от инфинитив�
 msgid "The <et>-nud</et> form from the -da infinitive"
 msgstr "Форма на <et>-nud</et> от инфинитива на -da"
 
-msgid "The five <et>-nud</et> forms to learn by heart"
-msgstr "Пять форм на <et>-nud</et>, которые надо запомнить"
+msgid "The <et>-nud</et> forms to learn by heart"
+msgstr "Формы на <et>-nud</et>, которые надо запомнить"
 
 msgid "the infinitive"
 msgstr "инфинитив"
@@ -751,9 +751,6 @@ msgstr "Вчера у тебя весь день была работа дома,
 msgid "you"
 msgstr "ты"
 
-msgid "You (one person) didn’t see the cat."
-msgstr "Ты не видел (не видела) кота."
-
 msgid "You aren’t reading the book."
 msgstr "Вы не читаете книгу."
 
@@ -765,6 +762,9 @@ msgstr "В магазин ты вчера не ходил (не ходила), �
 
 msgid "You didn’t read the book."
 msgstr "Вы не прочитали книгу."
+
+msgid "You didn’t see the cat."
+msgstr "Ты не видел (не видела) кота."
 
 msgid "You don’t drink water."
 msgstr "Ты не пьёшь воду."
@@ -781,5 +781,5 @@ msgstr "Услышишь её вместе с местоимением."
 msgid "You’ll hear the form in a sentence."
 msgstr "Услышишь форму в предложении."
 
-msgid "Your friend Mari asks about yesterday. A wrong reply shows why, then you hear the right one."
-msgstr "Твоя подруга Мари спрашивает о вчерашнем дне. Неверный ответ покажет почему, а потом ты услышишь правильный."
+msgid "Your friend Mari asks about yesterday. A wrong reply shows why it’s wrong, then you hear the right one."
+msgstr "Твоя подруга Мари спрашивает о вчерашнем дне. После неверного ответа увидишь объяснение, а потом услышишь правильный."

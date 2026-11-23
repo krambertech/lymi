@@ -147,6 +147,7 @@ const SAY_ALSO: Record<(typeof MARKET_SAY)[number]["id"], readonly string[]> = {
   ounad: [],
   turule: ["Ma tahan minna turule.", "Mina tahan turule minna.", "Tahan turule minna."],
   kodus: [
+    "Pean kell kaksteist kodus olema.",
     "Kell kaksteist pean ma kodus olema.",
     "Ma pean kodus olema kell kaksteist.",
     "Mina pean kell kaksteist kodus olema.",
@@ -452,14 +453,14 @@ export function TurulLesson() {
       sub={
         <Trans>
           Read a friend’s message and answer it, buy cheese and bread at a stall, and follow a
-          conversation at the market: amounts, prices, <Et>meeldib</Et> and <Et>meeldivad</Et>, and
-          the <End>da</End> and <End>ma</End> infinitive after <Et>tahan</Et> and <Et>pean</Et>, and{" "}
-          <Et>turule</Et>, <Et>turul</Et> and <Et>turult</Et>.
+          conversation at the market. It practises amounts and prices, <Et>meeldib</Et> and{" "}
+          <Et>meeldivad</Et>, the <End>da</End> and <End>ma</End> infinitives after <Et>tahan</Et>{" "}
+          and <Et>pean</Et>, and <Et>turule</Et>, <Et>turul</Et> and <Et>turult</Et>.
         </Trans>
       }
       facts={[
         <Trans key="m">15 minutes</Trans>,
-        <Trans key="q">6 exercises and a conversation you can play twice</Trans>,
+        <Trans key="q">5 quizzes, a conversation and a recording you can play twice</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -481,8 +482,8 @@ export function TurulLesson() {
           <b lang="et">kaks eurot</b>.
         </Trans>,
         <Trans key="2">
-          Say a price with <b lang="et">maksab</b>: <b lang="et">Leib maksab kaks eurot.</b> Ask for
-          one with <b lang="et">Kui palju see maksab?</b>
+          Say a price with <b lang="et">maksab</b>: <b lang="et">Leib maksab kaks eurot.</b> Ask the
+          price with <b lang="et">Kui palju see maksab?</b>
         </Trans>,
         <Trans key="3">
           <b lang="et">Tahan</b>, <b lang="et">saan</b> and <b lang="et">mul on vaja</b> take the{" "}
@@ -546,7 +547,7 @@ export function TurulLesson() {
                 title={<Trans>Fill the gaps: Liis’s answer</Trans>}
                 gaps={gaps}
                 mode="drag"
-                spare={["minna", "turule", "kohv", "meeldib", "tulema"]}
+                spare={["lähen", "turule", "kohv", "meeldib", "olla"]}
                 clip="p-liis"
               />
             </>

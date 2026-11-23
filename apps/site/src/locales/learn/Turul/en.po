@@ -31,8 +31,8 @@ msgstr "<et>Turult</et>: where you come from."
 msgid "15 minutes"
 msgstr "15 minutes"
 
-msgid "6 exercises and a conversation you can play twice"
-msgstr "6 exercises and a conversation you can play twice"
+msgid "5 quizzes, a conversation and a recording you can play twice"
+msgstr "5 quizzes, a conversation and a recording you can play twice"
 
 msgid "a kilo of cheese"
 msgstr "a kilo of cheese"
@@ -325,14 +325,14 @@ msgstr "of the market"
 msgid "One thing <0>meeldib</0>, more than one <1>meeldivad</1>: <2>mulle meeldib turg, mulle meeldivad õunad</2>."
 msgstr "One thing <0>meeldib</0>, more than one <1>meeldivad</1>: <2>mulle meeldib turg, mulle meeldivad õunad</2>."
 
-msgid "Read a friend’s message and answer it, buy cheese and bread at a stall, and follow a conversation at the market: amounts, prices, <0>meeldib</0> and <1>meeldivad</1>, and the <2>da</2> and <3>ma</3> infinitive after <4>tahan</4> and <5>pean</5>, and <6>turule</6>, <7>turul</7> and <8>turult</8>."
-msgstr "Read a friend’s message and answer it, buy cheese and bread at a stall, and follow a conversation at the market: amounts, prices, <0>meeldib</0> and <1>meeldivad</1>, and the <2>da</2> and <3>ma</3> infinitive after <4>tahan</4> and <5>pean</5>, and <6>turule</6>, <7>turul</7> and <8>turult</8>."
+msgid "Read a friend’s message and answer it, buy cheese and bread at a stall, and follow a conversation at the market. It practises amounts and prices, <0>meeldib</0> and <1>meeldivad</1>, the <2>da</2> and <3>ma</3> infinitives after <4>tahan</4> and <5>pean</5>, and <6>turule</6>, <7>turul</7> and <8>turult</8>."
+msgstr "Read a friend’s message and answer it, buy cheese and bread at a stall, and follow a conversation at the market. It practises amounts and prices, <0>meeldib</0> and <1>meeldivad</1>, the <2>da</2> and <3>ma</3> infinitives after <4>tahan</4> and <5>pean</5>, and <6>turule</6>, <7>turul</7> and <8>turult</8>."
 
 msgid "Read Mari’s message once more, then try again."
 msgstr "Read Mari’s message once more, then try again."
 
-msgid "Say a price with <0>maksab</0>: <1>Leib maksab kaks eurot.</1> Ask for one with <2>Kui palju see maksab?</2>"
-msgstr "Say a price with <0>maksab</0>: <1>Leib maksab kaks eurot.</1> Ask for one with <2>Kui palju see maksab?</2>"
+msgid "Say a price with <0>maksab</0>: <1>Leib maksab kaks eurot.</1> Ask the price with <2>Kui palju see maksab?</2>"
+msgstr "Say a price with <0>maksab</0>: <1>Leib maksab kaks eurot.</1> Ask the price with <2>Kui palju see maksab?</2>"
 
 msgctxt "the man at the stall in the recording"
 msgid "Seller"

@@ -8,7 +8,7 @@ msgstr ""
 "Language: uk\n"
 
 msgid "<0/> and the four verbs in lesson {verbForms} whose <1>da</1> infinitive ends in a bare <2>a</2> don’t follow that rule. Learn their <3>nud</3> forms as they are: <4/>, <5/>, <6/>, <7/>, <8><9/>.</8>"
-msgstr "<0/> і чотири дієслова з уроку {verbForms}, у яких інфінітив на <1>da</1> закінчується просто на <2>a</2>, утворюють її не за цим правилом. Їхні форми на <3>nud</3> запам’ятай як є: <4/>, <5/>, <6/>, <7/>, <8><9/>.</8>"
+msgstr "<0/> і чотири дієслова з уроку {verbForms}, у яких інфінітив на <1>da</1> закінчується просто на <2>a</2>, цього правила не дотримуються. Їхні форми на <3>nud</3> запам’ятай як є: <4/>, <5/>, <6/>, <7/>, <8><9/>.</8>"
 
 msgid "<0/> has a one-word form, <1/>, as <2>ei ole</2> has <3>pole</3>: <4><5/>.</4> Both mean the same."
 msgstr "<0/> можна сказати й одним словом, <1/>, як <2>ei ole</2> — <3>pole</3>: <4><5/>.</4> Значення те саме."
@@ -251,7 +251,7 @@ msgid "I"
 msgstr "я"
 
 msgid "I didn’t do any work."
-msgstr "Я не зробив (не зробила) роботу."
+msgstr "Я не робив (не робила) жодної роботи."
 
 msgid "I didn’t drink any water."
 msgstr "Я не пив (не пила) води."
@@ -340,7 +340,7 @@ msgstr "Минулого тижня, учора і сьогодні"
 msgid "Learn five by heart: <0>läinud, teinud, näinud, söönud, joonud</0>. <1>Tahtma</1> keeps its t: <2>tahtnud</2>."
 msgstr "П’ять форм запам’ятай: <0>läinud, teinud, näinud, söönud, joonud</0>. <1>Tahtma</1> зберігає своє t: <2>tahtnud</2>."
 
-msgid "Lesson {past} taught the past with yes, where each person has its own ending: <0/>, I worked. With no, the person ending goes: <1/>, I didn’t work. Tap a time on the line to hear its sentence."
+msgid "Lesson {past} taught the past with yes, where each person has its own ending: <0/>, I worked. With no, there is no person ending: <1/>, I didn’t work. Tap a time on the line to hear its sentence."
 msgstr "В уроці {past} був минулий час без заперечення, з окремим закінченням для кожної особи: <0/>, «я працював (працювала)». Із запереченням особового закінчення немає: <1/>, «я не працював (не працювала)». Торкнися часу на лінії, щоб почути речення."
 
 msgid "Listen: Kati and Jaan’s weekend"
@@ -367,8 +367,8 @@ msgstr "Марі не прийшла додому."
 msgid "Mari isn’t coming home."
 msgstr "Марі не йде додому."
 
-msgid "Most of them. Check the verbs you missed against the table above."
-msgstr "Більшість правильно. Звір дієслова, де були помилки, з таблицею вище."
+msgid "Most of them. Check the -nud forms you missed in the sections above."
+msgstr "Більшість правильно. Звір форми на -nud, де були помилки, з розділами вище."
 
 msgid "Most of them. Look again at the ones you missed."
 msgstr "Більшість правильно. Ще раз поглянь на ті, де була помилка."
@@ -382,9 +382,6 @@ msgstr "Mul pole aega в минулому."
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Майже. Переслухай ті, де були помилки."
 
-msgid "No now, yes and no in the past"
-msgstr "«Ні» зараз, «так» і «ні» в минулому"
-
 msgid "no, for every person"
 msgstr "«ні», для всіх осіб"
 
@@ -396,6 +393,9 @@ msgstr "«Ні» зараз"
 
 msgid "No, now and in the past"
 msgstr "«Ні» зараз і в минулому"
+
+msgid "No, now; yes and no, in the past"
+msgstr "«Ні» зараз, «так» і «ні» в минулому"
 
 msgid "not; no"
 msgstr "не; ні"
@@ -532,8 +532,8 @@ msgstr "Форма на <0>nud</0> утворюється від інфініт�
 msgid "The <et>-nud</et> form from the -da infinitive"
 msgstr "Форма на <et>-nud</et> від інфінітива на -da"
 
-msgid "The five <et>-nud</et> forms to learn by heart"
-msgstr "П’ять форм на <et>-nud</et>, які треба запам’ятати"
+msgid "The <et>-nud</et> forms to learn by heart"
+msgstr "Форми на <et>-nud</et>, які треба запам’ятати"
 
 msgid "the infinitive"
 msgstr "інфінітив"
@@ -751,9 +751,6 @@ msgstr "Учора в тебе цілий день була робота вдо�
 msgid "you"
 msgstr "ти"
 
-msgid "You (one person) didn’t see the cat."
-msgstr "Ти не бачив (не бачила) кота."
-
 msgid "You aren’t reading the book."
 msgstr "Ви не читаєте книжку."
 
@@ -765,6 +762,9 @@ msgstr "До магазину ти вчора не ходив (не ходила
 
 msgid "You didn’t read the book."
 msgstr "Ви не прочитали книжку."
+
+msgid "You didn’t see the cat."
+msgstr "Ти не бачив (не бачила) кота."
 
 msgid "You don’t drink water."
 msgstr "Ти не п’єш води."
@@ -781,5 +781,5 @@ msgstr "Почуєш її разом із займенником."
 msgid "You’ll hear the form in a sentence."
 msgstr "Почуєш форму в реченні."
 
-msgid "Your friend Mari asks about yesterday. A wrong reply shows why, then you hear the right one."
-msgstr "Твоя подруга Марі питає про вчорашній день. Хибна відповідь покаже чому, а потім ти почуєш правильну."
+msgid "Your friend Mari asks about yesterday. A wrong reply shows why it’s wrong, then you hear the right one."
+msgstr "Твоя подруга Марі питає про вчорашній день. Після хибної відповіді побачиш пояснення, а потім почуєш правильну."

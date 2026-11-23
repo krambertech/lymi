@@ -340,8 +340,8 @@ msgstr "Last week, yesterday and today"
 msgid "Learn five by heart: <0>läinud, teinud, näinud, söönud, joonud</0>. <1>Tahtma</1> keeps its t: <2>tahtnud</2>."
 msgstr "Learn five by heart: <0>läinud, teinud, näinud, söönud, joonud</0>. <1>Tahtma</1> keeps its t: <2>tahtnud</2>."
 
-msgid "Lesson {past} taught the past with yes, where each person has its own ending: <0/>, I worked. With no, the person ending goes: <1/>, I didn’t work. Tap a time on the line to hear its sentence."
-msgstr "Lesson {past} taught the past with yes, where each person has its own ending: <0/>, I worked. With no, the person ending goes: <1/>, I didn’t work. Tap a time on the line to hear its sentence."
+msgid "Lesson {past} taught the past with yes, where each person has its own ending: <0/>, I worked. With no, there is no person ending: <1/>, I didn’t work. Tap a time on the line to hear its sentence."
+msgstr "Lesson {past} taught the past with yes, where each person has its own ending: <0/>, I worked. With no, there is no person ending: <1/>, I didn’t work. Tap a time on the line to hear its sentence."
 
 msgid "Listen: Kati and Jaan’s weekend"
 msgstr "Listen: Kati and Jaan’s weekend"
@@ -367,8 +367,8 @@ msgstr "Mari didn’t come home."
 msgid "Mari isn’t coming home."
 msgstr "Mari isn’t coming home."
 
-msgid "Most of them. Check the verbs you missed against the table above."
-msgstr "Most of them. Check the verbs you missed against the table above."
+msgid "Most of them. Check the -nud forms you missed in the sections above."
+msgstr "Most of them. Check the -nud forms you missed in the sections above."
 
 msgid "Most of them. Look again at the ones you missed."
 msgstr "Most of them. Look again at the ones you missed."
@@ -382,9 +382,6 @@ msgstr "Mul pole aega, in the past."
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Nearly. Play the ones you missed once more."
 
-msgid "No now, yes and no in the past"
-msgstr "No now, yes and no in the past"
-
 msgid "no, for every person"
 msgstr "no, for every person"
 
@@ -396,6 +393,9 @@ msgstr "No, now"
 
 msgid "No, now and in the past"
 msgstr "No, now and in the past"
+
+msgid "No, now; yes and no, in the past"
+msgstr "No, now; yes and no, in the past"
 
 msgid "not; no"
 msgstr "not; no"
@@ -532,8 +532,8 @@ msgstr "The <0>nud</0> form is built on the <1>da</1> infinitive from lesson {ve
 msgid "The <et>-nud</et> form from the -da infinitive"
 msgstr "The <et>-nud</et> form from the -da infinitive"
 
-msgid "The five <et>-nud</et> forms to learn by heart"
-msgstr "The five <et>-nud</et> forms to learn by heart"
+msgid "The <et>-nud</et> forms to learn by heart"
+msgstr "The <et>-nud</et> forms to learn by heart"
 
 msgid "the infinitive"
 msgstr "the infinitive"
@@ -751,9 +751,6 @@ msgstr "Yesterday you worked at home all day and had no time to go to the shop. 
 msgid "you"
 msgstr "you"
 
-msgid "You (one person) didn’t see the cat."
-msgstr "You (one person) didn’t see the cat."
-
 msgid "You aren’t reading the book."
 msgstr "You aren’t reading the book."
 
@@ -765,6 +762,9 @@ msgstr "You didn’t go to the shop, and <0>käin</0> is the present."
 
 msgid "You didn’t read the book."
 msgstr "You didn’t read the book."
+
+msgid "You didn’t see the cat."
+msgstr "You didn’t see the cat."
 
 msgid "You don’t drink water."
 msgstr "You don’t drink water."
@@ -781,5 +781,5 @@ msgstr "You’ll hear it with its pronoun."
 msgid "You’ll hear the form in a sentence."
 msgstr "You’ll hear the form in a sentence."
 
-msgid "Your friend Mari asks about yesterday. A wrong reply shows why, then you hear the right one."
-msgstr "Your friend Mari asks about yesterday. A wrong reply shows why, then you hear the right one."
+msgid "Your friend Mari asks about yesterday. A wrong reply shows why it’s wrong, then you hear the right one."
+msgstr "Your friend Mari asks about yesterday. A wrong reply shows why it’s wrong, then you hear the right one."

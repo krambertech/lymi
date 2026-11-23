@@ -443,7 +443,7 @@ function weekendQuestions(i18n: I18n): PassageQuestion[] {
       kind: "short",
       id: "who-came",
       ask: label(msg`Who came from Tartu? Write one or two words in Estonian.`),
-      answers: ["ema", "minu ema", "Jaani ema"],
+      answers: ["ema", "minu ema", "tema ema", "Jaani ema"],
       line: 5,
     },
     {
@@ -829,7 +829,7 @@ export function MinevikuEitusLesson() {
                 <p>
                   <Trans>
                     Lesson {past} taught the past with yes, where each person has its own ending:{" "}
-                    <Word w="töötasin" />, I worked. With no, the person ending goes:{" "}
+                    <Word w="töötasin" />, I worked. With no, there is no person ending:{" "}
                     <Word w="ma ei töötanud" />, I didn’t work. Tap a time on the line to hear its
                     sentence.
                   </Trans>
@@ -1059,7 +1059,7 @@ export function MinevikuEitusLesson() {
         },
         {
           id: "sort",
-          title: t`No now, yes and no in the past`,
+          title: t`No, now; yes and no, in the past`,
           quiz: true,
           children: (
             <>
@@ -1103,7 +1103,9 @@ export function MinevikuEitusLesson() {
                       All six, every one with <Et>ei</Et> and the <End>nud</End> form.
                     </Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Most of them. Check the verbs you missed against the table above.</Trans>
+                    <Trans>
+                      Most of them. Check the -nud forms you missed in the sections above.
+                    </Trans>
                   ) : (
                     <Trans>
                       Go back to the table under “The same for every person” and the five forms,
@@ -1177,8 +1179,8 @@ export function MinevikuEitusLesson() {
                 </p>
                 <p>
                   <Trans>
-                    Your friend Mari asks about yesterday. A wrong reply shows why, then you hear
-                    the right one.
+                    Your friend Mari asks about yesterday. A wrong reply shows why it’s wrong, then
+                    you hear the right one.
                   </Trans>
                 </p>
               </Prose>

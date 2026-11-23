@@ -31,8 +31,8 @@ msgstr "<et>Turult</et>: откуда ты идёшь."
 msgid "15 minutes"
 msgstr "15 минут"
 
-msgid "6 exercises and a conversation you can play twice"
-msgstr "6 упражнений и разговор, который можно прослушать дважды"
+msgid "5 quizzes, a conversation and a recording you can play twice"
+msgstr "5 упражнений, разговор и запись, которую можно прослушать дважды"
 
 msgid "a kilo of cheese"
 msgstr "килограмм сыра"
@@ -325,13 +325,13 @@ msgstr "рынка, рыночный"
 msgid "One thing <0>meeldib</0>, more than one <1>meeldivad</1>: <2>mulle meeldib turg, mulle meeldivad õunad</2>."
 msgstr "Одна вещь — <0>meeldib</0>, несколько — <1>meeldivad</1>: <2>mulle meeldib turg, mulle meeldivad õunad</2>."
 
-msgid "Read a friend’s message and answer it, buy cheese and bread at a stall, and follow a conversation at the market: amounts, prices, <0>meeldib</0> and <1>meeldivad</1>, and the <2>da</2> and <3>ma</3> infinitive after <4>tahan</4> and <5>pean</5>, and <6>turule</6>, <7>turul</7> and <8>turult</8>."
-msgstr "Прочитай сообщение подруги и ответь, купи сыр и хлеб у прилавка и пойми разговор на рынке: количество, цены, <0>meeldib</0> и <1>meeldivad</1>, инфинитив на <2>da</2> и на <3>ma</3> после <4>tahan</4> и <5>pean</5>, а также <6>turule</6>, <7>turul</7> и <8>turult</8>."
+msgid "Read a friend’s message and answer it, buy cheese and bread at a stall, and follow a conversation at the market. It practises amounts and prices, <0>meeldib</0> and <1>meeldivad</1>, the <2>da</2> and <3>ma</3> infinitives after <4>tahan</4> and <5>pean</5>, and <6>turule</6>, <7>turul</7> and <8>turult</8>."
+msgstr "Прочитай сообщение подруги и ответь, купи сыр и хлеб у прилавка и пойми разговор на рынке. Здесь повторяются количество и цены, <0>meeldib</0> и <1>meeldivad</1>, инфинитивы на <2>da</2> и на <3>ma</3> после <4>tahan</4> и <5>pean</5>, а также <6>turule</6>, <7>turul</7> и <8>turult</8>."
 
 msgid "Read Mari’s message once more, then try again."
 msgstr "Перечитай сообщение Мари, а потом попробуй снова."
 
-msgid "Say a price with <0>maksab</0>: <1>Leib maksab kaks eurot.</1> Ask for one with <2>Kui palju see maksab?</2>"
+msgid "Say a price with <0>maksab</0>: <1>Leib maksab kaks eurot.</1> Ask the price with <2>Kui palju see maksab?</2>"
 msgstr "Цену называют словом <0>maksab</0>: <1>Leib maksab kaks eurot.</1> А спрашивают так: <2>Kui palju see maksab?</2>"
 
 msgctxt "the man at the stall in the recording"
@@ -361,7 +361,7 @@ msgid "The partitive after an amount or a number"
 msgstr "Партитив после слова количества или числа"
 
 msgid "The seller asks <0/> (What would you like?), then <1/> (Anything else?). If you pick a wrong reply, you see why, then hear the right one."
-msgstr "Продавец спрашивает <0/> («Что желаете?»), потом <1/> («Что-нибудь ещё?»). Если выберешь неверный ответ, увидишь почему, а потом услышишь правильный."
+msgstr "Продавщица спрашивает <0/> («Что желаете?»), потом <1/> («Что-нибудь ещё?»). Если выберешь неверный ответ, увидишь почему, а потом услышишь правильный."
 
 msgid "The seller has bread today."
 msgstr "Сегодня у продавца есть хлеб."

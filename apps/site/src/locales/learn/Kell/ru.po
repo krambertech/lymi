@@ -11,7 +11,7 @@ msgid "{past} minutes past {struck}."
 msgstr "{past} минут после {struck}."
 
 msgid "<0/> counts on from the hour that has struck; <1/> counts down to the hour that’s coming. Mix them up and the time comes out wrong by up to forty minutes. Listen, then pick the clock."
-msgstr "<0/> считает от часа, который уже наступил, а <1/> — до часа, который наступит. Перепутаешь их — ошибёшься на полчаса и больше. Послушай и выбери часы."
+msgstr "<0/> считает от часа, который уже наступил, а <1/> — до часа, который наступит. Перепутаешь их — и ошибёшься на время до сорока минут. Послушай и выбери часы."
 
 msgid "<0/> means half, and it looks ahead. <1/> is halfway to four, so it’s 3:30, not 4:30."
 msgstr "<0/> значит «половина» и смотрит вперёд. <1/> — это половина четвёртого, то есть 3:30, а не 4:30."
@@ -63,7 +63,7 @@ msgid "after; in, as in “in ten minutes”"
 msgstr "после; через, как в «через десять минут»"
 
 msgid "All six, each clock right."
-msgstr "Все шесть часов выбраны верно."
+msgstr "Все шесть циферблатов выбраны верно."
 
 msgid "All six, every word in its place."
 msgstr "Все шесть, каждое слово на месте."
@@ -190,11 +190,11 @@ msgstr "Только на слух, без микрофона"
 msgid "Listening: a message from Mari"
 msgstr "На слух: сообщение от Мари"
 
-msgid "Mari is at home at two."
-msgstr "В два часа Мари дома."
+msgid "Mari is at home at three."
+msgstr "В три часа Мари дома."
 
-msgid "Mari is at work now."
-msgstr "Сейчас Мари на работе."
+msgid "Mari is at home now."
+msgstr "Сейчас Мари дома."
 
 msgid "Mari leaves Jaan a message about her afternoon. <0/> also means at six. Listen for each time."
 msgstr "Мари оставляет Яану сообщение о своём дне. <0/> значит также «в шесть часов». Слушай каждое время."
@@ -313,7 +313,7 @@ msgid "Turn the clock above once more, then try again."
 msgstr "Ещё раз покрути часы выше, а потом попробуй снова."
 
 msgid "Turn the clock above to a few minutes past and to, then try again."
-msgstr "Поставь часы выше на несколько времён с läbi и с pärast, а потом попробуй снова."
+msgstr "Покрути часы выше: поставь несколько минут после часа и до часа, а потом попробуй снова."
 
 msgid "Type the time"
 msgstr "Введи время"

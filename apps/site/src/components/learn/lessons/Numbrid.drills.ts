@@ -93,6 +93,14 @@ export const DRILLS: DrillBank = {
     sentence("two-cats", "Mul on kaks kassi.", { kind: "dictation" }),
     sentence("six-cats", "Mul on kuus kassi.", { kind: "dictation" }),
     sentence("coffee-two", "Kohv maksab kaks eurot.", { kind: "dictation" }),
-    sentence("flat-eighteen", "Minu korteri number on kaheksateist.", { kind: "dictation" }),
+    sentence("coffee-four", "Kohv maksab neli eurot.", { kind: "dictation" }),
+    {
+      kind: "dictation",
+      id: "flat-eighteen",
+      rule: "teist",
+      say: "Minu korteri number on kaheksateist.",
+      answers: ["Minu korteri number on kaheksateist."],
+      explain: msg`<et>Kaheksateist</et>: <et>kaheksa</et> and <et>-teist</et>, 18.`,
+    },
   ],
 };

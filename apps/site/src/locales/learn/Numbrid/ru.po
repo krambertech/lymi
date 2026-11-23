@@ -28,6 +28,9 @@ msgstr "<et>-teist</et> образует числа от одиннадцати 
 msgid "<et>-teist</et> or <et>-kümmend</et>"
 msgstr "<et>-teist</et> или <et>-kümmend</et>"
 
+msgid "<et>Kaheksateist</et>: <et>kaheksa</et> and <et>-teist</et>, 18."
+msgstr "<et>Kaheksateist</et>: <et>kaheksa</et> и <et>-teist</et>, 18."
+
 msgid "<et>Kaks</et> has a short a and a k; <et>kuus</et> a long uu. <et>Kaheksa</et> starts with ka, <et>üheksa</et> with ü."
 msgstr "В <et>kaks</et> короткое a и k, в <et>kuus</et> — долгое uu. <et>Kaheksa</et> начинается с ka, <et>üheksa</et> — с ü."
 

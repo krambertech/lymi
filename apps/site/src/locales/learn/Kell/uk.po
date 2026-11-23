@@ -11,7 +11,7 @@ msgid "{past} minutes past {struck}."
 msgstr "{past} хвилин після {struck}."
 
 msgid "<0/> counts on from the hour that has struck; <1/> counts down to the hour that’s coming. Mix them up and the time comes out wrong by up to forty minutes. Listen, then pick the clock."
-msgstr "<0/> рахує від години, що вже настала, а <1/> — до години, що наближається. Сплутаєш їх — помилишся на пів години й більше. Послухай і вибери годинник."
+msgstr "<0/> рахує від години, що вже настала, а <1/> — до години, що наближається. Сплутаєш їх — і помилишся на час до сорока хвилин. Послухай і вибери годинник."
 
 msgid "<0/> means half, and it looks ahead. <1/> is halfway to four, so it’s 3:30, not 4:30."
 msgstr "<0/> означає «пів» і дивиться вперед. <1/> — це пів на четверту, тобто 3:30, а не 4:30."
@@ -190,11 +190,11 @@ msgstr "Лише слухання, без мікрофона"
 msgid "Listening: a message from Mari"
 msgstr "На слух: повідомлення від Марі"
 
-msgid "Mari is at home at two."
-msgstr "О другій Марі вдома."
+msgid "Mari is at home at three."
+msgstr "О третій Марі вдома."
 
-msgid "Mari is at work now."
-msgstr "Зараз Марі на роботі."
+msgid "Mari is at home now."
+msgstr "Зараз Марі вдома."
 
 msgid "Mari leaves Jaan a message about her afternoon. <0/> also means at six. Listen for each time."
 msgstr "Марі залишає Яанові повідомлення про свій день. <0/> означає також «о шостій». Слухай кожен час."
@@ -313,7 +313,7 @@ msgid "Turn the clock above once more, then try again."
 msgstr "Ще раз покрути годинник вище, а тоді спробуй знову."
 
 msgid "Turn the clock above to a few minutes past and to, then try again."
-msgstr "Постав годинник вище на кілька часів із läbi і з pärast, а тоді спробуй знову."
+msgstr "Покрути годинник вище: постав кілька хвилин після години й до неї, а тоді спробуй знову."
 
 msgid "Type the time"
 msgstr "Введи час"

@@ -236,6 +236,7 @@ export const NUMBER_DRILLED = [
   "Mul on kaks kassi.",
   "Mul on kuus kassi.",
   "Kohv maksab kaks eurot.",
+  "Kohv maksab neli eurot.",
   "Minu korteri number on kaheksateist.",
 ] as const;
 

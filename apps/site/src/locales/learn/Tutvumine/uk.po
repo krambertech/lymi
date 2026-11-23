@@ -37,8 +37,8 @@ msgstr "<0>Sinu</0> — це «твоє»: виходить «Твоє ім’я
 msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> — це «привіт», а Марі вже йде."
 
-msgid "<et>Kus</et> asks where; when the answer says <et>ma</et>, ask with <et>sa</et>."
-msgstr "<et>Kus</et> питає «де»; якщо у відповіді <et>ma</et>, то в питанні — <et>sa</et>."
+msgid "<et>Kus</et> asks where; with <et>sa</et> the verb takes -d: <et>Kus sa elad?</et>"
+msgstr "<et>Kus</et> питає «де»; із <et>sa</et> дієслово має -d: <et>Kus sa elad?</et>"
 
 msgid "<et>Mina</et> takes <et>olen</et>: <et>Mina olen Andres</et>."
 msgstr "З <et>mina</et> — <et>olen</et>: <et>Mina olen Andres</et>."
@@ -86,16 +86,16 @@ msgid "Answer, then ask back: <0>Hästi, aitäh. Aga sul?</0>"
 msgstr "Відповідай і питай у відповідь: <0>Hästi, aitäh. Aga sul?</0>"
 
 msgid "Answering Mari"
-msgstr "Відповіді на запитання Марі"
+msgstr "Відповіді на питання Марі"
 
 msgid "Ask a yes-or-no question with <0>kas</0>, and any other with a question word: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
-msgstr "Запитання «так чи ні» починай з <0>kas</0>, а будь-яке інше — з питального слова: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
+msgstr "Питання «так чи ні» починай з <0>kas</0>, а будь-яке інше — з питального слова: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
 
 msgid "Ask the question"
 msgstr "Запитай"
 
 msgid "Asking Mari"
-msgstr "Запитання до Марі"
+msgstr "Питання до Марі"
 
 msgid "Asking questions"
 msgstr "Питання"
@@ -161,7 +161,7 @@ msgid "From õppima, to learn, to study."
 msgstr "Від õppima, вчити, вчитися."
 
 msgid "Go through Asking Mari once more, then try again."
-msgstr "Ще раз пройди «Запитання до Марі», а тоді спробуй знову."
+msgstr "Ще раз пройди «Питання до Марі», а тоді спробуй знову."
 
 msgid "Goodbye"
 msgstr "До побачення"
@@ -269,7 +269,7 @@ msgid "Mari told you her name at the start."
 msgstr "Марі назвала своє ім’я ще на початку."
 
 msgid "Meet someone in Estonian: say who you are, where you live and work, answer their questions and ask your own."
-msgstr "Знайомство естонською: скажи, хто ти, де живеш і працюєш, відповідай на запитання й став свої."
+msgstr "Знайомство естонською: скажи, хто ти, де живеш і працюєш, відповідай на питання й став свої."
 
 msgid "name"
 msgstr "ім’я"
@@ -287,7 +287,7 @@ msgid "not; no"
 msgstr "не; ні"
 
 msgid "Now you ask. Pick the question that fits what Mari just said. Ask why with <0/>, and the answer starts with <1/>, because."
-msgstr "Тепер питаєш ти. Обирай запитання, яке пасує до того, що Марі щойно сказала. «Чому» — це <0/>, а відповідь починається з <1/>, «бо»."
+msgstr "Тепер питаєш ти. Обирай питання, яке пасує до того, що Марі щойно сказала. «Чому» — це <0/>, а відповідь починається з <1/>, «бо»."
 
 msgid "Pärnu takes <0>-s</0>: <1>Pärnus</1>."
 msgstr "Пярну має <0>-s</0>: <1>Pärnus</1>."
@@ -335,7 +335,7 @@ msgid "She’s a teacher"
 msgstr "Вона вчителька"
 
 msgid "Talk: asking Mari"
-msgstr "Розмова: запитання до Марі"
+msgstr "Розмова: питання до Марі"
 
 msgid "Talk: meeting Mari"
 msgstr "Розмова: знайомство з Марі"
@@ -359,7 +359,7 @@ msgid "turns a sentence into a yes-or-no question"
 msgstr "робить з речення питання «так чи ні»"
 
 msgid "Verb forms: after <et>ei</et>, and <et>olema</et>"
-msgstr "Форми дієслова: після <et>ei</et> і <et>olema</et>"
+msgstr "Дієслово після <et>ei</et> і форми <et>olema</et>"
 
 msgid "Water"
 msgstr "Вода"
@@ -390,6 +390,9 @@ msgstr "Де ти працюєш?"
 
 msgid "Where does Jaan work?"
 msgstr "Де працює Яан?"
+
+msgid "Where does Kati live?"
+msgstr "Де живе Каті?"
 
 msgid "Where does Liis live?"
 msgstr "Де живе Лііс?"
@@ -429,7 +432,7 @@ msgid "Write it in Estonian"
 msgstr "Напиши естонською"
 
 msgid "Write Mari a short message about yourself, then compare it with a model and tick what yours does. Nothing is marked for you here."
-msgstr "Напиши Марі коротке повідомлення про себе, а тоді порівняй його із взірцем і познач, що в ньому є. Тут ніхто не оцінює за тебе."
+msgstr "Напиши Марі коротке повідомлення про себе, а тоді порівняй його зі зразком і познач, що в ньому є. Тут ніхто не оцінює за тебе."
 
 msgid "Write the question it answers"
 msgstr "Напиши питання до відповіді"

@@ -372,8 +372,8 @@ function useContent() {
       line: 2,
     },
     {
-      id: "liis-lives",
-      ask: t`Where does Liis live?`,
+      id: "kati-lives",
+      ask: t`Where does Kati live?`,
       options: [
         { id: "parnu", label: t`In Pärnu` },
         { id: "tartu", label: t`In Tartu` },

@@ -4051,6 +4051,222 @@ const PERFECT_CLIPS: Record<string, Clip> = {
   "c-saaremaa": PERFECT_CONVERSATION,
 };
 
+export const COND_VERBS = [
+  { ma: "lugema", n: "loen", cond: "loeksin" },
+  { ma: "minema", n: "lähen", cond: "läheksin" },
+  { ma: "olema", n: "olen", cond: "oleksin" },
+  { ma: "tegema", n: "teen", cond: "teeksin" },
+  { ma: "tahtma", n: "tahan", cond: "tahaksin" },
+  { ma: "saama", n: "saan", cond: "saaksin" },
+  { ma: "võima", n: "võin", cond: "võiksin" },
+  { ma: "sööma", n: "söön", cond: "sööksin" },
+  { ma: "elama", n: "elan", cond: "elaksin" },
+] as const;
+
+export const COND_PERSONS = [
+  { person: "ma", said: "Ma läheksin.", no: "Ma ei läheks." },
+  { person: "sa", said: "Sa läheksid.", no: "Sa ei läheks." },
+  { person: "ta", said: "Ta läheks.", no: "Ta ei läheks." },
+  { person: "me", said: "Me läheksime.", no: "Me ei läheks." },
+  { person: "te", said: "Te läheksite.", no: "Te ei läheks." },
+  { person: "nad", said: "Nad läheksid.", no: "Nad ei läheks." },
+] as const;
+
+export const COND_FORM_QUIZ = [
+  { ma: "lugema", n: "loen", person: "sa", answer: "loeksid", said: "Sa loeksid." },
+  { ma: "minema", n: "lähen", person: "ta", answer: "läheks", said: "Ta läheks." },
+  { ma: "olema", n: "olen", person: "me", answer: "oleksime", said: "Me oleksime." },
+  { ma: "tegema", n: "teen", person: "nad", answer: "teeksid", said: "Nad teeksid." },
+  { ma: "tahtma", n: "tahan", person: "ma", answer: "tahaksin", said: "Ma tahaksin." },
+  { ma: "saama", n: "saan", person: "te", answer: "saaksite", said: "Te saaksite." },
+  { ma: "sööma", n: "söön", person: "ma", answer: "sööksin", said: "Ma sööksin." },
+  { ma: "elama", n: "elan", person: "ta", answer: "elaks", said: "Ta elaks." },
+] as const;
+
+export const COND_HEARD = [
+  { id: "minema", now: "Ma lähen kinno.", would: "Ma läheksin kinno.", past: "Ma läksin kinno." },
+  { id: "olema", now: "Mul on aega.", would: "Mul oleks aega.", past: "Mul oli aega." },
+  { id: "ostma", now: "Ta ostab auto.", would: "Ta ostaks auto.", past: "Ta ostis auto." },
+  { id: "sooma", now: "Me sööme kooki.", would: "Me sööksime kooki.", past: "Me sõime kooki." },
+] as const;
+
+export const COND_SORT = [
+  { w: "läheksin", would: true },
+  { w: "tahaksin", would: true },
+  { w: "oleks", would: true },
+  { w: "teeksid", would: true },
+  { w: "lähen", would: false },
+  { w: "tahan", would: false },
+  { w: "on", would: false },
+  { w: "teeb", would: false },
+] as const;
+
+export const COND_POLITE = [
+  "Ma tahaksin kohvi.",
+  "Kas sa saaksid mind aidata?",
+  "Kas te võiksite seda korrata?",
+] as const;
+
+export const COND_IF = [
+  "Kui mul oleks aega, läheksin ma kinno.",
+  "Kui ilm oleks ilus, sõidaksime mere äärde.",
+  "Kui ma oleksin rikas, ostaksin maja.",
+] as const;
+
+export const COND_REWRITE = [
+  { from: "Ma tahan kohvi.", to: "Ma tahaksin kohvi.", cue: "politely" },
+  { from: "Kas sa saad mind aidata?", to: "Kas sa saaksid mind aidata?", cue: "politely" },
+  { from: "Ma lähen kinno.", to: "Ma läheksin kinno.", cue: "would" },
+  { from: "Nad ostavad maja.", to: "Nad ostaksid maja.", cue: "would" },
+  { from: "Ma ei lähe.", to: "Ma ei läheks.", cue: "would" },
+  { from: "Me elame Tartus.", to: "Me elaksime Tartus.", cue: "would" },
+] as const;
+
+export const COND_TRANSLATE = [
+  "Ma tahaksin kohvi.",
+  "Kas sa saaksid mind aidata?",
+  "Kui mul oleks aega, läheksin ma kinno.",
+  "Ma ei läheks.",
+  "Me elaksime Tartus.",
+  "Kas sa loeksid seda raamatut?",
+  "Kui oleks soe, ujuksime me meres.",
+] as const;
+
+export const COND_FIXES = [
+  { wrong: "Ma ei läheksin kinno.", right: "Ma ei läheks kinno." },
+  { wrong: "Kas sa saaksin mind aidata?", right: "Kas sa saaksid mind aidata?" },
+  { wrong: "Kui mul on aega, läheksin ma kinno.", right: "Kui mul oleks aega, läheksin ma kinno." },
+  { wrong: "Me läheksid homme kinno.", right: "Me läheksime homme kinno." },
+  { wrong: "Ta läheksin koju.", right: "Ta läheks koju." },
+  { wrong: "Kui ma oleksin rikas, ostan maja.", right: "Kui ma oleksin rikas, ostaksin maja." },
+  { wrong: "Te loeksid seda raamatut.", right: "Te loeksite seda raamatut." },
+] as const;
+
+export const COND_DIALOGUE = {
+  "d-teenindaja-1": { text: "Tere õhtust! Mida te sooviksite?", voice: "second" },
+  "d-sina-1": "Ma tahaksin üht teed, palun.",
+  "d-teenindaja-2": { text: "Kas te sooviksite ka midagi süüa?", voice: "second" },
+  "d-sina-2": "Jah, ma võtaksin ühe võileiva.",
+  "d-teenindaja-3": { text: "Kas te istuksite akna all või terrassil?", voice: "second" },
+  "d-sina-3": "Ma istuksin hea meelega terrassil.",
+  "d-teenindaja-4": { text: "Hästi. Ma toon teie tee kohe.", voice: "second" },
+} as const satisfies Record<string, Clip>;
+
+export const COND_CONVERSATION: Conversation = {
+  turns: [
+    {
+      voice: "second",
+      text: ["Jaan, mida sa teeksid, kui sul oleks terve kuu puhkust?"],
+      say: "[curious] Jaan, mida sa teeksid, kui sul oleks terve kuu puhkust?",
+    },
+    { voice: "main", text: ["Hea küsimus!", "Ma sõidaksin kindlasti Jaapanisse."] },
+    { voice: "second", text: ["Jaapanisse?", "Miks just sinna?"] },
+    {
+      voice: "main",
+      text: [
+        "Ma tahaksin näha vanu templeid ja süüa päris jaapani toitu.",
+        "Ja ma õpiksin natuke jaapani keelt.",
+      ],
+    },
+    { voice: "second", text: "Kui kaua sa seal oleksid?" },
+    {
+      voice: "main",
+      text: ["Ma oleksin seal kolm nädalat.", "Viimasel nädalal sõidaksin ma mägedesse."],
+    },
+    { voice: "second", text: ["Jaapani keel on väga raske.", "Kas sa suudaksid seda õppida?"] },
+    {
+      voice: "main",
+      text: ["Natuke kindlasti.", "Aga ma ei räägiks seda kunagi nii hästi kui eesti keelt."],
+    },
+    {
+      voice: "second",
+      text: "Sa räägid eesti keelt juba päris hästi.",
+      say: "[laughs] Sa räägid eesti keelt juba päris hästi.",
+    },
+    { voice: "main", text: ["Aitäh!", "Aga sina?", "Mida sina teeksid?"] },
+    {
+      voice: "second",
+      text: ["Mina ei sõidaks kuhugi kaugele.", "Ma elaksin terve kuu maal, vanaema juures."],
+    },
+    { voice: "main", text: ["Maal?", "Kas sul ei oleks igav?"] },
+    {
+      voice: "second",
+      text: [
+        "Ei, mitte üldse.",
+        "Ma loeksin raamatuid, käiksin metsas ja ujuksin järves.",
+        "Hommikuti magaksin ma kaua.",
+      ],
+    },
+    { voice: "main", text: ["See kõlab hästi.", "Aga kui ilm oleks halb?"] },
+    {
+      voice: "second",
+      text: [
+        "Siis ma istuksin köögis ja küpsetaksin vanaemaga kooke.",
+        "Me räägiksime tundide kaupa.",
+      ],
+    },
+    {
+      voice: "main",
+      text: ["Kui mul oleks vanaema maal, teeksin ma sama.", "Minu vanavanemad elavad Tallinnas."],
+    },
+    {
+      voice: "second",
+      text: ["Siis sa võiksid tulla minuga kaasa.", "Vanaemale meeldivad külalised."],
+    },
+    {
+      voice: "main",
+      text: ["Tõesti?", "Ma tuleksin hea meelega!", "Kas ma saaksin aias aidata?"],
+      say: "[surprised] Tõesti? Ma tuleksin hea meelega! Kas ma saaksin aias aidata?",
+    },
+    {
+      voice: "second",
+      text: ["Muidugi.", "Aias on alati tööd.", "Sa võiksid kartuleid kaevata."],
+    },
+    {
+      voice: "main",
+      text: ["Ma oleksin parem kokk kui aednik.", "Ma võiksin iga päev süüa teha."],
+      say: "[laughs] Ma oleksin parem kokk kui aednik. Ma võiksin iga päev süüa teha.",
+    },
+    {
+      voice: "second",
+      text: ["Suurepärane!", "Siis sööksime me iga päev head toitu."],
+    },
+    { voice: "main", text: ["Aga Jaapan jääb minu unistuseks."] },
+    {
+      voice: "second",
+      text: ["Võib-olla saaksime järgmisel aastal koos Jaapanisse sõita."],
+    },
+    { voice: "main", text: ["See oleks väga tore!"] },
+    { voice: "second", text: ["Aga enne peaksime natuke raha koguma.", "Lennupiletid on kallid."] },
+    { voice: "main", text: ["Õige.", "Ma ei ostaks enam iga päev kohvikust kohvi."] },
+    {
+      voice: "second",
+      text: "See oleks sinu jaoks väga raske!",
+      say: "[laughs] See oleks sinu jaoks väga raske!",
+    },
+  ],
+};
+
+export const COND_WORDS = ["kui", "hea meelega", "läheksin", "tahaksin", "oleks"] as const;
+
+const COND_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...COND_WORDS,
+    ...COND_VERBS.flatMap(({ n, cond }) => [n, cond]),
+    ...COND_PERSONS.flatMap(({ said, no }) => [said, no]),
+    ...COND_FORM_QUIZ.map(({ said }) => said),
+    ...COND_HEARD.flatMap(({ now, would, past }) => [now, would, past]),
+    ...COND_SORT.map(({ w }) => w),
+    ...COND_POLITE,
+    ...COND_IF,
+    ...COND_REWRITE.map(({ to }) => to),
+    ...COND_TRANSLATE,
+    ...COND_FIXES.map(({ right }) => right),
+  ]),
+  ...COND_DIALOGUE,
+  "c-holiday": COND_CONVERSATION,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -4213,6 +4429,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "raamatuid-maju": PLURAL_PART_CLIPS,
   "majades-inimestele": PLURAL_CASE_CLIPS,
   "olen-lugenud": PERFECT_CLIPS,
+  laheksin: COND_CLIPS,
   lihtminevik: PAST_CLIPS,
   kit: KIT_CLIPS,
 };

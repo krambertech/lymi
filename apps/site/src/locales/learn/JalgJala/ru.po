@@ -112,8 +112,8 @@ msgstr "Исправь предложение"
 msgid "foot, leg"
 msgstr "нога, ступня"
 
-msgid "Four ways to weaken"
-msgstr "Четыре способа ослабления"
+msgid "Four usual ways to weaken"
+msgstr "Четыре обычных способа ослабления"
 
 msgid "From lugema: the g is gone and u turns into o."
 msgstr "От lugema: g выпадает, а u становится o."
@@ -142,8 +142,8 @@ msgstr "Здесь сильная форма в родительном: <0>mõte
 msgid "hill, mountain"
 msgstr "холм, гора"
 
-msgid "I go to the shop every day."
-msgstr "Я каждый день хожу в магазин."
+msgid "I go to the shop almost every day."
+msgstr "Я почти каждый день хожу в магазин."
 
 msgid "I read"
 msgstr "я читаю"
@@ -358,11 +358,11 @@ msgstr "Дети в парке."
 msgid "The consonant has a strong form and a weak one. Usually the nominative and the partitive have one, and the genitive of lesson {genitive} has the other: <0/>, <1/>, <2>jalga</2>. Not always: <3>sõber, sõbra, sõpra</3> puts the nominative with the genitive. Pick a kind of change and tap the forms."
 msgstr "У согласного есть сильная и слабая форма. Обычно именительный и партитив имеют одну, а родительный из урока {genitive} — другую: <0/>, <1/>, <2>jalga</2>. Не всегда: в <3>sõber, sõbra, sõpra</3> именительный идёт вместе с родительным. Выбери вид изменения и нажимай на формы."
 
-msgid "The genitive is the weak form."
-msgstr "Родительный — слабая форма."
-
 msgid "The genitive is usually the odd one out"
 msgstr "Родительный обычно выделяется"
+
+msgid "The genitive is usually the weak form."
+msgstr "Родительный — обычно слабая форма."
 
 msgid "The genitive of <0>{word}</0> ({means}) is <1>{said}</1>."
 msgstr "Родительный от <0>{word}</0> («{means}») — <1>{said}</1>."
@@ -451,12 +451,6 @@ msgstr "Короткая форма «куда» от pood сохраняет d.
 msgid "The short “into” forms of lesson {inside} take the strong form: into the shop is <0/>, but in the shop is <1>poes</1>."
 msgstr "Короткие формы «куда» из урока {inside} имеют сильную форму: «в магазин» — <0/>, но «в магазине» — <1>poes</1>."
 
-msgid "The strong form in the partitive and “into”"
-msgstr "Сильная форма в партитиве и «куда»"
-
-msgid "The weak form in <et>-s</et>, <et>-l</et> and the plural"
-msgstr "Слабая форма с <et>-s</et>, <et>-l</et> и во множественном"
-
 msgid "The weak form in verbs"
 msgstr "Слабая форма в глаголах"
 
@@ -499,8 +493,14 @@ msgstr "Tuba, toa, tuba."
 msgid "Type the form"
 msgstr "Напиши форму"
 
+msgid "Usually strong: the partitive and “into”"
+msgstr "Обычно сильная: партитив и «куда»"
+
 msgid "Usually the first two columns are strong, and the genitive and the forms built on it are weak."
 msgstr "Обычно первые два столбца сильные, а родительный и формы от него слабые."
+
+msgid "Usually weak: <et>-s</et>, <et>-l</et> and the plural"
+msgstr "Обычно слабая: <et>-s</et>, <et>-l</et> и множественное"
 
 msgid "Verbs change too. The <0>-ma</0> infinitive is strong. The present or the <1>-da</1> infinitive can be weak: <2>lugema, loen</2>; <3>ootama, oodata</3>."
 msgstr "Глаголы тоже меняются. Инфинитив на <0>-ma</0> сильный. Настоящее время или инфинитив на <1>-da</1> могут быть слабыми: <2>lugema, loen</2>; <3>ootama, oodata</3>."

@@ -12100,7 +12100,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "raamatuid-maju/p-party": {
-    "text": "Täna on Kati sünnipäev. Ta ostis poest õunu ja banaane. Külalisi tuleb palju. Kati sõbrad toovad lilli. Lapsed söövad kooke.",
+    "text": "Täna on Kati sünnipäev. Ta ostis poest õunu ja banaane. Külalisi tuleb palju. Kati sõbrad toovad lilli. Lapsed laulavad laule.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -15809,6 +15809,1372 @@
   },
   "raamatut-voi-raamatu/kati-teeb-salati": {
     "text": "Kati teeb salati.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ei": {
+    "text": "ei",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/eile": {
+    "text": "eile",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta2na": {
+    "text": "täna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/to2o2tasin": {
+    "text": "töötasin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-ei-to2o2tanud": {
+    "text": "ma ei töötanud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/lugesin": {
+    "text": "lugesin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-ei-lugenud": {
+    "text": "Ma ei lugenud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/nad-ei-lugenud": {
+    "text": "Nad ei lugenud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ei-olnud": {
+    "text": "ei olnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/polnud": {
+    "text": "polnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-polnud-kodus": {
+    "text": "Ma polnud kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ei-lugenud": {
+    "text": "ei lugenud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ei-la2inud": {
+    "text": "ei läinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ei-teinud": {
+    "text": "ei teinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ei-na2inud": {
+    "text": "ei näinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ei-so2o2nud": {
+    "text": "ei söönud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ei-joonud": {
+    "text": "ei joonud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ei-ka2inud": {
+    "text": "ei käinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ei-tahtnud": {
+    "text": "ei tahtnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/tahtma": {
+    "text": "tahtma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/tahta": {
+    "text": "tahta",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/tahtnud": {
+    "text": "tahtnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-ei-tahtnud": {
+    "text": "Ma ei tahtnud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ka2inud": {
+    "text": "käinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/kas-sa-ka2isid-poes": {
+    "text": "Kas sa käisid poes?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/mul-polnud-aega": {
+    "text": "mul polnud aega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-lugesin": {
+    "text": "Ma lugesin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/sa-lugesid": {
+    "text": "Sa lugesid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/sa-ei-lugenud": {
+    "text": "Sa ei lugenud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-luges": {
+    "text": "Ta luges",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-ei-lugenud": {
+    "text": "Ta ei lugenud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/me-lugesime": {
+    "text": "Me lugesime",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/me-ei-lugenud": {
+    "text": "Me ei lugenud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/te-lugesite": {
+    "text": "Te lugesite",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/te-ei-lugenud": {
+    "text": "Te ei lugenud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/nad-lugesid": {
+    "text": "Nad lugesid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-olin": {
+    "text": "Ma olin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-ei-olnud": {
+    "text": "Ma ei olnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/sa-ei-olnud": {
+    "text": "Sa ei olnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-oli": {
+    "text": "Ta oli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-ei-olnud": {
+    "text": "Ta ei olnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/me-ei-olnud": {
+    "text": "Me ei olnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/te-olite": {
+    "text": "Te olite",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/nad-olid": {
+    "text": "Nad olid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/nad-ei-olnud": {
+    "text": "Nad ei olnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-la2ksin": {
+    "text": "Ma läksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-ei-la2inud": {
+    "text": "Ma ei läinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/sa-la2ksid": {
+    "text": "Sa läksid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/sa-ei-la2inud": {
+    "text": "Sa ei läinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-la2ks": {
+    "text": "Ta läks",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-ei-la2inud": {
+    "text": "Ta ei läinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/me-la2ksime": {
+    "text": "Me läksime",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/me-ei-la2inud": {
+    "text": "Me ei läinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/te-la2ksite": {
+    "text": "Te läksite",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/nad-la2ksid": {
+    "text": "Nad läksid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/nad-ei-la2inud": {
+    "text": "Nad ei läinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/eelmisel-na2dalal-ma-ei-olnud-tallinnas": {
+    "text": "Eelmisel nädalal ma ei olnud Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/eile-ma-ei-to2o2tanud": {
+    "text": "Eile ma ei töötanud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta2na-ma-ei-to2o2ta": {
+    "text": "Täna ma ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/elama": {
+    "text": "elama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/elada": {
+    "text": "elada",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/elanud": {
+    "text": "elanud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/lugema": {
+    "text": "lugema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/lugeda": {
+    "text": "lugeda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/lugenud": {
+    "text": "lugenud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ra2a2kima": {
+    "text": "rääkima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ra2a2kida": {
+    "text": "rääkida",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ra2a2kinud": {
+    "text": "rääkinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/o3ppima": {
+    "text": "õppima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/o3ppida": {
+    "text": "õppida",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/o3ppinud": {
+    "text": "õppinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/istuma": {
+    "text": "istuma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/istuda": {
+    "text": "istuda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/istunud": {
+    "text": "istunud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/to2o2tama": {
+    "text": "töötama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/to2o2tada": {
+    "text": "töötada",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/to2o2tanud": {
+    "text": "töötanud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/armastama": {
+    "text": "armastama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/armastada": {
+    "text": "armastada",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/armastanud": {
+    "text": "armastanud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ootama": {
+    "text": "ootama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/oodata": {
+    "text": "oodata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/oodanud": {
+    "text": "oodanud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/kuulama": {
+    "text": "kuulama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/kuulata": {
+    "text": "kuulata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/kuulanud": {
+    "text": "kuulanud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/vaatama": {
+    "text": "vaatama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/vaadata": {
+    "text": "vaadata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/vaadanud": {
+    "text": "vaadanud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/olema": {
+    "text": "olema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/olla": {
+    "text": "olla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/olnud": {
+    "text": "olnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/tulema": {
+    "text": "tulema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/tulla": {
+    "text": "tulla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/tulnud": {
+    "text": "tulnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/minema": {
+    "text": "minema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/minna": {
+    "text": "minna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/la2inud": {
+    "text": "läinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-ei-la2inud-to2o2le": {
+    "text": "Ma ei läinud tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/tegema": {
+    "text": "tegema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/teha": {
+    "text": "teha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/teinud": {
+    "text": "teinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-ei-teinud-to2o2d": {
+    "text": "Ma ei teinud tööd.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/na2gema": {
+    "text": "nägema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/na2ha": {
+    "text": "näha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/na2inud": {
+    "text": "näinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-ei-na2inud-kassi": {
+    "text": "Ma ei näinud kassi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/so2o2ma": {
+    "text": "sööma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/su2u2a": {
+    "text": "süüa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/so2o2nud": {
+    "text": "söönud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-ei-so2o2nud-kodus": {
+    "text": "Ma ei söönud kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/jooma": {
+    "text": "jooma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/juua": {
+    "text": "juua",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/joonud": {
+    "text": "joonud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-ei-joonud-kohvi": {
+    "text": "Ma ei joonud kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-pole-kodus": {
+    "text": "Ta pole kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-polnud-kodus": {
+    "text": "Ta polnud kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/mari-ei-tule-koju": {
+    "text": "Mari ei tule koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/mari-ei-tulnud-koju": {
+    "text": "Mari ei tulnud koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-ei-la2he-to2o2le": {
+    "text": "Ta ei lähe tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-ei-la2inud-to2o2le": {
+    "text": "Ta ei läinud tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/me-ei-so2o2-leiba": {
+    "text": "Me ei söö leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/me-ei-so2o2nud-leiba": {
+    "text": "Me ei söönud leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/sa-ei-joonud-vett": {
+    "text": "Sa ei joonud vett.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/te-ei-loe-raamatut": {
+    "text": "Te ei loe raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/te-ei-lugenud-raamatut": {
+    "text": "Te ei lugenud raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/nad-ei-ela-tartus": {
+    "text": "Nad ei ela Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/nad-ei-elanud-tartus": {
+    "text": "Nad ei elanud Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ei-loe": {
+    "text": "ei loe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ei-joo": {
+    "text": "ei joo",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/pole": {
+    "text": "pole",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/elasin": {
+    "text": "elasin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/la2ksin": {
+    "text": "läksin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/olin": {
+    "text": "olin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/d-mari-1": {
+    "text": "Tere! Kas sa käisid eile poes?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "mineviku-eitus/d-sina-1": {
+    "text": "Ei, ma ei käinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/d-mari-2": {
+    "text": "Miks sa ei käinud?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "mineviku-eitus/d-sina-2": {
+    "text": "Mul polnud aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/d-mari-3": {
+    "text": "Mida sa siis tegid?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "mineviku-eitus/d-sina-3": {
+    "text": "Ma töötasin kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/d-mari-4": {
+    "text": "Kas Jaan oli kodus?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "mineviku-eitus/d-sina-4": {
+    "text": "Ei, ta ei olnud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-ei-la2inud-eile-to2o2le": {
+    "text": "Ma ei läinud eile tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-ei-olnud-kodus": {
+    "text": "Ta ei olnud kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/me-ei-so2o2nud-kohvikus": {
+    "text": "Me ei söönud kohvikus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/nad-ei-lugenud-raamatut": {
+    "text": "Nad ei lugenud raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/sa-ei-oodanud-bussi": {
+    "text": "Sa ei oodanud bussi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/te-ei-tulnud-koju": {
+    "text": "Te ei tulnud koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-ei-la2inud-poodi": {
+    "text": "Ma ei läinud poodi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-ei-olnud-to2o2l": {
+    "text": "Ta ei olnud tööl.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/me-ei-ka2inud-turul": {
+    "text": "Me ei käinud turul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/sa-ei-so2o2nud-eile-kodus": {
+    "text": "Sa ei söönud eile kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-ei-elanud-tartus": {
+    "text": "Ma ei elanud Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-ei-ra2a2kinud-eesti-keelt": {
+    "text": "Ta ei rääkinud eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/me-ei-o3ppinud-eile": {
+    "text": "Me ei õppinud eile.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/nad-ei-kuulanud": {
+    "text": "Nad ei kuulanud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-ei-la2inud-koju": {
+    "text": "Ta ei läinud koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/me-ei-teinud-to2o2d": {
+    "text": "Me ei teinud tööd.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/sa-ei-na2inud-kassi": {
+    "text": "Sa ei näinud kassi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/nad-ei-so2o2nud-leiba": {
+    "text": "Nad ei söönud leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-ei-joonud-vett": {
+    "text": "Ma ei joonud vett.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/te-ei-ka2inud-poes": {
+    "text": "Te ei käinud poes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ma-ei-tahtnud-tulla": {
+    "text": "Ma ei tahtnud tulla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/nad-ei-olnud-kodus": {
+    "text": "Nad ei olnud kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/sa-ei-to2o2tanud-eile": {
+    "text": "Sa ei töötanud eile.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/me-ei-oodanud": {
+    "text": "Me ei oodanud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-ei-tulnud-to2o2le": {
+    "text": "Ta ei tulnud tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-luges-raamatut": {
+    "text": "Ta luges raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-ei-loe-raamatut": {
+    "text": "Ta ei loe raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/ta-ei-lugenud-raamatut": {
+    "text": "Ta ei lugenud raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/c-weekend": {
+    "text": "Tere, Jaan! Mida sa laupäeval tegid? Laupäeval olin ma kodus. Ma ei läinud tööle ja ma ei käinud poes. Miks sa poes ei käinud? Mul polnud aega. Minu ema tuli Tartust ja me rääkisime palju. Kas te sõite kohvikus? Ei, me ei söönud kohvikus. Me sõime kodus. Ja sina? Mina ei olnud laupäeval kodus. Ma käisin Tallinnas ja jõin seal kohvi. Ja pühapäeval? Pühapäeval olin kodus ja lugesin raamatut. Ma ei tahtnud linna minna. Kas sa poes käisid? Ei, ma ei käinud. Ma lähen täna. Mina ka. Mul pole kodus leiba. Kas läheme koos kell kuus? Jah! Kell kuus olen poe ees. Tore! Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Jaan! Mida sa laupäeval tegid?"
+        ],
+        "say": "[cheerful] Tere, Jaan! Mida sa laupäeval tegid?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Laupäeval olin ma kodus.",
+          "Ma ei läinud tööle ja ma ei käinud poes."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Miks sa poes ei käinud?"
+        ],
+        "say": "[curious] Miks sa poes ei käinud?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mul polnud aega.",
+          "Minu ema tuli Tartust ja me rääkisime palju."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas te sõite kohvikus?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, me ei söönud kohvikus.",
+          "Me sõime kodus.",
+          "Ja sina?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mina ei olnud laupäeval kodus.",
+          "Ma käisin Tallinnas ja jõin seal kohvi."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja pühapäeval?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Pühapäeval olin kodus ja lugesin raamatut.",
+          "Ma ei tahtnud linna minna."
+        ],
+        "say": "[laughs] Pühapäeval olin kodus ja lugesin raamatut. Ma ei tahtnud linna minna."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas sa poes käisid?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, ma ei käinud.",
+          "Ma lähen täna."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mina ka.",
+          "Mul pole kodus leiba."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas läheme koos kell kuus?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah!",
+          "Kell kuus olen poe ees."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tore! Head aega!"
+        ],
+        "say": "[cheerful] Tore! Head aega!"
+      }
+    ]
+  },
+  "mineviku-eitus/me-olime": {
+    "text": "Me olime",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/te-ei-olnud": {
+    "text": "Te ei olnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/te-ei-la2inud": {
+    "text": "Te ei läinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/sa-ei-joo-vett": {
+    "text": "Sa ei joo vett.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mineviku-eitus/sa-olid": {
+    "text": "Sa olid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/turg": {
+    "text": "turg",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/turule": {
+    "text": "turule",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/turul": {
+    "text": "turul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/turult": {
+    "text": "turult",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/o3unad": {
+    "text": "õunad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/turu-o3unad": {
+    "text": "turu õunad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/kilo-juustu": {
+    "text": "kilo juustu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/maksab": {
+    "text": "maksab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mida-te-soovite": {
+    "text": "Mida te soovite?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/midagi-veel": {
+    "text": "Midagi veel?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mul-on-vaja": {
+    "text": "mul on vaja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/kahju": {
+    "text": "kahju",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/tahan": {
+    "text": "tahan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/vo3in": {
+    "text": "võin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/saan": {
+    "text": "saan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mulle-meeldib": {
+    "text": "mulle meeldib",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/pean": {
+    "text": "pean",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/la2hen": {
+    "text": "lähen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/hakkan": {
+    "text": "hakkan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mul-on-vaja-kilo-juustu": {
+    "text": "Mul on vaja kilo juustu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/kui-palju-see-maksab": {
+    "text": "Kui palju see maksab?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mulle-meeldivad-o3unad": {
+    "text": "Mulle meeldivad õunad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-tahan-turule-minna": {
+    "text": "Ma tahan turule minna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-pean-kell-kaksteist-kodus-olema": {
+    "text": "Ma pean kell kaksteist kodus olema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-pean-turule-minema": {
+    "text": "Ma pean turule minema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-tahan-kohvi-juua": {
+    "text": "Ma tahan kohvi juua.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-la2hen-ta2na-turule": {
+    "text": "Ma lähen täna turule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mul-on-vaja-kilo-kohvi": {
+    "text": "Mul on vaja kilo kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/kolm-eurot": {
+    "text": "kolm eurot",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/juust-maksab-kaheksa-eurot": {
+    "text": "Juust maksab kaheksa eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-pean-kodus-olema": {
+    "text": "Ma pean kodus olema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mul-on-vaja-poodi-minna": {
+    "text": "Mul on vaja poodi minna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-pean-koju-minema": {
+    "text": "Ma pean koju minema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/me-saame-kohvikus-su2u2a": {
+    "text": "Me saame kohvikus süüa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mulle-meeldib-turg": {
+    "text": "Mulle meeldib turg.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/talle-meeldib-kohv": {
+    "text": "Talle meeldib kohv.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/mulle-meeldivad-kassid": {
+    "text": "Mulle meeldivad kassid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/talle-meeldivad-o3unad": {
+    "text": "Talle meeldivad õunad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-la2hen-turule": {
+    "text": "Ma lähen turule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-olen-turul": {
+    "text": "Ma olen turul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-tulen-turult": {
+    "text": "Ma tulen turult.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-olen-ta2na-turul": {
+    "text": "Ma olen täna turul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/ma-tulen-turult-koju": {
+    "text": "Ma tulen turult koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/p-mari": {
+    "text": "Tere, Liis! Täna on laupäev ja ma lähen kell kümme turule. Mul on vaja kilo juustu, leiba ja piima. Kilo juustu maksab poes kümme eurot. Leib maksab kaks eurot. Homme tuleb minu ema meile ja talle meeldivad turu õunad. Mulle ei meeldi pood, mulle meeldib turg. Turul on ka väike kohvik. Kas sa tahad tulla? Jaan ei saa tulla, sest ta on täna tööl. Me võime kohvikus kohvi juua. Ma ootan sind kell kümme turul. Kell kaksteist pean ma kodus olema.",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "turul/p-liis": {
+    "text": "Tere, Mari! Jah, ma tahan tulla. Ma olen kell kümme turul. Mul on ka vaja kilo kohvi. Ka mulle meeldivad turu õunad. Kas me saame kohvikus süüa? Kell kaksteist pean ma ka koju minema.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "turul/d-muuja-1": {
+    "text": "Tere! Mida te soovite?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "turul/d-sina-1": {
+    "text": "Tere! Mul on vaja kilo juustu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/d-muuja-2": {
+    "text": "Kilo maksab kaheksa eurot. Midagi veel?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "turul/d-sina-2": {
+    "text": "Jah, ma tahan ka leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/d-muuja-3": {
+    "text": "Juust ja leib on kümme eurot.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "turul/d-sina-3": {
+    "text": "Palun, kümme eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/c-stall": {
+    "text": "Tere! Mida te soovite? Tere! Mul on vaja kilo juustu. Kui palju see maksab? Kilo maksab kaheksa eurot. See juust on väga hea. Kas see on Eesti juust? Jah, see juust on Tartust. Kas leib on ka Tartust? Ei, leib on Tallinnast. Hästi, üks kilo, palun. Midagi veel? Jah, ma tahan ka leiba ja piima. Leiba on, aga piima täna pole. Piima saate poest. Kahju. Ma pean poodi minema. Kas teile meeldib kohv? Meil on ka kohvi. Mulle meeldib kohv, aga täna ma kohvi ei taha. Leib ja juust on kümme eurot. Palun, kümme eurot. Aitäh, head aega! Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere! Mida te soovite?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere! Mul on vaja kilo juustu.",
+          "Kui palju see maksab?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kilo maksab kaheksa eurot.",
+          "See juust on väga hea."
+        ],
+        "say": "Kilo maksab kaheksa eurot. [proudly] See juust on väga hea."
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas see on Eesti juust?"
+        ],
+        "say": "[curious] Kas see on Eesti juust?"
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, see juust on Tartust."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas leib on ka Tartust?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei, leib on Tallinnast."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hästi, üks kilo, palun."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Midagi veel?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, ma tahan ka leiba ja piima."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Leiba on, aga piima täna pole.",
+          "Piima saate poest."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kahju.",
+          "Ma pean poodi minema."
+        ],
+        "say": "[sighs] Kahju. Ma pean poodi minema."
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas teile meeldib kohv?",
+          "Meil on ka kohvi."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mulle meeldib kohv, aga täna ma kohvi ei taha."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Leib ja juust on kümme eurot."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Palun, kümme eurot.",
+          "Aitäh, head aega!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Head aega!"
+        ]
+      }
+    ]
+  },
+  "turul/leib-maksab-kaks-eurot": {
+    "text": "Leib maksab kaks eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "turul/kohv-maksab-kolm-eurot": {
+    "text": "Kohv maksab kolm eurot.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

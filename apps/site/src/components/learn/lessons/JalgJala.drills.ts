@@ -1,10 +1,10 @@
 import { msg } from "@lingui/core/macro";
-import { GRADATION_ANSWERS } from "../../../lib/learn/clips";
+import { GRADATION_ANSWERS, GRADATION_FIX_ANSWERS } from "../../../lib/learn/clips";
 import type { DrillBank, FormDrill, WrittenDrill } from "../../../lib/learn/drill";
 
 const WEAK = msg`<et>-s</et>, <et>-l</et> and the plural <et>-d</et> go on the genitive and keep its consonant: usually the weak one.`;
 const STRONG = msg`The partitive and the short “into” form usually keep the strong form.`;
-const GENITIVE = msg`The genitive is the weak form.`;
+const GENITIVE = msg`The genitive is usually the weak form.`;
 const VERB = msg`The present of this verb is weak.`;
 
 const form = (
@@ -16,6 +16,7 @@ const form = (
   answer: string,
   say: string,
   explain: FormDrill["explain"],
+  also: readonly string[] = [],
 ): FormDrill => ({
   kind: "form",
   id,
@@ -23,7 +24,7 @@ const form = (
   base,
   gloss,
   cue: { et: cue },
-  answers: [answer],
+  answers: [answer, ...also],
   say,
   explain,
 });
@@ -32,8 +33,8 @@ const written = (item: WrittenDrill) => item;
 
 export const DRILLS: DrillBank = {
   rules: {
-    weak: { label: msg`The weak form in <et>-s</et>, <et>-l</et> and the plural`, section: "make" },
-    strong: { label: msg`The strong form in the partitive and “into”`, section: "which-forms" },
+    weak: { label: msg`Usually weak: <et>-s</et>, <et>-l</et> and the plural`, section: "make" },
+    strong: { label: msg`Usually strong: the partitive and “into”`, section: "which-forms" },
     genitive: { label: msg`The genitive’s consonant`, section: "four-ways" },
     verbs: { label: msg`The weak form in verbs`, section: "verbs" },
   },
@@ -61,7 +62,7 @@ export const DRILLS: DrillBank = {
       id: "fix-kapis",
       rule: "weak",
       wrong: "Kass on kappis.",
-      answers: ["Kass on kapis."],
+      answers: GRADATION_FIX_ANSWERS["Kass on kapis."],
       say: "Kass on kapis.",
       explain: WEAK,
     }),
@@ -70,7 +71,7 @@ export const DRILLS: DrillBank = {
       id: "fix-pangas",
       rule: "weak",
       wrong: "Me oleme pankas.",
-      answers: ["Me oleme pangas."],
+      answers: GRADATION_FIX_ANSWERS["Me oleme pangas."],
       say: "Me oleme pangas.",
       explain: WEAK,
     }),
@@ -111,6 +112,7 @@ export const DRILLS: DrillBank = {
       "poodi",
       "Ma lähen poodi.",
       STRONG,
+      ["poesse"],
     ),
     form(
       "form-kappi",
@@ -132,6 +134,7 @@ export const DRILLS: DrillBank = {
       "parki",
       "Me läheme parki.",
       STRONG,
+      ["pargisse"],
     ),
     form(
       "form-panka",
@@ -174,7 +177,7 @@ export const DRILLS: DrillBank = {
       id: "fix-loen",
       rule: "verbs",
       wrong: "Ma lugen raamatut.",
-      answers: ["Ma loen raamatut."],
+      answers: GRADATION_FIX_ANSWERS["Ma loen raamatut."],
       say: "Ma loen raamatut.",
       explain: VERB,
     }),
@@ -183,7 +186,7 @@ export const DRILLS: DrillBank = {
       id: "fix-opin",
       rule: "verbs",
       wrong: "Ma õppin eesti keelt.",
-      answers: ["Ma õpin eesti keelt."],
+      answers: GRADATION_FIX_ANSWERS["Ma õpin eesti keelt."],
       say: "Ma õpin eesti keelt.",
       explain: VERB,
     }),
@@ -192,7 +195,7 @@ export const DRILLS: DrillBank = {
       id: "fix-raagib",
       rule: "verbs",
       wrong: "Ta rääkib eesti keelt.",
-      answers: ["Ta räägib eesti keelt."],
+      answers: GRADATION_FIX_ANSWERS["Ta räägib eesti keelt."],
       say: "Ta räägib eesti keelt.",
       explain: VERB,
     }),

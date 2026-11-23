@@ -1,0 +1,785 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 09:03+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0/> and the four verbs in lesson {verbForms} whose <1>da</1> infinitive ends in a bare <2>a</2> don’t follow that rule. Learn their <3>nud</3> forms as they are: <4><5/>,</4> <6><7/>,</6> <8><9/>,</8> <10><11/>,</10> <12><13/>.</12>"
+msgstr "<0/> and the four verbs in lesson {verbForms} whose <1>da</1> infinitive ends in a bare <2>a</2> don’t follow that rule. Learn their <3>nud</3> forms as they are: <4><5/>,</4> <6><7/>,</6> <8><9/>,</8> <10><11/>,</10> <12><13/>.</12>"
+
+msgid "<0/> has a one-word form, <1/>, as <2>ei ole</2> has <3>pole</3>: <4><5/>.</4> Both mean the same."
+msgstr "<0/> has a one-word form, <1/>, as <2>ei ole</2> has <3>pole</3>: <4><5/>.</4> Both mean the same."
+
+msgid "<0/>, to want, from lesson {infinitives}, keeps its t: <1/> drops only its a before <2>nud</2>, so the form is <3><4/>.</3> <5><6/>.</5>"
+msgstr "<0/>, to want, from lesson {infinitives}, keeps its t: <1/> drops only its a before <2>nud</2>, so the form is <3><4/>.</3> <5><6/>.</5>"
+
+msgid "<0>{da}</0> drops <1>{ending}</1> and takes <2>nud</2>: <3>{nud}</3>."
+msgstr "<0>{da}</0> drops <1>{ending}</1> and takes <2>nud</2>: <3>{nud}</3>."
+
+msgid "<0>Ei käi</0> is no, now. Mari asked about yesterday."
+msgstr "<0>Ei käi</0> is no, now. Mari asked about yesterday."
+
+msgid "<0>Ei tööta</0> is no, now. You worked at home yesterday."
+msgstr "<0>Ei tööta</0> is no, now. You worked at home yesterday."
+
+msgid "<0>Ei</0> and the <1>nud</1> form: <2>ei töötanud</2>. <3>Polnud</3> is <4>ei olnud</4>."
+msgstr "<0>Ei</0> and the <1>nud</1> form: <2>ei töötanud</2>. <3>Polnud</3> is <4>ei olnud</4>."
+
+msgid "<0>Ei</0> and the present without its ending: <1>ei tööta</1>. <2>Pole</2> is <3>ei ole</3>."
+msgstr "<0>Ei</0> and the present without its ending: <1>ei tööta</1>. <2>Pole</2> is <3>ei ole</3>."
+
+msgid "<0>Eile</0> puts it in the past, so the <1>nud</1> form: <2>ei söönud</2>."
+msgstr "<0>Eile</0> puts it in the past, so the <1>nud</1> form: <2>ei söönud</2>."
+
+msgid "<0>Eile</0> puts it in the past, so the <1>nud</1> form: <2>ei töötanud</2>."
+msgstr "<0>Eile</0> puts it in the past, so the <1>nud</1> form: <2>ei töötanud</2>."
+
+msgid "<0>Mul on palju aega</0> means “I have a lot of time”, and it’s about now. Mari asked why you didn’t go, and you had no time."
+msgstr "<0>Mul on palju aega</0> means “I have a lot of time”, and it’s about now. Mari asked why you didn’t go, and you had no time."
+
+msgid "<0>Pole</0> is no, now. In the past it is <1>polnud</1>."
+msgstr "<0>Pole</0> is no, now. In the past it is <1>polnud</1>."
+
+msgid "<et>Ei loe</et>: the present without its ending, so now."
+msgstr "<et>Ei loe</et>: the present without its ending, so now."
+
+msgid "<et>Ei lugenud</et>: the <et>-nud</et> form, so the past."
+msgstr "<et>Ei lugenud</et>: the <et>-nud</et> form, so the past."
+
+msgid "<et>Ei oodanud</et>: the <et>-nud</et> form, so the past."
+msgstr "<et>Ei oodanud</et>: the <et>-nud</et> form, so the past."
+
+msgid "<et>Jooma</et> gives <et>joonud</et>, as <et>sööma</et> gives <et>söönud</et>."
+msgstr "<et>Jooma</et> gives <et>joonud</et>, as <et>sööma</et> gives <et>söönud</et>."
+
+msgid "<et>Käima</et> gives <et>käinud</et>, as in <et>Kas sa käisid poes? Ei käinud.</et>"
+msgstr "<et>Käima</et> gives <et>käinud</et>, as in <et>Kas sa käisid poes? Ei käinud.</et>"
+
+msgid "<et>Luges</et>, without <et>ei</et>: yes, in the past."
+msgstr "<et>Luges</et>, without <et>ei</et>: yes, in the past."
+
+msgid "<et>Minema</et> gives <et>läinud</et>. Learn it by heart."
+msgstr "<et>Minema</et> gives <et>läinud</et>. Learn it by heart."
+
+msgid "<et>Nägema</et> gives <et>näinud</et>, as <et>tegema</et> gives <et>teinud</et>."
+msgstr "<et>Nägema</et> gives <et>näinud</et>, as <et>tegema</et> gives <et>teinud</et>."
+
+msgid "<et>Pole</et> is <et>ei ole</et>, now."
+msgstr "<et>Pole</et> is <et>ei ole</et>, now."
+
+msgid "<et>Polnud</et> is <et>ei olnud</et>, in the past."
+msgstr "<et>Polnud</et> is <et>ei olnud</et>, in the past."
+
+msgid "<et>Sööma</et> gives <et>söönud</et>: the stem <et>söö-</et>, then <et>-nud</et>."
+msgstr "<et>Sööma</et> gives <et>söönud</et>: the stem <et>söö-</et>, then <et>-nud</et>."
+
+msgid "<et>Tahtma</et> keeps its t: <et>tahtnud</et>."
+msgstr "<et>Tahtma</et> keeps its t: <et>tahtnud</et>."
+
+msgid "<et>Tegema</et> gives <et>teinud</et>: the g becomes i."
+msgstr "<et>Tegema</et> gives <et>teinud</et>: the g becomes i."
+
+msgid "12 minutes"
+msgstr "12 minutes"
+
+msgid "5 quizzes, a conversation and a recording you can play twice"
+msgstr "5 quizzes, a conversation and a recording you can play twice"
+
+msgid "After <0>ei</0>, <1>me</1> takes the same form as every other person: <2>me ei käinud</2>."
+msgstr "After <0>ei</0>, <1>me</1> takes the same form as every other person: <2>me ei käinud</2>."
+
+msgid "After <0>ei</0>, <1>olnud</1>: <2>ta ei olnud</2>, or in one word, <3>ta polnud</3>."
+msgstr "After <0>ei</0>, <1>olnud</1>: <2>ta ei olnud</2>, or in one word, <3>ta polnud</3>."
+
+msgid "After <0>ei</0>, the <1>nud</1> form for every person: <2>te ei lugenud</2>."
+msgstr "After <0>ei</0>, the <1>nud</1> form for every person: <2>te ei lugenud</2>."
+
+msgid "After <0>ei</0>, the <1>nud</1> form, not the past with its ending: <2>ei läinud</2>."
+msgstr "After <0>ei</0>, the <1>nud</1> form, not the past with its ending: <2>ei läinud</2>."
+
+msgid "After <0>ei</0>, the <1>nud</1> form: <2>ei olnud</2>, never <3>ei oli</3>."
+msgstr "After <0>ei</0>, the <1>nud</1> form: <2>ei olnud</2>, never <3>ei oli</3>."
+
+msgid "After <et>ei</et>, the <et>-nud</et> form, without a person ending."
+msgstr "After <et>ei</et>, the <et>-nud</et> form, without a person ending."
+
+msgid "All seven. You told now from the past every time."
+msgstr "All seven. You told now from the past every time."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six, every one with <0>ei</0> and the <1>nud</1> form."
+msgstr "All six, every one with <0>ei</0> and the <1>nud</1> form."
+
+msgid "All six. You swapped <0>da</0>, <1>ta</1> and <2>la</2> for <3>nud</3> every time."
+msgstr "All six. You swapped <0>da</0>, <1>ta</1> and <2>la</2> for <3>nud</3> every time."
+
+msgid "Answering no"
+msgstr "Answering no"
+
+msgid "as in <0>ei tööta</0>"
+msgstr "as in <0>ei tööta</0>"
+
+msgid "as in <0>ei töötanud</0>"
+msgstr "as in <0>ei töötanud</0>"
+
+msgid "as in <0>töötasin</0>"
+msgstr "as in <0>töötasin</0>"
+
+msgid "At five"
+msgstr "At five"
+
+msgid "At home"
+msgstr "At home"
+
+msgid "At seven"
+msgstr "At seven"
+
+msgid "At six"
+msgstr "At six"
+
+msgid "Did you go to the shop?"
+msgstr "Did you go to the shop?"
+
+msgid "didn’t do, didn’t make"
+msgstr "didn’t do, didn’t make"
+
+msgid "didn’t drink"
+msgstr "didn’t drink"
+
+msgid "didn’t eat"
+msgstr "didn’t eat"
+
+msgid "didn’t go"
+msgstr "didn’t go"
+
+msgid "didn’t go, didn’t visit"
+msgstr "didn’t go, didn’t visit"
+
+msgid "didn’t read"
+msgstr "didn’t read"
+
+msgid "didn’t see"
+msgstr "didn’t see"
+
+msgid "didn’t want"
+msgstr "didn’t want"
+
+msgid "Each sentence has one wrong word: a past ending kept after <0>ei</0>, or the present where the past belongs. Tap it, then write it right."
+msgstr "Each sentence has one wrong word: a past ending kept after <0>ei</0>, or the present where the past belongs. Tap it, then write it right."
+
+msgid "Each sentence says what someone did. Write it with no: <0>ei</0> before the verb, and the verb in its <1>nud</1> form. The rest of the sentence stays as it is."
+msgstr "Each sentence says what someone did. Write it with no: <0>ei</0> before the verb, and the verb in its <1>nud</1> form. The rest of the sentence stays as it is."
+
+msgid "Ei olnud in one word."
+msgstr "Ei olnud in one word."
+
+msgid "Find and fix the mistake"
+msgstr "Find and fix the mistake"
+
+msgid "Five -nud forms to learn by heart"
+msgstr "Five -nud forms to learn by heart"
+
+msgid "Five to learn by heart"
+msgstr "Five to learn by heart"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "For the verbs of lesson {verbForms} whose <0>da</0> infinitive ends in <1>da</1>, <2>ta</2> or <3>la</3>, swap that ending for <4>nud</4>: <5>elada, elanud; oodata, oodanud; olla, olnud</5>."
+msgstr "For the verbs of lesson {verbForms} whose <0>da</0> infinitive ends in <1>da</1>, <2>ta</2> or <3>la</3>, swap that ending for <4>nud</4>: <5>elada, elanud; oodata, oodanud; olla, olnud</5>."
+
+msgid "From <0>jooma</0>: the stem <1>joo-</1>, then <2>nud</2>, as in <3>söönud</3>."
+msgstr "From <0>jooma</0>: the stem <1>joo-</1>, then <2>nud</2>, as in <3>söönud</3>."
+
+msgid "From <0>minema</0>. Neither <1>minna</1> nor <2>läksin</2> gives it: learn <3>läinud</3> as it is."
+msgstr "From <0>minema</0>. Neither <1>minna</1> nor <2>läksin</2> gives it: learn <3>läinud</3> as it is."
+
+msgid "From <0>nägema</0>: the g becomes i, <1>näi-</1>, then <2>nud</2>, as in <3>teinud</3>."
+msgstr "From <0>nägema</0>: the g becomes i, <1>näi-</1>, then <2>nud</2>, as in <3>teinud</3>."
+
+msgid "From <0>sööma</0>: the stem <1>söö-</1>, then <2>nud</2>."
+msgstr "From <0>sööma</0>: the stem <1>söö-</1>, then <2>nud</2>."
+
+msgid "From <0>tegema</0>: the g becomes i, <1>tei-</1>, then <2>nud</2>. <3>Näinud</3> goes the same way."
+msgstr "From <0>tegema</0>: the g becomes i, <1>tei-</1>, then <2>nud</2>. <3>Näinud</3> goes the same way."
+
+msgid "From käima, käia: to go somewhere and come back."
+msgstr "From käima, käia: to go somewhere and come back."
+
+msgid "Go back to the table under “The same for every person” and the five forms, then try again."
+msgstr "Go back to the table under “The same for every person” and the five forms, then try again."
+
+msgid "Go back to the verbs above, then try again."
+msgstr "Go back to the verbs above, then try again."
+
+msgid "Grammars call it the <0>nud</0> participle, <1>nud-kesksõna</1>. The map below shows it among the forms built on the <2>da</2> infinitive, beside the ones you already know."
+msgstr "Grammars call it the <0>nud</0> participle, <1>nud-kesksõna</1>. The map below shows it among the forms built on the <2>da</2> infinitive, beside the ones you already know."
+
+msgid "He had no time."
+msgstr "He had no time."
+
+msgid "he or she"
+msgstr "he or she"
+
+msgid "He or she didn’t go home."
+msgstr "He or she didn’t go home."
+
+msgid "He or she didn’t go to work."
+msgstr "He or she didn’t go to work."
+
+msgid "He or she isn’t at home."
+msgstr "He or she isn’t at home."
+
+msgid "He or she isn’t going to work."
+msgstr "He or she isn’t going to work."
+
+msgid "He or she wasn’t at home."
+msgstr "He or she wasn’t at home."
+
+msgid "He was ill."
+msgstr "He was ill."
+
+msgid "Hear a sentence with no and pick whether it’s about now or the past. Listen to the verb: <0>ei tööta</0> is now, <1>ei töötanud</1> is the past."
+msgstr "Hear a sentence with no and pick whether it’s about now or the past. Listen to the verb: <0>ei tööta</0> is now, <1>ei töötanud</1> is the past."
+
+msgid "I"
+msgstr "I"
+
+msgid "I didn’t do any work."
+msgstr "I didn’t do any work."
+
+msgid "I didn’t drink any water."
+msgstr "I didn’t drink any water."
+
+msgid "I didn’t drink coffee."
+msgstr "I didn’t drink coffee."
+
+msgid "I didn’t eat at home."
+msgstr "I didn’t eat at home."
+
+msgid "I didn’t go to work."
+msgstr "I didn’t go to work."
+
+msgid "I didn’t read"
+msgstr "I didn’t read"
+
+msgid "I didn’t see the cat."
+msgstr "I didn’t see the cat."
+
+msgid "I didn’t want to."
+msgstr "I didn’t want to."
+
+msgid "I didn’t work"
+msgstr "I didn’t work"
+
+msgid "I had no time"
+msgstr "I had no time"
+
+msgid "I read, I was reading"
+msgstr "I read, I was reading"
+
+msgid "I wasn’t at home."
+msgstr "I wasn’t at home."
+
+msgid "I worked"
+msgstr "I worked"
+
+msgid "In lesson {negation}, <0/> went before the verb and the verb lost its ending: <1><2/>.</1> In the past, <3>ei</3> stays and the verb takes its <4>nud</4> form: <5><6/>.</5>"
+msgstr "In lesson {negation}, <0/> went before the verb and the verb lost its ending: <1><2/>.</1> In the past, <3>ei</3> stays and the verb takes its <4>nud</4> form: <5><6/>.</5>"
+
+msgid "In Tallinn"
+msgstr "In Tallinn"
+
+msgid "In Tartu"
+msgstr "In Tartu"
+
+msgid "In the past"
+msgstr "In the past"
+
+msgid "In the past, <0>ei</0> takes the <1>nud</1> form: <2>ei läinud</2>, never <3>ei läksin</3> or <4>ei lähe</4>. Try again."
+msgstr "In the past, <0>ei</0> takes the <1>nud</1> form: <2>ei läinud</2>, never <3>ei läksin</3> or <4>ei lähe</4>. Try again."
+
+msgid "It is the same for every person: <0>ma ei lugenud, nad ei lugenud</0>. <1>Ei olnud</1> has a one-word form, <2>polnud</2>."
+msgstr "It is the same for every person: <0>ma ei lugenud, nad ei lugenud</0>. <1>Ei olnud</1> has a one-word form, <2>polnud</2>."
+
+msgid "its -nud form"
+msgstr "its -nud form"
+
+msgid "its <0>nud</0> form"
+msgstr "its <0>nud</0> form"
+
+msgid "Its present is tahan."
+msgstr "Its present is tahan."
+
+msgid "Jaan and his mother ate at home."
+msgstr "Jaan and his mother ate at home."
+
+msgid "Jaan wasn’t at home, so the answer is no."
+msgstr "Jaan wasn’t at home, so the answer is no."
+
+msgid "Jaan went to work on Saturday."
+msgstr "Jaan went to work on Saturday."
+
+msgid "Kati went to the shop at the weekend."
+msgstr "Kati went to the shop at the weekend."
+
+msgid "Last week"
+msgstr "Last week"
+
+msgid "Last week I wasn’t in Tallinn."
+msgstr "Last week I wasn’t in Tallinn."
+
+msgid "Last week, yesterday and today"
+msgstr "Last week, yesterday and today"
+
+msgid "Learn five by heart: <0>läinud, teinud, näinud, söönud, joonud</0>. <1>Tahtma</1> keeps its t: <2>tahtnud</2>."
+msgstr "Learn five by heart: <0>läinud, teinud, näinud, söönud, joonud</0>. <1>Tahtma</1> keeps its t: <2>tahtnud</2>."
+
+msgid "Lesson {past} taught the past with yes, where each person has its own ending: <0/>, I worked. With no, there is no person ending: <1/>, I didn’t work. Tap a time on the line to hear its sentence."
+msgstr "Lesson {past} taught the past with yes, where each person has its own ending: <0/>, I worked. With no, there is no person ending: <1/>, I didn’t work. Tap a time on the line to hear its sentence."
+
+msgid "Listen: Kati and Jaan’s weekend"
+msgstr "Listen: Kati and Jaan’s weekend"
+
+msgid "Listen: the weekend"
+msgstr "Listen: the weekend"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Make the -nud form"
+msgstr "Make the -nud form"
+
+msgid "Make the <0>nud</0> form"
+msgstr "Make the <0>nud</0> form"
+
+msgid "Mari"
+msgstr "Mari"
+
+msgid "Mari didn’t come home."
+msgstr "Mari didn’t come home."
+
+msgid "Mari isn’t coming home."
+msgstr "Mari isn’t coming home."
+
+msgid "Most of them. Check the -nud forms you missed in the sections above."
+msgstr "Most of them. Check the -nud forms you missed in the sections above."
+
+msgid "Most of them. Look again at the ones you missed."
+msgstr "Most of them. Look again at the ones you missed."
+
+msgid "Most of them. Play the ones you missed once more."
+msgstr "Most of them. Play the ones you missed once more."
+
+msgid "Most verbs build the <0>nud</0> form on the <1>da</1> infinitive from lesson {verbForms}. Take off <2>da</2> and add <3>nud</3>: <4><5/>,</4> <6><7/>;</6> <8><9/>,</8> <10><11/>.</10>"
+msgstr "Most verbs build the <0>nud</0> form on the <1>da</1> infinitive from lesson {verbForms}. Take off <2>da</2> and add <3>nud</3>: <4><5/>,</4> <6><7/>;</6> <8><9/>,</8> <10><11/>.</10>"
+
+msgid "Mul pole aega, in the past."
+msgstr "Mul pole aega, in the past."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "no, for every person"
+msgstr "no, for every person"
+
+msgid "No, in the past"
+msgstr "No, in the past"
+
+msgid "No, now"
+msgstr "No, now"
+
+msgid "No, now and in the past"
+msgstr "No, now and in the past"
+
+msgid "No, now; yes and no, in the past"
+msgstr "No, now; yes and no, in the past"
+
+msgid "not; no"
+msgstr "not; no"
+
+msgid "Now"
+msgstr "Now"
+
+msgid "Now or in the past"
+msgstr "Now or in the past"
+
+msgid "Now or in the past?"
+msgstr "Now or in the past?"
+
+msgid "Olema with no, in the past."
+msgstr "Olema with no, in the past."
+
+msgid "On Monday morning Kati and Jaan talk about the weekend: what they did, and what they didn’t. Read the questions first. You can play the recording twice, as in the A2 exam."
+msgstr "On Monday morning Kati and Jaan talk about the weekend: what they did, and what they didn’t. Read the questions first. You can play the recording twice, as in the A2 exam."
+
+msgid "On Sunday Kati wanted to go to town."
+msgstr "On Sunday Kati wanted to go to town."
+
+msgid "One form for every person"
+msgstr "One form for every person"
+
+msgid "Pick a verb and tap a form."
+msgstr "Pick a verb and tap a form."
+
+msgid "Put <0>ei</0> before the verb’s <1>nud</1> form: <2>ma ei läinud</2>, I didn’t go. As in the present, it stays the same for every person."
+msgstr "Put <0>ei</0> before the verb’s <1>nud</1> form: <2>ma ei läinud</2>, I didn’t go. As in the present, it stays the same for every person."
+
+msgid "Put each form in its group, then check. Tap a form to hear it."
+msgstr "Put each form in its group, then check. Tap a form to hear it."
+
+msgid "Say it with no"
+msgstr "Say it with no"
+
+msgid "say no"
+msgstr "say no"
+
+msgid "See a verb’s <0>da</0> infinitive and type its <1>nud</1> form, then hear it. The keys under the field type õ, ä, ö, ü, š and ž."
+msgstr "See a verb’s <0>da</0> infinitive and type its <1>nud</1> form, then hear it. The keys under the field type õ, ä, ö, ü, š and ž."
+
+msgid "She read at home."
+msgstr "She read at home."
+
+msgid "She went into town."
+msgstr "She went into town."
+
+msgid "She worked all day."
+msgstr "She worked all day."
+
+msgid "Take off the ending of the -da infinitive and add <et>-nud</et>."
+msgstr "Take off the ending of the -da infinitive and add <et>-nud</et>."
+
+msgid "Talk: Mari asks about yesterday"
+msgstr "Talk: Mari asks about yesterday"
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap a form to hear it in a sentence."
+msgstr "Tap a form to hear it in a sentence."
+
+msgid "Tap a time"
+msgstr "Tap a time"
+
+msgid "Tap the times on the line above once more, then try again."
+msgstr "Tap the times on the line above once more, then try again."
+
+msgid "That says you didn’t work at home, but you did. Answer with yes in the past."
+msgstr "That says you didn’t work at home, but you did. Answer with yes in the past."
+
+msgid "The -da infinitive of elama."
+msgstr "The -da infinitive of elama."
+
+msgid "The -da infinitive of lugema."
+msgstr "The -da infinitive of lugema."
+
+msgid "The -da infinitive of olema."
+msgstr "The -da infinitive of olema."
+
+msgid "The -da infinitive of ootama."
+msgstr "The -da infinitive of ootama."
+
+msgid "The -da infinitive of tahtma."
+msgstr "The -da infinitive of tahtma."
+
+msgid "the -nud form"
+msgstr "the -nud form"
+
+msgid "The -nud form"
+msgstr "The -nud form"
+
+msgid "The -nud form of elama."
+msgstr "The -nud form of elama."
+
+msgid "The -nud form of jooma."
+msgstr "The -nud form of jooma."
+
+msgid "The -nud form of lugema."
+msgstr "The -nud form of lugema."
+
+msgid "The -nud form of minema."
+msgstr "The -nud form of minema."
+
+msgid "The -nud form of nägema."
+msgstr "The -nud form of nägema."
+
+msgid "The -nud form of olema."
+msgstr "The -nud form of olema."
+
+msgid "The -nud form of ootama."
+msgstr "The -nud form of ootama."
+
+msgid "The -nud form of sööma."
+msgstr "The -nud form of sööma."
+
+msgid "The -nud form of tahtma."
+msgstr "The -nud form of tahtma."
+
+msgid "The -nud form of tegema."
+msgstr "The -nud form of tegema."
+
+msgid "The <0>da</0> infinitive from lesson {verbForms}."
+msgstr "The <0>da</0> infinitive from lesson {verbForms}."
+
+msgid "The <0>nud</0> form comes back in lesson {haveRead}, where <1>olen lugenud</1> means I have read."
+msgstr "The <0>nud</0> form comes back in lesson {haveRead}, where <1>olen lugenud</1> means I have read."
+
+msgid "The <et>-nud</et> form from the -da infinitive"
+msgstr "The <et>-nud</et> form from the -da infinitive"
+
+msgid "The <et>-nud</et> forms to learn by heart"
+msgstr "The <et>-nud</et> forms to learn by heart"
+
+msgid "the infinitive"
+msgstr "the infinitive"
+
+msgid "The past from lesson {past}: without <0>ei</0>, and with an ending that says who, as in <1>töötasin</1>."
+msgstr "The past from lesson {past}: without <0>ei</0>, and with an ending that says who, as in <1>töötasin</1>."
+
+msgid "The past of lugema, with yes."
+msgstr "The past of lugema, with yes."
+
+msgid "The past of töötama, with yes."
+msgstr "The past of töötama, with yes."
+
+msgid "the present, without its ending"
+msgstr "the present, without its ending"
+
+msgid "The same for every person"
+msgstr "The same for every person"
+
+msgid "The same for every person, now and in the past."
+msgstr "The same for every person, now and in the past."
+
+msgid "The same goes for <0>ta</0> and <1>la</1>: <2/>, <3/>; <4/>, <5><6/>.</5> All twelve verbs in lesson {verbForms} whose <7>da</7> infinitive ends in <8>da</8>, <9>ta</9> or <10>la</10> work like this. Pick a verb and tap its forms."
+msgstr "The same goes for <0>ta</0> and <1>la</1>: <2/>, <3/>; <4/>, <5><6/>.</5> All twelve verbs in lesson {verbForms} whose <7>da</7> infinitive ends in <8>da</8>, <9>ta</9> or <10>la</10> work like this. Pick a verb and tap its forms."
+
+msgid "The shop was closed."
+msgstr "The shop was closed."
+
+msgid "they"
+msgstr "they"
+
+msgid "They didn’t eat any bread."
+msgstr "They didn’t eat any bread."
+
+msgid "They didn’t live in Tartu."
+msgstr "They didn’t live in Tartu."
+
+msgid "they didn’t read"
+msgstr "they didn’t read"
+
+msgid "They don’t live in Tartu."
+msgstr "They don’t live in Tartu."
+
+msgid "To answer a question about the past with no, say <0>ei</0> and the <1>nud</1> form: <2><3/></2> <4><5/>.</4> Lesson {negation} showed the same short answer in the present: <6>Ei loe</6>, I don’t read."
+msgstr "To answer a question about the past with no, say <0>ei</0> and the <1>nud</1> form: <2><3/></2> <4><5/>.</4> Lesson {negation} showed the same short answer in the present: <6>Ei loe</6>, I don’t read."
+
+msgid "To answer a question about the past with no, say <0>ei</0> and the <1>nud</1> form: <2>Kas sa käisid poes? Ei käinud.</2>"
+msgstr "To answer a question about the past with no, say <0>ei</0> and the <1>nud</1> form: <2>Kas sa käisid poes? Ei käinud.</2>"
+
+msgid "to be"
+msgstr "to be"
+
+msgid "to come"
+msgstr "to come"
+
+msgid "to do, to make"
+msgstr "to do, to make"
+
+msgid "to drink"
+msgstr "to drink"
+
+msgid "to eat"
+msgstr "to eat"
+
+msgid "to go"
+msgstr "to go"
+
+msgid "to learn, to study"
+msgstr "to learn, to study"
+
+msgid "to listen"
+msgstr "to listen"
+
+msgid "to live"
+msgstr "to live"
+
+msgid "to look, to watch"
+msgstr "to look, to watch"
+
+msgid "to love"
+msgstr "to love"
+
+msgid "to read"
+msgstr "to read"
+
+msgid "To say no in the past, put <0>ei</0> before the <1>nud</1> form: <2>ma ei läinud</2>, I didn’t go."
+msgstr "To say no in the past, put <0>ei</0> before the <1>nud</1> form: <2>ma ei läinud</2>, I didn’t go."
+
+msgid "to see"
+msgstr "to see"
+
+msgid "to sit"
+msgstr "to sit"
+
+msgid "to speak, to talk"
+msgstr "to speak, to talk"
+
+msgid "to wait"
+msgstr "to wait"
+
+msgid "to want"
+msgstr "to want"
+
+msgid "to work"
+msgstr "to work"
+
+msgid "today"
+msgstr "today"
+
+msgid "Today"
+msgstr "Today"
+
+msgid "Today I’m not working."
+msgstr "Today I’m not working."
+
+msgid "Verbs"
+msgstr "Verbs"
+
+msgid "wasn’t, weren’t"
+msgstr "wasn’t, weren’t"
+
+msgid "we"
+msgstr "we"
+
+msgid "We didn’t do the work."
+msgstr "We didn’t do the work."
+
+msgid "We didn’t eat any bread."
+msgstr "We didn’t eat any bread."
+
+msgid "We don’t eat bread."
+msgstr "We don’t eat bread."
+
+msgid "What did Kati do on Sunday?"
+msgstr "What did Kati do on Sunday?"
+
+msgid "When will Kati and Jaan meet at the shop?"
+msgstr "When will Kati and Jaan meet at the shop?"
+
+msgid "Where was Kati on Saturday?"
+msgstr "Where was Kati on Saturday?"
+
+msgid "Which group?"
+msgstr "Which group?"
+
+msgid "Who came from Tartu? Write one or two words in Estonian."
+msgstr "Who came from Tartu? Write one or two words in Estonian."
+
+msgid "Why didn’t Jaan go to the shop?"
+msgstr "Why didn’t Jaan go to the shop?"
+
+msgid "with ei: didn’t do, didn’t make"
+msgstr "with ei: didn’t do, didn’t make"
+
+msgid "with ei: didn’t drink"
+msgstr "with ei: didn’t drink"
+
+msgid "with ei: didn’t eat"
+msgstr "with ei: didn’t eat"
+
+msgid "with ei: didn’t go"
+msgstr "with ei: didn’t go"
+
+msgid "with ei: didn’t live"
+msgstr "with ei: didn’t live"
+
+msgid "with ei: didn’t read"
+msgstr "with ei: didn’t read"
+
+msgid "with ei: didn’t see"
+msgstr "with ei: didn’t see"
+
+msgid "with ei: didn’t wait"
+msgstr "with ei: didn’t wait"
+
+msgid "with ei: didn’t want"
+msgstr "with ei: didn’t want"
+
+msgid "with ei: wasn’t, weren’t"
+msgstr "with ei: wasn’t, weren’t"
+
+msgid "With no, <0>ei</0> and the <1>nud</1> form, the same for every person."
+msgstr "With no, <0>ei</0> and the <1>nud</1> form, the same for every person."
+
+msgid "with no, in the past"
+msgstr "with no, in the past"
+
+msgid "With yes, the ending changes with the person: <0>lugesin</0>, <1>lugesid</1>, <2>luges</2>. With no, all six share one form: <3><4/>,</3> <5><6/>.</5> The pronoun says who, as in the present."
+msgstr "With yes, the ending changes with the person: <0>lugesin</0>, <1>lugesid</1>, <2>luges</2>. With no, all six share one form: <3><4/>,</3> <5><6/>.</5> The pronoun says who, as in the present."
+
+msgid "With yes, the ending changes with the person."
+msgstr "With yes, the ending changes with the person."
+
+msgid "Write it with no"
+msgstr "Write it with no"
+
+msgid "Yes and no in the past"
+msgstr "Yes and no in the past"
+
+msgid "Yes, in the past"
+msgstr "Yes, in the past"
+
+msgid "yesterday"
+msgstr "yesterday"
+
+msgid "Yesterday"
+msgstr "Yesterday"
+
+msgid "Yesterday I didn’t work."
+msgstr "Yesterday I didn’t work."
+
+msgid "Yesterday you worked at home all day and had no time to go to the shop. Your flatmate Jaan wasn’t at home. Mari speaks first; pick what you say back."
+msgstr "Yesterday you worked at home all day and had no time to go to the shop. Your flatmate Jaan wasn’t at home. Mari speaks first; pick what you say back."
+
+msgid "you"
+msgstr "you"
+
+msgid "You aren’t reading the book."
+msgstr "You aren’t reading the book."
+
+msgid "You didn’t drink any water."
+msgstr "You didn’t drink any water."
+
+msgid "You didn’t go to the shop, and <0>käin</0> is the present."
+msgstr "You didn’t go to the shop, and <0>käin</0> is the present."
+
+msgid "You didn’t read the book."
+msgstr "You didn’t read the book."
+
+msgid "You didn’t see the cat."
+msgstr "You didn’t see the cat."
+
+msgid "You don’t drink water."
+msgstr "You don’t drink water."
+
+msgid "you, to more than one; polite you"
+msgstr "you, to more than one; polite you"
+
+msgid "You’ll hear a sentence and see how its verb is built."
+msgstr "You’ll hear a sentence and see how its verb is built."
+
+msgid "You’ll hear it with its pronoun."
+msgstr "You’ll hear it with its pronoun."
+
+msgid "You’ll hear the form in a sentence."
+msgstr "You’ll hear the form in a sentence."
+
+msgid "Your friend Mari asks about yesterday. A wrong reply shows why it’s wrong, then you hear the right one."
+msgstr "Your friend Mari asks about yesterday. A wrong reply shows why it’s wrong, then you hear the right one."

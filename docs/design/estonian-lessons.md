@@ -41,7 +41,7 @@ The parts live in `apps/site/src/components/learn`. A new lesson reaches for the
 
 | Part | Use it for |
 | --- | --- |
-| `Word` | Any Estonian word in prose: `<Word w="kõrv" />` inside `<Trans>`. Resting on it for half a second opens its card with the meaning and a note; a tap plays it and keeps the card open. The cursor is the help cursor. |
+| `Word` | Any Estonian word in prose: `<Word w="kõrv" />` inside `<Trans>`. Resting on it for half a second opens its card with the meaning and a note; a tap plays it and keeps the card open. The cursor is the help cursor. It flows as text, so a full stop or comma after it never wraps onto a line of its own. |
 | `PlayButton`, `Listen` | One clip; the sound a quiz round asks about. While a sound plays, its triangle becomes three moving bars and a ring leaves the button. |
 | `ListenRows` | A list of things to hear on one plate, with an optional first column such as a numeral. The words at the end of a lesson are one. |
 | `Panel` | The tray anything to play with sits on. |

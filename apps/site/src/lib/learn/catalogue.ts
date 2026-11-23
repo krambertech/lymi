@@ -351,7 +351,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian total and partial object`,
         et: "Raamatut või raamatu",
         minutes: 20,
-        blurb: msg`A free lesson on the Estonian object: the partitive for part of something, an action still going on, after ei and after verbs such as ootama and otsima; and for a noun, usually the genitive for the whole thing done (Ma lugesin raamatu läbi) and the nominative in commands (Osta pilet!). Every sentence is read aloud.`,
+        blurb: msg`A free lesson on the Estonian object: the partitive for part of something, an action still going on, after ei and after verbs such as ootama and otsima on their own; and for a noun, usually the genitive for the whole thing done (Ma lugesin raamatu läbi) and the nominative in commands (Osta pilet!). Every sentence is read aloud.`,
       },
       {
         slug: "raamatuid-maju",

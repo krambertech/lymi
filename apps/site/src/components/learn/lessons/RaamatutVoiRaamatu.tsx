@@ -10,6 +10,7 @@ import {
   OBJECT_CONVERSATION,
   OBJECT_DIALOGUE,
   OBJECT_FIXES,
+  OBJECT_FIX_ANSWERS,
   OBJECT_FORM_QUIZ,
   OBJECT_FOUND,
   OBJECT_HEARD,
@@ -201,7 +202,10 @@ function PairTable() {
     <Panel>
       <Paradigm
         label={t`One sentence with the partitive and with the genitive`}
-        columns={[t`Partitive: part, or not said to be finished`, t`Genitive: the whole, done`]}
+        columns={[
+          t`Partitive: usually part, or not said to be finished`,
+          t`Genitive: the whole, done`,
+        ]}
         rows={rows}
         empty={{
           title: t`Tap a sentence`,
@@ -519,7 +523,7 @@ function useContent() {
       kind: "fix",
       id: `fix-${clipId(item.right)}`,
       wrong: item.wrong,
-      answers: [item.right],
+      answers: OBJECT_FIX_ANSWERS[item.right] ?? [item.right],
       src: src(item.right),
       explain: fixWhy[item.right],
     }));
@@ -797,7 +801,8 @@ export function RaamatutVoiRaamatuLesson() {
         </Trans>,
         <Trans key="2">
           The whole thing, done or sure to get done: for a noun, usually the genitive, often with{" "}
-          <b lang="et">läbi</b> or <b lang="et">ära</b>. <b lang="et">Ma lugesin raamatu läbi. Ma loen raamatu läbi.</b>
+          <b lang="et">läbi</b> or <b lang="et">ära</b>.{" "}
+          <b lang="et">Ma lugesin raamatu läbi. Ma loen raamatu läbi.</b>
         </Trans>,
         <Trans key="3">
           After <b lang="et">ei</b>, always the partitive: <b lang="et">Ma ei ostnud piletit.</b> On
@@ -810,7 +815,7 @@ export function RaamatutVoiRaamatuLesson() {
           <b lang="et">Osta pilet! Ära osta piletit!</b>
         </Trans>,
         <Trans key="5">
-          More than one whole thing, with no number before it, takes the plural with{" "}
+          More than one whole thing, with no number before it, usually takes the plural with{" "}
           <b lang="et">-d</b>: <b lang="et">Ma ostsin piletid.</b> After a number, the partitive:{" "}
           <b lang="et">kaks piletit</b>.
         </Trans>,
@@ -884,8 +889,8 @@ export function RaamatutVoiRaamatuLesson() {
                 <p>
                   <Trans>
                     The present also covers the future, as lesson {future} says, and the object
-                    tells you which. With the partitive, it’s going on, with no end in view. With
-                    the genitive, it will get done: <Word w="Ma loen raamatu läbi." />
+                    tells you which. With the partitive, it’s usually going on, with no end in view.
+                    With the genitive, it will get done: <Word w="Ma loen raamatu läbi." />
                   </Trans>
                 </p>
               </Prose>
@@ -959,16 +964,16 @@ export function RaamatutVoiRaamatuLesson() {
               <ListenRows items={rowsOf(OBJECT_VERBS)} />
               <Aside>
                 <Trans>
-                  A small word after the verb can give it an end, and then the object takes the
-                  genitive: <b lang="et">Ma otsisin hosteli üles</b>, I found the hostel, and{" "}
-                  <b lang="et">Me ootame Mari ära</b>, we’ll wait until Mari comes.
+                  A small word after the verb can give it an end, and then a noun object usually
+                  takes the genitive: <b lang="et">Ma otsisin hosteli üles</b>, I found the hostel,
+                  and <b lang="et">Me ootame Mari ära</b>, we’ll wait until Mari comes.
                 </Trans>
               </Aside>
               <Prose>
                 <p>
                   <Trans>
                     Finding is different. <Word w="Leidma" />, to find, ends the looking, so what
-                    you found takes the genitive.
+                    you found usually takes the genitive.
                   </Trans>
                 </p>
               </Prose>
@@ -1012,8 +1017,8 @@ export function RaamatutVoiRaamatuLesson() {
                 <p>
                   <Trans>
                     In a command about a whole thing, a noun object usually takes the nominative,
-                    the form a dictionary lists: <Word w="Osta pilet!" /> Not <b lang="et">pileti</b>. Lesson{" "}
-                    {commands} teaches the command itself.
+                    the form a dictionary lists: <Word w="Osta pilet!" /> Not{" "}
+                    <b lang="et">pileti</b>. Lesson {commands} teaches the command itself.
                   </Trans>
                 </p>
                 <p>
@@ -1033,7 +1038,7 @@ export function RaamatutVoiRaamatuLesson() {
               </Aside>
               <Aside>
                 <Trans>
-                  More than one whole thing, with no number before it, takes the plural with{" "}
+                  More than one whole thing, with no number before it, usually takes the plural with{" "}
                   <b lang="et">-d</b> from lesson {plural}: <Word w="Ma ostsin piletid." />{" "}
                   <Word w="Osta piletid!" /> After a number, the partitive singular:{" "}
                   <b lang="et">kaks piletit</b>. Some of many things takes the plural partitive,

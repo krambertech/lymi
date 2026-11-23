@@ -46,6 +46,7 @@ import {
 import { nameProblems, questionProblems } from "./questions";
 import { recording, resetRecording } from "./record";
 import { repeatedIds, sentenceProblems, writtenItems } from "./sentences";
+import { unlistedVariants } from "./variants";
 
 /**
  * Every `Object.fromEntries` the lesson modules make while they load. A glossary built from a list
@@ -552,6 +553,7 @@ const roundsKey = (unit: PickUnit) =>
 
 const SENTENCE_KNOWN = { verified: VERIFIED as Record<string, string>, clipSays: heardText };
 const SENTENCE_RULE = "Written sentences can be marked fairly (checklists.md#quizzes)";
+const VARIANT_RULE = "Always-right variants are accepted (checklists.md#quizzes)";
 
 describe("the kit page", () => {
   it.each(LOCALES)("shows written sentences that can be marked fairly, in %s", async (locale) => {
@@ -960,6 +962,19 @@ describe.each(SLUGS)("lesson %s", (slug) => {
         ...repeatedIds(items).map((problem) => `${where(slug)}: ${problem}`),
       ],
       SENTENCE_RULE,
+    );
+  });
+
+  it("accepts every always-right variant of its typed answers", () => {
+    const items = writtenItems(rendered(slug, "en").recording.parts);
+    expectNone(
+      unlistedVariants(
+        slug,
+        "lesson",
+        items.map(({ item }) => item),
+        (item) => where(slug, `id: "${item.id}"`),
+      ),
+      VARIANT_RULE,
     );
   });
 

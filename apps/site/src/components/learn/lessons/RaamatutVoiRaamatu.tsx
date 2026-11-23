@@ -753,7 +753,7 @@ export function RaamatutVoiRaamatuLesson() {
   const genitive = lessonBySlug("omastav")?.n;
   const commands = lessonBySlug("kaskiv")?.n;
   const plural = lessonBySlug("mitmus")?.n;
-  const future = LESSONS.find((lesson) => lesson.et === "Hakkan õppima")?.n;
+  const future = lessonBySlug("tulevik")?.n;
   const pastNo = lessonBySlug("mineviku-eitus")?.n;
   const gradation = LESSONS.find((lesson) => lesson.et === "Jalg, jala")?.n;
   const pluralPartitive = LESSONS.find((lesson) => lesson.et === "Raamatuid, maju")?.n;

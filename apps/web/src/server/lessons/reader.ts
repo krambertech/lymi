@@ -15,7 +15,19 @@ export type LessonMaterial = {
   images: { bytes: Uint8Array; type: "image/webp" | "image/jpeg" | "image/png" }[];
   pdfs: Uint8Array[];
   text: string;
+  transcript?: Transcript | undefined;
 };
+
+export type Transcript = {
+  title: string;
+  url: string;
+  sentences: { text: string; at: number | null }[];
+};
+
+export function transcriptText(transcript: Transcript): string {
+  const lines = transcript.sentences.map((s, i) => `[${i + 1}] ${s.text}`);
+  return `Article “${transcript.title}” from ${transcript.url}, one numbered sentence per line:\n${lines.join("\n")}`;
+}
 
 export type LessonUsage = {
   model: string;
@@ -73,6 +85,9 @@ export function createLessonReader(
         })),
         ...(material.text
           ? [{ type: "text", text: `Pasted by the learner:\n${material.text}` }]
+          : []),
+        ...(material.transcript
+          ? [{ type: "text", text: transcriptText(material.transcript) }]
           : []),
         { type: "text", text: brief },
       ];

@@ -1397,7 +1397,7 @@
   "apps/web/src/server/services/anki-connect-text.test.ts": 4,
   "apps/web/src/server/services/anki-connect-text.ts": 16,
   "apps/web/src/server/services/anki-connect.test.ts": 16,
-  "apps/web/src/server/services/anki-connect.ts": 81,
+  "apps/web/src/server/services/anki-connect.ts": 80,
   "apps/web/src/server/services/apple-revocations.test.ts": 2,
   "apps/web/src/server/services/apple-revocations.ts": 19,
   "apps/web/src/server/services/archived.test.ts": 3,

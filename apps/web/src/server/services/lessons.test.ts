@@ -7,7 +7,7 @@ import { updateAiConsent } from "./ai-consent";
 import type { AnalyticsEvent } from "./analytics";
 import { addCards } from "./cards";
 import { createDeck } from "./decks";
-import { lessonAccess, readLesson, worthAsking } from "./lessons";
+import { lessonAccess, readLesson, readLink, worthAsking } from "./lessons";
 import { learner, testDb } from "./test-db";
 
 let db: Db;
@@ -239,6 +239,8 @@ describe("reporting a read", () => {
     expect(events).toContainEqual({
       name: "lesson_read",
       client: "web",
+      material: "lesson",
+      reads: 1,
       pages: 0,
       pasted: true,
       deck: "guessed",
@@ -275,7 +277,30 @@ describe("reporting a read", () => {
     await addCards(ctx, [{ deckId: deck.id, term: "jooma", enrich: false }], null, {
       fromLesson: true,
     });
-    expect(events).toContainEqual({ name: "cards_added", source: "lesson", count: 1 });
+    expect(events).toContainEqual({ name: "cards_added", source: "lesson", count: 1, fields: [] });
+
+    events.length = 0;
+    await addCards(
+      ctx,
+      [
+        {
+          deckId: deck.id,
+          term: "kevad",
+          example: "Kevad on käes.",
+          exampleSource: "lesson",
+          source: "https://news.example.org/kevad",
+          enrich: false,
+        },
+      ],
+      null,
+      { fromLesson: true },
+    );
+    expect(events).toContainEqual({
+      name: "cards_added",
+      source: "lesson",
+      count: 1,
+      fields: ["example", "source"],
+    });
 
     // A typed add names the optional fields it holds, never their text.
     events.length = 0;
@@ -463,5 +488,428 @@ describe("worthAsking", () => {
       operators: new Set(["lesson-guard@lymi.test"]),
     });
     expect(read.questions).toEqual([]);
+  });
+});
+
+type Site = Record<string, { status?: number; body?: string; headers?: Record<string, string> }>;
+
+function fakeWeb(site: Site) {
+  const fetched: string[] = [];
+  const request = async (input: RequestInfo | URL) => {
+    const url = String(input);
+    fetched.push(url);
+    const page = site[url];
+    if (!page) return new Response("Not found", { status: 404 });
+    return new Response(page.body ?? "", {
+      status: page.status ?? 200,
+      headers: page.headers ?? { "content-type": "text/html; charset=utf-8" },
+    });
+  };
+  const toMarkdown = async ({ html }: { html: string }) =>
+    [...html.matchAll(/<p>([^<]*)<\/p>/g)].map((m) => m[1]).join("\n");
+  return { fetched, deps: { request, toMarkdown } };
+}
+
+const ARTICLE = "https://news.example.org/eesti/2026/kevad";
+const articleHtml = (paragraphs: string[], head = "") =>
+  `<html><head><title>Kevad &amp; ilm</title>${head}</head><body><article>${paragraphs
+    .map((p) => `<p>${p}</p>`)
+    .join("")}</article></body></html>`;
+
+async function refusal(promise: Promise<unknown>) {
+  const error = await promise.then(
+    () => null,
+    (e: unknown) => e as { reason?: string; details?: Record<string, string>; message: string },
+  );
+  return error && { reason: error.reason, details: error.details, message: error.message };
+}
+
+describe("readLink", () => {
+  const read = { client: "web", deck: "guessed" } as const;
+
+  it("reads an article's sentences with its title and link", async () => {
+    const ctx = await learner(db, "link-article", "Kateryna");
+    const { deps } = fakeWeb({
+      "https://news.example.org/robots.txt": { body: "User-agent: *\nDisallow: /private/" },
+      [ARTICLE]: { body: articleHtml(["Kevad on käes. Linnud laulavad!", "Ilm on soe."]) },
+    });
+    expect(await readLink(ctx, ARTICLE, deps, read)).toEqual({
+      title: "Kevad & ilm",
+      url: ARTICLE,
+      sentences: [
+        { text: "Kevad on käes.", at: null },
+        { text: "Linnud laulavad!", at: null },
+        { text: "Ilm on soe.", at: null },
+      ],
+    });
+  });
+
+  it("sends no page to Workers AI once the learner turns AI off while it is fetched", async () => {
+    const ctx = await learner(db, "link-declined", "Kateryna");
+    const { deps } = fakeWeb({ [ARTICLE]: { body: articleHtml(["Kevad on käes."]) } });
+    const toMarkdown = vi.fn(deps.toMarkdown);
+    const request: typeof deps.request = async (input) => {
+      await updateAiConsent(ctx, { allowed: false, version: 1, updated_at: Date.now() });
+      return deps.request(input);
+    };
+    expect(await refusal(readLink(ctx, ARTICLE, { request, toMarkdown }, read))).toMatchObject({
+      reason: "ai_consent_required",
+    });
+    expect(toMarkdown).not.toHaveBeenCalled();
+  });
+
+  it("refuses a page robots.txt disallows for LymiBot or for every app", async () => {
+    const events: AnalyticsEvent[] = [];
+    const ctx = {
+      ...(await learner(db, "link-robots", "Kateryna")),
+      analytics: { writeDataPoint: () => {}, capture: (e: AnalyticsEvent) => events.push(e) },
+    };
+    for (const robots of [
+      "User-agent: LymiBot\nDisallow: /eesti/",
+      "User-agent: *\nDisallow: /",
+      "User-agent: Googlebot\nAllow: /\n\nUser-agent: *\nDisallow: /eesti",
+    ]) {
+      const { deps, fetched } = fakeWeb({
+        "https://news.example.org/robots.txt": { body: robots },
+        [ARTICLE]: { body: articleHtml(["Kevad on käes."]) },
+      });
+      expect(await refusal(readLink(ctx, ARTICLE, deps, read))).toEqual({
+        reason: "link_refused",
+        details: { refused: "robots" },
+        message: "This site doesn't allow apps to read it. Paste the text instead.",
+      });
+      expect(fetched).not.toContain(ARTICLE);
+    }
+    expect(events).toContainEqual(
+      expect.objectContaining({ name: "lesson_read", material: "article", refused: "robots" }),
+    );
+  });
+
+  it("reads a page whose robots.txt allows LymiBot by its own group or is missing", async () => {
+    const ctx = await learner(db, "link-robots-allowed", "Kateryna");
+    for (const robots of [
+      "User-agent: *\nDisallow: /\n\nUser-agent: LymiBot\nAllow: /eesti/",
+      "User-agent: *\nDisallow: /eesti\nAllow: /eesti/2026/",
+      undefined,
+    ]) {
+      const { deps } = fakeWeb({
+        ...(robots ? { "https://news.example.org/robots.txt": { body: robots } } : {}),
+        [ARTICLE]: { body: articleHtml(["Kevad on käes."]) },
+      });
+      expect((await readLink(ctx, ARTICLE, deps, read)).sentences).toHaveLength(1);
+    }
+  });
+
+  it("leaves a page unread when its robots.txt fails or the site can't be reached", async () => {
+    const ctx = await learner(db, "link-robots-down", "Kateryna");
+    const { deps, fetched } = fakeWeb({
+      "https://news.example.org/robots.txt": { status: 503 },
+      [ARTICLE]: { body: articleHtml(["Kevad on käes."]) },
+    });
+    expect(await refusal(readLink(ctx, ARTICLE, deps, read))).toMatchObject({
+      reason: "link_unreadable",
+      message: "This site isn't answering. Try again later.",
+    });
+    expect(fetched).not.toContain(ARTICLE);
+    const offline = {
+      ...deps,
+      request: async () => {
+        throw new TypeError("Network connection lost.");
+      },
+    };
+    expect(await refusal(readLink(ctx, ARTICLE, offline, read))).toMatchObject({
+      reason: "link_unreadable",
+      message: "Smart add couldn't reach this page.",
+    });
+  });
+
+  it("refuses a page that reserves text and data mining by header or meta tag", async () => {
+    const ctx = await learner(db, "link-tdm", "Kateryna");
+    for (const page of [
+      {
+        body: articleHtml(["Kevad on käes."]),
+        headers: { "content-type": "text/html", "tdm-reservation": "1" },
+      },
+      { body: articleHtml(["Kevad on käes."], '<meta name="tdm-reservation" content="1">') },
+      { body: articleHtml(["Kevad on käes."], '<meta content="1" name="tdm-reservation">') },
+    ]) {
+      const { deps } = fakeWeb({ [ARTICLE]: page });
+      expect(await refusal(readLink(ctx, ARTICLE, deps, read))).toMatchObject({
+        reason: "link_refused",
+        details: { refused: "tdm" },
+      });
+    }
+  });
+
+  it("matches robots.txt rules in any script against the encoded path", async () => {
+    const ctx = await learner(db, "link-robots-cyrillic", "Kateryna");
+    const page = "https://news.example.org/статті/весна";
+    const { deps, fetched } = fakeWeb({
+      "https://news.example.org/robots.txt": { body: "User-agent: *\nDisallow: /статті/" },
+      [new URL(page).href]: { body: articleHtml(["Весна прийшла."]) },
+    });
+    expect(await refusal(readLink(ctx, page, deps, read))).toMatchObject({
+      details: { refused: "robots" },
+    });
+    expect(fetched).not.toContain(new URL(page).href);
+  });
+
+  it("keeps the article's address without tracking or access parameters", async () => {
+    const ctx = await learner(db, "link-source", "Kateryna");
+    const link = `${ARTICLE}?id=7&utm_source=x&fbclid=y&gift=abc&t=40#comments`;
+    const { deps } = fakeWeb({
+      [new URL(link.replace(/#.*$/, "")).href]: { body: articleHtml(["Kevad on käes."]) },
+    });
+    expect((await readLink(ctx, link, deps, read)).url).toBe(`${ARTICLE}?id=7&t=40`);
+  });
+
+  it("refuses links that are not https or name no public host, before fetching anything", async () => {
+    const ctx = await learner(db, "link-rules", "Kateryna");
+    const { deps, fetched } = fakeWeb({});
+    for (const link of [
+      "http://news.example.org/a",
+      "https://127.0.0.1/a",
+      "https://[::1]/a",
+      "https://localhost/a",
+      "https://intranet/a",
+      "https://printer.local/a",
+      "https://user:pass@news.example.org/a",
+      "https://news.example.org:8443/a",
+      "not a link",
+    ]) {
+      expect(await refusal(readLink(ctx, link, deps, read))).toMatchObject({
+        reason: "link_invalid",
+      });
+    }
+    expect(fetched).toEqual([]);
+  });
+
+  it("refuses a redirect to a private host", async () => {
+    const ctx = await learner(db, "link-redirect", "Kateryna");
+    const { deps, fetched } = fakeWeb({
+      [ARTICLE]: { status: 302, headers: { location: "https://10.0.0.1/admin" } },
+    });
+    expect(await refusal(readLink(ctx, ARTICLE, deps, read))).toMatchObject({
+      reason: "link_unreadable",
+    });
+    expect(fetched).not.toContain("https://10.0.0.1/admin");
+  });
+
+  it("holds a redirect to a pasted link's rules, so a shortener can't reach YouTube or a port", async () => {
+    const ctx = await learner(db, "link-redirect-rules", "Kateryna");
+    for (const location of [
+      "https://www.youtube.com/watch?v=abc",
+      "https://news.example.org:8443/a",
+    ]) {
+      const { deps, fetched } = fakeWeb({
+        [ARTICLE]: { status: 301, headers: { location } },
+      });
+      expect(await refusal(readLink(ctx, ARTICLE, deps, read))).toMatchObject({
+        reason: "link_unreadable",
+      });
+      expect(fetched).not.toContain(location);
+    }
+  });
+
+  it("names a YouTube video from oEmbed and fetches nothing else from YouTube", async () => {
+    const ctx = await learner(db, "link-youtube", "Kateryna");
+    const oembed = `https://www.youtube.com/oembed?format=json&url=${encodeURIComponent("https://youtu.be/abc123?t=40")}`;
+    const { deps, fetched } = fakeWeb({
+      [oembed]: {
+        body: JSON.stringify({ title: "Eesti keel algajatele" }),
+        headers: { "content-type": "application/json" },
+      },
+    });
+    expect(await refusal(readLink(ctx, "https://youtu.be/abc123?t=40", deps, read))).toMatchObject({
+      reason: "link_refused",
+      details: { refused: "youtube", title: "Eesti keel algajatele" },
+    });
+    expect(fetched).toEqual([oembed]);
+  });
+
+  it("refuses Netflix, Disney+ and Spotify without fetching them", async () => {
+    const ctx = await learner(db, "link-drm", "Kateryna");
+    const { deps, fetched } = fakeWeb({});
+    for (const [link, service] of [
+      ["https://www.netflix.com/watch/81234567", "Netflix"],
+      ["https://www.disneyplus.com/video/abc", "Disney+"],
+      ["https://open.spotify.com/episode/abc", "Spotify"],
+    ]) {
+      expect(await refusal(readLink(ctx, link ?? "", deps, read))).toMatchObject({
+        reason: "link_refused",
+        details: { refused: "drm", service },
+      });
+    }
+    expect(fetched).toEqual([]);
+  });
+});
+
+describe("reading an article", () => {
+  const transcript = (sentences: string[]): LessonMaterial => ({
+    images: [],
+    pdfs: [],
+    text: "",
+    transcript: {
+      title: "Kevad",
+      url: ARTICLE,
+      sentences: sentences.map((text) => ({ text, at: null })),
+    },
+  });
+
+  it("quotes each term's example from the article, whatever the model wrote", async () => {
+    const ctx = await learner(db, "article-examples", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    const long = `Eile ${"väga ".repeat(60)}hommikul käisime turul ja ostsime ${"palju ".repeat(30)}köögivilju.`;
+    const read = await readLesson(
+      ctx,
+      transcript([
+        "Kevad on käes.",
+        "Linnud laulavad aias.",
+        long,
+        "Kerkimine",
+        "Kerkimine on aeglane.",
+        "Magus kevad",
+        `Forno ${"molto ".repeat(60)}caldo è stato spento ieri.`,
+      ]),
+      {
+        reader: fakeReader({
+          deck: deck.id,
+          terms: [
+            term("t1", "laulma", { sentence: 2, seen: "The birds are singing." }),
+            term("t2", "kevad", { sentence: 0, seen: "Kevad on käes." }),
+            term("t3", "turg", { sentence: 3, seen: "turul" }),
+            term("t4", "lind", { sentence: 1, seen: "Linnud laulavad aias." }),
+            term("t5", "kerkimine", { sentence: 4, seen: "Kerkimine" }),
+            term("t6", "magus kevad", { sentence: 6, seen: "Magus kevad" }),
+            term("t7", "spegnere", {
+              sentence: 1,
+              seen: `Forno ${"molto ".repeat(60)}caldo è stato spento ieri.`,
+            }),
+          ],
+          questions: [],
+        }),
+        ai: undefined,
+        operators: new Set(["article-examples@lymi.test"]),
+      },
+      { deckId: deck.id },
+    );
+    const byId = Object.fromEntries(read.terms.map((t) => [t.id, t]));
+    expect(byId.t1).toMatchObject({ example: "Linnud laulavad aias.", at: null });
+    expect(byId.t4).toMatchObject({ example: "Linnud laulavad aias." });
+    expect(byId.t5).toMatchObject({ example: "Kerkimine on aeglane." });
+    expect(byId.t6).toMatchObject({ example: null });
+    expect(byId.t7?.example).toMatch(/^….*è stato spento ieri\.$/);
+    expect(byId.t2).toMatchObject({ example: "Kevad on käes.", at: null });
+    const cut = byId.t3?.example ?? "";
+    expect([...cut].length).toBeLessThanOrEqual(250);
+    expect(cut).toContain("turul");
+    expect(cut.startsWith("…")).toBe(true);
+    expect(long).toContain(cut.replace(/^…|…$/g, ""));
+  });
+
+  it("sends the article's title and link before its terms", async () => {
+    const events: AnalyticsEvent[] = [];
+    const ctx = {
+      ...(await learner(db, "article-source", "Kateryna")),
+      analytics: { writeDataPoint: () => {}, capture: (e: AnalyticsEvent) => events.push(e) },
+    };
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    const { prepareLesson, streamLesson } = await import("./lessons");
+    const material = transcript(["Kevad on käes."]);
+    const lesson = await prepareLesson(
+      ctx,
+      material,
+      {
+        reader: fakeReader({
+          deck: deck.id,
+          terms: [term("t1", "kevad", { sentence: 1 })],
+          questions: [],
+        }),
+        ai: undefined,
+        operators: new Set(["article-source@lymi.test"]),
+      },
+      { deckId: deck.id },
+    );
+    const sent: unknown[] = [];
+    await streamLesson(lesson, material, undefined, (event) => sent.push(event));
+    expect(sent.slice(0, 3)).toMatchObject([
+      { type: "deck" },
+      { type: "source", title: "Kevad", url: ARTICLE },
+      { type: "term", term: { term: "kevad", example: "Kevad on käes." } },
+    ]);
+    expect(events).toContainEqual(
+      expect.objectContaining({
+        name: "lesson_read",
+        material: "article",
+        reads: 1,
+        pasted: false,
+      }),
+    );
+  });
+
+  it("asks before a long article counts as several reads, then counts them all", async () => {
+    const ctx = await learner(db, "article-long", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    const sentence = `${"sõna ".repeat(99)}lõpp.`;
+    const material = transcript(Array.from({ length: 160 }, () => sentence));
+    const deps = {
+      reader: fakeReader({
+        deck: deck.id,
+        terms: [term("t1", "sõna", { sentence: 1 })],
+        questions: [],
+      }),
+      ai: undefined,
+      operators: new Set<string>(),
+    };
+    expect(await refusal(readLesson(ctx, material, deps, { deckId: deck.id }))).toMatchObject({
+      reason: "long_read",
+      details: { reads: "2", words: "16000", left: "5" },
+    });
+    expect((await lessonAccess(ctx, new Set())).daily?.used).toBe(0);
+
+    await readLesson(ctx, material, deps, { deckId: deck.id, reads: 2 });
+    expect((await lessonAccess(ctx, new Set())).daily?.used).toBe(2);
+  });
+
+  it("refuses an article whose characters would outgrow the reader, whatever its words", async () => {
+    const ctx = await learner(db, "article-too-many-characters", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Русский", defaultLanguage: "ru" });
+    const sentence = `${"достопримечательность ".repeat(99)}конец.`;
+    const material = transcript(Array.from({ length: 140 }, () => sentence));
+    expect(
+      await refusal(
+        readLesson(
+          ctx,
+          material,
+          {
+            reader: fakeReader({ deck: deck.id, terms: [], questions: [] }),
+            ai: undefined,
+            operators: new Set(),
+          },
+          { deckId: deck.id },
+        ),
+      ),
+    ).toMatchObject({ reason: "too_long" });
+  });
+
+  it("refuses an article too long for a day's reads", async () => {
+    const ctx = await learner(db, "article-too-long", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    const sentence = `${"sõna ".repeat(999)}lõpp.`;
+    const material = transcript(Array.from({ length: 76 }, () => sentence));
+    expect(
+      await refusal(
+        readLesson(
+          ctx,
+          material,
+          {
+            reader: fakeReader({ deck: deck.id, terms: [], questions: [] }),
+            ai: undefined,
+            operators: new Set(),
+          },
+          { deckId: deck.id, reads: 6 },
+        ),
+      ),
+    ).toMatchObject({ reason: "too_long" });
   });
 });

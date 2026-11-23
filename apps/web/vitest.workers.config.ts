@@ -37,6 +37,20 @@ const services: Record<string, () => Response> = {
   "POST https://eu.i.posthog.com/e/": () => json({ status: 1 }),
   "POST https://appleid.apple.com/auth/token": () => json({ refresh_token: "refresh" }),
   "POST https://appleid.apple.com/auth/revoke": () => new Response(null),
+  "GET https://news.example.org/robots.txt": () =>
+    new Response("User-agent: *\nDisallow: /private/", {
+      headers: { "Content-Type": "text/plain" },
+    }),
+  "GET https://news.example.org/start": () => redirect("/story"),
+  "GET https://news.example.org/story": () =>
+    new Response(
+      "<html><head><title>Kevad</title></head><body><p>Kevad on käes.</p></body></html>",
+      {
+        headers: { "Content-Type": "text/html; charset=utf-8" },
+      },
+    ),
+  [`GET https://www.youtube.com/oembed?format=json&url=${encodeURIComponent("https://youtu.be/abc")}`]:
+    () => json({ title: "Eesti keel" }),
 };
 
 const events = (...data: unknown[]) =>

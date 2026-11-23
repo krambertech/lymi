@@ -121,17 +121,29 @@ export async function chooseFiles(room: number): Promise<Picked> {
 
 /** The read's form: Expo's fetch sends a file it can read the bytes of, not React Native's `{ uri }`. */
 export function lessonForm(
-  pages: Page[],
-  text: string,
+  material: { pages: Page[]; text: string; link: string },
   deckId: string | undefined,
   hint: string | undefined,
+  reads?: number,
 ) {
   const form = new FormData();
-  if (text.trim()) form.append("text", text.trim());
+  const link = material.link.trim();
+  if (link) form.append("link", link);
+  else if (material.text.trim()) form.append("text", material.text.trim());
+  if (reads) form.append("reads", String(reads));
   if (deckId) form.append("deckId", deckId);
   if (hint) form.append("hint", hint);
-  for (const page of pages) form.append("file", new File(page.uri) as unknown as Blob);
+  if (!link)
+    for (const page of material.pages) form.append("file", new File(page.uri) as unknown as Blob);
   return form;
 }
+
+export const shownLink = (link: string) =>
+  link
+    .trim()
+    .replace(/^https:\/\//i, "")
+    .replace(/^www\./i, "");
+
+export const usableLink = (link: string) => /^https:\/\/\S+\.\S+/i.test(link.trim());
 
 export const wordCount = (text: string) => (text.trim() ? text.trim().split(/\s+/).length : 0);

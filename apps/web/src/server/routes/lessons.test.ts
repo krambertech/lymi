@@ -76,6 +76,37 @@ describe("POST /api/lesson-reads", () => {
     expect(response.status).toBe(400);
     expect(await response.json()).toMatchObject({ error: expect.stringContaining("3 PDFs") });
   });
+
+  it.each([
+    [
+      "a service it never reads",
+      { link: "https://www.netflix.com/watch/1" },
+      { code: "link_refused" },
+    ],
+    ["a link that is not https", { link: "http://news.example.org/a" }, { code: "link_invalid" }],
+    [
+      "a link beside text",
+      { link: "https://www.netflix.com/watch/1", text: "Tund 6" },
+      { error: "Smart add reads a link on its own." },
+    ],
+    ["more reads than a day has", { text: "Tund 6", reads: "99" }, { error: "Invalid lesson" }],
+    [
+      "an endless link",
+      { link: `https://news.example.org/${"a".repeat(9000)}` },
+      { error: "Invalid lesson" },
+    ],
+  ])("refuses %s", async (_case, fields, refusal) => {
+    const form = new FormData();
+    for (const [name, value] of Object.entries(fields)) form.set(name, value);
+    const response = await app.fetch("/api/lesson-reads", {
+      method: "POST",
+      body: form,
+      headers: { "content-length": "10000" },
+      as: operator,
+    });
+    expect(await response.json()).toMatchObject(refusal);
+    expect(response.status).toBe(400);
+  });
 });
 
 describe("POST /api/lesson-reads/answers", () => {

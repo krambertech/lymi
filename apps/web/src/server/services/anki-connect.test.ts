@@ -140,6 +140,21 @@ describe("answerCall", () => {
     expect(events).toContainEqual({ name: "cards_added", count: 1, source: "anki_connect" });
   });
 
+  it("keeps the moment of a source URL too long for a card", async () => {
+    await call("addNote", {
+      note: note({
+        Term: "動画",
+        Reading: "どうが",
+        Meaning: "video",
+        Sentence: "",
+        URL: `https://www.youtube.com/watch?v=abc&t=221&pp=${"x".repeat(220)}`,
+        Audio: "",
+      }),
+    });
+    const [card] = await db.select().from(schema.cards).where(eq(schema.cards.term, "動画"));
+    expect(card?.source).toBe("https://www.youtube.com/watch?t=221");
+  });
+
   it("reports a duplicate the way Yomitan reads it, and adding it again changes nothing", async () => {
     expect(
       await call("canAddNotesWithErrorDetail", { notes: [probe("散歩"), probe("図書館")] }),

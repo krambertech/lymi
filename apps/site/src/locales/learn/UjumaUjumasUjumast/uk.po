@@ -209,7 +209,7 @@ msgid "Going, out, coming back"
 msgstr "Іти, бути там, повертатися"
 
 msgid "Having coffee"
-msgstr "З кави"
+msgstr "З кав’ярні з подругою"
 
 msgid "I am"
 msgstr "я є"

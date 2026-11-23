@@ -3,7 +3,6 @@ import type { SpeakerNames } from "../conversation";
 import { normalizeForm } from "../practice";
 import { markedItems, type PassageQuestion } from "../questions";
 
-/** A clock time such as 15.00 or 15:00 counts as one word. */
 const words = (text: string) =>
   normalizeForm(text).match(/[\p{L}\p{M}\p{N}]+(?:[.:]\p{N}+)*/gu) ?? [];
 

@@ -73,8 +73,8 @@ msgstr "Все шесть, и каждое «да», и каждое «нет».
 msgid "am not, is not, are not"
 msgstr "не быть: я не, он не, они не"
 
-msgid "answer no"
-msgstr "ответь «нет»"
+msgid "answer no with the verb"
+msgstr "ответь «нет» с глаголом"
 
 msgid "Answering no"
 msgstr "Как ответить «нет»"

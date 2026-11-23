@@ -220,8 +220,8 @@ msgstr "На кухне"
 msgid "Kati"
 msgstr "Кати"
 
-msgid "Kati can’t find something and asks Peeter. <0>Ei näinud</0> is didn’t see; a later lesson builds that form."
-msgstr "Кати не может что-то найти и спрашивает Пеэтера. <0>Ei näinud</0> — «не видел»; эту форму объяснит один из следующих уроков."
+msgid "Kati can’t find something and asks Peeter. <0>Ei näinud</0> is didn’t see; lesson {pastNo} builds that form."
+msgstr "Кати не может что-то найти и спрашивает Пеэтера. <0>Ei näinud</0> — «не видел»; эту форму объясняет урок {pastNo}."
 
 msgid "Kati is buying something."
 msgstr "Кати что-то покупает."
@@ -256,8 +256,8 @@ msgstr "Большинство. Проверь форму глагола пос�
 msgid "Most of them. Find the case first, then add the ending."
 msgstr "Большинство. Сначала найди падеж, потом добавь окончание."
 
-msgid "Most of them. Listen for the last sound before the ending."
-msgstr "Большинство. Обрати внимание на последний звук перед окончанием."
+msgid "Most of them. Look at the last letter before the ending."
+msgstr "Большинство. Посмотри на последнюю букву перед окончанием."
 
 msgid "Most of them. Read the reason under each one you missed."
 msgstr "Большинство. Прочитай пояснения к тем, что не получились."

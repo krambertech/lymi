@@ -46,6 +46,9 @@ msgstr "a good doctor"
 msgid "A good doctor"
 msgstr "A good doctor"
 
+msgid "a new doctor"
+msgstr "a new doctor"
+
 msgid "A new job"
 msgstr "A new job"
 
@@ -81,9 +84,6 @@ msgstr "An adjective takes <0>-ks</0> too: <1>heaks arstiks</1>. With <2>-na</2>
 
 msgid "as a present"
 msgstr "as a present"
-
-msgid "as the new doctor"
-msgstr "as the new doctor"
 
 msgid "As: <0>-na</0>, <1>{answer}</1>."
 msgstr "As: <0>-na</0>, <1>{answer}</1>."

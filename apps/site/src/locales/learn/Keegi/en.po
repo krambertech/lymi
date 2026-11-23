@@ -220,8 +220,8 @@ msgstr "In the kitchen"
 msgid "Kati"
 msgstr "Kati"
 
-msgid "Kati can’t find something and asks Peeter. <0>Ei näinud</0> is didn’t see; a later lesson builds that form."
-msgstr "Kati can’t find something and asks Peeter. <0>Ei näinud</0> is didn’t see; a later lesson builds that form."
+msgid "Kati can’t find something and asks Peeter. <0>Ei näinud</0> is didn’t see; lesson {pastNo} builds that form."
+msgstr "Kati can’t find something and asks Peeter. <0>Ei näinud</0> is didn’t see; lesson {pastNo} builds that form."
 
 msgid "Kati is buying something."
 msgstr "Kati is buying something."
@@ -256,8 +256,8 @@ msgstr "Most of them. Check the verb’s form after <0>ei</0>."
 msgid "Most of them. Find the case first, then add the ending."
 msgstr "Most of them. Find the case first, then add the ending."
 
-msgid "Most of them. Listen for the last sound before the ending."
-msgstr "Most of them. Listen for the last sound before the ending."
+msgid "Most of them. Look at the last letter before the ending."
+msgstr "Most of them. Look at the last letter before the ending."
 
 msgid "Most of them. Read the reason under each one you missed."
 msgstr "Most of them. Read the reason under each one you missed."

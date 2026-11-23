@@ -2,7 +2,7 @@ import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type ReactNode, useMemo } from "react";
-import { lessonBySlug } from "../../../lib/learn/catalogue";
+import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   GI_EXCEPT,
   GI_FIX,
@@ -311,6 +311,7 @@ export function KeegiLesson() {
   const { t, i18n } = useLingui();
   const content = useContent();
   const partitive = lessonBySlug("osastav")?.n;
+  const pastNo = LESSONS.find((lesson) => lesson.et === "Ma ei läinud")?.n;
   const negation = lessonBySlug("eitus")?.n;
 
   const rows = (list: readonly string[]) =>
@@ -609,7 +610,7 @@ export function KeegiLesson() {
                   share === 1 ? (
                     <Trans>All eight, by the last sound.</Trans>
                   ) : share >= 0.6 ? (
-                    <Trans>Most of them. Listen for the last sound before the ending.</Trans>
+                    <Trans>Most of them. Look at the last letter before the ending.</Trans>
                   ) : (
                     <Trans>Read the rule above once more, then try again.</Trans>
                   )
@@ -699,7 +700,7 @@ export function KeegiLesson() {
                 <p>
                   <Trans>
                     Kati can’t find something and asks Peeter. <span lang="et">Ei näinud</span> is
-                    didn’t see; a later lesson builds that form.
+                    didn’t see; lesson {pastNo} builds that form.
                   </Trans>
                 </p>
               </Prose>

@@ -46,6 +46,9 @@ msgstr "хороший врач"
 msgid "A good doctor"
 msgstr "Хороший врач"
 
+msgid "a new doctor"
+msgstr "новый врач"
+
 msgid "A new job"
 msgstr "Новая работа"
 
@@ -82,9 +85,6 @@ msgstr "Прилагательное тоже получает <0>-ks</0>: <1>he
 msgid "as a present"
 msgstr "в подарок"
 
-msgid "as the new doctor"
-msgstr "в роли нового врача"
-
 msgid "As: <0>-na</0>, <1>{answer}</1>."
 msgstr "«Как» — <0>-na</0>: <1>{answer}</1>."
 
@@ -116,7 +116,7 @@ msgid "Both words: <et>heaks arstiks</et>"
 msgstr "Оба слова: <et>heaks arstiks</et>"
 
 msgid "By and for a time: <0>reedeks</0>, by Friday; <1>nädalaks</1>, for a week. With a meal, a day or an occasion, <2>-ks</2> says what for: <3>sünnipäevaks</3>, for a birthday."
-msgstr "«К» и «на» какое-то время: <0>reedeks</0> — «к пятнице»; <1>nädalaks</1> — «на неделю». С едой, днём или событием <2>-ks</2> говорит «на что»: <3>sünnipäevaks</3> — «на день рождения»."
+msgstr "«К» и «на» какое-то время: <0>reedeks</0> — «к пятнице»; <1>nädalaks</1> — «на неделю». С приёмом пищи, днём или событием <2>-ks</2> говорит «на что»: <3>sünnipäevaks</3> — «на день рождения»."
 
 msgid "By and for: <et>reedeks</et>, <et>nädalaks</et>"
 msgstr "К и на: <et>reedeks</et>, <et>nädalaks</et>"
@@ -299,7 +299,7 @@ msgid "On Sunday"
 msgstr "В воскресенье"
 
 msgid "Other verbs take it too. <0/> with <1>haigeks</1> is to fall ill, and its past is built the same way: <2>ma jäin</2>. <3/> and <4>minema</4> with <5>-ks</5> mean to turn: <6>Ilm muutub külmaks</6>, <7>Tuba läheb soojaks</7>. Pick a word and tap its forms."
-msgstr "Его требуют и другие глаголы. <0/> с <1>haigeks</1> — «заболеть», и прошедшее время у него образуется так же: <2>ma jäin</2>. <3/> и <4>minema</4> с <5>-ks</5> значат «становиться»: <6>Ilm muutub külmaks</6>, <7>Tuba läheb soojaks</7>. Выбери слово и нажми на его формы."
+msgstr "Транслатив требуют и другие глаголы. <0/> с <1>haigeks</1> — «заболеть», и прошедшее время у него образуется так же: <2>ma jäin</2>. <3/> и <4>minema</4> с <5>-ks</5> значат «становиться»: <6>Ilm muutub külmaks</6>, <7>Tuba läheb soojaks</7>. Выбери слово и нажми на его формы."
 
 msgid "Peeter"
 msgstr "Пеэтер"
@@ -449,7 +449,7 @@ msgid "With <et>-na</et>, only the noun takes the ending: <et>uue arstina</et>."
 msgstr "С <et>-na</et> окончание получает только существительное: <et>uue arstina</et>."
 
 msgid "With a time, <0>-ks</0> says by when, or how long something is planned for: <1/>, by Friday; <2/>, for a week. With a meal, a day or an occasion, it says what for: <3>hommikusöögiks</3>, for breakfast. Tap a line to hear it."
-msgstr "Когда речь о времени, <0>-ks</0> говорит «к какому сроку» или на сколько что-то задумано: <1/> — «к пятнице»; <2/> — «на неделю». С едой, днём или событием — «на что»: <3>hommikusöögiks</3> — «на завтрак». Нажми на строку, чтобы послушать."
+msgstr "Когда речь о времени, <0>-ks</0> говорит «к какому сроку» или на сколько что-то задумано: <1/> — «к пятнице»; <2/> — «на неделю». С приёмом пищи, днём или событием — «на что»: <3>hommikusöögiks</3> — «на завтрак». Нажми на строку, чтобы послушать."
 
 msgid "Words"
 msgstr "Слова"

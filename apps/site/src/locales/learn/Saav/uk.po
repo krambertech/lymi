@@ -46,6 +46,9 @@ msgstr "хороший лікар"
 msgid "A good doctor"
 msgstr "Хороший лікар"
 
+msgid "a new doctor"
+msgstr "новий лікар"
+
 msgid "A new job"
 msgstr "Нова робота"
 
@@ -82,9 +85,6 @@ msgstr "Прикметник теж отримує <0>-ks</0>: <1>heaks arstiks<
 msgid "as a present"
 msgstr "у подарунок"
 
-msgid "as the new doctor"
-msgstr "як новий лікар"
-
 msgid "As: <0>-na</0>, <1>{answer}</1>."
 msgstr "«Як» — <0>-na</0>: <1>{answer}</1>."
 
@@ -116,7 +116,7 @@ msgid "Both words: <et>heaks arstiks</et>"
 msgstr "Обидва слова: <et>heaks arstiks</et>"
 
 msgid "By and for a time: <0>reedeks</0>, by Friday; <1>nädalaks</1>, for a week. With a meal, a day or an occasion, <2>-ks</2> says what for: <3>sünnipäevaks</3>, for a birthday."
-msgstr "«До» і «на» якийсь час: <0>reedeks</0> — «до п’ятниці», не пізніше; <1>nädalaks</1> — «на тиждень». Зі стравою, днем чи подією <2>-ks</2> каже «на що»: <3>sünnipäevaks</3> — «на день народження»."
+msgstr "«До» і «на» якийсь час: <0>reedeks</0> — «до п’ятниці», не пізніше; <1>nädalaks</1> — «на тиждень». З прийомом їжі, днем чи подією <2>-ks</2> каже «на що»: <3>sünnipäevaks</3> — «на день народження»."
 
 msgid "By and for: <et>reedeks</et>, <et>nädalaks</et>"
 msgstr "До і на: <et>reedeks</et>, <et>nädalaks</et>"
@@ -299,7 +299,7 @@ msgid "On Sunday"
 msgstr "У неділю"
 
 msgid "Other verbs take it too. <0/> with <1>haigeks</1> is to fall ill, and its past is built the same way: <2>ma jäin</2>. <3/> and <4>minema</4> with <5>-ks</5> mean to turn: <6>Ilm muutub külmaks</6>, <7>Tuba läheb soojaks</7>. Pick a word and tap its forms."
-msgstr "Його вимагають також інші дієслова. <0/> з <1>haigeks</1> — «захворіти», і минулий час у нього утворюється так само: <2>ma jäin</2>. <3/> і <4>minema</4> з <5>-ks</5> означають «ставати»: <6>Ilm muutub külmaks</6>, <7>Tuba läheb soojaks</7>. Обери слово й торкнися його форм."
+msgstr "Транслатив вимагають і інші дієслова. <0/> з <1>haigeks</1> — «захворіти», і минулий час у нього утворюється так само: <2>ma jäin</2>. <3/> і <4>minema</4> з <5>-ks</5> означають «ставати»: <6>Ilm muutub külmaks</6>, <7>Tuba läheb soojaks</7>. Обери слово й торкнися його форм."
 
 msgid "Peeter"
 msgstr "Пеетер"
@@ -449,7 +449,7 @@ msgid "With <et>-na</et>, only the noun takes the ending: <et>uue arstina</et>."
 msgstr "З <et>-na</et> закінчення отримує лише іменник: <et>uue arstina</et>."
 
 msgid "With a time, <0>-ks</0> says by when, or how long something is planned for: <1/>, by Friday; <2/>, for a week. With a meal, a day or an occasion, it says what for: <3>hommikusöögiks</3>, for breakfast. Tap a line to hear it."
-msgstr "Коли йдеться про час, <0>-ks</0> каже «до коли» або на скільки щось заплановано: <1/> — «до п’ятниці», тобто не пізніше; <2/> — «на тиждень». Зі стравою, днем чи подією — «на що»: <3>hommikusöögiks</3> — «на сніданок». Торкнися рядка, щоб послухати."
+msgstr "Коли йдеться про час, <0>-ks</0> каже «до коли» або на скільки щось заплановано: <1/> — «до п’ятниці», тобто не пізніше; <2/> — «на тиждень». З прийомом їжі, днем чи подією — «на що»: <3>hommikusöögiks</3> — «на сніданок». Торкнися рядка, щоб послухати."
 
 msgid "Words"
 msgstr "Слова"

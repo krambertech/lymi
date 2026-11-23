@@ -22,11 +22,14 @@ msgstr "<0>Kus</0>, <1>kuhu</1> чи <2>kust</2>"
 msgid "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>?"
 msgstr "<0>Kus</0>, <1>kuhu</1> чи <2>kust</2>?"
 
-msgid "10 minutes"
-msgstr "10 хвилин"
+msgid "<0>Turg</0> takes <1>-le</1>, not <2>-sse</2>: <3>turule</3>."
+msgstr "<0>Turg</0> отримує <1>-le</1>, а не <2>-sse</2>: <3>turule</3>."
 
-msgid "2 quizzes and a story to fill in"
-msgstr "2 тести й історія з пропусками"
+msgid "20 minutes"
+msgstr "20 хвилин"
+
+msgid "7 exercises"
+msgstr "7 вправ"
 
 msgid "A cat and a table"
 msgstr "Кіт і стіл"
@@ -49,8 +52,17 @@ msgstr "Після <0>helistama</0> і <1>küsima</1> людина отриму�
 msgid "After <0>läheb</0>, goes, the place answers <1>kuhu</1>, so the market takes <2>-le</2>: <3>turule</3>."
 msgstr "Після <0>läheb</0>, «іде», місце відповідає на <1>kuhu</1>, тож ринок отримує <2>-le</2>: <3>turule</3>."
 
+msgid "All eight typed right."
+msgstr "Усі вісім введено правильно."
+
 msgid "All of them. You heard the ending of every form."
 msgstr "Усі. Жодної помилки в закінченнях."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All six written right."
+msgstr "Усі шість написано правильно."
 
 msgid "All three endings go on the same stem: <0/>, <1/>, <2/>. Tap a form in the table to hear it."
 msgstr "Усі три закінчення додаються до тієї самої основи: <0/>, <1/>, <2/>. Торкнися форми в таблиці, щоб її почути."
@@ -70,15 +82,39 @@ msgstr "на ринку"
 msgid "at work"
 msgstr "на роботі"
 
+msgid "Being on or at a place answers <et>kus</et> and takes <et>-l</et>."
+msgstr "Бути на чомусь чи десь — це відповідь на <et>kus</et>, закінчення <et>-l</et>."
+
+msgid "Being there answers <0>kus</0>: <1>laual</1>."
+msgstr "Бути десь — це відповідь на <0>kus</0>: <1>laual</1>."
+
 msgctxt "kass, the cat on the table"
 msgid "cat"
 msgstr "кіт"
+
+msgid "Coming from there answers <0>kust</0>: <1>turult</1>."
+msgstr "Іти звідкись — це відповідь на <0>kust</0>: <1>turult</1>."
+
+msgid "Coming off or from a place answers <et>kust</et> and takes <et>-lt</et>."
+msgstr "Іти звідкись чи з чогось — це відповідь на <et>kust</et>, закінчення <et>-lt</et>."
+
+msgid "Each round gives a place and a question. Type the form that answers it: <0>kus</0> takes <1>-l</1>, <2>kuhu</2> takes <3>-le</3>, and <4>kust</4> takes <5>-lt</5>."
+msgstr "У кожному раунді — місце й питання. Введи форму, що на нього відповідає: <0>kus</0> — <1>-l</1>, <2>kuhu</2> — <3>-le</3>, <4>kust</4> — <5>-lt</5>."
+
+msgid "Each sentence has one place or person in the wrong form. Tap it, then write the right form."
+msgstr "У кожному реченні одне місце чи людина в неправильній формі. Торкнися слова, а потім напиши правильну форму."
 
 msgid "Fill each gap with the form that fits. Some places take <0>-l</0>, some <1>-s</1>, and one gap is a person. Hear the whole story at the end."
 msgstr "Заповни кожен пропуск формою, що підходить. Одні місця вживаються з <0>-l</0>, інші — з <1>-s</1>, а в одному пропуску — людина. Наприкінці послухай усю історію."
 
 msgid "Fill the gaps"
 msgstr "Заповни пропуски"
+
+msgid "Find and fix the mistake"
+msgstr "Знайди й виправ помилку"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
 
 msgid "For the table, the answer to <0/> ends in <1>-le</1>: <2/> The answer to <3/> ends in <4>-lt</4>: <5/> The cat lands on the floor, so <6/> takes <7>-le</7>."
 msgstr "Для столу відповідь на <0/> закінчується на <1>-le</1>: <2/> Відповідь на <3/> — на <4>-lt</4>: <5/> Кіт приземляється на підлогу, тож <6/> отримує <7>-le</7>."
@@ -95,11 +131,23 @@ msgstr "з ринку"
 msgid "from work"
 msgstr "з роботи"
 
+msgid "Go through the sections above once more, then try again."
+msgstr "Ще раз переглянь розділи вище, а потім спробуй знову."
+
+msgid "Going onto or to a place answers <et>kuhu</et> and takes <et>-le</et>."
+msgstr "Іти кудись чи на щось — це відповідь на <et>kuhu</et>, закінчення <et>-le</et>."
+
+msgid "Going there answers <0>kuhu</0>: <1>tööle</1>."
+msgstr "Іти кудись — це відповідь на <0>kuhu</0>: <1>tööle</1>."
+
 msgid "Hear a form on its own and pick the question it answers. Listen to its last sounds: <0>-l</0>, <1>-le</1> or <2>-lt</2>."
 msgstr "Послухай форму окремо й вибери питання, на яке вона відповідає. Слухай останні звуки: <0>-l</0>, <1>-le</1> чи <2>-lt</2>."
 
 msgid "Helistama takes -le: helistan emale."
 msgstr "Helistama вимагає -le: helistan emale."
+
+msgid "Home"
+msgstr "Додому"
 
 msgid "hospital"
 msgstr "лікарня"
@@ -121,6 +169,9 @@ msgstr "Я спитаю тата."
 
 msgid "I’ll ask Mum."
 msgstr "Я спитаю маму."
+
+msgid "I’m asking Mum."
+msgstr "Я питаю маму."
 
 msgid "I’m calling a friend."
 msgstr "Я дзвоню другові."
@@ -152,6 +203,12 @@ msgstr "у Тарту"
 msgid "in the shop"
 msgstr "у магазині"
 
+msgid "Jaan calls Mari on Saturday. Read the questions, then listen."
+msgstr "У суботу Яан дзвонить Марі. Прочитай запитання, а потім послухай."
+
+msgid "Jaan’s mum lives on Saaremaa."
+msgstr "Мама Яана живе на Сааремаа."
+
 msgid "jumps"
 msgstr "стрибає"
 
@@ -167,14 +224,35 @@ msgstr "В уроці {have} <0>-l</0> показувало, у кого щос�
 msgid "Lesson {places} taught <0>-l</0> for on and at: <1/> Lesson {inner} paired <2>-s</2> with <3>-sse</3> and <4>-st</4>, for “where to” and “where from”. <5>-l</5> has a pair of its own: <6>-le</6> and <7>-lt</7>."
 msgstr "В уроці {places} було <0>-l</0> — «на»: <1/> В уроці {inner} у <2>-s</2> з’явилася пара: <3>-sse</3> і <4>-st</4> — для «куди?» і «звідки?». У <5>-l</5> є своя пара: <6>-le</6> і <7>-lt</7>."
 
+msgid "Listen: a call on Saturday"
+msgstr "Послухай: дзвінок у суботу"
+
+msgid "Listen: Jaan calls Mari"
+msgstr "Послухай: Яан дзвонить Марі"
+
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"
+
+msgid "Making the form"
+msgstr "Утвори форму"
+
+msgid "Mari goes to work today."
+msgstr "Сьогодні Марі йде на роботу."
+
+msgid "Mari is going to call her mum."
+msgstr "Марі подзвонить мамі."
 
 msgid "Mari’s Saturday"
 msgstr "Субота Марі"
 
 msgid "market"
 msgstr "ринок"
+
+msgid "Most of them. Look again at the ones you missed."
+msgstr "Майже всі. Ще раз поглянь на ті, де була помилка."
+
+msgid "Most of them. Read the ones you missed once more."
+msgstr "Майже всі. Ще раз прочитай ті, де була помилка."
 
 msgid "Mum has a cat."
 msgstr "У мами є кіт."
@@ -185,12 +263,18 @@ msgstr "Мама йде з роботи, а тато — зі школи."
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Майже. Переслухай ті, де були помилки."
 
+msgid "Off or from: -lt"
+msgstr "З, звідки: -lt"
+
 msgid "off the table"
 msgstr "зі столу"
 
 msgctxt "a place's form that answers kust"
 msgid "off, from"
 msgstr "з (звідки?)"
+
+msgid "On or at: -l"
+msgstr "На, де: -l"
 
 msgctxt "the island, where"
 msgid "on Saaremaa"
@@ -209,6 +293,9 @@ msgstr "на (де?)"
 msgid "On, onto and off the table"
 msgstr "На стіл, на столі, зі столу"
 
+msgid "Onto or to: -le"
+msgstr "На, куди: -le"
+
 msgid "onto the floor"
 msgstr "на підлогу"
 
@@ -221,6 +308,9 @@ msgstr "на (куди?)"
 
 msgid "or a short form"
 msgstr "або коротка форма"
+
+msgid "People with -le and -lt"
+msgstr "Люди з -le і -lt"
 
 msgid "Places that take <0>-l</0> answer <1>kus</1>, <2>kuhu</2> and <3>kust</3> with <4>-l</4>, <5>-le</5> and <6>-lt</6>: <7>laual, lauale, laualt</7>."
 msgstr "Місця з <0>-l</0> відповідають на <1>kus</1>, <2>kuhu</2> і <3>kust</3> закінченнями <4>-l</4>, <5>-le</5> і <6>-lt</6>: <7>laual, lauale, laualt</7>."
@@ -291,6 +381,9 @@ msgstr "Закінчення для «куди?» залежить від зак
 msgid "The person you call takes <0>-le</0>: <1>emale</1>."
 msgstr "Той, кому дзвониш, отримує <0>-le</0>: <1>emale</1>."
 
+msgid "The person you call takes <et>-le</et>, and the person you ask takes <et>-lt</et>."
+msgstr "Той, кому дзвониш, отримує <et>-le</et>, а той, кого питаєш, — <et>-lt</et>."
+
 msgid "The verb is the same both ways, so only the ending says which way the cat goes. Tap a form to watch it and hear the sentence."
 msgstr "Дієслово однакове в обох реченнях, тож напрямок показує лише закінчення. Торкнися форми, щоб побачити стрибок і почути речення."
 
@@ -313,6 +406,9 @@ msgctxt "the island, where to"
 msgid "to Saaremaa"
 msgstr "на острів Сааремаа"
 
+msgid "To Saaremaa"
+msgstr "На Сааремаа"
+
 msgid "to school"
 msgstr "до школи"
 
@@ -325,12 +421,24 @@ msgstr "до лікарні"
 msgid "to the market"
 msgstr "на ринок"
 
+msgid "To the market"
+msgstr "На ринок"
+
 msgid "to the shop"
 msgstr "до магазину"
 
 msgctxt "the place: going to work"
 msgid "to work"
 msgstr "на роботу"
+
+msgid "To work"
+msgstr "На роботу"
+
+msgid "Type the form"
+msgstr "Введи форму"
+
+msgid "We live on Saaremaa."
+msgstr "Ми живемо на Сааремаа."
 
 msgid "where"
 msgstr "де"
@@ -343,6 +451,24 @@ msgstr "Куди ти йдеш?"
 
 msgid "where from"
 msgstr "звідки"
+
+msgid "Where is Jaan going tomorrow?"
+msgstr "Куди Яан їде завтра?"
+
+msgid "Where is Mari going from the market?"
+msgstr "Куди Марі піде з ринку?"
+
+msgid "Where is Mari? Write the place in Estonian, with its ending."
+msgstr "Де Марі? Напиши місце естонською, із закінченням."
+
+msgid "Where it comes from"
+msgstr "Звідки воно йде"
+
+msgid "Where it goes"
+msgstr "Куди воно йде"
+
+msgid "Where it is"
+msgstr "Де воно"
 
 msgid "Where something comes from: <0>-lt</0> says off it or from it."
 msgstr "Звідки щось рухається: <0>-lt</0> — це «з чого»: зі столу, з роботи."
@@ -362,6 +488,9 @@ msgstr "куди"
 msgid "Where to: <0>-le</0> or <1>-sse</1>?"
 msgstr "Куди: <0>-le</0> чи <1>-sse</1>?"
 
+msgid "Which question a form answers"
+msgstr "На яке питання відповідає форма"
+
 msgid "Which question the form answers"
 msgstr "На яке питання відповідає форма"
 
@@ -376,3 +505,15 @@ msgstr "робота"
 
 msgid "Work, the market, the table and names ending in <0>-maa</0> take <1>-l</1>, so <2>-le</2>: <3>turule</3>."
 msgstr "Робота, ринок, стіл і назви на <0>-maa</0> вживаються з <1>-l</1>, тож <2>-le</2>: <3>turule</3>."
+
+msgid "Write each sentence in Estonian. For a place, ask yourself first: where, where to or where from? For a person, think of the verb."
+msgstr "Напиши кожне речення естонською. Для місця спершу спитай себе: де, куди чи звідки? Для людини згадай дієслово."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "You ask someone with <0>-lt</0>: <1>küsin emalt</1>."
+msgstr "Той, кого питаєш, отримує <0>-lt</0>: <1>küsin emalt</1>."
+
+msgid "You call someone with <0>-le</0>: <1>helistan emale</1>."
+msgstr "Той, кому дзвониш, отримує <0>-le</0>: <1>helistan emale</1>."

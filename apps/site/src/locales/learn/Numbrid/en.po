@@ -22,8 +22,8 @@ msgstr "<0/> is twelve and <1/> is twenty. Both start with kaks, so listen to ho
 msgid "<0>Sada</0> and <1>tuhat</1> usually need no “one”. Hundreds join up; thousands stay separate."
 msgstr "<0>Sada</0> and <1>tuhat</1> usually need no “one”. Hundreds join up; thousands stay separate."
 
-msgid "<et>-teist</et> makes eleven to nineteen; <et>-kümmend</et> makes the tens."
-msgstr "<et>-teist</et> makes eleven to nineteen; <et>-kümmend</et> makes the tens."
+msgid "<et>-teist</et> makes eleven to nineteen; <et>-kümmend</et> makes twenty to ninety."
+msgstr "<et>-teist</et> makes eleven to nineteen; <et>-kümmend</et> makes twenty to ninety."
 
 msgid "<et>-teist</et> or <et>-kümmend</et>"
 msgstr "<et>-teist</et> or <et>-kümmend</et>"
@@ -127,11 +127,11 @@ msgstr "Eurot is the partitive of euro."
 msgid "five"
 msgstr "five"
 
-msgid "For the tens, add <0>-kümmend</0> to the digit: <1/> is two tens, twenty."
-msgstr "For the tens, add <0>-kümmend</0> to the digit: <1/> is two tens, twenty."
-
 msgid "four"
 msgstr "four"
+
+msgid "From twenty to ninety, add <0>-kümmend</0> to the digit: <1/> is two tens, twenty. Ten is just <2>kümme</2>."
+msgstr "From twenty to ninety, add <0>-kümmend</0> to the digit: <1/> is two tens, twenty. Ten is just <2>kümme</2>."
 
 msgid "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
 msgstr "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
@@ -268,17 +268,14 @@ msgstr "ten"
 msgid "Tens and ones are separate words: <0>kakskümmend üks</0>."
 msgstr "Tens and ones are separate words: <0>kakskümmend üks</0>."
 
-msgid "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
-msgstr "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
+msgid "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens from twenty to ninety."
+msgstr "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens from twenty to ninety."
 
 msgid "The tens"
 msgstr "The tens"
 
 msgid "The tens and the ones are two words."
 msgstr "The tens and the ones are two words."
-
-msgid "The tens: -kümmend"
-msgstr "The tens: -kümmend"
 
 msgid "The word after the number changes too: <0/>, <1/>. That form is the partitive, which lesson {partitive} explains. For now, listen for the number."
 msgstr "The word after the number changes too: <0/>, <1/>. That form is the partitive, which lesson {partitive} explains. For now, listen for the number."
@@ -315,6 +312,9 @@ msgstr "twelve euros"
 
 msgid "twenty"
 msgstr "twenty"
+
+msgid "Twenty to ninety: -kümmend"
+msgstr "Twenty to ninety: -kümmend"
 
 msgid "twenty-one"
 msgstr "twenty-one"

@@ -1,6 +1,6 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import { KELL_DRILLED, KELL_HEARD, timeAnswers } from "../../../lib/learn/clips";
+import { KELL_DRILLED, KELL_HEARD, KELL_WRITTEN, timeAnswers } from "../../../lib/learn/clips";
 import type { ChoiceDrill, DrillBank, FormDrill, SentenceDrill } from "../../../lib/learn/drill";
 import {
   type ClockTime,
@@ -10,7 +10,7 @@ import {
   timeSentence,
 } from "../../../lib/learn/estonian-time";
 
-const HOUR = msg`On the hour, say the hour alone: <et>kell on viis</et>, 5:00.`;
+const HOUR = msg`On the hour, you usually say the hour alone: <et>kell on viis</et>, 5:00.`;
 const HALF = msg`<et>Pool</et>, <et>veerand</et> and <et>kolmveerand</et> name the hour that’s coming.`;
 const PAST = msg`<et>Läbi</et> counts on from the hour that has struck.`;
 const TO = msg`<et>Pärast</et> counts down to the hour that’s coming.`;
@@ -87,5 +87,5 @@ export const DRILLS: DrillBank = {
     past: { label: msg`Minutes past: <et>läbi</et>`, section: "past" },
     to: { label: msg`Minutes to: <et>pärast</et>`, section: "to" },
   },
-  items: [...KELL_DRILLED.map(typed), ...KELL_DRILLED.map(written), ...KELL_HEARD.map(heard)],
+  items: [...KELL_DRILLED.map(typed), ...KELL_WRITTEN.map(written), ...KELL_HEARD.map(heard)],
 };

@@ -4,7 +4,7 @@ import { numberAnswers } from "../../../lib/learn/clips";
 import type { ChoiceDrill, DrillBank, FormDrill } from "../../../lib/learn/drill";
 import { numberWords } from "../../../lib/learn/estonian-numbers";
 
-const TEIST = msg`<et>-teist</et> makes eleven to nineteen; <et>-kümmend</et> makes the tens.`;
+const TEIST = msg`<et>-teist</et> makes eleven to nineteen; <et>-kümmend</et> makes twenty to ninety.`;
 const BOTH = msg`The tens and the ones are two words.`;
 const BIG = msg`Hundreds join into one word; thousands stay separate.`;
 
@@ -71,8 +71,8 @@ export const DRILLS: DrillBank = {
     typed(60, "teist", TEIST),
     typed(15, "teist", TEIST),
     typed(50, "teist", TEIST),
-    typed(17, "teist", TEIST),
-    typed(70, "teist", TEIST),
+    typed(19, "teist", TEIST),
+    typed(90, "teist", TEIST),
     heard(17, 70, "teist", TEIST),
     heard(70, 17, "teist", TEIST),
     typed(27, "words", BOTH),

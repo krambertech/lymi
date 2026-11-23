@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: uk\n"
 
-msgid "<0>Kas</0> asks yes or no: the answer usually starts with <1>jah</1> or <2>ei</2>."
-msgstr "<0>Kas</0> питає «так чи ні»: відповідь зазвичай починається з <1>jah</1> чи <2>ei</2>."
+msgid "<0>Kas</0> usually asks yes or no; the answer often starts with <1>jah</1> or <2>ei</2>."
+msgstr "<0>Kas</0> зазвичай питає «так чи ні»; відповідь часто починається з <1>jah</1> чи <2>ei</2>."
 
 msgid "<0>Kes</0> asks who, so a person answers it."
 msgstr "<0>Kes</0> питає «хто», тож відповідь — людина."
@@ -52,14 +52,14 @@ msgstr "<et>Kus</et> питає «де», а закінчення дієслов
 msgid "<et>Mina</et> takes <et>olen</et>: <et>Mina olen Andres</et>."
 msgstr "З <et>mina</et> — <et>olen</et>: <et>Mina olen Andres</et>."
 
-msgid "<et>Mis</et> asks what; when the answer says <et>ma</et> or <et>minu</et>, ask with <et>sa</et> or <et>su</et>."
-msgstr "<et>Mis</et> питає «що»; якщо у відповіді <et>ma</et> чи <et>minu</et>, то в питанні — <et>sa</et> чи <et>su</et>."
+msgid "<et>Mis</et> asks what; when the answer says <et>ma</et> or <et>minu</et>, ask with <et>sa</et> or <et>su</et>, or polite <et>te</et>."
+msgstr "<et>Mis</et> питає «що»; якщо у відповіді <et>ma</et> чи <et>minu</et>, то в питанні — <et>sa</et> чи <et>su</et>, а ввічливо — <et>te</et>."
 
 msgid "20 minutes"
 msgstr "20 хвилин"
 
-msgid "A <0/> question wants yes or no, a <1/> question a place, and a <2/> question a person. Put each answer under the question it fits."
-msgstr "На питання з <0/> відповідають «так» чи «ні», на питання з <1/> — місцем, на питання з <2/> — людиною. Розклади відповіді за питаннями."
+msgid "A <0/> question usually wants yes or no, a <1/> question a place, and a <2/> question a person. Put each answer under the question it fits."
+msgstr "На питання з <0/> зазвичай відповідають «так» чи «ні», на питання з <1/> — місцем, на питання з <2/> — людиною. Розклади відповіді за питаннями."
 
 msgid "a little"
 msgstr "трохи"
@@ -79,14 +79,14 @@ msgstr "Питання з відповіддю «так» чи «ні» зазв
 msgid "A yes-or-no question usually starts with <et>kas</et>."
 msgstr "Питання з відповіддю «так» чи «ні» зазвичай починається з <et>kas</et>."
 
-msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
-msgstr "Після <0>ei</0> дієслово <1>olema</1> втрачає закінчення: <2>ei ole</2>."
+msgid "After <0>ei</0>, <1>olema</1> usually loses its ending: <2>ei ole</2>."
+msgstr "Після <0>ei</0> дієслово <1>olema</1> зазвичай втрачає закінчення: <2>ei ole</2>."
 
-msgid "After <et>ei</et> the verb has no ending; <et>olema</et> is <et>ole</et>."
-msgstr "Після <et>ei</et> дієслово без закінчення; <et>olema</et> стає <et>ole</et>."
+msgid "After <et>ei</et> the verb usually has no ending; <et>olema</et> is <et>ole</et>."
+msgstr "Після <et>ei</et> дієслово зазвичай без закінчення; <et>olema</et> стає <et>ole</et>."
 
-msgid "After ei the verb has no ending: ei tööta, doesn’t work."
-msgstr "Після ei дієслово без закінчення: ei tööta, «не працює»."
+msgid "After ei the verb usually has no ending: ei tööta, doesn’t work."
+msgstr "Після ei дієслово зазвичай без закінчення: ei tööta, «не працює»."
 
 msgid "All six, each with the right question word and verb ending."
 msgstr "Усі шість: у кожному правильне питальне слово й закінчення дієслова."
@@ -136,8 +136,8 @@ msgstr "Ти говориш естонською?"
 msgid "Does he or she speak Estonian?"
 msgstr "Він чи вона розмовляє естонською?"
 
-msgid "Each round gives an answer. Write the question it answers. When the answer says <0>ma</0> or <1>minu</1>, ask with <2>sa</2> or <3>su</3>."
-msgstr "У кожному раунді є відповідь. Напиши питання до неї. Якщо у відповіді <0>ma</0> чи <1>minu</1>, то в питанні — <2>sa</2> чи <3>su</3>."
+msgid "Each round gives an answer. Write the question it answers. When the answer says <0>ma</0> or <1>minu</1>, ask with <2>sa</2> or <3>su</3>, or polite <4>te</4>."
+msgstr "У кожному раунді є відповідь. Напиши питання до неї. Якщо у відповіді <0>ma</0> чи <1>minu</1>, то в питанні — <2>sa</2> чи <3>su</3>, а ввічливо — <4>te</4>."
 
 msgid "Each sentence needs one thing from lessons {first} to {last}: the verb after <0>ei</0>, a place with its ending, or a question."
 msgstr "У кожному реченні знадобиться щось з уроків {first}–{last}: дієслово після <0>ei</0>, місце із закінченням або питання."
@@ -172,8 +172,8 @@ msgstr "Ще раз пройди «Питання до Марі», а тоді �
 msgid "Goodbye"
 msgstr "До побачення"
 
-msgid "Has a sentence with <0>ei</0> and the verb without its ending."
-msgstr "Є речення з <0>ei</0> і дієсловом без закінчення."
+msgid "Has a sentence with <0>ei</0> and the verb without its ending for the person."
+msgstr "Є речення з <0>ei</0> і дієсловом без особового закінчення."
 
 msgid "he or she drinks"
 msgstr "він чи вона п’є"
@@ -316,8 +316,8 @@ msgstr "Місця з <et>-s</et> і <et>-l</et>"
 msgid "Practice for lessons {first} to {last}"
 msgstr "Практика за уроками {first}–{last}"
 
-msgid "Say no with <0>ei</0> and the verb without its ending: <1>Ma ei tööta. Ei, ma ei ole.</1>"
-msgstr "Щоб сказати «ні», став <0>ei</0>, а дієслово — без закінчення: <1>Ma ei tööta. Ei, ma ei ole.</1>"
+msgid "Say no with <0>ei</0> and the verb, usually without its ending: <1>Ma ei tööta. Ei, ma ei ole.</1>"
+msgstr "Щоб сказати «ні», став <0>ei</0>, а дієслово — зазвичай без закінчення: <1>Ma ei tööta. Ei, ma ei ole.</1>"
 
 msgid "Say where you live and work, with <0>-s</0> or <1>-l</1> on the place: <2>Ma elan Tartus. Ma töötan kontoris. Ta on tööl.</2>"
 msgstr "Кажи, де живеш і працюєш, додаючи до місця <0>-s</0> чи <1>-l</1>: <2>Ma elan Tartus. Ma töötan kontoris. Ta on tööl.</2>"
@@ -358,8 +358,8 @@ msgstr "Тарту має <0>-s</0>: <1>Tartus</1>."
 msgid "Tea"
 msgstr "Чай"
 
-msgid "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
-msgstr "Дієслово втрачає закінчення після <0>ei</0>, а не після <1>kas</1>: <2>elad</2>."
+msgid "The verb usually drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
+msgstr "Дієслово зазвичай втрачає закінчення після <0>ei</0>, а не після <1>kas</1>: <2>elad</2>."
 
 msgid "They’re at work."
 msgstr "Вони на роботі."
@@ -367,8 +367,8 @@ msgstr "Вони на роботі."
 msgid "This time Mari’s lines are sound only. Tap a line to hear it again, or tap Show what Mari said to read it."
 msgstr "Цього разу репліки Марі тільки звучать. Натисни на репліку, щоб почути її ще раз, або на «Показати репліку: Марі», щоб її прочитати."
 
-msgid "turns a sentence into a yes-or-no question"
-msgstr "робить із речення питання «так чи ні»"
+msgid "usually turns a sentence into a yes-or-no question"
+msgstr "зазвичай робить із речення питання «так чи ні»"
 
 msgid "Verb forms: after <et>ei</et>, and <et>olema</et>"
 msgstr "Дієслово після <et>ei</et> і форми <et>olema</et>"

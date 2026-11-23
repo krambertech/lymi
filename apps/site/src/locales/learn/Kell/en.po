@@ -56,8 +56,8 @@ msgstr "A quarter of the way to {next}."
 msgid "a time"
 msgstr "a time"
 
-msgid "After a number from two up, minut becomes minutit."
-msgstr "After a number from two up, minut becomes minutit."
+msgid "After a number from two up, minut usually becomes minutit: kümme minutit. After kümne, it’s minuti."
+msgstr "After a number from two up, minut usually becomes minutit: kümme minutit. After kümne, it’s minuti."
 
 msgid "after; in, as in “in ten minutes”"
 msgstr "after; in, as in “in ten minutes”"
@@ -83,14 +83,14 @@ msgstr "An hour later"
 msgid "Ask <0>Mis kell on?</0> The answer is <1>kell on</1> and the hour: <2>kell on kolm</2>."
 msgstr "Ask <0>Mis kell on?</0> The answer is <1>kell on</1> and the hour: <2>kell on kolm</2>."
 
-msgid "Ask the time and understand the answer. Halves and quarters count toward the hour that’s coming."
-msgstr "Ask the time and understand the answer. Halves and quarters count toward the hour that’s coming."
+msgid "Ask the time and understand the answer. Pool, veerand and kolmveerand count toward the hour that’s coming."
+msgstr "Ask the time and understand the answer. Pool, veerand and kolmveerand count toward the hour that’s coming."
 
 msgid "at six; six o’clock"
 msgstr "at six; six o’clock"
 
-msgid "Before the hour, say how long until the next one. <0/> is, word for word, “in ten minutes, four”: 3:50."
-msgstr "Before the hour, say how long until the next one. <0/> is, word for word, “in ten minutes, four”: 3:50."
+msgid "Before the hour, you usually say how long until the next one. <0/> is, word for word, “in ten minutes, four”: 3:50."
+msgstr "Before the hour, you usually say how long until the next one. <0/> is, word for word, “in ten minutes, four”: 3:50."
 
 msgid "clock, watch; o’clock"
 msgstr "clock, watch; o’clock"
@@ -197,9 +197,6 @@ msgstr "minutes"
 msgid "Minutes"
 msgstr "Minutes"
 
-msgid "Minutes past count from the hour that has struck: <0>kümme minutit kolm läbi</0>, 3:10. Minutes to count down to the next: <1>kümne minuti pärast neli</1>, 3:50."
-msgstr "Minutes past count from the hour that has struck: <0>kümme minutit kolm läbi</0>, 3:10. Minutes to count down to the next: <1>kümne minuti pärast neli</1>, 3:50."
-
 msgid "Minutes past: <et>läbi</et>"
 msgstr "Minutes past: <et>läbi</et>"
 
@@ -227,14 +224,14 @@ msgstr "Nearly. Play the ones you missed once more."
 msgid "On the hour"
 msgstr "On the hour"
 
-msgid "On the hour, say the hour alone: <et>kell on viis</et>, 5:00."
-msgstr "On the hour, say the hour alone: <et>kell on viis</et>, 5:00."
+msgid "On the hour, you usually say the hour alone: <et>kell on viis</et>, 5:00."
+msgstr "On the hour, you usually say the hour alone: <et>kell on viis</et>, 5:00."
 
-msgid "On the hour: the number alone."
-msgstr "On the hour: the number alone."
+msgid "On the hour: usually the number alone."
+msgstr "On the hour: usually the number alone."
 
-msgid "Other minutes, up to twenty past, count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, the form after a number; lesson {partitive} explains it."
-msgstr "Other minutes, up to twenty past, count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, the form after a number; lesson {partitive} explains it."
+msgid "Other minutes, up to twenty past, usually count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, its form after a number such as kümme; lesson {partitive} explains it."
+msgstr "Other minutes, up to twenty past, usually count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, its form after a number such as kümme; lesson {partitive} explains it."
 
 #. placeholder {0}: timeDigits(time)
 #. placeholder {1}: timeWords(time)
@@ -345,6 +342,9 @@ msgstr "Which half hour?"
 
 msgid "Which time did you hear?"
 msgstr "Which time did you hear?"
+
+msgid "With <0>läbi</0>, minutes past count from the hour that has struck: <1>kümme minutit kolm läbi</1>, 3:10. With <2>pärast</2>, minutes to count down to the next: <3>kümne minuti pärast neli</3>, 3:50."
+msgstr "With <0>läbi</0>, minutes past count from the hour that has struck: <1>kümme minutit kolm läbi</1>, 3:10. With <2>pärast</2>, minutes to count down to the next: <3>kümne minuti pärast neli</3>, 3:50."
 
 msgid "Word for word: “what clock is?”"
 msgstr "Word for word: “what clock is?”"

@@ -34,7 +34,7 @@ const asking = (id: keyof typeof TUTVUMINE_ASKING) => said(TUTVUMINE_ASKING[id])
 
 const GLOSSARY: Glossary = {
   nimi: { en: msg`name` },
-  kas: { en: msg`turns a sentence into a yes-or-no question` },
+  kas: { en: msg`usually turns a sentence into a yes-or-no question` },
   kus: { en: msg`where` },
   kes: { en: msg`who` },
   elan: { en: msg`I live`, note: msg`From elama, to live.` },
@@ -44,7 +44,7 @@ const GLOSSARY: Glossary = {
   ei: { en: msg`not; no` },
   tööta: {
     en: msg({ message: "work", context: "the verb, after ei" }),
-    note: msg`After ei the verb has no ending: ei tööta, doesn’t work.`,
+    note: msg`After ei the verb usually has no ending: ei tööta, doesn’t work.`,
   },
   töötan: { en: msg`I work` },
   kontoris: { en: msg`at the office` },
@@ -196,7 +196,7 @@ function useContent() {
           line: "Ei, ma ei olen. Ma töötan kontoris.",
           why: (
             <Trans>
-              After <b lang="et">ei</b>, <b lang="et">olema</b> loses its ending:{" "}
+              After <b lang="et">ei</b>, <b lang="et">olema</b> usually loses its ending:{" "}
               <b lang="et">ei ole</b>.
             </Trans>
           ),
@@ -348,8 +348,8 @@ function useContent() {
           line: "Kas sa ela Pärnus?",
           why: (
             <Trans>
-              The verb drops its ending after <b lang="et">ei</b>, not after <b lang="et">kas</b>:{" "}
-              <b lang="et">elad</b>.
+              The verb usually drops its ending after <b lang="et">ei</b>, not after{" "}
+              <b lang="et">kas</b>: <b lang="et">elad</b>.
             </Trans>
           ),
         },
@@ -441,8 +441,8 @@ export function TutvumineLesson() {
       hint: t`yes or no`,
       rule: (
         <Trans>
-          <b lang="et">Kas</b> asks yes or no: the answer usually starts with <b lang="et">jah</b>{" "}
-          or <b lang="et">ei</b>.
+          <b lang="et">Kas</b> usually asks yes or no; the answer often starts with{" "}
+          <b lang="et">jah</b> or <b lang="et">ei</b>.
         </Trans>
       ),
     },
@@ -591,7 +591,7 @@ export function TutvumineLesson() {
           on the place: <b lang="et">Ma elan Tartus. Ma töötan kontoris. Ta on tööl.</b>
         </Trans>,
         <Trans key="3">
-          Say no with <b lang="et">ei</b> and the verb without its ending:{" "}
+          Say no with <b lang="et">ei</b> and the verb, usually without its ending:{" "}
           <b lang="et">Ma ei tööta. Ei, ma ei ole.</b>
         </Trans>,
         <Trans key="4">
@@ -724,8 +724,8 @@ export function TutvumineLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    A <Word w="kas" /> question wants yes or no, a <Word w="kus" /> question a
-                    place, and a <Word w="kes" /> question a person. Put each answer under the
+                    A <Word w="kas" /> question usually wants yes or no, a <Word w="kus" /> question
+                    a place, and a <Word w="kes" /> question a person. Put each answer under the
                     question it fits.
                   </Trans>
                 </p>
@@ -750,7 +750,8 @@ export function TutvumineLesson() {
                   <Trans>
                     Each round gives an answer. Write the question it answers. When the answer says{" "}
                     <span lang="et">ma</span> or <span lang="et">minu</span>, ask with{" "}
-                    <span lang="et">sa</span> or <span lang="et">su</span>.
+                    <span lang="et">sa</span> or <span lang="et">su</span>, or polite{" "}
+                    <span lang="et">te</span>.
                   </Trans>
                 </p>
               </Prose>
@@ -876,7 +877,7 @@ export function TutvumineLesson() {
                     label: (
                       <Trans>
                         Has a sentence with <span lang="et">ei</span> and the verb without its
-                        ending.
+                        ending for the person.
                       </Trans>
                     ),
                   },

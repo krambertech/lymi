@@ -201,7 +201,7 @@ function PairTable() {
     <Panel>
       <Paradigm
         label={t`One sentence with the partitive and with the genitive`}
-        columns={[t`Partitive: part, or not finished`, t`Genitive: the whole, done`]}
+        columns={[t`Partitive: part, or not said to be finished`, t`Genitive: the whole, done`]}
         rows={rows}
         empty={{
           title: t`Tap a sentence`,
@@ -365,7 +365,7 @@ function useContent() {
           partitive.
         </Trans>
       ) : (
-        <Trans>A command for the whole thing: the object takes the nominative.</Trans>
+        <Trans>A command for the whole thing: the noun takes the nominative.</Trans>
       ),
     }));
 
@@ -750,7 +750,7 @@ export function RaamatutVoiRaamatuLesson() {
   const commands = lessonBySlug("kaskiv")?.n;
   const plural = lessonBySlug("mitmus")?.n;
   const future = LESSONS.find((lesson) => lesson.et === "Hakkan õppima")?.n;
-  const pastNo = LESSONS.find((lesson) => lesson.et === "Ma ei läinud")?.n;
+  const pastNo = lessonBySlug("mineviku-eitus")?.n;
   const gradation = lessonBySlug("jalg-jala")?.n;
   const pluralPartitive = lessonBySlug("raamatuid-maju")?.n;
   const pronouns = lessonBySlug("asesonad")?.n;
@@ -796,8 +796,8 @@ export function RaamatutVoiRaamatuLesson() {
           <b lang="et">Ma ostsin leiba. Ma lugesin raamatut.</b>
         </Trans>,
         <Trans key="2">
-          The whole thing, done or sure to get done: the genitive, often with <b lang="et">läbi</b>{" "}
-          or <b lang="et">ära</b>. <b lang="et">Ma lugesin raamatu läbi. Ma loen raamatu läbi.</b>
+          The whole thing, done or sure to get done: for a noun, usually the genitive, often with{" "}
+          <b lang="et">läbi</b> or <b lang="et">ära</b>. <b lang="et">Ma lugesin raamatu läbi. Ma loen raamatu läbi.</b>
         </Trans>,
         <Trans key="3">
           After <b lang="et">ei</b>, always the partitive: <b lang="et">Ma ei ostnud piletit.</b> On
@@ -805,7 +805,7 @@ export function RaamatutVoiRaamatuLesson() {
           too: <b lang="et">Ma ootan sõpra.</b>
         </Trans>,
         <Trans key="4">
-          In a command, the whole thing takes the nominative, and a command with{" "}
+          In a command, a whole noun usually takes the nominative, and a command with{" "}
           <b lang="et">ära</b>, don’t, takes the partitive:{" "}
           <b lang="et">Osta pilet! Ära osta piletit!</b>
         </Trans>,
@@ -844,7 +844,7 @@ export function RaamatutVoiRaamatuLesson() {
                   <Trans>
                     Two small words after a verb often say that it’s done: <Word w="läbi" />,
                     through to the end, and <Word w="ära" />, all of it. In a statement without{" "}
-                    <b lang="et">ei</b>, the object before them takes the genitive.
+                    <b lang="et">ei</b>, a noun object before them usually takes the genitive.
                   </Trans>
                 </p>
               </Prose>
@@ -1011,8 +1011,8 @@ export function RaamatutVoiRaamatuLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    In a command about a whole thing, the object takes the nominative, the form a
-                    dictionary lists: <Word w="Osta pilet!" /> Not <b lang="et">pileti</b>. Lesson{" "}
+                    In a command about a whole thing, a noun object usually takes the nominative,
+                    the form a dictionary lists: <Word w="Osta pilet!" /> Not <b lang="et">pileti</b>. Lesson{" "}
                     {commands} teaches the command itself.
                   </Trans>
                 </p>

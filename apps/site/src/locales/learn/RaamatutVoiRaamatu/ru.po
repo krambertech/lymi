@@ -52,6 +52,9 @@ msgstr "Торт"
 msgid "A colleague was ill"
 msgstr "Коллега заболел"
 
+msgid "A command for a whole noun: usually the nominative."
+msgstr "Команда о чём-то целом, существительное: обычно именительный."
+
 msgid "A command for the whole thing takes the nominative: <0>pilet</0>."
 msgstr "В команде о чём-то целом — именительный: <0>pilet</0>."
 
@@ -61,8 +64,8 @@ msgstr "В команде о чём-то целом — именительный
 msgid "A command for the whole thing: the nominative."
 msgstr "Команда о чём-то целом: именительный."
 
-msgid "A command for the whole thing: the object takes the nominative."
-msgstr "Команда о чём-то целом: объект стоит в именительном."
+msgid "A command for the whole thing: the noun takes the nominative."
+msgstr "Команда о чём-то целом: существительное стоит в именительном."
 
 msgid "A command with <0>ära</0>, don’t, is a no, so its object takes the partitive: <1/>"
 msgstr "Команда с <0>ära</0>, «не», — это отрицание, поэтому объект стоит в партитиве: <1/>"
@@ -235,8 +238,8 @@ msgstr "Найти — это конец поиска: родительный."
 msgid "Finding is different. <0/>, to find, ends the looking, so what you found takes the genitive."
 msgstr "С «найти» иначе. <0/>, находить, завершает поиск, поэтому найденное стоит в родительном."
 
-msgid "Finished, all of it: the genitive with <et>läbi</et> or <et>ära</et>."
-msgstr "Завершено, всё целиком: родительный с <et>läbi</et> или <et>ära</et>."
+msgid "Finished, all of it: for a noun, usually the genitive with <et>läbi</et> or <et>ära</et>."
+msgstr "Завершено, всё целиком: у существительного обычно родительный с <et>läbi</et> или <et>ära</et>."
 
 msgid "Finished, or still going on"
 msgstr "Завершено или ещё идёт"
@@ -367,11 +370,11 @@ msgstr "Я работаю."
 msgid "In a command"
 msgstr "В команде"
 
-msgid "In a command about a whole thing, the object takes the nominative, the form a dictionary lists: <0/> Not <1>pileti</1>. Lesson {commands} teaches the command itself."
-msgstr "В команде о чём-то целом объект стоит в именительном падеже, то есть в форме из словаря: <0/> Не <1>pileti</1>. Как образовать саму команду, объясняет урок {commands}."
+msgid "In a command about a whole thing, a noun object usually takes the nominative, the form a dictionary lists: <0/> Not <1>pileti</1>. Lesson {commands} teaches the command itself."
+msgstr "В команде о чём-то целом объект-существительное обычно стоит в именительном падеже, то есть в форме из словаря: <0/> Не <1>pileti</1>. Как образовать саму команду, объясняет урок {commands}."
 
-msgid "In a command, the whole thing takes the nominative, and a command with <0>ära</0>, don’t, takes the partitive: <1>Osta pilet! Ära osta piletit!</1>"
-msgstr "В команде что-то целое стоит в именительном, а в команде с <0>ära</0>, «не», — в партитиве: <1>Osta pilet! Ära osta piletit!</1>"
+msgid "In a command, a whole noun usually takes the nominative, and a command with <0>ära</0>, don’t, takes the partitive: <1>Osta pilet! Ära osta piletit!</1>"
+msgstr "В команде существительное о чём-то целом обычно стоит в именительном, а в команде с <0>ära</0>, «не», — в партитиве: <1>Osta pilet! Ära osta piletit!</1>"
 
 msgid "In his pocket"
 msgstr "В кармане"
@@ -556,8 +559,8 @@ msgstr "Часть чего-то или действие, которое ещё 
 msgid "Part or whole"
 msgstr "Часть или целое"
 
-msgid "Partitive: part, or not finished"
-msgstr "Партитив: часть или не завершено"
+msgid "Partitive: part, or not said to be finished"
+msgstr "Партитив: часть, или не сказано, что завершено"
 
 msgid "Past: leidsin, I found."
 msgstr "Прошедшее время: leidsin — я нашёл."
@@ -566,7 +569,7 @@ msgid "Pilet, pileti, piletit."
 msgstr "Pilet, pileti, piletit."
 
 msgid "Pronouns are different. <0>Mina, sina, meie</0> and <1>teie</1> can take the partitive even for the whole person: <2>Ta viis mu koju</2> or <3>Ta viis mind koju</3>; <4>Ta viis meid koju</4>. In a command, only the partitive: <5>Vii mind koju!</5> <6>Ta</6> works like a noun: <7>Vii ta koju!</7> Lesson {pronouns} has every form."
-msgstr "С местоимениями иначе. <0>Mina, sina, meie</0> и <1>teie</1> могут стоять в партитиве даже о человеке целиком: <2>Ta viis mu koju</2> или <3>Ta viis mind koju</3>; <4>Ta viis meid koju</4>. В приказе — только партитив: <5>Vii mind koju!</5> <6>Ta</6> ведёт себя как существительное: <7>Vii ta koju!</7> Все формы — в уроке {pronouns}."
+msgstr "С местоимениями иначе. <0>Mina, sina, meie</0> и <1>teie</1> могут стоять в партитиве даже о человеке целиком: <2>Ta viis mu koju</2> или <3>Ta viis mind koju</3>; <4>Ta viis meid koju</4>. В команде — только партитив: <5>Vii mind koju!</5> <6>Ta</6> ведёт себя как существительное: <7>Vii ta koju!</7> Все формы — в уроке {pronouns}."
 
 msgid "Read the book to the end!"
 msgstr "Дочитай книгу до конца!"
@@ -664,11 +667,11 @@ msgstr "Тот же выбор отличает завершённое дейс�
 msgid "The verb is in the present in both columns. The object says whether it gets done."
 msgstr "В обоих столбцах глагол в настоящем времени. Объект показывает, будет ли действие завершено."
 
-msgid "The whole thing, done or sure to get done: the genitive, often with <0>läbi</0> or <1>ära</1>. <2>Ma lugesin raamatu läbi. Ma loen raamatu läbi.</2>"
-msgstr "Всё целиком, и действие завершено или точно будет завершено: родительный, часто с <0>läbi</0> или <1>ära</1>. <2>Ma lugesin raamatu läbi. Ma loen raamatu läbi.</2>"
+msgid "The whole thing, done or sure to get done: for a noun, usually the genitive, often with <0>läbi</0> or <1>ära</1>. <2>Ma lugesin raamatu läbi. Ma loen raamatu läbi.</2>"
+msgstr "Всё целиком, и действие завершено или точно будет завершено: у существительного обычно родительный, часто с <0>läbi</0> или <1>ära</1>. <2>Ma lugesin raamatu läbi. Ma loen raamatu läbi.</2>"
 
-msgid "The whole thing: the genitive."
-msgstr "Всё целиком: родительный."
+msgid "The whole thing: for a noun, usually the genitive."
+msgstr "Всё целиком: у существительного обычно родительный."
 
 msgid "This <0>ära</0> comes before the verb and means don’t. The <1>ära</1> after a verb means all of it: <2/> Eat up the soup!"
 msgstr "Это <0>ära</0> стоит перед глаголом и значит «не». А <1>ära</1> после глагола значит «целиком»: <2/> Доешь суп!"
@@ -709,8 +712,8 @@ msgstr "«До конца» — это <0>läbi</0>, с родительным."
 msgid "to wait, to wait for"
 msgstr "ждать"
 
-msgid "Two small words after a verb often say that it’s done: <0/>, through to the end, and <1/>, all of it. In a statement without <2>ei</2>, the object before them takes the genitive."
-msgstr "Два коротких слова после глагола часто говорят, что действие завершено: <0/>, до конца, и <1/>, целиком. В утвердительном предложении, без <2>ei</2>, объект перед ними стоит в родительном."
+msgid "Two small words after a verb often say that it’s done: <0/>, through to the end, and <1/>, all of it. In a statement without <2>ei</2>, a noun object before them usually takes the genitive."
+msgstr "Два коротких слова после глагола часто говорят, что действие завершено: <0/>, до конца, и <1/>, целиком. В утвердительном предложении, без <2>ei</2>, объект-существительное перед ними обычно стоит в родительном."
 
 msgid "Type the object"
 msgstr "Напиши объект"

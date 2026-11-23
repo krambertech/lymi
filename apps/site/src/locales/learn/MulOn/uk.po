@@ -264,8 +264,8 @@ msgstr "Мені потрібні гроші."
 msgid "I’m a teacher."
 msgstr "Я вчитель."
 
-msgid "In a yes sentence, one thing you can count stays in its first form, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
-msgstr "У ствердному реченні одна річ, яку можна порахувати, лишається в першій формі, тій, що в уроці {forms} іде першою: <0/>, <1/>, <2/>. Час — це кількість, а не одна річ, тому він має іншу форму: <3/> Цю форму пояснює урок {partitive}."
+msgid "In a yes sentence, one thing you can count stays in its nominative, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
+msgstr "У ствердному реченні одна річ, яку можна порахувати, лишається в називному, тій формі, що в уроці {forms} іде першою: <0/>, <1/>, <2/>. Час — це кількість, а не одна річ, тому він має іншу форму: <3/> Цю форму пояснює урок {partitive}."
 
 msgid "In Kas sul on aega? and Mul pole aega, time takes this form."
 msgstr "У Kas sul on aega? і Mul pole aega час стоїть саме в цій формі."
@@ -465,8 +465,8 @@ msgstr "Власник стоїть у формі на <0>-l</0>: <1>mul, sul, t
 msgid "The teacher has a book."
 msgstr "У вчителя є книжка."
 
-msgid "The verb is <0>on</0> whoever has the thing, and in a yes sentence one thing you can count stays in its first form: <1>Meil on maja.</1>"
-msgstr "Дієслово — <0>on</0>, хоч би в кого була річ, а в ствердному реченні одна річ, яку можна порахувати, лишається в першій формі: <1>Meil on maja.</1>"
+msgid "The verb is <0>on</0> whoever has the thing, and in a yes sentence one thing you can count stays in its nominative: <1>Meil on maja.</1>"
+msgstr "Дієслово — <0>on</0>, хоч би в кого була річ, а в ствердному реченні одна річ, яку можна порахувати, лишається в називному: <1>Meil on maja.</1>"
 
 msgid "they"
 msgstr "вони"

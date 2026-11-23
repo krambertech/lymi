@@ -264,8 +264,8 @@ msgstr "Мне нужны деньги."
 msgid "I’m a teacher."
 msgstr "Я учитель."
 
-msgid "In a yes sentence, one thing you can count stays in its first form, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
-msgstr "В утвердительном предложении одна вещь, которую можно посчитать, остаётся в первой форме, той, что в уроке {forms} идёт первой: <0/>, <1/>, <2/>. Время — это количество, а не одна вещь, поэтому у него другая форма: <3/> Эту форму объясняет урок {partitive}."
+msgid "In a yes sentence, one thing you can count stays in its nominative, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
+msgstr "В утвердительном предложении одна вещь, которую можно посчитать, остаётся в именительном, той форме, что в уроке {forms} идёт первой: <0/>, <1/>, <2/>. Время — это количество, а не одна вещь, поэтому у него другая форма: <3/> Эту форму объясняет урок {partitive}."
 
 msgid "In Kas sul on aega? and Mul pole aega, time takes this form."
 msgstr "В Kas sul on aega? и Mul pole aega время стоит именно в этой форме."
@@ -465,8 +465,8 @@ msgstr "Владелец стоит в форме на <0>-l</0>: <1>mul, sul, t
 msgid "The teacher has a book."
 msgstr "У учителя есть книга."
 
-msgid "The verb is <0>on</0> whoever has the thing, and in a yes sentence one thing you can count stays in its first form: <1>Meil on maja.</1>"
-msgstr "Глагол — <0>on</0>, у кого бы ни была вещь, а в утвердительном предложении одна вещь, которую можно посчитать, остаётся в первой форме: <1>Meil on maja.</1>"
+msgid "The verb is <0>on</0> whoever has the thing, and in a yes sentence one thing you can count stays in its nominative: <1>Meil on maja.</1>"
+msgstr "Глагол — <0>on</0>, у кого бы ни была вещь, а в утвердительном предложении одна вещь, которую можно посчитать, остаётся в именительном: <1>Meil on maja.</1>"
 
 msgid "they"
 msgstr "они"

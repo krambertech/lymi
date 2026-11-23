@@ -128,7 +128,7 @@ msgid "All six found and fixed."
 msgstr "Усі шість знайдено й виправлено."
 
 msgid "All six. You heard which actions got done."
-msgstr "Усі шість. Ти почув, які дії завершено."
+msgstr "Усі шість. Ти почув (почула), які дії завершено."
 
 msgid "At a café"
 msgstr "У кав’ярні"
@@ -215,7 +215,7 @@ msgid "Drink up the water!"
 msgstr "Випий усю воду!"
 
 msgid "Each round gives a sentence about something you did. Write the command that tells a friend to do it, or not to, as the cue says."
-msgstr "У кожному раунді — речення про те, що ти зробив. Напиши наказ другові: зробити це чи не робити — за підказкою."
+msgstr "У кожному раунді — речення про те, що ти зробив (зробила). Напиши наказ другові: зробити це чи не робити — за підказкою."
 
 msgid "Each round gives a word as a dictionary lists it and a sentence with a gap. Type the form the gap needs. Some rounds take the genitive."
 msgstr "У кожному раунді — слово, як його подає словник, і речення з пропуском. Напиши форму, потрібну в пропуску. У деяких раундах потрібен родовий."
@@ -232,8 +232,8 @@ msgstr "З’їж увесь суп!"
 msgid "English says this with “some” and “a”, or with “was reading” and “read”. Estonian says it with the object’s case, so the ending carries the meaning."
 msgstr "В українській «купив хліба» означає «трохи», і це родовий відмінок. В естонській навпаки: родовий — це ціла хлібина, а «трохи хліба» — партитив."
 
-msgid "Finding ends the looking: the genitive."
-msgstr "Знайти — це кінець пошуку: родовий."
+msgid "Finding ends the looking: usually the genitive."
+msgstr "Знайти — це кінець пошуку: зазвичай родовий."
 
 msgid "Finding is different. <0/>, to find, ends the looking, so what you found usually takes the genitive."
 msgstr "Зі «знайти» інакше. <0/>, знаходити, завершує пошук, тому знайдене зазвичай стоїть у родовому."
@@ -658,11 +658,11 @@ msgstr "Теперішній час із родовим означає, що д�
 msgid "The present with the genitive: it will get done."
 msgstr "Теперішній час із родовим: дію буде завершено."
 
-msgid "The present with the partitive: going on now."
-msgstr "Теперішній час із партитивом: дія триває зараз."
+msgid "The present with the partitive: usually going on now."
+msgstr "Теперішній час із партитивом: дія зазвичай триває зараз."
 
 msgid "The same choice tells a finished action from one still going on. <0/> means you were reading, maybe not to the end. <1/> means you finished it."
-msgstr "Той самий вибір відрізняє завершену дію від тієї, що ще триває. <0/> означає, що ти читав, можливо, не до кінця. <1/> — що дочитав."
+msgstr "Той самий вибір відрізняє завершену дію від тієї, що ще триває. <0/> означає, що ти читав (читала), можливо, не до кінця. <1/> — що дочитав (дочитала)."
 
 msgid "The verb is in the present in both columns. The object says whether it gets done."
 msgstr "В обох стовпцях дієслово в теперішньому часі. Об’єкт показує, чи дію буде завершено."
@@ -776,7 +776,7 @@ msgid "You want a cake."
 msgstr "Ти хочеш торт."
 
 msgid "You want one cake and no tea. You’ve lost your key, and you’ll eat the cake right away."
-msgstr "Ти хочеш один торт і не хочеш чаю. Ти загубив ключ, а торт з’їси одразу."
+msgstr "Ти хочеш один торт і не хочеш чаю. Ти загубив (загубила) ключ, а торт з’їси одразу."
 
 msgid "Your friend Liisa leaves you a voice message. Listen for what she bought, what she didn’t, and what she asks you."
 msgstr "Твоя подруга Ліїса надсилає тобі голосове. Послухай, що вона купила, чого не купила і про що просить."

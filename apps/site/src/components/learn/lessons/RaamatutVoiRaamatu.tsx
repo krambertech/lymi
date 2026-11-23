@@ -304,7 +304,7 @@ function useContent() {
           ) : kind === "whole" ? (
             <Trans>The past with the genitive: all of it, done.</Trans>
           ) : kind === "now" ? (
-            <Trans>The present with the partitive: going on now.</Trans>
+            <Trans>The present with the partitive: usually going on now.</Trans>
           ) : (
             <Trans>The present with the genitive: it will get done.</Trans>
           ),
@@ -331,7 +331,7 @@ function useContent() {
       "Ma ostsin ühe pileti.": <Trans>One whole ticket, bought: the genitive.</Trans>,
       "Ma ootan sõpra.": always("ootama"),
       "Ma otsin võtit.": always("otsima"),
-      "Ma leidsin võtme.": <Trans>Finding ends the looking: the genitive.</Trans>,
+      "Ma leidsin võtme.": <Trans>Finding ends the looking: usually the genitive.</Trans>,
       "Ma aitan last.": always("aitama"),
       "Me ei söönud kooki.": noFirst,
       "Me sõime koogi ära.": allOfIt,
@@ -469,7 +469,7 @@ function useContent() {
         src: src("Ma leidsin võtme."),
         answers: OBJECT_ANSWERS["Ma leidsin võtme."],
         pair: ["verbs", "found"],
-        explain: <Trans>Finding ends the looking: the genitive.</Trans>,
+        explain: <Trans>Finding ends the looking: usually the genitive.</Trans>,
       },
       {
         kind: "translate",

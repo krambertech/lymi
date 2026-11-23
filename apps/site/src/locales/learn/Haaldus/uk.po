@@ -254,7 +254,7 @@ msgid "No English sound is like it. Say o, then spread your lips and keep your t
 msgstr "В українській такого звуку немає. Найближче до нього російське «ы», трохи схоже й українське «и». Скажи «о», потім розтягни губи, а язик залиш на місці."
 
 msgid "Now write the word. Use the keys under the field to type õ, ä, ö and ü. A vowel without its marks makes another word, so it counts as wrong."
-msgstr "Тепер напиши слово. Набрати õ, ä, ö та ü можна кнопками під полем. Голосна без значків — це вже інше слово, тож відповідь не зарахується."
+msgstr "Тепер напиши слово. Набрати õ, ä, ö та ü можна кнопками під полем. Без значків виходить інше слово, тож відповідь не зарахується."
 
 msgid "Õ or o, ä or a, ü or u"
 msgstr "Õ чи o, ä чи a, ü чи u"

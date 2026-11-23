@@ -254,7 +254,7 @@ msgid "No English sound is like it. Say o, then spread your lips and keep your t
 msgstr "В русском такого звука нет, но близко к нему «ы». Скажи «о», затем растяни губы, а язык оставь на месте."
 
 msgid "Now write the word. Use the keys under the field to type õ, ä, ö and ü. A vowel without its marks makes another word, so it counts as wrong."
-msgstr "Теперь напиши слово. Набрать õ, ä, ö и ü можно кнопками под полем. Гласная без значков — это уже другое слово, так что ответ не засчитается."
+msgstr "Теперь напиши слово. Набрать õ, ä, ö и ü можно кнопками под полем. Без значков получается другое слово, так что ответ не засчитается."
 
 msgid "Õ or o, ä or a, ü or u"
 msgstr "Õ или o, ä или a, ü или u"
@@ -385,7 +385,7 @@ msgid "The letters <0>õ ä ö ü</0> are vowels of their own, and English has n
 msgstr "Буквы <0>õ ä ö ü</0> — отдельные гласные, а к <1>õ</1> ближе всего русское ы."
 
 msgid "The same word twice"
-msgstr "Одно слово дважды"
+msgstr "Одно и то же слово дважды"
 
 msgid "The same word, said twice."
 msgstr "Одно и то же слово, сказанное дважды."

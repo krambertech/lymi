@@ -12,11 +12,9 @@ interface Page {
   View: ComponentType;
 }
 
-type Shown = Promise<Page> & { status?: "fulfilled"; value?: Page };
-
 interface Load {
   page: Promise<Page>;
-  shown: Shown;
+  shown: Promise<Page>;
 }
 
 const pages = new Map<string, Load>();
@@ -63,7 +61,7 @@ function open(target: LearnTarget, locale: string): Load {
       : target.kind === "hub"
         ? hubPage(locale)
         : kitPage(locale);
-  const shown: Shown = page.catch(keepServerHtml);
+  const shown = page.catch(keepServerHtml);
   page.then((value) => Object.assign(shown, { status: "fulfilled", value }), noop);
   const load = { page, shown };
   pages.set(key, load);

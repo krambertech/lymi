@@ -2925,7 +2925,11 @@ export const ADJ_MESSAGE = [
 export const ADJ_TRANSLATE = [
   {
     id: "suures-majas",
-    answers: withPronouns(["Ma elan suures majas."]),
+    answers: withPronouns([
+      "Ma elan suures majas.",
+      "Suures majas elan ma.",
+      "Ma elan ühes suures majas.",
+    ]),
   },
   { id: "uue-autoga", answers: ["Jaan sõidab uue autoga."] },
   {
@@ -3074,12 +3078,41 @@ export const CMP_THAN = [
 ] as const;
 
 export const CMP_ST = [
-  { kui: "Tallinn on suurem kui Tartu.", st: "Tallinn on Tartust suurem." },
-  { kui: "Jaan on vanem kui Mari.", st: "Jaan on Marist vanem." },
-  { kui: "Kohv on kallim kui tee.", st: "Kohv on teest kallim." },
-  { kui: "Minu tuba on suurem kui sinu tuba.", st: "Minu tuba on sinu toast suurem." },
-  { kui: "Mari on noorem kui Kati.", st: "Mari on Katist noorem." },
-  { kui: "Tartu on vanem kui Tallinn.", st: "Tartu on Tallinnast vanem." },
+  {
+    kui: "Tallinn on suurem kui Tartu.",
+    st: "Tallinn on Tartust suurem.",
+    answers: ["Tallinn on Tartust suurem.", "Tallinn on suurem Tartust."],
+  },
+  {
+    kui: "Jaan on vanem kui Mari.",
+    st: "Jaan on Marist vanem.",
+    answers: ["Jaan on Marist vanem.", "Jaan on vanem Marist."],
+  },
+  {
+    kui: "Kohv on kallim kui tee.",
+    st: "Kohv on teest kallim.",
+    answers: ["Kohv on teest kallim.", "Kohv on kallim teest."],
+  },
+  {
+    kui: "Minu tuba on suurem kui sinu tuba.",
+    st: "Minu tuba on sinu toast suurem.",
+    answers: [
+      "Minu tuba on sinu toast suurem.",
+      "Minu tuba on sinu omast suurem.",
+      "Minu tuba on suurem sinu toast.",
+      "Minu tuba on suurem sinu omast.",
+    ],
+  },
+  {
+    kui: "Mari on noorem kui Kati.",
+    st: "Mari on Katist noorem.",
+    answers: ["Mari on Katist noorem.", "Mari on noorem Katist."],
+  },
+  {
+    kui: "Tartu on vanem kui Tallinn.",
+    st: "Tartu on Tallinnast vanem.",
+    answers: ["Tartu on Tallinnast vanem.", "Tartu on vanem Tallinnast."],
+  },
 ] as const;
 
 export const CMP_MOST = [
@@ -3114,10 +3147,32 @@ export const CMP_HEARD = [
 ] as const;
 
 export const CMP_TRANSLATE = [
-  { id: "suurem-kui", answers: ["Tallinn on suurem kui Tartu.", "Tallinn on Tartust suurem."] },
-  { id: "kallim", answers: ["Kohv on kallim kui tee.", "Kohv on teest kallim."] },
-  { id: "koige-parem", answers: ["See on kõige parem kohvik.", "See on parim kohvik."] },
-  { id: "vanem", answers: ["Jaan on vanem kui Mari.", "Jaan on Marist vanem."] },
+  {
+    id: "suurem-kui",
+    answers: [
+      "Tallinn on suurem kui Tartu.",
+      "Tallinn on Tartust suurem.",
+      "Tallinn on suurem Tartust.",
+      "Tallinn on suurem linn kui Tartu.",
+    ],
+  },
+  {
+    id: "kallim",
+    answers: ["Kohv on kallim kui tee.", "Kohv on teest kallim.", "Kohv on kallim teest."],
+  },
+  {
+    id: "koige-parem",
+    answers: [
+      "See on kõige parem kohvik.",
+      "See on parim kohvik.",
+      "See kohvik on kõige parem.",
+      "See kohvik on parim.",
+    ],
+  },
+  {
+    id: "vanem",
+    answers: ["Jaan on vanem kui Mari.", "Jaan on Marist vanem.", "Jaan on vanem Marist."],
+  },
   {
     id: "sama-suur",
     answers: [
@@ -3137,6 +3192,14 @@ export const CMP_TRANSLATE = [
       "Minu tuba on sama suur nagu su tuba.",
       "Mu tuba on sama suur nagu sinu oma.",
       "Minu tuba on sama suur nagu su oma.",
+      "Minu tuba on sama suur kui teie tuba.",
+      "Minu tuba on sama suur kui teie oma.",
+      "Minu tuba on sama suur nagu teie tuba.",
+      "Minu tuba on sama suur nagu teie oma.",
+      "Mu tuba on sama suur kui teie tuba.",
+      "Mu tuba on sama suur kui teie oma.",
+      "Mu tuba on sama suur nagu teie tuba.",
+      "Mu tuba on sama suur nagu teie oma.",
     ],
   },
   {
@@ -3146,6 +3209,10 @@ export const CMP_TRANSLATE = [
       "Mari on mu parim sõber.",
       "Mari on minu kõige parem sõber.",
       "Mari on mu kõige parem sõber.",
+      "Minu parim sõber on Mari.",
+      "Mu parim sõber on Mari.",
+      "Minu kõige parem sõber on Mari.",
+      "Mu kõige parem sõber on Mari.",
     ],
   },
 ] as const;

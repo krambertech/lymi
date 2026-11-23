@@ -67,17 +67,17 @@ msgstr "Прикметники змінюються, як іменники"
 msgid "Adjectives in the plural"
 msgstr "Прикметники в множині"
 
-msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, both words take the partitive singular: <2>kaks head sõpra</2>."
-msgstr "Після <0>kaks</0>, <1>kolm</1> і більших чисел обидва слова стоять у партитиві однини: <2>kaks head sõpra</2>."
+msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, both words usually take the partitive singular: <2>kaks head sõpra</2>."
+msgstr "Після <0>kaks</0>, <1>kolm</1> і більших чисел обидва слова зазвичай стоять у партитиві однини: <2>kaks head sõpra</2>."
 
-msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, both words take the partitive singular: <2>kaks suurt kassi</2>. With <3>-ga</3>, the number changes as well: <4>kahe suure kassiga</4>."
-msgstr "Після <0>kaks</0>, <1>kolm</1> і більших чисел обидва слова стоять у партитиві однини: <2>kaks suurt kassi</2>. З <3>-ga</3> змінюється і число: <4>kahe suure kassiga</4>."
+msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, both words usually take the partitive singular: <2>kaks suurt kassi</2>. With other endings, the number changes as well: <3>kahes suures majas</3>, <4>kahe suure kassiga</4>."
+msgstr "Після <0>kaks</0>, <1>kolm</1> і більших чисел обидва слова зазвичай стоять у партитиві однини: <2>kaks suurt kassi</2>. З іншими закінченнями змінюється і число: <3>kahes suures majas</3>, <4>kahe suure kassiga</4>."
 
-msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, the adjective is in the partitive singular as well: <2>kaks suurt kassi</2>."
-msgstr "Після <0>kaks</0>, <1>kolm</1> і більших чисел прикметник теж стоїть у партитиві однини: <2>kaks suurt kassi</2>."
+msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, the adjective is usually in the partitive singular as well: <2>kaks suurt kassi</2>."
+msgstr "Після <0>kaks</0>, <1>kolm</1> і більших чисел прикметник теж зазвичай стоїть у партитиві однини: <2>kaks suurt kassi</2>."
 
-msgid "After <et>kaks</et>, <et>kolm</et> and higher numbers, both words take the partitive singular: <et>kaks suurt kassi</et>."
-msgstr "Після <et>kaks</et>, <et>kolm</et> і більших чисел обидва слова стоять у партитиві однини: <et>kaks suurt kassi</et>."
+msgid "After <et>kaks</et>, <et>kolm</et> and higher numbers, both words usually take the partitive singular: <et>kaks suurt kassi</et>."
+msgstr "Після <et>kaks</et>, <et>kolm</et> і більших чисел обидва слова зазвичай стоять у партитиві однини: <et>kaks suurt kassi</et>."
 
 msgid "All eight: both words with <0>-s</0>, the noun alone with <1>-ga</1> or <2>-na</2>."
 msgstr "Усі вісім: з <0>-s</0> — обидва слова, з <1>-ga</1> чи <2>-na</2> — лише іменник."
@@ -164,8 +164,8 @@ msgstr "Родовий"
 msgid "good"
 msgstr "хороший, добрий"
 
-msgid "How does the brother get to work? Write it as Jaan says it."
-msgstr "Як брат добирається на роботу? Напиши так, як каже Яан."
+msgid "How does the brother get to work? Write the two words as Jaan says them."
+msgstr "Як брат добирається на роботу? Напиши два слова так, як їх каже Яан."
 
 msgid "How many small rooms does the brother’s house have?"
 msgstr "Скільки маленьких кімнат у будинку брата?"
@@ -438,8 +438,8 @@ msgstr "Де працює брат Яана?"
 msgid "Where was Jaan yesterday?"
 msgstr "Де Яан був учора?"
 
-msgid "Where will Kati wait for Jaan? Write it as she says it."
-msgstr "Де Каті чекатиме на Яана? Напиши так, як вона каже."
+msgid "Where will Kati wait for Jaan? Write the two words as she says them."
+msgstr "Де Каті чекатиме на Яана? Напиши два слова так, як їх каже вона."
 
 msgid "With"
 msgstr "З"

@@ -1,13 +1,15 @@
 import { msg } from "@lingui/core/macro";
-import { ADJ_TRANSLATE } from "../../../lib/learn/clips";
+import { ADJ_FIX, ADJ_TRANSLATE } from "../../../lib/learn/clips";
 import type { DrillBank } from "../../../lib/learn/drill";
 
+const fixAnswers = (id: (typeof ADJ_FIX)[number]["id"]) =>
+  (ADJ_FIX.find((item) => item.id === id) as (typeof ADJ_FIX)[number]).answers;
 const translateAnswers = (id: (typeof ADJ_TRANSLATE)[number]["id"]) =>
   (ADJ_TRANSLATE.find((item) => item.id === id) as (typeof ADJ_TRANSLATE)[number]).answers;
 
 const AGREE = msg`The adjective usually takes the noun’s case: <et>suures majas</et>, <et>uut raamatut</et>.`;
 const GEN = msg`With <et>-ga</et>, <et>-ta</et>, <et>-ni</et> or <et>-na</et>, only the noun takes the ending: <et>suure autoga</et>.`;
-const NUMBER = msg`After <et>kaks</et>, <et>kolm</et> and higher numbers, both words take the partitive singular: <et>kaks suurt kassi</et>.`;
+const NUMBER = msg`After <et>kaks</et>, <et>kolm</et> and higher numbers, both words usually take the partitive singular: <et>kaks suurt kassi</et>.`;
 const PLURAL = msg`When the noun takes plural <et>-d</et>, the adjective takes <et>-d</et> as well: <et>uued raamatud</et>.`;
 
 export const DRILLS: DrillBank = {
@@ -32,7 +34,7 @@ export const DRILLS: DrillBank = {
       id: "agree-fix-suures",
       rule: "agree",
       wrong: "Ma elan suur majas.",
-      answers: ["Ma elan suures majas."],
+      answers: fixAnswers("fix-suures"),
       say: "Ma elan suures majas.",
       explain: AGREE,
     },
@@ -69,7 +71,7 @@ export const DRILLS: DrillBank = {
       id: "agree-fix-uut",
       rule: "agree",
       wrong: "Ma loen uus raamatut.",
-      answers: ["Ma loen uut raamatut."],
+      answers: fixAnswers("fix-uut"),
       say: "Ma loen uut raamatut.",
       explain: AGREE,
     },
@@ -79,7 +81,7 @@ export const DRILLS: DrillBank = {
       id: "gen-fix-suure",
       rule: "genitive",
       wrong: "Ma sõidan suurega autoga.",
-      answers: ["Ma sõidan suure autoga."],
+      answers: fixAnswers("fix-suure"),
       say: "Ma sõidan suure autoga.",
       explain: GEN,
     },
@@ -167,7 +169,7 @@ export const DRILLS: DrillBank = {
       id: "stems-fix-vaikeses",
       rule: "stems",
       wrong: "Kass magab väike toas.",
-      answers: ["Kass magab väikeses toas."],
+      answers: fixAnswers("fix-vaikeses"),
       say: "Kass magab väikeses toas.",
       explain: msg`<et>Väike</et> takes <et>-s</et> on its genitive <et>väikese</et>: <et>väikeses toas</et>.`,
     },
@@ -205,7 +207,7 @@ export const DRILLS: DrillBank = {
       id: "agree-fix-suurt",
       rule: "agree",
       wrong: "Mul on kaks suur kassi.",
-      answers: ["Mul on kaks suurt kassi."],
+      answers: fixAnswers("fix-suurt"),
       say: "Mul on kaks suurt kassi.",
       explain: NUMBER,
     },
@@ -215,7 +217,7 @@ export const DRILLS: DrillBank = {
       id: "plural-fix-uued",
       rule: "plural",
       wrong: "Need on uus raamatud.",
-      answers: ["Need on uued raamatud."],
+      answers: fixAnswers("fix-uued"),
       say: "Need on uued raamatud.",
       explain: PLURAL,
     },

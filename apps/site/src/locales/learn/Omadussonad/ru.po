@@ -67,17 +67,17 @@ msgstr "Прилагательные меняются, как существит
 msgid "Adjectives in the plural"
 msgstr "Прилагательные во множественном числе"
 
-msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, both words take the partitive singular: <2>kaks head sõpra</2>."
-msgstr "После <0>kaks</0>, <1>kolm</1> и бо́льших чисел оба слова стоят в партитиве единственного числа: <2>kaks head sõpra</2>."
+msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, both words usually take the partitive singular: <2>kaks head sõpra</2>."
+msgstr "После <0>kaks</0>, <1>kolm</1> и бо́льших чисел оба слова обычно стоят в партитиве единственного числа: <2>kaks head sõpra</2>."
 
-msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, both words take the partitive singular: <2>kaks suurt kassi</2>. With <3>-ga</3>, the number changes as well: <4>kahe suure kassiga</4>."
-msgstr "После <0>kaks</0>, <1>kolm</1> и бо́льших чисел оба слова стоят в партитиве единственного числа: <2>kaks suurt kassi</2>. С <3>-ga</3> меняется и число: <4>kahe suure kassiga</4>."
+msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, both words usually take the partitive singular: <2>kaks suurt kassi</2>. With other endings, the number changes as well: <3>kahes suures majas</3>, <4>kahe suure kassiga</4>."
+msgstr "После <0>kaks</0>, <1>kolm</1> и бо́льших чисел оба слова обычно стоят в партитиве единственного числа: <2>kaks suurt kassi</2>. С другими окончаниями меняется и число: <3>kahes suures majas</3>, <4>kahe suure kassiga</4>."
 
-msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, the adjective is in the partitive singular as well: <2>kaks suurt kassi</2>."
-msgstr "После <0>kaks</0>, <1>kolm</1> и бо́льших чисел прилагательное тоже стоит в партитиве единственного числа: <2>kaks suurt kassi</2>."
+msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, the adjective is usually in the partitive singular as well: <2>kaks suurt kassi</2>."
+msgstr "После <0>kaks</0>, <1>kolm</1> и бо́льших чисел прилагательное тоже обычно стоит в партитиве единственного числа: <2>kaks suurt kassi</2>."
 
-msgid "After <et>kaks</et>, <et>kolm</et> and higher numbers, both words take the partitive singular: <et>kaks suurt kassi</et>."
-msgstr "После <et>kaks</et>, <et>kolm</et> и бо́льших чисел оба слова стоят в партитиве единственного числа: <et>kaks suurt kassi</et>."
+msgid "After <et>kaks</et>, <et>kolm</et> and higher numbers, both words usually take the partitive singular: <et>kaks suurt kassi</et>."
+msgstr "После <et>kaks</et>, <et>kolm</et> и бо́льших чисел оба слова обычно стоят в партитиве единственного числа: <et>kaks suurt kassi</et>."
 
 msgid "All eight: both words with <0>-s</0>, the noun alone with <1>-ga</1> or <2>-na</2>."
 msgstr "Все восемь: с <0>-s</0> — оба слова, с <1>-ga</1> или <2>-na</2> — только существительное."
@@ -164,8 +164,8 @@ msgstr "Родительный"
 msgid "good"
 msgstr "хороший"
 
-msgid "How does the brother get to work? Write it as Jaan says it."
-msgstr "Как брат добирается на работу? Напиши так, как говорит Яан."
+msgid "How does the brother get to work? Write the two words as Jaan says them."
+msgstr "Как брат добирается на работу? Напиши два слова так, как их говорит Яан."
 
 msgid "How many small rooms does the brother’s house have?"
 msgstr "Сколько маленьких комнат в доме брата?"
@@ -438,8 +438,8 @@ msgstr "Где работает брат Яана?"
 msgid "Where was Jaan yesterday?"
 msgstr "Где Яан был вчера?"
 
-msgid "Where will Kati wait for Jaan? Write it as she says it."
-msgstr "Где Кати будет ждать Яана? Напиши так, как она говорит."
+msgid "Where will Kati wait for Jaan? Write the two words as she says them."
+msgstr "Где Кати будет ждать Яана? Напиши два слова так, как их говорит она."
 
 msgid "With"
 msgstr "С"

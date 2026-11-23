@@ -229,7 +229,7 @@ function useContent() {
       head: (
         <Trans>
           After <span lang="et">kaks</span>, <span lang="et">kolm</span> and higher numbers, both
-          words take the partitive singular: <span lang="et">kaks head sõpra</span>.
+          words usually take the partitive singular: <span lang="et">kaks head sõpra</span>.
         </Trans>
       ),
     };
@@ -259,7 +259,8 @@ function useContent() {
       "fix-suurt": (
         <Trans>
           After <span lang="et">kaks</span>, <span lang="et">kolm</span> and higher numbers, the
-          adjective is in the partitive singular as well: <span lang="et">kaks suurt kassi</span>.
+          adjective is usually in the partitive singular as well:{" "}
+          <span lang="et">kaks suurt kassi</span>.
         </Trans>
       ),
       "fix-uut": (
@@ -332,7 +333,7 @@ function useContent() {
       {
         id: "car",
         kind: "short",
-        ask: t`How does the brother get to work? Write it as Jaan says it.`,
+        ask: t`How does the brother get to work? Write the two words as Jaan says them.`,
         answers: ["vana autoga"],
         line: 12,
       },
@@ -358,7 +359,7 @@ function useContent() {
       {
         id: "meet",
         kind: "short",
-        ask: t`Where will Kati wait for Jaan? Write it as she says it.`,
+        ask: t`Where will Kati wait for Jaan? Write the two words as she says them.`,
         answers: ["väikeses kohvikus"],
         line: 26,
       },
@@ -471,9 +472,10 @@ export function OmadussonadLesson() {
           genitive: <b lang="et">suure autoga</b>.
         </Trans>,
         <Trans key="4">
-          After <b lang="et">kaks</b>, <b lang="et">kolm</b> and higher numbers, both words take the
-          partitive singular: <b lang="et">kaks suurt kassi</b>. With <b lang="et">-ga</b>, the
-          number changes as well: <b lang="et">kahe suure kassiga</b>.
+          After <b lang="et">kaks</b>, <b lang="et">kolm</b> and higher numbers, both words usually
+          take the partitive singular: <b lang="et">kaks suurt kassi</b>. With other endings, the
+          number changes as well: <b lang="et">kahes suures majas</b>,{" "}
+          <b lang="et">kahe suure kassiga</b>.
         </Trans>,
       ]}
       sections={[

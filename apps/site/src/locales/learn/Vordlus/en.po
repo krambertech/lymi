@@ -22,14 +22,14 @@ msgstr "A bigger desk and a newer computer"
 msgid "A bigger office and more money"
 msgstr "A bigger office and more money"
 
-msgid "A comparative is the genitive with <0>-m</0>: <1>suur, suure, suurem</1>; <2>uus, uue, uuem</2>. A two-syllable genitive’s a usually becomes e: <3>vana, vanem</3>."
-msgstr "A comparative is the genitive with <0>-m</0>: <1>suur, suure, suurem</1>; <2>uus, uue, uuem</2>. A two-syllable genitive’s a usually becomes e: <3>vana, vanem</3>."
+msgid "A comparative is usually the genitive with <0>-m</0>: <1>suur, suure, suurem</1>; <2>uus, uue, uuem</2>. A two-syllable genitive’s a usually becomes e: <3>vana, vanem</3>."
+msgstr "A comparative is usually the genitive with <0>-m</0>: <1>suur, suure, suurem</1>; <2>uus, uue, uuem</2>. A two-syllable genitive’s a usually becomes e: <3>vana, vanem</3>."
 
-msgid "A comparative is the genitive with <et>-m</et>: <et>suur</et>, <et>suure</et>, <et>suurem</et>; <et>uus</et>, <et>uue</et>, <et>uuem</et>."
-msgstr "A comparative is the genitive with <et>-m</et>: <et>suur</et>, <et>suure</et>, <et>suurem</et>; <et>uus</et>, <et>uue</et>, <et>uuem</et>."
+msgid "A comparative is usually the genitive with <et>-m</et>: <et>suur</et>, <et>suure</et>, <et>suurem</et>; <et>uus</et>, <et>uue</et>, <et>uuem</et>."
+msgstr "A comparative is usually the genitive with <et>-m</et>: <et>suur</et>, <et>suure</et>, <et>suurem</et>; <et>uus</et>, <et>uue</et>, <et>uuem</et>."
 
-msgid "A comparative takes the noun’s case like any adjective from lesson {agree}: <0>suuremas majas</0>, in a bigger house."
-msgstr "A comparative takes the noun’s case like any adjective from lesson {agree}: <0>suuremas majas</0>, in a bigger house."
+msgid "A comparative usually takes the noun’s case, like any adjective from lesson {agree}: <0>suuremas majas</0>, in a bigger house."
+msgstr "A comparative usually takes the noun’s case, like any adjective from lesson {agree}: <0>suuremas majas</0>, in a bigger house."
 
 msgid "Add <0>-m</0> to the genitive <1>{gen}</1>: <2>{answer}</2>."
 msgstr "Add <0>-m</0> to the genitive <1>{gen}</1>: <2>{answer}</2>."
@@ -67,11 +67,11 @@ msgstr "All six, by the ending and by <0>kõige</0>."
 msgid "All six, with <0>-st</0> before the comparative."
 msgstr "All six, with <0>-st</0> before the comparative."
 
-msgid "As big as is <0/> and the adjective, then <1>kui</1>: <2>sama suur kui</2>. Tap a line to hear it."
-msgstr "As big as is <0/> and the adjective, then <1>kui</1>: <2>sama suur kui</2>. Tap a line to hear it."
+msgid "As big as is <0/> and the adjective, then <1>kui</1> or <2>nagu</2>: <3>sama suur kui</3>. Tap a line to hear it."
+msgstr "As big as is <0/> and the adjective, then <1>kui</1> or <2>nagu</2>: <3>sama suur kui</3>. Tap a line to hear it."
 
-msgid "As big as is <et>sama suur kui</et>."
-msgstr "As big as is <et>sama suur kui</et>."
+msgid "As big as is <et>sama suur kui</et>, or <et>sama suur nagu</et>."
+msgstr "As big as is <et>sama suur kui</et>, or <et>sama suur nagu</et>."
 
 msgid "At her work"
 msgstr "At her work"
@@ -79,8 +79,8 @@ msgstr "At her work"
 msgid "beautiful"
 msgstr "beautiful"
 
-msgid "Before <0>-m</0>, the genitive’s a becomes e: <1>{answer}</1>."
-msgstr "Before <0>-m</0>, the genitive’s a becomes e: <1>{answer}</1>."
+msgid "Before <0>-m</0>, the a of a two-syllable genitive usually becomes e: <1>{answer}</1>."
+msgstr "Before <0>-m</0>, the a of a two-syllable genitive usually becomes e: <1>{answer}</1>."
 
 msgid "better"
 msgstr "better"
@@ -103,14 +103,14 @@ msgstr "Big, bigger or the biggest?"
 msgid "bigger"
 msgstr "bigger"
 
-msgid "Bigger is <0>suurem</0>: the genitive with <1>-m</1>. Than is <2>kui</2>, and the biggest is <3>kõige suurem</3>."
-msgstr "Bigger is <0>suurem</0>: the genitive with <1>-m</1>. Than is <2>kui</2>, and the biggest is <3>kõige suurem</3>."
-
-msgid "Bigger: -m on the genitive"
-msgstr "Bigger: -m on the genitive"
+msgid "Bigger is <0>suurem</0>: usually the genitive with <1>-m</1>. Than is <2>kui</2>, and the biggest is <3>kõige suurem</3>."
+msgstr "Bigger is <0>suurem</0>: usually the genitive with <1>-m</1>. Than is <2>kui</2>, and the biggest is <3>kõige suurem</3>."
 
 msgid "Bigger: <et>suurem</et>, <et>uuem</et>"
 msgstr "Bigger: <et>suurem</et>, <et>uuem</et>"
+
+msgid "Bigger: usually -m on the genitive"
+msgstr "Bigger: usually -m on the genitive"
 
 msgid "Cheap is <et>odav</et>, genitive <et>odava</et>. It has three syllables, so the a stays: <et>odavam</et>."
 msgstr "Cheap is <et>odav</et>, genitive <et>odava</et>. It has three syllables, so the a stays: <et>odavam</et>."
@@ -235,8 +235,8 @@ msgstr "Most of them. Check the <0>-st</0> form and where it goes."
 msgid "Most of them. Check the comparative in the ones you missed."
 msgstr "Most of them. Check the comparative in the ones you missed."
 
-msgid "Most of them. Find the genitive first, then add <0>-m</0>."
-msgstr "Most of them. Find the genitive first, then add <0>-m</0>."
+msgid "Most of them. Find the genitive first, then usually add <0>-m</0>."
+msgstr "Most of them. Find the genitive first, then usually add <0>-m</0>."
 
 msgid "Most of them. Listen for <0>-m</0> and for <1>kõige</1>."
 msgstr "Most of them. Listen for <0>-m</0> and for <1>kõige</1>."
@@ -322,8 +322,8 @@ msgstr "Tartu is older than Tallinn."
 msgid "Tartu is smaller than Tallinn."
 msgstr "Tartu is smaller than Tallinn."
 
-msgid "Than is <0>kui</0>: <1>suurem kui Tartu</1>. Or leave out <2>kui</2> and give the thing you compare with <3>-st</3>, before the comparative: <4>Tartust suurem</4>."
-msgstr "Than is <0>kui</0>: <1>suurem kui Tartu</1>. Or leave out <2>kui</2> and give the thing you compare with <3>-st</3>, before the comparative: <4>Tartust suurem</4>."
+msgid "Than is <0>kui</0>: <1>suurem kui Tartu</1>. Or leave out <2>kui</2> and give the thing you compare with <3>-st</3>, usually before the comparative: <4>Tartust suurem</4>."
+msgstr "Than is <0>kui</0>: <1>suurem kui Tartu</1>. Or leave out <2>kui</2> and give the thing you compare with <3>-st</3>, usually before the comparative: <4>Tartust suurem</4>."
 
 msgid "Than is <0>kui</0>. <1>Nagu</1> means like."
 msgstr "Than is <0>kui</0>. <1>Nagu</1> means like."
@@ -379,11 +379,11 @@ msgstr "the same"
 msgid "The short form of kõige parem."
 msgstr "The short form of kõige parem."
 
-msgid "The thing you compare with takes <0>-st</0> and goes before the comparative."
-msgstr "The thing you compare with takes <0>-st</0> and goes before the comparative."
+msgid "The thing you compare with takes <0>-st</0> and usually goes before the comparative."
+msgstr "The thing you compare with takes <0>-st</0> and usually goes before the comparative."
 
-msgid "There is a second way to say than. Leave out <0>kui</0>, put the thing you compare with before the comparative, and give it <1>-st</1> from lesson {into}: <2/>. Both mean the same."
-msgstr "There is a second way to say than. Leave out <0>kui</0>, put the thing you compare with before the comparative, and give it <1>-st</1> from lesson {into}: <2/>. Both mean the same."
+msgid "There is a second way to say than. Leave out <0>kui</0>, put the thing you compare with, usually before the comparative, and give it <1>-st</1> from lesson {into}: <2/>. Both mean the same."
+msgstr "There is a second way to say than. Leave out <0>kui</0>, put the thing you compare with, usually before the comparative, and give it <1>-st</1> from lesson {into}: <2/>. Both mean the same."
 
 msgid "This café is better."
 msgstr "This café is better."
@@ -397,8 +397,8 @@ msgstr "This is the best café."
 msgid "This one is its own word: <0>{answer}</0>."
 msgstr "This one is its own word: <0>{answer}</0>."
 
-msgid "To say bigger, take the adjective’s genitive from lesson {forms} and add <0>-m</0>: <1>suur</1>, <2>suure</2>, <3/>. This form is the comparative. Than is <4/>: <5/>."
-msgstr "To say bigger, take the adjective’s genitive from lesson {forms} and add <0>-m</0>: <1>suur</1>, <2>suure</2>, <3/>. This form is the comparative. Than is <4/>: <5/>."
+msgid "To say bigger, you usually take the adjective’s genitive from lesson {forms} and add <0>-m</0>: <1>suur</1>, <2>suure</2>, <3/>. This form is the comparative. Than is <4/>: <5/>."
+msgstr "To say bigger, you usually take the adjective’s genitive from lesson {forms} and add <0>-m</0>: <1>suur</1>, <2>suure</2>, <3/>. This form is the comparative. Than is <4/>: <5/>."
 
 msgid "Tomorrow"
 msgstr "Tomorrow"
@@ -448,8 +448,8 @@ msgstr "Without <0>kui</0>"
 msgid "Without <0>kui</0>, the thing you compare with takes <1>-st</1>: <2>Tartust</2>."
 msgstr "Without <0>kui</0>, the thing you compare with takes <1>-st</1>: <2>Tartust</2>."
 
-msgid "Without <et>kui</et>, the thing you compare with takes <et>-st</et> and goes before the comparative: <et>Tartust suurem</et>."
-msgstr "Without <et>kui</et>, the thing you compare with takes <et>-st</et> and goes before the comparative: <et>Tartust suurem</et>."
+msgid "Without <et>kui</et>, the thing you compare with takes <et>-st</et> and usually goes before the comparative: <et>Tartust suurem</et>."
+msgstr "Without <et>kui</et>, the thing you compare with takes <et>-st</et> and usually goes before the comparative: <et>Tartust suurem</et>."
 
 msgid "Write each sentence in Estonian."
 msgstr "Write each sentence in Estonian."

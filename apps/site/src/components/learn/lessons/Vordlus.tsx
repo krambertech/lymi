@@ -132,7 +132,7 @@ export const shuffledKinds = () => shuffle(["plain", "more", "most"] as const);
 function useContent() {
   const { t, i18n } = useLingui();
   return useMemo(() => {
-    const rewrite: SentenceItem[] = CMP_ST.map(({ kui, st }, i) => ({
+    const rewrite: SentenceItem[] = CMP_ST.map(({ kui, st, answers }, i) => ({
       kind: "rewrite",
       id: `st-${i}`,
       from: kui,
@@ -141,12 +141,11 @@ function useContent() {
           with <span lang="et">-st</span>, without <span lang="et">kui</span>
         </Trans>
       ),
-      answers:
-        st === "Minu tuba on sinu toast suurem." ? [st, "Minu tuba on sinu omast suurem."] : [st],
+      answers,
       src: src(st),
       explain: (
         <Trans>
-          The thing you compare with takes <span lang="et">-st</span> and goes before the
+          The thing you compare with takes <span lang="et">-st</span> and usually goes before the
           comparative.
         </Trans>
       ),
@@ -355,8 +354,8 @@ export function VordlusLesson() {
               </Trans>
             ) : kind === "a-to-e" ? (
               <Trans>
-                Before <span lang="et">-m</span>, the genitive’s a becomes e:{" "}
-                <span lang="et">{answer}</span>.
+                Before <span lang="et">-m</span>, the a of a two-syllable genitive usually becomes
+                e: <span lang="et">{answer}</span>.
               </Trans>
             ) : (
               <Trans>
@@ -410,8 +409,9 @@ export function VordlusLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Bigger is <span lang="et">suurem</span>: the genitive with <span lang="et">-m</span>. Than
-          is <span lang="et">kui</span>, and the biggest is <span lang="et">kõige suurem</span>.
+          Bigger is <span lang="et">suurem</span>: usually the genitive with{" "}
+          <span lang="et">-m</span>. Than is <span lang="et">kui</span>, and the biggest is{" "}
+          <span lang="et">kõige suurem</span>.
         </Trans>
       }
       facts={[
@@ -422,14 +422,14 @@ export function VordlusLesson() {
       words={["suurem", "kõige suurem", "parem", "kõige parem", "parim", "kui", "sama", "kallis"]}
       recap={[
         <Trans key="1">
-          A comparative is the genitive with <b lang="et">-m</b>:{" "}
+          A comparative is usually the genitive with <b lang="et">-m</b>:{" "}
           <b lang="et">suur, suure, suurem</b>; <b lang="et">uus, uue, uuem</b>. A two-syllable
           genitive’s a usually becomes e: <b lang="et">vana, vanem</b>.
         </Trans>,
         <Trans key="2">
           Than is <b lang="et">kui</b>: <b lang="et">suurem kui Tartu</b>. Or leave out{" "}
-          <b lang="et">kui</b> and give the thing you compare with <b lang="et">-st</b>, before the
-          comparative: <b lang="et">Tartust suurem</b>.
+          <b lang="et">kui</b> and give the thing you compare with <b lang="et">-st</b>, usually
+          before the comparative: <b lang="et">Tartust suurem</b>.
         </Trans>,
         <Trans key="3">
           For the biggest, put <b lang="et">kõige</b> before the comparative:{" "}
@@ -443,15 +443,15 @@ export function VordlusLesson() {
       sections={[
         {
           id: "bigger",
-          title: t`Bigger: -m on the genitive`,
+          title: t`Bigger: usually -m on the genitive`,
           quiz: true,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    To say bigger, take the adjective’s genitive from lesson {forms} and add{" "}
-                    <span lang="et">-m</span>: <span lang="et">suur</span>,{" "}
+                    To say bigger, you usually take the adjective’s genitive from lesson {forms} and
+                    add <span lang="et">-m</span>: <span lang="et">suur</span>,{" "}
                     <span lang="et">suure</span>, <Word w="suurem" />. This form is the comparative.
                     Than is <Word w="kui" />: <Word w="Tallinn on suurem kui Tartu" />.
                   </Trans>
@@ -491,7 +491,8 @@ export function VordlusLesson() {
                     <Trans>All eight comparatives.</Trans>
                   ) : share >= 0.6 ? (
                     <Trans>
-                      Most of them. Find the genitive first, then add <span lang="et">-m</span>.
+                      Most of them. Find the genitive first, then usually add{" "}
+                      <span lang="et">-m</span>.
                     </Trans>
                   ) : (
                     <Trans>Tap the words above once more, then try again.</Trans>
@@ -514,7 +515,7 @@ export function VordlusLesson() {
                 <p>
                   <Trans>
                     There is a second way to say than. Leave out <span lang="et">kui</span>, put the
-                    thing you compare with before the comparative, and give it{" "}
+                    thing you compare with, usually before the comparative, and give it{" "}
                     <span lang="et">-st</span> from lesson {into}:{" "}
                     <Word w="Tallinn on Tartust suurem" />. Both mean the same.
                   </Trans>
@@ -575,8 +576,8 @@ export function VordlusLesson() {
                 <p>
                   <Trans>
                     As big as is <Word w="sama" /> and the adjective, then{" "}
-                    <span lang="et">kui</span>: <span lang="et">sama suur kui</span>. Tap a line to
-                    hear it.
+                    <span lang="et">kui</span> or <span lang="et">nagu</span>:{" "}
+                    <span lang="et">sama suur kui</span>. Tap a line to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -632,8 +633,8 @@ export function VordlusLesson() {
               />
               <Aside>
                 <Trans>
-                  A comparative takes the noun’s case like any adjective from lesson {agree}:{" "}
-                  <span lang="et">suuremas majas</span>, in a bigger house.
+                  A comparative usually takes the noun’s case, like any adjective from lesson{" "}
+                  {agree}: <span lang="et">suuremas majas</span>, in a bigger house.
                 </Trans>
               </Aside>
             </>

@@ -262,9 +262,9 @@ describe("marketingPage", () => {
 describe("examBreadcrumbs", () => {
   it("leads from the translated hub to the exam", () => {
     const data = examBreadcrumbs("uk", "Підготовка", { name: "HSK", path: "/uk/exams/hsk" });
-    expect(data.itemListElement.map(({ position, item }) => [position, item])).toEqual([
-      [1, "https://lymi.app/uk/exams"],
-      [2, "https://lymi.app/uk/exams/hsk"],
+    expect(data.itemListElement.map(({ name, item }) => [name, item])).toEqual([
+      ["Підготовка", "https://lymi.app/uk/exams"],
+      ["HSK", "https://lymi.app/uk/exams/hsk"],
     ]);
   });
 });

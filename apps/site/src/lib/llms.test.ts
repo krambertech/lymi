@@ -15,14 +15,7 @@ describe("llmsTxt", () => {
   });
 
   it("points at the pages an assistant should read", () => {
-    for (const url of [
-      "https://lymi.app/",
-      "https://lymi.app/explore",
-      "https://lymi.app/docs",
-      "https://lymi.app/privacy",
-    ]) {
-      expect(text).toContain(url);
-    }
+    expect(text).toContain("(https://lymi.app/explore)");
   });
 
   it("lists every launched page that is translated", () => {

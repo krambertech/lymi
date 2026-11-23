@@ -204,7 +204,7 @@ export function changelogPost(
     description: update.summary,
     datePublished: update.date.toISOString(),
     inLanguage: locale,
-    about: { "@id": APP_ID },
+    about: { "@type": "SoftwareApplication", "@id": APP_ID, name: "Lymi" },
     author: PUBLISHER,
     publisher: PUBLISHER,
     isPartOf: WEBSITE,

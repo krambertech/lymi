@@ -194,3 +194,17 @@ describe("pagesSitemap", () => {
     expect(xml).not.toContain("lymi.app/explore");
   });
 });
+
+describe("the changelog in pagesSitemap", () => {
+  it("dates an update by its own day in every locale, and the list by the newest", () => {
+    const xml = pagesSitemap();
+    for (const prefix of ["", "/uk", "/ru"]) {
+      expect(entry(xml, `${prefix}/changelog/rest-days`)).toContain(
+        "<lastmod>2026-09-24T12:00:00.000Z</lastmod>",
+      );
+    }
+    const days = [...xml.matchAll(/<lastmod>([^<]*)<\/lastmod>/g)].map((m) => m[1] ?? "").sort();
+    expect(entry(xml, "/changelog")).toContain(`<lastmod>${days.at(-1)}</lastmod>`);
+    expect(entry(xml, "/privacy")).not.toContain("lastmod");
+  });
+});

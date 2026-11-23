@@ -10,17 +10,20 @@ msgstr ""
 msgid "-s or -l?"
 msgstr "-s or -l?"
 
-msgid "<0/> is at home. Now answer <1/> six ways: tap a place."
-msgstr "<0/> is at home. Now answer <1/> six ways: tap a place."
-
 msgid "<0/> is the town; <1/> is in Tallinn. Estonian says in with an ending, not a word in front: it puts <2>-s</2> on the end of the name. I live in Tallinn is <3/>"
 msgstr "<0/> is the town; <1/> is in Tallinn. Estonian says in with an ending, not a word in front: it puts <2>-s</2> on the end of the name. I live in Tallinn is <3/>"
 
-msgid "2 quizzes"
-msgstr "2 quizzes"
+msgid "<et>-l</et>, on or at"
+msgstr "<et>-l</et>, on or at"
 
-msgid "8 minutes"
-msgstr "8 minutes"
+msgid "<et>-s</et>, in"
+msgstr "<et>-s</et>, in"
+
+msgid "15 minutes"
+msgstr "15 minutes"
+
+msgid "6 quizzes and a voice message"
+msgstr "6 quizzes and a voice message"
 
 msgid "A market takes <0>-l</0> by habit: <1/>, at the market. So do names ending in <2>-maa</2>: <3/>, on Saaremaa, and <4/>, in Germany, though English says in there. A few towns and districts take <5>-l</5> as well, such as <6/> and <7/>."
 msgstr "A market takes <0>-l</0> by habit: <1/>, at the market. So do names ending in <2>-maa</2>: <3/>, on Saaremaa, and <4/>, in Germany, though English says in there. A few towns and districts take <5>-l</5> as well, such as <6/> and <7/>."
@@ -31,20 +34,47 @@ msgstr "All of them. You picked the place in every sentence."
 msgid "All of them. You picked the right ending every time."
 msgstr "All of them. You picked the right ending every time."
 
+msgid "All six questions, each with <0>kus</0> and the right verb."
+msgstr "All six questions, each with <0>kus</0> and the right verb."
+
+msgid "All six, each place with its ending."
+msgstr "All six, each place with its ending."
+
+msgid "All six, each with the right ending."
+msgstr "All six, each with the right ending."
+
+msgid "All six, every word right."
+msgstr "All six, every word right."
+
 msgid "Answering where with a place"
 msgstr "Answering where with a place"
+
+msgid "Ask where"
+msgstr "Ask where"
 
 msgid "Ask with <0>kus</0>, and answer with a sentence or the place alone: <1>Kus sa elad? Tartus.</1>"
 msgstr "Ask with <0>kus</0>, and answer with a sentence or the place alone: <1>Kus sa elad? Tartus.</1>"
 
+msgid "Ask with <et>kus</et> and leave out the place; <et>me</et> in the answer is <et>te</et> in the question."
+msgstr "Ask with <et>kus</et> and leave out the place; <et>me</et> in the answer is <et>te</et> in the question."
+
+msgid "Asking where with <et>kus</et>"
+msgstr "Asking where with <et>kus</et>"
+
 msgid "at home"
 msgstr "at home"
+
+msgid "At home"
+msgstr "At home"
 
 msgid "at school, in a school"
 msgstr "at school, in a school"
 
 msgid "at the market"
 msgstr "at the market"
+
+msgid "At the market"
+msgstr "At the market"
 
 msgid "at the office"
 msgstr "at the office"
@@ -55,8 +85,20 @@ msgstr "at work"
 msgid "café"
 msgstr "café"
 
+msgid "Dad"
+msgstr "Dad"
+
+msgid "Dad is at the market."
+msgstr "Dad is at the market."
+
 msgid "Each name took -s, and the -s says in. Tallinn took an extra a before it."
 msgstr "Each name took -s, and the -s says in. Tallinn took an extra a before it."
+
+msgid "Each round gives a place and asks <0/>, where. Type the place with <1>-s</1> or <2>-l</2>. Each of these takes its ending with no other change."
+msgstr "Each round gives a place and asks <0/>, where. Type the place with <1>-s</1> or <2>-l</2>. Each of these takes its ending with no other change."
+
+msgid "Each round gives an answer. Write the question it answers, starting with <0/>. Leave out the place: that is what you ask about. When the answer says <1>ma</1> or <2>me</2>, ask with <3>sa</3> or <4>te</4>."
+msgstr "Each round gives an answer. Write the question it answers, starting with <0/>. Leave out the place: that is what you ask about. When the answer says <1>ma</1> or <2>me</2>, ask with <3>sa</3> or <4>te</4>."
 
 msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 msgstr "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
@@ -88,8 +130,17 @@ msgstr "He or she lives in Finland."
 msgid "He or she studies at school."
 msgstr "He or she studies at school."
 
+msgid "He’s studying at school."
+msgstr "He’s studying at school."
+
 msgid "Hear a sentence and pick the place. Listen for the word that ends in <0>-s</0>."
 msgstr "Hear a sentence and pick the place. Listen for the word that ends in <0>-s</0>."
+
+msgid "Hear a sentence and write it. Listen for the last sound of the place: <0>-s</0> or <1>-l</1>."
+msgstr "Hear a sentence and write it. Listen for the last sound of the place: <0>-s</0> or <1>-l</1>."
+
+msgid "Hear the questions and answers above once more, then try again."
+msgstr "Hear the questions and answers above once more, then try again."
 
 msgid "Hearing the place"
 msgstr "Hearing the place"
@@ -100,8 +151,8 @@ msgstr "home"
 msgid "hospital"
 msgstr "hospital"
 
-msgid "How to say where you are in Estonian: <0>-s</0> for in, <1>-l</1> for on and at, and how to answer <2>kus</2>, where."
-msgstr "How to say where you are in Estonian: <0>-s</0> for in, <1>-l</1> for on and at, and how to answer <2>kus</2>, where."
+msgid "How to say where you are in Estonian: usually <0>-s</0> for in and <1>-l</1> for on and at, and how to answer <2>kus</2>, where."
+msgstr "How to say where you are in Estonian: usually <0>-s</0> for in and <1>-l</1> for on and at, and how to answer <2>kus</2>, where."
 
 msgid "I live in Estonia."
 msgstr "I live in Estonia."
@@ -139,11 +190,20 @@ msgstr "I work in town."
 msgid "I’m at work."
 msgstr "I’m at work."
 
+msgid "In a bar"
+msgstr "In a bar"
+
 msgid "in a café"
 msgstr "in a café"
 
+msgid "In a café"
+msgstr "In a café"
+
 msgid "in a hospital"
 msgstr "in a hospital"
+
+msgid "In a hospital"
+msgstr "In a hospital"
 
 msgid "in Estonia"
 msgstr "in Estonia"
@@ -169,6 +229,9 @@ msgstr "in Tallinn"
 msgid "in Tartu"
 msgstr "in Tartu"
 
+msgid "In Tartu"
+msgstr "In Tartu"
+
 msgid "In Tartu."
 msgstr "In Tartu."
 
@@ -181,8 +244,11 @@ msgstr "in town"
 msgid "in Ukraine"
 msgstr "in Ukraine"
 
-msgid "It works the same for towns, buildings and most countries. Try it on three countries and three towns."
-msgstr "It works the same for towns, buildings and most countries. Try it on three countries and three towns."
+msgid "It works the same for most towns, buildings and countries. Try it on three countries and three towns."
+msgstr "It works the same for most towns, buildings and countries. Try it on three countries and three towns."
+
+msgid "Jaan"
+msgstr "Jaan"
 
 msgid "Jaan lives in Pärnu."
 msgstr "Jaan lives in Pärnu."
@@ -193,11 +259,23 @@ msgstr "Lasnamäe, a district of Tallinn"
 msgid "Learn each place together with its ending: <0>Tallinn, Tallinnas</0>."
 msgstr "Learn each place together with its ending: <0>Tallinn, Tallinnas</0>."
 
+msgid "Listen: a message from Mari"
+msgstr "Listen: a message from Mari"
+
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
 
+msgid "Listening: a message from Mari"
+msgstr "Listening: a message from Mari"
+
 msgid "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which vowel is hard to guess for now. So learn each place together with its <1>-s</1> form: <2/>, <3/>; <4/>, <5/>. Lesson {stems} shows where the vowel comes from."
 msgstr "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which vowel is hard to guess for now. So learn each place together with its <1>-s</1> form: <2/>, <3/>; <4/>, <5/>. Lesson {stems} shows where the vowel comes from."
+
+msgid "Mari is at work today."
+msgstr "Mari is at work today."
+
+msgid "Mari leaves Kati a voice message about where everyone is today. Listen for each place and its ending."
+msgstr "Mari leaves Kati a voice message about where everyone is today. Listen for each place and its ending."
 
 msgid "Mari works in a hospital."
 msgstr "Mari works in a hospital."
@@ -205,11 +283,32 @@ msgstr "Mari works in a hospital."
 msgid "market"
 msgstr "market"
 
+msgid "Most towns, countries and buildings: <et>-s</et>."
+msgstr "Most towns, countries and buildings: <et>-s</et>."
+
+msgid "Mum"
+msgstr "Mum"
+
 msgid "Mum is at the market."
 msgstr "Mum is at the market."
 
+msgid "Nearly. Check the place’s ending in the ones you missed."
+msgstr "Nearly. Check the place’s ending in the ones you missed."
+
+msgid "Nearly. Check the verb’s ending in the ones you missed."
+msgstr "Nearly. Check the verb’s ending in the ones you missed."
+
+msgid "Nearly. Check which ending each place takes."
+msgstr "Nearly. Check which ending each place takes."
+
+msgid "Nearly. Hear the ones you missed below, then try again with Slower."
+msgstr "Nearly. Hear the ones you missed below, then try again with Slower."
+
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Nearly. Play the ones you missed once more."
+
+msgid "Now answer <0/> six ways: tap a place."
+msgstr "Now answer <0/> six ways: tap a place."
 
 msgid "office"
 msgstr "office"
@@ -271,20 +370,23 @@ msgstr "Tartu, a university town"
 msgid "The book is on the table."
 msgstr "The book is on the table."
 
-msgid "The ending -l means on or at"
-msgstr "The ending -l means on or at"
+msgid "The ending -l usually means on or at"
+msgstr "The ending -l usually means on or at"
 
-msgid "The ending -s means in"
-msgstr "The ending -s means in"
+msgid "The ending -s usually means in"
+msgstr "The ending -s usually means in"
 
-msgid "The ending <0>-l</0> says on a surface or at an activity: <1>laual, tööl</1>."
-msgstr "The ending <0>-l</0> says on a surface or at an activity: <1>laual, tööl</1>."
+msgid "The ending <0>-l</0> usually says on a surface or at an activity: <1>laual, tööl</1>."
+msgstr "The ending <0>-l</0> usually says on a surface or at an activity: <1>laual, tööl</1>."
 
-msgid "The ending <0>-s</0> says in: <1>Eestis, Tallinnas, koolis</1>."
-msgstr "The ending <0>-s</0> says in: <1>Eestis, Tallinnas, koolis</1>."
+msgid "The ending <0>-s</0> usually says in: <1>Eestis, Tallinnas, koolis</1>."
+msgstr "The ending <0>-s</0> usually says in: <1>Eestis, Tallinnas, koolis</1>."
 
 msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you’re doing something rather than inside a building: <2/>, at work."
 msgstr "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you’re doing something rather than inside a building: <2/>, at work."
+
+msgid "The picture is on the table."
+msgstr "The picture is on the table."
 
 msgid "The picture is on the wall."
 msgstr "The picture is on the wall."
@@ -307,17 +409,32 @@ msgstr "They study in Tartu."
 msgid "They work in an office."
 msgstr "They work in an office."
 
+msgid "They’re at work."
+msgstr "They’re at work."
+
 msgid "town, city"
 msgstr "town, city"
 
+msgid "Try again, and tap Slower before you write each sentence."
+msgstr "Try again, and tap Slower before you write each sentence."
+
+msgid "Type the place"
+msgstr "Type the place"
+
 msgid "Ukraine"
 msgstr "Ukraine"
+
+msgid "Usually <et>-l</et>: on something, at work, at the market, and names ending in <et>-maa</et>."
+msgstr "Usually <et>-l</et>: on something, at work, at the market, and names ending in <et>-maa</et>."
 
 msgid "wall"
 msgstr "wall"
 
 msgid "We live in Estonia."
 msgstr "We live in Estonia."
+
+msgid "We live in Tartu."
+msgstr "We live in Tartu."
 
 msgid "We live on Saaremaa."
 msgstr "We live on Saaremaa."
@@ -337,14 +454,38 @@ msgstr "Where do you live?"
 msgid "Where do you work?"
 msgstr "Where do you work?"
 
+msgid "Where does Mari work?"
+msgstr "Where does Mari work?"
+
 msgid "Where is he or she?"
 msgstr "Where is he or she?"
+
+msgid "Where is Jaan?"
+msgstr "Where is Jaan?"
 
 msgid "Which place?"
 msgstr "Which place?"
 
+msgid "Who is in Tartu?"
+msgstr "Who is in Tartu?"
+
 msgid "work"
 msgstr "work"
+
+msgid "Write each sentence in Estonian. Most towns, countries and buildings take <0>-s</0>. A surface usually takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
+msgstr "Write each sentence in Estonian. Most towns, countries and buildings take <0>-s</0>. A surface usually takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "Write the question"
+msgstr "Write the question"
+
+msgid "Write the sentence"
+msgstr "Write the sentence"
+
+msgid "Write what you hear"
+msgstr "Write what you hear"
 
 msgid "You all work in an office."
 msgstr "You all work in an office."

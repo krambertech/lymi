@@ -5,13 +5,23 @@ import { clsx } from "clsx";
 import { CornerDownRight } from "lucide-react";
 import { type ReactNode, useMemo, useState } from "react";
 import { lessonBySlug } from "../../../lib/learn/catalogue";
-import { clipUrl, KUSIMUSED_SENTENCES } from "../../../lib/learn/clips";
+import {
+  clipId,
+  clipUrl,
+  KUSIMUSED_ASKED,
+  KUSIMUSED_SENTENCES,
+  KUSIMUSED_TALK,
+  KUSIMUSED_TRANSLATED,
+} from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst } from "../../../lib/learn/quiz";
 import { Chips, Panel } from "../Explore";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
+import { Match, type MatchPair } from "../Match";
+import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
 import { PlayButton, PlayMark } from "../Sound";
 import { Word } from "../Word";
 
@@ -83,12 +93,18 @@ const QUESTION_WORDS: readonly {
   q: Id;
   a: Id;
 }[] = [
-  { word: "kes", means: msg`who`, asks: msg`Asks about a person.`, q: "q-kes", a: "a-kes" },
-  { word: "mis", means: msg`what`, asks: msg`Asks about a thing.`, q: "q-mis", a: "a-mis" },
+  { word: "kes", means: msg`who`, asks: msg`Usually asks about a person.`, q: "q-kes", a: "a-kes" },
+  { word: "mis", means: msg`what`, asks: msg`Usually asks about a thing.`, q: "q-mis", a: "a-mis" },
   { word: "kus", means: msg`where`, asks: msg`Asks about a place.`, q: "q-kus", a: "a-kus" },
   { word: "millal", means: msg`when`, asks: msg`Asks about a time.`, q: "q-millal", a: "a-millal" },
   { word: "miks", means: msg`why`, asks: msg`Asks for a reason.`, q: "q-miks", a: "a-miks" },
-  { word: "kuidas", means: msg`how`, asks: msg`Asks how it’s done.`, q: "q-kuidas", a: "a-kuidas" },
+  {
+    word: "kuidas",
+    means: msg`how`,
+    asks: msg`Asks how, or how things are.`,
+    q: "q-kuidas",
+    a: "a-kuidas",
+  },
   {
     word: "kui palju",
     means: msg`how much, how many`,
@@ -99,12 +115,12 @@ const QUESTION_WORDS: readonly {
 ];
 
 /** A run's questions for “what does it ask?”, two to each word. */
-const ASKS: readonly { id: Id; word: QuestionWord }[] = [
+const ASKS: readonly { id: Id; word: QuestionWord; dictated?: false }[] = [
   { id: "w-kes-tartus", word: "kes" },
   { id: "w-kes-raagib", word: "kes" },
   { id: "w-mis-teed", word: "mis" },
   { id: "w-mis-loed", word: "mis" },
-  { id: "w-kus-tootab", word: "kus" },
+  { id: "w-kus-tootab", word: "kus", dictated: false },
   { id: "w-kus-elate", word: "kus" },
   { id: "w-millal-sood", word: "millal" },
   { id: "w-millal-loed", word: "millal" },
@@ -156,12 +172,32 @@ const KAS: readonly { s: Id; q: Id; rest: string }[] = [
   { s: "s-tootavad", q: "q-tootavad", rest: "nad töötavad täna" },
 ];
 
+const TRANSLATED_MEANS: readonly MessageDescriptor[] = [
+  msg`Do you all live in Tartu?`,
+  msg`Where do you work?`,
+  msg`Does he speak Estonian?`,
+  msg`Who speaks Estonian?`,
+  msg`Do you work at home?`,
+  msg`Where is he?`,
+  msg`Do they drink coffee?`,
+  msg`What are you reading?`,
+];
+
+const MATCHED: readonly { word: QuestionWord; about: MessageDescriptor }[] = [
+  { word: "kes", about: msg`a person` },
+  { word: "mis", about: msg`a thing` },
+  { word: "kus", about: msg`a place` },
+  { word: "millal", about: msg`a time` },
+  { word: "miks", about: msg`a reason` },
+  { word: "kuidas", about: msg`how, or how things are` },
+];
+
 const capital = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 
 const GLOSSARY: Glossary = {
   kas: {
     en: msg`turns a sentence into a yes-or-no question`,
-    note: msg`It has no meaning of its own, like a spoken question mark.`,
+    note: msg`At the start of a question it has no meaning of its own, like a spoken question mark.`,
   },
   kes: { en: msg`who` },
   mis: { en: msg`what` },
@@ -301,7 +337,7 @@ function KasSwitch() {
       </ul>
       <p aria-live="polite" className="text-md text-ink-secondary">
         {asking
-          ? t`Kas in front, a question mark at the end. Every other word stays put.`
+          ? t`Kas in front, a question mark at the end. Here every other word stays put.`
           : t`Five sentences. Switch to Question and watch what changes.`}
       </p>
     </Panel>
@@ -449,6 +485,94 @@ export function KusimusedLesson() {
     [i18n],
   );
 
+  const matchPairs = useMemo<MatchPair[]>(
+    () =>
+      MATCHED.map(({ word, about }) => ({
+        id: word,
+        left: word,
+        right: i18n._(about),
+        src: clipUrl(SLUG, clipId(word)),
+      })),
+    [i18n],
+  );
+
+  const writtenItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
+    () =>
+      ASKS.filter(({ dictated }) => dictated !== false).map(({ id, word }) => ({
+        kind: "dictation" as const,
+        id: `write-${id.slice(2)}`,
+        src: src(id),
+        answers: [said(id)],
+        pair: [word, id] as const,
+      })),
+    [],
+  );
+
+  const askedItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
+    () =>
+      KUSIMUSED_ASKED.map(({ word, reply, answers }) => ({
+        kind: "ask" as const,
+        id: `ask-${clipId(word)}`,
+        reply,
+        src: clipUrl(SLUG, clipId(answers[0])),
+        answers,
+        pair: [word, reply] as const,
+      })),
+    [],
+  );
+
+  const translatedItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
+    () =>
+      KUSIMUSED_TRANSLATED.map(({ kind, answers }, i) => ({
+        kind: "translate" as const,
+        id: `translate-${clipId(answers[0])}`,
+        prompt: i18n._(TRANSLATED_MEANS[i] as MessageDescriptor),
+        src: clipUrl(SLUG, clipId(answers[0])),
+        answers,
+        pair: [kind, answers[0]] as const,
+      })),
+    [i18n],
+  );
+
+  const talkQuestions = useMemo<PassageQuestion[]>(
+    () => [
+      {
+        id: "first",
+        ask: t`What does Kati ask first?`,
+        options: [
+          { id: "from", label: t`Where he is from` },
+          { id: "name", label: t`His name` },
+          { id: "lives", label: t`Where he lives` },
+        ],
+        answer: "name",
+        line: 1,
+      },
+      {
+        id: "lives",
+        ask: t`Where does Jaan live?`,
+        options: [
+          { id: "tallinn", label: t`In Tallinn` },
+          { id: "tartu", label: t`In Tartu` },
+          { id: "narva", label: t`In Narva` },
+        ],
+        answer: "tartu",
+        line: 8,
+      },
+      {
+        id: "why",
+        ask: t`Why is Jaan learning Estonian?`,
+        options: [
+          { id: "fun", label: t`For fun` },
+          { id: "work", label: t`For work` },
+          { id: "school", label: t`For his family` },
+        ],
+        answer: "work",
+        line: 10,
+      },
+    ],
+    [t],
+  );
+
   return (
     <LessonView
       slug={SLUG}
@@ -460,8 +584,8 @@ export function KusimusedLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">10 minutes</Trans>,
-        <Trans key="q">2 quizzes</Trans>,
+        <Trans key="m">15 minutes</Trans>,
+        <Trans key="q">5 quizzes, a matching game and a conversation</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -484,19 +608,20 @@ export function KusimusedLesson() {
       ]}
       recap={[
         <Trans key="1">
-          Put <b lang="et">kas</b> in front of a sentence to ask yes or no. Nothing else moves:{" "}
-          <b lang="et">Kas sa elad Tallinnas?</b>
+          Put <b lang="et">kas</b> in front of a sentence to ask yes or no. Usually nothing else
+          moves: <b lang="et">Kas sa elad Tallinnas?</b>
         </Trans>,
         <Trans key="2">
           Answer <b lang="et">jah</b> or <b lang="et">ei</b>. When the question has olema, the no is{" "}
-          <b lang="et">ei ole</b>. If you don’t know, say <b lang="et">Ma ei tea.</b>
+          <b lang="et">ei ole</b> or <b lang="et">pole</b>. If you don’t know, say{" "}
+          <b lang="et">Ma ei tea.</b>
         </Trans>,
         <Trans key="3">
-          A question word goes first, and the part you ask about drops out:{" "}
+          A question word usually goes first, and the part you ask about drops out:{" "}
           <b lang="et">Kus sa elad?</b>
         </Trans>,
         <Trans key="4">
-          <b lang="et">Kes</b> asks about people, <b lang="et">mis</b> about things.
+          <b lang="et">Kes</b> usually asks about people, <b lang="et">mis</b> about things.
         </Trans>,
         <Trans key="5">
           Learn three questions whole: <b lang="et">Mis su nimi on? Kuidas läheb?</b> and{" "}
@@ -519,17 +644,17 @@ export function KusimusedLesson() {
                 </p>
                 <p>
                   <Trans>
-                    English adds do or swaps words round. Estonian adds kas and leaves every other
-                    word where it was. Try it on five sentences.
+                    English adds do or swaps words round. Estonian adds kas and usually leaves every
+                    other word where it was. Try it on five sentences.
                   </Trans>
                 </p>
               </Prose>
               <KasSwitch />
               <Aside>
                 <Trans>
-                  In a kas question your voice falls at the end, as in a statement: kas already says
-                  it’s a question. In speech you’ll also hear <Word w="või" /> at the end instead, a
-                  bit like “right?”: <Word w="Sa elad Tallinnas või?" />
+                  In a kas question your voice usually falls at the end, as in a statement: kas
+                  already says it’s a question. In speech you’ll also hear <Word w="või" /> at the
+                  end instead, a bit like “right?”: <Word w="Sa elad Tallinnas või?" />
                 </Trans>
               </Aside>
             </>
@@ -592,7 +717,7 @@ export function KusimusedLesson() {
               <AskWords />
               <Aside>
                 <Trans>
-                  <Word w="Kes" /> asks about people and <Word w="mis" /> about things:{" "}
+                  <Word w="Kes" /> usually asks about people and <Word w="mis" /> about things:{" "}
                   <Word w="Kes see on?" /> Who is that? <Word w="Mis see on?" /> What is that?
                 </Trans>
               </Aside>
@@ -608,8 +733,8 @@ export function KusimusedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a question and pick its question word. It always comes first, so listen to
-                    the start.
+                    Hear a question and pick its question word. In these questions it comes first,
+                    so listen to the start.
                   </Trans>
                 </p>
               </Prose>
@@ -630,6 +755,63 @@ export function KusimusedLesson() {
                 recall={(item) => ({ label: said(item.id), src: item.src })}
                 order={eachPairFirst}
                 round={(props) => <ChoiceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "match",
+          title: t`What each word asks about`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>Match each question word with what it asks about.</Trans>
+                </p>
+              </Prose>
+              <Match
+                id="match-question-words"
+                title={<Trans>Match the question words</Trans>}
+                pairs={matchPairs}
+              />
+            </>
+          ),
+        },
+        {
+          id: "write",
+          title: t`Write the question you hear`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Hear a question and write it. <Word w="Kes" /> and <Word w="kus" /> differ by
+                    one vowel, and <Word w="mis" /> and <Word w="miks" /> by one k, so listen
+                    closely to the first word.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="write-questions"
+                title={<Trans>Write the question</Trans>}
+                items={writtenItems}
+                rounds={7}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All seven, each question word right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>
+                      Nearly. Hear the ones you missed below, then try again with Slower.
+                    </Trans>
+                  ) : (
+                    <Trans>Tap the question words above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
               />
             </>
           ),
@@ -698,6 +880,107 @@ export function KusimusedLesson() {
                 recall={(item) => ({ label: said(item.q), src: item.src })}
                 both={(item) => [src(item.q), src(item.a)]}
                 round={(props) => <ChoiceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "ask",
+          title: t`Ask the question`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each round gives an answer. Write the question it answers: start with the
+                    question word, and when the answer says <span lang="et">ma</span>, ask with{" "}
+                    <span lang="et">sa</span> (or <span lang="et">te</span> to be polite).
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="ask-question"
+                title={<Trans>Write the question it answers</Trans>}
+                items={askedItems}
+                rounds={7}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All seven questions, each with the right word.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check the question word and the verb’s ending.</Trans>
+                  ) : (
+                    <Trans>Tap the question words above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "kas-or-word",
+          title: t`Kas or a question word`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    A question answered with yes or no usually starts with <Word w="kas" />. A
+                    question that wants a place, a person or a thing starts with its question word
+                    instead, not with both. Write each question in Estonian.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="kas-or-word"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={translatedItems}
+                rounds={8}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>
+                      All eight, each with <span lang="et">kas</span> or its question word.
+                    </Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check whether each one asks for yes or no.</Trans>
+                  ) : (
+                    <Trans>
+                      Go back to the <span lang="et">kas</span> switch at the top, then try again.
+                    </Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listening: Kati meets Jaan`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Kati and Jaan meet for the first time and ask each other questions. Listen for
+                    the question words.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="kati-meets-jaan"
+                title={<Trans>Listen: Kati meets Jaan</Trans>}
+                clip="d-kati"
+                turns={KUSIMUSED_TALK.turns}
+                names={{ second: t`Kati`, main: t`Jaan` }}
+                questions={talkQuestions}
               />
             </>
           ),

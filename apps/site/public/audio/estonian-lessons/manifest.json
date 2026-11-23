@@ -19507,5 +19507,406 @@
     "text": "istuma",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/lugege-palun": {
+    "text": "Lugege, palun!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ma-ootan-kohvikus": {
+    "text": "Ma ootan kohvikus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/oodake-palun": {
+    "text": "Oodake, palun!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ma-tahan-su2u2a": {
+    "text": "Ma tahan süüa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/me-teeme-to2o2d": {
+    "text": "Me teeme tööd.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ma-loen-raamatut": {
+    "text": "Ma loen raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ma-teen-to2o2d": {
+    "text": "Ma teen tööd.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/kuulake-palun": {
+    "text": "Kuulake, palun!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ma-tahan-tulla": {
+    "text": "Ma tahan tulla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/tulge-siia": {
+    "text": "Tulge siia!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ma-tahan-kohvi-juua": {
+    "text": "Ma tahan kohvi juua.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/me-ra2a2gime-eesti-keelt": {
+    "text": "Me räägime eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/vaadake-palun": {
+    "text": "Vaadake, palun!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/nad-elavad-tartus": {
+    "text": "Nad elavad Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ma-tahan-eesti-keelt-o3ppida": {
+    "text": "Ma tahan eesti keelt õppida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-tahan-kohvi-juua": {
+    "text": "Ma tahan kohvi juua.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-pean-koju-minema": {
+    "text": "Ma pean koju minema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/mulle-meeldib-lugeda": {
+    "text": "Mulle meeldib lugeda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-tahan-linna-minna": {
+    "text": "Ma tahan linna minna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-pean-homme-tulema": {
+    "text": "Ma pean homme tulema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-oskan-eesti-keelt-ra2a2kida": {
+    "text": "Ma oskan eesti keelt rääkida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-hakkan-homme-o3ppima": {
+    "text": "Ma hakkan homme õppima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-tahan-vett-juua": {
+    "text": "Ma tahan vett juua.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/kas-sa-saad-ta2na-tulla": {
+    "text": "Kas sa saad täna tulla?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-oskan-su2u2a-teha": {
+    "text": "Ma oskan süüa teha.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/mulle-meeldib-kodus-olla": {
+    "text": "Mulle meeldib kodus olla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/nad-peavad-homme-to2o2le-minema": {
+    "text": "Nad peavad homme tööle minema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ta-la2heb-so2o2ma": {
+    "text": "Ta läheb sööma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-hakkan-o3htul-su2u2a-tegema": {
+    "text": "Ma hakkan õhtul süüa tegema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-pean-kell-seitse-kodus-olema": {
+    "text": "Ma pean kell seitse kodus olema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/me-peame-kell-viis-to2o2l-olema": {
+    "text": "Me peame kell viis tööl olema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-vo3in-sind-kohvikus-oodata": {
+    "text": "Ma võin sind kohvikus oodata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/c-cafe": {
+    "text": "Tere, Mari! Mida sa teed? Tere, Jaan! Ma loen raamatut. Mu sõber Kati tuleb ka. Kas Kati tuleb täna? Jah, ta tuleb kell kolm. Istu, palun! Aitäh. Mida sa loed? Ma loen eesti raamatut. Ma õpin eesti keelt. Kas sa räägid kodus eesti keelt? Natuke. Mu mees räägib soome keelt. Ma tahan ka eesti keelt õppida. Tule meie kooli! Me loeme ja räägime palju. Hästi! Kas õpetaja on hea? Jah, väga hea. Vaata, Kati tuleb! Kati, tule siia! Istu, palun! Tere, Kati! Mida te täna teete? Me loeme koos eesti raamatut. Tule ka homme, Jaan! Hästi, ma tulen. Head aega! Head aega, Jaan!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Mari!",
+          "Mida sa teed?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Jaan!",
+          "Ma loen raamatut.",
+          "Mu sõber Kati tuleb ka."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas Kati tuleb täna?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, ta tuleb kell kolm.",
+          "Istu, palun!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Aitäh.",
+          "Mida sa loed?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ma loen eesti raamatut.",
+          "Ma õpin eesti keelt."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas sa räägid kodus eesti keelt?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Natuke.",
+          "Mu mees räägib soome keelt."
+        ],
+        "say": "[laughs] Natuke. Mu mees räägib soome keelt."
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma tahan ka eesti keelt õppida."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tule meie kooli!",
+          "Me loeme ja räägime palju."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hästi!",
+          "Kas õpetaja on hea?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, väga hea."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Vaata, Kati tuleb!"
+        ],
+        "say": "[excited] Vaata, Kati tuleb!"
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kati, tule siia!",
+          "Istu, palun!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Kati!",
+          "Mida te täna teete?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Me loeme koos eesti raamatut.",
+          "Tule ka homme, Jaan!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hästi, ma tulen.",
+          "Head aega!"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Head aega, Jaan!"
+        ]
+      }
+    ]
+  },
+  "tegevusnimed/c-plans": {
+    "text": "Tere, Jaan! Mida sa täna teed? Täna ma pean tööle minema. Aga kell viis ma tulen koju. Kas sa tahad kohvikusse tulla? Jah, ma tahan kohvi juua. Aga ma pean kell seitse kodus olema. Hästi. Mulle meeldib kohvikus lugeda. Ma võin sind kohvikus oodata. Kas Kati saab ka tulla? Ei, Kati hakkab täna eesti keelt õppima. Kas sa oskad süüa teha? Natuke. Täna ma proovin süüa teha. Hästi! Ma tulen homme sööma! Tule! Aga sa pead kell kuus tulema. Ma hakkan kell viis süüa tegema. Hästi. Kas Kati võib ka tulla? Jah, muidugi. Kati armastab süüa. Väga hea. Nüüd ma pean tööle minema. Homme näeme! Head aega! Head aega, Jaan!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Jaan!",
+          "Mida sa täna teed?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Täna ma pean tööle minema.",
+          "Aga kell viis ma tulen koju."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas sa tahad kohvikusse tulla?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, ma tahan kohvi juua.",
+          "Aga ma pean kell seitse kodus olema."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hästi.",
+          "Mulle meeldib kohvikus lugeda.",
+          "Ma võin sind kohvikus oodata."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas Kati saab ka tulla?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, Kati hakkab täna eesti keelt õppima."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas sa oskad süüa teha?"
+        ],
+        "say": "[curious] Kas sa oskad süüa teha?"
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Natuke.",
+          "Täna ma proovin süüa teha."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hästi!",
+          "Ma tulen homme sööma!"
+        ],
+        "say": "[laughs] Hästi! Ma tulen homme sööma!"
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tule!",
+          "Aga sa pead kell kuus tulema.",
+          "Ma hakkan kell viis süüa tegema."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hästi.",
+          "Kas Kati võib ka tulla?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, muidugi.",
+          "Kati armastab süüa."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Väga hea.",
+          "Nüüd ma pean tööle minema.",
+          "Homme näeme!",
+          "Head aega!"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Head aega, Jaan!"
+        ]
+      }
+    ]
   }
 }

@@ -10,6 +10,9 @@ msgstr ""
 msgid "{past} minutes past {struck}."
 msgstr "{past} минут после {struck}."
 
+msgid "<0/> counts on from the hour that has struck; <1/> counts down to the hour that’s coming. Mix them up and the time comes out wrong by up to forty minutes. Listen, then pick the time."
+msgstr "<0/> считает от прошедшего часа, а <1/> — до наступающего. Перепутаешь их — и ошибёшься иногда на целых сорок минут. Послушай и выбери время."
+
 msgid "<0/> means half, and it looks ahead. <1/> is halfway to four, so it’s 3:30, not 4:30."
 msgstr "<0/> значит «половина» и смотрит вперёд. <1/> — это половина четвёртого, то есть 3:30, а не 4:30."
 
@@ -19,11 +22,20 @@ msgstr "<0>Pool</0>, <1>veerand</1> и <2>kolmveerand</2> называют на�
 msgid "<0>Veerand neli</0> is a quarter of the way to four, 3:15. <1>Kolmveerand neli</1> is three quarters, 3:45."
 msgstr "<0>Veerand neli</0> — четверть пути к четырём, 3:15. <1>Kolmveerand neli</1> — три четверти, 3:45."
 
-msgid "12 minutes"
-msgstr "12 минут"
+msgid "<et>Läbi</et> counts on from the hour that has struck."
+msgstr "<et>Läbi</et> считает от прошедшего часа."
 
-msgid "3 quizzes"
-msgstr "3 теста"
+msgid "<et>Pärast</et> counts down to the hour that’s coming."
+msgstr "<et>Pärast</et> отсчитывает до наступающего часа."
+
+msgid "<et>Pool</et>, <et>veerand</et> and <et>kolmveerand</et> name the hour that’s coming."
+msgstr "<et>Pool</et>, <et>veerand</et> и <et>kolmveerand</et> называют наступающий час."
+
+msgid "18 minutes"
+msgstr "18 минут"
+
+msgid "6 quizzes and a voice message"
+msgstr "6 тестов и голосовое сообщение"
 
 msgid "A clock"
 msgstr "Часы"
@@ -41,11 +53,23 @@ msgstr "четверть"
 msgid "A quarter of the way to {next}."
 msgstr "Четверть пути до {next}."
 
-msgid "After a number from two up, minut becomes minutit."
-msgstr "После чисел от двух и больше minut становится minutit."
+msgid "a time"
+msgstr "время"
+
+msgid "After a number from two up, minut usually becomes minutit: kümme minutit. After kümne, it’s minuti."
+msgstr "После чисел от двух и больше minut обычно становится minutit: kümme minutit. После kümne — minuti."
 
 msgid "after; in, as in “in ten minutes”"
 msgstr "после; через, как в «через десять минут»"
+
+msgid "All six right."
+msgstr "Все шесть верно."
+
+msgid "All six, every word in its place."
+msgstr "Все шесть, каждое слово на месте."
+
+msgid "All six, every word spelled right."
+msgstr "Все шесть, каждое слово написано без ошибок."
 
 msgid "Also a bell."
 msgstr "Ещё и колокол."
@@ -59,11 +83,14 @@ msgstr "На час позже"
 msgid "Ask <0>Mis kell on?</0> The answer is <1>kell on</1> and the hour: <2>kell on kolm</2>."
 msgstr "Спрашивай <0>Mis kell on?</0> Ответ — <1>kell on</1> и час: <2>kell on kolm</2>."
 
-msgid "Ask the time and understand the answer. Halves and quarters count toward the hour that’s coming."
-msgstr "Спроси, который час, и пойми ответ. Половины и четверти считают до наступающего часа."
+msgid "Ask the time and understand the answer. Pool, veerand and kolmveerand count toward the hour that’s coming."
+msgstr "Спроси, который час, и пойми ответ. Pool, veerand и kolmveerand считают до наступающего часа."
 
-msgid "Before the hour, say how long until the next one. <0/> is, word for word, “in ten minutes, four”: 3:50."
-msgstr "Перед ровным часом говорят, сколько осталось до следующего. <0/> — дословно «через десять минут четыре»: 3:50."
+msgid "at six; six o’clock"
+msgstr "в шесть часов; шесть часов"
+
+msgid "Before the hour, you usually say how long until the next one. <0/> is, word for word, “in ten minutes, four”: 3:50."
+msgstr "Перед ровным часом обычно говорят, сколько осталось до следующего. <0/> — дословно «через десять минут четыре»: 3:50."
 
 msgid "clock, watch; o’clock"
 msgstr "часы; час (о времени)"
@@ -73,6 +100,9 @@ msgstr "Перетащи минутную стрелку или выбери м�
 
 msgid "Each clock fills in the part of the hour that has gone. Tap one to hear it."
 msgstr "На каждых часах закрашена часть часа, которая прошла. Нажми на любые, чтобы услышать."
+
+msgid "Each round shows a time in digits. Type how you say it, without <0>kell on</0>."
+msgstr "В каждом раунде время цифрами. Напиши, как его сказать, без <0>kell on</0>."
 
 msgid "Every one, by ear."
 msgstr "Все до одного, на слух."
@@ -92,6 +122,9 @@ msgstr "Половина: pool"
 msgid "Halfway to {next}."
 msgstr "Полпути до {next}."
 
+msgid "Hear a time and write the whole sentence. With <0>läbi</0>, say <1>viis</1>, <2>kümme</2> or <3>kakskümmend</3>, then <4>minutit</4>; with <5>pärast</5>, <6>viie</6>, <7>kümne</7> or <8>kahekümne</8>, then <9>minuti</9>."
+msgstr "Послушай время и напиши всё предложение. С <0>läbi</0> говори <1>viis</1>, <2>kümme</2> или <3>kakskümmend</3>, а потом <4>minutit</4>; с <5>pärast</5> — <6>viie</6>, <7>kümne</7> или <8>kahekümne</8>, а потом <9>minuti</9>."
+
 msgid "Here the number changes shape: <0>viis</0> becomes <1>viie</1>, <2>kümme</2> becomes <3>kümne</3>, <4>kakskümmend</4> becomes <5>kahekümne</5>. Learn these three as set phrases for now. Lesson {genitive} explains the form."
 msgstr "Здесь число меняет форму: <0>viis</0> становится <1>viie</1>, <2>kümme</2> — <3>kümne</3>, <4>kakskümmend</4> — <5>kahekümne</5>. Пока запомни эти три как готовые фразы. Эту форму объясняет урок {genitive}."
 
@@ -101,6 +134,9 @@ msgstr "Час"
 msgid "In {ahead} minutes it’s {next}."
 msgstr "Через {ahead} минут будет {next}."
 
+msgid "in words"
+msgstr "словами"
+
 msgid "It’s {digits}: <0>{words}</0>."
 msgstr "Это {digits}: <0>{words}</0>."
 
@@ -109,6 +145,9 @@ msgstr "Это {right}: <0>{words}</0> — полпути до {next}."
 
 msgid "It’s three o’clock."
 msgstr "Три часа."
+
+msgid "Kell with a time also says when: kell kuus, at six."
+msgstr "Kell перед временем отвечает и на вопрос «когда?»: kell kuus — в шесть часов."
 
 msgid "Kolm, three, and veerand, a quarter."
 msgstr "Kolm — три, veerand — четверть."
@@ -122,6 +161,9 @@ msgstr "Kümne — это форма kümme перед minuti pärast."
 msgid "Kümne minuti pärast neli: in ten minutes it’s four, 3:50."
 msgstr "Kümne minuti pärast neli: через десять минут четыре, 3:50."
 
+msgid "Läbi or pärast?"
+msgstr "Läbi или pärast?"
+
 msgid "Listen and pick the clock. The others are an hour out, or another time named after the same hour, such as 3:15 and 3:45."
 msgstr "Послушай и выбери часы. На остальных — не тот час или другое время, названное по тому же часу, как 3:15 и 3:45."
 
@@ -131,8 +173,20 @@ msgstr "Послушай и введи время цифрами, наприме
 msgid "Listen for pool, veerand, kolmveerand, läbi or pärast. Each tells you which hour to count from."
 msgstr "Слушай pool, veerand, kolmveerand, läbi или pärast: каждое подсказывает, от какого часа считать."
 
+msgid "Listen: a message from Mari"
+msgstr "Аудирование: сообщение от Мари"
+
 msgid "Listening only, no microphone"
 msgstr "Только на слух, без микрофона"
+
+msgid "Listening: a message from Mari"
+msgstr "На слух: сообщение от Мари"
+
+msgid "Mari is at work now."
+msgstr "Сейчас Мари на работе."
+
+msgid "Mari leaves Jaan a message about her afternoon. Without <0>on</0>, <1/> says when: at six. Listen for each time."
+msgstr "Мари оставляет Яану сообщение о своём дне. Без <0>on</0> <1/> отвечает на «когда»: в шесть. Слушай каждое время."
 
 msgid "Minute hand"
 msgstr "Минутная стрелка"
@@ -143,11 +197,14 @@ msgstr "минуты"
 msgid "Minutes"
 msgstr "Минуты"
 
-msgid "Minutes past count from the hour that has struck: <0>kümme minutit kolm läbi</0>, 3:10. Minutes to count down to the next: <1>kümne minuti pärast neli</1>, 3:50."
-msgstr "Минуты после считают от прошедшего часа: <0>kümme minutit kolm läbi</0>, 3:10. Минуты до отсчитывают до следующего: <1>kümne minuti pärast neli</1>, 3:50."
+msgid "Minutes past: <et>läbi</et>"
+msgstr "Минуты после: <et>läbi</et>"
 
 msgid "Minutes past: läbi"
 msgstr "Минуты после: läbi"
+
+msgid "Minutes to: <et>pärast</et>"
+msgstr "Минуты до: <et>pärast</et>"
 
 msgid "Minutes to: pärast"
 msgstr "Минуты до: pärast"
@@ -155,14 +212,26 @@ msgstr "Минуты до: pärast"
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Почти все. Переслушай ещё раз те, где были ошибки."
 
+msgid "Nearly. Check which hour each one names."
+msgstr "Почти. Проверь, какой час назван в каждом ответе."
+
+msgid "Nearly. Hear the ones you missed below, then try again with Slower."
+msgstr "Почти. Послушай ниже те, где была ошибка, а потом попробуй ещё раз с кнопкой «Медленнее»."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Почти. Переслушай те, где были ошибки."
+
 msgid "On the hour"
 msgstr "Целые часы"
 
-msgid "On the hour: the number alone."
-msgstr "Ровно: только число часа."
+msgid "On the hour, you usually say the hour alone: <et>kell on viis</et>, 5:00."
+msgstr "Для целого часа обычно называют только число: <et>kell on viis</et>, 5:00."
 
-msgid "Other minutes, up to twenty past, count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, the form after a number; lesson {partitive} explains it."
-msgstr "Остальные минуты, до двадцати после ровного часа, считают от прошедшего часа. <0/> — дословно «десять минут, три прошло»: 3:10. <1/> значит «сквозь» или «прошло», а <2/> — партитив от <3>minut</3>, форма после числа; её объясняет урок {partitive}."
+msgid "On the hour: usually the number alone."
+msgstr "Ровно: обычно только число часа."
+
+msgid "Other minutes, up to twenty past, usually count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, its form after a number such as kümme; lesson {partitive} explains it."
+msgstr "Остальные минуты, до двадцати после ровного часа, обычно считают от прошедшего часа. <0/> — дословно «десять минут, три прошло»: 3:10. <1/> значит «сквозь» или «прошло», а <2/> — партитив от <3>minut</3>, форма после числа вроде kümme; её объясняет урок {partitive}."
 
 #. placeholder {0}: timeDigits(time)
 #. placeholder {1}: timeWords(time)
@@ -186,6 +255,9 @@ msgstr "без четверти четыре, 3:45"
 
 msgid "Quarters look ahead too. <0/> is a quarter, so <1/> is a quarter of the way to four: 3:15. <2/> is three quarters, so <3/> is 3:45."
 msgstr "Четверти тоже смотрят вперёд. <0/> — четверть, поэтому <1/> — это четверть четвёртого, 3:15, совсем как по-русски. <2/> — три четверти, поэтому <3/> — это 3:45."
+
+msgid "Quarters: <et>veerand</et> and <et>kolmveerand</et>"
+msgstr "Четверти: <et>veerand</et> и <et>kolmveerand</et>"
 
 msgid "Quarters: veerand and kolmveerand"
 msgstr "Четверти: veerand и kolmveerand"
@@ -220,11 +292,23 @@ msgstr "Время"
 msgid "To ask the time, say <0/> Word for word, it’s “what clock is?” The answer starts with <1/> too: <2/>, it’s three o’clock."
 msgstr "Чтобы спросить, который час, скажи <0/> Дословно — «что часы есть?» Ответ тоже начинается с <1/>: <2/>, три часа."
 
+msgid "Try again, and tap Slower before you write each sentence."
+msgstr "Попробуй ещё раз и перед каждым предложением нажми «Медленнее»."
+
 msgid "Turn the clock"
 msgstr "Покрути часы"
 
+msgid "Turn the clock above once more, then try again."
+msgstr "Ещё раз покрути часы выше, а потом попробуй снова."
+
+msgid "Turn the clock above to a few minutes past and to, then try again."
+msgstr "Покрути часы выше: поставь несколько минут после часа и до часа, а потом попробуй снова."
+
 msgid "Type the time"
 msgstr "Введи время"
+
+msgid "Type the time in words"
+msgstr "Напиши время словами"
 
 msgid "Type the time you hear"
 msgstr "Введи время, которое слышишь"
@@ -232,8 +316,20 @@ msgstr "Введи время, которое слышишь"
 msgid "Veerand neli: a quarter of the way to four, 3:15."
 msgstr "Veerand neli: четверть четвёртого, 3:15."
 
+msgid "What time is it now?"
+msgstr "Который сейчас час?"
+
 msgid "What time is it?"
 msgstr "Который час?"
+
+msgid "When do they drink coffee?"
+msgstr "Когда они пьют кофе?"
+
+msgid "When do they wait for the bus?"
+msgstr "Когда они ждут автобус?"
+
+msgid "When is Mari at home?"
+msgstr "Когда Мари дома?"
 
 msgid "Which clock did you hear?"
 msgstr "Какое время прозвучало?"
@@ -244,5 +340,20 @@ msgstr "Какие часы?"
 msgid "Which half hour?"
 msgstr "Половина какого?"
 
+msgid "Which time did you hear?"
+msgstr "Какое время прозвучало?"
+
+msgid "With <0>läbi</0>, minutes past count from the hour that has struck: <1>kümme minutit kolm läbi</1>, 3:10. With <2>pärast</2>, minutes to count down to the next: <3>kümne minuti pärast neli</3>, 3:50."
+msgstr "С <0>läbi</0> минуты после считают от прошедшего часа: <1>kümme minutit kolm läbi</1>, 3:10. С <2>pärast</2> минуты до отсчитывают до следующего: <3>kümne minuti pärast neli</3>, 3:50."
+
 msgid "Word for word: “what clock is?”"
 msgstr "Дословно: «что часы есть?»"
+
+msgid "Write the sentence"
+msgstr "Напиши предложение"
+
+msgid "Write the time in words"
+msgstr "Напиши время словами"
+
+msgid "Write what you hear"
+msgstr "Напиши, что слышишь"

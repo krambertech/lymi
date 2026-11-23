@@ -10,35 +10,65 @@ msgstr ""
 msgid "-teist or -kümmend?"
 msgstr "-teist or -kümmend?"
 
-msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
-msgstr "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
+msgid "<0/> has a short <1>a</1> and a <2>k</2> before the <3>s</3>; <4/> has a long <5>uu</5>. <6/> starts with <7>ka</7>, <8/> with <9>ü</9>. The numbers built from them differ the same way. Listen, then pick."
+msgstr "<0/> has a short <1>a</1> and a <2>k</2> before the <3>s</3>; <4/> has a long <5>uu</5>. <6/> starts with <7>ka</7>, <8/> with <9>ü</9>. The numbers built from them differ the same way. Listen, then pick."
+
+msgid "<0/> is a hundred and <1/> a thousand, usually with no “one” in front. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
+msgstr "<0/> is a hundred and <1/> a thousand, usually with no “one” in front. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 
 msgid "<0/> is twelve and <1/> is twenty. Both start with kaks, so listen to how the word ends."
 msgstr "<0/> is twelve and <1/> is twenty. Both start with kaks, so listen to how the word ends."
 
-msgid "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
-msgstr "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
+msgid "<0>Sada</0> and <1>tuhat</1> usually need no “one”. Hundreds join up; thousands stay separate."
+msgstr "<0>Sada</0> and <1>tuhat</1> usually need no “one”. Hundreds join up; thousands stay separate."
+
+msgid "<et>-teist</et> makes eleven to nineteen; <et>-kümmend</et> makes twenty to ninety."
+msgstr "<et>-teist</et> makes eleven to nineteen; <et>-kümmend</et> makes twenty to ninety."
+
+msgid "<et>-teist</et> or <et>-kümmend</et>"
+msgstr "<et>-teist</et> or <et>-kümmend</et>"
+
+msgid "<et>Kaks</et> has a short <et>a</et> and a <et>k</et> before the <et>s</et>; <et>kuus</et> a long <et>uu</et>. <et>Kaheksa</et> starts with <et>ka</et>, <et>üheksa</et> with <et>ü</et>."
+msgstr "<et>Kaks</et> has a short <et>a</et> and a <et>k</et> before the <et>s</et>; <et>kuus</et> a long <et>uu</et>. <et>Kaheksa</et> starts with <et>ka</et>, <et>üheksa</et> with <et>ü</et>."
+
+msgid "<et>Kaks</et> or <et>kuus</et> in a sentence"
+msgstr "<et>Kaks</et> or <et>kuus</et> in a sentence"
+
+msgid "<et>Tuhat</et>, usually with no “one” in front."
+msgstr "<et>Tuhat</et>, usually with no “one” in front."
+
+msgid "€2.15"
+msgstr "€2.15"
+
+msgid "€2.50"
+msgstr "€2.50"
+
+msgid "€6.50"
+msgstr "€6.50"
 
 msgid "0 to 10"
 msgstr "0 to 10"
 
-msgid "10 minutes"
-msgstr "10 minutes"
-
 msgid "11 to 19"
 msgstr "11 to 19"
+
+msgid "15 minutes"
+msgstr "15 minutes"
 
 msgid "20 to 100"
 msgstr "20 to 100"
 
-msgid "3 quizzes"
-msgstr "3 quizzes"
+msgid "5 quizzes and a passage"
+msgstr "5 quizzes and a passage"
 
 msgid "A digit after the tens is a word of its own: <0/>, twenty-one. Slide to any number and hear how it’s built."
 msgstr "A digit after the tens is a word of its own: <0/>, twenty-one. Slide to any number and hear how it’s built."
 
 msgid "a hundred"
 msgstr "a hundred"
+
+msgid "a number"
+msgstr "a number"
 
 msgid "a thousand"
 msgstr "a thousand"
@@ -51,6 +81,12 @@ msgstr "Add <0>-teist</0> to a digit and you have eleven to nineteen: <1/>, <2/>
 
 msgid "All of them, by ear."
 msgstr "All of them, by ear."
+
+msgid "All of them, every pair told apart."
+msgstr "All of them, every pair told apart."
+
+msgid "All of them, every word spelled right."
+msgstr "All of them, every word spelled right."
 
 msgid "All of them, inside real sentences."
 msgstr "All of them, inside real sentences."
@@ -91,17 +127,23 @@ msgstr "Eurot is the partitive of euro."
 msgid "five"
 msgstr "five"
 
-msgid "For the tens, add <0>-kümmend</0> to the digit: <1/> is two tens, twenty."
-msgstr "For the tens, add <0>-kümmend</0> to the digit: <1/> is two tens, twenty."
-
 msgid "four"
 msgstr "four"
+
+msgid "From twenty to ninety, add <0>-kümmend</0> to the digit: <1/> is two tens, twenty. Ten is just <2>kümme</2>."
+msgstr "From twenty to ninety, add <0>-kümmend</0> to the digit: <1/> is two tens, twenty. Ten is just <2>kümme</2>."
 
 msgid "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
 msgstr "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
 
+msgid "How old is Jaan?"
+msgstr "How old is Jaan?"
+
 msgid "Hundreds and thousands"
 msgstr "Hundreds and thousands"
+
+msgid "Hundreds join into one word; thousands stay separate."
+msgstr "Hundreds join into one word; thousands stay separate."
 
 msgid "Hundreds join into one word."
 msgstr "Hundreds join into one word."
@@ -112,17 +154,35 @@ msgstr "I have three cats."
 msgid "I’m 34 years old."
 msgstr "I’m 34 years old."
 
+msgid "in words"
+msgstr "in words"
+
+msgid "Jaan has six cats."
+msgstr "Jaan has six cats."
+
+msgid "Jaan says how old he is, his flat and phone numbers, how many cats he has and what his coffee costs. Listen for each number."
+msgstr "Jaan says how old he is, his flat and phone numbers, how many cats he has and what his coffee costs. Listen for each number."
+
 msgid "Kassi is the partitive of kass, cat."
 msgstr "Kassi is the partitive of kass, cat."
 
 msgid "Learn eleven words, <0>null</0> to <1>kümme</1>. Every number up to 99 is built from them."
 msgstr "Learn eleven words, <0>null</0> to <1>kümme</1>. Every number up to 99 is built from them."
 
+msgid "Listen: Jaan’s numbers"
+msgstr "Listen: Jaan’s numbers"
+
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
 
+msgid "Listening: Jaan’s numbers"
+msgstr "Listening: Jaan’s numbers"
+
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Most of them. Play the ones you missed once more."
+
+msgid "Move the slider in Put them together once more, then try again."
+msgstr "Move the slider in Put them together once more, then try again."
 
 msgid "My flat is number 16."
 msgstr "My flat is number 16."
@@ -130,8 +190,14 @@ msgstr "My flat is number 16."
 msgid "My number is 5 2 0 9 4."
 msgstr "My number is 5 2 0 9 4."
 
+msgid "Nearly. Check -teist and -kümmend in the ones you missed."
+msgstr "Nearly. Check -teist and -kümmend in the ones you missed."
+
 msgid "nine"
 msgstr "nine"
+
+msgid "Now the other way round: each round shows digits, and you type the words. Tens and ones are two words: <0/>."
+msgstr "Now the other way round: each round shows digits, and you type the words. Tens and ones are two words: <0/>."
 
 msgid "Number"
 msgstr "Number"
@@ -141,6 +207,12 @@ msgstr "Numbers by ear. Eleven words and two endings take you to ninety-nine."
 
 msgid "Numbers in the wild"
 msgstr "Numbers in the wild"
+
+msgid "Numbers in words"
+msgstr "Numbers in words"
+
+msgid "Numbers that sound alike"
+msgstr "Numbers that sound alike"
 
 msgid "one"
 msgstr "one"
@@ -172,14 +244,23 @@ msgstr "Put them together"
 msgid "Range"
 msgstr "Range"
 
-msgid "Sada alone, with no “one” in front."
-msgstr "Sada alone, with no “one” in front."
+msgid "Sada, usually with no “one” in front."
+msgstr "Sada, usually with no “one” in front."
 
 msgid "seven"
 msgstr "seven"
 
+msgid "seventeen"
+msgstr "seventeen"
+
+msgid "seventy"
+msgstr "seventy"
+
 msgid "six"
 msgstr "six"
+
+msgid "Tap zero to ten at the top once more, then try again."
+msgstr "Tap zero to ten at the top once more, then try again."
 
 msgid "ten"
 msgstr "ten"
@@ -187,14 +268,14 @@ msgstr "ten"
 msgid "Tens and ones are separate words: <0>kakskümmend üks</0>."
 msgstr "Tens and ones are separate words: <0>kakskümmend üks</0>."
 
-msgid "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
-msgstr "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
+msgid "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens from twenty to ninety."
+msgstr "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens from twenty to ninety."
 
 msgid "The tens"
 msgstr "The tens"
 
-msgid "The tens: -kümmend"
-msgstr "The tens: -kümmend"
+msgid "The tens and the ones are two words."
+msgstr "The tens and the ones are two words."
 
 msgid "The word after the number changes too: <0/>, <1/>. That form is the partitive, which lesson {partitive} explains. For now, listen for the number."
 msgstr "The word after the number changes too: <0/>, <1/>. That form is the partitive, which lesson {partitive} explains. For now, listen for the number."
@@ -232,6 +313,9 @@ msgstr "twelve euros"
 msgid "twenty"
 msgstr "twenty"
 
+msgid "Twenty to ninety: -kümmend"
+msgstr "Twenty to ninety: -kümmend"
+
 msgid "twenty-one"
 msgstr "twenty-one"
 
@@ -244,17 +328,32 @@ msgstr "two hundred"
 msgid "two thousand"
 msgstr "two thousand"
 
+msgid "Type it in words"
+msgstr "Type it in words"
+
 msgid "Type the number you hear"
 msgstr "Type the number you hear"
 
 msgid "Type what you hear"
 msgstr "Type what you hear"
 
+msgid "What does the coffee cost?"
+msgstr "What does the coffee cost?"
+
+msgid "What is his flat number?"
+msgstr "What is his flat number?"
+
+msgid "What is his phone number?"
+msgstr "What is his phone number?"
+
 msgid "What number was in it?"
 msgstr "What number was in it?"
 
 msgid "Which number did you hear?"
 msgstr "Which number did you hear?"
+
+msgid "Write the number in words"
+msgstr "Write the number in words"
 
 msgid "zero"
 msgstr "zero"

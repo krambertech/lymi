@@ -7,9 +7,6 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
-msgid "<0/> asks about people and <1/> about things: <2/> Who is that? <3/> What is that?"
-msgstr "<0/> спрашивает о людях, а <1/> — о вещах: <2/> Кто это? <3/> Что это?"
-
 msgid "<0/> is yes and <1/> is no. When the question asks with olema, to be, the usual no is <2/>: he or she isn’t, I’m not. When you don’t know, say <3/>."
 msgstr "<0/> значит «да», <1/> — «нет». Если в вопросе есть olema, «быть», обычный ответ «нет» — <2/>, то есть «не» вместе с глаголом olema. Если не знаешь, скажи <3/>."
 
@@ -19,17 +16,29 @@ msgstr "<0/> значит «твой», это короткое <1/>; откуд
 msgid "<0/> repeats the verb from the question, and any verb can answer this way: <1>Kas sa loed? Ei loe.</1> Lesson {negation} covers saying no."
 msgstr "<0/> повторяет глагол из вопроса, и так можно ответить с любым глаголом: <1>Kas sa loed? Ei loe.</1> Об отрицании рассказывает урок {negation}."
 
+msgid "<0/> usually asks about people and <1/> about things: <2/> Who is that? <3/> What is that?"
+msgstr "<0/> обычно спрашивает о людях, а <1/> — о вещах: <2/> Кто это? <3/> Что это?"
+
 msgid "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
 msgstr "<0/> Ты живёшь в Таллине. <1/> Ты живёшь в Таллине? Чтобы спросить «да или нет», поставь <2/> перед предложением."
 
-msgid "<0>Kes</0> asks about people, <1>mis</1> about things."
-msgstr "<0>Kes</0> спрашивает о людях, <1>mis</1> — о вещах."
+msgid "<0>Kes</0> usually asks about people, <1>mis</1> about things."
+msgstr "<0>Kes</0> обычно спрашивает о людях, <1>mis</1> — о вещах."
 
-msgid "10 minutes"
-msgstr "10 минут"
+msgid "<et>Kas</et> or a question word"
+msgstr "<et>Kas</et> или вопросительное слово"
 
-msgid "2 quizzes"
-msgstr "2 теста"
+msgid "<et>Kes</et>, who, not <et>kus</et>, where."
+msgstr "<et>Kes</et>, «кто», а не <et>kus</et>, «где»."
+
+msgid "<et>Kus</et>, where, not <et>kes</et>, who."
+msgstr "<et>Kus</et>, «где», а не <et>kes</et>, «кто»."
+
+msgid "15 minutes"
+msgstr "15 минут"
+
+msgid "5 quizzes, a matching game and a conversation"
+msgstr "5 тестов, поиск пар и разговор"
 
 msgid "a little"
 msgstr "немного"
@@ -37,8 +46,35 @@ msgstr "немного"
 msgid "A little."
 msgstr "Немного."
 
-msgid "A question word goes first, and the part you ask about drops out: <0>Kus sa elad?</0>"
-msgstr "Вопросительное слово ставится первым, а то, о чём спрашиваешь, уходит: <0>Kus sa elad?</0>"
+msgid "a person"
+msgstr "человек"
+
+msgid "a place"
+msgstr "место"
+
+msgid "A question answered with yes or no usually starts with <0/>. A question that wants a place, a person or a thing starts with its question word instead, not with both. Write each question in Estonian."
+msgstr "Вопрос, на который отвечают «да» или «нет», обычно начинается с <0/>. Вопрос о месте, человеке или вещи начинается с вопросительного слова, а не с обоих сразу. Напиши каждый вопрос по-эстонски."
+
+msgid "A question word replaces <et>kas</et>, so a question usually starts with one or the other."
+msgstr "Вопросительное слово стоит вместо <et>kas</et>: вопрос обычно начинается с одного из них."
+
+msgid "A question word usually goes first, and the part you ask about drops out: <0>Kus sa elad?</0>"
+msgstr "Вопросительное слово обычно ставится первым, а то, о чём спрашиваешь, уходит: <0>Kus sa elad?</0>"
+
+msgid "a reason"
+msgstr "причина"
+
+msgid "a thing"
+msgstr "вещь"
+
+msgid "a time"
+msgstr "время"
+
+msgid "A yes-or-no question usually starts with <et>kas</et>."
+msgstr "Вопрос с ответом «да» или «нет» обычно начинается с <et>kas</et>."
+
+msgid "All eight, each with <0>kas</0> or its question word."
+msgstr "Все восемь, каждый с <0>kas</0> или своим вопросительным словом."
 
 msgid "All of them. You can hear what a question asks."
 msgstr "Все. Ты слышишь, о чём спрашивают."
@@ -46,20 +82,23 @@ msgstr "Все. Ты слышишь, о чём спрашивают."
 msgid "All of them. You matched every answer to its question."
 msgstr "Все. Каждый ответ подходит к своему вопросу."
 
-msgid "Answer <0>jah</0> or <1>ei</1>. When the question has olema, the no is <2>ei ole</2>. If you don’t know, say <3>Ma ei tea.</3>"
-msgstr "Отвечай <0>jah</0> или <1>ei</1>. Если в вопросе есть olema, «нет» — это <2>ei ole</2>. Если не знаешь, говори <3>Ma ei tea.</3>"
+msgid "All seven questions, each with the right word."
+msgstr "Все семь вопросов, и в каждом верное слово."
+
+msgid "All seven, each question word right."
+msgstr "Все семь, каждое вопросительное слово верное."
+
+msgid "Answer <0>jah</0> or <1>ei</1>. When the question has olema, the no is <2>ei ole</2> or <3>pole</3>. If you don’t know, say <4>Ma ei tea.</4>"
+msgstr "Отвечай <0>jah</0> или <1>ei</1>. Если в вопросе есть olema, «нет» — это <2>ei ole</2> или <3>pole</3>. Если не знаешь, говори <4>Ma ei tea.</4>"
 
 msgid "Are they working today?"
 msgstr "Они сегодня работают?"
 
-msgid "Asks about a person."
-msgstr "Спрашивает о человеке."
+msgid "Ask the question"
+msgstr "Задай вопрос"
 
 msgid "Asks about a place."
 msgstr "Спрашивает о месте."
-
-msgid "Asks about a thing."
-msgstr "Спрашивает о вещи."
 
 msgid "Asks about a time."
 msgstr "Спрашивает о времени."
@@ -70,17 +109,26 @@ msgstr "Спрашивает о количестве."
 msgid "Asks for a reason."
 msgstr "Спрашивает о причине."
 
-msgid "Asks how it’s done."
-msgstr "Спрашивает, каким образом."
+msgid "Asks how, or how things are."
+msgstr "Спрашивает, каким образом или как дела."
 
 msgid "at home"
 msgstr "дома"
+
+msgid "At the start of a question it has no meaning of its own, like a spoken question mark."
+msgstr "В начале вопроса своего значения не имеет, это как знак вопроса вслух."
 
 msgid "because"
 msgstr "потому что"
 
 msgid "Because I live in Tallinn."
 msgstr "Потому что я живу в Таллине."
+
+msgid "Do they drink coffee?"
+msgstr "Они пьют кофе?"
+
+msgid "Do you all live in Tartu?"
+msgstr "Вы живёте в Тарту?"
 
 msgid "Do you drink coffee?"
 msgstr "Ты пьёшь кофе?"
@@ -91,8 +139,17 @@ msgstr "Ты живёшь в Таллине?"
 msgid "Do you speak Estonian?"
 msgstr "Ты говоришь по-эстонски?"
 
-msgid "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
-msgstr "По-русски вопрос часто задают одной интонацией. В эстонском нужно слово kas, а все остальные слова остаются на своих местах. Попробуй на пяти предложениях."
+msgid "Do you work at home?"
+msgstr "Ты работаешь дома?"
+
+msgid "Does he speak Estonian?"
+msgstr "Он говорит по-эстонски?"
+
+msgid "Each round gives an answer. Write the question it answers: start with the question word, and when the answer says <0>ma</0>, ask with <1>sa</1> (or <2>te</2> to be polite)."
+msgstr "В каждом раунде есть ответ. Напиши к нему вопрос: начни с вопросительного слова, а если в ответе <0>ma</0>, в вопросе ставь <1>sa</1> (или вежливое <2>te</2>)."
+
+msgid "English adds do or swaps words round. Estonian adds kas and usually leaves every other word where it was. Try it on five sentences."
+msgstr "По-русски вопрос часто задают одной интонацией. В эстонском нужно слово kas, а остальные слова обычно остаются на своих местах. Попробуй на пяти предложениях."
 
 msgid "Fine, thanks. And you?"
 msgstr "Хорошо, спасибо. А у тебя?"
@@ -100,17 +157,35 @@ msgstr "Хорошо, спасибо. А у тебя?"
 msgid "Five sentences. Switch to Question and watch what changes."
 msgstr "Пять предложений. Переключи на «Вопрос» и посмотри, что изменится."
 
+msgid "For fun"
+msgstr "Для удовольствия"
+
+msgid "For his family"
+msgstr "Из-за семьи"
+
+msgid "For work"
+msgstr "Из-за работы"
+
 msgid "from, by birth"
 msgstr "родом из"
+
+msgid "Go back to the <0>kas</0> switch at the top, then try again."
+msgstr "Вернись к переключателю с <0>kas</0> в начале урока, а потом попробуй ещё раз."
 
 msgid "He or she is at home."
 msgstr "Он или она дома."
 
-msgid "Hear a question and pick its question word. It always comes first, so listen to the start."
-msgstr "Послушай вопрос и выбери вопросительное слово. Оно всегда первое, так что слушай начало."
+msgid "Hear a question and pick its question word. In these questions it comes first, so listen to the start."
+msgstr "Послушай вопрос и выбери вопросительное слово. В этих вопросах оно первое, так что слушай начало."
+
+msgid "Hear a question and write it. <0/> and <1/> differ by one vowel, and <2/> and <3/> by one k, so listen closely to the first word."
+msgstr "Послушай вопрос и напиши его. <0/> и <1/> отличаются одной гласной, а <2/> и <3/> — одним k, так что внимательно слушай первое слово."
 
 msgid "Hear a question, then pick the answer that fits. A kas question takes yes, no or I don’t know; a question word wants what it asks about, such as a place for kus or a time for millal."
 msgstr "Послушай вопрос и выбери ответ, который подходит. На kas отвечают «да», «нет» или «не знаю», а на вопросительное слово — тем, о чём оно спрашивает: местом на kus, временем на millal."
+
+msgid "His name"
+msgstr "Его имя"
 
 msgid "how"
 msgstr "как"
@@ -139,6 +214,9 @@ msgstr "сколько"
 msgid "How to ask in Estonian: kas for yes or no, seven question words for the rest, and three everyday questions to learn whole."
 msgstr "Как спрашивать по-эстонски: kas для «да или нет», семь вопросительных слов для всего остального и три повседневных вопроса, которые учат целиком."
 
+msgid "how, or how things are"
+msgstr "как или как дела"
+
 msgid "How’s it going?"
 msgstr "Как дела?"
 
@@ -154,11 +232,17 @@ msgstr "Я много читаю."
 msgid "I’m from Ukraine."
 msgstr "Я из Украины."
 
-msgid "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
-msgstr "В вопросе с kas голос в конце понижается, как в утверждении: kas уже говорит, что это вопрос. В разговоре вместо него ещё услышишь <0/> в конце, что-то вроде «да?»: <1/>"
+msgid "In a kas question your voice usually falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
+msgstr "В вопросе с kas голос в конце обычно понижается, как в утверждении: kas уже говорит, что это вопрос. В разговоре вместо него ещё услышишь <0/> в конце, что-то вроде «да?»: <1/>"
+
+msgid "In Narva"
+msgstr "В Нарве"
 
 msgid "in Tallinn"
 msgstr "в Таллине"
+
+msgid "In Tallinn"
+msgstr "В Таллине"
 
 msgid "In Tallinn."
 msgstr "В Таллине."
@@ -166,20 +250,32 @@ msgstr "В Таллине."
 msgid "in Tartu"
 msgstr "в Тарту"
 
+msgid "In Tartu"
+msgstr "В Тарту"
+
 msgid "Is he or she at home?"
 msgstr "Он или она дома?"
 
-msgid "It has no meaning of its own, like a spoken question mark."
-msgstr "Своего значения не имеет, это как знак вопроса вслух."
+msgid "Jaan"
+msgstr "Яан"
 
 msgid "Jah, ei, ei ole"
 msgstr "Jah, ei, ei ole"
 
-msgid "Kas in front, a question mark at the end. Every other word stays put."
-msgstr "Kas в начале, знак вопроса в конце. Все остальные слова на своих местах."
+msgid "Kas in front, a question mark at the end. Here every other word stays put."
+msgstr "Kas в начале, знак вопроса в конце. Здесь все остальные слова остаются на своих местах."
 
 msgid "Kas makes a question"
 msgstr "Kas превращает фразу в вопрос"
+
+msgid "Kas or a question word"
+msgstr "Kas или вопросительное слово"
+
+msgid "Kati"
+msgstr "Кати"
+
+msgid "Kati and Jaan meet for the first time and ask each other questions. Listen for the question words."
+msgstr "Кати и Яан знакомятся и задают друг другу вопросы. Слушай вопросительные слова."
 
 msgid "Kus with its -s swapped for -st, “out of”."
 msgstr "Kus, где -s заменили на -st, «из»."
@@ -190,14 +286,38 @@ msgstr "Три вопроса учи целиком: <0>Mis su nimi on? Kuidas l
 msgid "Listen to the first word. Kas wants yes or no; a question word wants what it asks about."
 msgstr "Слушай первое слово. На kas отвечают «да» или «нет», а на вопросительное слово — тем, о чём оно спрашивает."
 
+msgid "Listen: Kati meets Jaan"
+msgstr "Аудирование: Кати знакомится с Яаном"
+
 msgid "Listening only, no microphone"
 msgstr "Только на слух, без микрофона"
+
+msgid "Listening: Kati meets Jaan"
+msgstr "На слух: Кати знакомится с Яаном"
 
 msgid "Ma olen pärit… is I’m from…"
 msgstr "Ma olen pärit… значит «я родом из…»."
 
+msgid "make it a yes-or-no question"
+msgstr "сделай вопросом «да или нет»"
+
+msgid "Match each question word with what it asks about."
+msgstr "Соедини каждое вопросительное слово с тем, о чём оно спрашивает."
+
+msgid "Match the question words"
+msgstr "Соедини вопросительные слова"
+
 msgid "My name is Mari."
 msgstr "Меня зовут Mari."
+
+msgid "Nearly. Check the question word and the verb’s ending."
+msgstr "Почти. Проверь вопросительное слово и окончание глагола."
+
+msgid "Nearly. Check whether each one asks for yes or no."
+msgstr "Почти. Проверь, ждёт ли вопрос ответа «да» или «нет»."
+
+msgid "Nearly. Hear the ones you missed below, then try again with Slower."
+msgstr "Почти. Послушай ниже те, где была ошибка, а потом попробуй ещё раз с кнопкой «Медленнее»."
 
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Почти. Переслушай те, где были ошибки."
@@ -227,8 +347,11 @@ msgstr "Воспроизвести {0}"
 msgid "Play {question}"
 msgstr "Воспроизвести {question}"
 
-msgid "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
-msgstr "Чтобы спросить «да или нет», поставь <0>kas</0> перед предложением. Больше ничего не двигается: <1>Kas sa elad Tallinnas?</1>"
+msgid "Put <0>kas</0> in front of a sentence to ask yes or no. Usually nothing else moves: <1>Kas sa elad Tallinnas?</1>"
+msgstr "Чтобы спросить «да или нет», поставь <0>kas</0> перед предложением. Остальные слова обычно остаются на месте: <1>Kas sa elad Tallinnas?</1>"
+
+msgid "Put <et>kas</et> in front; the other words can stay where they were."
+msgstr "Поставь <et>kas</et> в начало; остальные слова могут остаться на месте."
 
 msgid "Question"
 msgstr "Вопрос"
@@ -238,6 +361,9 @@ msgstr "Вопросительные слова"
 
 msgid "Short for sinu."
 msgstr "Сокращение от sinu."
+
+msgid "Start with the question word for what you ask about, and leave that part out; when the answer says <et>ma</et>, ask with <et>sa</et> (or <et>te</et> to be polite)."
+msgstr "Начни с вопросительного слова к тому, о чём спрашиваешь, и пропусти эту часть; если в ответе <et>ma</et>, в вопросе ставь <et>sa</et> (или вежливое <et>te</et>)."
 
 msgid "Statement"
 msgstr "Утверждение"
@@ -256,6 +382,12 @@ msgstr "Это книга."
 
 msgid "That’s Jaan."
 msgstr "Это Jaan."
+
+msgid "The question word by ear"
+msgstr "Вопросительное слово на слух"
+
+msgid "The question word usually comes first: <et>{word}</et>."
+msgstr "Вопросительное слово обычно стоит первым: <et>{word}</et>."
 
 msgid "There are seven to start with. Tap one to hear it in a question."
 msgstr "Для начала их семь. Нажми на любое, чтобы услышать его в вопросе."
@@ -281,6 +413,12 @@ msgstr "Завтра."
 msgid "turns a sentence into a yes-or-no question"
 msgstr "делает из предложения вопрос «да или нет»"
 
+msgid "Usually asks about a person."
+msgstr "Обычно спрашивает о человеке."
+
+msgid "Usually asks about a thing."
+msgstr "Обычно спрашивает о вещи."
+
 msgid "well, fine"
 msgstr "хорошо"
 
@@ -295,6 +433,12 @@ msgstr "Что ты читаешь?"
 
 msgid "What does it ask?"
 msgstr "О чём спрашивают?"
+
+msgid "What does Kati ask first?"
+msgstr "О чём Кати спрашивает сначала?"
+
+msgid "What each word asks about"
+msgstr "О чём спрашивает каждое слово"
 
 msgid "What is that?"
 msgstr "Что это?"
@@ -326,11 +470,26 @@ msgstr "Где вы живёте?"
 msgid "Where do you live?"
 msgstr "Где ты живёшь?"
 
+msgid "Where do you work?"
+msgstr "Где ты работаешь?"
+
 msgid "Where does he or she work?"
 msgstr "Где он или она работает?"
 
+msgid "Where does Jaan live?"
+msgstr "Где живёт Яан?"
+
 msgid "where from"
 msgstr "откуда"
+
+msgid "Where he is from"
+msgstr "Откуда он родом"
+
+msgid "Where he lives"
+msgstr "Где он живёт"
+
+msgid "Where is he?"
+msgstr "Где он?"
 
 msgid "Which answer fits?"
 msgstr "Какой ответ подходит?"
@@ -364,6 +523,24 @@ msgstr "Почему ты ждёшь?"
 
 msgid "Why is he or she learning Estonian?"
 msgstr "Почему он или она учит эстонский?"
+
+msgid "Why is Jaan learning Estonian?"
+msgstr "Почему Яан учит эстонский?"
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"
+
+msgid "Write the question"
+msgstr "Напиши вопрос"
+
+msgid "Write the question it answers"
+msgstr "Напиши вопрос к ответу"
+
+msgid "Write the question you hear"
+msgstr "Напиши вопрос, который слышишь"
+
+msgid "Writing the question for an answer"
+msgstr "Вопрос к ответу"
 
 msgid "yes"
 msgstr "да"

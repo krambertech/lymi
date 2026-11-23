@@ -1,0 +1,515 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 12:41+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0/> means I would go. Take the <1>ma</1> form of the present from lesson {present}, <2>lähen</2>, drop its <3>-n</3>, and add <4>-ksin</4>. Every verb works this way. Tap each form in the table to hear it."
+msgstr "<0/> means I would go. Take the <1>ma</1> form of the present from lesson {present}, <2>lähen</2>, drop its <3>-n</3>, and add <4>-ksin</4>. Every verb works this way. Tap each form in the table to hear it."
+
+msgid "<0/> means if. When the if is imagined, English says “if I had”, then “I would”; Estonian puts both halves in the would form: <1/> For a real if, both usually stay in the present: <2>Kui mul on aega, lähen ma kinno.</2>"
+msgstr "<0/> means if. When the if is imagined, English says “if I had”, then “I would”; Estonian puts both halves in the would form: <1/> For a real if, both usually stay in the present: <2>Kui mul on aega, lähen ma kinno.</2>"
+
+msgid "<0>-ks</0> in the verb: would."
+msgstr "<0>-ks</0> in the verb: would."
+
+msgid "<0>-ks</0> is in every person. The form for <1>ta</1> stops at it, and <2>nad</2> ends like <3>sa</3>. After <4>ei</4>, every person takes the form for <5>ta</5>."
+msgstr "<0>-ks</0> is in every person. The form for <1>ta</1> stops at it, and <2>nad</2> ends like <3>sa</3>. After <4>ei</4>, every person takes the form for <5>ta</5>."
+
+msgid "22 minutes"
+msgstr "22 minutes"
+
+msgid "8 exercises"
+msgstr "8 exercises"
+
+msgid "A month off"
+msgstr "A month off"
+
+msgid "After <0>ei</0>, the form for <1>ta</1>: <2>läheks</2>."
+msgstr "After <0>ei</0>, the form for <1>ta</1>: <2>läheks</2>."
+
+msgid "After <0>ei</0>, the would form has no person ending: <1>läheks</1>."
+msgstr "After <0>ei</0>, the would form has no person ending: <1>läheks</1>."
+
+msgid "After <et>ei</et>, the form for <et>ta</et>, for every person."
+msgstr "After <et>ei</et>, the form for <et>ta</et>, for every person."
+
+msgid "All eight, typed in full."
+msgstr "All eight, typed in full."
+
+msgid "All seven, each with the would form where it belongs."
+msgstr "All seven, each with the would form where it belongs."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six, each with the would form."
+msgstr "All six, each with the would form."
+
+msgid "All six: right every time."
+msgstr "All six: right every time."
+
+msgid "An imagined if takes the would form in both halves: <0>oleks</0>."
+msgstr "An imagined if takes the would form in both halves: <0>oleks</0>."
+
+msgid "An imagined if: both halves take the would form."
+msgstr "An imagined if: both halves take the would form."
+
+msgid "Ask politely with it: <0>Ma tahaksin kohvi. Kas sa saaksid mind aidata?</0>"
+msgstr "Ask politely with it: <0>Ma tahaksin kohvi. Kas sa saaksid mind aidata?</0>"
+
+msgid "Asking politely"
+msgstr "Asking politely"
+
+msgid "Bake cakes with her grandmother"
+msgstr "Bake cakes with her grandmother"
+
+msgid "Both forms are correct for every person: <0>ma tahaksin</0> or <1>ma tahaks</1>, <2>me läheksime</2> or <3>me läheks</3>. The short one, like the form for <4>ta</4>, is common in speech."
+msgstr "Both forms are correct for every person: <0>ma tahaksin</0> or <1>ma tahaks</1>, <2>me läheksime</2> or <3>me läheks</3>. The short one, like the form for <4>ta</4>, is common in speech."
+
+msgid "can, to get"
+msgstr "can, to get"
+
+msgid "Could you help me?"
+msgstr "Could you help me?"
+
+msgid "Could you say that again, please?"
+msgstr "Could you say that again, please?"
+
+#. placeholder {0}: item.n
+#. placeholder {1}: item.person
+#. placeholder {2}: item.answer
+msgid "Drop the <0>-n</0> of <1>{0}</1> and add <2>-ks</2> with the ending for <3>{1}</3>: <4>{2}</4>."
+msgstr "Drop the <0>-n</0> of <1>{0}</1> and add <2>-ks</2> with the ending for <3>{1}</3>: <4>{2}</4>."
+
+msgid "Drop the <0>-n</0> of the present and add <1>-ksin</1>."
+msgstr "Drop the <0>-n</0> of the present and add <1>-ksin</1>."
+
+msgid "Drop the <et>-n</et> of the present and add <et>-ks</et>, usually with the person’s ending: <et>-in</et>, <et>-id</et>, none for <et>ta</et>, <et>-ime</et>, <et>-ite</et>, <et>-id</et>."
+msgstr "Drop the <et>-n</et> of the present and add <et>-ks</et>, usually with the person’s ending: <et>-in</et>, <et>-id</et>, none for <et>ta</et>, <et>-ime</et>, <et>-ite</et>, <et>-id</et>."
+
+msgid "Each round gives a sentence and a cue. Write it with the would form."
+msgstr "Each round gives a sentence and a cue. Write it with the would form."
+
+msgid "Each round gives a verb, its present for <0>ma</0>, and a person. Type the would form."
+msgstr "Each round gives a verb, its present for <0>ma</0>, and a person. Type the would form."
+
+msgid "Each sentence has one verb in the wrong form. Tap it, then type it right."
+msgstr "Each sentence has one verb in the wrong form. Tap it, then type it right."
+
+msgid "First we should save some money."
+msgstr "First we should save some money."
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "Fix the would form"
+msgstr "Fix the would form"
+
+msgid "For <0>me</0>, the full ending is <1>-me</1>: <2>läheksime</2>."
+msgstr "For <0>me</0>, the full ending is <1>-me</1>: <2>läheksime</2>."
+
+msgid "For <0>sa</0>, the full ending is <1>-d</1>: <2>saaksid</2>."
+msgstr "For <0>sa</0>, the full ending is <1>-d</1>: <2>saaksid</2>."
+
+msgid "For <0>te</0>, the full ending is <1>-te</1>: <2>loeksite</2>."
+msgstr "For <0>te</0>, the full ending is <1>-te</1>: <2>loeksite</2>."
+
+msgid "For <et>me</et>, the full ending is <et>-me</et>: <et>läheksime</et>."
+msgstr "For <et>me</et>, the full ending is <et>-me</et>: <et>läheksime</et>."
+
+msgid "For <et>sa</et>, the full ending is <et>-d</et>: <et>saaksid</et>."
+msgstr "For <et>sa</et>, the full ending is <et>-d</et>: <et>saaksid</et>."
+
+msgid "For <et>te</et>, the full ending is <et>-te</et>: <et>loeksite</et>."
+msgstr "For <et>te</et>, the full ending is <et>-te</et>: <et>loeksite</et>."
+
+msgid "For the other persons, <0>-ks</0> takes <1>-id</1> for <2>sa</2> and <3>nad</3>, <4>-ime</4> for <5>me</5> and <6>-ite</6> for <7>te</7>. The form for <8>ta</8> stops at <9>-ks</9>: <10/>, would be."
+msgstr "For the other persons, <0>-ks</0> takes <1>-id</1> for <2>sa</2> and <3>nad</3>, <4>-ime</4> for <5>me</5> and <6>-ite</6> for <7>te</7>. The form for <8>ta</8> stops at <9>-ks</9>: <10/>, would be."
+
+msgid "gladly, I’d love to"
+msgstr "gladly, I’d love to"
+
+msgid "he or she"
+msgstr "he or she"
+
+msgid "He or she bought the car."
+msgstr "He or she bought the car."
+
+msgid "He or she is buying the car."
+msgstr "He or she is buying the car."
+
+msgid "He or she would buy the car."
+msgstr "He or she would buy the car."
+
+msgid "He or she would go home."
+msgstr "He or she would go home."
+
+msgid "Hear a sentence, then pick what it means. Listen for <0>-ks</0>. Without it, a changed stem or <1>-s</1> means the past: <2>tulin, oli, ostis</2>."
+msgstr "Hear a sentence, then pick what it means. Listen for <0>-ks</0>. Without it, a changed stem or <1>-s</1> means the past: <2>tulin, oli, ostis</2>."
+
+msgid "How many weeks would Jaan stay there? Write the number as he says it."
+msgstr "How many weeks would Jaan stay there? Write the number as he says it."
+
+msgid "I"
+msgstr "I"
+
+msgid "I came home."
+msgstr "I came home."
+
+msgid "I do"
+msgstr "I do"
+
+msgid "I form and would form of nine verbs"
+msgstr "I form and would form of nine verbs"
+
+msgid "I had time."
+msgstr "I had time."
+
+msgid "I have time."
+msgstr "I have time."
+
+msgid "I would"
+msgstr "I would"
+
+msgid "I would come home."
+msgstr "I would come home."
+
+msgid "I would go"
+msgstr "I would go"
+
+msgid "I would have time."
+msgstr "I would have time."
+
+msgid "I would like"
+msgstr "I would like"
+
+msgid "I wouldn’t buy coffee every day."
+msgstr "I wouldn’t buy coffee every day."
+
+msgid "I wouldn’t go far."
+msgstr "I wouldn’t go far."
+
+msgid "I wouldn’t go to the cinema."
+msgstr "I wouldn’t go to the cinema."
+
+msgid "I wouldn’t go."
+msgstr "I wouldn’t go."
+
+msgid "I’d learn a little Japanese."
+msgstr "I’d learn a little Japanese."
+
+msgid "I’d like a coffee, please."
+msgstr "I’d like a coffee, please."
+
+msgid "I’d like a coffee."
+msgstr "I’d like a coffee."
+
+msgid "I’d love to come."
+msgstr "I’d love to come."
+
+msgid "I’m coming home."
+msgstr "I’m coming home."
+
+msgid "If I had time, I’d go to the cinema."
+msgstr "If I had time, I’d go to the cinema."
+
+msgid "If I were rich, I’d buy a house."
+msgstr "If I were rich, I’d buy a house."
+
+msgid "If it were warm, we would swim in the sea."
+msgstr "If it were warm, we would swim in the sea."
+
+msgid "If the weather were fine, we’d drive to the sea."
+msgstr "If the weather were fine, we’d drive to the sea."
+
+msgid "If, and would"
+msgstr "If, and would"
+
+msgid "if; when; as, than"
+msgstr "if; when; as, than"
+
+msgid "In an imagined if sentence, both halves take it: <0>Kui mul oleks aega, läheksin ma kinno.</0>"
+msgstr "In an imagined if sentence, both halves take it: <0>Kui mul oleks aega, läheksin ma kinno.</0>"
+
+msgid "Jaan"
+msgstr "Jaan"
+
+msgid "Jaan thinks he would speak Japanese as well as Estonian."
+msgstr "Jaan thinks he would speak Japanese as well as Estonian."
+
+msgid "Jaan’s grandparents live in the country."
+msgstr "Jaan’s grandparents live in the country."
+
+msgid "Lähe-, from lähen, plus -ksin."
+msgstr "Lähe-, from lähen, plus -ksin."
+
+msgid "Lesson {verbForms} gave each verb its present; that’s the one to start from. <0>Õppima</0> gives <1>õpin</1>, so <2>õpiksin</2>, not <3>õppiksin</3>."
+msgstr "Lesson {verbForms} gave each verb its present; that’s the one to start from. <0>Õppima</0> gives <1>õpin</1>, so <2>õpiksin</2>, not <3>õppiksin</3>."
+
+msgid "Listen to the requests above once more, then try again."
+msgstr "Listen to the requests above once more, then try again."
+
+msgid "Listen to the sentences above once more, then try again."
+msgstr "Listen to the sentences above once more, then try again."
+
+msgid "Listen: Mari and Jaan"
+msgstr "Listen: Mari and Jaan"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Mari"
+msgstr "Mari"
+
+msgid "Mari asks Jaan what he would do with a month off."
+msgstr "Mari asks Jaan what he would do with a month off."
+
+msgid "Mari would spend the month at her grandmother’s in the country."
+msgstr "Mari would spend the month at her grandmother’s in the country."
+
+msgid "may, can"
+msgstr "may, can"
+
+msgid "Nearly. Check both halves of the if sentences."
+msgstr "Nearly. Check both halves of the if sentences."
+
+msgid "Nearly. Check the ending in the ones you got wrong."
+msgstr "Nearly. Check the ending in the ones you got wrong."
+
+msgid "Nearly. Check the person’s ending in the ones you got wrong."
+msgstr "Nearly. Check the person’s ending in the ones you got wrong."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Nearly. Play the ones you got wrong once more."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Nearly. Read the reason under each one you got wrong."
+
+msgid "Now"
+msgstr "Now"
+
+msgid "Now or would"
+msgstr "Now or would"
+
+msgid "Now or would?"
+msgstr "Now or would?"
+
+msgid "Now, would or past"
+msgstr "Now, would or past"
+
+msgid "Ole-, from olen, plus -ks: the form for ta."
+msgstr "Ole-, from olen, plus -ks: the form for ta."
+
+msgid "Ordering politely"
+msgstr "Ordering politely"
+
+msgid "Play the sentences you missed once more, then try again."
+msgstr "Play the sentences you missed once more, then try again."
+
+msgid "politely"
+msgstr "politely"
+
+msgid "Put each form in its bin. A would form always has <0>-ks</0>."
+msgstr "Put each form in its bin. A would form always has <0>-ks</0>."
+
+msgid "Read in the forest"
+msgstr "Read in the forest"
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "Say it with would"
+msgstr "Say it with would"
+
+msgid "Server"
+msgstr "Server"
+
+msgid "Swim in the lake"
+msgstr "Swim in the lake"
+
+msgid "Taha-, from tahan, plus -ksin."
+msgstr "Taha-, from tahan, plus -ksin."
+
+msgid "Take the present’s <0>ma</0> form without <1>-n</1> and add <2>-ks</2>, usually with the person’s ending: <3>lähen, läheksin, läheksid, läheks</3>."
+msgstr "Take the present’s <0>ma</0> form without <1>-n</1> and add <2>-ks</2>, usually with the person’s ending: <3>lähen, läheksin, läheksid, läheks</3>."
+
+msgid "Talk: at a café"
+msgstr "Talk: at a café"
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap each form in both tables once more, then try again."
+msgstr "Tap each form in both tables once more, then try again."
+
+msgid "That sounds abrupt. Ask with the would form: <0>tahaksin</0>."
+msgstr "That sounds abrupt. Ask with the would form: <0>tahaksin</0>."
+
+msgid "The conditional, or would form: <0>-ks</0> in the verb, for wishes, polite requests and what would happen if."
+msgstr "The conditional, or would form: <0>-ks</0> in the verb, for wishes, polite requests and what would happen if."
+
+msgid "The form for <0>ta</0> has no ending: <1>läheks</1>."
+msgstr "The form for <0>ta</0> has no ending: <1>läheks</1>."
+
+msgid "The form for <et>ta</et> has no ending: <et>läheks</et>."
+msgstr "The form for <et>ta</et> has no ending: <et>läheks</et>."
+
+msgid "The other half takes the would form too: <0>ostaksin</0>."
+msgstr "The other half takes the would form too: <0>ostaksin</0>."
+
+msgid "The person’s ending, and <et>ei</et>"
+msgstr "The person’s ending, and <et>ei</et>"
+
+msgid "The present: no <0>-ks</0>."
+msgstr "The present: no <0>-ks</0>."
+
+msgid "The simple past: no <0>-ks</0>."
+msgstr "The simple past: no <0>-ks</0>."
+
+msgid "The verb takes <0>-ks</0> and usually its person’s ending."
+msgstr "The verb takes <0>-ks</0> and usually its person’s ending."
+
+msgid "The would form"
+msgstr "The would form"
+
+msgid "The would form makes a request polite, as could and would do in English. <0>Saama</0> and <1>võima</1> from lesson {modal} give <2>saaksid</2> and <3>võiksite</3>: could you."
+msgstr "The would form makes a request polite, as could and would do in English. <0>Saama</0> and <1>võima</1> from lesson {modal} give <2>saaksid</2> and <3>võiksite</3>: could you."
+
+msgid "The would form makes a request polite."
+msgstr "The would form makes a request polite."
+
+msgid "The would form of minema"
+msgstr "The would form of minema"
+
+msgid "they"
+msgstr "they"
+
+msgid "to be"
+msgstr "to be"
+
+msgid "to do, to make"
+msgstr "to do, to make"
+
+msgid "to eat"
+msgstr "to eat"
+
+msgid "To Finland"
+msgstr "To Finland"
+
+msgid "to go"
+msgstr "to go"
+
+msgid "To Japan"
+msgstr "To Japan"
+
+msgid "To Lapland, in the far north"
+msgstr "To Lapland, in the far north"
+
+msgid "to live"
+msgstr "to live"
+
+msgid "to read"
+msgstr "to read"
+
+msgid "To say would not, put <0>ei</0> before the form for <1>ta</1>, for every person: <2/>"
+msgstr "To say would not, put <0>ei</0> before the form for <1>ta</1>, for every person: <2/>"
+
+msgid "To say would not, put <0>ei</0> before the form for <1>ta</1>: <2>ma ei läheks</2>."
+msgstr "To say would not, put <0>ei</0> before the form for <1>ta</1>: <2>ma ei läheks</2>."
+
+msgid "to want"
+msgstr "to want"
+
+msgid "Type the would form"
+msgstr "Type the would form"
+
+msgid "we"
+msgstr "we"
+
+msgid "We ate cake."
+msgstr "We ate cake."
+
+msgid "We would eat cake."
+msgstr "We would eat cake."
+
+msgid "We would go to the cinema tomorrow."
+msgstr "We would go to the cinema tomorrow."
+
+msgid "We would live in Tartu."
+msgstr "We would live in Tartu."
+
+msgid "We’re eating cake."
+msgstr "We’re eating cake."
+
+msgid "What could Jaan dig in the garden? Write it as Mari says it."
+msgstr "What could Jaan dig in the garden? Write it as Mari says it."
+
+msgid "What does it mean?"
+msgstr "What does it mean?"
+
+msgid "What would Mari do if the weather were bad?"
+msgstr "What would Mari do if the weather were bad?"
+
+msgid "When the if is imagined, both halves take the would form."
+msgstr "When the if is imagined, both halves take the would form."
+
+msgid "Where would Jaan go?"
+msgstr "Where would Jaan go?"
+
+msgid "Who says it?"
+msgstr "Who says it?"
+
+msgid "would"
+msgstr "would"
+
+msgid "Would"
+msgstr "Would"
+
+msgid "would be"
+msgstr "would be"
+
+msgid "Would go"
+msgstr "Would go"
+
+msgid "Would you read this book?"
+msgstr "Would you read this book?"
+
+msgid "Wouldn’t go"
+msgstr "Wouldn’t go"
+
+msgid "Write each sentence in Estonian."
+msgstr "Write each sentence in Estonian."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "you"
+msgstr "you"
+
+msgid "You order at a café. Pick what you say back. A wrong reply says why, then you hear the right one."
+msgstr "You order at a café. Pick what you say back. A wrong reply says why, then you hear the right one."
+
+msgid "You want tea."
+msgstr "You want tea."
+
+msgid "You would read this book."
+msgstr "You would read this book."
+
+msgid "you, to more than one; polite you"
+msgstr "you, to more than one; polite you"
+
+msgid "You’d like a sandwich now."
+msgstr "You’d like a sandwich now."
+
+msgid "You’d like a sandwich."
+msgstr "You’d like a sandwich."
+
+msgid "You’d like a tea and a sandwich, and you’d like to sit on the terrace."
+msgstr "You’d like a tea and a sandwich, and you’d like to sit on the terrace."
+
+msgid "You’d like to sit on the terrace."
+msgstr "You’d like to sit on the terrace."

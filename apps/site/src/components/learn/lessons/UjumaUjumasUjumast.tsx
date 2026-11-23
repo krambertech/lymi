@@ -6,9 +6,12 @@ import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
+  GOING_FIX,
   GOING_KEYS,
+  GOING_SAY,
   GOING_SCENE,
   GOING_SORT,
+  GOING_TALK,
   GOING_VERBS,
   GOING_VOICE,
   type GoingVerb,
@@ -19,12 +22,14 @@ import {
 } from "../../../lib/learn/clips";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Keys, Panel } from "../Explore";
+import { type FixItem, FixRound, fixRecall } from "../FixRound";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
 import { Lit, Paradigm, type ParadigmRow } from "../Paradigm";
 import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
 import { Scene, type ScenePlace } from "../Scene";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
 import { Sort, type SortBin, type SortItem } from "../Sort";
 import { Word } from "../Word";
 
@@ -146,7 +151,7 @@ function CatScene() {
   const { t } = useLingui();
   const said: Record<(typeof GOING_SCENE)[number]["id"], { meaning: string; gloss: string }> = {
     majja: { meaning: t`going off to eat`, gloss: t`The cat is going off to eat.` },
-    majas: { meaning: t`out eating`, gloss: t`The cat is off eating.` },
+    majas: { meaning: t`off eating`, gloss: t`The cat is off eating.` },
     majast: { meaning: t`back from eating`, gloss: t`The cat is coming back from eating.` },
   };
   const places: ScenePlace[] = GOING_SCENE.map((place) => ({
@@ -364,8 +369,199 @@ function voiceQuestions(t: (descriptor: MessageDescriptor) => string): PassageQu
   ];
 }
 
+const SAY_MEANS: Record<(typeof GOING_SAY)[number]["id"], MessageDescriptor> = {
+  ujuma: msg`I’m going swimming.`,
+  ujumas: msg`Mari is out swimming.`,
+  jooksmast: msg`Dad is coming back from his run.`,
+  kain: msg`I go swimming every day.`,
+  sooma: msg`We’re going off to eat.`,
+  tuled: msg`Are you coming back from swimming?`,
+};
+
+export function sayItems(i18n: I18n): SentenceItem[] {
+  return GOING_SAY.map(({ id, said, also }) => ({
+    kind: "translate",
+    id: `say-${id}`,
+    prompt: i18n._(SAY_MEANS[id]),
+    src: src(said),
+    answers: [said, ...also],
+  }));
+}
+
+const FIX_MEANS: Record<(typeof GOING_FIX)[number]["id"], MessageDescriptor> = {
+  ujuma: msg`I’m going swimming.`,
+  ujumas: msg`Mari is out swimming.`,
+  jooksmast: msg`Dad is coming back from his run.`,
+  kain: msg`I go swimming every day.`,
+  sooma: msg`The cat is going off to eat.`,
+  soomast: msg`We’re coming back from eating.`,
+};
+
+function FixWhy({ id }: { id: (typeof GOING_FIX)[number]["id"] }) {
+  switch (id) {
+    case "ujuma":
+    case "sooma":
+      return (
+        <Trans>
+          Setting off to do it, after a form of <b lang="et">minema</b>: the <End>-ma</End>{" "}
+          infinitive.
+        </Trans>
+      );
+    case "ujumas":
+      return (
+        <Trans>
+          Out doing it, after <b lang="et">on</b>: the <End>-mas</End> form.
+        </Trans>
+      );
+    case "kain":
+      return (
+        <Trans>
+          <b lang="et">Käin</b> says you go there and come back, so it takes the <End>-mas</End>{" "}
+          form.
+        </Trans>
+      );
+    case "jooksmast":
+    case "soomast":
+      return (
+        <Trans>
+          Coming back from it: the <End>-mast</End> form.
+        </Trans>
+      );
+  }
+}
+
+export function fixItems(i18n: I18n): FixItem[] {
+  return GOING_FIX.map(({ id, wrong, right }) => ({
+    kind: "fix",
+    id: `fix-${id}`,
+    wrong,
+    prompt: i18n._(FIX_MEANS[id]),
+    answers: [right],
+    src: src(right),
+    explain: <FixWhy id={id} />,
+  }));
+}
+
+function useTalkQuestions(): PassageQuestion[] {
+  const { t } = useLingui();
+  return [
+    {
+      kind: "truefalse",
+      id: "pool",
+      ask: t`Mari is at the pool when Jaan calls.`,
+      answer: false,
+      line: 2,
+    },
+    {
+      kind: "short",
+      id: "kati",
+      ask: t`Where is Kati? Write the form Mari uses, in Estonian.`,
+      answers: ["jooksmas"],
+      line: 5,
+    },
+    {
+      kind: "truefalse",
+      id: "daily",
+      ask: t`Kati goes running every day.`,
+      answer: true,
+      line: 6,
+    },
+    {
+      id: "mum",
+      ask: t`What is Mari’s mum coming back from?`,
+      options: [
+        { id: "coffee", label: t`Having coffee` },
+        { id: "work", label: t`Work` },
+        { id: "walk", label: t`A long walk with a friend` },
+      ],
+      answer: "coffee",
+      line: 8,
+    },
+    {
+      kind: "short",
+      id: "jaan",
+      ask: t`What is Jaan coming back from? Write the form in Estonian.`,
+      answers: ["söömast"],
+      line: 10,
+    },
+    {
+      id: "often",
+      ask: t`What does Jaan do more often than swimming?`,
+      options: [
+        { id: "run", label: t`Running` },
+        { id: "eat", label: t`Eating out` },
+        { id: "read", label: t`Reading at home` },
+      ],
+      answer: "run",
+      line: 14,
+    },
+    {
+      kind: "truefalse",
+      id: "eat",
+      ask: t`Mari and Jaan will go swimming together.`,
+      answer: true,
+      line: 17,
+    },
+    {
+      kind: "short",
+      id: "time",
+      ask: t`When do they meet? Write the time in Estonian.`,
+      answers: [
+        "kell viis",
+        "viis",
+        "kell 5",
+        "5",
+        "kell 17",
+        "17",
+        "17.00",
+        "17:00",
+        "kell seitseteist",
+        "seitseteist",
+      ],
+      line: 20,
+    },
+    {
+      id: "where",
+      ask: t`Where will Mari wait for Jaan?`,
+      options: [
+        { id: "pool", label: t`In front of the pool` },
+        { id: "home", label: t`At home` },
+        { id: "cafe", label: t`In the café` },
+      ],
+      answer: "pool",
+      line: 21,
+    },
+    {
+      kind: "short",
+      id: "kati-back",
+      ask: t`When does Kati come back from her run? Write the time in Estonian.`,
+      answers: [
+        "kell kuus",
+        "kuus",
+        "kell 6",
+        "6",
+        "kell 18",
+        "18",
+        "18.00",
+        "18:00",
+        "kell kaheksateist",
+        "kaheksateist",
+      ],
+      line: 24,
+    },
+    {
+      kind: "truefalse",
+      id: "later",
+      ask: t`Kati will come to eat later.`,
+      answer: true,
+      line: 25,
+    },
+  ];
+}
+
 export function UjumaUjumasUjumastLesson() {
   const { t, i18n } = useLingui();
+  const talkQuestions = useTalkQuestions();
   const inOut = lessonBySlug("majas-majja-majast")?.n;
   const infinitives = lessonBySlug("tegevusnimed")?.n;
 
@@ -405,7 +601,7 @@ export function UjumaUjumasUjumastLesson() {
       hint: <Trans>where</Trans>,
       rule: (
         <Trans>
-          Where: an activity in <End>-mas</End>, or a place in <End>-s</End> such as{" "}
+          Where: an activity in <End>-mas</End>, or a place, usually in <End>-s</End>, such as{" "}
           <span lang="et">poes</span>.
         </Trans>
       ),
@@ -416,8 +612,8 @@ export function UjumaUjumasUjumastLesson() {
       hint: <Trans>where from</Trans>,
       rule: (
         <Trans>
-          Where from: an activity in <End>-mast</End>, or a place in <End>-st</End> such as{" "}
-          <span lang="et">poest</span>.
+          Where from: an activity in <End>-mast</End>, or a place, usually in <End>-st</End>, such
+          as <span lang="et">poest</span>.
         </Trans>
       ),
     },
@@ -436,8 +632,8 @@ export function UjumaUjumasUjumastLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">12 minutes</Trans>,
-        <Trans key="q">A quiz by ear, a sort and a voice message</Trans>,
+        <Trans key="m">20 minutes</Trans>,
+        <Trans key="q">5 exercises and a recording you can play twice</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={["ujuma", "ujumas", "ujumast", "käima", "tulema", "iga päev", "kust sa tuled?"]}
@@ -458,7 +654,7 @@ export function UjumaUjumasUjumastLesson() {
           as <b lang="et">poodi</b>, <b lang="et">poes</b> and <b lang="et">poest</b> do.
         </Trans>,
         <Trans key="5">
-          <b lang="et">Tulema</b> takes <End>-mast</End> or <End>-ma</End>:{" "}
+          For coming, <b lang="et">tulema</b> takes <End>-mast</End> or <End>-ma</End>:{" "}
           <b lang="et">Ma tulen ujumast. Tule sööma!</b>
         </Trans>,
       ]}
@@ -472,8 +668,8 @@ export function UjumaUjumasUjumastLesson() {
                 <p>
                   <Trans>
                     In lesson {inOut}, a place has a form for each question: <Word w="majja" /> for{" "}
-                    <b lang="et">kuhu?</b>, where to, <Word w="majas" /> for <b lang="et">kus?</b>,
-                    where, and <Word w="majast" /> for <b lang="et">kust?</b>, where from.
+                    <b lang="et">kuhu?</b> (where to?), <Word w="majas" /> for <b lang="et">kus?</b>{" "}
+                    (where?) and <Word w="majast" /> for <b lang="et">kust?</b> (where from?).
                   </Trans>
                 </p>
                 <p>
@@ -664,6 +860,101 @@ export function UjumaUjumasUjumastLesson() {
                 clip="p-voice"
                 sentences={GOING_VOICE}
                 questions={voiceQuestions((descriptor) => i18n._(descriptor))}
+              />
+            </>
+          ),
+        },
+        {
+          id: "say-it",
+          title: t`Write it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write each sentence in Estonian. Setting off to do it takes the <End>-ma</End>{" "}
+                    infinitive, out doing it the <End>-mas</End> form, and coming back from it the{" "}
+                    <End>-mast</End> form.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="say-going"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={sayItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six written right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Read the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "fix",
+          title: t`Fix the sentence`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each sentence has one form with the wrong ending. Tap it, then write the right
+                    one.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="fix-going"
+                title={<Trans>Find and fix the mistake</Trans>}
+                items={fixItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six found and fixed.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Look again at the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={fixRecall}
+                round={(props) => <FixRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listen: going swimming`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Jaan calls Mari. Listen for where each person is going, where they are and what
+                    they’re coming back from.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="pool-talk"
+                title={<Trans>Listen: Jaan calls Mari</Trans>}
+                clip="c-pool"
+                turns={GOING_TALK.turns}
+                names={{ third: "Mari", fourth: "Jaan" }}
+                questions={talkQuestions}
+                plays={2}
               />
             </>
           ),

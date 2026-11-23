@@ -10,6 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { ALSO_RIGHT_SHOWN } from "../../lib/learn/answers";
 import { playSound } from "../../lib/learn/player";
 import {
   lineReducer,
@@ -171,9 +172,11 @@ export function OrderRound({ item, state, heard, answer, autoplay }: RoundProps<
   const right = done && state.right;
   // Once right, the other orders that also work; once wrong, the ones besides the order shown.
   const builtOrder = words.join(" ").toLowerCase();
-  const others = right
-    ? item.answers.filter((other) => sentenceWords(other).join(" ").toLowerCase() !== builtOrder)
-    : item.answers.slice(1);
+  const others = (
+    right
+      ? item.answers.filter((other) => sentenceWords(other).join(" ").toLowerCase() !== builtOrder)
+      : item.answers.slice(1)
+  ).slice(0, ALSO_RIGHT_SHOWN);
   return (
     <>
       {fromMeaning ? (

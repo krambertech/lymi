@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { clsx } from "clsx";
 import { ArrowRight, X } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { morph } from "../../lib/learn/forms";
@@ -38,12 +39,16 @@ export interface FormItem {
 function Change({ base, form, src }: { base: string; form: string; src?: string | undefined }) {
   const { i18n } = useLingui();
   const parts = morph(base, form);
+  const shared = parts.some((part) => part.kind === "kept" && part.text.trim());
   return (
     <p className="flex flex-wrap items-center gap-3">
       <span
         lang="et"
         data-play=""
-        className="learn-morph learn-morph-ink min-w-0 text-3xl/tight font-semibold tracking-tight whitespace-nowrap"
+        className={clsx(
+          "learn-morph learn-morph-ink min-w-0 text-3xl/tight font-semibold tracking-tight",
+          shared && "whitespace-nowrap",
+        )}
       >
         {/* The sentence is in the reader's language; only the forms in it are Estonian. */}
         <span lang={i18n.locale} className="sr-only">
@@ -52,7 +57,14 @@ function Change({ base, form, src }: { base: string; form: string; src?: string 
           </Trans>
         </span>
         <span aria-hidden="true">
-          <MorphLetters parts={parts} />
+          {shared ? (
+            <MorphLetters parts={parts} />
+          ) : (
+            <>
+              <span className="text-ink-faint line-through">{base}</span>{" "}
+              <span className="text-(--form)">{form}</span>
+            </>
+          )}
         </span>
       </span>
       {src && (

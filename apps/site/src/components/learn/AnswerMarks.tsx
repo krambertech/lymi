@@ -6,6 +6,7 @@ import {
   type AnswerPart,
   bareWord,
   differing,
+  lettersOff,
   type MarkedAnswer,
   onlyOrderDiffers,
   otherAnswers,
@@ -84,12 +85,22 @@ export function TypedSentence({ marked }: { marked: MarkedAnswer }) {
   );
 }
 
-export function RightSentence({ marked, src }: { marked: MarkedAnswer; src?: string | undefined }) {
+export function RightSentence({
+  marked,
+  src,
+  word = false,
+}: {
+  marked: MarkedAnswer;
+  src?: string | undefined;
+  word?: boolean;
+}) {
   return (
     <div className="grid gap-1">
       <p className="text-sm text-ink-muted">
         {marked.verdict === "almost" ? (
           <Trans>It’s spelled like this</Trans>
+        ) : word ? (
+          <Trans>The right word</Trans>
         ) : (
           <Trans>The right sentence</Trans>
         )}
@@ -171,8 +182,15 @@ export function slipsOf(marked: MarkedAnswer): Slip[] {
   return marked.parts.flatMap((part) => (part.kind === "slip" ? [part.slip] : []));
 }
 
-export function SentenceVerdict({ marked }: { marked: MarkedAnswer }) {
+export function SentenceVerdict({
+  marked,
+  word = false,
+}: {
+  marked: MarkedAnswer;
+  word?: boolean;
+}) {
   const off = differing(marked).length;
+  const letters = word ? lettersOff(marked) : 0;
   switch (marked.verdict) {
     case "right":
       return (
@@ -185,7 +203,13 @@ export function SentenceVerdict({ marked }: { marked: MarkedAnswer }) {
     case "wrong":
       return (
         <VerdictLine tone="wrong">
-          {onlyOrderDiffers(marked) ? (
+          {word ? (
+            <Plural
+              value={letters}
+              one="Not right: # letter differs."
+              other="Not right: # letters differ."
+            />
+          ) : onlyOrderDiffers(marked) ? (
             <Trans>The words are right, but they go in another order.</Trans>
           ) : (
             <Plural

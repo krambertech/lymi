@@ -5092,6 +5092,15 @@ export const COND_TRANSLATE = [
   "Kui oleks soe, ujuksime me meres.",
 ] as const;
 
+export const COND_SHORT: Record<string, string> = {
+  loeksid: "loeks",
+  oleksime: "oleks",
+  teeksid: "teeks",
+  tahaksin: "tahaks",
+  saaksite: "saaks",
+  sööksin: "sööks",
+};
+
 export const COND_FIXES = [
   { wrong: "Ma ei läheksin kinno.", right: "Ma ei läheks kinno." },
   { wrong: "Kas sa saaksin mind aidata?", right: "Kas sa saaksid mind aidata?" },
@@ -5102,9 +5111,12 @@ export const COND_FIXES = [
   { wrong: "Te loeksid seda raamatut.", right: "Te loeksite seda raamatut." },
 ] as const;
 
-export const COND_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = Object.fromEntries(
-  COND_FIXES.map(({ right }) => [right, [right]]),
-);
+export const COND_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  ...Object.fromEntries(COND_FIXES.map(({ right }) => [right, [right]])),
+  "Kas sa saaksid mind aidata?": ["Kas sa saaksid mind aidata?", "Kas sa saaks mind aidata?"],
+  "Me läheksime homme kinno.": ["Me läheksime homme kinno.", "Me läheks homme kinno."],
+  "Te loeksite seda raamatut.": ["Te loeksite seda raamatut.", "Te loeks seda raamatut."],
+};
 
 export const COND_DIALOGUE = {
   "d-teenindaja-1": { text: "Tere õhtust! Mida te sooviksite?", voice: "second" },
@@ -5229,6 +5241,12 @@ export const COND_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Ma võtaksin kohvi, palun.",
     "Võtaksin kohvi.",
     "Võtaksin kohvi, palun.",
+    "Ma tahaksin üht kohvi.",
+    "Ma tahaksin üht kohvi, palun.",
+    "Tahaksin üht kohvi, palun.",
+    "Ma võtaksin ühe kohvi, palun.",
+    "Ma tahaks kohvi.",
+    "Ma tahaks kohvi, palun.",
   ],
   "Kas sa saaksid mind aidata?": [
     "Kas sa saaksid mind aidata?",
@@ -5237,6 +5255,15 @@ export const COND_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Kas te võiksite mind aidata?",
     "Saaksid sa mind aidata?",
     "Kas sa saaksid mulle appi tulla?",
+    "Kas saaksid mind aidata?",
+    "Kas saaksite mind aidata?",
+    "Kas sina saaksid mind aidata?",
+    "Saaksite te mind aidata?",
+    "Võiksid sa mind aidata?",
+    "Kas te saaksite mulle appi tulla?",
+    "Kas sa aitaksid mind?",
+    "Kas te aitaksite mind?",
+    "Kas sa saaks mind aidata?",
   ],
   "Kui mul oleks aega, läheksin ma kinno.": [
     "Kui mul oleks aega, läheksin ma kinno.",
@@ -5247,14 +5274,26 @@ export const COND_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Kui mul oleks aega, siis läheksin ma kinno.",
     "Kui mul oleks aega, siis ma läheksin kinno.",
     "Kui mul oleks aega, siis läheksin kinno.",
+    "Kui mul aega oleks, läheksin ma kinno.",
+    "Kui mul aega oleks, läheksin kinno.",
+    "Kui mul aega oleks, ma läheksin kinno.",
+    "Ma läheksin kinno, kui mul aega oleks.",
   ],
   "Ma ei läheks.": ["Ma ei läheks.", "Mina ei läheks.", "Ei läheks."],
-  "Me elaksime Tartus.": ["Me elaksime Tartus.", "Meie elaksime Tartus.", "Elaksime Tartus."],
+  "Me elaksime Tartus.": [
+    "Me elaksime Tartus.",
+    "Meie elaksime Tartus.",
+    "Elaksime Tartus.",
+    "Me elaks Tartus.",
+  ],
   "Kas sa loeksid seda raamatut?": [
     "Kas sa loeksid seda raamatut?",
     "Kas te loeksite seda raamatut?",
     "Loeksid sa seda raamatut?",
     "Kas sina loeksid seda raamatut?",
+    "Kas loeksid seda raamatut?",
+    "Kas loeksite seda raamatut?",
+    "Loeksite te seda raamatut?",
   ],
   "Kui oleks soe, ujuksime me meres.": [
     "Kui oleks soe, ujuksime me meres.",
@@ -5267,14 +5306,30 @@ export const COND_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Kui oleks soe, siis me ujuksime meres.",
     "Kui oleks soe, siis ujuksime meres.",
     "Kui ilm oleks soe, siis ujuksime me meres.",
+    "Kui ilm oleks soe, me ujuksime meres.",
+    "Kui ilm oleks soe, ujuksime meres.",
+    "Me ujuksime meres, kui ilm oleks soe.",
+    "Kui ilm oleks soe, siis me ujuksime meres.",
+    "Kui soe oleks, ujuksime me meres.",
   ],
-  "Ma läheksin kinno.": ["Ma läheksin kinno.", "Läheksin kinno.", "Mina läheksin kinno."],
-  "Nad ostaksid maja.": ["Nad ostaksid maja.", "Nemad ostaksid maja."],
+  "Ma läheksin kinno.": [
+    "Ma läheksin kinno.",
+    "Läheksin kinno.",
+    "Mina läheksin kinno.",
+    "Ma läheks kinno.",
+  ],
+  "Nad ostaksid maja.": ["Nad ostaksid maja.", "Nemad ostaksid maja.", "Nad ostaks maja."],
   "Kas te võiksite seda korrata?": [
     "Kas te võiksite seda korrata?",
     "Kas sa võiksid seda korrata?",
     "Kas te saaksite seda korrata?",
     "Kas sa saaksid seda korrata?",
+    "Kas te võiksite seda palun korrata?",
+    "Kas te võiksite palun seda korrata?",
+    "Kas te võiksite seda korrata, palun?",
+    "Kas võiksite seda korrata?",
+    "Võiksite te seda korrata?",
+    "Kas te võiksite seda uuesti öelda?",
   ],
 };
 

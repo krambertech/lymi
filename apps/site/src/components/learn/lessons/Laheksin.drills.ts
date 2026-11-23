@@ -1,8 +1,8 @@
 import { msg } from "@lingui/core/macro";
-import { COND_ANSWERS, COND_FIX_ANSWERS } from "../../../lib/learn/clips";
+import { COND_ANSWERS, COND_FIX_ANSWERS, COND_SHORT } from "../../../lib/learn/clips";
 import type { DrillBank, FormDrill } from "../../../lib/learn/drill";
 
-const BUILD = msg`Drop the <et>-n</et> of the present and add <et>-ks</et> with the person’s ending: <et>-in</et>, <et>-id</et>, none for <et>ta</et>, <et>-ime</et>, <et>-ite</et>, <et>-id</et>.`;
+const BUILD = msg`Drop the <et>-n</et> of the present and add <et>-ks</et>, usually with the person’s ending: <et>-in</et>, <et>-id</et>, none for <et>ta</et>, <et>-ime</et>, <et>-ite</et>, <et>-id</et>.`;
 const POLITE = msg`The would form makes a request polite.`;
 const IF = msg`When the if is imagined, both halves take the would form.`;
 const NO = msg`After <et>ei</et>, the form for <et>ta</et>, for every person.`;
@@ -22,7 +22,7 @@ const form = (
   base: `${ma}, ${n}`,
   gloss,
   cue: { et: `${person} …` },
-  answers: [answer],
+  answers: [answer, ...(COND_SHORT[answer] ? [COND_SHORT[answer] as string] : [])],
   say,
   explain: BUILD,
 });
@@ -160,6 +160,7 @@ export const DRILLS: DrillBank = {
       rule: "if",
       wrong: "Kui mul on aega, läheksin ma kinno.",
       answers: COND_FIX_ANSWERS["Kui mul oleks aega, läheksin ma kinno."],
+      prompt: msg`If I had time, I’d go to the cinema.`,
       say: "Kui mul oleks aega, läheksin ma kinno.",
       explain: IF,
     },
@@ -169,6 +170,7 @@ export const DRILLS: DrillBank = {
       rule: "if",
       wrong: "Kui ma oleksin rikas, ostan maja.",
       answers: COND_FIX_ANSWERS["Kui ma oleksin rikas, ostaksin maja."],
+      prompt: msg`If I were rich, I’d buy a house.`,
       say: "Kui ma oleksin rikas, ostaksin maja.",
       explain: IF,
     },
@@ -179,6 +181,7 @@ export const DRILLS: DrillBank = {
       rule: "ending",
       wrong: "Ma ei läheksin kinno.",
       answers: COND_FIX_ANSWERS["Ma ei läheks kinno."],
+      prompt: msg`I wouldn’t go to the cinema.`,
       say: "Ma ei läheks kinno.",
       explain: NO,
     },
@@ -198,8 +201,9 @@ export const DRILLS: DrillBank = {
       rule: "ending",
       wrong: "Kas sa saaksin mind aidata?",
       answers: COND_FIX_ANSWERS["Kas sa saaksid mind aidata?"],
+      prompt: msg`Could you help me?`,
       say: "Kas sa saaksid mind aidata?",
-      explain: msg`For <et>sa</et>, the ending is <et>-d</et>: <et>saaksid</et>.`,
+      explain: msg`For <et>sa</et>, the full ending is <et>-d</et>: <et>saaksid</et>.`,
     },
     {
       kind: "fix",
@@ -207,8 +211,9 @@ export const DRILLS: DrillBank = {
       rule: "ending",
       wrong: "Me läheksid homme kinno.",
       answers: COND_FIX_ANSWERS["Me läheksime homme kinno."],
+      prompt: msg`We would go to the cinema tomorrow.`,
       say: "Me läheksime homme kinno.",
-      explain: msg`For <et>me</et>, the ending is <et>-me</et>: <et>läheksime</et>.`,
+      explain: msg`For <et>me</et>, the full ending is <et>-me</et>: <et>läheksime</et>.`,
     },
     {
       kind: "fix",
@@ -216,6 +221,7 @@ export const DRILLS: DrillBank = {
       rule: "ending",
       wrong: "Ta läheksin koju.",
       answers: COND_FIX_ANSWERS["Ta läheks koju."],
+      prompt: msg`He or she would go home.`,
       say: "Ta läheks koju.",
       explain: msg`The form for <et>ta</et> has no ending: <et>läheks</et>.`,
     },
@@ -225,8 +231,9 @@ export const DRILLS: DrillBank = {
       rule: "ending",
       wrong: "Te loeksid seda raamatut.",
       answers: COND_FIX_ANSWERS["Te loeksite seda raamatut."],
+      prompt: msg`You would read this book.`,
       say: "Te loeksite seda raamatut.",
-      explain: msg`For <et>te</et>, the ending is <et>-te</et>: <et>loeksite</et>.`,
+      explain: msg`For <et>te</et>, the full ending is <et>-te</et>: <et>loeksite</et>.`,
     },
   ],
 };

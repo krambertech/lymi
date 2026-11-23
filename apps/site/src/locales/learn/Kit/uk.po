@@ -89,6 +89,9 @@ msgstr "{left, plural, one {# запитання на повторення} few 
 msgid "{lessonCount, plural, one {# lesson, coming soon} other {# lessons, coming soon}}"
 msgstr "{lessonCount, plural, one {# урок, скоро} few {# уроки, скоро} many {# уроків, скоро} other {# уроку, скоро}}"
 
+msgid "{letters, plural, one {Not right: # letter differs.} other {Not right: # letters differ.}}"
+msgstr "{letters, plural, one {Неправильно: відрізняється # літера.} few {Неправильно: відрізняються # літери.} many {Неправильно: відрізняються # літер.} other {Неправильно: відрізняються # літери.}}"
+
 msgid "{more, plural, one {and # more} other {and # more}}"
 msgstr "{more, plural, one {і ще #} few {і ще #} many {і ще #} other {і ще #}}"
 
@@ -103,6 +106,10 @@ msgstr "{plays, plural, one {Спершу прочитай питання. За�
 
 msgid "{position} of {count}"
 msgstr "{position} з {count}"
+
+#. placeholder {0}: checks.length
+msgid "{right} of {0} ticked"
+msgstr "Позначено {right} з {0}"
 
 msgid "{right} of {total}"
 msgstr "{right} з {total}"
@@ -247,8 +254,8 @@ msgstr "Безкоштовний урок естонської про особо
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud."
 msgstr "Безкоштовний урок естонської про те, як сказати, котра година: повні години, pool, veerand і kolmveerand, що називають наступну годину, і хвилини до та після. Кожен приклад озвучено."
 
-msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud."
-msgstr "Безкоштовний урок естонської вимови: дев’ять голосних з õ, ä, ö та ü, наголос на першому складі й те, як подвоєна літера змінює слово. Кожне слово озвучено."
+msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
+msgstr "Безкоштовний урок естонської вимови: дев’ять голосних з õ, ä, ö та ü, наголос, зазвичай на першому складі, і те, як подвоєна літера може змінити слово. Кожне слово озвучено."
 
 msgid "A free lesson on consonant gradation in Estonian: why jalg becomes jala and tuba becomes toa, which forms take the strong or the weak stem, the four usual ways a consonant weakens (kapp, kapi; pank, panga; pood, poe; lind, linnu), words that go the other way (mõte, mõtte), and the same change in verbs (lugema, loen). Every sentence is read aloud."
 msgstr "Безкоштовний урок про чергування приголосних в естонській: чому jalg стає jala, а tuba — toa, які форми мають сильну чи слабку основу, чотири звичні способи ослаблення приголосного (kapp, kapi; pank, panga; pood, poe; lind, linnu), слова, що йдуть навпаки (mõte, mõtte), і та сама зміна в дієсловах (lugema, loen). Кожне речення озвучене."
@@ -286,8 +293,8 @@ msgstr "Безкоштовний урок про те, як сказати «у 
 msgid "A free lesson on saying no in the Estonian past tense: ei and the -nud form (ma ei läinud, ei olnud, polnud), the same for every person, how the -nud form comes from the -da infinitive, the five forms to learn whole, and answering a question with no. Every sentence is read aloud."
 msgstr "Безкоштовний урок про заперечення в минулому часі естонської: ei і форма на -nud (ma ei läinud, ei olnud, polnud), однакова для всіх осіб, як форма на -nud утворюється від інфінітива на -da, п’ять форм, які вчать напам’ять, і як відповісти «ні» на запитання. Кожне речення озвучене."
 
-msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
-msgstr "Безкоштовний урок естонської про те, як сказати, де ти: -s означає «в» (Tallinnas, koolis), -l — «на» (laual, tööl), які місця мають яке закінчення і як відповісти на kus, «де». Кожне речення озвучене."
+msgid "A free lesson on saying where you are in Estonian: -s, usually for in (Tallinnas, koolis), -l, usually for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про те, як сказати, де ти: -s зазвичай означає «в» (Tallinnas, koolis), -l — «на» (laual, tööl), які місця мають яке закінчення і як відповісти на kus, «де». Кожне речення озвучене."
 
 msgid "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
 msgstr "Безкоштовний урок про естонські форми на -ma, -mas і -mast: lähen ujuma (іду плавати), olen ujumas (на плаванні) і tulen ujumast (повертаюся з плавання). Вони відповідають на kuhu?, kus? і kust?, як і назви місць. А ще — коли казати lähen, käin чи tulen. Кожне речення озвучене."
@@ -346,6 +353,9 @@ msgstr "Довша розмова"
 msgid "a lot, much"
 msgstr "багато"
 
+msgid "A model answer"
+msgstr "Зразок"
+
 msgid "A noun’s cases on the tray: tap a form to hear it, its ending lit. Question words can head the rows, and one row or column can be tinted. On a phone the rows stack."
 msgstr "Відмінки іменника на підкладці: торкнися форми, щоб її почути, закінчення підсвічене. Рядки можуть починатися з питальних слів, а один рядок чи стовпець можна виділити. На телефоні рядки стають списком."
 
@@ -375,6 +385,9 @@ msgstr "крамниця"
 
 msgid "A short text to read and hear, every question at once; its words open their cards once checked."
 msgstr "Короткий текст, щоб прочитати й послухати, і всі питання одразу; картки слів відкриваються після перевірки."
+
+msgid "A short text written in a field with the Estonian letters, then shown above a model answer and a checklist the learner ticks; nothing is marked for them."
+msgstr "Короткий текст, написаний у полі з естонськими літерами, а потім показаний над зразком і списком, де учень сам ставить позначки; ніхто не оцінює за нього."
 
 msgid "a town"
 msgstr "місто"
@@ -615,6 +628,10 @@ msgstr "Не чекайте!"
 msgid "Done"
 msgstr "Пройдено"
 
+msgctxt "button that ends the checklist"
+msgid "Done"
+msgstr "Готово"
+
 msgid "Drag each word to its gap, or tap it."
 msgstr "Перетягни кожне слово в його пропуск або торкнися його."
 
@@ -850,6 +867,9 @@ msgstr "До уроку"
 
 msgid "Going, being, coming back: -ma, -mas, -mast"
 msgstr "Іти, бути там, повертатися: -ma, -mas, -mast"
+
+msgid "Greets Mari."
+msgstr "Є привітання."
 
 msgid "hakkama, now"
 msgstr "hakkama, зараз"
@@ -1602,6 +1622,9 @@ msgstr "Відтворити від цієї репліки, {name}"
 msgid "Play from here"
 msgstr "Відтворити звідси"
 
+msgid "Play the model answer"
+msgstr "Послухати зразок"
+
 msgid "Play what {name} said"
 msgstr "Відтворити репліку: {name}"
 
@@ -1757,6 +1780,15 @@ msgstr "Заперечення в минулому"
 msgid "Saying where: -s and -l"
 msgstr "Як сказати, де: закінчення -s і -l"
 
+msgid "Says what you do."
+msgstr "Сказано, чим ти займаєшся."
+
+msgid "Says where you live."
+msgstr "Сказано, де ти живеш."
+
+msgid "Says who you are."
+msgstr "Сказано, хто ти."
+
 msgid "Scene"
 msgstr "Сцена"
 
@@ -1798,6 +1830,9 @@ msgstr "Вона вчителька"
 
 msgid "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
 msgstr "Короткі безкоштовні уроки від перших звуків до B1. Натисни на будь-яке слово, щоб його почути, і пробуй кожне правило просто під час читання."
+
+msgid "Show the model"
+msgstr "Показати зразок"
 
 msgid "Show what {name} said"
 msgstr "Показати репліку: {name}"
@@ -2094,6 +2129,9 @@ msgstr "Запитання не завантажилися. Перевір з’
 msgid "The right sentence"
 msgstr "Правильне речення"
 
+msgid "The right word"
+msgstr "Правильне слово"
+
 msgid "The same conversation with Mari’s lines heard, not shown; each can be read on request."
 msgstr "Та сама розмова, але репліки Марі лише чути; кожну можна відкрити й прочитати."
 
@@ -2175,6 +2213,9 @@ msgstr "Це кава Мартіна."
 msgid "Through, over, along"
 msgstr "Крізь, через, уздовж"
 
+msgid "Tick what your text does."
+msgstr "Познач, що є у твоєму тексті."
+
 msgid "Time expressions: when things happen"
 msgstr "Вирази часу: коли що відбувається"
 
@@ -2235,6 +2276,9 @@ msgstr "Напиши запитання"
 
 msgid "Type the sentence"
 msgstr "Напиши речення"
+
+msgid "Type the word"
+msgstr "Напиши слово"
 
 msgid "under"
 msgstr "під"
@@ -2449,11 +2493,20 @@ msgstr "Інші слова"
 msgid "work"
 msgstr "робота"
 
+msgid "Write it again"
+msgstr "Написати ще раз"
+
 msgid "Write it in Estonian"
 msgstr "Напиши естонською"
 
 msgid "Write it in Estonian."
 msgstr "Напиши естонською."
+
+msgid "Write Mari a few lines: greet her, say who you are, what you do and where you live."
+msgstr "Напиши Марі кілька рядків: привітайся, скажи, хто ти, чим займаєшся і де живеш."
+
+msgid "Write something first, then compare."
+msgstr "Спершу напиши щось, а тоді порівняй."
 
 msgid "Write the question"
 msgstr "Напиши запитання"
@@ -2464,8 +2517,17 @@ msgstr "Напиши запитання до цієї відповіді."
 msgid "Write the sentence you hear."
 msgstr "Напиши речення, яке чуєш."
 
+msgid "Write the word you hear."
+msgstr "Напиши слово, яке чуєш."
+
+msgid "Write to Mari"
+msgstr "Напиши Марі"
+
 msgid "Write what you hear"
 msgstr "Напиши, що чуєш"
+
+msgid "Writing"
+msgstr "Письмо"
 
 msgid "Yes, she is"
 msgstr "Так"
@@ -2490,6 +2552,9 @@ msgstr "Неправильне слово знайдено."
 
 msgid "You live in Tartu."
 msgstr "Ти живеш у Тарту."
+
+msgid "You wrote"
+msgstr "Твій текст"
 
 msgid "You wrote <0>{typed}</0>. It’s <1>{right}</1>."
 msgstr "У тебе <0>{typed}</0>, а треба <1>{right}</1>."
@@ -2529,3 +2594,6 @@ msgstr "Твоя відповідь"
 
 msgid "Your sentence"
 msgstr "Твоє речення"
+
+msgid "Your text"
+msgstr "Твій текст"

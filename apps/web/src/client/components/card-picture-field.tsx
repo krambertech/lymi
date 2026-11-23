@@ -5,6 +5,7 @@ import { Camera, ImagePlus, Link2, RefreshCw, Upload, X } from "lucide-react";
 import { useRef, useState } from "react";
 import type { CardImage } from "../lib/api";
 import { useObjectUrl } from "../lib/avatar";
+import { composing } from "../lib/composing";
 import { useDesktop } from "../lib/device";
 import { Button, IconButton } from "./button";
 import { CardPicture } from "./card-picture";
@@ -141,6 +142,7 @@ export function CardPictureField({
                   setLinkError(undefined);
                 }}
                 onKeyDown={(e) => {
+                  if (composing(e)) return;
                   if (e.key === "Enter") {
                     e.preventDefault();
                     applyLink();

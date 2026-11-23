@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useCommandList } from "../components/ui/command-palette";
 import { Input } from "../components/ui/input";
-import { isFindKey } from "./device-frame";
+import { useShortcut } from "../lib/use-shortcut";
 import { type DocRef, FOUNDATIONS, GROUPS, groupListing } from "./registry";
 
 type Section = "Start" | "Foundations" | "Components";
@@ -60,22 +60,14 @@ const ROWS: Row[] = [
   ),
 ];
 
-// Specimens hold some overlays open, so only one with focus in it counts as in use.
-const OVERLAY = '[role="menu"], [role="listbox"], [role="dialog"], [role="alertdialog"]';
-
 /** ⌘K, or Ctrl K, finds any page or component and goes there. */
 export function usePageSearch() {
   const [open, setOpen] = useState(false);
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (!isFindKey(e)) return;
-      if (!open && document.activeElement?.closest(OVERLAY)) return;
-      e.preventDefault();
-      setOpen((o) => !o);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
+  // Specimens hold some overlays open, so only one with focus in it counts as in use.
+  useShortcut({ mod: "k" }, () => setOpen((o) => !o), {
+    over: open ? "any" : "unfocused",
+    focus: "any",
+  });
   return { open, setOpen };
 }
 

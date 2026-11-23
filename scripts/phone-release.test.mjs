@@ -372,6 +372,22 @@ test("every workflow installs the app's dependencies before it calls EAS", () =>
   }
 });
 
+test("every step that calls EAS carries its own EXPO_TOKEN", () => {
+  const dir = new URL("../.github/workflows/", import.meta.url);
+  for (const file of ["phone-beta", "phone-promote", "phone-rollback", "phone-rollout"]) {
+    const steps = readFileSync(new URL(`${file}.yml`, dir), "utf8").split(/^ {6}- /m);
+    for (const step of steps) {
+      const [, command] = step.match(/phone-release\.mjs ([\w-]+)/) ?? [];
+      if (!command || command === "runtime") continue;
+      assert.match(
+        step,
+        /EXPO_TOKEN: \$\{\{ secrets\.EXPO_TOKEN \}\}/,
+        `${file}.yml runs phone-release.mjs ${command} without EXPO_TOKEN in the step's env.`,
+      );
+    }
+  }
+});
+
 test("only a run of Phone beta by hand spends a build", () => {
   const workflow = readFileSync(
     new URL("../.github/workflows/phone-beta.yml", import.meta.url),

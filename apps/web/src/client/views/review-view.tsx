@@ -1586,6 +1586,7 @@ export function ReviewComplete({
     const skip = () => setSkipped(true);
     const done = window.setTimeout(skip, end);
     window.addEventListener("pointerdown", skip, { once: true });
+    // oxlint-disable-next-line lymi/shortcut-owner -- any key at all finishes the sequence, and none is taken
     window.addEventListener("keydown", skip, { once: true });
     return () => {
       window.clearTimeout(done);

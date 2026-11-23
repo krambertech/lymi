@@ -209,7 +209,7 @@ function useContent() {
       options: [
         { id: "eleven-thirty", label: t`At 11:30` },
         { id: "ten-thirty", label: t`At 10:30` },
-        { id: "eleven", label: t`At 11:00` },
+        { id: "nine-thirty", label: t`At 9:30` },
       ],
       answer: "ten-thirty",
       line: 2,
@@ -354,8 +354,8 @@ function useContent() {
       id: "meet",
       ask: t`When does Jaan come to the market?`,
       options: [
-        { id: "1300", label: t`At 13:00` },
         { id: "1330", label: t`At 13:30` },
+        { id: "1430", label: t`At 14:30` },
         { id: "1230", label: t`At 12:30` },
       ],
       answer: "1230",

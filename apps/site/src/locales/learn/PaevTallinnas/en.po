@@ -103,20 +103,17 @@ msgstr "At 10:00"
 msgid "At 10:30"
 msgstr "At 10:30"
 
-msgid "At 11:00"
-msgstr "At 11:00"
-
 msgid "At 11:30"
 msgstr "At 11:30"
 
 msgid "At 12:30"
 msgstr "At 12:30"
 
-msgid "At 13:00"
-msgstr "At 13:00"
-
 msgid "At 13:30"
 msgstr "At 13:30"
+
+msgid "At 14:30"
+msgstr "At 14:30"
 
 msgid "At 16:00"
 msgstr "At 16:00"
@@ -126,6 +123,9 @@ msgstr "At 18:00"
 
 msgid "At 9:00"
 msgstr "At 9:00"
+
+msgid "At 9:30"
+msgstr "At 9:30"
 
 msgid "at home"
 msgstr "at home"

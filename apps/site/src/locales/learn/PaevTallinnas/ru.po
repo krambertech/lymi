@@ -103,20 +103,17 @@ msgstr "В 10:00"
 msgid "At 10:30"
 msgstr "В 10:30"
 
-msgid "At 11:00"
-msgstr "В 11:00"
-
 msgid "At 11:30"
 msgstr "В 11:30"
 
 msgid "At 12:30"
 msgstr "В 12:30"
 
-msgid "At 13:00"
-msgstr "В 13:00"
-
 msgid "At 13:30"
 msgstr "В 13:30"
+
+msgid "At 14:30"
+msgstr "В 14:30"
 
 msgid "At 16:00"
 msgstr "В 16:00"
@@ -126,6 +123,9 @@ msgstr "В 18:00"
 
 msgid "At 9:00"
 msgstr "В 9:00"
+
+msgid "At 9:30"
+msgstr "В 9:30"
 
 msgid "at home"
 msgstr "дома"

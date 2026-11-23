@@ -343,9 +343,9 @@ function NextLesson({
   const number = next?.n;
   const previousNumber = previous?.n;
   // The two links share a size; "All lessons" is at the top of the page.
-  const shape = "h-auto w-full flex-col gap-0 py-3 whitespace-normal";
+  const shape = "h-auto w-full min-w-0 flex-col gap-0 py-3";
   return (
-    <nav className="grid gap-3 pt-2 pb-18 sm:grid-cols-2">
+    <nav className="grid grid-cols-1 gap-3 pt-2 pb-18 sm:grid-cols-2">
       {previous && (
         <a
           href={lessonPath(previous.slug, locale)}
@@ -355,7 +355,7 @@ function NextLesson({
             <ArrowLeft aria-hidden="true" className="size-3.5! rtl:-scale-x-100" />
             <Trans>Lesson {previousNumber}</Trans>
           </small>
-          <span>
+          <span className="max-w-full whitespace-normal">
             <LessonName name={i18n._(previous.name)} />
           </span>
         </a>
@@ -374,7 +374,7 @@ function NextLesson({
             <Trans>Lesson {number}</Trans>
             <ArrowRight aria-hidden="true" className="size-3.5! rtl:-scale-x-100" />
           </small>
-          <span>
+          <span className="max-w-full whitespace-normal">
             <LessonName name={i18n._(next.name)} />
           </span>
         </a>

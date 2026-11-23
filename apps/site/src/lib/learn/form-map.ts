@@ -178,7 +178,7 @@ const VERB_USES = [
     form: "da",
     label: msg`“Have done”`,
     tip: msg`With *olen* for have, *olin* for had.`,
-    taught: { et: "Olen lugenud, olin lugenud" },
+    taught: { slug: "olen-lugenud" },
     examples: [
       { et: "Ma olen juba *söönud*.", meaning: msg`I’ve already eaten.` },
       { et: "Kas sa oled Tartus *käinud*?", meaning: msg`Have you been to Tartu?` },
@@ -855,6 +855,7 @@ const HEARD: Readonly<Record<string, string>> = {
   "Sõber ootab.": "mitmus/so3ber-ootab",
   sõbra: "mitmus/so3bra",
   "Sõbrad ootavad.": "mitmus/so3brad-ootavad",
+  sõpra: "majades-inimestele/so3pra",
   sööma: "lihtminevik/so2o2ma",
   söön: "verbi-pohivormid/so2o2n",
   süüa: "verbi-pohivormid/su2u2a",

@@ -189,7 +189,7 @@ export const DRILLS: DrillBank = {
     ...NEGATION_TURNED.slice(6).map(turned),
     ...NEGATION_FIXES.map(fixed),
     ...OLEMA_ROWS.slice(1).map(olema),
-    ...NO_ANSWERS.slice(1, 7).map(answered),
+    ...[1, 2, 3, 4, 6, 7].map((i) => answered(NO_ANSWERS[i] as (typeof NO_ANSWERS)[number])),
     ...YES_NO.map(yesNo),
   ],
 };

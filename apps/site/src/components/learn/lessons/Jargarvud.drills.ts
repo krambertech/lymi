@@ -186,8 +186,10 @@ export const DRILLS: DrillBank = {
       answers: [
         "Mitmendal korrusel sa elad?",
         "Mitmendal korrusel sina elad?",
+        "Mitmendal korrusel elad?",
         "Mitmendal korrusel te elate?",
         "Mitmendal korrusel teie elate?",
+        "Mitmendal korrusel elate?",
       ],
       say: "Mitmendal korrusel sa elad?",
       explain: msg`<et>Mitmendal korrusel</et> means on which floor: <et>mitmes</et> with <et>-s</et> turned into <et>-ndal</et>.`,

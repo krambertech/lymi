@@ -1,0 +1,392 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 10:34+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0>Ei käi</0> is no in the present. Mari asked about the weekend."
+msgstr "<0>Ei käi</0> — це «ні» в теперішньому часі. Марі питала про вихідні."
+
+msgid "<0>Eile</0> is yesterday, so the past: <1>läksin</1>."
+msgstr "<0>Eile</0> — це вчора, тож минулий час: <1>läksin</1>."
+
+msgid "<0>Homme</0> is tomorrow, so the present: <1>olen</1>."
+msgstr "<0>Homme</0> — це завтра, тож теперішній час: <1>olen</1>."
+
+msgid "<0>Nädalavahetusel</0> is at the weekend: <1>eelmisel</1> for the last one, <2>järgmisel</2> for the next."
+msgstr "<0>Nädalavahetusel</0> — на вихідних: <1>eelmisel</1> — про минулі, <2>järgmisel</2> — про наступні."
+
+msgid "<0>Töötasin</0> is the past, and next week hasn’t happened yet."
+msgstr "<0>Töötasin</0> — минулий час, а наступний тиждень ще не настав."
+
+msgid "<et>Eelmisel laupäeval</et> is last Saturday, so the past: <et>käisime</et>."
+msgstr "<et>Eelmisel laupäeval</et> — минулої суботи, тож минулий час: <et>käisime</et>."
+
+msgid "<et>Ei läinud</et> is no in the past."
+msgstr "<et>Ei läinud</et> — це «ні» в минулому."
+
+msgid "<et>Eile</et> is yesterday, so the past: <et>luges</et>."
+msgstr "<et>Eile</et> — це вчора, тож минулий час: <et>luges</et>."
+
+msgid "<et>Eile</et> is yesterday, so the past: <et>olin</et>."
+msgstr "<et>Eile</et> — це вчора, тож минулий час: <et>olin</et>."
+
+msgid "<et>Hakkan</et> with the -ma infinitive: something will start."
+msgstr "<et>Hakkan</et> з інфінітивом на -ma: щось почнеться."
+
+msgid "<et>Homme</et> is tomorrow, so the present: <et>lähen</et>."
+msgstr "<et>Homme</et> — це завтра, тож теперішній час: <et>lähen</et>."
+
+msgid "<et>Homme</et> with the present: later."
+msgstr "<et>Homme</et> з теперішнім часом: пізніше."
+
+msgid "<et>Käisin</et> is the past."
+msgstr "<et>Käisin</et> — це минулий час."
+
+msgid "<et>Kavatsen</et>: a plan."
+msgstr "<et>Kavatsen</et>: план."
+
+msgid "<et>Olin</et> is the past."
+msgstr "<et>Olin</et> — це минулий час."
+
+msgid "15 minutes"
+msgstr "15 хвилин"
+
+msgid "5 quizzes, a conversation and a recording you can play twice"
+msgstr "5 вправ, розмова і запис, який можна прослухати двічі"
+
+msgid "After <0>ei</0>, the <1>nud</1> form for every person: <2>ei käinud</2>."
+msgstr "Після <0>ei</0> для всіх осіб — форма на <1>nud</1>: <2>ei käinud</2>."
+
+msgid "After <0>ei</0>, the <1>nud</1> form: <2>ei olnud</2>."
+msgstr "Після <0>ei</0> — форма на <1>nud</1>: <2>ei olnud</2>."
+
+msgid "After <0>ei</0>, the <1>nud</1> form: <2>ei söönud</2>."
+msgstr "Після <0>ei</0> — форма на <1>nud</1>: <2>ei söönud</2>."
+
+msgid "After <0>hakkan</0>, the <1>ma</1> infinitive: <2>töötama</2>."
+msgstr "Після <0>hakkan</0> — інфінітив на <1>ma</1>: <2>töötama</2>."
+
+msgid "After <0>kavatsen</0>, the <1>da</1> infinitive: <2>minna</2>."
+msgstr "Після <0>kavatsen</0> — інфінітив на <1>da</1>: <2>minna</2>."
+
+msgid "After <et>hakkan</et>, the -ma infinitive."
+msgstr "Після <et>hakkan</et> — інфінітив на -ma."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All six written right."
+msgstr "Усі шість написано правильно."
+
+msgid "at the weekend"
+msgstr "на вихідних"
+
+msgid "Drag a word from below Mari’s answer into each gap, or tap a word to put it in the open gap. Some words are spare. The gaps test the past with yes and no, the future, where to, and the infinitive after <0>kavatsen</0>."
+msgstr "Перетягни в кожен пропуск слово з-під відповіді Марі або торкнися слова, щоб поставити його у відкритий пропуск. Деякі слова зайві. Пропуски перевіряють минулий час із «так» і «ні», майбутнє, напрямок «куди» та інфінітив після <0>kavatsen</0>."
+
+msgid "Each sentence has one verb in the wrong form: a past ending kept after <0>ei</0>, a tense that doesn’t fit the time word, or the wrong infinitive. Tap it, then write the right form."
+msgstr "У кожному реченні одне дієслово стоїть у хибній формі: закінчення минулого часу після <0>ei</0>, часова форма, що не пасує до слова на кшталт «учора» чи «завтра», або не той інфінітив. Торкнися його й напиши правильну форму."
+
+msgid "Fill the gaps: Mari’s answer"
+msgstr "Заповни пропуски: відповідь Марі"
+
+msgid "Find and fix the mistake"
+msgstr "Знайди й виправ помилку"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "For I, <0>hakkan</0>, then the <1>ma</1> infinitive: <2>hakkan õppima</2>."
+msgstr "Для «я» — <0>hakkan</0>, а далі інфінітив на <1>ma</1>: <2>hakkan õppima</2>."
+
+msgid "gladly"
+msgstr "залюбки"
+
+msgid "He or she didn’t read the book."
+msgstr "Він не прочитав чи вона не прочитала книжку."
+
+msgid "He stayed at home."
+msgstr "Сидів удома."
+
+msgid "He went swimming."
+msgstr "Ходив плавати."
+
+msgid "He went to the market."
+msgstr "Ходив на ринок."
+
+msgid "I didn’t go to work."
+msgstr "Я не пішов (не пішла) на роботу."
+
+msgid "I’m going to start learning Estonian."
+msgstr "Я почну вчити естонську."
+
+msgid "I’m planning to come."
+msgstr "Я планую прийти."
+
+msgid "In Pärnu"
+msgstr "У Пярну"
+
+msgid "In Tallinn"
+msgstr "У Таллінні"
+
+msgid "In Tartu, where her mother lives"
+msgstr "У Тарту, де живе її мама"
+
+msgid "In the past"
+msgstr "У минулому"
+
+msgid "In which city is Kati going to work? Write it in Estonian."
+msgstr "У якому місті працюватиме Каті? Напиши естонською."
+
+msgid "Jaan went to the market at the weekend."
+msgstr "На вихідних Яан ходив на ринок."
+
+msgid "Kati writes"
+msgstr "Каті пише"
+
+msgid "Kati writes to Mari about her <0><1/>,</0> the weekend, and about next week. Read it, then answer the questions. Once you check your answers, tap a word in the message to open its card."
+msgstr "Каті пише Марі про свої <0><1/>,</0> вихідні, і про наступний тиждень. Прочитай і відповідай на запитання. Після перевірки відповідей торкнися слова в повідомленні, щоб відкрити його картку."
+
+msgid "Kati’s message"
+msgstr "Повідомлення від Каті"
+
+msgid "Kati’s message to Mari"
+msgstr "Повідомлення Каті для Марі"
+
+msgid "last week"
+msgstr "минулого тижня"
+
+msgid "last weekend"
+msgstr "минулих вихідних"
+
+msgid "Last weekend"
+msgstr "Минулі вихідні"
+
+msgid "Last weekend I was in Tartu."
+msgstr "Минулих вихідних я був (була) в Тарту."
+
+msgid "Last weekend or next week"
+msgstr "Минулі вихідні чи наступний тиждень"
+
+msgid "Last weekend or next week?"
+msgstr "Минулі вихідні чи наступний тиждень?"
+
+msgid "Later"
+msgstr "Пізніше"
+
+msgid "Learning Estonian"
+msgstr "Вчити естонську"
+
+msgid "Lessons {past} and {pastNo} show how to say what happened and what didn’t, and lesson {future} what will happen. Put each phrase in its group. Tap a phrase to hear it."
+msgstr "В уроках {past} і {pastNo} — як сказати, що сталося і чого не сталося, а в уроці {future} — що буде. Розклади фрази за групами. Торкнися фрази, щоб почути її."
+
+msgid "Liis and Jaan talk about last weekend and next week. Read the questions first. You can play the recording twice, as in the A2 exam."
+msgstr "Ліїс і Яан говорять про минулі вихідні й наступний тиждень. Спершу прочитай запитання. Запис можна прослухати двічі, як на іспиті A2."
+
+msgid "Liis asks Jaan to come to her place on Saturday."
+msgstr "Ліїс кличе Яана до себе в суботу."
+
+msgid "Liis has her lessons on Monday and Wednesday."
+msgstr "Заняття в Ліїс у понеділок і середу."
+
+msgid "Listen: Liis and Jaan"
+msgstr "Послухай: Ліїс і Яан"
+
+msgid "Listen: the weekend and next week"
+msgstr "Послухай: вихідні й наступний тиждень"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Mari"
+msgstr "Марі"
+
+msgid "Mari answers"
+msgstr "Марі відповідає"
+
+msgid "Mari asks about your weekend and next week. A wrong reply shows why it’s wrong, then you hear the right one."
+msgstr "Марі питає про твої вихідні й наступний тиждень. Після хибної відповіді побачиш пояснення, а потім почуєш правильну."
+
+msgid "Most of them. Look again at the ones you missed."
+msgstr "Більшість правильно. Ще раз поглянь на ті, де була помилка."
+
+msgid "Most of them. Read the ones you missed once more."
+msgstr "Майже всі. Ще раз прочитай ті, де була помилка."
+
+msgid "Nädalavahetus with the -l that says when."
+msgstr "Nädalavahetus із -l, яке відповідає на питання «коли?»."
+
+msgid "next week"
+msgstr "наступного тижня"
+
+msgid "Next week I’m going to Tallinn."
+msgstr "Наступного тижня я їду до Таллінна."
+
+msgid "Next week I’m starting to study."
+msgstr "Наступного тижня я починаю вчитися."
+
+msgid "next weekend"
+msgstr "наступних вихідних"
+
+msgid "No in the past"
+msgstr "«Ні» в минулому"
+
+msgid "No in the past is <0>ei</0> and the <1>nud</1> form for every person: <2>ma ei läinud, ta ei olnud</2>."
+msgstr "«Ні» в минулому — це <0>ei</0> і форма на <1>nud</1> для всіх осіб: <2>ma ei läinud, ta ei olnud</2>."
+
+msgid "No in the past is <et>ei</et> and the -nud form, the same for every person."
+msgstr "«Ні» в минулому — це <et>ei</et> і форма на -nud, однакова для всіх осіб."
+
+msgid "No in the past: <0>ei</0> and the <1>nud</1> form, <2>ei läinud</2>."
+msgstr "«Ні» в минулому: <0>ei</0> і форма на <1>nud</1>, <2>ei läinud</2>."
+
+msgid "Now, as a habit"
+msgstr "Зараз або зазвичай"
+
+msgid "On Friday"
+msgstr "У п’ятницю"
+
+msgid "On Saturday I went to the market."
+msgstr "У суботу я ходив (ходила) на ринок."
+
+msgid "On Saturday Kati bought cheese and bread at the market."
+msgstr "У суботу Каті купила на ринку сир і хліб."
+
+msgid "On Sunday Kati went into town."
+msgstr "У неділю Каті ходила в місто."
+
+msgid "On which day is Jaan going to Tallinn? Write it in Estonian."
+msgstr "Якого дня Яан їде до Таллінна? Напиши естонською."
+
+msgid "Read a friend’s message about her weekend, fill the gaps in the reply, and write what you did, didn’t do and will do next week. It practises the past with yes and no, and the future with a time word, <0>hakkama</0> and <1>kavatsema</1>."
+msgstr "Прочитай повідомлення подруги про її вихідні, заповни пропуски у відповіді й напиши, що ти робив (робила), чого не робив (не робила) і що робитимеш наступного тижня. Тут повторюються минулий час із «так» і «ні» та майбутнє зі словом про час, <0>hakkama</0> і <1>kavatsema</1>."
+
+msgid "Read Kati’s message once more, then try again."
+msgstr "Ще раз прочитай повідомлення Каті, а тоді спробуй знову."
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Що запам’ятати» нижче, а тоді спробуй знову."
+
+msgid "Swimming"
+msgstr "Плавати"
+
+msgid "Talk: Mari asks about your weekend"
+msgstr "Розмова: Марі питає про твої вихідні"
+
+msgid "Talking about the weekend"
+msgstr "Розмова про вихідні"
+
+msgid "That is now. Mari asked about the weekend that has passed."
+msgstr "Це про зараз. Марі питала про вихідні, які вже минули."
+
+msgid "That is tomorrow. Mari asked what you did."
+msgstr "Це про завтра. Марі питала, що ти робив (робила)."
+
+msgid "The future"
+msgstr "Майбутнє"
+
+msgid "The future is the present with a time word, <0>hakkama</0> with the <1>ma</1> infinitive, or <2>kavatsema</2> with the <3>da</3> infinitive: <4>homme lähen, hakkan õppima, kavatsen tulla</4>."
+msgstr "Майбутнє — це теперішній час зі словом про час, <0>hakkama</0> з інфінітивом на <1>ma</1> або <2>kavatsema</2> з інфінітивом на <3>da</3>: <4>homme lähen, hakkan õppima, kavatsen tulla</4>."
+
+msgid "The future is the present with a time word, <et>hakkama</et> or <et>kavatsema</et>."
+msgstr "Майбутнє — це теперішній час зі словом про час, <et>hakkama</et> або <et>kavatsema</et>."
+
+msgid "The past, with yes or no: <0>olin kodus</0>, <1>ma ei läinud</1>."
+msgstr "Минулий час із «так» чи «ні»: <0>olin kodus</0>, <1>ma ei läinud</1>."
+
+msgid "The present with a time word, <0>hakkama</0> or <1>kavatsema</1>: <2>homme lähen</2>, <3>hakkan õppima</3>."
+msgstr "Теперішній час зі словом про час, <0>hakkama</0> чи <1>kavatsema</1>: <2>homme lähen</2>, <3>hakkan õppima</3>."
+
+msgid "To come to Tallinn next weekend"
+msgstr "Приїхати до Таллінна наступних вихідних"
+
+msgid "To go to Tartu"
+msgstr "Поїхати до Тарту"
+
+msgid "To meet at a café on Monday"
+msgstr "Зустрітися в кав’ярні в понеділок"
+
+msgid "Today"
+msgstr "Сьогодні"
+
+msgid "Tomorrow"
+msgstr "Завтра"
+
+msgid "Tomorrow I’m going to Tartu."
+msgstr "Завтра я їду до Тарту."
+
+msgid "We ate at the café."
+msgstr "Ми їли в кав’ярні."
+
+msgid "We didn’t go to the market."
+msgstr "Ми не ходили на ринок."
+
+msgid "We’re going to live in Tallinn."
+msgstr "Ми житимемо в Таллінні."
+
+msgid "weekend"
+msgstr "вихідні"
+
+msgid "What did Jaan do on Saturday?"
+msgstr "Що Яан робив у суботу?"
+
+msgid "What did Liis buy with the bread? Write one word in Estonian."
+msgstr "Що Ліїс купила разом із хлібом? Напиши одне слово естонською."
+
+msgid "What does Kati ask Mari?"
+msgstr "Що Каті пропонує Марі?"
+
+msgid "What is Liis going to start next week?"
+msgstr "Що Ліїс почне наступного тижня?"
+
+msgid "When is Jaan planning to come to Tartu?"
+msgstr "Коли Яан планує приїхати до Тарту?"
+
+msgid "Where to, so <0>sse</0>: <1>Tallinnasse</1>."
+msgstr "Куди, тож <0>sse</0>: <1>Tallinnasse</1>."
+
+msgid "Where was Kati last weekend?"
+msgstr "Де була Каті минулих вихідних?"
+
+msgid "Which time a sentence is about"
+msgstr "Про який час речення"
+
+msgid "Working in Tallinn"
+msgstr "Працювати в Таллінні"
+
+msgid "Write each sentence in Estonian: what happened, what didn’t, and what will."
+msgstr "Напиши кожне речення естонською: що сталося, чого не сталося і що буде."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "Yes in the past"
+msgstr "«Так» у минулому"
+
+msgid "Yes in the past takes the person ending: <0>olin, käisin, lugesin</0>."
+msgstr "«Так» у минулому має особове закінчення: <0>olin, käisin, lugesin</0>."
+
+msgid "Yes in the past takes the person ending."
+msgstr "«Так» у минулому має особове закінчення."
+
+msgid "Yes in the past, no <0>ei</0>, so the person ending: <1>lugesin</1>."
+msgstr "«Так» у минулому, без <0>ei</0>, тож особове закінчення: <1>lugesin</1>."
+
+msgid "Yesterday I didn’t go to work."
+msgstr "Учора я не пішов (не пішла) на роботу."
+
+msgid "Yesterday I was at home."
+msgstr "Учора я був (була) вдома."
+
+msgid "Yesterday we ate at home."
+msgstr "Учора ми їли вдома."
+
+msgid "You didn’t go, and that is about now."
+msgstr "Ти не ходив (не ходила), а це про зараз."
+
+msgid "You were in Tartu at the weekend and didn’t go to the market. Next week you start a job in Tallinn. Mari speaks first; pick what you say back."
+msgstr "На вихідних ти був (була) в Тарту й не ходив (не ходила) на ринок. Наступного тижня в тебе починається робота в Таллінні. Марі говорить першою; обирай, що відповісти."

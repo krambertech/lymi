@@ -166,7 +166,7 @@ const VERB_USES = [
     form: "da",
     label: msg`“Didn’t”`,
     tip: msg`The same for every person.`,
-    taught: { et: "Ma ei läinud" },
+    taught: { slug: "mineviku-eitus" },
     examples: [
       { et: "Ma ei *teadnud*.", meaning: msg`I didn’t know.` },
       { et: "Ta ei *tulnud* koju.", meaning: msg`He or she didn’t come home.` },

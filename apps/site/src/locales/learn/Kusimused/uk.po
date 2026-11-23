@@ -7,9 +7,6 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: uk\n"
 
-msgid "<0/> asks about people and <1/> about things: <2/> Who is that? <3/> What is that?"
-msgstr "<0/> питає про людей, а <1/> — про речі: <2/> Хто це? <3/> Що це?"
-
 msgid "<0/> is yes and <1/> is no. When the question asks with olema, to be, the usual no is <2/>: he or she isn’t, I’m not. When you don’t know, say <3/>."
 msgstr "<0/> означає «так», <1/> — «ні». Якщо в питанні є olema, «бути», звичайна відповідь «ні» — <2/>, тобто «не» разом із дієсловом olema. Коли не знаєш, скажи <3/>."
 
@@ -19,11 +16,14 @@ msgstr "<0/> означає «твій», це коротке <1/>; звідки
 msgid "<0/> repeats the verb from the question, and any verb can answer this way: <1>Kas sa loed? Ei loe.</1> Lesson {negation} covers saying no."
 msgstr "<0/> повторює дієслово з питання, і так можна відповісти з будь-яким дієсловом: <1>Kas sa loed? Ei loe.</1> Про заперечення розповідає урок {negation}."
 
+msgid "<0/> usually asks about people and <1/> about things: <2/> Who is that? <3/> What is that?"
+msgstr "<0/> зазвичай питає про людей, а <1/> — про речі: <2/> Хто це? <3/> Що це?"
+
 msgid "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
 msgstr "<0/> Ти живеш у Таллінні. <1/> Ти живеш у Таллінні? Щоб спитати «так чи ні», постав <2/> перед реченням."
 
-msgid "<0>Kes</0> asks about people, <1>mis</1> about things."
-msgstr "<0>Kes</0> питає про людей, <1>mis</1> — про речі."
+msgid "<0>Kes</0> usually asks about people, <1>mis</1> about things."
+msgstr "<0>Kes</0> зазвичай питає про людей, <1>mis</1> — про речі."
 
 msgid "<et>Kas</et> or a question word"
 msgstr "<et>Kas</et> чи питальне слово"
@@ -52,14 +52,14 @@ msgstr "людина"
 msgid "a place"
 msgstr "місце"
 
-msgid "A question answered with yes or no starts with <0/>. A question that wants a place, a person or a thing starts with its question word instead, never with both. Write each question in Estonian."
-msgstr "Питання, на яке відповідають «так» чи «ні», починається з <0/>. Питання про місце, людину чи річ починається з питального слова. Обидва слова разом не вживають. Напиши кожне питання естонською."
+msgid "A question answered with yes or no usually starts with <0/>. A question that wants a place, a person or a thing starts with its question word instead, not with both. Write each question in Estonian."
+msgstr "Питання, на яке відповідають «так» чи «ні», зазвичай починається з <0/>. Питання про місце, людину чи річ починається з питального слова, а не з обох одразу. Напиши кожне питання естонською."
 
-msgid "A question word goes first, and the part you ask about drops out: <0>Kus sa elad?</0>"
-msgstr "Питальне слово стоїть першим, а те, про що питаєш, зникає: <0>Kus sa elad?</0>"
+msgid "A question word replaces <et>kas</et>, so a question usually starts with one or the other."
+msgstr "Питальне слово стоїть замість <et>kas</et>: питання зазвичай починається з одного з них."
 
-msgid "A question word replaces <et>kas</et>; never use both."
-msgstr "Питальне слово стоїть замість <et>kas</et>; разом їх не вживають."
+msgid "A question word usually goes first, and the part you ask about drops out: <0>Kus sa elad?</0>"
+msgstr "Питальне слово зазвичай стоїть першим, а те, про що питаєш, зникає: <0>Kus sa elad?</0>"
 
 msgid "a reason"
 msgstr "причина"
@@ -70,8 +70,8 @@ msgstr "річ"
 msgid "a time"
 msgstr "час"
 
-msgid "A yes-or-no question starts with <et>kas</et>."
-msgstr "Питання з відповіддю «так» чи «ні» починається з <et>kas</et>."
+msgid "A yes-or-no question usually starts with <et>kas</et>."
+msgstr "Питання з відповіддю «так» чи «ні» зазвичай починається з <et>kas</et>."
 
 msgid "All eight, each with <0>kas</0> or its question word."
 msgstr "Усі вісім, кожне з <0>kas</0> або своїм питальним словом."
@@ -88,8 +88,8 @@ msgstr "Усі сім питань, і в кожному правильне сл
 msgid "All seven, each question word right."
 msgstr "Усі сім, кожне питальне слово правильне."
 
-msgid "Answer <0>jah</0> or <1>ei</1>. When the question has olema, the no is <2>ei ole</2>. If you don’t know, say <3>Ma ei tea.</3>"
-msgstr "Відповідай <0>jah</0> або <1>ei</1>. Якщо в питанні є olema, «ні» — це <2>ei ole</2>. Якщо не знаєш, кажи <3>Ma ei tea.</3>"
+msgid "Answer <0>jah</0> or <1>ei</1>. When the question has olema, the no is <2>ei ole</2> or <3>pole</3>. If you don’t know, say <4>Ma ei tea.</4>"
+msgstr "Відповідай <0>jah</0> або <1>ei</1>. Якщо в питанні є olema, «ні» — це <2>ei ole</2> або <3>pole</3>. Якщо не знаєш, кажи <4>Ma ei tea.</4>"
 
 msgid "Are they working today?"
 msgstr "Вони сьогодні працюють?"
@@ -97,14 +97,8 @@ msgstr "Вони сьогодні працюють?"
 msgid "Ask the question"
 msgstr "Постав питання"
 
-msgid "Asks about a person."
-msgstr "Питає про людину."
-
 msgid "Asks about a place."
 msgstr "Питає про місце."
-
-msgid "Asks about a thing."
-msgstr "Питає про річ."
 
 msgid "Asks about a time."
 msgstr "Питає про час."
@@ -115,11 +109,14 @@ msgstr "Питає про кількість."
 msgid "Asks for a reason."
 msgstr "Питає про причину."
 
-msgid "Asks how it’s done."
-msgstr "Питає, як саме."
+msgid "Asks how, or how things are."
+msgstr "Питає, як саме або як справи."
 
 msgid "at home"
 msgstr "вдома"
+
+msgid "At the start of a question it has no meaning of its own, like a spoken question mark."
+msgstr "На початку питання власного значення не має, це ніби знак питання вголос."
 
 msgid "because"
 msgstr "бо, тому що"
@@ -148,11 +145,11 @@ msgstr "Ти працюєш удома?"
 msgid "Does he speak Estonian?"
 msgstr "Він говорить естонською?"
 
-msgid "Each round gives an answer. Write the question it answers: start with the question word, and when the answer says <0>ma</0>, ask with <1>sa</1>."
-msgstr "У кожному раунді є відповідь. Напиши питання до неї: почни з питального слова, а якщо у відповіді <0>ma</0>, у питанні став <1>sa</1>."
+msgid "Each round gives an answer. Write the question it answers: start with the question word, and when the answer says <0>ma</0>, ask with <1>sa</1> (or <2>te</2> to be polite)."
+msgstr "У кожному раунді є відповідь. Напиши питання до неї: почни з питального слова, а якщо у відповіді <0>ma</0>, у питанні став <1>sa</1> (або ввічливе <2>te</2>)."
 
-msgid "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
-msgstr "Українською так само: «Ти живеш у Таллінні» стає «Чи ти живеш у Таллінні?». Kas працює як «чи», а всі інші слова лишаються на місці. Спробуй на п’яти реченнях."
+msgid "English adds do or swaps words round. Estonian adds kas and usually leaves every other word where it was. Try it on five sentences."
+msgstr "Українською так само: «Ти живеш у Таллінні» стає «Чи ти живеш у Таллінні?». Kas працює як «чи», а решта слів зазвичай лишається на місці. Спробуй на п’яти реченнях."
 
 msgid "Fine, thanks. And you?"
 msgstr "Добре, дякую. А в тебе?"
@@ -178,8 +175,8 @@ msgstr "Повернися до перемикача з <0>kas</0> на поча
 msgid "He or she is at home."
 msgstr "Він чи вона вдома."
 
-msgid "Hear a question and pick its question word. It always comes first, so listen to the start."
-msgstr "Послухай питання й обери питальне слово. Воно завжди перше, тож слухай початок."
+msgid "Hear a question and pick its question word. In these questions it comes first, so listen to the start."
+msgstr "Послухай питання й обери питальне слово. У цих питаннях воно перше, тож слухай початок."
 
 msgid "Hear a question and write it. <0/> and <1/> differ by one vowel, and <2/> and <3/> by one k, so listen closely to the first word."
 msgstr "Послухай питання й напиши його. <0/> і <1/> різняться однією голосною, а <2/> і <3/> — одним k, тож уважно слухай перше слово."
@@ -202,9 +199,6 @@ msgstr "Як ти вчиш естонську?"
 msgid "How does he or she speak Estonian?"
 msgstr "Як він чи вона говорить естонською?"
 
-msgid "how it’s done"
-msgstr "як це робиться"
-
 msgid "How much coffee do you drink?"
 msgstr "Скільки кави ти п’єш?"
 
@@ -219,6 +213,9 @@ msgstr "скільки"
 
 msgid "How to ask in Estonian: kas for yes or no, seven question words for the rest, and three everyday questions to learn whole."
 msgstr "Як питати естонською: kas для «так чи ні», сім питальних слів для всього іншого і три повсякденні питання, які вчать цілими."
+
+msgid "how, or how things are"
+msgstr "як або як справи"
 
 msgid "How’s it going?"
 msgstr "Як справи?"
@@ -235,8 +232,8 @@ msgstr "Я багато читаю."
 msgid "I’m from Ukraine."
 msgstr "Я з України."
 
-msgid "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
-msgstr "У питанні з kas голос наприкінці знижується, як у звичайному реченні: kas уже каже, що це питання. У розмові замість нього ще почуєш <0/> у кінці, щось на зразок «так?»: <1/>"
+msgid "In a kas question your voice usually falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
+msgstr "У питанні з kas голос наприкінці зазвичай знижується, як у звичайному реченні: kas уже каже, що це питання. У розмові замість нього ще почуєш <0/> у кінці, щось на зразок «так?»: <1/>"
 
 msgid "In Narva"
 msgstr "У Нарві"
@@ -259,17 +256,14 @@ msgstr "У Тарту"
 msgid "Is he or she at home?"
 msgstr "Він чи вона вдома?"
 
-msgid "It has no meaning of its own, like a spoken question mark."
-msgstr "Власного значення не має, це ніби знак питання вголос."
-
 msgid "Jaan"
 msgstr "Яан"
 
 msgid "Jah, ei, ei ole"
 msgstr "Jah, ei, ei ole"
 
-msgid "Kas in front, a question mark at the end. Every other word stays put."
-msgstr "Kas на початку, знак питання в кінці. Усі інші слова на своїх місцях."
+msgid "Kas in front, a question mark at the end. Here every other word stays put."
+msgstr "Kas на початку, знак питання в кінці. Тут усі інші слова лишаються на своїх місцях."
 
 msgid "Kas makes a question"
 msgstr "Kas перетворює речення на питання"
@@ -353,11 +347,11 @@ msgstr "Відтворити {0}"
 msgid "Play {question}"
 msgstr "Відтворити {question}"
 
-msgid "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
-msgstr "Щоб спитати «так чи ні», постав <0>kas</0> перед реченням. Більше нічого не рухається: <1>Kas sa elad Tallinnas?</1>"
+msgid "Put <0>kas</0> in front of a sentence to ask yes or no. Usually nothing else moves: <1>Kas sa elad Tallinnas?</1>"
+msgstr "Щоб спитати «так чи ні», постав <0>kas</0> перед реченням. Решта слів зазвичай лишається на місці: <1>Kas sa elad Tallinnas?</1>"
 
-msgid "Put <et>kas</et> in front; every other word stays where it was."
-msgstr "Постав <et>kas</et> на початок; решта слів лишається на місці."
+msgid "Put <et>kas</et> in front; the other words can stay where they were."
+msgstr "Постав <et>kas</et> на початок; решта слів може лишитися на місці."
 
 msgid "Question"
 msgstr "Питання"
@@ -368,8 +362,8 @@ msgstr "Питальні слова"
 msgid "Short for sinu."
 msgstr "Скорочено від sinu."
 
-msgid "Start with the question word for what you ask about, and leave that part out; when the answer says <et>ma</et>, ask with <et>sa</et>."
-msgstr "Почни з питального слова до того, про що питаєш, і пропусти цю частину; якщо у відповіді <et>ma</et>, у питанні став <et>sa</et>."
+msgid "Start with the question word for what you ask about, and leave that part out; when the answer says <et>ma</et>, ask with <et>sa</et> (or <et>te</et> to be polite)."
+msgstr "Почни з питального слова до того, про що питаєш, і пропусти цю частину; якщо у відповіді <et>ma</et>, у питанні став <et>sa</et> (або ввічливе <et>te</et>)."
 
 msgid "Statement"
 msgstr "Твердження"
@@ -392,8 +386,8 @@ msgstr "Це Jaan."
 msgid "The question word by ear"
 msgstr "Питальне слово на слух"
 
-msgid "The question word comes first: <et>{word}</et>."
-msgstr "Питальне слово стоїть першим: <et>{word}</et>."
+msgid "The question word usually comes first: <et>{word}</et>."
+msgstr "Питальне слово зазвичай стоїть першим: <et>{word}</et>."
 
 msgid "There are seven to start with. Tap one to hear it in a question."
 msgstr "Для початку їх сім. Натисни на будь-яке, щоб почути його в питанні."
@@ -418,6 +412,12 @@ msgstr "Завтра."
 
 msgid "turns a sentence into a yes-or-no question"
 msgstr "робить із речення питання «так чи ні»"
+
+msgid "Usually asks about a person."
+msgstr "Зазвичай питає про людину."
+
+msgid "Usually asks about a thing."
+msgstr "Зазвичай питає про річ."
 
 msgid "well, fine"
 msgstr "добре"

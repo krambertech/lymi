@@ -22,6 +22,9 @@ msgstr "<0>Ei ole</0> одним словом"
 msgid "<0>Ei</0> before the verb, and the ending is gone: <1>ei {stem}</1>."
 msgstr "<0>Ei</0> перед дієсловом, а закінчення зникло: <1>ei {stem}</1>."
 
+msgid "<0>Ei</0> is the same for every person: <1>ma ei loe</1>, <2>nad ei loe</2>."
+msgstr "<0>Ei</0> однакове для всіх осіб: <1>ma ei loe</1>, <2>nad ei loe</2>."
+
 msgid "<0>Ei</0>, and the verb without its ending."
 msgstr "<0>Ei</0> і дієслово без закінчення."
 
@@ -48,21 +51,6 @@ msgstr "6 тестів і розмова"
 
 msgid "A yes keeps the verb’s ending."
 msgstr "У ствердженні дієслово зберігає закінчення."
-
-msgid "After <0>ei</0> comes the I form of the present without its -n: <1>loen</1>, <2>ei loe</2>."
-msgstr "Після <0>ei</0> іде форма першої особи однини теперішнього часу без -n: <1>loen</1>, <2>ei loe</2>."
-
-msgid "After <0>ei</0>, <1>olema</1> is always <2>ole</2>."
-msgstr "Після <0>ei</0> дієслово <1>olema</1> завжди має форму <2>ole</2>."
-
-msgid "After <0>ei</0>, the verb drops its ending."
-msgstr "Після <0>ei</0> дієслово втрачає закінчення."
-
-msgid "After <et>ei</et>, <et>olema</et> is always <et>ole</et>. <et>Pole</et> is <et>ei ole</et> in one word."
-msgstr "Після <et>ei</et> дієслово <et>olema</et> завжди має форму <et>ole</et>. <et>Pole</et> — це <et>ei ole</et> одним словом."
-
-msgid "After <et>ei</et>, the verb drops its ending."
-msgstr "Після <et>ei</et> дієслово втрачає закінчення."
 
 msgid "All of them. <0>Ei</0>, and the ending goes."
 msgstr "Усі. <0>Ei</0>, і закінчення зникає."
@@ -133,8 +121,8 @@ msgstr "не говорю, не говорить тощо"
 msgid "don’t work, doesn’t work"
 msgstr "не працюю, не працює тощо"
 
-msgid "Each person has its own: -n, -d, -b, -me, -te, -vad."
-msgstr "У кожної особи своє: -n, -d, -b, -me, -te, -vad."
+msgid "Each person usually has its own: -n, -d, -b, -me, -te, -vad."
+msgstr "Зазвичай у кожної особи своє: -n, -d, -b, -me, -te, -vad."
 
 msgid "Each round shows a verb with its ending, such as <0>teevad</0>. Type the form that follows <1>ei</1>: drop the ending, so <2>teevad</2> becomes <3>ei tee</3>."
 msgstr "У кожному раунді є дієслово із закінченням, як-от <0>teevad</0>. Напиши форму, що йде після <1>ei</1>: відкинь закінчення, і <2>teevad</2> стає <3>ei tee</3>."
@@ -148,8 +136,8 @@ msgstr "Ei ole і pole"
 msgid "Ei ole in one word."
 msgstr "Ei ole одним словом."
 
-msgid "Every form of <0>olema</0> becomes <1>ei ole</1>."
-msgstr "Кожна форма <0>olema</0> стає <1>ei ole</1>."
+msgid "Every present form of <0>olema</0> becomes <1>ei ole</1>."
+msgstr "Кожна форма <0>olema</0> в теперішньому часі стає <1>ei ole</1>."
 
 msgid "Fix the no"
 msgstr "Виправ заперечення"
@@ -234,6 +222,21 @@ msgstr "У деяких дієсловах основа змінюється: <0
 
 msgid "In the present tense, put <0>ei</0> before the verb and drop its ending. It’s the same for every person, so no is easier than yes."
 msgstr "У теперішньому часі постав <0>ei</0> перед дієсловом і прибери закінчення. Для всіх осіб це однаково, тож «ні» сказати легше, ніж «так»."
+
+msgid "In the present, after <0>ei</0> comes the I form without its -n: <1>loen</1>, <2>ei loe</2>."
+msgstr "У теперішньому часі після <0>ei</0> іде форма першої особи однини без -n: <1>loen</1>, <2>ei loe</2>."
+
+msgid "In the present, after <0>ei</0>, <1>olema</1> is <2>ole</2>."
+msgstr "У теперішньому часі після <0>ei</0> дієслово <1>olema</1> має форму <2>ole</2>."
+
+msgid "In the present, after <et>ei</et>, <et>olema</et> is <et>ole</et>. <et>Pole</et> is <et>ei ole</et> in one word."
+msgstr "У теперішньому часі після <et>ei</et> дієслово <et>olema</et> має форму <et>ole</et>. <et>Pole</et> — це <et>ei ole</et> одним словом."
+
+msgid "In the present, the verb after <0>ei</0> drops its ending."
+msgstr "У теперішньому часі дієслово після <0>ei</0> втрачає закінчення."
+
+msgid "In the present, the verb after <et>ei</et> drops its ending."
+msgstr "У теперішньому часі дієслово після <et>ei</et> втрачає закінчення."
 
 msgid "Is he or she at home?"
 msgstr "Він чи вона вдома?"
@@ -330,9 +333,6 @@ msgstr "Відтворити {ask}"
 msgid "Play {said}"
 msgstr "Відтворити {said}"
 
-msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
-msgstr "Став <0>ei</0> перед дієсловом: <1>ma ei loe</1>, я не читаю."
-
 msgid "Rewrite each sentence as a no. Put <0>ei</0> before the verb and drop its ending. In these sentences the rest stays the same: <1>Mari armastab kohvi</1> becomes <2>Mari ei armasta kohvi</2>."
 msgstr "Перепиши кожне речення як заперечення. Постав <0>ei</0> перед дієсловом і відкинь закінчення. У цих реченнях решта не змінюється: <1>Mari armastab kohvi</1> стає <2>Mari ei armasta kohvi</2>."
 
@@ -357,11 +357,8 @@ msgstr "Перемкни <0/> на <1/>, і всі шість речень ст�
 msgid "Tea"
 msgstr "Чай"
 
-msgid "The form says who"
-msgstr "Форма каже, хто"
-
-msgid "The no is the same for every person: <0>ma ei loe</0>, <1>nad ei loe</1>."
-msgstr "Заперечення однакове для всіх осіб: <0>ma ei loe</0>, <1>nad ei loe</1>."
+msgid "The form mostly says who"
+msgstr "Форма здебільшого каже, хто"
 
 msgid "The no of olema, to be."
 msgstr "Заперечення olema, «бути»."
@@ -402,8 +399,11 @@ msgstr "любити, кохати"
 msgid "to read"
 msgstr "читати"
 
-msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
-msgstr "Щоб сказати «не», постав <0/> перед дієсловом. <1/> — «я читаю», а <2/> — «я не читаю». Дієслово втрачає закінчення, а <3/> однакове, хоч би про кого йшлося."
+msgid "To say not, you usually put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
+msgstr "Щоб сказати «не», зазвичай ставлять <0/> перед дієсловом. <1/> — «я читаю», а <2/> — «я не читаю». Дієслово втрачає закінчення, а <3/> однакове, хоч би про кого йшлося."
+
+msgid "To say not, you usually put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
+msgstr "Щоб сказати «не», зазвичай ставлять <0>ei</0> перед дієсловом: <1>ma ei loe</1>, я не читаю."
 
 msgid "to speak"
 msgstr "говорити"

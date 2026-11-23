@@ -22,6 +22,9 @@ msgstr "<0>Ei ole</0> in one word"
 msgid "<0>Ei</0> before the verb, and the ending is gone: <1>ei {stem}</1>."
 msgstr "<0>Ei</0> before the verb, and the ending is gone: <1>ei {stem}</1>."
 
+msgid "<0>Ei</0> is the same for every person: <1>ma ei loe</1>, <2>nad ei loe</2>."
+msgstr "<0>Ei</0> is the same for every person: <1>ma ei loe</1>, <2>nad ei loe</2>."
+
 msgid "<0>Ei</0>, and the verb without its ending."
 msgstr "<0>Ei</0>, and the verb without its ending."
 
@@ -48,21 +51,6 @@ msgstr "6 quizzes and a conversation"
 
 msgid "A yes keeps the verb’s ending."
 msgstr "A yes keeps the verb’s ending."
-
-msgid "After <0>ei</0> comes the I form of the present without its -n: <1>loen</1>, <2>ei loe</2>."
-msgstr "After <0>ei</0> comes the I form of the present without its -n: <1>loen</1>, <2>ei loe</2>."
-
-msgid "After <0>ei</0>, <1>olema</1> is always <2>ole</2>."
-msgstr "After <0>ei</0>, <1>olema</1> is always <2>ole</2>."
-
-msgid "After <0>ei</0>, the verb drops its ending."
-msgstr "After <0>ei</0>, the verb drops its ending."
-
-msgid "After <et>ei</et>, <et>olema</et> is always <et>ole</et>. <et>Pole</et> is <et>ei ole</et> in one word."
-msgstr "After <et>ei</et>, <et>olema</et> is always <et>ole</et>. <et>Pole</et> is <et>ei ole</et> in one word."
-
-msgid "After <et>ei</et>, the verb drops its ending."
-msgstr "After <et>ei</et>, the verb drops its ending."
 
 msgid "All of them. <0>Ei</0>, and the ending goes."
 msgstr "All of them. <0>Ei</0>, and the ending goes."
@@ -133,8 +121,8 @@ msgstr "don’t speak, doesn’t speak"
 msgid "don’t work, doesn’t work"
 msgstr "don’t work, doesn’t work"
 
-msgid "Each person has its own: -n, -d, -b, -me, -te, -vad."
-msgstr "Each person has its own: -n, -d, -b, -me, -te, -vad."
+msgid "Each person usually has its own: -n, -d, -b, -me, -te, -vad."
+msgstr "Each person usually has its own: -n, -d, -b, -me, -te, -vad."
 
 msgid "Each round shows a verb with its ending, such as <0>teevad</0>. Type the form that follows <1>ei</1>: drop the ending, so <2>teevad</2> becomes <3>ei tee</3>."
 msgstr "Each round shows a verb with its ending, such as <0>teevad</0>. Type the form that follows <1>ei</1>: drop the ending, so <2>teevad</2> becomes <3>ei tee</3>."
@@ -148,8 +136,8 @@ msgstr "Ei ole and pole"
 msgid "Ei ole in one word."
 msgstr "Ei ole in one word."
 
-msgid "Every form of <0>olema</0> becomes <1>ei ole</1>."
-msgstr "Every form of <0>olema</0> becomes <1>ei ole</1>."
+msgid "Every present form of <0>olema</0> becomes <1>ei ole</1>."
+msgstr "Every present form of <0>olema</0> becomes <1>ei ole</1>."
 
 msgid "Fix the no"
 msgstr "Fix the no"
@@ -234,6 +222,21 @@ msgstr "In some verbs the stem changes: <0/>, but <1/>. Start from the I form of
 
 msgid "In the present tense, put <0>ei</0> before the verb and drop its ending. It’s the same for every person, so no is easier than yes."
 msgstr "In the present tense, put <0>ei</0> before the verb and drop its ending. It’s the same for every person, so no is easier than yes."
+
+msgid "In the present, after <0>ei</0> comes the I form without its -n: <1>loen</1>, <2>ei loe</2>."
+msgstr "In the present, after <0>ei</0> comes the I form without its -n: <1>loen</1>, <2>ei loe</2>."
+
+msgid "In the present, after <0>ei</0>, <1>olema</1> is <2>ole</2>."
+msgstr "In the present, after <0>ei</0>, <1>olema</1> is <2>ole</2>."
+
+msgid "In the present, after <et>ei</et>, <et>olema</et> is <et>ole</et>. <et>Pole</et> is <et>ei ole</et> in one word."
+msgstr "In the present, after <et>ei</et>, <et>olema</et> is <et>ole</et>. <et>Pole</et> is <et>ei ole</et> in one word."
+
+msgid "In the present, the verb after <0>ei</0> drops its ending."
+msgstr "In the present, the verb after <0>ei</0> drops its ending."
+
+msgid "In the present, the verb after <et>ei</et> drops its ending."
+msgstr "In the present, the verb after <et>ei</et> drops its ending."
 
 msgid "Is he or she at home?"
 msgstr "Is he or she at home?"
@@ -330,9 +333,6 @@ msgstr "Play {ask}"
 msgid "Play {said}"
 msgstr "Play {said}"
 
-msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
-msgstr "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
-
 msgid "Rewrite each sentence as a no. Put <0>ei</0> before the verb and drop its ending. In these sentences the rest stays the same: <1>Mari armastab kohvi</1> becomes <2>Mari ei armasta kohvi</2>."
 msgstr "Rewrite each sentence as a no. Put <0>ei</0> before the verb and drop its ending. In these sentences the rest stays the same: <1>Mari armastab kohvi</1> becomes <2>Mari ei armasta kohvi</2>."
 
@@ -357,11 +357,8 @@ msgstr "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line 
 msgid "Tea"
 msgstr "Tea"
 
-msgid "The form says who"
-msgstr "The form says who"
-
-msgid "The no is the same for every person: <0>ma ei loe</0>, <1>nad ei loe</1>."
-msgstr "The no is the same for every person: <0>ma ei loe</0>, <1>nad ei loe</1>."
+msgid "The form mostly says who"
+msgstr "The form mostly says who"
 
 msgid "The no of olema, to be."
 msgstr "The no of olema, to be."
@@ -402,8 +399,11 @@ msgstr "to love"
 msgid "to read"
 msgstr "to read"
 
-msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
-msgstr "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
+msgid "To say not, you usually put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
+msgstr "To say not, you usually put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
+
+msgid "To say not, you usually put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
+msgstr "To say not, you usually put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
 
 msgid "to speak"
 msgstr "to speak"

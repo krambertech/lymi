@@ -151,8 +151,8 @@ msgstr "дім"
 msgid "hospital"
 msgstr "лікарня"
 
-msgid "How to say where you are in Estonian: <0>-s</0> for in, <1>-l</1> for on and at, and how to answer <2>kus</2>, where."
-msgstr "Як сказати естонською, де ти: <0>-s</0> означає «в», <1>-l</1> — «на», і як відповісти на <2>kus</2>, де."
+msgid "How to say where you are in Estonian: usually <0>-s</0> for in and <1>-l</1> for on and at, and how to answer <2>kus</2>, where."
+msgstr "Як сказати естонською, де ти: зазвичай <0>-s</0> означає «в», а <1>-l</1> — «на», і як відповісти на <2>kus</2>, де."
 
 msgid "I live in Estonia."
 msgstr "Я живу в Естонії."
@@ -244,8 +244,8 @@ msgstr "у місті"
 msgid "in Ukraine"
 msgstr "в Україні"
 
-msgid "It works the same for towns, buildings and most countries. Try it on three countries and three towns."
-msgstr "Так само з містами, будівлями й більшістю країн. Спробуй на трьох країнах і трьох містах."
+msgid "It works the same for most towns, buildings and countries. Try it on three countries and three towns."
+msgstr "Так само з більшістю міст, будівель і країн. Спробуй на трьох країнах і трьох містах."
 
 msgid "Jaan"
 msgstr "Яан"
@@ -316,9 +316,6 @@ msgstr "офіс"
 msgid "on Saaremaa"
 msgstr "на Сааремаа"
 
-msgid "On something, at work, at the market, and names ending in <et>-maa</et>: <et>-l</et>."
-msgstr "На чомусь, на роботі, на ринку й назви на <et>-maa</et>: <et>-l</et>."
-
 msgid "on the table"
 msgstr "на столі"
 
@@ -373,17 +370,17 @@ msgstr "Тарту, університетське місто"
 msgid "The book is on the table."
 msgstr "Книжка на столі."
 
-msgid "The ending -l means on or at"
-msgstr "Закінчення -l — це «на»"
+msgid "The ending -l usually means on or at"
+msgstr "Закінчення -l зазвичай означає «на»"
 
-msgid "The ending -s means in"
-msgstr "Закінчення -s — це «в»"
+msgid "The ending -s usually means in"
+msgstr "Закінчення -s зазвичай означає «в»"
 
-msgid "The ending <0>-l</0> says on a surface or at an activity: <1>laual, tööl</1>."
-msgstr "Закінчення <0>-l</0> означає «на», коли йдеться про поверхню або про те, що ти робиш: <1>laual, tööl</1>."
+msgid "The ending <0>-l</0> usually says on a surface or at an activity: <1>laual, tööl</1>."
+msgstr "Закінчення <0>-l</0> зазвичай означає «на», коли йдеться про поверхню або про те, що ти робиш: <1>laual, tööl</1>."
 
-msgid "The ending <0>-s</0> says in: <1>Eestis, Tallinnas, koolis</1>."
-msgstr "Закінчення <0>-s</0> означає «в»: <1>Eestis, Tallinnas, koolis</1>."
+msgid "The ending <0>-s</0> usually says in: <1>Eestis, Tallinnas, koolis</1>."
+msgstr "Закінчення <0>-s</0> зазвичай означає «в»: <1>Eestis, Tallinnas, koolis</1>."
 
 msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you’re doing something rather than inside a building: <2/>, at work."
 msgstr "Друге закінчення — <0>-l</0>. Воно означає «на», коли йдеться про поверхню: <1/>, на столі. А ще «на» там, де ти щось робиш, а не просто перебуваєш у будівлі: <2/>, на роботі."
@@ -426,6 +423,9 @@ msgstr "Напиши місце"
 
 msgid "Ukraine"
 msgstr "Україна"
+
+msgid "Usually <et>-l</et>: on something, at work, at the market, and names ending in <et>-maa</et>."
+msgstr "Зазвичай <et>-l</et>: на чомусь, на роботі, на ринку й назви на <et>-maa</et>."
 
 msgid "wall"
 msgstr "стіна"
@@ -472,8 +472,8 @@ msgstr "Хто в Тарту?"
 msgid "work"
 msgstr "робота"
 
-msgid "Write each sentence in Estonian. Most towns, countries and buildings take <0>-s</0>. A surface takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
-msgstr "Напиши кожне речення естонською. Більшість міст, країн і будівель мають <0>-s</0>. Поверхня має <1>-l</1>, як і робота, ринок і назви на <2>-maa</2>."
+msgid "Write each sentence in Estonian. Most towns, countries and buildings take <0>-s</0>. A surface usually takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
+msgstr "Напиши кожне речення естонською. Більшість міст, країн і будівель мають <0>-s</0>. Поверхня зазвичай має <1>-l</1>, як і робота, ринок і назви на <2>-maa</2>."
 
 msgid "Write it in Estonian"
 msgstr "Напиши естонською"

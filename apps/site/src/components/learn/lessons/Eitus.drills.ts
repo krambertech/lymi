@@ -11,6 +11,7 @@ import {
   olemaSentence,
   type Person,
   verbSentence,
+  withLongPronoun,
 } from "../../../lib/learn/clips";
 import type { DrillBank, FixDrill, FormDrill, SentenceDrill } from "../../../lib/learn/drill";
 
@@ -25,8 +26,8 @@ const MEANS: Record<string, MessageDescriptor> = {
   joo: msg`to drink`,
 };
 
-const NO_ENDING = msg`After <et>ei</et>, the verb drops its ending.`;
-const OLE = msg`After <et>ei</et>, <et>olema</et> is always <et>ole</et>. <et>Pole</et> is <et>ei ole</et> in one word.`;
+const NO_ENDING = msg`In the present, the verb after <et>ei</et> drops its ending.`;
+const OLE = msg`In the present, after <et>ei</et>, <et>olema</et> is <et>ole</et>. <et>Pole</et> is <et>ei ole</et> in one word.`;
 
 const typed = (stem: string, person: Person): FormDrill => ({
   kind: "form",
@@ -47,7 +48,7 @@ const turned = ({ yes, no }: (typeof NEGATION_TURNED)[number]): SentenceDrill =>
   from: yes,
   cue: msg`make it no`,
   say: no,
-  answers: [no],
+  answers: [no, withLongPronoun(no)],
   explain: NO_ENDING,
 });
 
@@ -63,6 +64,7 @@ const fixed = ({ wrong, said, kind }: (typeof NEGATION_FIXES)[number]): FixDrill
 
 const olema = (row: (typeof OLEMA_ROWS)[number]): SentenceDrill => {
   const no = olemaSentence(row, "ei ole");
+  const pole = olemaSentence(row, "pole");
   return {
     kind: "rewrite",
     id: `ole-${clipId(no)}`,
@@ -70,7 +72,7 @@ const olema = (row: (typeof OLEMA_ROWS)[number]): SentenceDrill => {
     from: olemaSentence(row, "yes"),
     cue: msg`make it no`,
     say: no,
-    answers: [no, olemaSentence(row, "pole")],
+    answers: [no, pole, withLongPronoun(no), withLongPronoun(pole)],
     explain: OLE,
   };
 };

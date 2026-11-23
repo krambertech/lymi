@@ -151,8 +151,8 @@ msgstr "home"
 msgid "hospital"
 msgstr "hospital"
 
-msgid "How to say where you are in Estonian: <0>-s</0> for in, <1>-l</1> for on and at, and how to answer <2>kus</2>, where."
-msgstr "How to say where you are in Estonian: <0>-s</0> for in, <1>-l</1> for on and at, and how to answer <2>kus</2>, where."
+msgid "How to say where you are in Estonian: usually <0>-s</0> for in and <1>-l</1> for on and at, and how to answer <2>kus</2>, where."
+msgstr "How to say where you are in Estonian: usually <0>-s</0> for in and <1>-l</1> for on and at, and how to answer <2>kus</2>, where."
 
 msgid "I live in Estonia."
 msgstr "I live in Estonia."
@@ -244,8 +244,8 @@ msgstr "in town"
 msgid "in Ukraine"
 msgstr "in Ukraine"
 
-msgid "It works the same for towns, buildings and most countries. Try it on three countries and three towns."
-msgstr "It works the same for towns, buildings and most countries. Try it on three countries and three towns."
+msgid "It works the same for most towns, buildings and countries. Try it on three countries and three towns."
+msgstr "It works the same for most towns, buildings and countries. Try it on three countries and three towns."
 
 msgid "Jaan"
 msgstr "Jaan"
@@ -316,9 +316,6 @@ msgstr "office"
 msgid "on Saaremaa"
 msgstr "on Saaremaa"
 
-msgid "On something, at work, at the market, and names ending in <et>-maa</et>: <et>-l</et>."
-msgstr "On something, at work, at the market, and names ending in <et>-maa</et>: <et>-l</et>."
-
 msgid "on the table"
 msgstr "on the table"
 
@@ -373,17 +370,17 @@ msgstr "Tartu, a university town"
 msgid "The book is on the table."
 msgstr "The book is on the table."
 
-msgid "The ending -l means on or at"
-msgstr "The ending -l means on or at"
+msgid "The ending -l usually means on or at"
+msgstr "The ending -l usually means on or at"
 
-msgid "The ending -s means in"
-msgstr "The ending -s means in"
+msgid "The ending -s usually means in"
+msgstr "The ending -s usually means in"
 
-msgid "The ending <0>-l</0> says on a surface or at an activity: <1>laual, tööl</1>."
-msgstr "The ending <0>-l</0> says on a surface or at an activity: <1>laual, tööl</1>."
+msgid "The ending <0>-l</0> usually says on a surface or at an activity: <1>laual, tööl</1>."
+msgstr "The ending <0>-l</0> usually says on a surface or at an activity: <1>laual, tööl</1>."
 
-msgid "The ending <0>-s</0> says in: <1>Eestis, Tallinnas, koolis</1>."
-msgstr "The ending <0>-s</0> says in: <1>Eestis, Tallinnas, koolis</1>."
+msgid "The ending <0>-s</0> usually says in: <1>Eestis, Tallinnas, koolis</1>."
+msgstr "The ending <0>-s</0> usually says in: <1>Eestis, Tallinnas, koolis</1>."
 
 msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you’re doing something rather than inside a building: <2/>, at work."
 msgstr "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you’re doing something rather than inside a building: <2/>, at work."
@@ -426,6 +423,9 @@ msgstr "Type the place"
 
 msgid "Ukraine"
 msgstr "Ukraine"
+
+msgid "Usually <et>-l</et>: on something, at work, at the market, and names ending in <et>-maa</et>."
+msgstr "Usually <et>-l</et>: on something, at work, at the market, and names ending in <et>-maa</et>."
 
 msgid "wall"
 msgstr "wall"
@@ -472,8 +472,8 @@ msgstr "Who is in Tartu?"
 msgid "work"
 msgstr "work"
 
-msgid "Write each sentence in Estonian. Most towns, countries and buildings take <0>-s</0>. A surface takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
-msgstr "Write each sentence in Estonian. Most towns, countries and buildings take <0>-s</0>. A surface takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
+msgid "Write each sentence in Estonian. Most towns, countries and buildings take <0>-s</0>. A surface usually takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
+msgstr "Write each sentence in Estonian. Most towns, countries and buildings take <0>-s</0>. A surface usually takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
 
 msgid "Write it in Estonian"
 msgstr "Write it in Estonian"

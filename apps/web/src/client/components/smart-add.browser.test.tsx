@@ -165,3 +165,21 @@ test("Stop in the beat after the scan finishes stays on the lesson", async () =>
   await expect.element(findTerms()).toBeVisible();
   expect(page.getByRole("button", { name: "Stop" }).query()).toBeNull();
 });
+
+test("Enter adds the link, but not while an input method is confirming a word", async () => {
+  await open();
+  await userEvent.click(page.getByRole("button", { name: /^Link/ }));
+  const field = page.getByRole("textbox", { name: "Article link" });
+  await userEvent.fill(field, "https://news.example.org/a");
+  const enter = (init: KeyboardEventInit) =>
+    field
+      .element()
+      .dispatchEvent(
+        new KeyboardEvent("keydown", { key: "Enter", bubbles: true, cancelable: true, ...init }),
+      );
+  enter({ isComposing: true });
+  await expect.element(field).toBeVisible();
+  enter({});
+  await expect.element(page.getByText("news.example.org/a")).toBeVisible();
+  expect(field.query()).toBeNull();
+});

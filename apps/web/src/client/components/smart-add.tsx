@@ -29,6 +29,7 @@ import {
   refusalCode,
 } from "../lib/api";
 import { refreshAfterCardWrite } from "../lib/card-writes";
+import { composing } from "../lib/composing";
 import { useDesktop } from "../lib/device";
 import { smartAddFlow } from "../lib/smart-add-flow";
 import { Button, IconButton } from "./button";
@@ -678,7 +679,7 @@ function InputStep(props: {
                 setLinkError(undefined);
               }}
               onKeyDown={(e) => {
-                if (e.key === "Enter") {
+                if (e.key === "Enter" && !composing(e)) {
                   e.preventDefault();
                   save();
                 }

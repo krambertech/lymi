@@ -238,6 +238,9 @@ msgstr "Бесплатный урок эстонского о четырёх п�
 msgid "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о meeldima, «нравиться»: mulle meeldib и другие лица, meeldivad, когда нравится несколько вещей, meeldib с глаголом, ei meeldi, вопросы с kas и kellele и чувства, например mul on külm. Каждое предложение озвучено."
 
+msgid "A free Estonian lesson on personal pronouns in their cases: minuga and sinuta on the genitive, the short forms mulle, mul and mult, the partitive mind, sind, teda, and telling minu, mul and mind apart. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о склонении личных местоимений: minuga и sinuta от родительного падежа, короткие формы mulle, mul и mult, партитив mind, sind, teda и как не путать minu, mul и mind. Каждое предложение озвучено."
+
 msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о личных местоимениях: mina, sina, tema и другие в полной и краткой форме, и глагол olema, «быть». Каждое предложение озвучено."
 
@@ -262,11 +265,14 @@ msgstr "Бесплатный урок об основе эстонских су�
 msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud."
 msgstr "Бесплатный урок об эстонских числах: от нуля до десяти, -teist и -kümmend, сотни и тысячи, а также числа в ценах, возрасте и номерах телефонов. Каждое число озвучено."
 
+msgid "A free lesson on Estonian ordinal numbers and dates: esimene, teine, kolmas and how the rest are built from the genitive, the months, asking mis kuupäev täna on?, writing 21. november, and -l for on a date or a floor (viiendal mail, kolmandal korrusel). Every sentence is read aloud."
+msgstr "Бесплатный урок о порядковых числительных и датах в эстонском языке: esimene, teine, kolmas и как остальные образуются от родительного падежа, названия месяцев, вопрос mis kuupäev täna on?, запись 21. november и -l, чтобы сказать «какого числа» или «на каком этаже» (viiendal mail, kolmandal korrusel). Каждое предложение озвучено."
+
 msgid "A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and three everyday questions to learn whole. Every sentence is read aloud."
 msgstr "Бесплатный урок о вопросах в эстонском: kas для вопросов «да или нет», ответы jah и ei, вопросительные слова kes, mis, kus, millal, miks, kuidas и kui palju и три повседневных вопроса, которые учат целиком. Каждое предложение озвучено."
 
-msgid "A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad on ten everyday verbs. Every sentence is read aloud."
-msgstr "Бесплатный урок об эстонских глаголах в настоящем времени: форма на -ma, основа и шесть окончаний -n, -d, -b, -me, -te и -vad на десяти повседневных глаголах. Каждое предложение озвучено."
+msgid "A free lesson on Estonian verbs in the present tense: the -ma infinitive, the stem, and the six endings -n, -d, -b, -me, -te and -vad on ten everyday verbs. Every sentence is read aloud."
+msgstr "Бесплатный урок об эстонских глаголах в настоящем времени: инфинитив на -ma, основа и шесть окончаний -n, -d, -b, -me, -te и -vad на десяти повседневных глаголах. Каждое предложение озвучено."
 
 msgid "A free lesson on Estonian’s three “inside” cases, the inessive, illative and elative: kus, kuhu and kust, -s for in, -sse for into (Tartusse) and -st for out of (koolist), the short forms kooli, poodi and koju, and how to say where you’re from. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о трёх «внутренних» местных падежах — инессиве, иллативе и элативе: kus, kuhu и kust, -s — где (Tartus), -sse — куда (Tartusse), -st — откуда (koolist), короткие формы kooli, poodi и koju, и как сказать, откуда ты. Каждое предложение озвучено."
@@ -307,11 +313,11 @@ msgstr "Бесплатный урок о партитиве множествен
 msgid "A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb with a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
 msgstr "Бесплатный урок о множественном числе в эстонском языке: вторая форма плюс -d (kassid, raamatud), изменение основы, которое в нём сохраняется (poed, toad, mehed), глагол с существительным во множественном числе (lapsed loevad) и прилагательные во множественном числе (suured majad). Каждое предложение озвучено."
 
-msgid "A free lesson on the three forms of an Estonian verb, lugema, lugeda and loen: how the -da form is made with -da, -ta, -la, -na or -a, including teha, näha, süüa and juua, and the -ge and -ke commands built on it. Every word and sentence is read aloud."
-msgstr "Бесплатный урок о трёх основных формах эстонского глагола — lugema, lugeda, loen: как образуется форма на -da (-da, -ta, -la, -na или -a), в том числе teha, näha, süüa и juua, и команды на -ge и -ke, которые строятся на ней. Каждое слово и предложение озвучено."
+msgid "A free lesson on the three forms of an Estonian verb, lugema, lugeda and loen: how the -da infinitive is made with -da, -ta, -la, -na or -a, including teha, näha, süüa and juua, and the -ge and -ke commands built on it. Every word and sentence is read aloud."
+msgstr "Бесплатный урок о трёх основных формах эстонского глагола — lugema, lugeda, loen: как образуется инфинитив на -da (-da, -ta, -la, -na или -a), в том числе teha, näha, süüa и juua, и команды на -ge и -ke, которые строятся на нём. Каждое слово и предложение озвучено."
 
-msgid "A free lesson on which Estonian verbs take the -da form after them and which take the -ma form: tahan lugeda but pean lugema, with võin, saan, oskan, tohin, proovin, armastan and mulle meeldib on one side and hakkan, lähen, tule and jään on the other. Every sentence is read aloud."
-msgstr "Бесплатный урок о том, после каких эстонских глаголов идёт форма на -da, а после каких — на -ma: tahan lugeda, но pean lugema. Форму на -da требуют ещё võin, saan, oskan, tohin, proovin, armastan и mulle meeldib, форму на -ma — hakkan, lähen, tule и jään. Каждое предложение озвучено."
+msgid "A free lesson on which Estonian verbs take the -da infinitive after them and which take the -ma infinitive: tahan lugeda but pean lugema, with võin, saan, oskan, tohin, proovin, armastan and mulle meeldib on one side and hakkan, lähen, tule and jään on the other. Every sentence is read aloud."
+msgstr "Бесплатный урок о том, после каких эстонских глаголов идёт инфинитив на -da, а после каких — на -ma: tahan lugeda, но pean lugema. Инфинитив на -da требуют ещё võin, saan, oskan, tohin, proovin, armastan и mulle meeldib, инфинитив на -ma — hakkan, lähen, tule и jään. Каждое предложение озвучено."
 
 msgid "a friend"
 msgstr "друг"
@@ -663,11 +669,17 @@ msgstr "Основа слова в эстонском"
 msgid "Estonian numbers"
 msgstr "Числа на эстонском"
 
+msgid "Estonian ordinal numbers and dates"
+msgstr "Порядковые числительные и даты в эстонском языке"
+
 msgid "Estonian past tense"
 msgstr "Прошедшее время в эстонском языке"
 
 msgid "Estonian personal pronouns and “to be”"
 msgstr "Эстонские личные местоимения и «быть»"
+
+msgid "Estonian personal pronouns in every case"
+msgstr "Склонение личных местоимений в эстонском"
 
 msgid "Estonian plural"
 msgstr "Множественное число в эстонском языке"
@@ -1920,8 +1932,8 @@ msgstr "Это «доброе утро», а Мари уходит."
 msgid "The -des and -mata forms"
 msgstr "Формы на -des и -mata"
 
-msgid "the -ma form"
-msgstr "форма на -ma"
+msgid "the -ma infinitive"
+msgstr "инфинитив на -ma"
 
 msgid "the -nud form"
 msgstr "форма на -nud"
@@ -2160,8 +2172,8 @@ msgstr "идти"
 msgid "to read"
 msgstr "читать"
 
-msgid "to read, da-form"
-msgstr "читать, форма на -da"
+msgid "to read, the -da infinitive"
+msgstr "читать, инфинитив на -da"
 
 msgid "to wait"
 msgstr "ждать"

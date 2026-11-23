@@ -785,7 +785,7 @@ export function RaamatutVoiRaamatuLesson() {
   const pastNo = LESSONS.find((lesson) => lesson.et === "Ma ei läinud")?.n;
   const gradation = lessonBySlug("jalg-jala")?.n;
   const pluralPartitive = lessonBySlug("raamatuid-maju")?.n;
-  const pronouns = LESSONS.find((lesson) => lesson.et === "Mind, mulle, minuga")?.n;
+  const pronouns = lessonBySlug("asesonad")?.n;
 
   const rowsOf = (texts: readonly string[]): RowItem[] =>
     texts.map((text) => ({ main: text, sub: means(text, i18n), src: src(text) }));

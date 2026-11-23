@@ -443,8 +443,8 @@ export function OlevikLesson() {
       words={PRESENT_VERBS.map((each) => each.verb)}
       recap={[
         <Trans key="1">
-          A dictionary lists a verb in its -ma form: <b lang="et">elama</b>, to live. The endings go
-          on its stem, <b lang="et">ela-</b>.
+          A dictionary lists a verb in its -ma infinitive: <b lang="et">elama</b>, to live. The
+          endings go on its stem, <b lang="et">ela-</b>.
         </Trans>,
         <Trans key="2">
           Each pronoun has its ending:{" "}
@@ -506,9 +506,9 @@ export function OlevikLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    A dictionary lists a verb in its -ma form: <Word w="elama" />, to live. Take off
-                    -ma and you have the stem, <b lang="et">ela-</b>. The ending goes on the stem:{" "}
-                    <Word w="elan" />, I live.
+                    A dictionary lists a verb in its -ma infinitive: <Word w="elama" />, to live.
+                    Take off -ma and you have the stem, <b lang="et">ela-</b>. The ending goes on
+                    the stem: <Word w="elan" />, I live.
                   </Trans>
                 </p>
                 <p>

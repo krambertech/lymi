@@ -547,7 +547,7 @@ export function KusimusedLesson() {
         options: [
           { id: "tallinn", label: t`In Tallinn` },
           { id: "tartu", label: t`In Tartu` },
-          { id: "parnu", label: t`In Pärnu` },
+          { id: "narva", label: t`In Narva` },
         ],
         answer: "tartu",
         line: 8,

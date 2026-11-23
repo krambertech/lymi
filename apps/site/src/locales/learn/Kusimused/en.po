@@ -241,8 +241,8 @@ msgstr "I’m from Ukraine."
 msgid "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
 msgstr "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
 
-msgid "In Pärnu"
-msgstr "In Pärnu"
+msgid "In Narva"
+msgstr "In Narva"
 
 msgid "in Tallinn"
 msgstr "in Tallinn"

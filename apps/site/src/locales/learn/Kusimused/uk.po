@@ -152,7 +152,7 @@ msgid "Does he speak Estonian?"
 msgstr "Він говорить естонською?"
 
 msgid "Each round gives an answer. Write the question it answers: start with the question word, and when the answer says <0>ma</0>, ask with <1>sa</1>."
-msgstr "У кожному раунді є відповідь. Напиши питання до неї: почни з питального слова, а якщо у відповіді <0>ma</0>, питай через <1>sa</1>."
+msgstr "У кожному раунді є відповідь. Напиши питання до неї: почни з питального слова, а якщо у відповіді <0>ma</0>, у питанні став <1>sa</1>."
 
 msgid "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
 msgstr "Українською так само: «Ти живеш у Таллінні» стає «Чи ти живеш у Таллінні?». Kas працює як «чи», а всі інші слова лишаються на місці. Спробуй на п’яти реченнях."
@@ -241,8 +241,8 @@ msgstr "Я з України."
 msgid "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
 msgstr "У питанні з kas голос наприкінці знижується, як у звичайному реченні: kas уже каже, що це питання. У розмові замість нього ще почуєш <0/> у кінці, щось на зразок «так?»: <1/>"
 
-msgid "In Pärnu"
-msgstr "У Пярну"
+msgid "In Narva"
+msgstr "У Нарві"
 
 msgid "in Tallinn"
 msgstr "у Таллінні"
@@ -369,7 +369,7 @@ msgid "Short for sinu."
 msgstr "Скорочено від sinu."
 
 msgid "Start with <et>{word}</et>; when the answer says <et>ma</et>, ask with <et>sa</et>."
-msgstr "Почни з <et>{word}</et>; якщо у відповіді <et>ma</et>, питай через <et>sa</et>."
+msgstr "Почни з <et>{word}</et>; якщо у відповіді <et>ma</et>, у питанні став <et>sa</et>."
 
 msgid "Statement"
 msgstr "Твердження"

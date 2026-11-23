@@ -427,6 +427,7 @@ export const KUSIMUSED_ASKED = [
       "Kus elab Mari?",
       "Kus ta elab?",
       "Kus tema elab?",
+      "Kes Tartus elab?",
     ],
   },
   {
@@ -502,6 +503,10 @@ export const KUSIMUSED_ASKED = [
       "Kui palju nad kohvi joovad?",
       "Kui palju nad joovad kohvi?",
       "Kui palju kohvi nemad joovad?",
+      "Mis nad joovad?",
+      "Mida nad joovad?",
+      "Mis nemad joovad?",
+      "Mida nemad joovad?",
     ],
   },
 ] as const;
@@ -519,8 +524,16 @@ export const KUSIMUSED_TRANSLATED = [
       "Kus töötate?",
     ],
   },
-  { kind: "kas", answers: ["Kas ta räägib eesti keelt?", "Kas tema räägib eesti keelt?"] },
-  { kind: "word", answers: ["Kes räägib eesti keelt?"] },
+  {
+    kind: "kas",
+    answers: [
+      "Kas ta räägib eesti keelt?",
+      "Kas tema räägib eesti keelt?",
+      "Kas ta eesti keelt räägib?",
+      "Kas tema eesti keelt räägib?",
+    ],
+  },
+  { kind: "word", answers: ["Kes räägib eesti keelt?", "Kes eesti keelt räägib?"] },
   {
     kind: "kas",
     answers: [
@@ -530,10 +543,15 @@ export const KUSIMUSED_TRANSLATED = [
       "Kas teie töötate kodus?",
       "Kas töötad kodus?",
       "Kas töötate kodus?",
+      "Kas sa kodus töötad?",
+      "Kas te kodus töötate?",
     ],
   },
   { kind: "word", answers: ["Kus ta on?", "Kus tema on?"] },
-  { kind: "kas", answers: ["Kas nad joovad kohvi?", "Kas nemad joovad kohvi?"] },
+  {
+    kind: "kas",
+    answers: ["Kas nad joovad kohvi?", "Kas nemad joovad kohvi?", "Kas nad kohvi joovad?"],
+  },
   {
     kind: "word",
     answers: [

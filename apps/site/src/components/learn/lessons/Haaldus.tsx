@@ -631,7 +631,7 @@ export function HaaldusLesson() {
                 <p>
                   <Trans>
                     Write the whole word this time. A long sound is written with two letters:{" "}
-                    <Word w="sada" />, <Word w="saada" />.
+                    <Word w="kas" />, <Word w="kass" />.
                   </Trans>
                 </p>
               </Prose>
@@ -709,8 +709,7 @@ export function HaaldusLesson() {
                   <Trans>
                     Jaan’s mother asks him for something. Three words are new: the name{" "}
                     <Word w="Jaan" />, <Word w="ja" />, “and”, and <Word w="jah" />, “yes”. Listen
-                    for the vowels and the long sounds: they tell <Word w="korv" /> from{" "}
-                    <Word w="kõrv" /> and <Word w="kooli" /> from <Word w="koli" />.
+                    for the vowels and the long sounds, as in the pairs above.
                   </Trans>
                 </p>
               </Prose>

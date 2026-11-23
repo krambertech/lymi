@@ -181,8 +181,8 @@ msgstr "Jaan says he will."
 msgid "Jaan, a man’s name"
 msgstr "Jaan, a man’s name"
 
-msgid "Jaan’s mother asks him for something. Three words are new: the name <0/>, <1/>, “and”, and <2/>, “yes”. Listen for the vowels and the long sounds: they tell <3/> from <4/> and <5/> from <6/>."
-msgstr "Jaan’s mother asks him for something. Three words are new: the name <0/>, <1/>, “and”, and <2/>, “yes”. Listen for the vowels and the long sounds: they tell <3/> from <4/> and <5/> from <6/>."
+msgid "Jaan’s mother asks him for something. Three words are new: the name <0/>, <1/>, “and”, and <2/>, “yes”. Listen for the vowels and the long sounds, as in the pairs above."
+msgstr "Jaan’s mother asks him for something. Three words are new: the name <0/>, <1/>, “and”, and <2/>, “yes”. Listen for the vowels and the long sounds, as in the pairs above."
 
 msgid "junk"
 msgstr "junk"

@@ -181,8 +181,8 @@ msgstr "Яан каже, що віднесе."
 msgid "Jaan, a man’s name"
 msgstr "Яан, чоловіче ім’я"
 
-msgid "Jaan’s mother asks him for something. Three words are new: the name <0/>, <1/>, “and”, and <2/>, “yes”. Listen for the vowels and the long sounds: they tell <3/> from <4/> and <5/> from <6/>."
-msgstr "Мама про щось просить Яана. Нових слів три: ім’я <0/>, <1/>, «і», та <2/>, «так». Слухай голосні й довгі звуки: саме вони відрізняють <3/> від <4/> і <5/> від <6/>."
+msgid "Jaan’s mother asks him for something. Three words are new: the name <0/>, <1/>, “and”, and <2/>, “yes”. Listen for the vowels and the long sounds, as in the pairs above."
+msgstr "Мама про щось просить Яана. Нових слів три: ім’я <0/>, <1/>, «і», та <2/>, «так». Слухай голосні й довгі звуки, як у парах вище."
 
 msgid "junk"
 msgstr "мотлох"

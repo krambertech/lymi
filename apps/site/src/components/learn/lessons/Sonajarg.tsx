@@ -257,8 +257,8 @@ function useContent() {
             line: "Ei, laupäeval ei ma tule.",
             why: (
               <Trans>
-                <span lang="et">Ei</span> goes right before the verb, so the person comes before{" "}
-                <span lang="et">ei</span>: <span lang="et">laupäeval ma ei tule</span>.
+                <span lang="et">Ei</span> goes right before the verb, so the person can’t stand
+                between them: <span lang="et">laupäeval ma ei tule</span>.
               </Trans>
             ),
           },

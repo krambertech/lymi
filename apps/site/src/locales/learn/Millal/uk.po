@@ -119,7 +119,7 @@ msgid "All six sentences, every time word in its form."
 msgstr "Усі шість речень, кожне слово часу у своїй формі."
 
 msgid "All six: in, ago and after, told apart by where pärast stands and by tagasi."
-msgstr "Усі шість: «через», «тому» і «після» — розрізнено за місцем pärast і за tagasi."
+msgstr "Усі шість: «через», «тому» і «після» розрізняє місце pärast і tagasi."
 
 msgid "at night"
 msgstr "уночі"
@@ -169,8 +169,8 @@ msgstr "Виправ речення"
 msgid "For a month"
 msgstr "На місяць"
 
-msgid "For something that happens again and again, use <0>-ti</0>: <1/>, in the mornings; <2/>, in the evenings. Days take <3>-iti</3>: <4>laupäeviti</4>, on Saturdays. Tap a line to hear it."
-msgstr "Для того, що повторюється, є <0>-ti</0>: <1/> — «щоранку», <2/> — «щовечора». Дні тижня мають <3>-iti</3>: <4>laupäeviti</4> — «щосуботи». Торкнися рядка, щоб послухати."
+msgid "For something that happens again and again, use <0>-ti</0>: <1/>, in the mornings; <2/>, in the evenings. Days ending in <3>päev</3> take <4>-iti</4>: <5>laupäeviti</5>, on Saturdays. Tap a line to hear it."
+msgstr "Для того, що повторюється, є <0>-ti</0>: <1/> — «щоранку», <2/> — «щовечора». Дні на <3>päev</3> мають <4>-iti</4>: <5>laupäeviti</5> — «щосуботи». Торкнися рядка, щоб послухати."
 
 msgid "For two days"
 msgstr "На два дні"
@@ -473,7 +473,7 @@ msgid "On a date it is <0>-l</0> again, as in lesson {ordinals}: <1>viiendal mai
 msgstr "А з числом знову <0>-l</0>, як в уроці {ordinals}: <1>viiendal mail</1> — «п’ятого травня». Торкнися рядка, щоб послухати."
 
 msgid "On a day: <0>-l</0>."
-msgstr "У який день: <0>-l</0>."
+msgstr "У день тижня: <0>-l</0>."
 
 msgid "on Monday"
 msgstr "у понеділок"

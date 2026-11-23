@@ -2264,7 +2264,11 @@ export const WHEN_TRANSLATE = [
   },
   {
     id: "kaks-paeva-tagasi",
-    answers: ["Jaan oli siin kaks päeva tagasi.", "Kaks päeva tagasi oli Jaan siin."],
+    answers: [
+      "Jaan oli siin kaks päeva tagasi.",
+      "Kaks päeva tagasi oli Jaan siin.",
+      "Jaan oli kaks päeva tagasi siin.",
+    ],
   },
   {
     id: "parast-tood",
@@ -2275,7 +2279,10 @@ export const WHEN_TRANSLATE = [
       "Pärast tööd lähen koju.",
     ],
   },
-  { id: "esmaspaevast", answers: ["Pood on avatud esmaspäevast reedeni."] },
+  {
+    id: "esmaspaevast",
+    answers: ["Pood on avatud esmaspäevast reedeni.", "Pood on esmaspäevast reedeni avatud."],
+  },
 ] as const;
 
 export const WHEN_FIX = [
@@ -2487,7 +2494,7 @@ export const ORDER_MEANING = [
     id: "ohtul-tahan",
     answers: ["Õhtul tahan ma raamatut lugeda.", "Ma tahan õhtul raamatut lugeda."],
   },
-  { id: "homme-ei-tule", answers: ["Homme me ei tule.", "Me ei tule homme."] },
+  { id: "homme-ei-tule", answers: ["Homme me ei tule.", "Me ei tule homme.", "Homme ei tule me."] },
   {
     id: "ohtul-ei-ole",
     answers: ["Õhtul ta ei ole kodus.", "Ta ei ole õhtul kodus.", "Õhtul ei ole ta kodus."],

@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
-msgid "<0>Ei</0> goes right before the verb, so the person comes before <1>ei</1>: <2>laupäeval ma ei tule</2>."
-msgstr "<0>Ei</0> goes right before the verb, so the person comes before <1>ei</1>: <2>laupäeval ma ei tule</2>."
+msgid "<0>Ei</0> goes right before the verb, so the person can’t stand between them: <1>laupäeval ma ei tule</1>."
+msgstr "<0>Ei</0> goes right before the verb, so the person can’t stand between them: <1>laupäeval ma ei tule</1>."
 
 msgid "<0>Ei</0> goes right before the verb."
 msgstr "<0>Ei</0> goes right before the verb."

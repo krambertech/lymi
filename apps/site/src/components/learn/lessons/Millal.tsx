@@ -623,8 +623,8 @@ export function MillalLesson() {
                   <Trans>
                     For something that happens again and again, use <span lang="et">-ti</span>:{" "}
                     <Word w="hommikuti" />, in the mornings; <Word w="õhtuti" />, in the evenings.
-                    Days take <span lang="et">-iti</span>: <span lang="et">laupäeviti</span>, on
-                    Saturdays. Tap a line to hear it.
+                    Days ending in <span lang="et">päev</span> take <span lang="et">-iti</span>:{" "}
+                    <span lang="et">laupäeviti</span>, on Saturdays. Tap a line to hear it.
                   </Trans>
                 </p>
               </Prose>

@@ -235,7 +235,7 @@ export const DRILLS: DrillBank = {
       rule: "no",
       from: "Ma ei tööta täna.",
       cue: START,
-      answers: ["Täna ma ei tööta."],
+      answers: ["Täna ma ei tööta.", "Täna ei tööta ma."],
       say: "Täna ma ei tööta.",
       explain: NO,
     },

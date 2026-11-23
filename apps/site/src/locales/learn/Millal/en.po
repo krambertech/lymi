@@ -169,8 +169,8 @@ msgstr "Fix the sentence"
 msgid "For a month"
 msgstr "For a month"
 
-msgid "For something that happens again and again, use <0>-ti</0>: <1/>, in the mornings; <2/>, in the evenings. Days take <3>-iti</3>: <4>laupäeviti</4>, on Saturdays. Tap a line to hear it."
-msgstr "For something that happens again and again, use <0>-ti</0>: <1/>, in the mornings; <2/>, in the evenings. Days take <3>-iti</3>: <4>laupäeviti</4>, on Saturdays. Tap a line to hear it."
+msgid "For something that happens again and again, use <0>-ti</0>: <1/>, in the mornings; <2/>, in the evenings. Days ending in <3>päev</3> take <4>-iti</4>: <5>laupäeviti</5>, on Saturdays. Tap a line to hear it."
+msgstr "For something that happens again and again, use <0>-ti</0>: <1/>, in the mornings; <2/>, in the evenings. Days ending in <3>päev</3> take <4>-iti</4>: <5>laupäeviti</5>, on Saturdays. Tap a line to hear it."
 
 msgid "For two days"
 msgstr "For two days"

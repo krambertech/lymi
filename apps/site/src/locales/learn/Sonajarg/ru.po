@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
-msgid "<0>Ei</0> goes right before the verb, so the person comes before <1>ei</1>: <2>laupäeval ma ei tule</2>."
-msgstr "<0>Ei</0> стоит прямо перед глаголом, так что подлежащее идёт перед <1>ei</1>: <2>laupäeval ma ei tule</2>."
+msgid "<0>Ei</0> goes right before the verb, so the person can’t stand between them: <1>laupäeval ma ei tule</1>."
+msgstr "<0>Ei</0> стоит прямо перед глаголом, так что подлежащее не может встать между ними: <1>laupäeval ma ei tule</1>."
 
 msgid "<0>Ei</0> goes right before the verb."
 msgstr "<0>Ei</0> стоит прямо перед глаголом."
@@ -89,7 +89,7 @@ msgid "He works"
 msgstr "Он работает"
 
 msgid "I have to go to work tomorrow."
-msgstr "Завтра мне надо идти на работу."
+msgstr "Мне нужно завтра идти на работу."
 
 msgid "I’m going to Tartu today."
 msgstr "Я сегодня еду в Тарту."
@@ -104,10 +104,10 @@ msgid "In a question, the short pronoun comes right after the question word: <et
 msgstr "В вопросе короткое местоимение стоит сразу после вопросительного слова: <et>Kus sa elad?</et>"
 
 msgid "In a statement the verb usually comes second. Start with a time or a place, and the person follows the verb: <0>Täna lähen ma Tartusse.</0>"
-msgstr "В утвердительном предложении глагол обычно стоит вторым. Начни со времени или места — и подлежащее пойдёт за глаголом: <0>Täna lähen ma Tartusse.</0>"
+msgstr "В утверждении глагол обычно стоит вторым. Начни со времени или места — и подлежащее пойдёт за глаголом: <0>Täna lähen ma Tartusse.</0>"
 
 msgid "In an Estonian statement the verb usually comes second. Start with a time or a place, and the person moves after the verb: <0>Täna lähen ma Tartusse</0>, today I’m going to Tartu."
-msgstr "В эстонском утвердительном предложении глагол обычно стоит вторым. Начни со времени или места — и подлежащее перейдёт за глагол: <0>Täna lähen ma Tartusse</0> — «сегодня я еду в Тарту»."
+msgstr "В эстонском утверждении глагол обычно стоит вторым. Начни со времени или места — и подлежащее перейдёт за глагол: <0>Täna lähen ma Tartusse</0> — «сегодня я еду в Тарту»."
 
 msgid "In Tartu lives Kati."
 msgstr "В Тарту живёт Кати."
@@ -119,7 +119,7 @@ msgid "In the evening I want to read a book."
 msgstr "Вечером я хочу почитать книгу."
 
 msgid "In the evening we’re at home."
-msgstr "Мы дома вечером."
+msgstr "Вечером мы дома."
 
 msgid "In the morning Mari drinks coffee."
 msgstr "Утром Мари пьёт кофе."
@@ -224,7 +224,7 @@ msgid "Start with the time word"
 msgstr "Начни со слова, которое называет время"
 
 msgid "Switch between the two starts above once more, then try again."
-msgstr "Ещё раз попереключай выше, с чего начинается предложение, и попробуй снова."
+msgstr "Ещё раз переключи начало предложения выше и попробуй снова."
 
 msgid "Talk: plans"
 msgstr "Разговор: планы"

@@ -1230,6 +1230,8 @@ export const TUTVUMINE_ASKED = [
       "Teie räägite eesti keelt või?",
       "Kas sina eesti keelt räägid?",
       "Kas teie eesti keelt räägite?",
+      "Kas eesti keelt räägid?",
+      "Kas eesti keelt räägite?",
     ],
   },
   {
@@ -1250,6 +1252,8 @@ export const TUTVUMINE_ASKED = [
       "Teie olete õpetaja või?",
       "Kas sina õpetaja oled?",
       "Kas teie õpetaja olete?",
+      "Kas õpetaja oled?",
+      "Kas õpetaja olete?",
     ],
   },
   {
@@ -1319,6 +1323,8 @@ export const TUTVUMINE_TRANSLATED = [
       "Teie elate Tallinnas või?",
       "Kas sina Tallinnas elad?",
       "Kas teie Tallinnas elate?",
+      "Kas Tallinnas elad?",
+      "Kas Tallinnas elate?",
     ],
   },
   {
@@ -1391,7 +1397,7 @@ export const KELL_DRILLED: readonly ClockTime[] = [
   { hour: 11, minute: 15 },
   { hour: 7, minute: 15 },
   { hour: 9, minute: 45 },
-  { hour: 1, minute: 5 },
+  { hour: 3, minute: 5 },
   { hour: 6, minute: 20 },
   { hour: 10, minute: 40 },
   { hour: 11, minute: 55 },

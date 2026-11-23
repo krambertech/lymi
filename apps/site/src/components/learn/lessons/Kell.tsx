@@ -476,8 +476,16 @@ const otherHour = (hour: number, by: number) => ((hour - 1 + by + 12) % 12) + 1;
 
 export const confusedWith = ({ hour, minute }: ClockTime): ClockTime[] =>
   minute < 30
-    ? [at(otherHour(hour, -1), (60 - minute) as Minute), at(otherHour(hour, 1), minute)]
-    : [at(otherHour(hour, 1), (60 - minute) as Minute), at(hour, (60 - minute) as Minute)];
+    ? [
+        at(otherHour(hour, -1), (60 - minute) as Minute),
+        at(otherHour(hour, -1), minute),
+        at(hour, (60 - minute) as Minute),
+      ]
+    : [
+        at(otherHour(hour, 1), (60 - minute) as Minute),
+        at(otherHour(hour, 1), minute),
+        at(hour, (60 - minute) as Minute),
+      ];
 
 type PastToItem = ChoiceItem & { pair: readonly [string, string] };
 
@@ -608,18 +616,18 @@ export function KellLesson() {
   const pastToItems = useMemo<PastToItem[]>(
     () =>
       PAST_OR_TO.map((time, i) => {
-        const three = [time, ...confusedWith(time)].map((each) => ({
+        const four = [time, ...confusedWith(time)].map((each) => ({
           id: timeClip(each),
           label: timeDigits(each),
         }));
-        const turn = i % 3;
+        const turn = i % 4;
         const digits = timeDigits(time);
         const words = timeWords(time);
         return {
           src: timeSrc(time),
           answer: timeClip(time),
           pair: [time.minute < 30 ? "labi" : "parast", timeClip(time)] as const,
-          options: [...three.slice(turn), ...three.slice(0, turn)],
+          options: [...four.slice(turn), ...four.slice(0, turn)],
           explain: (
             <Trans>
               It’s {digits}: <b lang="et">{words}</b>.
@@ -648,9 +656,9 @@ export function KellLesson() {
         id: "now",
         ask: t`What time is it now?`,
         options: [
-          { id: "1230", label: "12:30" },
           { id: "130", label: "1:30" },
           { id: "230", label: "2:30" },
+          { id: "200", label: "2:00" },
         ],
         answer: "130",
         line: 1,
@@ -660,9 +668,9 @@ export function KellLesson() {
         id: "home",
         ask: t`When is Mari at home?`,
         options: [
+          { id: "230", label: "2:30" },
           { id: "200", label: "2:00" },
           { id: "300", label: "3:00" },
-          { id: "330", label: "3:30" },
         ],
         answer: "300",
         line: 3,
@@ -671,10 +679,10 @@ export function KellLesson() {
         id: "coffee",
         ask: t`When do they drink coffee?`,
         options: [
-          { id: "345", label: "3:45" },
-          { id: "415", label: "4:15" },
           { id: "515", label: "5:15" },
+          { id: "445", label: "4:45" },
           { id: "530", label: "5:30" },
+          { id: "415", label: "4:15" },
         ],
         answer: "415",
         line: 4,
@@ -683,10 +691,10 @@ export function KellLesson() {
         id: "bus",
         ask: t`When do they wait for the bus?`,
         options: [
-          { id: "445", label: "4:45" },
-          { id: "615", label: "6:15" },
+          { id: "515", label: "5:15" },
           { id: "545", label: "5:45" },
-          { id: "630", label: "6:30" },
+          { id: "645", label: "6:45" },
+          { id: "530", label: "5:30" },
         ],
         answer: "545",
         line: 5,

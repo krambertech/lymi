@@ -11314,11 +11314,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "kell/kell-on-viis-minutit-u2ks-la2bi": {
-    "text": "Kell on viis minutit üks läbi.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "kell/kell-on-kaksku2mmend-minutit-kuus-la2bi": {
     "text": "Kell on kakskümmend minutit kuus läbi.",
     "model": "eleven_v4",
@@ -11505,6 +11500,11 @@
   },
   "kell/kell-on-veerand-kaksteist": {
     "text": "Kell on veerand kaksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-viis-minutit-kolm-la2bi": {
+    "text": "Kell on viis minutit kolm läbi.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

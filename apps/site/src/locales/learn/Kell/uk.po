@@ -186,7 +186,7 @@ msgid "Mari is at work now."
 msgstr "Зараз Марі на роботі."
 
 msgid "Mari leaves Jaan a message about her afternoon. Without <0>on</0>, <1/> says when: at six. Listen for each time."
-msgstr "Марі залишає Яанові повідомлення про свій день. Без <0>on</0> <1/> означає «коли»: о шостій. Слухай кожен час."
+msgstr "Марі залишає Яанові повідомлення про свій день. Без <0>on</0> <1/> каже, коли саме: о шостій. Слухай кожен час."
 
 msgid "Minute hand"
 msgstr "Хвилинна стрілка"

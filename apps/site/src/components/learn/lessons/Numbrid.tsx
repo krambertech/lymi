@@ -313,7 +313,7 @@ export function NumbridLesson() {
         options: [
           { id: "22", label: "22" },
           { id: "32", label: "32" },
-          { id: "42", label: "42" },
+          { id: "23", label: "23" },
         ],
         answer: "32",
         line: 1,
@@ -322,8 +322,8 @@ export function NumbridLesson() {
         id: "flat",
         ask: t`What is his flat number?`,
         options: [
-          { id: "8", label: "8" },
           { id: "80", label: "80" },
+          { id: "19", label: "19" },
           { id: "18", label: "18" },
         ],
         answer: "18",
@@ -335,7 +335,7 @@ export function NumbridLesson() {
         options: [
           { id: "56209", label: "5 6 2 0 9" },
           { id: "52609", label: "5 2 6 0 9" },
-          { id: "56290", label: "5 6 2 9 0" },
+          { id: "56208", label: "5 6 2 0 8" },
         ],
         answer: "56209",
         line: 3,
@@ -352,7 +352,7 @@ export function NumbridLesson() {
         ask: t`What does the coffee cost?`,
         options: [
           { id: "250", label: t`€2.50` },
-          { id: "215", label: t`€2.15` },
+          { id: "650", label: t`€6.50` },
           { id: "1250", label: t`€12.50` },
         ],
         answer: "250",

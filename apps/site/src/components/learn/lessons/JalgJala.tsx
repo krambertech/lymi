@@ -14,6 +14,7 @@ import {
   GRADATION_MATCH,
   GRADATION_SORT,
   GRADATION_VERBS,
+  GRADATION_ANSWERS,
 } from "../../../lib/learn/clips";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Panel } from "../Explore";
@@ -168,7 +169,7 @@ function CaseTable() {
         rows={rows}
         empty={{
           title: t`Tap a form`,
-          tip: t`The first two columns are strong. The genitive and the forms built on it are weak.`,
+          tip: t`Usually the first two columns are strong, and the genitive and the forms built on it are weak.`,
         }}
       />
     </Panel>
@@ -317,11 +318,13 @@ function useContent() {
         pair: [item.word, item.said] as const,
         explain:
           item.cue === "many" ? (
-            <Trans>The plural is built on the genitive, so it takes the weak form.</Trans>
+            <Trans>
+              The plural is built on the genitive, so it keeps the genitive’s consonant.
+            </Trans>
           ) : (
             <Trans>
-              <b lang="et">-s</b> and <b lang="et">-l</b> go on the genitive, so they take the weak
-              form.
+              <b lang="et">-s</b> and <b lang="et">-l</b> go on the genitive, so they keep the
+              genitive’s consonant.
             </Trans>
           ),
       }),
@@ -333,7 +336,7 @@ function useContent() {
         id: "in-room",
         prompt: t`Kati is in the room.`,
         src: src("Kati on toas."),
-        answers: ["Kati on toas."],
+        answers: GRADATION_ANSWERS["Kati on toas."],
         pair: ["in", "in-room"],
       },
       {
@@ -341,7 +344,7 @@ function useContent() {
         id: "at-bank",
         prompt: t`Jaan is at the bank.`,
         src: src("Jaan on pangas."),
-        answers: ["Jaan on pangas."],
+        answers: GRADATION_ANSWERS["Jaan on pangas."],
         pair: ["in", "at-bank"],
       },
       {
@@ -349,7 +352,7 @@ function useContent() {
         id: "in-park",
         prompt: t`The children are in the park.`,
         src: src("Lapsed on pargis."),
-        answers: ["Lapsed on pargis."],
+        answers: GRADATION_ANSWERS["Lapsed on pargis."],
         pair: ["in", "in-park"],
       },
       {
@@ -357,11 +360,12 @@ function useContent() {
         id: "on-beach",
         prompt: t`We’re on the beach.`,
         src: src("Me oleme rannas."),
-        answers: ["Me oleme rannas.", "Meie oleme rannas.", "Oleme rannas."],
+        answers: GRADATION_ANSWERS["Me oleme rannas."],
         pair: ["in", "on-beach"],
         explain: (
           <Trans>
-            On the beach takes the “in” ending: <b lang="et">rannas</b>.
+            On the beach takes the “in” or the “on” ending: <b lang="et">rannas</b> or{" "}
+            <b lang="et">rannal</b>.
           </Trans>
         ),
       },
@@ -370,7 +374,7 @@ function useContent() {
         id: "in-cupboard",
         prompt: t`The bag is in the cupboard.`,
         src: src("Kott on kapis."),
-        answers: ["Kott on kapis."],
+        answers: GRADATION_ANSWERS["Kott on kapis."],
         pair: ["in", "in-cupboard"],
       },
       {
@@ -378,7 +382,7 @@ function useContent() {
         id: "tired-feet",
         prompt: t`My feet are tired.`,
         src: src("Mu jalad on väsinud."),
-        answers: ["Mu jalad on väsinud.", "Minu jalad on väsinud."],
+        answers: GRADATION_ANSWERS["Mu jalad on väsinud."],
         pair: ["many", "tired-feet"],
       },
       {
@@ -386,7 +390,7 @@ function useContent() {
         id: "birds",
         prompt: t`The birds are in the park.`,
         src: src("Linnud on pargis."),
-        answers: ["Linnud on pargis."],
+        answers: GRADATION_ANSWERS["Linnud on pargis."],
         pair: ["many", "birds"],
       },
     ];
@@ -454,7 +458,7 @@ function useContent() {
         id: "shop",
         kind: "short",
         ask: t`Where is the shop? Write it in two words, as Kati says it.`,
-        answers: ["nurga taga"],
+        answers: ["nurga taga", "maja kõrval"],
         line: 11,
       },
       {
@@ -525,7 +529,7 @@ export function JalgJalaLesson() {
         <Trans>
           Consonant gradation is why <b lang="et">jalg</b> becomes <b lang="et">jala</b> and{" "}
           <b lang="et">tuba</b> becomes <b lang="et">toa</b>: which forms take the weak consonant,
-          the four ways it weakens, and the same change in verbs.
+          the usual ways it weakens, and the same change in verbs.
         </Trans>
       }
       facts={[
@@ -545,9 +549,9 @@ export function JalgJalaLesson() {
           strong: <b lang="et">poodi</b>.
         </Trans>,
         <Trans key="3">
-          The weak form goes single, turns soft, drops the letter or blends it:{" "}
-          <b lang="et">kapi, panga, toa, linnu</b>. A few words go the other way:{" "}
-          <b lang="et">mõte, mõtte</b>.
+          The weak form usually goes single, turns soft, drops the letter or blends it:{" "}
+          <b lang="et">kapi, panga, toa, linnu</b>. A few change the letter instead (
+          <b lang="et">leib, leiva</b>) or go the other way (<b lang="et">mõte, mõtte</b>).
         </Trans>,
         <Trans key="4">
           Verbs change too. The <b lang="et">-ma</b> infinitive is strong. The present or the{" "}
@@ -558,7 +562,7 @@ export function JalgJalaLesson() {
       sections={[
         {
           id: "odd-one-out",
-          title: t`The genitive is the odd one out`,
+          title: t`The genitive is usually the odd one out`,
           quiz: true,
           children: (
             <>
@@ -573,10 +577,11 @@ export function JalgJalaLesson() {
                 </p>
                 <p>
                   <Trans>
-                    The consonant has a strong form and a weak one. The nominative and the partitive
-                    have one, and the genitive of lesson {genitive} has the other: <Word w="jalg" />
-                    , <Word w="jala" />, <b lang="et">jalga</b>. Pick a kind of change and tap the
-                    forms.
+                    The consonant has a strong form and a weak one. Usually the nominative and the
+                    partitive have one, and the genitive of lesson {genitive} has the other:{" "}
+                    <Word w="jalg" />, <Word w="jala" />, <b lang="et">jalga</b>. Not always:{" "}
+                    <b lang="et">sõber, sõbra, sõpra</b> puts the nominative with the genitive. Pick
+                    a kind of change and tap the forms.
                   </Trans>
                 </p>
               </Prose>
@@ -630,7 +635,8 @@ export function JalgJalaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The weak form is shorter or softer than the strong one, in one of four ways:
+                    The weak form is shorter or softer than the strong one, usually in one of four
+                    ways:
                   </Trans>
                 </p>
                 <ul>
@@ -662,7 +668,8 @@ export function JalgJalaLesson() {
                   <Trans>
                     A few words go the other way: the nominative is weak and the genitive strong.{" "}
                     <Word w="mõte" />, thought, has the genitive <Word w="mõtte" />. The genitive is
-                    still the odd one out.
+                    still the odd one out. A few others change the letter:{" "}
+                    <b lang="et">leib, leiva</b>.
                   </Trans>
                 </p>
                 <p>
@@ -718,7 +725,7 @@ export function JalgJalaLesson() {
                     label: t`Strong`,
                     lang: i18n.locale,
                     hint: t`nominative, partitive, into`,
-                    rule: t`The partitive and the short “into” form are strong.`,
+                    rule: t`The partitive and the short “into” form are usually strong.`,
                   },
                   {
                     id: "weak",
@@ -728,7 +735,7 @@ export function JalgJalaLesson() {
                     rule: (
                       <Trans>
                         <b lang="et">-s</b>, <b lang="et">-l</b> and the plural <b lang="et">-d</b>{" "}
-                        go on the genitive, so they are weak.
+                        go on the genitive and keep its consonant: usually the weak one.
                       </Trans>
                     ),
                   },
@@ -879,7 +886,7 @@ export function JalgJalaLesson() {
                 title={<Trans>Fill the gaps</Trans>}
                 gaps={ROOM_GAPS}
                 mode="drag"
-                spare={["toa", "kappi", "poes"]}
+                spare={["toa", "kappi", "poe"]}
                 clip="p-room"
               />
             </>

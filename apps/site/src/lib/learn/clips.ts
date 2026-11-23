@@ -3344,29 +3344,39 @@ export const OBJECT_NOW = [
 
 export const OBJECT_HEARD = [
   {
-    noun: "raamat",
-    part: "Mari luges raamatut.",
-    whole: "Mari luges raamatu läbi.",
-    will: "Mari loeb raamatu läbi.",
-  },
-  {
-    noun: "supp",
-    part: "Jaan sõi suppi.",
-    whole: "Jaan sõi supi ära.",
-    will: "Jaan sööb supi ära.",
-  },
-  { noun: "too", part: "Kati tegi tööd.", whole: "Kati tegi töö ära.", will: "Kati teeb töö ära." },
-  {
-    noun: "leib",
-    part: "Liis sõi leiba.",
-    whole: "Liis sõi leiva ära.",
-    will: "Liis sööb leiva ära.",
-  },
-  {
     noun: "ostma",
     part: "Liis ostis leiba.",
     whole: "Liis ostis leiva.",
+    now: "Liis ostab leiba.",
     will: "Liis ostab leiva.",
+  },
+  {
+    noun: "kirjutama",
+    part: "Mari kirjutas raamatut.",
+    whole: "Mari kirjutas raamatu.",
+    now: "Mari kirjutab raamatut.",
+    will: "Mari kirjutab raamatu.",
+  },
+  {
+    noun: "parandama",
+    part: "Jaan parandas autot.",
+    whole: "Jaan parandas auto.",
+    now: "Jaan parandab autot.",
+    will: "Jaan parandab auto.",
+  },
+  {
+    noun: "ehitama",
+    part: "Isa ehitas suvilat.",
+    whole: "Isa ehitas suvila.",
+    now: "Isa ehitab suvilat.",
+    will: "Isa ehitab suvila.",
+  },
+  {
+    noun: "tegema",
+    part: "Kati tegi salatit.",
+    whole: "Kati tegi salati.",
+    now: "Kati teeb salatit.",
+    will: "Kati teeb salati.",
   },
 ] as const;
 
@@ -3556,12 +3566,111 @@ export const OBJECT_DRILL = [
   "Loe raamat läbi!",
 ] as const;
 
+export const OBJECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Ma lugesin raamatut.": ["Ma lugesin raamatut.", "Mina lugesin raamatut.", "Lugesin raamatut."],
+  "Ma lugesin raamatu läbi.": [
+    "Ma lugesin raamatu läbi.",
+    "Mina lugesin raamatu läbi.",
+    "Lugesin raamatu läbi.",
+    "Ma lugesin raamatu lõpuni.",
+    "Lugesin raamatu lõpuni.",
+    "Mina lugesin raamatu lõpuni.",
+  ],
+  "Ma teen töö ära.": [
+    "Ma teen töö ära.",
+    "Mina teen töö ära.",
+    "Teen töö ära.",
+    "Ma teen oma töö ära.",
+    "Teen oma töö ära.",
+    "Mina teen oma töö ära.",
+  ],
+  "Ma ostsin leiba.": [
+    "Ma ostsin leiba.",
+    "Mina ostsin leiba.",
+    "Ostsin leiba.",
+    "Ma ostsin natuke leiba.",
+    "Ostsin natuke leiba.",
+    "Mina ostsin natuke leiba.",
+  ],
+  "Ma ostsin leiva.": [
+    "Ma ostsin leiva.",
+    "Ma ostsin ühe leiva.",
+    "Mina ostsin leiva.",
+    "Mina ostsin ühe leiva.",
+    "Ostsin leiva.",
+    "Ostsin ühe leiva.",
+  ],
+  "Ma ei ostnud piletit.": [
+    "Ma ei ostnud piletit.",
+    "Mina ei ostnud piletit.",
+    "Ei ostnud piletit.",
+  ],
+  "Ma ootan sõpra.": ["Ma ootan sõpra.", "Mina ootan sõpra.", "Ootan sõpra."],
+  "Ma otsin võtit.": [
+    "Ma otsin võtit.",
+    "Ma otsin oma võtit.",
+    "Mina otsin võtit.",
+    "Mina otsin oma võtit.",
+    "Otsin võtit.",
+    "Otsin oma võtit.",
+  ],
+  "Ma leidsin võtme.": [
+    "Ma leidsin võtme.",
+    "Ma leidsin oma võtme.",
+    "Mina leidsin võtme.",
+    "Mina leidsin oma võtme.",
+    "Leidsin võtme.",
+    "Leidsin oma võtme.",
+  ],
+  "Söö supp ära!": ["Söö supp ära!", "Sööge supp ära!"],
+  "Ma jõin vett.": ["Ma jõin vett.", "Mina jõin vett.", "Jõin vett."],
+  "Ma jõin vee ära.": [
+    "Ma jõin vee ära.",
+    "Mina jõin vee ära.",
+    "Jõin vee ära.",
+    "Ma jõin kogu vee ära.",
+    "Jõin kogu vee ära.",
+    "Mina jõin kogu vee ära.",
+  ],
+  "Ma söön supi ära.": [
+    "Ma söön supi ära.",
+    "Söön supi ära.",
+    "Mina söön supi ära.",
+    "Ma söön kogu supi ära.",
+  ],
+  "Ma ei teinud tööd.": [
+    "Ma ei teinud tööd.",
+    "Mina ei teinud tööd.",
+    "Ma ei teinud tööd ära.",
+    "Ei teinud tööd.",
+    "Ei teinud tööd ära.",
+    "Mina ei teinud tööd ära.",
+  ],
+  "Osta pilet!": ["Osta pilet!", "Ostke pilet!"],
+  "Ära joo vett!": [
+    "Ära joo vett!",
+    "Ärge jooge vett!",
+    "Ära joo vett ära!",
+    "Ärge jooge vett ära!",
+  ],
+  "Ära osta leiba!": ["Ära osta leiba!", "Ärge ostke leiba!"],
+  "Loe raamat läbi!": ["Loe raamat läbi!", "Lugege raamat läbi!"],
+  "Ära söö suppi!": [
+    "Ära söö suppi!",
+    "Ära söö suppi ära!",
+    "Ärge sööge suppi!",
+    "Ärge sööge suppi ära!",
+  ],
+  "Söö kook ära!": ["Söö kook ära!", "Sööge kook ära!"],
+  "Tee töö ära!": ["Tee töö ära!", "Tehke töö ära!"],
+};
+
 const OBJECT_CLIPS: Record<string, Clip> = {
   ...words([
     ...OBJECT_WORDS,
     ...OBJECT_PAIRS.flatMap(({ part, whole }) => [part, whole]),
     ...OBJECT_NOW.flatMap(({ part, whole }) => [part, whole]),
-    ...OBJECT_HEARD.flatMap(({ part, whole, will }) => [part, whole, will]),
+    ...OBJECT_HEARD.flatMap(({ part, whole, now, will }) => [part, whole, now, will]),
     ...OBJECT_NO,
     ...OBJECT_VERBS,
     OBJECT_FOUND.looked,
@@ -3733,7 +3842,7 @@ export const GRADATION_CONVERSATION: Conversation = {
       voice: "second",
       text: [
         "Jah, ema elab Tartus, ühe väikese mäe peal.",
-        "Tema majas on suur aed, kus kasvavad õunapuud.",
+        "Maja juures on suur aed, kus kasvavad õunapuud.",
         "Ma käin seal kord kuus ja aitan tal aias töötada.",
       ],
     },
@@ -3783,6 +3892,28 @@ export const GRADATION_DRILL = [
   "aia",
 ] as const;
 
+export const GRADATION_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Kati on toas.": ["Kati on toas."],
+  "Jaan on pangas.": ["Jaan on pangas."],
+  "Lapsed on pargis.": ["Lapsed on pargis.", "Pargis on lapsed."],
+  "Me oleme rannas.": [
+    "Me oleme rannas.",
+    "Meie oleme rannas.",
+    "Oleme rannas.",
+    "Me oleme rannal.",
+    "Meie oleme rannal.",
+    "Oleme rannal.",
+  ],
+  "Kott on kapis.": ["Kott on kapis."],
+  "Mu jalad on väsinud.": [
+    "Mu jalad on väsinud.",
+    "Minu jalad on väsinud.",
+    "Mul on jalad väsinud.",
+    "Minul on jalad väsinud.",
+  ],
+  "Linnud on pargis.": ["Linnud on pargis."],
+};
+
 const GRADATION_CLIPS: Record<string, Clip> = {
   ...words([
     ...GRADATION_WORDS,
@@ -3809,7 +3940,7 @@ export const PLURAL_PART_KINDS = {
   ],
   sid: [
     { word: "auto", of: "auto", part: "autot", many: "autosid" },
-    { word: "kino", of: "kino", part: "kinot", many: "kinosid" },
+    { word: "kino", of: "kino", part: "kino", many: "kinosid" },
     { word: "ema", of: "ema", part: "ema", many: "emasid" },
   ],
   vowel: [
@@ -3824,6 +3955,27 @@ export const PLURAL_PART_KINDS = {
     { word: "tee", of: "tee", part: "teed", many: "teid" },
   ],
 } as const;
+
+export const PLURAL_PART_ALT: Record<string, string> = {
+  maju: "majasid",
+  õunu: "õunasid",
+  koole: "koolisid",
+  puid: "puusid",
+  sõpru: "sõprasid",
+  linde: "lindusid",
+  lilli: "lillesid",
+};
+
+export const pluralPartVariants = (sentence: string): string[] => {
+  const words = sentence.split(" ");
+  const at = words.findIndex((word) => word.replace(/[.,!?]$/, "") in PLURAL_PART_ALT);
+  if (at < 0) return [sentence];
+  const word = words[at] as string;
+  const bare = word.replace(/[.,!?]$/, "");
+  const swapped = [...words];
+  swapped[at] = word.replace(bare, PLURAL_PART_ALT[bare] as string);
+  return [sentence, swapped.join(" ")];
+};
 
 export const PLURAL_PART_THREE = [
   { word: "raamat", two: "kaks raamatut", many: "palju raamatuid", the: "raamatud" },
@@ -4011,6 +4163,49 @@ export const PLURAL_PART_DRILL = [
   "Ma armastan lilli.",
   "Mul on kaks sõpra.",
 ] as const;
+
+export const PLURAL_PART_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Mul on palju raamatuid.": ["Mul on palju raamatuid.", "Minul on palju raamatuid."],
+  "Mul on kaks last.": ["Mul on kaks last.", "Minul on kaks last."],
+  "Lapsed on kodus.": ["Lapsed on kodus."],
+  "Poes on õunu.": ["Poes on õunu.", "Poes on õunasid."],
+  "Ma ostsin õunad.": ["Ma ostsin õunad.", "Mina ostsin õunad.", "Ostsin õunad."],
+  "Mul ei ole autosid.": [
+    "Mul ei ole autosid.",
+    "Mul pole autosid.",
+    "Minul ei ole autosid.",
+    "Minul pole autosid.",
+  ],
+  "Ma armastan linde.": [
+    "Ma armastan linde.",
+    "Ma armastan lindusid.",
+    "Mina armastan linde.",
+    "Mina armastan lindusid.",
+    "Armastan linde.",
+    "Armastan lindusid.",
+  ],
+  "Mul on palju sõpru.": [
+    "Mul on palju sõpru.",
+    "Mul on palju sõprasid.",
+    "Minul on palju sõpru.",
+    "Minul on palju sõprasid.",
+  ],
+  "Mul on kaks sõpra.": ["Mul on kaks sõpra.", "Minul on kaks sõpra."],
+  "Tal ei ole autosid.": [
+    "Tal ei ole autosid.",
+    "Tal pole autosid.",
+    "Temal ei ole autosid.",
+    "Temal pole autosid.",
+  ],
+  "Ma armastan lilli.": [
+    "Ma armastan lilli.",
+    "Ma armastan lillesid.",
+    "Mina armastan lilli.",
+    "Mina armastan lillesid.",
+    "Armastan lilli.",
+    "Armastan lillesid.",
+  ],
+};
 
 const PLURAL_PART_CLIPS: Record<string, Clip> = {
   ...words([

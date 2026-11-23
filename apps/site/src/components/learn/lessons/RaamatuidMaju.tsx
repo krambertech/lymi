@@ -8,6 +8,7 @@ import {
   clipUrl,
   PLURAL_PART_CONVERSATION,
   PLURAL_PART_FIXES,
+  PLURAL_PART_ALT,
   PLURAL_PART_FORM_QUIZ,
   PLURAL_PART_FORMS,
   PLURAL_PART_GAPS,
@@ -17,6 +18,8 @@ import {
   PLURAL_PART_THREE,
   PLURAL_PART_USES,
   pluralGapSaid,
+  pluralPartVariants,
+  PLURAL_PART_ANSWERS,
 } from "../../../lib/learn/clips";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, ListenRows, Panel, type RowItem } from "../Explore";
@@ -267,7 +270,10 @@ function useContent() {
         gloss: i18n._(NOUNS[item.word] as MessageDescriptor),
         cue: item.cue,
         cueLang: "et",
-        answers: [item.answer],
+        answers: [
+          item.answer,
+          ...(PLURAL_PART_ALT[item.answer] ? [PLURAL_PART_ALT[item.answer] as string] : []),
+        ],
         src: src(item.said),
         said: item.said,
         explain:
@@ -287,7 +293,7 @@ function useContent() {
         id: "many-books",
         prompt: t`I have a lot of books.`,
         src: src("Mul on palju raamatuid."),
-        answers: ["Mul on palju raamatuid.", "Minul on palju raamatuid."],
+        answers: PLURAL_PART_ANSWERS["Mul on palju raamatuid."],
         pair: ["many", "many-books"],
       },
       {
@@ -295,7 +301,7 @@ function useContent() {
         id: "two-children",
         prompt: t`I have two children.`,
         src: src("Mul on kaks last."),
-        answers: ["Mul on kaks last.", "Minul on kaks last."],
+        answers: PLURAL_PART_ANSWERS["Mul on kaks last."],
         pair: ["two", "two-children"],
         explain: <Trans>After a number, the singular partitive.</Trans>,
       },
@@ -304,7 +310,7 @@ function useContent() {
         id: "children-home",
         prompt: t`The children are at home.`,
         src: src("Lapsed on kodus."),
-        answers: ["Lapsed on kodus."],
+        answers: PLURAL_PART_ANSWERS["Lapsed on kodus."],
         pair: ["the", "children-home"],
         explain: <Trans>The ones you mean, the subject: the plural nominative.</Trans>,
       },
@@ -313,7 +319,7 @@ function useContent() {
         id: "apples-shop",
         prompt: t`There are apples in the shop.`,
         src: src("Poes on õunu."),
-        answers: ["Poes on õunu."],
+        answers: PLURAL_PART_ANSWERS["Poes on õunu."],
         pair: ["many", "apples-shop"],
       },
       {
@@ -321,7 +327,7 @@ function useContent() {
         id: "the-apples",
         prompt: t`I bought the apples.`,
         src: src("Ma ostsin õunad."),
-        answers: ["Ma ostsin õunad.", "Mina ostsin õunad.", "Ostsin õunad."],
+        answers: PLURAL_PART_ANSWERS["Ma ostsin õunad."],
         pair: ["the", "the-apples"],
         explain: <Trans>All of them, done: the plural nominative.</Trans>,
       },
@@ -330,7 +336,7 @@ function useContent() {
         id: "no-cars",
         prompt: t`I don’t have any cars.`,
         src: src("Mul ei ole autosid."),
-        answers: ["Mul ei ole autosid.", "Mul pole autosid.", "Minul ei ole autosid."],
+        answers: PLURAL_PART_ANSWERS["Mul ei ole autosid."],
         pair: ["no", "no-cars"],
       },
       {
@@ -338,7 +344,7 @@ function useContent() {
         id: "love-birds",
         prompt: t`I love birds.`,
         src: src("Ma armastan linde."),
-        answers: ["Ma armastan linde.", "Mina armastan linde.", "Armastan linde."],
+        answers: PLURAL_PART_ANSWERS["Ma armastan linde."],
         pair: ["no", "love-birds"],
       },
     ];
@@ -373,7 +379,7 @@ function useContent() {
       kind: "fix",
       id: `fix-${clipId(item.right)}`,
       wrong: item.wrong,
-      answers: [item.right],
+      answers: pluralPartVariants(item.right),
       src: src(item.right),
       explain: fixWhy[item.right],
     }));
@@ -581,9 +587,10 @@ export function RaamatuidMajuLesson() {
               <Aside>
                 <Trans>
                   You can’t always tell from a word which way it goes, and some words have two
-                  forms. A dictionary lists the plural partitive, so learn it with the word. Where
-                  the stem changes, as lesson {gradation} explains, a changed vowel goes on the
-                  partitive’s stem: <b lang="et">sõber, sõpra, sõpru</b>.
+                  forms, both correct: <b lang="et">maju</b> and <b lang="et">majasid</b>. A
+                  dictionary lists the plural partitive, so learn it with the word. Where the stem
+                  changes, as lesson {gradation} explains, a changed vowel goes on the partitive’s
+                  stem: <b lang="et">sõber, sõpra, sõpru</b>.
                 </Trans>
               </Aside>
               <Prose>
@@ -769,7 +776,7 @@ export function RaamatuidMajuLesson() {
                 title={<Trans>Fill the gaps</Trans>}
                 gaps={PARTY_GAPS}
                 mode="drag"
-                spare={["õunad", "kooki"]}
+                spare={["õunad", "kook"]}
                 clip="p-party"
               />
             </>

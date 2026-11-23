@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
-msgid "<0>-s</0> and <1>-l</1> go on the genitive, so they take the weak form."
-msgstr "<0>-s</0> and <1>-l</1> go on the genitive, so they take the weak form."
+msgid "<0>-s</0> and <1>-l</1> go on the genitive, so they keep the genitive’s consonant."
+msgstr "<0>-s</0> and <1>-l</1> go on the genitive, so they keep the genitive’s consonant."
 
 msgid "<0>-s</0> goes on the genitive <1>kapi</1>: <2>kapis</2>."
 msgstr "<0>-s</0> goes on the genitive <1>kapi</1>: <2>kapis</2>."
@@ -19,11 +19,11 @@ msgstr "<0>-s</0> goes on the genitive <1>panga</1>: <2>pangas</2>."
 msgid "<0>-s</0> goes on the genitive <1>toa</1>: <2>toas</2>."
 msgstr "<0>-s</0> goes on the genitive <1>toa</1>: <2>toas</2>."
 
-msgid "<0>-s</0>, <1>-l</1> and the plural <2>-d</2> go on the genitive, so they are weak."
-msgstr "<0>-s</0>, <1>-l</1> and the plural <2>-d</2> go on the genitive, so they are weak."
+msgid "<0>-s</0>, <1>-l</1> and the plural <2>-d</2> go on the genitive and keep its consonant: usually the weak one."
+msgstr "<0>-s</0>, <1>-l</1> and the plural <2>-d</2> go on the genitive and keep its consonant: usually the weak one."
 
-msgid "<et>-s</et>, <et>-l</et> and the plural <et>-d</et> go on the genitive, so they take the weak form."
-msgstr "<et>-s</et>, <et>-l</et> and the plural <et>-d</et> go on the genitive, so they take the weak form."
+msgid "<et>-s</et>, <et>-l</et> and the plural <et>-d</et> go on the genitive and keep its consonant: usually the weak one."
+msgstr "<et>-s</et>, <et>-l</et> and the plural <et>-d</et> go on the genitive and keep its consonant: usually the weak one."
 
 msgid "<et>Mõte</et> goes the other way: its genitive is strong, <et>mõtte</et>."
 msgstr "<et>Mõte</et> goes the other way: its genitive is strong, <et>mõtte</et>."
@@ -40,8 +40,8 @@ msgstr "A double letter goes single: <0/>, <1/>."
 msgid "A double letter goes single: <0>kapp, kapi</0>."
 msgstr "A double letter goes single: <0>kapp, kapi</0>."
 
-msgid "A few words go the other way: the nominative is weak and the genitive strong. <0/>, thought, has the genitive <1/>. The genitive is still the odd one out."
-msgstr "A few words go the other way: the nominative is weak and the genitive strong. <0/>, thought, has the genitive <1/>. The genitive is still the odd one out."
+msgid "A few words go the other way: the nominative is weak and the genitive strong. <0/>, thought, has the genitive <1/>. The genitive is still the odd one out. A few others change the letter: <2>leib, leiva</2>."
+msgstr "A few words go the other way: the nominative is weak and the genitive strong. <0/>, thought, has the genitive <1/>. The genitive is still the odd one out. A few others change the letter: <2>leib, leiva</2>."
 
 msgid "All eight. You heard the difference every time."
 msgstr "All eight. You heard the difference every time."
@@ -70,8 +70,8 @@ msgstr "bird"
 msgid "Blended"
 msgstr "Blended"
 
-msgid "Consonant gradation is why <0>jalg</0> becomes <1>jala</1> and <2>tuba</2> becomes <3>toa</3>: which forms take the weak consonant, the four ways it weakens, and the same change in verbs."
-msgstr "Consonant gradation is why <0>jalg</0> becomes <1>jala</1> and <2>tuba</2> becomes <3>toa</3>: which forms take the weak consonant, the four ways it weakens, and the same change in verbs."
+msgid "Consonant gradation is why <0>jalg</0> becomes <1>jala</1> and <2>tuba</2> becomes <3>toa</3>: which forms take the weak consonant, the usual ways it weakens, and the same change in verbs."
+msgstr "Consonant gradation is why <0>jalg</0> becomes <1>jala</1> and <2>tuba</2> becomes <3>toa</3>: which forms take the weak consonant, the usual ways it weakens, and the same change in verbs."
 
 msgid "cupboard"
 msgstr "cupboard"
@@ -277,8 +277,8 @@ msgstr "nominative, partitive, into"
 msgid "On the …"
 msgstr "On the …"
 
-msgid "On the beach takes the “in” ending: <0>rannas</0>."
-msgstr "On the beach takes the “in” ending: <0>rannas</0>."
+msgid "On the beach takes the “in” or the “on” ending: <0>rannas</0> or <1>rannal</1>."
+msgstr "On the beach takes the “in” or the “on” ending: <0>rannas</0> or <1>rannal</1>."
 
 msgid "On the table"
 msgstr "On the table"
@@ -355,17 +355,14 @@ msgstr "The birds are in the park."
 msgid "The children are in the park."
 msgstr "The children are in the park."
 
-msgid "The consonant has a strong form and a weak one. The nominative and the partitive have one, and the genitive of lesson {genitive} has the other: <0/>, <1/>, <2>jalga</2>. Pick a kind of change and tap the forms."
-msgstr "The consonant has a strong form and a weak one. The nominative and the partitive have one, and the genitive of lesson {genitive} has the other: <0/>, <1/>, <2>jalga</2>. Pick a kind of change and tap the forms."
-
-msgid "The first two columns are strong. The genitive and the forms built on it are weak."
-msgstr "The first two columns are strong. The genitive and the forms built on it are weak."
-
-msgid "The genitive is the odd one out"
-msgstr "The genitive is the odd one out"
+msgid "The consonant has a strong form and a weak one. Usually the nominative and the partitive have one, and the genitive of lesson {genitive} has the other: <0/>, <1/>, <2>jalga</2>. Not always: <3>sõber, sõbra, sõpra</3> puts the nominative with the genitive. Pick a kind of change and tap the forms."
+msgstr "The consonant has a strong form and a weak one. Usually the nominative and the partitive have one, and the genitive of lesson {genitive} has the other: <0/>, <1/>, <2>jalga</2>. Not always: <3>sõber, sõbra, sõpra</3> puts the nominative with the genitive. Pick a kind of change and tap the forms."
 
 msgid "The genitive is the weak form."
 msgstr "The genitive is the weak form."
+
+msgid "The genitive is usually the odd one out"
+msgstr "The genitive is usually the odd one out"
 
 msgid "The genitive of <0>{word}</0> ({means}) is <1>{said}</1>."
 msgstr "The genitive of <0>{word}</0> ({means}) is <1>{said}</1>."
@@ -415,11 +412,11 @@ msgstr "The nominative doesn’t tell you which change a word makes, or whether 
 msgid "The other way"
 msgstr "The other way"
 
-msgid "The partitive and the short “into” form are strong."
-msgstr "The partitive and the short “into” form are strong."
+msgid "The partitive and the short “into” form are usually strong."
+msgstr "The partitive and the short “into” form are usually strong."
 
-msgid "The partitive and the short “into” form keep the strong form."
-msgstr "The partitive and the short “into” form keep the strong form."
+msgid "The partitive and the short “into” form usually keep the strong form."
+msgstr "The partitive and the short “into” form usually keep the strong form."
 
 msgid "The partitive of <0>{word}</0> ({means}) is <1>{said}</1>."
 msgstr "The partitive of <0>{word}</0> ({means}) is <1>{said}</1>."
@@ -427,8 +424,8 @@ msgstr "The partitive of <0>{word}</0> ({means}) is <1>{said}</1>."
 msgid "The plural goes on the genitive <0>linnu</0>: <1>linnud</1>."
 msgstr "The plural goes on the genitive <0>linnu</0>: <1>linnud</1>."
 
-msgid "The plural is built on the genitive, so it takes the weak form."
-msgstr "The plural is built on the genitive, so it takes the weak form."
+msgid "The plural is built on the genitive, so it keeps the genitive’s consonant."
+msgstr "The plural is built on the genitive, so it keeps the genitive’s consonant."
 
 msgid "The present of <0>lugema</0> is weak: <1>loen</1>."
 msgstr "The present of <0>lugema</0> is weak: <1>loen</1>."
@@ -457,17 +454,17 @@ msgstr "The short “into” forms of lesson {inside} take the strong form: into
 msgid "The strong form in the partitive and “into”"
 msgstr "The strong form in the partitive and “into”"
 
-msgid "The weak form goes single, turns soft, drops the letter or blends it: <0>kapi, panga, toa, linnu</0>. A few words go the other way: <1>mõte, mõtte</1>."
-msgstr "The weak form goes single, turns soft, drops the letter or blends it: <0>kapi, panga, toa, linnu</0>. A few words go the other way: <1>mõte, mõtte</1>."
-
 msgid "The weak form in <et>-s</et>, <et>-l</et> and the plural"
 msgstr "The weak form in <et>-s</et>, <et>-l</et> and the plural"
 
 msgid "The weak form in verbs"
 msgstr "The weak form in verbs"
 
-msgid "The weak form is shorter or softer than the strong one, in one of four ways:"
-msgstr "The weak form is shorter or softer than the strong one, in one of four ways:"
+msgid "The weak form is shorter or softer than the strong one, usually in one of four ways:"
+msgstr "The weak form is shorter or softer than the strong one, usually in one of four ways:"
+
+msgid "The weak form usually goes single, turns soft, drops the letter or blends it: <0>kapi, panga, toa, linnu</0>. A few change the letter instead (<1>leib, leiva</1>) or go the other way (<2>mõte, mõtte</2>)."
+msgstr "The weak form usually goes single, turns soft, drops the letter or blends it: <0>kapi, panga, toa, linnu</0>. A few change the letter instead (<1>leib, leiva</1>) or go the other way (<2>mõte, mõtte</2>)."
 
 msgid "thought, idea"
 msgstr "thought, idea"
@@ -501,6 +498,9 @@ msgstr "Tuba, toa, tuba."
 
 msgid "Type the form"
 msgstr "Type the form"
+
+msgid "Usually the first two columns are strong, and the genitive and the forms built on it are weak."
+msgstr "Usually the first two columns are strong, and the genitive and the forms built on it are weak."
 
 msgid "Verbs change too. The <0>-ma</0> infinitive is strong. The present or the <1>-da</1> infinitive can be weak: <2>lugema, loen</2>; <3>ootama, oodata</3>."
 msgstr "Verbs change too. The <0>-ma</0> infinitive is strong. The present or the <1>-da</1> infinitive can be weak: <2>lugema, loen</2>; <3>ootama, oodata</3>."

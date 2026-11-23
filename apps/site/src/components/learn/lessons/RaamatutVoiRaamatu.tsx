@@ -19,6 +19,7 @@ import {
   OBJECT_REWRITE,
   OBJECT_VERBS,
   OBJECT_VOICE,
+  OBJECT_ANSWERS,
 } from "../../../lib/learn/clips";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
@@ -35,15 +36,6 @@ import { Word } from "../Word";
 
 const SLUG = "raamatut-voi-raamatu";
 
-const PLURAL_COMMANDS: Record<string, readonly string[]> = {
-  "Osta pilet!": ["Ostke pilet!"],
-  "Loe raamat läbi!": ["Lugege raamat läbi!"],
-  "Söö kook ära!": ["Sööge kook ära!"],
-  "Tee töö ära!": ["Tehke töö ära!"],
-  "Ära joo vett!": ["Ärge jooge vett!"],
-  "Ära osta leiba!": ["Ärge ostke leiba!"],
-  "Ära söö suppi!": ["Ärge sööge suppi!"],
-};
 const src = (text: string) => clipUrl(SLUG, clipId(text));
 
 const MEANS: Record<string, MessageDescriptor> = {
@@ -116,40 +108,45 @@ const GLOSSARY: Glossary = {
   leidma: { en: msg`to find`, note: msg`Past: leidsin, I found.` },
 };
 
-type DoneKind = "part" | "whole" | "will";
+type DoneKind = "part" | "whole" | "now" | "will";
 
 const DONE_MEANS: Record<
   (typeof OBJECT_HEARD)[number]["noun"],
   Record<DoneKind, MessageDescriptor>
 > = {
-  raamat: {
-    part: msg`Mari was reading the book.`,
-    whole: msg`Mari read the book to the end.`,
-    will: msg`Mari will read the book to the end.`,
-  },
-  supp: {
-    part: msg`Jaan had some soup.`,
-    whole: msg`Jaan ate all the soup.`,
-    will: msg`Jaan will eat all the soup.`,
-  },
-  too: {
-    part: msg`Kati was working.`,
-    whole: msg`Kati got the work done.`,
-    will: msg`Kati will get the work done.`,
-  },
-  leib: {
-    part: msg`Liis had some bread.`,
-    whole: msg`Liis ate all the bread.`,
-    will: msg`Liis will eat all the bread.`,
-  },
   ostma: {
     part: msg`Liis bought some bread.`,
     whole: msg`Liis bought a loaf of bread.`,
+    now: msg`Liis is buying some bread.`,
     will: msg`Liis will buy a loaf of bread.`,
+  },
+  kirjutama: {
+    part: msg`Mari was writing a book.`,
+    whole: msg`Mari wrote a book.`,
+    now: msg`Mari is writing a book.`,
+    will: msg`Mari will write a book.`,
+  },
+  parandama: {
+    part: msg`Jaan was repairing the car.`,
+    whole: msg`Jaan repaired the car.`,
+    now: msg`Jaan is repairing the car.`,
+    will: msg`Jaan will repair the car.`,
+  },
+  ehitama: {
+    part: msg`Dad was building a summer house.`,
+    whole: msg`Dad built a summer house.`,
+    now: msg`Dad is building a summer house.`,
+    will: msg`Dad will build a summer house.`,
+  },
+  tegema: {
+    part: msg`Kati was making a salad.`,
+    whole: msg`Kati made a salad.`,
+    now: msg`Kati is making a salad.`,
+    will: msg`Kati will make a salad.`,
   },
 };
 
-const KINDS: readonly DoneKind[] = ["part", "whole", "will"];
+const KINDS: readonly DoneKind[] = ["part", "whole", "now", "will"];
 
 const NOUN_MEANS: Record<(typeof OBJECT_FORM_QUIZ)[number]["noun"], MessageDescriptor> = {
   pilet: msg`ticket`,
@@ -299,9 +296,11 @@ function useContent() {
         pair: [kind, group[kind]] as const,
         explain:
           kind === "part" ? (
-            <Trans>The partitive: some of it, or not finished.</Trans>
+            <Trans>The past with the partitive: some of it, or not finished.</Trans>
           ) : kind === "whole" ? (
             <Trans>The past with the genitive: all of it, done.</Trans>
+          ) : kind === "now" ? (
+            <Trans>The present with the partitive: going on now.</Trans>
           ) : (
             <Trans>The present with the genitive: it will get done.</Trans>
           ),
@@ -358,7 +357,7 @@ function useContent() {
       from: item.from,
       cue: item.not ? t`tell a friend not to` : t`tell a friend to`,
       src: src(item.to),
-      answers: [item.to, ...(PLURAL_COMMANDS[item.to] ?? [])],
+      answers: OBJECT_ANSWERS[item.to] ?? [item.to],
       pair: [item.not ? "not" : "do", item.to] as const,
       explain: item.not ? (
         <Trans>
@@ -376,7 +375,7 @@ function useContent() {
         id: "was-reading",
         prompt: t`I was reading a book.`,
         src: src("Ma lugesin raamatut."),
-        answers: ["Ma lugesin raamatut.", "Mina lugesin raamatut.", "Lugesin raamatut."],
+        answers: OBJECT_ANSWERS["Ma lugesin raamatut."],
         pair: ["done", "was-reading"],
         explain: <Trans>Going on, not said to be finished: the partitive.</Trans>,
       },
@@ -385,11 +384,7 @@ function useContent() {
         id: "read-through",
         prompt: t`I read the book to the end.`,
         src: src("Ma lugesin raamatu läbi."),
-        answers: [
-          "Ma lugesin raamatu läbi.",
-          "Mina lugesin raamatu läbi.",
-          "Lugesin raamatu läbi.",
-        ],
+        answers: OBJECT_ANSWERS["Ma lugesin raamatu läbi."],
         pair: ["done", "read-through"],
         explain: (
           <Trans>
@@ -402,13 +397,7 @@ function useContent() {
         id: "will-finish",
         prompt: t`I’ll get the work done.`,
         src: src("Ma teen töö ära."),
-        answers: [
-          "Ma teen töö ära.",
-          "Mina teen töö ära.",
-          "Teen töö ära.",
-          "Ma teen oma töö ära.",
-          "Teen oma töö ära.",
-        ],
+        answers: OBJECT_ANSWERS["Ma teen töö ära."],
         pair: ["done", "will-finish"],
         explain: <Trans>The present with the genitive says it will get done.</Trans>,
       },
@@ -417,7 +406,7 @@ function useContent() {
         id: "some-bread",
         prompt: t`I bought some bread.`,
         src: src("Ma ostsin leiba."),
-        answers: ["Ma ostsin leiba.", "Mina ostsin leiba.", "Ostsin leiba."],
+        answers: OBJECT_ANSWERS["Ma ostsin leiba."],
         pair: ["some", "some-bread"],
         explain: <Trans>Some of it: the partitive.</Trans>,
       },
@@ -426,14 +415,7 @@ function useContent() {
         id: "a-loaf",
         prompt: t`I bought a loaf of bread.`,
         src: src("Ma ostsin leiva."),
-        answers: [
-          "Ma ostsin leiva.",
-          "Ma ostsin ühe leiva.",
-          "Mina ostsin leiva.",
-          "Mina ostsin ühe leiva.",
-          "Ostsin leiva.",
-          "Ostsin ühe leiva.",
-        ],
+        answers: OBJECT_ANSWERS["Ma ostsin leiva."],
         pair: ["some", "a-loaf"],
         explain: <Trans>One whole loaf: the genitive.</Trans>,
       },
@@ -442,7 +424,7 @@ function useContent() {
         id: "no-ticket",
         prompt: t`I didn’t buy a ticket.`,
         src: src("Ma ei ostnud piletit."),
-        answers: ["Ma ei ostnud piletit.", "Mina ei ostnud piletit.", "Ei ostnud piletit."],
+        answers: OBJECT_ANSWERS["Ma ei ostnud piletit."],
         pair: ["no", "no-ticket"],
         explain: (
           <Trans>
@@ -455,7 +437,7 @@ function useContent() {
         id: "waiting",
         prompt: t`I’m waiting for a friend.`,
         src: src("Ma ootan sõpra."),
-        answers: ["Ma ootan sõpra.", "Mina ootan sõpra.", "Ootan sõpra."],
+        answers: OBJECT_ANSWERS["Ma ootan sõpra."],
         pair: ["verbs", "waiting"],
         explain: (
           <Trans>
@@ -468,14 +450,7 @@ function useContent() {
         id: "looking",
         prompt: t`I’m looking for my key.`,
         src: src("Ma otsin võtit."),
-        answers: [
-          "Ma otsin võtit.",
-          "Ma otsin oma võtit.",
-          "Mina otsin võtit.",
-          "Mina otsin oma võtit.",
-          "Otsin võtit.",
-          "Otsin oma võtit.",
-        ],
+        answers: OBJECT_ANSWERS["Ma otsin võtit."],
         pair: ["verbs", "looking"],
         explain: (
           <Trans>
@@ -488,14 +463,7 @@ function useContent() {
         id: "found",
         prompt: t`I found my key.`,
         src: src("Ma leidsin võtme."),
-        answers: [
-          "Ma leidsin võtme.",
-          "Ma leidsin oma võtme.",
-          "Mina leidsin võtme.",
-          "Mina leidsin oma võtme.",
-          "Leidsin võtme.",
-          "Leidsin oma võtme.",
-        ],
+        answers: OBJECT_ANSWERS["Ma leidsin võtme."],
         pair: ["verbs", "found"],
         explain: <Trans>Finding ends the looking: the genitive.</Trans>,
       },
@@ -504,7 +472,7 @@ function useContent() {
         id: "eat-up",
         prompt: t`Eat up the soup!`,
         src: src("Söö supp ära!"),
-        answers: ["Söö supp ära!", "Sööge supp ära!"],
+        answers: OBJECT_ANSWERS["Söö supp ära!"],
         pair: ["command", "eat-up"],
         explain: <Trans>A command for the whole thing: the nominative.</Trans>,
       },
@@ -798,8 +766,8 @@ export function RaamatutVoiRaamatuLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          The object, the thing a verb acts on, takes the genitive when the action takes in the
-          whole of it, and the partitive when it takes in only part, or never finishes.
+          The object, the thing a verb acts on, usually takes the genitive when the action takes in
+          the whole of it, and the partitive when it takes in only part, or never finishes.
         </Trans>
       }
       facts={[
@@ -888,9 +856,12 @@ export function RaamatutVoiRaamatuLesson() {
               </Aside>
               <Aside>
                 <Trans>
-                  Pronouns follow the same rule. For the whole person, the genitive, often the short{" "}
-                  <b lang="et">mu, su, ta</b>: <b lang="et">Ta viis mu koju.</b> Lesson {pronouns}{" "}
-                  has every form.
+                  Pronouns are different. <b lang="et">Mina, sina, meie</b> and{" "}
+                  <b lang="et">teie</b> can take the partitive even for the whole person:{" "}
+                  <b lang="et">Ta viis mu koju</b> or <b lang="et">Ta viis mind koju</b>;{" "}
+                  <b lang="et">Ta viis meid koju</b>. In a command, only the partitive:{" "}
+                  <b lang="et">Vii mind koju!</b> <b lang="et">Ta</b> works like a noun:{" "}
+                  <b lang="et">Vii ta koju!</b> Lesson {pronouns} has every form.
                 </Trans>
               </Aside>
             </>
@@ -929,8 +900,8 @@ export function RaamatutVoiRaamatuLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a sentence, then pick what it means. Listen for the object’s ending, for{" "}
-                    <b lang="et">läbi</b> or <b lang="et">ära</b>, and for the tense of the verb.
+                    Hear a sentence, then pick what it means. The verb’s tense narrows it to two;
+                    the object’s ending decides.
                   </Trans>
                 </p>
               </Prose>

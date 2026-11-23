@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: uk\n"
 
-msgid "<0>-s</0> and <1>-l</1> go on the genitive, so they take the weak form."
-msgstr "<0>-s</0> і <1>-l</1> додаються до родового, тому форма слабка."
+msgid "<0>-s</0> and <1>-l</1> go on the genitive, so they keep the genitive’s consonant."
+msgstr "<0>-s</0> і <1>-l</1> додаються до родового, тож зберігають його приголосний."
 
 msgid "<0>-s</0> goes on the genitive <1>kapi</1>: <2>kapis</2>."
 msgstr "<0>-s</0> додається до родового <1>kapi</1>: <2>kapis</2>."
@@ -19,11 +19,11 @@ msgstr "<0>-s</0> додається до родового <1>panga</1>: <2>pang
 msgid "<0>-s</0> goes on the genitive <1>toa</1>: <2>toas</2>."
 msgstr "<0>-s</0> додається до родового <1>toa</1>: <2>toas</2>."
 
-msgid "<0>-s</0>, <1>-l</1> and the plural <2>-d</2> go on the genitive, so they are weak."
-msgstr "<0>-s</0>, <1>-l</1> і множина на <2>-d</2> додаються до родового, тому вони слабкі."
+msgid "<0>-s</0>, <1>-l</1> and the plural <2>-d</2> go on the genitive and keep its consonant: usually the weak one."
+msgstr "<0>-s</0>, <1>-l</1> і множина на <2>-d</2> додаються до родового і зберігають його приголосний: зазвичай слабкий."
 
-msgid "<et>-s</et>, <et>-l</et> and the plural <et>-d</et> go on the genitive, so they take the weak form."
-msgstr "<et>-s</et>, <et>-l</et> і закінчення множини <et>-d</et> додаються до родового, тому форма слабка."
+msgid "<et>-s</et>, <et>-l</et> and the plural <et>-d</et> go on the genitive and keep its consonant: usually the weak one."
+msgstr "<et>-s</et>, <et>-l</et> і множина на <et>-d</et> додаються до родового і зберігають його приголосний: зазвичай слабкий."
 
 msgid "<et>Mõte</et> goes the other way: its genitive is strong, <et>mõtte</et>."
 msgstr "У <et>mõte</et> навпаки: родовий сильний, <et>mõtte</et>."
@@ -40,8 +40,8 @@ msgstr "Подвоєна літера стає одинарною: <0/>, <1/>."
 msgid "A double letter goes single: <0>kapp, kapi</0>."
 msgstr "Подвоєна літера стає одинарною: <0>kapp, kapi</0>."
 
-msgid "A few words go the other way: the nominative is weak and the genitive strong. <0/>, thought, has the genitive <1/>. The genitive is still the odd one out."
-msgstr "У деяких словах навпаки: у називному слабка форма, а в родовому сильна. <0/>, думка, має родовий <1/>. Родовий і тут вирізняється."
+msgid "A few words go the other way: the nominative is weak and the genitive strong. <0/>, thought, has the genitive <1/>. The genitive is still the odd one out. A few others change the letter: <2>leib, leiva</2>."
+msgstr "У деяких словах навпаки: у називному слабка форма, а в родовому сильна. <0/>, думка, має родовий <1/>. Родовий і тут вирізняється. А в деяких словах літера змінюється: <2>leib, leiva</2>."
 
 msgid "All eight. You heard the difference every time."
 msgstr "Усі вісім. Ти щоразу чув різницю."
@@ -70,8 +70,8 @@ msgstr "птах"
 msgid "Blended"
 msgstr "Злиття"
 
-msgid "Consonant gradation is why <0>jalg</0> becomes <1>jala</1> and <2>tuba</2> becomes <3>toa</3>: which forms take the weak consonant, the four ways it weakens, and the same change in verbs."
-msgstr "Через чергування приголосних <0>jalg</0> стає <1>jala</1>, а <2>tuba</2> — <3>toa</3>. У яких формах приголосний слабкий, чотири способи ослаблення і та сама зміна в дієсловах."
+msgid "Consonant gradation is why <0>jalg</0> becomes <1>jala</1> and <2>tuba</2> becomes <3>toa</3>: which forms take the weak consonant, the usual ways it weakens, and the same change in verbs."
+msgstr "Через чергування приголосних <0>jalg</0> стає <1>jala</1>, а <2>tuba</2> — <3>toa</3>. У яких формах приголосний слабкий, звичайні способи ослаблення і та сама зміна в дієсловах."
 
 msgid "cupboard"
 msgstr "шафа"
@@ -277,8 +277,8 @@ msgstr "називний, партитив, «куди»"
 msgid "On the …"
 msgstr "На …"
 
-msgid "On the beach takes the “in” ending: <0>rannas</0>."
-msgstr "«На пляжі» має закінчення «в»: <0>rannas</0>."
+msgid "On the beach takes the “in” or the “on” ending: <0>rannas</0> or <1>rannal</1>."
+msgstr "«На пляжі» має закінчення «в» або «на»: <0>rannas</0> чи <1>rannal</1>."
 
 msgid "On the table"
 msgstr "На столі"
@@ -355,17 +355,14 @@ msgstr "Птахи в парку."
 msgid "The children are in the park."
 msgstr "Діти в парку."
 
-msgid "The consonant has a strong form and a weak one. The nominative and the partitive have one, and the genitive of lesson {genitive} has the other: <0/>, <1/>, <2>jalga</2>. Pick a kind of change and tap the forms."
-msgstr "Приголосний має сильну і слабку форму. Називний і партитив мають одну, а родовий з уроку {genitive} — іншу: <0/>, <1/>, <2>jalga</2>. Вибери вид зміни й натискай форми."
-
-msgid "The first two columns are strong. The genitive and the forms built on it are weak."
-msgstr "Перші два стовпці сильні. Родовий і форми від нього слабкі."
-
-msgid "The genitive is the odd one out"
-msgstr "Родовий вирізняється"
+msgid "The consonant has a strong form and a weak one. Usually the nominative and the partitive have one, and the genitive of lesson {genitive} has the other: <0/>, <1/>, <2>jalga</2>. Not always: <3>sõber, sõbra, sõpra</3> puts the nominative with the genitive. Pick a kind of change and tap the forms."
+msgstr "Приголосний має сильну і слабку форму. Зазвичай називний і партитив мають одну, а родовий з уроку {genitive} — іншу: <0/>, <1/>, <2>jalga</2>. Не завжди: у <3>sõber, sõbra, sõpra</3> називний іде разом із родовим. Вибери вид зміни й натискай форми."
 
 msgid "The genitive is the weak form."
 msgstr "Родовий — слабка форма."
+
+msgid "The genitive is usually the odd one out"
+msgstr "Родовий зазвичай вирізняється"
 
 msgid "The genitive of <0>{word}</0> ({means}) is <1>{said}</1>."
 msgstr "Родовий від <0>{word}</0> («{means}») — <1>{said}</1>."
@@ -415,11 +412,11 @@ msgstr "З називного не видно, яка зміна буде і ч�
 msgid "The other way"
 msgstr "Навпаки"
 
-msgid "The partitive and the short “into” form are strong."
-msgstr "Партитив і коротка форма «куди» сильні."
+msgid "The partitive and the short “into” form are usually strong."
+msgstr "Партитив і коротка форма «куди» зазвичай сильні."
 
-msgid "The partitive and the short “into” form keep the strong form."
-msgstr "Партитив і коротка форма «куди» зберігають сильну форму."
+msgid "The partitive and the short “into” form usually keep the strong form."
+msgstr "Партитив і коротка форма «куди» зазвичай зберігають сильну форму."
 
 msgid "The partitive of <0>{word}</0> ({means}) is <1>{said}</1>."
 msgstr "Партитив від <0>{word}</0> («{means}») — <1>{said}</1>."
@@ -427,8 +424,8 @@ msgstr "Партитив від <0>{word}</0> («{means}») — <1>{said}</1>."
 msgid "The plural goes on the genitive <0>linnu</0>: <1>linnud</1>."
 msgstr "Множина утворюється від родового <0>linnu</0>: <1>linnud</1>."
 
-msgid "The plural is built on the genitive, so it takes the weak form."
-msgstr "Множина утворюється від родового, тому форма слабка."
+msgid "The plural is built on the genitive, so it keeps the genitive’s consonant."
+msgstr "Множина утворюється від родового, тож зберігає його приголосний."
 
 msgid "The present of <0>lugema</0> is weak: <1>loen</1>."
 msgstr "Теперішній час від <0>lugema</0> слабкий: <1>loen</1>."
@@ -457,17 +454,17 @@ msgstr "Короткі форми «куди» з уроку {inside} мають
 msgid "The strong form in the partitive and “into”"
 msgstr "Сильна форма в партитиві та «куди»"
 
-msgid "The weak form goes single, turns soft, drops the letter or blends it: <0>kapi, panga, toa, linnu</0>. A few words go the other way: <1>mõte, mõtte</1>."
-msgstr "У слабкій формі подвоєна літера стає одинарною, k стає g, літера випадає або зливається: <0>kapi, panga, toa, linnu</0>. У деяких словах навпаки: <1>mõte, mõtte</1>."
-
 msgid "The weak form in <et>-s</et>, <et>-l</et> and the plural"
 msgstr "Слабка форма з <et>-s</et>, <et>-l</et> і в множині"
 
 msgid "The weak form in verbs"
 msgstr "Слабка форма в дієсловах"
 
-msgid "The weak form is shorter or softer than the strong one, in one of four ways:"
-msgstr "Слабка форма відрізняється від сильної одним із чотирьох способів:"
+msgid "The weak form is shorter or softer than the strong one, usually in one of four ways:"
+msgstr "Слабка форма зазвичай відрізняється від сильної одним із чотирьох способів:"
+
+msgid "The weak form usually goes single, turns soft, drops the letter or blends it: <0>kapi, panga, toa, linnu</0>. A few change the letter instead (<1>leib, leiva</1>) or go the other way (<2>mõte, mõtte</2>)."
+msgstr "У слабкій формі зазвичай подвоєна літера стає одинарною, k стає g, літера випадає або зливається: <0>kapi, panga, toa, linnu</0>. У деяких словах літера змінюється (<1>leib, leiva</1>) або навпаки (<2>mõte, mõtte</2>)."
 
 msgid "thought, idea"
 msgstr "думка, ідея"
@@ -501,6 +498,9 @@ msgstr "Tuba, toa, tuba."
 
 msgid "Type the form"
 msgstr "Напиши форму"
+
+msgid "Usually the first two columns are strong, and the genitive and the forms built on it are weak."
+msgstr "Зазвичай перші два стовпці сильні, а родовий і форми від нього слабкі."
 
 msgid "Verbs change too. The <0>-ma</0> infinitive is strong. The present or the <1>-da</1> infinitive can be weak: <2>lugema, loen</2>; <3>ootama, oodata</3>."
 msgstr "Дієслова теж змінюються. Інфінітив на <0>-ma</0> сильний. Теперішній час чи інфінітив на <1>-da</1> можуть бути слабкими: <2>lugema, loen</2>; <3>ootama, oodata</3>."

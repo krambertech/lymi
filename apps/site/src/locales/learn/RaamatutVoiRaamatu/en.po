@@ -166,6 +166,18 @@ msgstr "child"
 msgid "Compare the object across each row: genitive, nominative, partitive."
 msgstr "Compare the object across each row: genitive, nominative, partitive."
 
+msgid "Dad built a summer house."
+msgstr "Dad built a summer house."
+
+msgid "Dad is building a summer house."
+msgstr "Dad is building a summer house."
+
+msgid "Dad was building a summer house."
+msgstr "Dad was building a summer house."
+
+msgid "Dad will build a summer house."
+msgstr "Dad will build a summer house."
+
 msgid "Did she buy milk?"
 msgstr "Did she buy milk?"
 
@@ -256,8 +268,8 @@ msgstr "He had a big report to finish"
 msgid "He or she didn’t read the book."
 msgstr "He or she didn’t read the book."
 
-msgid "Hear a sentence, then pick what it means. Listen for the object’s ending, for <0>läbi</0> or <1>ära</1>, and for the tense of the verb."
-msgstr "Hear a sentence, then pick what it means. Listen for the object’s ending, for <0>läbi</0> or <1>ära</1>, and for the tense of the verb."
+msgid "Hear a sentence, then pick what it means. The verb’s tense narrows it to two; the object’s ending decides."
+msgstr "Hear a sentence, then pick what it means. The verb’s tense narrows it to two; the object’s ending decides."
 
 msgid "Hear the sentences above once more, then try again."
 msgstr "Hear the sentences above once more, then try again."
@@ -370,29 +382,35 @@ msgstr "Is waiting for a friend tonight"
 msgid "Jaan"
 msgstr "Jaan"
 
-msgid "Jaan ate all the soup."
-msgstr "Jaan ate all the soup."
-
-msgid "Jaan had some soup."
-msgstr "Jaan had some soup."
-
 msgid "Jaan has finished Mari’s book."
 msgstr "Jaan has finished Mari’s book."
+
+msgid "Jaan is repairing the car."
+msgstr "Jaan is repairing the car."
 
 msgid "Jaan loves Mari."
 msgstr "Jaan loves Mari."
 
-msgid "Jaan will eat all the soup."
-msgstr "Jaan will eat all the soup."
+msgid "Jaan repaired the car."
+msgstr "Jaan repaired the car."
 
-msgid "Kati got the work done."
-msgstr "Kati got the work done."
+msgid "Jaan was repairing the car."
+msgstr "Jaan was repairing the car."
 
-msgid "Kati was working."
-msgstr "Kati was working."
+msgid "Jaan will repair the car."
+msgstr "Jaan will repair the car."
 
-msgid "Kati will get the work done."
-msgstr "Kati will get the work done."
+msgid "Kati is making a salad."
+msgstr "Kati is making a salad."
+
+msgid "Kati made a salad."
+msgstr "Kati made a salad."
+
+msgid "Kati was making a salad."
+msgstr "Kati was making a salad."
+
+msgid "Kati will make a salad."
+msgstr "Kati will make a salad."
 
 msgid "key"
 msgstr "key"
@@ -400,23 +418,17 @@ msgstr "key"
 msgid "Kook, koogi, kooki."
 msgstr "Kook, koogi, kooki."
 
-msgid "Liis ate all the bread."
-msgstr "Liis ate all the bread."
-
 msgid "Liis bought a loaf of bread."
 msgstr "Liis bought a loaf of bread."
 
 msgid "Liis bought some bread."
 msgstr "Liis bought some bread."
 
-msgid "Liis had some bread."
-msgstr "Liis had some bread."
+msgid "Liis is buying some bread."
+msgstr "Liis is buying some bread."
 
 msgid "Liis will buy a loaf of bread."
 msgstr "Liis will buy a loaf of bread."
-
-msgid "Liis will eat all the bread."
-msgstr "Liis will eat all the bread."
 
 msgid "Liisa has found her key."
 msgstr "Liisa has found her key."
@@ -448,14 +460,17 @@ msgstr "Mari bought several things. Which did she buy one whole one of?"
 msgid "Mari hasn’t eaten the cake yet."
 msgstr "Mari hasn’t eaten the cake yet."
 
-msgid "Mari read the book to the end."
-msgstr "Mari read the book to the end."
+msgid "Mari is writing a book."
+msgstr "Mari is writing a book."
 
-msgid "Mari was reading the book."
-msgstr "Mari was reading the book."
+msgid "Mari was writing a book."
+msgstr "Mari was writing a book."
 
-msgid "Mari will read the book to the end."
-msgstr "Mari will read the book to the end."
+msgid "Mari will write a book."
+msgstr "Mari will write a book."
+
+msgid "Mari wrote a book."
+msgstr "Mari wrote a book."
 
 msgid "More than one whole thing, with no number before it, takes the plural with <0>-d</0> from lesson {plural}: <1/> <2/> After a number, the partitive singular: <3>kaks piletit</3>. Some of many things takes the plural partitive, which lesson {pluralPartitive} teaches."
 msgstr "More than one whole thing, with no number before it, takes the plural with <0>-d</0> from lesson {plural}: <1/> <2/> After a number, the partitive singular: <3>kaks piletit</3>. Some of many things takes the plural partitive, which lesson {pluralPartitive} teaches."
@@ -550,8 +565,8 @@ msgstr "Past: leidsin, I found."
 msgid "Pilet, pileti, piletit."
 msgstr "Pilet, pileti, piletit."
 
-msgid "Pronouns follow the same rule. For the whole person, the genitive, often the short <0>mu, su, ta</0>: <1>Ta viis mu koju.</1> Lesson {pronouns} has every form."
-msgstr "Pronouns follow the same rule. For the whole person, the genitive, often the short <0>mu, su, ta</0>: <1>Ta viis mu koju.</1> Lesson {pronouns} has every form."
+msgid "Pronouns are different. <0>Mina, sina, meie</0> and <1>teie</1> can take the partitive even for the whole person: <2>Ta viis mu koju</2> or <3>Ta viis mind koju</3>; <4>Ta viis meid koju</4>. In a command, only the partitive: <5>Vii mind koju!</5> <6>Ta</6> works like a noun: <7>Vii ta koju!</7> Lesson {pronouns} has every form."
+msgstr "Pronouns are different. <0>Mina, sina, meie</0> and <1>teie</1> can take the partitive even for the whole person: <2>Ta viis mu koju</2> or <3>Ta viis mind koju</3>; <4>Ta viis meid koju</4>. In a command, only the partitive: <5>Vii mind koju!</5> <6>Ta</6> works like a noun: <7>Vii ta koju!</7> Lesson {pronouns} has every form."
 
 msgid "Read the book to the end!"
 msgstr "Read the book to the end!"
@@ -622,14 +637,14 @@ msgstr "The genitive of kook."
 msgid "The object in a command"
 msgstr "The object in a command"
 
-msgid "The object, the thing a verb acts on, takes the genitive when the action takes in the whole of it, and the partitive when it takes in only part, or never finishes."
-msgstr "The object, the thing a verb acts on, takes the genitive when the action takes in the whole of it, and the partitive when it takes in only part, or never finishes."
-
-msgid "The partitive: some of it, or not finished."
-msgstr "The partitive: some of it, or not finished."
+msgid "The object, the thing a verb acts on, usually takes the genitive when the action takes in the whole of it, and the partitive when it takes in only part, or never finishes."
+msgstr "The object, the thing a verb acts on, usually takes the genitive when the action takes in the whole of it, and the partitive when it takes in only part, or never finishes."
 
 msgid "The past with the genitive: all of it, done."
 msgstr "The past with the genitive: all of it, done."
+
+msgid "The past with the partitive: some of it, or not finished."
+msgstr "The past with the partitive: some of it, or not finished."
 
 msgid "The present also covers the future, as lesson {future} says, and the object tells you which. With the partitive, it’s going on, with no end in view. With the genitive, it will get done: <0/>"
 msgstr "The present also covers the future, as lesson {future} says, and the object tells you which. With the partitive, it’s going on, with no end in view. With the genitive, it will get done: <0/>"
@@ -639,6 +654,9 @@ msgstr "The present with the genitive says it will get done."
 
 msgid "The present with the genitive: it will get done."
 msgstr "The present with the genitive: it will get done."
+
+msgid "The present with the partitive: going on now."
+msgstr "The present with the partitive: going on now."
 
 msgid "The same choice tells a finished action from one still going on. <0/> means you were reading, maybe not to the end. <1/> means you finished it."
 msgstr "The same choice tells a finished action from one still going on. <0/> means you were reading, maybe not to the end. <1/> means you finished it."

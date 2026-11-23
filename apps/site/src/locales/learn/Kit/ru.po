@@ -2445,6 +2445,9 @@ msgstr "Напиши по-эстонски."
 msgid "Write Mari a few lines: greet her, say who you are, what you do and where you live."
 msgstr "Напиши Мари несколько строк: поздоровайся, скажи, кто ты, чем занимаешься и где живёшь."
 
+msgid "Write something first, then compare."
+msgstr "Сначала напиши что-нибудь, а потом сравни."
+
 msgid "Write the question"
 msgstr "Напиши вопрос"
 

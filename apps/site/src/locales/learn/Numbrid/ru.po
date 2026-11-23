@@ -28,8 +28,8 @@ msgstr "<et>-teist</et> образует числа от одиннадцати 
 msgid "<et>-teist</et> or <et>-kümmend</et>"
 msgstr "<et>-teist</et> или <et>-kümmend</et>"
 
-msgid "<et>Kaks</et> has a short a and a k; <et>kuus</et> a long uu. <et>Kaheksa</et> starts with ka, <et>üheksa</et> with ü."
-msgstr "В <et>kaks</et> короткое a и k, в <et>kuus</et> — долгое uu. <et>Kaheksa</et> начинается с ka, <et>üheksa</et> — с ü."
+msgid "<et>Kaks</et> has a short a and a k before the s; <et>kuus</et> a long uu. <et>Kaheksa</et> starts with ka, <et>üheksa</et> with ü."
+msgstr "В <et>kaks</et> короткое a и k перед s, в <et>kuus</et> — долгое uu. <et>Kaheksa</et> начинается с ka, <et>üheksa</et> — с ü."
 
 msgid "<et>Tuhat</et> alone, with no “one” in front."
 msgstr "Только <et>tuhat</et>, без «один» перед ним."

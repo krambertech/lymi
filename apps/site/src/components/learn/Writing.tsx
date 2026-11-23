@@ -26,6 +26,7 @@ export function Writing({ id, title, prompt, model, src, checks }: WritingProps)
   const promptId = useId();
   const field = useRef<HTMLTextAreaElement>(null);
   const [value, setValue] = useState("");
+  const [empty, setEmpty] = useState(false);
   const [step, setStep] = useState<Step>("writing");
   const [ticked, setTicked] = useState<readonly boolean[]>(() => checks.map(() => false));
   const type = useLetters(field, value, setValue);
@@ -58,6 +59,7 @@ export function Writing({ id, title, prompt, model, src, checks }: WritingProps)
           className="grid w-full grid-cols-1 gap-2.5"
           onSubmit={(event) => {
             event.preventDefault();
+            setEmpty(!written);
             if (written) setStep("checking");
             else field.current?.focus();
           }}
@@ -67,7 +69,10 @@ export function Writing({ id, title, prompt, model, src, checks }: WritingProps)
             rows={4}
             lang="et"
             value={value}
-            onChange={(event) => setValue(event.target.value)}
+            onChange={(event) => {
+              setValue(event.target.value);
+              setEmpty(false);
+            }}
             autoCapitalize="sentences"
             autoCorrect="off"
             spellCheck={false}
@@ -76,6 +81,9 @@ export function Writing({ id, title, prompt, model, src, checks }: WritingProps)
             placeholder={t`Your text`}
             className="learn-answer min-h-32 w-full resize-y rounded-tile border border-edge-strong bg-plate px-4 py-3 text-xl font-medium placeholder:font-normal placeholder:text-ink-muted focus:outline-2 focus:outline-offset-1 focus:outline-(--form)"
           />
+          <p role="status" className="min-h-5 text-sm text-ink-muted">
+            {empty && <Trans>Write something first, then compare.</Trans>}
+          </p>
           <div className="flex flex-wrap items-center justify-between gap-2.5">
             <LetterKeys onLetter={type} />
             <Button type="submit" variant="primary" size="lg" className="ms-auto">

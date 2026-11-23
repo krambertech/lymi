@@ -24,8 +24,6 @@ const MEANS: Record<number, MessageDescriptor> = {
   6: msg`six`,
   8: msg`eight`,
   9: msg`nine`,
-  12: msg`twelve`,
-  20: msg`twenty`,
   17: msg`seventeen`,
   70: msg`seventy`,
 };
@@ -47,7 +45,7 @@ const heard = (n: number, other: number, rule: string, explain: MessageDescripto
   };
 };
 
-const ALIKE = msg`<et>Kaks</et> has a short a and a k; <et>kuus</et> a long uu. <et>Kaheksa</et> starts with ka, <et>üheksa</et> with ü.`;
+const ALIKE = msg`<et>Kaks</et> has a short a and a k before the s; <et>kuus</et> a long uu. <et>Kaheksa</et> starts with ka, <et>üheksa</et> with ü.`;
 
 const heardIn = (id: string, said: string, answer: string, wrong: string): ChoiceDrill => ({
   kind: "choice",

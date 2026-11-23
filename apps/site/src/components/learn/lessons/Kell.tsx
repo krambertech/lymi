@@ -470,7 +470,7 @@ const IN_WORDS = [
   at(9, 40),
 ];
 
-const PAST_OR_TO = [at(9, 10), at(5, 20), at(8, 5), at(6, 50), at(2, 40), at(11, 55)];
+const PAST_OR_TO = [at(9, 10), at(5, 20), at(8, 5), at(7, 50), at(2, 40), at(11, 55)];
 
 const otherHour = (hour: number, by: number) => ((hour - 1 + by + 12) % 12) + 1;
 

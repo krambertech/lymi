@@ -215,8 +215,6 @@ export const NUMBER_PASSAGE = [
 ] as const;
 
 export const NUMBER_DRILLED = [
-  "kaksteist",
-  "kakskümmend",
   "viisteist",
   "viiskümmend",
   "seitseteist",
@@ -231,17 +229,14 @@ export const NUMBER_DRILLED = [
   "üheksakümmend üks",
   "kuusteist",
   "kuuskümmend",
-  "kakssada",
   "nelisada",
   "tuhat",
-  "kaks tuhat",
   "kolm tuhat",
   "kolmsada",
   "Mul on kaks kassi.",
   "Mul on kuus kassi.",
   "Kohv maksab kaks eurot.",
   "Kohv maksab kuus eurot.",
-  "Minu korteri number on kaheksateist.",
 ] as const;
 
 /** The week from Monday, as the days lesson shows it. */
@@ -1231,6 +1226,10 @@ export const TUTVUMINE_ASKED = [
       "Te räägite eesti keelt või?",
       "Kas sa eesti keelt räägid?",
       "Kas te eesti keelt räägite?",
+      "Sina räägid eesti keelt või?",
+      "Teie räägite eesti keelt või?",
+      "Kas sina eesti keelt räägid?",
+      "Kas teie eesti keelt räägite?",
     ],
   },
   {
@@ -1247,6 +1246,10 @@ export const TUTVUMINE_ASKED = [
       "Te olete õpetaja või?",
       "Kas sa õpetaja oled?",
       "Kas te õpetaja olete?",
+      "Sina oled õpetaja või?",
+      "Teie olete õpetaja või?",
+      "Kas sina õpetaja oled?",
+      "Kas teie õpetaja olete?",
     ],
   },
   {
@@ -1300,6 +1303,8 @@ export const TUTVUMINE_TRANSLATED = [
       "Te elate Tallinnas või?",
       "Sina elad Tallinnas või?",
       "Teie elate Tallinnas või?",
+      "Kas sina Tallinnas elad?",
+      "Kas teie Tallinnas elate?",
     ],
   },
   {

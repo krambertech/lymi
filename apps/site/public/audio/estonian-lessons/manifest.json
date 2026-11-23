@@ -11204,16 +11204,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "numbrid/kaksteist": {
-    "text": "kaksteist",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "numbrid/kaksku2mmend": {
-    "text": "kakskümmend",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "numbrid/viisteist": {
     "text": "viisteist",
     "model": "eleven_v4",
@@ -11274,18 +11264,8 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "numbrid/kakssada": {
-    "text": "kakssada",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "numbrid/tuhat": {
     "text": "tuhat",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "numbrid/kaks-tuhat": {
-    "text": "kaks tuhat",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -11306,11 +11286,6 @@
   },
   "numbrid/kohv-maksab-kaks-eurot": {
     "text": "Kohv maksab kaks eurot.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "numbrid/minu-korteri-number-on-kaheksateist": {
-    "text": "Minu korteri number on kaheksateist.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },

@@ -1224,7 +1224,13 @@ export const MUL_ON_SAY = [
   {
     id: "abi",
     said: "Mul on vaja abi.",
-    also: ["Minul on vaja abi.", "Mul on abi vaja.", "Ma vajan abi.", "Mina vajan abi."],
+    also: [
+      "Minul on vaja abi.",
+      "Mul on abi vaja.",
+      "Ma vajan abi.",
+      "Mina vajan abi.",
+      "Vajan abi.",
+    ],
   },
 ] as const;
 
@@ -3521,12 +3527,15 @@ export const INNER_SAY = [
       "Kust sa oled pärit?",
       "Kust te pärit olete?",
       "Kust te olete pärit?",
+      "Kust teie olete pärit?",
+      "Kust teie pärit olete?",
       "Kust sina pärit oled?",
       "Kust sina oled pärit?",
       "Kust oled pärit?",
       "Kust olete pärit?",
       "Kust sa oled?",
       "Kust te olete?",
+      "Kust teie olete?",
       "Kust sina oled?",
       "Kust oled?",
       "Kust olete?",
@@ -4185,12 +4194,19 @@ export const OBJECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Mina leidsin oma võtme.",
     "Leidsin võtme.",
     "Leidsin oma võtme.",
+    "Ma leidsin võtme üles.",
+    "Ma leidsin oma võtme üles.",
+    "Mina leidsin võtme üles.",
+    "Leidsin võtme üles.",
+    "Mina leidsin oma võtme üles.",
+    "Leidsin oma võtme üles.",
   ],
   "Söö supp ära!": [
     "Söö supp ära!",
     "Sööge supp ära!",
     "Söö kogu supp ära!",
     "Sööge kogu supp ära!",
+    "Söö supp kõik ära!",
   ],
   "Ma jõin vett.": [
     "Ma jõin vett.",
@@ -4207,6 +4223,9 @@ export const OBJECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Ma jõin kogu vee ära.",
     "Jõin kogu vee ära.",
     "Mina jõin kogu vee ära.",
+    "Ma jõin vee kõik ära.",
+    "Mina jõin vee kõik ära.",
+    "Jõin vee kõik ära.",
   ],
   "Ma söön supi ära.": [
     "Ma söön supi ära.",
@@ -4244,8 +4263,8 @@ export const OBJECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Ärge sööge suppi!",
     "Ärge sööge suppi ära!",
   ],
-  "Söö kook ära!": ["Söö kook ära!", "Sööge kook ära!"],
-  "Tee töö ära!": ["Tee töö ära!", "Tehke töö ära!"],
+  "Söö kook ära!": ["Söö kook ära!", "Sööge kook ära!", "Söö kogu kook ära!"],
+  "Tee töö ära!": ["Tee töö ära!", "Tehke töö ära!", "Tee oma töö ära!"],
 };
 
 const OBJECT_CLIPS: Record<string, Clip> = {
@@ -4479,8 +4498,8 @@ export const GRADATION_DRILL = [
 ] as const;
 
 export const GRADATION_ANSWERS: Record<string, readonly [string, ...string[]]> = {
-  "Kati on toas.": ["Kati on toas."],
-  "Jaan on pangas.": ["Jaan on pangas."],
+  "Kati on toas.": ["Kati on toas.", "Toas on Kati."],
+  "Jaan on pangas.": ["Jaan on pangas.", "Pangas on Jaan."],
   "Lapsed on pargis.": ["Lapsed on pargis.", "Pargis on lapsed."],
   "Me oleme rannas.": [
     "Me oleme rannas.",
@@ -4659,7 +4678,7 @@ export const PLURAL_PART_TRANSLATE = [
 export const PLURAL_PART_PARTY = [
   "Täna on Kati sünnipäev.",
   "Ta ostis poest õunu ja banaane.",
-  "Külalisi tuleb palju.",
+  "Õhtul tuleb palju külalisi.",
   "Kati sõbrad toovad lilli.",
   "Lapsed laulavad laule.",
 ] as const;
@@ -4757,7 +4776,7 @@ export const PLURAL_PART_DRILL = [
 export const PLURAL_PART_ANSWERS: Record<string, readonly [string, ...string[]]> = {
   "Mul on palju raamatuid.": ["Mul on palju raamatuid.", "Minul on palju raamatuid."],
   "Mul on kaks last.": ["Mul on kaks last.", "Minul on kaks last."],
-  "Lapsed on kodus.": ["Lapsed on kodus."],
+  "Lapsed on kodus.": ["Lapsed on kodus.", "Kodus on lapsed."],
   "Poes on õunu.": ["Poes on õunu.", "Poes on õunasid."],
   "Ma ostsin õunad.": ["Ma ostsin õunad.", "Mina ostsin õunad.", "Ostsin õunad."],
   "Mul ei ole autosid.": [
@@ -4765,6 +4784,10 @@ export const PLURAL_PART_ANSWERS: Record<string, readonly [string, ...string[]]>
     "Mul pole autosid.",
     "Minul ei ole autosid.",
     "Minul pole autosid.",
+    "Mul pole ühtegi autot.",
+    "Mul ei ole ühtegi autot.",
+    "Minul pole ühtegi autot.",
+    "Minul ei ole ühtegi autot.",
   ],
   "Ma armastan linde.": [
     "Ma armastan linde.",

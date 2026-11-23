@@ -101,7 +101,7 @@ msgid "Asking questions"
 msgstr "Вопросы"
 
 msgid "Asks Mari a question."
-msgstr "Вопрос к Мари."
+msgstr "Есть вопрос к Мари."
 
 msgid "At a school"
 msgstr "В школе"
@@ -158,7 +158,7 @@ msgid "Goodbye"
 msgstr "До свидания"
 
 msgid "Has a sentence with <0>ei</0> and the verb without its ending."
-msgstr "Предложение с <0>ei</0> и глаголом без окончания."
+msgstr "Есть предложение с <0>ei</0> и глаголом без окончания."
 
 msgid "he or she drinks"
 msgstr "он или она пьёт"

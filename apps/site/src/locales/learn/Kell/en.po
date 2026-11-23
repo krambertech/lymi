@@ -185,8 +185,8 @@ msgstr "Listening only, no microphone"
 msgid "Listening: a message from Mari"
 msgstr "Listening: a message from Mari"
 
-msgid "Mari is at home now."
-msgstr "Mari is at home now."
+msgid "Mari is at work now."
+msgstr "Mari is at work now."
 
 msgid "Mari leaves Jaan a message about her afternoon. Without <0>on</0>, <1/> says when: at six. Listen for each time."
 msgstr "Mari leaves Jaan a message about her afternoon. Without <0>on</0>, <1/> says when: at six. Listen for each time."

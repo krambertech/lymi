@@ -185,8 +185,8 @@ msgstr "Лише слухання, без мікрофона"
 msgid "Listening: a message from Mari"
 msgstr "На слух: повідомлення від Марі"
 
-msgid "Mari is at home now."
-msgstr "Зараз Марі вдома."
+msgid "Mari is at work now."
+msgstr "Зараз Марі на роботі."
 
 msgid "Mari leaves Jaan a message about her afternoon. Without <0>on</0>, <1/> says when: at six. Listen for each time."
 msgstr "Марі залишає Яанові повідомлення про свій день. Без <0>on</0> <1/> означає «коли»: о шостій. Слухай кожен час."

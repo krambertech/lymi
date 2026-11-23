@@ -101,7 +101,7 @@ msgid "Asking questions"
 msgstr "Питання"
 
 msgid "Asks Mari a question."
-msgstr "Питання до Марі."
+msgstr "Є питання до Марі."
 
 msgid "At a school"
 msgstr "У школі"
@@ -158,7 +158,7 @@ msgid "Goodbye"
 msgstr "До побачення"
 
 msgid "Has a sentence with <0>ei</0> and the verb without its ending."
-msgstr "Речення з <0>ei</0> і дієсловом без закінчення."
+msgstr "Є речення з <0>ei</0> і дієсловом без закінчення."
 
 msgid "he or she drinks"
 msgstr "він чи вона п’є"

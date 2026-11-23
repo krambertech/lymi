@@ -655,7 +655,7 @@ export function KellLesson() {
         answer: "130",
         line: 1,
       },
-      { id: "work", kind: "truefalse", ask: t`Mari is at home now.`, answer: false, line: 2 },
+      { id: "work", kind: "truefalse", ask: t`Mari is at work now.`, answer: true, line: 2 },
       {
         id: "home",
         ask: t`When is Mari at home?`,

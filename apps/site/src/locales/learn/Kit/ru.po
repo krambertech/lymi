@@ -747,8 +747,8 @@ msgstr "Найдено, почти исправлено"
 msgid "Found, not fixed"
 msgstr "Найдено, не исправлено"
 
-msgid "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
-msgstr "Бесплатная разговорная практика эстонского для начинающих: скажи, как тебя зовут, откуда ты, где живёшь и работаешь, отвечай на вопросы «да или нет» и задавай свои. Каждый разговор и каждый текст озвучены."
+msgid "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions, ask your own and write a short message. Every conversation and passage is read aloud."
+msgstr "Бесплатная разговорная практика эстонского для начинающих: скажи, как тебя зовут, откуда ты, где живёшь и работаешь, отвечай на вопросы «да или нет», задавай свои и напиши короткое сообщение. Каждый разговор и каждый текст озвучены."
 
 msgid "Free Estonian decks in Lymi"
 msgstr "Бесплатные эстонские колоды в Lymi"

@@ -16,8 +16,8 @@ msgstr "<0/> — про разрешение. С <1>ei</1> это «нельзя
 msgid "<0/> is for what you learned. To say you know how to swim: <1/> <2/> says nothing stops you: <3/>"
 msgstr "<0/> — про умение. Чтобы сказать, что умеешь плавать: <1/> <2/> говорит, что тебе ничто не мешает: <3/>"
 
-msgid "<0/> is I have to, and it takes the <1>-ma</1> form from lesson {infinitives}: <2/>"
-msgstr "<0/> — это «мне надо», и после него идёт форма на <1>-ma</1> из урока {infinitives}: <2/>"
+msgid "<0/> is I have to, and it takes the <1>-ma</1> infinitive from lesson {infinitives}: <2/>"
+msgstr "<0/> — это «мне надо», и после него идёт инфинитив на <1>-ma</1> из урока {infinitives}: <2/>"
 
 msgid "<0/> is must, but <1>ei pea</1> is don’t have to: <2/> For mustn’t, Estonian switches to <3>ei tohi</3>: <4/> <5/>, no need, also leaves it to you. Tap one to hear it said about swimming."
 msgstr "<0/> — это «надо», но <1>ei pea</1> — не «нельзя», а «не обязательно»: <2/> Для «нельзя» в эстонском другой глагол, <3>ei tohi</3>: <4/> <5/>, «не нужно», тоже оставляет выбор тебе. Коснись любого, чтобы услышать, как это говорят о плавании."
@@ -25,11 +25,11 @@ msgstr "<0/> — это «надо», но <1>ei pea</1> — не «нельзя
 msgid "<0/> says something is allowed, and you also offer with it: <1/> To let someone do something: <2/>"
 msgstr "<0/> — когда ты разрешаешь или предлагаешь. Так предлагают: <1/> И так разрешают: <2/>"
 
-msgid "<0/> with the <1>-da</1> form says something has to be done, without naming who: <2/> Put a person in the <3>-l</3> form from lesson {having} to make it theirs: <4/>"
-msgstr "<0/> с формой на <1>-da</1> говорит, что что-то надо сделать, и не называет кому: <2/> Чтобы сказать кому, добавь человека в форме на <3>-l</3> из урока {having}: <4/>"
+msgid "<0/> with the <1>-da</1> infinitive says something has to be done, without naming who: <2/> Put a person in the <3>-l</3> form from lesson {having} to make it theirs: <4/>"
+msgstr "<0/> с инфинитивом на <1>-da</1> говорит, что что-то надо сделать, и не называет кому: <2/> Чтобы сказать кому, добавь человека в форме на <3>-l</3> из урока {having}: <4/>"
 
-msgid "<0/>, I need, takes the <1>-da</1> form of a verb: <2/> Tap a form to hear its sentence."
-msgstr "После <0/>, «мне нужно», глагол стоит в форме на <1>-da</1>: <2/> Коснись формы, чтобы услышать предложение."
+msgid "<0/>, I need, takes the <1>-da</1> infinitive of a verb: <2/> Tap a form to hear its sentence."
+msgstr "После <0/>, «мне нужно», глагол стоит в инфинитиве на <1>-da</1>: <2/> Коснись формы, чтобы услышать предложение."
 
 msgid "<0>Ei oska</0> says you never learned. You learned as a child."
 msgstr "<0>Ei oska</0> значит, что ты не умеешь. А тебя научили ещё в детстве."
@@ -52,8 +52,8 @@ msgstr "<0>Oskan</0> — про умение: <1>Ma oskan ujuda.</1> <2>Saan</2>
 msgid "<0>Oskan</0>: you learned how."
 msgstr "<0>Oskan</0>: ты это умеешь."
 
-msgid "<0>Pean</0> is I have to. <1>Tuleb</1> with the <2>-da</2> form says it has to be done, naming no one. <3>Mul on vaja</3> is I need to."
-msgstr "<0>Pean</0> — это «мне надо». <1>Tuleb</1> с формой на <2>-da</2> говорит, что что-то надо сделать, и никого не называет. <3>Mul on vaja</3> — это «мне нужно»."
+msgid "<0>Pean</0> is I have to. <1>Tuleb</1> with the <2>-da</2> infinitive says it has to be done, naming no one. <3>Mul on vaja</3> is I need to."
+msgstr "<0>Pean</0> — это «мне надо». <1>Tuleb</1> с инфинитивом на <2>-da</2> говорит, что что-то надо сделать, и никого не называет. <3>Mul on vaja</3> — это «мне нужно»."
 
 msgid "<0>Pean</0> says you have to come. Nobody makes you; you’re free."
 msgstr "<0>Pean</0> значит, что тебе надо прийти. Тебя никто не заставляет, у тебя просто свободный день."
@@ -91,8 +91,8 @@ msgstr "Не умею, не могу, нельзя, не обязательно"
 msgid "don’t have to"
 msgstr "не обязательно"
 
-msgid "English says I can for both. Both take the <0>-da</0> form, as lesson {infinitives} showed. Tap a form to hear its sentence."
-msgstr "По-русски это тоже разные слова: «умею» и «могу». После обоих идёт форма на <0>-da</0>, как показал урок {infinitives}. Коснись формы, чтобы услышать предложение."
+msgid "English says I can for both. Both take the <0>-da</0> infinitive, as lesson {infinitives} showed. Tap a form to hear its sentence."
+msgstr "По-русски это тоже разные слова: «умею» и «могу». После обоих идёт инфинитив на <0>-da</0>, как показал урок {infinitives}. Коснись формы, чтобы услышать предложение."
 
 msgid "From oskama."
 msgstr "От oskama."
@@ -106,8 +106,8 @@ msgstr "От saama, которое значит ещё и «получать»."
 msgid "From tohtima."
 msgstr "От tohtima."
 
-msgid "From tulema, to come. Before a -da form it means has to."
-msgstr "От tulema, «приходить». Перед формой на -da значит «надо»."
+msgid "From tulema, to come. Before a -da infinitive it means has to."
+msgstr "От tulema, «приходить». Перед инфинитивом на -da значит «надо»."
 
 msgid "From võima."
 msgstr "От võima."
@@ -254,11 +254,11 @@ msgstr "Я не против."
 msgid "It’s up to you."
 msgstr "Решать тебе."
 
-msgid "Its -da form is ujuda."
-msgstr "Его форма на -da — ujuda."
+msgid "Its -da infinitive is ujuda."
+msgstr "Его инфинитив на -da — ujuda."
 
-msgid "Like <0>mul on vaja</0>: the person in the <1>-l</1> form, then the <2>-da</2> form. It means the same as <3>ei pea</3>."
-msgstr "Как и в <0>mul on vaja</0>: человек в форме на <1>-l</1>, потом форма на <2>-da</2>. Значит то же, что <3>ei pea</3>."
+msgid "Like <0>mul on vaja</0>: the person in the <1>-l</1> form, then the <2>-da</2> infinitive. It means the same as <3>ei pea</3>."
+msgstr "Как и в <0>mul on vaja</0>: человек в форме на <1>-l</1>, потом инфинитив на <2>-da</2>. Значит то же, что <3>ei pea</3>."
 
 msgid "Listen to each sentence and pick what it means."
 msgstr "Послушай каждое предложение и выбери, что оно значит."
@@ -404,8 +404,8 @@ msgstr "Почему этот глагол?"
 msgid "With a language, <0/> needs no second verb: <1/>"
 msgstr "С названием языка <0/> обходится без второго глагола: <1/>"
 
-msgid "With the <0>-ma</0> form, <1/> still means comes: <2/> Only with the <3>-da</3> form does it mean has to: <4/>"
-msgstr "С формой на <0>-ma</0> <1/> так и значит «приходит», «идёт»: <2/> «Надо» оно значит только с формой на <3>-da</3>: <4/>"
+msgid "With the <0>-ma</0> infinitive, <1/> still means comes: <2/> Only with the <3>-da</3> infinitive does it mean has to: <4/>"
+msgstr "С инфинитивом на <0>-ma</0> <1/> так и значит «приходит», «идёт»: <2/> «Надо» оно значит только с инфинитивом на <3>-da</3>: <4/>"
 
 msgid "You can sit here."
 msgstr "Можешь здесь сесть."

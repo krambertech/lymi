@@ -77,8 +77,8 @@ msgstr "Книгу"
 msgid "A few everyday verbs take <0>i-</0> instead, and several change their stem too: <1/>, <2/>, I ate; <3/>, <4/>, I went. Learn them one by one, as you learned <5>lugema</5> with <6>loen</6>."
 msgstr "Несколько повседневных глаголов вместо этого получают <0>i-</0>, и у некоторых из них ещё и меняется основа: <1/> — <2/>, <3/> — <4/>. Запоминай их по одному, как пару <5>lugema</5> — <6>loen</6>."
 
-msgid "A few everyday verbs take <0>i-</0> on the stem of the <1>ma</1> form: <2>olin, tulin, tegin, nägin</2>. Three change the stem: <3>läksin, sõin, jõin</3>. <4>Ta</4> ends in <5>i</5>, as in <6>ta oli</6>, except <7>ta läks</7>."
-msgstr "Несколько повседневных глаголов добавляют <0>i-</0> к основе формы на <1>ma</1>: <2>olin, tulin, tegin, nägin</2>. Три меняют основу: <3>läksin, sõin, jõin</3>. Форма для <4>ta</4> заканчивается на <5>i</5>, как <6>ta oli</6>, кроме <7>ta läks</7>."
+msgid "A few everyday verbs take <0>i-</0> on the stem of the <1>-ma</1> infinitive: <2>olin, tulin, tegin, nägin</2>. Three change the stem: <3>läksin, sõin, jõin</3>. <4>Ta</4> ends in <5>i</5>, as in <6>ta oli</6>, except <7>ta läks</7>."
+msgstr "Несколько повседневных глаголов добавляют <0>i-</0> к основе инфинитива на <1>-ma</1>: <2>olin, tulin, tegin, nägin</2>. Три меняют основу: <3>läksin, sõin, jõin</3>. Форма для <4>ta</4> заканчивается на <5>i</5>, как <6>ta oli</6>, кроме <7>ta läks</7>."
 
 msgid "A new stem, <0>läks-</0>, then <1>in</1>. Now it’s <2>lähen</2>."
 msgstr "Новая основа, <0>läks-</0>, потом <1>in</1>. В настоящем — <2>lähen</2>."
@@ -292,17 +292,17 @@ msgstr "Суббота Мари"
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Почти все. Переслушай ещё раз те, где были ошибки."
 
-msgid "Most verbs build the past on the <0>ma</0> form. Take off <1>ma</1> and add <2>sin</2> for I: <3/>, <4/>."
-msgstr "Большинство глаголов строит прошедшее время от формы на <0>ma</0>. Отбрось <1>ma</1> и добавь <2>sin</2> для «я»: <3/>, <4/>."
+msgid "Most verbs build the past on the <0>-ma</0> infinitive. Take off <1>ma</1> and add <2>sin</2> for I: <3/>, <4/>."
+msgstr "Большинство глаголов строит прошедшее время от инфинитива на <0>-ma</0>. Отбрось <1>ma</1> и добавь <2>sin</2> для «я»: <3/>, <4/>."
 
-msgid "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form; a few everyday verbs take <2>i-</2>. An ending for each person says who did it."
-msgstr "Большинство глаголов добавляет <0>si-</0> к основе формы на <1>ma</1>, несколько повседневных — <2>i-</2>. А окончание показывает, кто это сделал."
+msgid "Most verbs put <0>si-</0> on the stem of the <1>-ma</1> infinitive; a few everyday verbs take <2>i-</2>. An ending for each person says who did it."
+msgstr "Большинство глаголов добавляет <0>si-</0> к основе инфинитива на <1>-ma</1>, несколько повседневных — <2>i-</2>. А окончание показывает, кто это сделал."
 
-msgid "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
-msgstr "Большинство глаголов добавляет <0>si-</0> к основе формы на <1>ma</1>: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
+msgid "Most verbs put <0>si-</0> on the stem of the <1>-ma</1> infinitive: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
+msgstr "Большинство глаголов добавляет <0>si-</0> к основе инфинитива на <1>-ma</1>: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
 
-msgid "Most verbs: <0>si-</0> on the stem of the <1>ma</1> form."
-msgstr "Большинство глаголов: <0>si-</0> после основы формы на <1>ma</1>."
+msgid "Most verbs: <0>si-</0> on the stem of the <1>-ma</1> infinitive."
+msgstr "Большинство глаголов: <0>si-</0> после основы инфинитива на <1>-ma</1>."
 
 msgid "Nearly. Tap the past forms in the table once more."
 msgstr "Почти. Ещё раз послушай формы прошедшего времени в таблице."
@@ -362,8 +362,8 @@ msgstr "Окончания те же, что после <0>si-</0>: <1>sõin, s�
 msgid "The other persons take the present’s endings after <0>si-</0>, with two changes. <1>Ta</1> has only <2>s</2>: <3/>. <4>Nad</4> has <5>sid</5>, the same as <6>sa</6>: <7/>. Pick a verb and tap a form."
 msgstr "Остальные лица после <0>si-</0> берут окончания настоящего времени, с двумя изменениями. У <1>ta</1> только <2>s</2>: <3/>. У <4>nad</4> — <5>sid</5>, так же, как у <6>sa</6>: <7/>. Выбери глагол и коснись формы."
 
-msgid "The past keeps the stem of the <0>ma</0> form where the present changes it. You say <1/> now but <2/> in the past, because the past comes from <3/>. In the same way, <4/> is now and <5/> the past. Lesson {verbForms} puts the <6>ma</6> form beside the I form."
-msgstr "Прошедшее время сохраняет основу формы на <0>ma</0> там, где настоящее её меняет. Сейчас говорят <1/>, а в прошлом <2/>, потому что прошедшее образуется от <3/>. Так же <4/> — настоящее, а <5/> — прошедшее. Форму на <6>ma</6> рядом с формой для «я» показывает урок {verbForms}."
+msgid "The past keeps the stem of the <0>-ma</0> infinitive where the present changes it. You say <1/> now but <2/> in the past, because the past comes from <3/>. In the same way, <4/> is now and <5/> the past. Lesson {verbForms} puts the <6>-ma</6> infinitive beside the present."
+msgstr "Прошедшее время сохраняет основу инфинитива на <0>-ma</0> там, где настоящее её меняет. Сейчас говорят <1/>, а в прошлом <2/>, потому что прошедшее образуется от <3/>. Так же <4/> — настоящее, а <5/> — прошедшее. Инфинитив на <6>-ma</6> рядом с формой настоящего времени показывает урок {verbForms}."
 
 msgid "The past with -i-"
 msgstr "Прошедшее время с -i-"

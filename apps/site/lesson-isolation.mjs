@@ -2,7 +2,7 @@ const LESSON_MODULE = /\/apps\/site\/src\/(?:components\/learn|lib\/learn|locale
 const LESSON_ENTRY =
   /\/components\/islands\/(?:LearnHubPage|LearnLessonPage|LearnReload|LearnReviewPage|LessonKitPage|LessonKitReload)\.tsx$/;
 
-/** @type {(bundle: Record<string, { type: string, fileName: string, moduleIds?: string[], imports?: string[], isEntry?: boolean, facadeModuleId?: string | null }>) => string[]} */
+/** @type {(bundle: Record<string, { type: string, fileName: string, moduleIds?: string[], imports?: string[], dynamicImports?: string[], isEntry?: boolean, facadeModuleId?: string | null }>) => string[]} */
 export const leakedLessonChunks = (bundle) => {
   const entries = Object.values(bundle).filter(
     (output) =>
@@ -18,7 +18,7 @@ export const leakedLessonChunks = (bundle) => {
       seen.add(name);
       const module = output.moduleIds?.find((id) => LESSON_MODULE.test(id));
       if (module) return [`${entry.facadeModuleId ?? entry.fileName} loads ${module}`];
-      queue.push(...(output.imports ?? []));
+      queue.push(...(output.imports ?? []), ...(output.dynamicImports ?? []));
     }
     return [];
   });

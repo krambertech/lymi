@@ -169,6 +169,9 @@ msgstr "Для удовольствия."
 msgid "For his family."
 msgstr "Ради семьи."
 
+msgid "For work."
+msgstr "Из-за работы."
+
 msgid "from, by birth"
 msgstr "родом из"
 
@@ -177,9 +180,6 @@ msgstr "Вернись к переключателю с <0>kas</0> в начал
 
 msgid "He or she is at home."
 msgstr "Он или она дома."
-
-msgid "He works in Tartu."
-msgstr "Он работает в Тарту."
 
 msgid "Hear a question and pick its question word. It always comes first, so listen to the start."
 msgstr "Послушай вопрос и выбери вопросительное слово. Оно всегда первое, так что слушай начало."

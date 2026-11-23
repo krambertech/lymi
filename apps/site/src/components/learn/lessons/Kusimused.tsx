@@ -557,7 +557,7 @@ export function KusimusedLesson() {
         ask: t`Why is Jaan learning Estonian?`,
         options: [
           { id: "fun", label: t`For fun.` },
-          { id: "work", label: t`He works in Tartu.` },
+          { id: "work", label: t`For work.` },
           { id: "school", label: t`For his family.` },
         ],
         answer: "work",

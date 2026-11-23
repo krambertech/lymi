@@ -137,7 +137,7 @@ msgid "He or she studies at school."
 msgstr "Він або вона вчиться в школі."
 
 msgid "He’s studying at school."
-msgstr "Він навчається в школі."
+msgstr "Він вчиться в школі."
 
 msgid "Hear a sentence and pick the place. Listen for the word that ends in <0>-s</0>."
 msgstr "Послухай речення й обери місце. Слухай слово, яке закінчується на <0>-s</0>."

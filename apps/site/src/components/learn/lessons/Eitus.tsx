@@ -787,9 +787,9 @@ export function EitusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each round shows a verb with its ending, such as <b lang="et">elavad</b>. Type
+                    Each round shows a verb with its ending, such as <b lang="et">teevad</b>. Type
                     the form that follows <span lang="et">ei</span>: drop the ending, so{" "}
-                    <b lang="et">elavad</b> becomes <b lang="et">ei ela</b>.
+                    <b lang="et">teevad</b> becomes <b lang="et">ei tee</b>.
                   </Trans>
                 </p>
               </Prose>
@@ -990,7 +990,7 @@ export function EitusLesson() {
                       Nearly. Look at the word right after <span lang="et">ei</span>.
                     </Trans>
                   ) : (
-                    <Trans>Go back to the two switches above, then try again.</Trans>
+                    <Trans>Flip the six lines at the top and the <span lang="et">olema</span> lines once more, then try again.</Trans>
                   )
                 }
                 recall={fixRecall}

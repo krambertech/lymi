@@ -472,7 +472,9 @@ export const KUSIMUSED_ASKED = [
       "Miks te olete kodus?",
       "Miks te kodus olete?",
       "Miks sina oled kodus?",
+      "Miks sina kodus oled?",
       "Miks teie olete kodus?",
+      "Miks teie kodus olete?",
       "Miks oled kodus?",
       "Miks olete kodus?",
     ],
@@ -512,7 +514,16 @@ export const KUSIMUSED_ASKED = [
 ] as const;
 
 export const KUSIMUSED_TRANSLATED = [
-  { kind: "kas", answers: ["Kas te elate Tartus?", "Kas teie elate Tartus?", "Kas elate Tartus?"] },
+  {
+    kind: "kas",
+    answers: [
+      "Kas te elate Tartus?",
+      "Kas teie elate Tartus?",
+      "Kas elate Tartus?",
+      "Kas te Tartus elate?",
+      "Kas teie Tartus elate?",
+    ],
+  },
   {
     kind: "word",
     answers: [

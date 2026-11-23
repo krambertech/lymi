@@ -136,8 +136,8 @@ msgstr "не работаю, не работает и т. д."
 msgid "Each person has its own: -n, -d, -b, -me, -te, -vad."
 msgstr "У каждого лица своё: -n, -d, -b, -me, -te, -vad."
 
-msgid "Each round shows a verb with its ending, such as <0>elavad</0>. Type the form that follows <1>ei</1>: drop the ending, so <2>elavad</2> becomes <3>ei ela</3>."
-msgstr "В каждом раунде есть глагол с окончанием, например <0>elavad</0>. Напиши форму, которая идёт после <1>ei</1>: отбрось окончание, и <2>elavad</2> становится <3>ei ela</3>."
+msgid "Each round shows a verb with its ending, such as <0>teevad</0>. Type the form that follows <1>ei</1>: drop the ending, so <2>teevad</2> becomes <3>ei tee</3>."
+msgstr "В каждом раунде есть глагол с окончанием, например <0>teevad</0>. Напиши форму, которая идёт после <1>ei</1>: отбрось окончание, и <2>teevad</2> становится <3>ei tee</3>."
 
 msgid "Ei before the verb"
 msgstr "Ei перед глаголом"
@@ -160,6 +160,9 @@ msgstr "Исправь предложение"
 msgid "Flip the six lines above once more, then come back."
 msgstr "Ещё раз переключи шесть строк выше и возвращайся."
 
+msgid "Flip the six lines at the top and the <0>olema</0> lines once more, then try again."
+msgstr "Ещё раз переключи шесть строк в начале урока и строки с <0>olema</0>, а потом попробуй снова."
+
 msgid "Flip the six lines at the top once more, then try again."
 msgstr "Ещё раз переключи шесть строк в начале урока, а потом попробуй снова."
 
@@ -168,9 +171,6 @@ msgstr "От lugema, «читать»."
 
 msgid "From rääkima, to speak."
 msgstr "От rääkima, «говорить»."
-
-msgid "Go back to the two switches above, then try again."
-msgstr "Вернись к двум переключателям выше, а потом попробуй ещё раз."
 
 msgid "He doesn’t speak."
 msgstr "Он не говорит."

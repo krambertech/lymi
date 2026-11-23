@@ -37,7 +37,7 @@ msgstr "<et>{0} {verb}</et>; краткая форма — <et>{short} {verb}</e
 
 #. placeholder {0}: capital(pronoun)
 msgid "<et>{0}</et> takes <et>{verb}</et>."
-msgstr "С <et>{0}</et> идёт <et>{verb}</et>."
+msgstr "<et>{0}</et>: форма <et>{verb}</et>."
 
 msgid "<et>Oled</et> can only be you are, to one person."
 msgstr "<et>Oled</et> — это только «ты есть»."

@@ -234,7 +234,7 @@ msgid "Some verbs keep the stem of the -ma form: <0/>, <1/>. In others the stem 
 msgstr "Одні дієслова зберігають основу форми на -ma: <0/>, <1/>. В інших основа змінюється, і з форми на -ma цього не видно, тож запам’ятовуй форму для «я»: <2/>, <3/>."
 
 msgid "Sort the verbs. Tap one to hear its I form."
-msgstr "Розклади дієслова. Натисни на дієслово, щоб почути форму для «я»."
+msgstr "Розклади дієслова по групах. Натисни на дієслово, щоб почути форму для «я»."
 
 msgid "Stem {stem}-: ma {form}."
 msgstr "Основа {stem}-: ma {form}."

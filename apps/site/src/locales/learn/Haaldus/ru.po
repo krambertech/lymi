@@ -92,7 +92,7 @@ msgid "bed"
 msgstr "кровать"
 
 msgid "bucket handle"
-msgstr "дужка"
+msgstr "дужка ведра"
 
 msgid "carry!"
 msgstr "неси!"

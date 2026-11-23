@@ -92,7 +92,7 @@ msgid "bed"
 msgstr "ліжко"
 
 msgid "bucket handle"
-msgstr "дужка"
+msgstr "дужка відра"
 
 msgid "carry!"
 msgstr "неси!"
@@ -164,7 +164,7 @@ msgid "I"
 msgstr "я"
 
 msgid "into town"
-msgstr "до міста"
+msgstr "у місто"
 
 msgid "Into town"
 msgstr "До міста"

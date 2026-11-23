@@ -3632,8 +3632,20 @@ export const OBJECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Leidsin võtme.",
     "Leidsin oma võtme.",
   ],
-  "Söö supp ära!": ["Söö supp ära!", "Sööge supp ära!"],
-  "Ma jõin vett.": ["Ma jõin vett.", "Mina jõin vett.", "Jõin vett."],
+  "Söö supp ära!": [
+    "Söö supp ära!",
+    "Sööge supp ära!",
+    "Söö kogu supp ära!",
+    "Sööge kogu supp ära!",
+  ],
+  "Ma jõin vett.": [
+    "Ma jõin vett.",
+    "Mina jõin vett.",
+    "Jõin vett.",
+    "Ma jõin natuke vett.",
+    "Mina jõin natuke vett.",
+    "Jõin natuke vett.",
+  ],
   "Ma jõin vee ära.": [
     "Ma jõin vee ära.",
     "Mina jõin vee ära.",

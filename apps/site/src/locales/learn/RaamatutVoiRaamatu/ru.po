@@ -73,8 +73,8 @@ msgstr "Команда с <0>ära</0>, «не», — это отрицание, 
 msgid "A sentence, a command and a don’t"
 msgstr "Предложение, команда и запрет"
 
-msgid "A small word after the verb can give it an end, and then the object takes the genitive: <0>Ma otsisin hosteli üles</0>, I found the hostel, and <1>Me ootame Mari ära</1>, we’ll wait until Mari comes."
-msgstr "Короткое слово после глагола может делать действие завершённым, и тогда объект стоит в родительном: <0>Ma otsisin hosteli üles</0>, я нашёл хостел, и <1>Me ootame Mari ära</1>, мы дождёмся Мари."
+msgid "A small word after the verb can give it an end, and then a noun object usually takes the genitive: <0>Ma otsisin hosteli üles</0>, I found the hostel, and <1>Me ootame Mari ära</1>, we’ll wait until Mari comes."
+msgstr "Короткое слово после глагола может делать действие завершённым, и тогда объект-существительное обычно стоит в родительном: <0>Ma otsisin hosteli üles</0>, я нашёл хостел, и <1>Me ootame Mari ära</1>, мы дождёмся Мари."
 
 msgid "A voice message from the shop"
 msgstr "Голосовое из магазина"
@@ -235,8 +235,8 @@ msgstr "В русском «купил хлеба» значит «немног�
 msgid "Finding ends the looking: the genitive."
 msgstr "Найти — это конец поиска: родительный."
 
-msgid "Finding is different. <0/>, to find, ends the looking, so what you found takes the genitive."
-msgstr "С «найти» иначе. <0/>, находить, завершает поиск, поэтому найденное стоит в родительном."
+msgid "Finding is different. <0/>, to find, ends the looking, so what you found usually takes the genitive."
+msgstr "С «найти» иначе. <0/>, находить, завершает поиск, поэтому найденное обычно стоит в родительном."
 
 msgid "Finished, all of it: for a noun, usually the genitive with <et>läbi</et> or <et>ära</et>."
 msgstr "Завершено, всё целиком: у существительного обычно родительный с <et>läbi</et> или <et>ära</et>."
@@ -475,11 +475,11 @@ msgstr "Мари напишет книгу."
 msgid "Mari wrote a book."
 msgstr "Мари написала книгу."
 
-msgid "More than one whole thing, with no number before it, takes the plural with <0>-d</0> from lesson {plural}: <1/> <2/> After a number, the partitive singular: <3>kaks piletit</3>. Some of many things takes the plural partitive, which lesson {pluralPartitive} teaches."
-msgstr "Несколько целых вещей без числа перед ними — множественное число на <0>-d</0> из урока {plural}: <1/> <2/> После числа — партитив единственного числа: <3>kaks piletit</3>. Часть из многих вещей — партитив множественного числа, о нём урок {pluralPartitive}."
+msgid "More than one whole thing, with no number before it, usually takes the plural with <0>-d</0> from lesson {plural}: <1/> <2/> After a number, the partitive singular: <3>kaks piletit</3>. Some of many things takes the plural partitive, which lesson {pluralPartitive} teaches."
+msgstr "Несколько целых вещей без числа перед ними — обычно множественное число на <0>-d</0> из урока {plural}: <1/> <2/> После числа — партитив единственного числа: <3>kaks piletit</3>. Часть из многих вещей — партитив множественного числа, о нём урок {pluralPartitive}."
 
-msgid "More than one whole thing, with no number before it, takes the plural with <0>-d</0>: <1>Ma ostsin piletid.</1> After a number, the partitive: <2>kaks piletit</2>."
-msgstr "Несколько целых вещей без числа перед ними — множественное число на <0>-d</0>: <1>Ma ostsin piletid.</1> После числа — партитив: <2>kaks piletit</2>."
+msgid "More than one whole thing, with no number before it, usually takes the plural with <0>-d</0>: <1>Ma ostsin piletid.</1> After a number, the partitive: <2>kaks piletit</2>."
+msgstr "Несколько целых вещей без числа перед ними — обычно множественное число на <0>-d</0>: <1>Ma ostsin piletid.</1> После числа — партитив: <2>kaks piletit</2>."
 
 msgid "Nearly. Compare the columns of the table for the ones you missed."
 msgstr "Почти. Для пропущенных сравни столбцы таблицы."
@@ -559,8 +559,8 @@ msgstr "Часть чего-то или действие, которое ещё 
 msgid "Part or whole"
 msgstr "Часть или целое"
 
-msgid "Partitive: part, or not said to be finished"
-msgstr "Партитив: часть, или не сказано, что завершено"
+msgid "Partitive: usually part, or not said to be finished"
+msgstr "Партитив: обычно часть, или не сказано, что завершено"
 
 msgid "Past: leidsin, I found."
 msgstr "Прошедшее время: leidsin — я нашёл."
@@ -649,8 +649,8 @@ msgstr "Прошедшее время с родительным: всё, сде�
 msgid "The past with the partitive: some of it, or not finished."
 msgstr "Прошедшее время с партитивом: часть или не завершено."
 
-msgid "The present also covers the future, as lesson {future} says, and the object tells you which. With the partitive, it’s going on, with no end in view. With the genitive, it will get done: <0/>"
-msgstr "Настоящее время передаёт и будущее, об этом — в уроке {future}, а объект показывает, что именно. С партитивом действие идёт, и конца не видно. С родительным оно будет завершено: <0/>"
+msgid "The present also covers the future, as lesson {future} says, and the object tells you which. With the partitive, it’s usually going on, with no end in view. With the genitive, it will get done: <0/>"
+msgstr "Настоящее время передаёт и будущее, об этом — в уроке {future}, а объект показывает, что именно. С партитивом действие обычно идёт, и конца не видно. С родительным оно будет завершено: <0/>"
 
 msgid "The present with the genitive says it will get done."
 msgstr "Настоящее время с родительным значит, что действие будет завершено."

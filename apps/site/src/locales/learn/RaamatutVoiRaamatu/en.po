@@ -73,8 +73,8 @@ msgstr "A command with <0>ära</0>, don’t, is a no, so its object takes the pa
 msgid "A sentence, a command and a don’t"
 msgstr "A sentence, a command and a don’t"
 
-msgid "A small word after the verb can give it an end, and then the object takes the genitive: <0>Ma otsisin hosteli üles</0>, I found the hostel, and <1>Me ootame Mari ära</1>, we’ll wait until Mari comes."
-msgstr "A small word after the verb can give it an end, and then the object takes the genitive: <0>Ma otsisin hosteli üles</0>, I found the hostel, and <1>Me ootame Mari ära</1>, we’ll wait until Mari comes."
+msgid "A small word after the verb can give it an end, and then a noun object usually takes the genitive: <0>Ma otsisin hosteli üles</0>, I found the hostel, and <1>Me ootame Mari ära</1>, we’ll wait until Mari comes."
+msgstr "A small word after the verb can give it an end, and then a noun object usually takes the genitive: <0>Ma otsisin hosteli üles</0>, I found the hostel, and <1>Me ootame Mari ära</1>, we’ll wait until Mari comes."
 
 msgid "A voice message from the shop"
 msgstr "A voice message from the shop"
@@ -235,8 +235,8 @@ msgstr "English says this with “some” and “a”, or with “was reading”
 msgid "Finding ends the looking: the genitive."
 msgstr "Finding ends the looking: the genitive."
 
-msgid "Finding is different. <0/>, to find, ends the looking, so what you found takes the genitive."
-msgstr "Finding is different. <0/>, to find, ends the looking, so what you found takes the genitive."
+msgid "Finding is different. <0/>, to find, ends the looking, so what you found usually takes the genitive."
+msgstr "Finding is different. <0/>, to find, ends the looking, so what you found usually takes the genitive."
 
 msgid "Finished, all of it: for a noun, usually the genitive with <et>läbi</et> or <et>ära</et>."
 msgstr "Finished, all of it: for a noun, usually the genitive with <et>läbi</et> or <et>ära</et>."
@@ -475,11 +475,11 @@ msgstr "Mari will write a book."
 msgid "Mari wrote a book."
 msgstr "Mari wrote a book."
 
-msgid "More than one whole thing, with no number before it, takes the plural with <0>-d</0> from lesson {plural}: <1/> <2/> After a number, the partitive singular: <3>kaks piletit</3>. Some of many things takes the plural partitive, which lesson {pluralPartitive} teaches."
-msgstr "More than one whole thing, with no number before it, takes the plural with <0>-d</0> from lesson {plural}: <1/> <2/> After a number, the partitive singular: <3>kaks piletit</3>. Some of many things takes the plural partitive, which lesson {pluralPartitive} teaches."
+msgid "More than one whole thing, with no number before it, usually takes the plural with <0>-d</0> from lesson {plural}: <1/> <2/> After a number, the partitive singular: <3>kaks piletit</3>. Some of many things takes the plural partitive, which lesson {pluralPartitive} teaches."
+msgstr "More than one whole thing, with no number before it, usually takes the plural with <0>-d</0> from lesson {plural}: <1/> <2/> After a number, the partitive singular: <3>kaks piletit</3>. Some of many things takes the plural partitive, which lesson {pluralPartitive} teaches."
 
-msgid "More than one whole thing, with no number before it, takes the plural with <0>-d</0>: <1>Ma ostsin piletid.</1> After a number, the partitive: <2>kaks piletit</2>."
-msgstr "More than one whole thing, with no number before it, takes the plural with <0>-d</0>: <1>Ma ostsin piletid.</1> After a number, the partitive: <2>kaks piletit</2>."
+msgid "More than one whole thing, with no number before it, usually takes the plural with <0>-d</0>: <1>Ma ostsin piletid.</1> After a number, the partitive: <2>kaks piletit</2>."
+msgstr "More than one whole thing, with no number before it, usually takes the plural with <0>-d</0>: <1>Ma ostsin piletid.</1> After a number, the partitive: <2>kaks piletit</2>."
 
 msgid "Nearly. Compare the columns of the table for the ones you missed."
 msgstr "Nearly. Compare the columns of the table for the ones you missed."
@@ -559,8 +559,8 @@ msgstr "Part of something, or an action still going on: the partitive. <0>Ma ost
 msgid "Part or whole"
 msgstr "Part or whole"
 
-msgid "Partitive: part, or not said to be finished"
-msgstr "Partitive: part, or not said to be finished"
+msgid "Partitive: usually part, or not said to be finished"
+msgstr "Partitive: usually part, or not said to be finished"
 
 msgid "Past: leidsin, I found."
 msgstr "Past: leidsin, I found."
@@ -649,8 +649,8 @@ msgstr "The past with the genitive: all of it, done."
 msgid "The past with the partitive: some of it, or not finished."
 msgstr "The past with the partitive: some of it, or not finished."
 
-msgid "The present also covers the future, as lesson {future} says, and the object tells you which. With the partitive, it’s going on, with no end in view. With the genitive, it will get done: <0/>"
-msgstr "The present also covers the future, as lesson {future} says, and the object tells you which. With the partitive, it’s going on, with no end in view. With the genitive, it will get done: <0/>"
+msgid "The present also covers the future, as lesson {future} says, and the object tells you which. With the partitive, it’s usually going on, with no end in view. With the genitive, it will get done: <0/>"
+msgstr "The present also covers the future, as lesson {future} says, and the object tells you which. With the partitive, it’s usually going on, with no end in view. With the genitive, it will get done: <0/>"
 
 msgid "The present with the genitive says it will get done."
 msgstr "The present with the genitive says it will get done."

@@ -202,7 +202,10 @@ function PairTable() {
     <Panel>
       <Paradigm
         label={t`One sentence with the partitive and with the genitive`}
-        columns={[t`Partitive: part, or not said to be finished`, t`Genitive: the whole, done`]}
+        columns={[
+          t`Partitive: usually part, or not said to be finished`,
+          t`Genitive: the whole, done`,
+        ]}
         rows={rows}
         empty={{
           title: t`Tap a sentence`,
@@ -812,7 +815,7 @@ export function RaamatutVoiRaamatuLesson() {
           <b lang="et">Osta pilet! Ära osta piletit!</b>
         </Trans>,
         <Trans key="5">
-          More than one whole thing, with no number before it, takes the plural with{" "}
+          More than one whole thing, with no number before it, usually takes the plural with{" "}
           <b lang="et">-d</b>: <b lang="et">Ma ostsin piletid.</b> After a number, the partitive:{" "}
           <b lang="et">kaks piletit</b>.
         </Trans>,
@@ -886,8 +889,8 @@ export function RaamatutVoiRaamatuLesson() {
                 <p>
                   <Trans>
                     The present also covers the future, as lesson {future} says, and the object
-                    tells you which. With the partitive, it’s going on, with no end in view. With
-                    the genitive, it will get done: <Word w="Ma loen raamatu läbi." />
+                    tells you which. With the partitive, it’s usually going on, with no end in view.
+                    With the genitive, it will get done: <Word w="Ma loen raamatu läbi." />
                   </Trans>
                 </p>
               </Prose>
@@ -961,16 +964,16 @@ export function RaamatutVoiRaamatuLesson() {
               <ListenRows items={rowsOf(OBJECT_VERBS)} />
               <Aside>
                 <Trans>
-                  A small word after the verb can give it an end, and then the object takes the
-                  genitive: <b lang="et">Ma otsisin hosteli üles</b>, I found the hostel, and{" "}
-                  <b lang="et">Me ootame Mari ära</b>, we’ll wait until Mari comes.
+                  A small word after the verb can give it an end, and then a noun object usually
+                  takes the genitive: <b lang="et">Ma otsisin hosteli üles</b>, I found the hostel,
+                  and <b lang="et">Me ootame Mari ära</b>, we’ll wait until Mari comes.
                 </Trans>
               </Aside>
               <Prose>
                 <p>
                   <Trans>
                     Finding is different. <Word w="Leidma" />, to find, ends the looking, so what
-                    you found takes the genitive.
+                    you found usually takes the genitive.
                   </Trans>
                 </p>
               </Prose>
@@ -1035,7 +1038,7 @@ export function RaamatutVoiRaamatuLesson() {
               </Aside>
               <Aside>
                 <Trans>
-                  More than one whole thing, with no number before it, takes the plural with{" "}
+                  More than one whole thing, with no number before it, usually takes the plural with{" "}
                   <b lang="et">-d</b> from lesson {plural}: <Word w="Ma ostsin piletid." />{" "}
                   <Word w="Osta piletid!" /> After a number, the partitive singular:{" "}
                   <b lang="et">kaks piletit</b>. Some of many things takes the plural partitive,

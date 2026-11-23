@@ -261,9 +261,12 @@ function useContent() {
       who: "you",
       clip: "d-sina-3",
       replies: [
-        { line: "Kell on pool kümme.", why: t`Pool looks ahead: pool kümme is 9:30.` },
+        {
+          line: "Kell on pool üksteist.",
+          why: t`Pool looks ahead: pool üksteist is 10:30, and it’s ten.`,
+        },
         { line: said("d-sina-3"), right: true },
-        { line: "Kell on üksteist.", why: t`Üksteist is 11:00, and it’s half past ten.` },
+        { line: "Kell on üksteist.", why: t`Üksteist is 11:00, and it’s ten.` },
       ],
     },
     { who: "them", clip: "d-mari-4", line: said("d-mari-4") },
@@ -289,6 +292,13 @@ function useContent() {
       answer: "work",
       line: 2,
     },
+    {
+      id: "asks",
+      kind: "truefalse",
+      ask: t`Mari asks if Jaan works tomorrow.`,
+      answer: true,
+      line: 3,
+    },
     { id: "works", kind: "truefalse", ask: t`Jaan works tomorrow.`, answer: false, line: 4 },
     {
       id: "eleven",
@@ -302,13 +312,6 @@ function useContent() {
       line: 5,
     },
     {
-      id: "mari-home",
-      kind: "truefalse",
-      ask: t`Mari is at home at twelve.`,
-      answer: false,
-      line: 6,
-    },
-    {
       id: "meet",
       ask: t`When does Jaan come to the market?`,
       options: [
@@ -319,7 +322,13 @@ function useContent() {
       answer: "twelve",
       line: 7,
     },
-    { id: "sunday", kind: "truefalse", ask: t`Jaan is at home on Sunday.`, answer: true, line: 9 },
+    {
+      id: "who-sunday",
+      kind: "truefalse",
+      ask: t`Jaan asks about Sunday.`,
+      answer: false,
+      line: 8,
+    },
   ];
   const bins: SortBin[] = [
     {
@@ -389,7 +398,7 @@ export function PaevTallinnasLesson() {
       sub={
         <Trans>
           Read a café sign and a text message, follow a voice message and a phone call, write what
-          you hear, fill in a plan for Saturday, answer a friend at a café and write back to Mari:
+          you hear, fill in a plan for Saturday, talk with Mari at the café and answer her message:
           numbers, times and days in sentences you know.
         </Trans>
       }
@@ -662,7 +671,8 @@ export function PaevTallinnasLesson() {
                   <Trans>
                     Now it’s Saturday, and this is your plan. Put a word in each gap: a form of{" "}
                     <Word w="olema" />, a verb with the right ending, <Word w="ei" />, or the form a
-                    word takes after a number.
+                    word takes after a number. <span lang="et">Mari ja mina</span>, Mari and I, is
+                    the same as <span lang="et">me</span>, we.
                   </Trans>
                 </p>
               </Prose>
@@ -696,7 +706,7 @@ export function PaevTallinnasLesson() {
                 title={<Trans>Talk: coffee with Mari</Trans>}
                 part={
                   <Trans>
-                    It’s Saturday, half past ten, and you don’t work on Sundays. Mari speaks first;
+                    It’s Saturday, ten o’clock, and you don’t work on Sundays. Mari speaks first;
                     pick what you say back.
                   </Trans>
                 }

@@ -14,9 +14,6 @@ msgstr "“On Monday” takes an ending: <0/>. That comes in lesson {when}."
 msgid "{word}, {0}, today"
 msgstr "{word}, {0}, today"
 
-msgid "<0/> and <1/> point opposite ways, and <2>üle-</2> takes each one a day further. Match each word with what it means."
-msgstr "<0/> and <1/> point opposite ways, and <2>üle-</2> takes each one a day further. Match each word with what it means."
-
 msgid "<0/> is tomorrow and <1/> yesterday. Put <2>üle-</2> in front to go one day further: <3/>, the day after tomorrow, and <4/>, the day before yesterday. Pick a day to be today."
 msgstr "<0/> is tomorrow and <1/> yesterday. Put <2>üle-</2> in front to go one day further: <3/>, the day after tomorrow, and <4/>, the day before yesterday. Pick a day to be today."
 
@@ -67,6 +64,9 @@ msgstr "At home"
 
 msgid "At work"
 msgstr "At work"
+
+msgid "Before and after today"
+msgstr "Before and after today"
 
 msgid "Borrowed from Low German or Old Swedish."
 msgstr "Borrowed from Low German or Old Swedish."
@@ -145,6 +145,9 @@ msgstr "Listening only, no microphone"
 
 msgid "Listening: Jaan’s week"
 msgstr "Listening: Jaan’s week"
+
+msgid "Match each word with what it means."
+msgstr "Match each word with what it means."
 
 msgid "Match the words"
 msgstr "Match the words"
@@ -341,9 +344,6 @@ msgstr "week"
 msgid "What day is it today?"
 msgstr "What day is it today?"
 
-msgid "What day is the day after tomorrow?"
-msgstr "What day is the day after tomorrow?"
-
 msgid "What day it is"
 msgstr "What day it is"
 
@@ -355,9 +355,6 @@ msgstr "Which day did you hear?"
 
 msgid "Which day is tomorrow?"
 msgstr "Which day is tomorrow?"
-
-msgid "Words for days"
-msgstr "Words for days"
 
 msgid "Write it in Estonian"
 msgstr "Write it in Estonian"

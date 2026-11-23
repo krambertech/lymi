@@ -241,8 +241,8 @@ msgstr "у місті"
 msgid "It costs twelve euros."
 msgstr "Це коштує дванадцять євро."
 
-msgid "It’s Saturday, half past ten, and you don’t work on Sundays. Mari speaks first; pick what you say back."
-msgstr "Субота, пів на одинадцяту, а в неділю ти не працюєш. Марі говорить першою; вибирай, що відповісти."
+msgid "It’s Saturday, ten o’clock, and you don’t work on Sundays. Mari speaks first; pick what you say back."
+msgstr "Субота, десята година, а в неділю ти не працюєш. Марі говорить першою; вибирай, що відповісти."
 
 msgid "It’s ten o’clock."
 msgstr "Зараз десята година."
@@ -250,8 +250,8 @@ msgstr "Зараз десята година."
 msgid "Jaan"
 msgstr "Яан"
 
-msgid "Jaan is at home on Sunday."
-msgstr "У неділю Яан удома."
+msgid "Jaan asks about Sunday."
+msgstr "Яан питає про неділю."
 
 msgid "Jaan works tomorrow."
 msgstr "Яан завтра працює."
@@ -277,6 +277,9 @@ msgstr "Ma olen, sa oled, ta on."
 msgid "Mari"
 msgstr "Марі"
 
+msgid "Mari asks if Jaan works tomorrow."
+msgstr "Марі питає, чи Яан працює завтра."
+
 msgid "Mari calls Jaan"
 msgstr "Марі дзвонить Яану"
 
@@ -285,9 +288,6 @@ msgstr "Марі дзвонить Яану, щоб домовитися. Зве�
 
 msgid "Mari doesn’t work today."
 msgstr "Марі сьогодні не працює."
-
-msgid "Mari is at home at twelve."
-msgstr "О дванадцятій Марі вдома."
 
 msgid "Mari writes"
 msgstr "Марі пише"
@@ -307,8 +307,8 @@ msgstr "Ні, зачинено"
 msgid "no; not"
 msgstr "ні; не"
 
-msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
-msgstr "Тепер субота, і ось твій план. Встав у кожен пропуск слово: форму <0/>, дієслово з потрібним закінченням, <1/> або форму слова після числа."
+msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number. <2>Mari ja mina</2>, Mari and I, is the same as <3>me</3>, we."
+msgstr "Тепер субота, і ось твій план. Встав у кожен пропуск слово: форму <0/>, дієслово з потрібним закінченням, <1/> або форму слова після числа. <2>Mari ja mina</2>, «Марі і я», — це те саме, що <3>me</3>, «ми»."
 
 msgid "On a door or a sign."
 msgstr "На дверях або на табличці."
@@ -328,8 +328,8 @@ msgstr "Ще раз послухай рядки нижче, а тоді спро
 msgid "Pool looks ahead: halfway to eleven."
 msgstr "Pool дивиться вперед: пів на одинадцяту."
 
-msgid "Pool looks ahead: pool kümme is 9:30."
-msgstr "Pool дивиться вперед: pool kümme — це 9:30."
+msgid "Pool looks ahead: pool üksteist is 10:30, and it’s ten."
+msgstr "Pool дивиться вперед: pool üksteist — це 10:30, а зараз десята."
 
 msgid "Pool neli: halfway to four, 3:30."
 msgstr "Pool neli: пів на четверту, 3:30."
@@ -337,8 +337,8 @@ msgstr "Pool neli: пів на четверту, 3:30."
 msgid "Pühapäev with the ending that says when, as in esmaspäeval."
 msgstr "Pühapäev із закінченням, яке відповідає на питання «коли», як у esmaspäeval."
 
-msgid "Read a café sign and a text message, follow a voice message and a phone call, write what you hear, fill in a plan for Saturday, answer a friend at a café and write back to Mari: numbers, times and days in sentences you know."
-msgstr "Прочитай табличку на дверях кав’ярні й повідомлення, послухай голосове повідомлення й телефонну розмову, запиши почуте, заповни план на суботу, відповідай подрузі в кав’ярні й напиши Марі: числа, час і дні в реченнях, які ти вже знаєш."
+msgid "Read a café sign and a text message, follow a voice message and a phone call, write what you hear, fill in a plan for Saturday, talk with Mari at the café and answer her message: numbers, times and days in sentences you know."
+msgstr "Прочитай табличку на дверях кав’ярні й повідомлення, послухай голосове повідомлення й телефонну розмову, запиши почуте, заповни план на суботу, поговори з Марі в кав’ярні й відповідай на її повідомлення: числа, час і дні в реченнях, які ти вже знаєш."
 
 msgid "Read Mari’s message once more, then try again."
 msgstr "Ще раз прочитай повідомлення від Марі, а тоді спробуй знову."
@@ -386,7 +386,7 @@ msgid "sit down"
 msgstr "сідай"
 
 msgid "Six short lines: two times, a price, a day, a no and a sign. Write each one as you hear it."
-msgstr "Шість коротких рядків: двічі час, ціна, день, заперечення й табличка на дверях. Запиши кожен так, як чуєш."
+msgstr "Шість коротких рядків: час (двічі), ціна, день, заперечення й табличка на дверях. Запиши кожен так, як чуєш."
 
 msgid "Sunday"
 msgstr "Неділя"
@@ -445,8 +445,8 @@ msgstr "Turg, ринок, має -l за традицією."
 msgid "twelve"
 msgstr "дванадцять"
 
-msgid "Üksteist is 11:00, and it’s half past ten."
-msgstr "Üksteist — це 11:00, а зараз пів на одинадцяту."
+msgid "Üksteist is 11:00, and it’s ten."
+msgstr "Üksteist — це 11:00, а зараз десята."
 
 msgid "We drink coffee at eleven."
 msgstr "Ми п’ємо каву об одинадцятій."

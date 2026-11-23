@@ -508,29 +508,11 @@ export function PaevadLesson() {
       },
       { id: "work", kind: "truefalse", ask: t`Jaan is at work today.`, answer: true, line: 2 },
       {
-        id: "thursday",
-        kind: "truefalse",
-        ask: t`Tomorrow is Friday.`,
-        answer: false,
-        line: 3,
-      },
-      {
         id: "work-tomorrow",
         kind: "truefalse",
         ask: t`Jaan is at work tomorrow.`,
         answer: false,
         line: 4,
-      },
-      {
-        id: "after",
-        ask: t`What day is the day after tomorrow?`,
-        options: [
-          { id: "fri", label: i18n._(MEANINGS.reede) },
-          { id: "sat", label: i18n._(MEANINGS.laupäev) },
-          { id: "thu", label: i18n._(MEANINGS.neljapäev) },
-        ],
-        answer: "fri",
-        line: 5,
       },
       {
         id: "town",
@@ -762,17 +744,13 @@ export function PaevadLesson() {
         },
         {
           id: "which-day",
-          title: t`Words for days`,
+          title: t`Before and after today`,
           quiz: true,
           children: (
             <>
               <Prose>
                 <p>
-                  <Trans>
-                    <Word w="Homme" /> and <Word w="eile" /> point opposite ways, and{" "}
-                    <b lang="et">üle-</b> takes each one a day further. Match each word with what it
-                    means.
-                  </Trans>
+                  <Trans>Match each word with what it means.</Trans>
                 </p>
               </Prose>
               <Match id="match-days" title={<Trans>Match the words</Trans>} pairs={relativePairs} />

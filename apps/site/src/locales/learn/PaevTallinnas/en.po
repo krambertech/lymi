@@ -241,8 +241,8 @@ msgstr "in town"
 msgid "It costs twelve euros."
 msgstr "It costs twelve euros."
 
-msgid "It’s Saturday, half past ten, and you don’t work on Sundays. Mari speaks first; pick what you say back."
-msgstr "It’s Saturday, half past ten, and you don’t work on Sundays. Mari speaks first; pick what you say back."
+msgid "It’s Saturday, ten o’clock, and you don’t work on Sundays. Mari speaks first; pick what you say back."
+msgstr "It’s Saturday, ten o’clock, and you don’t work on Sundays. Mari speaks first; pick what you say back."
 
 msgid "It’s ten o’clock."
 msgstr "It’s ten o’clock."
@@ -250,8 +250,8 @@ msgstr "It’s ten o’clock."
 msgid "Jaan"
 msgstr "Jaan"
 
-msgid "Jaan is at home on Sunday."
-msgstr "Jaan is at home on Sunday."
+msgid "Jaan asks about Sunday."
+msgstr "Jaan asks about Sunday."
 
 msgid "Jaan works tomorrow."
 msgstr "Jaan works tomorrow."
@@ -277,6 +277,9 @@ msgstr "Ma olen, sa oled, ta on."
 msgid "Mari"
 msgstr "Mari"
 
+msgid "Mari asks if Jaan works tomorrow."
+msgstr "Mari asks if Jaan works tomorrow."
+
 msgid "Mari calls Jaan"
 msgstr "Mari calls Jaan"
 
@@ -285,9 +288,6 @@ msgstr "Mari calls Jaan to make a plan. Listen for the days, the times and the p
 
 msgid "Mari doesn’t work today."
 msgstr "Mari doesn’t work today."
-
-msgid "Mari is at home at twelve."
-msgstr "Mari is at home at twelve."
 
 msgid "Mari writes"
 msgstr "Mari writes"
@@ -307,8 +307,8 @@ msgstr "No, it’s closed"
 msgid "no; not"
 msgstr "no; not"
 
-msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
-msgstr "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
+msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number. <2>Mari ja mina</2>, Mari and I, is the same as <3>me</3>, we."
+msgstr "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number. <2>Mari ja mina</2>, Mari and I, is the same as <3>me</3>, we."
 
 msgid "On a door or a sign."
 msgstr "On a door or a sign."
@@ -328,8 +328,8 @@ msgstr "Play the lines below once more, then try again."
 msgid "Pool looks ahead: halfway to eleven."
 msgstr "Pool looks ahead: halfway to eleven."
 
-msgid "Pool looks ahead: pool kümme is 9:30."
-msgstr "Pool looks ahead: pool kümme is 9:30."
+msgid "Pool looks ahead: pool üksteist is 10:30, and it’s ten."
+msgstr "Pool looks ahead: pool üksteist is 10:30, and it’s ten."
 
 msgid "Pool neli: halfway to four, 3:30."
 msgstr "Pool neli: halfway to four, 3:30."
@@ -337,8 +337,8 @@ msgstr "Pool neli: halfway to four, 3:30."
 msgid "Pühapäev with the ending that says when, as in esmaspäeval."
 msgstr "Pühapäev with the ending that says when, as in esmaspäeval."
 
-msgid "Read a café sign and a text message, follow a voice message and a phone call, write what you hear, fill in a plan for Saturday, answer a friend at a café and write back to Mari: numbers, times and days in sentences you know."
-msgstr "Read a café sign and a text message, follow a voice message and a phone call, write what you hear, fill in a plan for Saturday, answer a friend at a café and write back to Mari: numbers, times and days in sentences you know."
+msgid "Read a café sign and a text message, follow a voice message and a phone call, write what you hear, fill in a plan for Saturday, talk with Mari at the café and answer her message: numbers, times and days in sentences you know."
+msgstr "Read a café sign and a text message, follow a voice message and a phone call, write what you hear, fill in a plan for Saturday, talk with Mari at the café and answer her message: numbers, times and days in sentences you know."
 
 msgid "Read Mari’s message once more, then try again."
 msgstr "Read Mari’s message once more, then try again."
@@ -445,8 +445,8 @@ msgstr "Turg, market, takes -l by habit."
 msgid "twelve"
 msgstr "twelve"
 
-msgid "Üksteist is 11:00, and it’s half past ten."
-msgstr "Üksteist is 11:00, and it’s half past ten."
+msgid "Üksteist is 11:00, and it’s ten."
+msgstr "Üksteist is 11:00, and it’s ten."
 
 msgid "We drink coffee at eleven."
 msgstr "We drink coffee at eleven."

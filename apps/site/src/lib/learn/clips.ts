@@ -1920,7 +1920,7 @@ export const TALLINN_DIALOGUE = {
   "d-mari-2": { text: "Hästi! Istu! Kas sa jood kohvi?", voice: "second" },
   "d-sina-2": "Jah, ma joon kohvi.",
   "d-mari-3": { text: "Mis kell on?", voice: "second" },
-  "d-sina-3": "Kell on pool üksteist.",
+  "d-sina-3": "Kell on kümme.",
   "d-mari-4": { text: "Kas sa töötad homme?", voice: "second" },
   "d-sina-4": "Ei, homme on pühapäev.",
 } as const satisfies Record<string, Clip>;

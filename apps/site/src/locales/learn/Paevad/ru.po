@@ -14,9 +14,6 @@ msgstr "«В понедельник» по-эстонски — одно сло
 msgid "{word}, {0}, today"
 msgstr "{word}, {0}, сегодня"
 
-msgid "<0/> and <1/> point opposite ways, and <2>üle-</2> takes each one a day further. Match each word with what it means."
-msgstr "<0/> и <1/> указывают в противоположные стороны, а <2>üle-</2> сдвигает каждое ещё на день. Найди пару каждому слову."
-
 msgid "<0/> is tomorrow and <1/> yesterday. Put <2>üle-</2> in front to go one day further: <3/>, the day after tomorrow, and <4/>, the day before yesterday. Pick a day to be today."
 msgstr "<0/> — завтра, <1/> — вчера. Добавь в начало <2>üle-</2>, и получится на день дальше: <3/> — послезавтра, <4/> — позавчера. Выбери, какой сегодня день."
 
@@ -67,6 +64,9 @@ msgstr "Дома"
 
 msgid "At work"
 msgstr "На работе"
+
+msgid "Before and after today"
+msgstr "До и после сегодня"
 
 msgid "Borrowed from Low German or Old Swedish."
 msgstr "Заимствовано из нижненемецкого или древнешведского."
@@ -145,6 +145,9 @@ msgstr "Только на слух, без микрофона"
 
 msgid "Listening: Jaan’s week"
 msgstr "На слух: неделя Яана"
+
+msgid "Match each word with what it means."
+msgstr "Найди пару каждому слову."
 
 msgid "Match the words"
 msgstr "Найди пары"
@@ -341,9 +344,6 @@ msgstr "неделя"
 msgid "What day is it today?"
 msgstr "Какой сегодня день?"
 
-msgid "What day is the day after tomorrow?"
-msgstr "Какой день будет послезавтра?"
-
 msgid "What day it is"
 msgstr "Какой сегодня день"
 
@@ -355,9 +355,6 @@ msgstr "Какой день прозвучал?"
 
 msgid "Which day is tomorrow?"
 msgstr "Какой день завтра?"
-
-msgid "Words for days"
-msgstr "Слова для дней"
 
 msgid "Write it in Estonian"
 msgstr "Напиши по-эстонски"

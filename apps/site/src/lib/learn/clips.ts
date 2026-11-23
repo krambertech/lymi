@@ -968,6 +968,76 @@ export const STEM_PASSAGE = [
   "Kohv on laual.",
 ] as const;
 
+export const STEM_SORT = [
+  { word: "jõgi", bin: "inside" },
+  { word: "turg", bin: "inside" },
+  { word: "aken", bin: "inside" },
+  { word: "uks", bin: "vowel" },
+  { word: "sein", bin: "vowel" },
+  { word: "kohvik", bin: "vowel" },
+  { word: "haigla", bin: "same" },
+  { word: "töö", bin: "same" },
+  { word: "Soome", bin: "same" },
+] as const satisfies readonly { word: (typeof STEM_WORDS)[number]["word"]; bin: StemKind }[];
+
+export const STEM_SAID_ALSO: Record<(typeof STEM_WORDS)[number]["said"], readonly string[]> = {
+  "Ema on poes.": [],
+  "Ta on toas.": ["Tema on toas."],
+  "Me ujume jões.": ["Meie ujume jões.", "Ujume jões."],
+  "Raamat on laual.": ["Raamat on laua peal."],
+  "Nad on turul.": ["Nemad on turul."],
+  "Kohv on aknal.": ["Kohv on akna peal."],
+  "Ta õpib koolis.": ["Tema õpib koolis."],
+  "Pilt on raamatus.": [],
+  "Jaan on uksel.": ["Jaan on ukse juures."],
+  "Ma elan Tallinnas.": ["Mina elan Tallinnas.", "Elan Tallinnas."],
+  "Pilt on seinal.": ["Pilt on seina peal."],
+  "Me oleme kohvikus.": ["Meie oleme kohvikus.", "Oleme kohvikus."],
+  "Ta töötab kodus.": ["Tema töötab kodus."],
+  "Mari töötab haiglas.": [],
+  "Nad õpivad Tartus.": ["Nemad õpivad Tartus."],
+  "Ma olen tööl.": ["Mina olen tööl.", "Olen tööl."],
+  "Jaan elab Pärnus.": [],
+  "Ma elan Soomes.": ["Mina elan Soomes.", "Elan Soomes."],
+};
+
+export const STEM_SAY = [
+  "Ema on poes.",
+  "Raamat on laual.",
+  "Nad on turul.",
+  "Me oleme kohvikus.",
+  "Ma elan Tallinnas.",
+  "Mari töötab haiglas.",
+] as const satisfies readonly (typeof STEM_WORDS)[number]["said"][];
+
+export const STEM_FIX = [
+  { word: "pood", wrong: "Ema on poodis." },
+  { word: "turg", wrong: "Nad on turgul." },
+  { word: "tuba", wrong: "Ta on tubas." },
+  { word: "aken", wrong: "Kohv on akenal." },
+  { word: "kool", wrong: "Ta õpib kools." },
+  { word: "raamat", wrong: "Pilt on raamats." },
+] as const satisfies readonly { word: (typeof STEM_WORDS)[number]["word"]; wrong: string }[];
+
+export const STEM_TALK = {
+  turns: [
+    { voice: "fourth", text: ["Tere, Mari!", "Kus sa oled?"] },
+    { voice: "third", text: ["Tere, Jaan!", "Ma olen poes.", "Aga sina?"] },
+    { voice: "fourth", text: ["Ma olen kodus.", "Ma olen toas ja loen."] },
+    { voice: "third", text: "Kus Kati on?", say: "[curious] Kus Kati on?" },
+    { voice: "fourth", text: ["Kati on koolis.", "Ema on turul."] },
+    { voice: "third", text: "Ja isa?" },
+    { voice: "fourth", text: ["Isa on tööl.", "Ta töötab täna Tartus."] },
+    { voice: "third", text: "Kas minu raamat on laual?" },
+    {
+      voice: "fourth",
+      text: "Ei, raamat on aknal.",
+      say: "[laughs] Ei, raamat on aknal.",
+    },
+    { voice: "third", text: ["Aitäh!", "Head aega!"] },
+  ],
+} as const satisfies Conversation;
+
 /**
  * The owners of the lesson on “to have”: each short pronoun, its -l form, the long -l form said
  * for stress, and a sentence. Checked in ÕS 2025 on Sõnaveeb (EKI morphology): mul, minul; sul,
@@ -2169,8 +2239,8 @@ export const NOUN_FORMS = [
 ] as const satisfies readonly NounForms[];
 
 /**
- * Lesson 14's “type the third form” quiz: words whose ending gives the third form away, by
- * pattern. Each shows its first form; the learner types the third.
+ * Lesson 14's “type the partitive” quiz: words whose ending gives the partitive away, by
+ * pattern. Each shows its nominative; the learner types the partitive.
  */
 export const POHIVORMID_TYPED = [
   { forms: ["inimene", "inimese", "inimest"], pattern: "ne" },
@@ -2197,15 +2267,82 @@ export const POHIVORMID_DIALOGUE = {
   "d-sina-4": "Vastus, vastuse, vastust.",
 } as const satisfies Record<string, Clip>;
 
+export const POHIVORMID_SORT = [
+  { w: "toa", bin: "genitive" },
+  { w: "turu", bin: "genitive" },
+  { w: "lapse", bin: "genitive" },
+  { w: "naise", bin: "genitive" },
+  { w: "mehe", bin: "genitive" },
+  { w: "lauda", bin: "partitive" },
+  { w: "raamatut", bin: "partitive" },
+  { w: "küsimust", bin: "partitive" },
+  { w: "ust", bin: "partitive" },
+  { w: "autot", bin: "partitive" },
+] as const;
+
+export const POHIVORMID_SAY = [
+  { id: "koolis", said: "Laps on koolis.", also: [] },
+  { id: "majas", said: "Mees on majas.", also: [] },
+  { id: "toas", said: "Naine on toas.", also: [] },
+  { id: "laual", said: "Raamat on laual.", also: ["Raamat on laua peal."] },
+  { id: "linnas", said: "Me oleme linnas.", also: ["Meie oleme linnas.", "Oleme linnas."] },
+  { id: "kodus", said: "Auto on kodus.", also: [] },
+] as const;
+
+export const POHIVORMID_FIX = [
+  { first: "pood", wrong: "pood, pood, poodi" },
+  { first: "laps", wrong: "laps, lapse, lapse" },
+  { first: "raamat", wrong: "raamat, raamatu, raamatu" },
+  { first: "tuba", wrong: "tuba, tuba, tuba" },
+  { first: "naine", wrong: "naine, naine, naist" },
+  { first: "mees", wrong: "mees, mees, meest" },
+] as const;
+
+export const POHIVORMID_DRILL = [
+  { first: "linn", said: "Mees on linnas.", also: [] },
+  { first: "pood", said: "Naine on poes.", also: [] },
+  { first: "auto", said: "Laps on autos.", also: [] },
+  { first: "uks", said: "Mees on uksel.", also: ["Mees on ukse juures."] },
+  { first: "turg", said: "Laps on turul.", also: [] },
+  { first: "töö", said: "Naine on tööl.", also: [] },
+] as const;
+
+export const POHIVORMID_HEARD = [
+  { form: "poe", first: "pood", slot: "genitive" },
+  { form: "poodi", first: "pood", slot: "partitive" },
+  { form: "laua", first: "laud", slot: "genitive" },
+  { form: "lauda", first: "laud", slot: "partitive" },
+  { form: "mehe", first: "mees", slot: "genitive" },
+  { form: "meest", first: "mees", slot: "partitive" },
+] as const;
+
+export const POHIVORMID_TALK = {
+  turns: [
+    { voice: "second", text: ["Tere, Jaan!", "Mis on sõna raamat põhivormid?"] },
+    { voice: "fourth", text: "Raamat, raamatu, raamatut." },
+    { voice: "second", text: ["Väga hea!", "Ja sõna laps?"] },
+    { voice: "fourth", text: "Laps, lapse, lapse." },
+    { voice: "second", text: "Ei, laps, lapse, last.", say: "[gently] Ei, laps, lapse, last." },
+    { voice: "fourth", text: ["Last.", "Aitäh!"] },
+    { voice: "second", text: "Ja sõna maja?" },
+    { voice: "fourth", text: "Maja, maja, maja." },
+    { voice: "second", text: "Väga hea, Jaan!", say: "[warmly] Väga hea, Jaan!" },
+  ],
+} as const satisfies Conversation;
+
 const POHIVORMID_CLIPS: Record<string, Clip> = {
   ...words([
     "põhivormid",
     "koolis",
+    "linnas",
     ...new Set([...NOUN_FORMS, ...POHIVORMID_TYPED.map(({ forms }) => forms)].flat()),
   ]),
   ...words(NOUN_FORMS.map(nounEntry)),
   ...words(POHIVORMID_TYPED.map(({ forms }) => nounEntry(forms))),
   ...POHIVORMID_DIALOGUE,
+  ...words(POHIVORMID_SAY.map(({ said }) => said)),
+  ...words(POHIVORMID_DRILL.map(({ said }) => said)),
+  "c-class": POHIVORMID_TALK,
 };
 
 /*
@@ -4166,6 +4303,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
       "ujume",
     ]),
     "p-saturday": { sentences: STEM_PASSAGE },
+    "c-call": STEM_TALK,
   },
   pohivormid: POHIVORMID_CLIPS,
   omastav: OMASTAV_CLIPS,

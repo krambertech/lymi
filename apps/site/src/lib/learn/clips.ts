@@ -3678,7 +3678,7 @@ export const TRA_TALK: Conversation = {
     {
       voice: "second",
       text: [
-        "Jah, aga õpetaja töö meeldib mulle rohkem.",
+        "Jah, aga õpetaja töö meeldib mulle väga.",
         "Ma õpetan eesti keelt.",
         "Lapsed on väga toredad.",
         "Ja sinu õde?",
@@ -4004,8 +4004,8 @@ export const GI_TALK: Conversation = {
     { voice: "main", text: ["Näed!", "Kas ma tulen sinuga?"] },
     { voice: "second", text: ["Ei, aitäh.", "Aga õhtul võime kuhugi sööma minna."] },
     { voice: "main", text: ["Hea mõte!", "Kuhu?"] },
-    { voice: "second", text: ["Mulle on ükskõik.", "Kuhugi, kus on hea supp."] },
-    { voice: "main", text: ["Supp on hea mõte.", "Siis näeme kell seitse!"] },
+    { voice: "second", text: ["Mulle on ükskõik.", "Kuhugi kohvikusse."] },
+    { voice: "main", text: ["Kohvik on hea mõte.", "Siis näeme kell seitse!"] },
   ],
 };
 

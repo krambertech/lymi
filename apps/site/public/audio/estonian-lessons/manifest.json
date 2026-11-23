@@ -16267,7 +16267,7 @@
     "voice": "xd3ufyLcuKKZZXDZO9H7"
   },
   "saav/c-talk": {
-    "text": "Tere, Liisa! Kuidas läheb? Tere, Peeter! Mitte väga hästi. Ma jäin eile haigeks. Oi! Kas sa oled homseks terve? Ma ei tea. Mul on palavik ja kurk on haige. Ma pean paariks päevaks koju jääma. Kahju. Aga kuidas su uus töö on? Hea. Ma töötan nüüd koolis õpetajana. Õpetajana? Sa tahtsid ju saada arstiks! Jah, aga õpetaja töö meeldib mulle rohkem. Ma õpetan eesti keelt. Lapsed on väga toredad. Ja sinu õde? Minu õde sai aasta tagasi arstiks. Ta töötab nüüd Tartus. Ta on väga hea arst. Tore! Mis plaanid sul laupäevaks on? Mu emal on laupäeval sünnipäev. Õde tuleb ka nädalaks koju. Mul on emale kingiks raamat. Ja õhtusöögiks teen ma kala. Kala! Hea mõte! Ja ilm muutub ka soojaks. Jah. Tule laupäeval ka! Aga praegu jää koju ja saa terveks! Aitäh! Ma olen reedeks kindlasti terve. Head paranemist, Liisa! Nägemist!",
+    "text": "Tere, Liisa! Kuidas läheb? Tere, Peeter! Mitte väga hästi. Ma jäin eile haigeks. Oi! Kas sa oled homseks terve? Ma ei tea. Mul on palavik ja kurk on haige. Ma pean paariks päevaks koju jääma. Kahju. Aga kuidas su uus töö on? Hea. Ma töötan nüüd koolis õpetajana. Õpetajana? Sa tahtsid ju saada arstiks! Jah, aga õpetaja töö meeldib mulle väga. Ma õpetan eesti keelt. Lapsed on väga toredad. Ja sinu õde? Minu õde sai aasta tagasi arstiks. Ta töötab nüüd Tartus. Ta on väga hea arst. Tore! Mis plaanid sul laupäevaks on? Mu emal on laupäeval sünnipäev. Õde tuleb ka nädalaks koju. Mul on emale kingiks raamat. Ja õhtusöögiks teen ma kala. Kala! Hea mõte! Ja ilm muutub ka soojaks. Jah. Tule laupäeval ka! Aga praegu jää koju ja saa terveks! Aitäh! Ma olen reedeks kindlasti terve. Head paranemist, Liisa! Nägemist!",
     "model": "eleven_v4",
     "turns": [
       {
@@ -16326,7 +16326,7 @@
       {
         "voice": "WtzwR2kNGVNuaTGaYLfK",
         "sentences": [
-          "Jah, aga õpetaja töö meeldib mulle rohkem.",
+          "Jah, aga õpetaja töö meeldib mulle väga.",
           "Ma õpetan eesti keelt.",
           "Lapsed on väga toredad.",
           "Ja sinu õde?"
@@ -16605,7 +16605,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "keegi/c-talk": {
-    "text": "Peeter, kas mu võtmed on kuskil siin? Ei, ma ei näinud neid kuskil. Kus nad eile olid? Eile olid nad laual. Aga nüüd ei ole seal midagi. Ma otsisin terve hommiku. Kas keegi käis eile siin? Jah, Mari käis. Aga ta ei võtnud midagi. Kas sa helistasid talle? Helistasin, aga keegi ei vastanud. Võib-olla ta magab. Hmm. Kas sa läksid eile kuhugi? Ma käisin poes ja kohvikus. Kohvikus jõin ma kohvi ja lugesin raamatut. Võib-olla jäid võtmed kohvikusse. Ei, ma ei unusta kunagi midagi! Kunagi? Nädal tagasi jäi sul telefon poodi. Jah, see on tõsi. Hästi, ma helistan kohvikusse. Noh? Kas keegi vastas? Jah! Kohvikus on laual võtmed. Need on minu võtmed! Näed! Kas ma tulen sinuga? Ei, aitäh. Aga õhtul võime kuhugi sööma minna. Hea mõte! Kuhu? Mulle on ükskõik. Kuhugi, kus on hea supp. Supp on hea mõte. Siis näeme kell seitse!",
+    "text": "Peeter, kas mu võtmed on kuskil siin? Ei, ma ei näinud neid kuskil. Kus nad eile olid? Eile olid nad laual. Aga nüüd ei ole seal midagi. Ma otsisin terve hommiku. Kas keegi käis eile siin? Jah, Mari käis. Aga ta ei võtnud midagi. Kas sa helistasid talle? Helistasin, aga keegi ei vastanud. Võib-olla ta magab. Hmm. Kas sa läksid eile kuhugi? Ma käisin poes ja kohvikus. Kohvikus jõin ma kohvi ja lugesin raamatut. Võib-olla jäid võtmed kohvikusse. Ei, ma ei unusta kunagi midagi! Kunagi? Nädal tagasi jäi sul telefon poodi. Jah, see on tõsi. Hästi, ma helistan kohvikusse. Noh? Kas keegi vastas? Jah! Kohvikus on laual võtmed. Need on minu võtmed! Näed! Kas ma tulen sinuga? Ei, aitäh. Aga õhtul võime kuhugi sööma minna. Hea mõte! Kuhu? Mulle on ükskõik. Kuhugi kohvikusse. Kohvik on hea mõte. Siis näeme kell seitse!",
     "model": "eleven_v4",
     "turns": [
       {
@@ -16739,13 +16739,13 @@
         "voice": "WtzwR2kNGVNuaTGaYLfK",
         "sentences": [
           "Mulle on ükskõik.",
-          "Kuhugi, kus on hea supp."
+          "Kuhugi kohvikusse."
         ]
       },
       {
         "voice": "jGja51dd7gcoK0zkxeyg",
         "sentences": [
-          "Supp on hea mõte.",
+          "Kohvik on hea mõte.",
           "Siis näeme kell seitse!"
         ]
       }

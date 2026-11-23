@@ -325,8 +325,8 @@ msgstr "Говори, кто ты: <0>Mina olen Andres</0> или <1>Minu nimi o
 msgid "Says what you do."
 msgstr "Сказано, чем ты занимаешься."
 
-msgid "Says where you live, with <0>-s</0> on the place."
-msgstr "Сказано, где ты живёшь, с <0>-s</0> в названии места."
+msgid "Says where you live, with <0>-s</0> or <1>-l</1> on the place."
+msgstr "Сказано, где ты живёшь, с <0>-s</0> или <1>-l</1> в названии места."
 
 msgid "Says who you are."
 msgstr "Сказано, кто ты."

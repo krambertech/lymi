@@ -1186,9 +1186,32 @@ export const TUTVUMINE_TALK: Conversation = {
 
 export const numberAnswers = (n: number): [string, ...string[]] => [numberWords(n)];
 
+const HOUR_GENITIVES = [
+  "ühe",
+  "kahe",
+  "kolme",
+  "nelja",
+  "viie",
+  "kuue",
+  "seitsme",
+  "kaheksa",
+  "üheksa",
+  "kümne",
+  "üheteistkümne",
+  "kaheteistkümne",
+] as const;
+
 export const timeAnswers = (time: ClockTime): [string, ...string[]] => {
   const words = timeWords(time);
-  return [words, `kell on ${words}`, `kell ${words}`];
+  const past = [5, 10, 20].includes(time.minute)
+    ? [`${numberWords(time.minute)} minutit üle ${HOUR_GENITIVES[time.hour - 1]}`]
+    : [];
+  return [
+    words,
+    `kell on ${words}`,
+    `kell ${words}`,
+    ...past.flatMap((each) => [each, `kell on ${each}`, `kell ${each}`]),
+  ];
 };
 
 export const TUTVUMINE_ASKED = [
@@ -1214,6 +1237,10 @@ export const TUTVUMINE_ASKED = [
       "Kuidas on su nimi?",
       "Kuidas on sinu nimi?",
       "Kuidas on teie nimi?",
+      "Mis te nimi on?",
+      "Mis on te nimi?",
+      "Kuidas te nimi on?",
+      "Kuidas on te nimi?",
     ],
   },
   {
@@ -1438,7 +1465,7 @@ export const KELL_PASSAGE = [
 ] as const;
 
 export const KELL_DRILLED: readonly ClockTime[] = [
-  { hour: 2, minute: 0 },
+  { hour: 4, minute: 0 },
   { hour: 8, minute: 0 },
   { hour: 11, minute: 15 },
   { hour: 7, minute: 15 },

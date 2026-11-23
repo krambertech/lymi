@@ -89,6 +89,9 @@ msgstr "{left, plural, one {# вопрос на повторение} few {# в�
 msgid "{lessonCount, plural, one {# lesson, coming soon} other {# lessons, coming soon}}"
 msgstr "{lessonCount, plural, one {# урок, скоро} few {# урока, скоро} many {# уроков, скоро} other {# урока, скоро}}"
 
+msgid "{letters, plural, one {Not right: # letter differs.} other {Not right: # letters differ.}}"
+msgstr "{letters, plural, one {Неверно: отличается # буква.} few {Неверно: отличаются # буквы.} many {Неверно: отличаются # букв.} other {Неверно: отличаются # буквы.}}"
+
 msgid "{more, plural, one {and # more} other {and # more}}"
 msgstr "{more, plural, one {и ещё #} few {и ещё #} many {и ещё #} other {и ещё #}}"
 
@@ -103,6 +106,10 @@ msgstr "{plays, plural, one {Сначала прочитай вопросы. З�
 
 msgid "{position} of {count}"
 msgstr "{position} из {count}"
+
+#. placeholder {0}: checks.length
+msgid "{right} of {0} ticked"
+msgstr "Отмечено {right} из {0}"
 
 msgid "{right} of {total}"
 msgstr "{right} из {total}"
@@ -247,8 +254,8 @@ msgstr "Бесплатный урок эстонского о личных ме�
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud."
 msgstr "Бесплатный урок эстонского о том, как сказать, который час: целые часы, pool, veerand и kolmveerand, которые называют следующий час, и минуты до и после. Каждый пример озвучен."
 
-msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud."
-msgstr "Бесплатный урок эстонского произношения: девять гласных с õ, ä, ö и ü, ударение на первом слоге и то, как удвоенная буква меняет слово. Каждое слово озвучено."
+msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
+msgstr "Бесплатный урок эстонского произношения: девять гласных с õ, ä, ö и ü, ударение, обычно на первом слоге, и то, как удвоенная буква может изменить слово. Каждое слово озвучено."
 
 msgid "A free lesson on Estonian modal verbs: oskan for what you know how to do, saan for what nothing stops you doing, võin and tohin for what is allowed, pean, tuleb and mul on vaja for what you have to do, and how to say can’t, mustn’t and don’t have to. Every sentence is read aloud."
 msgstr "Бесплатный урок о модальных глаголах в эстонском языке: oskan — когда умеешь, saan — когда ничто не мешает, võin и tohin — когда можно, pean, tuleb и mul on vaja — когда надо, и как сказать «не могу», «нельзя» и «не обязательно». Каждое предложение можно послушать."
@@ -264,6 +271,9 @@ msgstr "Бесплатный урок об эстонских числах: от
 
 msgid "A free lesson on Estonian ordinal numbers and dates: esimene, teine, kolmas and how the rest are built from the genitive, the months, asking mis kuupäev täna on?, writing 21. november, and -l for on a date or a floor (viiendal mail, kolmandal korrusel). Every sentence is read aloud."
 msgstr "Бесплатный урок о порядковых числительных и датах в эстонском языке: esimene, teine, kolmas и как остальные образуются от родительного падежа, названия месяцев, вопрос mis kuupäev täna on?, запись 21. november и -l, чтобы сказать «какого числа» или «на каком этаже» (viiendal mail, kolmandal korrusel). Каждое предложение озвучено."
+
+msgid "A free lesson on Estonian postpositions of place: peal, all, taga, ees, kõrval and sees (on, under, behind, in front of, next to, inside), the genitive before them (laua peal, poe ees), their kuhu and kust forms (peale, pealt; taha, tagant; sisse, seest) and juures for a person’s place. Every sentence is read aloud."
+msgstr "Бесплатный урок об эстонских послелогах места: peal, all, taga, ees, kõrval и sees (на, под, за, перед, рядом, внутри), родительный падеж перед ними (laua peal, poe ees), их формы для kuhu и kust (peale, pealt; taha, tagant; sisse, seest) и juures — «у кого-то». Каждое предложение озвучено."
 
 msgid "A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and three everyday questions to learn whole. Every sentence is read aloud."
 msgstr "Бесплатный урок о вопросах в эстонском: kas для вопросов «да или нет», ответы jah и ei, вопросительные слова kes, mis, kus, millal, miks, kuidas и kui palju и три повседневных вопроса, которые учат целиком. Каждое предложение озвучено."
@@ -283,8 +293,8 @@ msgstr "Бесплатный урок о том, как сказать «у ме
 msgid "A free lesson on saying no in the Estonian past tense: ei and the -nud form (ma ei läinud, ei olnud, polnud), the same for every person, how the -nud form comes from the -da infinitive, the five forms to learn whole, and answering a question with no. Every sentence is read aloud."
 msgstr "Бесплатный урок об отрицании в эстонском прошедшем времени: ei и форма на -nud (ma ei läinud, ei olnud, polnud), одна для всех лиц, как форма на -nud образуется от инфинитива на -da, пять форм, которые учат наизусть, и как ответить «нет» на вопрос. Каждое предложение озвучено."
 
-msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
-msgstr "Бесплатный урок эстонского о том, как сказать, где ты: -s значит «в» (Tallinnas, koolis), -l — «на» (laual, tööl), какие места получают какое окончание и как ответить на kus, «где». Каждое предложение озвучено."
+msgid "A free lesson on saying where you are in Estonian: -s, usually for in (Tallinnas, koolis), -l, usually for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о том, как сказать, где ты: -s обычно значит «в» (Tallinnas, koolis), -l — «на» (laual, tööl), какие места получают какое окончание и как ответить на kus, «где». Каждое предложение озвучено."
 
 msgid "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
 msgstr "Бесплатный урок об эстонских формах на -ma, -mas и -mast: lähen ujuma (иду плавать), olen ujumas (на плавании) и tulen ujumast (возвращаюсь с плавания). Они отвечают на kuhu?, kus? и kust?, как и названия мест. А ещё — когда говорить lähen, käin или tulen. Каждое предложение озвучено."
@@ -297,6 +307,9 @@ msgstr "Бесплатный урок о родительном падеже в 
 
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "Бесплатный урок о повелительном наклонении в эстонском языке: основа глагола как команда (loe!, istu!, tule siia!), ära для «не делай», формы на -ge и -ke для нескольких человек или на «вы», повседневные команды вроде räägi aeglasemalt, palun и короткий разговор в кафе. Каждое предложение озвучено."
+
+msgid "A free lesson on the Estonian object: the partitive for part of something, an action still going on, after ei and after verbs such as ootama and otsima on their own; and for a noun, usually the genitive for the whole thing done (Ma lugesin raamatu läbi) and the nominative in commands (Osta pilet!). Every sentence is read aloud."
+msgstr "Бесплатный урок об объекте в эстонском языке: партитив для части, для действия, которое ещё идёт, после ei и после глаголов вроде ootama и otsima без других слов; а у существительного обычно родительный для завершённого действия над целым (Ma lugesin raamatu läbi) и именительный в командах (Osta pilet!). Каждое предложение озвучено."
 
 msgid "A free lesson on the Estonian partitive case: after numbers from two up (kaks kassi, viis eurot), after mitu and amounts (tass kohvi), after pole (mul pole kassi) and with food and drink (ma joon kohvi). Every sentence is read aloud."
 msgstr "Бесплатный урок о партитиве в эстонском языке: после числительных от двух (kaks kassi, viis eurot), после mitu и слов количества (tass kohvi), после pole (mul pole kassi) и с едой и напитками (ma joon kohvi). Каждое предложение озвучено."
@@ -337,6 +350,9 @@ msgstr "Разговор подлиннее"
 msgid "a lot, much"
 msgstr "много"
 
+msgid "A model answer"
+msgstr "Образец"
+
 msgid "A noun’s cases on the tray: tap a form to hear it, its ending lit. Question words can head the rows, and one row or column can be tinted. On a phone the rows stack."
 msgstr "Падежи существительного на подложке: коснись формы, чтобы её услышать, окончание подсвечено. Строки могут начинаться с вопросительных слов, а одну строку или столбец можно выделить. На телефоне строки становятся списком."
 
@@ -366,6 +382,9 @@ msgstr "магазин"
 
 msgid "A short text to read and hear, every question at once; its words open their cards once checked."
 msgstr "Короткий текст, чтобы прочитать и послушать, и все вопросы сразу; карточки слов открываются после проверки."
+
+msgid "A short text written in a field with the Estonian letters, then shown above a model answer and a checklist the learner ticks; nothing is marked for them."
+msgstr "Короткий текст, написанный в поле с эстонскими буквами, а потом показанный над образцом и списком, где ученик сам ставит отметки; никто не проверяет за него."
 
 msgid "a town"
 msgstr "город"
@@ -606,6 +625,10 @@ msgstr "Не ждите!"
 msgid "Done"
 msgstr "Пройдено"
 
+msgctxt "button that ends the checklist"
+msgid "Done"
+msgstr "Готово"
+
 msgid "Drag each word to its gap, or tap it."
 msgstr "Перетащи каждое слово в его пропуск или нажми на него."
 
@@ -681,6 +704,9 @@ msgstr "Склонение личных местоимений в эстонск
 msgid "Estonian plural"
 msgstr "Множественное число в эстонском языке"
 
+msgid "Estonian postpositions: on, under, behind"
+msgstr "Эстонские послелоги: на, под, за"
+
 msgid "Estonian practice: last weekend and next week"
 msgstr "Практика эстонского: прошлые выходные и следующая неделя"
 
@@ -695,6 +721,9 @@ msgstr "Эстонское произношение"
 
 msgid "Estonian reading and listening practice: a day in Tallinn"
 msgstr "Эстонский язык: чтение и аудирование. День в Таллине"
+
+msgid "Estonian total and partial object"
+msgstr "Полный и частичный объект в эстонском языке"
 
 msgid "Every word has a group. Check when you’re ready."
 msgstr "Все слова в группах. Можно проверять."
@@ -832,6 +861,9 @@ msgstr "К уроку"
 
 msgid "Going, being, coming back: -ma, -mas, -mast"
 msgstr "Идти, быть там, возвращаться: -ma, -mas, -mast"
+
+msgid "Greets Mari."
+msgstr "Есть приветствие."
 
 msgid "hakkama, now"
 msgstr "hakkama, сейчас"
@@ -1584,6 +1616,9 @@ msgstr "Воспроизвести с этой реплики, {name}"
 msgid "Play from here"
 msgstr "Воспроизвести отсюда"
 
+msgid "Play the model answer"
+msgstr "Послушать образец"
+
 msgid "Play what {name} said"
 msgstr "Воспроизвести реплику: {name}"
 
@@ -1739,6 +1774,15 @@ msgstr "Отрицание в прошлом"
 msgid "Saying where: -s and -l"
 msgstr "Как сказать, где: окончания -s и -l"
 
+msgid "Says what you do."
+msgstr "Сказано, чем ты занимаешься."
+
+msgid "Says where you live."
+msgstr "Сказано, где ты живёшь."
+
+msgid "Says who you are."
+msgstr "Сказано, кто ты."
+
 msgid "Scene"
 msgstr "Сцена"
 
@@ -1780,6 +1824,9 @@ msgstr "Она учительница"
 
 msgid "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
 msgstr "Короткие бесплатные уроки от первых звуков до B1. Нажми на любое слово, чтобы его услышать, и пробуй каждое правило прямо по ходу чтения."
+
+msgid "Show the model"
+msgstr "Показать образец"
 
 msgid "Show what {name} said"
 msgstr "Показать реплику: {name}"
@@ -2076,6 +2123,9 @@ msgstr "Вопросы не загрузились. Проверь соедин�
 msgid "The right sentence"
 msgstr "Верное предложение"
 
+msgid "The right word"
+msgstr "Верное слово"
+
 msgid "The same conversation with Mari’s lines heard, not shown; each can be read on request."
 msgstr "Тот же разговор, но реплики Мари только слышно; каждую можно открыть и прочитать."
 
@@ -2157,6 +2207,9 @@ msgstr "Это кофе Мартина."
 msgid "Through, over, along"
 msgstr "Сквозь, через, вдоль"
 
+msgid "Tick what your text does."
+msgstr "Отметь, что есть в твоём тексте."
+
 msgid "Time expressions: when things happen"
 msgstr "Выражения времени: когда что происходит"
 
@@ -2217,6 +2270,9 @@ msgstr "Напиши вопрос"
 
 msgid "Type the sentence"
 msgstr "Напиши предложение"
+
+msgid "Type the word"
+msgstr "Напиши слово"
 
 msgid "under"
 msgstr "под"
@@ -2431,11 +2487,20 @@ msgstr "Другие слова"
 msgid "work"
 msgstr "работа"
 
+msgid "Write it again"
+msgstr "Написать ещё раз"
+
 msgid "Write it in Estonian"
 msgstr "Напиши по-эстонски"
 
 msgid "Write it in Estonian."
 msgstr "Напиши по-эстонски."
+
+msgid "Write Mari a few lines: greet her, say who you are, what you do and where you live."
+msgstr "Напиши Мари несколько строк: поздоровайся, скажи, кто ты, чем занимаешься и где живёшь."
+
+msgid "Write something first, then compare."
+msgstr "Сначала напиши что-нибудь, а потом сравни."
 
 msgid "Write the question"
 msgstr "Напиши вопрос"
@@ -2446,8 +2511,17 @@ msgstr "Напиши вопрос к этому ответу."
 msgid "Write the sentence you hear."
 msgstr "Напиши предложение, которое слышишь."
 
+msgid "Write the word you hear."
+msgstr "Напиши слово, которое слышишь."
+
+msgid "Write to Mari"
+msgstr "Напиши Мари"
+
 msgid "Write what you hear"
 msgstr "Напиши, что слышишь"
+
+msgid "Writing"
+msgstr "Письмо"
 
 msgid "Yes, she is"
 msgstr "Да"
@@ -2472,6 +2546,9 @@ msgstr "Неверное слово найдено."
 
 msgid "You live in Tartu."
 msgstr "Ты живёшь в Тарту."
+
+msgid "You wrote"
+msgstr "Твой текст"
 
 msgid "You wrote <0>{typed}</0>. It’s <1>{right}</1>."
 msgstr "У тебя <0>{typed}</0>, а нужно <1>{right}</1>."
@@ -2511,3 +2588,6 @@ msgstr "Твой ответ"
 
 msgid "Your sentence"
 msgstr "Твоё предложение"
+
+msgid "Your text"
+msgstr "Твой текст"

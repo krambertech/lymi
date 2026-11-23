@@ -1,0 +1,482 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 13:44+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0/> became <1/> before <2/>. That’s the genitive, the form lesson {genitive} taught for whose: <3>kasti</3>, the box’s. Each place word takes it: <4/> becomes <5>laua all</5>."
+msgstr "<0/> became <1/> before <2/>. That’s the genitive, the form lesson {genitive} taught for whose: <3>kasti</3>, the box’s. Each place word takes it: <4/> becomes <5>laua all</5>."
+
+msgid "<0>Laua peal</0> and <1>laual</1> both mean on the table, and <2>kasti sees</2> and <3>kastis</3> both mean in the box."
+msgstr "<0>Laua peal</0> and <1>laual</1> both mean on the table, and <2>kasti sees</2> and <3>kastis</3> both mean in the box."
+
+msgid "22 minutes"
+msgstr "22 minutes"
+
+msgid "8 exercises"
+msgstr "8 exercises"
+
+msgid "A cat and a box"
+msgstr "A cat and a box"
+
+msgid "All eight typed right."
+msgstr "All eight typed right."
+
+msgid "All five places right."
+msgstr "All five places right."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six written right."
+msgstr "All six written right."
+
+msgid "at someone’s place, by"
+msgstr "at someone’s place, by"
+
+msgid "away"
+msgstr "away"
+
+msgid "behind"
+msgstr "behind"
+
+msgctxt "taha, moving behind"
+msgid "behind"
+msgstr "behind"
+
+msgid "Being at someone’s place answers <0>kus</0>: <1>juures</1>."
+msgstr "Being at someone’s place answers <0>kus</0>: <1>juures</1>."
+
+msgid "box"
+msgstr "box"
+
+msgctxt "kass, the cat on the table"
+msgid "cat"
+msgstr "cat"
+
+msgid "Coming out answers <0>kust</0>: <1>seest</1>."
+msgstr "Coming out answers <0>kust</0>: <1>seest</1>."
+
+msgid "down, off"
+msgstr "down, off"
+
+msgid "Each place word has a form for <et>kus</et>, <et>kuhu</et> and <et>kust</et>: <et>taga, taha, tagant</et>."
+msgstr "Each place word has a form for <et>kus</et>, <et>kuhu</et> and <et>kust</et>: <et>taga, taha, tagant</et>."
+
+msgid "Each round gives a place word and a question. Type the form that answers it, then hear it in a sentence about the cat."
+msgstr "Each round gives a place word and a question. Type the form that answers it, then hear it in a sentence about the cat."
+
+msgid "Each sentence has one word in the wrong form: the thing, or the place word. Tap it, then write the right form."
+msgstr "Each sentence has one word in the wrong form: the thing, or the place word. Tap it, then write the right form."
+
+msgid "Each word has a form for <0>kus</0>, <1>kuhu</1> and <2>kust</2>: <3>peal, peale, pealt</3>; <4>taga, taha, tagant</4>; <5>sees, sisse, seest</5>."
+msgstr "Each word has a form for <0>kus</0>, <1>kuhu</1> and <2>kust</2>: <3>peal, peale, pealt</3>; <4>taga, taha, tagant</4>; <5>sees, sisse, seest</5>."
+
+msgid "Ema juures: at Mum’s."
+msgstr "Ema juures: at Mum’s."
+
+msgid "English does this with ago: a week ago. The six place words in this lesson work the same way. Tap a word to move the cat and hear the sentence."
+msgstr "English does this with ago: a week ago. The six place words in this lesson work the same way. Tap a word to move the cat and hear the sentence."
+
+msgid "English puts on or under before the thing. Estonian puts its word after it: <0/> Word for word: “cat is box’s on top”."
+msgstr "English puts on or under before the thing. Estonian puts its word after it: <0/> Word for word: “cat is box’s on top”."
+
+msgid "Estonian says on, under and behind with a word after the thing: <0>kasti peal</0>, on the box. The thing takes its genitive, and the place word has a form for each of <1>kus</1>, <2>kuhu</2> and <3>kust</3>."
+msgstr "Estonian says on, under and behind with a word after the thing: <0>kasti peal</0>, on the box. The thing takes its genitive, and the place word has a form for each of <1>kus</1>, <2>kuhu</2> and <3>kust</3>."
+
+msgid "Fill the gaps"
+msgstr "Fill the gaps"
+
+msgid "Find and fix the mistake"
+msgstr "Find and fix the mistake"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "For a person’s place, Estonian says <0/>: <1/> It has three forms too: <2/> <3/>"
+msgstr "For a person’s place, Estonian says <0/>: <1/> It has three forms too: <2/> <3/>"
+
+msgid "from behind"
+msgstr "from behind"
+
+msgid "from beside"
+msgstr "from beside"
+
+msgid "from in front of"
+msgstr "from in front of"
+
+msgid "from someone’s place"
+msgstr "from someone’s place"
+
+msgid "from the floor"
+msgstr "from the floor"
+
+msgid "from under"
+msgstr "from under"
+
+msgid "Go through the sections above once more, then try again."
+msgstr "Go through the sections above once more, then try again."
+
+msgid "Hear a sentence and tap where the cat is."
+msgstr "Hear a sentence and tap where the cat is."
+
+msgid "I’m at Mum’s."
+msgstr "I’m at Mum’s."
+
+msgid "I’m coming from Mum’s."
+msgstr "I’m coming from Mum’s."
+
+msgid "I’m going to Mum’s."
+msgstr "I’m going to Mum’s."
+
+msgid "I’m waiting in front of the shop."
+msgstr "I’m waiting in front of the shop."
+
+msgid "in front of"
+msgstr "in front of"
+
+msgctxt "ette, moving in front"
+msgid "in front of"
+msgstr "in front of"
+
+msgid "in the box"
+msgstr "in the box"
+
+msgid "In the box"
+msgstr "In the box"
+
+msgid "inside"
+msgstr "inside"
+
+msgid "into"
+msgstr "into"
+
+msgid "Jaan can’t find his book. Read the questions, then listen."
+msgstr "Jaan can’t find his book. Read the questions, then listen."
+
+msgid "Jaan is coming over to Mari."
+msgstr "Jaan is coming over to Mari."
+
+msgid "Jumping onto it answers <0>kuhu</0>: <1>peale</1>."
+msgstr "Jumping onto it answers <0>kuhu</0>: <1>peale</1>."
+
+msgid "Kasti is its genitive: kasti peal, on the box."
+msgstr "Kasti is its genitive: kasti peal, on the box."
+
+msgid "Lesson {onto} gave <0>laud</0> three forms: <1>laual</1>, <2>lauale</2>, <3>laualt</3>. These words have three too, one for <4/>, one for <5/> and one for <6/>. <7/> and <8/> take the same <9>-l</9>, <10>-le</10> and <11>-lt</11>."
+msgstr "Lesson {onto} gave <0>laud</0> three forms: <1>laual</1>, <2>lauale</2>, <3>laualt</3>. These words have three too, one for <4/>, one for <5/> and one for <6/>. <7/> and <8/> take the same <9>-l</9>, <10>-le</10> and <11>-lt</11>."
+
+msgid "Listen: a lost book"
+msgstr "Listen: a lost book"
+
+msgid "Listen: Jaan looks for his book"
+msgstr "Listen: Jaan looks for his book"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Looking for Miisu"
+msgstr "Looking for Miisu"
+
+msgid "Making the form"
+msgstr "Making the form"
+
+msgid "Mari has it"
+msgstr "Mari has it"
+
+msgid "Mari is looking for her cat, <0/>. Pick the form for each gap: is Miisu somewhere, going somewhere or coming from somewhere?"
+msgstr "Mari is looking for her cat, <0/>. Pick the form for each gap: is Miisu somewhere, going somewhere or coming from somewhere?"
+
+msgid "Meaning"
+msgstr "Meaning"
+
+msgid "Miisu"
+msgstr "Miisu"
+
+msgid "Miisu, a cat’s name"
+msgstr "Miisu, a cat’s name"
+
+msgid "Most of them. Look again at the ones you missed."
+msgstr "Most of them. Look again at the ones you missed."
+
+msgid "Most of them. Read the ones you missed once more."
+msgstr "Most of them. Read the ones you missed once more."
+
+msgid "next to"
+msgstr "next to"
+
+msgctxt "kõrvale, moving next to"
+msgid "next to"
+msgstr "next to"
+
+msgid "of the box"
+msgstr "of the box"
+
+msgid "of the table"
+msgstr "of the table"
+
+msgctxt "pealt"
+msgid "off, from on top of"
+msgstr "off, from on top of"
+
+msgid "on the table"
+msgstr "on the table"
+
+msgid "On the table"
+msgstr "On the table"
+
+msgid "on, on top of"
+msgstr "on, on top of"
+
+msgid "On, under, behind"
+msgstr "On, under, behind"
+
+msgid "onto"
+msgstr "onto"
+
+msgid "out"
+msgstr "out"
+
+msgid "out of"
+msgstr "out of"
+
+msgid "Put each form under the question it answers."
+msgstr "Put each form under the question it answers."
+
+msgid "Six place words, each with a form for kus, kuhu and kust"
+msgstr "Six place words, each with a form for kus, kuhu and kust"
+
+msgid "Sort the forms"
+msgstr "Sort the forms"
+
+msgid "table"
+msgstr "table"
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap the words above the box once more, then try again."
+msgstr "Tap the words above the box once more, then try again."
+
+msgid "Tap through the table of forms above once more, then try again."
+msgstr "Tap through the table of forms above once more, then try again."
+
+msgid "The <0>-l</0> and <1>-s</1> endings go on the genitive too: <2>laua</2> gives <3>laual</3>, <4>kasti</4> gives <5>kastis</5>. These two say the same about a book on a table: <6/> <7/> And <8>kastis</8> means the same as <9>kasti sees</9>: <10/>"
+msgstr "The <0>-l</0> and <1>-s</1> endings go on the genitive too: <2>laua</2> gives <3>laual</3>, <4>kasti</4> gives <5>kastis</5>. These two say the same about a book on a table: <6/> <7/> And <8>kastis</8> means the same as <9>kasti sees</9>: <10/>"
+
+msgid "The book"
+msgstr "The book"
+
+msgid "The book is on the table."
+msgstr "The book is on the table."
+
+msgid "The café is next to the school."
+msgstr "The café is next to the school."
+
+msgid "The car is behind the house."
+msgstr "The car is behind the house."
+
+msgid "The cat comes down off the box."
+msgstr "The cat comes down off the box."
+
+msgid "The cat comes out from behind the box."
+msgstr "The cat comes out from behind the box."
+
+msgid "The cat comes out from under the box."
+msgstr "The cat comes out from under the box."
+
+msgid "The cat comes out of the box."
+msgstr "The cat comes out of the box."
+
+msgid "The cat goes behind the box."
+msgstr "The cat goes behind the box."
+
+msgid "The cat goes in front of the box."
+msgstr "The cat goes in front of the box."
+
+msgid "The cat goes into the box."
+msgstr "The cat goes into the box."
+
+msgid "The cat goes next to the box."
+msgstr "The cat goes next to the box."
+
+msgid "The cat goes under the box."
+msgstr "The cat goes under the box."
+
+msgid "The cat is behind the box."
+msgstr "The cat is behind the box."
+
+msgid "The cat is in front of the box."
+msgstr "The cat is in front of the box."
+
+msgid "The cat is in the box."
+msgstr "The cat is in the box."
+
+msgid "The cat is next to the box."
+msgstr "The cat is next to the box."
+
+msgid "The cat is on the box."
+msgstr "The cat is on the box."
+
+msgid "The cat is under the box."
+msgstr "The cat is under the box."
+
+msgid "The cat is under the table."
+msgstr "The cat is under the table."
+
+msgid "The cat jumps onto the box."
+msgstr "The cat jumps onto the box."
+
+msgid "The cat moves away from beside the box."
+msgstr "The cat moves away from beside the box."
+
+msgid "The cat moves away from in front of the box."
+msgstr "The cat moves away from in front of the box."
+
+msgid "The genitive before a place word"
+msgstr "The genitive before a place word"
+
+msgid "The genitive of kast, box."
+msgstr "The genitive of kast, box."
+
+msgid "The genitive of laud, table."
+msgstr "The genitive of laud, table."
+
+msgid "The money"
+msgstr "The money"
+
+msgid "The money is inside the book."
+msgstr "The money is inside the book."
+
+msgid "The other four change more, so learn each as three: <0>all, alla, alt</0>; <1>taga, taha, tagant</1>; <2>ees, ette, eest</2>; <3>sees, sisse, seest</3>. Tap a form to hear its sentence."
+msgstr "The other four change more, so learn each as three: <0>all, alla, alt</0>; <1>taga, taha, tagant</1>; <2>ees, ette, eest</2>; <3>sees, sisse, seest</3>. Tap a form to hear its sentence."
+
+msgid "The thing before a place word is in the genitive: <0>laua peal</0>."
+msgstr "The thing before a place word is in the genitive: <0>laua peal</0>."
+
+msgid "The thing before a place word is in the genitive: <0>pood, poe</0>, <1>poe ees</1>."
+msgstr "The thing before a place word is in the genitive: <0>pood, poe</0>, <1>poe ees</1>."
+
+msgid "The thing before a place word is in the genitive: <et>laua peal, poe ees</et>."
+msgstr "The thing before a place word is in the genitive: <et>laua peal, poe ees</et>."
+
+msgid "The thing before them is in the genitive: <0>laud</0> becomes <1>laua all</1>, <2>pood</2> becomes <3>poe ees</3>."
+msgstr "The thing before them is in the genitive: <0>laud</0> becomes <1>laua all</1>, <2>pood</2> becomes <3>poe ees</3>."
+
+msgid "The words for on, under, behind, in front of, next to and inside come after the thing: <0>kasti peal, laua all, maja taga</0>."
+msgstr "The words for on, under, behind, in front of, next to and inside come after the thing: <0>kasti peal, laua all, maja taga</0>."
+
+msgid "to sit"
+msgstr "to sit"
+
+msgid "to someone’s place"
+msgstr "to someone’s place"
+
+msgid "Type the form"
+msgstr "Type the form"
+
+msgid "under"
+msgstr "under"
+
+msgctxt "alla, moving under"
+msgid "under"
+msgstr "under"
+
+msgid "What is in the box? Write it in Estonian."
+msgstr "What is in the box? Write it in Estonian."
+
+msgid "What is under the table?"
+msgstr "What is under the table?"
+
+msgid "where"
+msgstr "where"
+
+msgid "where from"
+msgstr "where from"
+
+msgid "Where from?"
+msgstr "Where from?"
+
+msgid "Where is Jaan’s book?"
+msgstr "Where is Jaan’s book?"
+
+msgid "Where is the cat?"
+msgstr "Where is the cat?"
+
+msgid "Where is the coffee? Write it in Estonian."
+msgstr "Where is the coffee? Write it in Estonian."
+
+msgid "Where it comes from"
+msgstr "Where it comes from"
+
+msgid "Where it goes"
+msgstr "Where it goes"
+
+msgid "Where it is"
+msgstr "Where it is"
+
+#. placeholder {0}: gap.answer
+msgid "Where Miisu comes from, so the <0>kust</0> form: <1>{0}</1>."
+msgstr "Where Miisu comes from, so the <0>kust</0> form: <1>{0}</1>."
+
+#. placeholder {0}: gap.answer
+msgid "Where Miisu goes, so the <0>kuhu</0> form: <1>{0}</1>."
+msgstr "Where Miisu goes, so the <0>kuhu</0> form: <1>{0}</1>."
+
+#. placeholder {0}: gap.answer
+msgid "Where Miisu is, so the <0>kus</0> form: <1>{0}</1>."
+msgstr "Where Miisu is, so the <0>kus</0> form: <1>{0}</1>."
+
+msgid "Where something comes from: <0>pealt, alt, tagant, eest, kõrvalt, seest</0>."
+msgstr "Where something comes from: <0>pealt, alt, tagant, eest, kõrvalt, seest</0>."
+
+msgid "Where something goes: <0>peale, alla, taha, ette, kõrvale, sisse</0>."
+msgstr "Where something goes: <0>peale, alla, taha, ette, kõrvale, sisse</0>."
+
+msgid "Where something is: <0>peal, all, taga, ees, kõrval, sees</0>."
+msgstr "Where something is: <0>peal, all, taga, ees, kõrval, sees</0>."
+
+msgid "Where the car is answers <0>kus</0>: <1>taga</1>."
+msgstr "Where the car is answers <0>kus</0>: <1>taga</1>."
+
+msgid "Where the cat is"
+msgstr "Where the cat is"
+
+msgid "where to"
+msgstr "where to"
+
+msgid "Where to and where from"
+msgstr "Where to and where from"
+
+msgid "Where to?"
+msgstr "Where to?"
+
+msgid "Where, where to and where from"
+msgstr "Where, where to and where from"
+
+msgid "Where?"
+msgstr "Where?"
+
+msgid "Which question a form answers"
+msgstr "Which question a form answers"
+
+msgid "Which word means what?"
+msgstr "Which word means what?"
+
+msgid "Word"
+msgstr "Word"
+
+msgid "Write each sentence in Estonian. Put the thing in the genitive, then the place word."
+msgstr "Write each sentence in Estonian. Put the thing in the genitive, then the place word."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "You know these genitives already: <0>poe</0> from <1>pood</1>, <2>kooli</2> from <3>kool</3>. <4>Maja</4> stays <5>maja</5>. Tap a sentence to hear it."
+msgstr "You know these genitives already: <0>poe</0> from <1>pood</1>, <2>kooli</2> from <3>kool</3>. <4>Maja</4> stays <5>maja</5>. Tap a sentence to hear it."
+
+msgid "You’ll hear it in a sentence about the cat."
+msgstr "You’ll hear it in a sentence about the cat."

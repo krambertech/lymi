@@ -314,7 +314,7 @@ const NOUN_USES = [
     form: "nominative",
     label: msg`In a command`,
     tip: msg`All of it. Some of it is the partitive: *osta leiba!*`,
-    taught: { et: "Raamatut või raamatu" },
+    taught: { slug: "raamatut-voi-raamatu" },
     examples: [
       { et: "Too *raamat* siia!", meaning: msg`Bring the book here!` },
       { et: "Pane *uks* kinni!", meaning: msg`Shut the door!` },
@@ -363,7 +363,7 @@ const NOUN_USES = [
     form: "genitive",
     label: msg`Before words like “under”`,
     tip: msg`Usually, when such a word stands after the noun.`,
-    taught: { et: "Kass ja kast" },
+    taught: { slug: "peal-all-taga" },
     examples: [
       { et: "Kass on *kasti* all.", meaning: msg`The cat is under the box.` },
       { et: "Auto on *maja* ees.", meaning: msg`The car is in front of the house.` },
@@ -374,7 +374,7 @@ const NOUN_USES = [
     id: "whole",
     form: "genitive",
     label: msg`All of it, finished`,
-    taught: { et: "Raamatut või raamatu" },
+    taught: { slug: "raamatut-voi-raamatu" },
     examples: [
       { et: "Ma ostsin *raamatu*.", meaning: msg`I bought the book.` },
       { et: "Ta sõi *leiva* ära.", meaning: msg`He or she ate all the bread.` },
@@ -422,7 +422,7 @@ const NOUN_USES = [
     form: "partitive",
     label: msg`Still going on`,
     tip: msg`Not finished yet.`,
-    taught: { et: "Raamatut või raamatu" },
+    taught: { slug: "raamatut-voi-raamatu" },
     examples: [
       { et: "Ta loeb *raamatut*.", meaning: msg`He or she is reading a book.` },
       { et: "Ema teeb *suppi*.", meaning: msg`Mum is making soup.` },
@@ -815,7 +815,8 @@ const HEARD: Readonly<Record<string, string>> = {
   "Ma oskan natuke eesti keelt rääkida.": "tegevusnimed/ma-oskan-natuke-eesti-keelt-ra2a2kida",
   "Ma pean homme tööle minema.": "tegevusnimed/ma-pean-homme-to2o2le-minema",
   "Ma tahan homme linna minna.": "tegevusnimed/ma-tahan-homme-linna-minna",
-  "Ma teen tööd.": "verbi-pohivormid/ma-teen-to2o2d",
+  "Ma tegin töö ära.": "raamatut-voi-raamatu/ma-tegin-to2o2-a2ra",
+  "Ma teen tööd.": "raamatut-voi-raamatu/ma-teen-to2o2d",
   "Ma õpin eesti keelt.": "olevik/s-opin-eesti",
   maja: "kit/maja",
   "Mari on jooksmas.": "ujuma-ujumas-ujumast/mari-on-jooksmas",

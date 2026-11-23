@@ -248,7 +248,7 @@ msgid "The left column, top to bottom: the nominative, the genitive and the part
 msgstr "Лівий стовпчик згори донизу: називний, родовий і партитив. Вибери інше слово й подивися, як вони змінюються."
 
 msgid "the main forms: a word’s nominative, genitive and partitive"
-msgstr "основні форми: називний, родовий і партитив слова"
+msgstr "основні форми слова: називний, родовий і партитив"
 
 msgid "The nominative is the word on its own. The genitive is what lesson {stems} called the stem: put <0>-s</0> on it and you have <1/>. Lesson {genitive} shows what the genitive means by itself, and lesson {partitive} what the partitive is for."
 msgstr "Називний — це слово саме по собі. Родовий — те, що урок {stems} назвав основою: додай до нього <0>-s</0>, і вийде <1/>. Що означає родовий сам по собі, розповідає урок {genitive}, а для чого партитив — урок {partitive}."
@@ -329,7 +329,7 @@ msgid "work, job"
 msgstr "робота"
 
 msgid "You’ll hear it and see how it changes from the nominative."
-msgstr "Почуєш її й побачиш, чим вона відрізняється від називного."
+msgstr "Почуєш цю форму й побачиш, чим вона відрізняється від називного."
 
 msgid "You’ll hear its three forms."
 msgstr "Почуєш три його форми."

@@ -204,8 +204,8 @@ msgstr "is, are"
 msgid "Kass, kassi: a vowel appears at the end."
 msgstr "Kass, kassi: a vowel appears at the end."
 
-msgid "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on that genitive, so the change shows again: <2/>, shops."
-msgstr "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on that genitive, so the change shows again: <2/>, shops."
+msgid "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on the genitive, so the change shows again: <2/>, shops."
+msgstr "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on the genitive, so the change shows again: <2/>, shops."
 
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"

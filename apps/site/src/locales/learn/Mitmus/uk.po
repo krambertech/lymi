@@ -204,8 +204,8 @@ msgstr "є"
 msgid "Kass, kassi: a vowel appears at the end."
 msgstr "Kass, kassi: у кінці з’являється голосний."
 
-msgid "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on that genitive, so the change shows again: <2/>, shops."
-msgstr "Урок {stems} показав іменники, основа яких змінюється перед закінченням: <0/> стає <1/>. Множина утворюється від цього родового, тож зміна є і в ній: <2/> — магазини."
+msgid "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on the genitive, so the change shows again: <2/>, shops."
+msgstr "Урок {stems} показав іменники, основа яких змінюється перед закінченням: <0/> стає <1/>. Множина утворюється від родового, тож зміна є і в ній: <2/> — магазини."
 
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"

@@ -164,7 +164,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`The three forms of an Estonian noun`,
         et: "Kolm põhivormi",
         minutes: 12,
-        blurb: msg`A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the third. Every word is read aloud.`,
+        blurb: msg`A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the partitive. Every word is read aloud.`,
       },
       {
         slug: "omastav",

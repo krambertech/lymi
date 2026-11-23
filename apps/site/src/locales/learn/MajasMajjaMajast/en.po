@@ -85,8 +85,8 @@ msgstr "English puts in, into or out of before the place. Estonian changes the e
 msgid "Estonian asks three questions about a place, <0>kus</0>, <1>kuhu</1> and <2>kust</2>, and answers each with its own ending: <3>majas, majja, majast</3>."
 msgstr "Estonian asks three questions about a place, <0>kus</0>, <1>kuhu</1> and <2>kust</2>, and answers each with its own ending: <3>majas, majja, majast</3>."
 
-msgid "For <0/>, <1/> and <2/>, the short form is the partitive a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. Two words have a short form of their own: <4/> for <5/>, <6/> for <7/>."
-msgstr "For <0/>, <1/> and <2/>, the short form is the partitive a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. Two words have a short form of their own: <4/> for <5/>, <6/> for <7/>."
+msgid "For <0/>, <1/> and <2/>, the short form is the same word as the partitive a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. Two words have a short form of their own: <4/> for <5/>, <6/> for <7/>."
+msgstr "For <0/>, <1/> and <2/>, the short form is the same word as the partitive a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. Two words have a short form of their own: <4/> for <5/>, <6/> for <7/>."
 
 msgid "Four places, each with a form for kus, kuhu and kust"
 msgstr "Four places, each with a form for kus, kuhu and kust"

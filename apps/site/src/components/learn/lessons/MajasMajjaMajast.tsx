@@ -749,9 +749,9 @@ export function MajasMajjaMajastLesson() {
                 <p>
                   <Trans>
                     For <Word w="kool" />, <Word w="pood" /> and <Word w="linn" />, the short form
-                    is the partitive a dictionary gives, as lesson {threeForms} shows:{" "}
-                    <b lang="et">pood, poe, poodi</b>. Two words have a short form of their own:{" "}
-                    <Word w="majja" /> for <Word w="maja" />, <Word w="koju" /> for{" "}
+                    is the same word as the partitive a dictionary gives, as lesson {threeForms}{" "}
+                    shows: <b lang="et">pood, poe, poodi</b>. Two words have a short form of their
+                    own: <Word w="majja" /> for <Word w="maja" />, <Word w="koju" /> for{" "}
                     <Word w="kodu" />.
                   </Trans>
                 </p>

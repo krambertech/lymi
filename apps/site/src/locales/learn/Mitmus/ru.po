@@ -72,7 +72,7 @@ msgstr "маленькая кошка"
 
 #. placeholder {0}: ending("-d")
 msgid "Add the {0} to the genitive, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Pick a word, then tap each form to see what changes."
-msgstr "Добавляй {0} ко родительном, <0>poe</0>, а не к <1>pood</1>: <2>poed</2>. Выбери слово и нажимай на каждую форму, чтобы увидеть, что меняется."
+msgstr "Добавляй {0} к родительному, <0>poe</0>, а не к <1>pood</1>: <2>poed</2>. Выбери слово и нажимай на каждую форму, чтобы увидеть, что меняется."
 
 msgid "Adjective and noun in the nominative."
 msgstr "Прилагательное и существительное в именительном."
@@ -204,8 +204,8 @@ msgstr "есть"
 msgid "Kass, kassi: a vowel appears at the end."
 msgstr "Kass, kassi: в конце появляется гласная."
 
-msgid "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on that genitive, so the change shows again: <2/>, shops."
-msgstr "Урок {stems} показал существительные, у которых основа меняется перед окончанием: <0/> становится <1/>. Множественное число образуется от этого родительного, поэтому изменение есть и в нём: <2/> — магазины."
+msgid "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on the genitive, so the change shows again: <2/>, shops."
+msgstr "Урок {stems} показал существительные, у которых основа меняется перед окончанием: <0/> становится <1/>. Множественное число образуется от родительного, поэтому изменение есть и в нём: <2/> — магазины."
 
 msgid "Listening only, no microphone"
 msgstr "Только на слух, без микрофона"
@@ -230,7 +230,7 @@ msgid "Mother and father are working."
 msgstr "Мама и папа работают."
 
 msgid "Nearly. For the ones you missed, start from the genitive."
-msgstr "Почти. Там, где была ошибка, начни со родительного."
+msgstr "Почти. Там, где была ошибка, начни с родительного."
 
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Почти. Переслушай те, где были ошибки."
@@ -401,7 +401,7 @@ msgid "they"
 msgstr "они"
 
 msgid "To say more than one, add <0>-d</0> to a noun’s genitive: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5> The big cats are eating."
-msgstr "Чтобы сказать «больше одного», добавь <0>-d</0> ко родительном существительного: <1>kass, kassi</1> даёт <2>kassid</2> — кошки. К прилагательному тоже добавляется <3>-d</3>, а глагол стоит в форме для <4>nad</4>: <5>Suured kassid söövad.</5> Большие кошки едят."
+msgstr "Чтобы сказать «больше одного», добавь <0>-d</0> к родительному существительного: <1>kass, kassi</1> даёт <2>kassid</2> — кошки. К прилагательному тоже добавляется <3>-d</3>, а глагол стоит в форме для <4>nad</4>: <5>Suured kassid söövad.</5> Большие кошки едят."
 
 msgid "to sleep"
 msgstr "спать"

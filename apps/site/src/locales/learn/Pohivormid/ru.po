@@ -233,7 +233,7 @@ msgid "The genitive drops the <0>g</0>; the partitive has it back."
 msgstr "В родительном <0>g</0> выпадает, в партитиве возвращается."
 
 msgid "The genitive is the one <0>-s</0> and <1>-l</1> go on: <2>kooli</2> gives <3>koolis</3>."
-msgstr "Именно ко родительном добавляют <0>-s</0> и <1>-l</1>: из <2>kooli</2> получается <3>koolis</3>."
+msgstr "Именно к родительному добавляют <0>-s</0> и <1>-l</1>: из <2>kooli</2> получается <3>koolis</3>."
 
 msgid "The genitive loses the <0>b</0> and the <1>u</1> turns into <2>o</2>; the partitive is the nominative again."
 msgstr "В родительном <0>b</0> исчезает, а <1>u</1> становится <2>o</2>; партитив снова такой же, как именительный."
@@ -248,7 +248,7 @@ msgid "The left column, top to bottom: the nominative, the genitive and the part
 msgstr "Левый столбец сверху вниз: именительный, родительный и партитив. Выбери другое слово и посмотри, как они меняются."
 
 msgid "the main forms: a word’s nominative, genitive and partitive"
-msgstr "основные формы: именительный, родительный и партитив слова"
+msgstr "основные формы слова: именительный, родительный и партитив"
 
 msgid "The nominative is the word on its own. The genitive is what lesson {stems} called the stem: put <0>-s</0> on it and you have <1/>. Lesson {genitive} shows what the genitive means by itself, and lesson {partitive} what the partitive is for."
 msgstr "Именительный — это слово само по себе. Родительный — то, что урок {stems} назвал основой: добавь к нему <0>-s</0>, и получится <1/>. Что значит родительный сам по себе, рассказывает урок {genitive}, а зачем нужен партитив — урок {partitive}."
@@ -329,7 +329,7 @@ msgid "work, job"
 msgstr "работа"
 
 msgid "You’ll hear it and see how it changes from the nominative."
-msgstr "Услышишь её и увидишь, чем она отличается от именительного."
+msgstr "Услышишь эту форму и увидишь, чем она отличается от именительного."
 
 msgid "You’ll hear its three forms."
 msgstr "Услышишь три его формы."

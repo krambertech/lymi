@@ -624,8 +624,8 @@ export function MitmusLesson() {
                 <p>
                   <Trans>
                     Lesson {stems} showed nouns whose stem changes before an ending:{" "}
-                    <Word w="pood" /> becomes <Word w="poe" />. The plural is built on that
-                    genitive, so the change shows again: <Word w="poed" />, shops.
+                    <Word w="pood" /> becomes <Word w="poe" />. The plural is built on the genitive,
+                    so the change shows again: <Word w="poed" />, shops.
                   </Trans>
                 </p>
                 <p>

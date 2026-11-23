@@ -12989,5 +12989,70 @@
     "text": "Kell on neli.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kuus": {
+    "text": "Kell on kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-ku2mme": {
+    "text": "Kell on kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-veerand-neli": {
+    "text": "Kell on veerand neli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kolmveerand-kuus": {
+    "text": "Kell on kolmveerand kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-ku2mme-minutit-kaheksa-la2bi": {
+    "text": "Kell on kümme minutit kaheksa läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kaksku2mmend-minutit-neli-la2bi": {
+    "text": "Kell on kakskümmend minutit neli läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-ku2mne-minuti-pa2rast-kaheksa": {
+    "text": "Kell on kümne minuti pärast kaheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kaheku2mne-minuti-pa2rast-kolm": {
+    "text": "Kell on kahekümne minuti pärast kolm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kas-ta-ra2a2gib-eesti-keelt": {
+    "text": "Kas ta räägib eesti keelt?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kolmveerand-kaks": {
+    "text": "Kell on kolmveerand kaks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kus-mari-elab": {
+    "text": "Kus Mari elab?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kus-te-elate": {
+    "text": "Kus te elate?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kas-te-ra2a2gite-eesti-keelt": {
+    "text": "Kas te räägite eesti keelt?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

@@ -70,6 +70,9 @@ msgstr "багато"
 msgid "A note from Kati"
 msgstr "Записка від Каті"
 
+msgid "A yes-or-no question usually starts with <0>kas</0>, and any other with a question word: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
+msgstr "Питання «так чи ні» зазвичай починається з <0>kas</0>, а будь-яке інше — з питального слова: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
+
 msgid "A yes-or-no question usually starts with <et>kas</et>; the verb takes the ending for its person, as without <et>kas</et>."
 msgstr "Питання з відповіддю «так» чи «ні» зазвичай починається з <et>kas</et>; закінчення дієслова, як і без <et>kas</et>, залежить від особи."
 
@@ -96,9 +99,6 @@ msgstr "Відповідай і питай у відповідь: <0>Hästi, ait
 
 msgid "Answering Mari"
 msgstr "Відповіді на питання Марі"
-
-msgid "Ask a yes-or-no question with <0>kas</0>, and any other with a question word: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
-msgstr "Питання «так чи ні» починай з <0>kas</0>, а будь-яке інше — з питального слова: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
 
 msgid "Ask the question"
 msgstr "Постав питання"
@@ -132,6 +132,9 @@ msgstr "Ти живеш у Таллінні?"
 
 msgid "Do you speak Estonian?"
 msgstr "Ти говориш естонською?"
+
+msgid "Does he or she speak Estonian?"
+msgstr "Він чи вона розмовляє естонською?"
 
 msgid "Each round gives an answer. Write the question it answers. When the answer says <0>ma</0> or <1>minu</1>, ask with <2>sa</2> or <3>su</3>."
 msgstr "У кожному раунді є відповідь. Напиши питання до неї. Якщо у відповіді <0>ma</0> чи <1>minu</1>, то в питанні — <2>sa</2> чи <3>su</3>."
@@ -411,6 +414,9 @@ msgstr "Де живе Каті?"
 
 msgid "Where does Liis live?"
 msgstr "Де живе Ліїс?"
+
+msgid "Where does Mari live?"
+msgstr "Де живе Марі?"
 
 msgid "Where does Peeter live?"
 msgstr "Де живе Пеетер?"

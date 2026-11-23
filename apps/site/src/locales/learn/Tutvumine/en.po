@@ -70,6 +70,9 @@ msgstr "a lot"
 msgid "A note from Kati"
 msgstr "A note from Kati"
 
+msgid "A yes-or-no question usually starts with <0>kas</0>, and any other with a question word: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
+msgstr "A yes-or-no question usually starts with <0>kas</0>, and any other with a question word: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
+
 msgid "A yes-or-no question usually starts with <et>kas</et>; the verb takes the ending for its person, as without <et>kas</et>."
 msgstr "A yes-or-no question usually starts with <et>kas</et>; the verb takes the ending for its person, as without <et>kas</et>."
 
@@ -96,9 +99,6 @@ msgstr "Answer, then ask back: <0>Hästi, aitäh. Aga sul?</0>"
 
 msgid "Answering Mari"
 msgstr "Answering Mari"
-
-msgid "Ask a yes-or-no question with <0>kas</0>, and any other with a question word: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
-msgstr "Ask a yes-or-no question with <0>kas</0>, and any other with a question word: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
 
 msgid "Ask the question"
 msgstr "Ask the question"
@@ -132,6 +132,9 @@ msgstr "Do you live in Tallinn?"
 
 msgid "Do you speak Estonian?"
 msgstr "Do you speak Estonian?"
+
+msgid "Does he or she speak Estonian?"
+msgstr "Does he or she speak Estonian?"
 
 msgid "Each round gives an answer. Write the question it answers. When the answer says <0>ma</0> or <1>minu</1>, ask with <2>sa</2> or <3>su</3>."
 msgstr "Each round gives an answer. Write the question it answers. When the answer says <0>ma</0> or <1>minu</1>, ask with <2>sa</2> or <3>su</3>."
@@ -411,6 +414,9 @@ msgstr "Where does Kati live?"
 
 msgid "Where does Liis live?"
 msgstr "Where does Liis live?"
+
+msgid "Where does Mari live?"
+msgstr "Where does Mari live?"
 
 msgid "Where does Peeter live?"
 msgstr "Where does Peeter live?"

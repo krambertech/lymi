@@ -81,7 +81,7 @@ export const DRILLS: DrillBank = {
     typed(91, "words", BOTH),
     typed(400, "big", BIG),
     typed(300, "big", BIG),
-    typed(1000, "big", msg`<et>Tuhat</et> alone, with no “one” in front.`),
+    typed(1000, "big", msg`<et>Tuhat</et>, usually with no “one” in front.`),
     typed(3000, "big", BIG),
     heard(2, 6, "alike", ALIKE),
     heard(6, 2, "alike", ALIKE),

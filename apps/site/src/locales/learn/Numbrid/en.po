@@ -34,8 +34,8 @@ msgstr "<et>Kaks</et> has a short <et>a</et> and a <et>k</et> before the <et>s</
 msgid "<et>Kaks</et> or <et>kuus</et> in a sentence"
 msgstr "<et>Kaks</et> or <et>kuus</et> in a sentence"
 
-msgid "<et>Tuhat</et> alone, with no “one” in front."
-msgstr "<et>Tuhat</et> alone, with no “one” in front."
+msgid "<et>Tuhat</et>, usually with no “one” in front."
+msgstr "<et>Tuhat</et>, usually with no “one” in front."
 
 msgid "€2.15"
 msgstr "€2.15"

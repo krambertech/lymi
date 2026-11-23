@@ -122,9 +122,6 @@ msgstr "Половина: pool"
 msgid "Halfway to {next}."
 msgstr "Полпути до {next}."
 
-msgid "Halves and quarters"
-msgstr "Половины и четверти"
-
 msgid "Hear a time and write the whole sentence. With <0>läbi</0>, the minutes are <1>viis</1>, <2>kümme</2> or <3>kakskümmend minutit</3>; with <4>pärast</4>, <5>viie</5>, <6>kümne</6> or <7>kahekümne minuti</7>."
 msgstr "Послушай время и напиши всё предложение. С <0>läbi</0> минуты — это <1>viis</1>, <2>kümme</2> или <3>kakskümmend minutit</3>, а с <4>pärast</4> — <5>viie</5>, <6>kümne</6> или <7>kahekümne minuti</7>."
 
@@ -261,6 +258,9 @@ msgstr "без четверти четыре, 3:45"
 
 msgid "Quarters look ahead too. <0/> is a quarter, so <1/> is a quarter of the way to four: 3:15. <2/> is three quarters, so <3/> is 3:45."
 msgstr "Четверти тоже смотрят вперёд. <0/> — четверть, поэтому <1/> — это четверть четвёртого, 3:15, совсем как по-русски. <2/> — три четверти, поэтому <3/> — это 3:45."
+
+msgid "Quarters: <et>veerand</et> and <et>kolmveerand</et>"
+msgstr "Четверти: <et>veerand</et> и <et>kolmveerand</et>"
 
 msgid "Quarters: veerand and kolmveerand"
 msgstr "Четверти: veerand и kolmveerand"

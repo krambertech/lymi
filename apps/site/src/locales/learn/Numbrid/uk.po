@@ -31,6 +31,9 @@ msgstr "<et>-teist</et> чи <et>-kümmend</et>"
 msgid "<et>Kaks</et> has a short a and a k before the s; <et>kuus</et> a long uu. <et>Kaheksa</et> starts with ka, <et>üheksa</et> with ü."
 msgstr "У <et>kaks</et> коротке a і k перед s, у <et>kuus</et> — довге uu. <et>Kaheksa</et> починається з ka, <et>üheksa</et> — з ü."
 
+msgid "<et>Kaks</et> or <et>kuus</et> in a sentence"
+msgstr "<et>Kaks</et> чи <et>kuus</et> у реченні"
+
 msgid "<et>Tuhat</et> alone, with no “one” in front."
 msgstr "Лише <et>tuhat</et>, без «один» перед ним."
 
@@ -201,9 +204,6 @@ msgstr "Число"
 
 msgid "Numbers by ear. Eleven words and two endings take you to ninety-nine."
 msgstr "Числа на слух. Одинадцять слів і дві частини, -teist і -kümmend, доведуть тебе до дев’яноста дев’яти."
-
-msgid "Numbers in sentences"
-msgstr "Числа в реченнях"
 
 msgid "Numbers in the wild"
 msgstr "Числа в житті"

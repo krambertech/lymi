@@ -108,7 +108,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian numbers`,
         et: "Üks, kaks, kolm",
         minutes: 15,
-        blurb: msg`A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, numbers that sound alike, and numbers heard in prices, ages and phone numbers. Every number is read aloud.`,
+        blurb: msg`A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, numbers that sound alike, writing numbers in words, and numbers heard in prices, ages and phone numbers. Every number is read aloud.`,
       },
       {
         slug: "kell",
@@ -116,7 +116,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Telling the time in Estonian`,
         et: "Mis kell on?",
         minutes: 18,
-        blurb: msg`A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud.`,
+        blurb: msg`A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, minutes past and to, and writing the time in words. Every time is read aloud.`,
       },
       {
         slug: "paevad",

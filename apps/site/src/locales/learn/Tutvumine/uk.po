@@ -47,7 +47,7 @@ msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> — це «привіт», а Марі вже йде."
 
 msgid "<et>Kus</et> asks where, and the verb takes its person’s ending: <et>Kus sa õpid? Kus ta õpib?</et>"
-msgstr "<et>Kus</et> питає «де», а дієслово має закінчення своєї особи: <et>Kus sa õpid? Kus ta õpib?</et>"
+msgstr "<et>Kus</et> питає «де», а закінчення дієслова залежить від особи: <et>Kus sa õpid? Kus ta õpib?</et>"
 
 msgid "<et>Mina</et> takes <et>olen</et>: <et>Mina olen Andres</et>."
 msgstr "З <et>mina</et> — <et>olen</et>: <et>Mina olen Andres</et>."

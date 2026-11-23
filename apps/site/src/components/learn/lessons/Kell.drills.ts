@@ -68,7 +68,10 @@ const heard = (time: ClockTime): ChoiceDrill => {
 export const DRILLS: DrillBank = {
   rules: {
     hour: { label: msg`On the hour`, section: "hours" },
-    quarter: { label: msg`Halves and quarters`, section: "quarters" },
+    quarter: {
+      label: msg`Quarters: <et>veerand</et> and <et>kolmveerand</et>`,
+      section: "quarters",
+    },
     past: { label: msg`Minutes past: <et>läbi</et>`, section: "past" },
     to: { label: msg`Minutes to: <et>pärast</et>`, section: "to" },
   },

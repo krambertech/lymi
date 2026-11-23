@@ -11304,11 +11304,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "kell/kell-on-pool-viis": {
-    "text": "Kell on pool viis.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "kell/kell-on-veerand-kaheksa": {
     "text": "Kell on veerand kaheksa.",
     "model": "eleven_v4",
@@ -11505,6 +11500,11 @@
   },
   "tutvumine/kus-ta-to2o2tab": {
     "text": "Kus ta töötab?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-veerand-kaksteist": {
+    "text": "Kell on veerand kaksteist.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

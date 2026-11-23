@@ -63,7 +63,7 @@ export const DRILLS: DrillBank = {
     words: { label: msg`Numbers in words`, section: "words" },
     big: { label: msg`Hundreds and thousands`, section: "big" },
     alike: { label: msg`Numbers that sound alike`, section: "alike" },
-    sentence: { label: msg`Numbers in sentences`, section: "wild" },
+    sentence: { label: msg`<et>Kaks</et> or <et>kuus</et> in a sentence`, section: "alike" },
   },
   items: [
     typed(16, "teist", TEIST),

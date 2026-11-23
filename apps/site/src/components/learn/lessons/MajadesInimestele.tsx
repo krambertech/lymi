@@ -293,7 +293,7 @@ function useContent() {
       {
         kind: "translate",
         id: "go-shops",
-        prompt: t`We go to the shops.`,
+        prompt: t`We go round the shops.`,
         src: src("Me käime poodides."),
         answers: PLURAL_CASE_ANSWERS["Me käime poodides."],
         pair: ["s", "go-shops"],
@@ -580,8 +580,8 @@ export function MajadesInimesteleLesson() {
                     label: "-de",
                     rule: (
                       <Trans>
-                        The partitive doesn’t end in <b lang="et">-t</b>:{" "}
-                        <b lang="et">sõpra, sõprade</b>.
+                        The partitive doesn’t end in <b lang="et">-t</b>, so usually{" "}
+                        <b lang="et">-de</b>: <b lang="et">sõpra, sõprade</b>.
                       </Trans>
                     ),
                   },
@@ -590,8 +590,8 @@ export function MajadesInimesteleLesson() {
                     label: "-te",
                     rule: (
                       <Trans>
-                        The partitive ends in <b lang="et">-t</b>, so it adds <b lang="et">-e</b>:{" "}
-                        <b lang="et">inimest, inimeste</b>.
+                        The partitive ends in <b lang="et">-t</b>, so it usually adds{" "}
+                        <b lang="et">-e</b>: <b lang="et">inimest, inimeste</b>.
                       </Trans>
                     ),
                   },

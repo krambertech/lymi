@@ -150,8 +150,8 @@ function NudTable() {
           tip: (
             <Trans>
               Each row holds the <b lang="et">-da</b> infinitive and the <b lang="et">-nud</b> form.
-              The first five are regular; the last five are irregular: learn their{" "}
-              <b lang="et">-nud</b> form by heart.
+              The first six follow the rule, and in <b lang="et">olla</b> one <b lang="et">l</b>{" "}
+              goes. The last four are irregular: learn their <b lang="et">-nud</b> form by heart.
             </Trans>
           ),
         }}
@@ -259,7 +259,15 @@ function useContent() {
       cue: t`The -nud form`,
       answers: [verb.nud],
       src: src(verb.nud),
-      explain: verb.regular ? (
+      explain: verb.da.endsWith("lla") ? (
+        <Trans>
+          In a <b lang="et">-lla</b> verb, one <b lang="et">l</b> goes:{" "}
+          <b lang="et">
+            {verb.da}, {verb.nud}
+          </b>
+          .
+        </Trans>
+      ) : verb.regular ? (
         <Trans>
           Drop <b lang="et">-da</b> or <b lang="et">-a</b> from the <b lang="et">-da</b> infinitive
           and add <b lang="et">-nud</b>.
@@ -382,11 +390,6 @@ function useContent() {
         explain: <Trans>Last week is named, so the simple past.</Trans>,
       },
     ];
-    translations.find((item) => item.id === "two-years")!.answers = [
-      "Ta on eesti keelt kaks aastat õppinud.",
-      "Ta on kaks aastat eesti keelt õppinud.",
-      "Tema on eesti keelt kaks aastat õppinud.",
-    ];
 
     const fixWhy: Record<string, ReactNode> = {
       "Ma ei ole seda filmi näinud.": (
@@ -450,7 +453,8 @@ function useContent() {
             line: "Jah, ma olen eelmisel kuul seal käinud.",
             why: (
               <Trans>
-                A finished time is named, last month, so the simple past: <b lang="et">käisin</b>.
+                A finished time is named, last month, so usually the simple past:{" "}
+                <b lang="et">käisin</b>.
               </Trans>
             ),
           },
@@ -616,17 +620,17 @@ export function OlenLugenudLesson() {
       words={["juba", "veel", "kunagi", "jõudma", "lugenud", "söönud", "olen", "olin"]}
       recap={[
         <Trans key="1">
-          The <b lang="et">-nud</b> form comes from the <b lang="et">-da</b> infinitive:{" "}
-          <b lang="et">lugeda, lugenud</b>. Irregular verbs are learned by heart:{" "}
-          <b lang="et">olnud, läinud, teinud, söönud, näinud</b>.
+          The <b lang="et">-nud</b> form usually comes from the <b lang="et">-da</b> infinitive:{" "}
+          <b lang="et">lugeda, lugenud</b>; <b lang="et">olla, olnud</b>. Irregular verbs are
+          learned by heart: <b lang="et">läinud, teinud, söönud, näinud</b>.
         </Trans>,
         <Trans key="2">
           The perfect is <b lang="et">olema</b> in the present plus the <b lang="et">-nud</b> form,
           for what has happened with no finished time named: <b lang="et">Ma olen Tartus käinud.</b>
         </Trans>,
         <Trans key="3">
-          When a finished past time is named, such as <b lang="et">eile</b>, use the simple past:{" "}
-          <b lang="et">Eile käisin ma Tartus.</b>
+          When a finished past time is named, such as <b lang="et">eile</b>, usually use the simple
+          past: <b lang="et">Eile käisin ma Tartus.</b>
         </Trans>,
         <Trans key="4">
           The pluperfect is <b lang="et">olema</b> in the past plus the <b lang="et">-nud</b> form,
@@ -655,11 +659,13 @@ export function OlenLugenudLesson() {
                 </p>
                 <p>
                   <Trans>
-                    It comes from the <b lang="et">-da</b> infinitive of lesson {verbForms}: drop{" "}
-                    <b lang="et">-da</b> or <b lang="et">-a</b> and add <b lang="et">-nud</b>.{" "}
-                    <b lang="et">Lugeda</b> gives <Word w="lugenud" />. Some verbs are irregular:{" "}
-                    <b lang="et">süüa</b> gives <Word w="söönud" />. Tap each form in the table to
-                    hear it.
+                    It comes from the <b lang="et">-da</b> infinitive of lesson {verbForms}: usually
+                    you drop <b lang="et">-da</b> or <b lang="et">-a</b> and add{" "}
+                    <b lang="et">-nud</b>. <b lang="et">Lugeda</b> gives <Word w="lugenud" />. In a{" "}
+                    <b lang="et">-lla</b> verb, one <b lang="et">l</b> goes:{" "}
+                    <b lang="et">olla, olnud; tulla, tulnud</b>. Some verbs are irregular:{" "}
+                    <b lang="et">süüa</b> gives <Word w="söönud" />, <b lang="et">hakata</b> gives{" "}
+                    <b lang="et">hakanud</b>. Tap each form in the table to hear it.
                   </Trans>
                 </p>
               </Prose>

@@ -316,14 +316,14 @@ msgstr "The dog sleeps under the children’s beds."
 msgid "The ending goes on the plural genitive."
 msgstr "The ending goes on the plural genitive."
 
-msgid "The partitive doesn’t end in <0>-t</0>: <1>sõpra, sõprade</1>."
-msgstr "The partitive doesn’t end in <0>-t</0>: <1>sõpra, sõprade</1>."
+msgid "The partitive doesn’t end in <0>-t</0>, so usually <1>-de</1>: <2>sõpra, sõprade</2>."
+msgstr "The partitive doesn’t end in <0>-t</0>, so usually <1>-de</1>: <2>sõpra, sõprade</2>."
 
 msgid "The partitive ends in <0>-t</0>, so add <1>-e</1>."
 msgstr "The partitive ends in <0>-t</0>, so add <1>-e</1>."
 
-msgid "The partitive ends in <0>-t</0>, so it adds <1>-e</1>: <2>inimest, inimeste</2>."
-msgstr "The partitive ends in <0>-t</0>, so it adds <1>-e</1>: <2>inimest, inimeste</2>."
+msgid "The partitive ends in <0>-t</0>, so it usually adds <1>-e</1>: <2>inimest, inimeste</2>."
+msgstr "The partitive ends in <0>-t</0>, so it usually adds <1>-e</1>: <2>inimest, inimeste</2>."
 
 msgid "The partitive ends in <et>-t</et>, so add <et>-e</et>."
 msgstr "The partitive ends in <et>-t</et>, so add <et>-e</et>."
@@ -429,9 +429,6 @@ msgstr "We go to one shop."
 
 msgid "We go to the shop."
 msgstr "We go to the shop."
-
-msgid "We go to the shops."
-msgstr "We go to the shops."
 
 msgid "We talked for hours."
 msgstr "We talked for hours."

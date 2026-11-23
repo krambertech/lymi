@@ -14859,5 +14859,352 @@
     "text": "laupäeva õhtul",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/ta2na": {
+    "text": "täna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/homme": {
+    "text": "homme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/hommikul": {
+    "text": "hommikul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/o3htul": {
+    "text": "õhtul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/laupa2eval": {
+    "text": "laupäeval",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/tartus": {
+    "text": "Tartus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/ta2na-la2hen-ma": {
+    "text": "Täna lähen ma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/kus-sa-elad": {
+    "text": "Kus sa elad?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/ta2na-ma-ei-to2o2ta": {
+    "text": "Täna ma ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/ma-la2hen-ta2na-tartusse": {
+    "text": "Ma lähen täna Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/ta2na-la2hen-ma-tartusse": {
+    "text": "Täna lähen ma Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/mari-joob-hommikul-kohvi": {
+    "text": "Mari joob hommikul kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/hommikul-joob-mari-kohvi": {
+    "text": "Hommikul joob Mari kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/me-oleme-o3htul-kodus": {
+    "text": "Me oleme õhtul kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/o3htul-oleme-me-kodus": {
+    "text": "Õhtul oleme me kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/jaan-to2o2tab-laupa2eval": {
+    "text": "Jaan töötab laupäeval.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/laupa2eval-to2o2tab-jaan": {
+    "text": "Laupäeval töötab Jaan.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/kati-elab-tartus": {
+    "text": "Kati elab Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/tartus-elab-kati": {
+    "text": "Tartus elab Kati.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/ma-pean-homme-to2o2le-minema": {
+    "text": "Ma pean homme tööle minema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/homme-pean-ma-to2o2le-minema": {
+    "text": "Homme pean ma tööle minema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/mida-sa-ta2na-teed": {
+    "text": "Mida sa täna teed?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/millal-sa-tuled": {
+    "text": "Millal sa tuled?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/kellega-te-ra2a2gite": {
+    "text": "Kellega te räägite?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/kas-sa-tuled-homme": {
+    "text": "Kas sa tuled homme?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/o3htul-tahan-ma-raamatut-lugeda": {
+    "text": "Õhtul tahan ma raamatut lugeda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/laupa2eval-la2heme-me-ujuma": {
+    "text": "Laupäeval läheme me ujuma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/homme-me-ei-tule": {
+    "text": "Homme me ei tule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/o3htul-ta-ei-ole-kodus": {
+    "text": "Õhtul ta ei ole kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/ta2na-to2o2tan-ma-kodus": {
+    "text": "Täna töötan ma kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/homme-pean-ma-to2o2tama": {
+    "text": "Homme pean ma töötama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/ta2na-me-ei-to2o2ta": {
+    "text": "Täna me ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/mida-sa-laupa2eval-teed": {
+    "text": "Mida sa laupäeval teed?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/o3htul-loen-ma-raamatut": {
+    "text": "Õhtul loen ma raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/pu2hapa2eval-pean-ma-o3ppima": {
+    "text": "Pühapäeval pean ma õppima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/millal-te-tulete": {
+    "text": "Millal te tulete?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/homme-ta-ei-to2o2ta": {
+    "text": "Homme ta ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/d-liisa-1": {
+    "text": "Mida sa homme teed?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "sonajarg/d-sina-1": {
+    "text": "Homme pean ma tööle minema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/d-liisa-2": {
+    "text": "Ja õhtul?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "sonajarg/d-sina-2": {
+    "text": "Õhtul olen ma kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/d-liisa-3": {
+    "text": "Kas sa tuled laupäeval ujuma?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "sonajarg/d-sina-3": {
+    "text": "Ei, laupäeval ma ei tule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/d-liisa-4": {
+    "text": "Aga pühapäeval?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "sonajarg/d-sina-4": {
+    "text": "Pühapäeval tulen ma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sonajarg/c-talk": {
+    "text": "Tere, Peeter! Mida sa laupäeval teed? Tere, Liisa! Laupäeval pean ma hommikul tööle minema. Ma töötan kella kaheni. Ja pärast tööd? Pärast tööd lähen ma poodi. Õhtul olen ma kodus. Kas sa tahad õhtul meile tulla? Mari tuleb ka. Jah, ma tulen. Mis kell? Kus sa nüüd elad? Kell seitse. Nüüd elan ma Kalamajas. Minu korter on kolmandal korrusel. Kas Jaan tuleb ka? Ei, Jaan ei tule. Laupäeval on ta Tartus. Pühapäeval tuleb ta tagasi. Pühapäeval tahan ma ujuma minna. Kas sa tuled ka? Ei, pühapäeval ma ei saa. Pühapäeval pean ma õppima. Esmaspäeval on mul eksam. Eksam? Mis eksam? Mis kell? Kell üheksa hommikul. Eesti keele eksam. Nüüd räägin ma eesti keelt iga päev. Väga hea! Siis räägime me laupäeval eesti keelt! Jah! Laupäeval kell seitse. Ma ootan sind!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Peeter!",
+          "Mida sa laupäeval teed?"
+        ],
+        "say": "[cheerful] Tere, Peeter! Mida sa laupäeval teed?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Liisa!",
+          "Laupäeval pean ma hommikul tööle minema.",
+          "Ma töötan kella kaheni."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja pärast tööd?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Pärast tööd lähen ma poodi.",
+          "Õhtul olen ma kodus."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sa tahad õhtul meile tulla?",
+          "Mari tuleb ka."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, ma tulen.",
+          "Mis kell?",
+          "Kus sa nüüd elad?"
+        ],
+        "say": "[pleased] Jah, ma tulen. Mis kell? Kus sa nüüd elad?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kell seitse.",
+          "Nüüd elan ma Kalamajas.",
+          "Minu korter on kolmandal korrusel."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas Jaan tuleb ka?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, Jaan ei tule.",
+          "Laupäeval on ta Tartus.",
+          "Pühapäeval tuleb ta tagasi."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Pühapäeval tahan ma ujuma minna.",
+          "Kas sa tuled ka?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, pühapäeval ma ei saa.",
+          "Pühapäeval pean ma õppima.",
+          "Esmaspäeval on mul eksam."
+        ],
+        "say": "[sighs] Ei, pühapäeval ma ei saa. Pühapäeval pean ma õppima. Esmaspäeval on mul eksam."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Eksam?",
+          "Mis eksam?",
+          "Mis kell?"
+        ],
+        "say": "[curious] Eksam? Mis eksam? Mis kell?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kell üheksa hommikul.",
+          "Eesti keele eksam.",
+          "Nüüd räägin ma eesti keelt iga päev."
+        ],
+        "say": "Kell üheksa hommikul. [laughs] Eesti keele eksam. Nüüd räägin ma eesti keelt iga päev."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Väga hea!",
+          "Siis räägime me laupäeval eesti keelt!"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah!",
+          "Laupäeval kell seitse.",
+          "Ma ootan sind!"
+        ]
+      }
+    ]
   }
 }

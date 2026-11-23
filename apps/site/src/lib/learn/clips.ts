@@ -2423,6 +2423,209 @@ const WHEN_CLIPS: Record<string, Clip> = {
   "c-talk": WHEN_TALK,
 };
 
+export const ORDER_PAIRS = [
+  { id: "tana", plain: "Ma lähen täna Tartusse.", front: "Täna lähen ma Tartusse.", first: "Täna" },
+  {
+    id: "hommikul",
+    plain: "Mari joob hommikul kohvi.",
+    front: "Hommikul joob Mari kohvi.",
+    first: "Hommikul",
+  },
+  { id: "ohtul", plain: "Me oleme õhtul kodus.", front: "Õhtul oleme me kodus.", first: "Õhtul" },
+  {
+    id: "laupaeval",
+    plain: "Jaan töötab laupäeval.",
+    front: "Laupäeval töötab Jaan.",
+    first: "Laupäeval",
+  },
+  { id: "tartus", plain: "Kati elab Tartus.", front: "Tartus elab Kati.", first: "Tartus" },
+  {
+    id: "homme",
+    plain: "Ma pean homme tööle minema.",
+    front: "Homme pean ma tööle minema.",
+    first: "Homme",
+  },
+] as const;
+
+export const ORDER_QUESTIONS = [
+  "Kus sa elad?",
+  "Mida sa täna teed?",
+  "Millal sa tuled?",
+  "Kellega te räägite?",
+  "Kas sa tuled homme?",
+] as const;
+
+export const ORDER_TWO = [
+  "Homme pean ma tööle minema.",
+  "Õhtul tahan ma raamatut lugeda.",
+  "Laupäeval läheme me ujuma.",
+] as const;
+
+export const ORDER_NO = [
+  "Täna ma ei tööta.",
+  "Homme me ei tule.",
+  "Õhtul ta ei ole kodus.",
+] as const;
+
+export const ORDER_HEARD = [
+  { said: "Täna lähen ma Tartusse.", also: ["Ma lähen täna Tartusse."] },
+  { said: "Hommikul joob Mari kohvi.", also: ["Mari joob hommikul kohvi."] },
+  { said: "Tartus elab Kati.", also: ["Kati elab Tartus."] },
+  { said: "Kus sa elad?", also: [] },
+  { said: "Laupäeval läheme me ujuma.", also: ["Me läheme laupäeval ujuma."] },
+  { said: "Täna ma ei tööta.", also: ["Ma ei tööta täna."] },
+  { said: "Homme pean ma tööle minema.", also: ["Ma pean homme tööle minema."] },
+  { said: "Millal sa tuled?", also: [] },
+] as const;
+
+export const ORDER_MEANING = [
+  { id: "kus-elad", answers: ["Kus sa elad?"] },
+  { id: "tana-tootan", answers: ["Täna töötan ma kodus.", "Ma töötan täna kodus."] },
+  { id: "mida-teed", answers: ["Mida sa täna teed?", "Mida sa teed täna?"] },
+  { id: "homme-pean", answers: ["Homme pean ma tööle minema.", "Ma pean homme tööle minema."] },
+  {
+    id: "ohtul-tahan",
+    answers: ["Õhtul tahan ma raamatut lugeda.", "Ma tahan õhtul raamatut lugeda."],
+  },
+  { id: "homme-ei-tule", answers: ["Homme me ei tule.", "Me ei tule homme."] },
+  {
+    id: "ohtul-ei-ole",
+    answers: ["Õhtul ta ei ole kodus.", "Ta ei ole õhtul kodus.", "Õhtul ei ole ta kodus."],
+  },
+  { id: "laupaeval-ujuma", answers: ["Laupäeval läheme me ujuma.", "Me läheme laupäeval ujuma."] },
+] as const;
+
+export const ORDER_REWRITE = ORDER_PAIRS.map(({ id, plain, front, first }) => ({
+  id: `start-${id}`,
+  from: plain,
+  first,
+  answers:
+    front.includes(" ma ") || front.includes(" me ")
+      ? [front, front.replace(/ (ma|me) /, " ")]
+      : [front],
+}));
+
+export const ORDER_TRANSLATE = [
+  {
+    id: "tana-tartusse",
+    answers: [
+      "Täna lähen ma Tartusse.",
+      "Täna lähen Tartusse.",
+      "Ma lähen täna Tartusse.",
+      "Mina lähen täna Tartusse.",
+    ],
+  },
+  { id: "kus-elad", answers: ["Kus sa elad?", "Kus sina elad?"] },
+  {
+    id: "homme-tootama",
+    answers: ["Homme pean ma töötama.", "Homme pean töötama.", "Ma pean homme töötama."],
+  },
+  { id: "tana-ei-too", answers: ["Täna me ei tööta.", "Me ei tööta täna."] },
+  { id: "hommikul-joob", answers: ["Hommikul joob Mari kohvi.", "Mari joob hommikul kohvi."] },
+  { id: "laupaeval-teed", answers: ["Mida sa laupäeval teed?", "Mida sa teed laupäeval?"] },
+] as const;
+
+export const ORDER_DIALOGUE = {
+  "d-liisa-1": { text: "Mida sa homme teed?", voice: "second" },
+  "d-sina-1": "Homme pean ma tööle minema.",
+  "d-liisa-2": { text: "Ja õhtul?", voice: "second" },
+  "d-sina-2": "Õhtul olen ma kodus.",
+  "d-liisa-3": { text: "Kas sa tuled laupäeval ujuma?", voice: "second" },
+  "d-sina-3": "Ei, laupäeval ma ei tule.",
+  "d-liisa-4": { text: "Aga pühapäeval?", voice: "second" },
+  "d-sina-4": "Pühapäeval tulen ma.",
+} as const satisfies Record<string, Clip>;
+
+export const ORDER_TALK: Conversation = {
+  turns: [
+    {
+      voice: "second",
+      text: ["Tere, Peeter!", "Mida sa laupäeval teed?"],
+      say: "[cheerful] Tere, Peeter! Mida sa laupäeval teed?",
+    },
+    {
+      voice: "main",
+      text: ["Tere, Liisa!", "Laupäeval pean ma hommikul tööle minema.", "Ma töötan kella kaheni."],
+    },
+    { voice: "second", text: "Ja pärast tööd?" },
+    { voice: "main", text: ["Pärast tööd lähen ma poodi.", "Õhtul olen ma kodus."] },
+    { voice: "second", text: ["Kas sa tahad õhtul meile tulla?", "Mari tuleb ka."] },
+    {
+      voice: "main",
+      text: ["Jah, ma tulen.", "Mis kell?", "Kus sa nüüd elad?"],
+      say: "[pleased] Jah, ma tulen. Mis kell? Kus sa nüüd elad?",
+    },
+    {
+      voice: "second",
+      text: ["Kell seitse.", "Nüüd elan ma Kalamajas.", "Minu korter on kolmandal korrusel."],
+    },
+    { voice: "main", text: "Kas Jaan tuleb ka?" },
+    {
+      voice: "second",
+      text: ["Ei, Jaan ei tule.", "Laupäeval on ta Tartus.", "Pühapäeval tuleb ta tagasi."],
+    },
+    { voice: "main", text: ["Pühapäeval tahan ma ujuma minna.", "Kas sa tuled ka?"] },
+    {
+      voice: "second",
+      text: [
+        "Ei, pühapäeval ma ei saa.",
+        "Pühapäeval pean ma õppima.",
+        "Esmaspäeval on mul eksam.",
+      ],
+      say: "[sighs] Ei, pühapäeval ma ei saa. Pühapäeval pean ma õppima. Esmaspäeval on mul eksam.",
+    },
+    {
+      voice: "main",
+      text: ["Eksam?", "Mis eksam?", "Mis kell?"],
+      say: "[curious] Eksam? Mis eksam? Mis kell?",
+    },
+    {
+      voice: "second",
+      text: ["Kell üheksa hommikul.", "Eesti keele eksam.", "Nüüd räägin ma eesti keelt iga päev."],
+      say: "Kell üheksa hommikul. [laughs] Eesti keele eksam. Nüüd räägin ma eesti keelt iga päev.",
+    },
+    { voice: "main", text: ["Väga hea!", "Siis räägime me laupäeval eesti keelt!"] },
+    { voice: "second", text: ["Jah!", "Laupäeval kell seitse.", "Ma ootan sind!"] },
+  ],
+};
+
+export const ORDER_WORDS = [
+  "täna",
+  "homme",
+  "hommikul",
+  "õhtul",
+  "laupäeval",
+  "Tartus",
+  "Täna lähen ma",
+  "Kus sa elad?",
+  "Täna ma ei tööta.",
+] as const;
+
+export const ORDER_DRILL = [
+  "Õhtul loen ma raamatut.",
+  "Pühapäeval pean ma õppima.",
+  "Millal te tulete?",
+  "Homme ta ei tööta.",
+] as const;
+
+const ORDER_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...new Set([
+      ...ORDER_WORDS,
+      ...ORDER_PAIRS.flatMap(({ plain, front }) => [plain, front]),
+      ...ORDER_QUESTIONS,
+      ...ORDER_TWO,
+      ...ORDER_NO,
+      ...ORDER_HEARD.map(({ said }) => said),
+      ...ORDER_MEANING.map(({ answers }) => answers[0]),
+      ...ORDER_TRANSLATE.map(({ answers }) => answers[0]),
+      ...ORDER_DRILL,
+    ]),
+  ]),
+  ...ORDER_DIALOGUE,
+  "c-talk": ORDER_TALK,
+};
+
 /** A noun's three forms in a dictionary's order: first, second, third. */
 export type NounForms = readonly [string, string, string];
 
@@ -4434,6 +4637,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   asesonad: PRONOUN_CLIPS,
   jargarvud: JARGARVUD_CLIPS,
   millal: WHEN_CLIPS,
+  sonajarg: ORDER_CLIPS,
   "mul-on": {
     ...words([
       ...MUL_ON_WORDS,

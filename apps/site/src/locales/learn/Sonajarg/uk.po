@@ -1,0 +1,410 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 10:26+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0>Ei</0> goes right before the verb."
+msgstr "<0>Ei</0> стоїть просто перед дієсловом."
+
+msgid "<0>Läheme</0> is second, and <1>ujuma</1> goes last."
+msgstr "<0>Läheme</0> стоїть другим, а <1>ujuma</1> — у кінці."
+
+msgid "<0>Ma lähen täna Tartusse</0> is I’m going to Tartu today. Start it with today instead, and the verb stays in second place while the person moves after it: <1/> <2>Tartusse</2>."
+msgstr "<0>Ma lähen täna Tartusse</0> — «я сьогодні їду в Тарту». Почни речення з «сьогодні», і дієслово лишиться на другому місці, а особа перейде за нього: <1/> <2>Tartusse</2>."
+
+msgid "<0>Pean</0> is second, and the second verb, <1>minema</1>, goes last."
+msgstr "<0>Pean</0> стоїть другим, а друге дієслово, <1>minema</1>, — у кінці."
+
+msgid "<0>Tahan</0> is second, and <1>lugeda</1> goes last."
+msgstr "<0>Tahan</0> стоїть другим, а <1>lugeda</1> — у кінці."
+
+msgid "16 minutes"
+msgstr "16 хвилин"
+
+msgid "6 exercises, 2 of them typed, and a conversation"
+msgstr "6 вправ, у 2 з них треба писати, і розмова"
+
+msgid "A question works differently. After a question word from lesson {questions}, the short pronoun comes first and the verb after it: <0/>, where do you live? A question with <1>kas</1> keeps the order of a statement."
+msgstr "У питанні інакше. Після питального слова з уроку {questions} спершу йде короткий займенник, а за ним дієслово: <0/> — «де ти живеш?». Питання з <1>kas</1> зберігає порядок звичайного речення."
+
+msgid "After work Peeter goes to the shop."
+msgstr "Після роботи Пеетер іде в магазин."
+
+msgid "All eight, each in the order you heard."
+msgstr "Усі вісім, кожне в почутому порядку."
+
+msgid "All eight, questions and statements each in their order."
+msgstr "Усі вісім — і питання, і твердження у своєму порядку."
+
+msgid "All six sentences, each in its order."
+msgstr "Усі шість речень, кожне у своєму порядку."
+
+msgid "All six: the verb second, the person after it."
+msgstr "Усі шість: дієслово друге, особа після нього."
+
+msgid "Are you coming tomorrow?"
+msgstr "Ти прийдеш завтра?"
+
+msgid "Build each sentence from what it means. Some are questions and some are statements, so check which order each needs."
+msgstr "Склади кожне речення за його значенням. Серед них є питання і твердження, тож перевір, якого порядку потребує кожне."
+
+msgid "Build the sentence"
+msgstr "Склади речення"
+
+msgid "Build what you hear"
+msgstr "Склади те, що чуєш"
+
+msgid "Go swimming"
+msgstr "Піти плавати"
+
+msgid "Go to Tartu"
+msgstr "Поїхати в Тарту"
+
+msgid "Go to the shop"
+msgstr "Піти в магазин"
+
+msgid "He reads"
+msgstr "Він читає"
+
+msgid "He studies"
+msgstr "Він вчиться"
+
+msgid "He works"
+msgstr "Він працює"
+
+msgid "I have to go to work tomorrow."
+msgstr "Завтра я мушу йти на роботу."
+
+msgid "I’m going to Tartu today."
+msgstr "Я сьогодні їду в Тарту."
+
+msgid "In a question, the short pronoun comes right after the question word: <0>Kus sa elad? Mida sa täna teed?</0>"
+msgstr "У питанні короткий займенник стоїть одразу після питального слова: <0>Kus sa elad? Mida sa täna teed?</0>"
+
+msgid "In a question, the short pronoun comes right after the question word: <0>Kus sa elad?</0>"
+msgstr "У питанні короткий займенник стоїть одразу після питального слова: <0>Kus sa elad?</0>"
+
+msgid "In a question, the short pronoun comes right after the question word: <et>Kus sa elad?</et>"
+msgstr "У питанні короткий займенник стоїть одразу після питального слова: <et>Kus sa elad?</et>"
+
+msgid "In a statement the verb usually comes second. Start with a time or a place, and the person follows the verb: <0>Täna lähen ma Tartusse.</0>"
+msgstr "У ствердному реченні дієслово зазвичай стоїть другим. Почни з часу чи місця — і особа піде за дієсловом: <0>Täna lähen ma Tartusse.</0>"
+
+msgid "In an Estonian statement the verb usually comes second. Start with a time or a place, and the person moves after the verb: <0>Täna lähen ma Tartusse</0>, today I’m going to Tartu."
+msgstr "В естонському ствердному реченні дієслово зазвичай стоїть другим. Почни з часу чи місця — і особа перейде за дієслово: <0>Täna lähen ma Tartusse</0> — «сьогодні я їду в Тарту»."
+
+msgid "In speech you will also hear <0>Täna ma lähen</0>. When you write, keep the verb second: <1>Täna lähen ma</1>."
+msgstr "У розмові почуєш і <0>Täna ma lähen</0>. Коли пишеш, став дієслово другим: <1>Täna lähen ma</1>."
+
+msgid "In Tartu lives Kati."
+msgstr "У Тарту живе Каті."
+
+msgid "In the evening he isn’t at home."
+msgstr "Увечері його немає вдома."
+
+msgid "In the evening he or she isn’t at home."
+msgstr "Увечері його чи її немає вдома."
+
+msgid "In the evening I want to read a book."
+msgstr "Увечері я хочу почитати книжку."
+
+msgid "In the evening we’re at home."
+msgstr "Увечері ми вдома."
+
+msgid "In the morning Mari drinks coffee."
+msgstr "Зранку Марі п’є каву."
+
+msgid "Jaan is coming on Saturday."
+msgstr "Яан прийде в суботу."
+
+msgid "Jaan works on Saturday."
+msgstr "Яан працює в суботу."
+
+msgid "Kati lives in Tartu."
+msgstr "Каті живе в Тарту."
+
+msgid "Liisa"
+msgstr "Лііза"
+
+msgid "Liisa and Peeter talk about the weekend."
+msgstr "Лііза й Пеетер говорять про вихідні."
+
+msgid "Liisa asks about your plans. Pick each reply."
+msgstr "Лііза питає про твої плани. Обери кожну відповідь."
+
+msgid "Listen: Liisa and Peeter"
+msgstr "Послухай: Лііза й Пеетер"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Mari drinks coffee in the morning."
+msgstr "Марі п’є каву зранку."
+
+msgid "Most of them. Check that the verb comes right after the first word."
+msgstr "Більшість. Перевір, щоб дієслово стояло одразу після першого слова."
+
+msgid "Most of them. Check where the verb is in the ones you missed."
+msgstr "Більшість. У тих, що не вдалися, перевір, де стоїть дієслово."
+
+msgid "Now listen, and build the sentence you hear."
+msgstr "Тепер послухай і склади речення, яке чуєш."
+
+msgid "Now rewrite each sentence so that it starts with the word given."
+msgstr "Тепер перепиши кожне речення так, щоб воно починалося зі слова з підказки."
+
+msgid "On Monday morning"
+msgstr "У понеділок зранку"
+
+msgid "On Saturday Jaan works."
+msgstr "У суботу Яан працює."
+
+msgid "On Saturday morning"
+msgstr "У суботу зранку"
+
+msgid "On Saturday we’re going swimming."
+msgstr "У суботу ми йдемо плавати."
+
+msgid "On Sunday evening"
+msgstr "У неділю ввечері"
+
+msgid "Peeter"
+msgstr "Пеетер"
+
+msgid "Plans for the weekend"
+msgstr "Плани на вихідні"
+
+msgid "Play the ones you missed and listen for where the verb is."
+msgstr "Послухай ще раз ті, що не вдалися, і зверни увагу, де дієслово."
+
+msgid "Question word, pronoun, then the verb: <0>Mida sa täna teed?</0>"
+msgstr "Питальне слово, займенник, потім дієслово: <0>Mida sa täna teed?</0>"
+
+msgid "Questions: <et>Kus sa elad?</et>"
+msgstr "Питання: <et>Kus sa elad?</et>"
+
+msgid "Questions: where the pronoun goes"
+msgstr "Питання: де стоїть займенник"
+
+msgid "Read What to remember at the end, then try again."
+msgstr "Прочитай «Що запам’ятати» наприкінці й спробуй знову."
+
+msgid "Read why under each one you missed, then try again."
+msgstr "Прочитай пояснення до тих, що не вдалися, і спробуй знову."
+
+msgid "Saturday and Sunday"
+msgstr "Субота й неділя"
+
+msgid "Saying no"
+msgstr "Заперечення"
+
+msgid "She asks about Saturday, and the person comes before <0>ei</0>."
+msgstr "Вона питає про суботу, а особа стоїть перед <0>ei</0>."
+
+msgid "She asks about Sunday, and <0>ei</0> goes right before the verb."
+msgstr "Вона питає про неділю, а <0>ei</0> стоїть просто перед дієсловом."
+
+msgid "She asks about the evening, and the verb comes second."
+msgstr "Вона питає про вечір, а дієслово стоїть другим."
+
+msgid "She asks about tomorrow, and the second verb goes last."
+msgstr "Вона питає про завтра, а друге дієслово йде в кінець."
+
+msgid "So a statement says <0>Täna lähen ma</0>, and a question says <1>Millal sa lähed?</1> Tap a line to hear it."
+msgstr "Тож твердження каже <0>Täna lähen ma</0>, а питання — <1>Millal sa lähed?</1> Торкнися рядка, щоб послухати."
+
+msgid "Start with <0>{first}</0>"
+msgstr "Почни з <0>{first}</0>"
+
+msgid "Start with another word"
+msgstr "Почни з іншого слова"
+
+msgid "Start with the time word"
+msgstr "Почни зі слова часу"
+
+msgid "Switch between the two starts above once more, then try again."
+msgstr "Ще раз перемкни два початки вище й спробуй знову."
+
+msgid "Talk: plans"
+msgstr "Розмова: плани"
+
+msgid "The first"
+msgstr "На першому"
+
+msgid "The first word is not the person, so the verb comes second and the person after it."
+msgstr "Перше слово — не особа, тож дієслово стоїть другим, а особа після нього."
+
+msgid "The person"
+msgstr "Особа"
+
+msgid "The person comes before <0>ei</0>."
+msgstr "Особа стоїть перед <0>ei</0>."
+
+msgid "The person comes first and the verb second."
+msgstr "Особа йде першою, дієслово — другим."
+
+msgid "The same goes for a place, or a time word from lesson {when}: <0>Tartus elab Kati</0>, <1>Hommikul joob Mari kohvi</1>. Switch between the two starts, and tap a line to hear it."
+msgstr "Те саме з місцем чи словом часу з уроку {when}: <0>Tartus elab Kati</0>, <1>Hommikul joob Mari kohvi</1>. Перемикай два початки й торкнися рядка, щоб послухати."
+
+msgid "The second"
+msgstr "На другому"
+
+msgid "The second verb goes last, after the place."
+msgstr "Друге дієслово йде в кінець, після місця."
+
+msgid "The third"
+msgstr "На третьому"
+
+msgid "The time or place"
+msgstr "Час чи місце"
+
+msgid "The time or place comes first, the verb stays second, and the person moves after it."
+msgstr "Час чи місце йде першим, дієслово лишається другим, а особа переходить за нього."
+
+msgid "The verb comes second"
+msgstr "Дієслово на другому місці"
+
+msgid "The verb comes second, not last."
+msgstr "Дієслово стоїть другим, а не в кінці."
+
+msgid "The verb comes second; when a time or place starts the sentence, the person follows the verb: <et>Täna lähen ma</et>."
+msgstr "Дієслово стоїть другим; коли речення починається з часу чи місця, особа йде за дієсловом: <et>Täna lähen ma</et>."
+
+msgid "The verb second: <et>Täna lähen ma</et>"
+msgstr "Дієслово друге: <et>Täna lähen ma</et>"
+
+msgid "today I’m going"
+msgstr "сьогодні я йду"
+
+msgid "Today I’m going to Tartu."
+msgstr "Сьогодні я їду в Тарту."
+
+msgid "today I’m not working"
+msgstr "сьогодні я не працюю"
+
+msgid "Today I’m not working."
+msgstr "Сьогодні я не працюю."
+
+msgid "Today I’m working at home."
+msgstr "Сьогодні я працюю вдома."
+
+msgid "Today we’re not working."
+msgstr "Сьогодні ми не працюємо."
+
+msgid "tomorrow I have to go to work"
+msgstr "завтра мені треба на роботу"
+
+msgid "Tomorrow I have to go to work."
+msgstr "Завтра мені треба йти на роботу."
+
+msgid "Tomorrow I have to work."
+msgstr "Завтра мені треба працювати."
+
+msgid "Tomorrow we’re not coming."
+msgstr "Завтра ми не прийдемо."
+
+msgid "Two verbs: <et>pean … minema</et>"
+msgstr "Два дієслова: <et>pean … minema</et>"
+
+msgid "Two verbs: the second goes last"
+msgstr "Два дієслова: друге — у кінці"
+
+msgid "Until one"
+msgstr "До першої"
+
+msgid "Until six"
+msgstr "До шостої"
+
+msgid "Until two"
+msgstr "До другої"
+
+msgid "Until when does Peeter work?"
+msgstr "До котрої працює Пеетер?"
+
+msgid "We’re at home in the evening."
+msgstr "Увечері ми вдома."
+
+msgid "What are you doing on Saturday? (To a friend.)"
+msgstr "Що ти робиш у суботу? (Другові.)"
+
+msgid "What are you doing today?"
+msgstr "Що ти сьогодні робиш?"
+
+msgid "What does Peeter do on Saturday morning?"
+msgstr "Що Пеетер робить у суботу зранку?"
+
+msgid "What does Peeter want to do on Sunday?"
+msgstr "Що Пеетер хоче робити в неділю?"
+
+msgid "What exam is it? Write it as Liisa says it."
+msgstr "Що це за іспит? Напиши так, як каже Лііза."
+
+msgid "What the sentence starts with"
+msgstr "З чого починається речення"
+
+msgid "What time should Peeter come? Write the number as Liisa says it."
+msgstr "О котрій має прийти Пеетер? Напиши число так, як каже Лііза."
+
+msgid "When are you coming?"
+msgstr "Коли ти приїдеш?"
+
+msgid "When is Liisa’s exam?"
+msgstr "Коли в Ліізи іспит?"
+
+msgid "where do you live?"
+msgstr "де ти живеш?"
+
+msgid "Where do you live?"
+msgstr "Де ти живеш?"
+
+msgid "Where do you live? (To a friend.)"
+msgstr "Де ти живеш? (Другові.)"
+
+msgid "Which floor does Liisa live on?"
+msgstr "На якому поверсі живе Лііза?"
+
+msgid "Who are you talking with?"
+msgstr "З ким ти розмовляєш?"
+
+msgid "With <0>ei</0> from lesson {negation}, the person usually stays before it: <1/>, today I’m not working. Tap a line to hear it."
+msgstr "З <0>ei</0> з уроку {negation} особа зазвичай лишається перед ним: <1/> — «сьогодні я не працюю». Торкнися рядка, щоб послухати."
+
+msgid "With <0>ei</0>, the person usually stays before it: <1>Homme me ei tule.</1>"
+msgstr "З <0>ei</0> особа зазвичай лишається перед ним: <1>Homme me ei tule.</1>"
+
+msgid "With <0>ei</0>, the person usually stays before it: <1>Õhtul ta ei ole kodus.</1>"
+msgstr "З <0>ei</0> особа зазвичай лишається перед ним: <1>Õhtul ta ei ole kodus.</1>"
+
+msgid "With <0>ei</0>, the person usually stays before it: <1>Täna ma ei tööta.</1>"
+msgstr "З <0>ei</0> особа зазвичай лишається перед ним: <1>Täna ma ei tööta.</1>"
+
+msgid "With <et>ei</et>, the person usually stays before it: <et>Täna ma ei tööta.</et>"
+msgstr "З <et>ei</et> особа зазвичай лишається перед ним: <et>Täna ma ei tööta.</et>"
+
+msgid "With <et>ei</et>: <et>Täna ma ei tööta</et>"
+msgstr "З <et>ei</et>: <et>Täna ma ei tööta</et>"
+
+msgid "With two verbs, as in lesson {infinitives}, the first one takes second place, and the other goes to the end: <0/>, tomorrow I have to go to work. Tap a line to hear it."
+msgstr "З двома дієсловами, як в уроці {infinitives}, перше стає на друге місце, а інше йде в кінець: <0/> — «завтра мені треба на роботу». Торкнися рядка, щоб послухати."
+
+msgid "With two verbs, the first is second and the other goes last: <0>Homme pean ma tööle minema.</0>"
+msgstr "З двома дієсловами перше стоїть другим, а інше — у кінці: <0>Homme pean ma tööle minema.</0>"
+
+msgid "With two verbs, the first is second and the other goes last: <et>Homme pean ma tööle minema.</et>"
+msgstr "З двома дієсловами перше стоїть другим, а інше — у кінці: <et>Homme pean ma tööle minema.</et>"
+
+msgid "Write each sentence in Estonian. Start with the word the English starts with."
+msgstr "Напиши кожне речення естонською. Почни з того слова, з якого починається завдання."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "Write it in order"
+msgstr "Напиши в правильному порядку"
+
+msgid "You work tomorrow, you’re at home in the evening, you can’t come on Saturday, and you can on Sunday."
+msgstr "Завтра ти працюєш, увечері ти вдома, у суботу прийти не можеш, а в неділю можеш."

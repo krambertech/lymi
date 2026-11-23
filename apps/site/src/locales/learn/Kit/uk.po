@@ -330,7 +330,7 @@ msgid "a lot, much"
 msgstr "багато"
 
 msgid "A model answer"
-msgstr "Взірець"
+msgstr "Зразок"
 
 msgid "A noun’s cases on the tray: tap a form to hear it, its ending lit. Question words can head the rows, and one row or column can be tinted. On a phone the rows stack."
 msgstr "Відмінки іменника на підкладці: торкнися форми, щоб її почути, закінчення підсвічене. Рядки можуть починатися з питальних слів, а один рядок чи стовпець можна виділити. На телефоні рядки стають списком."
@@ -1556,7 +1556,7 @@ msgid "Play from here"
 msgstr "Відтворити звідси"
 
 msgid "Play the model answer"
-msgstr "Послухати взірець"
+msgstr "Послухати зразок"
 
 msgid "Play what {name} said"
 msgstr "Відтворити репліку: {name}"
@@ -1756,7 +1756,7 @@ msgid "Short, free lessons from the first sounds to B1. Tap any word to hear it,
 msgstr "Короткі безкоштовні уроки від перших звуків до B1. Натисни на будь-яке слово, щоб його почути, і пробуй кожне правило просто під час читання."
 
 msgid "Show the model"
-msgstr "Показати взірець"
+msgstr "Показати зразок"
 
 msgid "Show what {name} said"
 msgstr "Показати репліку: {name}"

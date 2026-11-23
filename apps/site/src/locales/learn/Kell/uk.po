@@ -10,8 +10,8 @@ msgstr ""
 msgid "{past} minutes past {struck}."
 msgstr "{past} хвилин після {struck}."
 
-msgid "<0/> counts on from the hour that has struck; <1/> counts down to the hour that’s coming. Mix them up and the time comes out wrong by up to an hour. Listen, then pick the clock."
-msgstr "<0/> рахує від години, що вже настала, а <1/> — до години, що наближається. Сплутаєш їх — і помилишся до години. Послухай і вибери годинник."
+msgid "<0/> counts on from the hour that has struck; <1/> counts down to the hour that’s coming. Mix them up and the time comes out wrong by up to forty minutes. Listen, then pick the clock."
+msgstr "<0/> рахує від години, що вже настала, а <1/> — до години, що наближається. Сплутаєш їх — помилишся на пів години й більше. Послухай і вибери годинник."
 
 msgid "<0/> means half, and it looks ahead. <1/> is halfway to four, so it’s 3:30, not 4:30."
 msgstr "<0/> означає «пів» і дивиться вперед. <1/> — це пів на четверту, тобто 3:30, а не 4:30."
@@ -63,7 +63,7 @@ msgid "after; in, as in “in ten minutes”"
 msgstr "після; через, як у «через десять хвилин»"
 
 msgid "All six, each clock right."
-msgstr "Усі шість, кожен годинник правильно."
+msgstr "Усі шість годинників вибрано правильно."
 
 msgid "All six, every word in its place."
 msgstr "Усі шість, кожне слово на місці."
@@ -86,8 +86,8 @@ msgstr "Питай <0>Mis kell on?</0> Відповідь — <1>kell on</1> і 
 msgid "Ask the time and understand the answer. Halves and quarters count toward the hour that’s coming."
 msgstr "Спитай, котра година, і зрозумій відповідь. Половини й чверті рахують до години, що настає."
 
-msgid "at three; three o’clock"
-msgstr "о третій; третя година"
+msgid "at six; six o’clock"
+msgstr "о шостій; шоста година"
 
 msgid "Before the hour, say how long until the next one. <0/> is, word for word, “in ten minutes, four”: 3:50."
 msgstr "Перед повною годиною кажуть, скільки лишилося до наступної. <0/> — дослівно «через десять хвилин чотири»: 3:50."
@@ -154,8 +154,8 @@ msgstr "Це {right}: <0>{words}</0> — пів шляху до {next}."
 msgid "It’s three o’clock."
 msgstr "Третя година."
 
-msgid "Kell with a time also says when: kell kolm, at three."
-msgstr "Kell із часом каже й коли: kell kolm — о третій."
+msgid "Kell with a time also says when: kell kuus, at six."
+msgstr "Kell перед часом відповідає й на питання «коли?»: kell kuus — о шостій."
 
 msgid "Kolm, three, and veerand, a quarter."
 msgstr "Kolm — три, veerand — чверть."
@@ -196,8 +196,8 @@ msgstr "О другій Марі вдома."
 msgid "Mari is at work now."
 msgstr "Зараз Марі на роботі."
 
-msgid "Mari leaves Jaan a message about her afternoon. <0/> also means at three. Listen for each time."
-msgstr "Марі залишає Яанові повідомлення про свій день. <0/> означає також «о третій». Слухай кожен час."
+msgid "Mari leaves Jaan a message about her afternoon. <0/> also means at six. Listen for each time."
+msgstr "Марі залишає Яанові повідомлення про свій день. <0/> означає також «о шостій». Слухай кожен час."
 
 msgid "Minute hand"
 msgstr "Хвилинна стрілка"
@@ -227,7 +227,7 @@ msgid "Most of them. Play the ones you missed once more."
 msgstr "Майже всі. Переслухай ще раз ті, де були помилки."
 
 msgid "Nearly. Check which hour each one names."
-msgstr "Майже. Перевір, яку годину називає кожен."
+msgstr "Майже. Перевір, яку годину називає кожна відповідь."
 
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Майже. Ще раз послухай ті, де була помилка."
@@ -239,7 +239,7 @@ msgid "On the hour"
 msgstr "Повні години"
 
 msgid "On the hour, say the hour alone: <et>kell on kaks</et>."
-msgstr "Рівно о годині називай лише годину: <et>kell on kaks</et>."
+msgstr "Якщо час рівний, називай лише годину: <et>kell on kaks</et>."
 
 msgid "On the hour: the number alone."
 msgstr "Рівно: лише число години."
@@ -313,7 +313,7 @@ msgid "Turn the clock above once more, then try again."
 msgstr "Ще раз покрути годинник вище, а тоді спробуй знову."
 
 msgid "Turn the clock above to a few minutes past and to, then try again."
-msgstr "Покрути годинник вище на кілька хвилин після й до години, а тоді спробуй знову."
+msgstr "Постав годинник вище на кілька часів із läbi і з pärast, а тоді спробуй знову."
 
 msgid "Type the time"
 msgstr "Введи час"

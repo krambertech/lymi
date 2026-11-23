@@ -1160,9 +1160,9 @@ export const TUTVUMINE_PASSAGES = {
 /** Words and phrases with a card: the passage's words, and the phrases worth keeping. */
 export const TUTVUMINE_TALK: Conversation = {
   turns: [
-    { voice: "second", text: ["Tere!", "Kas sa oled Andres?"] },
-    { voice: "main", text: "Jah, mina olen Andres." },
-    { voice: "second", text: ["Mina olen Kati.", "Kus sa elad?"] },
+    { voice: "second", text: ["Tere!", "Kas sa oled Peeter?"] },
+    { voice: "main", text: "Jah, mina olen Peeter." },
+    { voice: "second", text: ["Mina olen Liis.", "Kus sa elad?"] },
     { voice: "main", text: "Ma elan Tartus, aga ma töötan Tallinnas." },
     { voice: "second", text: "Kas sa räägid eesti keelt?" },
     { voice: "main", text: ["Natuke.", "Ma õpin eesti keelt."] },
@@ -1178,7 +1178,14 @@ export const TUTVUMINE_ASKED = [
   {
     kind: "mis",
     reply: "Minu nimi on Liis.",
-    answers: ["Mis su nimi on?", "Mis sinu nimi on?", "Mis teie nimi on?"],
+    answers: [
+      "Mis su nimi on?",
+      "Mis sinu nimi on?",
+      "Mis teie nimi on?",
+      "Mis on su nimi?",
+      "Mis on sinu nimi?",
+      "Mis on teie nimi?",
+    ],
   },
   {
     kind: "kus",
@@ -1213,6 +1220,7 @@ export const TUTVUMINE_ASKED = [
       "Kas sina räägid eesti keelt?",
       "Kas teie räägite eesti keelt?",
       "Kas räägid eesti keelt?",
+      "Kas räägite eesti keelt?",
     ],
   },
   {
@@ -1224,6 +1232,7 @@ export const TUTVUMINE_ASKED = [
       "Kas sina oled õpetaja?",
       "Kas teie olete õpetaja?",
       "Kas oled õpetaja?",
+      "Kas olete õpetaja?",
     ],
   },
   {
@@ -1238,6 +1247,8 @@ export const TUTVUMINE_ASKED = [
       "Mida sina jood?",
       "Mis jood?",
       "Mida jood?",
+      "Mis teie joote?",
+      "Mida teie joote?",
     ],
   },
 ] as const;
@@ -1245,7 +1256,12 @@ export const TUTVUMINE_ASKED = [
 export const TUTVUMINE_TRANSLATED = [
   {
     kind: "ei",
-    answers: ["Ma ei tööta, ma õpin.", "Mina ei tööta, ma õpin.", "Ma ei tööta, mina õpin."],
+    answers: [
+      "Ma ei tööta, ma õpin.",
+      "Mina ei tööta, ma õpin.",
+      "Ma ei tööta, mina õpin.",
+      "Mina ei tööta, mina õpin.",
+    ],
   },
   {
     kind: "ei",
@@ -1260,10 +1276,12 @@ export const TUTVUMINE_TRANSLATED = [
       "Kas te räägite eesti keelt?",
       "Kas sina räägid eesti keelt?",
       "Kas teie räägite eesti keelt?",
+      "Kas räägid eesti keelt?",
+      "Kas räägite eesti keelt?",
     ],
   },
   {
-    kind: "ask",
+    kind: "kus",
     answers: [
       "Kus sa töötad?",
       "Kus te töötate?",
@@ -1280,8 +1298,8 @@ export const TUTVUMINE_FIXES = [
   { wrong: "Ta elab Tartul.", said: "Ta elab Tartus.", kind: "place" },
   { wrong: "Nad on töös.", said: "Nad on tööl.", kind: "place" },
   { wrong: "Kas sa räägib eesti keelt?", said: "Kas sa räägid eesti keelt?", kind: "ask" },
-  { wrong: "Kus sa elab?", said: "Kus sa elad?", kind: "ask" },
-  { wrong: "Mina on Andres.", said: "Mina olen Andres.", kind: "ei" },
+  { wrong: "Kus sa elab?", said: "Kus sa elad?", kind: "kus" },
+  { wrong: "Mina on Andres.", said: "Mina olen Andres.", kind: "olema" },
 ] as const;
 
 export const TUTVUMINE_MESSAGE = [

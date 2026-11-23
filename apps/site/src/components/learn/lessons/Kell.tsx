@@ -56,9 +56,9 @@ const GLOSSARY: Glossary = {
   },
   kell: { en: msg`clock, watch; o’clock`, note: msg`Also a bell.` },
   "kell on kolm": { en: msg`It’s three o’clock.`, show: "Kell on kolm", clip: timeClip(at(3, 0)) },
-  "kell kolm": {
-    en: msg`at three; three o’clock`,
-    note: msg`Kell with a time also says when: kell kolm, at three.`,
+  "kell kuus": {
+    en: msg`at six; six o’clock`,
+    note: msg`Kell with a time also says when: kell kuus, at six.`,
     clip: false,
   },
   pool: { en: msg`half`, note: msg`Pool neli: halfway to four, 3:30.` },
@@ -1012,7 +1012,7 @@ export function KellLesson() {
                   <Trans>
                     <Word w="Läbi" /> counts on from the hour that has struck; <Word w="pärast" />{" "}
                     counts down to the hour that’s coming. Mix them up and the time comes out wrong
-                    by up to an hour. Listen, then pick the clock.
+                    by up to forty minutes. Listen, then pick the clock.
                   </Trans>
                 </p>
               </Prose>
@@ -1123,8 +1123,8 @@ export function KellLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Mari leaves Jaan a message about her afternoon. <Word w="Kell kolm" /> also
-                    means at three. Listen for each time.
+                    Mari leaves Jaan a message about her afternoon. <Word w="Kell kuus" /> also
+                    means at six. Listen for each time.
                   </Trans>
                 </p>
               </Prose>

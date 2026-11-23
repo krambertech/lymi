@@ -681,9 +681,9 @@ export function NumbridLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Kaks" /> and <Word w="kuus" /> differ in their vowel,{" "}
-                    <Word w="kaheksa" /> and <Word w="üheksa" /> in their first sound. The
-                    difference carries into the numbers built from them. Listen, then pick.
+                    <Word w="Kaks" /> has a short a and a k before the s; <Word w="kuus" /> has a
+                    long uu. <Word w="Kaheksa" /> starts with ka, <Word w="üheksa" /> with ü. The
+                    numbers built from them differ the same way. Listen, then pick.
                   </Trans>
                 </p>
               </Prose>
@@ -734,7 +734,7 @@ export function NumbridLesson() {
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Check -teist and -kümmend in the ones you missed.</Trans>
                   ) : (
-                    <Trans>Slide through the builder above once more, then try again.</Trans>
+                    <Trans>Move the slider in Put them together once more, then try again.</Trans>
                   )
                 }
                 recall={formRecall}
@@ -753,8 +753,8 @@ export function NumbridLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Jaan says how old he is, where he lives and what his coffee costs. Listen for
-                    each number.
+                    Jaan says how old he is, his flat and phone numbers, how many cats he has and
+                    what his coffee costs. Listen for each number.
                   </Trans>
                 </p>
               </Prose>

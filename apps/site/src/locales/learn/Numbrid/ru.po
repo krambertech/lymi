@@ -10,8 +10,8 @@ msgstr ""
 msgid "-teist or -kümmend?"
 msgstr "-teist или -kümmend?"
 
-msgid "<0/> and <1/> differ in their vowel, <2/> and <3/> in their first sound. The difference carries into the numbers built from them. Listen, then pick."
-msgstr "<0/> и <1/> различаются гласной, <2/> и <3/> — первым звуком. Эта разница переходит и в числа, составленные из них. Послушай и выбери."
+msgid "<0/> has a short a and a k before the s; <1/> has a long uu. <2/> starts with ka, <3/> with ü. The numbers built from them differ the same way. Listen, then pick."
+msgstr "В <0/> короткое a и k перед s, в <1/> — долгое uu. <2/> начинается с ka, <3/> — с ü. Так же различаются и числа, составленные из них. Послушай и выбери."
 
 msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 msgstr "<0/> — это сто, а <1/> — тысяча, и «один» перед ними не говорят. Сотни пишутся слитно, <2/>, а тысячи отдельно: <3/>."
@@ -28,8 +28,8 @@ msgstr "<et>-teist</et> образует числа от одиннадцати 
 msgid "<et>-teist</et> or <et>-kümmend</et>"
 msgstr "<et>-teist</et> или <et>-kümmend</et>"
 
-msgid "<et>Kaks</et> and <et>kuus</et> differ in the vowel; <et>kaheksa</et> and <et>üheksa</et> in the first sound."
-msgstr "<et>Kaks</et> и <et>kuus</et> различаются гласной, <et>kaheksa</et> и <et>üheksa</et> — первым звуком."
+msgid "<et>Kaks</et> has a short a and a k; <et>kuus</et> a long uu. <et>Kaheksa</et> starts with ka, <et>üheksa</et> with ü."
+msgstr "В <et>kaks</et> короткое a и k, в <et>kuus</et> — долгое uu. <et>Kaheksa</et> начинается с ka, <et>üheksa</et> — с ü."
 
 msgid "0 to 10"
 msgstr "0–10"
@@ -64,11 +64,14 @@ msgstr "В году 365 дней."
 msgid "Add <0>-teist</0> to a digit and you have eleven to nineteen: <1/>, <2/>, <3/>. Word for word, üksteist is “one of the second ten”."
 msgstr "Добавь <0>-teist</0> к цифре — и получишь числа от одиннадцати до девятнадцати: <1/>, <2/>, <3/>. Дословно üksteist — «один второго десятка»."
 
+msgid "After a number from two up, the word takes the partitive: <et>kaks kassi</et>, <et>kaks eurot</et>."
+msgstr "После числа от двух и больше слово стоит в партитиве: <et>kaks kassi</et>, <et>kaks eurot</et>."
+
 msgid "All of them, by ear."
 msgstr "Все верно, на слух."
 
 msgid "All of them, every pair told apart."
-msgstr "Все верно, каждая пара различена."
+msgstr "Все верно, ни одной пары не перепутано."
 
 msgid "All of them, every word spelled right."
 msgstr "Все верно, каждое слово написано без ошибок."
@@ -93,9 +96,6 @@ msgstr "Складывается из <0>{tensWord}</0> и -kümmend: {tens} × 
 
 msgid "Coffee costs €3.50."
 msgstr "Кофе стоит 3,50 €."
-
-msgid "Coffee costs two euros."
-msgstr "Кофе стоит два евро."
 
 msgid "eight"
 msgstr "восемь"
@@ -139,9 +139,6 @@ msgstr "Сотни пишутся слитно."
 msgid "I have three cats."
 msgstr "У меня три кошки."
 
-msgid "I have two cats."
-msgstr "У меня две кошки."
-
 msgid "I’m 34 years old."
 msgstr "Мне 34 года."
 
@@ -151,8 +148,8 @@ msgstr "словами"
 msgid "Jaan has six cats."
 msgstr "У Яана шесть кошек."
 
-msgid "Jaan says how old he is, where he lives and what his coffee costs. Listen for each number."
-msgstr "Яан рассказывает, сколько ему лет, где он живёт и сколько стоит его кофе. Слушай каждое число."
+msgid "Jaan says how old he is, his flat and phone numbers, how many cats he has and what his coffee costs. Listen for each number."
+msgstr "Яан называет свой возраст, номер квартиры и телефона, сколько у него кошек и сколько стоит его кофе. Слушай каждое число."
 
 msgid "Kassi is the partitive of kass, cat."
 msgstr "Kassi — партитив от kass, кошка."
@@ -171,6 +168,9 @@ msgstr "На слух: числа Яана"
 
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Почти все. Переслушай ещё раз те, где были ошибки."
+
+msgid "Move the slider in Put them together once more, then try again."
+msgstr "Ещё раз подвигай ползунок в разделе «Собираем вместе», а потом попробуй снова."
 
 msgid "My flat is number 16."
 msgstr "Моя квартира — номер 16."
@@ -250,9 +250,6 @@ msgstr "семьдесят"
 msgid "six"
 msgstr "шесть"
 
-msgid "Slide through the builder above once more, then try again."
-msgstr "Ещё раз прокрути конструктор выше, а потом попробуй снова."
-
 msgid "Tap zero to ten at the top once more, then try again."
 msgstr "Ещё раз понажимай числа от нуля до десяти в начале урока, а потом попробуй снова."
 
@@ -276,9 +273,6 @@ msgstr "Десятки: -kümmend"
 
 msgid "The word after the number changes too: <0/>, <1/>. That form is the partitive, which lesson {partitive} explains. For now, listen for the number."
 msgstr "Слово после числа тоже меняется: <0/>, <1/>. Эта форма — партитив, её объясняет урок {partitive}. Пока слушай число."
-
-msgid "The word after the number takes the partitive: <et>kaks kassi</et>, <et>kaks eurot</et>."
-msgstr "Слово после числа стоит в партитиве: <et>kaks kassi</et>, <et>kaks eurot</et>."
 
 msgid "There are 22 pupils in the class."
 msgstr "В классе 22 ученика."

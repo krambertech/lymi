@@ -10,8 +10,8 @@ msgstr ""
 msgid "{past} minutes past {struck}."
 msgstr "{past} minutes past {struck}."
 
-msgid "<0/> counts on from the hour that has struck; <1/> counts down to the hour that’s coming. Mix them up and the time comes out wrong by up to an hour. Listen, then pick the clock."
-msgstr "<0/> counts on from the hour that has struck; <1/> counts down to the hour that’s coming. Mix them up and the time comes out wrong by up to an hour. Listen, then pick the clock."
+msgid "<0/> counts on from the hour that has struck; <1/> counts down to the hour that’s coming. Mix them up and the time comes out wrong by up to forty minutes. Listen, then pick the clock."
+msgstr "<0/> counts on from the hour that has struck; <1/> counts down to the hour that’s coming. Mix them up and the time comes out wrong by up to forty minutes. Listen, then pick the clock."
 
 msgid "<0/> means half, and it looks ahead. <1/> is halfway to four, so it’s 3:30, not 4:30."
 msgstr "<0/> means half, and it looks ahead. <1/> is halfway to four, so it’s 3:30, not 4:30."
@@ -86,8 +86,8 @@ msgstr "Ask <0>Mis kell on?</0> The answer is <1>kell on</1> and the hour: <2>ke
 msgid "Ask the time and understand the answer. Halves and quarters count toward the hour that’s coming."
 msgstr "Ask the time and understand the answer. Halves and quarters count toward the hour that’s coming."
 
-msgid "at three; three o’clock"
-msgstr "at three; three o’clock"
+msgid "at six; six o’clock"
+msgstr "at six; six o’clock"
 
 msgid "Before the hour, say how long until the next one. <0/> is, word for word, “in ten minutes, four”: 3:50."
 msgstr "Before the hour, say how long until the next one. <0/> is, word for word, “in ten minutes, four”: 3:50."
@@ -154,8 +154,8 @@ msgstr "It’s {right}: <0>{words}</0> is halfway to {next}."
 msgid "It’s three o’clock."
 msgstr "It’s three o’clock."
 
-msgid "Kell with a time also says when: kell kolm, at three."
-msgstr "Kell with a time also says when: kell kolm, at three."
+msgid "Kell with a time also says when: kell kuus, at six."
+msgstr "Kell with a time also says when: kell kuus, at six."
 
 msgid "Kolm, three, and veerand, a quarter."
 msgstr "Kolm, three, and veerand, a quarter."
@@ -196,8 +196,8 @@ msgstr "Mari is at home at two."
 msgid "Mari is at work now."
 msgstr "Mari is at work now."
 
-msgid "Mari leaves Jaan a message about her afternoon. <0/> also means at three. Listen for each time."
-msgstr "Mari leaves Jaan a message about her afternoon. <0/> also means at three. Listen for each time."
+msgid "Mari leaves Jaan a message about her afternoon. <0/> also means at six. Listen for each time."
+msgstr "Mari leaves Jaan a message about her afternoon. <0/> also means at six. Listen for each time."
 
 msgid "Minute hand"
 msgstr "Minute hand"

@@ -40,8 +40,11 @@ msgstr "<0>Tere</0> is hello, and Mari is leaving."
 msgid "<et>Kus</et> asks where; when the answer says <et>ma</et>, ask with <et>sa</et>."
 msgstr "<et>Kus</et> asks where; when the answer says <et>ma</et>, ask with <et>sa</et>."
 
-msgid "<et>Mis</et> asks what; when the answer says <et>ma</et>, ask with <et>sa</et>."
-msgstr "<et>Mis</et> asks what; when the answer says <et>ma</et>, ask with <et>sa</et>."
+msgid "<et>Mina</et> takes <et>olen</et>: <et>Mina olen Andres</et>."
+msgstr "<et>Mina</et> takes <et>olen</et>: <et>Mina olen Andres</et>."
+
+msgid "<et>Mis</et> asks what; when the answer says <et>ma</et> or <et>minu</et>, ask with <et>sa</et> or <et>su</et>."
+msgstr "<et>Mis</et> asks what; when the answer says <et>ma</et> or <et>minu</et>, ask with <et>sa</et> or <et>su</et>."
 
 msgid "20 minutes"
 msgstr "20 minutes"
@@ -58,8 +61,8 @@ msgstr "a lot"
 msgid "A note from Kati"
 msgstr "A note from Kati"
 
-msgid "A yes-or-no question starts with <et>kas</et>; the verb keeps the ending for its pronoun."
-msgstr "A yes-or-no question starts with <et>kas</et>; the verb keeps the ending for its pronoun."
+msgid "A yes-or-no question starts with <et>kas</et>; the verb takes the ending for its person, as without <et>kas</et>."
+msgstr "A yes-or-no question starts with <et>kas</et>; the verb takes the ending for its person, as without <et>kas</et>."
 
 msgid "A yes-or-no question starts with <et>kas</et>."
 msgstr "A yes-or-no question starts with <et>kas</et>."
@@ -78,12 +81,6 @@ msgstr "All six questions, each with the right word."
 
 msgid "All six, every sentence right."
 msgstr "All six, every sentence right."
-
-msgid "Andres"
-msgstr "Andres"
-
-msgid "Andres speaks Estonian well."
-msgstr "Andres speaks Estonian well."
 
 msgid "Answer, then ask back: <0>Hästi, aitäh. Aga sul?</0>"
 msgstr "Answer, then ask back: <0>Hästi, aitäh. Aga sul?</0>"
@@ -115,6 +112,9 @@ msgstr "at the office"
 msgid "because"
 msgstr "because"
 
+msgid "Because he works at a school"
+msgstr "Because he works at a school"
+
 msgid "coffee"
 msgstr "coffee"
 
@@ -124,8 +124,8 @@ msgstr "Coffee"
 msgid "Do you speak Estonian?"
 msgstr "Do you speak Estonian?"
 
-msgid "Each round gives an answer. Write the question it answers. When the answer says <0>ma</0>, ask with <1>sa</1>."
-msgstr "Each round gives an answer. Write the question it answers. When the answer says <0>ma</0>, ask with <1>sa</1>."
+msgid "Each round gives an answer. Write the question it answers. When the answer says <0>ma</0> or <1>minu</1>, ask with <2>sa</2> or <3>su</3>."
+msgstr "Each round gives an answer. Write the question it answers. When the answer says <0>ma</0> or <1>minu</1>, ask with <2>sa</2> or <3>su</3>."
 
 msgid "Each sentence needs one thing from lessons {first} to {last}: the verb after <0>ei</0>, a place with its ending, or a question."
 msgstr "Each sentence needs one thing from lessons {first} to {last}: the verb after <0>ei</0>, a place with its ending, or a question."
@@ -142,11 +142,11 @@ msgstr "Fine, thanks. And you?"
 msgid "For fun"
 msgstr "For fun"
 
-msgid "For Kati"
-msgstr "For Kati"
+msgid "For Liis"
+msgstr "For Liis"
 
-msgid "Four to six sentences: who you are, where you’re from and where you live, what you do, something you don’t do, and a question for Mari."
-msgstr "Four to six sentences: who you are, where you’re from and where you live, what you do, something you don’t do, and a question for Mari."
+msgid "Four to six sentences: who you are, where you live, what you do, something you don’t do, and a question for Mari."
+msgstr "Four to six sentences: who you are, where you live, what you do, something you don’t do, and a question for Mari."
 
 msgid "friend"
 msgstr "friend"
@@ -177,9 +177,6 @@ msgstr "he or she lives"
 
 msgid "he or she studies"
 msgstr "he or she studies"
-
-msgid "He works at a school."
-msgstr "He works at a school."
 
 msgid "How are you?"
 msgstr "How are you?"
@@ -226,23 +223,23 @@ msgstr "Jaan talks about himself and his friend Kati. Listen for <0/>: Jaan says
 msgid "Joob kohvi: drinks coffee. Learn it as a phrase for now."
 msgstr "Joob kohvi: drinks coffee. Learn it as a phrase for now."
 
-msgid "Kati"
-msgstr "Kati"
-
-msgid "Kati and Andres meet and ask each other where they live and what they do."
-msgstr "Kati and Andres meet and ask each other where they live and what they do."
-
-msgid "Kati studies in Tartu."
-msgstr "Kati studies in Tartu."
-
 msgid "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, a place with <2>-l</2>, or a question word."
 msgstr "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, a place with <2>-l</2>, or a question word."
+
+msgid "Liis"
+msgstr "Liis"
+
+msgid "Liis and Peeter meet and ask each other where they live and what they do."
+msgstr "Liis and Peeter meet and ask each other where they live and what they do."
+
+msgid "Liis studies in Tartu."
+msgstr "Liis studies in Tartu."
 
 msgid "Listen: Jaan and Kati"
 msgstr "Listen: Jaan and Kati"
 
-msgid "Listen: Kati meets Andres"
-msgstr "Listen: Kati meets Andres"
+msgid "Listen: Liis meets Peeter"
+msgstr "Listen: Liis meets Peeter"
 
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
@@ -250,8 +247,8 @@ msgstr "Listening only, no microphone"
 msgid "Listening: Jaan and Kati"
 msgstr "Listening: Jaan and Kati"
 
-msgid "Listening: Kati meets Andres"
-msgstr "Listening: Kati meets Andres"
+msgid "Listening: Liis meets Peeter"
+msgstr "Listening: Liis meets Peeter"
 
 msgid "Mari"
 msgstr "Mari"
@@ -295,6 +292,12 @@ msgstr "Now you ask. Pick the question that fits what Mari just said. Ask why wi
 msgid "Pärnu takes <0>-s</0>: <1>Pärnus</1>."
 msgstr "Pärnu takes <0>-s</0>: <1>Pärnus</1>."
 
+msgid "Peeter"
+msgstr "Peeter"
+
+msgid "Peeter speaks Estonian well."
+msgstr "Peeter speaks Estonian well."
+
 msgid "Places with <et>-s</et> and <et>-l</et>"
 msgstr "Places with <et>-s</et> and <et>-l</et>"
 
@@ -309,9 +312,6 @@ msgstr "Say where you live and work, with <0>-s</0> or <1>-l</1> on the place: <
 
 msgid "Say who you are: <0>Mina olen Andres</0> or <1>Minu nimi on Andres</1>."
 msgstr "Say who you are: <0>Mina olen Andres</0> or <1>Minu nimi on Andres</1>."
-
-msgid "Saying no with <et>ei</et>"
-msgstr "Saying no with <et>ei</et>"
 
 msgid "Says what you do."
 msgstr "Says what you do."
@@ -358,6 +358,9 @@ msgstr "This time Mari’s lines are sound only. Tap a line to hear it again, or
 msgid "turns a sentence into a yes-or-no question"
 msgstr "turns a sentence into a yes-or-no question"
 
+msgid "Verb forms: after <et>ei</et>, and <et>olema</et>"
+msgstr "Verb forms: after <et>ei</et>, and <et>olema</et>"
+
 msgid "Water"
 msgstr "Water"
 
@@ -385,17 +388,17 @@ msgstr "Where do you live?"
 msgid "Where do you work?"
 msgstr "Where do you work?"
 
-msgid "Where does Andres live?"
-msgstr "Where does Andres live?"
-
-msgid "Where does Andres work?"
-msgstr "Where does Andres work?"
-
 msgid "Where does Jaan work?"
 msgstr "Where does Jaan work?"
 
-msgid "Where does Kati live?"
-msgstr "Where does Kati live?"
+msgid "Where does Liis live?"
+msgstr "Where does Liis live?"
+
+msgid "Where does Peeter live?"
+msgstr "Where does Peeter live?"
+
+msgid "Where does Peeter work?"
+msgstr "Where does Peeter work?"
 
 msgid "Which question does it answer?"
 msgstr "Which question does it answer?"
@@ -406,8 +409,8 @@ msgstr "who"
 msgid "why"
 msgstr "why"
 
-msgid "Why is Andres learning Estonian?"
-msgstr "Why is Andres learning Estonian?"
+msgid "Why is Peeter learning Estonian?"
+msgstr "Why is Peeter learning Estonian?"
 
 msgid "Word for word: “good time”."
 msgstr "Word for word: “good time”."

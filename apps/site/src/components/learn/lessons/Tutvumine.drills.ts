@@ -11,10 +11,11 @@ import type { DrillBank, FixDrill, SentenceDrill } from "../../../lib/learn/dril
 const WHY: Record<string, MessageDescriptor> = {
   ei: msg`After <et>ei</et> the verb has no ending; <et>olema</et> is <et>ole</et>.`,
   place: msg`In a town or a building, <et>-s</et>; at work, <et>-l</et>.`,
-  ask: msg`A yes-or-no question starts with <et>kas</et>; the verb keeps the ending for its pronoun.`,
+  ask: msg`A yes-or-no question starts with <et>kas</et>; the verb takes the ending for its person, as without <et>kas</et>.`,
   kas: msg`A yes-or-no question starts with <et>kas</et>.`,
   kus: msg`<et>Kus</et> asks where; when the answer says <et>ma</et>, ask with <et>sa</et>.`,
-  mis: msg`<et>Mis</et> asks what; when the answer says <et>ma</et>, ask with <et>sa</et>.`,
+  mis: msg`<et>Mis</et> asks what; when the answer says <et>ma</et> or <et>minu</et>, ask with <et>sa</et> or <et>su</et>.`,
+  olema: msg`<et>Mina</et> takes <et>olen</et>: <et>Mina olen Andres</et>.`,
 };
 
 const RULE: Record<string, string> = {
@@ -24,6 +25,7 @@ const RULE: Record<string, string> = {
   kas: "ask",
   kus: "ask",
   mis: "ask",
+  olema: "ei",
 };
 
 const MEANS = [
@@ -79,7 +81,7 @@ const written = (said: string, kind: string): SentenceDrill => ({
 
 export const DRILLS: DrillBank = {
   rules: {
-    ei: { label: msg`Saying no with <et>ei</et>`, section: "translate" },
+    ei: { label: msg`Verb forms: after <et>ei</et>, and <et>olema</et>`, section: "translate" },
     place: { label: msg`Places with <et>-s</et> and <et>-l</et>`, section: "translate" },
     ask: { label: msg`Asking questions`, section: "ask" },
   },
@@ -90,8 +92,8 @@ export const DRILLS: DrillBank = {
     written("Ma ei tööta kontoris.", "ei"),
     written("Ta elab Tartus.", "place"),
     written("Nad on tööl.", "place"),
-    written("Mina olen Andres.", "ei"),
-    written("Kus sa elad?", "ask"),
+    written("Mina olen Andres.", "olema"),
+    written("Kus sa elad?", "kus"),
     written("Kas sa räägid eesti keelt?", "ask"),
   ],
 };

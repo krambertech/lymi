@@ -47,7 +47,7 @@ const heard = (n: number, other: number, rule: string, explain: MessageDescripto
   };
 };
 
-const ALIKE = msg`<et>Kaks</et> and <et>kuus</et> differ in the vowel; <et>kaheksa</et> and <et>üheksa</et> in the first sound.`;
+const ALIKE = msg`<et>Kaks</et> has a short a and a k; <et>kuus</et> a long uu. <et>Kaheksa</et> starts with ka, <et>üheksa</et> with ü.`;
 
 const sentence = (
   id: string,
@@ -59,7 +59,7 @@ const sentence = (
   rule: "sentence",
   say: said,
   answers: [said],
-  explain: msg`The word after the number takes the partitive: <et>kaks kassi</et>, <et>kaks eurot</et>.`,
+  explain: msg`After a number from two up, the word takes the partitive: <et>kaks kassi</et>, <et>kaks eurot</et>.`,
 });
 
 export const DRILLS: DrillBank = {
@@ -90,15 +90,9 @@ export const DRILLS: DrillBank = {
     heard(6, 2, "alike", ALIKE),
     heard(8, 9, "alike", ALIKE),
     heard(9, 8, "alike", ALIKE),
-    sentence("two-cats", "Mul on kaks kassi.", {
-      kind: "translate",
-      prompt: msg`I have two cats.`,
-    }),
+    sentence("two-cats", "Mul on kaks kassi.", { kind: "dictation" }),
     sentence("six-cats", "Mul on kuus kassi.", { kind: "dictation" }),
-    sentence("coffee-two", "Kohv maksab kaks eurot.", {
-      kind: "translate",
-      prompt: msg`Coffee costs two euros.`,
-    }),
+    sentence("coffee-two", "Kohv maksab kaks eurot.", { kind: "dictation" }),
     sentence("flat-eighteen", "Minu korteri number on kaheksateist.", { kind: "dictation" }),
   ],
 };

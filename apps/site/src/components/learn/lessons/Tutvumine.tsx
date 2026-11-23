@@ -372,8 +372,8 @@ function useContent() {
       line: 2,
     },
     {
-      id: "kati-lives",
-      ask: t`Where does Kati live?`,
+      id: "liis-lives",
+      ask: t`Where does Liis live?`,
       options: [
         { id: "parnu", label: t`In Pärnu` },
         { id: "tartu", label: t`In Tartu` },
@@ -464,8 +464,8 @@ export function TutvumineLesson() {
 
   const talkQuestions: PassageQuestion[] = [
     {
-      id: "andres-lives",
-      ask: t`Where does Andres live?`,
+      id: "peeter-lives",
+      ask: t`Where does Peeter live?`,
       options: [
         { id: "tallinn", label: t`In Tallinn` },
         { id: "parnu", label: t`In Pärnu` },
@@ -475,8 +475,8 @@ export function TutvumineLesson() {
       line: 5,
     },
     {
-      id: "andres-works",
-      ask: t`Where does Andres work?`,
+      id: "peeter-works",
+      ask: t`Where does Peeter work?`,
       options: [
         { id: "tartu", label: t`In Tartu` },
         { id: "tallinn", label: t`In Tallinn` },
@@ -488,31 +488,31 @@ export function TutvumineLesson() {
     {
       id: "estonian",
       kind: "truefalse",
-      ask: t`Andres speaks Estonian well.`,
+      ask: t`Peeter speaks Estonian well.`,
       answer: false,
       line: 7,
     },
     {
       id: "why",
-      ask: t`Why is Andres learning Estonian?`,
+      ask: t`Why is Peeter learning Estonian?`,
       options: [
-        { id: "kati", label: t`For Kati` },
-        { id: "school", label: t`He works at a school.` },
+        { id: "liis", label: t`For Liis` },
+        { id: "school", label: t`Because he works at a school` },
         { id: "fun", label: t`For fun` },
       ],
       answer: "school",
       line: 10,
     },
     {
-      id: "kati-studies",
+      id: "liis-studies",
       kind: "truefalse",
-      ask: t`Kati studies in Tartu.`,
+      ask: t`Liis studies in Tartu.`,
       answer: true,
       line: 13,
     },
     {
-      id: "kati-lives",
-      ask: t`Where does Kati live?`,
+      id: "liis-lives",
+      ask: t`Where does Liis live?`,
       options: [
         { id: "parnu", label: t`In Pärnu` },
         { id: "tartu", label: t`In Tartu` },
@@ -729,7 +729,8 @@ export function TutvumineLesson() {
                 <p>
                   <Trans>
                     Each round gives an answer. Write the question it answers. When the answer says{" "}
-                    <span lang="et">ma</span>, ask with <span lang="et">sa</span>.
+                    <span lang="et">ma</span> or <span lang="et">minu</span>, ask with{" "}
+                    <span lang="et">sa</span> or <span lang="et">su</span>.
                   </Trans>
                 </p>
               </Prose>
@@ -791,23 +792,23 @@ export function TutvumineLesson() {
         },
         {
           id: "talk",
-          title: t`Listening: Kati meets Andres`,
+          title: t`Listening: Liis meets Peeter`,
           quiz: true,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    Kati and Andres meet and ask each other where they live and what they do.
+                    Liis and Peeter meet and ask each other where they live and what they do.
                   </Trans>
                 </p>
               </Prose>
               <Listening
-                id="kati-meets-andres"
-                title={<Trans>Listen: Kati meets Andres</Trans>}
+                id="liis-meets-peeter"
+                title={<Trans>Listen: Liis meets Peeter</Trans>}
                 clip="d-kati"
                 turns={TUTVUMINE_TALK.turns}
-                names={{ second: t`Kati`, main: t`Andres` }}
+                names={{ second: t`Liis`, main: t`Peeter` }}
                 questions={talkQuestions}
               />
             </>
@@ -832,8 +833,8 @@ export function TutvumineLesson() {
                 title={<Trans>Write to Mari</Trans>}
                 prompt={
                   <Trans>
-                    Four to six sentences: who you are, where you’re from and where you live, what
-                    you do, something you don’t do, and a question for Mari.
+                    Four to six sentences: who you are, where you live, what you do, something you
+                    don’t do, and a question for Mari.
                   </Trans>
                 }
                 model={TUTVUMINE_MESSAGE}

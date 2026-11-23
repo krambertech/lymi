@@ -11370,26 +11370,26 @@
     "voice": "xd3ufyLcuKKZZXDZO9H7"
   },
   "tutvumine/d-kati": {
-    "text": "Tere! Kas sa oled Andres? Jah, mina olen Andres. Mina olen Kati. Kus sa elad? Ma elan Tartus, aga ma töötan Tallinnas. Kas sa räägid eesti keelt? Natuke. Ma õpin eesti keelt. Miks? Sest ma töötan koolis. Ma olen õpetaja. Mina ei tööta. Ma õpin Tartus. Ja kus sa elad? Ma elan Pärnus.",
+    "text": "Tere! Kas sa oled Peeter? Jah, mina olen Peeter. Mina olen Liis. Kus sa elad? Ma elan Tartus, aga ma töötan Tallinnas. Kas sa räägid eesti keelt? Natuke. Ma õpin eesti keelt. Miks? Sest ma töötan koolis. Ma olen õpetaja. Mina ei tööta. Ma õpin Tartus. Ja kus sa elad? Ma elan Pärnus.",
     "model": "eleven_v4",
     "turns": [
       {
         "voice": "WtzwR2kNGVNuaTGaYLfK",
         "sentences": [
           "Tere!",
-          "Kas sa oled Andres?"
+          "Kas sa oled Peeter?"
         ]
       },
       {
         "voice": "jGja51dd7gcoK0zkxeyg",
         "sentences": [
-          "Jah, mina olen Andres."
+          "Jah, mina olen Peeter."
         ]
       },
       {
         "voice": "WtzwR2kNGVNuaTGaYLfK",
         "sentences": [
-          "Mina olen Kati.",
+          "Mina olen Liis.",
           "Kus sa elad?"
         ]
       },

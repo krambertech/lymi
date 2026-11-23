@@ -3,15 +3,15 @@ import type { DrillBank } from "../../../lib/learn/drill";
 
 const AGREE = msg`The adjective takes the noun’s case: <et>suures majas</et>, <et>uut raamatut</et>.`;
 const GEN = msg`With <et>-ga</et>, <et>-ta</et>, <et>-ni</et> or <et>-na</et>, only the noun takes the ending: <et>suure autoga</et>.`;
-const NUMBER = msg`After a number, both words take the partitive: <et>kaks suurt kassi</et>.`;
-const PLURAL = msg`In the plural, the adjective takes <et>-d</et> as well: <et>uued raamatud</et>.`;
+const NUMBER = msg`After two, three or a higher number, both words take the partitive singular: <et>kaks suurt kassi</et>.`;
+const PLURAL = msg`When the noun takes plural <et>-d</et>, the adjective takes <et>-d</et> as well: <et>uued raamatud</et>.`;
 
 export const DRILLS: DrillBank = {
   rules: {
     agree: { label: msg`Both words, one case: <et>suures majas</et>`, section: "agree" },
     genitive: { label: msg`Only the noun: <et>suure autoga</et>`, section: "genitive" },
-    stems: { label: msg`The adjective’s own stem: <et>uus, uue, uut</et>`, section: "stems" },
-    plural: { label: msg`Many: <et>suured majad</et>`, section: "plural" },
+    stems: { label: msg`Built on the genitive: <et>uue</et>, <et>uues</et>`, section: "stems" },
+    plural: { label: msg`More than one: <et>suured majad</et>`, section: "plural" },
   },
   items: [
     {
@@ -83,9 +83,9 @@ export const DRILLS: DrillBank = {
       kind: "translate",
       id: "gen-uue-autoga",
       rule: "genitive",
-      prompt: msg`Jaan is coming in a new car.`,
-      answers: ["Jaan tuleb uue autoga."],
-      say: "Jaan tuleb uue autoga.",
+      prompt: msg`Jaan drives a new car.`,
+      answers: ["Jaan sõidab uue autoga."],
+      say: "Jaan sõidab uue autoga.",
       explain: GEN,
     },
     {
@@ -123,7 +123,7 @@ export const DRILLS: DrillBank = {
       gloss: msg`a good doctor`,
       cue: msg`as a good doctor`,
       answers: ["hea arstina"],
-      say: "Ta töötab hea arstina.",
+      say: "Ta on tuntud hea arstina.",
       explain: GEN,
     },
 
@@ -136,7 +136,7 @@ export const DRILLS: DrillBank = {
       cue: msg`in a new house`,
       answers: ["uues majas"],
       say: "Mari elab uues majas.",
-      explain: msg`<et>Uus</et> builds on its genitive <et>uue</et>: <et>uues majas</et>.`,
+      explain: msg`<et>Uus</et> takes <et>-s</et> on its genitive <et>uue</et>: <et>uues majas</et>.`,
     },
     {
       kind: "form",
@@ -147,12 +147,12 @@ export const DRILLS: DrillBank = {
       cue: msg`in the small room`,
       answers: ["väikeses toas"],
       say: "Kass magab väikeses toas.",
-      explain: msg`<et>Väike</et> builds on its genitive <et>väikese</et>: <et>väikeses toas</et>.`,
+      explain: msg`<et>Väike</et> takes <et>-s</et> on its genitive <et>väikese</et>: <et>väikeses toas</et>.`,
     },
     {
       kind: "translate",
-      id: "stems-kolm-vaikest",
-      rule: "stems",
+      id: "agree-kolm-vaikest",
+      rule: "agree",
       prompt: msg`We have three small rooms.`,
       answers: ["Meil on kolm väikest tuba."],
       say: "Meil on kolm väikest tuba.",
@@ -165,12 +165,32 @@ export const DRILLS: DrillBank = {
       wrong: "Kass magab väike toas.",
       answers: ["Kass magab väikeses toas."],
       say: "Kass magab väikeses toas.",
-      explain: msg`<et>Väike</et> builds on its genitive <et>väikese</et>: <et>väikeses toas</et>.`,
+      explain: msg`<et>Väike</et> takes <et>-s</et> on its genitive <et>väikese</et>: <et>väikeses toas</et>.`,
+    },
+    {
+      kind: "form",
+      id: "stems-soojas",
+      rule: "stems",
+      base: "soe",
+      gloss: msg`warm`,
+      cue: msg`in a warm room`,
+      answers: ["soojas toas"],
+      say: "Me istume soojas toas.",
+      explain: msg`<et>Soe</et> takes <et>-s</et> on its genitive <et>sooja</et>: <et>soojas toas</et>.`,
     },
     {
       kind: "translate",
-      id: "stems-kaks-suurt",
+      id: "stems-uues-majas",
       rule: "stems",
+      prompt: msg`Mari lives in a new house.`,
+      answers: ["Mari elab uues majas."],
+      say: "Mari elab uues majas.",
+      explain: msg`<et>Uus</et> takes <et>-s</et> on its genitive <et>uue</et>: <et>uues majas</et>.`,
+    },
+    {
+      kind: "translate",
+      id: "agree-kaks-suurt",
+      rule: "agree",
       prompt: msg`I have two big cats.`,
       answers: ["Mul on kaks suurt kassi.", "Minul on kaks suurt kassi."],
       say: "Mul on kaks suurt kassi.",
@@ -178,8 +198,8 @@ export const DRILLS: DrillBank = {
     },
     {
       kind: "fix",
-      id: "stems-fix-suurt",
-      rule: "stems",
+      id: "agree-fix-suurt",
+      rule: "agree",
       wrong: "Mul on kaks suur kassi.",
       answers: ["Mul on kaks suurt kassi."],
       say: "Mul on kaks suurt kassi.",
@@ -190,9 +210,9 @@ export const DRILLS: DrillBank = {
       kind: "fix",
       id: "plural-fix-uued",
       rule: "plural",
-      wrong: "Laual on uus raamatud.",
-      answers: ["Laual on uued raamatud."],
-      say: "Laual on uued raamatud.",
+      wrong: "Need on uus raamatud.",
+      answers: ["Need on uued raamatud."],
+      say: "Need on uued raamatud.",
       explain: PLURAL,
     },
     {
@@ -208,8 +228,8 @@ export const DRILLS: DrillBank = {
       kind: "dictation",
       id: "plural-suured-majad",
       rule: "plural",
-      answers: ["Siin on suured majad."],
-      say: "Siin on suured majad.",
+      answers: ["Need on suured majad."],
+      say: "Need on suured majad.",
       explain: PLURAL,
     },
     {
@@ -220,24 +240,24 @@ export const DRILLS: DrillBank = {
       gloss: msg`a big house`,
       cue: msg`big houses`,
       answers: ["suured majad"],
-      say: "Siin on suured majad.",
+      say: "Need on suured majad.",
       explain: PLURAL,
     },
     {
       kind: "dictation",
       id: "plural-uued-raamatud",
       rule: "plural",
-      answers: ["Laual on uued raamatud."],
-      say: "Laual on uued raamatud.",
+      answers: ["Need on uued raamatud."],
+      say: "Need on uued raamatud.",
       explain: PLURAL,
     },
     {
       kind: "translate",
       id: "plural-new-books",
       rule: "plural",
-      prompt: msg`There are new books on the table.`,
-      answers: ["Laual on uued raamatud."],
-      say: "Laual on uued raamatud.",
+      prompt: msg`These are new books.`,
+      answers: ["Need on uued raamatud."],
+      say: "Need on uued raamatud.",
       explain: PLURAL,
     },
   ],

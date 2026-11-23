@@ -2778,12 +2778,12 @@ export const ADJ_GENITIVE = [
   "Ma sõidan suure autoga.",
   "Mari tuleb uue sõbraga.",
   "Ma joon kohvi sooja piimaga.",
-  "Ta töötab hea arstina.",
+  "Ta on tuntud hea arstina.",
 ] as const;
 
 export const ADJ_PLURAL = [
-  "Siin on suured majad.",
-  "Laual on uued raamatud.",
+  "Need on suured majad.",
+  "Need on uued raamatud.",
   "Need on head sõbrad.",
 ] as const;
 
@@ -2842,7 +2842,7 @@ export const ADJ_MAKE = [
     way: "plural",
     base: "suur maja",
     answer: "suured majad",
-    said: "Siin on suured majad.",
+    said: "Need on suured majad.",
   },
 ] as const;
 
@@ -2877,7 +2877,7 @@ export const ADJ_WHICH = [
     base: "hea arst",
     answer: "hea arstina",
     options: ["hea arstina", "heana arstina", "heas arstina"],
-    said: "Ta töötab hea arstina.",
+    said: "Ta on tuntud hea arstina.",
   },
   {
     id: "suures-autos",
@@ -2927,7 +2927,7 @@ export const ADJ_TRANSLATE = [
     id: "suures-majas",
     answers: ["Ma elan suures majas.", "Mina elan suures majas.", "Elan suures majas."],
   },
-  { id: "uue-autoga", answers: ["Jaan tuleb uue autoga."] },
+  { id: "uue-autoga", answers: ["Jaan sõidab uue autoga."] },
   {
     id: "uut-raamatut",
     answers: ["Ma loen uut raamatut.", "Mina loen uut raamatut.", "Loen uut raamatut."],
@@ -2943,7 +2943,7 @@ export const ADJ_FIX = [
   { id: "fix-suurt", wrong: "Mul on kaks suur kassi.", answers: ["Mul on kaks suurt kassi."] },
   { id: "fix-uut", wrong: "Ma loen uus raamatut.", answers: ["Ma loen uut raamatut."] },
   { id: "fix-vaikeses", wrong: "Kass magab väike toas.", answers: ["Kass magab väikeses toas."] },
-  { id: "fix-uued", wrong: "Laual on uus raamatud.", answers: ["Laual on uued raamatud."] },
+  { id: "fix-uued", wrong: "Need on uus raamatud.", answers: ["Need on uued raamatud."] },
 ] as const;
 
 export const ADJ_TALK: Conversation = {
@@ -2967,7 +2967,7 @@ export const ADJ_TALK: Conversation = {
       voice: "main",
       text: [
         "Ta töötab uues kohvikus.",
-        "Kohvik on vanas linnas, suure turu kõrval.",
+        "Kohvik on ilusas pargis, suure turu kõrval.",
         "Ta sõidab tööle vana autoga.",
       ],
     },

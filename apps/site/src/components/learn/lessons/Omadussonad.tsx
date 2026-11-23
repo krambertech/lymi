@@ -45,9 +45,9 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Ma sõidan suure autoga.": msg`I drive a big car.`,
   "Mari tuleb uue sõbraga.": msg`Mari is coming with a new friend.`,
   "Ma joon kohvi sooja piimaga.": msg`I drink coffee with warm milk.`,
-  "Ta töötab hea arstina.": msg`He or she works as a good doctor.`,
-  "Siin on suured majad.": msg`Here are big houses.`,
-  "Laual on uued raamatud.": msg`There are new books on the table.`,
+  "Ta on tuntud hea arstina.": msg`He or she is known as a good doctor.`,
+  "Need on suured majad.": msg`These are big houses.`,
+  "Need on uued raamatud.": msg`These are new books.`,
   "Need on head sõbrad.": msg`These are good friends.`,
 };
 
@@ -61,7 +61,11 @@ const ROW_NAMES = [
   { id: "nominative", label: msg`Nominative`, ask: "mis?" },
   { id: "genitive", label: msg`Genitive`, ask: "mille?" },
   { id: "partitive", label: msg`Partitive`, ask: "mida?" },
-  { id: "in", label: msg`In`, ask: "milles?" },
+  {
+    id: "in",
+    label: msg({ message: "In", context: "case row: the -s ending, inside something" }),
+    ask: "milles?",
+  },
   { id: "with", label: msg`With`, ask: "millega?" },
 ] as const;
 
@@ -74,7 +78,7 @@ const GLOSSARY: Glossary = {
   ilus: { en: msg`beautiful` },
   soe: { en: msg`warm`, note: msg`Its genitive is sooja.` },
   "suures majas": { en: msg`in a big house` },
-  "suure autoga": { en: msg`by a big car, with a big car` },
+  "suure autoga": { en: msg`with a big car` },
   "uut raamatut": { en: msg`a new book`, note: msg`Both words in the partitive.` },
   "suured majad": { en: msg`big houses` },
 };
@@ -91,7 +95,7 @@ const MAKE_CUES: Record<(typeof ADJ_MAKE)[number]["id"], MessageDescriptor | { e
 };
 
 const WHICH_CUES: Record<(typeof ADJ_WHICH)[number]["id"], MessageDescriptor> = {
-  "suure-autoga": msg`by a big car`,
+  "suure-autoga": msg`with a big car`,
   "uue-sobraga": msg`with a new friend`,
   "sooja-piimaga": msg`with warm milk`,
   "hea-arstina": msg`as a good doctor`,
@@ -103,7 +107,7 @@ const WHICH_CUES: Record<(typeof ADJ_WHICH)[number]["id"], MessageDescriptor> = 
 
 const TRANSLATE_PROMPTS: Record<(typeof ADJ_TRANSLATE)[number]["id"], MessageDescriptor> = {
   "suures-majas": msg`I live in a big house.`,
-  "uue-autoga": msg`Jaan is coming in a new car.`,
+  "uue-autoga": msg`Jaan drives a new car.`,
   "uut-raamatut": msg`I’m reading a new book.`,
   "kaks-suurt": msg`I have two big cats.`,
   "ilusas-linnas": msg`Mari lives in a beautiful town.`,
@@ -221,7 +225,8 @@ function useContent() {
       ),
       head: (
         <Trans>
-          After a number, both words take the partitive: <span lang="et">kaks head sõpra</span>.
+          After two, three or a higher number, both words take the partitive singular:{" "}
+          <span lang="et">kaks head sõpra</span>.
         </Trans>
       ),
     };
@@ -250,7 +255,7 @@ function useContent() {
       ),
       "fix-suurt": (
         <Trans>
-          After a number, the adjective is in the partitive as well:{" "}
+          After two, three or a higher number, the adjective is in the partitive singular as well:{" "}
           <span lang="et">kaks suurt kassi</span>.
         </Trans>
       ),
@@ -267,7 +272,7 @@ function useContent() {
       ),
       "fix-uued": (
         <Trans>
-          Many new books: the adjective is plural as well, <span lang="et">uued raamatud</span>.
+          More than one book: the adjective is plural as well, <span lang="et">uued raamatud</span>.
         </Trans>
       ),
     };
@@ -325,7 +330,7 @@ function useContent() {
         id: "car",
         kind: "short",
         ask: t`How does the brother get to work? Write it as Jaan says it.`,
-        answers: ["vana autoga", "autoga"],
+        answers: ["vana autoga"],
         line: 12,
       },
       { id: "bus", kind: "truefalse", ask: t`Kati goes to work by bus.`, answer: true, line: 17 },
@@ -351,7 +356,7 @@ function useContent() {
         id: "meet",
         kind: "short",
         ask: t`Where will Kati wait for Jaan? Write it as she says it.`,
-        answers: ["väikeses kohvikus", "kohvikus"],
+        answers: ["väikeses kohvikus"],
         line: 26,
       },
     ];
@@ -393,12 +398,12 @@ export function OmadussonadLesson() {
         pair: [way, id] as const,
         explain:
           way === "plural" ? (
-            <Trans>Many: both words in the plural.</Trans>
+            <Trans>More than one: both words in the plural.</Trans>
           ) : way === "partitive" ? (
             <Trans>Both words in the partitive.</Trans>
           ) : (
             <Trans>
-              Both words take <span lang="et">-s</span>, each on its own genitive.
+              Both words take <span lang="et">-s</span>, each on its own genitive form.
             </Trans>
           ),
       })),
@@ -436,7 +441,7 @@ export function OmadussonadLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          An adjective takes the noun’s case: <span lang="et">suur maja</span>, a big house, but{" "}
+          An adjective takes the noun’s case: <span lang="et">suur maja</span>, a big house, and{" "}
           <span lang="et">suures majas</span>, in a big house. With <span lang="et">-ga</span>,{" "}
           <span lang="et">-ta</span>, <span lang="et">-ni</span> and <span lang="et">-na</span>,
           only the noun takes the ending: <span lang="et">suure autoga</span>.
@@ -454,7 +459,7 @@ export function OmadussonadLesson() {
           <b lang="et">uut raamatut</b>, <b lang="et">suured majad</b>.
         </Trans>,
         <Trans key="2">
-          It builds the case on its own genitive: <b lang="et">uus, uue, uues</b>;{" "}
+          It adds the ending to its own genitive: <b lang="et">uus, uue, uues</b>;{" "}
           <b lang="et">väike, väikese, väikeses</b>.
         </Trans>,
         <Trans key="3">
@@ -463,7 +468,8 @@ export function OmadussonadLesson() {
           genitive: <b lang="et">suure autoga</b>.
         </Trans>,
         <Trans key="4">
-          After a number, both words take the partitive: <b lang="et">kaks suurt kassi</b>.
+          After two, three or a higher number, both words take the partitive singular:{" "}
+          <b lang="et">kaks suurt kassi</b>.
         </Trans>,
       ]}
       sections={[
@@ -478,14 +484,14 @@ export function OmadussonadLesson() {
                   <Trans>
                     <Word w="Suur" /> is big, and <span lang="et">suur maja</span> is a big house.
                     When the noun takes a case, the adjective takes it as well:{" "}
-                    <Word w="suures majas" />, in a big house; <Word w="uut raamatut" />, a new book
-                    after a verb such as <span lang="et">loen</span>.
+                    <Word w="suures majas" />, in a big house; <Word w="uut raamatut" />, a new
+                    book, as the object of <span lang="et">loen</span>, I’m reading.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Pick a phrase, then tap its forms. The question word beside each one is the case
-                    it answers.
+                    Pick a phrase, then tap its forms. The question word beside each form is the
+                    question that case answers.
                   </Trans>
                 </p>
               </Prose>
@@ -525,9 +531,12 @@ export function OmadussonadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    An adjective has the same three forms as a noun, from lesson {forms}, and builds
-                    its cases on the genitive: <span lang="et">uus, uue, uut</span>, so in a new
-                    house is <span lang="et">uues majas</span>. Pick a word and tap its forms.
+                    An adjective has the same three forms as a noun, from lesson {forms}:{" "}
+                    <span lang="et">uus, uue, uut</span>. The <span lang="et">-s</span> and{" "}
+                    <span lang="et">-ga</span> forms and plural <span lang="et">-d</span> are built
+                    on the genitive <span lang="et">uue</span>: <span lang="et">uues majas</span>,{" "}
+                    <span lang="et">uue autoga</span>, <span lang="et">uued majad</span>. Pick a
+                    word and tap its forms.
                   </Trans>
                 </p>
               </Prose>
@@ -549,14 +558,17 @@ export function OmadussonadLesson() {
                     Four endings from lesson {withLesson} work differently:{" "}
                     <span lang="et">-ga</span>, <span lang="et">-ta</span>,{" "}
                     <span lang="et">-ni</span> and <span lang="et">-na</span>. Only the noun takes
-                    them, and the adjective stays in the genitive: <Word w="suure autoga" />, by a
-                    big car.
+                    them, and the adjective stays in the genitive: <Word w="suure autoga" />, with a
+                    big car; <span lang="et">uue autota</span>, without a new car;{" "}
+                    <span lang="et">suure majani</span>, as far as the big house;{" "}
+                    <span lang="et">hea arstina</span>, as a good doctor.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    So it is <span lang="et">suures autos</span>, in a big car, but{" "}
-                    <span lang="et">suure autoga</span>, by a big car. Tap a line to hear it.
+                    So it is <span lang="et">suures autos</span>, inside a big car, but{" "}
+                    <span lang="et">suure autoga</span>, with a big car, going by car. Tap a line to
+                    hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -568,7 +580,7 @@ export function OmadussonadLesson() {
               </Prose>
               <Quiz
                 id="which-form"
-                title={<Trans>In a big car, by a big car</Trans>}
+                title={<Trans>In a big car, with a big car</Trans>}
                 items={whichItems}
                 rounds={8}
                 verdict={(share) =>
@@ -595,9 +607,9 @@ export function OmadussonadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    In the plural from lesson {plural}, the adjective takes{" "}
-                    <span lang="et">-d</span> as well: <Word w="suured majad" />, big houses. Tap a
-                    line to hear it.
+                    When the noun takes plural <span lang="et">-d</span>, from lesson {plural}, the
+                    adjective takes <span lang="et">-d</span> as well: <Word w="suured majad" />,
+                    big houses. Tap a line to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -647,7 +659,7 @@ export function OmadussonadLesson() {
                 rounds={content.sentences.length}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All six, every adjective in its form.</Trans>
+                    <Trans>All six, every adjective in the right form.</Trans>
                   ) : share >= 0.6 ? (
                     <Trans>Most of them. Check the adjective in the ones you missed.</Trans>
                   ) : (

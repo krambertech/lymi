@@ -15412,21 +15412,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "omadussonad/ta-to2o2tab-hea-arstina": {
-    "text": "Ta töötab hea arstina.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "omadussonad/siin-on-suured-majad": {
-    "text": "Siin on suured majad.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "omadussonad/laual-on-uued-raamatud": {
-    "text": "Laual on uued raamatud.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "omadussonad/need-on-head-so3brad": {
     "text": "Need on head sõbrad.",
     "model": "eleven_v4",
@@ -15467,11 +15452,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "omadussonad/jaan-tuleb-uue-autoga": {
-    "text": "Jaan tuleb uue autoga.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "omadussonad/mari-elab-ilusas-linnas": {
     "text": "Mari elab ilusas linnas.",
     "model": "eleven_v4",
@@ -15498,7 +15478,7 @@
     "voice": "xd3ufyLcuKKZZXDZO9H7"
   },
   "omadussonad/c-talk": {
-    "text": "Tere, Jaan! Kus sa eile olid? Tere, Kati! Ma olin Tartus. Mu vend elab nüüd seal, ühes vanas majas. Vanas majas? Kas see on suur maja? Ei, see on väike maja, aga väga ilus. Tal on kolm väikest tuba ja üks suur tuba. Ja kus ta töötab? Ta töötab uues kohvikus. Kohvik on vanas linnas, suure turu kõrval. Ta sõidab tööle vana autoga. Vana autoga? Kas see on hea auto? Jah, väga hea. See on vana, aga ilus auto. Mina sõidan tööle uue bussiga. Buss on soe ja hea. Ja mis sa õhtul teed? Ma loen uut raamatut. See on suur raamat, aga väga hea. Kas sa tahad ka lugeda? Jah! Mul on homme vaba päev. Hästi. Ma ootan sind homme väikeses kohvikus, kell kuus. Seal on hea kohv ja soe piim. Väikeses kohvikus? Kas see on sinu maja kõrval? Jah, minu maja kõrval. Nägemiseni! Hästi. Homme kell kuus väikeses kohvikus!",
+    "text": "Tere, Jaan! Kus sa eile olid? Tere, Kati! Ma olin Tartus. Mu vend elab nüüd seal, ühes vanas majas. Vanas majas? Kas see on suur maja? Ei, see on väike maja, aga väga ilus. Tal on kolm väikest tuba ja üks suur tuba. Ja kus ta töötab? Ta töötab uues kohvikus. Kohvik on ilusas pargis, suure turu kõrval. Ta sõidab tööle vana autoga. Vana autoga? Kas see on hea auto? Jah, väga hea. See on vana, aga ilus auto. Mina sõidan tööle uue bussiga. Buss on soe ja hea. Ja mis sa õhtul teed? Ma loen uut raamatut. See on suur raamat, aga väga hea. Kas sa tahad ka lugeda? Jah! Mul on homme vaba päev. Hästi. Ma ootan sind homme väikeses kohvikus, kell kuus. Seal on hea kohv ja soe piim. Väikeses kohvikus? Kas see on sinu maja kõrval? Jah, minu maja kõrval. Nägemiseni! Hästi. Homme kell kuus väikeses kohvikus!",
     "model": "eleven_v4",
     "turns": [
       {
@@ -15541,7 +15521,7 @@
         "voice": "jGja51dd7gcoK0zkxeyg",
         "sentences": [
           "Ta töötab uues kohvikus.",
-          "Kohvik on vanas linnas, suure turu kõrval.",
+          "Kohvik on ilusas pargis, suure turu kõrval.",
           "Ta sõidab tööle vana autoga."
         ]
       },
@@ -15624,6 +15604,26 @@
   },
   "omadussonad/meil-on-kolm-va2ikest-tuba": {
     "text": "Meil on kolm väikest tuba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/ta-on-tuntud-hea-arstina": {
+    "text": "Ta on tuntud hea arstina.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/need-on-suured-majad": {
+    "text": "Need on suured majad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/need-on-uued-raamatud": {
+    "text": "Need on uued raamatud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omadussonad/jaan-so3idab-uue-autoga": {
+    "text": "Jaan sõidab uue autoga.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

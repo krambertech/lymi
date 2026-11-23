@@ -7,14 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: uk\n"
 
-msgid "<0/> is big, and <1>suur maja</1> is a big house. When the noun takes a case, the adjective takes it as well: <2/>, in a big house; <3/>, a new book after a verb such as <4>loen</4>."
-msgstr "<0/> — «великий», а <1>suur maja</1> — «великий будинок». Коли іменник стоїть у якомусь відмінку, прикметник стоїть у ньому теж: <2/> — «у великому будинку»; <3/> — «нову книжку», після дієслова на кшталт <4>loen</4>."
+msgid "<0/> is big, and <1>suur maja</1> is a big house. When the noun takes a case, the adjective takes it as well: <2/>, in a big house; <3/>, a new book, as the object of <4>loen</4>, I’m reading."
+msgstr "<0/> — «великий», а <1>suur maja</1> — «великий будинок». Коли іменник стоїть у якомусь відмінку, прикметник стоїть у ньому теж: <2/> — «у великому будинку»; <3/> — «нову книжку», як додаток до <4>loen</4>, «читаю»."
 
-msgid "<et>Uus</et> builds on its genitive <et>uue</et>: <et>uues majas</et>."
-msgstr "<et>Uus</et> будує форму на своєму родовому <et>uue</et>: <et>uues majas</et>."
+msgid "<et>Soe</et> takes <et>-s</et> on its genitive <et>sooja</et>: <et>soojas toas</et>."
+msgstr "<et>Soe</et> додає <et>-s</et> до свого родового <et>sooja</et>: <et>soojas toas</et>."
 
-msgid "<et>Väike</et> builds on its genitive <et>väikese</et>: <et>väikeses toas</et>."
-msgstr "<et>Väike</et> будує форму на своєму родовому <et>väikese</et>: <et>väikeses toas</et>."
+msgid "<et>Uus</et> takes <et>-s</et> on its genitive <et>uue</et>: <et>uues majas</et>."
+msgstr "<et>Uus</et> додає <et>-s</et> до свого родового <et>uue</et>: <et>uues majas</et>."
+
+msgid "<et>Väike</et> takes <et>-s</et> on its genitive <et>väikese</et>: <et>väikeses toas</et>."
+msgstr "<et>Väike</et> додає <et>-s</et> до свого родового <et>väikese</et>: <et>väikeses toas</et>."
 
 msgid "16 minutes"
 msgstr "16 хвилин"
@@ -32,7 +35,7 @@ msgid "a good doctor"
 msgstr "хороший лікар"
 
 msgid "a good friend"
-msgstr "добрий друг"
+msgstr "хороший друг"
 
 msgid "a new book"
 msgstr "нова книжка"
@@ -52,17 +55,17 @@ msgstr "Прикметники"
 msgid "Adjectives change like nouns"
 msgstr "Прикметники змінюються, як іменники"
 
-msgid "After a number, both words take the partitive: <0>kaks head sõpra</0>."
-msgstr "Після числа обидва слова стоять у партитиві: <0>kaks head sõpra</0>."
+msgid "After two, three or a higher number, both words take the partitive singular: <0>kaks head sõpra</0>."
+msgstr "Після два, три й більших чисел обидва слова стоять у партитиві однини: <0>kaks head sõpra</0>."
 
-msgid "After a number, both words take the partitive: <0>kaks suurt kassi</0>."
-msgstr "Після числа обидва слова стоять у партитиві: <0>kaks suurt kassi</0>."
+msgid "After two, three or a higher number, both words take the partitive singular: <0>kaks suurt kassi</0>."
+msgstr "Після два, три й більших чисел обидва слова стоять у партитиві однини: <0>kaks suurt kassi</0>."
 
-msgid "After a number, both words take the partitive: <et>kaks suurt kassi</et>."
-msgstr "Після числа обидва слова стоять у партитиві: <et>kaks suurt kassi</et>."
+msgid "After two, three or a higher number, both words take the partitive singular: <et>kaks suurt kassi</et>."
+msgstr "Після два, три й більших чисел обидва слова стоять у партитиві однини: <et>kaks suurt kassi</et>."
 
-msgid "After a number, the adjective is in the partitive as well: <0>kaks suurt kassi</0>."
-msgstr "Після числа прикметник теж стоїть у партитиві: <0>kaks suurt kassi</0>."
+msgid "After two, three or a higher number, the adjective is in the partitive singular as well: <0>kaks suurt kassi</0>."
+msgstr "Після два, три й більших чисел прикметник теж стоїть у партитиві однини: <0>kaks suurt kassi</0>."
 
 msgid "All eight: both words with -s, the noun alone with -ga."
 msgstr "Усі вісім: з -s — обидва слова, з -ga — лише іменник."
@@ -73,17 +76,17 @@ msgstr "Усі, і щоразу прикметник у відмінку іме�
 msgid "All six found and fixed."
 msgstr "Усі шість знайдено й виправлено."
 
-msgid "All six, every adjective in its form."
-msgstr "Усі шість, кожен прикметник у своїй формі."
+msgid "All six, every adjective in the right form."
+msgstr "Усі шість, кожен прикметник у правильній формі."
 
-msgid "An adjective has the same three forms as a noun, from lesson {forms}, and builds its cases on the genitive: <0>uus, uue, uut</0>, so in a new house is <1>uues majas</1>. Pick a word and tap its forms."
-msgstr "Прикметник має ті самі три форми, що й іменник, з уроку {forms}, і будує відмінки на родовому: <0>uus, uue, uut</0>, тож «у новому будинку» — <1>uues majas</1>. Обери слово й торкнися його форм."
+msgid "An adjective has the same three forms as a noun, from lesson {forms}: <0>uus, uue, uut</0>. The <1>-s</1> and <2>-ga</2> forms and plural <3>-d</3> are built on the genitive <4>uue</4>: <5>uues majas</5>, <6>uue autoga</6>, <7>uued majad</7>. Pick a word and tap its forms."
+msgstr "Прикметник має ті самі три форми, що й іменник, з уроку {forms}: <0>uus, uue, uut</0>. Форми з <1>-s</1> і <2>-ga</2> та множина на <3>-d</3> утворюються від родового <4>uue</4>: <5>uues majas</5>, <6>uue autoga</6>, <7>uued majad</7>. Обери слово й торкнися його форм."
 
 msgid "An adjective takes the noun’s case and number: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
 msgstr "Прикметник стоїть у відмінку й числі іменника: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
 
-msgid "An adjective takes the noun’s case: <0>suur maja</0>, a big house, but <1>suures majas</1>, in a big house. With <2>-ga</2>, <3>-ta</3>, <4>-ni</4> and <5>-na</5>, only the noun takes the ending: <6>suure autoga</6>."
-msgstr "Прикметник стоїть у відмінку іменника: <0>suur maja</0> — «великий будинок», але <1>suures majas</1> — «у великому будинку». З <2>-ga</2>, <3>-ta</3>, <4>-ni</4> і <5>-na</5> закінчення бере лише іменник: <6>suure autoga</6>."
+msgid "An adjective takes the noun’s case: <0>suur maja</0>, a big house, and <1>suures majas</1>, in a big house. With <2>-ga</2>, <3>-ta</3>, <4>-ni</4> and <5>-na</5>, only the noun takes the ending: <6>suure autoga</6>."
+msgstr "Прикметник стоїть у відмінку іменника: <0>suur maja</0> — «великий будинок», і <1>suures majas</1> — «у великому будинку». З <2>-ga</2>, <3>-ta</3>, <4>-ni</4> і <5>-na</5> закінчення бере лише іменник: <6>suure autoga</6>."
 
 msgid "An old Estonian book"
 msgstr "Стару естонську книжку"
@@ -118,8 +121,8 @@ msgstr "Обидва слова в партитиві: <0>uut raamatut</0>."
 msgid "Both words in the partitive."
 msgstr "Обидва слова в партитиві."
 
-msgid "Both words take <0>-s</0>, each on its own genitive."
-msgstr "Обидва слова беруть <0>-s</0>, кожне на своєму родовому."
+msgid "Both words take <0>-s</0>, each on its own genitive form."
+msgstr "Обидва слова беруть <0>-s</0>: кожне додає його до свого родового."
 
 msgid "Both words take the same case."
 msgstr "Обидва слова стоять в одному відмінку."
@@ -130,11 +133,8 @@ msgstr "Два слова, один відмінок"
 msgid "Both words, one case: <et>suures majas</et>"
 msgstr "Два слова, один відмінок: <et>suures majas</et>"
 
-msgid "by a big car"
-msgstr "великою машиною"
-
-msgid "by a big car, with a big car"
-msgstr "великою машиною, з великою машиною"
+msgid "Built on the genitive: <et>uue</et>, <et>uues</et>"
+msgstr "Від родового: <et>uue</et>, <et>uues</et>"
 
 msgid "Fill the gaps"
 msgstr "Заповни пропуски"
@@ -146,11 +146,11 @@ msgstr "Виправ речення"
 msgid "Forms of {0}"
 msgstr "Форми {0}"
 
-msgid "Four endings from lesson {withLesson} work differently: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> and <3>-na</3>. Only the noun takes them, and the adjective stays in the genitive: <4/>, by a big car."
-msgstr "Чотири закінчення з уроку {withLesson} працюють інакше: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> і <3>-na</3>. Їх бере лише іменник, а прикметник лишається в родовому: <4/> — «великою машиною»."
+msgid "Four endings from lesson {withLesson} work differently: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> and <3>-na</3>. Only the noun takes them, and the adjective stays in the genitive: <4/>, with a big car; <5>uue autota</5>, without a new car; <6>suure majani</6>, as far as the big house; <7>hea arstina</7>, as a good doctor."
+msgstr "Чотири закінчення з уроку {withLesson} працюють інакше: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> і <3>-na</3>. Їх бере лише іменник, а прикметник лишається в родовому: <4/> — «великою машиною»; <5>uue autota</5> — «без нової машини»; <6>suure majani</6> — «до великого будинку»; <7>hea arstina</7> — «як хороший лікар»."
 
 msgid "genitive"
-msgstr "родовий відмінок"
+msgstr "родовий"
 
 msgid "Genitive"
 msgstr "Родовий"
@@ -158,11 +158,8 @@ msgstr "Родовий"
 msgid "good"
 msgstr "хороший, добрий"
 
-msgid "He or she works as a good doctor."
-msgstr "Він чи вона працює хорошим лікарем."
-
-msgid "Here are big houses."
-msgstr "Тут великі будинки."
+msgid "He or she is known as a good doctor."
+msgstr "Його чи її знають як хорошого лікаря."
 
 msgid "How does the brother get to work? Write it as Jaan says it."
 msgstr "Як брат добирається на роботу? Напиши так, як каже Яан."
@@ -185,8 +182,9 @@ msgstr "Я живу у великому будинку."
 msgid "I’m reading a new book."
 msgstr "Я читаю нову книжку."
 
+msgctxt "case row: the -s ending, inside something"
 msgid "In"
-msgstr "Через"
+msgstr "У"
 
 msgid "in a beautiful town"
 msgstr "у гарному місті"
@@ -194,7 +192,7 @@ msgstr "у гарному місті"
 msgid "in a big car"
 msgstr "у великій машині"
 
-msgid "In a big car, by a big car"
+msgid "In a big car, with a big car"
 msgstr "У великій машині, великою машиною"
 
 msgid "in a big house"
@@ -242,17 +240,11 @@ msgstr "У Пярну"
 msgid "In Tartu"
 msgstr "У Тарту"
 
-msgid "In the plural from lesson {plural}, the adjective takes <0>-d</0> as well: <1/>, big houses. Tap a line to hear it."
-msgstr "У множині з уроку {plural} прикметник теж бере <0>-d</0>: <1/> — «великі будинки». Торкнися рядка, щоб послухати."
-
-msgid "In the plural, the adjective takes <et>-d</et> as well: <et>uued raamatud</et>."
-msgstr "У множині прикметник теж бере <et>-d</et>: <et>uued raamatud</et>."
-
 msgid "in the small room"
 msgstr "у маленькій кімнаті"
 
-msgid "It builds the case on its own genitive: <0>uus, uue, uues</0>; <1>väike, väikese, väikeses</1>."
-msgstr "Відмінок він будує на своєму родовому: <0>uus, uue, uues</0>; <1>väike, väikese, väikeses</1>."
+msgid "It adds the ending to its own genitive: <0>uus, uue, uues</0>; <1>väike, väikese, väikeses</1>."
+msgstr "Закінчення він додає до свого родового: <0>uus, uue, uues</0>; <1>väike, väikese, väikeses</1>."
 
 msgid "Its genitive is sooja."
 msgstr "Родовий — sooja."
@@ -260,8 +252,8 @@ msgstr "Родовий — sooja."
 msgid "Jaan"
 msgstr "Яан"
 
-msgid "Jaan is coming in a new car."
-msgstr "Яан приїде новою машиною."
+msgid "Jaan drives a new car."
+msgstr "Яан їздить новою машиною."
 
 msgid "Jaan lives in a beautiful town."
 msgstr "Яан живе в гарному місті."
@@ -287,20 +279,14 @@ msgstr "Послухай: Каті й Яан"
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"
 
-msgid "Many new books: the adjective is plural as well, <0>uued raamatud</0>."
-msgstr "Багато нових книжок: прикметник теж у множині, <0>uued raamatud</0>."
-
-msgid "Many: <et>suured majad</et>"
-msgstr "Багато: <et>suured majad</et>"
-
-msgid "Many: both words in the plural."
-msgstr "Багато: обидва слова в множині."
-
 msgid "Mari is coming with a new friend."
 msgstr "Марі прийде з новим другом."
 
 msgid "Mari lives in a beautiful town."
 msgstr "Марі живе в гарному місті."
+
+msgid "Mari lives in a new house."
+msgstr "Марі живе в новому будинку."
 
 msgid "Mari lives in a small town."
 msgstr "Марі живе в маленькому місті."
@@ -310,6 +296,15 @@ msgstr "Марі пише Каті про своє нове місто. Обер
 
 msgid "Mari’s new town"
 msgstr "Нове місто Марі"
+
+msgid "More than one book: the adjective is plural as well, <0>uued raamatud</0>."
+msgstr "Більше ніж одна книжка: прикметник теж у множині, <0>uued raamatud</0>."
+
+msgid "More than one: <et>suured majad</et>"
+msgstr "Більше ніж один: <et>suured majad</et>"
+
+msgid "More than one: both words in the plural."
+msgstr "Більше ніж один: обидва слова в множині."
 
 msgid "Most of them. Check that the adjective took the ending as well."
 msgstr "Більшість. Перевір, чи прикметник теж має закінчення."
@@ -339,7 +334,7 @@ msgid "old"
 msgstr "старий"
 
 msgid "Only the noun takes -ga; the adjective stays in the genitive."
-msgstr "-ga бере лише іменник; прикметник лишається в родовому."
+msgstr "Лише іменник бере -ga; прикметник лишається в родовому."
 
 msgid "Only the noun: <et>suure autoga</et>"
 msgstr "Лише іменник: <et>suure autoga</et>"
@@ -353,8 +348,8 @@ msgstr "Партитив"
 msgid "Phrase"
 msgstr "Словосполучення"
 
-msgid "Pick a phrase, then tap its forms. The question word beside each one is the case it answers."
-msgstr "Обери словосполучення й торкнися його форм. Питальне слово поруч показує, на яке питання відповідає відмінок."
+msgid "Pick a phrase, then tap its forms. The question word beside each form is the question that case answers."
+msgstr "Обери словосполучення й торкнися його форм. Питальне слово поруч із кожною формою — це питання, на яке відповідає відмінок."
 
 msgid "Pick the phrase the cue asks for."
 msgstr "Обери словосполучення, якого вимагає підказка."
@@ -368,8 +363,8 @@ msgstr "Шість помилок"
 msgid "small, little"
 msgstr "маленький"
 
-msgid "So it is <0>suures autos</0>, in a big car, but <1>suure autoga</1>, by a big car. Tap a line to hear it."
-msgstr "Тож <0>suures autos</0> — «у великій машині», але <1>suure autoga</1> — «великою машиною». Торкнися рядка, щоб послухати."
+msgid "So it is <0>suures autos</0>, inside a big car, but <1>suure autoga</1>, with a big car, going by car. Tap a line to hear it."
+msgstr "Тож <0>suures autos</0> — «усередині великої машини», а <1>suure autoga</1> — «великою машиною», коли їдеш нею. Торкнися рядка, щоб послухати."
 
 msgid "Tap a form"
 msgstr "Торкнися форми"
@@ -387,7 +382,7 @@ msgid "The adjective takes <0>-s</0> as well: <1>suures majas</1>."
 msgstr "Прикметник теж бере <0>-s</0>: <1>suures majas</1>."
 
 msgid "The adjective takes <0>-s</0> on its genitive <1>väikese</1>: <2>väikeses toas</2>."
-msgstr "Прикметник бере <0>-s</0> на своєму родовому <1>väikese</1>: <2>väikeses toas</2>."
+msgstr "Прикметник додає <0>-s</0> до свого родового <1>väikese</1>: <2>väikeses toas</2>."
 
 msgid "The adjective takes the noun’s case"
 msgstr "Прикметник у відмінку іменника"
@@ -395,17 +390,17 @@ msgstr "Прикметник у відмінку іменника"
 msgid "The adjective takes the noun’s case: <et>suures majas</et>, <et>uut raamatut</et>."
 msgstr "Прикметник стоїть у відмінку іменника: <et>suures majas</et>, <et>uut raamatut</et>."
 
-msgid "The adjective’s own stem: <et>uus, uue, uut</et>"
-msgstr "Власна основа прикметника: <et>uus, uue, uut</et>"
-
 msgid "The cat sleeps in the small room."
 msgstr "Кіт спить у маленькій кімнаті."
 
-msgid "There are new books on the table."
-msgstr "На столі нові книжки."
+msgid "These are big houses."
+msgstr "Це великі будинки."
 
 msgid "These are good friends."
 msgstr "Це хороші друзі."
+
+msgid "These are new books."
+msgstr "Це нові книжки."
 
 msgid "Three"
 msgstr "Три"
@@ -424,6 +419,12 @@ msgstr "Ми сидимо в старій кав’ярні."
 
 msgid "What is Kati reading?"
 msgstr "Що читає Каті?"
+
+msgid "When the noun takes plural <0>-d</0>, from lesson {plural}, the adjective takes <1>-d</1> as well: <2/>, big houses. Tap a line to hear it."
+msgstr "Коли іменник бере <0>-d</0> множини з уроку {plural}, прикметник теж бере <1>-d</1>: <2/> — «великі будинки». Торкнися рядка, щоб послухати."
+
+msgid "When the noun takes plural <et>-d</et>, the adjective takes <et>-d</et> as well: <et>uued raamatud</et>."
+msgstr "Коли іменник бере <et>-d</et> множини, прикметник теж бере <et>-d</et>: <et>uued raamatud</et>."
 
 msgid "Where does Jaan’s brother work?"
 msgstr "Де працює брат Яана?"
@@ -457,6 +458,9 @@ msgstr "З <0>-s</0> закінчення беруть обидва слова."
 
 msgid "With <et>-ga</et>, <et>-ta</et>, <et>-ni</et> or <et>-na</et>, only the noun takes the ending: <et>suure autoga</et>."
 msgstr "З <et>-ga</et>, <et>-ta</et>, <et>-ni</et> чи <et>-na</et> закінчення бере лише іменник: <et>suure autoga</et>."
+
+msgid "with a big car"
+msgstr "великою машиною"
 
 msgid "with a good friend"
 msgstr "з хорошим другом"

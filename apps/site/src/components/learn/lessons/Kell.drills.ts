@@ -11,7 +11,7 @@ import {
   timeWords,
 } from "../../../lib/learn/estonian-time";
 
-const HOUR = msg`On the hour, say the hour alone: <et>kell on kolm</et>.`;
+const HOUR = msg`On the hour, say the hour alone: <et>kell on viis</et>, 5:00.`;
 const HALF = msg`<et>Pool</et>, <et>veerand</et> and <et>kolmveerand</et> name the hour that’s coming.`;
 const PAST = msg`<et>Läbi</et> counts on from the hour that has struck.`;
 const TO = msg`<et>Pärast</et> counts down to the hour that’s coming.`;

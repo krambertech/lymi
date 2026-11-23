@@ -227,8 +227,8 @@ msgstr "Майже. Переслухай ті, де були помилки."
 msgid "On the hour"
 msgstr "Повні години"
 
-msgid "On the hour, say the hour alone: <et>kell on kolm</et>."
-msgstr "Для повної години кажуть лише її число: <et>kell on kolm</et>."
+msgid "On the hour, say the hour alone: <et>kell on viis</et>, 5:00."
+msgstr "Для повної години кажуть лише її число: <et>kell on viis</et>, 5:00."
 
 msgid "On the hour: the number alone."
 msgstr "Рівно: лише число години."

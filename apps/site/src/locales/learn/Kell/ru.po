@@ -227,8 +227,8 @@ msgstr "Почти. Переслушай те, где были ошибки."
 msgid "On the hour"
 msgstr "Целые часы"
 
-msgid "On the hour, say the hour alone: <et>kell on kolm</et>."
-msgstr "Для целого часа называют только число: <et>kell on kolm</et>."
+msgid "On the hour, say the hour alone: <et>kell on viis</et>, 5:00."
+msgstr "Для целого часа называют только число: <et>kell on viis</et>, 5:00."
 
 msgid "On the hour: the number alone."
 msgstr "Ровно: только число часа."

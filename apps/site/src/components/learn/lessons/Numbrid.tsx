@@ -322,9 +322,9 @@ export function NumbridLesson() {
         id: "flat",
         ask: t`What is his flat number?`,
         options: [
-          { id: "90", label: "90" },
-          { id: "19", label: "19" },
           { id: "18", label: "18" },
+          { id: "19", label: "19" },
+          { id: "80", label: "80" },
         ],
         answer: "18",
         line: 2,
@@ -353,7 +353,7 @@ export function NumbridLesson() {
         options: [
           { id: "250", label: t`€2.50` },
           { id: "650", label: t`€6.50` },
-          { id: "615", label: t`€6.15` },
+          { id: "215", label: t`€2.15` },
         ],
         answer: "250",
         line: 5,

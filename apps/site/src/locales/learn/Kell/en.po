@@ -227,8 +227,8 @@ msgstr "Nearly. Play the ones you missed once more."
 msgid "On the hour"
 msgstr "On the hour"
 
-msgid "On the hour, say the hour alone: <et>kell on kolm</et>."
-msgstr "On the hour, say the hour alone: <et>kell on kolm</et>."
+msgid "On the hour, say the hour alone: <et>kell on viis</et>, 5:00."
+msgstr "On the hour, say the hour alone: <et>kell on viis</et>, 5:00."
 
 msgid "On the hour: the number alone."
 msgstr "On the hour: the number alone."

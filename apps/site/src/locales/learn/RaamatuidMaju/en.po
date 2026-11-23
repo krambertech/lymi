@@ -19,11 +19,8 @@ msgstr "20 minutes"
 msgid "8 exercises"
 msgstr "8 exercises"
 
-msgid "A long vowel shortens and takes <0>-id</0>: <1>puu, puid</1>."
-msgstr "A long vowel shortens and takes <0>-id</0>: <1>puu, puid</1>."
-
-msgid "A long vowel shortens and takes <et>-id</et>: <et>puid</et>."
-msgstr "A long vowel shortens and takes <et>-id</et>: <et>puid</et>."
+msgid "A changed vowel"
+msgstr "A changed vowel"
 
 msgid "a lot of apples"
 msgstr "a lot of apples"
@@ -40,14 +37,17 @@ msgstr "a lot of friends"
 msgid "a lot, many"
 msgstr "a lot, many"
 
-msgid "A number takes the singular partitive. Some or many takes the plural partitive."
-msgstr "A number takes the singular partitive. Some or many takes the plural partitive."
+msgid "A number from two up takes the singular partitive. Some or many takes the plural partitive."
+msgstr "A number from two up takes the singular partitive. Some or many takes the plural partitive."
 
 msgid "A number, many or the ones you mean"
 msgstr "A number, many or the ones you mean"
 
-msgid "A vowel"
-msgstr "A vowel"
+msgid "A one-syllable word with a long vowel shortens it and takes <0>-id</0>: <1>puu, puid</1>."
+msgstr "A one-syllable word with a long vowel shortens it and takes <0>-id</0>: <1>puu, puid</1>."
+
+msgid "A one-syllable word with a long vowel shortens it and takes <et>-id</et>: <et>puid</et>."
+msgstr "A one-syllable word with a long vowel shortens it and takes <et>-id</et>: <et>puid</et>."
 
 msgid "Adds <0>-id</0>: <1>raamatuid, puid</1>."
 msgstr "Adds <0>-id</0>: <1>raamatuid, puid</1>."
@@ -64,8 +64,11 @@ msgstr "Adds <et>-sid</et>: <et>autosid</et>."
 msgid "After <0>ei</0> and after verbs such as <1>armastama</1>, the plural partitive too: <2>Mul ei ole autosid. Ma armastan linde.</2>"
 msgstr "After <0>ei</0> and after verbs such as <1>armastama</1>, the plural partitive too: <2>Mul ei ole autosid. Ma armastan linde.</2>"
 
-msgid "After <0>ei</0>, many takes the plural partitive."
-msgstr "After <0>ei</0>, many takes the plural partitive."
+msgid "After <0>ei</0>, a plural noun takes the plural partitive."
+msgstr "After <0>ei</0>, a plural noun takes the plural partitive."
+
+msgid "After <0>ei</0>, the plural partitive."
+msgstr "After <0>ei</0>, the plural partitive."
 
 msgid "After <0>palju</0>, many, the plural partitive."
 msgstr "After <0>palju</0>, many, the plural partitive."
@@ -76,8 +79,8 @@ msgstr "After <0>palju</0>, the plural partitive."
 msgid "After <et>ei</et> and partitive verbs"
 msgstr "After <et>ei</et> and partitive verbs"
 
-msgid "After <et>ei</et> or a partitive verb, many takes the plural partitive."
-msgstr "After <et>ei</et> or a partitive verb, many takes the plural partitive."
+msgid "After <et>ei</et> or a verb such as <et>armastama</et>, a plural noun takes the plural partitive."
+msgstr "After <et>ei</et> or a verb such as <et>armastama</et>, a plural noun takes the plural partitive."
 
 msgid "After a number"
 msgstr "After a number"
@@ -108,6 +111,9 @@ msgstr "All seven, each noun in the form its meaning needs."
 
 msgid "All six found and fixed."
 msgstr "All six found and fixed."
+
+msgid "Apart from numbers, the plural partitive does the partitive’s jobs for more than one: <0>Poes on õunu</0>, after <1>ei</1>, and after verbs such as <2>armastama</2>. The whole or part of lesson {object} works too: <3>Ma ostsin õunu</3>, some apples; <4>Ma ostsin õunad</4>, the apples."
+msgstr "Apart from numbers, the plural partitive does the partitive’s jobs for more than one: <0>Poes on õunu</0>, after <1>ei</1>, and after verbs such as <2>armastama</2>. The whole or part of lesson {object} works too: <3>Ma ostsin õunu</3>, some apples; <4>Ma ostsin õunad</4>, the apples."
 
 msgid "apple"
 msgstr "apple"
@@ -162,9 +168,6 @@ msgstr "Each round gives a word with its genitive and partitive, as a dictionary
 
 msgid "Each sentence has one noun in the wrong form. Tap it, then type it right."
 msgstr "Each sentence has one noun in the wrong form. Tap it, then type it right."
-
-msgid "Ending in a vowel"
-msgstr "Ending in a vowel"
 
 msgid "Fill the gaps"
 msgstr "Fill the gaps"
@@ -241,9 +244,6 @@ msgstr "I’ll make you a cake."
 msgid "In a sentence"
 msgstr "In a sentence"
 
-msgid "It ends in <0>-id</0> (<1>raamatuid</1>), <2>-sid</2> (<3>autosid</3>) or a changed last vowel (<4>maju, koole</4>). Learn it with each word."
-msgstr "It ends in <0>-id</0> (<1>raamatuid</1>), <2>-sid</2> (<3>autosid</3>) or a changed last vowel (<4>maju, koole</4>). Learn it with each word."
-
 msgid "It’s Mari’s mother’s birthday."
 msgstr "It’s Mari’s mother’s birthday."
 
@@ -262,8 +262,20 @@ msgstr "Kinds of ending"
 msgid "land, country"
 msgstr "land, country"
 
-msgid "Lesson {partitive} used the partitive after a number: <0/>, two books. For some or many things you don’t count, Estonian uses the partitive’s plural: <1/>, a lot of books."
-msgstr "Lesson {partitive} used the partitive after a number: <0/>, two books. For some or many things you don’t count, Estonian uses the partitive’s plural: <1/>, a lot of books."
+msgid "Lesson {partitive} used the partitive after a number: <0/>, two books. For some or many things you don’t count, Estonian uses the plural partitive: <1/>, a lot of books."
+msgstr "Lesson {partitive} used the partitive after a number: <0/>, two books. For some or many things you don’t count, Estonian uses the plural partitive: <1/>, a lot of books."
+
+msgid "Like a book"
+msgstr "Like a book"
+
+msgid "Like a car"
+msgstr "Like a car"
+
+msgid "Like a house"
+msgstr "Like a house"
+
+msgid "Like a tree"
+msgstr "Like a tree"
 
 msgid "Listen: Jaan and Mari"
 msgstr "Listen: Jaan and Mari"
@@ -271,17 +283,11 @@ msgstr "Listen: Jaan and Mari"
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
 
-msgid "Long vowel"
-msgstr "Long vowel"
-
-msgid "Longer words"
-msgstr "Longer words"
-
 msgid "Make the plural partitive"
 msgstr "Make the plural partitive"
 
-msgid "Many short words swap the last vowel of the genitive for <0>-u</0>, <1>-e</1> or <2>-i</2>: <3>maja, maju</3>; <4>kooli, koole</4>; <5>lapse, lapsi</5>."
-msgstr "Many short words swap the last vowel of the genitive for <0>-u</0>, <1>-e</1> or <2>-i</2>: <3>maja, maju</3>; <4>kooli, koole</4>; <5>lapse, lapsi</5>."
+msgid "Many short words swap the partitive’s last vowel for <0>-u</0>, <1>-e</1> or <2>-i</2>: <3>maja, maju</3>; <4>kooli, koole</4>; <5>sõpra, sõpru</5>."
+msgstr "Many short words swap the partitive’s last vowel for <0>-u</0>, <1>-e</1> or <2>-i</2>: <3>maja, maju</3>; <4>kooli, koole</4>; <5>sõpra, sõpru</5>."
 
 msgid "Many words of two or more syllables add <0>-id</0> to the genitive: <1>raamatu, raamatuid</1>; <2>õpiku, õpikuid</2>."
 msgstr "Many words of two or more syllables add <0>-id</0> to the genitive: <1>raamatu, raamatuid</1>; <2>õpiku, õpikuid</2>."
@@ -310,12 +316,6 @@ msgstr "Nearly. Switch through the kinds in the table for the ones you missed."
 msgid "Nominative"
 msgstr "Nominative"
 
-msgid "Partitive, many"
-msgstr "Partitive, many"
-
-msgid "Partitive, one"
-msgstr "Partitive, one"
-
 msgid "Pick the form for each gap, then hear the sentence."
 msgstr "Pick the form for each gap, then hear the sentence."
 
@@ -343,11 +343,11 @@ msgstr "school"
 msgid "schools"
 msgstr "schools"
 
-msgid "Short words"
-msgstr "Short words"
-
 msgid "Singular and plural partitive"
 msgstr "Singular and plural partitive"
+
+msgid "Singular partitive"
+msgstr "Singular partitive"
 
 msgid "Six"
 msgstr "Six"
@@ -391,8 +391,8 @@ msgstr "the children"
 msgid "The children are at home."
 msgstr "The children are at home."
 
-msgid "The endings <et>-id</et>, <et>-sid</et> and a vowel"
-msgstr "The endings <et>-id</et>, <et>-sid</et> and a vowel"
+msgid "The endings <et>-id</et>, <et>-sid</et> and a changed vowel"
+msgstr "The endings <et>-id</et>, <et>-sid</et> and a changed vowel"
 
 msgid "the friends"
 msgstr "the friends"
@@ -400,8 +400,8 @@ msgstr "the friends"
 msgid "The ones you mean"
 msgstr "The ones you mean"
 
-msgid "The ones you mean, counted as a whole, take the plural of lesson {plural}: <0/>, the books. Tap across each row."
-msgstr "The ones you mean, counted as a whole, take the plural of lesson {plural}: <0/>, the books. Tap across each row."
+msgid "The ones you mean take the plural nominative, which lesson {plural} teaches: <0/>, the books. Tap across each row."
+msgstr "The ones you mean take the plural nominative, which lesson {plural} teaches: <0/>, the books. Tap across each row."
 
 msgid "The ones you mean, the subject: the plural nominative."
 msgstr "The ones you mean, the subject: the plural nominative."
@@ -409,11 +409,11 @@ msgstr "The ones you mean, the subject: the plural nominative."
 msgid "The ones you mean: the plural nominative."
 msgstr "The ones you mean: the plural nominative."
 
-msgid "The partitive for more than one: some or many things you don’t count, after a no, and after verbs that take the partitive. How it differs from <0>kaks raamatut</0> and <1>raamatud</1>, and how to build it."
-msgstr "The partitive for more than one: some or many things you don’t count, after a no, and after verbs that take the partitive. How it differs from <0>kaks raamatut</0> and <1>raamatud</1>, and how to build it."
+msgid "The partitive for more than one: some or many things you don’t count, after <0>ei</0>, and after verbs that take the partitive. How it differs from <1>kaks raamatut</1> and <2>raamatud</2>, and how to build it."
+msgstr "The partitive for more than one: some or many things you don’t count, after <0>ei</0>, and after verbs that take the partitive. How it differs from <1>kaks raamatut</1> and <2>raamatud</2>, and how to build it."
 
-msgid "The plural partitive does every job the partitive does, for many: things that are there, after <0>ei</0>, and after verbs such as <1>armastama</1>. Lesson {object}’s whole and part works for many too: some apples, or all the apples."
-msgstr "The plural partitive does every job the partitive does, for many: things that are there, after <0>ei</0>, and after verbs such as <1>armastama</1>. Lesson {object}’s whole and part works for many too: some apples, or all the apples."
+msgid "The plural partitive ends in <0>-id</0> (<1>raamatuid</1>), <2>-sid</2> (<3>autosid</3>) or a changed last vowel (<4>maju, koole</4>). Learn it with each word."
+msgstr "The plural partitive ends in <0>-id</0> (<1>raamatuid</1>), <2>-sid</2> (<3>autosid</3>) or a changed last vowel (<4>maju, koole</4>). Learn it with each word."
 
 msgid "The plural partitive for some or many"
 msgstr "The plural partitive for some or many"
@@ -457,6 +457,7 @@ msgstr "Three endings"
 msgid "tree"
 msgstr "tree"
 
+msgctxt "how many guests"
 msgid "Two"
 msgstr "Two"
 
@@ -493,9 +494,6 @@ msgstr "Which ending?"
 msgid "Which plural partitive?"
 msgstr "Which plural partitive?"
 
-msgid "Which way a word goes isn’t always clear from it, and some words have two forms. A dictionary lists the plural partitive, so learn it with the word. Stems follow the genitive, as lesson {gradation} explains: <0>sõber, sõbra, sõpru</0>."
-msgstr "Which way a word goes isn’t always clear from it, and some words have two forms. A dictionary lists the plural partitive, so learn it with the word. Stems follow the genitive, as lesson {gradation} explains: <0>sõber, sõbra, sõpru</0>."
-
 msgid "Who says it?"
 msgstr "Who says it?"
 
@@ -504,3 +502,6 @@ msgstr "Write each sentence in Estonian. Decide first: a number, some or many, a
 
 msgid "Write it in Estonian"
 msgstr "Write it in Estonian"
+
+msgid "You can’t always tell from a word which way it goes, and some words have two forms. A dictionary lists the plural partitive, so learn it with the word. Where the stem changes, as lesson {gradation} explains, a changed vowel goes on the partitive’s stem: <0>sõber, sõpra, sõpru</0>."
+msgstr "You can’t always tell from a word which way it goes, and some words have two forms. A dictionary lists the plural partitive, so learn it with the word. Where the stem changes, as lesson {gradation} explains, a changed vowel goes on the partitive’s stem: <0>sõber, sõpra, sõpru</0>."

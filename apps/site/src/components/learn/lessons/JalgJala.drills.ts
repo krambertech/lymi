@@ -1,7 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import type { DrillBank, FormDrill, WrittenDrill } from "../../../lib/learn/drill";
 
-const WEAK = msg`<et>-s</et>, <et>-l</et> and the plural <et>-d</et> go on the genitive, so the weak form.`;
+const WEAK = msg`<et>-s</et>, <et>-l</et> and the plural <et>-d</et> go on the genitive, so they take the weak form.`;
 const STRONG = msg`The partitive and the short “into” form keep the strong form.`;
 const GENITIVE = msg`The genitive is the weak form.`;
 const VERB = msg`The present of this verb is weak.`;
@@ -33,7 +33,7 @@ export const DRILLS: DrillBank = {
   rules: {
     weak: { label: msg`The weak form in <et>-s</et>, <et>-l</et> and the plural`, section: "make" },
     strong: { label: msg`The strong form in the partitive and “into”`, section: "which-forms" },
-    genitive: { label: msg`The genitive’s weak form`, section: "four-ways" },
+    genitive: { label: msg`The genitive’s consonant`, section: "four-ways" },
     verbs: { label: msg`The weak form in verbs`, section: "verbs" },
   },
   items: [

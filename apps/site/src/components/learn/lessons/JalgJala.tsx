@@ -98,18 +98,19 @@ function KindTable() {
     ),
     soft: (
       <Trans>
-        k turns into g, p into b and t into d: <b lang="et">pank, panga</b>;{" "}
+        The letter k turns into g, p into b and t into d: <b lang="et">pank, panga</b>;{" "}
         <b lang="et">lamp, lambi</b>.
       </Trans>
     ),
     gone: (
       <Trans>
-        g, b or d is gone, and the vowel next to it may change: <b lang="et">tuba, toa</b>.
+        The letter g, b or d is gone, and the vowel next to it may change:{" "}
+        <b lang="et">tuba, toa</b>.
       </Trans>
     ),
     blend: (
       <Trans>
-        d takes the sound of the letter before it: <b lang="et">lind, linnu</b>;{" "}
+        The letter d blends into the letter before it: <b lang="et">lind, linnu</b>;{" "}
         <b lang="et">kuld, kulla</b>.
       </Trans>
     ),
@@ -280,11 +281,11 @@ function useContent() {
           explain:
             answer === "weak" ? (
               <Trans>
-                <b lang="et">{said}</b> is the genitive of <b lang="et">{word}</b>, {means}.
+                The genitive of <b lang="et">{word}</b> ({means}) is <b lang="et">{said}</b>.
               </Trans>
             ) : (
               <Trans>
-                <b lang="et">{said}</b> is the partitive of <b lang="et">{word}</b>, {means}.
+                The partitive of <b lang="et">{word}</b> ({means}) is <b lang="et">{said}</b>.
               </Trans>
             ),
         };
@@ -319,7 +320,8 @@ function useContent() {
             <Trans>The plural is built on the genitive, so it takes the weak form.</Trans>
           ) : (
             <Trans>
-              <b lang="et">-s</b> and <b lang="et">-l</b> go on the genitive, so the weak form.
+              <b lang="et">-s</b> and <b lang="et">-l</b> go on the genitive, so they take the weak
+              form.
             </Trans>
           ),
       }),
@@ -359,7 +361,7 @@ function useContent() {
         pair: ["in", "on-beach"],
         explain: (
           <Trans>
-            On a beach is <b lang="et">rannas</b>, with <b lang="et">-s</b>.
+            On the beach takes the “in” ending: <b lang="et">rannas</b>.
           </Trans>
         ),
       },
@@ -521,9 +523,9 @@ export function JalgJalaLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Why <b lang="et">jalg</b> becomes <b lang="et">jala</b> and <b lang="et">tuba</b> becomes{" "}
-          <b lang="et">toa</b>: which forms take the weak consonant, the four ways it weakens, and
-          the same change in verbs.
+          Consonant gradation is why <b lang="et">jalg</b> becomes <b lang="et">jala</b> and{" "}
+          <b lang="et">tuba</b> becomes <b lang="et">toa</b>: which forms take the weak consonant,
+          the four ways it weakens, and the same change in verbs.
         </Trans>
       }
       facts={[
@@ -538,9 +540,9 @@ export function JalgJalaLesson() {
           <b lang="et">jalg, jala</b>; <b lang="et">kapp, kapi</b>.
         </Trans>,
         <Trans key="2">
-          The nominative and the partitive are strong. The genitive and every form built on it are
-          weak: <b lang="et">jala, jalal, jalad</b>. The short “into” form is strong:{" "}
-          <b lang="et">poodi</b>.
+          In most words the nominative and the partitive are strong, and the genitive and every form
+          built on it are weak: <b lang="et">jala, jalal, jalad</b>. The short “into” form is
+          strong: <b lang="et">poodi</b>.
         </Trans>,
         <Trans key="3">
           The weak form goes single, turns soft, drops the letter or blends it:{" "}
@@ -548,8 +550,9 @@ export function JalgJalaLesson() {
           <b lang="et">mõte, mõtte</b>.
         </Trans>,
         <Trans key="4">
-          Verbs change too. The <b lang="et">-ma</b> infinitive is strong, and the present is often
-          weak: <b lang="et">lugema, loen</b>.
+          Verbs change too. The <b lang="et">-ma</b> infinitive is strong. The present or the{" "}
+          <b lang="et">-da</b> infinitive can be weak: <b lang="et">lugema, loen</b>;{" "}
+          <b lang="et">ootama, oodata</b>.
         </Trans>,
       ]}
       sections={[
@@ -564,7 +567,8 @@ export function JalgJalaLesson() {
                   <Trans>
                     Lesson {stems} showed that a stem can lose or change a letter inside:{" "}
                     <Word w="tuba" />, room, has the stem <Word w="toa" />. This change is called
-                    consonant gradation. The word changes inside, as foot and feet do in English.
+                    consonant gradation. The word changes inside, as knife becomes knives in
+                    English.
                   </Trans>
                 </p>
                 <p>
@@ -586,7 +590,7 @@ export function JalgJalaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a form of a word from the table, then say whether it’s strong, like the
+                    Hear a form of a word from the table, then choose whether it’s strong, like the
                     nominative, or weak, like the genitive.
                   </Trans>
                 </p>
@@ -637,19 +641,20 @@ export function JalgJalaLesson() {
                   </li>
                   <li>
                     <Trans>
-                      A hard letter turns soft, k into g, p into b and t into d: <Word w="pank" />,{" "}
+                      The letter k turns into g, p into b and t into d: <Word w="pank" />,{" "}
                       <Word w="panga" />.
                     </Trans>
                   </li>
                   <li>
                     <Trans>
-                      g, b or d is gone, and the vowel next to it may change: <Word w="tuba" />,{" "}
-                      <Word w="toa" />.
+                      The letter g, b or d is gone, and the vowel next to it may change:{" "}
+                      <Word w="tuba" />, <Word w="toa" />.
                     </Trans>
                   </li>
                   <li>
                     <Trans>
-                      d blends into the letter before it: <Word w="lind" />, <Word w="linnu" />.
+                      The letter d blends into the letter before it: <Word w="lind" />,{" "}
+                      <Word w="linnu" />.
                     </Trans>
                   </li>
                 </ul>
@@ -685,17 +690,16 @@ export function JalgJalaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Every form built on the genitive is weak too: in and on with <b lang="et">-s</b>{" "}
-                    and <b lang="et">-l</b>, and the plural with <b lang="et">-d</b> from lesson{" "}
-                    {plural}. So on the foot is <b lang="et">jalal</b>, and feet are{" "}
-                    <b lang="et">jalad</b>.
+                    Every form built on the genitive keeps the genitive’s consonant: in and on with{" "}
+                    <b lang="et">-s</b> and <b lang="et">-l</b>, and the plural with{" "}
+                    <b lang="et">-d</b> from lesson {plural}. So on the foot is{" "}
+                    <b lang="et">jalal</b>, and feet are <b lang="et">jalad</b>.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    The short “into” forms of lesson {inside} are built like the partitive, so they
-                    stay strong: into the shop is <Word w="poodi" />, but in the shop is{" "}
-                    <b lang="et">poes</b>.
+                    The short “into” forms of lesson {inside} take the strong form: into the shop is{" "}
+                    <Word w="poodi" />, but in the shop is <b lang="et">poes</b>.
                   </Trans>
                 </p>
               </Prose>
@@ -791,7 +795,7 @@ export function JalgJalaLesson() {
                   share === 1 ? (
                     <Trans>All six sentences, each with the weak form.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Nearly. Look at the place in the ones you missed.</Trans>
+                    <Trans>Nearly. Check the weak form in the ones you missed.</Trans>
                   ) : (
                     <Trans>Tap the forms in the tables once more, then try again.</Trans>
                   )

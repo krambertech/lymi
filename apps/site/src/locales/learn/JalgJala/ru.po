@@ -7,7 +7,7 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
-msgid "<0>-s</0> and <1>-l</1> go on the genitive, so the weak form."
+msgid "<0>-s</0> and <1>-l</1> go on the genitive, so they take the weak form."
 msgstr "<0>-s</0> и <1>-l</1> добавляются к родительному, поэтому форма слабая."
 
 msgid "<0>-s</0> goes on the genitive <1>kapi</1>: <2>kapis</2>."
@@ -22,14 +22,8 @@ msgstr "<0>-s</0> добавляется к родительному <1>toa</1>:
 msgid "<0>-s</0>, <1>-l</1> and the plural <2>-d</2> go on the genitive, so they are weak."
 msgstr "<0>-s</0>, <1>-l</1> и множественное число на <2>-d</2> добавляются к родительному, поэтому они слабые."
 
-msgid "<0>{said}</0> is the genitive of <1>{word}</1>, {means}."
-msgstr "<0>{said}</0> — родительный падеж от <1>{word}</1>, «{means}»."
-
-msgid "<0>{said}</0> is the partitive of <1>{word}</1>, {means}."
-msgstr "<0>{said}</0> — партитив от <1>{word}</1>, «{means}»."
-
-msgid "<et>-s</et>, <et>-l</et> and the plural <et>-d</et> go on the genitive, so the weak form."
-msgstr "<et>-s</et>, <et>-l</et> и множественное число на <et>-d</et> добавляются к родительному, поэтому форма слабая."
+msgid "<et>-s</et>, <et>-l</et> and the plural <et>-d</et> go on the genitive, so they take the weak form."
+msgstr "<et>-s</et>, <et>-l</et> и окончание множественного числа <et>-d</et> добавляются к родительному, поэтому форма слабая."
 
 msgid "<et>Mõte</et> goes the other way: its genitive is strong, <et>mõtte</et>."
 msgstr "У <et>mõte</et> наоборот: родительный сильный, <et>mõtte</et>."
@@ -47,16 +41,13 @@ msgid "A double letter goes single: <0>kapp, kapi</0>."
 msgstr "Двойная буква становится одинарной: <0>kapp, kapi</0>."
 
 msgid "A few words go the other way: the nominative is weak and the genitive strong. <0/>, thought, has the genitive <1/>. The genitive is still the odd one out."
-msgstr "Некоторые слова идут наоборот: в именительном слабая форма, а в родительном сильная. <0/>, мысль, имеет родительный <1/>. Родительный всё равно выделяется."
-
-msgid "A hard letter turns soft, k into g, p into b and t into d: <0/>, <1/>."
-msgstr "Буква ослабевает: k становится g, p — b, t — d: <0/>, <1/>."
+msgstr "В некоторых словах наоборот: в именительном слабая форма, а в родительном сильная. <0/>, мысль, имеет родительный <1/>. Родительный и здесь выделяется."
 
 msgid "All eight. You heard the difference every time."
 msgstr "Все восемь. Ты каждый раз слышал разницу."
 
 msgid "All nine, typed in full."
-msgstr "Все девять, написаны полностью."
+msgstr "Все девять написаны полностью."
 
 msgid "All six found and fixed."
 msgstr "Все шесть найдены и исправлены."
@@ -79,14 +70,11 @@ msgstr "птица"
 msgid "Blended"
 msgstr "Слияние"
 
+msgid "Consonant gradation is why <0>jalg</0> becomes <1>jala</1> and <2>tuba</2> becomes <3>toa</3>: which forms take the weak consonant, the four ways it weakens, and the same change in verbs."
+msgstr "Из-за чередования согласных <0>jalg</0> становится <1>jala</1>, а <2>tuba</2> — <3>toa</3>. В каких формах согласный слабый, четыре способа ослабления и то же изменение в глаголах."
+
 msgid "cupboard"
 msgstr "шкаф"
-
-msgid "d blends into the letter before it: <0/>, <1/>."
-msgstr "d сливается с буквой перед ним: <0/>, <1/>."
-
-msgid "d takes the sound of the letter before it: <0>lind, linnu</0>; <1>kuld, kulla</1>."
-msgstr "d принимает звук буквы перед ним: <0>lind, linnu</0>; <1>kuld, kulla</1>."
 
 msgid "Do you often go to the bank?"
 msgstr "Ты часто ходишь в банк?"
@@ -112,8 +100,8 @@ msgstr "В каждом предложении одно слово стоит в
 msgid "Every day"
 msgstr "Каждый день"
 
-msgid "Every form built on the genitive is weak too: in and on with <0>-s</0> and <1>-l</1>, and the plural with <2>-d</2> from lesson {plural}. So on the foot is <3>jalal</3>, and feet are <4>jalad</4>."
-msgstr "Все формы, образованные от родительного, тоже слабые: «в» и «на» с <0>-s</0> и <1>-l</1> и множественное число на <2>-d</2> из урока {plural}. Поэтому «на ноге» — <3>jalal</3>, а «ноги» — <4>jalad</4>."
+msgid "Every form built on the genitive keeps the genitive’s consonant: in and on with <0>-s</0> and <1>-l</1>, and the plural with <2>-d</2> from lesson {plural}. So on the foot is <3>jalal</3>, and feet are <4>jalad</4>."
+msgstr "Все формы, образованные от родительного, сохраняют его согласный: «в» и «на» с <0>-s</0> и <1>-l</1> и множественное число на <2>-d</2> из урока {plural}. Поэтому «на ноге» — <3>jalal</3>, а «ноги» — <4>jalad</4>."
 
 msgid "Fill the gaps"
 msgstr "Заполни пропуски"
@@ -125,16 +113,10 @@ msgid "foot, leg"
 msgstr "нога, ступня"
 
 msgid "Four ways to weaken"
-msgstr "Четыре способа ослабнуть"
+msgstr "Четыре способа ослабления"
 
 msgid "From lugema: the g is gone and u turns into o."
 msgstr "От lugema: g выпадает, а u становится o."
-
-msgid "g, b or d is gone, and the vowel next to it may change: <0/>, <1/>."
-msgstr "g, b или d выпадает, а гласная рядом может измениться: <0/>, <1/>."
-
-msgid "g, b or d is gone, and the vowel next to it may change: <0>tuba, toa</0>."
-msgstr "g, b или d выпадает, а гласная рядом может измениться: <0>tuba, toa</0>."
 
 msgid "garden"
 msgstr "сад"
@@ -151,8 +133,8 @@ msgstr "золото"
 msgid "Hard to soft"
 msgstr "k, p, t — на g, b, d"
 
-msgid "Hear a form of a word from the table, then say whether it’s strong, like the nominative, or weak, like the genitive."
-msgstr "Послушай форму слова из таблицы и скажи, сильная она, как именительный, или слабая, как родительный."
+msgid "Hear a form of a word from the table, then choose whether it’s strong, like the nominative, or weak, like the genitive."
+msgstr "Послушай форму слова из таблицы и определи, сильная она, как именительный, или слабая, как родительный."
 
 msgid "Here the genitive is the strong one: <0>mõte, mõtte</0>; <1>hammas, hamba</1>."
 msgstr "Здесь сильная форма в родительном: <0>mõte, mõtte</0>; <1>hammas, hamba</1>."
@@ -170,7 +152,7 @@ msgid "I run in the park in the morning."
 msgstr "Утром я бегаю в парке."
 
 msgid "I’ll make tea."
-msgstr "Я сделаю чай."
+msgstr "Я заварю чай."
 
 msgid "In <0>ootama</0> and <1>vaatama</1> the present stays strong and the <2>-da</2> infinitive weakens: <3>ootan</3>, but <4>oodata</4>. <5>Hakkama</5> keeps kk in the present and weakens in <6>hakata</6>."
 msgstr "В <0>ootama</0> и <1>vaatama</1> настоящее время остаётся сильным, а инфинитив на <2>-da</2> ослабевает: <3>ootan</3>, но <4>oodata</4>. <5>Hakkama</5> сохраняет kk в настоящем и ослабевает в <6>hakata</6>."
@@ -183,6 +165,9 @@ msgstr "В предложении"
 
 msgid "In Kati’s room"
 msgstr "В комнате Кати"
+
+msgid "In most words the nominative and the partitive are strong, and the genitive and every form built on it are weak: <0>jala, jalal, jalad</0>. The short “into” form is strong: <1>poodi</1>."
+msgstr "В большинстве слов именительный и партитив сильные, а родительный и все формы от него слабые: <0>jala, jalal, jalad</0>. Короткая форма «куда» сильная: <1>poodi</1>."
 
 msgid "In or on"
 msgstr "В или на"
@@ -211,9 +196,6 @@ msgstr "Яан приходит к Кати в новую квартиру и с
 msgid "Jalg, jala, jalga."
 msgstr "Jalg, jala, jalga."
 
-msgid "k turns into g, p into b and t into d: <0>pank, panga</0>; <1>lamp, lambi</1>."
-msgstr "k становится g, p — b, t — d: <0>pank, panga</0>; <1>lamp, lambi</1>."
-
 msgid "Kapp, kapi, kappi."
 msgstr "Kapp, kapi, kappi."
 
@@ -241,8 +223,8 @@ msgstr "Виды изменений"
 msgid "lamp"
 msgstr "лампа"
 
-msgid "Lesson {stems} showed that a stem can lose or change a letter inside: <0/>, room, has the stem <1/>. This change is called consonant gradation. The word changes inside, as foot and feet do in English."
-msgstr "Урок {stems} показал, что основа может внутри потерять или изменить букву: <0/>, комната, имеет основу <1/>. Это изменение называется чередованием согласных. Слово меняется внутри, как в «день — дня»."
+msgid "Lesson {stems} showed that a stem can lose or change a letter inside: <0/>, room, has the stem <1/>. This change is called consonant gradation. The word changes inside, as knife becomes knives in English."
+msgstr "Урок {stems} показал, что основа может внутри потерять или изменить букву: <0/>, комната, имеет основу <1/>. Это изменение называется чередованием согласных. Слово меняется внутри, как «нога — ножка»."
 
 msgid "Lind, linnu, lindu."
 msgstr "Lind, linnu, lindu."
@@ -260,7 +242,7 @@ msgid "Many words have a strong and a weak form of the consonant inside: <0>jalg
 msgstr "У многих слов согласный внутри имеет сильную и слабую форму: <0>jalg, jala</0>; <1>kapp, kapi</1>."
 
 msgid "Match six words you haven’t met in this lesson with their genitives. Each one weakens in one of the four ways."
-msgstr "Соедини шесть новых слов с их родительным. Каждое ослабевает одним из четырёх способов."
+msgstr "Соедини шесть новых слов с их родительным. В каждом согласный ослабевает одним из четырёх способов."
 
 msgid "More than one"
 msgstr "Несколько"
@@ -271,17 +253,17 @@ msgstr "Mõte, mõtte, mõtet."
 msgid "My feet are tired."
 msgstr "У меня устали ноги."
 
-msgid "Nearly. Look at the place in the ones you missed."
-msgstr "Почти. Посмотри на место в тех, что пропустил."
+msgid "Nearly. Check the weak form in the ones you missed."
+msgstr "Почти. Проверь слабую форму там, где ошибся."
 
 msgid "Nearly. Play the ones you missed once more."
-msgstr "Почти. Ещё раз послушай те, что пропустил."
+msgstr "Почти. Ещё раз послушай те, где ошибся."
 
 msgid "Nearly. Read the reason under each one you missed."
-msgstr "Почти. Прочитай объяснение под каждым пропущенным."
+msgstr "Почти. Прочитай объяснение под каждой ошибкой."
 
 msgid "Nearly. Tap the forms in the tables for the ones you missed."
-msgstr "Почти. Для пропущенных нажми на формы в таблицах."
+msgstr "Почти. Там, где ошибся, нажми на формы в таблицах."
 
 msgid "Nominative"
 msgstr "Именительный"
@@ -290,13 +272,13 @@ msgid "Nominative, genitive and partitive"
 msgstr "Именительный, родительный и партитив"
 
 msgid "nominative, partitive, into"
-msgstr "именительный, партитив, «в» куда"
-
-msgid "On a beach is <0>rannas</0>, with <1>-s</1>."
-msgstr "«На пляже» — это <0>rannas</0>, с <1>-s</1>."
+msgstr "именительный, партитив, «куда»"
 
 msgid "On the …"
 msgstr "На …"
+
+msgid "On the beach takes the “in” ending: <0>rannas</0>."
+msgstr "«На пляже» берёт окончание «в»: <0>rannas</0>."
 
 msgid "On the table"
 msgstr "На столе"
@@ -350,7 +332,7 @@ msgid "Strong, like the nominative"
 msgstr "Сильная, как именительный"
 
 msgid "Switch through the kinds in the table, then try again."
-msgstr "Переключи все виды изменений в таблице, потом попробуй снова."
+msgstr "Просмотри каждый вид изменений в таблице, потом попробуй снова."
 
 msgid "Tap a form"
 msgstr "Нажми на форму"
@@ -385,6 +367,9 @@ msgstr "Родительный выделяется"
 msgid "The genitive is the weak form."
 msgstr "Родительный — слабая форма."
 
+msgid "The genitive of <0>{word}</0> ({means}) is <1>{said}</1>."
+msgstr "Родительный от <0>{word}</0> («{means}») — <1>{said}</1>."
+
 msgid "The genitive of jalg: the g is gone."
 msgstr "Родительный от jalg: g выпадает."
 
@@ -403,11 +388,26 @@ msgstr "Родительный от pank: k становится g."
 msgid "The genitive of tuba: the b is gone and u turns into o."
 msgstr "Родительный от tuba: b выпадает, а u становится o."
 
-msgid "The genitive’s weak form"
-msgstr "Слабая форма родительного"
+msgid "The genitive’s consonant"
+msgstr "Согласный родительного"
 
-msgid "The nominative and the partitive are strong. The genitive and every form built on it are weak: <0>jala, jalal, jalad</0>. The short “into” form is strong: <1>poodi</1>."
-msgstr "Именительный и партитив сильные. Родительный и все формы от него слабые: <0>jala, jalal, jalad</0>. Короткая форма «куда» сильная: <1>poodi</1>."
+msgid "The letter d blends into the letter before it: <0/>, <1/>."
+msgstr "Буква d сливается с буквой перед ней: <0/>, <1/>."
+
+msgid "The letter d blends into the letter before it: <0>lind, linnu</0>; <1>kuld, kulla</1>."
+msgstr "Буква d сливается с буквой перед ней: <0>lind, linnu</0>; <1>kuld, kulla</1>."
+
+msgid "The letter g, b or d is gone, and the vowel next to it may change: <0/>, <1/>."
+msgstr "Буква g, b или d выпадает, а гласная рядом может измениться: <0/>, <1/>."
+
+msgid "The letter g, b or d is gone, and the vowel next to it may change: <0>tuba, toa</0>."
+msgstr "Буква g, b или d выпадает, а гласная рядом может измениться: <0>tuba, toa</0>."
+
+msgid "The letter k turns into g, p into b and t into d: <0/>, <1/>."
+msgstr "Буква k становится g, p — b, t — d: <0/>, <1/>."
+
+msgid "The letter k turns into g, p into b and t into d: <0>pank, panga</0>; <1>lamp, lambi</1>."
+msgstr "Буква k становится g, p — b, t — d: <0>pank, panga</0>; <1>lamp, lambi</1>."
 
 msgid "The nominative doesn’t tell you which change a word makes, or whether it makes one. Learn each noun with its genitive and partitive, as a dictionary lists them."
 msgstr "По именительному не видно, какое будет изменение и будет ли вообще. Учи каждое существительное с родительным и партитивом, как их даёт словарь."
@@ -420,6 +420,9 @@ msgstr "Партитив и короткая форма «куда» сильн�
 
 msgid "The partitive and the short “into” form keep the strong form."
 msgstr "Партитив и короткая форма «куда» сохраняют сильную форму."
+
+msgid "The partitive of <0>{word}</0> ({means}) is <1>{said}</1>."
+msgstr "Партитив от <0>{word}</0> («{means}») — <1>{said}</1>."
 
 msgid "The plural goes on the genitive <0>linnu</0>: <1>linnud</1>."
 msgstr "Множественное число образуется от родительного <0>linnu</0>: <1>linnud</1>."
@@ -448,14 +451,14 @@ msgstr "То же изменение в глаголах"
 msgid "The short “into” form of pood keeps its d."
 msgstr "Короткая форма «куда» от pood сохраняет d."
 
-msgid "The short “into” forms of lesson {inside} are built like the partitive, so they stay strong: into the shop is <0/>, but in the shop is <1>poes</1>."
-msgstr "Короткие формы «куда» из урока {inside} образуются как партитив, поэтому остаются сильными: «в магазин» — <0/>, но «в магазине» — <1>poes</1>."
+msgid "The short “into” forms of lesson {inside} take the strong form: into the shop is <0/>, but in the shop is <1>poes</1>."
+msgstr "Короткие формы «куда» из урока {inside} имеют сильную форму: «в магазин» — <0/>, но «в магазине» — <1>poes</1>."
 
 msgid "The strong form in the partitive and “into”"
 msgstr "Сильная форма в партитиве и «куда»"
 
 msgid "The weak form goes single, turns soft, drops the letter or blends it: <0>kapi, panga, toa, linnu</0>. A few words go the other way: <1>mõte, mõtte</1>."
-msgstr "В слабой форме согласный становится одинарным, слабее, выпадает или сливается: <0>kapi, panga, toa, linnu</0>. Некоторые слова идут наоборот: <1>mõte, mõtte</1>."
+msgstr "В слабой форме двойная буква становится одинарной, k становится g, буква выпадает или сливается: <0>kapi, panga, toa, linnu</0>. В некоторых словах наоборот: <1>mõte, mõtte</1>."
 
 msgid "The weak form in <et>-s</et>, <et>-l</et> and the plural"
 msgstr "Слабая форма с <et>-s</et>, <et>-l</et> и во множественном"
@@ -464,7 +467,7 @@ msgid "The weak form in verbs"
 msgstr "Слабая форма в глаголах"
 
 msgid "The weak form is shorter or softer than the strong one, in one of four ways:"
-msgstr "Слабая форма короче или слабее сильной, и бывает это четырьмя способами:"
+msgstr "Слабая форма отличается от сильной одним из четырёх способов:"
 
 msgid "thought, idea"
 msgstr "мысль, идея"
@@ -499,8 +502,8 @@ msgstr "Tuba, toa, tuba."
 msgid "Type the form"
 msgstr "Напиши форму"
 
-msgid "Verbs change too. The <0>-ma</0> infinitive is strong, and the present is often weak: <1>lugema, loen</1>."
-msgstr "Глаголы тоже меняются. Инфинитив на <0>-ma</0> сильный, а настоящее время часто слабое: <1>lugema, loen</1>."
+msgid "Verbs change too. The <0>-ma</0> infinitive is strong. The present or the <1>-da</1> infinitive can be weak: <2>lugema, loen</2>; <3>ootama, oodata</3>."
+msgstr "Глаголы тоже меняются. Инфинитив на <0>-ma</0> сильный. Настоящее время или инфинитив на <1>-da</1> могут быть слабыми: <2>lugema, loen</2>; <3>ootama, oodata</3>."
 
 msgid "Verbs weaken the same way. Of the three forms of lesson {verbForms}, the <0>-ma</0> infinitive is strong. The <1>-da</1> infinitive, the present or both can be weak: <2/>, <3>lugeda</3>, <4/>."
 msgstr "Глаголы ослабевают так же. Из трёх форм из урока {verbForms} инфинитив на <0>-ma</0> сильный. Инфинитив на <1>-da</1>, настоящее время или оба могут быть слабыми: <2/>, <3>lugeda</3>, <4/>."
@@ -532,11 +535,8 @@ msgstr "Какой родительный?"
 msgid "Who says it?"
 msgstr "Кто это говорит?"
 
-msgid "Why <0>jalg</0> becomes <1>jala</1> and <2>tuba</2> becomes <3>toa</3>: which forms take the weak consonant, the four ways it weakens, and the same change in verbs."
-msgstr "Почему <0>jalg</0> становится <1>jala</1>, а <2>tuba</2> — <3>toa</3>: в каких формах слабый согласный, четыре способа ослабления и то же изменение в глаголах."
-
 msgid "Write each sentence in Estonian. Each place and each plural takes the weak form."
-msgstr "Напиши каждое предложение по-эстонски. Каждое место и каждое множественное число имеют слабую форму."
+msgstr "Напиши каждое предложение по-эстонски. Названия мест и множественное число стоят в слабой форме."
 
 msgid "Write it in Estonian"
 msgstr "Напиши по-эстонски"

@@ -4,7 +4,7 @@ import type { DrillBank, FormDrill } from "../../../lib/learn/drill";
 const MANY = msg`Some or many, not counted: the plural partitive.`;
 const NUMBER = msg`After a number from two up, the singular partitive.`;
 const THE = msg`The ones you mean: the plural nominative.`;
-const NO = msg`After <et>ei</et> or a partitive verb, many takes the plural partitive.`;
+const NO = msg`After <et>ei</et> or a verb such as <et>armastama</et>, a plural noun takes the plural partitive.`;
 
 const form = (
   id: string,
@@ -32,7 +32,7 @@ export const DRILLS: DrillBank = {
     many: { label: msg`The plural partitive for some or many`, section: "some-many" },
     number: { label: msg`A number, many or the ones you mean`, section: "some-many" },
     endings: {
-      label: msg`The endings <et>-id</et>, <et>-sid</et> and a vowel`,
+      label: msg`The endings <et>-id</et>, <et>-sid</et> and a changed vowel`,
       section: "endings",
     },
     no: { label: msg`After <et>ei</et> and partitive verbs`, section: "sentences" },
@@ -195,7 +195,7 @@ export const DRILLS: DrillBank = {
       "palju …",
       "puid",
       "puid",
-      msg`A long vowel shortens and takes <et>-id</et>: <et>puid</et>.`,
+      msg`A one-syllable word with a long vowel shortens it and takes <et>-id</et>: <et>puid</et>.`,
     ),
     form(
       "end-oun",

@@ -83,10 +83,10 @@ const means = (text: string, i18n: I18n) => {
 };
 
 const KIND_LABELS: Record<Kind, MessageDescriptor> = {
-  id: msg`Longer words`,
-  sid: msg`Ending in a vowel`,
-  vowel: msg`Short words`,
-  long: msg`Long vowel`,
+  id: msg`Like a book`,
+  sid: msg`Like a car`,
+  vowel: msg`Like a house`,
+  long: msg`Like a tree`,
 };
 
 const GLOSSARY: Glossary = {
@@ -123,7 +123,7 @@ function ThreeTable() {
         highlight={{ column: 1 }}
         empty={{
           title: t`Tap a form`,
-          tip: t`A number takes the singular partitive. Some or many takes the plural partitive.`,
+          tip: t`A number from two up takes the singular partitive. Some or many takes the plural partitive.`,
         }}
       />
     </Panel>
@@ -148,14 +148,15 @@ function KindTable() {
     ),
     vowel: (
       <Trans>
-        Many short words swap the last vowel of the genitive for <b lang="et">-u</b>,{" "}
+        Many short words swap the partitive’s last vowel for <b lang="et">-u</b>,{" "}
         <b lang="et">-e</b> or <b lang="et">-i</b>: <b lang="et">maja, maju</b>;{" "}
-        <b lang="et">kooli, koole</b>; <b lang="et">lapse, lapsi</b>.
+        <b lang="et">kooli, koole</b>; <b lang="et">sõpra, sõpru</b>.
       </Trans>
     ),
     long: (
       <Trans>
-        A long vowel shortens and takes <b lang="et">-id</b>: <b lang="et">puu, puid</b>.
+        A one-syllable word with a long vowel shortens it and takes <b lang="et">-id</b>:{" "}
+        <b lang="et">puu, puid</b>.
       </Trans>
     ),
   };
@@ -180,7 +181,7 @@ function KindTable() {
       <Paradigm
         key={kind}
         label={t`Singular and plural partitive`}
-        columns={[t`Partitive, one`, t`Partitive, many`]}
+        columns={[t`Singular partitive`, t`Plural partitive`]}
         rows={rows}
         highlight={{ column: 1 }}
         empty={{ title: t`Tap a form`, tip: tips[kind] }}
@@ -262,7 +263,14 @@ function useContent() {
         answers: [item.answer],
         src: src(item.said),
         said: item.said,
-        explain: <Trans>Some or many, not counted: the plural partitive.</Trans>,
+        explain:
+          item.word === "laps" ? (
+            <Trans>
+              After <b lang="et">ei</b>, the plural partitive.
+            </Trans>
+          ) : (
+            <Trans>Some or many, not counted: the plural partitive.</Trans>
+          ),
       };
     });
 
@@ -338,7 +346,7 @@ function useContent() {
       "Mul on kaks raamatut.": <Trans>After a number, the singular partitive.</Trans>,
       "Mul ei ole lapsi.": (
         <Trans>
-          After <b lang="et">ei</b>, many takes the plural partitive.
+          After <b lang="et">ei</b>, a plural noun takes the plural partitive.
         </Trans>
       ),
       "Ma armastan linde.": (
@@ -408,7 +416,7 @@ function useContent() {
         ask: t`How many guests is Jaan expecting?`,
         options: [
           { id: "four", label: t`Four` },
-          { id: "two", label: t`Two` },
+          { id: "two", label: t({ message: "Two", context: "how many guests" }) },
           { id: "six", label: t`Six` },
         ],
         answer: "six",
@@ -456,9 +464,9 @@ export function RaamatuidMajuLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          The partitive for more than one: some or many things you don’t count, after a no, and
-          after verbs that take the partitive. How it differs from <b lang="et">kaks raamatut</b>{" "}
-          and <b lang="et">raamatud</b>, and how to build it.
+          The partitive for more than one: some or many things you don’t count, after{" "}
+          <b lang="et">ei</b>, and after verbs that take the partitive. How it differs from{" "}
+          <b lang="et">kaks raamatut</b> and <b lang="et">raamatud</b>, and how to build it.
         </Trans>
       }
       facts={[
@@ -481,9 +489,9 @@ export function RaamatuidMajuLesson() {
           partitive too: <b lang="et">Mul ei ole autosid. Ma armastan linde.</b>
         </Trans>,
         <Trans key="4">
-          It ends in <b lang="et">-id</b> (<b lang="et">raamatuid</b>), <b lang="et">-sid</b> (
-          <b lang="et">autosid</b>) or a changed last vowel (<b lang="et">maju, koole</b>). Learn it
-          with each word.
+          The plural partitive ends in <b lang="et">-id</b> (<b lang="et">raamatuid</b>),{" "}
+          <b lang="et">-sid</b> (<b lang="et">autosid</b>) or a changed last vowel (
+          <b lang="et">maju, koole</b>). Learn it with each word.
         </Trans>,
       ]}
       sections={[
@@ -497,13 +505,13 @@ export function RaamatuidMajuLesson() {
                 <p>
                   <Trans>
                     Lesson {partitive} used the partitive after a number: <Word w="kaks raamatut" />
-                    , two books. For some or many things you don’t count, Estonian uses the
-                    partitive’s plural: <Word w="palju raamatuid" />, a lot of books.
+                    , two books. For some or many things you don’t count, Estonian uses the plural
+                    partitive: <Word w="palju raamatuid" />, a lot of books.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    The ones you mean, counted as a whole, take the plural of lesson {plural}:{" "}
+                    The ones you mean take the plural nominative, which lesson {plural} teaches:{" "}
                     <Word w="raamatud" />, the books. Tap across each row.
                   </Trans>
                 </p>
@@ -512,10 +520,11 @@ export function RaamatuidMajuLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The plural partitive does every job the partitive does, for many: things that
-                    are there, after <b lang="et">ei</b>, and after verbs such as{" "}
-                    <b lang="et">armastama</b>. Lesson {object}’s whole and part works for many too:
-                    some apples, or all the apples.
+                    Apart from numbers, the plural partitive does the partitive’s jobs for more than
+                    one: <b lang="et">Poes on õunu</b>, after <b lang="et">ei</b>, and after verbs
+                    such as <b lang="et">armastama</b>. The whole or part of lesson {object} works
+                    too: <b lang="et">Ma ostsin õunu</b>, some apples;{" "}
+                    <b lang="et">Ma ostsin õunad</b>, the apples.
                   </Trans>
                 </p>
               </Prose>
@@ -564,9 +573,10 @@ export function RaamatuidMajuLesson() {
               <KindTable />
               <Aside>
                 <Trans>
-                  Which way a word goes isn’t always clear from it, and some words have two forms. A
-                  dictionary lists the plural partitive, so learn it with the word. Stems follow the
-                  genitive, as lesson {gradation} explains: <b lang="et">sõber, sõbra, sõpru</b>.
+                  You can’t always tell from a word which way it goes, and some words have two
+                  forms. A dictionary lists the plural partitive, so learn it with the word. Where
+                  the stem changes, as lesson {gradation} explains, a changed vowel goes on the
+                  partitive’s stem: <b lang="et">sõber, sõpra, sõpru</b>.
                 </Trans>
               </Aside>
               <Prose>
@@ -598,7 +608,7 @@ export function RaamatuidMajuLesson() {
                   },
                   {
                     id: "vowel",
-                    label: t`A vowel`,
+                    label: t`A changed vowel`,
                     lang: i18n.locale,
                     rule: (
                       <Trans>

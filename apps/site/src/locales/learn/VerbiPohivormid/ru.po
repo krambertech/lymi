@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
-msgid "<0/> and <1/> both translate as to read. Estonian uses each after different words: after <2/>, I want, comes the <3>-da</3> infinitive, <4/>. Lesson {infinitives} shows which words take which."
-msgstr "<0/> и <1/> оба переводятся как «читать». Но ставят их после разных слов: после <2/>, «я хочу», идёт инфинитив на <3>-da</3>: <4/>. После каких слов идёт какой инфинитив, объясняет урок {infinitives}."
+msgid "<0/> and <1/> both translate as to read. Each follows different words. After <2/>, I want, comes the <3>-da</3> infinitive: <4/> Lesson {infinitives} shows which words take which."
+msgstr "<0/> и <1/> оба переводятся как «читать». Но ставят их после разных слов. После <2/>, «я хочу», идёт инфинитив на <3>-da</3>: <4/> После каких слов идёт какой инфинитив, объясняет урок {infinitives}."
 
 msgid "<0/> and <1/> change their long vowel: <2/>, <3/>. Learn these four whole."
 msgstr "<0/> и <1/> меняют долгий гласный: <2/>, <3/>. Эти четыре запоминай целыми словами."
@@ -22,41 +22,59 @@ msgstr "Инфинитив на <0>-da</0>"
 msgid "<0>-ma</0> infinitive"
 msgstr "Инфинитив на <0>-ma</0>"
 
-msgid "<0>{said}</0> is the <1>-da</1> infinitive of <2>{ma}</2>, {means}."
-msgstr "<0>{said}</0> — инфинитив на <1>-da</1> от <2>{ma}</2>, «{means}»."
-
-msgid "<0>{said}</0> is the <1>-ma</1> infinitive itself, {means}."
-msgstr "<0>{said}</0> — это сам инфинитив на <1>-ma</1>, «{means}»."
-
-msgid "<0>{said}</0> is the present of <1>{ma}</1>, {means}."
-msgstr "<0>{said}</0> — форма настоящего времени от <1>{ma}</1>, «{means}»."
-
 msgid "<0>Sööma</0> and <1>jooma</1> break the pattern. Their commands build on the present: <2>söön, sööge</2>; <3>joon, jooge</3>."
-msgstr "<0>Sööma</0> и <1>jooma</1> — исключения. Их команды строятся на форме настоящего времени: <2>söön, sööge</2>; <3>joon, jooge</3>."
+msgstr "<0>Sööma</0> и <1>jooma</1> — исключения. Их команды образуются от формы настоящего времени: <2>söön, sööge</2>; <3>joon, jooge</3>."
 
 msgid "<0>Teha, näha, süüa</0> and <1>juua</1> end in a bare <2>-a</2> and change their stem. Learn these four whole."
 msgstr "<0>Teha, näha, süüa</0> и <1>juua</1> оканчиваются просто на <2>-a</2>, и основа у них меняется. Эти четыре запоминай целыми словами."
 
-msgid "12 minutes"
-msgstr "12 минут"
+msgid "25 minutes"
+msgstr "25 минут"
 
-msgid "3 quizzes and a passage"
-msgstr "3 теста и текст"
+msgid "6 exercises and a recording you can play twice"
+msgstr "6 упражнений и запись, которую можно прослушать дважды"
+
+msgid "A <0>-da</0> infinitive in <1>-ta</1> gives a command in <2>-ke</2>: <3>kuulata, Kuulake!</3>"
+msgstr "Инфинитив на <0>-da</0>, оканчивающийся на <1>-ta</1>, даёт команду на <2>-ke</2>: <3>kuulata, Kuulake!</3>"
 
 msgid "A command again, built on the <0>-da</0> infinitive: <1>rääkida, rääkige</1>."
-msgstr "Снова команда, значит, от инфинитива на <0>-da</0>: <1>rääkida, rääkige</1>."
+msgstr "Снова команда, образованная от инфинитива на <0>-da</0>: <1>rääkida, rääkige</1>."
+
+msgid "a command to more than one"
+msgstr "команда нескольким людям"
+
+msgid "A command to more than one usually builds on the -da infinitive: <et>tulla, Tulge!</et> Where the -da infinitive ends in -ta, or in -a after h, it takes -ke: <et>oodata, Oodake!</et> <et>teha, Tehke!</et>"
+msgstr "Команда нескольким людям обычно образуется от инфинитива на -da: <et>tulla, Tulge!</et> Если инфинитив на -da оканчивается на -ta или на -a после h, команда оканчивается на -ke: <et>oodata, Oodake!</et> <et>teha, Tehke!</et>"
 
 msgid "A command to the class, built on the <0>-da</0> infinitive: <1>istuda, istuge</1>."
-msgstr "Команда классу, значит, от инфинитива на <0>-da</0>: <1>istuda, istuge</1>."
+msgstr "Команда классу, образованная от инфинитива на <0>-da</0>: <1>istuda, istuge</1>."
+
+msgid "A command usually builds on the <0>-da</0> infinitive, and <1>-ta</1> gives <2>-ke</2>: <3>oodata, Oodake!</3>"
+msgstr "Команда обычно образуется от инфинитива на <0>-da</0>, а из <1>-ta</1> получается <2>-ke</2>: <3>oodata, Oodake!</3>"
 
 msgid "A command, built on the <0>-da</0> infinitive: <1>lugeda, lugege</1>."
-msgstr "Команда, значит, от инфинитива на <0>-da</0>: <1>lugeda, lugege</1>."
+msgstr "Команда, образованная от инфинитива на <0>-da</0>: <1>lugeda, lugege</1>."
 
 msgid "A question about what the class does, so the present: <0>räägin, räägite</0>."
-msgstr "Вопрос о том, что делают ученики, значит, настоящее время: <0>räägin, räägite</0>."
+msgstr "Вопрос о том, что делают ученики, значит, форма настоящего времени: <0>räägin, räägite</0>."
+
+msgid "After <0>tahan</0>, the <1>-da</1> infinitive: <2>süüa</2>."
+msgstr "После <0>tahan</0> — инфинитив на <1>-da</1>: <2>süüa</2>."
+
+msgid "After <0>tahan</0>, the <1>-da</1> infinitive: <2>tulla</2>."
+msgstr "После <0>tahan</0> — инфинитив на <1>-da</1>: <2>tulla</2>."
+
+msgid "After <et>tahan</et>, the -da infinitive: <et>lugeda, süüa, tulla</et>."
+msgstr "После <et>tahan</et> — инфинитив на -da: <et>lugeda, süüa, tulla</et>."
 
 msgid "All nine. You knew which verb each <0>-da</0> infinitive belongs to."
-msgstr "Все девять. Каждый инфинитив на <0>-da</0> — со своим глаголом."
+msgstr "Все девять: глагол каждого инфинитива на <0>-da</0> выбран верно."
+
+msgid "All six found and fixed."
+msgstr "Все шесть найдены и исправлены."
+
+msgid "All six written right."
+msgstr "Все шесть написаны правильно."
 
 msgid "All six. You made every kind of <0>-da</0> infinitive."
 msgstr "Все шесть. Каждый вид инфинитива на <0>-da</0> без ошибки."
@@ -67,26 +85,47 @@ msgstr "Все шесть. Три формы без единой ошибки."
 msgid "Be. To more than one, or polite."
 msgstr "Будьте. Нескольким людям или на «вы»."
 
+msgid "Come here! To more than one."
+msgstr "Идите сюда! Нескольким людям."
+
 msgid "Come. To more than one, or polite."
 msgstr "Приходите. Нескольким людям или на «вы»."
 
-msgid "Commands for more than one"
+msgid "Commands"
+msgstr "Команды"
+
+msgid "Commands to more than one"
 msgstr "Команды нескольким людям"
 
 msgid "Do it. To more than one, or polite."
 msgstr "Сделайте. Нескольким людям или на «вы»."
 
+msgid "Each sentence has one wrong verb form. Tap it, then write the right form."
+msgstr "В каждом предложении одна неправильная форма глагола. Нажми на неё, а потом напиши правильную."
+
 msgid "Fill the gaps"
 msgstr "Заполни пропуски"
+
+msgid "Find and fix the mistake"
+msgstr "Найди и исправь ошибку"
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
 
 msgid "Four short verbs"
 msgstr "Четыре коротких глагола"
 
 msgid "From tahtma, to want."
-msgstr "От tahtma, хотеть."
+msgstr "От tahtma, «хотеть»."
 
 msgid "Go back through the forms above, then try again."
 msgstr "Ещё раз пройдись по формам выше, а потом попробуй снова."
+
+msgid "Go home"
+msgstr "Пойти домой"
+
+msgid "Go through the sections above once more, then try again."
+msgstr "Ещё раз просмотри разделы выше, а потом попробуй снова."
 
 msgid "Hear a <0>-da</0> infinitive and pick what its verb means. These are the ones that look least like their <1>-ma</1> infinitive."
 msgstr "Послушай инфинитив на <0>-da</0> и выбери, что значит его глагол. Здесь те, что меньше всего похожи на свой инфинитив на <1>-ma</1>."
@@ -148,23 +187,44 @@ msgstr "я жду"
 msgid "I want"
 msgstr "я хочу"
 
+msgid "I want to come."
+msgstr "Я хочу прийти."
+
+msgid "I want to drink coffee."
+msgstr "Я хочу выпить кофе."
+
+msgid "I want to eat."
+msgstr "Я хочу есть."
+
+msgid "I want to learn Estonian."
+msgstr "Я хочу учить эстонский."
+
 msgid "I want to read."
 msgstr "Я хочу читать."
 
 msgid "I work"
 msgstr "я работаю"
 
+msgid "I’m reading a book."
+msgstr "Я читаю книгу."
+
+msgid "I’m waiting in the café."
+msgstr "Я жду в кафе."
+
+msgid "I’m working."
+msgstr "Я работаю."
+
 msgid "In class"
 msgstr "На уроке"
 
-msgid "In lesson {commands} you learned <0/> as a whole word. It comes from the <1>-da</1> infinitive, with <2>-ge</2> in place of its ending: <3/> gives <4/>, and <5/> gives <6/>"
-msgstr "В уроке {commands} <0/> нужно было запомнить целым словом. Образуется это слово от инфинитива на <1>-da</1>: его окончание меняется на <2>-ge</2>. Из <3/> получается <4/>, а из <5/> — <6/>"
+msgid "In lesson {commands} you learned <0/> as a whole word. Like most commands to more than one, it comes from the <1>-da</1> infinitive, with <2>-ge</2> in place of its ending. <3/> gives <4/> <5/> gives <6/>"
+msgstr "В уроке {commands} <0/> нужно было запомнить целым словом. Как и большинство команд нескольким людям, это слово образуется от инфинитива на <1>-da</1>: его окончание меняется на <2>-ge</2>. Из <3/> получается <4/> Из <5/> — <6/>"
 
-msgid "In lesson {present} you learned a verb as two forms: <0/>, to read, and its present, <1/>. A dictionary gives a third between them, the <2>-da</2> infinitive: <3/>."
-msgstr "В уроке {present} были две формы глагола: <0/>, «читать», и форма настоящего времени, <1/>. Словарь даёт между ними третью форму, инфинитив на <2>-da</2>: <3/>."
+msgid "In lesson {present} you learned a verb as two forms: <0/>, to read, and its present, <1/>. A dictionary lists the <2>-da</2> infinitive right after the <3>-ma</3> infinitive. Learn the three together: <4/>."
+msgstr "В уроке {present} были две формы глагола: <0/>, «читать», и форма настоящего времени, <1/>. Словарь даёт инфинитив на <2>-da</2> сразу после инфинитива на <3>-ma</3>. Запоминай все три вместе: <4/>."
 
-msgid "It can have a stem of its own: <0>loe-n</0>, <1>räägi-n</1>, <2>õpi-n</2>. The <3>-da</3> infinitive keeps the <4>-ma</4> infinitive’s stem."
-msgstr "У неё может быть своя основа: <0>loe-n</0>, <1>räägi-n</1>, <2>õpi-n</2>. Инфинитив на <3>-da</3> сохраняет основу инфинитива на <4>-ma</4>."
+msgid "It can have a stem of its own: <0>loe-n</0>, <1>räägi-n</1>, <2>õpi-n</2>. For these verbs, the <3>-da</3> infinitive keeps the <4>-ma</4> infinitive’s stem."
+msgstr "У неё может быть своя основа: <0>loe-n</0>, <1>räägi-n</1>, <2>õpi-n</2>. У этих глаголов инфинитив на <3>-da</3> сохраняет основу инфинитива на <4>-ma</4>."
 
 msgid "Its -da infinitive is {da}, its present {n}."
 msgstr "Инфинитив на -da — {da}, форма настоящего времени — {n}."
@@ -172,23 +232,62 @@ msgstr "Инфинитив на -da — {da}, форма настоящего в
 msgid "its <0>-da</0> infinitive"
 msgstr "его инфинитив на <0>-da</0>"
 
+msgid "Jaan meets Mari in a café while she waits for a friend."
+msgstr "Яан встречает Мари в кафе, пока она ждёт подругу."
+
+msgid "Kati"
+msgstr "Кати"
+
 msgid "Learn a verb as three forms, the <0>-ma</0> infinitive, the <1>-da</1> infinitive and the present: <2>lugema, lugeda, loen</2>."
-msgstr "Запоминай глагол в трёх формах — инфинитив на <0>-ma</0>, инфинитив на <1>-da</1> и настоящее время: <2>lugema, lugeda, loen</2>."
+msgstr "Запоминай глагол в трёх формах — инфинитив на <0>-ma</0>, инфинитив на <1>-da</1> и форма настоящего времени: <2>lugema, lugeda, loen</2>."
 
-msgid "Learn every Estonian verb as three forms: <0>lugema, lugeda, loen</0>. Most verbs make the middle one by swapping <1>-ma</1> for <2>-da</2>; some take <3>-ta</3>, and a few take <4>-la</4>, <5>-na</5> or a bare <6>-a</6>."
-msgstr "Каждый эстонский глагол стоит запоминать в трёх формах: <0>lugema, lugeda, loen</0>. Большинство глаголов образует среднюю форму, меняя <1>-ma</1> на <2>-da</2>; у некоторых <3>-ta</3>, а у нескольких — <4>-la</4>, <5>-na</5> или просто <6>-a</6>."
+msgid "Learn Estonian"
+msgstr "Учить эстонский"
 
-msgid "Lessons {negation} and {commands} called <0/> the I form of the present, after <1>ma loen</1>. Here it is the present, and <2/> is the <3>-ma</3> infinitive."
-msgstr "В уроках {negation} и {commands} <0/> называлась формой первого лица единственного числа настоящего времени — от <1>ma loen</1>. Здесь это настоящее время, а <2/> — инфинитив на <3>-ma</3>."
+msgid "Learn every Estonian verb as three forms: <0>lugema, lugeda, loen</0>. Most verbs make the middle one by swapping <1>-ma</1> for <2>-da</2>; some take <3>-ta</3>, and a few others end in <4>-la</4>, <5>-na</5>, <6>-ra</6> or a bare <7>-a</7>."
+msgstr "Каждый эстонский глагол стоит запоминать в трёх формах: <0>lugema, lugeda, loen</0>. Большинство глаголов образует среднюю форму, меняя <1>-ma</1> на <2>-da</2>; у некоторых <3>-ta</3>, а ещё несколько оканчиваются на <4>-la</4>, <5>-na</5>, <6>-ra</6> или просто <7>-a</7>."
+
+msgid "Lessons {negation} and {commands} called <0/> the I form of the present, after <1>ma loen</1>. This lesson calls it the present, and <2/> is the <3>-ma</3> infinitive."
+msgstr "В уроках {negation} и {commands} <0/> называли формой первого лица единственного числа настоящего времени — от <1>ma loen</1>. Этот урок называет её формой настоящего времени, а <2/> — инфинитивом на <3>-ma</3>."
+
+msgid "Liis teaches a class. When she tells them what to do, the verb here builds on the <0>-da</0> infinitive; when she says or asks what the class does, on the present. Fill each gap."
+msgstr "Лийс ведёт урок. Когда она говорит ученикам, что делать, глагол здесь образуется от инфинитива на <0>-da</0>; когда говорит или спрашивает, что ученики делают, — от формы настоящего времени. Заполни каждый пропуск."
+
+msgid "Listen, please! To more than one."
+msgstr "Слушайте, пожалуйста! Нескольким людям."
+
+msgid "Listen: in a café"
+msgstr "Послушай: в кафе"
+
+msgid "Listen: Jaan meets Mari"
+msgstr "Послушай: Яан встречает Мари"
 
 msgid "Listening only, no microphone"
 msgstr "Только на слух, без микрофона"
 
+msgid "Look, please! To more than one."
+msgstr "Посмотрите, пожалуйста! Нескольким людям."
+
 msgid "Make the <0>-da</0> infinitive"
 msgstr "Образуй инфинитив на <0>-da</0>"
 
-msgid "Mari teaches a class. When she tells them what to do, the verb builds on the <0>-da</0> infinitive; when she says what the class does, on the present. Fill each gap."
-msgstr "Мари ведёт урок. Когда она говорит ученикам, что делать, глагол строится на инфинитиве на <0>-da</0>; когда говорит, что ученики делают, — на форме настоящего времени. Заполни каждый пропуск."
+msgid "Mari is reading an Estonian book."
+msgstr "Мари читает эстонскую книгу."
+
+msgid "Mari says the teacher is good."
+msgstr "Мари говорит, что учительница хорошая."
+
+msgid "Mari’s husband"
+msgstr "Муж Мари"
+
+msgid "Mari’s husband speaks Estonian."
+msgstr "Муж Мари говорит по-эстонски."
+
+msgid "Most of them. Look again at the ones you missed."
+msgstr "Большинство. Ещё раз посмотри на те, где была ошибка."
+
+msgid "Most of them. Read the ones you missed once more."
+msgstr "Большинство. Ещё раз прочитай те, где была ошибка."
 
 msgid "Most verbs keep the stem"
 msgstr "Большинство глаголов сохраняет основу"
@@ -196,11 +295,17 @@ msgstr "Большинство глаголов сохраняет основу"
 msgid "Most verbs make the <0>-da</0> infinitive by swapping <1>-ma</1> for <2>-da</2>: <3/>, <4/>. Whatever sits before <5>-ma</5> usually stays as it is."
 msgstr "Большинство глаголов образует инфинитив на <0>-da</0>, меняя <1>-ma</1> на <2>-da</2>: <3/>, <4/>. Всё, что стоит перед <5>-ma</5>, обычно остаётся как есть."
 
-msgid "Most verbs swap <0>-ma</0> for <1>-da</1> on the same stem: <2>elama, elada</2>. The <3>-da</3> infinitive keeps that stem when the present changes it: <4>lugeda, loen</4>."
-msgstr "Большинство глаголов меняет <0>-ma</0> на <1>-da</1> на той же основе: <2>elama, elada</2>. Инфинитив на <3>-da</3> сохраняет эту основу, даже когда форма настоящего времени её меняет: <4>lugeda, loen</4>."
+msgid "Most verbs swap -ma for -da; some take -ta, and a few others -la, -na, -ra or a bare -a."
+msgstr "Большинство глаголов меняет -ma на -da; у некоторых -ta, а ещё у нескольких -la, -na, -ra или просто -a."
+
+msgid "Most verbs swap <0>-ma</0> for <1>-da</1> on the same stem: <2>elama, elada</2>. The <3>-da</3> infinitive usually keeps that stem even when the present changes it: <4>lugeda, loen</4>."
+msgstr "Большинство глаголов меняет <0>-ma</0> на <1>-da</1> на той же основе: <2>elama, elada</2>. Инфинитив на <3>-da</3> обычно сохраняет эту основу, даже когда форма настоящего времени её меняет: <4>lugeda, loen</4>."
 
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Почти. Переслушай те, где были ошибки."
+
+msgid "One of the verbs that take <0>-ta</0>, and the t of its stem turns into d: <1>{ma}</1>, <2>{da}</2>."
+msgstr "Один из глаголов с <0>-ta</0>, и t в основе становится d: <1>{ma}</1>, <2>{da}</2>."
 
 msgid "One of the verbs that take <0>-ta</0>: <1>{ma}</1>, <2>{da}</2>."
 msgstr "Один из глаголов с <0>-ta</0>: <1>{ma}</1>, <2>{da}</2>."
@@ -217,14 +322,29 @@ msgstr "Ещё раз послушай формы на <0>-ta</0>, <1>-la</1>, <
 msgid "Play the forms above once more, then try again."
 msgstr "Ещё раз послушай формы выше, а потом попробуй снова."
 
+msgid "Please wait here for a moment"
+msgstr "Подожди тут минутку, пожалуйста"
+
 msgid "Present"
-msgstr "Настоящее время"
+msgstr "Форма настоящего времени"
+
+msgid "Read a book"
+msgstr "Почитать книгу"
+
+msgid "Read, please"
+msgstr "Читай, пожалуйста"
+
+msgid "Read, please! To more than one."
+msgstr "Читайте, пожалуйста! Нескольким людям."
 
 msgid "Read. To more than one, or polite."
 msgstr "Читайте. Нескольким людям или на «вы»."
 
 msgid "See a verb’s <0>-ma</0> infinitive and type its <1>-da</1> infinitive, then hear it. The keys under the field type õ, ä, ö, ü, š and ž."
-msgstr "Посмотри на инфинитив глагола на <0>-ma</0> и напечатай его инфинитив на <1>-da</1>, а потом послушай его. Кнопки под полем печатают õ, ä, ö, ü, š и ž."
+msgstr "Посмотри на инфинитив глагола на <0>-ma</0> и введи его инфинитив на <1>-da</1>, а потом послушай его. Кнопки под полем вводят õ, ä, ö, ü, š и ž."
+
+msgid "Sit down, please"
+msgstr "Садись, пожалуйста"
 
 msgid "Sit down. To more than one, or polite."
 msgstr "Садитесь. Нескольким людям или на «вы»."
@@ -245,10 +365,22 @@ msgid "Tahan, I want, is followed by the -da infinitive."
 msgstr "После tahan, «я хочу», идёт инфинитив на -da."
 
 msgid "Tap a form"
-msgstr "Коснись формы"
+msgstr "Нажми на форму"
 
-msgid "That holds even when the present changes the stem: <0/> gives <1/>, though I read is <2/>. The same goes for <3/> and <4/>. Switch between the forms and tap a line to hear it."
-msgstr "Это верно и тогда, когда форма настоящего времени меняет основу: из <0/> получается <1/>, хотя «я читаю» — это <2/>. То же с <3/> и <4/>. Переключай формы и нажми на строку, чтобы услышать её."
+msgid "That usually holds even when the present changes the stem: <0/> gives <1/>, though I read is <2/>. The same goes for <3/> and <4/>. Switch between the forms and tap a line to hear it."
+msgstr "Это обычно верно и тогда, когда форма настоящего времени меняет основу: из <0/> получается <1/>, хотя «я читаю» — это <2/>. То же с <3/> и <4/>. Переключай формы и нажми на строку, чтобы услышать её."
+
+msgid "That’s the <0>-da</0> infinitive of <1>{ma}</1>, {means}: <2>{said}</2>."
+msgstr "Это инфинитив на <0>-da</0> от <1>{ma}</1>, «{means}»: <2>{said}</2>."
+
+msgid "That’s the <0>-ma</0> infinitive itself, {means}: <1>{said}</1>."
+msgstr "Это сам инфинитив на <0>-ma</0>, «{means}»: <1>{said}</1>."
+
+msgid "That’s the present of <0>{ma}</0>, {means}: <1>{said}</1>."
+msgstr "Это форма настоящего времени от <0>{ma}</0>, «{means}»: <1>{said}</1>."
+
+msgid "The -da infinitive"
+msgstr "Инфинитив на -da"
 
 msgid "The -da infinitive of {ma}."
 msgstr "Инфинитив на -da от {ma}."
@@ -259,11 +391,17 @@ msgstr "Инфинитив на <0>-ma</0>"
 msgid "The form a dictionary lists first. Take off <0>-ma</0> and you have its stem, <1>luge-</1>."
 msgstr "Форма, которую словарь даёт первой. Отбрось <0>-ma</0>, и останется её основа, <1>luge-</1>."
 
-msgid "The other persons build on the present; for most verbs, the command to more than one builds on the <0>-da</0> infinitive: <1>te loete, lugege!</1>"
-msgstr "Остальные лица строятся на форме настоящего времени, а команда нескольким людям у большинства глаголов — на инфинитиве на <0>-da</0>: <1>te loete, lugege!</1>"
+msgid "The other persons usually build on the present’s stem: <0>loen, te loete</0>. For most verbs, the command to more than one builds on the <1>-da</1> infinitive: <2>lugeda, Lugege!</2>"
+msgstr "Формы остальных лиц обычно образуются от основы настоящего времени: <0>loen, te loete</0>. У большинства глаголов команда нескольким людям образуется от инфинитива на <1>-da</1>: <2>lugeda, Lugege!</2>"
 
 msgid "The present"
 msgstr "Форма настоящего времени"
+
+msgid "The present builds on its own stem: <0>lugema, lugeda, loen</0>."
+msgstr "У формы настоящего времени своя основа: <0>lugema, lugeda, loen</0>."
+
+msgid "The present builds on its own stem: <0>tegema, teha, teen</0>."
+msgstr "У формы настоящего времени своя основа: <0>tegema, teha, teen</0>."
 
 msgid "The present is <0>joon</0>. Drop <1>-ma</1>, turn <2>oo</2> into <3>uu</3> and add <4>-a</4>."
 msgstr "Форма настоящего времени — <0>joon</0>. Отбрось <1>-ma</1>, замени <2>oo</2> на <3>uu</3> и добавь <4>-a</4>."
@@ -292,8 +430,14 @@ msgstr "Форма настоящего времени от {ma}."
 msgid "The same stem with <0>-da</0>"
 msgstr "Та же основа с <0>-da</0>"
 
+msgid "The teacher"
+msgstr "Учительница"
+
 msgid "These four short verbs end their <0>-da</0> infinitive in a bare <1>-a</1>, and the stem changes too. <2/>, to do, and <3/>, to see, turn g into h: <4/>, <5/>."
 msgstr "У этих четырёх коротких глаголов инфинитив на <0>-da</0> оканчивается просто на <1>-a</1>, и основа тоже меняется. <2/>, «делать», и <3/>, «видеть», меняют g на h: <4/>, <5/>."
+
+msgid "They live in Tartu."
+msgstr "Они живут в Тарту."
 
 msgid "Three forms"
 msgstr "Три формы"
@@ -332,7 +476,7 @@ msgid "to live"
 msgstr "жить"
 
 msgid "to look, to watch"
-msgstr "смотреть, наблюдать"
+msgstr "смотреть"
 
 msgid "to love"
 msgstr "любить"
@@ -361,17 +505,41 @@ msgstr "Введи форму"
 msgid "Verbs"
 msgstr "Глаголы"
 
+msgid "Wait, please! To more than one."
+msgstr "Подождите, пожалуйста! Нескольким людям."
+
 msgid "Wait. To more than one, or polite."
 msgstr "Подождите. Нескольким людям или на «вы»."
 
+msgid "We speak Estonian."
+msgstr "Мы говорим по-эстонски."
+
+msgid "We’re working."
+msgstr "Мы работаем."
+
+msgid "What does Jaan want to do?"
+msgstr "Что Яан хочет делать?"
+
+msgid "What does Mari say when Kati comes?"
+msgstr "Что говорит Мари, когда приходит Кати?"
+
+msgid "What someone does takes the present, which can have a stem of its own: <et>loen, teen</et>."
+msgstr "Для того, что кто-то делает, — форма настоящего времени, и у неё может быть своя основа: <et>loen, teen</et>."
+
 msgid "What the class does, so the present: <0>loen, loete</0>."
-msgstr "Что делают ученики, значит, настоящее время: <0>loen, loete</0>."
+msgstr "Что делают ученики, значит, форма настоящего времени: <0>loen, loete</0>."
 
 msgid "What we do today, so the present: <0>loen, loeme</0>."
-msgstr "Что мы делаем сегодня, значит, настоящее время: <0>loen, loeme</0>."
+msgstr "Что мы делаем сегодня, значит, форма настоящего времени: <0>loen, loeme</0>."
 
-msgid "Where the <0>-da</0> infinitive ends in <1>-ta</1>, or in <2>-a</2> after h, the command takes <3>-ke</3>: <4/>, <5/>; <6/>, <7/> Tap either side of a pair to hear it."
-msgstr "Если инфинитив на <0>-da</0> оканчивается на <1>-ta</1> или на <2>-a</2> после h, у команды будет <3>-ke</3>: <4/>, <5/>; <6/>, <7/> Нажми на любое слово в паре, чтобы услышать его."
+msgid "When is Kati coming? Write the time in Estonian."
+msgstr "Когда придёт Кати? Напиши время по-эстонски."
+
+msgid "Where does Mari tell Jaan to come? Write it in Estonian."
+msgstr "Куда Мари зовёт Яана? Напиши по-эстонски."
+
+msgid "Where the <0>-da</0> infinitive ends in <1>-ta</1>, or in <2>-a</2> after h, the command takes <3>-ke</3>. <4/> gives <5/> <6/> gives <7/> Tap either side of a pair to hear it."
+msgstr "Если инфинитив на <0>-da</0> оканчивается на <1>-ta</1> или на <2>-a</2> после h, у команды будет <3>-ke</3>. Из <4/> получается <5/> Из <6/> — <7/> Нажми на любое слово в паре, чтобы услышать его."
 
 msgid "Which form"
 msgstr "Какая форма"
@@ -381,6 +549,15 @@ msgstr "Какую форму ты слышишь?"
 
 msgid "Which verb is it?"
 msgstr "Какой это глагол?"
+
+msgid "Who is coming?"
+msgstr "Кто приходит?"
+
+msgid "Write each sentence in Estonian. After <0>tahan</0>, use the <1>-da</1> infinitive. A command to more than one usually builds on it. For what someone does, use the present."
+msgstr "Напиши каждое предложение по-эстонски. После <0>tahan</0> ставь инфинитив на <1>-da</1>. Команда нескольким людям обычно образуется от него. Для того, что кто-то делает, — форма настоящего времени."
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"
 
 msgid "You know them in the present: <0/> from lesson {pronouns}, <1/> and <2/> from lesson {commands}. Tap a form to hear it and see how it’s made."
 msgstr "Их формы настоящего времени ты уже знаешь: <0/> из урока {pronouns}, <1/> и <2/> из урока {commands}. Нажми на форму, чтобы услышать её и увидеть, как она образуется."

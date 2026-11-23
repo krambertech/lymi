@@ -815,6 +815,7 @@ const HEARD: Readonly<Record<string, string>> = {
   "Ma oskan natuke eesti keelt rääkida.": "tegevusnimed/ma-oskan-natuke-eesti-keelt-ra2a2kida",
   "Ma pean homme tööle minema.": "tegevusnimed/ma-pean-homme-to2o2le-minema",
   "Ma tahan homme linna minna.": "tegevusnimed/ma-tahan-homme-linna-minna",
+  "Ma teen tööd.": "verbi-pohivormid/ma-teen-to2o2d",
   "Ma õpin eesti keelt.": "olevik/s-opin-eesti",
   maja: "kit/maja",
   "Mari on jooksmas.": "ujuma-ujumas-ujumast/mari-on-jooksmas",

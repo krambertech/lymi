@@ -14,15 +14,21 @@ import {
   VERB_FORMS,
   type VerbForms,
   VORMID_COMMANDS,
+  VORMID_FIX,
+  VORMID_SAY,
+  VORMID_TALK,
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Keys, Panel } from "../Explore";
+import { type FixItem, FixRound, fixRecall } from "../FixRound";
 import { type FormItem, FormRound, formRecall } from "../FormRound";
 import { type GapItem, GapPassage } from "../GapPassage";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
+import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
 import { PlayButton, Playing } from "../Sound";
 import { Word } from "../Word";
 
@@ -340,8 +346,8 @@ function FormFlip() {
       tip: (
         <Trans>
           It can have a stem of its own: <span lang="et">loe-n</span>,{" "}
-          <span lang="et">räägi-n</span>, <span lang="et">õpi-n</span>. The <End>-da</End>{" "}
-          infinitive keeps the <End>-ma</End> infinitive’s stem.
+          <span lang="et">räägi-n</span>, <span lang="et">õpi-n</span>. For these verbs, the{" "}
+          <End>-da</End> infinitive keeps the <End>-ma</End> infinitive’s stem.
         </Trans>
       ),
     },
@@ -625,6 +631,13 @@ function MadeHow({ verb }: { verb: VerbForms }) {
         <span lang="et">{da}</span>.
       </Trans>
     );
+  if (verb.pattern === "ta" && verb.da[0] !== ma.slice(0, -2))
+    return (
+      <Trans>
+        One of the verbs that take <End>-ta</End>, and the t of its stem turns into d:{" "}
+        <span lang="et">{ma}</span>, <span lang="et">{da}</span>.
+      </Trans>
+    );
   if (verb.pattern === "ta")
     return (
       <Trans>
@@ -645,30 +658,202 @@ function WhichForm({ verb, kind, said }: { verb: VerbForms; kind: Kind; said: st
   const means = i18n._(MEANS[ma]);
   return kind === "ma" ? (
     <Trans>
+      That’s the <End>-ma</End> infinitive itself, {means}:{" "}
       <b lang="et" className="font-medium text-ink">
         {said}
-      </b>{" "}
-      is the <End>-ma</End> infinitive itself, {means}.
+      </b>
+      .
     </Trans>
   ) : kind === "da" ? (
     <Trans>
+      That’s the <End>-da</End> infinitive of <span lang="et">{ma}</span>, {means}:{" "}
       <b lang="et" className="font-medium text-ink">
         {said}
-      </b>{" "}
-      is the <End>-da</End> infinitive of <span lang="et">{ma}</span>, {means}.
+      </b>
+      .
     </Trans>
   ) : (
     <Trans>
+      That’s the present of <span lang="et">{ma}</span>, {means}:{" "}
       <b lang="et" className="font-medium text-ink">
         {said}
-      </b>{" "}
-      is the present of <span lang="et">{ma}</span>, {means}.
+      </b>
+      .
     </Trans>
   );
 }
 
+const SAY_MEANS: Record<(typeof VORMID_SAY)[number]["id"], MessageDescriptor> = {
+  lugeda: msg`I want to read.`,
+  lugege: msg`Read, please! To more than one.`,
+  ootan: msg`I’m waiting in the café.`,
+  oodake: msg`Wait, please! To more than one.`,
+  suua: msg`I want to eat.`,
+  teeme: msg`We’re working.`,
+};
+
+export function sayItems(i18n: I18n): SentenceItem[] {
+  return VORMID_SAY.map(({ id, said, also }) => ({
+    kind: "translate",
+    id: `say-${id}`,
+    prompt: i18n._(SAY_MEANS[id]),
+    src: src(said),
+    answers: [said, ...also],
+  }));
+}
+
+const FIX_MEANS: Record<(typeof VORMID_FIX)[number]["id"], MessageDescriptor> = {
+  loen: msg`I’m reading a book.`,
+  oodake: msg`Wait, please! To more than one.`,
+  teen: msg`I’m working.`,
+  suua: msg`I want to eat.`,
+  kuulake: msg`Listen, please! To more than one.`,
+  tulla: msg`I want to come.`,
+};
+
+function FixWhy({ id }: { id: (typeof VORMID_FIX)[number]["id"] }) {
+  switch (id) {
+    case "loen":
+      return (
+        <Trans>
+          The present builds on its own stem: <b lang="et">lugema, lugeda, loen</b>.
+        </Trans>
+      );
+    case "oodake":
+      return (
+        <Trans>
+          A command usually builds on the <End>-da</End> infinitive, and <End>-ta</End> gives{" "}
+          <End>-ke</End>: <b lang="et">oodata, Oodake!</b>
+        </Trans>
+      );
+    case "teen":
+      return (
+        <Trans>
+          The present builds on its own stem: <b lang="et">tegema, teha, teen</b>.
+        </Trans>
+      );
+    case "suua":
+      return (
+        <Trans>
+          After <b lang="et">tahan</b>, the <End>-da</End> infinitive: <b lang="et">süüa</b>.
+        </Trans>
+      );
+    case "kuulake":
+      return (
+        <Trans>
+          A <End>-da</End> infinitive in <End>-ta</End> gives a command in <End>-ke</End>:{" "}
+          <b lang="et">kuulata, Kuulake!</b>
+        </Trans>
+      );
+    case "tulla":
+      return (
+        <Trans>
+          After <b lang="et">tahan</b>, the <End>-da</End> infinitive: <b lang="et">tulla</b>.
+        </Trans>
+      );
+  }
+}
+
+export function fixItems(i18n: I18n): FixItem[] {
+  return VORMID_FIX.map(({ id, wrong, right }) => ({
+    kind: "fix",
+    id: `fix-${id}`,
+    wrong,
+    prompt: i18n._(FIX_MEANS[id]),
+    answers: [right],
+    src: src(right),
+    explain: <FixWhy id={id} />,
+  }));
+}
+
+function useTalkQuestions(): PassageQuestion[] {
+  const { t } = useLingui();
+  return [
+    {
+      id: "coming",
+      ask: t`Who is coming?`,
+      options: [
+        { id: "teacher", label: t`The teacher` },
+        { id: "kati", label: t`Kati` },
+        { id: "husband", label: t`Mari’s husband` },
+      ],
+      answer: "kati",
+      line: 4,
+    },
+    {
+      kind: "short",
+      id: "when",
+      ask: t`When is Kati coming? Write the time in Estonian.`,
+      answers: [
+        "kell kolm",
+        "kolm",
+        "kell 3",
+        "3",
+        "kell 15",
+        "15",
+
+        "15.00",
+        "15:00",
+        "kell viisteist",
+      ],
+      line: 6,
+    },
+    {
+      kind: "truefalse",
+      id: "book",
+      ask: t`Mari is reading an Estonian book.`,
+      answer: true,
+      line: 10,
+    },
+    {
+      kind: "truefalse",
+      id: "husband",
+      ask: t`Mari’s husband speaks Estonian.`,
+      answer: false,
+      line: 14,
+    },
+    {
+      id: "wants",
+      ask: t`What does Jaan want to do?`,
+      options: [
+        { id: "read", label: t`Read a book` },
+        { id: "learn", label: t`Learn Estonian` },
+        { id: "home", label: t`Go home` },
+      ],
+      answer: "learn",
+      line: 15,
+    },
+    {
+      kind: "short",
+      id: "school",
+      ask: t`Where does Mari tell Jaan to come? Write it in Estonian.`,
+      answers: ["meie kooli", "kooli"],
+      line: 16,
+    },
+    {
+      kind: "truefalse",
+      id: "teacher",
+      ask: t`Mari says the teacher is good.`,
+      answer: true,
+      line: 20,
+    },
+    {
+      id: "end",
+      ask: t`What does Mari say when Kati comes?`,
+      options: [
+        { id: "sit", label: t`Sit down, please` },
+        { id: "read", label: t`Read, please` },
+        { id: "wait", label: t`Please wait here for a moment` },
+      ],
+      answer: "sit",
+      line: 23,
+    },
+  ];
+}
+
 export function VerbiPohivormidLesson() {
   const { t, i18n } = useLingui();
+  const talkQuestions = useTalkQuestions();
   const present = lessonBySlug("olevik")?.n;
   const pronouns = lessonBySlug("mina-sina-tema")?.n;
   const commands = lessonBySlug("kaskiv")?.n;
@@ -749,12 +934,13 @@ export function VerbiPohivormidLesson() {
         <Trans>
           Learn every Estonian verb as three forms: <span lang="et">lugema, lugeda, loen</span>.
           Most verbs make the middle one by swapping <End>-ma</End> for <End>-da</End>; some take{" "}
-          <End>-ta</End>, and a few take <End>-la</End>, <End>-na</End> or a bare <End>-a</End>.
+          <End>-ta</End>, and a few others end in <End>-la</End>, <End>-na</End>, <End>-ra</End> or
+          a bare <End>-a</End>.
         </Trans>
       }
       facts={[
-        <Trans key="m">12 minutes</Trans>,
-        <Trans key="q">3 quizzes and a passage</Trans>,
+        <Trans key="m">25 minutes</Trans>,
+        <Trans key="q">6 exercises and a recording you can play twice</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={VERB_FORMS.map(threeForms)}
@@ -765,8 +951,8 @@ export function VerbiPohivormidLesson() {
         </Trans>,
         <Trans key="2">
           Most verbs swap <End>-ma</End> for <End>-da</End> on the same stem:{" "}
-          <b lang="et">elama, elada</b>. The <End>-da</End> infinitive keeps that stem when the
-          present changes it: <b lang="et">lugeda, loen</b>.
+          <b lang="et">elama, elada</b>. The <End>-da</End> infinitive usually keeps that stem even
+          when the present changes it: <b lang="et">lugeda, loen</b>.
         </Trans>,
         <Trans key="3">
           Some take <End>-ta</End>: <b lang="et">oodata</b>. <span lang="et">Olema</span>,{" "}
@@ -778,8 +964,9 @@ export function VerbiPohivormidLesson() {
           and change their stem. Learn these four whole.
         </Trans>,
         <Trans key="5">
-          The other persons build on the present; for most verbs, the command to more than one
-          builds on the <End>-da</End> infinitive: <b lang="et">te loete, lugege!</b>
+          The other persons usually build on the present’s stem: <b lang="et">loen, te loete</b>.
+          For most verbs, the command to more than one builds on the <End>-da</End> infinitive:{" "}
+          <b lang="et">lugeda, Lugege!</b>
         </Trans>,
       ]}
       sections={[
@@ -792,22 +979,23 @@ export function VerbiPohivormidLesson() {
                 <p>
                   <Trans>
                     In lesson {present} you learned a verb as two forms: <Word w="lugema" />, to
-                    read, and its present, <Word w="loen" />. A dictionary gives a third between
-                    them, the <End>-da</End> infinitive: <Word w="lugema, lugeda, loen" />.
+                    read, and its present, <Word w="loen" />. A dictionary lists the <End>-da</End>{" "}
+                    infinitive right after the <End>-ma</End> infinitive. Learn the three together:{" "}
+                    <Word w="lugema, lugeda, loen" />.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
                     Lessons {negation} and {commands} called <Word w="loen" /> the I form of the
-                    present, after <span lang="et">ma loen</span>. Here it is the present, and{" "}
-                    <Word w="lugema" /> is the <End>-ma</End> infinitive.
+                    present, after <span lang="et">ma loen</span>. This lesson calls it the present,
+                    and <Word w="lugema" /> is the <End>-ma</End> infinitive.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    <Word w="Lugema" /> and <Word w="lugeda" /> both translate as to read. Estonian
-                    uses each after different words: after <Word w="tahan" />, I want, comes the{" "}
-                    <End>-da</End> infinitive, <Word w="Ma tahan lugeda" />. Lesson {infinitives}{" "}
+                    <Word w="Lugema" /> and <Word w="lugeda" /> both translate as to read. Each
+                    follows different words. After <Word w="tahan" />, I want, comes the{" "}
+                    <End>-da</End> infinitive: <Word w="Ma tahan lugeda" /> Lesson {infinitives}{" "}
                     shows which words take which.
                   </Trans>
                 </p>
@@ -837,8 +1025,8 @@ export function VerbiPohivormidLesson() {
                 </p>
                 <p>
                   <Trans>
-                    That holds even when the present changes the stem: <Word w="lugema" /> gives{" "}
-                    <Word w="lugeda" />, though I read is <Word w="loen" />. The same goes for{" "}
+                    That usually holds even when the present changes the stem: <Word w="lugema" />{" "}
+                    gives <Word w="lugeda" />, though I read is <Word w="loen" />. The same goes for{" "}
                     <Word w="rääkima" /> and <Word w="õppima" />. Switch between the forms and tap a
                     line to hear it.
                   </Trans>
@@ -1029,24 +1217,24 @@ export function VerbiPohivormidLesson() {
         },
         {
           id: "commands",
-          title: t`Commands for more than one`,
+          title: t`Commands to more than one`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    In lesson {commands} you learned <Word w="Lugege!" /> as a whole word. It comes
-                    from the <End>-da</End> infinitive, with <End>-ge</End> in place of its ending:{" "}
-                    <Word w="lugeda" /> gives <Word w="Lugege!" />, and <Word w="tulla" /> gives{" "}
-                    <Word w="Tulge!" />
+                    In lesson {commands} you learned <Word w="Lugege!" /> as a whole word. Like most
+                    commands to more than one, it comes from the <End>-da</End> infinitive, with{" "}
+                    <End>-ge</End> in place of its ending. <Word w="Lugeda" /> gives{" "}
+                    <Word w="Lugege!" /> <Word w="Tulla" /> gives <Word w="Tulge!" />
                   </Trans>
                 </p>
                 <p>
                   <Trans>
                     Where the <End>-da</End> infinitive ends in <End>-ta</End>, or in <End>-a</End>{" "}
-                    after h, the command takes <End>-ke</End>: <Word w="oodata" />,{" "}
-                    <Word w="Oodake!" />; <Word w="teha" />, <Word w="Tehke!" /> Tap either side of
-                    a pair to hear it.
+                    after h, the command takes <End>-ke</End>. <Word w="Oodata" /> gives{" "}
+                    <Word w="Oodake!" /> <Word w="Teha" /> gives <Word w="Tehke!" /> Tap either side
+                    of a pair to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -1068,6 +1256,74 @@ export function VerbiPohivormidLesson() {
           ),
         },
         {
+          id: "say-it",
+          title: t`Write it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write each sentence in Estonian. After <b lang="et">tahan</b>, use the{" "}
+                    <End>-da</End> infinitive. A command to more than one usually builds on it. For
+                    what someone does, use the present.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="say-forms"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={sayItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six written right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Read the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "fix",
+          title: t`Fix the sentence`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each sentence has one wrong verb form. Tap it, then write the right form.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="fix-forms"
+                title={<Trans>Find and fix the mistake</Trans>}
+                items={fixItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six found and fixed.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Look again at the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={fixRecall}
+                round={(props) => <FixRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
           id: "class",
           title: t`In class`,
           quiz: true,
@@ -1076,9 +1332,9 @@ export function VerbiPohivormidLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Mari teaches a class. When she tells them what to do, the verb builds on the{" "}
-                    <End>-da</End> infinitive; when she says what the class does, on the present.
-                    Fill each gap.
+                    Liis teaches a class. When she tells them what to do, the verb here builds on
+                    the <End>-da</End> infinitive; when she says or asks what the class does, on the
+                    present. Fill each gap.
                   </Trans>
                 </p>
               </Prose>
@@ -1088,6 +1344,29 @@ export function VerbiPohivormidLesson() {
                 gaps={CLASS_ITEMS}
                 mode="pick"
                 clip="p-class"
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listen: in a café`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>Jaan meets Mari in a café while she waits for a friend.</Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="cafe-talk"
+                title={<Trans>Listen: Jaan meets Mari</Trans>}
+                clip="c-cafe"
+                turns={VORMID_TALK.turns}
+                names={{ third: "Mari", fourth: "Jaan" }}
+                questions={talkQuestions}
+                plays={2}
               />
             </>
           ),

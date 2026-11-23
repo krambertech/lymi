@@ -6,21 +6,28 @@ import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
+  INFINITIVE_FIX,
   INFINITIVE_LEADS,
   INFINITIVE_ORDER,
+  INFINITIVE_ORDERS,
   INFINITIVE_PAIRS,
+  INFINITIVE_SAY,
+  INFINITIVE_TALK,
   type InfinitiveLead,
   type Takes,
   wantOrMust,
 } from "../../../lib/learn/clips";
 import { formText } from "../../../lib/learn/forms";
 import { Keys, ListenRows, Panel } from "../Explore";
+import { type FixItem, FixRound, fixRecall } from "../FixRound";
 import { type GapItem, GapPassage } from "../GapPassage";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
 import { type OrderItem, OrderRound } from "../OrderRound";
 import { Lit, Paradigm, type ParadigmRow } from "../Paradigm";
+import { Listening, type PassageQuestion } from "../Passage";
 import { Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
 import { Sort, type SortBin, type SortItem } from "../Sort";
 import { Word } from "../Word";
 
@@ -253,21 +260,17 @@ export const SORTED: readonly Lead[] = [
 /** The sentences to build: each with its other right order and the wrong form as a spare tile. */
 export const BUILT = [
   {
-    answers: ["Ma tahan homme linna minna.", "Homme tahan ma linna minna."],
+    answers: INFINITIVE_ORDERS.linna,
     spare: ["minema"],
     lead: "tahan",
   },
   {
-    answers: [
-      "Ma hakkan täna kodus õppima.",
-      "Täna hakkan ma kodus õppima.",
-      "Kodus hakkan ma täna õppima.",
-    ],
+    answers: INFINITIVE_ORDERS.oppima,
     spare: ["õppida"],
     lead: "hakkan",
   },
   {
-    answers: ["Ma jään koju lugema.", "Koju jään ma lugema."],
+    answers: INFINITIVE_ORDERS.lugema,
     spare: ["lugeda"],
     lead: "jään",
   },
@@ -277,15 +280,15 @@ export const BUILT = [
   lead: Lead;
 }[];
 
-/** After a sentence is built: which form its first verb takes, and that it goes last. */
+/** After a sentence is built: which form its first verb takes, and that it usually goes last. */
 function BuiltWhy({ lead }: { lead: Lead }) {
   return leadOf(lead).takes === "da" ? (
     <Trans>
-      After <span lang="et">{lead}</span>, the <End>-da</End> infinitive, and it goes last.
+      After <span lang="et">{lead}</span>, the <End>-da</End> infinitive, and it usually goes last.
     </Trans>
   ) : (
     <Trans>
-      After <span lang="et">{lead}</span>, the <End>-ma</End> infinitive, and it goes last.
+      After <span lang="et">{lead}</span>, the <End>-ma</End> infinitive, and it usually goes last.
     </Trans>
   );
 }
@@ -355,7 +358,7 @@ function MessageWhy({ id }: { id: (typeof MESSAGE_GAPS)[number]["id"] }) {
       return (
         <Trans>
           After <span lang="et">tahad</span>, from <span lang="et">tahtma</span>, the <End>-da</End>{" "}
-          form.
+          infinitive.
         </Trans>
       );
     case "ootan":
@@ -396,11 +399,197 @@ const ORDER_MEANS: Record<(typeof INFINITIVE_ORDER)[number], MessageDescriptor> 
 const BUILT_MEANS: Record<string, MessageDescriptor> = {
   ...SAID_MEANS,
   "Ma tahan homme linna minna.": msg`I want to go to town tomorrow.`,
-  "Ma hakkan täna kodus õppima.": msg`Today I’m starting to study at home.`,
+  "Ma hakkan täna kodus õppima.": msg`I’m starting to study at home today.`,
 };
 
 const orderRows = (i18n: I18n) =>
   INFINITIVE_ORDER.map((said) => ({ main: said, sub: i18n._(ORDER_MEANS[said]), src: src(said) }));
+
+const SAY_MEANS: Record<(typeof INFINITIVE_SAY)[number]["id"], MessageDescriptor> = {
+  juua: msg`I want to drink coffee.`,
+  minema: msg`I have to go home.`,
+  oppima: msg`I’m starting to learn Estonian.`,
+  tulla: msg`I can come tomorrow.`,
+  lugeda: msg`I like reading.`,
+  sooma: msg`Come and eat! To one person.`,
+};
+
+export function sayItems(i18n: I18n): SentenceItem[] {
+  return INFINITIVE_SAY.map(({ id, said, also }) => ({
+    kind: "translate",
+    id: `say-${id}`,
+    prompt: i18n._(SAY_MEANS[id]),
+    src: src(said),
+    answers: [said, ...also],
+  }));
+}
+
+const FIX_MEANS: Record<(typeof INFINITIVE_FIX)[number]["id"], MessageDescriptor> = {
+  minna: msg`I want to go to town.`,
+  tulema: msg`I have to come tomorrow.`,
+  jooma: msg`I’m going for a coffee.`,
+  raakida: msg`I can speak Estonian.`,
+  oppima: msg`I’m starting to study tomorrow.`,
+  lugeda: msg`I like reading.`,
+};
+
+const FIX_LEAD: Record<
+  (typeof INFINITIVE_FIX)[number]["id"],
+  { lead: string; form: string; takes: Takes }
+> = {
+  minna: { lead: "tahan", form: "minna", takes: "da" },
+  tulema: { lead: "pean", form: "tulema", takes: "ma" },
+  jooma: { lead: "lähen", form: "jooma", takes: "ma" },
+  raakida: { lead: "oskan", form: "rääkida", takes: "da" },
+  oppima: { lead: "hakkan", form: "õppima", takes: "ma" },
+  lugeda: { lead: "mulle meeldib", form: "lugeda", takes: "da" },
+};
+
+function FixWhy({ id }: { id: (typeof INFINITIVE_FIX)[number]["id"] }) {
+  const { lead, form, takes } = FIX_LEAD[id];
+  return takes === "da" ? (
+    <Trans>
+      After <b lang="et">{lead}</b>, the <End>-da</End> infinitive: <b lang="et">{form}</b>.
+    </Trans>
+  ) : (
+    <Trans>
+      After <b lang="et">{lead}</b>, the <End>-ma</End> infinitive: <b lang="et">{form}</b>.
+    </Trans>
+  );
+}
+
+export function fixItems(i18n: I18n): FixItem[] {
+  return INFINITIVE_FIX.map(({ id, wrong, right }) => ({
+    kind: "fix",
+    id: `fix-${id}`,
+    wrong,
+    prompt: i18n._(FIX_MEANS[id]),
+    answers: [right],
+    src: src(right),
+    explain: <FixWhy id={id} />,
+  }));
+}
+
+function useTalkQuestions(): PassageQuestion[] {
+  const { t } = useLingui();
+  return [
+    {
+      kind: "truefalse",
+      id: "work",
+      ask: t`Jaan is free all day today.`,
+      answer: false,
+      line: 2,
+    },
+    {
+      kind: "short",
+      id: "home",
+      ask: t`When is Jaan coming home? Write the time in Estonian.`,
+      answers: [
+        "kell viis",
+        "viis",
+        "kell 5",
+        "5",
+        "kell 17",
+        "17",
+
+        "17.00",
+        "17:00",
+        "kell seitseteist",
+      ],
+      line: 3,
+    },
+    {
+      id: "cafe",
+      ask: t`What does Jaan want at the café?`,
+      options: [
+        { id: "coffee", label: t`Coffee` },
+        { id: "read", label: t`Something to read` },
+        { id: "lunch", label: t`A big lunch` },
+      ],
+      answer: "coffee",
+      line: 5,
+    },
+    {
+      kind: "short",
+      id: "seven",
+      ask: t`When does Jaan have to be at home? Write the time in Estonian.`,
+      answers: [
+        "kell seitse",
+        "seitse",
+        "kell 7",
+        "7",
+        "kell 19",
+        "19",
+
+        "19.00",
+        "19:00",
+        "kell üheksateist",
+      ],
+      line: 6,
+    },
+    {
+      kind: "truefalse",
+      id: "reading",
+      ask: t`Mari likes reading in a café.`,
+      answer: true,
+      line: 8,
+    },
+    {
+      kind: "short",
+      id: "wait",
+      ask: t`Where can Mari wait for Jaan? Write the place in Estonian, with its ending.`,
+      answers: ["kohvikus"],
+      line: 9,
+    },
+    {
+      id: "kati",
+      ask: t`Why can’t Kati come today?`,
+      options: [
+        { id: "work", label: t`Work` },
+        { id: "ill", label: t`Illness` },
+        { id: "learn", label: t`Studying Estonian` },
+      ],
+      answer: "learn",
+      line: 11,
+    },
+    {
+      kind: "truefalse",
+      id: "cook",
+      ask: t`Mari can cook a little.`,
+      answer: true,
+      line: 13,
+    },
+    {
+      id: "tomorrow",
+      ask: t`What will Jaan do tomorrow?`,
+      options: [
+        { id: "work", label: t`Work all evening` },
+        { id: "learn", label: t`Study Estonian` },
+        { id: "eat", label: t`Come for dinner` },
+      ],
+      answer: "eat",
+      line: 16,
+    },
+    {
+      kind: "short",
+      id: "six",
+      ask: t`When does Jaan have to come tomorrow? Write the time in Estonian.`,
+      answers: [
+        "kell kuus",
+        "kuus",
+        "kell 6",
+        "6",
+        "kell 18",
+        "18",
+
+        "18.00",
+        "18:00",
+        "kell kaheksateist",
+      ],
+      line: 18,
+    },
+  ];
+}
 
 export function TegevusnimedLesson() {
   const { t, i18n } = useLingui();
@@ -413,6 +602,7 @@ export function TegevusnimedLesson() {
   const present = lessonBySlug("olevik")?.n;
 
   const rows = useMemo(() => orderRows(i18n), [i18n]);
+  const talkQuestions = useTalkQuestions();
 
   const bins: SortBin[] = [
     {
@@ -456,13 +646,13 @@ export function TegevusnimedLesson() {
       sub={
         <Trans>
           <span lang="et">Ma tahan lugeda</span> is I want to read, and{" "}
-          <span lang="et">Ma pean lugema</span> is I have to read. The first verb decides whether
-          the second takes its <End>-da</End> or its <End>-ma</End> infinitive.
+          <span lang="et">Ma pean lugema</span> is I have to read. The first verb usually decides
+          whether the second takes its <End>-da</End> or its <End>-ma</End> infinitive.
         </Trans>
       }
       facts={[
-        <Trans key="m">12 minutes</Trans>,
-        <Trans key="q">A sort, sentences to build and a message to fill in</Trans>,
+        <Trans key="m">20 minutes</Trans>,
+        <Trans key="q">5 exercises and a recording you can play twice</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={INFINITIVE_LEADS.map(({ lead }) => lead)}
@@ -499,7 +689,7 @@ export function TegevusnimedLesson() {
                 <p>
                   <Trans>
                     In lesson {verbForms}, <Word w="lugema" /> and <Word w="lugeda" /> both meant to
-                    read. Which one you use depends on the verb before it.
+                    read. Which one you use usually depends on the verb before it.
                   </Trans>
                 </p>
                 <p>
@@ -523,7 +713,7 @@ export function TegevusnimedLesson() {
         },
         {
           id: "da",
-          title: t`Verbs of wanting and being able`,
+          title: t`Eight verbs of wanting, being able, trying and liking`,
           children: (
             <>
               <Prose>
@@ -542,37 +732,42 @@ export function TegevusnimedLesson() {
                 </p>
                 <p>
                   <Trans>
-                    <Word w="Mulle meeldib" />, I like, is the eighth:{" "}
+                    <Word w="Mulle meeldib" />, I like, takes it too:{" "}
                     <Word w="Mulle meeldib kohvi juua." /> Tap a verb to hear it in a sentence.
                   </Trans>
                 </p>
               </Prose>
-              <LeadKeys takes="da" label={t`Verbs of wanting and being able`} />
+              <LeadKeys
+                takes="da"
+                label={t`Eight verbs of wanting, being able, trying and liking`}
+              />
             </>
           ),
         },
         {
           id: "ma",
-          title: t`Verbs of having to, starting and going`,
+          title: t`Five verbs of having to, starting, moving and staying`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Pean" /> takes the <End>-ma</End> infinitive, and so do{" "}
-                    <Word w="hakkan" />, <Word w="lähen" />, <Word w="tule" /> and <Word w="jään" />
-                    .
+                    <Word w="Pean" /> takes the <End>-ma</End> infinitive:{" "}
+                    <Word w="Ma pean minema." /> So do <Word w="hakkan" />, <Word w="lähen" />,{" "}
+                    <Word w="tule" /> and <Word w="jään" />: <Word w="Ma lähen kohvi jooma." />
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    <Word w="Ma pean minema." /> <Word w="Ma lähen kohvi jooma." /> Lesson {going}{" "}
-                    explains what the <End>-ma</End> infinitive means after{" "}
+                    Lesson {going} explains what the <End>-ma</End> infinitive means after{" "}
                     <span lang="et">lähen</span>. Tap a verb to hear it in a sentence.
                   </Trans>
                 </p>
               </Prose>
-              <LeadKeys takes="ma" label={t`Verbs of having to, starting and going`} />
+              <LeadKeys
+                takes="ma"
+                label={t`Five verbs of having to, starting, moving and staying`}
+              />
               <Aside>
                 <Trans>
                   <Word w="Õppima" />, to learn, takes the <End>-ma</End> infinitive when you learn
@@ -582,12 +777,11 @@ export function TegevusnimedLesson() {
               <Aside>
                 <Trans>
                   To check a verb that isn’t here, look it up in <span lang="et">Sõnaveeb</span>, as
-                  lesson {nounForms} shows. <Word w="Teha" /> and <Word w="tegema" /> are the{" "}
-                  <End>-da</End> and <End>-ma</End> infinitives of to do, and{" "}
-                  <span lang="et">Sõnaveeb</span> uses them to say which form a verb takes. Under{" "}
-                  <span lang="et">Rektsioon</span>, <b lang="et">mida teha</b> means the{" "}
-                  <End>-da</End> infinitive and <b lang="et">mida tegema</b> the <End>-ma</End>{" "}
-                  infinitive.
+                  lesson {nounForms} shows. <Word w="Teha" /> and <Word w="tegema" /> both mean to
+                  do: the <End>-da</End> and the <End>-ma</End> infinitive. Under{" "}
+                  <span lang="et">Rektsioon</span>, <span lang="et">Sõnaveeb</span> uses them to
+                  show which form a verb takes: <b lang="et">mida teha</b> means the <End>-da</End>{" "}
+                  infinitive, <b lang="et">mida tegema</b> the <End>-ma</End> infinitive.
                 </Trans>
               </Aside>
             </>
@@ -626,7 +820,7 @@ export function TegevusnimedLesson() {
                 <p>
                   <Trans>
                     Words for when and where usually sit between the two verbs, and the second verb
-                    stays at the end: <Word w="Ma pean homme tööle minema." />
+                    usually goes last: <Word w="Ma pean homme tööle minema." />
                   </Trans>
                 </p>
                 <p>
@@ -651,7 +845,7 @@ export function TegevusnimedLesson() {
                 items={built}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All three. Each second verb took the right form and went last.</Trans>
+                    <Trans>All three. Each second verb took the right form.</Trans>
                   ) : (
                     <Trans>
                       Check which form each second verb takes and where it goes, then try again.
@@ -660,6 +854,74 @@ export function TegevusnimedLesson() {
                 }
                 recall={(item) => ({ label: item.answers[0] ?? "", src: item.src })}
                 round={(props) => <OrderRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "say-it",
+          title: t`Write it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write each sentence in Estonian. The first verb usually decides the second
+                    verb’s form, and the second verb usually goes last.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="say-infinitives"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={sayItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six written right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Read the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "fix",
+          title: t`Fix the sentence`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    In each sentence the second verb has the wrong infinitive. Tap it, then write
+                    the right one.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="fix-infinitives"
+                title={<Trans>Find and fix the mistake</Trans>}
+                items={fixItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six found and fixed.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Look again at the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={fixRecall}
+                round={(props) => <FixRound {...props} />}
               />
             </>
           ),
@@ -685,6 +947,32 @@ export function TegevusnimedLesson() {
                 gaps={MESSAGE_ITEMS}
                 mode="pick"
                 clip="p-message"
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listen: plans for the day`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Mari calls Jaan to ask about his day. Listen for what each of them has to do,
+                    wants to do and can do.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="plans-talk"
+                title={<Trans>Listen: Mari calls Jaan</Trans>}
+                clip="c-plans"
+                turns={INFINITIVE_TALK.turns}
+                names={{ third: "Mari", fourth: "Jaan" }}
+                questions={talkQuestions}
+                plays={2}
               />
             </>
           ),

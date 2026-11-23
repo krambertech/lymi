@@ -21728,5 +21728,449 @@
         ]
       }
     ]
+  },
+  "numbrid/viisteist": {
+    "text": "viisteist",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/viisku2mmend": {
+    "text": "viiskümmend",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/seitseteist": {
+    "text": "seitseteist",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/seitseku2mmend": {
+    "text": "seitsekümmend",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/kaks": {
+    "text": "kaks",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/kuus": {
+    "text": "kuus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/kaheksa": {
+    "text": "kaheksa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/u2heksa": {
+    "text": "üheksa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/kaksku2mmend-seitse": {
+    "text": "kakskümmend seitse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/neliku2mmend-kolm": {
+    "text": "nelikümmend kolm",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/kuusku2mmend-kaheksa": {
+    "text": "kuuskümmend kaheksa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/u2heksaku2mmend-u2ks": {
+    "text": "üheksakümmend üks",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/tuhat": {
+    "text": "tuhat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/kolmsada": {
+    "text": "kolmsada",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/mul-on-kaks-kassi": {
+    "text": "Mul on kaks kassi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/mul-on-kuus-kassi": {
+    "text": "Mul on kuus kassi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/kohv-maksab-kaks-eurot": {
+    "text": "Kohv maksab kaks eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/p-jaan": {
+    "text": "Tere! Minu nimi on Jaan. Ma olen kolmkümmend kaks aastat vana. Minu korteri number on kaheksateist. Minu number on viis, kuus, kaks, null, üheksa. Mul on kaks kassi. Kohv maksab kaks eurot ja viiskümmend senti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kaheksa": {
+    "text": "Kell on kaheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-veerand-kaheksa": {
+    "text": "Kell on veerand kaheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kolmveerand-ku2mme": {
+    "text": "Kell on kolmveerand kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kaksku2mmend-minutit-kuus-la2bi": {
+    "text": "Kell on kakskümmend minutit kuus läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kaheku2mne-minuti-pa2rast-u2ksteist": {
+    "text": "Kell on kahekümne minuti pärast üksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-viie-minuti-pa2rast-kaksteist": {
+    "text": "Kell on viie minuti pärast kaksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/p-mari": {
+    "text": "Tere, Jaan! Kell on pool kaks. Ma olen tööl. Ma olen kodus kell kolm. Me joome kohvi kell veerand viis. Me ootame bussi kell kolmveerand kuus.",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "tutvumine/d-kati": {
+    "text": "Tere! Kas sa oled Peeter? Jah, mina olen Peeter. Mina olen Liis. Kus sa elad? Ma elan Tartus, aga ma töötan Tallinnas. Kas sa räägid eesti keelt? Natuke. Ma õpin eesti keelt. Mina ei tööta. Ma õpin Tartus. Ja kus sina elad? Ma elan Pärnus.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere!",
+          "Kas sa oled Peeter?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, mina olen Peeter."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mina olen Liis.",
+          "Kus sa elad?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma elan Tartus, aga ma töötan Tallinnas."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sa räägid eesti keelt?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Natuke.",
+          "Ma õpin eesti keelt."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mina ei tööta.",
+          "Ma õpin Tartus."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja kus sina elad?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ma elan Pärnus."
+        ]
+      }
+    ]
+  },
+  "tutvumine/p-message": {
+    "text": "Tere, Mari! Kuidas läheb? Mina olen Andres. Ma olen pärit Ukrainast. Ma elan Tartus ja töötan kontoris. Ma ei räägi palju eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kas": {
+    "text": "kas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kus": {
+    "text": "kus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kes": {
+    "text": "kes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kas-sa-oled-o3petaja": {
+    "text": "Kas sa oled õpetaja?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/mis-sa-jood": {
+    "text": "Mis sa jood?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/me-elame-tallinnas": {
+    "text": "Me elame Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/nad-on-to2o2l": {
+    "text": "Nad on tööl.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/ma-ei-to2o2ta-kontoris": {
+    "text": "Ma ei tööta kontoris.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/ta-elab-tartus": {
+    "text": "Ta elab Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/mina-olen-andres": {
+    "text": "Mina olen Andres.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/nelisada": {
+    "text": "nelisada",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/kolm-tuhat": {
+    "text": "kolm tuhat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/kuusteist": {
+    "text": "kuusteist",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/kuusku2mmend": {
+    "text": "kuuskümmend",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/kohv-maksab-kuus-eurot": {
+    "text": "Kohv maksab kuus eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/me-ei-to2o2ta-me-o3pime": {
+    "text": "Me ei tööta, me õpime.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/ma-ei-ole-kodus": {
+    "text": "Ma ei ole kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kas-sa-elad-tallinnas": {
+    "text": "Kas sa elad Tallinnas?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kus-ta-to2o2tab": {
+    "text": "Kus ta töötab?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-veerand-kaksteist": {
+    "text": "Kell on veerand kaksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-viis-minutit-kolm-la2bi": {
+    "text": "Kell on viis minutit kolm läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-neli": {
+    "text": "Kell on neli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kuus": {
+    "text": "Kell on kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-ku2mme": {
+    "text": "Kell on kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-veerand-neli": {
+    "text": "Kell on veerand neli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kolmveerand-kuus": {
+    "text": "Kell on kolmveerand kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-ku2mme-minutit-kaheksa-la2bi": {
+    "text": "Kell on kümme minutit kaheksa läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kaksku2mmend-minutit-neli-la2bi": {
+    "text": "Kell on kakskümmend minutit neli läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-ku2mne-minuti-pa2rast-kaheksa": {
+    "text": "Kell on kümne minuti pärast kaheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kaheku2mne-minuti-pa2rast-kolm": {
+    "text": "Kell on kahekümne minuti pärast kolm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kas-ta-ra2a2gib-eesti-keelt": {
+    "text": "Kas ta räägib eesti keelt?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kolmveerand-kaks": {
+    "text": "Kell on kolmveerand kaks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kus-mari-elab": {
+    "text": "Kus Mari elab?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/u2heksateist": {
+    "text": "üheksateist",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-viis": {
+    "text": "Kell on viis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kaksteist": {
+    "text": "Kell on kaksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-veerand-kaks": {
+    "text": "Kell on veerand kaks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kolmveerand-seitse": {
+    "text": "Kell on kolmveerand seitse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kolmveerand-viis": {
+    "text": "Kell on kolmveerand viis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-viis-minutit-ku2mme-la2bi": {
+    "text": "Kell on viis minutit kümme läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-ku2mme-minutit-kaksteist-la2bi": {
+    "text": "Kell on kümme minutit kaksteist läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-ku2mne-minuti-pa2rast-kuus": {
+    "text": "Kell on kümne minuti pärast kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell-on-kaheku2mne-minuti-pa2rast-seitse": {
+    "text": "Kell on kahekümne minuti pärast seitse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/ma-ei-ela-tallinnas": {
+    "text": "Ma ei ela Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kati-o3pib-tallinnas": {
+    "text": "Kati õpib Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/me-to2o2tame-kohvikus": {
+    "text": "Me töötame kohvikus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kus-te-o3pite": {
+    "text": "Kus te õpite?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kas-te-olete-kodus": {
+    "text": "Kas te olete kodus?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "numbrid/u2heksaku2mmend": {
+    "text": "üheksakümmend",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/sa-oled-kodus": {
+    "text": "Sa oled kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

@@ -3,12 +3,23 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { Minus, Plus } from "lucide-react";
 import { type ReactNode, useMemo, useRef, useState } from "react";
 import { lessonBySlug } from "../../../lib/learn/catalogue";
-import { clipUrl, NUMBER_SENTENCES, numberClip } from "../../../lib/learn/clips";
+import {
+  clipUrl,
+  NUMBER_ALIKE,
+  NUMBER_PASSAGE,
+  NUMBER_SENTENCES,
+  NUMBER_WRITTEN,
+  numberClip,
+  numberAnswers,
+} from "../../../lib/learn/clips";
 import { DIGIT_WORDS, numberParts, numberWords } from "../../../lib/learn/estonian-numbers";
 import { playSound } from "../../../lib/learn/player";
+import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Keys, ListenRows, Panel } from "../Explore";
+import { type FormItem, FormRound, formRecall } from "../FormRound";
 import type { Glossary } from "../lesson-context";
 import { LessonView, Prose } from "../LessonView";
+import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz, type TypedItem, TypedRound } from "../Quiz";
 import { PlayButton } from "../Sound";
 import { Word } from "../Word";
@@ -75,9 +86,18 @@ const SENTENCES: readonly {
   { id: "c-aasta", answers: ["365"], en: msg`A year has 365 days.` },
   { id: "c-tund", answers: ["60"], en: msg`An hour has 60 minutes.` },
   { id: "c-klass", answers: ["22"], en: msg`There are 22 pupils in the class.` },
-  { id: "c-telefon", answers: ["52094"], en: msg`My number is 5 2 0 9 4.` },
-  { id: "c-kohv", answers: ["3.50", "3,50"], en: msg`Coffee costs €3.50.` },
+  { id: "c-telefon", answers: ["52094", "5 2 0 9 4"], en: msg`My number is 5 2 0 9 4.` },
+  { id: "c-kohv", answers: ["3.50", "3,50", "3.5", "3,5"], en: msg`Coffee costs €3.50.` },
 ];
+
+type AlikeItem = ChoiceItem & { pair: readonly [string, string] };
+
+export const alikeRun = (items: readonly AlikeItem[], pinned?: AlikeItem): AlikeItem[] =>
+  eachPairFirst(items, pinned).map((item) =>
+    item === pinned ? item : { ...item, options: shuffle(item.options) },
+  );
+
+const kindOf = (n: number) => (n < 20 ? "teen" : n % 10 === 0 ? "tens" : "both");
 
 const range = (from: number, to: number) =>
   Array.from({ length: to - from + 1 }, (_, i) => from + i);
@@ -139,7 +159,7 @@ function HowItsBuilt({ n }: { n: number }) {
         Built from <b className={b}>{teen}</b> and -teist: {digit} in the second ten.
       </Trans>
     );
-  if (n === 100) return <Trans>Sada alone, with no “one” in front.</Trans>;
+  if (n === 100) return <Trans>Sada, usually with no “one” in front.</Trans>;
   if (n % 10 === 0)
     return (
       <Trans>
@@ -254,6 +274,95 @@ export function NumbridLesson() {
       }),
     [],
   );
+  const alikeItems = useMemo<AlikeItem[]>(
+    () =>
+      NUMBER_ALIKE.flatMap((pair, i) =>
+        pair.map((n, j) => {
+          const options = pair.map((v) => ({
+            id: String(v),
+            label: String(v),
+            sub: numberWords(v),
+          }));
+          return {
+            src: numberSrc(n),
+            answer: String(n),
+            pair: [pair.join("-"), String(n)] as const,
+            options: (i + j) % 2 ? [...options].reverse() : options,
+          };
+        }),
+      ),
+    [],
+  );
+
+  const writtenItems = useMemo<(FormItem & { pair: readonly [string, string] })[]>(
+    () =>
+      NUMBER_WRITTEN.map((n) => ({
+        base: String(n),
+        cue: t`in words`,
+        answers: numberAnswers(n),
+        src: numberSrc(n),
+        pair: [kindOf(n), String(n)] as const,
+      })),
+    [t],
+  );
+
+  const passageQuestions = useMemo<PassageQuestion[]>(
+    () => [
+      {
+        id: "age",
+        ask: t`How old is Jaan?`,
+        options: [
+          { id: "22", label: "22" },
+          { id: "32", label: "32" },
+          { id: "23", label: "23" },
+        ],
+        answer: "32",
+        line: 1,
+      },
+      {
+        id: "flat",
+        ask: t`What is his flat number?`,
+        options: [
+          { id: "19", label: "19" },
+          { id: "80", label: "80" },
+          { id: "18", label: "18" },
+        ],
+        answer: "18",
+        line: 2,
+      },
+      {
+        id: "phone",
+        ask: t`What is his phone number?`,
+        options: [
+          { id: "56209", label: "5 6 2 0 9" },
+          { id: "52609", label: "5 2 6 0 9" },
+          { id: "56609", label: "5 6 6 0 9" },
+        ],
+        answer: "56209",
+        line: 3,
+      },
+      {
+        id: "cats",
+        kind: "truefalse",
+        ask: t`Jaan has six cats.`,
+        answer: false,
+        line: 4,
+      },
+      {
+        id: "coffee",
+        ask: t`What does the coffee cost?`,
+        options: [
+          { id: "650", label: t`€6.50` },
+          { id: "250", label: t`€2.50` },
+          { id: "215", label: t`€2.15` },
+        ],
+        answer: "250",
+        line: 5,
+      },
+    ],
+    [t],
+  );
+
   const levelItems = useMemo(
     () =>
       LEVELS.map((each) =>
@@ -297,8 +406,8 @@ export function NumbridLesson() {
       glossary={GLOSSARY}
       sub={<Trans>Numbers by ear. Eleven words and two endings take you to ninety-nine.</Trans>}
       facts={[
-        <Trans key="m">10 minutes</Trans>,
-        <Trans key="q">3 quizzes</Trans>,
+        <Trans key="m">15 minutes</Trans>,
+        <Trans key="q">5 quizzes and a passage</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -325,13 +434,13 @@ export function NumbridLesson() {
         </Trans>,
         <Trans key="2">
           The ending <b lang="et">-teist</b> makes eleven to nineteen, and <b lang="et">-kümmend</b>{" "}
-          makes the tens.
+          makes the tens from twenty to ninety.
         </Trans>,
         <Trans key="3">
           Tens and ones are separate words: <b lang="et">kakskümmend üks</b>.
         </Trans>,
         <Trans key="4">
-          <b lang="et">Sada</b> and <b lang="et">tuhat</b> need no “one”. Hundreds join up;
+          <b lang="et">Sada</b> and <b lang="et">tuhat</b> usually need no “one”. Hundreds join up;
           thousands stay separate.
         </Trans>,
       ]}
@@ -398,14 +507,14 @@ export function NumbridLesson() {
         },
         {
           id: "tens",
-          title: t`The tens: -kümmend`,
+          title: t`Twenty to ninety: -kümmend`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    For the tens, add <em>-kümmend</em> to the digit: <Word w="kakskümmend" /> is
-                    two tens, twenty.
+                    From twenty to ninety, add <em>-kümmend</em> to the digit:{" "}
+                    <Word w="kakskümmend" /> is two tens, twenty. Ten is just <em>kümme</em>.
                   </Trans>
                 </p>
               </Prose>
@@ -476,8 +585,8 @@ export function NumbridLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Sada" /> is a hundred and <Word w="tuhat" /> a thousand, with no “one”
-                    in front of either. Hundreds join into one word, <Word w="kakssada" />, but
+                    <Word w="Sada" /> is a hundred and <Word w="tuhat" /> a thousand, usually with
+                    no “one” in front. Hundreds join into one word, <Word w="kakssada" />, but
                     thousands stay separate: <Word w="kaks tuhat" />.
                   </Trans>
                 </p>
@@ -560,6 +669,104 @@ export function NumbridLesson() {
                 }
                 recall={(item) => ({ label: item.answers[0] ?? "", src: item.src })}
                 round={(props) => <TypedRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "alike",
+          title: t`Numbers that sound alike`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    <Word w="Kaks" /> has a short <b lang="et">a</b> and a <b lang="et">k</b> before
+                    the <b lang="et">s</b>; <Word w="kuus" /> has a long <b lang="et">uu</b>.{" "}
+                    <Word w="Kaheksa" /> starts with <b lang="et">ka</b>, <Word w="üheksa" /> with{" "}
+                    <b lang="et">ü</b>. The numbers built from them differ the same way. Listen,
+                    then pick.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="sound-alike"
+                title={<Trans>Which number did you hear?</Trans>}
+                items={alikeItems}
+                rounds={8}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All of them, every pair told apart.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Play the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Tap zero to ten at the top once more, then try again.</Trans>
+                  )
+                }
+                both={(item) => item.options.map((option) => numberSrc(Number(option.id)))}
+                recall={(item) => ({ label: item.answer, src: item.src })}
+                order={alikeRun}
+                round={(props) => <ChoiceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "words",
+          title: t`Write the number in words`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Now the other way round: each round shows digits, and you type the words. Tens
+                    and ones are two words: <Word w="kakskümmend üks" />.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="number-words"
+                title={<Trans>Type it in words</Trans>}
+                items={writtenItems}
+                rounds={8}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All of them, every word spelled right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check -teist and -kümmend in the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Move the slider in Put them together once more, then try again.</Trans>
+                  )
+                }
+                recall={formRecall}
+                order={eachPairFirst}
+                round={(props) => <FormRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listening: Jaan’s numbers`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Jaan says how old he is, his flat and phone numbers, how many cats he has and
+                    what his coffee costs. Listen for each number.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="jaan-numbers"
+                title={<Trans>Listen: Jaan’s numbers</Trans>}
+                clip="p-jaan"
+                sentences={NUMBER_PASSAGE}
+                questions={passageQuestions}
               />
             </>
           ),

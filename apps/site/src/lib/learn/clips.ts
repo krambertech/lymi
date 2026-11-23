@@ -1,6 +1,6 @@
 import { numberWords } from "./estonian-numbers";
 import { MONTHS, ordinalOn, ordinalWords } from "./estonian-ordinals";
-import { ALL_TIMES, timeClip, timeSentence } from "./estonian-time";
+import { ALL_TIMES, type ClockTime, timeClip, timeSentence, timeWords } from "./estonian-time";
 import { KIT_EXPLORE_TEXTS } from "./kit-explore";
 
 /**
@@ -194,6 +194,53 @@ export const NUMBER_SENTENCES = {
 } as const;
 
 export const numberClip = (n: number) => `n${n}`;
+
+export const NUMBER_ALIKE = [
+  [2, 6],
+  [8, 9],
+  [12, 16],
+  [18, 19],
+  [20, 60],
+  [80, 90],
+] as const;
+
+export const NUMBER_WRITTEN = [14, 17, 30, 50, 27, 43, 68, 91] as const;
+
+export const NUMBER_PASSAGE = [
+  "Tere! Minu nimi on Jaan.",
+  "Ma olen kolmkümmend kaks aastat vana.",
+  "Minu korteri number on kaheksateist.",
+  "Minu number on viis, kuus, kaks, null, üheksa.",
+  "Mul on kaks kassi.",
+  "Kohv maksab kaks eurot ja viiskümmend senti.",
+] as const;
+
+export const NUMBER_DRILLED = [
+  "viisteist",
+  "viiskümmend",
+  "seitseteist",
+  "seitsekümmend",
+  "üheksateist",
+  "üheksakümmend",
+  "kaks",
+  "kuus",
+  "kaheksa",
+  "üheksa",
+  "kakskümmend seitse",
+  "nelikümmend kolm",
+  "kuuskümmend kaheksa",
+  "üheksakümmend üks",
+  "kuusteist",
+  "kuuskümmend",
+  "nelisada",
+  "tuhat",
+  "kolm tuhat",
+  "kolmsada",
+  "Mul on kaks kassi.",
+  "Mul on kuus kassi.",
+  "Kohv maksab kaks eurot.",
+  "Kohv maksab kuus eurot.",
+] as const;
 
 /** The week from Monday, as the days lesson shows it. */
 export const WEEK = [
@@ -1407,6 +1454,296 @@ export const TUTVUMINE_PASSAGES = {
   ],
 } as const;
 
+export const TUTVUMINE_TALK: Conversation = {
+  turns: [
+    { voice: "second", text: ["Tere!", "Kas sa oled Peeter?"] },
+    { voice: "main", text: "Jah, mina olen Peeter." },
+    { voice: "second", text: ["Mina olen Liis.", "Kus sa elad?"] },
+    { voice: "main", text: "Ma elan Tartus, aga ma töötan Tallinnas." },
+    { voice: "second", text: "Kas sa räägid eesti keelt?" },
+    { voice: "main", text: ["Natuke.", "Ma õpin eesti keelt."] },
+    { voice: "second", text: ["Mina ei tööta.", "Ma õpin Tartus."] },
+    { voice: "main", text: "Ja kus sina elad?" },
+    { voice: "second", text: "Ma elan Pärnus." },
+  ],
+};
+
+export const numberAnswers = (n: number): [string, ...string[]] => {
+  const words = numberWords(n);
+  if (n > 10 && n < 20) return [words, `${words}kümmend`];
+  return n === 100 ? [words, "ükssada"] : n === 1000 ? [words, "üks tuhat"] : [words];
+};
+
+const HOUR_GENITIVES = [
+  "ühe",
+  "kahe",
+  "kolme",
+  "nelja",
+  "viie",
+  "kuue",
+  "seitsme",
+  "kaheksa",
+  "üheksa",
+  "kümne",
+  "üheteistkümne",
+  "kaheteistkümne",
+] as const;
+
+export const timeAnswers = (time: ClockTime): [string, ...string[]] => {
+  const words = timeWords(time);
+  const hour = numberWords(time.hour);
+  const genitive = HOUR_GENITIVES[time.hour - 1];
+  const next = numberWords((time.hour % 12) + 1);
+  const nextGenitive = HOUR_GENITIVES[time.hour % 12];
+  const read =
+    time.minute === 0
+      ? []
+      : [`${hour} ${time.minute < 10 ? "null " : ""}${numberWords(time.minute)}`];
+  const zeroes = time.minute === 0 ? [`${hour} null null`] : [];
+  const past = [5, 10, 20].includes(time.minute)
+    ? [
+        `${numberWords(time.minute)} minutit üle ${genitive}`,
+        `${numberWords(time.minute)} minutit ${nextGenitive} peal`,
+      ]
+    : time.minute === 15
+      ? [
+          `viisteist minutit ${hour} läbi`,
+          `viisteist minutit üle ${genitive}`,
+          `viisteist minutit ${nextGenitive} peal`,
+        ]
+      : time.minute === 45
+        ? [`viieteist minuti pärast ${next}`]
+        : [];
+  return [
+    words,
+    `kell on ${words}`,
+    `kell ${words}`,
+    ...[...past, ...read, ...zeroes].flatMap((each) => [each, `kell on ${each}`, `kell ${each}`]),
+  ];
+};
+
+export const TUTVUMINE_ASKED = [
+  {
+    kind: "mis",
+    reply: "Minu nimi on Liis.",
+    answers: [
+      "Mis su nimi on?",
+      "Mis sinu nimi on?",
+      "Mis teie nimi on?",
+      "Mis on su nimi?",
+      "Mis on sinu nimi?",
+      "Mis on teie nimi?",
+      "Kes sa oled?",
+      "Kes sina oled?",
+      "Kes te olete?",
+      "Kes teie olete?",
+      "Kes oled?",
+      "Kes olete?",
+      "Kuidas su nimi on?",
+      "Kuidas sinu nimi on?",
+      "Kuidas teie nimi on?",
+      "Kuidas on su nimi?",
+      "Kuidas on sinu nimi?",
+      "Kuidas on teie nimi?",
+      "Mis te nimi on?",
+      "Mis on te nimi?",
+      "Kuidas te nimi on?",
+      "Kuidas on te nimi?",
+    ],
+  },
+  {
+    kind: "kus",
+    reply: "Ma elan Pärnus.",
+    answers: [
+      "Kus sa elad?",
+      "Kus te elate?",
+      "Kus sina elad?",
+      "Kus teie elate?",
+      "Kus elad?",
+      "Kus elate?",
+    ],
+  },
+  {
+    kind: "kus",
+    reply: "Ma töötan koolis.",
+    answers: [
+      "Kus sa töötad?",
+      "Kus te töötate?",
+      "Kus sina töötad?",
+      "Kus teie töötate?",
+      "Kus töötad?",
+      "Kus töötate?",
+    ],
+  },
+  {
+    kind: "kas",
+    reply: "Jah, ma räägin eesti keelt.",
+    answers: [
+      "Kas sa räägid eesti keelt?",
+      "Kas te räägite eesti keelt?",
+      "Kas sina räägid eesti keelt?",
+      "Kas teie räägite eesti keelt?",
+      "Kas räägid eesti keelt?",
+      "Kas räägite eesti keelt?",
+      "Sa räägid eesti keelt või?",
+      "Te räägite eesti keelt või?",
+      "Kas sa eesti keelt räägid?",
+      "Kas te eesti keelt räägite?",
+      "Sina räägid eesti keelt või?",
+      "Teie räägite eesti keelt või?",
+      "Kas sina eesti keelt räägid?",
+      "Kas teie eesti keelt räägite?",
+      "Kas eesti keelt räägid?",
+      "Kas eesti keelt räägite?",
+      "Räägid sa eesti keelt?",
+      "Räägite te eesti keelt?",
+      "Räägid sina eesti keelt?",
+      "Räägite teie eesti keelt?",
+      "Räägid eesti keelt?",
+      "Räägite eesti keelt?",
+      "Räägid eesti keelt või?",
+      "Räägite eesti keelt või?",
+      "Sa eesti keelt räägid või?",
+      "Te eesti keelt räägite või?",
+      "Sina eesti keelt räägid või?",
+      "Teie eesti keelt räägite või?",
+    ],
+  },
+  {
+    kind: "kas",
+    reply: "Ei, ma ei ole õpetaja.",
+    answers: [
+      "Kas sa oled õpetaja?",
+      "Kas te olete õpetaja?",
+      "Kas sina oled õpetaja?",
+      "Kas teie olete õpetaja?",
+      "Kas oled õpetaja?",
+      "Kas olete õpetaja?",
+      "Sa oled õpetaja või?",
+      "Te olete õpetaja või?",
+      "Kas sa õpetaja oled?",
+      "Kas te õpetaja olete?",
+      "Sina oled õpetaja või?",
+      "Teie olete õpetaja või?",
+      "Kas sina õpetaja oled?",
+      "Kas teie õpetaja olete?",
+      "Kas õpetaja oled?",
+      "Kas õpetaja olete?",
+      "Oled sa õpetaja?",
+      "Olete te õpetaja?",
+      "Oled sina õpetaja?",
+      "Olete teie õpetaja?",
+      "Oled õpetaja?",
+      "Olete õpetaja?",
+      "Oled õpetaja või?",
+      "Olete õpetaja või?",
+      "Sa õpetaja oled või?",
+      "Te õpetaja olete või?",
+      "Sina õpetaja oled või?",
+      "Teie õpetaja olete või?",
+    ],
+  },
+  { kind: "mis", reply: "Ma joon kohvi.", answers: KUSIMUSED_ASKED[1].answers },
+] as const;
+
+export const TUTVUMINE_TRANSLATED = [
+  {
+    kind: "ei",
+    answers: [
+      "Me ei tööta, me õpime.",
+      "Meie ei tööta, me õpime.",
+      "Me ei tööta, meie õpime.",
+      "Meie ei tööta, meie õpime.",
+      "Me ei tööta, õpime.",
+      "Meie ei tööta, õpime.",
+      "Me ei tööta, vaid õpime.",
+      "Meie ei tööta, vaid õpime.",
+      "Me ei tööta, vaid me õpime.",
+      "Meie ei tööta, vaid me õpime.",
+      "Me ei tööta, vaid meie õpime.",
+      "Meie ei tööta, vaid meie õpime.",
+    ],
+  },
+  {
+    kind: "ei",
+    answers: [
+      "Ma ei ole kodus.",
+      "Ma pole kodus.",
+      "Mina ei ole kodus.",
+      "Mina pole kodus.",
+      "Mind ei ole kodus.",
+      "Mind pole kodus.",
+    ],
+  },
+  {
+    kind: "place",
+    answers: [
+      "Me elame Tallinnas.",
+      "Meie elame Tallinnas.",
+      "Elame Tallinnas.",
+      "Tallinnas me elame.",
+      "Tallinnas meie elame.",
+      "Tallinnas elame.",
+    ],
+  },
+  { kind: "place", answers: ["Nad on tööl.", "Nemad on tööl."], confusable: ["tool"] },
+  {
+    kind: "ask",
+    answers: [
+      "Kas sa elad Tallinnas?",
+      "Kas te elate Tallinnas?",
+      "Kas sina elad Tallinnas?",
+      "Kas teie elate Tallinnas?",
+      "Kas elad Tallinnas?",
+      "Kas elate Tallinnas?",
+      "Kas sa Tallinnas elad?",
+      "Kas te Tallinnas elate?",
+      "Sa elad Tallinnas või?",
+      "Te elate Tallinnas või?",
+      "Sina elad Tallinnas või?",
+      "Teie elate Tallinnas või?",
+      "Kas sina Tallinnas elad?",
+      "Kas teie Tallinnas elate?",
+      "Kas Tallinnas elad?",
+      "Kas Tallinnas elate?",
+      "Elad sa Tallinnas?",
+      "Elate te Tallinnas?",
+      "Elad sina Tallinnas?",
+      "Elate teie Tallinnas?",
+      "Elad Tallinnas?",
+      "Elate Tallinnas?",
+      "Elad Tallinnas või?",
+      "Elate Tallinnas või?",
+      "Sa Tallinnas elad või?",
+      "Te Tallinnas elate või?",
+      "Sina Tallinnas elad või?",
+      "Teie Tallinnas elate või?",
+    ],
+  },
+  {
+    kind: "kus",
+    answers: ["Kus ta töötab?", "Kus tema töötab?", "Kus töötab ta?", "Kus töötab tema?"],
+  },
+] as const;
+
+export const TUTVUMINE_FIXES = [
+  { wrong: "Ma ei töötan kontoris.", said: "Ma ei tööta kontoris.", kind: "ei" },
+  { wrong: "Ta elab Tartul.", said: "Ta elab Tartus.", kind: "place" },
+  { wrong: "Nad on töös.", said: "Nad on tööl.", kind: "place", confusable: ["tool"] },
+  { wrong: "Kas ta räägid eesti keelt?", said: "Kas ta räägib eesti keelt?", kind: "ask" },
+  { wrong: "Kus Mari elad?", said: "Kus Mari elab?", kind: "kus" },
+  { wrong: "Mina on Andres.", said: "Mina olen Andres.", kind: "olema" },
+] as const;
+
+export const TUTVUMINE_MESSAGE = [
+  "Tere, Mari!",
+  "Kuidas läheb?",
+  "Mina olen Andres.",
+  "Ma olen pärit Ukrainast.",
+  "Ma elan Tartus ja töötan kontoris.",
+  "Ma ei räägi palju eesti keelt.",
+] as const;
+
 /** Words and phrases with a card: the passage's words, and the phrases worth keeping. */
 export const TUTVUMINE_WORDS = [
   "nimi",
@@ -1437,6 +1774,51 @@ export const TUTVUMINE_WORDS = [
   "Sest",
   "Head aega!",
 ] as const;
+
+export const KELL_PASSAGE = [
+  "Tere, Jaan!",
+  "Kell on pool kaks.",
+  "Ma olen tööl.",
+  "Ma olen kodus kell kolm.",
+  "Me joome kohvi kell veerand viis.",
+  "Me ootame bussi kell kolmveerand kuus.",
+] as const;
+
+export const KELL_HEARD: readonly ClockTime[] = [
+  { hour: 6, minute: 0 },
+  { hour: 10, minute: 0 },
+  { hour: 3, minute: 15 },
+  { hour: 5, minute: 45 },
+  { hour: 1, minute: 45 },
+  { hour: 8, minute: 10 },
+  { hour: 4, minute: 20 },
+  { hour: 7, minute: 50 },
+  { hour: 2, minute: 40 },
+];
+
+export const KELL_WRITTEN: readonly ClockTime[] = [
+  { hour: 5, minute: 0 },
+  { hour: 12, minute: 0 },
+  { hour: 1, minute: 15 },
+  { hour: 6, minute: 45 },
+  { hour: 4, minute: 45 },
+  { hour: 10, minute: 5 },
+  { hour: 12, minute: 10 },
+  { hour: 5, minute: 50 },
+  { hour: 6, minute: 40 },
+];
+
+export const KELL_DRILLED: readonly ClockTime[] = [
+  { hour: 4, minute: 0 },
+  { hour: 8, minute: 0 },
+  { hour: 11, minute: 15 },
+  { hour: 7, minute: 15 },
+  { hour: 9, minute: 45 },
+  { hour: 3, minute: 5 },
+  { hour: 6, minute: 20 },
+  { hour: 10, minute: 40 },
+  { hour: 11, minute: 55 },
+];
 
 /** The time lesson's words and phrases; each time it says is a clip of its own, by `timeClip`. */
 export const KELL_WORDS = [
@@ -8626,6 +9008,8 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   numbrid: {
     ...Object.fromEntries(SPOKEN_NUMBERS.map((n) => [numberClip(n), numberWords(n)])),
     ...NUMBER_SENTENCES,
+    ...words(NUMBER_DRILLED),
+    "p-jaan": { sentences: NUMBER_PASSAGE },
   },
   eitus: {
     ...words([
@@ -8715,6 +9099,8 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   kell: {
     ...words(KELL_WORDS),
     ...Object.fromEntries(ALL_TIMES.map((time) => [timeClip(time), timeSentence(time)])),
+    ...words([...KELL_DRILLED, ...KELL_HEARD, ...KELL_WRITTEN].map(timeSentence)),
+    "p-mari": { sentences: KELL_PASSAGE, voice: "third" },
   },
   paevad: { ...words(PAEVAD_WORDS), ...words(PAEVAD_SENTENCES) },
   tutvumine: {
@@ -8723,6 +9109,20 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...TUTVUMINE_ASKING,
     "p-jaan": { sentences: TUTVUMINE_PASSAGES.jaan },
     "p-kati": { sentences: TUTVUMINE_PASSAGES.kati, voice: "second" },
+    "d-kati": TUTVUMINE_TALK,
+    "p-message": { sentences: TUTVUMINE_MESSAGE },
+    ...words(["kas", "kus", "kes"]),
+    ...words(TUTVUMINE_ASKED.map(({ answers }) => answers[0])),
+    ...words(TUTVUMINE_TRANSLATED.map(({ answers }) => answers[0])),
+    ...words(TUTVUMINE_FIXES.map(({ said }) => said)),
+    ...words([
+      "Ma ei ela Tallinnas.",
+      "Kati õpib Tallinnas.",
+      "Me töötame kohvikus.",
+      "Kus te õpite?",
+      "Kas te olete kodus?",
+      "Sa oled kodus.",
+    ]),
   },
   kaskiv: {
     ...words([

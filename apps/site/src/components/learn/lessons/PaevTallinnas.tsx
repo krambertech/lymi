@@ -220,7 +220,7 @@ function useContent() {
       ask: t`Where will he be tomorrow?`,
       options: [
         { id: "cafe", label: t`In a café` },
-        { id: "tartu", label: t`In Tartu` },
+        { id: "parnu", label: t`In Pärnu` },
         { id: "home", label: t`At home` },
       ],
       answer: "cafe",

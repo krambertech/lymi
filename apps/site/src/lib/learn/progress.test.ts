@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { finishSection, readProgress, startLesson } from "./progress";
+import { finishSection, progressStore, startLesson } from "./progress";
 
 function memoryStorage(): Storage {
   const data = new Map<string, string>();
@@ -19,7 +19,7 @@ describe("lesson progress", () => {
   it("starts a lesson once and finishes it with its last section", () => {
     const store = memoryStorage();
     startLesson("numbrid", store);
-    expect(readProgress(store).lessons.numbrid).toEqual({ state: "started" });
+    expect(progressStore.read(store).lessons.numbrid).toEqual({ state: "started" });
     expect(finishSection("numbrid", "ten", ["ten", "build"], store)).toEqual({
       lessonFinished: false,
     });
@@ -29,9 +29,9 @@ describe("lesson progress", () => {
     expect(finishSection("numbrid", "build", ["ten", "build"], store)).toEqual({
       lessonFinished: true,
     });
-    expect(readProgress(store).lessons.numbrid).toEqual({ state: "done" });
+    expect(progressStore.read(store).lessons.numbrid).toEqual({ state: "done" });
     startLesson("numbrid", store);
-    expect(readProgress(store).lessons.numbrid).toEqual({ state: "done" });
+    expect(progressStore.read(store).lessons.numbrid).toEqual({ state: "done" });
   });
 
   it("keeps only well-formed progress from storage", () => {
@@ -44,7 +44,7 @@ describe("lesson progress", () => {
         sections: { haaldus: ["pairs", 3, "spell"], numbrid: "ten" },
       }),
     );
-    expect(readProgress(store)).toEqual({
+    expect(progressStore.read(store)).toEqual({
       lessons: { haaldus: { state: "done" } },
       sections: { haaldus: ["pairs", "spell"] },
     });
@@ -57,12 +57,12 @@ describe("lesson progress", () => {
       "lymi-estonian-lessons",
       JSON.stringify({ lessons: { haaldus: { state: "done" } } }),
     );
-    expect(readProgress(store)).toEqual({ lessons: {}, sections: {} });
+    expect(progressStore.read(store)).toEqual({ lessons: {}, sections: {} });
   });
 
   it("reads broken storage as no progress", () => {
     const store = memoryStorage();
     store.setItem("lymi-estonian-lessons", "{not json");
-    expect(readProgress(store)).toEqual({ lessons: {}, sections: {} });
+    expect(progressStore.read(store)).toEqual({ lessons: {}, sections: {} });
   });
 });

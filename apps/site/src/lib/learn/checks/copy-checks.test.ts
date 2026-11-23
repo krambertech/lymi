@@ -28,6 +28,14 @@ const FILES = [
       part: name.slice(0, -".tsx".length),
       catalog: readPart(name.slice(0, -".tsx".length)),
     })),
+  ...readdirSync(LESSON_DIR)
+    .filter((name) => name.endsWith(".drills.ts"))
+    .map((name) => ({
+      path: `apps/site/src/components/learn/lessons/${name}`,
+      url: new URL(name, LESSON_DIR),
+      part: name.slice(0, -".drills.ts".length),
+      catalog: readPart(name.slice(0, -".drills.ts".length)),
+    })),
   ...readdirSync(KIT)
     .filter((name) => name.endsWith(".tsx"))
     .map((name) => ({

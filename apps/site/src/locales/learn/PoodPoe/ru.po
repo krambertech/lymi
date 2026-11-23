@@ -24,11 +24,25 @@ msgstr "<0>-s</0> и <1>-l</1> добавляем к основе существ
 msgid "<0>{0}, {1}</0>: the ending goes on <1>{2}</1>."
 msgstr "<0>{0}, {1}</0>: окончание добавляем к <1>{2}</1>."
 
+#. placeholder {0}: noun.where
+#. placeholder {1}: noun.word
+#. placeholder {2}: noun.stem
+msgid "<et>{0}</et> is from <et>{1}, {2}</et>."
+msgstr "<et>{0}</et> — от <et>{1}, {2}</et>."
+
+msgid "<et>{word}, {stem}</et>: the ending goes on <et>{stem}</et>."
+msgstr "<et>{word}, {stem}</et>: окончание добавляем к <et>{stem}</et>."
+
 msgid "10 minutes"
 msgstr "10 минут"
 
 msgid "2 quizzes and a passage"
 msgstr "2 теста и текст"
+
+#. placeholder {0}: noun.word
+#. placeholder {1}: noun.stem
+msgid "A dictionary gives the pair: <et>{0}, {1}</et>."
+msgstr "В словаре стоит пара: <et>{0}, {1}</et>."
 
 msgid "A dictionary gives the stem second: <0>pood, poe</0>. Learn a noun as that pair and you can put <1>-s</1> or <2>-l</2> on it. A stem changes a letter inside, gains a vowel at the end, or stays the same as the word. The next sections take one each."
 msgstr "В словаре основа стоит второй: <0>pood, poe</0>. Запоминай существительное именно такой парой — тогда к нему можно добавить <1>-s</1> или <2>-l</2>. Основа либо меняет букву внутри, либо получает гласную на конце, либо совпадает со словом. Дальше о каждом случае по отдельности."
@@ -233,6 +247,15 @@ msgstr "Некоторые получают гласную на конце, и �
 
 msgid "Some stay as they are: <0>kodu, kodus</0>."
 msgstr "Некоторые не меняются: <0>kodu, kodus</0>."
+
+msgid "Stems like the word itself"
+msgstr "Основа совпадает со словом"
+
+msgid "Stems that gain a vowel"
+msgstr "Основа получает гласную"
+
+msgid "Stems where a letter inside changes"
+msgstr "Основа, где меняется буква внутри"
 
 msgid "Switch through the six nouns above once more, then try again."
 msgstr "Ещё раз пройди шаги для шести существительных выше, а потом попробуй снова."

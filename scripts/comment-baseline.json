@@ -766,7 +766,7 @@
   "apps/site/src/lib/learn/player.ts": 21,
   "apps/site/src/lib/learn/practice.test.ts": 2,
   "apps/site/src/lib/learn/practice.ts": 33,
-  "apps/site/src/lib/learn/progress.ts": 13,
+  "apps/site/src/lib/learn/progress.ts": 8,
   "apps/site/src/lib/learn/quiz.ts": 20,
   "apps/site/src/lib/llms.ts": 10,
   "apps/site/src/lib/menu-shelves.ts": 3,

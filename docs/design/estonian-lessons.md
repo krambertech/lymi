@@ -4,7 +4,7 @@ Free, interactive Estonian grammar lessons at `lymi.app/estonian/learn`, in Engl
 
 ## Launch
 
-The lessons are built and reachable but not launched: `learn` is in `prelaunchPages` in `apps/site/src/lib/routes.ts`, so every lesson page and the hub send `noindex`, stay out of the sitemap, and no other page links to them. Launching is removing `learn` from that list, which also puts every lesson page in the sitemap (`routes.test.ts` checks both states), and linking the hub from the Estonian page and the footer.
+The lessons are built and reachable but not launched: `learn` is in `prelaunchPages` in `apps/site/src/lib/routes.ts`, so every lesson page and the hub send `noindex`, stay out of the sitemap, and no other page links to them. Launching is removing `learn` from that list, which also puts every lesson page in the sitemap (`routes.test.ts` checks both states), and linking the hub from the Estonian page and the footer. `learnReview`, the review page, stays on the list after launch: it holds nothing until a visitor has answered something.
 
 ## The course
 
@@ -31,7 +31,9 @@ The lessons cost every other page nothing. Only the hub, a lesson's page and the
 
 When a lesson's code or catalog can't load, such as just after a deploy replaced it, the page keeps the article the server rendered and `LearnReload` offers to reload it. Its two lines live in the site's catalog, because the lesson's own may be what failed.
 
-Each lesson has its own Lingui catalogs in `apps/site/src/locales/learn/<File>/`, the kit, hub and course names share `locales/learn/Kit/`, and the site's own catalogs hold no lesson text. `apps/site/lingui.config.ts` finds a new lesson by its file. `lesson-isolation.mjs` fails the site's build when a page outside the lessons would load a module or catalog of theirs, and `pnpm i18n:check` fails when a lesson's line is in the site's catalog.
+A drill bank is a module of its own, `<File>.drills.ts` beside the lesson. No page loads one until the learner presses Start, Warm-up or Review, and then it loads only the banks and catalogs of the lessons asked about, through `drill-banks.ts`. The hub counts what is due from the visitor's stored answers without loading any.
+
+Each lesson has its own Lingui catalogs in `apps/site/src/locales/learn/<File>/`, the kit, hub and course names share `locales/learn/Kit/`, and the site's own catalogs hold no lesson text. `apps/site/lingui.config.ts` finds a new lesson by its file, and a lesson's drill bank shares its catalog. `lesson-isolation.mjs` fails the site's build when a page outside the lessons would load a module or catalog of theirs, and `pnpm i18n:check` fails when a lesson's line is in the site's catalog.
 
 ## Components
 
@@ -62,6 +64,8 @@ The parts live in `apps/site/src/components/learn`. A new lesson reaches for the
 | `Dialogue` | Practise a conversation. The other speaker talks in the second voice, and at each of the learner's turns they pick a reply in Estonian. A wrong pick says why, then Say it plays the right reply and the conversation goes on. There are no translations. With `text="sound"` the other speaker's lines arrive as sound only, each readable on request. |
 | `Sort` | Six to ten words into two or three labelled bins: tap a word, then its bin, or drag it; a keyboard picks with Enter, places with the bin's number and takes a word back with Backspace. One Check marks every word; a wrong one stays in its bin, marked, with an arrow to its right bin, and the bin's `rule` (or the word's `why`) is listed under the bins. Then the score with each word as a chip. |
 | `Match` | Four to six pairs across two columns, such as form and meaning or question word and ending: tap one side, then the other. A right pair locks with its number on both sides and plays its clip; a wrong one shakes and counts against the pair tapped first. The band's dots fill as pairs lock, green first time, red after a wrong try, and the score says how many wrong tries there were. |
+| `Drill` | The end of a lesson with a bank: ten of its questions, mixed across its rules. A miss comes back later in the run until it is right twice, then the result says how each rule went and links to the section that teaches it. “Ten more” goes on with questions not yet met. `LessonView` adds it, as a section the lesson needs to be done. |
+| `WarmUp` | Up to five questions from earlier lessons, offered at the top of a lesson once the visitor has answered some on an earlier day. `LessonView` adds it. |
 | `QuizCard`, `ResultDots` | The card and round dots every marked part shares, for a new kind of practice. |
 
 A lesson file in `components/learn/lessons` holds its glossary, its sections and its recap, and passes them to `LessonView`, which draws a link back to all lessons, the head, the read bar, What to remember, the words, and links to the previous and next lessons, the same size. The read bar shows where the reader is, filling in order up to the section on screen; which sections are done is kept for the hub, not shown in the bar.
@@ -143,6 +147,37 @@ A lesson teaches with explorers and quizzes. The practice parts use the rule in 
 - Each question names the sentence that answers it (`line`), so a missed answer points back at the passage.
 - A passage and a dialogue use only what earlier lessons taught, plus at most a word or two the glossary explains.
 
+## Drill banks
+
+A lesson's bank in `components/learn/lessons/<File>.drills.ts` is data with no JSX: its rules and its items, typed in `apps/site/src/lib/learn/drill.ts`. `Osastav.drills.ts` and `PoodPoe.drills.ts` are the models.
+
+- A rule has a short key, a label in the reader's language such as “The partitive after an amount”, and the `section` of the lesson that teaches it. A bank has at least three rules, four items on each, and 24 items in all, across more than one kind.
+- An item has an `id` that never changes, because the visitor's schedule is kept under it, its `rule`, the clip it plays (`say`, in the words the clip says) and an `explain` line. Estonian inside an `explain` or a label is written `<et>pole</et>` and renders with `lang="et"`.
+- Kinds are the quiz rounds: `form` (`FormRound`, typed, or picked when it has `wrong`), `choice` (`ChoiceRound`) and `gap` (`GapRound`). A new kind is one more member of `DrillItem`; the compiler then asks for its round in `DrillRound.tsx` and its Estonian and options in `drill-checks.test.ts`.
+- A pick shows its answer and two wrong options drawn afresh each time, in a new order. `slip` on a `choice` is the likeliest mistake and is always offered.
+- A bank uses only its lesson's clips and forms already in `verified-forms.json`.
+- An id is renamed only when the question is a different one. Answers to an item that is gone are dropped the next time its bank loads.
+
+A run (`drillReducer`) asks ten questions and never the same rule twice in a row while another is left. A missed question waits three others, or fewer when fewer are left, and leaves the run once it is right twice; it is asked twice in a row only when it is the last one left. A set takes what is due first, then what the learner has not met, then what they met longest ago.
+
+A run on the server would differ from the browser's, so nothing of it renders there: a drill is a Start button until it is pressed.
+
+## What comes back, and when
+
+`apps/site/src/lib/learn/review.ts` keeps one entry per answered item in `localStorage`: how many right answers in a row it has, the day it is due and the day it was last answered. It is not Lymi's scheduler and never reaches Lymi's product, database or API.
+
+- The first answer in a run counts. A miss is due the next day, from any point.
+- A right answer is due again after 1 day, then 3, 7 and 21. Right after the 21 days, the item rests: it is no longer due, and a later miss in a drill brings it back.
+- A right answer before an item's day leaves its day as it is, so drilling ten times in an evening is not ten steps.
+- Days are the visitor's own, from midnight.
+- A stored value of another version or shape reads as nothing, a broken entry is dropped alone, and the store keeps 3,000 entries, giving up rested ones first. Without storage it works until the page closes. `browser-store.ts` holds that for progress and review alike.
+
+Only a bank's questions come back. A lesson's own quizzes teach and are not scheduled.
+
+**Warm-up.** It offers what is due in earlier lessons, misses first, then what was answered longest ago, and nothing answered today. A miss is not asked again in it. It renders to nothing on the server. After hydration the offer takes empty space beside All lessons, so nothing moves; the card opens under the heading only when the learner asks, and Skip closes it.
+
+**Review.** `/estonian/learn/review` asks everything due across lessons, ten at a time. The hub links to it with the number due, after hydration and only when there is one. It says when the next questions are due and nothing about missed days.
+
 ## Sound
 
 Every clip a lesson plays is listed in `apps/site/src/lib/learn/clips.ts`. `pnpm --filter @lymi/site lesson:audio` records what is new or changed into `apps/site/public/audio/estonian-lessons/<lesson>/`, at 64 kbps, and removes clips no lesson uses. `manifest.json` beside them holds each clip's text, model and voice.
@@ -151,4 +186,4 @@ A clip is a word or sentence in the main voice, the product's Estonian voice (`e
 
 ## Progress and analytics
 
-`apps/site/src/lib/learn/progress.ts` keeps which lessons a visitor started and finished, and which sections of each, in `localStorage`. A reading section counts once its end has been on screen, so a short one may count as soon as the page opens; a section with a quiz counts when its quiz ends. `learn_quiz_finished` and `learn_lesson_finished` ([analytics](../analytics.md)) answer whether visitors finish lessons and which quizzes they get right.
+`apps/site/src/lib/learn/progress.ts` keeps which lessons a visitor started and finished, and which sections of each, in `localStorage`. A reading section counts once its end has been on screen, so a short one may count as soon as the page opens; a section with a quiz counts when its quiz ends. `learn_quiz_finished` and `learn_lesson_finished` ([analytics](../analytics.md)) answer whether visitors finish lessons, which quizzes they get right, whether they come back to warm up and review, and which rules they miss.

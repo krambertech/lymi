@@ -46,8 +46,17 @@ msgstr "{0}, правильна відповідь"
 msgid "{0}, your answer"
 msgstr "{0}, твоя відповідь"
 
+msgid "{count, plural, one {# to review} other {# to review}}"
+msgstr "{count, plural, one {Повторити: #} few {Повторити: #} many {Повторити: #} other {Повторити: #}}"
+
+msgid "{count, plural, one {Warm-up: # question} other {Warm-up: # questions}}"
+msgstr "{count, plural, one {Розминка: # запитання} few {Розминка: # запитання} many {Розминка: # запитань} other {Розминка: # запитання}}"
+
 msgid "{doneCount} of {builtCount} done"
 msgstr "Пройдено {doneCount} з {builtCount}"
+
+msgid "{left, plural, one {# question to review} other {# questions to review}}"
+msgstr "{left, plural, one {# запитання на повторення} few {# запитання на повторення} many {# запитань на повторення} other {# запитання на повторення}}"
 
 msgid "{lessonCount, plural, one {# lesson, coming soon} other {# lessons, coming soon}}"
 msgstr "{lessonCount, plural, one {# урок, скоро} few {# уроки, скоро} many {# уроків, скоро} other {# уроку, скоро}}"
@@ -55,8 +64,14 @@ msgstr "{lessonCount, plural, one {# урок, скоро} few {# уроки, с
 msgid "{more, plural, one {and # more} other {and # more}}"
 msgstr "{more, plural, one {і ще #} few {і ще #} many {і ще #} other {і ще #}}"
 
+msgid "{next, plural, one {# more} other {# more}}"
+msgstr "{next, plural, one {Ще #} few {Ще #} many {Ще #} other {Ще #}}"
+
 msgid "{position} of {count}"
 msgstr "{position} з {count}"
+
+msgid "{right} of {total}"
+msgstr "{right} з {total}"
 
 msgid "{right} of {total} right"
 msgstr "{right} з {total} правильно"
@@ -66,6 +81,9 @@ msgstr "{right} з {yours} відповідей правильні з першо
 
 msgid "{seconds} s"
 msgstr "{seconds} с"
+
+msgid "{settled} of {total}"
+msgstr "{settled} з {total}"
 
 msgid "{them} spoke."
 msgstr "{them} говорить."
@@ -222,6 +240,9 @@ msgstr "Текст із пропусками: слова для відкрито
 msgid "A quiz round on a scene: hear a sentence, then tap the place on the drawing."
 msgstr "Раунд вікторини на сцені: послухай речення, а потім торкнися місця на малюнку."
 
+msgid "A right answer brings a question back after 1, 3, 7 and then 21 days. A miss brings it back the next day. Your answers stay in this browser."
+msgstr "Після правильної відповіді запитання повертається через 1, 3, 7, а далі через 21 день. Після помилки — наступного дня. Відповіді зберігаються в цьому браузері."
+
 msgid "a room"
 msgstr "кімната"
 
@@ -321,6 +342,9 @@ msgstr "Чергування приголосних"
 msgid "Continue"
 msgstr "Продовжити"
 
+msgid "Counted on your first answer to each question."
+msgstr "Враховано першу відповідь на кожне запитання."
+
 msgid "Days of the week"
 msgstr "Дні тижня"
 
@@ -344,6 +368,12 @@ msgstr "Перетягни кожне слово в його пропуск аб
 
 msgid "Drag each word to its gap, or tap it. Some words are spare."
 msgstr "Перетягни кожне слово в його пропуск або торкнися його. Деякі слова зайві."
+
+msgid "Drill"
+msgstr "Тренування"
+
+msgid "Due today"
+msgstr "На сьогодні"
 
 msgid "Ei before the bare verb says not: ei loe."
 msgstr "Ei перед дієсловом без закінчення означає «не»: ei loe."
@@ -473,6 +503,9 @@ msgstr "Пропуски по одному"
 
 msgid "Genitive"
 msgstr "Родовий"
+
+msgid "Go to the lesson"
+msgstr "До уроку"
 
 msgid "Going, being, coming back: -ma, -mas, -mast"
 msgstr "Іти, бути там, повертатися: -ma, -mas, -mast"
@@ -760,6 +793,12 @@ msgstr "Не пара."
 msgid "Not this one."
 msgstr "Не це."
 
+msgid "Nothing is due today. The next questions are due on {date}."
+msgstr "На сьогодні нічого немає. Наступні запитання: {date}."
+
+msgid "Nothing to review yet. Do the drill at the end of a lesson, and its questions come back here."
+msgstr "Поки нема чого повторювати. Пройди тренування в кінці уроку, і його запитання повернуться сюди."
+
 msgid "Nouns and cases"
 msgstr "Іменники та відмінки"
 
@@ -982,6 +1021,15 @@ msgstr "Питання"
 msgid "Questions"
 msgstr "Питання"
 
+msgid "Questions done: {settled} of {total}"
+msgstr "Запитань пройдено: {settled} з {total}"
+
+msgid "Questions from the drills you’ve done, mixed across lessons, each on the day it’s due."
+msgstr "Запитання з пройдених тренувань, упереміш з різних уроків, кожне у свій день."
+
+msgid "Read it again"
+msgstr "Перечитати"
+
 msgid "Reading"
 msgstr "Читання"
 
@@ -990,6 +1038,9 @@ msgstr "Підрядні речення з «який»"
 
 msgid "Reported speech"
 msgstr "Непряма мова"
+
+msgid "Review"
+msgstr "Повторення"
 
 msgid "right answer"
 msgstr "правильна відповідь"
@@ -1070,6 +1121,9 @@ msgstr "Показати репліку: {name}"
 msgid "Sina is you: this says “You are Jaan.”"
 msgstr "Sina — це ти: тут сказано «Ти Яан»."
 
+msgid "Skip"
+msgstr "Пропустити"
+
 msgid "Somebody, nobody: -gi and -ki"
 msgstr "Хтось, ніхто: -gi і -ki"
 
@@ -1144,6 +1198,15 @@ msgstr "Котра година"
 
 msgid "Telling the time in Estonian"
 msgstr "Котра година естонською"
+
+msgid "Ten more"
+msgstr "Ще десять"
+
+msgid "Ten questions"
+msgstr "Десять запитань"
+
+msgid "Ten questions on this lesson’s rules, mixed. One you miss comes back until you answer it right twice, and they all return on later days."
+msgstr "Десять запитань на правила цього уроку, упереміш. Запитання з помилкою повертається, доки не відповіси на нього правильно двічі, а всі вони ще прийдуть в інші дні."
 
 msgid "Tenses of sööma"
 msgstr "Часи sööma"
@@ -1250,6 +1313,9 @@ msgstr "Партитив від muusika."
 msgid "The passage"
 msgstr "Текст"
 
+msgid "The questions didn’t load. Check your connection and try again."
+msgstr "Запитання не завантажилися. Перевір з’єднання і спробуй ще раз."
+
 msgid "The same conversation with Mari’s lines heard, not shown; each can be read on request."
 msgstr "Та сама розмова, але репліки Марі лише чути; кожну можна відкрити й прочитати."
 
@@ -1327,6 +1393,9 @@ msgstr "Використай усі слова."
 
 msgid "Verbs"
 msgstr "Дієслова"
+
+msgid "Warm-up"
+msgstr "Розминка"
 
 msgid "we"
 msgstr "ми"

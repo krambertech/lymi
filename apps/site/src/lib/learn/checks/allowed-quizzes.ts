@@ -64,6 +64,12 @@ export const ALLOWED_NEAR_PAIRS: readonly {
     reason:
       "Each gap asks for the first or the third form: üks leib against kilo juustu. Three of seven gaps want the first, so the longer form scores four of seven.",
   },
+  {
+    lesson: "osastav",
+    quiz: "drill-number-gap",
+    reason:
+      "The gap asks for the first or the third form after a number: kass after üks, kassi after kolm. Each noun comes both ways, so the longer form is right half the time.",
+  },
 ];
 
 /**

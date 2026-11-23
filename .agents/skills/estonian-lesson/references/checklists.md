@@ -56,6 +56,20 @@ At 375 px a `GapRound` sentence of 12 characters fits and 14 does not, and its a
 - **(checked) Each quiz, gap passage, dialogue, listening and reading part has a fixed id** of lowercase letters, digits and hyphens, unique in the lesson.
 - **Feedback and notes hold in every case.** "After a number, minut becomes minutit" is wrong after üks; it says "from two up".
 
+## Drill banks
+
+The design doc's [Drill banks](../../../../docs/design/estonian-lessons.md#drill-banks) says what a bank holds. `checks/drill-checks.test.ts` holds each one to this list.
+
+- **(checked)** Each item has one id of lowercase letters, digits and hyphens, and a rule the bank holds. An id that has shipped stays: learners' schedules are kept under it.
+- **(checked)** At least 24 items, three rules, and four items on each rule.
+- **(checked)** Every form shown, offered, said or explained is in `verified-forms.json`, and `say` is the exact text of a recorded clip of the same lesson that says the answer.
+- **(checked)** Each rule has a label and each item an explanation in English, Ukrainian and Russian, with the same `<et>` marks in each, and each rule's `section` is a section of the lesson.
+- **(checked)** Options meet the quiz rules above, per rule and kind: no near pairs, the answer in every place, no set that names its answer, no cheap rule above chance. The unit's id for `ALLOWED_NEAR_PAIRS` is `drill-<rule>-<kind>`. Give a listening `choice` its likeliest slip as `slip`: without toa beside tuba, the word sharing the first letters with toas was the answer 65% of the time.
+- **(checked)** A `gap` with its longest option stays within 12 characters.
+- Put contrasting items under one rule, such as üks kass beside kolm kassi, so no rule has one answer for everything.
+- Type most of the forms. A pick is for telling close forms apart.
+- Check that a typed item's cue allows one form only, or list every form in `answers`.
+
 ## Accessibility
 
 - (checked) Mark every piece of Estonian outside a `Word` with `lang="et"`: a `<b>`, an ending such as `-n`, a recap line, a feedback line. The check finds a bold Estonian word in English, and any Estonian word on the Ukrainian and Russian pages; bare Estonian in English prose it can't tell from English, so write `<b lang="et">ei</b>` there.
@@ -86,6 +100,7 @@ Drive the lesson in Playwright at 1280 and 375 px, light and night (`colorScheme
 
 - Every `Word` card, by resting on it and by tapping it.
 - Every key, chip, switch, line and play button.
+- The drill from Start to its result and Ten more, with a miss and its return; the warm-up and the review page with the clock moved a day.
 - Every quiz: the Listen-first nudge, right and wrong picks, Hear both, the score, and Try again.
 - What to remember, the words card opened, and the links to the previous and next lessons.
 - At 375 px, measure every element's right edge against the viewport. `scrollWidth` alone misses clipping inside an `overflow-hidden` card. No check does this yet: the site has no browser test of lessons.

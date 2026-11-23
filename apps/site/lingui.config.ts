@@ -26,7 +26,7 @@ export default defineConfig({
     },
     ...lessons.map((name) => ({
       path: `<rootDir>/src/locales/learn/${name}/{locale}`,
-      include: [`<rootDir>/${LESSONS}/${name}.tsx`],
+      include: [`<rootDir>/${LESSONS}/${name}.tsx`, `<rootDir>/${LESSONS}/${name}.drills.ts`],
     })),
   ],
   format: formatter({ lineNumbers: false, origins: false }),

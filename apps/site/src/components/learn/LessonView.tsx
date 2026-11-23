@@ -7,9 +7,12 @@ import { lessonBySlug, lessonPath, nextLesson, previousLesson } from "../../lib/
 import { finishSection as saveSection, startLesson } from "../../lib/learn/progress";
 import { localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
+import { Drill } from "./Drill";
+import { drillSlugs } from "./drill-banks";
 import { LearnLayout } from "./LearnLayout";
 import { type Glossary, LessonContext, SectionContext, useLesson } from "./lesson-context";
 import { LessonWords } from "./LessonWords";
+import { useWarmUp } from "./WarmUp";
 import { WordCards } from "./Word";
 
 export interface LessonSection {
@@ -36,8 +39,9 @@ interface Props {
 }
 
 /** A lesson page: its head, a read bar, its sections, what to remember, its words and the next lesson. */
-export function LessonView({ slug, sub, facts, glossary, sections, recap, words }: Props) {
+export function LessonView({ slug, sub, facts, glossary, sections: taught, recap, words }: Props) {
   const { t, i18n } = useLingui();
+  const sections = drillSlugs.has(slug) ? [...taught, drillSection(t`Drill`)] : taught;
   const lesson = lessonBySlug(slug);
   if (!lesson) throw new Error(`No lesson ${slug}`);
   const all = [...sections.map((s) => s.id), "recap"];
@@ -54,6 +58,8 @@ export function LessonView({ slug, sub, facts, glossary, sections, recap, words 
     },
     [slug],
   );
+  const heading = useRef<HTMLHeadingElement>(null);
+  const warmUp = useWarmUp(slug, () => heading.current?.focus());
   const paths = {
     en: lessonPath(slug, "en"),
     uk: lessonPath(slug, "uk"),
@@ -66,13 +72,18 @@ export function LessonView({ slug, sub, facts, glossary, sections, recap, words 
         <LearnLayout languages={{ paths }} hue={lesson.stage.hue}>
           <div className="mx-auto max-w-[720px] px-5">
             <header className="grid gap-3 pt-5 pb-5">
-              <a
-                href={localizedPath("learn", i18n.locale)}
-                className="relative inline-flex items-center gap-1.5 justify-self-start rounded-xs text-sm font-medium text-ink-secondary before:absolute before:inset-x-0 before:-inset-y-3 hoverable:hover:text-ink"
-              >
-                <ArrowLeft aria-hidden="true" className="size-4 rtl:-scale-x-100" />
-                <Trans>All lessons</Trans>
-              </a>
+              <div className="relative flex">
+                <a
+                  href={localizedPath("learn", i18n.locale)}
+                  className="relative inline-flex items-center gap-1.5 rounded-xs text-sm font-medium text-ink-secondary before:absolute before:inset-x-0 before:-inset-y-3 hoverable:hover:text-ink"
+                >
+                  <ArrowLeft aria-hidden="true" className="size-4 rtl:-scale-x-100" />
+                  <Trans>All lessons</Trans>
+                </a>
+                {warmUp.offer && (
+                  <div className="absolute end-0 top-1/2 -translate-y-1/2">{warmUp.offer}</div>
+                )}
+              </div>
               <span className="mt-3 text-md font-medium text-(--form)">
                 <Trans>
                   Lesson {number} · {level}
@@ -80,7 +91,11 @@ export function LessonView({ slug, sub, facts, glossary, sections, recap, words 
                 {" · "}
                 <span lang="et">{lesson.et}</span>
               </span>
-              <h1 className="text-[clamp(2.75rem,7vw,4.25rem)] leading-none font-semibold tracking-[-0.035em] text-balance">
+              <h1
+                ref={heading}
+                tabIndex={-1}
+                className="text-[clamp(2.75rem,7vw,4.25rem)] leading-none font-semibold tracking-[-0.035em] text-balance outline-none"
+              >
                 <LessonName name={i18n._(lesson.title)} />
               </h1>
               <p className="max-w-[44ch] text-[clamp(1.125rem,2vw,1.3125rem)] text-pretty text-ink-secondary">
@@ -93,6 +108,7 @@ export function LessonView({ slug, sub, facts, glossary, sections, recap, words 
                 ))}
               </p>
             </header>
+            {warmUp.card}
           </div>
           <ReadBar
             title={i18n._(lesson.name)}
@@ -120,6 +136,25 @@ export function LessonView({ slug, sub, facts, glossary, sections, recap, words 
     </LessonContext.Provider>
   );
 }
+
+const drillSection = (title: string): LessonSection => ({
+  id: "drill",
+  title,
+  quiz: true,
+  children: (
+    <>
+      <Prose>
+        <p>
+          <Trans>
+            Ten questions on this lesson’s rules, mixed. One you miss comes back until you answer it
+            right twice, and they all return on later days.
+          </Trans>
+        </p>
+      </Prose>
+      <Drill />
+    </>
+  ),
+});
 
 function Section({
   id,

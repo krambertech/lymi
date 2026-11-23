@@ -1,0 +1,13 @@
+---
+import LearnReviewPage, { REVIEW_BLURB, REVIEW_TITLE } from "../../../../components/islands/LearnReviewPage";
+import { prepareLearnPage } from "../../../../components/learn/learn-page";
+import LearnReload from "../../../../components/islands/LearnReload";
+import MarketingLayout from "../../../../layouts/MarketingLayout.astro";
+
+await prepareLearnPage({ kind: "review" }, "uk");
+---
+
+<MarketingLayout page="learnReview" title={REVIEW_TITLE} blurb={REVIEW_BLURB}>
+  <LearnReviewPage client:load locale="uk" />
+  <LearnReload client:load locale="uk" />
+</MarketingLayout>

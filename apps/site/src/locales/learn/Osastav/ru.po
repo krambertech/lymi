@@ -34,6 +34,18 @@ msgstr "<0>{text}</0>, {0}"
 msgid "<0>{text}</0>, {0}; its third form is <1>maja</1> too, so it looks the same."
 msgstr "<0>{text}</0>, {0}; третья форма тоже <1>maja</1>, поэтому слово не меняется."
 
+msgid "<et>Sul on auto</et>: with <et>on</et>, the first form."
+msgstr "<et>Sul on auto</et>: с <et>on</et> — первая форма."
+
+msgid "<et>Sul pole autot</et>: with <et>pole</et>, the third form."
+msgstr "<et>Sul pole autot</et>: с <et>pole</et> — третья форма."
+
+msgid "<et>Tal on laps</et>: with <et>on</et>, the first form."
+msgstr "<et>Tal on laps</et>: с <et>on</et> — первая форма."
+
+msgid "<et>Tal pole last</et>: with <et>pole</et>, the third form."
+msgstr "<et>Tal pole last</et>: с <et>pole</et> — третья форма."
+
 msgid "€10"
 msgstr "10 €"
 
@@ -103,11 +115,20 @@ msgstr "Только <0>üks</0> — значит, первая форма: <1>�
 msgid "After <0>üks</0> on its own, the first form: <1>üks leib</1>."
 msgstr "Только <0>üks</0> — значит, первая форма: <1>üks leib</1>."
 
+msgid "After <et>pole</et> or <et>ei ole</et>, what isn’t there takes the third form."
+msgstr "После <et>pole</et> или <et>ei ole</et> то, чего нет, стоит в третьей форме."
+
+msgid "After <et>üks</et> on its own, the first form."
+msgstr "Только <et>üks</et> — значит, первая форма."
+
 msgid "After a number from two up"
 msgstr "После числа от двух"
 
 msgid "After a number from two up, a noun takes its third form and stays singular: <0>kaks kassi, viis eurot</0>. After <1>üks</1> on its own, it keeps its first: <2>üks kass</2>."
 msgstr "После числа от двух существительное стоит в третьей форме и остаётся в единственном числе: <0>kaks kassi, viis eurot</0>. Если перед ним только <1>üks</1>, оно остаётся в первой: <2>üks kass</2>."
+
+msgid "After a number from two up, or <et>mitu</et>, the third form."
+msgstr "После числа от двух или <et>mitu</et> — третья форма."
 
 msgid "After a number from two up, the third form: <0>seitse eurot</0>."
 msgstr "После числа от двух — третья форма: <0>seitse eurot</0>."
@@ -117,6 +138,9 @@ msgstr "После слов количества"
 
 msgid "After an amount, the third form: <0>kilo juustu</0>."
 msgstr "После слова количества — третья форма: <0>kilo juustu</0>."
+
+msgid "After an amount, the third form."
+msgstr "После слова количества — третья форма."
 
 msgid "After an amount, what it measures takes the third form: <0>tass kohvi, palju raha</0>."
 msgstr "После слова количества то, что меряют, стоит в третьей форме: <0>tass kohvi, palju raha</0>."
@@ -481,8 +505,17 @@ msgstr "Кошки нет на столе."
 msgid "The form after a number"
 msgstr "Форма после числа"
 
+msgid "The form with <et>pole</et>"
+msgstr "Форма с <et>pole</et>"
+
 msgid "The milk costs two euros."
 msgstr "Молоко стоит два евро."
+
+msgid "The partitive after an amount"
+msgstr "Партитив после слова количества"
+
+msgid "The partitive for food and drink"
+msgstr "Партитив с едой и напитками"
 
 msgid "The sentence starts with it, so it keeps its first form."
 msgstr "Предложение начинается с этого предмета, поэтому он остаётся в первой форме."

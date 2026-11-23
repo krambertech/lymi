@@ -476,6 +476,15 @@ export const analyticsEvents = {
       .max(40),
     right: z.number().int().min(0).max(50),
     total: z.number().int().min(1).max(50),
+    missed_rules: z
+      .array(
+        z
+          .string()
+          .regex(/^[a-z0-9-]+\/[a-z0-9-]+$/)
+          .max(80),
+      )
+      .max(10)
+      .optional(),
   }),
   learn_lesson_finished: z.object({
     lesson: z

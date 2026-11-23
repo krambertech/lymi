@@ -34,6 +34,18 @@ msgstr "<0>{text}</0>, {0}"
 msgid "<0>{text}</0>, {0}; its third form is <1>maja</1> too, so it looks the same."
 msgstr "<0>{text}</0>, {0}; its third form is <1>maja</1> too, so it looks the same."
 
+msgid "<et>Sul on auto</et>: with <et>on</et>, the first form."
+msgstr "<et>Sul on auto</et>: with <et>on</et>, the first form."
+
+msgid "<et>Sul pole autot</et>: with <et>pole</et>, the third form."
+msgstr "<et>Sul pole autot</et>: with <et>pole</et>, the third form."
+
+msgid "<et>Tal on laps</et>: with <et>on</et>, the first form."
+msgstr "<et>Tal on laps</et>: with <et>on</et>, the first form."
+
+msgid "<et>Tal pole last</et>: with <et>pole</et>, the third form."
+msgstr "<et>Tal pole last</et>: with <et>pole</et>, the third form."
+
 msgid "€10"
 msgstr "€10"
 
@@ -103,11 +115,20 @@ msgstr "After <0>üks</0> on its own, the first form: <1>üks kass</1>."
 msgid "After <0>üks</0> on its own, the first form: <1>üks leib</1>."
 msgstr "After <0>üks</0> on its own, the first form: <1>üks leib</1>."
 
+msgid "After <et>pole</et> or <et>ei ole</et>, what isn’t there takes the third form."
+msgstr "After <et>pole</et> or <et>ei ole</et>, what isn’t there takes the third form."
+
+msgid "After <et>üks</et> on its own, the first form."
+msgstr "After <et>üks</et> on its own, the first form."
+
 msgid "After a number from two up"
 msgstr "After a number from two up"
 
 msgid "After a number from two up, a noun takes its third form and stays singular: <0>kaks kassi, viis eurot</0>. After <1>üks</1> on its own, it keeps its first: <2>üks kass</2>."
 msgstr "After a number from two up, a noun takes its third form and stays singular: <0>kaks kassi, viis eurot</0>. After <1>üks</1> on its own, it keeps its first: <2>üks kass</2>."
+
+msgid "After a number from two up, or <et>mitu</et>, the third form."
+msgstr "After a number from two up, or <et>mitu</et>, the third form."
 
 msgid "After a number from two up, the third form: <0>seitse eurot</0>."
 msgstr "After a number from two up, the third form: <0>seitse eurot</0>."
@@ -117,6 +138,9 @@ msgstr "After an amount"
 
 msgid "After an amount, the third form: <0>kilo juustu</0>."
 msgstr "After an amount, the third form: <0>kilo juustu</0>."
+
+msgid "After an amount, the third form."
+msgstr "After an amount, the third form."
 
 msgid "After an amount, what it measures takes the third form: <0>tass kohvi, palju raha</0>."
 msgstr "After an amount, what it measures takes the third form: <0>tass kohvi, palju raha</0>."
@@ -481,8 +505,17 @@ msgstr "The cat isn’t on the table."
 msgid "The form after a number"
 msgstr "The form after a number"
 
+msgid "The form with <et>pole</et>"
+msgstr "The form with <et>pole</et>"
+
 msgid "The milk costs two euros."
 msgstr "The milk costs two euros."
+
+msgid "The partitive after an amount"
+msgstr "The partitive after an amount"
+
+msgid "The partitive for food and drink"
+msgstr "The partitive for food and drink"
 
 msgid "The sentence starts with it, so it keeps its first form."
 msgstr "The sentence starts with it, so it keeps its first form."

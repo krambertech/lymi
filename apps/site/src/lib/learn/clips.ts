@@ -4498,8 +4498,8 @@ export const GRADATION_DRILL = [
 ] as const;
 
 export const GRADATION_ANSWERS: Record<string, readonly [string, ...string[]]> = {
-  "Kati on toas.": ["Kati on toas."],
-  "Jaan on pangas.": ["Jaan on pangas."],
+  "Kati on toas.": ["Kati on toas.", "Toas on Kati."],
+  "Jaan on pangas.": ["Jaan on pangas.", "Pangas on Jaan."],
   "Lapsed on pargis.": ["Lapsed on pargis.", "Pargis on lapsed."],
   "Me oleme rannas.": [
     "Me oleme rannas.",
@@ -4678,7 +4678,7 @@ export const PLURAL_PART_TRANSLATE = [
 export const PLURAL_PART_PARTY = [
   "Täna on Kati sünnipäev.",
   "Ta ostis poest õunu ja banaane.",
-  "Külalisi tuleb palju.",
+  "Õhtul tuleb palju külalisi.",
   "Kati sõbrad toovad lilli.",
   "Lapsed laulavad laule.",
 ] as const;
@@ -4776,7 +4776,7 @@ export const PLURAL_PART_DRILL = [
 export const PLURAL_PART_ANSWERS: Record<string, readonly [string, ...string[]]> = {
   "Mul on palju raamatuid.": ["Mul on palju raamatuid.", "Minul on palju raamatuid."],
   "Mul on kaks last.": ["Mul on kaks last.", "Minul on kaks last."],
-  "Lapsed on kodus.": ["Lapsed on kodus."],
+  "Lapsed on kodus.": ["Lapsed on kodus.", "Kodus on lapsed."],
   "Poes on õunu.": ["Poes on õunu.", "Poes on õunasid."],
   "Ma ostsin õunad.": ["Ma ostsin õunad.", "Mina ostsin õunad.", "Ostsin õunad."],
   "Mul ei ole autosid.": [
@@ -4784,6 +4784,10 @@ export const PLURAL_PART_ANSWERS: Record<string, readonly [string, ...string[]]>
     "Mul pole autosid.",
     "Minul ei ole autosid.",
     "Minul pole autosid.",
+    "Mul pole ühtegi autot.",
+    "Mul ei ole ühtegi autot.",
+    "Minul pole ühtegi autot.",
+    "Minul ei ole ühtegi autot.",
   ],
   "Ma armastan linde.": [
     "Ma armastan linde.",

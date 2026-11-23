@@ -15377,11 +15377,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "raamatuid-maju/p-party": {
-    "text": "Täna on Kati sünnipäev. Ta ostis poest õunu ja banaane. Külalisi tuleb palju. Kati sõbrad toovad lilli. Lapsed laulavad laule.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "tulevik/tulevik": {
     "text": "tulevik",
     "model": "eleven_v4",
@@ -17160,5 +17155,10 @@
         ]
       }
     ]
+  },
+  "raamatuid-maju/p-party": {
+    "text": "Täna on Kati sünnipäev. Ta ostis poest õunu ja banaane. Õhtul tuleb palju külalisi. Kati sõbrad toovad lilli. Lapsed laulavad laule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

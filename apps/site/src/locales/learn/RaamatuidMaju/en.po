@@ -235,8 +235,8 @@ msgstr "I only have four chairs."
 msgid "I’ll bring them tomorrow morning."
 msgstr "I’ll bring them tomorrow morning."
 
-msgid "I’ll make you a cake."
-msgstr "I’ll make you a cake."
+msgid "I’ll make you some cake."
+msgstr "I’ll make you some cake."
 
 msgid "In a sentence"
 msgstr "In a sentence"
@@ -259,8 +259,8 @@ msgstr "Kinds of ending"
 msgid "land, country"
 msgstr "land, country"
 
-msgid "Lesson {partitive} used the partitive after a number: <0/>, two books. For some or many things you don’t count, Estonian uses the plural partitive: <1/>, a lot of books."
-msgstr "Lesson {partitive} used the partitive after a number: <0/>, two books. For some or many things you don’t count, Estonian uses the plural partitive: <1/>, a lot of books."
+msgid "Lesson {partitive} used the partitive after a number: <0/>, two books. For some or many things you don’t count, Estonian usually uses the plural partitive: <1/>, a lot of books."
+msgstr "Lesson {partitive} used the partitive after a number: <0/>, two books. For some or many things you don’t count, Estonian usually uses the plural partitive: <1/>, a lot of books."
 
 msgid "Like a book"
 msgstr "Like a book"
@@ -503,5 +503,5 @@ msgstr "Write each sentence in Estonian. Decide first: a number, some or many, a
 msgid "Write it in Estonian"
 msgstr "Write it in Estonian"
 
-msgid "You can’t always tell from a word which way it goes, and some words have two forms, both correct: <0>maju</0> and <1>majasid</1>. A dictionary lists the plural partitive, so learn it with the word. Where the stem changes, as lesson {gradation} explains, a changed vowel goes on the partitive’s stem: <2>sõber, sõpra, sõpru</2>."
-msgstr "You can’t always tell from a word which way it goes, and some words have two forms, both correct: <0>maju</0> and <1>majasid</1>. A dictionary lists the plural partitive, so learn it with the word. Where the stem changes, as lesson {gradation} explains, a changed vowel goes on the partitive’s stem: <2>sõber, sõpra, sõpru</2>."
+msgid "You can’t always tell from a word which way it goes, and some words have two forms, both correct: <0>maju</0> and <1>majasid</1>. A dictionary lists the plural partitive, so learn it with the word. Where the stem changes, as lesson {gradation} explains, a changed vowel goes on the partitive’s stem: <2>sõber, sõpra, sõpru</2>. So does <3>-sid</3>: <4>sõprasid</4>, <5>tubasid</5>."
+msgstr "You can’t always tell from a word which way it goes, and some words have two forms, both correct: <0>maju</0> and <1>majasid</1>. A dictionary lists the plural partitive, so learn it with the word. Where the stem changes, as lesson {gradation} explains, a changed vowel goes on the partitive’s stem: <2>sõber, sõpra, sõpru</2>. So does <3>-sid</3>: <4>sõprasid</4>, <5>tubasid</5>."

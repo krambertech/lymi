@@ -2097,13 +2097,13 @@ export const TALLINN_WORDS = [
 export const TALLINN_TALK: Conversation = {
   turns: [
     { voice: "second", text: ["Tere, Jaan!", "Mis sa täna teed?"] },
-    { voice: "main", text: "Täna on reede ja ma olen tööl." },
+    { voice: "third", text: "Täna on reede ja ma olen tööl." },
     { voice: "second", text: "Kas sa töötad homme?" },
-    { voice: "main", text: ["Ei, homme ma ei tööta.", "Kell üksteist olen kohvikus."] },
+    { voice: "third", text: ["Ei, homme ma ei tööta.", "Kell üksteist olen kohvikus."] },
     { voice: "second", text: "Ma olen kell kaksteist turul." },
-    { voice: "main", text: "Hästi, ma tulen kell pool üks!" },
+    { voice: "third", text: "Hästi, ma tulen kell pool üks!" },
     { voice: "second", text: "Ja pühapäeval?" },
-    { voice: "main", text: "Pühapäeval olen kodus." },
+    { voice: "third", text: "Pühapäeval olen kodus." },
   ],
 };
 
@@ -2115,7 +2115,7 @@ export const TALLINN_SORTED = [
   { w: "Kell on kaksteist.", bin: "kell" },
   { w: "Reede.", bin: "paev" },
   { w: "Kaksteist eurot.", bin: "hind" },
-  { w: "Homme on pühapäev.", bin: "paev" },
+  { w: "Homme on laupäev.", bin: "paev" },
   { w: "Kell on kolm.", bin: "kell" },
 ] as const;
 
@@ -2233,7 +2233,7 @@ const TALLINN_CLIPS: Record<string, Clip> = {
   "d-plan": TALLINN_TALK,
   "p-reply": { sentences: TALLINN_REPLY },
   "p-mari": { sentences: TALLINN_PASSAGES.mari, voice: "second" },
-  "p-jaan": { sentences: TALLINN_PASSAGES.jaan },
+  "p-jaan": { sentences: TALLINN_PASSAGES.jaan, voice: "third" },
   "p-saturday": { sentences: TALLINN_PASSAGES.saturday },
   ...TALLINN_DIALOGUE,
 };

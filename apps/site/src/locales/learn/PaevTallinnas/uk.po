@@ -313,6 +313,9 @@ msgstr "ні; не"
 msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number. After <2>Mari ja mina</2>, Mari and I, the verb takes the same form as after <3>me</3>, we."
 msgstr "Тепер субота, і ось твій план. Встав у кожен пропуск слово: форму <0/>, дієслово з потрібним закінченням, <1/> або форму слова після числа. Після <2>Mari ja mina</2>, «Марі і я», дієслово має ту саму форму, що й після <3>me</3>, «ми»."
 
+msgid "Numbers, times and days in sentences you know. Read a sign and a message, follow a voice message and a phone call, write in Estonian, and talk with Mari at the café."
+msgstr "Числа, час і дні в реченнях, які ти вже знаєш. Прочитай табличку й повідомлення, послухай голосове повідомлення й телефонну розмову, напиши кілька речень естонською й поговори з Марі в кав’ярні."
+
 msgid "On a door or a sign."
 msgstr "На дверях або на табличці."
 
@@ -336,9 +339,6 @@ msgstr "Pool neli: пів на четверту, 3:30."
 
 msgid "Pühapäev with the ending that says when, as in esmaspäeval."
 msgstr "Pühapäev із закінченням, яке відповідає на питання «коли», як у esmaspäeval."
-
-msgid "Read a café sign and a text message, tell times from prices and days, follow a voice message and a phone call, write what you hear and write sentences in Estonian, fill in a plan for Saturday, talk with Mari at the café and answer her message: numbers, times and days in sentences you know."
-msgstr "Прочитай табличку на дверях кав’ярні й повідомлення, відрізни час від ціни й дня, послухай голосове повідомлення й телефонну розмову, запиши почуте й напиши речення естонською, заповни план на суботу, поговори з Марі в кав’ярні й відповідай на її повідомлення: числа, час і дні в реченнях, які ти вже знаєш."
 
 msgid "Read Mari’s message once more, then try again."
 msgstr "Ще раз прочитай повідомлення від Марі, а тоді спробуй знову."

@@ -442,10 +442,8 @@ export function PaevTallinnasLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Read a café sign and a text message, tell times from prices and days, follow a voice
-          message and a phone call, write what you hear and write sentences in Estonian, fill in a
-          plan for Saturday, talk with Mari at the café and answer her message: numbers, times and
-          days in sentences you know.
+          Numbers, times and days in sentences you know. Read a sign and a message, follow a voice
+          message and a phone call, write in Estonian, and talk with Mari at the café.
         </Trans>
       }
       facts={[
@@ -625,7 +623,7 @@ export function PaevTallinnasLesson() {
                 title={<Trans>Listen: a plan for tomorrow</Trans>}
                 clip="d-plan"
                 turns={TALLINN_TALK.turns}
-                names={{ second: t`Mari`, main: t`Jaan` }}
+                names={{ second: t`Mari`, third: t`Jaan` }}
                 questions={content.plan}
               />
             </>

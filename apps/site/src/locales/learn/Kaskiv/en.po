@@ -252,10 +252,6 @@ msgstr "Listening only, no microphone"
 msgid "Listening: in class"
 msgstr "Listening: in class"
 
-msgctxt "in class"
-msgid "Look here"
-msgstr "Look here"
-
 msgid "Look."
 msgstr "Look."
 
@@ -300,6 +296,10 @@ msgstr "One person or more?"
 
 msgid "please"
 msgstr "please"
+
+msgctxt "in class"
+msgid "Read"
+msgstr "Read"
 
 msgid "Read."
 msgstr "Read."

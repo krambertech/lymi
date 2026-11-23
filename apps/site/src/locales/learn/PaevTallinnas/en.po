@@ -313,6 +313,9 @@ msgstr "no; not"
 msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number. After <2>Mari ja mina</2>, Mari and I, the verb takes the same form as after <3>me</3>, we."
 msgstr "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number. After <2>Mari ja mina</2>, Mari and I, the verb takes the same form as after <3>me</3>, we."
 
+msgid "Numbers, times and days in sentences you know. Read a sign and a message, follow a voice message and a phone call, write in Estonian, and talk with Mari at the café."
+msgstr "Numbers, times and days in sentences you know. Read a sign and a message, follow a voice message and a phone call, write in Estonian, and talk with Mari at the café."
+
 msgid "On a door or a sign."
 msgstr "On a door or a sign."
 
@@ -336,9 +339,6 @@ msgstr "Pool neli: halfway to four, 3:30."
 
 msgid "Pühapäev with the ending that says when, as in esmaspäeval."
 msgstr "Pühapäev with the ending that says when, as in esmaspäeval."
-
-msgid "Read a café sign and a text message, tell times from prices and days, follow a voice message and a phone call, write what you hear and write sentences in Estonian, fill in a plan for Saturday, talk with Mari at the café and answer her message: numbers, times and days in sentences you know."
-msgstr "Read a café sign and a text message, tell times from prices and days, follow a voice message and a phone call, write what you hear and write sentences in Estonian, fill in a plan for Saturday, talk with Mari at the café and answer her message: numbers, times and days in sentences you know."
 
 msgid "Read Mari’s message once more, then try again."
 msgstr "Read Mari’s message once more, then try again."

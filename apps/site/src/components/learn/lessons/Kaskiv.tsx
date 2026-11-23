@@ -596,7 +596,7 @@ export function KaskivLesson() {
         options: [
           { id: "listen", label: t({ message: "Listen", context: "in class" }) },
           { id: "sit", label: t`Sit down` },
-          { id: "look", label: t({ message: "Look here", context: "in class" }) },
+          { id: "read", label: t({ message: "Read", context: "in class" }) },
         ],
         answer: "sit",
         line: 1,

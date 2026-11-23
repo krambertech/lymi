@@ -4252,7 +4252,7 @@
   "paev-tallinnas/p-jaan": {
     "text": "Tere, see on Jaan! Ma olen täna Tartus, aga homme olen Tallinnas. Minu buss on Tallinnas kell pool üksteist. Ma olen homme kohvikus. Pühapäeval olen kodus.",
     "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
   },
   "paev-tallinnas/p-saturday": {
     "text": "Täna on laupäev. Ma ei tööta. Ma olen Tallinnas. Mari ja Jaan on minu sõbrad. Mari ja mina joome kell kümme kohvikus kohvi. Kohv maksab kolm eurot.",
@@ -11523,11 +11523,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "paev-tallinnas/homme-on-pu2hapa2ev": {
-    "text": "Homme on pühapäev.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "paev-tallinnas/kell-on-kolm": {
     "text": "Kell on kolm.",
     "model": "eleven_v4",
@@ -11605,7 +11600,7 @@
         ]
       },
       {
-        "voice": "jGja51dd7gcoK0zkxeyg",
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
         "sentences": [
           "Täna on reede ja ma olen tööl."
         ]
@@ -11617,7 +11612,7 @@
         ]
       },
       {
-        "voice": "jGja51dd7gcoK0zkxeyg",
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
         "sentences": [
           "Ei, homme ma ei tööta.",
           "Kell üksteist olen kohvikus."
@@ -11630,7 +11625,7 @@
         ]
       },
       {
-        "voice": "jGja51dd7gcoK0zkxeyg",
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
         "sentences": [
           "Hästi, ma tulen kell pool üks!"
         ]
@@ -11642,7 +11637,7 @@
         ]
       },
       {
-        "voice": "jGja51dd7gcoK0zkxeyg",
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
         "sentences": [
           "Pühapäeval olen kodus."
         ]
@@ -13328,6 +13323,11 @@
   },
   "tutvumine/sa-oled-kodus": {
     "text": "Sa oled kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/homme-on-laupa2ev": {
+    "text": "Homme on laupäev.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

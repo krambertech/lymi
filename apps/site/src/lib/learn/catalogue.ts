@@ -405,7 +405,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Let’s and let them in Estonian`,
         et: "Lähme! Las ta tuleb.",
         minutes: 20,
-        blurb: msg`A free lesson on suggesting and allowing in Estonian: let’s with the present’s me form without me (teeme, vaatame; minema gives lähme), lähme with the -ma infinitive (lähme ujuma), and las with the present (las ta tuleb, las ma aitan). Every sentence is read aloud.`,
+        blurb: msg`A free lesson on suggesting and allowing in Estonian: let’s, usually the present’s me form without me (teeme, vaatame; minema gives lähme), lähme with the -ma infinitive (lähme ujuma), and las, usually with the present (las ta tuleb, las ma aitan). Every sentence is read aloud.`,
       },
       {
         slug: "raagitakse",

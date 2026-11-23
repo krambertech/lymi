@@ -2,9 +2,9 @@ import { msg } from "@lingui/core/macro";
 import { IMPERSONAL_ANSWERS, IMPERSONAL_FIX_ANSWERS } from "../../../lib/learn/clips";
 import type { DrillBank, FormDrill } from "../../../lib/learn/drill";
 
-const BUILD = msg`From the <et>-tud</et> form: <et>-takse</et> or <et>-dakse</et> for “people do”, <et>-ti</et> or <et>-di</et> for “people did”.`;
+const BUILD = msg`From the <et>-tud</et> form, usually: <et>-takse</et> or <et>-dakse</et> for “people do”, <et>-ti</et> or <et>-di</et> for “people did”.`;
 const HEART = msg`One to learn by heart: “people do” doesn’t follow the <et>-tud</et> rule: <et>tehtud, tehakse</et>.`;
-const WHO = msg`No person is named, so the impersonal.`;
+const WHO = msg`No person is named, so usually the impersonal.`;
 const NO_NOW = msg`Now: <et>ei</et> and the <et>-tud</et> form, with <et>-ta</et> for <et>-tud</et> and <et>-da</et> for <et>-dud</et>: <et>müüdud, ei müüda</et>.`;
 const NO_PAST = msg`In the past: <et>ei</et> and the <et>-tud</et> form.`;
 
@@ -51,6 +51,7 @@ export const DRILLS: DrillBank = {
       id: "fix-tehakse",
       rule: "build",
       wrong: "Jaanipäeval tegakse lõke.",
+      prompt: msg`At Midsummer, people make a bonfire.`,
       answers: IMPERSONAL_FIX_ANSWERS["Jaanipäeval tehakse lõke."],
       say: "Jaanipäeval tehakse lõke.",
       explain: HEART,
@@ -60,6 +61,7 @@ export const DRILLS: DrillBank = {
       id: "fix-minnakse",
       rule: "build",
       wrong: "Talvel minakse sauna.",
+      prompt: msg`In winter, people go to the sauna.`,
       answers: IMPERSONAL_FIX_ANSWERS["Talvel minnakse sauna."],
       say: "Talvel minnakse sauna.",
       explain: HEART,
@@ -115,6 +117,7 @@ export const DRILLS: DrillBank = {
       id: "fix-raagitakse",
       rule: "who",
       wrong: "Eestis räägib eesti keelt.",
+      prompt: msg`Estonian is spoken in Estonia.`,
       answers: IMPERSONAL_FIX_ANSWERS["Eestis räägitakse eesti keelt."],
       say: "Eestis räägitakse eesti keelt.",
       explain: WHO,
@@ -124,6 +127,7 @@ export const DRILLS: DrillBank = {
       id: "fix-ehitatakse",
       rule: "who",
       wrong: "Uus kool ehitab järgmisel aastal.",
+      prompt: msg`A new school will be built next year.`,
       answers: IMPERSONAL_FIX_ANSWERS["Uus kool ehitatakse järgmisel aastal."],
       say: "Uus kool ehitatakse järgmisel aastal.",
       explain: msg`The school doesn’t build anything; people build it: <et>ehitatakse</et>.`,

@@ -46,11 +46,11 @@ msgstr "<0>Tule ka</0> зовёт прийти Кати. Про Яана: <1>las
 msgid "<et>Lähme</et> with the <et>-ma</et> infinitive: go and do it."
 msgstr "<et>Lähme</et> с инфинитивом на <et>-ma</et>: пойдём и сделаем это."
 
-msgid "<et>Las</et> with the present"
-msgstr "<et>Las</et> с настоящим временем"
-
 msgid "<et>Las</et>, the person, and usually the present: <et>las ta tuleb</et>."
 msgstr "<et>Las</et>, лицо и обычно настоящее время: <et>las ta tuleb</et>."
+
+msgid "<et>Las</et>, usually with the present"
+msgstr "<et>Las</et>, обычно с настоящим временем"
 
 msgid "<et>Me läheme</et>: a statement, we are going."
 msgstr "<et>Me läheme</et>: утверждение, мы идём."
@@ -112,9 +112,6 @@ msgstr "В час"
 msgid "At three"
 msgstr "В три"
 
-msgid "Drop <0>me</0> and say it as a suggestion. Only <1>minema</1> gets shorter: <2>lähme</2>."
-msgstr "Отбрось <0>me</0> и скажи это как предложение. Только <1>minema</1> сокращается: <2>lähme</2>."
-
 msgid "Each round gives a verb’s <0>-ma</0> infinitive and its present for <1>ma</1>. Type its let’s form."
 msgstr "В каждом раунде — инфинитив глагола на <0>-ma</0> и его настоящее время для <1>ma</1>. Напиши форму «давай сделаем»."
 
@@ -133,14 +130,14 @@ msgstr "Исправь предложение"
 msgid "For <0>ma</0>, the present ends in <1>-n</1>: <2>aitan</2>."
 msgstr "Для <0>ma</0> настоящее время оканчивается на <1>-n</1>: <2>aitan</2>."
 
-msgid "For <0>nad</0>, the present ends in <1>-vad</1>: <2>mängivad</2>."
-msgstr "Для <0>nad</0> настоящее время оканчивается на <1>-vad</1>: <2>mängivad</2>."
+msgid "For <0>nad</0>, the present usually ends in <1>-vad</1>: <2>mängivad</2>."
+msgstr "Для <0>nad</0> настоящее время обычно оканчивается на <1>-vad</1>: <2>mängivad</2>."
 
 msgid "For <et>ma</et>, the present ends in <et>-n</et>: <et>aitan</et>."
 msgstr "Для <et>ma</et> настоящее время оканчивается на <et>-n</et>: <et>aitan</et>."
 
-msgid "For <et>nad</et>, the present ends in <et>-vad</et>: <et>mängivad</et>."
-msgstr "Для <et>nad</et> настоящее время оканчивается на <et>-vad</et>: <et>mängivad</et>."
+msgid "For <et>nad</et>, the present usually ends in <et>-vad</et>: <et>mängivad</et>."
+msgstr "Для <et>nad</et> настоящее время обычно оканчивается на <et>-vad</et>: <et>mängivad</et>."
 
 msgid "Go to the cinema!"
 msgstr "Иди в кино!"
@@ -163,8 +160,8 @@ msgstr "Яан лучше посмотрел бы футбол."
 msgid "Kati"
 msgstr "Кати"
 
-msgid "Lesson {commands} taught commands: <0>istu!</0>, sit! To suggest doing something together, take the present’s <1>me</1> form and drop <2>me</2>: <3>me vaatame</3>, we watch, becomes <4>vaatame!</4>, let’s watch. Tap each form in the table to hear it."
-msgstr "Урок {commands} научил приказам: <0>istu!</0>, садись! Чтобы предложить сделать что-то вместе, возьми форму настоящего времени для <1>me</1> и отбрось <2>me</2>: <3>me vaatame</3>, мы смотрим, становится <4>vaatame!</4>, давай посмотрим. Нажми каждую форму в таблице, чтобы её услышать."
+msgid "Lesson {commands} taught commands: <0>istu!</0>, sit! To suggest doing something together, usually take the present’s <1>me</1> form and drop <2>me</2>: <3>me vaatame</3>, we watch, becomes <4>vaatame!</4>, let’s watch. Tap each form in the table to hear it."
+msgstr "Урок {commands} научил приказам: <0>istu!</0>, садись! Чтобы предложить сделать что-то вместе, обычно бери форму настоящего времени для <1>me</1> и отбрасывай <2>me</2>: <3>me vaatame</3>, мы смотрим, становится <4>vaatame!</4>, давай посмотрим. Нажми каждую форму в таблице, чтобы её услышать."
 
 msgid "let"
 msgstr "пусть"
@@ -193,8 +190,8 @@ msgstr "Пусть он или она смотрит фильм."
 msgid "Let him, let them"
 msgstr "Пусть он, пусть они"
 
-msgid "Let him, let them, let me: <0>las</0>, the person, and the present. <1>Las ta magab. Las nad mängivad. Las ma aitan.</1>"
-msgstr "Пусть он, пусть они, давай я: <0>las</0>, лицо и настоящее время. <1>Las ta magab. Las nad mängivad. Las ma aitan.</1>"
+msgid "Let him, let them, let me: <0>las</0>, the person, and usually the present. <1>Las ta magab. Las nad mängivad. Las ma aitan.</1>"
+msgstr "Пусть он, пусть они, давай я: <0>las</0>, лицо и обычно настоящее время. <1>Las ta magab. Las nad mängivad. Las ma aitan.</1>"
 
 msgid "Let Mari decide."
 msgstr "Пусть Мари решает."
@@ -271,11 +268,11 @@ msgstr "Давай посмотрим фильм."
 msgid "Let’s, we do, do it, let him"
 msgstr "Давай, мы делаем, сделай, пусть он"
 
-msgid "Let’s: the present’s <0>me</0> form without <1>me</1>. <2>Teeme! Vaatame!</2> Only <3>minema</3> gets shorter: <4>Lähme!</4>"
-msgstr "«Давай»: форма настоящего времени для <0>me</0> без <1>me</1>. <2>Teeme! Vaatame!</2> Только <3>minema</3> сокращается: <4>Lähme!</4>"
+msgid "Let’s: usually the present’s <0>me</0> form without <1>me</1>. <2>Teeme! Vaatame!</2> Only <3>minema</3> gets shorter: <4>Lähme!</4>"
+msgstr "«Давай»: обычно форма настоящего времени для <0>me</0> без <1>me</1>. <2>Teeme! Vaatame!</2> Только <3>minema</3> сокращается: <4>Lähme!</4>"
 
-msgid "Let’s: the present’s <et>me</et> form without <et>me</et>. Only <et>minema</et> gets shorter: <et>lähme</et>."
-msgstr "«Давай»: форма настоящего времени для <et>me</et> без <et>me</et>. Только <et>minema</et> сокращается: <et>lähme</et>."
+msgid "Let’s: usually the present’s <et>me</et> form without <et>me</et>. Only <et>minema</et> gets shorter: <et>lähme</et>."
+msgstr "«Давай»: обычно форма настоящего времени для <et>me</et> без <et>me</et>. Только <et>minema</et> сокращается: <et>lähme</et>."
 
 msgid "Listen to the sentences above once more, then try again."
 msgstr "Ещё раз послушай предложения выше, а потом попробуй снова."
@@ -425,6 +422,9 @@ msgstr "Вместе: «давай». Одному человеку: форма 
 msgid "Type the let’s form"
 msgstr "Напиши форму «давай»"
 
+msgid "Usually, drop <0>me</0> and say it as a suggestion. Only <1>minema</1> gets shorter: <2>lähme</2>."
+msgstr "Обычно отбрось <0>me</0> и скажи это как предложение. Только <1>minema</1> сокращается: <2>lähme</2>."
+
 msgid "Watch a film!"
 msgstr "Посмотри фильм!"
 
@@ -433,6 +433,9 @@ msgstr "Мы делаем"
 
 msgid "We do and let’s of eight verbs"
 msgstr "«Мы делаем» и «давай» восьми глаголов"
+
+msgid "We eat together."
+msgstr "Мы едим вместе."
 
 msgid "We’re eating pizza."
 msgstr "Мы едим пиццу."
@@ -470,8 +473,8 @@ msgstr "Почему кафе у моря не подходит Лийсе?"
 msgid "With <0>me</0>, the present’s <1>me</1> form: <2>sööme</2>."
 msgstr "С <0>me</0> — форма настоящего времени для <1>me</1>: <2>sööme</2>."
 
-msgid "With a person and the present: las ta tuleb, let him or her come."
-msgstr "С лицом и настоящим временем: las ta tuleb, пусть он или она придёт."
+msgid "With a person and usually the present: las ta tuleb, let him or her come."
+msgstr "С лицом и обычно настоящим временем: las ta tuleb, пусть он или она придёт."
 
 msgid "Without <0>me</0>, a sentence can still be a plain statement: <1>pühapäeval magame kaua</1>, on Sunday we sleep in. The voice and the exclamation mark make it a suggestion."
 msgstr "Без <0>me</0> предложение может быть и простым утверждением: <1>pühapäeval magame kaua</1>, в воскресенье мы долго спим. Предложением его делают интонация и восклицательный знак."

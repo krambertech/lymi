@@ -53,6 +53,14 @@ const VERBS: Record<string, MessageDescriptor> = {
   avama: msg`to open`,
 };
 
+const FIX_PROMPTS: Record<string, MessageDescriptor> = {
+  "Eestis räägitakse eesti keelt.": msg`Estonian is spoken in Estonia.`,
+  "Eile räägiti sellest.": msg`People talked about it yesterday.`,
+  "Jaanipäeval tehakse lõke.": msg`At Midsummer, people make a bonfire.`,
+  "Talvel minnakse sauna.": msg`In winter, people go to the sauna.`,
+  "Uus kool ehitatakse järgmisel aastal.": msg`A new school will be built next year.`,
+};
+
 const MEANS: Record<string, MessageDescriptor> = {
   "Eestis räägitakse eesti keelt.": msg`Estonian is spoken in Estonia.`,
   "Poes müüakse leiba.": msg`Bread is sold in the shop.`,
@@ -384,6 +392,9 @@ function useContent() {
       kind: "fix",
       id: `fix-${clipId(item.right)}`,
       wrong: item.wrong,
+      prompt: FIX_PROMPTS[item.right]
+        ? i18n._(FIX_PROMPTS[item.right] as MessageDescriptor)
+        : undefined,
       answers: IMPERSONAL_FIX_ANSWERS[item.right] ?? [item.right],
       src: src(item.right),
       explain: fixWhy[item.right],
@@ -564,8 +575,8 @@ export function RaagitakseLesson() {
                   <Trans>
                     Each verb has a form in <b lang="et">-tud</b> or <b lang="et">-dud</b>: done.{" "}
                     <b lang="et">Räägitud</b> is spoken, as in <b lang="et">sellest on räägitud</b>,
-                    people have talked about it. Swap its ending, and you have “people do” and
-                    “people did”. Tap each form in the table to hear it.
+                    people have talked about it. Swap its ending, and you usually have “people do”
+                    and “people did”. Tap each form in the table to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -615,7 +626,7 @@ export function RaagitakseLesson() {
                 <p>
                   <Trans>
                     When a person is named, the verb takes that person’s form:{" "}
-                    <b lang="et">Mari räägib</b>. When nobody is, the impersonal:{" "}
+                    <b lang="et">Mari räägib</b>. When nobody is, usually the impersonal:{" "}
                     <b lang="et">siin räägitakse</b>. Read the whole sentence: is a person named,
                     and is it past?
                   </Trans>
@@ -732,7 +743,7 @@ export function RaagitakseLesson() {
                 <p>
                   <Trans>
                     Write each sentence in Estonian. English says “is done” or “people do”; Estonian
-                    uses one form for both.
+                    often uses one form for both.
                   </Trans>
                 </p>
               </Prose>

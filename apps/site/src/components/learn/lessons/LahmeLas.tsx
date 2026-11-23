@@ -48,6 +48,9 @@ const VERBS: Record<string, MessageDescriptor> = {
 };
 
 const FIX_PROMPTS: Record<string, MessageDescriptor> = {
+  "Las nad mängivad õues.": msg`Let them play outside.`,
+  "Las ma aitan sind.": msg`Let me help you.`,
+  "Me sööme koos.": msg`We eat together.`,
   "Vaatame filmi!": msg`Let’s watch a film!`,
   "Ostame koogi!": msg`Let’s buy a cake!`,
 };
@@ -73,7 +76,7 @@ const GLOSSARY: Glossary = {
   ),
   las: {
     en: msg`let`,
-    note: msg`With a person and the present: las ta tuleb, let him or her come.`,
+    note: msg`With a person and usually the present: las ta tuleb, let him or her come.`,
   },
   koos: { en: msg`together` },
   kahekesi: { en: msg`the two of us, just two` },
@@ -148,8 +151,8 @@ function LetsTable() {
           title: t`Tap a form`,
           tip: (
             <Trans>
-              Drop <b lang="et">me</b> and say it as a suggestion. Only <b lang="et">minema</b> gets
-              shorter: <b lang="et">lähme</b>.
+              Usually, drop <b lang="et">me</b> and say it as a suggestion. Only{" "}
+              <b lang="et">minema</b> gets shorter: <b lang="et">lähme</b>.
             </Trans>
           ),
         }}
@@ -323,7 +326,7 @@ function useContent() {
       ),
       "Las nad mängivad õues.": (
         <Trans>
-          For <b lang="et">nad</b>, the present ends in <b lang="et">-vad</b>:{" "}
+          For <b lang="et">nad</b>, the present usually ends in <b lang="et">-vad</b>:{" "}
           <b lang="et">mängivad</b>.
         </Trans>
       ),
@@ -589,7 +592,7 @@ export function LahmeLasLesson() {
       words={["las", "koos", "kahekesi", "õues"]}
       recap={[
         <Trans key="1">
-          Let’s: the present’s <b lang="et">me</b> form without <b lang="et">me</b>.{" "}
+          Let’s: usually the present’s <b lang="et">me</b> form without <b lang="et">me</b>.{" "}
           <b lang="et">Teeme! Vaatame!</b> Only <b lang="et">minema</b> gets shorter:{" "}
           <b lang="et">Lähme!</b>
         </Trans>,
@@ -598,7 +601,7 @@ export function LahmeLasLesson() {
           <b lang="et">Lähme ujuma!</b>
         </Trans>,
         <Trans key="3">
-          Let him, let them, let me: <b lang="et">las</b>, the person, and the present.{" "}
+          Let him, let them, let me: <b lang="et">las</b>, the person, and usually the present.{" "}
           <b lang="et">Las ta magab. Las nad mängivad. Las ma aitan.</b>
         </Trans>,
         <Trans key="4">
@@ -616,7 +619,7 @@ export function LahmeLasLesson() {
                 <p>
                   <Trans>
                     Lesson {commands} taught commands: <b lang="et">istu!</b>, sit! To suggest doing
-                    something together, take the present’s <b lang="et">me</b> form and drop{" "}
+                    something together, usually take the present’s <b lang="et">me</b> form and drop{" "}
                     <b lang="et">me</b>: <b lang="et">me vaatame</b>, we watch, becomes{" "}
                     <b lang="et">vaatame!</b>, let’s watch. Tap each form in the table to hear it.
                   </Trans>

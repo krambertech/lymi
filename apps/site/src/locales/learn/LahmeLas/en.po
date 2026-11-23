@@ -46,11 +46,11 @@ msgstr "<0>Tule ka</0> tells Kati to come. About Jaan: <1>las ta tuleb</1>."
 msgid "<et>Lähme</et> with the <et>-ma</et> infinitive: go and do it."
 msgstr "<et>Lähme</et> with the <et>-ma</et> infinitive: go and do it."
 
-msgid "<et>Las</et> with the present"
-msgstr "<et>Las</et> with the present"
-
 msgid "<et>Las</et>, the person, and usually the present: <et>las ta tuleb</et>."
 msgstr "<et>Las</et>, the person, and usually the present: <et>las ta tuleb</et>."
+
+msgid "<et>Las</et>, usually with the present"
+msgstr "<et>Las</et>, usually with the present"
 
 msgid "<et>Me läheme</et>: a statement, we are going."
 msgstr "<et>Me läheme</et>: a statement, we are going."
@@ -112,9 +112,6 @@ msgstr "At one"
 msgid "At three"
 msgstr "At three"
 
-msgid "Drop <0>me</0> and say it as a suggestion. Only <1>minema</1> gets shorter: <2>lähme</2>."
-msgstr "Drop <0>me</0> and say it as a suggestion. Only <1>minema</1> gets shorter: <2>lähme</2>."
-
 msgid "Each round gives a verb’s <0>-ma</0> infinitive and its present for <1>ma</1>. Type its let’s form."
 msgstr "Each round gives a verb’s <0>-ma</0> infinitive and its present for <1>ma</1>. Type its let’s form."
 
@@ -133,14 +130,14 @@ msgstr "Fix the sentence"
 msgid "For <0>ma</0>, the present ends in <1>-n</1>: <2>aitan</2>."
 msgstr "For <0>ma</0>, the present ends in <1>-n</1>: <2>aitan</2>."
 
-msgid "For <0>nad</0>, the present ends in <1>-vad</1>: <2>mängivad</2>."
-msgstr "For <0>nad</0>, the present ends in <1>-vad</1>: <2>mängivad</2>."
+msgid "For <0>nad</0>, the present usually ends in <1>-vad</1>: <2>mängivad</2>."
+msgstr "For <0>nad</0>, the present usually ends in <1>-vad</1>: <2>mängivad</2>."
 
 msgid "For <et>ma</et>, the present ends in <et>-n</et>: <et>aitan</et>."
 msgstr "For <et>ma</et>, the present ends in <et>-n</et>: <et>aitan</et>."
 
-msgid "For <et>nad</et>, the present ends in <et>-vad</et>: <et>mängivad</et>."
-msgstr "For <et>nad</et>, the present ends in <et>-vad</et>: <et>mängivad</et>."
+msgid "For <et>nad</et>, the present usually ends in <et>-vad</et>: <et>mängivad</et>."
+msgstr "For <et>nad</et>, the present usually ends in <et>-vad</et>: <et>mängivad</et>."
 
 msgid "Go to the cinema!"
 msgstr "Go to the cinema!"
@@ -163,8 +160,8 @@ msgstr "Jaan would rather watch football."
 msgid "Kati"
 msgstr "Kati"
 
-msgid "Lesson {commands} taught commands: <0>istu!</0>, sit! To suggest doing something together, take the present’s <1>me</1> form and drop <2>me</2>: <3>me vaatame</3>, we watch, becomes <4>vaatame!</4>, let’s watch. Tap each form in the table to hear it."
-msgstr "Lesson {commands} taught commands: <0>istu!</0>, sit! To suggest doing something together, take the present’s <1>me</1> form and drop <2>me</2>: <3>me vaatame</3>, we watch, becomes <4>vaatame!</4>, let’s watch. Tap each form in the table to hear it."
+msgid "Lesson {commands} taught commands: <0>istu!</0>, sit! To suggest doing something together, usually take the present’s <1>me</1> form and drop <2>me</2>: <3>me vaatame</3>, we watch, becomes <4>vaatame!</4>, let’s watch. Tap each form in the table to hear it."
+msgstr "Lesson {commands} taught commands: <0>istu!</0>, sit! To suggest doing something together, usually take the present’s <1>me</1> form and drop <2>me</2>: <3>me vaatame</3>, we watch, becomes <4>vaatame!</4>, let’s watch. Tap each form in the table to hear it."
 
 msgid "let"
 msgstr "let"
@@ -193,8 +190,8 @@ msgstr "Let him or her watch a film."
 msgid "Let him, let them"
 msgstr "Let him, let them"
 
-msgid "Let him, let them, let me: <0>las</0>, the person, and the present. <1>Las ta magab. Las nad mängivad. Las ma aitan.</1>"
-msgstr "Let him, let them, let me: <0>las</0>, the person, and the present. <1>Las ta magab. Las nad mängivad. Las ma aitan.</1>"
+msgid "Let him, let them, let me: <0>las</0>, the person, and usually the present. <1>Las ta magab. Las nad mängivad. Las ma aitan.</1>"
+msgstr "Let him, let them, let me: <0>las</0>, the person, and usually the present. <1>Las ta magab. Las nad mängivad. Las ma aitan.</1>"
 
 msgid "Let Mari decide."
 msgstr "Let Mari decide."
@@ -271,11 +268,11 @@ msgstr "Let’s watch a film."
 msgid "Let’s, we do, do it, let him"
 msgstr "Let’s, we do, do it, let him"
 
-msgid "Let’s: the present’s <0>me</0> form without <1>me</1>. <2>Teeme! Vaatame!</2> Only <3>minema</3> gets shorter: <4>Lähme!</4>"
-msgstr "Let’s: the present’s <0>me</0> form without <1>me</1>. <2>Teeme! Vaatame!</2> Only <3>minema</3> gets shorter: <4>Lähme!</4>"
+msgid "Let’s: usually the present’s <0>me</0> form without <1>me</1>. <2>Teeme! Vaatame!</2> Only <3>minema</3> gets shorter: <4>Lähme!</4>"
+msgstr "Let’s: usually the present’s <0>me</0> form without <1>me</1>. <2>Teeme! Vaatame!</2> Only <3>minema</3> gets shorter: <4>Lähme!</4>"
 
-msgid "Let’s: the present’s <et>me</et> form without <et>me</et>. Only <et>minema</et> gets shorter: <et>lähme</et>."
-msgstr "Let’s: the present’s <et>me</et> form without <et>me</et>. Only <et>minema</et> gets shorter: <et>lähme</et>."
+msgid "Let’s: usually the present’s <et>me</et> form without <et>me</et>. Only <et>minema</et> gets shorter: <et>lähme</et>."
+msgstr "Let’s: usually the present’s <et>me</et> form without <et>me</et>. Only <et>minema</et> gets shorter: <et>lähme</et>."
 
 msgid "Listen to the sentences above once more, then try again."
 msgstr "Listen to the sentences above once more, then try again."
@@ -425,6 +422,9 @@ msgstr "Together: let’s. One person: the command form. Someone else, or you of
 msgid "Type the let’s form"
 msgstr "Type the let’s form"
 
+msgid "Usually, drop <0>me</0> and say it as a suggestion. Only <1>minema</1> gets shorter: <2>lähme</2>."
+msgstr "Usually, drop <0>me</0> and say it as a suggestion. Only <1>minema</1> gets shorter: <2>lähme</2>."
+
 msgid "Watch a film!"
 msgstr "Watch a film!"
 
@@ -433,6 +433,9 @@ msgstr "We do"
 
 msgid "We do and let’s of eight verbs"
 msgstr "We do and let’s of eight verbs"
+
+msgid "We eat together."
+msgstr "We eat together."
 
 msgid "We’re eating pizza."
 msgstr "We’re eating pizza."
@@ -470,8 +473,8 @@ msgstr "Why doesn’t the café by the sea suit Liisa?"
 msgid "With <0>me</0>, the present’s <1>me</1> form: <2>sööme</2>."
 msgstr "With <0>me</0>, the present’s <1>me</1> form: <2>sööme</2>."
 
-msgid "With a person and the present: las ta tuleb, let him or her come."
-msgstr "With a person and the present: las ta tuleb, let him or her come."
+msgid "With a person and usually the present: las ta tuleb, let him or her come."
+msgstr "With a person and usually the present: las ta tuleb, let him or her come."
 
 msgid "Without <0>me</0>, a sentence can still be a plain statement: <1>pühapäeval magame kaua</1>, on Sunday we sleep in. The voice and the exclamation mark make it a suggestion."
 msgstr "Without <0>me</0>, a sentence can still be a plain statement: <1>pühapäeval magame kaua</1>, on Sunday we sleep in. The voice and the exclamation mark make it a suggestion."

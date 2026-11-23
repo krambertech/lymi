@@ -2,7 +2,7 @@ import { msg } from "@lingui/core/macro";
 import { LETS_ANSWERS, LETS_FIX_ANSWERS } from "../../../lib/learn/clips";
 import type { DrillBank, FormDrill } from "../../../lib/learn/drill";
 
-const LETS = msg`Let’s: the present’s <et>me</et> form without <et>me</et>. Only <et>minema</et> gets shorter: <et>lähme</et>.`;
+const LETS = msg`Let’s: usually the present’s <et>me</et> form without <et>me</et>. Only <et>minema</et> gets shorter: <et>lähme</et>.`;
 const LAS = msg`<et>Las</et>, the person, and usually the present: <et>las ta tuleb</et>.`;
 const WHICH = msg`Together: let’s. One person: the command form. Someone else, or you offering: <et>las</et>.`;
 
@@ -29,7 +29,7 @@ const form = (
 export const DRILLS: DrillBank = {
   rules: {
     lets: { label: msg`Let’s`, section: "lets" },
-    las: { label: msg`<et>Las</et> with the present`, section: "las" },
+    las: { label: msg`<et>Las</et>, usually with the present`, section: "las" },
     which: { label: msg`Let’s, we do, do it, let him`, section: "hear" },
   },
   items: [
@@ -175,15 +175,17 @@ export const DRILLS: DrillBank = {
       id: "fix-mangivad",
       rule: "las",
       wrong: "Las nad mängib õues.",
+      prompt: msg`Let them play outside.`,
       answers: LETS_FIX_ANSWERS["Las nad mängivad õues."],
       say: "Las nad mängivad õues.",
-      explain: msg`For <et>nad</et>, the present ends in <et>-vad</et>: <et>mängivad</et>.`,
+      explain: msg`For <et>nad</et>, the present usually ends in <et>-vad</et>: <et>mängivad</et>.`,
     },
     {
       kind: "fix",
       id: "fix-aitan",
       rule: "las",
       wrong: "Las ma aitab sind.",
+      prompt: msg`Let me help you.`,
       answers: LETS_FIX_ANSWERS["Las ma aitan sind."],
       say: "Las ma aitan sind.",
       explain: msg`For <et>ma</et>, the present ends in <et>-n</et>: <et>aitan</et>.`,

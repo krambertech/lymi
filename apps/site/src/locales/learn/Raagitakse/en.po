@@ -45,6 +45,9 @@ msgstr "7 exercises"
 msgid "A few take <0>-akse</0> for “people do”, often with a new stem: <1>tehakse, süüakse, minnakse</1>. Their past still follows the rule: <2>tehti, söödi, mindi</2>."
 msgstr "A few take <0>-akse</0> for “people do”, often with a new stem: <1>tehakse, süüakse, minnakse</1>. Their past still follows the rule: <2>tehti, söödi, mindi</2>."
 
+msgid "A new school will be built next year."
+msgstr "A new school will be built next year."
+
 msgid "A person is named, so the verb takes that person’s form."
 msgstr "A person is named, so the verb takes that person’s form."
 
@@ -123,8 +126,8 @@ msgstr "Each round gives a verb and its <0>-tud</0> form. Type “people do” o
 msgid "Each sentence has one verb in the wrong form. Tap it, then type it right."
 msgstr "Each sentence has one verb in the wrong form. Tap it, then type it right."
 
-msgid "Each verb has a form in <0>-tud</0> or <1>-dud</1>: done. <2>Räägitud</2> is spoken, as in <3>sellest on räägitud</3>, people have talked about it. Swap its ending, and you have “people do” and “people did”. Tap each form in the table to hear it."
-msgstr "Each verb has a form in <0>-tud</0> or <1>-dud</1>: done. <2>Räägitud</2> is spoken, as in <3>sellest on räägitud</3>, people have talked about it. Swap its ending, and you have “people do” and “people did”. Tap each form in the table to hear it."
+msgid "Each verb has a form in <0>-tud</0> or <1>-dud</1>: done. <2>Räägitud</2> is spoken, as in <3>sellest on räägitud</3>, people have talked about it. Swap its ending, and you usually have “people do” and “people did”. Tap each form in the table to hear it."
+msgstr "Each verb has a form in <0>-tud</0> or <1>-dud</1>: done. <2>Räägitud</2> is spoken, as in <3>sellest on räägitud</3>, people have talked about it. Swap its ending, and you usually have “people do” and “people did”. Tap each form in the table to hear it."
 
 msgid "Estonian is spoken here."
 msgstr "Estonian is spoken here."
@@ -147,8 +150,8 @@ msgstr "Fix the verb"
 msgid "For “people do”, <0>-tud</0> becomes <1>-takse</1> and <2>-dud</2> becomes <3>-dakse</3>. For “people did”, they become <4>-ti</4> and <5>-di</5>."
 msgstr "For “people do”, <0>-tud</0> becomes <1>-takse</1> and <2>-dud</2> becomes <3>-dakse</3>. For “people did”, they become <4>-ti</4> and <5>-di</5>."
 
-msgid "From the <et>-tud</et> form: <et>-takse</et> or <et>-dakse</et> for “people do”, <et>-ti</et> or <et>-di</et> for “people did”."
-msgstr "From the <et>-tud</et> form: <et>-takse</et> or <et>-dakse</et> for “people do”, <et>-ti</et> or <et>-di</et> for “people did”."
+msgid "From the <et>-tud</et> form, usually: <et>-takse</et> or <et>-dakse</et> for “people do”, <et>-ti</et> or <et>-di</et> for “people did”."
+msgstr "From the <et>-tud</et> form, usually: <et>-takse</et> or <et>-dakse</et> for “people do”, <et>-ti</et> or <et>-di</et> for “people did”."
 
 msgid "Hear a sentence, then pick what it means. Listen for <0>ei</0>, and for the ending."
 msgstr "Hear a sentence, then pick what it means. Listen for <0>ei</0>, and for the ending."
@@ -179,6 +182,9 @@ msgstr "In the past, <0>ei</0> takes the <1>-tud</1> form: <2>räägitud</2>."
 
 msgid "In the past: <et>ei</et> and the <et>-tud</et> form."
 msgstr "In the past: <et>ei</et> and the <et>-tud</et> form."
+
+msgid "In winter, people go to the sauna."
+msgstr "In winter, people go to the sauna."
 
 msgid "Is kvass made at home?"
 msgstr "Is kvass made at home?"
@@ -237,8 +243,8 @@ msgstr "No person is named, and it happened in the past: people did."
 msgid "No person is named, and it isn’t past: people do."
 msgstr "No person is named, and it isn’t past: people do."
 
-msgid "No person is named, so the impersonal."
-msgstr "No person is named, so the impersonal."
+msgid "No person is named, so usually the impersonal."
+msgstr "No person is named, so usually the impersonal."
 
 msgid "No person is named: <0>räägitakse</0>."
 msgstr "No person is named: <0>räägitakse</0>."
@@ -302,6 +308,9 @@ msgstr "People smoke here."
 
 msgid "People smoked here."
 msgstr "People smoked here."
+
+msgid "People talked about it yesterday."
+msgstr "People talked about it yesterday."
 
 msgid "Play the sentences you missed once more, then try again."
 msgstr "Play the sentences you missed once more, then try again."
@@ -453,8 +462,8 @@ msgstr "What does it mean?"
 msgid "What does jumping over the fire bring? Write it as Jaan says it."
 msgstr "What does jumping over the fire bring? Write it as Jaan says it."
 
-msgid "When a person is named, the verb takes that person’s form: <0>Mari räägib</0>. When nobody is, the impersonal: <1>siin räägitakse</1>. Read the whole sentence: is a person named, and is it past?"
-msgstr "When a person is named, the verb takes that person’s form: <0>Mari räägib</0>. When nobody is, the impersonal: <1>siin räägitakse</1>. Read the whole sentence: is a person named, and is it past?"
+msgid "When a person is named, the verb takes that person’s form: <0>Mari räägib</0>. When nobody is, usually the impersonal: <1>siin räägitakse</1>. Read the whole sentence: is a person named, and is it past?"
+msgstr "When a person is named, the verb takes that person’s form: <0>Mari räägib</0>. When nobody is, usually the impersonal: <1>siin räägitakse</1>. Read the whole sentence: is a person named, and is it past?"
 
 msgid "Where do people go on Midsummer Eve?"
 msgstr "Where do people go on Midsummer Eve?"
@@ -474,8 +483,8 @@ msgstr "Will I be invited too?"
 msgid "Wine"
 msgstr "Wine"
 
-msgid "Write each sentence in Estonian. English says “is done” or “people do”; Estonian uses one form for both."
-msgstr "Write each sentence in Estonian. English says “is done” or “people do”; Estonian uses one form for both."
+msgid "Write each sentence in Estonian. English says “is done” or “people do”; Estonian often uses one form for both."
+msgstr "Write each sentence in Estonian. English says “is done” or “people do”; Estonian often uses one form for both."
 
 msgid "Write it in Estonian"
 msgstr "Write it in Estonian"

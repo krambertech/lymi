@@ -45,6 +45,9 @@ msgstr "7 вправ"
 msgid "A few take <0>-akse</0> for “people do”, often with a new stem: <1>tehakse, süüakse, minnakse</1>. Their past still follows the rule: <2>tehti, söödi, mindi</2>."
 msgstr "Кілька дієслів мають у теперішньому часі <0>-akse</0>, часто з новою основою: <1>tehakse, süüakse, minnakse</1>. Їхній минулий час усе одно за правилом: <2>tehti, söödi, mindi</2>."
 
+msgid "A new school will be built next year."
+msgstr "Наступного року збудують нову школу."
+
 msgid "A person is named, so the verb takes that person’s form."
 msgstr "Особу названо, тож дієслово стоїть у формі цієї особи."
 
@@ -123,8 +126,8 @@ msgstr "У кожному раунді — дієслово і його форм
 msgid "Each sentence has one verb in the wrong form. Tap it, then type it right."
 msgstr "У кожному реченні одне дієслово в неправильній формі. Натисни на нього і напиши правильно."
 
-msgid "Each verb has a form in <0>-tud</0> or <1>-dud</1>: done. <2>Räägitud</2> is spoken, as in <3>sellest on räägitud</3>, people have talked about it. Swap its ending, and you have “people do” and “people did”. Tap each form in the table to hear it."
-msgstr "Кожне дієслово має форму на <0>-tud</0> або <1>-dud</1>: зроблено. <2>Räägitud</2> — сказано, як у <3>sellest on räägitud</3>, про це говорили. Заміни закінчення — і маєш «люди роблять» і «люди робили». Натисни кожну форму в таблиці, щоб її почути."
+msgid "Each verb has a form in <0>-tud</0> or <1>-dud</1>: done. <2>Räägitud</2> is spoken, as in <3>sellest on räägitud</3>, people have talked about it. Swap its ending, and you usually have “people do” and “people did”. Tap each form in the table to hear it."
+msgstr "Кожне дієслово має форму на <0>-tud</0> або <1>-dud</1>: зроблено. <2>Räägitud</2> — сказано, як у <3>sellest on räägitud</3>, про це говорили. Заміни закінчення — і зазвичай маєш «люди роблять» і «люди робили». Натисни кожну форму в таблиці, щоб її почути."
 
 msgid "Estonian is spoken here."
 msgstr "Тут говорять естонською."
@@ -147,8 +150,8 @@ msgstr "Виправ дієслово"
 msgid "For “people do”, <0>-tud</0> becomes <1>-takse</1> and <2>-dud</2> becomes <3>-dakse</3>. For “people did”, they become <4>-ti</4> and <5>-di</5>."
 msgstr "Для «люди роблять» <0>-tud</0> стає <1>-takse</1>, а <2>-dud</2> стає <3>-dakse</3>. Для «люди робили» вони стають <4>-ti</4> і <5>-di</5>."
 
-msgid "From the <et>-tud</et> form: <et>-takse</et> or <et>-dakse</et> for “people do”, <et>-ti</et> or <et>-di</et> for “people did”."
-msgstr "Від форми на <et>-tud</et>: <et>-takse</et> або <et>-dakse</et> для «люди роблять», <et>-ti</et> або <et>-di</et> для «люди робили»."
+msgid "From the <et>-tud</et> form, usually: <et>-takse</et> or <et>-dakse</et> for “people do”, <et>-ti</et> or <et>-di</et> for “people did”."
+msgstr "Від форми на <et>-tud</et>, зазвичай: <et>-takse</et> або <et>-dakse</et> для «люди роблять», <et>-ti</et> або <et>-di</et> для «люди робили»."
 
 msgid "Hear a sentence, then pick what it means. Listen for <0>ei</0>, and for the ending."
 msgstr "Послухай речення і вибери, що воно означає. Слухай, чи є <0>ei</0>, і яке закінчення."
@@ -179,6 +182,9 @@ msgstr "У минулому після <0>ei</0> — форма на <1>-tud</1>
 
 msgid "In the past: <et>ei</et> and the <et>-tud</et> form."
 msgstr "У минулому: <et>ei</et> і форма на <et>-tud</et>."
+
+msgid "In winter, people go to the sauna."
+msgstr "Узимку ходять у сауну."
 
 msgid "Is kvass made at home?"
 msgstr "Квас роблять удома?"
@@ -237,8 +243,8 @@ msgstr "Особу не названо, і це було в минулому: л
 msgid "No person is named, and it isn’t past: people do."
 msgstr "Особу не названо, і це не минуле: люди роблять."
 
-msgid "No person is named, so the impersonal."
-msgstr "Особу не названо, тож безособова форма."
+msgid "No person is named, so usually the impersonal."
+msgstr "Особу не названо, тож зазвичай безособова форма."
 
 msgid "No person is named: <0>räägitakse</0>."
 msgstr "Особу не названо: <0>räägitakse</0>."
@@ -302,6 +308,9 @@ msgstr "Тут курять."
 
 msgid "People smoked here."
 msgstr "Тут курили."
+
+msgid "People talked about it yesterday."
+msgstr "Учора про це говорили."
 
 msgid "Play the sentences you missed once more, then try again."
 msgstr "Ще раз послухай речення, де помилився, а тоді спробуй знову."
@@ -453,8 +462,8 @@ msgstr "Що це означає?"
 msgid "What does jumping over the fire bring? Write it as Jaan says it."
 msgstr "Що приносить стрибок через вогнище? Напиши так, як каже Яан."
 
-msgid "When a person is named, the verb takes that person’s form: <0>Mari räägib</0>. When nobody is, the impersonal: <1>siin räägitakse</1>. Read the whole sentence: is a person named, and is it past?"
-msgstr "Коли особу названо, дієслово стоїть у її формі: <0>Mari räägib</0>. Коли нікого не названо — безособова форма: <1>siin räägitakse</1>. Читай усе речення: чи названо особу і чи це минуле?"
+msgid "When a person is named, the verb takes that person’s form: <0>Mari räägib</0>. When nobody is, usually the impersonal: <1>siin räägitakse</1>. Read the whole sentence: is a person named, and is it past?"
+msgstr "Коли особу названо, дієслово стоїть у її формі: <0>Mari räägib</0>. Коли нікого не названо — зазвичай безособова форма: <1>siin räägitakse</1>. Читай усе речення: чи названо особу і чи це минуле?"
 
 msgid "Where do people go on Midsummer Eve?"
 msgstr "Куди їдуть напередодні Іванового дня?"
@@ -474,8 +483,8 @@ msgstr "Мене теж запросять?"
 msgid "Wine"
 msgstr "Вино"
 
-msgid "Write each sentence in Estonian. English says “is done” or “people do”; Estonian uses one form for both."
-msgstr "Напиши кожне речення естонською. Українською тут бувають різні звороти, а естонська має одну форму."
+msgid "Write each sentence in Estonian. English says “is done” or “people do”; Estonian often uses one form for both."
+msgstr "Напиши кожне речення естонською. Українською тут бувають різні звороти, а естонська часто має одну форму."
 
 msgid "Write it in Estonian"
 msgstr "Напиши естонською"

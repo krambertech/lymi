@@ -673,7 +673,7 @@ msgid "Estonian past tense"
 msgstr "Прошедшее время в эстонском языке"
 
 msgid "Estonian perfect and pluperfect"
-msgstr "Перфект и плюсквамперфект в эстонском языке"
+msgstr "Перфект и плюсквам­перфект в эстонском языке"
 
 msgid "Estonian personal pronouns and “to be”"
 msgstr "Эстонские личные местоимения и «быть»"

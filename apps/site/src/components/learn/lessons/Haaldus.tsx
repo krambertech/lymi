@@ -335,8 +335,8 @@ export function HaaldusLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          How Estonian sounds: nine vowels, letters that always sound the same, and length that
-          changes the word.
+          How Estonian sounds: nine vowels, letters that almost always sound the same, and length
+          that changes the word.
         </Trans>
       }
       facts={[
@@ -368,31 +368,31 @@ export function HaaldusLesson() {
         "linna",
       ]}
       recap={[
-        <Trans key="1">Say every letter the way it’s written.</Trans>,
-        <Trans key="2">Stress the first syllable.</Trans>,
+        <Trans key="1">Say every letter, and usually the way it’s written.</Trans>,
+        <Trans key="2">Usually stress the first syllable.</Trans>,
         <Trans key="3">
           The letters <b lang="et">õ ä ö ü</b> are vowels of their own, and English has no sound
           like <b lang="et">õ</b>.
         </Trans>,
-        <Trans key="4">A double letter is longer, and it makes a different word.</Trans>,
+        <Trans key="4">A double letter is longer, and it can make a different word.</Trans>,
       ]}
       sections={[
         {
           id: "spelled",
-          title: t`Read it as it’s written`,
+          title: t`Usually read as written`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    Estonian is spelled the way it sounds. You say every letter, and each one keeps
-                    its sound wherever it stands. Once you know the letters, you can read a new word
-                    aloud.
+                    Estonian is spelled almost the way it sounds. You say every letter, and each one
+                    usually keeps its sound wherever it stands. Once you know the letters, you can
+                    read most new words aloud.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Stress falls on the <b>first syllable</b>. Tap a word to hear it.
+                    Stress usually falls on the <b>first syllable</b>. Tap a word to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -514,8 +514,8 @@ export function HaaldusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Now write the word. Use the keys under the field to type õ, ä, ö and ü. A vowel
-                    without its marks makes another word, so it counts as wrong.
+                    Now write the word. Use the keys under the field to type õ, ä, ö and ü. Here a
+                    vowel without its marks makes another word, so it counts as wrong.
                   </Trans>
                 </p>
               </Prose>
@@ -549,9 +549,9 @@ export function HaaldusLesson() {
                 <p>
                   <Trans>
                     <Word w="Sada" /> is a hundred; <Word w="saada" /> means send. A double letter
-                    is a longer sound, and it makes a different word. Consonants work the same way:{" "}
-                    <Word w="kana" /> is a hen, and <Word w="kanna" /> tells one person to carry
-                    something.
+                    is a longer sound, and it can make a different word. Consonants work the same
+                    way: <Word w="kana" /> is a hen, and <Word w="kanna" /> tells one person to
+                    carry something.
                   </Trans>
                 </p>
                 <p>
@@ -630,8 +630,8 @@ export function HaaldusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Write the whole word this time. A long sound is written with two letters:{" "}
-                    <Word w="kas" />, <Word w="kass" />.
+                    Write the whole word this time. In these words, a long sound is written with two
+                    letters: <Word w="kas" />, <Word w="kass" />.
                   </Trans>
                 </p>
               </Prose>

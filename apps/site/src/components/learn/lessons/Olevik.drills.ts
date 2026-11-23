@@ -7,6 +7,7 @@ import {
   PRESENT_TURNED,
   PRESENT_VERBS,
   presentWithPronoun,
+  pronounOrders,
 } from "../../../lib/learn/clips";
 import type {
   ChoiceDrill,
@@ -75,7 +76,7 @@ const heard = (name: Verb["verb"], ending: Ending, wrong: readonly Ending[]): Ch
 };
 
 const STEM = msg`The ending goes on the stem of the I form, not of the -ma infinitive.`;
-const ENDING = msg`The ending goes with the pronoun at the start of the sentence.`;
+const ENDING = msg`The ending goes with the subject, here the pronoun at the start of the sentence.`;
 
 const FIX_MEANS: Record<string, MessageDescriptor> = {
   "Nad elab Tallinnas.": msg`They live in Tallinn.`,
@@ -96,22 +97,16 @@ const fixed = ({ wrong, said, kind }: (typeof PRESENT_FIXES)[number]): FixDrill 
   explain: kind === "stem" ? STEM : ENDING,
 });
 
-const LONG = { ma: "Mina", sa: "Sina", ta: "Tema", me: "Meie", te: "Teie", nad: "Nemad" } as const;
-
-const turned = ({ from, to, said }: (typeof PRESENT_TURNED)[number]): SentenceDrill => {
-  const rest = said.slice(said.indexOf(" ") + 1);
-  const dropped = to === "ta" || to === "nad" ? [] : [rest.charAt(0).toUpperCase() + rest.slice(1)];
-  return {
-    kind: "rewrite",
-    id: `turn-${ascii(said)}`,
-    rule: "ending",
-    from: PRESENT_SENTENCES[from],
-    cue: msg`with <et>${to}</et>`,
-    say: said,
-    answers: [said, `${LONG[to]} ${rest}`, ...dropped],
-    explain: msg`The verb takes the ending for <et>${to}</et>.`,
-  };
-};
+const turned = ({ from, to, said }: (typeof PRESENT_TURNED)[number]): SentenceDrill => ({
+  kind: "rewrite",
+  id: `turn-${ascii(said)}`,
+  rule: "ending",
+  from: PRESENT_SENTENCES[from],
+  cue: msg`with <et>${to}</et>`,
+  say: said,
+  answers: pronounOrders(said),
+  explain: msg`The verb takes the ending for <et>${to}</et>.`,
+});
 
 export const DRILLS: DrillBank = {
   rules: {

@@ -81,12 +81,46 @@ const PLACE_MEANS: Record<Place["place"] | Where, MessageDescriptor> = {
 };
 
 const WRITTEN: readonly { means: MessageDescriptor; also: readonly string[] }[] = [
-  { means: msg`We live in Tartu.`, also: ["Meie elame Tartus.", "Elame Tartus."] },
+  {
+    means: msg`We live in Tartu.`,
+    also: [
+      "Meie elame Tartus.",
+      "Elame Tartus.",
+      "Tartus me elame.",
+      "Tartus meie elame.",
+      "Tartus elame me.",
+      "Tartus elame meie.",
+      "Tartus elame.",
+    ],
+  },
   { means: msg`Dad is at the market.`, also: [] },
-  { means: msg`We live in Estonia.`, also: ["Meie elame Eestis.", "Elame Eestis."] },
-  { means: msg`They’re at work.`, also: ["Nemad on tööl."] },
+  {
+    means: msg`We live in Estonia.`,
+    also: [
+      "Meie elame Eestis.",
+      "Elame Eestis.",
+      "Eestis me elame.",
+      "Eestis meie elame.",
+      "Eestis elame me.",
+      "Eestis elame meie.",
+      "Eestis elame.",
+    ],
+  },
+  {
+    means: msg`They’re at work.`,
+    also: ["Nemad on tööl.", "Tööl nad on.", "Tööl nemad on.", "Tööl on nad.", "Tööl on nemad."],
+  },
   { means: msg`The picture is on the table.`, also: [] },
-  { means: msg`He’s studying at school.`, also: ["Tema õpib koolis."] },
+  {
+    means: msg`He’s studying at school.`,
+    also: [
+      "Tema õpib koolis.",
+      "Koolis ta õpib.",
+      "Koolis tema õpib.",
+      "Koolis õpib ta.",
+      "Koolis õpib tema.",
+    ],
+  },
 ];
 
 const endingKey = (sentence: string) => (/l\.$/.test(sentence) ? "l" : "s");
@@ -541,11 +575,11 @@ export function KohadLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          How to say where you are in Estonian:{" "}
+          How to say where you are in Estonian: usually{" "}
           <b lang="et" className="whitespace-nowrap">
             -s
           </b>{" "}
-          for in,{" "}
+          for in and{" "}
           <b lang="et" className="whitespace-nowrap">
             -l
           </b>{" "}
@@ -583,14 +617,14 @@ export function KohadLesson() {
           <b lang="et" className="whitespace-nowrap">
             -s
           </b>{" "}
-          says in: <b lang="et">Eestis, Tallinnas, koolis</b>.
+          usually says in: <b lang="et">Eestis, Tallinnas, koolis</b>.
         </Trans>,
         <Trans key="2">
           The ending{" "}
           <b lang="et" className="whitespace-nowrap">
             -l
           </b>{" "}
-          says on a surface or at an activity: <b lang="et">laual, tööl</b>.
+          usually says on a surface or at an activity: <b lang="et">laual, tööl</b>.
         </Trans>,
         <Trans key="3">
           Some places take{" "}
@@ -614,7 +648,7 @@ export function KohadLesson() {
       sections={[
         {
           id: "in",
-          title: t`The ending -s means in`,
+          title: t`The ending -s usually means in`,
           children: (
             <>
               <Prose>
@@ -630,7 +664,7 @@ export function KohadLesson() {
                 </p>
                 <p>
                   <Trans>
-                    It works the same for towns, buildings and most countries. Try it on three
+                    It works the same for most towns, buildings and countries. Try it on three
                     countries and three towns.
                   </Trans>
                 </p>
@@ -736,7 +770,7 @@ export function KohadLesson() {
         },
         {
           id: "on",
-          title: t`The ending -l means on or at`,
+          title: t`The ending -l usually means on or at`,
           children: (
             <>
               <Prose>
@@ -980,7 +1014,7 @@ export function KohadLesson() {
                     <b lang="et" className="whitespace-nowrap">
                       -s
                     </b>
-                    . A surface takes{" "}
+                    . A surface usually takes{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -l
                     </b>

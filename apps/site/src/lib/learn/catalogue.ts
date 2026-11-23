@@ -52,7 +52,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian pronunciation`,
         et: "Hääldus",
         minutes: 15,
-        blurb: msg`A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud.`,
+        blurb: msg`A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud.`,
       },
       {
         slug: "mina-sina-tema",
@@ -92,7 +92,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`In, on and at in Estonian: -s and -l`,
         et: "Tallinnas, Tartus",
         minutes: 15,
-        blurb: msg`A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud.`,
+        blurb: msg`A free lesson on saying where you are in Estonian: -s, usually for in (Tallinnas, koolis), -l, usually for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud.`,
       },
       {
         slug: "tutvumine",

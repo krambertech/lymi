@@ -482,6 +482,19 @@ export const KUSIMUSED_WORDS = [
   "sinu",
 ] as const;
 
+export const KUS_SA_TOOTAD = [
+  "Kus sa töötad?",
+  "Kus te töötate?",
+  "Kus sina töötad?",
+  "Kus teie töötate?",
+  "Kus töötad?",
+  "Kus töötate?",
+  "Kus töötad sa?",
+  "Kus töötate te?",
+  "Kus töötad sina?",
+  "Kus töötate teie?",
+] as const;
+
 export const KUSIMUSED_ASKED = [
   {
     word: "kes",
@@ -493,6 +506,8 @@ export const KUSIMUSED_ASKED = [
       "Kus ta elab?",
       "Kus tema elab?",
       "Kes Tartus elab?",
+      "Kus elab ta?",
+      "Kus elab tema?",
     ],
   },
   {
@@ -523,19 +538,28 @@ export const KUSIMUSED_ASKED = [
       "Mida joote?",
       "Mis teete?",
       "Mida teete?",
+      "Mis jood sa?",
+      "Mida jood sa?",
+      "Mis joote te?",
+      "Mida joote te?",
+      "Mis jood sina?",
+      "Mida jood sina?",
+      "Mis joote teie?",
+      "Mida joote teie?",
+      "Mis teed sa?",
+      "Mida teed sa?",
+      "Mis teete te?",
+      "Mida teete te?",
+      "Mis teed sina?",
+      "Mida teed sina?",
+      "Mis teete teie?",
+      "Mida teete teie?",
     ],
   },
   {
     word: "kus",
     reply: "Ma töötan Tartus.",
-    answers: [
-      "Kus sa töötad?",
-      "Kus te töötate?",
-      "Kus sina töötad?",
-      "Kus teie töötate?",
-      "Kus töötad?",
-      "Kus töötate?",
-    ],
+    answers: KUS_SA_TOOTAD,
   },
   {
     word: "millal",
@@ -549,6 +573,14 @@ export const KUSIMUSED_ASKED = [
       "Mida nad homme teevad?",
       "Mis nemad homme teevad?",
       "Mida nemad homme teevad?",
+      "Millal töötavad nad?",
+      "Millal töötavad nemad?",
+      "Mis teevad nad homme?",
+      "Mida teevad nad homme?",
+      "Mis teevad nemad homme?",
+      "Mida teevad nemad homme?",
+      "Kes töötavad homme?",
+      "Kes homme töötavad?",
     ],
   },
   {
@@ -573,6 +605,14 @@ export const KUSIMUSED_ASKED = [
       "Miks kodus olete?",
       "Kus oled?",
       "Kus olete?",
+      "Miks oled sa kodus?",
+      "Miks olete te kodus?",
+      "Miks oled sina kodus?",
+      "Miks olete teie kodus?",
+      "Kus oled sa?",
+      "Kus olete te?",
+      "Kus oled sina?",
+      "Kus olete teie?",
     ],
   },
   {
@@ -591,6 +631,10 @@ export const KUSIMUSED_ASKED = [
       "Kuidas eesti keelt räägite?",
       "Kuidas teie räägite eesti keelt?",
       "Kuidas räägite eesti keelt?",
+      "Kuidas räägid sa eesti keelt?",
+      "Kuidas räägite te eesti keelt?",
+      "Kuidas räägid sina eesti keelt?",
+      "Kuidas räägite teie eesti keelt?",
     ],
   },
   {
@@ -611,6 +655,16 @@ export const KUSIMUSED_ASKED = [
       "Mida nad joovad?",
       "Mis nemad joovad?",
       "Mida nemad joovad?",
+      "Kui palju kohvi joovad nad?",
+      "Kui palju kohvi joovad nemad?",
+      "Kui palju joovad nad?",
+      "Kui palju joovad nemad?",
+      "Mis joovad nad?",
+      "Mida joovad nad?",
+      "Mis joovad nemad?",
+      "Mida joovad nemad?",
+      "Kes joovad palju kohvi?",
+      "Kes palju kohvi joovad?",
     ],
   },
 ] as const;
@@ -625,18 +679,13 @@ export const KUSIMUSED_TRANSLATED = [
       "Kas te Tartus elate?",
       "Kas teie Tartus elate?",
       "Kas Tartus elate?",
+      "Elate te Tartus?",
+      "Elate teie Tartus?",
     ],
   },
   {
     kind: "word",
-    answers: [
-      "Kus sa töötad?",
-      "Kus te töötate?",
-      "Kus sina töötad?",
-      "Kus teie töötate?",
-      "Kus töötad?",
-      "Kus töötate?",
-    ],
+    answers: KUS_SA_TOOTAD,
   },
   {
     kind: "kas",
@@ -645,6 +694,8 @@ export const KUSIMUSED_TRANSLATED = [
       "Kas tema räägib eesti keelt?",
       "Kas ta eesti keelt räägib?",
       "Kas tema eesti keelt räägib?",
+      "Räägib ta eesti keelt?",
+      "Räägib tema eesti keelt?",
     ],
   },
   { kind: "word", answers: ["Kes räägib eesti keelt?", "Kes eesti keelt räägib?"] },
@@ -663,6 +714,10 @@ export const KUSIMUSED_TRANSLATED = [
       "Kas teie kodus töötate?",
       "Kas kodus töötad?",
       "Kas kodus töötate?",
+      "Töötad sa kodus?",
+      "Töötate te kodus?",
+      "Töötad sina kodus?",
+      "Töötate teie kodus?",
     ],
   },
   { kind: "word", answers: ["Kus ta on?", "Kus tema on?", "Kus on ta?", "Kus on tema?"] },
@@ -673,6 +728,8 @@ export const KUSIMUSED_TRANSLATED = [
       "Kas nemad joovad kohvi?",
       "Kas nad kohvi joovad?",
       "Kas nemad kohvi joovad?",
+      "Joovad nad kohvi?",
+      "Joovad nemad kohvi?",
     ],
   },
   {
@@ -690,6 +747,14 @@ export const KUSIMUSED_TRANSLATED = [
       "Mis teie loete?",
       "Mis loete?",
       "Mida loete?",
+      "Mis loed sa?",
+      "Mida loed sa?",
+      "Mis loete te?",
+      "Mida loete te?",
+      "Mis loed sina?",
+      "Mida loed sina?",
+      "Mis loete teie?",
+      "Mida loete teie?",
     ],
   },
 ] as const;
@@ -772,6 +837,29 @@ export const PRONOUNS = [
 
 /** The text with its first letter in capitals. */
 export const capital = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
+
+export const withLongPronoun = (sentence: string) => {
+  const [first = "", ...rest] = sentence.split(" ");
+  const pronoun = PRONOUNS.find(({ short }) => short === first.toLowerCase());
+  return pronoun ? [capital(pronoun.long), ...rest].join(" ") : sentence;
+};
+
+export function pronounOrders(said: string): [string, ...string[]] {
+  const stop = said.slice(-1);
+  const [first = "", verb = "", ...words] = said.slice(0, -1).split(" ");
+  const short = first.toLowerCase();
+  const { long } = PRONOUNS.find((each) => each.short === short) as (typeof PRONOUNS)[number];
+  const rest = words.join(" ");
+  const front = capital(rest);
+  const drops = short !== "ta" && short !== "nad";
+  return [
+    said,
+    `${capital(long)} ${verb} ${rest}${stop}`,
+    ...(drops ? [`${capital(verb)} ${rest}${stop}`, `${front} ${verb}${stop}`] : []),
+    ...[short, long].map((pronoun) => `${front} ${verb} ${pronoun}${stop}`),
+    ...[short, long].map((pronoun) => `${front} ${pronoun} ${verb}${stop}`),
+  ];
+}
 
 /** A pronoun said with its form of olema, as one clip: “Ma olen”. */
 export const pronounWithOlema = (pronoun: string, verb: string) => capital(`${pronoun} ${verb}`);
@@ -1006,9 +1094,19 @@ export const KOHAD_TYPED = [
 export const KOHAD_ASKED = [
   {
     reply: "Jaan töötab haiglas.",
-    answers: ["Kus Jaan töötab?", "Kus töötab Jaan?", "Kus ta töötab?", "Kus tema töötab?"],
+    answers: [
+      "Kus Jaan töötab?",
+      "Kus töötab Jaan?",
+      "Kus ta töötab?",
+      "Kus tema töötab?",
+      "Kus töötab ta?",
+      "Kus töötab tema?",
+    ],
   },
-  { reply: "Nad elavad Tartus.", answers: ["Kus nad elavad?", "Kus nemad elavad?"] },
+  {
+    reply: "Nad elavad Tartus.",
+    answers: ["Kus nad elavad?", "Kus nemad elavad?", "Kus elavad nad?", "Kus elavad nemad?"],
+  },
   {
     reply: "Isa on kontoris.",
     answers: [
@@ -1022,13 +1120,23 @@ export const KOHAD_ASKED = [
   },
   {
     reply: "Mari töötab koolis.",
-    answers: ["Kus Mari töötab?", "Kus töötab Mari?", "Kus ta töötab?", "Kus tema töötab?"],
+    answers: [
+      "Kus Mari töötab?",
+      "Kus töötab Mari?",
+      "Kus ta töötab?",
+      "Kus tema töötab?",
+      "Kus töötab ta?",
+      "Kus töötab tema?",
+    ],
   },
   {
     reply: "Me elame Saaremaal.",
-    answers: ["Kus te elate?", "Kus teie elate?", "Kus elate?"],
+    answers: ["Kus te elate?", "Kus teie elate?", "Kus elate?", "Kus elate te?", "Kus elate teie?"],
   },
-  { reply: "Ta õpib Tallinnas.", answers: ["Kus ta õpib?", "Kus tema õpib?"] },
+  {
+    reply: "Ta õpib Tallinnas.",
+    answers: ["Kus ta õpib?", "Kus tema õpib?", "Kus õpib ta?", "Kus õpib tema?"],
+  },
 ] as const;
 
 export const KOHAD_WRITTEN = [

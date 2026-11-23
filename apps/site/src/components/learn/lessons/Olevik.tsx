@@ -14,6 +14,7 @@ import {
   PRESENT_TURNED,
   PRESENT_VERBS,
   presentWithPronoun,
+  pronounOrders,
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
@@ -547,7 +548,9 @@ export function OlevikLesson() {
           kind === "stem" ? (
             <Trans>The ending goes on the stem of the I form, not of the -ma infinitive.</Trans>
           ) : (
-            <Trans>The ending goes with the pronoun at the start of the sentence.</Trans>
+            <Trans>
+              The ending goes with the subject, here the pronoun at the start of the sentence.
+            </Trans>
           ),
       })),
     [],
@@ -555,23 +558,15 @@ export function OlevikLesson() {
 
   const turnedItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
     () =>
-      PRESENT_TURNED.map(({ from, to, said: turned }) => {
-        const rest = turned.slice(turned.indexOf(" ") + 1);
-        const long = { ma: "Mina", sa: "Sina", ta: "Tema", me: "Meie", te: "Teie", nad: "Nemad" }[
-          to
-        ];
-        const dropped =
-          to === "ta" || to === "nad" ? [] : [`${rest.charAt(0).toUpperCase()}${rest.slice(1)}`];
-        return {
-          kind: "rewrite" as const,
-          id: `turn-${clipId(turned)}`,
-          from: PRESENT_SENTENCES[from],
-          cue: <span lang="et">{to}</span>,
-          src: wordSrc(turned),
-          answers: [turned, `${long} ${rest}`, ...dropped] as [string, ...string[]],
-          pair: [to, turned] as const,
-        };
-      }),
+      PRESENT_TURNED.map(({ from, to, said: turned }) => ({
+        kind: "rewrite" as const,
+        id: `turn-${clipId(turned)}`,
+        from: PRESENT_SENTENCES[from],
+        cue: <span lang="et">{to}</span>,
+        src: wordSrc(turned),
+        answers: pronounOrders(turned),
+        pair: [to, turned] as const,
+      })),
     [],
   );
 
@@ -651,7 +646,8 @@ export function OlevikLesson() {
         <Trans key="2">
           Each pronoun has its ending:{" "}
           <b lang="et">ma -n, sa -d, ta -b, me -me, te -te, nad -vad</b>, so{" "}
-          <b lang="et">elan, elad, elab, elame, elate, elavad</b>.
+          <b lang="et">elan, elad, elab, elame, elate, elavad</b>. Olema is the exception:{" "}
+          <b lang="et">on</b> for <b lang="et">ta</b> and <b lang="et">nad</b>.
         </Trans>,
         <Trans key="3">
           Some stems change: <b lang="et">lugema, loen</b>. Learn each verb with its I form.
@@ -709,8 +705,8 @@ export function OlevikLesson() {
                 <p>
                   <Trans>
                     A dictionary lists a verb in its -ma infinitive: <Word w="elama" />, to live.
-                    Take off -ma and you have the stem, <b lang="et">ela-</b>. The ending goes on
-                    the stem: <Word w="elan" />, I live.
+                    For this verb and many others, take off -ma and you have the stem,{" "}
+                    <b lang="et">ela-</b>. The ending goes on the stem: <Word w="elan" />, I live.
                   </Trans>
                 </p>
                 <p>
@@ -775,8 +771,7 @@ export function OlevikLesson() {
                 <p>
                   <Trans>
                     Estonian has one present tense. <Word w="Ma loen" /> means both I read and I’m
-                    reading, and the rest of the sentence tells you which. Tap a sentence to hear
-                    it.
+                    reading, and context tells you which. Tap a sentence to hear it.
                   </Trans>
                 </p>
               </Prose>

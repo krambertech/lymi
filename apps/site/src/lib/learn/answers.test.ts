@@ -269,6 +269,22 @@ describe("the helpers", () => {
     ]);
   });
 
+  it("shows at most three other accepted answers, the first listed first", () => {
+    const accepted = [
+      "Ma lähen täna Tartusse.",
+      "Täna lähen ma Tartusse.",
+      "Täna ma lähen Tartusse.",
+      "Lähen täna Tartusse.",
+      "Täna lähen Tartusse.",
+      "Mina lähen täna Tartusse.",
+    ];
+    expect(otherAnswers(markAnswer("täna lähen tartusse", accepted), accepted)).toEqual([
+      "Ma lähen täna Tartusse.",
+      "Täna lähen ma Tartusse.",
+      "Täna ma lähen Tartusse.",
+    ]);
+  });
+
   it("collects the forms in texts", () => {
     expect([...formsOf(["Ei loe.", "loe"])]).toEqual(["ei", "loe"]);
   });

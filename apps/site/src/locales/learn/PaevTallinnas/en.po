@@ -409,8 +409,8 @@ msgstr "ten"
 msgid "That says where you live. Mari asked how you are."
 msgstr "That says where you live. Mari asked how you are."
 
-msgid "That’s the time. Mari asked how you are."
-msgstr "That’s the time. Mari asked how you are."
+msgid "That’s a price. Mari asked how you are."
+msgstr "That’s a price. Mari asked how you are."
 
 msgid "The café is open."
 msgstr "The café is open."

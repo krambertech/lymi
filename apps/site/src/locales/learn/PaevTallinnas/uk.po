@@ -409,8 +409,8 @@ msgstr "десять"
 msgid "That says where you live. Mari asked how you are."
 msgstr "Це про те, де ти живеш. Марі спитала, як у тебе справи."
 
-msgid "That’s the time. Mari asked how you are."
-msgstr "Це про те, котра година. Марі спитала, як у тебе справи."
+msgid "That’s a price. Mari asked how you are."
+msgstr "Це про ціну. Марі спитала, як у тебе справи."
 
 msgid "The café is open."
 msgstr "Кав’ярня відчинена."

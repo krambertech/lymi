@@ -246,7 +246,7 @@ function useContent() {
       replies: [
         { line: said("d-sina-1"), right: true },
         { line: "Ma elan Tallinnas.", why: t`That says where you live. Mari asked how you are.` },
-        { line: "Kell on kümme.", why: t`That’s the time. Mari asked how you are.` },
+        { line: "Kohv maksab kolm eurot.", why: t`That’s a price. Mari asked how you are.` },
       ],
     },
     { who: "them", clip: "d-mari-2", line: said("d-mari-2") },

@@ -1,5 +1,9 @@
 import { msg } from "@lingui/core/macro";
+import { CMP_TRANSLATE } from "../../../lib/learn/clips";
 import type { DrillBank } from "../../../lib/learn/drill";
+
+const translateAnswers = (id: (typeof CMP_TRANSLATE)[number]["id"]) =>
+  (CMP_TRANSLATE.find((item) => item.id === id) as (typeof CMP_TRANSLATE)[number]).answers;
 
 const BUILD = msg`A comparative is the genitive with <et>-m</et>: <et>suur</et>, <et>suure</et>, <et>suurem</et>; <et>uus</et>, <et>uue</et>, <et>uuem</et>.`;
 const VANEM = msg`The genitive of <et>vana</et> is <et>vana</et>; before <et>-m</et> its a becomes e: <et>vanem</et>.`;
@@ -222,24 +226,7 @@ export const DRILLS: DrillBank = {
       id: "most-sama",
       rule: "most",
       prompt: msg`My room is as big as your room.`,
-      answers: [
-        "Minu tuba on sama suur kui sinu tuba.",
-        "Mu tuba on sama suur kui su tuba.",
-        "Minu tuba on sama suur kui sinu oma.",
-        "Mu tuba on sama suur kui su oma.",
-        "Minu tuba on sama suur nagu sinu tuba.",
-        "Mu tuba on sama suur nagu su tuba.",
-        "Minu tuba on sama suur nagu sinu oma.",
-        "Mu tuba on sama suur nagu su oma.",
-        "Mu tuba on sama suur kui sinu tuba.",
-        "Minu tuba on sama suur kui su tuba.",
-        "Mu tuba on sama suur kui sinu oma.",
-        "Minu tuba on sama suur kui su oma.",
-        "Mu tuba on sama suur nagu sinu tuba.",
-        "Minu tuba on sama suur nagu su tuba.",
-        "Mu tuba on sama suur nagu sinu oma.",
-        "Minu tuba on sama suur nagu su oma.",
-      ],
+      answers: translateAnswers("sama-suur"),
       say: "Minu tuba on sama suur kui sinu tuba.",
       explain: SAME,
     },
@@ -282,12 +269,7 @@ export const DRILLS: DrillBank = {
       id: "own-parim",
       rule: "most",
       prompt: msg`Mari is my best friend.`,
-      answers: [
-        "Mari on minu parim sõber.",
-        "Mari on mu parim sõber.",
-        "Mari on minu kõige parem sõber.",
-        "Mari on mu kõige parem sõber.",
-      ],
+      answers: translateAnswers("parim-sober"),
       say: "Mari on minu parim sõber.",
       explain: GOOD,
     },

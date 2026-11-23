@@ -1,9 +1,13 @@
 import { msg } from "@lingui/core/macro";
+import { ADJ_TRANSLATE } from "../../../lib/learn/clips";
 import type { DrillBank } from "../../../lib/learn/drill";
 
-const AGREE = msg`The adjective takes the noun’s case: <et>suures majas</et>, <et>uut raamatut</et>.`;
+const translateAnswers = (id: (typeof ADJ_TRANSLATE)[number]["id"]) =>
+  (ADJ_TRANSLATE.find((item) => item.id === id) as (typeof ADJ_TRANSLATE)[number]).answers;
+
+const AGREE = msg`The adjective usually takes the noun’s case: <et>suures majas</et>, <et>uut raamatut</et>.`;
 const GEN = msg`With <et>-ga</et>, <et>-ta</et>, <et>-ni</et> or <et>-na</et>, only the noun takes the ending: <et>suure autoga</et>.`;
-const NUMBER = msg`After a number from two up, both words take the partitive singular: <et>kaks suurt kassi</et>.`;
+const NUMBER = msg`After <et>kaks</et>, <et>kolm</et> and higher numbers, both words take the partitive singular: <et>kaks suurt kassi</et>.`;
 const PLURAL = msg`When the noun takes plural <et>-d</et>, the adjective takes <et>-d</et> as well: <et>uued raamatud</et>.`;
 
 export const DRILLS: DrillBank = {
@@ -19,7 +23,7 @@ export const DRILLS: DrillBank = {
       id: "agree-suures-majas",
       rule: "agree",
       prompt: msg`I live in a big house.`,
-      answers: ["Ma elan suures majas.", "Mina elan suures majas.", "Elan suures majas."],
+      answers: translateAnswers("suures-majas"),
       say: "Ma elan suures majas.",
       explain: AGREE,
     },
@@ -84,7 +88,7 @@ export const DRILLS: DrillBank = {
       id: "gen-uue-autoga",
       rule: "genitive",
       prompt: msg`Jaan drives a new car.`,
-      answers: ["Jaan sõidab uue autoga."],
+      answers: translateAnswers("uue-autoga"),
       say: "Jaan sõidab uue autoga.",
       explain: GEN,
     },
@@ -192,7 +196,7 @@ export const DRILLS: DrillBank = {
       id: "agree-kaks-suurt",
       rule: "agree",
       prompt: msg`I have two big cats.`,
-      answers: ["Mul on kaks suurt kassi.", "Minul on kaks suurt kassi."],
+      answers: translateAnswers("kaks-suurt"),
       say: "Mul on kaks suurt kassi.",
       explain: NUMBER,
     },
@@ -220,7 +224,7 @@ export const DRILLS: DrillBank = {
       id: "plural-head-sobrad",
       rule: "plural",
       prompt: msg`These are good friends.`,
-      answers: ["Need on head sõbrad."],
+      answers: translateAnswers("head-sobrad"),
       say: "Need on head sõbrad.",
       explain: PLURAL,
     },

@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
-msgid "<0/> is big, and <1>suur maja</1> is a big house. The adjective goes into the same case as the noun: <2/>, in a big house; <3/>, a new book, as the object of <4>loen</4>, I’m reading. Each word builds the case on its own forms, so the endings can differ: <5>suurt maja</5>. Four endings work differently; a section below shows them."
-msgstr "<0/> is big, and <1>suur maja</1> is a big house. The adjective goes into the same case as the noun: <2/>, in a big house; <3/>, a new book, as the object of <4>loen</4>, I’m reading. Each word builds the case on its own forms, so the endings can differ: <5>suurt maja</5>. Four endings work differently; a section below shows them."
+msgid "<0/> is big, and <1>suur maja</1> is a big house. The adjective usually goes into the same case as the noun: <2/>, in a big house; <3/>, a new book, as the object of <4>loen</4>, I’m reading. Each word builds the case on its own forms, so the endings can differ: <5>suurt maja</5>. Four endings work differently; a section below shows them."
+msgstr "<0/> is big, and <1>suur maja</1> is a big house. The adjective usually goes into the same case as the noun: <2/>, in a big house; <3/>, a new book, as the object of <4>loen</4>, I’m reading. Each word builds the case on its own forms, so the endings can differ: <5>suurt maja</5>. Four endings work differently; a section below shows them."
 
 msgid "<et>Soe</et> takes <et>-s</et> on its genitive <et>sooja</et>: <et>soojas toas</et>."
 msgstr "<et>Soe</et> takes <et>-s</et> on its genitive <et>sooja</et>: <et>soojas toas</et>."
@@ -67,17 +67,17 @@ msgstr "Adjectives change like nouns"
 msgid "Adjectives in the plural"
 msgstr "Adjectives in the plural"
 
-msgid "After a number from two up, both words take the partitive singular: <0>kaks head sõpra</0>."
-msgstr "After a number from two up, both words take the partitive singular: <0>kaks head sõpra</0>."
+msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, both words take the partitive singular: <2>kaks head sõpra</2>."
+msgstr "After <0>kaks</0>, <1>kolm</1> and higher numbers, both words take the partitive singular: <2>kaks head sõpra</2>."
 
-msgid "After a number from two up, both words take the partitive singular: <0>kaks suurt kassi</0>."
-msgstr "After a number from two up, both words take the partitive singular: <0>kaks suurt kassi</0>."
+msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, both words take the partitive singular: <2>kaks suurt kassi</2>. With <3>-ga</3>, the number changes as well: <4>kahe suure kassiga</4>."
+msgstr "After <0>kaks</0>, <1>kolm</1> and higher numbers, both words take the partitive singular: <2>kaks suurt kassi</2>. With <3>-ga</3>, the number changes as well: <4>kahe suure kassiga</4>."
 
-msgid "After a number from two up, both words take the partitive singular: <et>kaks suurt kassi</et>."
-msgstr "After a number from two up, both words take the partitive singular: <et>kaks suurt kassi</et>."
+msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, the adjective is in the partitive singular as well: <2>kaks suurt kassi</2>."
+msgstr "After <0>kaks</0>, <1>kolm</1> and higher numbers, the adjective is in the partitive singular as well: <2>kaks suurt kassi</2>."
 
-msgid "After a number from two up, the adjective is in the partitive singular as well: <0>kaks suurt kassi</0>."
-msgstr "After a number from two up, the adjective is in the partitive singular as well: <0>kaks suurt kassi</0>."
+msgid "After <et>kaks</et>, <et>kolm</et> and higher numbers, both words take the partitive singular: <et>kaks suurt kassi</et>."
+msgstr "After <et>kaks</et>, <et>kolm</et> and higher numbers, both words take the partitive singular: <et>kaks suurt kassi</et>."
 
 msgid "All eight: both words with <0>-s</0>, the noun alone with <1>-ga</1> or <2>-na</2>."
 msgstr "All eight: both words with <0>-s</0>, the noun alone with <1>-ga</1> or <2>-na</2>."
@@ -94,11 +94,11 @@ msgstr "All six, every adjective in the right form."
 msgid "An adjective adds <0>-s</0> and plural <1>-d</1> to its own genitive: <2>uus, uue, uues, uued</2>; <3>väike, väikese, väikeses</3>."
 msgstr "An adjective adds <0>-s</0> and plural <1>-d</1> to its own genitive: <2>uus, uue, uues, uued</2>; <3>väike, väikese, väikeses</3>."
 
-msgid "An adjective takes the noun’s case and number: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
-msgstr "An adjective takes the noun’s case and number: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
+msgid "An adjective usually takes the noun’s case and number: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
+msgstr "An adjective usually takes the noun’s case and number: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
 
-msgid "An adjective takes the noun’s case: <0>suur maja</0>, a big house, and <1>suures majas</1>, in a big house. With <2>-ga</2>, <3>-ta</3>, <4>-ni</4> and <5>-na</5>, only the noun takes the ending: <6>suure autoga</6>."
-msgstr "An adjective takes the noun’s case: <0>suur maja</0>, a big house, and <1>suures majas</1>, in a big house. With <2>-ga</2>, <3>-ta</3>, <4>-ni</4> and <5>-na</5>, only the noun takes the ending: <6>suure autoga</6>."
+msgid "An adjective usually takes the noun’s case: <0>suur maja</0>, a big house, and <1>suures majas</1>, in a big house. With <2>-ga</2>, <3>-ta</3>, <4>-ni</4> and <5>-na</5>, only the noun takes the ending: <6>suure autoga</6>."
+msgstr "An adjective usually takes the noun’s case: <0>suur maja</0>, a big house, and <1>suures majas</1>, in a big house. With <2>-ga</2>, <3>-ta</3>, <4>-ni</4> and <5>-na</5>, only the noun takes the ending: <6>suure autoga</6>."
 
 msgid "as a small child"
 msgstr "as a small child"
@@ -390,11 +390,11 @@ msgstr "The adjective takes <0>-s</0> as well: <1>suures majas</1>."
 msgid "The adjective takes <0>-s</0> on its genitive <1>väikese</1>: <2>väikeses toas</2>."
 msgstr "The adjective takes <0>-s</0> on its genitive <1>väikese</1>: <2>väikeses toas</2>."
 
-msgid "The adjective takes the noun’s case"
-msgstr "The adjective takes the noun’s case"
+msgid "The adjective usually takes the noun’s case"
+msgstr "The adjective usually takes the noun’s case"
 
-msgid "The adjective takes the noun’s case: <et>suures majas</et>, <et>uut raamatut</et>."
-msgstr "The adjective takes the noun’s case: <et>suures majas</et>, <et>uut raamatut</et>."
+msgid "The adjective usually takes the noun’s case: <et>suures majas</et>, <et>uut raamatut</et>."
+msgstr "The adjective usually takes the noun’s case: <et>suures majas</et>, <et>uut raamatut</et>."
 
 msgid "The cat sleeps in the small room."
 msgstr "The cat sleeps in the small room."

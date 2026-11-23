@@ -2925,12 +2925,12 @@ export const ADJ_MESSAGE = [
 export const ADJ_TRANSLATE = [
   {
     id: "suures-majas",
-    answers: ["Ma elan suures majas.", "Mina elan suures majas.", "Elan suures majas."],
+    answers: withPronouns(["Ma elan suures majas."]),
   },
   { id: "uue-autoga", answers: ["Jaan sõidab uue autoga."] },
   {
     id: "uut-raamatut",
-    answers: ["Ma loen uut raamatut.", "Mina loen uut raamatut.", "Loen uut raamatut."],
+    answers: withPronouns(["Ma loen uut raamatut."]),
   },
   { id: "kaks-suurt", answers: ["Mul on kaks suurt kassi.", "Minul on kaks suurt kassi."] },
   { id: "ilusas-linnas", answers: ["Mari elab ilusas linnas."] },

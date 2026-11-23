@@ -357,7 +357,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian adjectives: agreeing with the noun`,
         et: "Suures majas",
         minutes: 16,
-        blurb: msg`A free Estonian lesson on adjectives with nouns: suures majas and uut raamatut, where the adjective takes the noun’s case, suure autoga with -ga, -ta, -ni and -na, and suured majad in the plural. Every sentence is read aloud.`,
+        blurb: msg`A free Estonian lesson on adjectives with nouns: suures majas and uut raamatut, where the adjective usually takes the noun’s case, suure autoga with -ga, -ta, -ni and -na, and suured majad in the plural. Every sentence is read aloud.`,
       },
       {
         slug: "vordlus",

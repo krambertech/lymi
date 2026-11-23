@@ -228,8 +228,8 @@ function useContent() {
       ),
       head: (
         <Trans>
-          After a number from two up, both words take the partitive singular:{" "}
-          <span lang="et">kaks head sõpra</span>.
+          After <span lang="et">kaks</span>, <span lang="et">kolm</span> and higher numbers, both
+          words take the partitive singular: <span lang="et">kaks head sõpra</span>.
         </Trans>
       ),
     };
@@ -258,8 +258,8 @@ function useContent() {
       ),
       "fix-suurt": (
         <Trans>
-          After a number from two up, the adjective is in the partitive singular as well:{" "}
-          <span lang="et">kaks suurt kassi</span>.
+          After <span lang="et">kaks</span>, <span lang="et">kolm</span> and higher numbers, the
+          adjective is in the partitive singular as well: <span lang="et">kaks suurt kassi</span>.
         </Trans>
       ),
       "fix-uut": (
@@ -444,8 +444,8 @@ export function OmadussonadLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          An adjective takes the noun’s case: <span lang="et">suur maja</span>, a big house, and{" "}
-          <span lang="et">suures majas</span>, in a big house. With <span lang="et">-ga</span>,{" "}
+          An adjective usually takes the noun’s case: <span lang="et">suur maja</span>, a big house,
+          and <span lang="et">suures majas</span>, in a big house. With <span lang="et">-ga</span>,{" "}
           <span lang="et">-ta</span>, <span lang="et">-ni</span> and <span lang="et">-na</span>,
           only the noun takes the ending: <span lang="et">suure autoga</span>.
         </Trans>
@@ -458,7 +458,7 @@ export function OmadussonadLesson() {
       words={["suur", "väike", "uus", "vana", "hea", "ilus", "soe", "suures majas", "suure autoga"]}
       recap={[
         <Trans key="1">
-          An adjective takes the noun’s case and number: <b lang="et">suures majas</b>,{" "}
+          An adjective usually takes the noun’s case and number: <b lang="et">suures majas</b>,{" "}
           <b lang="et">uut raamatut</b>, <b lang="et">suured majad</b>.
         </Trans>,
         <Trans key="2">
@@ -471,14 +471,15 @@ export function OmadussonadLesson() {
           genitive: <b lang="et">suure autoga</b>.
         </Trans>,
         <Trans key="4">
-          After a number from two up, both words take the partitive singular:{" "}
-          <b lang="et">kaks suurt kassi</b>.
+          After <b lang="et">kaks</b>, <b lang="et">kolm</b> and higher numbers, both words take the
+          partitive singular: <b lang="et">kaks suurt kassi</b>. With <b lang="et">-ga</b>, the
+          number changes as well: <b lang="et">kahe suure kassiga</b>.
         </Trans>,
       ]}
       sections={[
         {
           id: "agree",
-          title: t`The adjective takes the noun’s case`,
+          title: t`The adjective usually takes the noun’s case`,
           quiz: true,
           children: (
             <>
@@ -486,11 +487,12 @@ export function OmadussonadLesson() {
                 <p>
                   <Trans>
                     <Word w="Suur" /> is big, and <span lang="et">suur maja</span> is a big house.
-                    The adjective goes into the same case as the noun: <Word w="suures majas" />, in
-                    a big house; <Word w="uut raamatut" />, a new book, as the object of{" "}
-                    <span lang="et">loen</span>, I’m reading. Each word builds the case on its own
-                    forms, so the endings can differ: <span lang="et">suurt maja</span>. Four
-                    endings work differently; a section below shows them.
+                    The adjective usually goes into the same case as the noun:{" "}
+                    <Word w="suures majas" />, in a big house; <Word w="uut raamatut" />, a new
+                    book, as the object of <span lang="et">loen</span>, I’m reading. Each word
+                    builds the case on its own forms, so the endings can differ:{" "}
+                    <span lang="et">suurt maja</span>. Four endings work differently; a section
+                    below shows them.
                   </Trans>
                 </p>
                 <p>

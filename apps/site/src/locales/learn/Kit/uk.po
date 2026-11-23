@@ -232,8 +232,8 @@ msgstr "нога"
 msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the partitive. Every word is read aloud."
 msgstr "Безкоштовний урок естонської про три основні форми іменника, põhivormid (kool, kooli, kooli; pood, poe, poodi): як їх подають словник і Sõnaveeb і як більшість слів на -ne та -us, а також односкладові слова на довгу голосну, підказують партитив. Кожне слово озвучене."
 
-msgid "A free Estonian lesson on adjectives with nouns: suures majas and uut raamatut, where the adjective takes the noun’s case, suure autoga with -ga, -ta, -ni and -na, and suured majad in the plural. Every sentence is read aloud."
-msgstr "Безкоштовний урок естонської про прикметники з іменниками: suures majas і uut raamatut, де прикметник стоїть у відмінку іменника, suure autoga з -ga, -ta, -ni і -na та suured majad у множині. Кожне речення озвучене."
+msgid "A free Estonian lesson on adjectives with nouns: suures majas and uut raamatut, where the adjective usually takes the noun’s case, suure autoga with -ga, -ta, -ni and -na, and suured majad in the plural. Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про прикметники з іменниками: suures majas і uut raamatut, де прикметник зазвичай стоїть у відмінку іменника, suure autoga з -ga, -ta, -ni і -na та suured majad у множині. Кожне речення озвучене."
 
 msgid "A free Estonian lesson on comparing: suurem and uuem built on the genitive, suurem kui Tartu and Tartust suurem, kõige suurem for the biggest, sama suur kui for as big as, and two odd ones, hea, parem, parim and väike, väiksem. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про порівняння: suurem і uuem, утворені від родового, suurem kui Tartu і Tartust suurem, kõige suurem — «найбільший», sama suur kui — «такий самий великий, як», і два особливі слова: hea, parem, parim та väike, väiksem. Кожне речення озвучене."

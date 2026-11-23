@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: uk\n"
 
-msgid "<0/> is big, and <1>suur maja</1> is a big house. The adjective goes into the same case as the noun: <2/>, in a big house; <3/>, a new book, as the object of <4>loen</4>, I’m reading. Each word builds the case on its own forms, so the endings can differ: <5>suurt maja</5>. Four endings work differently; a section below shows them."
-msgstr "<0/> — «великий», а <1>suur maja</1> — «великий будинок». Прикметник стоїть у тому самому відмінку, що й іменник: <2/> — «у великому будинку»; <3/> — «нову книжку», як додаток до <4>loen</4>, «читаю». Кожне слово утворює відмінок від своїх форм, тому закінчення можуть різнитися: <5>suurt maja</5>. Чотири закінчення працюють інакше, про них розповідає розділ нижче."
+msgid "<0/> is big, and <1>suur maja</1> is a big house. The adjective usually goes into the same case as the noun: <2/>, in a big house; <3/>, a new book, as the object of <4>loen</4>, I’m reading. Each word builds the case on its own forms, so the endings can differ: <5>suurt maja</5>. Four endings work differently; a section below shows them."
+msgstr "<0/> — «великий», а <1>suur maja</1> — «великий будинок». Прикметник зазвичай стоїть у тому самому відмінку, що й іменник: <2/> — «у великому будинку»; <3/> — «нову книжку», як додаток до <4>loen</4>, «читаю». Кожне слово утворює відмінок від своїх форм, тому закінчення можуть різнитися: <5>suurt maja</5>. Чотири закінчення працюють інакше, про них розповідає розділ нижче."
 
 msgid "<et>Soe</et> takes <et>-s</et> on its genitive <et>sooja</et>: <et>soojas toas</et>."
 msgstr "<et>Soe</et> додає <et>-s</et> до свого родового <et>sooja</et>: <et>soojas toas</et>."
@@ -67,17 +67,17 @@ msgstr "Прикметники змінюються, як іменники"
 msgid "Adjectives in the plural"
 msgstr "Прикметники в множині"
 
-msgid "After a number from two up, both words take the partitive singular: <0>kaks head sõpra</0>."
-msgstr "Після числа від двох обидва слова стоять у партитиві однини: <0>kaks head sõpra</0>."
+msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, both words take the partitive singular: <2>kaks head sõpra</2>."
+msgstr "Після <0>kaks</0>, <1>kolm</1> і більших чисел обидва слова стоять у партитиві однини: <2>kaks head sõpra</2>."
 
-msgid "After a number from two up, both words take the partitive singular: <0>kaks suurt kassi</0>."
-msgstr "Після числа від двох обидва слова стоять у партитиві однини: <0>kaks suurt kassi</0>."
+msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, both words take the partitive singular: <2>kaks suurt kassi</2>. With <3>-ga</3>, the number changes as well: <4>kahe suure kassiga</4>."
+msgstr "Після <0>kaks</0>, <1>kolm</1> і більших чисел обидва слова стоять у партитиві однини: <2>kaks suurt kassi</2>. З <3>-ga</3> змінюється і число: <4>kahe suure kassiga</4>."
 
-msgid "After a number from two up, both words take the partitive singular: <et>kaks suurt kassi</et>."
-msgstr "Після числа від двох обидва слова стоять у партитиві однини: <et>kaks suurt kassi</et>."
+msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, the adjective is in the partitive singular as well: <2>kaks suurt kassi</2>."
+msgstr "Після <0>kaks</0>, <1>kolm</1> і більших чисел прикметник теж стоїть у партитиві однини: <2>kaks suurt kassi</2>."
 
-msgid "After a number from two up, the adjective is in the partitive singular as well: <0>kaks suurt kassi</0>."
-msgstr "Після числа від двох прикметник теж стоїть у партитиві однини: <0>kaks suurt kassi</0>."
+msgid "After <et>kaks</et>, <et>kolm</et> and higher numbers, both words take the partitive singular: <et>kaks suurt kassi</et>."
+msgstr "Після <et>kaks</et>, <et>kolm</et> і більших чисел обидва слова стоять у партитиві однини: <et>kaks suurt kassi</et>."
 
 msgid "All eight: both words with <0>-s</0>, the noun alone with <1>-ga</1> or <2>-na</2>."
 msgstr "Усі вісім: з <0>-s</0> — обидва слова, з <1>-ga</1> чи <2>-na</2> — лише іменник."
@@ -94,11 +94,11 @@ msgstr "Усі шість, кожен прикметник у правильні
 msgid "An adjective adds <0>-s</0> and plural <1>-d</1> to its own genitive: <2>uus, uue, uues, uued</2>; <3>väike, väikese, väikeses</3>."
 msgstr "Прикметник додає <0>-s</0> і <1>-d</1> множини до свого родового: <2>uus, uue, uues, uued</2>; <3>väike, väikese, väikeses</3>."
 
-msgid "An adjective takes the noun’s case and number: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
-msgstr "Прикметник стоїть у відмінку й числі іменника: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
+msgid "An adjective usually takes the noun’s case and number: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
+msgstr "Прикметник зазвичай стоїть у відмінку й числі іменника: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
 
-msgid "An adjective takes the noun’s case: <0>suur maja</0>, a big house, and <1>suures majas</1>, in a big house. With <2>-ga</2>, <3>-ta</3>, <4>-ni</4> and <5>-na</5>, only the noun takes the ending: <6>suure autoga</6>."
-msgstr "Прикметник стоїть у відмінку іменника: <0>suur maja</0> — «великий будинок», і <1>suures majas</1> — «у великому будинку». З <2>-ga</2>, <3>-ta</3>, <4>-ni</4> і <5>-na</5> закінчення отримує лише іменник: <6>suure autoga</6>."
+msgid "An adjective usually takes the noun’s case: <0>suur maja</0>, a big house, and <1>suures majas</1>, in a big house. With <2>-ga</2>, <3>-ta</3>, <4>-ni</4> and <5>-na</5>, only the noun takes the ending: <6>suure autoga</6>."
+msgstr "Прикметник зазвичай стоїть у відмінку іменника: <0>suur maja</0> — «великий будинок», і <1>suures majas</1> — «у великому будинку». З <2>-ga</2>, <3>-ta</3>, <4>-ni</4> і <5>-na</5> закінчення отримує лише іменник: <6>suure autoga</6>."
 
 msgid "as a small child"
 msgstr "маленькою дитиною"
@@ -390,11 +390,11 @@ msgstr "Прикметник теж отримує <0>-s</0>: <1>suures majas</1
 msgid "The adjective takes <0>-s</0> on its genitive <1>väikese</1>: <2>väikeses toas</2>."
 msgstr "Прикметник додає <0>-s</0> до свого родового <1>väikese</1>: <2>väikeses toas</2>."
 
-msgid "The adjective takes the noun’s case"
-msgstr "Прикметник у відмінку іменника"
+msgid "The adjective usually takes the noun’s case"
+msgstr "Прикметник зазвичай у відмінку іменника"
 
-msgid "The adjective takes the noun’s case: <et>suures majas</et>, <et>uut raamatut</et>."
-msgstr "Прикметник стоїть у відмінку іменника: <et>suures majas</et>, <et>uut raamatut</et>."
+msgid "The adjective usually takes the noun’s case: <et>suures majas</et>, <et>uut raamatut</et>."
+msgstr "Прикметник зазвичай стоїть у відмінку іменника: <et>suures majas</et>, <et>uut raamatut</et>."
 
 msgid "The cat sleeps in the small room."
 msgstr "Кіт спить у маленькій кімнаті."

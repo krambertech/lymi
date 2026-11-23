@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
-msgid "<0/> is big, and <1>suur maja</1> is a big house. The adjective goes into the same case as the noun: <2/>, in a big house; <3/>, a new book, as the object of <4>loen</4>, I’m reading. Each word builds the case on its own forms, so the endings can differ: <5>suurt maja</5>. Four endings work differently; a section below shows them."
-msgstr "<0/> — «большой», а <1>suur maja</1> — «большой дом». Прилагательное стоит в том же падеже, что и существительное: <2/> — «в большом доме»; <3/> — «новую книгу», как дополнение к <4>loen</4>, «читаю». Каждое слово образует падеж от своих форм, поэтому окончания могут различаться: <5>suurt maja</5>. Четыре окончания работают иначе, о них — в разделе ниже."
+msgid "<0/> is big, and <1>suur maja</1> is a big house. The adjective usually goes into the same case as the noun: <2/>, in a big house; <3/>, a new book, as the object of <4>loen</4>, I’m reading. Each word builds the case on its own forms, so the endings can differ: <5>suurt maja</5>. Four endings work differently; a section below shows them."
+msgstr "<0/> — «большой», а <1>suur maja</1> — «большой дом». Прилагательное обычно стоит в том же падеже, что и существительное: <2/> — «в большом доме»; <3/> — «новую книгу», как дополнение к <4>loen</4>, «читаю». Каждое слово образует падеж от своих форм, поэтому окончания могут различаться: <5>suurt maja</5>. Четыре окончания работают иначе, о них — в разделе ниже."
 
 msgid "<et>Soe</et> takes <et>-s</et> on its genitive <et>sooja</et>: <et>soojas toas</et>."
 msgstr "<et>Soe</et> добавляет <et>-s</et> к своему родительному <et>sooja</et>: <et>soojas toas</et>."
@@ -67,17 +67,17 @@ msgstr "Прилагательные меняются, как существит
 msgid "Adjectives in the plural"
 msgstr "Прилагательные во множественном числе"
 
-msgid "After a number from two up, both words take the partitive singular: <0>kaks head sõpra</0>."
-msgstr "После числа от двух оба слова стоят в партитиве единственного числа: <0>kaks head sõpra</0>."
+msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, both words take the partitive singular: <2>kaks head sõpra</2>."
+msgstr "После <0>kaks</0>, <1>kolm</1> и бо́льших чисел оба слова стоят в партитиве единственного числа: <2>kaks head sõpra</2>."
 
-msgid "After a number from two up, both words take the partitive singular: <0>kaks suurt kassi</0>."
-msgstr "После числа от двух оба слова стоят в партитиве единственного числа: <0>kaks suurt kassi</0>."
+msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, both words take the partitive singular: <2>kaks suurt kassi</2>. With <3>-ga</3>, the number changes as well: <4>kahe suure kassiga</4>."
+msgstr "После <0>kaks</0>, <1>kolm</1> и бо́льших чисел оба слова стоят в партитиве единственного числа: <2>kaks suurt kassi</2>. С <3>-ga</3> меняется и число: <4>kahe suure kassiga</4>."
 
-msgid "After a number from two up, both words take the partitive singular: <et>kaks suurt kassi</et>."
-msgstr "После числа от двух оба слова стоят в партитиве единственного числа: <et>kaks suurt kassi</et>."
+msgid "After <0>kaks</0>, <1>kolm</1> and higher numbers, the adjective is in the partitive singular as well: <2>kaks suurt kassi</2>."
+msgstr "После <0>kaks</0>, <1>kolm</1> и бо́льших чисел прилагательное тоже стоит в партитиве единственного числа: <2>kaks suurt kassi</2>."
 
-msgid "After a number from two up, the adjective is in the partitive singular as well: <0>kaks suurt kassi</0>."
-msgstr "После числа от двух прилагательное тоже стоит в партитиве единственного числа: <0>kaks suurt kassi</0>."
+msgid "After <et>kaks</et>, <et>kolm</et> and higher numbers, both words take the partitive singular: <et>kaks suurt kassi</et>."
+msgstr "После <et>kaks</et>, <et>kolm</et> и бо́льших чисел оба слова стоят в партитиве единственного числа: <et>kaks suurt kassi</et>."
 
 msgid "All eight: both words with <0>-s</0>, the noun alone with <1>-ga</1> or <2>-na</2>."
 msgstr "Все восемь: с <0>-s</0> — оба слова, с <1>-ga</1> или <2>-na</2> — только существительное."
@@ -94,11 +94,11 @@ msgstr "Все шесть, каждое прилагательное в прав
 msgid "An adjective adds <0>-s</0> and plural <1>-d</1> to its own genitive: <2>uus, uue, uues, uued</2>; <3>väike, väikese, väikeses</3>."
 msgstr "Прилагательное добавляет <0>-s</0> и <1>-d</1> множественного числа к своему родительному: <2>uus, uue, uues, uued</2>; <3>väike, väikese, väikeses</3>."
 
-msgid "An adjective takes the noun’s case and number: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
-msgstr "Прилагательное стоит в падеже и числе существительного: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
+msgid "An adjective usually takes the noun’s case and number: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
+msgstr "Прилагательное обычно стоит в падеже и числе существительного: <0>suures majas</0>, <1>uut raamatut</1>, <2>suured majad</2>."
 
-msgid "An adjective takes the noun’s case: <0>suur maja</0>, a big house, and <1>suures majas</1>, in a big house. With <2>-ga</2>, <3>-ta</3>, <4>-ni</4> and <5>-na</5>, only the noun takes the ending: <6>suure autoga</6>."
-msgstr "Прилагательное стоит в падеже существительного: <0>suur maja</0> — «большой дом», и <1>suures majas</1> — «в большом доме». С <2>-ga</2>, <3>-ta</3>, <4>-ni</4> и <5>-na</5> окончание получает только существительное: <6>suure autoga</6>."
+msgid "An adjective usually takes the noun’s case: <0>suur maja</0>, a big house, and <1>suures majas</1>, in a big house. With <2>-ga</2>, <3>-ta</3>, <4>-ni</4> and <5>-na</5>, only the noun takes the ending: <6>suure autoga</6>."
+msgstr "Прилагательное обычно стоит в падеже существительного: <0>suur maja</0> — «большой дом», и <1>suures majas</1> — «в большом доме». С <2>-ga</2>, <3>-ta</3>, <4>-ni</4> и <5>-na</5> окончание получает только существительное: <6>suure autoga</6>."
 
 msgid "as a small child"
 msgstr "маленьким ребёнком"
@@ -390,11 +390,11 @@ msgstr "Прилагательное тоже получает <0>-s</0>: <1>suu
 msgid "The adjective takes <0>-s</0> on its genitive <1>väikese</1>: <2>väikeses toas</2>."
 msgstr "Прилагательное добавляет <0>-s</0> к своему родительному <1>väikese</1>: <2>väikeses toas</2>."
 
-msgid "The adjective takes the noun’s case"
-msgstr "Прилагательное в падеже существительного"
+msgid "The adjective usually takes the noun’s case"
+msgstr "Прилагательное обычно в падеже существительного"
 
-msgid "The adjective takes the noun’s case: <et>suures majas</et>, <et>uut raamatut</et>."
-msgstr "Прилагательное стоит в падеже существительного: <et>suures majas</et>, <et>uut raamatut</et>."
+msgid "The adjective usually takes the noun’s case: <et>suures majas</et>, <et>uut raamatut</et>."
+msgstr "Прилагательное обычно стоит в падеже существительного: <et>suures majas</et>, <et>uut raamatut</et>."
 
 msgid "The cat sleeps in the small room."
 msgstr "Кошка спит в маленькой комнате."

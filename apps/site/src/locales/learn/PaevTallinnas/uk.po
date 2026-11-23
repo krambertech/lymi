@@ -13,6 +13,12 @@ msgstr "З <0>eurot</0> чи <1>maksab</1> число стає ціною."
 msgid "<0>Kell on</0> before the number makes it a time."
 msgstr "<0>Kell on</0> перед числом означає час."
 
+msgid "<0>Pool</0> looks ahead: <1>pool üksteist</1> is 10:30, and it’s ten."
+msgstr "<0>Pool</0> дивиться вперед: <1>pool üksteist</1> — це 10:30, а зараз десята."
+
+msgid "<0>Üksteist</0> is 11:00, and it’s ten."
+msgstr "<0>Üksteist</0> — це 11:00, а зараз десята."
+
 msgid "<et>Avatud</et> is open and <et>suletud</et> closed, as on a door."
 msgstr "<et>Avatud</et> — відчинено, <et>suletud</et> — зачинено, як на дверях."
 
@@ -70,14 +76,14 @@ msgstr "Час кажуть із <et>kell</et> і числом: <et>kell kümme<
 msgid "A voice message from Jaan"
 msgstr "Голосове повідомлення від Яана"
 
+msgid "After <0>ei</0>, the verb drops its ending: <1>ei joo</1>."
+msgstr "Після <0>ei</0> дієслово втрачає закінчення: <1>ei joo</1>."
+
+msgid "After <0>ei</0>, the verb drops its ending: <1>ei tööta</1>."
+msgstr "Після <0>ei</0> дієслово втрачає закінчення: <1>ei tööta</1>."
+
 msgid "After a number from two up, euro becomes eurot."
 msgstr "Після числа від двох і більше euro стає eurot."
-
-msgid "After ei, the verb drops its ending: ei joo."
-msgstr "Після ei дієслово втрачає закінчення: ei joo."
-
-msgid "After ei, the verb drops its ending: ei tööta."
-msgstr "Після ei дієслово втрачає закінчення: ei tööta."
 
 msgid "All six sentences right."
 msgstr "Усі шість речень правильні."
@@ -334,9 +340,6 @@ msgstr "Ще раз послухай рядки нижче, а тоді спро
 msgid "Pool looks ahead: halfway to eleven."
 msgstr "Pool дивиться вперед: пів на одинадцяту."
 
-msgid "Pool looks ahead: pool üksteist is 10:30, and it’s ten."
-msgstr "Pool дивиться вперед: pool üksteist — це 10:30, а зараз десята."
-
 msgid "Pool neli: halfway to four, 3:30."
 msgstr "Pool neli: пів на четверту, 3:30."
 
@@ -451,9 +454,6 @@ msgstr "Turg, ринок, має -l за традицією."
 msgid "twelve"
 msgstr "дванадцять"
 
-msgid "Üksteist is 11:00, and it’s ten."
-msgstr "Üksteist — це 11:00, а зараз десята."
-
 msgid "We drink coffee at eleven."
 msgstr "Ми п’ємо каву об одинадцятій."
 
@@ -514,8 +514,8 @@ msgstr "Де він буде завтра?"
 msgid "Which question does it answer?"
 msgstr "На яке питання це відповідь?"
 
-msgid "With ma, the verb ends in -n: ma joon."
-msgstr "З ma дієслово закінчується на -n: ma joon."
+msgid "With <0>ma</0>, the verb ends in <1>-n</1>: <2>ma joon</2>."
+msgstr "З <0>ma</0> дієслово закінчується на <1>-n</1>: <2>ma joon</2>."
 
 msgid "Write back to Mari"
 msgstr "Напиши Марі"

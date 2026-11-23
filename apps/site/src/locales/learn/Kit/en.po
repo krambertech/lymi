@@ -753,8 +753,8 @@ msgstr "Free Estonian conversation practice for beginners: say your name, where 
 msgid "Free Estonian decks in Lymi"
 msgstr "Free Estonian decks in Lymi"
 
-msgid "Free Estonian practice for beginners: read opening hours and a message, follow a voice message and a phone call with times and days, write what you hear, write short sentences in Estonian, fill in a plan for Saturday, talk with a friend at a café and write back. Every sentence is read aloud."
-msgstr "Free Estonian practice for beginners: read opening hours and a message, follow a voice message and a phone call with times and days, write what you hear, write short sentences in Estonian, fill in a plan for Saturday, talk with a friend at a café and write back. Every sentence is read aloud."
+msgid "Free Estonian practice for beginners: read opening hours and a message, tell a time from a price and a day, follow a voice message and a phone call with times and days, write what you hear, write short sentences in Estonian, fill in a plan for Saturday, talk with a friend at a café and write back. Every sentence is read aloud."
+msgstr "Free Estonian practice for beginners: read opening hours and a message, tell a time from a price and a day, follow a voice message and a phone call with times and days, write what you hear, write short sentences in Estonian, fill in a plan for Saturday, talk with a friend at a café and write back. Every sentence is read aloud."
 
 msgid "friend"
 msgstr "friend"

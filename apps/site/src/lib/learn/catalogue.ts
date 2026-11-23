@@ -140,7 +140,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian reading and listening practice: a day in Tallinn`,
         et: "Päev Tallinnas",
         minutes: 20,
-        blurb: msg`Free Estonian practice for beginners: read opening hours and a message, follow a voice message and a phone call with times and days, write what you hear, write short sentences in Estonian, fill in a plan for Saturday, talk with a friend at a café and write back. Every sentence is read aloud.`,
+        blurb: msg`Free Estonian practice for beginners: read opening hours and a message, tell a time from a price and a day, follow a voice message and a phone call with times and days, write what you hear, write short sentences in Estonian, fill in a plan for Saturday, talk with a friend at a café and write back. Every sentence is read aloud.`,
       },
     ],
   },

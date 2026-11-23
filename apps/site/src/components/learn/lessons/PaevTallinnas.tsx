@@ -254,8 +254,24 @@ function useContent() {
       who: "you",
       clip: "d-sina-2",
       replies: [
-        { line: "Jah, ma joob kohvi.", why: t`With ma, the verb ends in -n: ma joon.` },
-        { line: "Ei, ma ei joon kohvi.", why: t`After ei, the verb drops its ending: ei joo.` },
+        {
+          line: "Jah, ma joob kohvi.",
+          why: (
+            <Trans>
+              With <span lang="et">ma</span>, the verb ends in <span lang="et">-n</span>:{" "}
+              <span lang="et">ma joon</span>.
+            </Trans>
+          ),
+        },
+        {
+          line: "Ei, ma ei joon kohvi.",
+          why: (
+            <Trans>
+              After <span lang="et">ei</span>, the verb drops its ending:{" "}
+              <span lang="et">ei joo</span>.
+            </Trans>
+          ),
+        },
         { line: said("d-sina-2"), right: true },
       ],
     },
@@ -266,10 +282,22 @@ function useContent() {
       replies: [
         {
           line: "Kell on pool üksteist.",
-          why: t`Pool looks ahead: pool üksteist is 10:30, and it’s ten.`,
+          why: (
+            <Trans>
+              <span lang="et">Pool</span> looks ahead: <span lang="et">pool üksteist</span> is
+              10:30, and it’s ten.
+            </Trans>
+          ),
         },
         { line: said("d-sina-3"), right: true },
-        { line: "Kell on üksteist.", why: t`Üksteist is 11:00, and it’s ten.` },
+        {
+          line: "Kell on üksteist.",
+          why: (
+            <Trans>
+              <span lang="et">Üksteist</span> is 11:00, and it’s ten.
+            </Trans>
+          ),
+        },
       ],
     },
     { who: "them", clip: "d-mari-4", line: said("d-mari-4") },
@@ -279,7 +307,15 @@ function useContent() {
       replies: [
         { line: "Jah, homme on esmaspäev.", why: t`Today is Saturday, so tomorrow is Sunday.` },
         { line: said("d-sina-4"), right: true },
-        { line: "Ei, ma ei töötan.", why: t`After ei, the verb drops its ending: ei tööta.` },
+        {
+          line: "Ei, ma ei töötan.",
+          why: (
+            <Trans>
+              After <span lang="et">ei</span>, the verb drops its ending:{" "}
+              <span lang="et">ei tööta</span>.
+            </Trans>
+          ),
+        },
       ],
     },
   ];

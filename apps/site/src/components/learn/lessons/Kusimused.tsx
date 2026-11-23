@@ -547,7 +547,7 @@ export function KusimusedLesson() {
         options: [
           { id: "estonia", label: t`Estonia` },
           { id: "finland", label: t`Finland` },
-          { id: "britain", label: t`Great Britain` },
+          { id: "britain", label: t`The United Kingdom` },
         ],
         answer: "finland",
         line: 6,

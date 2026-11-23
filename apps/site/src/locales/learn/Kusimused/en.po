@@ -166,9 +166,6 @@ msgstr "from, by birth"
 msgid "Go back to the <0>kas</0> switch at the top, then try again."
 msgstr "Go back to the <0>kas</0> switch at the top, then try again."
 
-msgid "Great Britain"
-msgstr "Great Britain"
-
 msgid "He or she is at home."
 msgstr "He or she is at home."
 
@@ -385,6 +382,9 @@ msgstr "That’s Jaan."
 
 msgid "The question word comes first: <et>{word}</et>."
 msgstr "The question word comes first: <et>{word}</et>."
+
+msgid "The United Kingdom"
+msgstr "The United Kingdom"
 
 msgid "the way"
 msgstr "the way"

@@ -166,9 +166,6 @@ msgstr "родом з"
 msgid "Go back to the <0>kas</0> switch at the top, then try again."
 msgstr "Повернися до перемикача з <0>kas</0> на початку уроку, а тоді спробуй ще раз."
 
-msgid "Great Britain"
-msgstr "З Великої Британії"
-
 msgid "He or she is at home."
 msgstr "Він чи вона вдома."
 
@@ -385,6 +382,9 @@ msgstr "Це Jaan."
 
 msgid "The question word comes first: <et>{word}</et>."
 msgstr "Питальне слово стоїть першим: <et>{word}</et>."
+
+msgid "The United Kingdom"
+msgstr "З Великої Британії"
 
 msgid "the way"
 msgstr "спосіб"

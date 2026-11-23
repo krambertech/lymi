@@ -20,6 +20,7 @@ describe("the variants of an accepted sentence that are always right", () => {
     expect(sentences("Kus sa elad?")).toContain("Kus elad?");
     expect(sentences("Me oleme kodus.")).toContain("Oleme kodus.");
     expect(sentences("Tere! Ma olen Jaan.")).toContain("Tere! Olen Jaan.");
+    expect(sentences("Ta ütles: „Ma tulen.“")).toContain("Ta ütles: „Tulen.“");
     expect(sentences("Täna lähen ma tööle.")).toEqual([
       "Täna lähen mina tööle.",
       "Täna lähen tööle.",

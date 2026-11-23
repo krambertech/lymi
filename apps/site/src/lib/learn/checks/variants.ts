@@ -47,6 +47,8 @@ const POINTING: ReadonlySet<string> = new Set(["see", "need"]);
 
 const SENTENCE_END = /[.!?…]$/;
 
+const OPENING_QUOTE = /[„“"«‹‚]/;
+
 const PERSONLESS: ReadonlySet<string> = new Set(["ei", "pole", "polnud"]);
 
 const NOT_VERBS: ReadonlySet<string> = new Set(["ema", "ilma", ...Object.keys(PRONOUNS)]);
@@ -135,7 +137,11 @@ export function alwaysRightVariants(sentence: string): string[] {
     if (!DROPPABLE.has(pronoun.person) || !(agrees(verbAfter) || agrees(verbBefore))) return;
     const rest = tokens.filter((_, i) => i !== at);
     const next = rest[at];
-    const starts = !before || SENTENCE_END.test(before.trail) || before.core === "";
+    const starts =
+      !before ||
+      SENTENCE_END.test(before.trail) ||
+      before.core === "" ||
+      OPENING_QUOTE.test(token.lead);
     if (next)
       rest[at] = {
         ...next,

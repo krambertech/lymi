@@ -45,9 +45,16 @@ const LONG: Record<string, string> = {
   Nad: "Nemad",
 };
 
-const withLong = (said: string): [string, ...string[]] => {
-  const [first, ...rest] = said.split(" ");
-  return first && LONG[first] ? [said, [LONG[first], ...rest].join(" ")] : [said];
+const DROPS = new Set(["Ma", "Sa", "Me", "Te"]);
+
+const withPronouns = (said: string): [string, ...string[]] => {
+  const [first, next, ...rest] = said.split(" ");
+  const long = first && LONG[first];
+  if (!long || !next) return [said];
+  const dropped = DROPS.has(first)
+    ? [[next.charAt(0).toUpperCase() + next.slice(1), ...rest].join(" ")]
+    : [];
+  return [said, [long, next, ...rest].join(" "), ...dropped];
 };
 
 const say = (
@@ -72,7 +79,7 @@ const start = (id: string, from: string, to: string): SentenceDrill => ({
   rule: "hakkama",
   from,
   cue: msg`with <et>hakkama</et>`,
-  answers: withLong(to),
+  answers: withPronouns(to),
   say: to,
   explain: HAKKAMA,
 });
@@ -153,6 +160,10 @@ export const DRILLS: DrillBank = {
         "Homme töötan ma kodus.",
         "Homme ma töötan kodus.",
         "Ma töötan homme kodus.",
+        "Homme mina töötan kodus.",
+        "Homme töötan mina kodus.",
+        "Mina töötan homme kodus.",
+        "Töötan homme kodus.",
       ],
       TIME_WORD,
     ),
@@ -166,6 +177,11 @@ export const DRILLS: DrillBank = {
         "Me läheme järgmisel nädalal Tartusse.",
         "Järgmisel nädalal läheme me Tartusse.",
         "Me läheme Tartusse järgmisel nädalal.",
+        "Järgmisel nädalal meie läheme Tartusse.",
+        "Läheme Tartusse järgmisel nädalal.",
+        "Läheme järgmisel nädalal Tartusse.",
+        "Meie läheme Tartusse järgmisel nädalal.",
+        "Meie läheme järgmisel nädalal Tartusse.",
       ],
       TIME_WORD,
     ),
@@ -192,6 +208,8 @@ export const DRILLS: DrillBank = {
         "Kavatsen minna Tallinnasse.",
         "Plaanin minna Tallinnasse.",
         "Mina plaanin Tallinnasse minna.",
+        "Mina kavatsen minna Tallinnasse.",
+        "Mina plaanin minna Tallinnasse.",
       ],
       PLAN,
     ),
@@ -206,6 +224,8 @@ export const DRILLS: DrillBank = {
         "Mida sa homme kavatsed teha?",
         "Mida plaanid homme teha?",
         "Mida kavatsed homme teha?",
+        "Mida sina kavatsed homme teha?",
+        "Mida sina plaanid homme teha?",
       ],
       PLAN,
     ),

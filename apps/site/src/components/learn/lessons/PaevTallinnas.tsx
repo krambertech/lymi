@@ -229,7 +229,7 @@ function useContent() {
       id: "sunday",
       ask: t`Where is Jaan on Sunday?`,
       options: [
-        { id: "tallinn", label: t`In Tallinn` },
+        { id: "market", label: t`At the market` },
         { id: "work", label: t`At work` },
         { id: "home", label: t`At home` },
       ],
@@ -469,8 +469,8 @@ export function PaevTallinnasLesson() {
         </Trans>,
         <Trans key="2">
           Say when with <b lang="et">kell</b> and a number:{" "}
-          <b lang="et">Ma joon kell kümme kohvi</b>, I drink coffee at ten. Pool looks ahead, so{" "}
-          <b lang="et">pool üksteist</b> is 10:30.
+          <b lang="et">Ma joon kell kümme kohvi</b>, I drink coffee at ten. <b lang="et">Pool</b>{" "}
+          looks ahead, so <b lang="et">pool üksteist</b> is 10:30.
         </Trans>,
         <Trans key="3">
           Say a price with <b lang="et">maksab</b>: <b lang="et">Kohv maksab kolm eurot</b>, coffee

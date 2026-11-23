@@ -14,7 +14,6 @@ export const KNOWN_ISSUES: Readonly<Record<string, readonly string[]>> = {
     "mina-sina-tema",
     "numbrid",
     "olevik",
-    "paev-tallinnas",
   ],
   /** A quiz whose options for an answer never change, so the set names the answer. */
   "option-sets": ["eitus", "kell", "kusimused", "mina-sina-tema"],

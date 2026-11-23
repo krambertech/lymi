@@ -109,12 +109,12 @@ const QUESTION_WORDS: readonly {
 ];
 
 /** A run's questions for “what does it ask?”, two to each word. */
-const ASKS: readonly { id: Id; word: QuestionWord }[] = [
+const ASKS: readonly { id: Id; word: QuestionWord; dictated?: false }[] = [
   { id: "w-kes-tartus", word: "kes" },
   { id: "w-kes-raagib", word: "kes" },
   { id: "w-mis-teed", word: "mis" },
   { id: "w-mis-loed", word: "mis" },
-  { id: "w-kus-tootab", word: "kus" },
+  { id: "w-kus-tootab", word: "kus", dictated: false },
   { id: "w-kus-elate", word: "kus" },
   { id: "w-millal-sood", word: "millal" },
   { id: "w-millal-loed", word: "millal" },
@@ -492,7 +492,7 @@ export function KusimusedLesson() {
 
   const writtenItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
     () =>
-      ASKS.map(({ id, word }) => ({
+      ASKS.filter(({ dictated }) => dictated !== false).map(({ id, word }) => ({
         kind: "dictation" as const,
         id: `write-${id.slice(2)}`,
         src: src(id),

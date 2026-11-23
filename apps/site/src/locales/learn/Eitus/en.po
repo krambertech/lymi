@@ -298,9 +298,6 @@ msgstr "No, I’m not."
 msgid "No."
 msgstr "No."
 
-msgid "None of you read."
-msgstr "None of you read."
-
 msgid "not; no"
 msgstr "not; no"
 
@@ -461,6 +458,9 @@ msgstr "You all read."
 
 msgid "You aren’t waiting."
 msgstr "You aren’t waiting."
+
+msgid "You don’t read (to more than one)."
+msgstr "You don’t read (to more than one)."
 
 msgid "You’ll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
 msgstr "You’ll often hear it as one word, <0/>, which means exactly <1/>. Try all three."

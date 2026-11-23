@@ -101,14 +101,12 @@ const answered = ({ ask, answer }: (typeof NO_ANSWERS)[number]): SentenceDrill =
         ? [
             answer,
             "Pole.",
-            "Ei.",
             ...full("ei ole"),
             ...full("pole"),
             ...(tail ? [`Ei ole ${tail}.`, `Pole ${tail}.`] : []),
           ]
         : [
             answer,
-            "Ei.",
             ...full(`ei ${verb}`),
             ...(tail ? [`Ei ${verb} ${tail}.`] : []),
             ...(asked === "te"
@@ -138,7 +136,7 @@ const YES_NO: readonly {
   },
   {
     id: "no-loete",
-    prompt: msg`None of you read.`,
+    prompt: msg`You don’t read (to more than one).`,
     stem: "loe",
     person: "te",
     no: true,

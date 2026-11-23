@@ -298,9 +298,6 @@ msgstr "Ні, не читаю."
 msgid "No."
 msgstr "Ні."
 
-msgid "None of you read."
-msgstr "Ви не читаєте."
-
 msgid "not; no"
 msgstr "не; ні"
 
@@ -461,6 +458,9 @@ msgstr "Ви читаєте."
 
 msgid "You aren’t waiting."
 msgstr "Ти не чекаєш."
+
+msgid "You don’t read (to more than one)."
+msgstr "Ви не читаєте (звертаючись до кількох)."
 
 msgid "You’ll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
 msgstr "Часто його кажуть одним словом, <0/>, і це рівно те саме, що <1/>. Спробуй усі три."

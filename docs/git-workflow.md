@@ -31,7 +31,7 @@ type(scope): imperative summary
 
 Allowed types are `feat`, `fix`, `docs`, `refactor`, `test`, `perf`, `build`, `ci`, `chore`, and `revert`. Use a concise lower-case scope such as `web`, `api`, `auth`, `review`, `audio`, `core`, `docs`, `repo`, or `deps`.
 
-Aim for 60 characters and never exceed 72. Start the summary with a lower-case word, use the imperative mood, and omit the final period. Name the concrete outcome in literal language, without metaphors, promotion or issue numbers. Add `!` before the colon for a breaking change.
+Aim for 60 characters and never exceed 72. Start the summary with a lower-case word, use the imperative mood, and omit the final period. Name the concrete outcome in literal language, without metaphors, promotion or issue numbers. Prefer a specific verb and object over broad words such as "improve", "streamline" or "harden". Include quantities or performance gains only when measured evidence supports them. Revisit the title when scope changes. Add `!` before the colon for a breaking change.
 
 ```text
 feat(review): add keyboard grading
@@ -45,7 +45,7 @@ Fixup commits are fine on an open pull request, because GitHub squashes the bran
 
 ## Write the pull request description
 
-Start from [the pull request template](../.github/pull_request_template.md) and write for the reviewer: what changed for a learner or caller, and how you know. Link to an owning decision instead of repeating it. Leave out the story of the work, file inventories, passing checks CI already shows, empty sections, decorative emoji and generated-by footers. Include raw output only when it explains a failure.
+Start from [the pull request template](../.github/pull_request_template.md). Open with the problem or missing capability from the request, then the resulting behavior and how you know. For repository work, name the developer or operational consequence. Link to an owning decision instead of repeating it. Leave out the story of the work, file inventories, passing checks CI already shows, empty sections, decorative emoji and generated-by footers. Include raw output only when it explains a failure.
 
 **`scripts/check-pr-body.mjs` fails a description that breaks the template.** The Pull request workflow runs it, and runs it again when the description is edited, without running CI again. Run it first with `pnpm pr:check <body file> "<title>"`.
 

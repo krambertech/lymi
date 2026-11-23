@@ -308,6 +308,9 @@ msgstr "Безкоштовний урок про родовий відмінок
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "Безкоштовний урок про наказовий спосіб в естонській мові: основа дієслова як наказ (loe!, istu!, tule siia!), ära для «не роби», форми на -ge і -ke для кількох людей або на «ви», щоденні накази на кшталт räägi aeglasemalt, palun і коротка розмова в кав’ярні. Кожне речення озвучене."
 
+msgid "A free lesson on the Estonian object: the partitive for part of something, an action still going on, after ei and after verbs such as ootama and otsima on their own; and for a noun, usually the genitive for the whole thing done (Ma lugesin raamatu läbi) and the nominative in commands (Osta pilet!). Every sentence is read aloud."
+msgstr "Безкоштовний урок про об’єкт в естонській мові: партитив для частини, для дії, що триває, після ei і після дієслів на кшталт ootama та otsima без інших слів; а в іменника зазвичай родовий для завершеної дії над усім цілим (Ma lugesin raamatu läbi) і називний у наказах (Osta pilet!). Кожне речення озвучене."
+
 msgid "A free lesson on the Estonian partitive case: after numbers from two up (kaks kassi, viis eurot), after mitu and amounts (tass kohvi), after pole (mul pole kassi) and with food and drink (ma joon kohvi). Every sentence is read aloud."
 msgstr "Безкоштовний урок про партитив в естонській мові: після числівників від двох (kaks kassi, viis eurot), після mitu і слів кількості (tass kohvi), після pole (mul pole kassi) та з їжею й напоями (ma joon kohvi). Кожне речення озвучене."
 
@@ -718,6 +721,9 @@ msgstr "Естонська вимова"
 
 msgid "Estonian reading and listening practice: a day in Tallinn"
 msgstr "Естонська мова: читання й аудіювання. День у Таллінні"
+
+msgid "Estonian total and partial object"
+msgstr "Повний і частковий об’єкт в естонській мові"
 
 msgid "Every word has a group. Check when you’re ready."
 msgstr "Усі слова в групах. Можна перевіряти."

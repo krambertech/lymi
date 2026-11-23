@@ -359,7 +359,14 @@ export const STAGES: readonly Stage[] = [
     goal: msg`Words that change inside, the object’s case, and new tenses and moods. You know every word by now, so only the rule is new.`,
     lessons: [
       { name: msg`Consonant gradation`, et: "Jalg, jala" },
-      { name: msg`The object: whole or part`, et: "Raamatut või raamatu" },
+      {
+        slug: "raamatut-voi-raamatu",
+        name: msg`The object: whole or part`,
+        title: msg`Estonian total and partial object`,
+        et: "Raamatut või raamatu",
+        minutes: 20,
+        blurb: msg`A free lesson on the Estonian object: the partitive for part of something, an action still going on, after ei and after verbs such as ootama and otsima on their own; and for a noun, usually the genitive for the whole thing done (Ma lugesin raamatu läbi) and the nominative in commands (Osta pilet!). Every sentence is read aloud.`,
+      },
       { name: msg`Plural partitive`, et: "Raamatuid, maju" },
       { name: msg`Plural cases`, et: "Majades, inimestele" },
       { name: msg`Perfect and pluperfect`, et: "Olen lugenud, olin lugenud" },

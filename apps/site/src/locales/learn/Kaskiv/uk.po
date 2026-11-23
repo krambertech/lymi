@@ -279,11 +279,11 @@ msgstr "Основа не змінюється: <0>istu</0>, <1>ära istu</1>."
 msgid "The stem is the command"
 msgstr "Основа — це наказ"
 
-msgid "The stem is the ma form without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It’s the form that follows <3>ei</3>."
-msgstr "Основа — це форма з ma без <0>-n</0>: <1>istun</1>, <2>istu</2>. Та сама форма йде після <3>ei</3>."
+msgid "The stem is the I form of the present without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It’s the form that follows <3>ei</3>."
+msgstr "Основа — це форма першої особи однини теперішнього часу без <0>-n</0>: <1>istun</1>, <2>istu</2>. Та сама форма йде після <3>ei</3>."
 
-msgid "The stem is the ma form without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
-msgstr "Основа — це форма з ma без <0>-n</0>. З <1/> виходить <2/> З <3/> виходить <4/> <5/> означає «сюди»."
+msgid "The stem is the I form of the present without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
+msgstr "Основа — це форма першої особи однини теперішнього часу без <0>-n</0>. З <1/> виходить <2/> З <3/> виходить <4/> <5/> означає «сюди»."
 
 msgid "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb’s three forms, shows where they come from."
 msgstr "Основа перед закінченням часто змінюється: <0/> стає <1/> Поки що запам’ятовуй ці форми цілими словами. Звідки вони беруться, розповідає урок {verbForms} про три форми дієслова."
@@ -321,8 +321,8 @@ msgstr "Щоб сказати «не роби», став <0>ära</0> перед
 msgid "to speak"
 msgstr "говорити"
 
-msgid "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the ma form from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
-msgstr "Щоб сказати одній людині, що робити, естонська бере основу дієслова й нічого до неї не додає. Візьми форму з ma з уроку {present} і прибери <0>-n</0>. <1/> — це «я читаю», а <2/> просить одну людину читати."
+msgid "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the I form of the present from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
+msgstr "Щоб сказати одній людині, що робити, естонська бере основу дієслова й нічого до неї не додає. Візьми форму першої особи однини теперішнього часу з уроку {present} і прибери <0>-n</0>. <1/> — це «я читаю», а <2/> просить одну людину читати."
 
 msgid "To tell one person what to do, say the verb’s stem: <0>Loe! Istu!</0>"
 msgstr "Щоб сказати одній людині, що робити, скажи основу дієслова: <0>Loe! Istu!</0>"

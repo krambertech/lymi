@@ -166,7 +166,7 @@ function FlipNote({ mode, title, tip }: { mode: string; title: ReactNode; tip: R
   );
 }
 
-/** The ma form with its -n lit, and the command it gives, each to tap. */
+/** The I form of the present with its -n lit, and the command it gives, each to tap. */
 function StemPair({ verb, ma, stem }: (typeof KASKIV_STEMS)[number]) {
   const { i18n } = useLingui();
   return (
@@ -531,8 +531,9 @@ export function KaskivLesson() {
           To tell one person what to do, say the verb’s stem: <b lang="et">Loe! Istu!</b>
         </Trans>,
         <Trans key="2">
-          The stem is the ma form without its <b lang="et">-n</b>: <b lang="et">istun</b>,{" "}
-          <b lang="et">istu</b>. It’s the form that follows <b lang="et">ei</b>.
+          The stem is the I form of the present without its <b lang="et">-n</b>:{" "}
+          <b lang="et">istun</b>, <b lang="et">istu</b>. It’s the form that follows{" "}
+          <b lang="et">ei</b>.
         </Trans>,
         <Trans key="3">
           To say don’t, put <b lang="et">ära</b> before the stem: <b lang="et">Ära istu!</b>
@@ -563,7 +564,7 @@ export function KaskivLesson() {
                 <p>
                   <Trans>
                     To tell one person what to do, Estonian uses the verb’s stem with nothing after
-                    it. Take the ma form from lesson {present} and drop the{" "}
+                    it. Take the I form of the present from lesson {present} and drop the{" "}
                     <span lang="et">-n</span>. <Word w="Ma loen" /> is I read, and <Word w="Loe!" />{" "}
                     tells one person to read.
                   </Trans>
@@ -613,7 +614,7 @@ export function KaskivLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The stem is the ma form without its <span lang="et">-n</span>.{" "}
+                    The stem is the I form of the present without its <span lang="et">-n</span>.{" "}
                     <Word w="Istun" /> gives <Word w="Istu!" /> <Word w="Tulen" /> gives{" "}
                     <Word w="Tule siia!" /> <Word w="Siia" /> means here, to this place.
                   </Trans>

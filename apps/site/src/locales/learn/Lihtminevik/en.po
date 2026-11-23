@@ -77,8 +77,8 @@ msgstr "A book"
 msgid "A few everyday verbs take <0>i-</0> instead, and several change their stem too: <1/>, <2/>, I ate; <3/>, <4/>, I went. Learn them one by one, as you learned <5>lugema</5> with <6>loen</6>."
 msgstr "A few everyday verbs take <0>i-</0> instead, and several change their stem too: <1/>, <2/>, I ate; <3/>, <4/>, I went. Learn them one by one, as you learned <5>lugema</5> with <6>loen</6>."
 
-msgid "A few everyday verbs take <0>i-</0> on the stem of the <1>ma</1> form: <2>olin, tulin, tegin, nägin</2>. Three change the stem: <3>läksin, sõin, jõin</3>. <4>Ta</4> ends in <5>i</5>, as in <6>ta oli</6>, except <7>ta läks</7>."
-msgstr "A few everyday verbs take <0>i-</0> on the stem of the <1>ma</1> form: <2>olin, tulin, tegin, nägin</2>. Three change the stem: <3>läksin, sõin, jõin</3>. <4>Ta</4> ends in <5>i</5>, as in <6>ta oli</6>, except <7>ta läks</7>."
+msgid "A few everyday verbs take <0>i-</0> on the stem of the <1>-ma</1> infinitive: <2>olin, tulin, tegin, nägin</2>. Three change the stem: <3>läksin, sõin, jõin</3>. <4>Ta</4> ends in <5>i</5>, as in <6>ta oli</6>, except <7>ta läks</7>."
+msgstr "A few everyday verbs take <0>i-</0> on the stem of the <1>-ma</1> infinitive: <2>olin, tulin, tegin, nägin</2>. Three change the stem: <3>läksin, sõin, jõin</3>. <4>Ta</4> ends in <5>i</5>, as in <6>ta oli</6>, except <7>ta läks</7>."
 
 msgid "A new stem, <0>läks-</0>, then <1>in</1>. Now it’s <2>lähen</2>."
 msgstr "A new stem, <0>läks-</0>, then <1>in</1>. Now it’s <2>lähen</2>."
@@ -292,17 +292,17 @@ msgstr "Mari’s Saturday"
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Most of them. Play the ones you missed once more."
 
-msgid "Most verbs build the past on the <0>ma</0> form. Take off <1>ma</1> and add <2>sin</2> for I: <3/>, <4/>."
-msgstr "Most verbs build the past on the <0>ma</0> form. Take off <1>ma</1> and add <2>sin</2> for I: <3/>, <4/>."
+msgid "Most verbs build the past on the <0>-ma</0> infinitive. Take off <1>ma</1> and add <2>sin</2> for I: <3/>, <4/>."
+msgstr "Most verbs build the past on the <0>-ma</0> infinitive. Take off <1>ma</1> and add <2>sin</2> for I: <3/>, <4/>."
 
-msgid "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form; a few everyday verbs take <2>i-</2>. An ending for each person says who did it."
-msgstr "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form; a few everyday verbs take <2>i-</2>. An ending for each person says who did it."
+msgid "Most verbs put <0>si-</0> on the stem of the <1>-ma</1> infinitive; a few everyday verbs take <2>i-</2>. An ending for each person says who did it."
+msgstr "Most verbs put <0>si-</0> on the stem of the <1>-ma</1> infinitive; a few everyday verbs take <2>i-</2>. An ending for each person says who did it."
 
-msgid "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
-msgstr "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
+msgid "Most verbs put <0>si-</0> on the stem of the <1>-ma</1> infinitive: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
+msgstr "Most verbs put <0>si-</0> on the stem of the <1>-ma</1> infinitive: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
 
-msgid "Most verbs: <0>si-</0> on the stem of the <1>ma</1> form."
-msgstr "Most verbs: <0>si-</0> on the stem of the <1>ma</1> form."
+msgid "Most verbs: <0>si-</0> on the stem of the <1>-ma</1> infinitive."
+msgstr "Most verbs: <0>si-</0> on the stem of the <1>-ma</1> infinitive."
 
 msgid "Nearly. Tap the past forms in the table once more."
 msgstr "Nearly. Tap the past forms in the table once more."
@@ -362,8 +362,8 @@ msgstr "The endings are the ones that follow <0>si-</0>: <1>sõin, sõid, sõi, 
 msgid "The other persons take the present’s endings after <0>si-</0>, with two changes. <1>Ta</1> has only <2>s</2>: <3/>. <4>Nad</4> has <5>sid</5>, the same as <6>sa</6>: <7/>. Pick a verb and tap a form."
 msgstr "The other persons take the present’s endings after <0>si-</0>, with two changes. <1>Ta</1> has only <2>s</2>: <3/>. <4>Nad</4> has <5>sid</5>, the same as <6>sa</6>: <7/>. Pick a verb and tap a form."
 
-msgid "The past keeps the stem of the <0>ma</0> form where the present changes it. You say <1/> now but <2/> in the past, because the past comes from <3/>. In the same way, <4/> is now and <5/> the past. Lesson {verbForms} puts the <6>ma</6> form beside the I form."
-msgstr "The past keeps the stem of the <0>ma</0> form where the present changes it. You say <1/> now but <2/> in the past, because the past comes from <3/>. In the same way, <4/> is now and <5/> the past. Lesson {verbForms} puts the <6>ma</6> form beside the I form."
+msgid "The past keeps the stem of the <0>-ma</0> infinitive where the present changes it. You say <1/> now but <2/> in the past, because the past comes from <3/>. In the same way, <4/> is now and <5/> the past. Lesson {verbForms} puts the <6>-ma</6> infinitive beside the present."
+msgstr "The past keeps the stem of the <0>-ma</0> infinitive where the present changes it. You say <1/> now but <2/> in the past, because the past comes from <3/>. In the same way, <4/> is now and <5/> the past. Lesson {verbForms} puts the <6>-ma</6> infinitive beside the present."
 
 msgid "The past with -i-"
 msgstr "The past with -i-"

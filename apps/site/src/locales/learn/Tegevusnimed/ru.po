@@ -7,11 +7,11 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
-msgid "<0/> <1/> Lesson {going} explains what the <2>-ma</2> form means after <3>lähen</3>. Tap a verb to hear it in a sentence."
-msgstr "<0/> <1/> Что значит форма на <2>-ma</2> после <3>lähen</3>, объясняет урок {going}. Коснись глагола, чтобы услышать его в предложении."
+msgid "<0/> <1/> Lesson {going} explains what the <2>-ma</2> infinitive means after <3>lähen</3>. Tap a verb to hear it in a sentence."
+msgstr "<0/> <1/> Что значит инфинитив на <2>-ma</2> после <3>lähen</3>, объясняет урок {going}. Коснись глагола, чтобы услышать его в предложении."
 
-msgid "<0/> takes the <1>-ma</1> form, and so do <2/>, <3/>, <4/> and <5/>."
-msgstr "<0/> требует формы на <1>-ma</1>, как и <2/>, <3/>, <4/> и <5/>."
+msgid "<0/> takes the <1>-ma</1> infinitive, and so do <2/>, <3/>, <4/> and <5/>."
+msgstr "<0/> требует инфинитива на <1>-ma</1>, как и <2/>, <3/>, <4/> и <5/>."
 
 msgid "<0/>, <1/> and <2/> can all translate as I can. Lesson {canMay} tells them apart; the form after them is the same."
 msgstr "<0/>, <1/> и <2/> можно перевести как «я могу». Чем они отличаются, объясняет урок {canMay}; форма после них одна и та же."
@@ -19,20 +19,20 @@ msgstr "<0/>, <1/> и <2/> можно перевести как «я могу».
 msgid "<0/>, I like, is the eighth: <1/> Tap a verb to hear it in a sentence."
 msgstr "Восьмой — <0/>, «мне нравится»: <1/> Коснись глагола, чтобы услышать его в предложении."
 
-msgid "<0/>, to learn, takes the <1>-ma</1> form when you learn to do something: <2/>"
-msgstr "<0/>, «учиться», требует формы на <1>-ma</1>, когда учишься что-то делать: <2/>"
+msgid "<0/>, to learn, takes the <1>-ma</1> infinitive when you learn to do something: <2/>"
+msgstr "<0/>, «учиться», требует инфинитива на <1>-ma</1>, когда учишься что-то делать: <2/>"
 
-msgid "<0>Ma tahan lugeda</0> is I want to read, and <1>Ma pean lugema</1> is I have to read. The first verb decides whether the second takes its <2>-da</2> or its <3>-ma</3> form."
-msgstr "<0>Ma tahan lugeda</0> — это «я хочу читать», а <1>Ma pean lugema</1> — «мне надо читать». Первый глагол решает, в какой форме будет второй: на <2>-da</2> или на <3>-ma</3>."
+msgid "<0>Ma tahan lugeda</0> is I want to read, and <1>Ma pean lugema</1> is I have to read. The first verb decides whether the second takes its <2>-da</2> or its <3>-ma</3> infinitive."
+msgstr "<0>Ma tahan lugeda</0> — это «я хочу читать», а <1>Ma pean lugema</1> — «мне надо читать». Первый глагол решает, в каком инфинитиве будет второй: на <2>-da</2> или на <3>-ma</3>."
 
 msgid "<0>Mulle meeldib</0> is I like. Lesson {liking} explains how it works."
 msgstr "<0>Mulle meeldib</0> — это «мне нравится». Как это устроено, объясняет урок {liking}."
 
-msgid "<0>Pean, hakkan, lähen, tule</0> and <1>jään</1> take the <2>-ma</2> form."
-msgstr "<0>Pean, hakkan, lähen, tule</0> и <1>jään</1> требуют формы на <2>-ma</2>."
+msgid "<0>Pean, hakkan, lähen, tule</0> and <1>jään</1> take the <2>-ma</2> infinitive."
+msgstr "<0>Pean, hakkan, lähen, tule</0> и <1>jään</1> требуют инфинитива на <2>-ma</2>."
 
-msgid "<0>Tahan, võin, saan, oskan, tohin, proovin, armastan</0> and <1>mulle meeldib</1> take the <2>-da</2> form."
-msgstr "<0>Tahan, võin, saan, oskan, tohin, proovin, armastan</0> и <1>mulle meeldib</1> требуют формы на <2>-da</2>."
+msgid "<0>Tahan, võin, saan, oskan, tohin, proovin, armastan</0> and <1>mulle meeldib</1> take the <2>-da</2> infinitive."
+msgstr "<0>Tahan, võin, saan, oskan, tohin, proovin, armastan</0> и <1>mulle meeldib</1> требуют инфинитива на <2>-da</2>."
 
 msgid "12 minutes"
 msgstr "12 минут"
@@ -40,32 +40,32 @@ msgstr "12 минут"
 msgid "A sort, sentences to build and a message to fill in"
 msgstr "Сортировка, предложения из слов и сообщение с пропусками"
 
-msgid "After <0/>, I want, comes the <1>-da</1> form: <2/> After <3/>, I have to, comes the <4>-ma</4> form: <5/>"
-msgstr "После <0/>, «я хочу», идёт форма на <1>-da</1>: <2/> После <3/>, «мне надо», — форма на <4>-ma</4>: <5/>"
+msgid "After <0/>, I want, comes the <1>-da</1> infinitive: <2/> After <3/>, I have to, comes the <4>-ma</4> infinitive: <5/>"
+msgstr "После <0/>, «я хочу», идёт инфинитив на <1>-da</1>: <2/> После <3/>, «мне надо», — инфинитив на <4>-ma</4>: <5/>"
 
-msgid "After <0>{lead}</0>, the <1>-da</1> form, and it goes last."
-msgstr "После <0>{lead}</0> — форма на <1>-da</1>, в конце."
+msgid "After <0>{lead}</0>, the <1>-da</1> infinitive, and it goes last."
+msgstr "После <0>{lead}</0> — инфинитив на <1>-da</1>, в конце."
 
-msgid "After <0>{lead}</0>, the <1>-ma</1> form, and it goes last."
-msgstr "После <0>{lead}</0> — форма на <1>-ma</1>, в конце."
+msgid "After <0>{lead}</0>, the <1>-ma</1> infinitive, and it goes last."
+msgstr "После <0>{lead}</0> — инфинитив на <1>-ma</1>, в конце."
 
-msgid "After <0>mulle meeldib</0>, the <1>-da</1> form."
-msgstr "После <0>mulle meeldib</0> — форма на <1>-da</1>."
+msgid "After <0>mulle meeldib</0>, the <1>-da</1> infinitive."
+msgstr "После <0>mulle meeldib</0> — инфинитив на <1>-da</1>."
 
-msgid "After <0>pean</0>, the <1>-ma</1> form, even with words between."
-msgstr "После <0>pean</0> — форма на <1>-ma</1>, даже когда между ними стоят другие слова."
+msgid "After <0>pean</0>, the <1>-ma</1> infinitive, even with words between."
+msgstr "После <0>pean</0> — инфинитив на <1>-ma</1>, даже когда между ними стоят другие слова."
 
-msgid "After <0>pean</0>, the <1>-ma</1> form."
-msgstr "После <0>pean</0> — форма на <1>-ma</1>."
+msgid "After <0>pean</0>, the <1>-ma</1> infinitive."
+msgstr "После <0>pean</0> — инфинитив на <1>-ma</1>."
 
 msgid "After <0>tahad</0>, from <1>tahtma</1>, the <2>-da</2> form."
 msgstr "После <0>tahad</0> (от <1>tahtma</1>) — форма на <2>-da</2>."
 
-msgid "After <0>tahan</0>, <1>pean</1> and the other verbs in this lesson, the second verb takes its <2>-da</2> or <3>-ma</3> form: <4>Ma tahan lugeda. Ma pean lugema.</4>"
-msgstr "После <0>tahan</0>, <1>pean</1> и других глаголов этого урока второй глагол стоит в форме на <2>-da</2> или на <3>-ma</3>: <4>Ma tahan lugeda. Ma pean lugema.</4>"
+msgid "After <0>tahan</0>, <1>pean</1> and the other verbs in this lesson, the second verb takes its <2>-da</2> or <3>-ma</3> infinitive: <4>Ma tahan lugeda. Ma pean lugema.</4>"
+msgstr "После <0>tahan</0>, <1>pean</1> и других глаголов этого урока второй глагол стоит в инфинитиве на <2>-da</2> или на <3>-ma</3>: <4>Ma tahan lugeda. Ma pean lugema.</4>"
 
-msgid "After <0>tahan</0>, the <1>-da</1> form."
-msgstr "После <0>tahan</0> — форма на <1>-da</1>."
+msgid "After <0>tahan</0>, the <1>-da</1> infinitive."
+msgstr "После <0>tahan</0> — инфинитив на <1>-da</1>."
 
 msgid "All three. Each second verb took the right form and went last."
 msgstr "Все три. Второй глагол каждый раз в нужной форме и в конце."
@@ -218,20 +218,20 @@ msgstr "Я пытаюсь учить эстонский."
 msgid "In lesson {verbForms}, <0/> and <1/> both meant to read. Which one you use depends on the verb before it."
 msgstr "В уроке {verbForms} <0/> и <1/> оба значили «читать». Какую из двух форм взять, зависит от глагола перед ней."
 
-msgid "Its <0>-ma</0> form is <1>{verb}</1>."
-msgstr "Его форма на <0>-ma</0> — <1>{verb}</1>."
+msgid "Its <0>-ma</0> infinitive is <1>{verb}</1>."
+msgstr "Его инфинитив на <0>-ma</0> — <1>{verb}</1>."
 
-msgid "Its <0>-ma</0> form is <1>hakkama</1>. Lesson {future} uses it for the future."
-msgstr "Его форма на <0>-ma</0> — <1>hakkama</1>. В уроке {future} с ним строят будущее время."
+msgid "Its <0>-ma</0> infinitive is <1>hakkama</1>. Lesson {future} uses it for the future."
+msgstr "Его инфинитив на <0>-ma</0> — <1>hakkama</1>. В уроке {future} с ним строят будущее время."
 
-msgid "Its I form is õpin."
-msgstr "Форма для «я» — õpin."
+msgid "Its present is õpin."
+msgstr "Форма настоящего времени — õpin."
 
 msgid "Listening only, no microphone"
 msgstr "Только на слух, без микрофона"
 
-msgid "Mari writes to her friend Jaan. In each gap, pick the <0>-ma</0> form, the <1>-da</1> form or the present. The verb before the gap decides; with no verb before it, the present fits."
-msgstr "Мари пишет другу Яану. В каждый пропуск выбери форму на <0>-ma</0>, на <1>-da</1> или настоящее время. Решает глагол перед пропуском; если его нет, подходит настоящее время."
+msgid "Mari writes to her friend Jaan. In each gap, pick the <0>-ma</0> infinitive, the <1>-da</1> infinitive or the present. The verb before the gap decides; with no verb before it, the present fits."
+msgstr "Мари пишет другу Яану. В каждый пропуск выбери инфинитив на <0>-ma</0>, на <1>-da</1> или настоящее время. Решает глагол перед пропуском; если его нет, подходит настоящее время."
 
 msgid "Mari’s message"
 msgstr "Сообщение от Мари"
@@ -272,23 +272,23 @@ msgstr "Коснись строки и послушай, как растёт п�
 msgid "Tap a verb"
 msgstr "Коснись глагола"
 
-msgid "The -da form of lugema."
-msgstr "Форма на -da от lugema."
+msgid "The -da infinitive of lugema."
+msgstr "Инфинитив на -da от lugema."
 
-msgid "The -da form of tegema."
-msgstr "Форма на -da от tegema."
+msgid "The -da infinitive of tegema."
+msgstr "Инфинитив на -da от tegema."
 
-msgid "The -ma form. Its -da form is lugeda."
-msgstr "Форма на -ma. Его форма на -da — lugeda."
+msgid "The -ma infinitive. Its -da infinitive is lugeda."
+msgstr "Инфинитив на -ma. Его инфинитив на -da — lugeda."
 
-msgid "The -ma form. Its -da form is teha."
-msgstr "Форма на -ma. Его форма на -da — teha."
+msgid "The -ma infinitive. Its -da infinitive is teha."
+msgstr "Инфинитив на -ma. Его инфинитив на -da — teha."
 
-msgid "The <0>-da</0> form follows <1>tahan, võin, saan, oskan, tohin, proovin, armastan</1> and <2>mulle meeldib</2>."
-msgstr "Форма на <0>-da</0> идёт после <1>tahan, võin, saan, oskan, tohin, proovin, armastan</1> и <2>mulle meeldib</2>."
+msgid "The <0>-da</0> infinitive follows <1>tahan, võin, saan, oskan, tohin, proovin, armastan</1> and <2>mulle meeldib</2>."
+msgstr "Инфинитив на <0>-da</0> идёт после <1>tahan, võin, saan, oskan, tohin, proovin, armastan</1> и <2>mulle meeldib</2>."
 
-msgid "The <0>-ma</0> form follows <1>pean, hakkan, lähen, tule</1> and <2>jään</2>. <3>Õpin</3> takes it too when you learn to do something: <4>Ma õpin lugema.</4>"
-msgstr "Форма на <0>-ma</0> идёт после <1>pean, hakkan, lähen, tule</1> и <2>jään</2>. После <3>õpin</3> тоже, когда учишься что-то делать: <4>Ma õpin lugema.</4>"
+msgid "The <0>-ma</0> infinitive follows <1>pean, hakkan, lähen, tule</1> and <2>jään</2>. <3>Õpin</3> takes it too when you learn to do something: <4>Ma õpin lugema.</4>"
+msgstr "Инфинитив на <0>-ma</0> идёт после <1>pean, hakkan, lähen, tule</1> и <2>jään</2>. После <3>õpin</3> тоже, когда учишься что-то делать: <4>Ma õpin lugema.</4>"
 
 msgid "The command of <0>tulema</0>, to come, from lesson {commands}."
 msgstr "Команда от <0>tulema</0>, «приходить», из урока {commands}."
@@ -296,8 +296,8 @@ msgstr "Команда от <0>tulema</0>, «приходить», из урок
 msgid "The command of tulema, to come."
 msgstr "Команда от tulema, «приходить»."
 
-msgid "The eight verbs below take the <0>-da</0> form, <1/> among them: <2/> <3/>"
-msgstr "Форму на <0>-da</0> требуют восемь глаголов ниже, среди них <1/>: <2/> <3/>"
+msgid "The eight verbs below take the <0>-da</0> infinitive, <1/> among them: <2/> <3/>"
+msgstr "Инфинитив на <0>-da</0> требуют восемь глаголов ниже, среди них <1/>: <2/> <3/>"
 
 msgid "The second verb usually goes last: <0>Ma pean homme tööle minema.</0>"
 msgstr "Второй глагол обычно стоит в конце: <0>Ma pean homme tööle minema.</0>"
@@ -308,8 +308,8 @@ msgstr "Они должны читать."
 msgid "They want to read."
 msgstr "Они хотят читать."
 
-msgid "To check a verb that isn’t here, look it up in <0>Sõnaveeb</0>, as lesson {nounForms} shows. <1/> and <2/> are the <3>-da</3> and <4>-ma</4> forms of to do, and <5>Sõnaveeb</5> uses them to say which form a verb takes. Under <6>Rektsioon</6>, <7>mida teha</7> means the <8>-da</8> form and <9>mida tegema</9> the <10>-ma</10> form."
-msgstr "Чтобы проверить глагол, которого здесь нет, найди его в <0>Sõnaveeb</0>, как показывает урок {nounForms}. <1/> и <2/> — это «делать» в форме на <3>-da</3> и на <4>-ma</4>, и <5>Sõnaveeb</5> ими обозначает, какую форму требует глагол. В строке <6>Rektsioon</6> надпись <7>mida teha</7> означает форму на <8>-da</8>, а <9>mida tegema</9> — форму на <10>-ma</10>."
+msgid "To check a verb that isn’t here, look it up in <0>Sõnaveeb</0>, as lesson {nounForms} shows. <1/> and <2/> are the <3>-da</3> and <4>-ma</4> infinitives of to do, and <5>Sõnaveeb</5> uses them to say which form a verb takes. Under <6>Rektsioon</6>, <7>mida teha</7> means the <8>-da</8> infinitive and <9>mida tegema</9> the <10>-ma</10> infinitive."
+msgstr "Чтобы проверить глагол, которого здесь нет, найди его в <0>Sõnaveeb</0>, как показывает урок {nounForms}. <1/> и <2/> — это «делать» в инфинитиве на <3>-da</3> и на <4>-ma</4>, и <5>Sõnaveeb</5> ими обозначает, какую форму требует глагол. В строке <6>Rektsioon</6> надпись <7>mida teha</7> означает инфинитив на <8>-da</8>, а <9>mida tegema</9> — инфинитив на <10>-ma</10>."
 
 msgid "to come"
 msgstr "приходить"

@@ -52,7 +52,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian pronunciation`,
         et: "Hääldus",
         minutes: 15,
-        blurb: msg`A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud.`,
+        blurb: msg`A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud.`,
       },
       {
         slug: "mina-sina-tema",

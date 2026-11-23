@@ -13,6 +13,7 @@ import {
   PRONOUN_PASSAGE,
   PRONOUN_SENTENCES,
   PRONOUNS,
+  pronounOrders,
   pronounWithOlema,
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
@@ -182,13 +183,6 @@ const KEEP_OR_DROP: readonly (keyof typeof PRONOUN_SENTENCES)[] = [
   "s-te-opetajad",
   "s-nad-vasinud",
 ];
-
-export function builtAnswers(pronoun: Short, said: string): [string, ...string[]] {
-  const person = PEOPLE.find((each) => each.short === pronoun) as (typeof PEOPLE)[number];
-  const rest = said.slice(said.indexOf(" ") + 1);
-  const long = `${capital(person.long)} ${rest}`;
-  return person.verb === "on" ? [said, long] : [said, long, capital(rest)];
-}
 
 /** The endings a gap offers: the answer and two near misses, so three fit on a phone. */
 const ENDINGS = ["n", "d", "me", "te"] as const;
@@ -625,11 +619,11 @@ export function MinaSinaTemaLesson() {
       },
       {
         id: "keep",
-        label: t`The pronoun stays`,
+        label: t`The pronoun usually stays`,
         lang: i18n.locale,
         rule: (
           <Trans>
-            <span lang="et">On</span> has no ending, so only <span lang="et">ta</span> or{" "}
+            <span lang="et">On</span> has no ending, so here only <span lang="et">ta</span> or{" "}
             <span lang="et">nad</span> says who.
           </Trans>
         ),
@@ -665,7 +659,7 @@ export function MinaSinaTemaLesson() {
         id: `build-${pronoun}`,
         words: [pronoun, "olema", word],
         src: wordSrc(said),
-        answers: builtAnswers(pronoun, said),
+        answers: pronounOrders(said),
         pair: [pronoun, said] as const,
       })),
     [],
@@ -720,7 +714,7 @@ export function MinaSinaTemaLesson() {
       sub={
         <Trans>
           Six words for people, each with a long and a short form, and olema, to be, whose ending
-          tells you who.
+          usually tells you who.
         </Trans>
       }
       facts={[
@@ -748,8 +742,8 @@ export function MinaSinaTemaLesson() {
       ]}
       recap={[
         <Trans key="1">
-          Each pronoun has two forms. Say the short one, <b lang="et">ma</b>, and keep the long one,{" "}
-          <b lang="et">mina</b>, for stress.
+          As the subject, each pronoun has two forms. Usually say the short one, <b lang="et">ma</b>
+          , and keep the long one, <b lang="et">mina</b>, for stress.
         </Trans>,
         <Trans key="2">
           <b lang="et">Ta</b> is both he and she. <b lang="et">Te</b> is you, to more than one, and
@@ -759,10 +753,11 @@ export function MinaSinaTemaLesson() {
           The forms of olema, to be: <b lang="et">olen, oled, on, oleme, olete, on</b>.
         </Trans>,
         <Trans key="4">
-          The ending tells who, so the pronoun can go: <b lang="et">Olen Mari.</b>
+          Where the ending tells who, the pronoun can go: <b lang="et">Olen Mari.</b>
         </Trans>,
         <Trans key="5">
-          <b lang="et">On</b> is both he or she is and they are. Only the pronoun tells them apart.
+          <b lang="et">On</b> is both he or she is and they are. Usually only the pronoun tells them
+          apart.
         </Trans>,
       ]}
       sections={[
@@ -774,9 +769,9 @@ export function MinaSinaTemaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Estonian has six words for people, and each comes in a long and a short form
-                    that mean the same. <Word w="Mina" /> and <Word w="ma" /> are both I. The short
-                    one, in colour below, is the one you’ll hear most. Tap any word.
+                    Estonian has six words for people, and as the subject each comes in a long and a
+                    short form that mean the same. <Word w="Mina" /> and <Word w="ma" /> are both I.
+                    The short one, in colour below, is the one you’ll hear most. Tap any word.
                   </Trans>
                 </p>
               </Prose>
@@ -827,7 +822,7 @@ export function MinaSinaTemaLesson() {
                 <p>
                   <Trans>
                     Because the ending already says who, the pronoun can go. Both lines below mean
-                    I’m Mari. A sentence can drop the pronoun, but not the verb.
+                    I’m Mari. A sentence can drop the pronoun, but usually not the verb.
                   </Trans>
                 </p>
               </Prose>
@@ -865,7 +860,7 @@ export function MinaSinaTemaLesson() {
               <Table />
               <Aside>
                 <Trans>
-                  Setting two people side by side takes the long forms:{" "}
+                  Setting two people side by side usually takes the long forms:{" "}
                   <Word w="Mina olen Liis ja tema on Peeter" />
                 </Trans>
               </Aside>
@@ -979,8 +974,8 @@ export function MinaSinaTemaLesson() {
                 <p>
                   <Trans>
                     <Word w="Olen" /> can only mean I am, so <Word w="ma" /> can go. <Word w="On" />{" "}
-                    means both he or she is and they are, so <Word w="ta" /> or <Word w="nad" /> has
-                    to stay.
+                    means both he or she is and they are, so <Word w="ta" /> or <Word w="nad" />{" "}
+                    usually has to stay.
                   </Trans>
                 </p>
                 <p>

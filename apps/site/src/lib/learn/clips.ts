@@ -451,6 +451,23 @@ export const PRONOUNS = [
 /** The text with its first letter in capitals. */
 export const capital = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 
+export function pronounOrders(said: string): [string, ...string[]] {
+  const stop = said.slice(-1);
+  const [first = "", verb = "", ...words] = said.slice(0, -1).split(" ");
+  const short = first.toLowerCase();
+  const { long } = PRONOUNS.find((each) => each.short === short) as (typeof PRONOUNS)[number];
+  const rest = words.join(" ");
+  const front = capital(rest);
+  const drops = short !== "ta" && short !== "nad";
+  return [
+    said,
+    `${capital(long)} ${verb} ${rest}${stop}`,
+    ...(drops ? [`${capital(verb)} ${rest}${stop}`, `${front} ${verb}${stop}`] : []),
+    ...[short, long].map((pronoun) => `${front} ${verb} ${pronoun}${stop}`),
+    ...[short, long].map((pronoun) => `${front} ${pronoun} ${verb}${stop}`),
+  ];
+}
+
 /** A pronoun said with its form of olema, as one clip: “Ma olen”. */
 export const pronounWithOlema = (pronoun: string, verb: string) => capital(`${pronoun} ${verb}`);
 

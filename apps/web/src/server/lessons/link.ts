@@ -2,6 +2,7 @@ import type { LinkRefusal } from "@lymi/core";
 import type { AiConsent } from "../ai/consent";
 import type { Fetch } from "../ai/types";
 import { type HealthEnv, metered } from "../dependency-health";
+import { log } from "../log";
 
 export const LYMI_BOT = "LymiBot/1.0 (+https://lymi.app/docs/smart-add#lymibot)";
 const BOT_TOKEN = "lymibot";
@@ -60,13 +61,8 @@ function site(host: string): string {
 }
 
 export function classifyLink(raw: string): LinkKind {
-  let url: URL;
-  try {
-    url = new URL(raw.trim());
-  } catch {
-    throw new LinkInvalid("Paste a link that starts with https://.");
-  }
-  if (url.protocol !== "https:") throw new LinkInvalid("Paste a link that starts with https://.");
+  const url = URL.parse(raw.trim());
+  if (url?.protocol !== "https:") throw new LinkInvalid("Paste a link that starts with https://.");
   if (url.username || url.password || (url.port && url.port !== "443") || !publicHost(url.hostname))
     throw new LinkInvalid("Smart add reads only public web pages.");
   url.hash = "";
@@ -93,7 +89,8 @@ export async function youtubeTitle(url: URL, request: Fetch = fetch): Promise<st
     }
     const body = (await response.json()) as { title?: unknown };
     return typeof body.title === "string" && body.title.trim() ? body.title.trim() : null;
-  } catch {
+  } catch (error) {
+    log.warn("link_title_unread", { error });
     return null;
   }
 }
@@ -173,8 +170,8 @@ async function follow(
     let kind: LinkKind | null = null;
     try {
       kind = classifyLink(next.href);
-    } catch {
-      kind = null;
+    } catch (error) {
+      if (!(error instanceof LinkInvalid)) throw error;
     }
     if (kind?.kind !== "article")
       throw new LinkUnreadable("This link leads somewhere Smart add can't read.");
@@ -193,10 +190,7 @@ async function bounded(response: Response, limit: number): Promise<Uint8Array | 
   let size = 0;
   for await (const chunk of response.body as unknown as AsyncIterable<Uint8Array>) {
     size += chunk.byteLength;
-    if (size > limit) {
-      await response.body.cancel().catch(() => {});
-      return null;
-    }
+    if (size > limit) return null;
     chunks.push(chunk);
   }
   const out = new Uint8Array(size);
@@ -308,7 +302,8 @@ function decode(bytes: Uint8Array, contentType: string): string {
         new TextDecoder("latin1").decode(bytes.subarray(0, 4096)),
       )?.[1];
     return new TextDecoder(declared ?? "utf-8").decode(bytes);
-  } catch {
+  } catch (error) {
+    if (!(error instanceof RangeError)) throw error;
     return new TextDecoder("utf-8").decode(bytes);
   }
 }

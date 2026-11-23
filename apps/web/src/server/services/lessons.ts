@@ -256,9 +256,7 @@ export async function readLink(
   } catch (error) {
     if (error instanceof LinkUnreadable)
       throw unreadable("Smart add couldn't read this page. Paste the text instead.");
-    console.error("Converting a page failed", {
-      error: error instanceof Error ? error.name : typeof error,
-    });
+    log.error("lesson_page_unconverted", { error });
     throw new ServiceError("unavailable", "Smart add couldn't read pages just now. Try again.");
   }
   const sentences = markdownSentences(markdown);

@@ -49,8 +49,8 @@ msgstr "6 тестов и разговор"
 msgid "A yes keeps the verb’s ending."
 msgstr "В утверждении глагол сохраняет окончание."
 
-msgid "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe</2>."
-msgstr "После <0>ei</0> идёт форма с ma без -n: <1>loen</1>, <2>ei loe</2>."
+msgid "After <0>ei</0> comes the I form of the present without its -n: <1>loen</1>, <2>ei loe</2>."
+msgstr "После <0>ei</0> идёт форма первого лица единственного числа настоящего времени без -n: <1>loen</1>, <2>ei loe</2>."
 
 msgid "After <0>ei</0>, <1>olema</1> is always <2>ole</2>."
 msgstr "После <0>ei</0> глагол <1>olema</1> всегда в форме <2>ole</2>."
@@ -229,8 +229,8 @@ msgstr "я устал (устала)"
 msgid "In each sentence one word is wrong: a verb that keeps its ending after <0>ei</0>, or a form of <1>olema</1> other than <2>ole</2>. Tap the wrong word, then type it right."
 msgstr "В каждом предложении одно слово неверное: глагол, сохранивший окончание после <0>ei</0>, или форма <1>olema</1>, отличная от <2>ole</2>. Нажми на неверное слово, а потом напиши его правильно."
 
-msgid "In some verbs the stem changes: <0/>, but <1/>. Start from the ma form, not the dictionary form, and the no follows: <2/>."
-msgstr "У некоторых глаголов основа меняется: <0/>, но <1/>. Бери форму с ma, а не словарную форму на -ma, и отрицание получится само: <2/>."
+msgid "In some verbs the stem changes: <0/>, but <1/>. Start from the I form of the present, not the -ma infinitive, and the no follows: <2/>."
+msgstr "У некоторых глаголов основа меняется: <0/>, но <1/>. Бери форму первого лица единственного числа настоящего времени, а не инфинитив на -ma, и отрицание получится само: <2/>."
 
 msgid "In the present tense, put <0>ei</0> before the verb and drop its ending. It’s the same for every person, so no is easier than yes."
 msgstr "В настоящем времени поставь <0>ei</0> перед глаголом и убери окончание. Для всех лиц это одинаково, так что сказать «нет» проще, чем «да»."
@@ -238,8 +238,8 @@ msgstr "В настоящем времени поставь <0>ei</0> перед
 msgid "Is he or she at home?"
 msgstr "Он или она дома?"
 
-msgid "Its ma form is loen."
-msgstr "Форма с ma: loen."
+msgid "Its I form in the present is loen."
+msgstr "Форма первого лица единственного числа настоящего времени: loen."
 
 msgid "Jaan"
 msgstr "Яан"
@@ -390,8 +390,8 @@ msgstr "пить"
 msgid "to eat"
 msgstr "есть"
 
-msgid "To find the form that follows ei, take the ma form from lesson {present} and drop the -n. <0/> becomes <1/>, and <2/> becomes <3/>. It works for every verb below. Tap either side to hear it with ma."
-msgstr "Чтобы найти форму после ei, возьми форму с ma из урока {present} и убери -n. <0/> становится <1/>, а <2/> — <3/>. Так со всеми глаголами ниже. Нажми на любую половину, чтобы услышать её с ma."
+msgid "To find the form that follows ei, take the I form of the present from lesson {present} and drop the -n. <0/> becomes <1/>, and <2/> becomes <3/>. It works for every verb below. Tap either side to hear it with ma."
+msgstr "Чтобы найти форму после ei, возьми форму первого лица единственного числа настоящего времени из урока {present} и убери -n. <0/> становится <1/>, а <2/> — <3/>. Так со всеми глаголами ниже. Нажми на любую половину, чтобы услышать её с ma."
 
 msgid "to learn, to study"
 msgstr "учить, учиться"

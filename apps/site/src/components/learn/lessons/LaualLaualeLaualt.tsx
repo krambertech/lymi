@@ -4,7 +4,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { CornerDownRight } from "lucide-react";
 import { useMemo } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -318,7 +318,7 @@ export function LaualLaualeLaualtLesson() {
   const inner = lessonBySlug("majas-majja-majast")?.n;
   const stems = lessonBySlug("pood-poe")?.n;
   const have = lessonBySlug("mul-on")?.n;
-  const pronouns = LESSONS.find((lesson) => lesson.et === "Mind, mulle, minuga")?.n;
+  const pronouns = lessonBySlug("asesonad")?.n;
   const saturday = useSaturday();
 
   const means: Record<Direction, string> = {

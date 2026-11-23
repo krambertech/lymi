@@ -49,11 +49,11 @@ msgstr "Вправа на слух, сортування і голосове п�
 msgid "Add <0>-s</0> and it says someone is in the middle of it, often out doing it: <1/> Add <2>-st</2> and it says what they’re coming back from: <3/>"
 msgstr "Додай <0>-s</0>, і форма скаже, що людина саме цим зайнята, часто не вдома: <1/> Додай <2>-st</2>, і вона скаже, звідки людина повертається: <3/>"
 
-msgid "After <0>läheb</0>, the <1>-ma</1> form says what someone is off to do: <2/> You met it after <3>lähen</3> in lesson {infinitives}."
-msgstr "Після <0>läheb</0> форма на <1>-ma</1> каже, що людина йде робити: <2/> Вона вже траплялася після <3>lähen</3> в уроці {infinitives}."
+msgid "After <0>läheb</0>, the <1>-ma</1> infinitive says what someone is off to do: <2/> You met it after <3>lähen</3> in lesson {infinitives}."
+msgstr "Після <0>läheb</0> інфінітив на <1>-ma</1> каже, що людина йде робити: <2/> Він уже траплявся після <3>lähen</3> в уроці {infinitives}."
 
-msgid "After <0>läheb</0>, the <1>-ma</1> form says what someone is off to do: <2>Mari läheb ujuma.</2>"
-msgstr "Після <0>läheb</0> форма на <1>-ma</1> каже, що людина йде робити: <2>Mari läheb ujuma.</2>"
+msgid "After <0>läheb</0>, the <1>-ma</1> infinitive says what someone is off to do: <2>Mari läheb ujuma.</2>"
+msgstr "Після <0>läheb</0> інфінітив на <1>-ma</1> каже, що людина йде робити: <2>Mari läheb ujuma.</2>"
 
 msgid "After <0>tulen</0>, only the ending tells you which way: <1>tulen sööma</1> is I’m coming to eat, and <2>tulen söömast</2> is I’m coming back from eating."
 msgstr "Після <0>tulen</0> напрямок видно лише із закінчення: <1>tulen sööma</1> — «приходжу поїсти», а <2>tulen söömast</2> — «повертаюся після їжі»."
@@ -61,8 +61,8 @@ msgstr "Після <0>tulen</0> напрямок видно лише із зак
 msgid "All six. You heard every ending."
 msgstr "Усі шість: кожне закінчення почуте правильно."
 
-msgid "An activity has the same three, built on its <0>-ma</0> form: <1/> <2/> <3/> She’s going swimming, she’s out swimming, and she’s on her way back."
-msgstr "Заняття має ті самі три форми, і всі вони виростають із форми на <0>-ma</0>: <1/> <2/> <3/> Марі йде плавати, вона на плаванні, і вона вже повертається."
+msgid "An activity has the same three, built on its <0>-ma</0> infinitive: <1/> <2/> <3/> She’s going swimming, she’s out swimming, and she’s on her way back."
+msgstr "Заняття має ті самі три форми, і всі вони виростають із інфінітива на <0>-ma</0>: <1/> <2/> <3/> Марі йде плавати, вона на плаванні, і вона вже повертається."
 
 msgid "At home"
 msgstr "Удома"
@@ -190,11 +190,11 @@ msgstr "у магазині"
 msgid "into the house"
 msgstr "у будинок"
 
-msgid "Its I form is käin."
-msgstr "Форма для «я» — käin."
+msgid "Its present is käin."
+msgstr "Форма теперішнього часу — käin."
 
-msgid "Its I form is tulen."
-msgstr "Форма для «я» — tulen."
+msgid "Its present is tulen."
+msgstr "Форма теперішнього часу — tulen."
 
 msgid "Kati leaves Jaan a voice message about her family. Listen for where each of them is and what she asks Jaan to do."
 msgstr "Каті залишає Яану голосове повідомлення про свою родину. Слухай, хто де і про що вона просить Яана."
@@ -211,8 +211,8 @@ msgstr "Kus? Від maja, «будинок»."
 msgid "Kus? From pood, a shop."
 msgstr "Kus? Від pood, «магазин»."
 
-msgid "Kus? The -ma form plus -s."
-msgstr "Kus? Форма на -ma плюс -s."
+msgid "Kus? The -ma infinitive plus -s."
+msgstr "Kus? Інфінітив на -ma плюс -s."
 
 msgid "Kust? From maja, a house."
 msgstr "Kust? Від maja, «будинок»."
@@ -220,8 +220,8 @@ msgstr "Kust? Від maja, «будинок»."
 msgid "Kust? From pood, a shop."
 msgstr "Kust? Від pood, «магазин»."
 
-msgid "Kust? The -ma form plus -st."
-msgstr "Kust? Форма на -ma плюс -st."
+msgid "Kust? The -ma infinitive plus -st."
+msgstr "Kust? Інфінітив на -ma плюс -st."
 
 msgid "Listen: Kati’s message"
 msgstr "Слухання: повідомлення Каті"
@@ -320,8 +320,8 @@ msgstr "Торкнися слова, щоб почути речення й по�
 msgid "Tap the forms in the table above once more, then try again."
 msgstr "Ще раз торкнись форм у таблиці вище, а потім спробуй знову."
 
-msgid "The -ma form. After lähen: going swimming."
-msgstr "Форма на -ma. Після lähen — «іду плавати»."
+msgid "The -ma infinitive. After lähen: going swimming."
+msgstr "Інфінітив на -ma. Після lähen — «іду плавати»."
 
 msgid "The cat is coming back from eating."
 msgstr "Кіт повертається після їжі."

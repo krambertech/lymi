@@ -49,8 +49,8 @@ msgstr "6 тестів і розмова"
 msgid "A yes keeps the verb’s ending."
 msgstr "У ствердженні дієслово зберігає закінчення."
 
-msgid "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe</2>."
-msgstr "Після <0>ei</0> іде форма з ma без -n: <1>loen</1>, <2>ei loe</2>."
+msgid "After <0>ei</0> comes the I form of the present without its -n: <1>loen</1>, <2>ei loe</2>."
+msgstr "Після <0>ei</0> іде форма першої особи однини теперішнього часу без -n: <1>loen</1>, <2>ei loe</2>."
 
 msgid "After <0>ei</0>, <1>olema</1> is always <2>ole</2>."
 msgstr "Після <0>ei</0> дієслово <1>olema</1> завжди має форму <2>ole</2>."
@@ -229,8 +229,8 @@ msgstr "я втомився (втомилася)"
 msgid "In each sentence one word is wrong: a verb that keeps its ending after <0>ei</0>, or a form of <1>olema</1> other than <2>ole</2>. Tap the wrong word, then type it right."
 msgstr "У кожному реченні одне слово хибне: дієслово, що зберегло закінчення після <0>ei</0>, або форма <1>olema</1>, відмінна від <2>ole</2>. Натисни на хибне слово, а тоді напиши його правильно."
 
-msgid "In some verbs the stem changes: <0/>, but <1/>. Start from the ma form, not the dictionary form, and the no follows: <2/>."
-msgstr "У деяких дієсловах основа змінюється: <0/>, але <1/>. Бери форму з ma, а не словникову форму на -ma, і заперечення вийде саме: <2/>."
+msgid "In some verbs the stem changes: <0/>, but <1/>. Start from the I form of the present, not the -ma infinitive, and the no follows: <2/>."
+msgstr "У деяких дієсловах основа змінюється: <0/>, але <1/>. Бери форму першої особи однини теперішнього часу, а не інфінітив на -ma, і заперечення вийде саме: <2/>."
 
 msgid "In the present tense, put <0>ei</0> before the verb and drop its ending. It’s the same for every person, so no is easier than yes."
 msgstr "У теперішньому часі постав <0>ei</0> перед дієсловом і прибери закінчення. Для всіх осіб це однаково, тож «ні» сказати легше, ніж «так»."
@@ -238,8 +238,8 @@ msgstr "У теперішньому часі постав <0>ei</0> перед �
 msgid "Is he or she at home?"
 msgstr "Він чи вона вдома?"
 
-msgid "Its ma form is loen."
-msgstr "Форма з ma: loen."
+msgid "Its I form in the present is loen."
+msgstr "Форма першої особи однини теперішнього часу: loen."
 
 msgid "Jaan"
 msgstr "Яан"
@@ -390,8 +390,8 @@ msgstr "пити"
 msgid "to eat"
 msgstr "їсти"
 
-msgid "To find the form that follows ei, take the ma form from lesson {present} and drop the -n. <0/> becomes <1/>, and <2/> becomes <3/>. It works for every verb below. Tap either side to hear it with ma."
-msgstr "Щоб знайти форму після ei, візьми форму з ma з уроку {present} і прибери -n. <0/> стає <1/>, а <2/> стає <3/>. Так з усіма дієсловами нижче. Натисни будь-яку половину, щоб почути її з ma."
+msgid "To find the form that follows ei, take the I form of the present from lesson {present} and drop the -n. <0/> becomes <1/>, and <2/> becomes <3/>. It works for every verb below. Tap either side to hear it with ma."
+msgstr "Щоб знайти форму після ei, візьми форму першої особи однини теперішнього часу з уроку {present} і прибери -n. <0/> стає <1/>, а <2/> стає <3/>. Так з усіма дієсловами нижче. Натисни будь-яку половину, щоб почути її з ma."
 
 msgid "to learn, to study"
 msgstr "вчити, вчитися"

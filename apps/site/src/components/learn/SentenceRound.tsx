@@ -204,6 +204,7 @@ export function SentenceResult({ item, typed }: { item: SentenceItem; typed: str
   const marked = markSentence(item, typed);
   const src = item.kind === "dictation" ? undefined : item.src;
   const shownSrc = marked.accepted === item.answers[0] ? src : undefined;
+  const word = item.kind === "dictation" && item.word === true;
   return (
     <div className="grid w-full grid-cols-1 gap-3">
       <div className="flex items-center gap-3">
@@ -215,8 +216,10 @@ export function SentenceResult({ item, typed }: { item: SentenceItem; typed: str
           <PlaySentence src={shownSrc} sentence={marked.accepted} />
         )}
       </div>
-      <SentenceVerdict marked={marked} />
-      {marked.verdict !== "right" && <RightSentence marked={marked} src={shownSrc} />}
+      <SentenceVerdict marked={marked} word={word} />
+      {marked.verdict !== "right" && (
+        <RightSentence marked={marked} src={shownSrc} word={word} />
+      )}
       <OtherForm marked={marked} />
       {item.explain && <p className="text-md text-ink-secondary">{item.explain}</p>}
       <AlsoRight marked={marked} accepted={item.answers} src={shownSrc ? undefined : src} />

@@ -8,8 +8,8 @@ const MEANS = {
   korv: msg`basket`,
   üks: msg`one`,
   uks: msg`door`,
-  säng: msg`bed`,
-  sang: msg`bucket handle`,
+  jälg: msg`a footprint`,
+  jalg: msg`a leg; a foot`,
   tüli: msg`a quarrel`,
   tuli: msg`fire`,
   sada: msg`a hundred`,
@@ -29,7 +29,7 @@ type Known = keyof typeof MEANS;
 const VOWEL_PAIRS = [
   ["kõrv", "korv"],
   ["üks", "uks"],
-  ["säng", "sang"],
+  ["jälg", "jalg"],
   ["tüli", "tuli"],
 ] as const satisfies readonly (readonly [Known, Known])[];
 

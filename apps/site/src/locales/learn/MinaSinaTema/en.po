@@ -242,9 +242,6 @@ msgstr "Pick the ending that goes with the pronoun, then hear the sentence."
 msgid "Play {word}"
 msgstr "Play {word}"
 
-msgid "Play each sentence slower, then try again."
-msgstr "Play each sentence slower, then try again."
-
 msgid "Pronouns"
 msgstr "Pronouns"
 
@@ -389,6 +386,9 @@ msgstr "tired"
 
 msgid "to be"
 msgstr "to be"
+
+msgid "Try again, and tap Slower before you write each sentence."
+msgstr "Try again, and tap Slower before you write each sentence."
 
 msgid "Type the form"
 msgstr "Type the form"

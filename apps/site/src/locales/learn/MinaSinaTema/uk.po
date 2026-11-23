@@ -242,9 +242,6 @@ msgstr "Обери закінчення, яке пасує до займенни
 msgid "Play {word}"
 msgstr "Відтворити {word}"
 
-msgid "Play each sentence slower, then try again."
-msgstr "Послухай кожне речення повільніше, а тоді спробуй ще раз."
-
 msgid "Pronouns"
 msgstr "Займенники"
 
@@ -389,6 +386,9 @@ msgstr "втомлений"
 
 msgid "to be"
 msgstr "бути"
+
+msgid "Try again, and tap Slower before you write each sentence."
+msgstr "Спробуй ще раз і перед кожним реченням натисни «Повільніше»."
 
 msgid "Type the form"
 msgstr "Напиши форму"

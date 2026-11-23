@@ -69,7 +69,7 @@ const GLOSSARY: Glossary = {
   ),
   juba: { en: msg`already` },
   veel: { en: msg`yet, still`, note: msg`Ei ole veel: not yet.` },
-  kunagi: { en: msg`ever; once`, note: msg`Mitte kunagi: never.` },
+  kunagi: { en: msg`ever; once`, note: msg`Ei … kunagi: never.` },
   jõudma: { en: msg`to arrive, to get to`, note: msg`Past: jõudsin, I arrived.` },
   lugenud: { en: msg`read`, note: msg`The -nud form of lugema.` },
   söönud: { en: msg`eaten`, note: msg`The -nud form of sööma.` },
@@ -148,7 +148,8 @@ function NudTable() {
           tip: (
             <Trans>
               Each row holds the <b lang="et">-da</b> infinitive and the <b lang="et">-nud</b> form.
-              The first five are regular; the last five are short verbs to learn by heart.
+              The first five are regular; the last five are irregular: learn their{" "}
+              <b lang="et">-nud</b> form by heart.
             </Trans>
           ),
         }}
@@ -162,7 +163,7 @@ const PERSONS: Record<string, MessageDescriptor> = {
   sa: msg`you`,
   ta: msg`he or she`,
   me: msg`we`,
-  te: msg`you, to more than one`,
+  te: msg`you, to more than one; polite you`,
   nad: msg`they`,
 };
 
@@ -202,7 +203,7 @@ function TenseLine() {
   const labels: Record<string, string> = {
     pluperfect: t`Pluperfect`,
     past: t`Past`,
-    perfect: t`Present perfect`,
+    perfect: t`Perfect`,
     present: t`Present`,
   };
   const ets: Record<string, string> = {
@@ -212,11 +213,11 @@ function TenseLine() {
     present: "olevik",
   };
   const pieces: Record<string, string> = {
-    "ol|i": t`to be, in the past`,
-    "söö|nud": t`the -nud form of to eat`,
-    "sõ|in": t`to eat, in the past`,
-    "ole|n": t`to be, in the present`,
-    "söö|n": t`to eat, in the present`,
+    "ol|i": t`was`,
+    "söö|nud": t`eaten: the -nud form`,
+    "sõ|in": t`I ate`,
+    "ole|n": t`I am`,
+    "söö|n": t`I eat`,
   };
   const points: TimelinePoint[] = PERFECT_TIMELINE.map((point) => ({
     id: point.id,
@@ -236,7 +237,7 @@ function TenseLine() {
   return (
     <Panel>
       <Timeline
-        label={t`Tenses of to eat`}
+        label={t`Four tenses of one verb`}
         points={points}
         empty={{
           title: t`Tap a tense`,
@@ -263,7 +264,7 @@ function useContent() {
         </Trans>
       ) : (
         <Trans>
-          A short verb: learn its <b lang="et">-nud</b> form by heart.
+          Irregular: learn its <b lang="et">-nud</b> form by heart.
         </Trans>
       ),
     }));
@@ -296,7 +297,7 @@ function useContent() {
     const cues: Record<(typeof PERFECT_REWRITE)[number]["cue"], string> = {
       already: t`already`,
       done: t`it’s done now`,
-      never: t`never so far`,
+      never: t`up to now`,
     };
     const rewrites: SentenceItem[] = PERFECT_REWRITE.map((item) => ({
       kind: "rewrite",
@@ -307,8 +308,8 @@ function useContent() {
       answers: [item.to],
       explain: (
         <Trans>
-          <b lang="et">Olema</b> in the present, and the main verb in its <b lang="et">-nud</b> form
-          at the end.
+          <b lang="et">Olema</b> in the present, and the <b lang="et">-nud</b> form, usually at the
+          end.
         </Trans>
       ),
     }));
@@ -318,6 +319,8 @@ function useContent() {
         "Ma ei ole seda filmi näinud.",
         "Ma pole seda filmi näinud.",
         "Ma ei ole seda filmi veel näinud.",
+        "Ma ei ole seda filmi kunagi näinud.",
+        "Ma pole seda filmi kunagi näinud.",
       ],
     };
     for (const item of rewrites) {
@@ -339,7 +342,7 @@ function useContent() {
           "Mina käisin eile Tartus.",
         ],
         pair: ["past", "went-yesterday"],
-        explain: <Trans>A time is named, yesterday, so the simple past.</Trans>,
+        explain: <Trans>A finished time is named, yesterday, so the simple past.</Trans>,
       },
       {
         kind: "translate",
@@ -348,7 +351,7 @@ function useContent() {
         src: src("Ma olen Tartus käinud."),
         answers: ["Ma olen Tartus käinud.", "Olen Tartus käinud.", "Mina olen Tartus käinud."],
         pair: ["perfect", "have-been"],
-        explain: <Trans>No time is named: the perfect.</Trans>,
+        explain: <Trans>No finished time is named: the perfect.</Trans>,
       },
       {
         kind: "translate",
@@ -488,7 +491,7 @@ function useContent() {
             line: "Jah, ma olen eelmisel kuul seal käinud.",
             why: (
               <Trans>
-                A time is named, last month, so the simple past: <b lang="et">käisin</b>.
+                A finished time is named, last month, so the simple past: <b lang="et">käisin</b>.
               </Trans>
             ),
           },
@@ -612,8 +615,8 @@ function useContent() {
           { id: "coffee", label: t`I drank three cups of coffee.`, answer: "kati", line: 19 },
           { id: "heard", label: t`I’ve never heard of it.`, answer: "jaan", line: 36 },
           { id: "photos", label: t`I’ve taken a hundred photos.`, answer: "kati", line: 41 },
-          { id: "call", label: t`I’ll call him tomorrow.`, answer: "jaan", line: 46 },
-          { id: "decided", label: t`I’ve made up my mind.`, answer: "jaan", line: 47 },
+          { id: "call", label: t`I’ll call him tomorrow.`, answer: "jaan", line: 52 },
+          { id: "decided", label: t`I’ve made up my mind.`, answer: "jaan", line: 53 },
         ],
       },
     ];
@@ -655,15 +658,16 @@ export function OlenLugenudLesson() {
       recap={[
         <Trans key="1">
           The <b lang="et">-nud</b> form comes from the <b lang="et">-da</b> infinitive:{" "}
-          <b lang="et">lugeda, lugenud</b>. Short verbs are irregular:{" "}
-          <b lang="et">läinud, teinud, söönud, näinud</b>.
+          <b lang="et">lugeda, lugenud</b>. Irregular verbs are learned by heart:{" "}
+          <b lang="et">olnud, läinud, teinud, söönud, näinud</b>.
         </Trans>,
         <Trans key="2">
           The perfect is <b lang="et">olema</b> in the present plus the <b lang="et">-nud</b> form,
-          for what has happened with no time named: <b lang="et">Ma olen Tartus käinud.</b>
+          for what has happened with no finished time named: <b lang="et">Ma olen Tartus käinud.</b>
         </Trans>,
         <Trans key="3">
-          When a time is named, use the simple past: <b lang="et">Eile käisin ma Tartus.</b>
+          When a finished past time is named, such as <b lang="et">eile</b>, use the simple past:{" "}
+          <b lang="et">Eile käisin ma Tartus.</b>
         </Trans>,
         <Trans key="4">
           The pluperfect is <b lang="et">olema</b> in the past plus the <b lang="et">-nud</b> form,
@@ -694,8 +698,9 @@ export function OlenLugenudLesson() {
                   <Trans>
                     It comes from the <b lang="et">-da</b> infinitive of lesson {verbForms}: drop{" "}
                     <b lang="et">-da</b> or <b lang="et">-a</b> and add <b lang="et">-nud</b>.{" "}
-                    <b lang="et">Lugeda</b> gives <Word w="lugenud" />. Short verbs change more:{" "}
-                    <b lang="et">süüa</b> gives <Word w="söönud" />. Tap down the table.
+                    <b lang="et">Lugeda</b> gives <Word w="lugenud" />. Some verbs are irregular:{" "}
+                    <b lang="et">süüa</b> gives <Word w="söönud" />. Tap each form in the table to
+                    hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -719,7 +724,7 @@ export function OlenLugenudLesson() {
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Tap the table for the ones you got wrong.</Trans>
                   ) : (
-                    <Trans>Tap down the table once more, then try again.</Trans>
+                    <Trans>Tap each form in the table once more, then try again.</Trans>
                   )
                 }
                 recall={formRecall}
@@ -739,7 +744,7 @@ export function OlenLugenudLesson() {
                   <Trans>
                     The perfect is <b lang="et">olema</b> in the present plus the{" "}
                     <b lang="et">-nud</b> form: <Word w="Ma olen Tartus käinud." /> It says
-                    something has happened, with no time named: ever, already, or not yet.
+                    something has happened, with no finished time named: ever, already, or not yet.
                   </Trans>
                 </p>
                 <p>
@@ -791,9 +796,9 @@ export function OlenLugenudLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Lesson {past}’s simple past tells what happened at a time you name:{" "}
-                    <Word w="Eile käisin ma Tartus." /> The perfect reaches up to now, with no time
-                    named.
+                    Lesson {past}’s simple past tells what happened at a finished time you name:{" "}
+                    <Word w="Eile käisin ma Tartus." /> The perfect reaches up to now, with no
+                    finished time named.
                   </Trans>
                 </p>
                 <p>
@@ -823,7 +828,7 @@ export function OlenLugenudLesson() {
               </Prose>
               <Quiz
                 id="hear-tense"
-                title={<Trans>Which tense?</Trans>}
+                title={<Trans>Hear the tense</Trans>}
                 items={content.heard}
                 rounds={6}
                 verdict={(share) =>
@@ -853,8 +858,8 @@ export function OlenLugenudLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Write each sentence in Estonian. First ask: is a time named, and is it before
-                    another past?
+                    Write each sentence in Estonian. First ask: is a finished time named, and is it
+                    before another past?
                   </Trans>
                 </p>
               </Prose>
@@ -881,7 +886,7 @@ export function OlenLugenudLesson() {
         },
         {
           id: "fix",
-          title: t`Fix the tense`,
+          title: t`Fix the form`,
           quiz: true,
           children: (
             <>
@@ -915,7 +920,7 @@ export function OlenLugenudLesson() {
         },
         {
           id: "talk",
-          title: t`Have you been to Tartu?`,
+          title: t`Tartu, lunch and your Estonian`,
           quiz: true,
           children: (
             <>

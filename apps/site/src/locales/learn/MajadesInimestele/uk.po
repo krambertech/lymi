@@ -286,11 +286,11 @@ msgstr "Візьми партитив, прибери <0>-d</0>, якщо він
 msgid "Tap a form"
 msgstr "Натисни на форму"
 
-msgid "Tap down the first table once more, then try again."
-msgstr "Ще раз натисни форми в першій таблиці по черзі, потім спробуй знову."
+msgid "Tap each form in the first table once more, then try again."
+msgstr "Ще раз натисни кожну форму в першій таблиці, а тоді спробуй знову."
 
-msgid "Tap down the table once more, then try again."
-msgstr "Ще раз натисни форми в таблиці по черзі, потім спробуй знову."
+msgid "Tap each form in the table once more, then try again."
+msgstr "Ще раз натисни кожну форму в таблиці, а тоді спробуй знову."
 
 msgid "teacher"
 msgstr "вчитель"
@@ -358,8 +358,8 @@ msgstr "Родовий множини"
 msgid "The plural genitive comes from the partitive <et>sõpra</et>: <et>sõpradele</et>."
 msgstr "Родовий множини утворюється від партитива <et>sõpra</et>: <et>sõpradele</et>."
 
-msgid "The plural genitive comes from the partitive, the third of lesson {forms}’s three forms. If the partitive ends in <0>-t</0>, add <1>-e</1>: <2/>. If not, drop any <3>-d</3> and add <4>-de</4>: <5/>. Tap down both columns."
-msgstr "Родовий множини утворюється від партитива, третьої з трьох форм з уроку {forms}. Якщо партитив закінчується на <0>-t</0>, додай <1>-e</1>: <2/>. Якщо ні, прибери <3>-d</3>, якщо він є, і додай <4>-de</4>: <5/>. Пройдися по обох стовпцях."
+msgid "The plural genitive comes from the partitive, the third of lesson {forms}’s three forms. If the partitive ends in <0>-t</0>, add <1>-e</1>: <2/>. If not, drop any <3>-d</3> and add <4>-de</4>: <5/>. Tap each form in both columns to hear it."
+msgstr "Родовий множини утворюється від партитива, третьої з трьох форм з уроку {forms}. Якщо партитив закінчується на <0>-t</0>, додай <1>-e</1>: <2/>. Якщо ні, прибери <3>-d</3>, якщо він є, і додай <4>-de</4>: <5/>. Натисни кожну форму в обох стовпцях, щоб її почути."
 
 msgid "The plural genitive is <0>inimeste</0>, so <1>inimestega</1>, not the plural nominative <2>inimesed</2>."
 msgstr "Родовий множини — <0>inimeste</0>, тож <1>inimestega</1>. Від називного множини <2>inimesed</2> не утворюють."

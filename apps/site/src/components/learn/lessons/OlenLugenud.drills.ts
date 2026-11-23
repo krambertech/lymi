@@ -2,9 +2,9 @@ import { msg } from "@lingui/core/macro";
 import type { DrillBank, FormDrill } from "../../../lib/learn/drill";
 
 const REGULAR = msg`Drop <et>-da</et> or <et>-a</et> from the <et>-da</et> infinitive and add <et>-nud</et>.`;
-const SHORT = msg`A short verb: learn its <et>-nud</et> form by heart.`;
-const PERFECT = msg`No time is named: <et>olema</et> in the present and the <et>-nud</et> form.`;
-const PAST = msg`A time is named, so the simple past.`;
+const SHORT = msg`Irregular: learn its <et>-nud</et> form by heart.`;
+const PERFECT = msg`No finished time is named: <et>olema</et> in the present and the <et>-nud</et> form.`;
+const PAST = msg`A finished time is named, so the simple past.`;
 const PLUPERFECT = msg`Before another past event: <et>olema</et> in the past and the <et>-nud</et> form.`;
 
 const nud = (
@@ -176,7 +176,7 @@ export const DRILLS: DrillBank = {
       wrong: "Ma ei olen seda filmi näinud.",
       answers: ["Ma ei ole seda filmi näinud."],
       say: "Ma ei ole seda filmi näinud.",
-      explain: msg`After <et>ei</et>, <et>olema</et> is <et>ole</et> for every person.`,
+      explain: msg`In the present, after <et>ei</et>, <et>olema</et> is <et>ole</et> for every person.`,
     },
     {
       kind: "fix",
@@ -189,8 +189,17 @@ export const DRILLS: DrillBank = {
     },
     {
       kind: "fix",
-      id: "fix-oli",
+      id: "fix-nad-on",
       rule: "agree",
+      wrong: "Nad oleme piletid ostnud.",
+      answers: ["Nad on piletid ostnud."],
+      say: "Nad on piletid ostnud.",
+      explain: msg`<et>Olema</et> agrees with the person: <et>nad on</et>.`,
+    },
+    {
+      kind: "fix",
+      id: "fix-oli",
+      rule: "which",
       wrong: "Kui ma jaama jõudsin, on rong juba läinud.",
       answers: ["Kui ma jaama jõudsin, oli rong juba läinud."],
       say: "Kui ma jaama jõudsin, oli rong juba läinud.",
@@ -199,7 +208,7 @@ export const DRILLS: DrillBank = {
     {
       kind: "fix",
       id: "fix-lainud",
-      rule: "agree",
+      rule: "nud",
       wrong: "Ta on juba koju minnud.",
       answers: ["Ta on juba koju läinud."],
       say: "Ta on juba koju läinud.",
@@ -208,7 +217,7 @@ export const DRILLS: DrillBank = {
     {
       kind: "fix",
       id: "fix-oppinud",
-      rule: "agree",
+      rule: "nud",
       wrong: "Ma olen eesti keelt kaks aastat õpinud.",
       answers: ["Ma olen eesti keelt kaks aastat õppinud."],
       say: "Ma olen eesti keelt kaks aastat õppinud.",
@@ -222,7 +231,7 @@ export const DRILLS: DrillBank = {
       cue: msg`say no`,
       answers: ["Ta pole seda filmi näinud.", "Ta ei ole seda filmi näinud."],
       say: "Ta pole seda filmi näinud.",
-      explain: msg`To say no: <et>ei ole</et> for every person.`,
+      explain: msg`To say no: <et>ei ole</et> or <et>pole</et> for every person.`,
     },
   ],
 };

@@ -520,8 +520,8 @@ export function MajadesInimesteleLesson() {
                     The plural genitive comes from the partitive, the third of lesson {forms}’s
                     three forms. If the partitive ends in <b lang="et">-t</b>, add{" "}
                     <b lang="et">-e</b>: <Word w="raamatute" />. If not, drop any{" "}
-                    <b lang="et">-d</b> and add <b lang="et">-de</b>: <Word w="sõprade" />. Tap down
-                    both columns.
+                    <b lang="et">-d</b> and add <b lang="et">-de</b>: <Word w="sõprade" />. Tap each
+                    form in both columns to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -551,7 +551,7 @@ export function MajadesInimesteleLesson() {
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Look at the partitive in the ones you got wrong.</Trans>
                   ) : (
-                    <Trans>Tap down the table once more, then try again.</Trans>
+                    <Trans>Tap each form in the table once more, then try again.</Trans>
                   )
                 }
                 recall={formRecall}
@@ -702,7 +702,7 @@ export function MajadesInimesteleLesson() {
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Check the plural genitive in the ones you got wrong.</Trans>
                   ) : (
-                    <Trans>Tap down the first table once more, then try again.</Trans>
+                    <Trans>Tap each form in the first table once more, then try again.</Trans>
                   )
                 }
                 recall={sentenceRecall}

@@ -13521,7 +13521,7 @@
     "voice": "WtzwR2kNGVNuaTGaYLfK"
   },
   "olen-lugenud/c-saaremaa": {
-    "text": "Tere, Jaan! Kas sa oled kunagi Saaremaal käinud? Ei, ma ei ole seal kunagi käinud. Aga mu vend on seal mitu korda käinud. Mina käisin eelmisel suvel Saaremaal. See oli väga ilus reis. Mida sa seal tegid? Ma sõitsin rattaga ja ujusin meres. Varem olin ma ainult Pärnus meres ujunud. Kas Saaremaa meri on külm? Natuke. Aga ma olen ka külmemas vees ujunud. Sa oled julge! Kuidas sa sinna sõitsid? Ma sõitsin bussiga ja siis praamiga. Aga kui ma sadamasse jõudsin, oli praam juba läinud. Oh ei! Mida sa siis tegid? Ma ootasin kaks tundi järgmist praami. Ma lugesin raamatu läbi ja jõin kolm tassi kohvi. Kas sa olid varem praamiga sõitnud? Ei, see oli esimene kord. Ma olin varem ainult laevaga Soome sõitnud. Kas sa oled Kuressaare lossi näinud? Jah, olen. Ma käisin seal teisel päeval. Ma polnud varem nii vana lossi näinud. Ma tahan ka sinna minna. Mida sa soovitad? Kas sa oled kunagi suitsukala söönud? Ei ole. Kas see on hea? Väga hea! Ma sõin seda iga päev. Ja sa pead kindlasti Kaali kraatrit vaatama. Kraatrit? Ma pole sellest kunagi kuulnud. See on väga vana auk maas. Sinna kukkus kunagi meteoriit. Huvitav! Kas sa oled reisist pilte teinud? Jah, ma olen teinud sada pilti. Ma saadan need sulle õhtul. Kas sa oled oma vennaga juba rääkinud? Ta võib sulle ka midagi soovitada. Ei, ma pole temaga veel rääkinud. Ma helistan talle homme. Aga ma olen nüüd otsustanud. Suvel lähen ma Saaremaale. Tore! Ja too mulle suitsukala! Kus sa seal ööbisid? Väikeses külalistemajas. Perenaine oli seal kolmkümmend aastat elanud. Ma annan sulle tema numbri.",
+    "text": "Tere, Jaan! Kas sa oled kunagi Saaremaal käinud? Ei, ma ei ole seal kunagi käinud. Aga mu vend on seal mitu korda käinud. Mina käisin eelmisel suvel Saaremaal. See oli väga ilus reis. Mida sa seal tegid? Ma sõitsin rattaga ja ujusin meres. Varem olin ma ainult Pärnus meres ujunud. Kas Saaremaa meri on külm? Natuke. Aga ma olen ka külmemas vees ujunud. Sa oled julge! Kuidas sa sinna sõitsid? Ma sõitsin bussiga ja siis praamiga. Aga kui ma sadamasse jõudsin, oli praam juba läinud. Oh ei! Mida sa siis tegid? Ma ootasin kaks tundi järgmist praami. Ma lugesin raamatu läbi ja jõin kolm tassi kohvi. Kas sa olid varem praamiga sõitnud? Ei, see oli esimene kord. Ma olin varem ainult laevaga Soome sõitnud. Kas sa oled Kuressaare lossi näinud? Jah, olen. Ma käisin seal teisel päeval. Ma polnud varem nii vana lossi näinud. Ma tahan ka sinna minna. Mida sa soovitad? Kas sa oled kunagi suitsukala söönud? Ei ole. Kas see on hea? Väga hea! Ma sõin seda iga päev. Ja sa pead kindlasti Kaali kraatrit vaatamas käima. Kraatrit? Ma pole sellest kunagi kuulnud. See on väga vana auk maas. Sinna kukkus kunagi meteoriit. Huvitav! Kas sa oled reisist pilte teinud? Jah, ma olen sada pilti teinud. Ma saadan need sulle õhtul. Aitäh! Kus sa seal ööbisid? Väikeses külalistemajas. Perenaine oli seal kolmkümmend aastat elanud. Ma annan sulle tema numbri. Suur aitäh! Kas sa oled oma vennaga juba rääkinud? Ta võib sulle ka midagi soovitada. Ei, ma pole temaga veel rääkinud. Ma helistan talle homme. Aga ma olen nüüd otsustanud. Suvel lähen ma Saaremaale. Tore! Ja too mulle suitsukala!",
     "model": "eleven_v4",
     "turns": [
       {
@@ -13655,7 +13655,7 @@
         "sentences": [
           "Väga hea!",
           "Ma sõin seda iga päev.",
-          "Ja sa pead kindlasti Kaali kraatrit vaatama."
+          "Ja sa pead kindlasti Kaali kraatrit vaatamas käima."
         ]
       },
       {
@@ -13682,8 +13682,29 @@
       {
         "voice": "WtzwR2kNGVNuaTGaYLfK",
         "sentences": [
-          "Jah, ma olen teinud sada pilti.",
+          "Jah, ma olen sada pilti teinud.",
           "Ma saadan need sulle õhtul."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh!",
+          "Kus sa seal ööbisid?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Väikeses külalistemajas.",
+          "Perenaine oli seal kolmkümmend aastat elanud.",
+          "Ma annan sulle tema numbri."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Suur aitäh!"
         ]
       },
       {
@@ -13709,20 +13730,6 @@
           "Ja too mulle suitsukala!"
         ],
         "say": "[laughs] Tore! Ja too mulle suitsukala!"
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Kus sa seal ööbisid?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Väikeses külalistemajas.",
-          "Perenaine oli seal kolmkümmend aastat elanud.",
-          "Ma annan sulle tema numbri."
-        ]
       }
     ]
   }

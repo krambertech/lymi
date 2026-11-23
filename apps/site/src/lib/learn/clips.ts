@@ -3859,7 +3859,11 @@ export const PERFECT_CONVERSATION: Conversation = {
     { voice: "main", text: ["Ei ole.", "Kas see on hea?"] },
     {
       voice: "second",
-      text: ["Väga hea!", "Ma sõin seda iga päev.", "Ja sa pead kindlasti Kaali kraatrit vaatama."],
+      text: [
+        "Väga hea!",
+        "Ma sõin seda iga päev.",
+        "Ja sa pead kindlasti Kaali kraatrit vaatamas käima.",
+      ],
     },
     { voice: "main", text: ["Kraatrit?", "Ma pole sellest kunagi kuulnud."] },
     {
@@ -3869,8 +3873,18 @@ export const PERFECT_CONVERSATION: Conversation = {
     { voice: "main", text: ["Huvitav!", "Kas sa oled reisist pilte teinud?"] },
     {
       voice: "second",
-      text: ["Jah, ma olen teinud sada pilti.", "Ma saadan need sulle õhtul."],
+      text: ["Jah, ma olen sada pilti teinud.", "Ma saadan need sulle õhtul."],
     },
+    { voice: "main", text: ["Aitäh!", "Kus sa seal ööbisid?"] },
+    {
+      voice: "second",
+      text: [
+        "Väikeses külalistemajas.",
+        "Perenaine oli seal kolmkümmend aastat elanud.",
+        "Ma annan sulle tema numbri.",
+      ],
+    },
+    { voice: "main", text: "Suur aitäh!" },
     {
       voice: "second",
       text: ["Kas sa oled oma vennaga juba rääkinud?", "Ta võib sulle ka midagi soovitada."],
@@ -3888,15 +3902,6 @@ export const PERFECT_CONVERSATION: Conversation = {
       voice: "second",
       text: ["Tore!", "Ja too mulle suitsukala!"],
       say: "[laughs] Tore! Ja too mulle suitsukala!",
-    },
-    { voice: "main", text: "Kus sa seal ööbisid?" },
-    {
-      voice: "second",
-      text: [
-        "Väikeses külalistemajas.",
-        "Perenaine oli seal kolmkümmend aastat elanud.",
-        "Ma annan sulle tema numbri.",
-      ],
     },
   ],
 };

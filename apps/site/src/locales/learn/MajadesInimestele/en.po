@@ -286,11 +286,11 @@ msgstr "Take the partitive, drop any <0>-d</0>, and add <1>-de</1>."
 msgid "Tap a form"
 msgstr "Tap a form"
 
-msgid "Tap down the first table once more, then try again."
-msgstr "Tap down the first table once more, then try again."
+msgid "Tap each form in the first table once more, then try again."
+msgstr "Tap each form in the first table once more, then try again."
 
-msgid "Tap down the table once more, then try again."
-msgstr "Tap down the table once more, then try again."
+msgid "Tap each form in the table once more, then try again."
+msgstr "Tap each form in the table once more, then try again."
 
 msgid "teacher"
 msgstr "teacher"
@@ -358,8 +358,8 @@ msgstr "The plural genitive"
 msgid "The plural genitive comes from the partitive <et>sõpra</et>: <et>sõpradele</et>."
 msgstr "The plural genitive comes from the partitive <et>sõpra</et>: <et>sõpradele</et>."
 
-msgid "The plural genitive comes from the partitive, the third of lesson {forms}’s three forms. If the partitive ends in <0>-t</0>, add <1>-e</1>: <2/>. If not, drop any <3>-d</3> and add <4>-de</4>: <5/>. Tap down both columns."
-msgstr "The plural genitive comes from the partitive, the third of lesson {forms}’s three forms. If the partitive ends in <0>-t</0>, add <1>-e</1>: <2/>. If not, drop any <3>-d</3> and add <4>-de</4>: <5/>. Tap down both columns."
+msgid "The plural genitive comes from the partitive, the third of lesson {forms}’s three forms. If the partitive ends in <0>-t</0>, add <1>-e</1>: <2/>. If not, drop any <3>-d</3> and add <4>-de</4>: <5/>. Tap each form in both columns to hear it."
+msgstr "The plural genitive comes from the partitive, the third of lesson {forms}’s three forms. If the partitive ends in <0>-t</0>, add <1>-e</1>: <2/>. If not, drop any <3>-d</3> and add <4>-de</4>: <5/>. Tap each form in both columns to hear it."
 
 msgid "The plural genitive is <0>inimeste</0>, so <1>inimestega</1>, not the plural nominative <2>inimesed</2>."
 msgstr "The plural genitive is <0>inimeste</0>, so <1>inimestega</1>, not the plural nominative <2>inimesed</2>."

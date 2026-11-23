@@ -93,6 +93,11 @@ function known(value: string): string | undefined {
   return match && (match[1] ?? value);
 }
 
+export function failureMessage(error: unknown, depth = 0): string | undefined {
+  if (!(error instanceof Error) || depth > 4) return;
+  return d1Message(error.message) ?? known(error.message) ?? failureMessage(error.cause, depth + 1);
+}
+
 const CHUNK_ID = /^[A-Za-z0-9-]{1,64}$/;
 
 function scriptFilename(value: unknown): string | undefined {

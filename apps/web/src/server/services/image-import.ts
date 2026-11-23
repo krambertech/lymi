@@ -54,12 +54,8 @@ export async function fetchRemoteImage(
 }
 
 function publicUrl(link: string): URL {
-  let url: URL;
-  try {
-    url = new URL(link);
-  } catch {
-    throw invalid("Use a public http or https link to a picture.");
-  }
+  const url = URL.parse(link);
+  if (!url) throw invalid("Use a public http or https link to a picture.");
   const defaultPort = url.port === "" || url.port === "80" || url.port === "443";
   if (
     (url.protocol !== "https:" && url.protocol !== "http:") ||

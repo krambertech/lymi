@@ -7,6 +7,7 @@ import {
   sealAppleToken,
 } from "../apple-revoke";
 import { type Db, schema } from "../db";
+import { log } from "../log";
 import { appleRevocationStatus, moveState } from "../state-moves";
 import { type AnalyticsWriter, track } from "./analytics";
 
@@ -40,15 +41,13 @@ function report(
   reason?: Reason | undefined,
   status?: number | null,
 ) {
-  console.log(
-    JSON.stringify({
-      job: "apple-revocation",
-      outcome,
-      attempt,
-      reason,
-      status: status ?? undefined,
-    }),
-  );
+  log.info("apple_revocation_attempted", {
+    job: "apple-revocation",
+    outcome,
+    attempt,
+    reason,
+    status: status ?? undefined,
+  });
   track(events, {
     name: "apple_revocation_attempted",
     outcome,
@@ -123,10 +122,9 @@ async function settle(
   if (written.length === 0) return "retrying";
   report(events, outcome, change.attempts ?? row.attempts, change.reason ?? undefined, status);
   if (outcome === "failed") {
-    console.error("A deleted account's Apple grant was not revoked", {
+    log.error("apple_grant_not_revoked", {
       reason: change.reason,
       attempts: change.attempts ?? row.attempts,
-      settledAt: now.toISOString(),
     });
   }
   return outcome;

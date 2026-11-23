@@ -11,6 +11,7 @@ import { createDb, type Db, schema } from "../db";
 import { FLIP_LINK_DAYS, readFlipLink, signFlipLink, signUnsubscribeLink } from "../email/links";
 import type { EmailCardSide } from "../email/template";
 import type { Bindings } from "../env";
+import { log } from "../log";
 import { ownerAnalytics, trackProductEvent } from "../posthog";
 import { reminderIsDue } from "../push-delivery";
 import { analyticsContextFor } from "./analytics-context";
@@ -366,16 +367,16 @@ export async function dispatchLearningEmails(
         },
       });
       summary.sent += 1;
-    } catch {
+    } catch (error) {
       // Once delivered, the claim stays even if the audit row failed, or the email would send twice.
       if (!delivered) await release();
       summary.failed += delivered ? 0 : 1;
       summary.sent += delivered ? 1 : 0;
-      console.error(JSON.stringify({ event: "learning_email_failed", delivered }));
+      log.error("learning_email_failed", { delivered, error });
     }
   }
   await Promise.all(reports);
-  console.log(JSON.stringify({ event: "learning_emails_dispatched", ...summary }));
+  log.info("learning_emails_dispatched", { ...summary });
   return summary;
 }
 

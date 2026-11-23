@@ -1,3 +1,5 @@
+import { log } from "../log";
+import { bodyJson } from "../parse";
 /** What Lymi hands a provider: a finished message. Templates and preferences never live there. */
 export interface OutgoingEmail {
   to: string;
@@ -16,8 +18,11 @@ const RESEND_API = "https://api.resend.com/emails";
 
 /** Resend's error `name`, kept as `code` so the caller's error classes cover both providers. */
 export class ResendError extends Error {
-  constructor(readonly code: string) {
-    super(`Resend refused the email: ${code}`);
+  constructor(
+    readonly code: string,
+    options?: ErrorOptions,
+  ) {
+    super(`Resend refused the email: ${code}`, options);
     this.name = "ResendError";
   }
 }
@@ -43,13 +48,10 @@ export async function sendWithResend(
         ...(email.headers ? { headers: email.headers } : {}),
       }),
     });
-  } catch {
-    throw new ResendError("network_error");
+  } catch (cause) {
+    throw new ResendError("network_error", { cause });
   }
-  const payload = (await response.json().catch(() => null)) as {
-    id?: string;
-    name?: string;
-  } | null;
+  const payload = (await bodyJson(response)) as { id?: string; name?: string } | null | undefined;
   if (!response.ok || !payload?.id)
     throw new ResendError(payload?.name ?? `http_${response.status}`);
   return { id: payload.id };
@@ -88,7 +90,8 @@ export async function verifyResendWebhook(
     key = await crypto.subtle.importKey("raw", raw, { name: "HMAC", hash: "SHA-256" }, false, [
       "sign",
     ]);
-  } catch {
+  } catch (error) {
+    log.error("email_webhook_secret_unusable", { error });
     return false;
   }
   const expected = base64(

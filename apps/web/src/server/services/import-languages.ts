@@ -1,6 +1,7 @@
 import { LanguageTag, languageOfScript } from "@lymi/core";
 import { z } from "zod";
 import type { TextProvider } from "../ai";
+import { log } from "../log";
 
 /** Terms read from each deck for detection: enough to see past a stray loanword, few enough for one call. */
 export const TERMS_PER_DECK = 12;
@@ -73,8 +74,8 @@ export async function detectDeckLanguages(
       const tag = deck.language?.trim();
       if (keys.has(deck.key) && tag && LanguageTag.safeParse(tag).success) found[deck.key] = tag;
     }
-  } catch {
-    console.warn("Detecting import deck languages failed; falling back to deck names");
+  } catch (error) {
+    log.warn("import_language_detection_failed", { error });
   }
   return found;
 }

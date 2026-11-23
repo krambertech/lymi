@@ -44,12 +44,8 @@ const PRODUCT_ASSET_FILES = new Set([
 ]);
 
 function canonicalOrigin(value: string | undefined, fallback: string): string {
-  try {
-    const url = new URL(value ?? fallback);
-    return url.protocol === "http:" || url.protocol === "https:" ? url.origin : fallback;
-  } catch {
-    return fallback;
-  }
+  const url = URL.parse(value ?? fallback);
+  return url?.protocol === "http:" || url?.protocol === "https:" ? url.origin : fallback;
 }
 
 export function canonicalOrigins(env: OriginConfiguration): CanonicalOrigins {

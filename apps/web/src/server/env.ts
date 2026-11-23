@@ -85,18 +85,14 @@ export function appPreviewEnabled(env: {
   APP_PREVIEW?: string | undefined;
 }): boolean {
   if (env.APP_PREVIEW !== "true") return false;
-  try {
-    const url = new URL(env.PRODUCT_URL);
-    return (
-      url.protocol === "https:" &&
-      /^preview-lymi-app-pr-\d+\.[a-z0-9-]+\.workers\.dev$/.test(url.hostname) &&
-      url.pathname === "/" &&
-      !url.search &&
-      !url.hash
-    );
-  } catch {
-    return false;
-  }
+  const url = URL.parse(env.PRODUCT_URL);
+  return (
+    url?.protocol === "https:" &&
+    /^preview-lymi-app-pr-\d+\.[a-z0-9-]+\.workers\.dev$/.test(url.hostname) &&
+    url.pathname === "/" &&
+    !url.search &&
+    !url.hash
+  );
 }
 
 export function devToolsEnabled(
@@ -106,11 +102,7 @@ export function devToolsEnabled(
 }
 
 function originOf(value: string | undefined): string | null {
-  try {
-    return value ? new URL(value).origin : null;
-  } catch {
-    return null;
-  }
+  return (value && URL.parse(value)?.origin) || null;
 }
 
 /** A loopback product follows the request's port so parallel worktrees need no `.dev.vars` edit. */

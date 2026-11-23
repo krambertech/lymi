@@ -16,6 +16,7 @@ import { decisionModel, termsAgainstAnswer } from "../lessons/keep";
 import { pageMarkdown } from "../lessons/link";
 import type { LessonMaterial } from "../lessons/reader";
 import { createLessonReader, LessonReaderError } from "../lessons/reader";
+import { log } from "../log";
 import { posthogEnabled, reportServerException } from "../posthog";
 import {
   assertCanCheckAnswers,
@@ -146,7 +147,7 @@ lessonReads.post(
       void writer.write(encoder.encode(`${JSON.stringify(event)}\n`));
     const reading = streamLesson(lesson, material, deps.ai, send)
       .catch((error: unknown) => {
-        console.error("Lesson read failed", error);
+        log.error("lesson_read_failed", { error });
         send({ type: "error", message: "The lesson could not be read. Try again." });
         // The stream has already answered 200, so the HTTP error handler never sees this; a vendor's
         // HTTP refusal is already in lymi_health.

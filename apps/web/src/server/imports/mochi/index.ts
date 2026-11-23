@@ -13,8 +13,16 @@ import {
   pitchIntoReading,
   type ReviewModeKey,
 } from "@lymi/core";
+import { parseJson } from "../../parse";
 import type { SourceAdapter, SourceDeck, SourceNoteType, SourceSummary } from "../adapter";
-import { ImportFileError, openZip, type RandomAccess, readZipEntry, type ZipEntry } from "../files";
+import {
+  ImportFileError,
+  opens,
+  openZip,
+  type RandomAccess,
+  readZipEntry,
+  type ZipEntry,
+} from "../files";
 import {
   attachments,
   furigana,
@@ -81,11 +89,8 @@ async function readData(file: RandomAccess, entry: ZipEntry): Promise<TransitMap
   if (entry.size > MAX_DATA_BYTES) {
     throw new ImportFileError("too_large", "The export's data is too large");
   }
-  let raw: unknown;
-  try {
-    raw = JSON.parse(new TextDecoder().decode(await readZipEntry(file, entry, MAX_DATA_BYTES)));
-  } catch (err) {
-    if (err instanceof ImportFileError) throw err;
+  const raw = parseJson(new TextDecoder().decode(await readZipEntry(file, entry, MAX_DATA_BYTES)));
+  if (raw === undefined) {
     throw new ImportFileError("damaged", "The export's data is damaged");
   }
   const root = decodeTransit(raw, UNREAD);
@@ -230,12 +235,7 @@ export const mochi: SourceAdapter<MochiNote> = {
   source: "mochi",
 
   async detect(file) {
-    try {
-      await openExport(file);
-      return true;
-    } catch {
-      return false;
-    }
+    return opens(openExport(file));
   },
 
   async inspect(file) {

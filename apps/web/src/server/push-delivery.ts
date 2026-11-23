@@ -5,6 +5,7 @@ import { createDb } from "./db";
 import { outcomeOfStatus, recordCall } from "./dependency-health";
 import type { Bindings } from "./env";
 import { serverI18n } from "./i18n";
+import { log } from "./log";
 import { trackProductEvent } from "./posthog";
 import { analyticsContextFor } from "./services/analytics-context";
 import { drawableCount } from "./services/draw";
@@ -300,11 +301,11 @@ export async function dispatchReviewReminders(
         .bind(now.getTime(), candidate.id, moment.localDate)
         .run();
       summary.failed += 1;
-      console.error(JSON.stringify({ event: "review_reminder_failed", statusCode }));
+      log.error("review_reminder_failed", { statusCode, error });
     }
   }
 
   await Promise.all(reports);
-  console.log(JSON.stringify({ event: "review_reminders_dispatched", ...summary }));
+  log.info("review_reminders_dispatched", { ...summary });
   return summary;
 }

@@ -26,6 +26,12 @@ describe("assistantClientOf", () => {
   it("falls back to the default site when the configured one is empty, and never throws", () => {
     expect(assistantClientOf(site("/oauth/grok.json"), "")).toBe("grok");
     expect(assistantClientOf("https://chatgpt.com/oauth/client.json", "not a url")).toBe("other");
+    expect(assistantClientOf("https://chatgpt.com/oauth/client.json", "localhost:5242")).toBe(
+      "other",
+    );
+    for (const id of ["", "https://", "https://[", "data:,x", "\u0000", "constructor", "//x"]) {
+      expect(assistantClientOf(id, SITE)).toBe("other");
+    }
   });
 
   it("has a label for every assistant the Apps group offers", () => {

@@ -11,8 +11,16 @@ import {
   LymiFileManifest,
   type ReviewModeKey,
 } from "@lymi/core";
+import { parseJson } from "../../parse";
 import type { SourceAdapter, SourceNoteType, SourceSummary } from "../adapter";
-import { ImportFileError, openZip, type RandomAccess, readZipEntry, type ZipEntry } from "../files";
+import {
+  ImportFileError,
+  opens,
+  openZip,
+  type RandomAccess,
+  readZipEntry,
+  type ZipEntry,
+} from "../files";
 
 /** The largest `cards.jsonl` a Worker reads beside its own work, as for an Anki collection. */
 export const MAX_CARDS_BYTES = 64 * 1024 * 1024;
@@ -50,13 +58,10 @@ async function openExport(file: RandomAccess) {
   if (!manifestEntry || !cardsEntry) {
     throw new ImportFileError("unrecognized", "The file is not a Lymi export");
   }
-  let raw: unknown;
-  try {
-    raw = JSON.parse(
-      new TextDecoder().decode(await readZipEntry(file, manifestEntry, MAX_MANIFEST_BYTES)),
-    );
-  } catch (err) {
-    if (err instanceof ImportFileError) throw err;
+  const raw = parseJson(
+    new TextDecoder().decode(await readZipEntry(file, manifestEntry, MAX_MANIFEST_BYTES)),
+  );
+  if (raw === undefined) {
     throw new ImportFileError("damaged", "The export's manifest is damaged");
   }
   const manifest = LymiFileManifest.safeParse(raw);
@@ -74,13 +79,9 @@ function* lines(bytes: Uint8Array): Generator<LymiFileCard> {
     let end = bytes.indexOf(0x0a, start);
     if (end < 0) end = bytes.length;
     if (end > start) {
-      let card: LymiFileCard;
-      try {
-        card = LymiFileCard.parse(JSON.parse(decoder.decode(bytes.subarray(start, end))));
-      } catch {
-        throw new ImportFileError("damaged", "A card in the export is damaged");
-      }
-      yield card;
+      const card = LymiFileCard.safeParse(parseJson(decoder.decode(bytes.subarray(start, end))));
+      if (!card.success) throw new ImportFileError("damaged", "A card in the export is damaged");
+      yield card.data;
     }
     start = end + 1;
   }
@@ -108,12 +109,7 @@ export const lymi: SourceAdapter<LymiNote> = {
   source: "lymi",
 
   async detect(file) {
-    try {
-      await openExport(file);
-      return true;
-    } catch {
-      return false;
-    }
+    return opens(openExport(file));
   },
 
   async inspect(file) {

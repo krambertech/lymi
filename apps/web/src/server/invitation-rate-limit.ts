@@ -2,6 +2,7 @@ import type { MiddlewareHandler } from "hono";
 import { isLoopbackUrl } from "../shared/origins";
 import { type Budget, count, tooManyRequests, windowFull } from "./auth-rate-limit";
 import type { AppEnv } from "./index";
+import { clonedJson } from "./parse";
 
 /** Per owner and day, well above a class and well under what a mailer would want. */
 const OWNER: Budget = { max: 60, window: 24 * 60 * 60 };
@@ -31,12 +32,8 @@ export const limitInvitationSends: MiddlewareHandler<AppEnv> = async (c, next) =
 
 /** The address in the body, read from a clone so the validator still gets it. */
 async function addressOf(request: Request): Promise<string | null> {
-  try {
-    const body = (await request.clone().json()) as { email?: unknown };
-    return typeof body.email === "string" && body.email.trim()
-      ? body.email.trim().toLowerCase().slice(0, 254)
-      : null;
-  } catch {
-    return null;
-  }
+  const body = (await clonedJson(request)) as { email?: unknown } | null | undefined;
+  return typeof body?.email === "string" && body.email.trim()
+    ? body.email.trim().toLowerCase().slice(0, 254)
+    : null;
 }

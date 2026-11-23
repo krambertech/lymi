@@ -73,8 +73,8 @@ export class ReadwiseLimited extends Error {
 }
 
 export class ReadwiseUnavailable extends Error {
-  constructor(status: number) {
-    super(`Readwise answered ${status}`);
+  constructor(status: number, options?: ErrorOptions) {
+    super(`Readwise answered ${status}`, options);
     this.name = "ReadwiseUnavailable";
   }
 }
@@ -97,8 +97,8 @@ export function createReadwiseApi(fetcher: typeof fetch = fetch): ReadwiseApi {
   async function get(token: string, path: string): Promise<unknown> {
     const response = await fetcher(`${BASE}${path}`, {
       headers: { Authorization: `Token ${token}`, Accept: "application/json" },
-    }).catch(() => {
-      throw new ReadwiseUnavailable(0);
+    }).catch((cause: unknown) => {
+      throw new ReadwiseUnavailable(0, { cause });
     });
     if (response.status === 401 || response.status === 403) throw new ReadwiseRefused();
     if (response.status === 429) {
@@ -106,8 +106,8 @@ export function createReadwiseApi(fetcher: typeof fetch = fetch): ReadwiseApi {
     }
     if (!response.ok) throw new ReadwiseUnavailable(response.status);
     if (response.status === 204) return null;
-    return response.json().catch(() => {
-      throw new ReadwiseUnavailable(response.status);
+    return response.json().catch((cause: unknown) => {
+      throw new ReadwiseUnavailable(response.status, { cause });
     });
   }
 

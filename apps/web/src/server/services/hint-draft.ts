@@ -12,6 +12,7 @@ import { z } from "zod";
 import type { TextProvider, TextProviderFor } from "../ai";
 import { schema } from "../db";
 import { languagePrompts } from "../languages";
+import { log } from "../log";
 import { requireAi } from "./ai-consent";
 import { getCard } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
@@ -263,9 +264,7 @@ export async function hintDraftFor(
   try {
     draft = (await draftHint(provider, hintCard)) ?? (await draftHint(provider, hintCard));
   } catch (error) {
-    console.error("Drafting a hint failed", {
-      error: error instanceof Error ? error.name : "unknown",
-    });
+    log.error("hint_draft_failed", { error });
     throw new ServiceError("unavailable", "The AI couldn't draft a hint. Try again in a moment.");
   }
   // An empty answer keeps the last draft, which may still be in the learner's field. Only while the

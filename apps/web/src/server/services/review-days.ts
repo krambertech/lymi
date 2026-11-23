@@ -10,6 +10,7 @@ import {
 import { and, eq, isNotNull, isNull, ne, sql } from "@lymi/core/db";
 import type { ReviewDay } from "@lymi/core/schema";
 import { schema } from "../db";
+import { log } from "../log";
 import { track } from "./analytics";
 import { audit } from "./audit";
 import { notFound, type ServiceContext, ServiceError } from "./context";
@@ -57,8 +58,9 @@ function isZone(zone: string) {
   try {
     new Intl.DateTimeFormat("en", { timeZone: zone }).format();
     return true;
-  } catch {
-    return false;
+  } catch (error) {
+    if (error instanceof RangeError) return false;
+    throw error;
   }
 }
 
@@ -400,8 +402,8 @@ function recordStreakChange(ctx: ServiceContext, today: string, zone: string): v
       }
       if (was > 0 && now.current === 0)
         track(ctx.analytics, { name: "streak_ended", streak_days: was });
-    } catch {
-      /* A failed analytics read cannot undo the day it describes. */
+    } catch (error) {
+      log.warn("product_analytics_failed", { marker: "streak", error });
     }
   });
 }

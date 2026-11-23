@@ -101,11 +101,12 @@ export const pleco: SourceAdapter<PlecoNote> = {
     if (file.size > MAX_PLECO_BYTES) {
       throw new ImportFileError("too_large", "The export is larger than one import takes");
     }
+    const bytes = await file.read(0, file.size);
     let text: string;
     try {
-      text = decodePleco(await file.read(0, file.size));
-    } catch {
-      throw new ImportFileError("unrecognized", "The export is not UTF-8 or UTF-16");
+      text = decodePleco(bytes);
+    } catch (cause) {
+      throw new ImportFileError("unrecognized", "The export is not UTF-8 or UTF-16", { cause });
     }
     const { lines, categories } = parsePleco(text);
     const notes = notesOf(lines);

@@ -3,6 +3,7 @@ import { newId, revealedAnswer } from "@lymi/core";
 import { and, desc, eq, type SQL, sql } from "@lymi/core/db";
 import type { Card, CardImage } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
+import { log, logFailure } from "../log";
 import { moveState, pictureStatus } from "../state-moves";
 import { newCardPictureKey, type ObjectStore, putObject } from "../storage";
 import { type AuditAction, auditStatementWhen, insertWhen } from "./audit";
@@ -183,7 +184,8 @@ async function storeImage(
     await putObject(deps.bucket, objectKey, normalized.bytes, {
       httpMetadata: { contentType: "image/webp" },
     });
-  } catch {
+  } catch (error) {
+    log.error("card_picture_not_stored", { error });
     throw new ServiceError("unavailable", "The picture couldn’t be saved. Try again.");
   }
 
@@ -238,9 +240,7 @@ async function storeImage(
   } finally {
     // The object is kept only when this write's claim committed; nothing else knows its key.
     if (!won) {
-      await deps.bucket
-        .delete(objectKey)
-        .catch(() => console.error("Discarding a card picture object failed"));
+      await deps.bucket.delete(objectKey).catch(logFailure("card_picture_discard_failed"));
     }
   }
   if (!won) throw stale();

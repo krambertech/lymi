@@ -1,3 +1,4 @@
+import { warnOnce } from "../log";
 import type { AiConsent } from "./consent";
 import { type AiGatewayBindings, providerEndpoint } from "./gateway";
 import type { Fetch, TextObserver, TextProvider, TextRequest } from "./types";
@@ -55,8 +56,8 @@ export function createOpenAiTextProvider(
             error: status !== undefined,
             status,
           });
-        } catch {
-          /* Measuring a call never decides its outcome. */
+        } catch (error) {
+          warnOnce("ai_call_not_observed", { error });
         }
       };
       try {

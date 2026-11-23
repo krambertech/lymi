@@ -44,6 +44,7 @@ import { type CallToolResult, McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
 import type { McpView, ViewCard, ViewDeckResult, ViewDueResult } from "../../shared/mcp-app";
 import type { AssistantClient } from "../assistant-client";
+import { log, logFailure } from "../log";
 import {
   addCards,
   archiveCard,
@@ -1113,12 +1114,8 @@ async function runTool(
     if (err instanceof ServiceError) {
       return failure(err.reason ? `${err.reason}: ${err.message}` : err.message);
     }
-    console.error("MCP tool failed", { tool, error: err instanceof Error ? err.name : typeof err });
-    try {
-      await principal.reportError?.(err, tool);
-    } catch {
-      // Monitoring cannot change the tool's error response.
-    }
+    log.error("mcp_tool_failed", { tool, error: err });
+    await principal.reportError?.(err, tool).catch(logFailure("mcp_error_report_failed", { tool }));
     return failure("Lymi could not finish this just now. Try again in a moment.");
   } finally {
     track(principal.ctx.analytics, {

@@ -1,3 +1,4 @@
+import { parseJson } from "../parse";
 type NativeVoice = { voice: string; name: string };
 
 // Native reference voices; English reference voices can drift on short foreign words.
@@ -77,13 +78,10 @@ export const NATIVE_SPEECH_VOICES: Readonly<Record<string, NativeVoice>> = {
 export function nativeSpeechVoice(locale: string, overrides?: string): NativeVoice | null {
   let configured: Record<string, unknown> = {};
   if (overrides?.trim()) {
-    try {
-      const parsed: unknown = JSON.parse(overrides);
-      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
-        configured = parsed as Record<string, unknown>;
-      }
-    } catch {
-      // A malformed optional voice map must not prevent OpenAI or a stored clip from playing.
+    // A malformed optional voice map must not prevent OpenAI or a stored clip from playing.
+    const parsed = parseJson(overrides);
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+      configured = parsed as Record<string, unknown>;
     }
   }
   const root = locale.split("-")[0] ?? locale;

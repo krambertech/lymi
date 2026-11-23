@@ -1,6 +1,7 @@
 import type { AiConsent } from "../ai/consent";
 import { AiGatewayError } from "../ai/gateway";
 import { type DependencySource, type HealthEnv, metered } from "../dependency-health";
+import { log } from "../log";
 
 /**
  * Below this, a term starts unticked. Clef-flash rates real words as low as 0.17, so the bar only
@@ -66,6 +67,7 @@ export async function keepScores(
   const scores = new Map<string, number>();
   if (!ai || candidates.length === 0) return scores;
   const queue = [...candidates];
+  let failure: { error: unknown } | undefined;
   await Promise.all(
     Array.from({ length: 8 }, async () => {
       for (let next = queue.shift(); next; next = queue.shift()) {
@@ -94,12 +96,13 @@ export async function keepScores(
           )) as { answers?: { worth?: { noul?: number } } };
           const p = reply.answers?.worth?.noul;
           if (typeof p === "number") scores.set(candidate.id, p);
-        } catch {
-          // The list still works without a score: the reader's choice stands.
+        } catch (error) {
+          failure = { error };
         }
       }
     }),
   );
+  if (failure) log.warn("lesson_terms_unjudged", { question: "worth", error: failure.error });
   return scores;
 }
 
@@ -120,6 +123,7 @@ export async function termsAgainstAnswer(
   if (!ai) return [];
   const drop: string[] = [];
   const queue = [...terms];
+  let failure: { error: unknown } | undefined;
   await Promise.all(
     Array.from({ length: 8 }, async () => {
       for (let next = queue.shift(); next; next = queue.shift()) {
@@ -147,11 +151,12 @@ export async function termsAgainstAnswer(
           )) as { answers?: { fits?: { noul?: number } } };
           const p = reply.answers?.fits?.noul;
           if (typeof p === "number" && p < FITS_THRESHOLD) drop.push(term.id);
-        } catch {
-          // An unjudged term stays: the learner can still untick it.
+        } catch (error) {
+          failure = { error };
         }
       }
     }),
   );
+  if (failure) log.warn("lesson_terms_unjudged", { question: "fits", error: failure.error });
   return drop;
 }

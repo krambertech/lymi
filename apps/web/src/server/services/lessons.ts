@@ -46,6 +46,8 @@ import {
   type Transcript,
 } from "../lessons/reader";
 import { TermsStream } from "../lessons/terms-stream";
+import { log } from "../log";
+import { parseJson } from "../parse";
 import { aiConsentFor, requireAi } from "./ai-consent";
 import { type AnalyticsWriter, textCallReporter, track } from "./analytics";
 import type { ServiceContext } from "./context";
@@ -254,9 +256,7 @@ export async function readLink(
   } catch (error) {
     if (error instanceof LinkUnreadable)
       throw unreadable("Smart add couldn't read this page. Paste the text instead.");
-    console.error("Converting a page failed", {
-      error: error instanceof Error ? error.name : typeof error,
-    });
+    log.error("lesson_page_unconverted", { error });
     throw new ServiceError("unavailable", "Smart add couldn't read pages just now. Try again.");
   }
   const sentences = markdownSentences(markdown);
@@ -531,7 +531,10 @@ async function scoreTerm(
   candidate: Parameters<typeof keepScore>[2],
 ): Promise<number | null> {
   if (!ai) return null;
-  const consent = await lesson.consentNow().catch(() => null);
+  const consent = await lesson.consentNow().catch((error: unknown) => {
+    log.warn("lesson_consent_unread", { error });
+    return null;
+  });
   return consent && keepScore(ai, lesson.deckRule, candidate, consent);
 }
 
@@ -652,13 +655,9 @@ async function readInto(
   if (!deck) announce(lesson.fallback);
   await queue;
 
-  let reply: Reply | null = null;
-  try {
-    const parsed = Reply.safeParse(JSON.parse(stream.all));
-    if (parsed.success) reply = parsed.data;
-  } catch {
-    // A reply that broke off after its terms still leaves a usable list.
-  }
+  // A reply that broke off after its terms still leaves a usable list.
+  const parsed = Reply.safeParse(parseJson(stream.all));
+  const reply: Reply | null = parsed.success ? parsed.data : null;
   if (!reply && ids.size === 0)
     throw new ServiceError("unavailable", "The lesson could not be read. Try again.");
 

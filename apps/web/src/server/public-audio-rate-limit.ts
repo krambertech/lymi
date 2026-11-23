@@ -2,6 +2,7 @@ import type { Context } from "hono";
 import { isLoopbackUrl } from "../shared/origins";
 import { type Budget, count, windowFull } from "./auth-rate-limit";
 import type { AppEnv } from "./index";
+import { log } from "./log";
 
 /** Per caller and hour, more than a visitor plays through a deck page and less than a crawl wants. */
 const CALLER: Budget = { max: 30, window: 60 * 60 };
@@ -23,7 +24,7 @@ export async function spendPublicAudio(c: Context<AppEnv>): Promise<number | nul
     const full = await windowFull(c.env.SESSIONS, key, budget);
     if (full !== null) {
       const spent = budget === EVERYONE ? "everyone" : "caller";
-      console.warn(JSON.stringify({ event: "public_audio_budget_spent", budget: spent }));
+      log.warn("public_audio_budget_spent", { budget: spent });
       return full;
     }
   }

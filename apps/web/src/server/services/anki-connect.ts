@@ -19,6 +19,7 @@ import { and, asc, eq, gte, inArray, isNull, selectIn, sql } from "@lymi/core/db
 import type { Card } from "@lymi/core/schema";
 import { z } from "zod";
 import { schema } from "../db";
+import { decodeBase64, languageName } from "../parse";
 import {
   ankiConnectUploadKey,
   type ObjectKey,
@@ -356,16 +357,6 @@ async function ownedDecks({ db, userId }: ServiceContext): Promise<Deck[]> {
   });
 }
 
-const LANGUAGE_NAMES = new Intl.DisplayNames(["en"], { type: "language" });
-
-function languageName(language: string) {
-  try {
-    return LANGUAGE_NAMES.of(language) ?? language;
-  } catch {
-    return language;
-  }
-}
-
 const chooseNoteType = () => `In Yomitan’s Anki settings, choose the note type “${NOTE_TYPE}”.`;
 const noteUnreadable = () =>
   `Lymi couldn’t read this note. In Yomitan’s Anki settings, choose a Lymi deck and the note type “${NOTE_TYPE}”.`;
@@ -432,7 +423,7 @@ function prepare(note: AnkiConnectNote | null, decks: Map<string, Deck>): Prepar
     };
   }
   if (deck.language && !fitsLanguage(term, deck.language)) {
-    const language = languageName(deck.language);
+    const language = languageName(deck.language) ?? deck.language;
     return {
       ok: false,
       error: `“${term}” isn’t ${language}, and “${deck.name}” is a ${language} deck. In Yomitan’s Anki settings, choose a deck for this language.`,
@@ -579,13 +570,8 @@ async function stash(
   deps: AnkiConnectDeps,
 ): Promise<void> {
   if (!deps.media || data === undefined) return;
-  let bytes: Uint8Array;
-  try {
-    bytes = Uint8Array.from(atob(data), (c) => c.charCodeAt(0));
-  } catch {
-    return;
-  }
-  if (!uploadKind(bytes)) return;
+  const bytes = decodeBase64(data);
+  if (!bytes || !uploadKind(bytes)) return;
   await putObject(deps.media.stash, await stashKey(ctx.userId, fileName), bytes);
 }
 

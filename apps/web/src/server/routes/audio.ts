@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { createSpeechProviders } from "../ai";
 import { tooManyRequests } from "../auth-rate-limit";
 import { exampleAudioAllowance } from "../example-audio-rate-limit";
-import { ctxOf, describe } from "../http";
+import { ctxOf, describe, keepAlive } from "../http";
 import type { AppEnv } from "../index";
 import { leadInDependencies } from "../lead-ins";
 import { exampleAudio, pronunciationAudio } from "../services";
@@ -21,7 +21,7 @@ audio.get("/:cardId/example", describe({ hide: true, errors: [400, 404, 503] }),
     exampleAudioAllowance(c),
   );
   // A learner who moves on mid-generation still gets the clip stored, and its lease released.
-  c.executionCtx.waitUntil(work.catch(() => undefined));
+  keepAlive(c, work);
   const found = await work;
   if ("retryAfter" in found) return tooManyRequests(found.retryAfter);
   return clipResponse(found.clip);
@@ -35,7 +35,7 @@ audio.get("/:cardId", describe({ hide: true, errors: [400, 404, 503] }), async (
     storedOnly: c.req.query("stored") === "1",
   });
   // A learner who moves on mid-generation still gets the clip stored, and its lease released.
-  c.executionCtx.waitUntil(work.catch(() => undefined));
+  keepAlive(c, work);
   return clipResponse(await work);
 });
 

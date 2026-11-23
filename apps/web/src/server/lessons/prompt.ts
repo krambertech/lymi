@@ -1,6 +1,7 @@
 import { CARD_LIMITS } from "@lymi/core";
 import { z } from "zod";
 import { lessonReading } from "../languages";
+import { languageName } from "../parse";
 
 /** The rules come from docs/card-writing.md; change both together. */
 export const INSTRUCTIONS = `You turn one language lesson into a pick list: the terms worth a card in the learner's deck. The learner ticks the terms they want, so list every candidate and let them choose.
@@ -50,14 +51,7 @@ export type DeckCandidate = {
   examples: { term: string; meaning: string | null }[];
 };
 
-const english = (tag: string | null) => {
-  if (!tag) return null;
-  try {
-    return new Intl.DisplayNames(["en"], { type: "language" }).of(tag) ?? tag;
-  } catch {
-    return tag;
-  }
-};
+const english = (tag: string | null) => (tag ? (languageName(tag) ?? tag) : null);
 
 /** The learner's decks as the model sees them. Their own cards decide the shape and the meaning language. */
 export function decksBrief(

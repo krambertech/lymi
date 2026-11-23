@@ -2,10 +2,12 @@ import { createSpeechProviders } from "./ai";
 import { handleFetch } from "./app";
 import { appleClientsOf } from "./apple-revoke";
 import { runCanary } from "./canary";
+import { JobFailed, job } from "./cron";
 import { createDb } from "./db";
 import type { Bindings } from "./env";
 import { leadInDependencies } from "./lead-ins";
-import { ownerAnalytics, reportServerException } from "./posthog";
+import { log } from "./log";
+import { ownerAnalytics } from "./posthog";
 import { dispatchReviewReminders } from "./push-delivery";
 import { readwiseDeps } from "./readwise/deps";
 import { dropUnstudiedFormerDecks } from "./services/account-deletion";
@@ -25,14 +27,6 @@ export type { AppEnv } from "./app";
 
 const PRODUCTION_URL = "https://my.lymi.app";
 
-/** A failed job reaches Error Tracking and still fails the invocation in Workers Logs. */
-function job(env: Bindings, name: string, work: Promise<unknown>): Promise<unknown> {
-  return work.catch(async (error: unknown) => {
-    await reportServerException(env, error, { route: `cron/${name}`, method: "CRON" });
-    throw error;
-  });
-}
-
 /** The canary spends real provider calls, so it runs only on the production Worker. */
 function runsCanary(env: Bindings): boolean {
   return Boolean(env.HEALTH) && env.PRODUCT_URL === PRODUCTION_URL && env.APP_PREVIEW !== "true";
@@ -49,13 +43,13 @@ export default {
     run(
       "review-reminders",
       dispatchReviewReminders(env, at).then((result) => {
-        if (result.failed > 0) throw new Error(`${result.failed} review reminder sends failed`);
+        if (result.failed > 0) throw new JobFailed(`${result.failed} review reminder sends failed`);
       }),
     );
     run(
       "learning-emails",
       dispatchLearningEmails(env, at).then(({ failed }) => {
-        if (failed > 0) throw new Error(`${failed} learning emails failed`);
+        if (failed > 0) throw new JobFailed(`${failed} learning emails failed`);
       }),
     );
     {
@@ -68,7 +62,7 @@ export default {
           at,
           ownerAnalytics(env, db, (work) => executionCtx.waitUntil(work)),
         ).then(({ stalled }) => {
-          if (stalled > 0) throw new Error(`${stalled} stalled imports were failed`);
+          if (stalled > 0) throw new JobFailed(`${stalled} stalled imports were failed`);
         }),
       );
     }
@@ -76,12 +70,22 @@ export default {
     run(
       "former-deck-copies",
       copyFormerDecks(createDb(env.DB), env.EVENTS).then(({ failed }) => {
-        if (failed > 0) throw new Error(`${failed} copies of a former owner's deck failed`);
+        if (failed > 0) throw new JobFailed(`${failed} copies of a former owner's deck failed`);
       }),
     );
     run("anki-connect-uploads", sweepAnkiConnectUploads(env.IMPORTS, at));
-    run("former-decks", dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES));
-    run("purge-card-audio", purgeCardAudio(createDb(env.DB), env.AUDIO));
+    run(
+      "former-decks",
+      dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES).then(({ failed }) => {
+        if (failed > 0) throw new JobFailed(`${failed} former owners' decks kept their pictures`);
+      }),
+    );
+    run(
+      "purge-card-audio",
+      purgeCardAudio(createDb(env.DB), env.AUDIO).then(({ failed }) => {
+        if (failed > 0) throw new JobFailed(`${failed} deleted cards kept their audio`);
+      }),
+    );
     run(
       "apple-revocations",
       retryAppleRevocations(createDb(env.DB), {
@@ -89,7 +93,7 @@ export default {
         events: env.EVENTS,
       }).then(({ failed }) => {
         if (failed > 0)
-          throw new Error(`${failed} deleted accounts' Apple grants were not revoked`);
+          throw new JobFailed(`${failed} deleted accounts' Apple grants were not revoked`);
       }),
     );
     run("purge-expired-auth", purgeExpiredAuthRows(createDb(env.DB), at));
@@ -115,7 +119,7 @@ export default {
       run(
         "stress-backfill",
         runStressBackfill(createDb(env.DB), { dryRun: false }).then((counts) =>
-          console.log(JSON.stringify({ job: "stress-backfill", ...counts })),
+          log.info("stress_backfill", { job: "stress-backfill", ...counts }),
         ),
       );
     }
@@ -132,7 +136,7 @@ export default {
           },
           at,
         ).then(({ failed }) => {
-          if (failed > 0) throw new Error(`${failed} Readwise pulls failed`);
+          if (failed > 0) throw new JobFailed(`${failed} Readwise pulls failed`);
         }),
       );
     }

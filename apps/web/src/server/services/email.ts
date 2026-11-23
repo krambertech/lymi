@@ -11,6 +11,8 @@ import { type HealthEnv, metered } from "../dependency-health";
 import type { Block, ComposedEmail, EmailCardSide, LearningBody } from "../email/template";
 import type { Bindings } from "../env";
 import { serverI18n } from "../i18n";
+import { log } from "../log";
+import { languageName } from "../parse";
 import { track } from "./analytics";
 import { audit } from "./audit";
 import { type ServiceContext, ServiceError } from "./context";
@@ -242,15 +244,11 @@ function initials(name: string): string {
     .toLocaleUpperCase();
 }
 
-function languageName(tag: string | null | undefined, locale: string): string | null {
+function coverLanguage(tag: string | null | undefined, locale: string): string | null {
   if (!tag) return null;
-  try {
-    const name = new Intl.DisplayNames([locale], { type: "language" }).of(tag);
-    // Ukrainian and Russian name languages in lower case; on the cover the name starts the line.
-    return name ? name.charAt(0).toLocaleUpperCase(locale) + name.slice(1) : null;
-  } catch {
-    return null;
-  }
+  const name = languageName(tag, locale);
+  // Ukrainian and Russian name languages in lower case; on the cover the name starts the line.
+  return name ? name.charAt(0).toLocaleUpperCase(locale) + name.slice(1) : null;
 }
 
 type LearningKind = Extract<TransactionalEmailKind, `learning-${string}`>;
@@ -577,7 +575,7 @@ function compose(
       const { ownerName, deckName } = it;
       const url = required(params.url, kind);
       const cards = i18n._(msg`${plural(it.cards, { one: "# card", other: "# cards" })}`);
-      const language = languageName(it.language, i18n.locale);
+      const language = coverLanguage(it.language, i18n.locale);
       const text = i18n._(
         msg`You review on your own schedule, and ${ownerName} doesn’t see your progress.`,
       );
@@ -730,7 +728,8 @@ async function withinDailyBudget(sessions: KVNamespace | undefined): Promise<boo
     if (sent >= DAILY_SEND_LIMIT) return false;
     await sessions.put(key, String(sent + 1), { expirationTtl: 60 * 60 * 48 });
     return true;
-  } catch {
+  } catch (error) {
+    log.warn("email_budget_unreadable", { budget: "account", error });
     return true;
   }
 }
@@ -744,7 +743,8 @@ export async function learningBudgetLeft(sessions: KVNamespace | undefined): Pro
     if (sent >= DAILY_LEARNING_LIMIT) return false;
     await sessions.put(key, String(sent + 1), { expirationTtl: 60 * 60 * 48 });
     return true;
-  } catch {
+  } catch (error) {
+    log.warn("email_budget_unreadable", { budget: "learning", error });
     return false;
   }
 }
@@ -822,9 +822,7 @@ export async function sendTransactionalEmail(
     delivery = "outbox";
   } else {
     if (!(await withinDailyBudget(env.SESSIONS))) {
-      console.error(
-        JSON.stringify({ event: "transactional_email_over_daily_budget", kind: input.kind }),
-      );
+      log.error("transactional_email_over_daily_budget", { kind: input.kind });
       track(ctx.analytics, { name: "email_failed", kind: input.kind, error_class: "daily_budget" });
       throw new ServiceError("unavailable", "Couldn’t send the email. Try again in a moment.");
     }
@@ -835,9 +833,7 @@ export async function sendTransactionalEmail(
       delivery = "provider";
     } catch (error) {
       const errorClass = providerErrorClass(error);
-      console.error(
-        JSON.stringify({ event: "transactional_email_failed", kind: input.kind, errorClass }),
-      );
+      log.error("transactional_email_failed", { kind: input.kind, errorClass });
       track(ctx.analytics, { name: "email_failed", kind: input.kind, error_class: errorClass });
       throw new ServiceError("unavailable", "Couldn’t send the email. Try again in a moment.");
     }
@@ -938,13 +934,7 @@ export async function sendAccountEmail(
   try {
     await sendTransactionalEmail(ctx, env, input);
   } catch (error) {
-    console.error(
-      JSON.stringify({
-        event: "account_email_not_sent",
-        kind: input.kind,
-        error: error instanceof Error ? error.name : "unknown",
-      }),
-    );
+    log.error("account_email_not_sent", { kind: input.kind, error });
   }
 }
 

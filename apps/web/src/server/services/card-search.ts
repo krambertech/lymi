@@ -36,6 +36,7 @@ import {
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
+import { decodeBase64, parseJson } from "../parse";
 import { selectIn } from "./batch";
 import { type CardView, editionText, presentCards, seenIn } from "./card-view";
 import { foldForSearch, matchesSearch, searchKey } from "./cards";
@@ -642,14 +643,8 @@ function decodeCursor(
   if (!cursor) return null;
   const invalid = () =>
     new ServiceError("invalid", "Pass the `nextCursor` value from the previous page as `cursor`.");
-  let parsed: unknown;
-  try {
-    const binary = atob(cursor.replace(/-/g, "+").replace(/_/g, "/"));
-    const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
-    parsed = JSON.parse(new TextDecoder().decode(bytes));
-  } catch {
-    throw invalid();
-  }
+  const bytes = decodeBase64(cursor);
+  const parsed = bytes && parseJson(new TextDecoder().decode(bytes));
   if (!Array.isArray(parsed) || parsed.length !== 4) throw invalid();
   const [sorted, searched, values, id] = parsed as unknown[];
   if (typeof sorted !== "string" || typeof searched !== "string") throw invalid();

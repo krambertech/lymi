@@ -39,11 +39,14 @@ describe("handleError", () => {
     expect(res.status).toBe(500);
     expect(await res.json()).toEqual({ error: "Something went wrong" });
     expect(log).toHaveBeenCalledOnce();
-    expect(log).toHaveBeenCalledWith("Request failed", {
-      method: "PATCH",
-      route: "/api/cards/:id",
-      error: "DrizzleQueryError",
-    });
+    expect(log).toHaveBeenCalledWith(
+      JSON.stringify({
+        event: "request_failed",
+        method: "PATCH",
+        route: "/api/cards/:id",
+        error: "DrizzleQueryError",
+      }),
+    );
     const logged = JSON.stringify(log.mock.calls);
     for (const secret of ["to hurry up", "user-1", "card-1", "sbrigarsi", "Failed query"]) {
       expect(logged).not.toContain(secret);

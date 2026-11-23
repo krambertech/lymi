@@ -1,5 +1,6 @@
 import { and, asc, type Column, eq, lt, or, type SQL } from "@lymi/core/db";
 import { schema } from "../db";
+import { log } from "../log";
 import { track } from "./analytics";
 import type { ServiceContext } from "./context";
 
@@ -23,8 +24,8 @@ export function recordFirstDeck(ctx: ServiceContext, deck: NewDeck): void {
   ctx.analytics?.later?.(async () => {
     try {
       await record(ctx, deck);
-    } catch {
-      /* A failed analytics marker cannot undo a stored deck. */
+    } catch (error) {
+      log.warn("product_analytics_failed", { marker: "first_deck", error });
     }
   });
 }

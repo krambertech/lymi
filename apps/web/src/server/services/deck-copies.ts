@@ -12,6 +12,7 @@ import {
   sql,
 } from "@lymi/core/db";
 import { type Db, schema } from "../db";
+import { log } from "../log";
 import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatementWhen } from "./audit";
 import { stateStatementsForLearner } from "./modes";
@@ -315,9 +316,7 @@ export async function copyFormerDecks(
       track(events, { name: "former_deck_copied", cards: member.cards });
     } catch (error) {
       failed++;
-      console.error("Copying a former owner's deck for a member failed", {
-        error: error instanceof Error ? error.name : "unknown",
-      });
+      log.error("former_deck_copy_failed", { error });
     }
   }
   await db.delete(schema.formerDeckCopies).where(

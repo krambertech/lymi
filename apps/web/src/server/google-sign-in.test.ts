@@ -111,7 +111,11 @@ function cookieHeader(jar: Map<string, string>) {
 }
 
 /** The whole redirect sign-in against the real auth handler, as a browser would drive it. */
-async function signInWithGoogle(pending: Promise<unknown>[], firstTouch?: unknown) {
+async function signInWithGoogle(
+  pending: Promise<unknown>[],
+  firstTouch?: unknown,
+  callbackDb: Db = db,
+) {
   const auth = createAuth(env, db, (work) => pending.push(work));
   const jar = new Map<string, string>();
   const start = await auth.handler(
@@ -130,7 +134,7 @@ async function signInWithGoogle(pending: Promise<unknown>[], firstTouch?: unknow
   const { url } = (await start.json()) as { url: string };
   const state = new URL(url).searchParams.get("state") ?? "";
 
-  const callback = await auth.handler(
+  const callback = await createAuth(env, callbackDb, (work) => pending.push(work)).handler(
     new Request(`${PRODUCT_URL}/api/auth/callback/google?code=the-code&state=${state}`, {
       headers: { cookie: cookieHeader(jar) },
     }),
@@ -241,8 +245,45 @@ describe("signing in with Google", () => {
     expect(after?.googleVersion).toBe(row?.googleVersion);
     // The log line names what failed, never the URL, the bytes or the learner.
     for (const call of error.mock.calls) {
-      expect(String(call[0])).toBe("Importing the Google photo failed");
+      expect(Object.keys(JSON.parse(String(call[0]))).sort()).toEqual(
+        expect.arrayContaining(["error", "event"]),
+      );
+      expect(String(call[0])).toContain('"event":"google_photo_import_failed"');
+      expect(String(call[0])).not.toMatch(/https|svg|network down/);
     }
+  });
+
+  it("logs a failed sign-in query without its SQL or the learner's address", async () => {
+    stubGoogle("https://lh3.googleusercontent.com/a/photo=s96-c", () => new Response("photo"));
+    const lines = [
+      vi.spyOn(console, "error").mockImplementation(() => {}),
+      vi.spyOn(console, "warn").mockImplementation(() => {}),
+      vi.spyOn(console, "log").mockImplementation(() => {}),
+    ];
+    const failing = new Proxy(db, {
+      get(target, key) {
+        if (key !== "select") return Reflect.get(target, key, target);
+        return (fields: never) => ({
+          from: (table: never) => {
+            if (table === schema.account) {
+              throw new Error(`Failed query: select "id" from "account"\nparams: ${EMAIL}`);
+            }
+            return target.select(fields).from(table);
+          },
+        });
+      },
+    });
+    const pending: Promise<unknown>[] = [];
+
+    await signInWithGoogle(pending, undefined, failing).catch((error: unknown) => error);
+
+    const logged = lines
+      .flatMap((line) => line.mock.calls.flat())
+      .map(String)
+      .join("\n");
+    expect(logged).toContain("auth_library_failed");
+    expect(logged).not.toContain("Failed query");
+    expect(logged).not.toContain(EMAIL);
   });
 
   it("never fetches a picture that is not on Google's photo host", async () => {

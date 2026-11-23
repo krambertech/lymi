@@ -1,6 +1,7 @@
 import type { Scope } from "@lymi/core";
 import { and, eq, inArray, isNull } from "@lymi/core/db";
 import { schema } from "../db";
+import { parseJson } from "../parse";
 import type { ServiceContext } from "./context";
 
 /**
@@ -40,12 +41,8 @@ export async function grantedScope(
 function consentScopes(value: unknown): unknown[] {
   if (Array.isArray(value)) return value;
   if (typeof value !== "string") return [];
-  try {
-    const parsed: unknown = JSON.parse(value);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
+  const parsed = parseJson(value);
+  return Array.isArray(parsed) ? parsed : [];
 }
 
 /**

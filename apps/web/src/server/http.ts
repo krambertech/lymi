@@ -13,6 +13,8 @@ import { routePath } from "hono/route";
 import type { ZodSafeParseResult, ZodType, z } from "zod";
 import { AiGatewayError } from "./ai/gateway";
 import type { AppEnv } from "./index";
+import { log } from "./log";
+import { bodyJson } from "./parse";
 import { posthogEnabled, productAnalytics, reportServerException } from "./posthog";
 import { requireLearner, requireScopeForWrites } from "./principal";
 import { analyticsContextFor } from "./services/analytics-context";
@@ -88,7 +90,7 @@ export function reader<T extends ZodType>(schema: T, what: string) {
 }
 
 export async function readJson<R>(c: Context<AppEnv>, read: (value: unknown) => R): Promise<R> {
-  return read(await c.req.json().catch(() => null));
+  return read((await bodyJson(c.req)) ?? null);
 }
 
 export async function readForm<R>(c: Context<AppEnv>, read: (value: unknown) => R) {
@@ -162,6 +164,13 @@ export function describe(
   return Object.assign(guarded, { [uniqueSymbol]: specOf(documented) });
 }
 
+export function keepAlive(c: Context<AppEnv>, work: Promise<unknown>): void {
+  const unexpected = (error: unknown) => {
+    if (!(error instanceof ServiceError)) log.warn("response_work_failed", { error });
+  };
+  c.executionCtx.waitUntil(work.catch(unexpected));
+}
+
 export function errorResponse(status: keyof typeof ERRORS) {
   return {
     description: ERRORS[status],
@@ -196,12 +205,7 @@ export const handleError: ErrorHandler<AppEnv> = (err, c) => {
   if (err instanceof HTTPException) {
     return c.json({ error: err.message }, err.status);
   }
-  // Drizzle and D1 messages carry the SQL and its bound learner data, so only the class name is logged.
-  console.error("Request failed", {
-    method: c.req.method,
-    route: routePath(c, -1),
-    error: err.name,
-  });
+  log.error("request_failed", { method: c.req.method, route: routePath(c, -1), error: err });
   if (c.env && posthogEnabled(c.env)) {
     c.executionCtx.waitUntil(
       reportServerException(c.env, err, {

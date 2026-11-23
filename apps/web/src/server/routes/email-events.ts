@@ -3,6 +3,8 @@ import { Hono } from "hono";
 import { deliveryProblem, verifyResendWebhook } from "../email/resend";
 import { describe } from "../http";
 import type { AppEnv } from "../index";
+import { log } from "../log";
+import { parseJson } from "../parse";
 import { trackProductEvent } from "../posthog";
 import { accountIdForEmail, stopLearningEmails } from "../services";
 import { analyticsContextFor } from "../services/analytics-context";
@@ -20,7 +22,9 @@ async function seenBefore(sessions: KVNamespace | undefined, id: string): Promis
   try {
     if (await sessions.get(key)) return true;
     await sessions.put(key, "1", { expirationTtl: 60 * 60 * 24 * 3 });
-  } catch {}
+  } catch (error) {
+    log.warn("email_event_dedupe_failed", { error });
+  }
   return false;
 }
 
@@ -42,19 +46,15 @@ emailEvents.post("/", describe({ hide: true, open: true }), async (c) => {
   );
   if (!signed) return c.json({ error: "Invalid signature" }, 401);
 
-  let body: unknown;
-  try {
-    body = JSON.parse(raw);
-  } catch {
-    return c.json({ error: "Invalid JSON" }, 400);
-  }
+  const body = parseJson(raw);
+  if (body === undefined) return c.json({ error: "Invalid JSON" }, 400);
   const problem = deliveryProblem(body);
   if (!problem) return c.json({ ok: true });
   // Resend retries a delivery it is unsure of under the same id; count each event once.
   if (await seenBefore(c.env.SESSIONS, c.req.header("svix-id") ?? "")) return c.json({ ok: true });
 
   const kind = isKind(problem.kind) ? problem.kind : undefined;
-  console.error(JSON.stringify({ event: `email_${problem.type}`, kind: kind ?? "unknown" }));
+  log.error(`email_${problem.type}`, { kind: kind ?? "unknown" });
   const db = c.get("db");
   for (const address of problem.to) {
     const userId = await accountIdForEmail(db, address);

@@ -6,6 +6,7 @@ import {
 } from "@lymi/core";
 import type { MiddlewareHandler } from "hono";
 import type { AppEnv } from "./index";
+import { bodyFields } from "./parse";
 
 /** The endpoints that accept a new password. Better Auth checks only its length. */
 const GUARDED = new Set(["/api/auth/sign-up/email", "/api/auth/reset-password"]);
@@ -19,7 +20,7 @@ const GUARDED = new Set(["/api/auth/sign-up/email", "/api/auth/reset-password"])
 export const requireStrongPassword: MiddlewareHandler<AppEnv> = async (c, next) => {
   if (c.req.method !== "POST" || !GUARDED.has(new URL(c.req.url).pathname)) return next();
 
-  const body = await readBody(c.req.raw);
+  const body = await bodyFields(c.req.raw);
   if (!body) return next();
 
   // `newPassword` on a reset, `password` on a sign-up.
@@ -58,19 +59,5 @@ function messageFor(problem: PasswordProblem): string {
       return "Don’t use your email address in your password.";
     case "from-lymi":
       return "Don’t use “Lymi” in your password.";
-  }
-}
-
-async function readBody(request: Request): Promise<Record<string, unknown> | null> {
-  const type = request.headers.get("content-type")?.split(";")[0]?.trim().toLowerCase();
-  try {
-    const clone = request.clone();
-    if (type === "application/json") return (await clone.json()) as Record<string, unknown>;
-    if (type === "application/x-www-form-urlencoded") {
-      return Object.fromEntries(new URLSearchParams(await clone.text()));
-    }
-    return null;
-  } catch {
-    return null;
   }
 }

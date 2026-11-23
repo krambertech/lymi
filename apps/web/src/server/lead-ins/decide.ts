@@ -1,5 +1,6 @@
 import type { AiConsent } from "../ai/consent";
 import type { DecisionModel } from "../lessons/keep";
+import { log } from "../log";
 import type { LeadInInput, LeadInPolicy } from "./policy";
 
 export const DECISION_MODEL = "@cf/cloudflare/clef";
@@ -23,8 +24,9 @@ export async function leadInScore(
     )) as { answers?: { ambiguous?: { noul?: unknown } } };
     const score = reply.answers?.ambiguous?.noul;
     return typeof score === "number" && score >= 0 && score <= 1 ? score : null;
-  } catch {
+  } catch (error) {
     // The writer still decides on its own, so a failed decision costs only the saving.
+    log.warn("lead_in_decision_failed", { language: policy.language, error });
     return null;
   }
 }

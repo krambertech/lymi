@@ -21,6 +21,7 @@ import type { Db } from "./db";
 import { schema } from "./db";
 import { type Bindings, DEV_EMAIL_DOMAIN, devToolsEnabled } from "./env";
 import { admissionFrom, attributes, cookieName } from "./join-cookie";
+import { log, logFailure } from "./log";
 import { productAnalytics, trackProductEvent } from "./posthog";
 import { analyticsContextFor } from "./services/analytics-context";
 import { audit } from "./services/audit";
@@ -84,6 +85,13 @@ function fromPhoneApp(request: Request | undefined): boolean {
   return request?.headers.get("origin")?.startsWith(PHONE_APP_ORIGIN) ?? false;
 }
 
+function logAuthLibrary(level: string, _message: string, ...details: unknown[]) {
+  const error = details
+    .map((detail) => (detail instanceof Error ? detail : (detail as { error?: unknown })?.error))
+    .find((detail) => detail instanceof Error);
+  log[level === "error" ? "error" : "warn"]("auth_library_failed", error ? { error } : {});
+}
+
 export function createAuth(
   env: Bindings,
   db: Db,
@@ -106,6 +114,7 @@ export function createAuth(
     baseURL: env.PRODUCT_URL,
     basePath: "/api/auth",
     secret: env.BETTER_AUTH_SECRET,
+    logger: { log: logAuthLibrary },
     // The Mac app's scheme is left out on purpose: trusting it would let a callback redirect carry
     // the session cookie there. Its code is traded at `/electron/token` with no cookie to check.
     trustedOrigins: [env.PRODUCT_URL, PHONE_APP_ORIGIN, "https://appleid.apple.com"],
@@ -430,7 +439,7 @@ export function createAuth(
                 });
               }
             } catch (err) {
-              if (!(err instanceof ServiceError)) console.error("Joining after sign-in failed");
+              if (!(err instanceof ServiceError)) log.error("sign_in_join_failed", { error: err });
             }
             context?.setCookie(cookieName(env.PRODUCT_URL), "", {
               ...attributes(env.PRODUCT_URL),
@@ -455,8 +464,8 @@ export function createAuth(
             waitUntil,
             analyticsContextFor(db, userId, headersOf(ctx)),
           );
-        } catch {
-          console.error("Consent analytics failed");
+        } catch (error) {
+          log.error("consent_analytics_failed", { error });
         }
       }),
     },
@@ -539,7 +548,8 @@ async function firstTouchOf(redirect: boolean, headers: Headers | undefined) {
   if (!redirect) return parseFirstTouch(headers?.get(FIRST_TOUCH_HEADER));
   try {
     return parseFirstTouch((await getOAuthState<{ firstTouch?: unknown }>())?.firstTouch);
-  } catch {
+  } catch (error) {
+    log.warn("first_touch_unreadable", { error });
     return parseFirstTouch(undefined);
   }
 }
@@ -580,7 +590,10 @@ async function syncGoogleAvatar(
   userId: string,
   waitUntil: ((work: Promise<unknown>) => void) | undefined,
 ) {
-  const refresh = await avatarRow({ db, userId }).then(hasGoogleAvatar, () => false);
+  const refresh = await avatarRow({ db, userId }).then(hasGoogleAvatar, (error: unknown) => {
+    log.error("google_photo_import_failed", { error });
+    return false;
+  });
   const work = (async () => {
     const picture = await googlePictureOf(db, userId);
     if (!picture) return;
@@ -589,14 +602,16 @@ async function syncGoogleAvatar(
       { bucket: env.PRIVATE_IMAGES, images: env.IMAGES },
       picture,
     );
-  })().catch(() => console.error("Importing the Google photo failed"));
+  })().catch(logFailure("google_photo_import_failed"));
   let background = false;
   try {
     if (waitUntil) {
       waitUntil(work);
       background = true;
     }
-  } catch {}
+  } catch (error) {
+    log.warn("background_work_refused", { error });
+  }
   if (refresh && background) return;
   if (!background) return void (await work);
   await Promise.race([work, new Promise((resolve) => setTimeout(resolve, FIRST_IMPORT_WAIT_MS))]);

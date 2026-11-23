@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { createSpeechProviders } from "../ai";
 import { tooManyRequests } from "../auth-rate-limit";
-import { describe } from "../http";
+import { describe, keepAlive } from "../http";
 import type { AppEnv } from "../index";
 import { leadInDependencies } from "../lead-ins";
 import { ownerAnalytics } from "../posthog";
@@ -37,7 +37,7 @@ publicMedia.get(
         () => spendPublicAudio(c),
       );
       // A visitor who leaves mid-generation still gets the clip stored, and its lease released.
-      c.executionCtx.waitUntil(work.catch(() => undefined));
+      keepAlive(c, work);
       const found = await work;
       if ("retryAfter" in found) return tooManyRequests(found.retryAfter);
       object = found.clip;

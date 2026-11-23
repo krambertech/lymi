@@ -21,6 +21,7 @@ import { EMAIL_SAMPLES } from "../email/samples";
 import { devToolsEnabled, operatorEmails } from "../env";
 import { body, describe, query, reader } from "../http";
 import type { AppEnv } from "../index";
+import { log } from "../log";
 import {
   addSampleCards,
   asClaude,
@@ -519,7 +520,7 @@ async function signInPersona(auth: Auth, db: Db, persona: Persona) {
   if (signedIn.ok) return await sessionFrom(signedIn, true);
 
   // The account is there and its password is not this one, so the fixture is stale.
-  console.warn(`Rebuilding ${email}: its stored password predates the current fixture.`);
+  log.warn("stale_persona_rebuilt");
   await deletePersonaAccount(db, email);
   const rebuilt = await auth.api.signUpEmail({
     body: { email, password: DEV_PASSWORD, name: persona.name },

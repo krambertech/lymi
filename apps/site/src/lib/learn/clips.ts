@@ -3059,50 +3059,80 @@ export const GRADATION_CONVERSATION: Conversation = {
   turns: [
     {
       voice: "second",
-      text: ["Tere, Jaan!", "Tule sisse.", "See on minu uus korter."],
-      say: "[cheerful] Tere, Jaan! Tule sisse. See on minu uus korter.",
+      text: ["Tere, Jaan!", "Tule sisse, see on minu uus korter, kuhu ma eile kolisin."],
+      say: "[cheerful] Tere, Jaan! Tule sisse, see on minu uus korter, kuhu ma eile kolisin.",
     },
-    { voice: "main", text: ["Tere, Kati!", "Kas su tuba on suur?"] },
+    { voice: "main", text: ["Tere, Kati!", "Korter on ilus, aga kas su tuba on ka suur?"] },
     {
       voice: "second",
-      text: ["Ei, tuba on väike.", "Toas on ainult laud, voodi ja kapp."],
-      say: "[laughs] Ei, tuba on väike. Toas on ainult laud, voodi ja kapp.",
+      text: [
+        "Ei, tuba on väike, aga see on hele ja soe.",
+        "Toas on ainult laud, voodi ja kapp, mille ma turult ostsin.",
+      ],
     },
-    { voice: "main", text: "Kus su raamatud on?" },
-    { voice: "second", text: ["Raamatud on kapis.", "Kapi peal on lamp."] },
-    { voice: "main", text: "Ja kus su kott on?" },
-    { voice: "second", text: "Kott on toas, laua all." },
-    { voice: "main", text: "Kas siin lähedal on pood?" },
+    { voice: "main", text: "Kus su raamatud on, kas sa tõid need kõik kaasa?" },
+    { voice: "second", text: "Jah, raamatud on kapis ja kapi peal on lamp." },
+    { voice: "main", text: "Ja kus su suur kott on, mida sa eile kandsid?" },
+    { voice: "second", text: "Kott on toas laua all, sest mul pole veel riiulit." },
+    { voice: "main", text: "Kas siin lähedal on pood, kus saab leiba osta?" },
     {
       voice: "second",
-      text: ["Jah, pood on nurga taga.", "Ma käin poes iga päev."],
+      text: [
+        "Jah, pood on kohe nurga taga, maja kõrval.",
+        "Ma käin poes peaaegu iga päev, sest see on nii lähedal.",
+      ],
     },
-    { voice: "main", text: ["Ja pank?", "Kas sa käid tihti pangas?"] },
+    { voice: "main", text: "Ja pank, kas sa käid tihti pangas?" },
     {
       voice: "second",
-      text: ["Pank on pargi kõrval.", "Aga pangas ma ei käi, ma maksan telefoniga."],
+      text: [
+        "Pank on pargi kõrval, aga pangas ma ei käi.",
+        "Ma maksan kõik arved telefoniga, see on lihtsam.",
+      ],
     },
-    { voice: "main", text: "Mis pargis on?", say: "[curious] Mis pargis on?" },
+    { voice: "main", text: "Mis pargis on, kas seal on midagi huvitavat?" },
     {
       voice: "second",
-      text: ["Pargis on suured puud ja linnud.", "Hommikul ma jooksen pargis."],
+      text: [
+        "Pargis on suured vanad puud ja palju linde.",
+        "Hommikul ma jooksen pargis, enne kui tööle lähen.",
+      ],
     },
-    { voice: "main", text: ["Ja rand?", "Kas rand on ka lähedal?"] },
+    { voice: "main", text: "Ja rand, kas rand on ka siit lähedal?" },
     {
       voice: "second",
-      text: ["Ei, rand on kaugel.", "Rannas käin ma ainult laupäeval."],
+      text: [
+        "Ei, rand on kaugel, bussiga umbes pool tundi.",
+        "Rannas käin ma ainult laupäeval, kui mul on aega.",
+      ],
     },
-    { voice: "main", text: "Kus su ema elab?" },
+    { voice: "main", text: "Kas sa käid ka talvel rannas?" },
+    { voice: "second", text: "Talvel käin ma rannas ainult jalutamas, siis on seal vaikne." },
+    { voice: "main", text: "Kus su ema praegu elab, kas ikka Tartus?" },
     {
       voice: "second",
-      text: ["Ema elab Tartus, mäe peal.", "Tema majas on suur aed.", "Ma käin seal kord kuus."],
+      text: [
+        "Jah, ema elab Tartus, ühe väikese mäe peal.",
+        "Tema majas on suur aed, kus kasvavad õunapuud.",
+        "Ma käin seal kord kuus ja aitan tal aias töötada.",
+      ],
     },
+    { voice: "main", text: "Kas sinu õde elab ka Tartus?" },
+    { voice: "second", text: "Ei, õde elab Pärnus, mere ääres." },
     {
       voice: "main",
-      text: ["Mu jalad on väsinud.", "Kas ma võin istuda?"],
-      say: "[sighs] Mu jalad on väsinud. Kas ma võin istuda?",
+      text: ["Mu jalad on väsinud, sest ma tulin jala.", "Kas ma võin natuke istuda?"],
+      say: "[laughs] Mu jalad on väsinud, sest ma tulin jala. Kas ma võin natuke istuda?",
     },
-    { voice: "second", text: ["Muidugi, istu siia!", "Ma teen teed."] },
+    {
+      voice: "second",
+      text: [
+        "Muidugi, istu siia diivanile, see on mugav.",
+        "Ma teen meile teed ja toon küpsiseid.",
+      ],
+    },
+    { voice: "main", text: "Aitäh, sul on siin väga hubane, ma tulen jälle." },
+    { voice: "second", text: "Tule järgmisel nädalal jälle, siis on mul juba uus riiul." },
   ],
 };
 
@@ -3274,59 +3304,74 @@ export const PLURAL_PART_PARTY = [
 
 export const PLURAL_PART_CONVERSATION: Conversation = {
   turns: [
-    {
-      voice: "main",
-      text: ["Tere, Mari!", "Kas sa käisid turul?"],
-      say: "[cheerful] Tere, Mari! Kas sa käisid turul?",
-    },
-    {
-      voice: "second",
-      text: ["Jah, käisin.", "Ma ostsin õunu, porgandeid ja kaks kilo kartuleid."],
-    },
-    { voice: "main", text: "Kas turul oli ka tomateid?" },
+    { voice: "main", text: ["Tere, Mari!", "Kas sa käisid täna hommikul turul?"] },
+    { voice: "second", text: "Jah, käisin, ja ostsin õunu, porgandeid ja kaks kilo kartuleid." },
+    { voice: "main", text: "Kas turul oli ka tomateid, mida sa eile otsisid?" },
+    { voice: "second", text: "Ei, tomateid täna ei olnud, sest müüja oli haige." },
+    { voice: "main", text: "Kahju, ma tahtsin teha tomatisalatit." },
     {
       voice: "second",
-      text: ["Ei, tomateid täna ei olnud.", "Aga seal oli palju lilli."],
-      say: "[sighs] Ei, tomateid täna ei olnud. Aga seal oli palju lilli.",
+      text: [
+        "Ma võin homme uuesti minna, kui sul neid väga vaja on.",
+        "Aga seal oli palju lilli, punaseid ja kollaseid.",
+      ],
     },
-    { voice: "main", text: "Kas sa ostsid lilli ka?" },
+    { voice: "main", text: "Kas sa ostsid ka lilli või ainult köögivilju?" },
+    { voice: "second", text: "Jah, ma ostsin viis roosi, need on emale." },
+    { voice: "main", text: "Kas su emal on sünnipäev, et sa talle lilli viid?" },
     {
       voice: "second",
-      text: ["Jah, ma ostsin viis roosi.", "Need on emale."],
-    },
-    { voice: "main", text: "Kas su emal on sünnipäev?" },
-    {
-      voice: "second",
-      text: ["Ei, ta lihtsalt armastab lilli.", "Tal on aias palju roose, aga praegu ei ole."],
-    },
-    { voice: "main", text: ["Mul on homme külalised.", "Ma pean veel leiba ja juustu ostma."] },
-    {
-      voice: "second",
-      text: "Mitu külalist sul tuleb?",
-      say: "[curious] Mitu külalist sul tuleb?",
+      text: [
+        "Ei, ta lihtsalt armastab lilli ja ootab mind täna külla.",
+        "Tal on aias palju roose, aga praegu nad veel ei õitse.",
+      ],
     },
     {
       voice: "main",
-      text: ["Kuus.", "Minu sõbrad ja nende lapsed."],
+      text: [
+        "Mul tulevad homme külalised ja ma pean veel poodi minema.",
+        "Mul on vaja veel leiba, juustu ja mahla.",
+      ],
     },
-    { voice: "second", text: ["Kuus inimest!", "Mida sa neile teed?"] },
+    { voice: "second", text: "Mitu külalist sul tuleb, kas palju?" },
+    { voice: "main", text: "Kuus inimest: minu sõbrad ja nende lapsed." },
+    {
+      voice: "second",
+      text: "Kuus inimest, see on palju, mida sa neile teed?",
+      say: "[surprised] Kuus inimest, see on palju, mida sa neile teed?",
+    },
     {
       voice: "main",
-      text: ["Ma teen suppi ja ostan kooke.", "Lapsed armastavad kooke."],
+      text: "Ma teen suppi ja ostan kondiitrist kooke, sest lapsed armastavad kooke.",
     },
-    { voice: "second", text: "Kas sul on piisavalt toole?" },
+    { voice: "second", text: "Milliseid kooke sa ostad?" },
+    { voice: "main", text: "Mõned õunakoogid ja mõned kohupiimakoogid." },
+    { voice: "second", text: "Kas sul on piisavalt toole, et kõik saaksid istuda?" },
     {
       voice: "main",
-      text: ["Ei, mul on ainult neli tooli.", "Kas sa saad mulle kaks tooli laenata?"],
+      text: [
+        "Ei, mul on ainult neli tooli ja üks diivan.",
+        "Kas sa saad mulle kaks tooli laenata?",
+      ],
     },
     {
       voice: "second",
-      text: ["Muidugi.", "Ma toon need homme hommikul."],
-      say: "[laughs] Muidugi. Ma toon need homme hommikul.",
+      text: [
+        "Muidugi, ma toon need homme hommikul autoga.",
+        "Mul on köögis kuus tooli, aga me kasutame ainult kahte.",
+      ],
     },
-    { voice: "main", text: ["Aitäh!", "Ma teen sulle kooki."] },
-    { voice: "second", text: "Kas sul on ka taldrikuid ja tasse?" },
-    { voice: "main", text: ["Jah, neid on mul palju.", "Tule homme kell kuus!"] },
+    { voice: "main", text: "Aitäh, sa oled tõeline sõber, ma teen sulle kooki." },
+    { voice: "second", text: "Kas sul on ka piisavalt taldrikuid ja tasse?" },
+    { voice: "main", text: "Jah, neid on mul palju, sest ema andis mulle oma vanad nõud." },
+    { voice: "second", text: "Ja kas sa vajad veel midagi, näiteks klaase või lusikaid?" },
+    { voice: "main", text: "Ei, klaase ja lusikaid on mul küll, aga mul pole vaase." },
+    { voice: "second", text: "Siis toon ma ka ühe vaasi, sest külalised toovad sageli lilli." },
+    {
+      voice: "main",
+      text: "Suurepärane, tule homme kell kuus ja too oma lapsed ka!",
+      say: "[cheerful] Suurepärane, tule homme kell kuus ja too oma lapsed ka!",
+    },
   ],
 };
 

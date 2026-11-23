@@ -438,7 +438,7 @@ function useContent() {
     }));
 
     const exam: PassageQuestion[] = [
-      { id: "big", kind: "truefalse", ask: t`Kati’s room is big.`, answer: false, line: 5 },
+      { id: "big", kind: "truefalse", ask: t`Kati’s room is big.`, answer: false, line: 4 },
       {
         id: "books",
         ask: t`Where are Kati’s books?`,
@@ -448,21 +448,21 @@ function useContent() {
           { id: "on", label: t`On top of the cupboard` },
         ],
         answer: "in",
-        line: 8,
+        line: 7,
       },
       {
         id: "shop",
         kind: "short",
         ask: t`Where is the shop? Write it in two words, as Kati says it.`,
         answers: ["nurga taga"],
-        line: 13,
+        line: 11,
       },
       {
         id: "bank",
         kind: "truefalse",
         ask: t`Kati pays with her phone.`,
         answer: true,
-        line: 18,
+        line: 15,
       },
       {
         id: "beach",
@@ -473,14 +473,14 @@ function useContent() {
           { id: "day", label: t`Every day` },
         ],
         answer: "saturday",
-        line: 25,
+        line: 21,
       },
       {
         id: "mother",
         kind: "truefalse",
         ask: t`Kati’s mother lives in Tartu.`,
         answer: true,
-        line: 27,
+        line: 25,
       },
       {
         id: "who",
@@ -491,9 +491,9 @@ function useContent() {
           { id: "jaan", label: t`Jaan` },
         ],
         statements: [
-          { id: "every-day", label: t`I go to the shop every day.`, answer: "kati", line: 14 },
-          { id: "often", label: t`Do you often go to the bank?`, answer: "jaan", line: 16 },
-          { id: "run", label: t`I run in the park in the morning.`, answer: "kati", line: 21 },
+          { id: "every-day", label: t`I go to the shop every day.`, answer: "kati", line: 12 },
+          { id: "often", label: t`Do you often go to the bank?`, answer: "jaan", line: 13 },
+          { id: "run", label: t`I run in the park in the morning.`, answer: "kati", line: 18 },
           { id: "tired", label: t`My feet are tired.`, answer: "jaan", line: 30 },
           { id: "tea", label: t`I’ll make tea.`, answer: "kati", line: 33 },
         ],

@@ -14272,5 +14272,210 @@
     "text": "Homme õpib ta eesti keelt.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/c-call": {
+    "text": "Tere, Mari! Kus sa oled? Tere, Jaan! Ma olen poes. Aga sina? Ma olen kodus. Ma olen toas ja loen. Kus Kati on? Kati on koolis. Ema on turul. Ja isa? Isa on tööl. Ta töötab täna Tartus. Kas minu raamat on laual? Ei, raamat on aknal. Aitäh! Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Mari!",
+          "Kus sa oled?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Jaan!",
+          "Ma olen poes.",
+          "Aga sina?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma olen kodus.",
+          "Ma olen toas ja loen."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kus Kati on?"
+        ],
+        "say": "[curious] Kus Kati on?"
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kati on koolis.",
+          "Ema on turul."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ja isa?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Isa on tööl.",
+          "Ta töötab täna Tartus."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas minu raamat on laual?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei, raamat on aknal."
+        ],
+        "say": "[laughs] Ei, raamat on aknal."
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Aitäh!",
+          "Head aega!"
+        ]
+      }
+    ]
+  },
+  "pohivormid/laps-on-koolis": {
+    "text": "Laps on koolis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/mees-on-majas": {
+    "text": "Mees on majas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/naine-on-toas": {
+    "text": "Naine on toas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/raamat-on-laual": {
+    "text": "Raamat on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/me-oleme-linnas": {
+    "text": "Me oleme linnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/auto-on-kodus": {
+    "text": "Auto on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/mees-on-linnas": {
+    "text": "Mees on linnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/naine-on-poes": {
+    "text": "Naine on poes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/laps-on-autos": {
+    "text": "Laps on autos.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/mees-on-uksel": {
+    "text": "Mees on uksel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/laps-on-turul": {
+    "text": "Laps on turul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/naine-on-to2o2l": {
+    "text": "Naine on tööl.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/c-class": {
+    "text": "Tere, Jaan! Mis on sõna raamat põhivormid? Raamat, raamatu, raamatut. Väga hea! Ja sõna laps? Laps, lapse, lapse. Ei, laps, lapse, last. Last. Aitäh! Ja sõna maja? Maja, maja, maja. Väga hea, Jaan!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Mis on sõna raamat põhivormid?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Raamat, raamatu, raamatut."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Väga hea!",
+          "Ja sõna laps?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Laps, lapse, lapse."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, laps, lapse, last."
+        ],
+        "say": "[gently] Ei, laps, lapse, last."
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Last.",
+          "Aitäh!"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja sõna maja?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Maja, maja, maja."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Väga hea, Jaan!"
+        ],
+        "say": "[warmly] Väga hea, Jaan!"
+      }
+    ]
+  },
+  "pohivormid/linnas": {
+    "text": "linnas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

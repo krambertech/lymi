@@ -178,8 +178,8 @@ msgstr "Learn a verb as three forms, the <0>-ma</0> infinitive, the <1>-da</1> i
 msgid "Learn every Estonian verb as three forms: <0>lugema, lugeda, loen</0>. Most verbs make the middle one by swapping <1>-ma</1> for <2>-da</2>; some take <3>-ta</3>, and a few take <4>-la</4>, <5>-na</5> or a bare <6>-a</6>."
 msgstr "Learn every Estonian verb as three forms: <0>lugema, lugeda, loen</0>. Most verbs make the middle one by swapping <1>-ma</1> for <2>-da</2>; some take <3>-ta</3>, and a few take <4>-la</4>, <5>-na</5> or a bare <6>-a</6>."
 
-msgid "Lessons {negation} and {commands} called <0/> the <1>ma</1> form, after <2>ma loen</2>. From here on it is the present, and the <3>-ma</3> infinitive is <4/>."
-msgstr "Lessons {negation} and {commands} called <0/> the <1>ma</1> form, after <2>ma loen</2>. From here on it is the present, and the <3>-ma</3> infinitive is <4/>."
+msgid "Lessons {negation} and {commands} called <0/> the I form of the present, after <1>ma loen</1>. Here it is the present, and <2/> is the <3>-ma</3> infinitive."
+msgstr "Lessons {negation} and {commands} called <0/> the I form of the present, after <1>ma loen</1>. Here it is the present, and <2/> is the <3>-ma</3> infinitive."
 
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"

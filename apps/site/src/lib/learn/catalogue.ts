@@ -68,7 +68,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian present tense`,
         et: "Ma loen",
         minutes: 10,
-        blurb: msg`A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad on ten everyday verbs. Every sentence is read aloud.`,
+        blurb: msg`A free lesson on Estonian verbs in the present tense: the -ma infinitive, the stem, and the six endings -n, -d, -b, -me, -te and -vad on ten everyday verbs. Every sentence is read aloud.`,
       },
       {
         slug: "eitus",

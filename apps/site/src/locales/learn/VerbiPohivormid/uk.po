@@ -178,8 +178,8 @@ msgstr "Запам’ятовуй дієслово у трьох формах �
 msgid "Learn every Estonian verb as three forms: <0>lugema, lugeda, loen</0>. Most verbs make the middle one by swapping <1>-ma</1> for <2>-da</2>; some take <3>-ta</3>, and a few take <4>-la</4>, <5>-na</5> or a bare <6>-a</6>."
 msgstr "Кожне естонське дієслово варто запам’ятовувати у трьох формах: <0>lugema, lugeda, loen</0>. Більшість дієслів утворює середню форму, міняючи <1>-ma</1> на <2>-da</2>; деякі мають <3>-ta</3>, а кілька — <4>-la</4>, <5>-na</5> або просто <6>-a</6>."
 
-msgid "Lessons {negation} and {commands} called <0/> the <1>ma</1> form, after <2>ma loen</2>. From here on it is the present, and the <3>-ma</3> infinitive is <4/>."
-msgstr "В уроках {negation} і {commands} <0/> називалася формою з <1>ma</1> — від <2>ma loen</2>. Далі це форма теперішнього часу, а інфінітив на <3>-ma</3> — це <4/>."
+msgid "Lessons {negation} and {commands} called <0/> the I form of the present, after <1>ma loen</1>. Here it is the present, and <2/> is the <3>-ma</3> infinitive."
+msgstr "В уроках {negation} і {commands} <0/> називалася формою першої особи однини теперішнього часу — від <1>ma loen</1>. Тут це теперішній час, а <2/> — інфінітив на <3>-ma</3>."
 
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"

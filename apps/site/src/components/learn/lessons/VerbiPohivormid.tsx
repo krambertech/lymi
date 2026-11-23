@@ -798,9 +798,9 @@ export function VerbiPohivormidLesson() {
                 </p>
                 <p>
                   <Trans>
-                    Lessons {negation} and {commands} called <Word w="loen" /> the{" "}
-                    <span lang="et">ma</span> form, after <span lang="et">ma loen</span>. From here
-                    on it is the present, and the <End>-ma</End> infinitive is <Word w="lugema" />.
+                    Lessons {negation} and {commands} called <Word w="loen" /> the I form of the
+                    present, after <span lang="et">ma loen</span>. Here it is the present,
+                    and <Word w="lugema" /> is the <End>-ma</End> infinitive.
                   </Trans>
                 </p>
                 <p>

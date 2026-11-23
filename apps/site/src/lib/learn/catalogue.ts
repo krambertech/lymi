@@ -51,7 +51,7 @@ export const STAGES: readonly Stage[] = [
         name: msg`Pronunciation`,
         title: msg`Estonian pronunciation`,
         et: "Hääldus",
-        minutes: 10,
+        minutes: 15,
         blurb: msg`A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud.`,
       },
       {
@@ -59,7 +59,7 @@ export const STAGES: readonly Stage[] = [
         name: msg`Personal pronouns and “to be”`,
         title: msg`Estonian personal pronouns and “to be”`,
         et: "Mina, sina, tema",
-        minutes: 10,
+        minutes: 15,
         blurb: msg`A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud.`,
       },
       {
@@ -67,7 +67,7 @@ export const STAGES: readonly Stage[] = [
         name: msg`Present tense`,
         title: msg`Estonian present tense`,
         et: "Ma loen",
-        minutes: 10,
+        minutes: 15,
         blurb: msg`A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad on ten everyday verbs. Every sentence is read aloud.`,
       },
       {

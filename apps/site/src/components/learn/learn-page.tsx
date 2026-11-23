@@ -12,9 +12,12 @@ interface Page {
   View: ComponentType;
 }
 
-type Load =
-  | { status: "loading"; page: Promise<Page>; shown: Promise<Page> }
-  | { status: "ready"; page: Page };
+type Shown = Promise<Page> & { status?: "fulfilled"; value?: Page };
+
+interface Load {
+  page: Promise<Page>;
+  shown: Shown;
+}
 
 const pages = new Map<string, Load>();
 
@@ -60,9 +63,10 @@ function open(target: LearnTarget, locale: string): Load {
       : target.kind === "hub"
         ? hubPage(locale)
         : kitPage(locale);
-  const load: Load = { status: "loading", page, shown: page.catch(keepServerHtml) };
+  const shown: Shown = page.catch(keepServerHtml);
+  page.then((value) => Object.assign(shown, { status: "fulfilled", value }), noop);
+  const load = { page, shown };
   pages.set(key, load);
-  page.then((ready) => pages.set(key, { status: "ready", page: ready }), noop);
   return load;
 }
 
@@ -71,8 +75,7 @@ export async function prepareLearnPage(target: LearnTarget, locale: string): Pro
 }
 
 export function LearnPage({ target, locale }: { target: LearnTarget; locale: string }) {
-  const load = open(target, locale);
-  const { i18n, View } = load.status === "ready" ? load.page : use(load.shown);
+  const { i18n, View } = use(open(target, locale).shown);
   return (
     <I18nProvider i18n={i18n}>
       <Queries>

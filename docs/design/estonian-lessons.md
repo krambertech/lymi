@@ -31,7 +31,7 @@ The lessons cost every other page nothing. Only the hub, a lesson's page and the
 
 When a lesson's code or catalog can't load, such as just after a deploy replaced it, the page keeps the article the server rendered and `LearnReload` offers to reload it. Its two lines live in the site's catalog, because the lesson's own may be what failed.
 
-Each lesson has its own Lingui catalogs in `apps/site/src/locales/learn/<File>/`, the kit, hub and course names share `locales/learn/Kit/`, and the site's own catalogs hold no lesson text. `apps/site/lingui.config.ts` finds a new lesson by its file. `lib/learn/isolation.test.ts` fails when another page imports lesson code or a lesson line reaches the site's catalog, and `pnpm check:boundaries` fails when a built page outside the lessons loads a chunk of theirs.
+Each lesson has its own Lingui catalogs in `apps/site/src/locales/learn/<File>/`, the kit, hub and course names share `locales/learn/Kit/`, and the site's own catalogs hold no lesson text. `apps/site/lingui.config.ts` finds a new lesson by its file. `lesson-isolation.mjs` fails the site's build when a page outside the lessons would load a module or catalog of theirs, and `pnpm i18n:check` fails when a lesson's line is in the site's catalog.
 
 ## Components
 

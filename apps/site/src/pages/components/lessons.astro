@@ -1,6 +1,6 @@
 ---
-import LearnReload from "../../components/islands/LearnReload";
 import LessonKitPage from "../../components/islands/LessonKitPage";
+import LessonKitReload from "../../components/islands/LessonKitReload";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 ---
 
@@ -12,5 +12,5 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 >
   <meta slot="head" name="robots" content="noindex, nofollow" />
   <LessonKitPage client:only="react" />
-  <LearnReload client:load locale="en" />
+  <LessonKitReload client:only="react" />
 </BaseLayout>

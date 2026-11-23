@@ -1,8 +1,8 @@
+import { kitLocale } from "../../lib/learn/kit-locale";
 import { LearnPage } from "../learn/learn-page";
 
 export default function LessonKitPage() {
-  const lang = new URLSearchParams(window.location.search).get("lang");
-  const locale = lang === "uk" || lang === "ru" ? lang : "en";
+  const locale = kitLocale();
   return (
     <div lang={locale}>
       <LearnPage target={{ kind: "kit" }} locale={locale} />

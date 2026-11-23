@@ -3428,9 +3428,9 @@ export const TRA_NA_KS = [
     noun: "arst",
     base: "arst",
     way: "na",
-    cue: "Ta töötab …",
+    cue: "Ta alustas haiglas …",
     answer: "arstina",
-    said: "Ta töötab arstina.",
+    said: "Ta alustas haiglas arstina.",
   },
   {
     id: "arstiks",
@@ -3446,9 +3446,9 @@ export const TRA_NA_KS = [
     noun: "opetaja",
     base: "õpetaja",
     way: "na",
-    cue: "Mari töötab koolis …",
+    cue: "Mari alustas koolis …",
     answer: "õpetajana",
-    said: "Mari töötab koolis õpetajana.",
+    said: "Mari alustas koolis õpetajana.",
   },
   {
     id: "opetajaks",
@@ -3464,9 +3464,9 @@ export const TRA_NA_KS = [
     noun: "kokk",
     base: "kokk",
     way: "na",
-    cue: "Jaan töötab restoranis …",
+    cue: "Jaan alustas restoranis …",
     answer: "kokana",
-    said: "Jaan töötab restoranis kokana.",
+    said: "Jaan alustas restoranis kokana.",
   },
   {
     id: "kokaks",
@@ -3482,9 +3482,9 @@ export const TRA_NA_KS = [
     noun: "muuja",
     base: "müüja",
     way: "na",
-    cue: "Kati töötab poes …",
+    cue: "Kati alustas poes …",
     answer: "müüjana",
-    said: "Kati töötab poes müüjana.",
+    said: "Kati alustas poes müüjana.",
   },
   {
     id: "muujaks",
@@ -3572,6 +3572,8 @@ export const TRA_TRANSLATE = [
       "Sõidan nädalaks Tartusse.",
       "Mina lähen Tartusse nädalaks.",
       "Ma lähen nädalaks Tartu.",
+      "Lähen nädalaks Tartu.",
+      "Ma lähen Tartu nädalaks.",
     ],
   },
   {
@@ -3683,6 +3685,8 @@ export const TRA_WORDS = [
 ] as const;
 
 export const TRA_DRILL = [
+  "Jaan töötab restoranis kokana.",
+  "Kati töötab poes müüjana.",
   "Ma tahan saada arstiks.",
   "Tuba läheb külmaks.",
   "Ma olen õhtuks kodus.",
@@ -3721,13 +3725,21 @@ export const GI_SOME = [
 
 export const GI_NOT = [
   { pos: "Keegi tuleb.", neg: "Keegi ei tule.", also: ["Mitte keegi ei tule."] },
-  { pos: "Ma näen kedagi.", neg: "Ma ei näe kedagi.", also: ["Ma ei näe mitte kedagi."] },
+  {
+    pos: "Ma näen kedagi.",
+    neg: "Ma ei näe kedagi.",
+    also: ["Ma ei näe mitte kedagi.", "Ma kedagi ei näe."],
+  },
   {
     pos: "Mul on midagi.",
     neg: "Mul ei ole midagi.",
     also: ["Mul pole midagi.", "Mul ei ole mitte midagi.", "Mul pole mitte midagi."],
   },
-  { pos: "Ta läheb kuhugi.", neg: "Ta ei lähe kuhugi.", also: ["Ta ei lähe mitte kuhugi."] },
+  {
+    pos: "Ta läheb kuhugi.",
+    neg: "Ta ei lähe kuhugi.",
+    also: ["Ta ei lähe mitte kuhugi.", "Ta ei lähe kuskile."],
+  },
   { pos: "Kati ostab midagi.", neg: "Kati ei osta midagi.", also: ["Kati ei osta mitte midagi."] },
   {
     pos: "Ma räägin kellegagi.",
@@ -3836,6 +3848,8 @@ export const GI_TRANSLATE = [
       "Kas te tahate midagi?",
       "Kas tahad midagi?",
       "Tahad sa midagi?",
+      "Kas tahate midagi?",
+      "Tahate te midagi?",
     ],
   },
   {

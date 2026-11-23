@@ -25,9 +25,6 @@ msgstr "18 хвилин"
 msgid "6 exercises, 3 of them typed, and a conversation"
 msgstr "6 вправ, у 3 з них треба писати, і розмова"
 
-msgid "a birthday"
-msgstr "день народження"
-
 msgid "A book"
 msgstr "Книжку"
 
@@ -204,6 +201,9 @@ msgstr "Став чи стала хорошим лікарем."
 
 msgid "He or she started as the new doctor."
 msgstr "Почав чи почала працювати новим лікарем."
+
+msgid "He or she started at the hospital as a doctor."
+msgstr "Почав чи почала працювати в лікарні лікарем."
 
 msgid "He or she works as a doctor."
 msgstr "Працює лікарем."
@@ -458,13 +458,13 @@ msgid "Works as is <et>-na</et>: <et>töötab arstina</et>."
 msgstr "«Працює як» — це <et>-na</et>: <et>töötab arstina</et>."
 
 msgid "Works as or becomes"
-msgstr "Працює як чи стає"
+msgstr "Ким працює, ким стає"
 
 msgid "Works as or becomes: <et>arstina</et>, <et>arstiks</et>"
-msgstr "Працює як чи стає: <et>arstina</et>, <et>arstiks</et>"
+msgstr "Ким працює, ким стає: <et>arstina</et>, <et>arstiks</et>"
 
 msgid "Works as or becomes?"
-msgstr "Працює як чи стає?"
+msgstr "Ким працює, а ким стає?"
 
 msgid "Works as: <0>-na</0>, <1>{answer}</1>."
 msgstr "«Працює як» — <0>-na</0>: <1>{answer}</1>."

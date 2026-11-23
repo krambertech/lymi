@@ -25,9 +25,6 @@ msgstr "18 minutes"
 msgid "6 exercises, 3 of them typed, and a conversation"
 msgstr "6 exercises, 3 of them typed, and a conversation"
 
-msgid "a birthday"
-msgstr "a birthday"
-
 msgid "A book"
 msgstr "A book"
 
@@ -204,6 +201,9 @@ msgstr "He or she became a good doctor."
 
 msgid "He or she started as the new doctor."
 msgstr "He or she started as the new doctor."
+
+msgid "He or she started at the hospital as a doctor."
+msgstr "He or she started at the hospital as a doctor."
 
 msgid "He or she works as a doctor."
 msgstr "He or she works as a doctor."

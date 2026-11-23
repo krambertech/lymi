@@ -16166,11 +16166,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "saav/mari-to2o2tab-koolis-o3petajana": {
-    "text": "Mari töötab koolis õpetajana.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "saav/jaan-to2o2tab-restoranis-kokana": {
     "text": "Jaan töötab restoranis kokana.",
     "model": "eleven_v4",
@@ -16755,5 +16750,25 @@
         ]
       }
     ]
+  },
+  "saav/ta-alustas-haiglas-arstina": {
+    "text": "Ta alustas haiglas arstina.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "saav/mari-alustas-koolis-o3petajana": {
+    "text": "Mari alustas koolis õpetajana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "saav/jaan-alustas-restoranis-kokana": {
+    "text": "Jaan alustas restoranis kokana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "saav/kati-alustas-poes-mu2u2jana": {
+    "text": "Kati alustas poes müüjana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

@@ -242,7 +242,7 @@ msgid "A free Estonian lesson on four case endings: -ga for with and by (sõbrag
 msgstr "Безкоштовний урок естонської про чотири відмінкові закінчення: -ga — «з» і «чим» (sõbraga, bussiga), -ta — «без» (piimata), -ni — «аж до» (kella viieni, Tartuni) і -na — «як», у ролі (arstina). Усі вони додаються до родового відмінка. Кожне речення озвучене."
 
 msgid "A free Estonian lesson on keegi, midagi, kuskil and kuhugi: question words with -gi or -ki for somebody and something, ei for nobody and nothing, mitte keegi on its own, and -gi or -ki on every case, as in kellelegi and kellestki, and which one to use. Every sentence is read aloud."
-msgstr "Безкоштовний урок естонської про keegi, midagi, kuskil і kuhugi: питальні слова з -gi чи -ki для «хтось» і «щось», ei для «ніхто» і «нічого», mitte keegi окремо, а також -gi чи -ki у кожному відмінку, як у kellelegi і kellestki, і яке з них коли. Кожне речення озвучене."
+msgstr "Безкоштовний урок естонської про keegi, midagi, kuskil і kuhugi: питальні слова з -gi чи -ki для «хтось» і «щось», ei для «ніхто» і «нічого», mitte keegi окремо, а також -gi чи -ki у кожному відмінку, як у kellelegi і kellestki, і коли яке з них уживати. Кожне речення озвучене."
 
 msgid "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про meeldima, «подобатися»: mulle meeldib та інші особи, meeldivad, коли подобається кілька речей, meeldib з дієсловом, ei meeldi, питання з kas і kellele та почуття, як-от mul on külm. Кожне речення озвучене."

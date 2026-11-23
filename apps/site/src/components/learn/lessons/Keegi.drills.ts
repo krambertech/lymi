@@ -36,6 +36,8 @@ export const DRILLS: DrillBank = {
         "Kas te tahate midagi juua?",
         "Kas tahad midagi juua?",
         "Tahad sa midagi juua?",
+        "Kas tahate midagi juua?",
+        "Tahate te midagi juua?",
       ],
       say: "Kas sa tahad midagi juua?",
       explain: SOME,

@@ -50,6 +50,7 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Ilm muutus väga külmaks.": msg`The weather turned very cold.`,
   "Ta töötab arstina.": msg`He or she works as a doctor.`,
   "Ta sai arstiks.": msg`He or she became a doctor.`,
+  "Ta alustas haiglas arstina.": msg`He or she started at the hospital as a doctor.`,
 };
 
 const MAKE_GLOSS: Record<(typeof TRA_MAKE)[number]["id"], MessageDescriptor> = {

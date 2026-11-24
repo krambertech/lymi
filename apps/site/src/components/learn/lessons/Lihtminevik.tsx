@@ -6,7 +6,10 @@ import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
+  PAST_ANSWERS,
+  PAST_CONVERSATION,
   PAST_DIALOGUE,
+  PAST_FIXES,
   PAST_I_VERBS,
   PAST_NOW_OR_THEN,
   PAST_SATURDAY,
@@ -14,6 +17,7 @@ import {
   PAST_SI_VERBS,
   PAST_SORT,
   PAST_TIMELINE,
+  PAST_TRANSLATE,
   PRESENT_ENDINGS,
   presentWithPronoun,
 } from "../../../lib/learn/clips";
@@ -21,12 +25,14 @@ import { playSound } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, Panel } from "../Explore";
+import { type FixItem, FixRound, fixRecall } from "../FixRound";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
 import { Morph, type MorphChain } from "../Morph";
 import { Paradigm, type ParadigmRow } from "../Paradigm";
 import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, type GapItem, GapRound, Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
 import { Sort, type SortBin, type SortItem } from "../Sort";
 import { Timeline, type TimelinePoint } from "../Timeline";
 import { Word } from "../Word";
@@ -413,6 +419,58 @@ const TIME_BUILDS: Record<(typeof PAST_TIMELINE)[number]["id"], MessageDescripto
   today: msg`the present, for I`,
 };
 
+const TRANSLATE_PROMPTS: Record<(typeof PAST_TRANSLATE)[number], MessageDescriptor> = {
+  "Eile ma lugesin raamatut.": msg`Yesterday I read a book.`,
+  "Me käisime eile poes.": msg`We went to the shop yesterday.`,
+  "Ta läks eile koju.": msg`He or she went home yesterday.`,
+  "Ma sõin hommikul leiba.": msg`I ate bread in the morning.`,
+  "Nad tulid eile Tartust.": msg`They came from Tartu yesterday.`,
+  "Ma töötasin eile kodus.": msg`I worked at home yesterday.`,
+};
+
+const FIX_PROMPTS: Record<(typeof PAST_FIXES)[number]["id"], MessageDescriptor> = {
+  read: msg`I read a book yesterday.`,
+  lived: msg`He or she lived in Tartu last year.`,
+  went: msg`I went to work in the morning.`,
+  ate: msg`He or she ate soup yesterday.`,
+  we: msg`We lived in Tallinn before.`,
+  came: msg`He or she came home in the evening.`,
+};
+
+const FIX_WHY: Record<(typeof PAST_FIXES)[number]["id"], ReactNode> = {
+  read: (
+    <Trans>
+      The past keeps the <End>ma</End> stem of <b lang="et">lugema</b>: <b lang="et">lugesin</b>,
+      not <b lang="et">loesin</b>.
+    </Trans>
+  ),
+  lived: (
+    <Trans>
+      With <Et>ta</Et>, a <End>si-</End> verb ends in <End>s</End>: <b lang="et">ta elas</b>.
+    </Trans>
+  ),
+  went: (
+    <Trans>
+      <b lang="et">Minema</b> changes its stem in the past: <b lang="et">ma läksin</b>.
+    </Trans>
+  ),
+  ate: (
+    <Trans>
+      <b lang="et">Sööma</b> takes <End>i-</End> with <b lang="et">õ</b>: <b lang="et">ta sõi</b>.
+    </Trans>
+  ),
+  we: (
+    <Trans>
+      With <Et>me</Et>, the past ending is <End>sime</End>: <b lang="et">me elasime</b>.
+    </Trans>
+  ),
+  came: (
+    <Trans>
+      <b lang="et">Tulema</b> takes <End>i-</End> in the past: <b lang="et">ta tuli</b>.
+    </Trans>
+  ),
+};
+
 function useContent() {
   const { t, i18n } = useLingui();
   return useMemo(() => {
@@ -640,6 +698,98 @@ function useContent() {
         ),
     }));
 
+    const translations: (SentenceItem & { pair: readonly [string, string] })[] = PAST_TRANSLATE.map(
+      (said) => ({
+        kind: "translate",
+        id: clipId(said),
+        prompt: i18n._(TRANSLATE_PROMPTS[said]),
+        src: src(said),
+        answers: PAST_ANSWERS[said],
+        pair: [clipId(said), clipId(said)] as const,
+      }),
+    );
+
+    const fixes: FixItem[] = PAST_FIXES.map((item) => ({
+      kind: "fix",
+      id: `fix-${item.id}`,
+      wrong: item.wrong,
+      prompt: i18n._(FIX_PROMPTS[item.id]),
+      answers: [item.right],
+      src: src(item.right),
+      explain: FIX_WHY[item.id],
+    }));
+
+    const weekend: PassageQuestion[] = [
+      {
+        id: "why-tartu",
+        ask: t`Why did Mari travel to Tartu on Friday evening?`,
+        options: [
+          { id: "sister", label: t`To see her sister` },
+          { id: "work", label: t`To attend a meeting at the university` },
+          { id: "coat", label: t`To pick up a winter coat` },
+        ],
+        answer: "sister",
+        line: 4,
+      },
+      {
+        id: "apples",
+        kind: "short",
+        ask: t`What fruit did Mari buy at the market? Write the word as she says it.`,
+        answers: ["õunu"],
+        line: 7,
+      },
+      {
+        id: "soup",
+        kind: "short",
+        ask: t`What hot food did they eat at the café? Write the word as Mari says it.`,
+        answers: ["suppi"],
+        line: 10,
+      },
+      {
+        id: "friend",
+        ask: t`Who did Mari meet at the café?`,
+        options: [
+          { id: "neighbour", label: t`Her neighbour` },
+          { id: "peeter", label: t`Her old friend Peeter` },
+          { id: "brother", label: t`Her younger brother who lives nearby` },
+        ],
+        answer: "peeter",
+        line: 11,
+      },
+      {
+        id: "talk-long",
+        kind: "truefalse",
+        ask: t`They talked with Peeter for almost an hour.`,
+        answer: true,
+        line: 12,
+      },
+      {
+        id: "evening-out",
+        kind: "truefalse",
+        ask: t`Mari went to the cinema on Saturday evening.`,
+        answer: false,
+        line: 15,
+      },
+      {
+        id: "return-how",
+        ask: t`How did Mari travel back to Tallinn on Sunday?`,
+        options: [
+          { id: "bus", label: t`By bus early` },
+          { id: "car", label: t`In her sister’s red car` },
+          { id: "train", label: t`By train in the afternoon at three` },
+        ],
+        answer: "train",
+        line: 17,
+      },
+      {
+        id: "station",
+        kind: "truefalse",
+        ask: t`Mari’s sister walked her to the station.`,
+        answer: true,
+        line: 18,
+      },
+    ];
+
     return {
       points,
       chains,
@@ -650,6 +800,9 @@ function useContent() {
       whenRun,
       saturday,
       talk,
+      translations,
+      fixes,
+      weekend,
     };
   }, [t, i18n]);
 }
@@ -661,6 +814,7 @@ export function LihtminevikLesson() {
   const days = lessonBySlug("paevad")?.n;
   const verbForms = lessonBySlug("verbi-pohivormid")?.n;
   const pastNo = lessonBySlug("mineviku-eitus")?.n;
+  const names = { third: t`Mari`, fourth: t`Jaan` };
 
   return (
     <LessonView
@@ -668,13 +822,13 @@ export function LihtminevikLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Most verbs put <End>si-</End> on the stem of the <End>-ma</End> infinitive; a few everyday
-          verbs take <End>i-</End>. An ending for each person says who did it.
+          Most verbs usually put <End>si-</End> on the stem of the <End>-ma</End> infinitive; a few
+          everyday verbs take <End>i-</End>. An ending for each person says who did it.
         </Trans>
       }
       facts={[
-        <Trans key="m">14 minutes</Trans>,
-        <Trans key="q">5 exercises</Trans>,
+        <Trans key="m">20 minutes</Trans>,
+        <Trans key="q">8 exercises</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -928,6 +1082,75 @@ export function LihtminevikLesson() {
           ),
         },
         {
+          id: "write",
+          title: t`Write it in the past`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write each sentence in Estonian in the past tense, using <End>si-</End> or{" "}
+                    <End>i-</End> as the verb needs.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="write-past"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={content.translations}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six past sentences right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check the verb stem and ending in the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Read What to remember below, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "fix",
+          title: t`Fix the past verb`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each sentence has one wrong past verb form. Tap the wrong word, then type the
+                    right one.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="fix-past"
+                title={<Trans>Fix the sentence</Trans>}
+                items={content.fixes}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six past verbs found and fixed.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Read the reason under each one you missed.</Trans>
+                  ) : (
+                    <Trans>Read What to remember below, then try again.</Trans>
+                  )
+                }
+                recall={fixRecall}
+                round={(props) => <FixRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
           id: "saturday",
           title: t`Mari’s Saturday`,
           quiz: true,
@@ -946,6 +1169,32 @@ export function LihtminevikLesson() {
                 clip="p-saturday"
                 sentences={PAST_SATURDAY}
                 questions={content.saturday}
+              />
+            </>
+          ),
+        },
+        {
+          id: "weekend",
+          title: t`A Sunday evening call`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Jaan calls Mari on Sunday evening to ask about her weekend in Tartu. Listen and
+                    answer. You can play the conversation twice.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="weekend-call"
+                title={<Trans>Listen: Mari and Jaan</Trans>}
+                clip="c-puhapaev"
+                turns={PAST_CONVERSATION.turns}
+                names={names}
+                questions={content.weekend}
+                plays={2}
               />
             </>
           ),

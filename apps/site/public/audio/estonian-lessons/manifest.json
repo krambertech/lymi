@@ -30099,5 +30099,147 @@
     "text": "vanem",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lihtminevik/eile-ma-lugesin-raamatut": {
+    "text": "Eile ma lugesin raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lihtminevik/me-ka2isime-eile-poes": {
+    "text": "Me käisime eile poes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lihtminevik/ta-la2ks-eile-koju": {
+    "text": "Ta läks eile koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lihtminevik/ma-so3in-hommikul-leiba": {
+    "text": "Ma sõin hommikul leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lihtminevik/nad-tulid-eile-tartust": {
+    "text": "Nad tulid eile Tartust.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lihtminevik/ma-to2o2tasin-eile-kodus": {
+    "text": "Ma töötasin eile kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lihtminevik/ma-lugesin-eile-raamatut": {
+    "text": "Ma lugesin eile raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lihtminevik/ta-elas-eelmisel-aastal-tartus": {
+    "text": "Ta elas eelmisel aastal Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lihtminevik/ma-la2ksin-hommikul-to2o2le": {
+    "text": "Ma läksin hommikul tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lihtminevik/ta-so3i-eile-suppi": {
+    "text": "Ta sõi eile suppi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lihtminevik/me-elasime-varem-tallinnas": {
+    "text": "Me elasime varem Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lihtminevik/ta-tuli-o3htul-koju": {
+    "text": "Ta tuli õhtul koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lihtminevik/c-puhapaev": {
+    "text": "Tere, Mari! Kuidas sinu nädalavahetus läks? Tere, Jaan! Väga hästi. Reede õhtul sõitsin ma Tartusse õe juurde. Mida te laupäeval tegite? Hommikul käisime me turul. Ma ostsin sealt leiba ja magusaid õunu. Pärast läksime kohvikusse. Kas te sõite seal lõunat? Jah, me sõime kuuma suppi ja jõime kohvi. Seal nägin ma ka oma vana sõpra Peetrit. Me rääkisime temaga peaaegu tund aega. Aga mida sa õhtul tegid? Õhtul olime kodus. Ma lugesin uut raamatut ja läksin vara magama. Millal sa täna Tallinnasse tulid? Ma tulin rongiga kell kolm. Õde saatis mu jaama. Kodus jõin veel teed ja puhkasin. Tore, siis oli sul mõnus nädalavahetus.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Mari!",
+          "Kuidas sinu nädalavahetus läks?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Jaan!",
+          "Väga hästi.",
+          "Reede õhtul sõitsin ma Tartusse õe juurde."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mida te laupäeval tegite?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hommikul käisime me turul.",
+          "Ma ostsin sealt leiba ja magusaid õunu.",
+          "Pärast läksime kohvikusse."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas te sõite seal lõunat?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, me sõime kuuma suppi ja jõime kohvi.",
+          "Seal nägin ma ka oma vana sõpra Peetrit.",
+          "Me rääkisime temaga peaaegu tund aega."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Aga mida sa õhtul tegid?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Õhtul olime kodus.",
+          "Ma lugesin uut raamatut ja läksin vara magama."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Millal sa täna Tallinnasse tulid?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ma tulin rongiga kell kolm.",
+          "Õde saatis mu jaama.",
+          "Kodus jõin veel teed ja puhkasin."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tore, siis oli sul mõnus nädalavahetus."
+        ]
+      }
+    ]
   }
 }

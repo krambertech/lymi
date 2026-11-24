@@ -266,6 +266,9 @@ msgstr "Безкоштовний урок естонської про дієпр
 msgid "A free Estonian lesson on particle verbs whose meaning you can’t guess from their parts: aru saama, kokku saama, läbi saama, hakkama saama, otsa saama, maha jääma, ära jääma, välja nägema, ära tundma, vastu võtma, järele mõtlema and alla andma; the case each one usually takes, and where the particle goes. Every example is read aloud."
 msgstr "Безкоштовний урок естонської про дієслова з частками, значення яких не вгадаєш зі складових: aru saama, kokku saama, läbi saama, hakkama saama, otsa saama, maha jääma, ära jääma, välja nägema, ära tundma, vastu võtma, järele mõtlema і alla andma; який відмінок зазвичай потрібен кожному і де стоїть частка. Кожен приклад озвучено."
 
+msgid "A free Estonian lesson on particle verbs with üles, alla, sisse, välja, ära, tagasi, lahti and kinni: what each particle adds, where the particle usually goes in a sentence and with a second verb, and telling ära (away, completely) apart from ära (don’t). Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про дієслова з частками üles, alla, sisse, välja, ära, tagasi, lahti і kinni: що додає кожна частка, де вона зазвичай стоїть у реченні та з другим дієсловом, і як відрізнити ära («геть, до кінця») від ära («не»). Кожне речення озвучено."
+
 msgid "A free Estonian lesson on personal pronouns in their cases: minuga and sinuta on the genitive, the short forms mulle, mul and mult, the partitive mind, sind, teda, and telling minu, mul and mind apart. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про відмінювання особових займенників: minuga і sinuta від родового відмінка, короткі форми mulle, mul і mult, партитив mind, sind, teda і як не сплутати minu, mul і mind. Кожне речення озвучене."
 
@@ -778,6 +781,9 @@ msgstr "Естонські дієприкметники в ролі прикме
 
 msgid "Estonian particle verbs with new meanings"
 msgstr "Естонські дієслова з частками, що мають нове значення"
+
+msgid "Estonian particle verbs: up, out and away"
+msgstr "Естонські дієслова з частками: угору, назовні й геть"
 
 msgid "Estonian past tense"
 msgstr "Минулий час в естонській мові"

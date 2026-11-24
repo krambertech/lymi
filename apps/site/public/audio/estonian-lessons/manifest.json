@@ -29641,5 +29641,360 @@
     "text": "vanem",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/u2les": {
+    "text": "üles",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/alla": {
+    "text": "alla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/sisse": {
+    "text": "sisse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/va2lja": {
+    "text": "välja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/a2ra": {
+    "text": "ära",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/tagasi": {
+    "text": "tagasi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/lahti": {
+    "text": "lahti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kinni": {
+    "text": "kinni",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/u2les-to3usma": {
+    "text": "üles tõusma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ma-to3usen-kell-seitse-u2les": {
+    "text": "Ma tõusen kell seitse üles.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/u2les-a2rkama": {
+    "text": "üles ärkama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ta-a2rkas-vara-u2les": {
+    "text": "Ta ärkas vara üles.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/u2les-kirjutama": {
+    "text": "üles kirjutama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ma-kirjutan-numbri-u2les": {
+    "text": "Ma kirjutan numbri üles.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/alla-tulema": {
+    "text": "alla tulema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/tule-palun-alla": {
+    "text": "Tule palun alla!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/maha-istuma": {
+    "text": "maha istuma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/istu-palun-maha": {
+    "text": "Istu palun maha!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/sisse-tulema": {
+    "text": "sisse tulema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/tule-sisse-uks-on-lahti": {
+    "text": "Tule sisse, uks on lahti!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/sisse-minema": {
+    "text": "sisse minema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/me-la2ksime-kohvikusse-sisse": {
+    "text": "Me läksime kohvikusse sisse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/va2lja-minema": {
+    "text": "välja minema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ma-la2hen-o3htul-so3pradega-va2lja": {
+    "text": "Ma lähen õhtul sõpradega välja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/va2lja-vo3tma": {
+    "text": "välja võtma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/vo3ta-ku2lmkapist-piim-va2lja": {
+    "text": "Võta külmkapist piim välja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/a2ra-minema": {
+    "text": "ära minema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ta-la2ks-juba-a2ra": {
+    "text": "Ta läks juba ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/a2ra-so2o2ma": {
+    "text": "ära sööma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ma-so3in-vo3ileiva-a2ra": {
+    "text": "Ma sõin võileiva ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/a2ra-viskama": {
+    "text": "ära viskama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/viska-vanad-ajalehed-a2ra": {
+    "text": "Viska vanad ajalehed ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/tagasi-tulema": {
+    "text": "tagasi tulema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ma-tulen-kell-kuus-tagasi": {
+    "text": "Ma tulen kell kuus tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/lahti-tegema": {
+    "text": "lahti tegema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ma-tegin-akna-lahti": {
+    "text": "Ma tegin akna lahti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kinni-panema": {
+    "text": "kinni panema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/pane-palun-uks-kinni": {
+    "text": "Pane palun uks kinni.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/tule-palun-sisse-siin-on-soe": {
+    "text": "Tule palun sisse, siin on soe.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/me-la2heme-o3htul-va2lja": {
+    "text": "Me läheme õhtul välja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/tee-aken-lahti-siin-on-palav": {
+    "text": "Tee aken lahti, siin on palav.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ma-tulen-homme-tagasi": {
+    "text": "Ma tulen homme tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ta-so3i-kogu-koogi-a2ra": {
+    "text": "Ta sõi kogu koogi ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/me-viime-kastid-alla": {
+    "text": "Me viime kastid alla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ta-la2ks-vara-a2ra": {
+    "text": "Ta läks vara ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/a2ra-mine-veel-koju": {
+    "text": "Ära mine veel koju!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/a2ra-istu-siia": {
+    "text": "Ära istu siia!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/viska-see-paber-a2ra": {
+    "text": "Viska see paber ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/a2ra-unusta-vo3tmeid": {
+    "text": "Ära unusta võtmeid!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ma-pean-vara-u2les-to3usma": {
+    "text": "Ma pean vara üles tõusma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/kas-sa-saad-ukse-kinni-panna": {
+    "text": "Kas sa saad ukse kinni panna?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/ma-annan-raamatu-homme-tagasi": {
+    "text": "Ma annan raamatu homme tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/tule-sisse-siin-on-soe": {
+    "text": "Tule sisse, siin on soe!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ules-valja-ara/c-kolimine": {
+    "text": "Tere, Jaan! Tule sisse, uks on lahti! Tere, Mari! Aitäh! Kas sa tõusid täna vara üles? Jah, ma ärkasin kell kuus üles, sest korteris on veel palju pakkida. Pane palun uks kinni, koridoris on külm. Panen kohe kinni. Kuhu me need suured kastid viime? Viime need alla auto juurde. Aga enne võta palun köögist kohvitassid välja. Kas need vanad ajalehed lähevad kaasa? Ei, viska need palun ära, ma olen need kõik juba läbi lugenud. Aga sinine raamat on raamatukogu oma, selle pean ma homme tagasi andma. Hea küll, ma panen selle lauale, et sa ei unustaks. Kas sa oled midagi söönud ka? Ma sõin hommikul ühe võileiva ära ja jõin tassi kohvi. Lõunaks võime välja sööma minna, kui kastid on autos. See on hea mõte. Millal me uue korteri võtmed kätte saame? Kell kaks tuleb omanik kohale. Kirjuta palun tema telefoninumber üles, mul on käed täis. Ütle number, ma kirjutan kohe üles. Ja siis viime esimesed kastid alla.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Jaan!",
+          "Tule sisse, uks on lahti!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Mari! Aitäh!",
+          "Kas sa tõusid täna vara üles?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, ma ärkasin kell kuus üles, sest korteris on veel palju pakkida.",
+          "Pane palun uks kinni, koridoris on külm."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Panen kohe kinni.",
+          "Kuhu me need suured kastid viime?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Viime need alla auto juurde.",
+          "Aga enne võta palun köögist kohvitassid välja."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas need vanad ajalehed lähevad kaasa?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, viska need palun ära, ma olen need kõik juba läbi lugenud.",
+          "Aga sinine raamat on raamatukogu oma, selle pean ma homme tagasi andma."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hea küll, ma panen selle lauale, et sa ei unustaks.",
+          "Kas sa oled midagi söönud ka?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ma sõin hommikul ühe võileiva ära ja jõin tassi kohvi.",
+          "Lõunaks võime välja sööma minna, kui kastid on autos."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "See on hea mõte.",
+          "Millal me uue korteri võtmed kätte saame?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kell kaks tuleb omanik kohale.",
+          "Kirjuta palun tema telefoninumber üles, mul on käed täis."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ütle number, ma kirjutan kohe üles.",
+          "Ja siis viime esimesed kastid alla."
+        ],
+        "say": "[warm] Ütle number, ma kirjutan kohe üles. Ja siis viime esimesed kastid alla."
+      }
+    ]
   }
 }

@@ -2,7 +2,7 @@ import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type ReactNode, useMemo, useState } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -603,7 +603,7 @@ export function AruSaamaLesson() {
   const { t } = useLingui();
   const content = useContent();
   const government = lessonBySlug("ootan-sind")?.n;
-  const particles = LESSONS.find((lesson) => lesson.et === "Üles, välja, ära")?.n;
+  const particles = lessonBySlug("ules-valja-ara")?.n;
   const object = lessonBySlug("raamatut-voi-raamatu")?.n;
   const names = { fourth: t`Kalev`, third: t`Olga` };
 

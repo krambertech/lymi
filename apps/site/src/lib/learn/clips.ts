@@ -16932,6 +16932,8 @@ const NEWS_CLIPS: Record<string, Clip> = {
   "c-raadio": NEWS_CONVERSATION,
 };
 
+type Said = readonly [string, ...string[]];
+
 export const REP_SAY = [
   { id: "tired", from: "Mari ütles: „Ma olen väsinud.“", cue: "ütles, et" },
   { id: "busy", from: "Peeter ütles: „Mul on kiire.“", cue: "ütles, et" },

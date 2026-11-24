@@ -1,0 +1,716 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-24 23:37+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0/> also gives a reason, and it can start the sentence: <1>Kuna väljas sajab, jääme koju.</1> A reason clause with <2>sest</2> usually comes after the clause it explains."
+msgstr "<0/> also gives a reason, and it can start the sentence: <1>Kuna väljas sajab, jääme koju.</1> A reason clause with <2>sest</2> usually comes after the clause it explains."
+
+msgid "<0/> gives a reason, and the reason is the second clause: <1>Me jäime koju, sest sadas.</1> <2/> gives a result, so the cause comes first: <3>Sadas, nii et me jäime koju.</3> The facts are the same, in the other order."
+msgstr "<0/> gives a reason, and the reason is the second clause: <1>Me jäime koju, sest sadas.</1> <2/> gives a result, so the cause comes first: <3>Sadas, nii et me jäime koju.</3> The facts are the same, in the other order."
+
+msgid "<0/> means both when and if, and the sentence decides which. <1/> also gives a purpose, as in <2>et siin tööd leida</2>. In a comparison, <3>kui</3> means than, as in lesson {comparing}."
+msgstr "<0/> means both when and if, and the sentence decides which. <1/> also gives a purpose, as in <2>et siin tööd leida</2>. In a comparison, <3>kui</3> means than, as in lesson {comparing}."
+
+msgid "<0>Et</0> gives a purpose, with the <1>-da</1> infinitive or with <2>saaksin</2>."
+msgstr "<0>Et</0> gives a purpose, with the <1>-da</1> infinitive or with <2>saaksin</2>."
+
+msgid "<0>Et</0> says what Mari wrote."
+msgstr "<0>Et</0> says what Mari wrote."
+
+msgid "<0>Et</0> says what someone knows, says or intends. <1>Sest</1> and <2>kuna</2> give a reason, <3>kui</3> gives a time or condition and <4>nii et</4> gives a result."
+msgstr "<0>Et</0> says what someone knows, says or intends. <1>Sest</1> and <2>kuna</2> give a reason, <3>kui</3> gives a time or condition and <4>nii et</4> gives a result."
+
+msgid "<0>Et</0> says what someone knows, thinks or says."
+msgstr "<0>Et</0> says what someone knows, thinks or says."
+
+msgid "<0>Et</0> says what you know."
+msgstr "<0>Et</0> says what you know."
+
+msgid "<0>Et</0> with the <1>-da</1> infinitive gives a purpose."
+msgstr "<0>Et</0> with the <1>-da</1> infinitive gives a purpose."
+
+msgid "<0>Kui</0> gives the condition: if you have time."
+msgstr "<0>Kui</0> gives the condition: if you have time."
+
+msgid "<0>Kui</0> gives the condition. <1>Siis</1> can follow the comma, and the sentence is still right."
+msgstr "<0>Kui</0> gives the condition. <1>Siis</1> can follow the comma, and the sentence is still right."
+
+msgid "<0>Kui</0> gives the time: when you get home."
+msgstr "<0>Kui</0> gives the time: when you get home."
+
+msgid "<0>Kuna</0> gives the reason, and here it comes first."
+msgstr "<0>Kuna</0> gives the reason, and here it comes first."
+
+msgid "<0>Kuna</0> gives the reason, here after the main clause."
+msgstr "<0>Kuna</0> gives the reason, here after the main clause."
+
+msgid "<0>Kuna</0> gives the reason. <1>Sest</1> fits here too."
+msgstr "<0>Kuna</0> gives the reason. <1>Sest</1> fits here too."
+
+msgid "<0>Ma tean, et sa oled väsinud</0> has two clauses and a word that joins them. Learn what each linking word does, where the comma goes and where the verb usually stands."
+msgstr "<0>Ma tean, et sa oled väsinud</0> has two clauses and a word that joins them. Learn what each linking word does, where the comma goes and where the verb usually stands."
+
+msgid "<0>Nii et</0> gives the result of what came before."
+msgstr "<0>Nii et</0> gives the result of what came before."
+
+msgid "<0>Nii et</0> gives the result, after the cause."
+msgstr "<0>Nii et</0> gives the result, after the cause."
+
+msgid "<0>Nii et</0> gives the result, so the cause is the first part."
+msgstr "<0>Nii et</0> gives the result, so the cause is the first part."
+
+msgid "<0>Nii et</0> gives the result: she was tired, so she went to bed."
+msgstr "<0>Nii et</0> gives the result: she was tired, so she went to bed."
+
+msgid "<0>Nii et</0> gives the result: the bus was late, so I was late."
+msgstr "<0>Nii et</0> gives the result: the bus was late, so I was late."
+
+msgid "<0>Sest</0> and <1>kuna</1> both give the reason."
+msgstr "<0>Sest</0> and <1>kuna</1> both give the reason."
+
+msgid "<0>Sest</0> gives the reason, so the cause is the second part."
+msgstr "<0>Sest</0> gives the reason, so the cause is the second part."
+
+msgid "<0>Sest</0> gives the reason: the old phone broke."
+msgstr "<0>Sest</0> gives the reason: the old phone broke."
+
+msgid "<0>Sest</0> gives the reason. <1>Kuna</1> fits here too."
+msgstr "<0>Sest</0> gives the reason. <1>Kuna</1> fits here too."
+
+msgid "<et>Et</et> gives a purpose, with the <et>-da</et> infinitive or with <et>saaksin</et>."
+msgstr "<et>Et</et> gives a purpose, with the <et>-da</et> infinitive or with <et>saaksin</et>."
+
+msgid "<et>Et</et> says what he says."
+msgstr "<et>Et</et> says what he says."
+
+msgid "<et>Et</et> says what someone knows, thinks or says."
+msgstr "<et>Et</et> says what someone knows, thinks or says."
+
+msgid "<et>Et</et> says what someone thinks."
+msgstr "<et>Et</et> says what someone thinks."
+
+msgid "<et>Kui</et> gives a time or a condition."
+msgstr "<et>Kui</et> gives a time or a condition."
+
+msgid "<et>Kui</et> gives the time: when I get home."
+msgstr "<et>Kui</et> gives the time: when I get home."
+
+msgid "<et>Nii et</et> gives the result of what came before."
+msgstr "<et>Nii et</et> gives the result of what came before."
+
+msgid "<et>Nii et</et> gives the result, after the cause."
+msgstr "<et>Nii et</et> gives the result, after the cause."
+
+msgid "<et>Nii et</et> gives the result, so the cause comes first."
+msgstr "<et>Nii et</et> gives the result, so the cause comes first."
+
+msgid "<et>Nii et</et> gives the result."
+msgstr "<et>Nii et</et> gives the result."
+
+msgid "<et>Sest</et> and <et>kuna</et> both give the reason."
+msgstr "<et>Sest</et> and <et>kuna</et> both give the reason."
+
+msgid "<et>Sest</et> and <et>kuna</et> give the reason."
+msgstr "<et>Sest</et> and <et>kuna</et> give the reason."
+
+msgid "<et>Sest</et> gives the reason. <et>Kuna</et> fits here too."
+msgstr "<et>Sest</et> gives the reason. <et>Kuna</et> fits here too."
+
+msgid "24 minutes"
+msgstr "24 minutes"
+
+msgid "9 exercises"
+msgstr "9 exercises"
+
+msgid "A boy tripped and fell yesterday."
+msgstr "A boy tripped and fell yesterday."
+
+msgid "A clause has its own verb. A linking word joins two clauses: <0>Ma tean, et sa oled väsinud.</0> The clauses are <1>ma tean</1> and <2>sa oled väsinud</2>, and <3/> joins them."
+msgstr "A clause has its own verb. A linking word joins two clauses: <0>Ma tean, et sa oled väsinud.</0> The clauses are <1>ma tean</1> and <2>sa oled väsinud</2>, and <3/> joins them."
+
+msgid "A comma usually separates the two clauses, and it comes before the linking word: <0>Ma tean, et sa oled väsinud.</0> <1>Me jäime koju, sest sadas.</1> Put it before <2>nii et</2> as a whole, not between the two words."
+msgstr "A comma usually separates the two clauses, and it comes before the linking word: <0>Ma tean, et sa oled väsinud.</0> <1>Me jäime koju, sest sadas.</1> Put it before <2>nii et</2> as a whole, not between the two words."
+
+msgid "A linking word joins two clauses, and a comma usually comes before it: <0>Ma tean, et sa oled väsinud.</0> When the clause with <1>kui</1> or <2>kuna</2> comes first, the comma comes after it."
+msgstr "A linking word joins two clauses, and a comma usually comes before it: <0>Ma tean, et sa oled väsinud.</0> When the clause with <1>kui</1> or <2>kuna</2> comes first, the comma comes after it."
+
+msgid "A neighbour who can’t come should write to Tiiu."
+msgstr "A neighbour who can’t come should write to Tiiu."
+
+msgid "A notice to the neighbours"
+msgstr "A notice to the neighbours"
+
+msgid "A place or time word can come first, and the verb usually follows it: <0>väljas oli külm</0>."
+msgstr "A place or time word can come first, and the verb usually follows it: <0>väljas oli külm</0>."
+
+msgid "A purpose with the <0>-da</0> infinitive needs <1>et</1>, not <2>sest</2>."
+msgstr "A purpose with the <0>-da</0> infinitive needs <1>et</1>, not <2>sest</2>."
+
+msgid "A reason needs <0>sest</0> or <1>kuna</1>, not <2>et</2>."
+msgstr "A reason needs <0>sest</0> or <1>kuna</1>, not <2>et</2>."
+
+msgid "A reason needs <0>sest</0> or <1>kuna</1>, not <2>kui</2>."
+msgstr "A reason needs <0>sest</0> or <1>kuna</1>, not <2>kui</2>."
+
+msgid "A reason needs <et>sest</et> or <et>kuna</et>, not <et>et</et>."
+msgstr "A reason needs <et>sest</et> or <et>kuna</et>, not <et>et</et>."
+
+msgid "A reason needs <et>sest</et> or <et>kuna</et>, not <et>kui</et>."
+msgstr "A reason needs <et>sest</et> or <et>kuna</et>, not <et>kui</et>."
+
+msgid "A rented car"
+msgstr "A rented car"
+
+msgid "A time needs <0>kui</0>: when you get home."
+msgstr "A time needs <0>kui</0>: when you get home."
+
+msgid "A time needs <et>kui</et>: when you get home."
+msgstr "A time needs <et>kui</et>: when you get home."
+
+msgid "After <0>et</0>, <1>sest</1>, <2>kui</2> and <3>kuna</3>, the clause usually runs subject, then verb: <4>Ma tean, et ta tuleb homme.</4> If a time or place word comes first, the verb usually follows it: <5>sest väljas oli külm</5>."
+msgstr "After <0>et</0>, <1>sest</1>, <2>kui</2> and <3>kuna</3>, the clause usually runs subject, then verb: <4>Ma tean, et ta tuleb homme.</4> If a time or place word comes first, the verb usually follows it: <5>sest väljas oli külm</5>."
+
+msgid "After a first <et>kui</et> clause, the main clause usually starts with its verb."
+msgstr "After a first <et>kui</et> clause, the main clause usually starts with its verb."
+
+msgid "After a linking word, the subject usually comes next, then the verb. A time or place word can come first, and the verb usually follows it. After a first <0>kui</0> or <1>kuna</1> clause, the main clause usually starts with its verb."
+msgstr "After a linking word, the subject usually comes next, then the verb. A time or place word can come first, and the verb usually follows it. After a first <0>kui</0> or <1>kuna</1> clause, the main clause usually starts with its verb."
+
+msgid "After a linking word, the subject usually comes next, then the verb. Other orders are possible."
+msgstr "After a linking word, the subject usually comes next, then the verb. Other orders are possible."
+
+msgid "After the linking word, the subject usually comes next, then the verb. Other orders are possible."
+msgstr "After the linking word, the subject usually comes next, then the verb. Other orders are possible."
+
+msgid "All eight, each with the right linking word."
+msgstr "All eight, each with the right linking word."
+
+msgid "All five commas in the right place."
+msgstr "All five commas in the right place."
+
+msgid "All six built in an order a teacher would accept."
+msgstr "All six built in an order a teacher would accept."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six: you heard which word gave the reason."
+msgstr "All six: you heard which word gave the reason."
+
+msgid "All ten linking words right."
+msgstr "All ten linking words right."
+
+msgid "Ask what the second clause does. It says what someone knows or says (<0/>), gives a reason (<1/> or <2/>), gives a result (<3/>) or gives a time or condition (<4/>)."
+msgstr "Ask what the second clause does. It says what someone knows or says (<0/>), gives a reason (<1/> or <2/>), gives a result (<3/>) or gives a time or condition (<4/>)."
+
+msgid "because"
+msgstr "because"
+
+msgid "Because I’m tired, I’m going to bed early."
+msgstr "Because I’m tired, I’m going to bed early."
+
+msgid "Build each sentence from what it means. More than one order can be right."
+msgstr "Build each sentence from what it means. More than one order can be right."
+
+msgid "Build the sentence"
+msgstr "Build the sentence"
+
+msgid "builders"
+msgstr "builders"
+
+msgid "but"
+msgstr "but"
+
+msgid "By bicycle"
+msgstr "By bicycle"
+
+msgid "By motorbike"
+msgstr "By motorbike"
+
+msgid "Call me when you get home."
+msgstr "Call me when you get home."
+
+msgid "Come and visit us if you have time."
+msgstr "Come and visit us if you have time."
+
+msgid "Each gap needs one linking word. Where <0>sest</0> and <1>kuna</1> both fit, the options show only one of them. Pick it, then hear the sentence."
+msgstr "Each gap needs one linking word. Where <0>sest</0> and <1>kuna</1> both fit, the options show only one of them. Pick it, then hear the sentence."
+
+msgid "Each sentence has one wrong linking word. Tap it, then type the right one. The meaning shown with the sentence says what it should say."
+msgstr "Each sentence has one wrong linking word. Tap it, then type the right one. The meaning shown with the sentence says what it should say."
+
+msgid "Five linking words do most of the work. Tap a sentence to hear it."
+msgstr "Five linking words do most of the work. Tap a sentence to hear it."
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "Forgot the food last time."
+msgstr "Forgot the food last time."
+
+msgid "from the rubbish pile"
+msgstr "from the rubbish pile"
+
+msgid "Give a reason with <0>sest</0> or <1>kuna</1>."
+msgstr "Give a reason with <0>sest</0> or <1>kuna</1>."
+
+msgid "give the reason"
+msgstr "give the reason"
+
+msgid "gloves"
+msgstr "gloves"
+
+msgid "Go anyway."
+msgstr "Go anyway."
+
+msgid "Go through the table once more, then try again."
+msgstr "Go through the table once more, then try again."
+
+msgid "Greet Tiiu."
+msgstr "Greet Tiiu."
+
+msgid "He is busy at eight."
+msgstr "He is busy at eight."
+
+msgid "He is not a morning person."
+msgstr "He is not a morning person."
+
+msgid "He says he’ll be right back."
+msgstr "He says he’ll be right back."
+
+msgid "He works on Sunday."
+msgstr "He works on Sunday."
+
+msgid "Hear a sentence, then pick which part is the cause."
+msgstr "Hear a sentence, then pick which part is the cause."
+
+msgid "How does Tiiu get past the rubbish pile in the morning?"
+msgstr "How does Tiiu get past the rubbish pile in the morning?"
+
+msgid "How long will the work take if ten people come? Write the word from the text."
+msgstr "How long will the work take if ten people come? Write the word from the text."
+
+msgid "I didn’t come because I had no time."
+msgstr "I didn’t come because I had no time."
+
+msgid "I didn’t go to school because I was ill."
+msgstr "I didn’t go to school because I was ill."
+
+msgid "I know she’s coming tomorrow."
+msgstr "I know she’s coming tomorrow."
+
+msgid "I know that you’re tired."
+msgstr "I know that you’re tired."
+
+msgid "I know you’re tired."
+msgstr "I know you’re tired."
+
+msgid "I stayed home because I was ill."
+msgstr "I stayed home because I was ill."
+
+msgid "I think it’s a good idea."
+msgstr "I think it’s a good idea."
+
+msgid "I’ll call you when I get home."
+msgstr "I’ll call you when I get home."
+
+msgid "I’m buying a present because it’s her birthday tomorrow."
+msgstr "I’m buying a present because it’s her birthday tomorrow."
+
+msgid "I’m learning Estonian so that I can find work here."
+msgstr "I’m learning Estonian so that I can find work here."
+
+msgid "I’m learning Estonian to find work here."
+msgstr "I’m learning Estonian to find work here."
+
+msgid "If you have time, come and visit us."
+msgstr "If you have time, come and visit us."
+
+msgid "In a sentence"
+msgstr "In a sentence"
+
+msgid "It rained, so we stayed home."
+msgstr "It rained, so we stayed home."
+
+msgid "It was cold, so we went home."
+msgstr "It was cold, so we went home."
+
+msgid "It’s raining today, so we’re staying home."
+msgstr "It’s raining today, so we’re staying home."
+
+msgid "Jaan"
+msgstr "Jaan"
+
+msgid "Jaan has to work on Saturday."
+msgstr "Jaan has to work on Saturday."
+
+msgid "Jaan’s car"
+msgstr "Jaan’s car"
+
+msgid "Jaan’s sister has invited him to her birthday on Sunday evening."
+msgstr "Jaan’s sister has invited him to her birthday on Sunday evening."
+
+msgid "Kui sul on aega, tule külla."
+msgstr "Kui sul on aega, tule külla."
+
+msgid "Kuna sajab, jääme koju."
+msgstr "Kuna sajab, jääme koju."
+
+msgid "Linking two clauses"
+msgstr "Linking two clauses"
+
+msgid "Linking words and their meanings"
+msgstr "Linking words and their meanings"
+
+msgid "Listen: Mari and Jaan"
+msgstr "Listen: Mari and Jaan"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Ma jään koju, sest ma olen haige."
+msgstr "Ma jään koju, sest ma olen haige."
+
+msgid "Ma tean, et sa tuled."
+msgstr "Ma tean, et sa tuled."
+
+msgid "Mari"
+msgstr "Mari"
+
+msgid "Mari calls Jaan about a hike on Saturday. Listen to how they change their plan."
+msgstr "Mari calls Jaan about a hike on Saturday. Listen to how they change their plan."
+
+msgid "Mari says Jaan must pay for the petrol."
+msgstr "Mari says Jaan must pay for the petrol."
+
+msgid "Mari wrote that she can’t come."
+msgstr "Mari wrote that she can’t come."
+
+msgid "Mari’s car"
+msgstr "Mari’s car"
+
+msgid "Mari’s car is being repaired."
+msgstr "Mari’s car is being repaired."
+
+msgid "maritime museum"
+msgstr "maritime museum"
+
+msgid "Match each linking word with what it means."
+msgstr "Match each linking word with what it means."
+
+msgid "Meaning"
+msgstr "Meaning"
+
+msgid "morning person"
+msgstr "morning person"
+
+msgid "most"
+msgstr "most"
+
+msgid "Move the hike to next Saturday."
+msgstr "Move the hike to next Saturday."
+
+msgid "Nearly. Check the linking word in the ones you missed."
+msgstr "Nearly. Check the linking word in the ones you missed."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Nearly. Play the ones you got wrong once more."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Nearly. Read the reason under each one you got wrong."
+
+msgid "Now answer Tiiu in about 80 words, then compare your message with a model."
+msgstr "Now answer Tiiu in about 80 words, then compare your message with a model."
+
+msgid "On foot"
+msgstr "On foot"
+
+msgid "Pick the linking word"
+msgstr "Pick the linking word"
+
+msgid "Planning a hike"
+msgstr "Planning a hike"
+
+msgid "Rain is forecast for Saturday."
+msgstr "Rain is forecast for Saturday."
+
+msgid "Read the lines above once more, then try again."
+msgstr "Read the lines above once more, then try again."
+
+msgid "Read the reason under each one you missed, then try again."
+msgstr "Read the reason under each one you missed, then try again."
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "Read why under each one you missed, then try again."
+msgstr "Read why under each one you missed, then try again."
+
+msgid "Reason or result"
+msgstr "Reason or result"
+
+msgid "repairs, renovation"
+msgstr "repairs, renovation"
+
+msgid "rubbish"
+msgstr "rubbish"
+
+msgid "Sadas, nii et me jäime koju."
+msgstr "Sadas, nii et me jäime koju."
+
+msgid "Say that you will come, and why."
+msgstr "Say that you will come, and why."
+
+msgid "She is complaining about noisy children in the yard."
+msgstr "She is complaining about noisy children in the yard."
+
+msgid "She is looking for a lost bicycle in the yard."
+msgstr "She is looking for a lost bicycle in the yard."
+
+msgid "She said she is coming tomorrow."
+msgstr "She said she is coming tomorrow."
+
+msgid "She said that she isn’t coming."
+msgstr "She said that she isn’t coming."
+
+msgid "She wants help with the rubbish left in the yard."
+msgstr "She wants help with the rubbish left in the yard."
+
+msgid "She was ill, so she stayed home. Use <0>nii et</0>."
+msgstr "She was ill, so she stayed home. Use <0>nii et</0>."
+
+msgid "Sign with your name."
+msgstr "Sign with your name."
+
+msgid "Since she was ill, she didn’t come."
+msgstr "Since she was ill, she didn’t come."
+
+msgid "since, because"
+msgstr "since, because"
+
+msgid "so"
+msgstr "so"
+
+msgid "So that nobody needs to buy anything."
+msgstr "So that nobody needs to buy anything."
+
+msgid "start with kui"
+msgstr "start with kui"
+
+msgid "start with tule"
+msgstr "start with tule"
+
+msgid "Stay in town."
+msgstr "Stay in town."
+
+msgid "Tap a sentence"
+msgstr "Tap a sentence"
+
+msgid "that, so that"
+msgstr "that, so that"
+
+msgid "The boy was badly hurt."
+msgstr "The boy was badly hurt."
+
+msgid "The bus was late, so I was late for work."
+msgstr "The bus was late, so I was late for work."
+
+msgid "The cause comes first, then <0>nii et</0> and the result."
+msgstr "The cause comes first, then <0>nii et</0> and the result."
+
+msgid "The comma"
+msgstr "The comma"
+
+msgid "The comma comes before <0>et</0>."
+msgstr "The comma comes before <0>et</0>."
+
+msgid "The comma comes before <0>kui</0>."
+msgstr "The comma comes before <0>kui</0>."
+
+msgid "The comma comes before <0>nii et</0> as a whole."
+msgstr "The comma comes before <0>nii et</0> as a whole."
+
+msgid "The comma comes before <0>sest</0>."
+msgstr "The comma comes before <0>sest</0>."
+
+msgid "The first part"
+msgstr "The first part"
+
+msgid "The part after the comma is the second clause. The linking word starts it."
+msgstr "The part after the comma is the second clause. The linking word starts it."
+
+msgid "The reason clause with <et>sest</et> usually comes second. <et>Kuna</et> can also come first."
+msgstr "The reason clause with <et>sest</et> usually comes second. <et>Kuna</et> can also come first."
+
+msgid "The same two facts, in two orders: <0>Jäime koju, sest sadas.</0> and <1>Sadas, nii et jäime koju.</1> The cause usually comes after <2>sest</2> and before <3>nii et</3>."
+msgstr "The same two facts, in two orders: <0>Jäime koju, sest sadas.</0> and <1>Sadas, nii et jäime koju.</1> The cause usually comes after <2>sest</2> and before <3>nii et</3>."
+
+msgid "The second part"
+msgstr "The second part"
+
+msgid "The typing exercises in this lesson don’t mark commas, so a missing comma is not counted wrong there. In real writing, add it. Hear a sentence, then pick how it is written."
+msgstr "The typing exercises in this lesson don’t mark commas, so a missing comma is not counted wrong there. In real writing, add it. Hear a sentence, then pick how it is written."
+
+msgid "The word"
+msgstr "The word"
+
+msgid "They are for the children."
+msgstr "They are for the children."
+
+msgid "They are on holiday until next month."
+msgstr "They are on holiday until next month."
+
+msgid "They don’t know where the building is."
+msgstr "They don’t know where the building is."
+
+msgid "They have a lot of other work."
+msgstr "They have a lot of other work."
+
+msgid "They were on sale."
+msgstr "They were on sale."
+
+msgid "Tiiu pins a notice in the entrance of her building. Read it and answer the questions, as in the reading part of the B1 exam."
+msgstr "Tiiu pins a notice in the entrance of her building. Read it and answer the questions, as in the reading part of the B1 exam."
+
+msgid "Tiiu writes"
+msgstr "Tiiu writes"
+
+msgid "tripped"
+msgstr "tripped"
+
+msgid "Use <0>kui</0> once."
+msgstr "Use <0>kui</0> once."
+
+msgid "Was in Käsmu in the summer."
+msgstr "Was in Käsmu in the summer."
+
+msgid "We stayed home because it was cold outside."
+msgstr "We stayed home because it was cold outside."
+
+msgid "We stayed home because it was raining."
+msgstr "We stayed home because it was raining."
+
+msgid "We’re staying home today because it’s raining outside."
+msgstr "We’re staying home today because it’s raining outside."
+
+msgid "weather forecast"
+msgstr "weather forecast"
+
+msgid "What does it mean?"
+msgstr "What does it mean?"
+
+msgid "What does Mari want to see in Käsmu? Write it as Mari says it."
+msgstr "What does Mari want to see in Käsmu? Write it as Mari says it."
+
+msgid "What does Tiiu write?"
+msgstr "What does Tiiu write?"
+
+msgid "what happened because of it"
+msgstr "what happened because of it"
+
+msgid "What someone said follows <0>et</0>, not <1>kui</1>."
+msgstr "What someone said follows <0>et</0>, not <1>kui</1>."
+
+msgid "What someone said follows <et>et</et>, not <et>kui</et>."
+msgstr "What someone said follows <et>et</et>, not <et>kui</et>."
+
+msgid "what someone said or thought"
+msgstr "what someone said or thought"
+
+msgid "What someone thinks follows <0>et</0>, not <1>sest</1>."
+msgstr "What someone thinks follows <0>et</0>, not <1>sest</1>."
+
+msgid "What will they do if it rains on Sunday too?"
+msgstr "What will they do if it rains on Sunday too?"
+
+msgid "When I get home, I’ll call you."
+msgstr "When I get home, I’ll call you."
+
+msgid "When the <0>kui</0> clause comes first, the comma comes after it."
+msgstr "When the <0>kui</0> clause comes first, the comma comes after it."
+
+msgid "When the <0>kui</0> clause comes first, the main clause usually starts with its verb. The <1>kui</1> clause can also come second."
+msgstr "When the <0>kui</0> clause comes first, the main clause usually starts with its verb. The <1>kui</1> clause can also come second."
+
+msgid "When the <0>kuna</0> clause comes first, the main clause usually starts with its verb. It can also come second."
+msgstr "When the <0>kuna</0> clause comes first, the main clause usually starts with its verb. It can also come second."
+
+msgid "When the clause with <0>kui</0> or <1>kuna</1> comes first, the comma comes after it: <2>Kui ma koju jõuan, helistan sulle.</2> A short comparison takes no comma: <3>suurem kui Tartu</3>, as in lesson {comparing}."
+msgstr "When the clause with <0>kui</0> or <1>kuna</1> comes first, the comma comes after it: <2>Kui ma koju jõuan, helistan sulle.</2> A short comparison takes no comma: <3>suurem kui Tartu</3>, as in lesson {comparing}."
+
+msgid "When the clause with <0>kui</0> or <1>kuna</1> comes first, the main clause usually starts with its verb: <2>Kui ma koju jõuan, helistan sulle.</2> With <3>siis</3>, the subject can come first again: <4>Kui ma koju jõuan, siis ma helistan sulle.</4>"
+msgstr "When the clause with <0>kui</0> or <1>kuna</1> comes first, the main clause usually starts with its verb: <2>Kui ma koju jõuan, helistan sulle.</2> With <3>siis</3>, the subject can come first again: <4>Kui ma koju jõuan, siis ma helistan sulle.</4>"
+
+msgid "when, if"
+msgstr "when, if"
+
+msgid "when, or on what condition"
+msgstr "when, or on what condition"
+
+msgid "Where does the comma go?"
+msgstr "Where does the comma go?"
+
+msgid "Where the verb goes"
+msgstr "Where the verb goes"
+
+msgid "Which linking word"
+msgstr "Which linking word"
+
+msgid "Which linking word?"
+msgstr "Which linking word?"
+
+msgid "Which part is the cause?"
+msgstr "Which part is the cause?"
+
+msgid "Who did it?"
+msgstr "Who did it?"
+
+msgid "Whose car do they take?"
+msgstr "Whose car do they take?"
+
+msgid "Why can’t the building firm come this week?"
+msgstr "Why can’t the building firm come this week?"
+
+msgid "Why do they move the hike to Sunday?"
+msgstr "Why do they move the hike to Sunday?"
+
+msgid "Why does Tiiu write?"
+msgstr "Why does Tiiu write?"
+
+msgid "Why is eight o’clock early for Jaan?"
+msgstr "Why is eight o’clock early for Jaan?"
+
+msgid "why something happened"
+msgstr "why something happened"
+
+msgid "Why will Tiiu bring gloves and bags?"
+msgstr "Why will Tiiu bring gloves and bags?"
+
+msgid "Will check the forecast in the morning."
+msgstr "Will check the forecast in the morning."
+
+msgid "with nii et"
+msgstr "with nii et"
+
+msgid "With the <et>kui</et> clause second, the main clause keeps its usual order."
+msgstr "With the <et>kui</et> clause second, the main clause keeps its usual order."
+
+msgid "Word"
+msgstr "Word"
+
+msgid "Write back to Tiiu"
+msgstr "Write back to Tiiu"
+
+msgid "Write each sentence with a linking word. Where a reason fits both <0>sest</0> and <1>kuna</1>, both count."
+msgstr "Write each sentence with a linking word. Where a reason fits both <0>sest</0> and <1>kuna</1>, both count."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "Write to Tiiu. Say that you will come on Saturday, give a reason, say what you can bring and use <0>kui</0> once."
+msgstr "Write to Tiiu. Say that you will come on Saturday, give a reason, say what you can bring and use <0>kui</0> once."

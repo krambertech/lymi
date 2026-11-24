@@ -251,6 +251,9 @@ msgstr "Бесплатный урок эстонского о пяти слов�
 msgid "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive, with sentences to write and fix and a phone call to follow. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о четырёх падежных окончаниях: -ga — «с» и «на чём» (sõbraga, bussiga), -ta — «без» (piimata), -ni — «до самого» (kella viieni, Tartuni) и -na — «как», в роли (arstina). Все они добавляются к родительному падежу. А ещё предложения, чтобы написать и исправить, и телефонный разговор. Каждое предложение озвучено."
 
+msgid "A free Estonian lesson on joining clauses: et (that, so that), sest and kuna (because), kui (when, if) and nii et (so); how to tell a reason from a result, the comma that usually comes before the linking word, and where the verb usually goes after it. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о соединении частей предложения: et («что», «чтобы»), sest и kuna («потому что», «поскольку»), kui («когда», «если») и nii et («поэтому»); как отличить причину от следствия, запятая, которая обычно стоит перед союзом, и где обычно стоит глагол после него. Каждое предложение озвучено."
+
 msgid "A free Estonian lesson on keegi, midagi, kuskil and kuhugi: question words with -gi or -ki for somebody and something, ei for nobody and nothing, mitte keegi on its own, and -gi or -ki on every case, as in kellelegi and kellestki, and which one to use. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о keegi, midagi, kuskil и kuhugi: вопросительные слова с -gi или -ki для «кто-то» и «что-то», ei для «никто» и «ничего», mitte keegi отдельно, а также -gi или -ki в каждом падеже, как в kellelegi и kellestki, и когда какое из них нужно. Каждое предложение озвучено."
 
@@ -730,6 +733,9 @@ msgstr "Эстонские степени сравнения прилагате�
 
 msgid "Estonian conditional mood"
 msgstr "Условное наклонение в эстонском языке"
+
+msgid "Estonian conjunctions and linking words"
+msgstr "Эстонские союзы: как соединять части предложения"
 
 msgid "Estonian consonant gradation"
 msgstr "Чередование согласных в эстонском языке"

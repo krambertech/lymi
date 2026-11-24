@@ -251,6 +251,9 @@ msgstr "Безкоштовний урок естонської про п’ят�
 msgid "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive, with sentences to write and fix and a phone call to follow. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про чотири відмінкові закінчення: -ga — «з» і «чим» (sõbraga, bussiga), -ta — «без» (piimata), -ni — «аж до» (kella viieni, Tartuni) і -na — «як», у ролі (arstina). Усі вони додаються до родового відмінка. А ще речення, щоб написати й виправити, і телефонна розмова. Кожне речення озвучене."
 
+msgid "A free Estonian lesson on joining clauses: et (that, so that), sest and kuna (because), kui (when, if) and nii et (so); how to tell a reason from a result, the comma that usually comes before the linking word, and where the verb usually goes after it. Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про з’єднання частин речення: et («що», «щоб»), sest і kuna («бо», «оскільки»), kui («коли», «якщо») і nii et («тож»); як відрізнити причину від наслідку, кома, яка зазвичай стоїть перед сполучником, і де зазвичай стоїть дієслово після нього. Кожне речення озвучене."
+
 msgid "A free Estonian lesson on keegi, midagi, kuskil and kuhugi: question words with -gi or -ki for somebody and something, ei for nobody and nothing, mitte keegi on its own, and -gi or -ki on every case, as in kellelegi and kellestki, and which one to use. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про keegi, midagi, kuskil і kuhugi: питальні слова з -gi чи -ki для «хтось» і «щось», ei для «ніхто» і «нічого», mitte keegi окремо, а також -gi чи -ki у кожному відмінку, як у kellelegi і kellestki, і коли яке з них уживати. Кожне речення озвучене."
 
@@ -730,6 +733,9 @@ msgstr "Естонські ступені порівняння прикметн�
 
 msgid "Estonian conditional mood"
 msgstr "Умовний спосіб в естонській мові"
+
+msgid "Estonian conjunctions and linking words"
+msgstr "Естонські сполучники: як з’єднувати частини речення"
 
 msgid "Estonian consonant gradation"
 msgstr "Чергування приголосних в естонській мові"

@@ -145,8 +145,17 @@ msgstr "Готовит завтрак и поёт."
 msgid "Don’t come to visit without calling."
 msgstr "Не приходи в гости, не позвонив."
 
+msgid "Don’t come to visit without calling. (use -des or -mata)"
+msgstr "Не приходи в гости, не позвонив. (используй -des или -mata)"
+
+msgid "Don’t talk while eating. (use -des or -mata)"
+msgstr "Не разговаривай за едой. (используй -des или -mata)"
+
 msgid "Don’t use the phone while driving."
 msgstr "Не пользуйся телефоном за рулём."
+
+msgid "Don’t use the phone while driving. (use -des or -mata)"
+msgstr "Не пользуйся телефоном за рулём. (используй -des или -mata)"
 
 msgid "Each sentence has a moment of two things at once or of something left out. Choose <0>-des</0> or <1>-mata</1>, then write the whole sentence."
 msgstr "В каждом предложении либо два действия происходят одновременно, либо одно пропущено. Выбери <0>-des</0> или <1>-mata</1> и напиши всё предложение."
@@ -168,6 +177,9 @@ msgstr "Он вошёл, постучав."
 
 msgid "He came in without knocking."
 msgstr "Он вошёл, не постучав."
+
+msgid "He didn’t come yesterday. (use -des or -mata)"
+msgstr "Вчера он не пришёл. (используй -des или -mata)"
 
 msgid "He didn’t go to the meeting."
 msgstr "Он не пошёл на собрание."
@@ -196,20 +208,23 @@ msgstr "Он потерял телефон на работе."
 msgid "He missed a bus."
 msgstr "Он опоздал на автобус."
 
-msgid "He sang all the way."
-msgstr "Он пел всю дорогу."
+msgid "He sang loudly while driving."
+msgstr "Он громко пел за рулём."
 
-msgid "He slept all the way home."
-msgstr "Он проспал всю дорогу домой."
+msgid "He stayed quiet the whole way."
+msgstr "Он молчал всю дорогу."
 
-msgid "He slept."
-msgstr "Он спал."
+msgid "He stopped at the café again."
+msgstr "Он снова остановился у кафе."
 
 msgid "He took my book without asking."
 msgstr "Он взял мою книгу, не спросив."
 
 msgid "He watched a film while drinking tea."
 msgstr "Он смотрел фильм и пил чай."
+
+msgid "He watched a film while drinking tea. (use -des or -mata)"
+msgstr "Он смотрел фильм и пил чай. (используй -des или -mata)"
 
 msgid "Her book"
 msgstr "Её книга"
@@ -229,8 +244,23 @@ msgstr "Я делаю домашнее задание и слушаю радио
 msgid "I listen to music while studying."
 msgstr "Я слушаю музыку, когда учусь."
 
+msgid "I listen to music while studying. (use -des or -mata)"
+msgstr "Я слушаю музыку, когда учусь. (используй -des или -mata)"
+
+msgid "I listen to the radio on my way to work. (use -des or -mata)"
+msgstr "Я слушаю радио по дороге на работу. (используй -des или -mata)"
+
 msgid "I never come without calling."
 msgstr "Я никогда не прихожу, не позвонив."
+
+msgid "I read a book while waiting for the bus. (use -des or -mata)"
+msgstr "Я читаю книгу, пока жду автобус. (используй -des или -mata)"
+
+msgid "I spent the whole night without sleep. (use -des or -mata)"
+msgstr "Я всю ночь не спал. (используй -des или -mata)"
+
+msgid "I went to work without drinking coffee. (use -des or -mata)"
+msgstr "Я пошёл на работу, не выпив кофе. (используй -des или -mata)"
 
 msgid "I went to work without eating breakfast."
 msgstr "Я пошёл на работу, не позавтракав."
@@ -244,8 +274,8 @@ msgstr "В предложении"
 msgid "Infinitive"
 msgstr "Инфинитив"
 
-msgid "It can also start the sentence. The verb then comes next, as it does after any first phrase: <0>Sõites ära kasuta telefoni.</0>"
-msgstr "Оборот может стоять и в начале предложения. Тогда сразу за ним идёт глагол, как и после любого другого первого оборота: <0>Sõites ära kasuta telefoni.</0>"
+msgid "It can also start the sentence. The verb then usually comes next, as it does after any first phrase: <0>Sõites ära kasuta telefoni.</0> The subject can also come before the verb: <1>Koju minnes ma ostan leiba.</1>"
+msgstr "Оборот может стоять и в начале предложения. Тогда обычно сразу за ним идёт глагол, как и после любого другого первого оборота: <0>Sõites ära kasuta telefoni.</0> Подлежащее тоже может стоять перед глаголом: <1>Koju minnes ma ostan leiba.</1>"
 
 msgid "Kalev"
 msgstr "Калев"
@@ -358,6 +388,9 @@ msgstr "У неё не было прав."
 msgid "She hadn’t slept at all the night before."
 msgstr "Она совсем не спала прошлой ночью."
 
+msgid "She left the café without paying. (use -des or -mata)"
+msgstr "Она ушла из кафе, не заплатив. (используй -des или -mata)"
+
 msgid "She left without saying a word."
 msgstr "Она ушла, не сказав ни слова."
 
@@ -372,6 +405,9 @@ msgstr "Она подписала договор, не прочитав его."
 
 msgid "She sings while cooking."
 msgstr "Она поёт, пока готовит."
+
+msgid "She sings while cooking. (use -des or -mata)"
+msgstr "Она поёт, пока готовит. (используй -des или -mata)"
 
 msgid "Short and irregular verbs"
 msgstr "Короткие и неправильные глаголы"
@@ -430,20 +466,20 @@ msgstr "Ещё раз нажми на пары предложений выше �
 msgid "Telephone calls sometimes keep Liisa awake at night."
 msgstr "Из-за телефонных разговоров Лийса иногда не спит ночью."
 
+msgid "the -des form"
+msgstr "форма на -des"
+
+msgid "the -mata form"
+msgstr "форма на -mata"
+
 msgid "the <0>-des</0> form"
 msgstr "форма на <0>-des</0>"
 
 msgid "the <0>-mata</0> form"
 msgstr "форма на <0>-mata</0>"
 
-msgid "the <et>-des</et> form"
-msgstr "форма на <et>-des</et>"
-
 msgid "The <et>-des</et> form"
 msgstr "Форма на <et>-des</et>"
-
-msgid "the <et>-mata</et> form"
-msgstr "форма на <et>-mata</et>"
 
 msgid "The <et>-mata</et> form"
 msgstr "Форма на <et>-mata</et>"
@@ -451,11 +487,11 @@ msgstr "Форма на <et>-mata</et>"
 msgid "The flatmate knocked before coming into Liisa’s room."
 msgstr "Соседка по квартире постучала, прежде чем войти в комнату Лийсы."
 
-msgid "The phrase usually goes with the thing it describes and often comes last. It can also start the sentence, and the verb then comes next: <0>Õppides kuulan ma muusikat.</0>"
-msgstr "Оборот обычно стоит рядом со словом, к которому относится, и нередко завершает предложение. Он может стоять и в начале, тогда сразу за ним идёт глагол: <0>Õppides kuulan ma muusikat.</0>"
+msgid "The phrase usually goes with the thing it describes and often comes last. It can also start the sentence. The verb then usually comes next, but the subject can also come first: <0>Õppides kuulan ma muusikat</0> or <1>Õppides ma kuulan muusikat</1>."
+msgstr "Оборот обычно стоит рядом со словом, к которому относится, и нередко завершает предложение. Он может стоять и в начале: тогда глагол обычно идёт сразу за ним, но подлежащее может стоять и первым: <0>Õppides kuulan ma muusikat</0> или <1>Õppides ma kuulan muusikat</1>."
 
-msgid "The phrase with <0>-des</0> or <1>-mata</1> usually goes with the thing it describes and often comes last. It can also start the sentence, and the verb comes next."
-msgstr "Оборот с <0>-des</0> или <1>-mata</1> обычно стоит рядом со словом, к которому относится, и нередко завершает предложение. Он может стоять и в начале, тогда сразу за ним идёт глагол."
+msgid "The phrase with <0>-des</0> or <1>-mata</1> usually goes with the thing it describes and often comes last. It can also start the sentence. The verb then usually comes next, but the subject can also come first: <2>Koju minnes ostan ma leiba</2> or <3>Koju minnes ma ostan leiba</3>."
+msgstr "Оборот с <0>-des</0> или <1>-mata</1> обычно стоит рядом со словом, к которому относится, и нередко завершает предложение. Он может стоять и в начале: тогда глагол обычно идёт сразу за ним, но подлежащее может стоять и первым: <2>Koju minnes ostan ma leiba</2> или <3>Koju minnes ma ostan leiba</3>."
 
 msgid "The same rule works for every verb: <0>minema</0>, <1>minemata</1>."
 msgstr "То же правило работает для каждого глагола: <0>minema</0> — <1>minemata</1>."
@@ -463,8 +499,8 @@ msgstr "То же правило работает для каждого глаг
 msgid "The same verb with -des and with -mata"
 msgstr "Один и тот же глагол с -des и с -mata"
 
-msgid "The sentences differ in one ending: <0>-des</0> is at the same time, <1>-mata</1> is without it."
-msgstr "Предложения различаются одним окончанием: <0>-des</0> — «одновременно», <1>-mata</1> — «без этого действия»."
+msgid "The sentences differ in one ending: <0>-des</0> usually means at the same time, <1>-mata</1> means without it."
+msgstr "Предложения различаются одним окончанием: <0>-des</0> обычно значит «одновременно», <1>-mata</1> — «без этого действия»."
 
 msgid "The two endings sit in the same place in a sentence and usually mean opposites: <0/> is while knocking and <1/> is without knocking. The last letters decide, so listen for them."
 msgstr "Оба окончания стоят на одном и том же месте и обычно значат противоположное: <0/> — «стуча», а <1/> — «не стуча». Всё решают последние буквы, поэтому слушай именно их."
@@ -472,8 +508,8 @@ msgstr "Оба окончания стоят на одном и том же ме
 msgid "They were poisonous."
 msgstr "Они ядовитые."
 
-msgid "They were very tasty and cheap."
-msgstr "Они были очень вкусные и дешёвые."
+msgid "They were too old to cook."
+msgstr "Они были слишком старые, чтобы их готовить."
 
 msgid "They were very tasty and fresh."
 msgstr "Они были очень вкусные и свежие."

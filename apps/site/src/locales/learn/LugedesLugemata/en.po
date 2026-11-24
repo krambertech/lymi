@@ -145,8 +145,17 @@ msgstr "Cooks breakfast and sings."
 msgid "Don’t come to visit without calling."
 msgstr "Don’t come to visit without calling."
 
+msgid "Don’t come to visit without calling. (use -des or -mata)"
+msgstr "Don’t come to visit without calling. (use -des or -mata)"
+
+msgid "Don’t talk while eating. (use -des or -mata)"
+msgstr "Don’t talk while eating. (use -des or -mata)"
+
 msgid "Don’t use the phone while driving."
 msgstr "Don’t use the phone while driving."
+
+msgid "Don’t use the phone while driving. (use -des or -mata)"
+msgstr "Don’t use the phone while driving. (use -des or -mata)"
 
 msgid "Each sentence has a moment of two things at once or of something left out. Choose <0>-des</0> or <1>-mata</1>, then write the whole sentence."
 msgstr "Each sentence has a moment of two things at once or of something left out. Choose <0>-des</0> or <1>-mata</1>, then write the whole sentence."
@@ -168,6 +177,9 @@ msgstr "He came in knocking."
 
 msgid "He came in without knocking."
 msgstr "He came in without knocking."
+
+msgid "He didn’t come yesterday. (use -des or -mata)"
+msgstr "He didn’t come yesterday. (use -des or -mata)"
 
 msgid "He didn’t go to the meeting."
 msgstr "He didn’t go to the meeting."
@@ -196,20 +208,23 @@ msgstr "He lost his phone at work."
 msgid "He missed a bus."
 msgstr "He missed a bus."
 
-msgid "He sang all the way."
-msgstr "He sang all the way."
+msgid "He sang loudly while driving."
+msgstr "He sang loudly while driving."
 
-msgid "He slept all the way home."
-msgstr "He slept all the way home."
+msgid "He stayed quiet the whole way."
+msgstr "He stayed quiet the whole way."
 
-msgid "He slept."
-msgstr "He slept."
+msgid "He stopped at the café again."
+msgstr "He stopped at the café again."
 
 msgid "He took my book without asking."
 msgstr "He took my book without asking."
 
 msgid "He watched a film while drinking tea."
 msgstr "He watched a film while drinking tea."
+
+msgid "He watched a film while drinking tea. (use -des or -mata)"
+msgstr "He watched a film while drinking tea. (use -des or -mata)"
 
 msgid "Her book"
 msgstr "Her book"
@@ -229,8 +244,23 @@ msgstr "I do my homework while listening to the radio."
 msgid "I listen to music while studying."
 msgstr "I listen to music while studying."
 
+msgid "I listen to music while studying. (use -des or -mata)"
+msgstr "I listen to music while studying. (use -des or -mata)"
+
+msgid "I listen to the radio on my way to work. (use -des or -mata)"
+msgstr "I listen to the radio on my way to work. (use -des or -mata)"
+
 msgid "I never come without calling."
 msgstr "I never come without calling."
+
+msgid "I read a book while waiting for the bus. (use -des or -mata)"
+msgstr "I read a book while waiting for the bus. (use -des or -mata)"
+
+msgid "I spent the whole night without sleep. (use -des or -mata)"
+msgstr "I spent the whole night without sleep. (use -des or -mata)"
+
+msgid "I went to work without drinking coffee. (use -des or -mata)"
+msgstr "I went to work without drinking coffee. (use -des or -mata)"
 
 msgid "I went to work without eating breakfast."
 msgstr "I went to work without eating breakfast."
@@ -244,8 +274,8 @@ msgstr "In a sentence"
 msgid "Infinitive"
 msgstr "Infinitive"
 
-msgid "It can also start the sentence. The verb then comes next, as it does after any first phrase: <0>Sõites ära kasuta telefoni.</0>"
-msgstr "It can also start the sentence. The verb then comes next, as it does after any first phrase: <0>Sõites ära kasuta telefoni.</0>"
+msgid "It can also start the sentence. The verb then usually comes next, as it does after any first phrase: <0>Sõites ära kasuta telefoni.</0> The subject can also come before the verb: <1>Koju minnes ma ostan leiba.</1>"
+msgstr "It can also start the sentence. The verb then usually comes next, as it does after any first phrase: <0>Sõites ära kasuta telefoni.</0> The subject can also come before the verb: <1>Koju minnes ma ostan leiba.</1>"
 
 msgid "Kalev"
 msgstr "Kalev"
@@ -358,6 +388,9 @@ msgstr "She didn’t have a licence."
 msgid "She hadn’t slept at all the night before."
 msgstr "She hadn’t slept at all the night before."
 
+msgid "She left the café without paying. (use -des or -mata)"
+msgstr "She left the café without paying. (use -des or -mata)"
+
 msgid "She left without saying a word."
 msgstr "She left without saying a word."
 
@@ -372,6 +405,9 @@ msgstr "She signed the contract without reading it."
 
 msgid "She sings while cooking."
 msgstr "She sings while cooking."
+
+msgid "She sings while cooking. (use -des or -mata)"
+msgstr "She sings while cooking. (use -des or -mata)"
 
 msgid "Short and irregular verbs"
 msgstr "Short and irregular verbs"
@@ -430,20 +466,20 @@ msgstr "Tap the pairs above once more, then try again."
 msgid "Telephone calls sometimes keep Liisa awake at night."
 msgstr "Telephone calls sometimes keep Liisa awake at night."
 
+msgid "the -des form"
+msgstr "the -des form"
+
+msgid "the -mata form"
+msgstr "the -mata form"
+
 msgid "the <0>-des</0> form"
 msgstr "the <0>-des</0> form"
 
 msgid "the <0>-mata</0> form"
 msgstr "the <0>-mata</0> form"
 
-msgid "the <et>-des</et> form"
-msgstr "the <et>-des</et> form"
-
 msgid "The <et>-des</et> form"
 msgstr "The <et>-des</et> form"
-
-msgid "the <et>-mata</et> form"
-msgstr "the <et>-mata</et> form"
 
 msgid "The <et>-mata</et> form"
 msgstr "The <et>-mata</et> form"
@@ -451,11 +487,11 @@ msgstr "The <et>-mata</et> form"
 msgid "The flatmate knocked before coming into Liisa’s room."
 msgstr "The flatmate knocked before coming into Liisa’s room."
 
-msgid "The phrase usually goes with the thing it describes and often comes last. It can also start the sentence, and the verb then comes next: <0>Õppides kuulan ma muusikat.</0>"
-msgstr "The phrase usually goes with the thing it describes and often comes last. It can also start the sentence, and the verb then comes next: <0>Õppides kuulan ma muusikat.</0>"
+msgid "The phrase usually goes with the thing it describes and often comes last. It can also start the sentence. The verb then usually comes next, but the subject can also come first: <0>Õppides kuulan ma muusikat</0> or <1>Õppides ma kuulan muusikat</1>."
+msgstr "The phrase usually goes with the thing it describes and often comes last. It can also start the sentence. The verb then usually comes next, but the subject can also come first: <0>Õppides kuulan ma muusikat</0> or <1>Õppides ma kuulan muusikat</1>."
 
-msgid "The phrase with <0>-des</0> or <1>-mata</1> usually goes with the thing it describes and often comes last. It can also start the sentence, and the verb comes next."
-msgstr "The phrase with <0>-des</0> or <1>-mata</1> usually goes with the thing it describes and often comes last. It can also start the sentence, and the verb comes next."
+msgid "The phrase with <0>-des</0> or <1>-mata</1> usually goes with the thing it describes and often comes last. It can also start the sentence. The verb then usually comes next, but the subject can also come first: <2>Koju minnes ostan ma leiba</2> or <3>Koju minnes ma ostan leiba</3>."
+msgstr "The phrase with <0>-des</0> or <1>-mata</1> usually goes with the thing it describes and often comes last. It can also start the sentence. The verb then usually comes next, but the subject can also come first: <2>Koju minnes ostan ma leiba</2> or <3>Koju minnes ma ostan leiba</3>."
 
 msgid "The same rule works for every verb: <0>minema</0>, <1>minemata</1>."
 msgstr "The same rule works for every verb: <0>minema</0>, <1>minemata</1>."
@@ -463,8 +499,8 @@ msgstr "The same rule works for every verb: <0>minema</0>, <1>minemata</1>."
 msgid "The same verb with -des and with -mata"
 msgstr "The same verb with -des and with -mata"
 
-msgid "The sentences differ in one ending: <0>-des</0> is at the same time, <1>-mata</1> is without it."
-msgstr "The sentences differ in one ending: <0>-des</0> is at the same time, <1>-mata</1> is without it."
+msgid "The sentences differ in one ending: <0>-des</0> usually means at the same time, <1>-mata</1> means without it."
+msgstr "The sentences differ in one ending: <0>-des</0> usually means at the same time, <1>-mata</1> means without it."
 
 msgid "The two endings sit in the same place in a sentence and usually mean opposites: <0/> is while knocking and <1/> is without knocking. The last letters decide, so listen for them."
 msgstr "The two endings sit in the same place in a sentence and usually mean opposites: <0/> is while knocking and <1/> is without knocking. The last letters decide, so listen for them."
@@ -472,8 +508,8 @@ msgstr "The two endings sit in the same place in a sentence and usually mean opp
 msgid "They were poisonous."
 msgstr "They were poisonous."
 
-msgid "They were very tasty and cheap."
-msgstr "They were very tasty and cheap."
+msgid "They were too old to cook."
+msgstr "They were too old to cook."
 
 msgid "They were very tasty and fresh."
 msgstr "They were very tasty and fresh."

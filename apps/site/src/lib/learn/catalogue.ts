@@ -526,7 +526,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian -des and -mata forms: while and without`,
         et: "Lugedes, lugemata",
         minutes: 24,
-        blurb: msg`A free Estonian lesson on two verb forms that look alike: -des for doing something at the same time (lugedes, süües, minnes) and -mata for without doing it (lugemata, ütlemata, söömata), how to make each from the -da and -ma forms, the case of the object after -mata, and where the phrase goes in the sentence. Every sentence is read aloud.`,
+        blurb: msg`A free Estonian lesson on two verb forms that look alike: -des for doing something, usually at the same time (lugedes, süües, minnes) and -mata for without doing it (lugemata, ütlemata, söömata), how to make each from the -da and -ma forms, the case of the object after -mata, and where the phrase goes in the sentence. Every sentence is read aloud.`,
       },
       { name: msg`Participles`, et: "Loetud raamat" },
       { name: msg`Conjunctions and word order`, et: "Et, sest, kui" },

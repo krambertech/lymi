@@ -212,8 +212,8 @@ function PairTable() {
           title: t`Tap a sentence`,
           tip: (
             <Trans>
-              The sentences differ in one ending: <b lang="et">-des</b> is at the same time,{" "}
-              <b lang="et">-mata</b> is without it.
+              The sentences differ in one ending: <b lang="et">-des</b> usually means at the same
+              time, <b lang="et">-mata</b> means without it.
             </Trans>
           ),
         }}
@@ -357,7 +357,9 @@ function useContent() {
     const orderWhy = (
       <Trans>
         The phrase with <b lang="et">-des</b> or <b lang="et">-mata</b> usually goes with the thing
-        it describes and often comes last. It can also start the sentence, and the verb comes next.
+        it describes and often comes last. It can also start the sentence. The verb then usually
+        comes next, but the subject can also come first: <b lang="et">Koju minnes ostan ma leiba</b>{" "}
+        or <b lang="et">Koju minnes ma ostan leiba</b>.
       </Trans>
     );
     const built: (OrderItem & { id: string })[] = DES_ORDER.map(({ id, answers }) => ({
@@ -473,9 +475,9 @@ function useContent() {
         id: "why-not-drive",
         ask: t`Why didn’t Mari drive?`,
         options: [
-          { id: "sleep", label: t`She hadn’t slept at all the night before.` },
           { id: "licence", label: t`She didn’t have a licence.` },
           { id: "broken", label: t`She didn’t have a car.` },
+          { id: "sleep", label: t`She hadn’t slept at all the night before.` },
         ],
         answer: "sleep",
         line: 1,
@@ -514,7 +516,7 @@ function useContent() {
         options: [
           { id: "poison", label: t`They were poisonous.` },
           { id: "tasty", label: t`They were very tasty and fresh.` },
-          { id: "small", label: t`They were very tasty and cheap.` },
+          { id: "small", label: t`They were too old to cook.` },
         ],
         answer: "poison",
         line: 18,
@@ -523,9 +525,9 @@ function useContent() {
         id: "sang",
         ask: t`What did Peeter do on the way back?`,
         options: [
-          { id: "sang", label: t`He sang all the way.` },
-          { id: "slept", label: t`He slept.` },
-          { id: "phoned", label: t`He slept all the way home.` },
+          { id: "slept", label: t`He stayed quiet the whole way.` },
+          { id: "sang", label: t`He sang loudly while driving.` },
+          { id: "phoned", label: t`He stopped at the café again.` },
         ],
         answer: "sang",
         line: 19,
@@ -544,8 +546,8 @@ function useContent() {
         id: "morning",
         ask: t`What does the flatmate do in the morning?`,
         options: [
-          { id: "phone", label: t`Looks at the phone while drinking coffee.` },
           { id: "news", label: t`Reads the news over breakfast.` },
+          { id: "phone", label: t`Looks at the phone while drinking coffee.` },
           { id: "cooks", label: t`Cooks breakfast and sings.` },
         ],
         answer: "phone",
@@ -562,9 +564,9 @@ function useContent() {
         id: "took",
         ask: t`What did the flatmate take without asking?`,
         options: [
-          { id: "charger", label: t`Her charger` },
           { id: "book", label: t`Her book` },
           { id: "cup", label: t`Her coffee cup` },
+          { id: "charger", label: t`Her charger` },
         ],
         answer: "charger",
         line: 13,
@@ -605,8 +607,8 @@ function useContent() {
         id: "bus",
         ask: t`What happened to Kalev yesterday?`,
         options: [
-          { id: "missed", label: t`He missed a bus.` },
           { id: "lost", label: t`He lost his phone at work.` },
+          { id: "missed", label: t`He missed a bus.` },
           { id: "late", label: t`He felt ill at work.` },
         ],
         answer: "missed",
@@ -624,8 +626,8 @@ function useContent() {
         ask: t`What will Liisa cook on Saturday?`,
         options: [
           { id: "fish", label: t`Fish soup` },
-          { id: "veg", label: t`Vegetable soup` },
           { id: "meat", label: t`Meat soup` },
+          { id: "veg", label: t`Vegetable soup` },
         ],
         answer: "veg",
         line: 62,
@@ -697,8 +699,9 @@ export function LugedesLugemataLesson() {
         </Trans>,
         <Trans key="5">
           The phrase usually goes with the thing it describes and often comes last. It can also
-          start the sentence, and the verb then comes next:{" "}
-          <b lang="et">Õppides kuulan ma muusikat.</b>
+          start the sentence. The verb then usually comes next, but the subject can also come first:{" "}
+          <b lang="et">Õppides kuulan ma muusikat</b> or <b lang="et">Õppides ma kuulan muusikat</b>
+          .
         </Trans>,
       ]}
       sections={[
@@ -877,8 +880,9 @@ export function LugedesLugemataLesson() {
                 </p>
                 <p>
                   <Trans>
-                    It can also start the sentence. The verb then comes next, as it does after any
-                    first phrase: <b lang="et">Sõites ära kasuta telefoni.</b>
+                    It can also start the sentence. The verb then usually comes next, as it does
+                    after any first phrase: <b lang="et">Sõites ära kasuta telefoni.</b> The subject
+                    can also come before the verb: <b lang="et">Koju minnes ma ostan leiba.</b>
                   </Trans>
                 </p>
                 <p>

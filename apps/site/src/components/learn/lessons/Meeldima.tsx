@@ -641,7 +641,7 @@ const letterQuestions = (i18n: I18n): PassageQuestion[] => {
       id: "pets",
       ask: label(msg`Kati and Mari have a cat and a dog.`),
       answer: true,
-      line: 3,
+      line: 2,
     },
     {
       id: "dogs",
@@ -652,28 +652,28 @@ const letterQuestions = (i18n: I18n): PassageQuestion[] => {
         { id: "liis", label: label(msg`Liis`) },
       ],
       answer: "mari",
-      line: 4,
+      line: 3,
     },
     {
       kind: "truefalse",
       id: "mari-swims",
       ask: label(msg`Mari likes swimming.`),
       answer: false,
-      line: 7,
+      line: 5,
     },
     {
       kind: "truefalse",
       id: "kati-writes",
       ask: label(msg`Kati likes writing.`),
       answer: false,
-      line: 8,
+      line: 6,
     },
     {
       kind: "short",
       id: "learn",
       ask: label(msg`What does Kati want to learn well? Write two words in Estonian.`),
       answers: ["eesti keelt", "eesti keel"],
-      line: 10,
+      line: 7,
     },
     {
       id: "asks",
@@ -684,7 +684,7 @@ const letterQuestions = (i18n: I18n): PassageQuestion[] => {
         { id: "tallinn", label: label(msg`Whether she likes Tallinn`) },
       ],
       answer: "coffee",
-      line: 14,
+      line: 10,
     },
   ];
 };

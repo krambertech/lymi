@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
+#. placeholder {0}: i18n._(COMMAND_VERB_MEANS[verb] as MessageDescriptor)
+msgid "{0}, <0>ma {ma}</0>"
+msgstr "{0}, <0>ma {ma}</0>"
+
 msgid "<0/> and <1/> both mean not, but they do different jobs. <2>Ei</2> says what someone doesn’t do: <3/>, I’m not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
 msgstr "<0/> and <1/> both mean not, but they do different jobs. <2>Ei</2> says what someone doesn’t do: <3/>, I’m not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
 
@@ -19,23 +23,57 @@ msgstr "<0/>, please, makes a command polite. When Estonian comes too fast, say 
 msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> or <1>-ke</1> on the end"
 
+msgid "<0>-ge</0> or <1>-ke</1> on the end: more than one, or polite."
+msgstr "<0>-ge</0> or <1>-ke</1> on the end: more than one, or polite."
+
 msgid "<0>Ära</0> before the stem"
 msgstr "<0>Ära</0> before the stem"
 
 msgid "<0>Ei</0> says what someone doesn’t do; <1>ära</1> tells them not to: <2>Ma ei istu. Ära istu!</2>"
 msgstr "<0>Ei</0> says what someone doesn’t do; <1>ära</1> tells them not to: <2>Ma ei istu. Ära istu!</2>"
 
-msgid "10 minutes"
-msgstr "10 minutes"
+msgid "<et>Ära</et> becomes <et>ärge</et>, and the verb takes its <et>-ge</et> or <et>-ke</et> form: <et>Ärge istuge!</et>"
+msgstr "<et>Ära</et> becomes <et>ärge</et>, and the verb takes its <et>-ge</et> or <et>-ke</et> form: <et>Ärge istuge!</et>"
 
-msgid "2 quizzes and a conversation"
-msgstr "2 quizzes and a conversation"
+msgid "<et>Ära</et> before the stem tells one person not to do it."
+msgstr "<et>Ära</et> before the stem tells one person not to do it."
+
+msgid "<et>Ära</et> tells someone not to do it; <et>ei</et> says what someone doesn’t do."
+msgstr "<et>Ära</et> tells someone not to do it; <et>ei</et> says what someone doesn’t do."
+
+msgid "<et>Ära</et>, don’t"
+msgstr "<et>Ära</et>, don’t"
+
+#. placeholder {0}: commandTo(stem)
+msgid "<et>Ma {ma}</et>, so the command is <et>{0}</et>"
+msgstr "<et>Ma {ma}</et>, so the command is <et>{0}</et>"
+
+msgid "15 minutes"
+msgstr "15 minutes"
+
+msgid "4 quizzes, a sort, a conversation and a passage"
+msgstr "4 quizzes, a sort, a conversation and a passage"
+
+msgid "a book"
+msgstr "a book"
+
+msgid "A command to one person is usually the present without its ending (<0>loen → loe!</0>), though a few change, like <1>lähen → mine!</1> To more than one, or politely, it ends in <2>-ge</2> or <3>-ke</3>. Sort the commands; tap one to hear it."
+msgstr "A command to one person is usually the present without its ending (<0>loen → loe!</0>), though a few change, like <1>lähen → mine!</1> To more than one, or politely, it ends in <2>-ge</2> or <3>-ke</3>. Sort the commands; tap one to hear it."
+
+msgid "A teacher starts the class. Listen to who is told to do what."
+msgstr "A teacher starts the class. Listen to who is told to do what."
 
 msgid "All of them. You told <0>ära</0> from <1>ei</1> every time."
 msgstr "All of them. You told <0>ära</0> from <1>ei</1> every time."
 
 msgid "All of them. You understood every command."
 msgstr "All of them. You understood every command."
+
+msgid "All six commands right."
+msgstr "All six commands right."
+
+msgid "All six, each the I form of the present without its <0>-n</0>."
+msgstr "All six, each the I form of the present without its <0>-n</0>."
 
 msgid "Ära istu tells her not to sit down."
 msgstr "Ära istu tells her not to sit down."
@@ -48,6 +86,9 @@ msgstr "At a café"
 
 msgid "Before the stem, to tell one person not to do something."
 msgstr "Before the stem, to tell one person not to do something."
+
+msgid "Change the command"
+msgstr "Change the command"
 
 msgid "Come here."
 msgstr "Come here."
@@ -105,17 +146,32 @@ msgstr "Each of these six everyday commands starts with a verb’s stem. Tap one
 msgid "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 msgstr "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 
+msgid "Each round gives a verb and its I form of the present. Type the command to one person you’d call <0>sa</0>: usually that form without its <1>-n</1>."
+msgstr "Each round gives a verb and its I form of the present. Type the command to one person you’d call <0>sa</0>: usually that form without its <1>-n</1>."
+
 msgid "Eat."
 msgstr "Eat."
 
 msgid "Everyday commands"
 msgstr "Everyday commands"
 
+msgid "Everyone"
+msgstr "Everyone"
+
+msgid "Everyone should look here."
+msgstr "Everyone should look here."
+
 msgid "From istuma, to sit."
 msgstr "From istuma, to sit."
 
 msgid "From tulema, to come."
 msgstr "From tulema, to come."
+
+msgid "Go back to the stems at the top, then try again."
+msgstr "Go back to the stems at the top, then try again."
+
+msgid "Go back to the two switches above, then try again."
+msgstr "Go back to the two switches above, then try again."
 
 msgid "Go."
 msgstr "Go."
@@ -168,14 +224,33 @@ msgstr "I’m not sitting down."
 msgid "I’m not waiting."
 msgstr "I’m not waiting."
 
-msgid "It’s the form that follows <0>ei</0> in lesson {negation}: <1/>, I don’t read. Tap either side of a pair to hear it."
-msgstr "It’s the form that follows <0>ei</0> in lesson {negation}: <1/>, I don’t read. Tap either side of a pair to hear it."
+msgid "It’s usually the form that follows <0>ei</0> in lesson {negation}: <1/>, I don’t read. Tap either side of a pair to hear it."
+msgstr "It’s usually the form that follows <0>ei</0> in lesson {negation}: <1/>, I don’t read. Tap either side of a pair to hear it."
+
+msgid "Jaan"
+msgstr "Jaan"
+
+msgid "Jaan should talk."
+msgstr "Jaan should talk."
+
+msgid "Kati"
+msgstr "Kati"
+
+msgctxt "in class"
+msgid "Listen"
+msgstr "Listen"
+
+msgid "Listen: in class"
+msgstr "Listen: in class"
 
 msgid "Listen."
 msgstr "Listen."
 
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
+
+msgid "Listening: in class"
+msgstr "Listening: in class"
 
 msgid "Look."
 msgstr "Look."
@@ -188,6 +263,12 @@ msgstr "Mari"
 
 msgid "More than one"
 msgstr "More than one"
+
+msgid "Nearly. Check the cue in the ones you missed."
+msgstr "Nearly. Check the cue in the ones you missed."
+
+msgid "Nearly. Check the stem in the ones you missed."
+msgstr "Nearly. Check the stem in the ones you missed."
 
 msgid "Nearly. Listen to the first word of the ones you missed."
 msgstr "Nearly. Listen to the first word of the ones you missed."
@@ -210,14 +291,30 @@ msgstr "One person"
 msgid "One person or more"
 msgstr "One person or more"
 
+msgid "One person or more?"
+msgstr "One person or more?"
+
 msgid "please"
 msgstr "please"
+
+msgctxt "in class"
+msgid "Read"
+msgstr "Read"
 
 msgid "Read."
 msgstr "Read."
 
 msgid "Read. To more than one, or polite."
 msgstr "Read. To more than one, or polite."
+
+msgid "Rewrite each command as the cue says: with <0>ära</0> for don’t, or for more than one."
+msgstr "Rewrite each command as the cue says: with <0>ära</0> for don’t, or for more than one."
+
+msgid "Rewrite the command"
+msgstr "Rewrite the command"
+
+msgid "Sit down"
+msgstr "Sit down"
 
 msgid "Sit down."
 msgstr "Sit down."
@@ -270,8 +367,17 @@ msgstr "That tells Mari not to drink water. She asked what you’d like."
 msgid "That tells Mari to drink coffee. She asked what you’d like."
 msgstr "That tells Mari to drink coffee. She asked what you’d like."
 
+msgid "The command to one person"
+msgstr "The command to one person"
+
+msgid "The command to one person is usually the I form of the present without its <et>-n</et>."
+msgstr "The command to one person is usually the I form of the present without its <et>-n</et>."
+
 msgid "The stem alone"
 msgstr "The stem alone"
+
+msgid "The stem alone: one person."
+msgstr "The stem alone: one person."
 
 msgid "The stem doesn’t change: <0>istu</0>, <1>ära istu</1>."
 msgstr "The stem doesn’t change: <0>istu</0>, <1>ära istu</1>."
@@ -279,11 +385,11 @@ msgstr "The stem doesn’t change: <0>istu</0>, <1>ära istu</1>."
 msgid "The stem is the command"
 msgstr "The stem is the command"
 
-msgid "The stem is the I form of the present without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It’s the form that follows <3>ei</3>."
-msgstr "The stem is the I form of the present without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It’s the form that follows <3>ei</3>."
+msgid "The stem is usually the I form of the present without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It’s usually the same form that follows <3>ei</3>."
+msgstr "The stem is usually the I form of the present without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It’s usually the same form that follows <3>ei</3>."
 
-msgid "The stem is the I form of the present without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
-msgstr "The stem is the I form of the present without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
+msgid "The stem is usually the I form of the present without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
+msgstr "The stem is usually the I form of the present without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
 
 msgid "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb’s three forms, shows where they come from."
 msgstr "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb’s three forms, shows where they come from."
@@ -300,6 +406,15 @@ msgstr "to go"
 msgid "to learn, to study"
 msgstr "to learn, to study"
 
+msgid "to listen"
+msgstr "to listen"
+
+msgid "to look"
+msgstr "to look"
+
+msgid "to more than one"
+msgstr "to more than one"
+
 msgid "To more than one person"
 msgstr "To more than one person"
 
@@ -309,8 +424,17 @@ msgstr "To more than one person, or politely to one."
 msgid "To more than one person, or politely, the command ends in <0>-ge</0> or <1>-ke</1>: <2>Istuge! Oodake! Ärge lugege!</2>"
 msgstr "To more than one person, or politely, the command ends in <0>-ge</0> or <1>-ke</1>: <2>Istuge! Oodake! Ärge lugege!</2>"
 
+msgid "To more than one, or polite"
+msgstr "To more than one, or polite"
+
+msgid "To more than one, or politely, the verb ends in <et>-ge</et> or <et>-ke</et>."
+msgstr "To more than one, or politely, the verb ends in <et>-ge</et> or <et>-ke</et>."
+
 msgid "To one person"
 msgstr "To one person"
+
+msgid "to one person you’d call sa"
+msgstr "to one person you’d call sa"
 
 msgid "to read"
 msgstr "to read"
@@ -321,8 +445,8 @@ msgstr "To say don’t, put <0>ära</0> before the stem: <1>Ära istu!</1>"
 msgid "to speak"
 msgstr "to speak"
 
-msgid "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the I form of the present from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
-msgstr "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the I form of the present from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
+msgid "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Usually that’s the I form of the present from lesson {present} without its <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
+msgstr "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Usually that’s the I form of the present from lesson {present} without its <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
 
 msgid "To tell one person what to do, say the verb’s stem: <0>Loe! Istu!</0>"
 msgstr "To tell one person what to do, say the verb’s stem: <0>Loe! Istu!</0>"
@@ -339,17 +463,32 @@ msgstr "to wait"
 msgid "Tuleb says that he’s coming. To call him over, use the stem: tule."
 msgstr "Tuleb says that he’s coming. To call him over, use the stem: tule."
 
+msgid "Type the command"
+msgstr "Type the command"
+
 msgid "Wait."
 msgstr "Wait."
 
 msgid "Wait. To more than one, or polite."
 msgstr "Wait. To more than one, or polite."
 
+msgid "What should everyone do first?"
+msgstr "What should everyone do first?"
+
 msgid "What to do?"
 msgstr "What to do?"
 
 msgid "Where someone goes: tule siia, come here."
 msgstr "Where someone goes: tule siia, come here."
+
+msgid "Who is it said to?"
+msgstr "Who is it said to?"
+
+msgid "Who should read?"
+msgstr "Who should read?"
+
+msgid "Who should wait?"
+msgstr "Who should wait?"
 
 msgid "you, to more than one; polite you"
 msgstr "you, to more than one; polite you"

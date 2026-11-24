@@ -9,21 +9,28 @@ import {
   clipId,
   clipUrl,
   commandTo,
+  KASKIV_CLASS,
   KASKIV_DIALOGUE,
   KASKIV_EVERYDAY,
   KASKIV_FLIP,
   KASKIV_HEARD,
   KASKIV_MORE,
   KASKIV_STEMS,
+  KASKIV_TURNED,
+  KASKIV_TYPED,
   notSentence,
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, ListenRows, Panel } from "../Explore";
+import { type FormItem, FormRound, formRecall } from "../FormRound";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
+import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
+import { type SortBin, type SortItem, Sort } from "../Sort";
 import { Playing } from "../Sound";
 import { Word } from "../Word";
 
@@ -91,6 +98,7 @@ const GLOSSARY: Glossary = {
   tulen: { en: msg`I come`, note: msg`From tulema, to come.`, clip: false },
   minema: { en: msg`to go`, clip: false },
   sa: { en: msg`you, to one person`, clip: false },
+  raamatut: { en: msg`a book`, clip: false },
   te: { en: msg`you, to more than one; polite you`, clip: false },
 };
 
@@ -387,6 +395,27 @@ function Explain({ said }: { said: string }) {
   );
 }
 
+const COMMAND_VERB_MEANS: Record<string, MessageDescriptor> = {
+  rääkima: msg`to speak`,
+  ootama: msg`to wait`,
+  sööma: msg`to eat`,
+  jooma: msg`to drink`,
+  õppima: msg`to learn, to study`,
+  kuulama: msg`to listen`,
+  vaatama: msg`to look`,
+};
+
+const ONE_OR_MORE = [
+  "Istu!",
+  "Oodake!",
+  "Kuula!",
+  "Lugege!",
+  "Oota!",
+  "Istuge!",
+  "Loe!",
+  "Ärge oodake!",
+] as const;
+
 export function KaskivLesson() {
   const { t, i18n } = useLingui();
   const pronouns = lessonBySlug("mina-sina-tema")?.n;
@@ -496,6 +525,110 @@ export function KaskivLesson() {
     },
   ];
 
+  const typedItems = useMemo<(FormItem & { pair: readonly [string, string] })[]>(
+    () =>
+      KASKIV_TYPED.map(({ verb, ma, stem, answers }) => ({
+        base: verb,
+        gloss: (
+          <Trans>
+            {i18n._(COMMAND_VERB_MEANS[verb] as MessageDescriptor)}, <span lang="et">ma {ma}</span>
+          </Trans>
+        ),
+        cue: t`to one person you’d call sa`,
+        answers,
+        src: src(commandTo(stem)),
+        pair: [`${verb.slice(0, -2)}` === stem ? "same" : "changed", verb] as const,
+      })),
+    [t, i18n],
+  );
+
+  const sortBins = useMemo<SortBin[]>(
+    () => [
+      {
+        id: "one",
+        label: t`To one person`,
+        lang: i18n.locale,
+        rule: <Trans>The stem alone: one person.</Trans>,
+      },
+      {
+        id: "more",
+        label: t`To more than one, or polite`,
+        lang: i18n.locale,
+        rule: (
+          <Trans>
+            <span lang="et">-ge</span> or <span lang="et">-ke</span> on the end: more than one, or
+            polite.
+          </Trans>
+        ),
+      },
+    ],
+    [t, i18n],
+  );
+  const sortItems = useMemo<SortItem[]>(
+    () =>
+      ONE_OR_MORE.map((w) => ({
+        w,
+        bin: w.endsWith("ge!") || w.endsWith("ke!") ? "more" : "one",
+        src: src(w),
+      })),
+    [],
+  );
+
+  const turnedItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
+    () =>
+      KASKIV_TURNED.map(({ from, to, kind, answers }) => ({
+        kind: "rewrite" as const,
+        id: `turn-${clipId(to)}`,
+        from,
+        cue: kind === "dont" ? t`don’t` : t`to more than one`,
+        src: src(to),
+        answers,
+        pair: [kind, to] as const,
+      })),
+    [t],
+  );
+
+  const classQuestions = useMemo<PassageQuestion[]>(
+    () => [
+      {
+        id: "first",
+        ask: t`What should everyone do first?`,
+        options: [
+          { id: "listen", label: t({ message: "Listen", context: "in class" }) },
+          { id: "sit", label: t`Sit down` },
+          { id: "read", label: t({ message: "Read", context: "in class" }) },
+        ],
+        answer: "sit",
+        line: 1,
+      },
+      { id: "jaan", kind: "truefalse", ask: t`Jaan should talk.`, answer: false, line: 3 },
+      {
+        id: "read",
+        ask: t`Who should read?`,
+        options: [
+          { id: "jaan", label: t`Jaan` },
+          { id: "kati", label: t`Kati` },
+          { id: "mari", label: t`Mari` },
+        ],
+        answer: "mari",
+        line: 4,
+      },
+      {
+        id: "wait",
+        ask: t`Who should wait?`,
+        options: [
+          { id: "kati", label: t`Kati` },
+          { id: "mari", label: t`Mari` },
+          { id: "all", label: t`Everyone` },
+        ],
+        answer: "kati",
+        line: 5,
+      },
+      { id: "look", kind: "truefalse", ask: t`Everyone should look here.`, answer: true, line: 6 },
+    ],
+    [t],
+  );
+
   return (
     <LessonView
       slug={SLUG}
@@ -508,8 +641,8 @@ export function KaskivLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">10 minutes</Trans>,
-        <Trans key="q">2 quizzes and a conversation</Trans>,
+        <Trans key="m">15 minutes</Trans>,
+        <Trans key="q">4 quizzes, a sort, a conversation and a passage</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -531,8 +664,8 @@ export function KaskivLesson() {
           To tell one person what to do, say the verb’s stem: <b lang="et">Loe! Istu!</b>
         </Trans>,
         <Trans key="2">
-          The stem is the I form of the present without its <b lang="et">-n</b>:{" "}
-          <b lang="et">istun</b>, <b lang="et">istu</b>. It’s the form that follows{" "}
+          The stem is usually the I form of the present without its <b lang="et">-n</b>:{" "}
+          <b lang="et">istun</b>, <b lang="et">istu</b>. It’s usually the same form that follows{" "}
           <b lang="et">ei</b>.
         </Trans>,
         <Trans key="3">
@@ -564,15 +697,16 @@ export function KaskivLesson() {
                 <p>
                   <Trans>
                     To tell one person what to do, Estonian uses the verb’s stem with nothing after
-                    it. Take the I form of the present from lesson {present} and drop the{" "}
+                    it. Usually that’s the I form of the present from lesson {present} without its{" "}
                     <span lang="et">-n</span>. <Word w="Ma loen" /> is I read, and <Word w="Loe!" />{" "}
                     tells one person to read.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    It’s the form that follows <span lang="et">ei</span> in lesson {negation}:{" "}
-                    <Word w="ma ei loe" />, I don’t read. Tap either side of a pair to hear it.
+                    It’s usually the form that follows <span lang="et">ei</span> in lesson{" "}
+                    {negation}: <Word w="ma ei loe" />, I don’t read. Tap either side of a pair to
+                    hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -614,9 +748,10 @@ export function KaskivLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The stem is the I form of the present without its <span lang="et">-n</span>.{" "}
-                    <Word w="Istun" /> gives <Word w="Istu!" /> <Word w="Tulen" /> gives{" "}
-                    <Word w="Tule siia!" /> <Word w="Siia" /> means here, to this place.
+                    The stem is usually the I form of the present without its{" "}
+                    <span lang="et">-n</span>. <Word w="Istun" /> gives <Word w="Istu!" />{" "}
+                    <Word w="Tulen" /> gives <Word w="Tule siia!" /> <Word w="Siia" /> means here,
+                    to this place.
                   </Trans>
                 </p>
                 <p>
@@ -801,6 +936,126 @@ export function KaskivLesson() {
                 }
                 them={t`Mari`}
                 turns={dialogue}
+              />
+            </>
+          ),
+        },
+        {
+          id: "type",
+          title: t`Type the command`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each round gives a verb and its I form of the present. Type the command to one
+                    person you’d call <span lang="et">sa</span>: usually that form without its{" "}
+                    <span lang="et">-n</span>.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="type-command"
+                title={<Trans>Type the command</Trans>}
+                items={typedItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>
+                      All six, each the I form of the present without its <span lang="et">-n</span>.
+                    </Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check the stem in the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Go back to the stems at the top, then try again.</Trans>
+                  )
+                }
+                recall={formRecall}
+                order={eachPairFirst}
+                round={(props) => <FormRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "one-or-more",
+          title: t`One person or more?`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    A command to one person is usually the present without its ending (
+                    <span lang="et">loen → loe!</span>), though a few change, like{" "}
+                    <span lang="et">lähen → mine!</span> To more than one, or politely, it ends in{" "}
+                    <span lang="et">-ge</span> or <span lang="et">-ke</span>. Sort the commands; tap
+                    one to hear it.
+                  </Trans>
+                </p>
+              </Prose>
+              <Sort
+                id="sort-one-more"
+                title={<Trans>Who is it said to?</Trans>}
+                bins={sortBins}
+                items={sortItems}
+              />
+            </>
+          ),
+        },
+        {
+          id: "rewrite",
+          title: t`Change the command`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Rewrite each command as the cue says: with <span lang="et">ära</span> for don’t,
+                    or for more than one.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="rewrite-command"
+                title={<Trans>Rewrite the command</Trans>}
+                items={turnedItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six commands right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check the cue in the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Go back to the two switches above, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listening: in class`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>A teacher starts the class. Listen to who is told to do what.</Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="in-class"
+                title={<Trans>Listen: in class</Trans>}
+                clip="p-class"
+                sentences={KASKIV_CLASS}
+                questions={classQuestions}
               />
             </>
           ),

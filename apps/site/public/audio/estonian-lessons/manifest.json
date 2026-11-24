@@ -4140,7 +4140,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "paev-tallinnas/reede": {
-    "text": "reede",
+    "text": "Reede.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -4250,12 +4250,12 @@
     "voice": "WtzwR2kNGVNuaTGaYLfK"
   },
   "paev-tallinnas/p-jaan": {
-    "text": "Tere, see on Jaan! Ma olen täna Tartus, aga homme olen Tallinnas. Minu buss on Tallinnas kell pool üksteist. Ma ootan sind kohvikus. Pühapäeval olen kodus.",
+    "text": "Tere, see on Jaan! Ma olen täna Tartus, aga homme olen Tallinnas. Minu buss on Tallinnas kell pool üksteist. Ma olen homme kohvikus. Pühapäeval olen kodus.",
     "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
   },
   "paev-tallinnas/p-saturday": {
-    "text": "Täna on laupäev. Ma ei tööta. Ma olen Tallinnas. Mari ja Jaan on minu sõbrad. Me joome kell kümme kohvikus kohvi. Kohv maksab kolm eurot.",
+    "text": "Täna on laupäev. Ma ei tööta. Ma olen Tallinnas. Mari ja Jaan on minu sõbrad. Mari ja mina joome kell kümme kohvikus kohvi. Kohv maksab kolm eurot.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -4285,7 +4285,7 @@
     "voice": "WtzwR2kNGVNuaTGaYLfK"
   },
   "paev-tallinnas/d-sina-3": {
-    "text": "Kell on pool üksteist.",
+    "text": "Kell on kümme.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -25960,6 +25960,399 @@
   },
   "saav/ilm": {
     "text": "ilm",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/p-jaan": {
+    "text": "Tere, Mari! Täna on kolmapäev. Ma olen täna tööl. Homme on neljapäev. Ma olen homme kodus. Ülehomme on reede. Ma olen ülehomme linnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/p-class": {
+    "text": "Tere! Istuge, palun. Kuulake! Jaan, ära räägi! Mari, loe raamatut, palun! Kati, oota! Vaadake siia! Aitäh!",
+    "model": "eleven_v4",
+    "voice": "0cuaFlR2we1Gl3woPjeJ"
+  },
+  "paev-tallinnas/kell-on-pool-u2ksteist": {
+    "text": "Kell on pool üksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kolm-eurot": {
+    "text": "Kolm eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/ta2na-on-laupa2ev": {
+    "text": "Täna on laupäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kell-on-kaksteist": {
+    "text": "Kell on kaksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kaksteist-eurot": {
+    "text": "Kaksteist eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kell-on-kolm": {
+    "text": "Kell on kolm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kell-on-pool-kaksteist": {
+    "text": "Kell on pool kaksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/ta2na-ma-ei-to2o2ta": {
+    "text": "Täna ma ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/ma-olen-kell-u2ksteist-kodus": {
+    "text": "Ma olen kell üksteist kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kohvik-on-suletud": {
+    "text": "Kohvik on suletud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/minu-buss-on-kell-ku2mme": {
+    "text": "Minu buss on kell kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/pu2hapa2eval-ma-ei-to2o2ta": {
+    "text": "Pühapäeval ma ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kell-on-ku2mme": {
+    "text": "Kell on kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/homme-ma-ei-to2o2ta": {
+    "text": "Homme ma ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/ma-olen-kell-kaksteist-turul": {
+    "text": "Ma olen kell kaksteist turul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/me-joome-kell-u2ksteist-kohvi": {
+    "text": "Me joome kell üksteist kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kohvik-on-avatud": {
+    "text": "Kohvik on avatud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/mari-ei-to2o2ta-ta2na": {
+    "text": "Mari ei tööta täna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/d-plan": {
+    "text": "Tere, Jaan! Mis sa täna teed? Täna on reede ja ma olen tööl. Kas sa töötad homme? Ei, homme ma ei tööta. Kell üksteist olen kohvikus. Ma olen kell kaksteist turul. Hästi, ma tulen kell pool üks! Ja pühapäeval? Pühapäeval olen kodus.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Mis sa täna teed?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Täna on reede ja ma olen tööl."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sa töötad homme?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, homme ma ei tööta.",
+          "Kell üksteist olen kohvikus."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ma olen kell kaksteist turul."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hästi, ma tulen kell pool üks!"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja pühapäeval?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Pühapäeval olen kodus."
+        ]
+      }
+    ]
+  },
+  "paev-tallinnas/p-reply": {
+    "text": "Tere, Mari! Jah, ma olen homme linnas. Ma ei tööta. Kell kümme olen kohvikus. Pühapäeval olen kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/see-maksab-viis-eurot": {
+    "text": "See maksab viis eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/see-maksab-kaksteist-eurot": {
+    "text": "See maksab kaksteist eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/ta2na-on-reede": {
+    "text": "Täna on reede.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/see-maksab-neli-eurot": {
+    "text": "See maksab neli eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/see-maksab-kuus-eurot": {
+    "text": "See maksab kuus eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/u2lehomme-on-pu2hapa2ev": {
+    "text": "Ülehomme on pühapäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/see-maksab-kaks-eurot": {
+    "text": "See maksab kaks eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/homme-on-laupa2ev": {
+    "text": "Homme on laupäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/u2lehomme-on-laupa2ev": {
+    "text": "Ülehomme on laupäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-tulen-so3braga": {
+    "text": "Ma tulen sõbraga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/mari-to2o2tab-kella-kuueni": {
+    "text": "Mari töötab kella kuueni.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/jaan-to2o2tab-o3petajana": {
+    "text": "Jaan töötab õpetajana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/me-la2heme-bussiga-tartusse": {
+    "text": "Me läheme bussiga Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/lapsena-elasin-ma-tartus": {
+    "text": "Lapsena elasin ma Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-joon-kohvi-piimata": {
+    "text": "Ma joon kohvi piimata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/jaan-tuleb-so3braga": {
+    "text": "Jaan tuleb sõbraga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-olen-praegu-rahata": {
+    "text": "Ma olen praegu rahata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-to2o2tan-kella-neljani": {
+    "text": "Ma töötan kella neljani.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/c-talk": {
+    "text": "Tere, Kati! Kas sa tuled laupäeval kohvikusse? Mari tuleb ka. Tere, Jaan! Laupäeval ma ei saa. Ma lähen rongiga Tartusse. Rongiga? Miks sa autoga ei lähe? Ma olen praegu autota. Ja rongis saab lugeda ja kohvi juua. Kellega sa lähed? Õega. Lapsena elasime Pärnus. Nüüd elab ta Tartus ja töötab seal arstina. Arstina? Tore! Kas ta töötab ka laupäeval? Jah, haiglas kella kaheni. Siis läheme koos linna ja sööme kohvikus. Kui kaua te Tartus olete? Pühapäeva õhtuni. Siis tuleme bussiga tagasi. Aga esmaspäeval? Ma töötan kella neljani. Siis olen vaba. Esmaspäeval saan. Ma tulen kell viis. Kellega Mari tuleb? Vennaga. Aga ma olen praegu rahata. Pole midagi, ma maksan. Sa jood kohvi piimata, jah? Jah, piimata, aga suhkruga. Ja Mari joob teed sidruniga. Hästi. Nägemiseni, Jaan! Nägemiseni! Head teed!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Kati!",
+          "Kas sa tuled laupäeval kohvikusse?",
+          "Mari tuleb ka."
+        ],
+        "say": "[cheerful] Tere, Kati! Kas sa tuled laupäeval kohvikusse? Mari tuleb ka."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Jaan!",
+          "Laupäeval ma ei saa.",
+          "Ma lähen rongiga Tartusse."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Rongiga?",
+          "Miks sa autoga ei lähe?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma olen praegu autota.",
+          "Ja rongis saab lugeda ja kohvi juua."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kellega sa lähed?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Õega.",
+          "Lapsena elasime Pärnus.",
+          "Nüüd elab ta Tartus ja töötab seal arstina."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Arstina?",
+          "Tore!",
+          "Kas ta töötab ka laupäeval?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, haiglas kella kaheni.",
+          "Siis läheme koos linna ja sööme kohvikus."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kui kaua te Tartus olete?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Pühapäeva õhtuni.",
+          "Siis tuleme bussiga tagasi."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Aga esmaspäeval?",
+          "Ma töötan kella neljani.",
+          "Siis olen vaba."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Esmaspäeval saan.",
+          "Ma tulen kell viis.",
+          "Kellega Mari tuleb?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Vennaga.",
+          "Aga ma olen praegu rahata."
+        ],
+        "say": "Vennaga. [sighs] Aga ma olen praegu rahata."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Pole midagi, ma maksan.",
+          "Sa jood kohvi piimata, jah?"
+        ],
+        "say": "[laughs] Pole midagi, ma maksan. Sa jood kohvi piimata, jah?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, piimata, aga suhkruga.",
+          "Ja Mari joob teed sidruniga."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hästi.",
+          "Nägemiseni, Jaan!"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Nägemiseni!",
+          "Head teed!"
+        ]
+      }
+    ]
+  },
+  "sobraga-rahata/ma-joon-teed-suhkruta": {
+    "text": "Ma joon teed suhkruta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/buss-la2heb-poeni": {
+    "text": "Buss läheb poeni.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

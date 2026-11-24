@@ -1,0 +1,692 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-24 23:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "-nud form"
+msgstr "форма на -nud"
+
+msgid "-tud"
+msgstr "-tud"
+
+msgid "-tud form"
+msgstr "форма на -tud"
+
+msgid "-v"
+msgstr "-v"
+
+msgid "-v form"
+msgstr "форма на -v"
+
+msgid "<0>Loetud raamat</0> is a book that has been read, and <1>väsinud mees</1> is a tired man: a verb can turn into an adjective, and its ending says who did what."
+msgstr "<0>Loetud raamat</0> — это прочитанная книга, а <1>väsinud mees</1> — уставший мужчина: глагол может стать прилагательным, и его окончание показывает, кто что сделал."
+
+msgid "26 minutes"
+msgstr "26 минут"
+
+msgid "9 exercises"
+msgstr "9 упражнений"
+
+msgid "a book that has been read"
+msgstr "книга, которую прочитали"
+
+msgid "A broken fence"
+msgstr "Сломанный забор"
+
+msgid "a closed door"
+msgstr "закрытая дверь"
+
+msgid "a dried-out flower"
+msgstr "засохший цветок"
+
+msgid "A fallen apple tree"
+msgstr "Яблоня, упавшая на землю"
+
+msgid "a fallen leaf"
+msgstr "упавший лист"
+
+msgid "A few old school books and pens"
+msgstr "Несколько старых школьных учебников и ручек"
+
+msgid "A few verbs change their stem: <0>tehakse</0> gives <1>tehtud</1>, so <2/> is work that has been done. Tap the forms."
+msgstr "Некоторые глаголы меняют основу: из <0>tehakse</0> получается <1>tehtud</1>, так что <2/> — это уже сделанная работа. Касайся форм."
+
+msgid "A few verbs use another stem, such as <0>lugema</0>, which gives <1>lugev</1>. Tap the forms."
+msgstr "Некоторые глаголы берут другую основу, например <0>lugema</0>: от него <1>lugev</1>. Касайся форм."
+
+msgid "A friend of her mother"
+msgstr "Подруга её мамы"
+
+msgid "A friend of the family"
+msgstr "Друг семьи"
+
+msgid "a lost cat"
+msgstr "кошка, которая потерялась"
+
+msgid "A morning after the storm"
+msgstr "Утро после бури"
+
+msgid "A neighbour"
+msgstr "Сосед"
+
+msgid "A noun changes with its job in the sentence. The -v form changes with it, like an adjective: <0>jooksev vesi</0>, <1>jooksva vee</1>, <2>jooksvat vett</2>. The -tud and -nud forms usually stay the same before the noun, and only the noun changes: <3>loetud raamat</3>, <4>loetud raamatut</4>."
+msgstr "Существительное меняется в зависимости от роли в предложении. Форма на -v меняется вместе с ним, как прилагательное: <0>jooksev vesi</0>, <1>jooksva vee</1>, <2>jooksvat vett</2>. Формы на -tud и -nud перед существительным обычно не меняются, меняется только существительное: <3>loetud raamat</3>, <4>loetud raamatut</4>."
+
+msgid "A rusty old car in the grass"
+msgstr "Ржавая старая машина в траве"
+
+msgid "a sleeping child"
+msgstr "спящий ребёнок"
+
+msgid "A talk at the farmhouse"
+msgstr "Разговор на хуторе"
+
+msgid "a tired man"
+msgstr "уставший мужчина"
+
+msgid "A tree that had fallen"
+msgstr "Дерево, которое упало"
+
+msgid "A villager writes"
+msgstr "Жительница деревни пишет"
+
+msgid "A villager writes about the morning after a storm. Read the text and answer the questions, as in the reading part of the B1 exam."
+msgstr "Жительница деревни рассказывает об утре после бури. Прочитай текст и ответь на вопросы, как в части экзамена B1 на чтение."
+
+msgid "A water pipe burst in the cold."
+msgstr "Водопроводная труба лопнула от мороза."
+
+msgid "All eight, each participle in the right form."
+msgstr "Все восемь, и каждое причастие в правильной форме."
+
+msgid "All nine: you heard who did the verb every time."
+msgstr "Все девять: каждый раз ты услышал, кто совершает действие."
+
+msgid "All six found and fixed."
+msgstr "Все шесть найдены и исправлены."
+
+msgid "All ten participles right."
+msgstr "Все десять причастий правильные."
+
+msgid "an open window, one that someone opened"
+msgstr "открытое окно, которое кто-то открыл"
+
+msgid "Ask who does the verb. If the noun is doing it now, usually use -v: <0/>, melting ice. If the noun has done it or changed, usually use -nud: <1>sulanud lumi</1>, melted snow. If someone else did it to the noun, usually use -tud: <2/>, a window someone opened."
+msgstr "Спроси, кто выполняет действие. Если существительное делает это сейчас, обычно бери -v: <0/>, тающий лёд. Если существительное уже сделало это или изменилось, обычно -nud: <1>sulanud lumi</1>, растаявший снег. Если кто-то другой сделал это с существительным, обычно -tud: <2/>, окно, которое кто-то открыл."
+
+msgid "closed"
+msgstr "закрытый"
+
+msgid "Cold and unhappy"
+msgstr "Замёрзшая и невесёлая"
+
+msgid "coming"
+msgstr "наступающий"
+
+msgid "Dictionaries call it the past passive participle. The noun is what received the action, so it usually fits verbs that take an object."
+msgstr "В словарях это страдательное причастие прошедшего времени. Существительное — то, что испытало действие, поэтому такая форма обычно бывает от глаголов, у которых есть прямое дополнение."
+
+msgid "done"
+msgstr "сделанный"
+
+msgid "Done to it: -tud"
+msgstr "Сделали с ним: -tud"
+
+msgid "dried out"
+msgstr "засохший"
+
+msgid "Each sentence has a gap for the participle. The small word beside the verb says what it should mean, so it tells you whether it is -v, -nud or -tud. Type it."
+msgstr "В каждом предложении есть пропуск для причастия. Маленькое слово рядом с глаголом подсказывает, что оно должно значить, а значит, это -v, -nud или -tud. Впиши его."
+
+msgid "Each sentence has one wrong word: the wrong participle, or a form that didn’t change when it should have. Tap it, then type it right."
+msgstr "В каждом предложении одно неправильное слово: не то причастие или форма, которая не изменилась, хотя должна была. Коснись его и впиши правильно."
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
+
+msgid "Genitive"
+msgstr "Родительный"
+
+msgid "Go back to the three tables, then try again."
+msgstr "Вернись к трём таблицам и попробуй ещё раз."
+
+msgid "Go through the three tables once more, then try again."
+msgstr "Ещё раз пройди три таблицы и попробуй снова."
+
+msgid "Happening now: -v"
+msgstr "Происходит сейчас: -v"
+
+msgid "He got tired himself: <0>väsinud</0>."
+msgstr "Он устал сам: <0>väsinud</0>."
+
+msgid "He got tired himself: <et>väsinud</et>."
+msgstr "Он устал сам: <et>väsinud</et>."
+
+msgid "He, she does"
+msgstr "Он, она делает"
+
+msgid "Hear the sentence, then pick what the noun’s participle says."
+msgstr "Послушай предложение и выбери, что причастие говорит о существительном."
+
+msgid "Her brother from town"
+msgstr "Её брат из города"
+
+msgid "Hers, Liis’s"
+msgstr "Кошка Лийс"
+
+msgid "His father"
+msgstr "Его отец"
+
+msgid "His uncle in the village"
+msgstr "Его дядя в деревне"
+
+msgid "How did the writer feel in the evening?"
+msgstr "Что чувствовала автор вечером?"
+
+msgid "I am looking forward to the coming weekend."
+msgstr "Я жду ближайших выходных."
+
+msgid "I bought a used car."
+msgstr "Я купил подержанную машину."
+
+msgid "I can hear running water."
+msgstr "Я слышу, как течёт вода."
+
+msgid "In the …"
+msgstr "В …"
+
+msgid "Is done"
+msgstr "Делается"
+
+msgid "It did it: -nud"
+msgstr "Он сам это сделал: -nud"
+
+msgid "It dried out by itself: <0>kuivanud</0>."
+msgstr "Он высох сам: <0>kuivanud</0>."
+
+msgid "It dried out by itself: <et>kuivanud</et>."
+msgstr "Он высох сам: <et>kuivanud</et>."
+
+msgid "It has done it, or it has changed"
+msgstr "Оно сделало это или изменилось"
+
+msgid "It is doing it now"
+msgstr "Оно делает это сейчас"
+
+msgid "Jookseb, jooksev."
+msgstr "Jookseb, jooksev."
+
+msgid "Kukkuma, kukkunud."
+msgstr "Kukkuma, kukkunud."
+
+msgid "Lesson {impersonal} showed the impersonal, such as <0>loetakse</0>, it is read. Change -akse to -ud and you usually get an adjective for what was done to the noun: <1/> is a book that has been read, and <2/> is a door that someone closed."
+msgstr "В уроке {impersonal} была безличная форма, например <0>loetakse</0>, «читают». Замени -akse на -ud — и обычно получится прилагательное о том, что сделали с существительным: <1/> — это книга, которую прочитали, а <2/> — дверь, которую кто-то закрыл."
+
+msgid "Letters from the old neighbour"
+msgstr "Письма от старого соседа"
+
+msgid "Liis"
+msgstr "Лийс"
+
+msgid "Listen for the ending: <et>-v</et> now, <et>-nud</et> has done or changed, <et>-tud</et> done to it."
+msgstr "Прислушайся к окончанию: <et>-v</et> — делает сейчас, <et>-nud</et> — сделал или изменился, <et>-tud</et> — с ним сделали."
+
+msgid "Listen: Tiit and Liis"
+msgstr "Слушай: Тийт и Лийс"
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Loetakse, loetud."
+msgstr "Loetakse, loetud."
+
+msgid "lost"
+msgstr "потерянный"
+
+msgid "Magab, magav."
+msgstr "Magab, magav."
+
+msgid "Make the participle"
+msgstr "Образуй причастие"
+
+msgid "Making the participle"
+msgstr "Образование причастия"
+
+msgid "Match each he, she form with its -v form."
+msgstr "Подбери к каждой форме «он, она делает» её форму на -v."
+
+msgid "Match each impersonal with its -tud form."
+msgstr "Подбери к каждой безличной форме её форму на -tud."
+
+msgid "Match each verb with its -nud form."
+msgstr "Подбери к каждому глаголу его форму на -nud."
+
+msgid "melting ice"
+msgstr "тающий лёд"
+
+msgid "Melting snow came in."
+msgstr "Попал тающий снег."
+
+msgid "Nearly. Check the participle and the noun in the ones you missed."
+msgstr "Почти. Проверь причастие и существительное там, где ошибся."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Почти. Ещё раз послушай те, где ошибка."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Почти. Прочитай объяснение под каждой ошибкой."
+
+msgid "next week, the coming week"
+msgstr "следующая неделя, предстоящая неделя"
+
+msgid "Nominative"
+msgstr "Именительный"
+
+msgid "One noun in four cases"
+msgstr "Одно существительное в четырёх падежах"
+
+msgid "Participle"
+msgstr "Причастие"
+
+msgid "Partitive"
+msgstr "Партитив"
+
+msgid "Pick a participle and tap the four cases."
+msgstr "Выбери причастие и коснись четырёх падежей."
+
+msgid "Pleased, but very tired"
+msgstr "Довольна, но очень уставшая"
+
+msgid "Rain came in through a leaking roof."
+msgstr "Дождь попадал внутрь через дырявую крышу."
+
+msgid "read"
+msgstr "прочитанный"
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Что запомнить» ниже, а потом попробуй снова."
+
+msgid "running"
+msgstr "текущий"
+
+msgid "running water"
+msgstr "текущая вода"
+
+msgid "She opened the closed door."
+msgstr "Она открыла закрытую дверь."
+
+msgid "sleeping"
+msgstr "спящий"
+
+msgid "Someone closed it: <0>suletud</0>."
+msgstr "Кто-то это закрыл: <0>suletud</0>."
+
+msgid "Someone closed it: <et>suletud</et>."
+msgstr "Кто-то это закрыл: <et>suletud</et>."
+
+msgid "Someone did the work: <0>tehtud</0>."
+msgstr "Кто-то выполнил работу: <0>tehtud</0>."
+
+msgid "Someone did the work: <et>tehtud</et>."
+msgstr "Кто-то выполнил работу: <et>tehtud</et>."
+
+msgid "Someone has done it to it"
+msgstr "Кто-то сделал это с ним"
+
+msgid "Someone has lived in the house recently."
+msgstr "Недавно в доме кто-то жил."
+
+msgid "Someone read it: <0>loetud</0>."
+msgstr "Кто-то это прочитал: <0>loetud</0>."
+
+msgid "Someone read it: <et>loetud</et>."
+msgstr "Кто-то это прочитал: <et>loetud</et>."
+
+msgid "Someone used the car before, so it takes -tud: <0>kasutatud</0>."
+msgstr "Машиной уже кто-то пользовался, поэтому здесь -tud: <0>kasutatud</0>."
+
+msgid "Someone used the car before, so it takes <et>-tud</et>."
+msgstr "Машиной уже кто-то пользовался, поэтому здесь <et>-tud</et>."
+
+msgid "Someone wrote it: <0>kirjutatud</0>."
+msgstr "Кто-то это написал: <0>kirjutatud</0>."
+
+msgid "Someone wrote it: <et>kirjutatud</et>."
+msgstr "Кто-то это написал: <et>kirjutatud</et>."
+
+msgid "Suletakse, suletud."
+msgstr "Suletakse, suletud."
+
+msgid "Tap a form"
+msgstr "Коснись формы"
+
+msgid "Tehakse, tehtud."
+msgstr "Tehakse, tehtud."
+
+msgid "The -akse ending usually becomes -ud: <0>loetakse</0> gives <1>loetud</1>. A few verbs change their stem: <2>tehtud</2>, <3>müüdud</3>, <4>toodud</4>."
+msgstr "Окончание -akse обычно становится -ud: из <0>loetakse</0> получается <1>loetud</1>. Некоторые глаголы меняют основу: <2>tehtud</2>, <3>müüdud</3>, <4>toodud</4>."
+
+msgid "The -b of the he, she form usually becomes -v: <0>magab</0> gives <1>magav</1>. <2>Lugema</2> uses <3>lugev</3>."
+msgstr "Окончание -b в форме «он, она» обычно становится -v: из <0>magab</0> получается <1>magav</1>. У <2>lugema</2> будет <3>lugev</3>."
+
+msgid "The -nud form"
+msgstr "Форма на -nud"
+
+msgid "The -nud form usually means the noun has done it or changed: <0>väsinud</0> has got tired."
+msgstr "Форма на -nud обычно означает, что существительное это сделало или изменилось: <0>väsinud</0> — тот, кто устал."
+
+msgid "The -nud form usually says what the noun itself did or became: <0>väsinud</0> <1>mees</1>, <2>kukkunud leht</2>. The <3>-ma</3> of the verb usually becomes -nud; <4>tulema</4> gives <5>tulnud</5>."
+msgstr "Форма на -nud обычно говорит, что существительное само сделало или каким стало: <0>väsinud</0> <1>mees</1>, <2>kukkunud leht</2>. Окончание <3>-ma</3> у глагола обычно становится -nud; из <4>tulema</4> получается <5>tulnud</5>."
+
+msgid "The -nud form usually says what the noun itself did or became. Usually you take the verb and change <0>-ma</0> to -nud: <1>väsima</1> gives <2>väsinud</2>, so <3/> is a man who has got tired. Nobody tired him; it happened to him."
+msgstr "Форма на -nud обычно говорит, что существительное само сделало или каким стало. Обычно берут глагол и меняют <0>-ma</0> на -nud: из <1>väsima</1> получается <2>väsinud</2>, так что <3/> — это мужчина, который устал. Никто его не утомлял: это с ним случилось."
+
+msgid "The -tud form"
+msgstr "Форма на -tud"
+
+msgid "The -tud form usually means someone has done it to the noun: <0>suletud</0> was closed."
+msgstr "Форма на -tud обычно означает, что кто-то сделал это с существительным: <0>suletud</0> — то, что закрыли."
+
+msgid "The -tud form usually says what was done to the noun: <0>loetud raamat</0>, a book that has been read. The -akse of the impersonal usually becomes -ud: <1>loetakse</1>, <2>loetud</2>. A few verbs change their stem: <3>tehtud</3>, <4>müüdud</4>, <5>toodud</5>."
+msgstr "Форма на -tud обычно говорит, что сделали с существительным: <0>loetud raamat</0>, прочитанная книга. Окончание -akse безличной формы обычно становится -ud: <1>loetakse</1>, <2>loetud</2>. Некоторые глаголы меняют основу: <3>tehtud</3>, <4>müüdud</4>, <5>toodud</5>."
+
+msgid "The -tud form usually stays the same in every case, and only the noun changes."
+msgstr "Форма на -tud обычно остаётся одинаковой во всех падежах, меняется только существительное."
+
+msgid "The -v form"
+msgstr "Форма на -v"
+
+msgid "The -v form changes with its noun: <0>jooksvat vett</0>."
+msgstr "Форма на -v меняется вместе с существительным: <0>jooksvat vett</0>."
+
+msgid "The -v form changes with its noun: <0>magavat last</0>."
+msgstr "Форма на -v меняется вместе с существительным: <0>magavat last</0>."
+
+msgid "The -v form changes with its noun: <0>tulevat nädalavahetust</0>."
+msgstr "Форма на -v меняется вместе с существительным: <0>tulevat nädalavahetust</0>."
+
+msgid "The -v form is an adjective: it changes with its noun, <0>jooksva vee</0>, <1>jooksvat vett</1>."
+msgstr "Форма на -v — это прилагательное: она меняется вместе с существительным, <0>jooksva vee</0>, <1>jooksvat vett</1>."
+
+msgid "The -v form usually means the noun is doing it now: <0>magav</0> is sleeping."
+msgstr "Форма на -v обычно означает, что существительное делает это сейчас: <0>magav</0> — тот, кто спит."
+
+msgid "The -v form usually says what the noun is doing now: <0>jooksev vesi</0>, <1>magav laps</1>. The -b of the he, she form usually becomes -v."
+msgstr "Форма на -v обычно говорит, что существительное делает сейчас: <0>jooksev vesi</0>, <1>magav laps</1>. Окончание -b в форме «он, она» обычно становится -v."
+
+msgid "The -v form usually says what the noun is doing now. Usually you take the he, she form of the verb and change -b to -v: <0>magab</0> gives <1>magav</1>, so <2/> is a child who is asleep, and <3/> is water that is running."
+msgstr "Форма на -v обычно говорит, что существительное делает сейчас. Обычно берут форму «он, она» и меняют -b на -v: из <0>magab</0> получается <1>magav</1>, так что <2/> — это ребёнок, который спит, а <3/> — вода, которая течёт."
+
+msgid "The <0>-ma</0> of the verb usually becomes -nud: <1>väsima</1> gives <2>väsinud</2>. Some verbs shorten or change: <3>tulema</3> gives <4>tulnud</4>."
+msgstr "Окончание <0>-ma</0> у глагола обычно становится -nud: из <1>väsima</1> получается <2>väsinud</2>. Некоторые глаголы сокращаются или меняются: из <3>tulema</3> — <4>tulnud</4>."
+
+msgid "The <et>-nud</et> form usually means the noun has done it or changed."
+msgstr "Форма на <et>-nud</et> обычно означает, что существительное это сделало или изменилось."
+
+msgid "The <et>-tud</et> form usually means someone has done it to the noun."
+msgstr "Форма на <et>-tud</et> обычно означает, что кто-то сделал это с существительным."
+
+msgid "The <et>-v</et> form changes with its noun: <et>jooksvat vett</et>."
+msgstr "Форма на <et>-v</et> меняется вместе с существительным: <et>jooksvat vett</et>."
+
+msgid "The <et>-v</et> form changes with its noun: <et>magavat last</et>."
+msgstr "Форма на <et>-v</et> меняется вместе с существительным: <et>magavat last</et>."
+
+msgid "The <et>-v</et> form changes with its noun: <et>tulevat nädalavahetust</et>."
+msgstr "Форма на <et>-v</et> меняется вместе с существительным: <et>tulevat nädalavahetust</et>."
+
+msgid "The <et>-v</et> form changes with its noun. The <et>-tud</et> and <et>-nud</et> forms usually stay the same."
+msgstr "Форма на <et>-v</et> меняется вместе с существительным. Формы на <et>-tud</et> и <et>-nud</et> обычно остаются одинаковыми."
+
+msgid "The <et>-v</et> form usually means the noun is doing it now."
+msgstr "Форма на <et>-v</et> обычно означает, что существительное делает это сейчас."
+
+msgid "The cat went missing: <0>kadunud</0>."
+msgstr "Кошка потерялась: <0>kadunud</0>."
+
+msgid "The cat went missing: <et>kadunud</et>."
+msgstr "Кошка потерялась: <et>kadunud</et>."
+
+msgid "The child is asleep now, and the form follows <0>last</0>: <1>magavat</1>."
+msgstr "Ребёнок сейчас спит, а форма следует за словом <0>last</0>: <1>magavat</1>."
+
+msgid "The child is asleep now, and the form follows its noun: <et>magavat</et>."
+msgstr "Ребёнок сейчас спит, а форма следует за своим существительным: <et>magavat</et>."
+
+msgid "The fallen leaf is on the ground."
+msgstr "Упавший лист лежит на земле."
+
+msgid "The finished work is on the table."
+msgstr "Сделанная работа лежит на столе."
+
+msgid "The house has running water."
+msgstr "В доме есть водопровод."
+
+msgid "The leaf has fallen: <0>kukkunud</0>. <1>Kukkuv</1> would be a leaf that is falling now."
+msgstr "Лист упал: <0>kukkunud</0>. <1>Kukkuv</1> был бы лист, который падает сейчас."
+
+msgid "The leaf has fallen: <et>kukkunud</et>."
+msgstr "Лист упал: <et>kukkunud</et>."
+
+msgid "The neighbour Mari’s"
+msgstr "Кошка соседки Мари"
+
+msgid "The noun changes and the -nud form usually stays: <0>kadunud kassi</0>."
+msgstr "Существительное меняется, а форма на -nud обычно остаётся: <0>kadunud kassi</0>."
+
+msgid "The noun changes and the -tud form usually stays: <0>suletud ukse</0>."
+msgstr "Существительное меняется, а форма на -tud обычно остаётся: <0>suletud ukse</0>."
+
+msgid "The noun changes, and <et>kadunud</et> usually stays the same."
+msgstr "Существительное меняется, а <et>kadunud</et> обычно остаётся таким же."
+
+msgid "The noun changes, the form usually doesn’t"
+msgstr "Существительное меняется, а форма обычно нет"
+
+msgid "The noun is the object, so it changes: <0>kassi</0>. <1>Kadunud</1> usually stays the same."
+msgstr "Существительное здесь дополнение, поэтому оно меняется: <0>kassi</0>. <1>Kadunud</1> обычно остаётся таким же."
+
+msgid "The phrase"
+msgstr "Выражение"
+
+msgid "The same goes for <0/> and <1/>. <2>Tulema</2> is one of the verbs that change: <3>tulnud</3>. Tap the forms."
+msgstr "То же с <0/> и <1/>. <2>Tulema</2> — один из глаголов, которые меняются: <3>tulnud</3>. Касайся форм."
+
+msgid "The stream had more water than usual."
+msgstr "В ручье было больше воды, чем обычно."
+
+msgid "The tired man sat down on the bench."
+msgstr "Уставший мужчина сел на скамейку."
+
+msgid "The uncle’s newspapers"
+msgstr "Газеты дяди"
+
+msgid "The uncle’s old cat from the farm"
+msgstr "Старая кошка дяди с хутора"
+
+msgid "The verb"
+msgstr "Глагол"
+
+msgid "The water is running now, and the form follows <0>vett</0>: <1>jooksvat</1>."
+msgstr "Вода сейчас течёт, а форма следует за словом <0>vett</0>: <1>jooksvat</1>."
+
+msgid "The water is running now, and the form follows its noun: <et>jooksvat</et>."
+msgstr "Вода сейчас течёт, а форма следует за своим существительным: <et>jooksvat</et>."
+
+msgid "The week is coming, and the form follows <0>nädalavahetust</0>: <1>tulevat</1>."
+msgstr "Выходные наступят, а форма следует за словом <0>nädalavahetust</0>: <1>tulevat</1>."
+
+msgid "The week is coming, and the form follows its noun: <et>tulevat</et>."
+msgstr "Выходные наступят, а форма следует за своим существительным: <et>tulevat</et>."
+
+msgid "They decide to dry the floor first."
+msgstr "Они решают сначала высушить пол."
+
+msgid "Tiit"
+msgstr "Тийт"
+
+msgid "Tiit feels well rested."
+msgstr "Тийт хорошо отдохнул."
+
+msgid "Tiit has inherited an old farmhouse. His friend Liis comes to see it, and they decide where to start."
+msgstr "Тийт унаследовал старый хутор. Его подруга Лийс приходит посмотреть, и они решают, с чего начать."
+
+msgid "Tiit’s uncle read a lot."
+msgstr "Дядя Тийта много читал."
+
+msgid "tired"
+msgstr "уставший"
+
+msgid "to bring"
+msgstr "приносить"
+
+msgid "to close"
+msgstr "закрывать"
+
+msgid "to come"
+msgstr "приходить"
+
+msgid "to do, to make"
+msgstr "делать"
+
+msgid "to dry out"
+msgstr "высыхать"
+
+msgid "to fall"
+msgstr "падать"
+
+msgid "to fly"
+msgstr "летать"
+
+msgid "to freeze"
+msgstr "замерзать"
+
+msgid "to get tired"
+msgstr "уставать"
+
+msgid "to go missing"
+msgstr "пропадать"
+
+msgid "to grow"
+msgstr "расти"
+
+msgid "to melt"
+msgstr "таять"
+
+msgid "to open"
+msgstr "открывать"
+
+msgid "to read"
+msgstr "читать"
+
+msgid "to run"
+msgstr "бежать, течь"
+
+msgid "to sell"
+msgstr "продавать"
+
+msgid "to sleep"
+msgstr "спать"
+
+msgid "to wash"
+msgstr "мыть"
+
+msgid "to work"
+msgstr "работать"
+
+msgid "to write"
+msgstr "писать"
+
+msgid "Tõnu looked fresh and rested."
+msgstr "Тыну выглядел бодрым и отдохнувшим."
+
+msgid "Tõnu thinks next week will be sunny."
+msgstr "Тыну думает, что на следующей неделе будет солнечно."
+
+msgid "Type the participle"
+msgstr "Впиши причастие"
+
+msgid "Usually only the -v form changes with its noun: <0>jooksva vee</0>, <1>jooksvat vett</1>. The -tud and -nud forms usually stay the same: <2>loetud raamatut</2>, <3>kadunud kassi</3>."
+msgstr "Обычно только форма на -v меняется вместе с существительным: <0>jooksva vee</0>, <1>jooksvat vett</1>. Формы на -tud и -nud обычно остаются одинаковыми: <2>loetud raamatut</2>, <3>kadunud kassi</3>."
+
+msgid "Väsima, väsinud."
+msgstr "Väsima, väsinud."
+
+msgid "Water in the cellar"
+msgstr "Вода в подвале"
+
+msgid "We are looking for the lost cat."
+msgstr "Мы ищем потерянную кошку."
+
+msgid "What did Liis bring to eat or drink? Write one thing as she says it."
+msgstr "Что Лийс принесла поесть или попить? Напиши одну вещь так, как она говорит."
+
+msgid "What did the writer see in the garden?"
+msgstr "Что автор увидела в саду?"
+
+msgid "What did Tõnu bring to eat? Write it as the text says."
+msgstr "Что Тыну принёс поесть? Напиши так, как в тексте."
+
+msgid "What does it say?"
+msgstr "Что это значит?"
+
+msgid "What happened after the storm?"
+msgstr "Что случилось после бури?"
+
+msgid "What is lying in the garden?"
+msgstr "Что лежит в саду?"
+
+msgid "What is on the kitchen table?"
+msgstr "Что лежит на кухонном столе?"
+
+msgid "Which -nud form?"
+msgstr "Какая форма на -nud?"
+
+msgid "Which -tud form?"
+msgstr "Какая форма на -tud?"
+
+msgid "Which -v form?"
+msgstr "Какая форма на -v?"
+
+msgid "Which of the three?"
+msgstr "Какая из трёх?"
+
+msgid "Which participle, which meaning"
+msgstr "Какое причастие, какое значение"
+
+msgid "Who came to help?"
+msgstr "Кто пришёл помочь?"
+
+msgid "Who left the farmhouse to Tiit?"
+msgstr "Кто оставил хутор Тийту?"
+
+msgid "Whose cat might the sleeping cat be?"
+msgstr "Чья может быть спящая кошка?"
+
+msgid "Why is the floor upstairs wet?"
+msgstr "Почему пол наверху мокрый?"
+
+msgid "With a noun"
+msgstr "С существительным"
+
+msgid "With a verb that takes an object, -nud can name someone who has done it: <0>palju lugenud inimene</0> is a person who has read a lot."
+msgstr "У глагола с дополнением -nud может назвать того, кто это сделал: <0>palju lugenud inimene</0> — человек, который много прочитал."
+
+msgid "work that has been done"
+msgstr "сделанная работа"
+
+msgid "Worried about another storm"
+msgstr "Тревожится из-за новой бури"
+
+msgid "Write each sentence in Estonian."
+msgstr "Напиши каждое предложение по-эстонски."
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"
+
+msgid "written"
+msgstr "написанный"

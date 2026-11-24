@@ -260,6 +260,9 @@ msgstr "Бесплатный урок эстонского о том, как о�
 msgid "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о meeldima, «нравиться»: mulle meeldib и другие лица, meeldivad, когда нравится несколько вещей, meeldib с глаголом, ei meeldi, вопросы с kas и kellele и чувства, например mul on külm. Каждое предложение озвучено."
 
+msgid "A free Estonian lesson on participles used as adjectives: -tud for what was done to it (loetud raamat, suletud uks, tehtud töö), -nud for what it did or became (väsinud mees, kukkunud leht) and -v for what it is doing now (jooksev vesi, magav laps), how to tell them apart, and which of them usually change with the noun. Every example is read aloud."
+msgstr "Бесплатный урок эстонского о причастиях в роли прилагательных: -tud для того, что с ним сделали (loetud raamat, suletud uks, tehtud töö), -nud для того, что оно сделало или чем стало (väsinud mees, kukkunud leht), и -v для того, что оно делает сейчас (jooksev vesi, magav laps), как их различать и какие из них обычно меняются вместе с существительным. Каждый пример озвучен."
+
 msgid "A free Estonian lesson on particle verbs whose meaning you can’t guess from their parts: aru saama, kokku saama, läbi saama, hakkama saama, otsa saama, maha jääma, ära jääma, välja nägema, ära tundma, vastu võtma, järele mõtlema and alla andma; the case each one usually takes, and where the particle goes. Every example is read aloud."
 msgstr "Бесплатный урок эстонского о глаголах с частицами, значение которых не угадать по частям: aru saama, kokku saama, läbi saama, hakkama saama, otsa saama, maha jääma, ära jääma, välja nägema, ära tundma, vastu võtma, järele mõtlema и alla andma; какой падеж обычно нужен каждому и где стоит частица. Каждый пример озвучен."
 
@@ -769,6 +772,9 @@ msgstr "Числа на эстонском"
 
 msgid "Estonian ordinal numbers and dates"
 msgstr "Порядковые числительные и даты в эстонском языке"
+
+msgid "Estonian participles used as adjectives"
+msgstr "Эстонские причастия в роли прилагательных"
 
 msgid "Estonian particle verbs with new meanings"
 msgstr "Эстонские глаголы с частицами, у которых новое значение"

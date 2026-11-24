@@ -1,14 +1,13 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import type {
-  PV_TRANSLATE} from "../../../lib/learn/clips";
+import type { PV_TRANSLATE } from "../../../lib/learn/clips";
 import {
   PV_ANSWERS,
   PV_FIX_ANSWERS,
   PV_FIXES,
   PV_GAPS,
   PV_PARTICLES,
-  PV_TELL
+  PV_TELL,
 } from "../../../lib/learn/clips";
 import type {
   ChoiceDrill,

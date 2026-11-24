@@ -1,0 +1,692 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-24 23:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "-nud form"
+msgstr "-nud form"
+
+msgid "-tud"
+msgstr "-tud"
+
+msgid "-tud form"
+msgstr "-tud form"
+
+msgid "-v"
+msgstr "-v"
+
+msgid "-v form"
+msgstr "-v form"
+
+msgid "<0>Loetud raamat</0> is a book that has been read, and <1>väsinud mees</1> is a tired man: a verb can turn into an adjective, and its ending says who did what."
+msgstr "<0>Loetud raamat</0> is a book that has been read, and <1>väsinud mees</1> is a tired man: a verb can turn into an adjective, and its ending says who did what."
+
+msgid "26 minutes"
+msgstr "26 minutes"
+
+msgid "9 exercises"
+msgstr "9 exercises"
+
+msgid "a book that has been read"
+msgstr "a book that has been read"
+
+msgid "A broken fence"
+msgstr "A broken fence"
+
+msgid "a closed door"
+msgstr "a closed door"
+
+msgid "a dried-out flower"
+msgstr "a dried-out flower"
+
+msgid "A fallen apple tree"
+msgstr "A fallen apple tree"
+
+msgid "a fallen leaf"
+msgstr "a fallen leaf"
+
+msgid "A few old school books and pens"
+msgstr "A few old school books and pens"
+
+msgid "A few verbs change their stem: <0>tehakse</0> gives <1>tehtud</1>, so <2/> is work that has been done. Tap the forms."
+msgstr "A few verbs change their stem: <0>tehakse</0> gives <1>tehtud</1>, so <2/> is work that has been done. Tap the forms."
+
+msgid "A few verbs use another stem, such as <0>lugema</0>, which gives <1>lugev</1>. Tap the forms."
+msgstr "A few verbs use another stem, such as <0>lugema</0>, which gives <1>lugev</1>. Tap the forms."
+
+msgid "A friend of her mother"
+msgstr "A friend of her mother"
+
+msgid "A friend of the family"
+msgstr "A friend of the family"
+
+msgid "a lost cat"
+msgstr "a lost cat"
+
+msgid "A morning after the storm"
+msgstr "A morning after the storm"
+
+msgid "A neighbour"
+msgstr "A neighbour"
+
+msgid "A noun changes with its job in the sentence. The -v form changes with it, like an adjective: <0>jooksev vesi</0>, <1>jooksva vee</1>, <2>jooksvat vett</2>. The -tud and -nud forms usually stay the same before the noun, and only the noun changes: <3>loetud raamat</3>, <4>loetud raamatut</4>."
+msgstr "A noun changes with its job in the sentence. The -v form changes with it, like an adjective: <0>jooksev vesi</0>, <1>jooksva vee</1>, <2>jooksvat vett</2>. The -tud and -nud forms usually stay the same before the noun, and only the noun changes: <3>loetud raamat</3>, <4>loetud raamatut</4>."
+
+msgid "A rusty old car in the grass"
+msgstr "A rusty old car in the grass"
+
+msgid "a sleeping child"
+msgstr "a sleeping child"
+
+msgid "A talk at the farmhouse"
+msgstr "A talk at the farmhouse"
+
+msgid "a tired man"
+msgstr "a tired man"
+
+msgid "A tree that had fallen"
+msgstr "A tree that had fallen"
+
+msgid "A villager writes"
+msgstr "A villager writes"
+
+msgid "A villager writes about the morning after a storm. Read the text and answer the questions, as in the reading part of the B1 exam."
+msgstr "A villager writes about the morning after a storm. Read the text and answer the questions, as in the reading part of the B1 exam."
+
+msgid "A water pipe burst in the cold."
+msgstr "A water pipe burst in the cold."
+
+msgid "All eight, each participle in the right form."
+msgstr "All eight, each participle in the right form."
+
+msgid "All nine: you heard who did the verb every time."
+msgstr "All nine: you heard who did the verb every time."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All ten participles right."
+msgstr "All ten participles right."
+
+msgid "an open window, one that someone opened"
+msgstr "an open window, one that someone opened"
+
+msgid "Ask who does the verb. If the noun is doing it now, usually use -v: <0/>, melting ice. If the noun has done it or changed, usually use -nud: <1>sulanud lumi</1>, melted snow. If someone else did it to the noun, usually use -tud: <2/>, a window someone opened."
+msgstr "Ask who does the verb. If the noun is doing it now, usually use -v: <0/>, melting ice. If the noun has done it or changed, usually use -nud: <1>sulanud lumi</1>, melted snow. If someone else did it to the noun, usually use -tud: <2/>, a window someone opened."
+
+msgid "closed"
+msgstr "closed"
+
+msgid "Cold and unhappy"
+msgstr "Cold and unhappy"
+
+msgid "coming"
+msgstr "coming"
+
+msgid "Dictionaries call it the past passive participle. The noun is what received the action, so it usually fits verbs that take an object."
+msgstr "Dictionaries call it the past passive participle. The noun is what received the action, so it usually fits verbs that take an object."
+
+msgid "done"
+msgstr "done"
+
+msgid "Done to it: -tud"
+msgstr "Done to it: -tud"
+
+msgid "dried out"
+msgstr "dried out"
+
+msgid "Each sentence has a gap for the participle. The small word beside the verb says what it should mean, so it tells you whether it is -v, -nud or -tud. Type it."
+msgstr "Each sentence has a gap for the participle. The small word beside the verb says what it should mean, so it tells you whether it is -v, -nud or -tud. Type it."
+
+msgid "Each sentence has one wrong word: the wrong participle, or a form that didn’t change when it should have. Tap it, then type it right."
+msgstr "Each sentence has one wrong word: the wrong participle, or a form that didn’t change when it should have. Tap it, then type it right."
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "Genitive"
+msgstr "Genitive"
+
+msgid "Go back to the three tables, then try again."
+msgstr "Go back to the three tables, then try again."
+
+msgid "Go through the three tables once more, then try again."
+msgstr "Go through the three tables once more, then try again."
+
+msgid "Happening now: -v"
+msgstr "Happening now: -v"
+
+msgid "He got tired himself: <0>väsinud</0>."
+msgstr "He got tired himself: <0>väsinud</0>."
+
+msgid "He got tired himself: <et>väsinud</et>."
+msgstr "He got tired himself: <et>väsinud</et>."
+
+msgid "He, she does"
+msgstr "He, she does"
+
+msgid "Hear the sentence, then pick what the noun’s participle says."
+msgstr "Hear the sentence, then pick what the noun’s participle says."
+
+msgid "Her brother from town"
+msgstr "Her brother from town"
+
+msgid "Hers, Liis’s"
+msgstr "Hers, Liis’s"
+
+msgid "His father"
+msgstr "His father"
+
+msgid "His uncle in the village"
+msgstr "His uncle in the village"
+
+msgid "How did the writer feel in the evening?"
+msgstr "How did the writer feel in the evening?"
+
+msgid "I am looking forward to the coming weekend."
+msgstr "I am looking forward to the coming weekend."
+
+msgid "I bought a used car."
+msgstr "I bought a used car."
+
+msgid "I can hear running water."
+msgstr "I can hear running water."
+
+msgid "In the …"
+msgstr "In the …"
+
+msgid "Is done"
+msgstr "Is done"
+
+msgid "It did it: -nud"
+msgstr "It did it: -nud"
+
+msgid "It dried out by itself: <0>kuivanud</0>."
+msgstr "It dried out by itself: <0>kuivanud</0>."
+
+msgid "It dried out by itself: <et>kuivanud</et>."
+msgstr "It dried out by itself: <et>kuivanud</et>."
+
+msgid "It has done it, or it has changed"
+msgstr "It has done it, or it has changed"
+
+msgid "It is doing it now"
+msgstr "It is doing it now"
+
+msgid "Jookseb, jooksev."
+msgstr "Jookseb, jooksev."
+
+msgid "Kukkuma, kukkunud."
+msgstr "Kukkuma, kukkunud."
+
+msgid "Lesson {impersonal} showed the impersonal, such as <0>loetakse</0>, it is read. Change -akse to -ud and you usually get an adjective for what was done to the noun: <1/> is a book that has been read, and <2/> is a door that someone closed."
+msgstr "Lesson {impersonal} showed the impersonal, such as <0>loetakse</0>, it is read. Change -akse to -ud and you usually get an adjective for what was done to the noun: <1/> is a book that has been read, and <2/> is a door that someone closed."
+
+msgid "Letters from the old neighbour"
+msgstr "Letters from the old neighbour"
+
+msgid "Liis"
+msgstr "Liis"
+
+msgid "Listen for the ending: <et>-v</et> now, <et>-nud</et> has done or changed, <et>-tud</et> done to it."
+msgstr "Listen for the ending: <et>-v</et> now, <et>-nud</et> has done or changed, <et>-tud</et> done to it."
+
+msgid "Listen: Tiit and Liis"
+msgstr "Listen: Tiit and Liis"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Loetakse, loetud."
+msgstr "Loetakse, loetud."
+
+msgid "lost"
+msgstr "lost"
+
+msgid "Magab, magav."
+msgstr "Magab, magav."
+
+msgid "Make the participle"
+msgstr "Make the participle"
+
+msgid "Making the participle"
+msgstr "Making the participle"
+
+msgid "Match each he, she form with its -v form."
+msgstr "Match each he, she form with its -v form."
+
+msgid "Match each impersonal with its -tud form."
+msgstr "Match each impersonal with its -tud form."
+
+msgid "Match each verb with its -nud form."
+msgstr "Match each verb with its -nud form."
+
+msgid "melting ice"
+msgstr "melting ice"
+
+msgid "Melting snow came in."
+msgstr "Melting snow came in."
+
+msgid "Nearly. Check the participle and the noun in the ones you missed."
+msgstr "Nearly. Check the participle and the noun in the ones you missed."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Nearly. Play the ones you got wrong once more."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Nearly. Read the reason under each one you got wrong."
+
+msgid "next week, the coming week"
+msgstr "next week, the coming week"
+
+msgid "Nominative"
+msgstr "Nominative"
+
+msgid "One noun in four cases"
+msgstr "One noun in four cases"
+
+msgid "Participle"
+msgstr "Participle"
+
+msgid "Partitive"
+msgstr "Partitive"
+
+msgid "Pick a participle and tap the four cases."
+msgstr "Pick a participle and tap the four cases."
+
+msgid "Pleased, but very tired"
+msgstr "Pleased, but very tired"
+
+msgid "Rain came in through a leaking roof."
+msgstr "Rain came in through a leaking roof."
+
+msgid "read"
+msgstr "read"
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "running"
+msgstr "running"
+
+msgid "running water"
+msgstr "running water"
+
+msgid "She opened the closed door."
+msgstr "She opened the closed door."
+
+msgid "sleeping"
+msgstr "sleeping"
+
+msgid "Someone closed it: <0>suletud</0>."
+msgstr "Someone closed it: <0>suletud</0>."
+
+msgid "Someone closed it: <et>suletud</et>."
+msgstr "Someone closed it: <et>suletud</et>."
+
+msgid "Someone did the work: <0>tehtud</0>."
+msgstr "Someone did the work: <0>tehtud</0>."
+
+msgid "Someone did the work: <et>tehtud</et>."
+msgstr "Someone did the work: <et>tehtud</et>."
+
+msgid "Someone has done it to it"
+msgstr "Someone has done it to it"
+
+msgid "Someone has lived in the house recently."
+msgstr "Someone has lived in the house recently."
+
+msgid "Someone read it: <0>loetud</0>."
+msgstr "Someone read it: <0>loetud</0>."
+
+msgid "Someone read it: <et>loetud</et>."
+msgstr "Someone read it: <et>loetud</et>."
+
+msgid "Someone used the car before, so it takes -tud: <0>kasutatud</0>."
+msgstr "Someone used the car before, so it takes -tud: <0>kasutatud</0>."
+
+msgid "Someone used the car before, so it takes <et>-tud</et>."
+msgstr "Someone used the car before, so it takes <et>-tud</et>."
+
+msgid "Someone wrote it: <0>kirjutatud</0>."
+msgstr "Someone wrote it: <0>kirjutatud</0>."
+
+msgid "Someone wrote it: <et>kirjutatud</et>."
+msgstr "Someone wrote it: <et>kirjutatud</et>."
+
+msgid "Suletakse, suletud."
+msgstr "Suletakse, suletud."
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tehakse, tehtud."
+msgstr "Tehakse, tehtud."
+
+msgid "The -akse ending usually becomes -ud: <0>loetakse</0> gives <1>loetud</1>. A few verbs change their stem: <2>tehtud</2>, <3>müüdud</3>, <4>toodud</4>."
+msgstr "The -akse ending usually becomes -ud: <0>loetakse</0> gives <1>loetud</1>. A few verbs change their stem: <2>tehtud</2>, <3>müüdud</3>, <4>toodud</4>."
+
+msgid "The -b of the he, she form usually becomes -v: <0>magab</0> gives <1>magav</1>. <2>Lugema</2> uses <3>lugev</3>."
+msgstr "The -b of the he, she form usually becomes -v: <0>magab</0> gives <1>magav</1>. <2>Lugema</2> uses <3>lugev</3>."
+
+msgid "The -nud form"
+msgstr "The -nud form"
+
+msgid "The -nud form usually means the noun has done it or changed: <0>väsinud</0> has got tired."
+msgstr "The -nud form usually means the noun has done it or changed: <0>väsinud</0> has got tired."
+
+msgid "The -nud form usually says what the noun itself did or became: <0>väsinud</0> <1>mees</1>, <2>kukkunud leht</2>. The <3>-ma</3> of the verb becomes -nud; <4>tulema</4> gives <5>tulnud</5>."
+msgstr "The -nud form usually says what the noun itself did or became: <0>väsinud</0> <1>mees</1>, <2>kukkunud leht</2>. The <3>-ma</3> of the verb becomes -nud; <4>tulema</4> gives <5>tulnud</5>."
+
+msgid "The -nud form usually says what the noun itself did or became. Take the verb and change <0>-ma</0> to -nud: <1>väsima</1> gives <2>väsinud</2>, so <3/> is a man who has got tired. Nobody tired him; it happened to him."
+msgstr "The -nud form usually says what the noun itself did or became. Take the verb and change <0>-ma</0> to -nud: <1>väsima</1> gives <2>väsinud</2>, so <3/> is a man who has got tired. Nobody tired him; it happened to him."
+
+msgid "The -tud form"
+msgstr "The -tud form"
+
+msgid "The -tud form usually means someone has done it to the noun: <0>suletud</0> was closed."
+msgstr "The -tud form usually means someone has done it to the noun: <0>suletud</0> was closed."
+
+msgid "The -tud form usually says what was done to the noun: <0>loetud raamat</0>, a book that has been read. The -akse of the impersonal usually becomes -ud: <1>loetakse</1>, <2>loetud</2>. A few verbs change their stem: <3>tehtud</3>, <4>müüdud</4>, <5>toodud</5>."
+msgstr "The -tud form usually says what was done to the noun: <0>loetud raamat</0>, a book that has been read. The -akse of the impersonal usually becomes -ud: <1>loetakse</1>, <2>loetud</2>. A few verbs change their stem: <3>tehtud</3>, <4>müüdud</4>, <5>toodud</5>."
+
+msgid "The -tud form usually stays the same in every case, and only the noun changes."
+msgstr "The -tud form usually stays the same in every case, and only the noun changes."
+
+msgid "The -v form"
+msgstr "The -v form"
+
+msgid "The -v form changes with its noun: <0>jooksvat vett</0>."
+msgstr "The -v form changes with its noun: <0>jooksvat vett</0>."
+
+msgid "The -v form changes with its noun: <0>magavat last</0>."
+msgstr "The -v form changes with its noun: <0>magavat last</0>."
+
+msgid "The -v form changes with its noun: <0>tulevat nädalavahetust</0>."
+msgstr "The -v form changes with its noun: <0>tulevat nädalavahetust</0>."
+
+msgid "The -v form is an adjective: it changes with its noun, <0>jooksva vee</0>, <1>jooksvat vett</1>."
+msgstr "The -v form is an adjective: it changes with its noun, <0>jooksva vee</0>, <1>jooksvat vett</1>."
+
+msgid "The -v form says what the noun is doing now. Take the he, she form of the verb and change -b to -v: <0>magab</0> gives <1>magav</1>, so <2/> is a child who is asleep, and <3/> is water that is running."
+msgstr "The -v form says what the noun is doing now. Take the he, she form of the verb and change -b to -v: <0>magab</0> gives <1>magav</1>, so <2/> is a child who is asleep, and <3/> is water that is running."
+
+msgid "The -v form usually means the noun is doing it now: <0>magav</0> is sleeping."
+msgstr "The -v form usually means the noun is doing it now: <0>magav</0> is sleeping."
+
+msgid "The -v form usually says what the noun is doing now: <0>jooksev vesi</0>, <1>magav laps</1>. The -b of the he, she form usually becomes -v."
+msgstr "The -v form usually says what the noun is doing now: <0>jooksev vesi</0>, <1>magav laps</1>. The -b of the he, she form usually becomes -v."
+
+msgid "The <0>-ma</0> of the verb becomes -nud: <1>väsima</1> gives <2>väsinud</2>. <3>Tulema</3> gives <4>tulnud</4>."
+msgstr "The <0>-ma</0> of the verb becomes -nud: <1>väsima</1> gives <2>väsinud</2>. <3>Tulema</3> gives <4>tulnud</4>."
+
+msgid "The <et>-nud</et> form usually means the noun has done it or changed."
+msgstr "The <et>-nud</et> form usually means the noun has done it or changed."
+
+msgid "The <et>-tud</et> form usually means someone has done it to the noun."
+msgstr "The <et>-tud</et> form usually means someone has done it to the noun."
+
+msgid "The <et>-v</et> form changes with its noun: <et>jooksvat vett</et>."
+msgstr "The <et>-v</et> form changes with its noun: <et>jooksvat vett</et>."
+
+msgid "The <et>-v</et> form changes with its noun: <et>magavat last</et>."
+msgstr "The <et>-v</et> form changes with its noun: <et>magavat last</et>."
+
+msgid "The <et>-v</et> form changes with its noun: <et>tulevat nädalavahetust</et>."
+msgstr "The <et>-v</et> form changes with its noun: <et>tulevat nädalavahetust</et>."
+
+msgid "The <et>-v</et> form changes with its noun. The <et>-tud</et> and <et>-nud</et> forms usually stay the same."
+msgstr "The <et>-v</et> form changes with its noun. The <et>-tud</et> and <et>-nud</et> forms usually stay the same."
+
+msgid "The <et>-v</et> form usually means the noun is doing it now."
+msgstr "The <et>-v</et> form usually means the noun is doing it now."
+
+msgid "The cat went missing: <0>kadunud</0>."
+msgstr "The cat went missing: <0>kadunud</0>."
+
+msgid "The cat went missing: <et>kadunud</et>."
+msgstr "The cat went missing: <et>kadunud</et>."
+
+msgid "The child is asleep now, and the form follows <0>last</0>: <1>magavat</1>."
+msgstr "The child is asleep now, and the form follows <0>last</0>: <1>magavat</1>."
+
+msgid "The child is asleep now, and the form follows its noun: <et>magavat</et>."
+msgstr "The child is asleep now, and the form follows its noun: <et>magavat</et>."
+
+msgid "The fallen leaf is on the ground."
+msgstr "The fallen leaf is on the ground."
+
+msgid "The finished work is on the table."
+msgstr "The finished work is on the table."
+
+msgid "The house has running water."
+msgstr "The house has running water."
+
+msgid "The leaf has fallen: <0>kukkunud</0>. <1>Kukkuv</1> would be a leaf that is falling now."
+msgstr "The leaf has fallen: <0>kukkunud</0>. <1>Kukkuv</1> would be a leaf that is falling now."
+
+msgid "The leaf has fallen: <et>kukkunud</et>."
+msgstr "The leaf has fallen: <et>kukkunud</et>."
+
+msgid "The neighbour Mari’s"
+msgstr "The neighbour Mari’s"
+
+msgid "The noun changes and the -nud form usually stays: <0>kadunud kassi</0>."
+msgstr "The noun changes and the -nud form usually stays: <0>kadunud kassi</0>."
+
+msgid "The noun changes and the -tud form usually stays: <0>suletud ukse</0>."
+msgstr "The noun changes and the -tud form usually stays: <0>suletud ukse</0>."
+
+msgid "The noun changes, and <et>kadunud</et> usually stays the same."
+msgstr "The noun changes, and <et>kadunud</et> usually stays the same."
+
+msgid "The noun changes, the form usually doesn’t"
+msgstr "The noun changes, the form usually doesn’t"
+
+msgid "The noun is the object, so it changes: <0>kassi</0>. <1>Kadunud</1> usually stays the same."
+msgstr "The noun is the object, so it changes: <0>kassi</0>. <1>Kadunud</1> usually stays the same."
+
+msgid "The phrase"
+msgstr "The phrase"
+
+msgid "The same goes for <0/> and <1/>. <2>Tulema</2> is one of the verbs that change: <3>tulnud</3>. Tap the forms."
+msgstr "The same goes for <0/> and <1/>. <2>Tulema</2> is one of the verbs that change: <3>tulnud</3>. Tap the forms."
+
+msgid "The stream had more water than usual."
+msgstr "The stream had more water than usual."
+
+msgid "The tired man sat down on the bench."
+msgstr "The tired man sat down on the bench."
+
+msgid "The uncle’s newspapers"
+msgstr "The uncle’s newspapers"
+
+msgid "The uncle’s old cat from the farm"
+msgstr "The uncle’s old cat from the farm"
+
+msgid "The verb"
+msgstr "The verb"
+
+msgid "The water is running now, and the form follows <0>vett</0>: <1>jooksvat</1>."
+msgstr "The water is running now, and the form follows <0>vett</0>: <1>jooksvat</1>."
+
+msgid "The water is running now, and the form follows its noun: <et>jooksvat</et>."
+msgstr "The water is running now, and the form follows its noun: <et>jooksvat</et>."
+
+msgid "The week is coming, and the form follows <0>nädalavahetust</0>: <1>tulevat</1>."
+msgstr "The week is coming, and the form follows <0>nädalavahetust</0>: <1>tulevat</1>."
+
+msgid "The week is coming, and the form follows its noun: <et>tulevat</et>."
+msgstr "The week is coming, and the form follows its noun: <et>tulevat</et>."
+
+msgid "They decide to dry the floor first."
+msgstr "They decide to dry the floor first."
+
+msgid "Tiit"
+msgstr "Tiit"
+
+msgid "Tiit feels well rested."
+msgstr "Tiit feels well rested."
+
+msgid "Tiit has inherited an old farmhouse. His friend Liis comes to see it, and they decide where to start."
+msgstr "Tiit has inherited an old farmhouse. His friend Liis comes to see it, and they decide where to start."
+
+msgid "Tiit’s uncle read a lot."
+msgstr "Tiit’s uncle read a lot."
+
+msgid "tired"
+msgstr "tired"
+
+msgid "to bring"
+msgstr "to bring"
+
+msgid "to close"
+msgstr "to close"
+
+msgid "to come"
+msgstr "to come"
+
+msgid "to do, to make"
+msgstr "to do, to make"
+
+msgid "to dry out"
+msgstr "to dry out"
+
+msgid "to fall"
+msgstr "to fall"
+
+msgid "to fly"
+msgstr "to fly"
+
+msgid "to freeze"
+msgstr "to freeze"
+
+msgid "to get tired"
+msgstr "to get tired"
+
+msgid "to go missing"
+msgstr "to go missing"
+
+msgid "to grow"
+msgstr "to grow"
+
+msgid "to melt"
+msgstr "to melt"
+
+msgid "to open"
+msgstr "to open"
+
+msgid "to read"
+msgstr "to read"
+
+msgid "to run"
+msgstr "to run"
+
+msgid "to sell"
+msgstr "to sell"
+
+msgid "to sleep"
+msgstr "to sleep"
+
+msgid "to wash"
+msgstr "to wash"
+
+msgid "to work"
+msgstr "to work"
+
+msgid "to write"
+msgstr "to write"
+
+msgid "Tõnu looked fresh and rested."
+msgstr "Tõnu looked fresh and rested."
+
+msgid "Tõnu thinks next week will be sunny."
+msgstr "Tõnu thinks next week will be sunny."
+
+msgid "Type the participle"
+msgstr "Type the participle"
+
+msgid "Usually only the -v form changes with its noun: <0>jooksva vee</0>, <1>jooksvat vett</1>. The -tud and -nud forms usually stay the same: <2>loetud raamatut</2>, <3>kadunud kassi</3>."
+msgstr "Usually only the -v form changes with its noun: <0>jooksva vee</0>, <1>jooksvat vett</1>. The -tud and -nud forms usually stay the same: <2>loetud raamatut</2>, <3>kadunud kassi</3>."
+
+msgid "Väsima, väsinud."
+msgstr "Väsima, väsinud."
+
+msgid "Water in the cellar"
+msgstr "Water in the cellar"
+
+msgid "We are looking for the lost cat."
+msgstr "We are looking for the lost cat."
+
+msgid "What did Liis bring to eat or drink? Write one thing as she says it."
+msgstr "What did Liis bring to eat or drink? Write one thing as she says it."
+
+msgid "What did the writer see in the garden?"
+msgstr "What did the writer see in the garden?"
+
+msgid "What did Tõnu bring to eat? Write it as the text says."
+msgstr "What did Tõnu bring to eat? Write it as the text says."
+
+msgid "What does it say?"
+msgstr "What does it say?"
+
+msgid "What happened after the storm?"
+msgstr "What happened after the storm?"
+
+msgid "What is lying in the garden?"
+msgstr "What is lying in the garden?"
+
+msgid "What is on the kitchen table?"
+msgstr "What is on the kitchen table?"
+
+msgid "Which -nud form?"
+msgstr "Which -nud form?"
+
+msgid "Which -tud form?"
+msgstr "Which -tud form?"
+
+msgid "Which -v form?"
+msgstr "Which -v form?"
+
+msgid "Which of the three?"
+msgstr "Which of the three?"
+
+msgid "Which participle, which meaning"
+msgstr "Which participle, which meaning"
+
+msgid "Who came to help?"
+msgstr "Who came to help?"
+
+msgid "Who left the farmhouse to Tiit?"
+msgstr "Who left the farmhouse to Tiit?"
+
+msgid "Whose cat might the sleeping cat be?"
+msgstr "Whose cat might the sleeping cat be?"
+
+msgid "Why is the floor upstairs wet?"
+msgstr "Why is the floor upstairs wet?"
+
+msgid "With a noun"
+msgstr "With a noun"
+
+msgid "With a verb that takes an object, -nud can name someone who has done it: <0>palju lugenud inimene</0> is a person who has read a lot."
+msgstr "With a verb that takes an object, -nud can name someone who has done it: <0>palju lugenud inimene</0> is a person who has read a lot."
+
+msgid "work that has been done"
+msgstr "work that has been done"
+
+msgid "Worried about another storm"
+msgstr "Worried about another storm"
+
+msgid "Write each sentence in Estonian."
+msgstr "Write each sentence in Estonian."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "written"
+msgstr "written"

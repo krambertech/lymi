@@ -28367,5 +28367,659 @@
     "text": "Ta on kolmkümmend, aga väga lapselik.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/lugema": {
+    "text": "lugema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/loetakse": {
+    "text": "loetakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/loetud-raamat": {
+    "text": "loetud raamat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/sulgema": {
+    "text": "sulgema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/suletakse": {
+    "text": "suletakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/suletud-uks": {
+    "text": "suletud uks",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/tegema": {
+    "text": "tegema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/tehakse": {
+    "text": "tehakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/tehtud-to2o2": {
+    "text": "tehtud töö",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/avama": {
+    "text": "avama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/avatakse": {
+    "text": "avatakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/avatud-aken": {
+    "text": "avatud aken",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/kirjutama": {
+    "text": "kirjutama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/kirjutatakse": {
+    "text": "kirjutatakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/kirjutatud-kiri": {
+    "text": "kirjutatud kiri",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/pesema": {
+    "text": "pesema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/pestakse": {
+    "text": "pestakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/pestud-no3ud": {
+    "text": "pestud nõud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/mu2u2ma": {
+    "text": "müüma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/mu2u2akse": {
+    "text": "müüakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/mu2u2dud-maja": {
+    "text": "müüdud maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/tooma": {
+    "text": "tooma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/tuuakse": {
+    "text": "tuuakse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/toodud-kingitus": {
+    "text": "toodud kingitus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/va2sima": {
+    "text": "väsima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/va2sinud": {
+    "text": "väsinud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/va2sinud-mees": {
+    "text": "väsinud mees",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/kukkuma": {
+    "text": "kukkuma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/kukkunud": {
+    "text": "kukkunud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/kukkunud-leht": {
+    "text": "kukkunud leht",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/kuivama": {
+    "text": "kuivama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/kuivanud": {
+    "text": "kuivanud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/kuivanud-lill": {
+    "text": "kuivanud lill",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/ku2lmuma": {
+    "text": "külmuma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/ku2lmunud": {
+    "text": "külmunud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/ku2lmunud-ja2rv": {
+    "text": "külmunud järv",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/sulama": {
+    "text": "sulama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/sulanud": {
+    "text": "sulanud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/sulanud-lumi": {
+    "text": "sulanud lumi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/kaduma": {
+    "text": "kaduma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/kadunud": {
+    "text": "kadunud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/kadunud-kass": {
+    "text": "kadunud kass",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/tulema": {
+    "text": "tulema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/tulnud": {
+    "text": "tulnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/tulnud-ku2laline": {
+    "text": "tulnud külaline",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/jooksma": {
+    "text": "jooksma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/jookseb": {
+    "text": "jookseb",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/jooksev-vesi": {
+    "text": "jooksev vesi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/magama": {
+    "text": "magama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/magab": {
+    "text": "magab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/magav-laps": {
+    "text": "magav laps",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/kasvama": {
+    "text": "kasvama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/kasvab": {
+    "text": "kasvab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/kasvav-puu": {
+    "text": "kasvav puu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/to2o2tama": {
+    "text": "töötama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/to2o2tab": {
+    "text": "töötab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/to2o2tav-masin": {
+    "text": "töötav masin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/lendama": {
+    "text": "lendama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/lendab": {
+    "text": "lendab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/lendav-lind": {
+    "text": "lendav lind",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/sulab": {
+    "text": "sulab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/sulav-ja2a2": {
+    "text": "sulav jää",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/tuleb": {
+    "text": "tuleb",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/tulev-na2dal": {
+    "text": "tulev nädal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/loeb": {
+    "text": "loeb",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/lugev-laps": {
+    "text": "lugev laps",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/jooksva-vee": {
+    "text": "jooksva vee",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/jooksvat-vett": {
+    "text": "jooksvat vett",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/jooksvas-vees": {
+    "text": "jooksvas vees",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/loetud-raamatu": {
+    "text": "loetud raamatu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/loetud-raamatut": {
+    "text": "loetud raamatut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/loetud-raamatus": {
+    "text": "loetud raamatus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/magav-laps-on-voodis": {
+    "text": "Magav laps on voodis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/va2sinud-mees-istus-pingile": {
+    "text": "Väsinud mees istus pingile.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/ta-avas-suletud-ukse": {
+    "text": "Ta avas suletud ukse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/kukkunud-leht-on-maas": {
+    "text": "Kukkunud leht on maas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/pestud-no3ud-on-kapis": {
+    "text": "Pestud nõud on kapis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/sulav-ja2a2-on-ohtlik": {
+    "text": "Sulav jää on ohtlik.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/kadunud-kass-tuli-koju": {
+    "text": "Kadunud kass tuli koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/laual-on-loetud-raamat": {
+    "text": "Laual on loetud raamat.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/seal-istub-va2sinud-mees": {
+    "text": "Seal istub väsinud mees.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/ma-kuulen-jooksvat-vett": {
+    "text": "Ma kuulen jooksvat vett.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/ma-na2gin-voodis-magavat-last": {
+    "text": "Ma nägin voodis magavat last.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/ta-viskas-a2ra-kuivanud-lille": {
+    "text": "Ta viskas ära kuivanud lille.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/tehtud-to2o2-on-laual": {
+    "text": "Tehtud töö on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/ma-sain-ka2sitsi-kirjutatud-kirja": {
+    "text": "Ma sain käsitsi kirjutatud kirja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/ma-ootan-tulevat-na2dalavahetust": {
+    "text": "Ma ootan tulevat nädalavahetust.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/me-otsime-kadunud-kassi": {
+    "text": "Me otsime kadunud kassi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/ma-ostsin-kasutatud-auto": {
+    "text": "Ma ostsin kasutatud auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/ta-ostis-kasutatud-auto": {
+    "text": "Ta ostis kasutatud auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/c-liis": {
+    "text": "Tere, Liis! Aitäh, et sa nii kaugele tulid. See vana talu on nüüd minu, sest onu jättis selle mulle. Oi, kui vaikne koht! Kas siin on keegi viimasel ajal elanud? Ei ole, vähemalt kümme aastat mitte. Uks on suletud, aga võti on mul kaasas. Vaata, aias on kukkunud õunapuu, torm oli vist suur. Kui kurb! Kuivanud oksi võib ahjus siiski hästi kasutada. See on hea mõte. Tule sisse ja ava see aken, siin on nii hapu õhk. Oi, siin on külm ja pime. Kas elekter töötab, või peame küünlaid ostma? Elekter töötab, aga majas ei ole jooksvat vett. Kaev on aias ja seal on väga hea vesi. Siis on siin palju tööd. Mis köögis on? Seal on vana laud ja kuus tooli. Laual on veel onu loetud ajalehed. Kas su onu luges tõesti nii palju? Jah, ta oli väga palju lugenud inimene. Ta luges iga päev, kuni silmad väsisid. Näe, diivanil on magav kass! Kas see on sinu oma? Ei ole, aga naaber Mari otsib kadunud kassi. Võib-olla see ongi tema, sest uks oli terve nädala lahti. Siis anname talle kohe teada. Aga mida sa selle majaga teha tahad? Ma ei tea veel, kas parem on maja müüa või remontida. Linnas on korter kallis ja siin on palju ruumi. Müüdud maja ei ole enam sinu. Mina tahaksin siia kolida, kui mul oleks selline koht. Ma olen sama mõelnud. Tulev suvi on minu jaoks vaba, nii et saan siin töötada. Siis alustame kohe, enne kui sa meelt muudad. Ma tõin kuuma kohvi ja värskelt küpsetatud saia. Oh, see on nii armas! Ma olen täna väga väsinud, sest ma sõitsin terve öö. Istu siis maha ja söö. Väsinud inimene ei peaks üksi suurt tööd tegema. Hea küll, sul on õigus. Pärast kohvi vaatame ülakorrust ja otsustame, mida teha. Kas seal on kõik aknad kinni? Üks on lahti, ja sulav lumi tuli kevadel tuppa. Põrand on seal veel märg. Oh ei, siis tuleb kõigepealt põrand kuivaks teha. Mul on kaasas ka vana rätik. See aitab. Pärast seda pesen kõik nõud ära ja siis teeme lõunat. Hea küll, tööle! Õhtul oleme väsinud ja külmunud, aga väga rahul. Täpselt nii. Aitäh, et sa mind aitad, Liis.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Liis! Aitäh, et sa nii kaugele tulid.",
+          "See vana talu on nüüd minu, sest onu jättis selle mulle."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Oi, kui vaikne koht!",
+          "Kas siin on keegi viimasel ajal elanud?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei ole, vähemalt kümme aastat mitte.",
+          "Uks on suletud, aga võti on mul kaasas.",
+          "Vaata, aias on kukkunud õunapuu, torm oli vist suur."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kui kurb!",
+          "Kuivanud oksi võib ahjus siiski hästi kasutada."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "See on hea mõte.",
+          "Tule sisse ja ava see aken, siin on nii hapu õhk."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Oi, siin on külm ja pime.",
+          "Kas elekter töötab, või peame küünlaid ostma?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Elekter töötab, aga majas ei ole jooksvat vett.",
+          "Kaev on aias ja seal on väga hea vesi."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Siis on siin palju tööd.",
+          "Mis köögis on?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Seal on vana laud ja kuus tooli.",
+          "Laual on veel onu loetud ajalehed."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas su onu luges tõesti nii palju?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, ta oli väga palju lugenud inimene.",
+          "Ta luges iga päev, kuni silmad väsisid."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Näe, diivanil on magav kass!",
+          "Kas see on sinu oma?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei ole, aga naaber Mari otsib kadunud kassi.",
+          "Võib-olla see ongi tema, sest uks oli terve nädala lahti."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Siis anname talle kohe teada.",
+          "Aga mida sa selle majaga teha tahad?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma ei tea veel, kas parem on maja müüa või remontida.",
+          "Linnas on korter kallis ja siin on palju ruumi."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Müüdud maja ei ole enam sinu.",
+          "Mina tahaksin siia kolida, kui mul oleks selline koht."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma olen sama mõelnud.",
+          "Tulev suvi on minu jaoks vaba, nii et saan siin töötada."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Siis alustame kohe, enne kui sa meelt muudad.",
+          "Ma tõin kuuma kohvi ja värskelt küpsetatud saia."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Oh, see on nii armas!",
+          "Ma olen täna väga väsinud, sest ma sõitsin terve öö."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Istu siis maha ja söö.",
+          "Väsinud inimene ei peaks üksi suurt tööd tegema."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hea küll, sul on õigus.",
+          "Pärast kohvi vaatame ülakorrust ja otsustame, mida teha."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas seal on kõik aknad kinni?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Üks on lahti, ja sulav lumi tuli kevadel tuppa.",
+          "Põrand on seal veel märg."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Oh ei, siis tuleb kõigepealt põrand kuivaks teha.",
+          "Mul on kaasas ka vana rätik."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "See aitab.",
+          "Pärast seda pesen kõik nõud ära ja siis teeme lõunat."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hea küll, tööle!",
+          "Õhtul oleme väsinud ja külmunud, aga väga rahul."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Täpselt nii.",
+          "Aitäh, et sa mind aitad, Liis."
+        ]
+      }
+    ]
+  },
+  "loetud-raamat/jooksev-vesi-on-va2ga-ku2lm": {
+    "text": "Jooksev vesi on väga külm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "loetud-raamat/mu2u2dud-maja-on-praegu-tu2hi": {
+    "text": "Müüdud maja on praegu tühi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

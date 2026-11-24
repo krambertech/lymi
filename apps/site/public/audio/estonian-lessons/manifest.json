@@ -30408,5 +30408,216 @@
     "text": "vanem",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/juba": {
+    "text": "juba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/veel": {
+    "text": "veel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/alles": {
+    "text": "alles",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/enam": {
+    "text": "enam",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/veel-mitte": {
+    "text": "veel mitte",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/mitte-enam": {
+    "text": "mitte enam",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/kell-on-juba-kaheksa": {
+    "text": "Kell on juba kaheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/kell-on-alles-kaheksa": {
+    "text": "Kell on alles kaheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/ta-jo3udis-juba-kohale": {
+    "text": "Ta jõudis juba kohale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/ta-jo3udis-alles-kohale": {
+    "text": "Ta jõudis alles kohale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/ta-tuli-juba-eile": {
+    "text": "Ta tuli juba eile.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/ta-tuli-alles-eile": {
+    "text": "Ta tuli alles eile.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/pood-on-juba-lahti": {
+    "text": "Pood on juba lahti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/pood-avatakse-alles-kell-ku2mme": {
+    "text": "Pood avatakse alles kell kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/kell-on-juba-ku2mme": {
+    "text": "Kell on juba kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/kell-on-alles-seitse": {
+    "text": "Kell on alles seitse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/ma-olen-veel-to2o2l": {
+    "text": "Ma olen veel tööl.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/ta-ei-ole-veel-kodus": {
+    "text": "Ta ei ole veel kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/ma-ei-ela-enam-seal": {
+    "text": "Ma ei ela enam seal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/vihma-ei-saja-enam": {
+    "text": "Vihma ei saja enam.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/buss-ei-ole-veel-tulnud": {
+    "text": "Buss ei ole veel tulnud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/kas-sa-oled-veel-to2o2l": {
+    "text": "Kas sa oled veel tööl?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/ma-ei-ole-veel-so2o2nud": {
+    "text": "Ma ei ole veel söönud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/ta-ei-ela-enam-siin": {
+    "text": "Ta ei ela enam siin.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "juba-veel-alles/c-kolimine": {
+    "text": "Tere, Mart! Kas sa oled juba uude korterisse sisse kolinud? Tere, Kati! Suurem osa asjadest on juba siin. Aga kõik kastid ei ole veel lahti pakitud, sest kogu nädal oli kiire. Ma sain uue korteri võtmed kätte alles esmaspäeval. Kas sa käid veel vanas korteris ka? Ei, seal ma ei ela enam üldse. Andsin vanad võtmed eile omanikule tagasi. Kas kogu mööbel on juba paigas? Laud ja voodi on juba toas, aga uus diivan ei ole veel poest kohale tulnud. Pood helistas ja ütles, et see jõuab alles reedel. Kas väljas sajab ikka veel vihma? Mõtlesin poodi minna. Ei, vihma ei saja enam ja päike tuli juba pilve tagant välja. Hea kuulda! Millal ma võin sinu uut kodu vaatama tulla? Kas laupäev sobib sulle? Muidugi! Laupäeval on diivan juba kohal ja ma teen sulle head kohvi.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Mart! Kas sa oled juba uude korterisse sisse kolinud?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Kati! Suurem osa asjadest on juba siin."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Aga kõik kastid ei ole veel lahti pakitud, sest kogu nädal oli kiire."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma sain uue korteri võtmed kätte alles esmaspäeval."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas sa käid veel vanas korteris ka?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei, seal ma ei ela enam üldse. Andsin vanad võtmed eile omanikule tagasi."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas kogu mööbel on juba paigas?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Laud ja voodi on juba toas, aga uus diivan ei ole veel poest kohale tulnud."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Pood helistas ja ütles, et see jõuab alles reedel."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas väljas sajab ikka veel vihma? Mõtlesin poodi minna."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei, vihma ei saja enam ja päike tuli juba pilve tagant välja."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hea kuulda! Millal ma võin sinu uut kodu vaatama tulla?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas laupäev sobib sulle?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Muidugi! Laupäeval on diivan juba kohal ja ma teen sulle head kohvi."
+        ],
+        "say": "[warm] Muidugi! Laupäeval on diivan juba kohal ja ma teen sulle head kohvi."
+      }
+    ]
   }
 }

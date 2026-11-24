@@ -1,0 +1,445 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 01:25+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+#. placeholder {0}: item.said
+#. placeholder {1}: i18n._(TELL_MEANS[item.id])
+msgid "<0>{0}</0> {1}"
+msgstr "<0>{0}</0> {1}"
+
+msgid "<0>Alles</0> means only, just recently, or not until: <1>Kell on alles seitse.</1> <2>Ta tuli alles eile.</2>"
+msgstr "<0>Alles</0> means only, just recently, or not until: <1>Kell on alles seitse.</1> <2>Ta tuli alles eile.</2>"
+
+msgid "<0>Ei … enam</0> means no longer (<1>Ma ei ela enam seal</1>); <2>enam</2> usually appears only in negative sentences."
+msgstr "<0>Ei … enam</0> means no longer (<1>Ma ei ela enam seal</1>); <2>enam</2> usually appears only in negative sentences."
+
+msgid "<0>Enam</0> usually appears only in negative sentences; positive still is <1>veel</1>."
+msgstr "<0>Enam</0> usually appears only in negative sentences; positive still is <1>veel</1>."
+
+msgid "<0>Juba</0> marks something sooner than expected; <1>alles</1> marks something less, later or just recent; <2>veel</2> means still or more."
+msgstr "<0>Juba</0> marks something sooner than expected; <1>alles</1> marks something less, later or just recent; <2>veel</2> means still or more."
+
+msgid "<0>Juba</0> means already (sooner or more than expected): <1>Kell on juba kümme.</1>"
+msgstr "<0>Juba</0> means already (sooner or more than expected): <1>Kell on juba kümme.</1>"
+
+msgid "<0>Veel</0> also means “more” in offers and requests: <1>Kas sa tahad veel kohvi?</1> (Would you like more coffee?)."
+msgstr "<0>Veel</0> also means “more” in offers and requests: <1>Kas sa tahad veel kohvi?</1> (Would you like more coffee?)."
+
+msgid "<et>Ei … enam</et> means no longer; <et>enam</et> usually appears only in negative sentences."
+msgstr "<et>Ei … enam</et> means no longer; <et>enam</et> usually appears only in negative sentences."
+
+msgid "<et>Juba</et> means already (sooner than expected); <et>alles</et> means only, just recently, or not until."
+msgstr "<et>Juba</et> means already (sooner than expected); <et>alles</et> means only, just recently, or not until."
+
+msgid "<et>Veel</et> means still in a positive sentence and not yet with <et>ei</et>."
+msgstr "<et>Veel</et> means still in a positive sentence and not yet with <et>ei</et>."
+
+msgid "20 minutes"
+msgstr "20 minutes"
+
+msgid "7 exercises"
+msgstr "7 exercises"
+
+msgid "A coffee machine"
+msgstr "A coffee machine"
+
+msgid "A large refrigerator for the whole floor"
+msgstr "A large refrigerator for the whole floor"
+
+msgid "A quick team lunch"
+msgstr "A quick team lunch"
+
+msgid "A short update is posted on the team board after an office move. Read and answer."
+msgstr "A short update is posted on the team board after an office move. Read and answer."
+
+msgid "A small desk"
+msgstr "A small desk"
+
+msgid "A wooden dining table"
+msgstr "A wooden dining table"
+
+msgid "All eight right."
+msgstr "All eight right."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six sentences right."
+msgstr "All six sentences right."
+
+msgid "already"
+msgstr "already"
+
+msgid "Already"
+msgstr "Already"
+
+msgid "Already (sooner than expected)"
+msgstr "Already (sooner than expected)"
+
+msgid "Already or only?"
+msgstr "Already or only?"
+
+msgid "Already vs only: <et>juba, alles</et>"
+msgstr "Already vs only: <et>juba, alles</et>"
+
+msgid "Are you still at work?"
+msgstr "Are you still at work?"
+
+msgid "At seven"
+msgstr "At seven"
+
+msgid "Back in early spring before Easter"
+msgstr "Back in early spring before Easter"
+
+msgid "Chairs around the long table"
+msgstr "Chairs around the long table"
+
+msgid "Check the table above, then try again."
+msgstr "Check the table above, then try again."
+
+msgid "Each sentence uses the wrong time word for a positive or negative statement. Tap the wrong word, then type the right one."
+msgstr "Each sentence uses the wrong time word for a positive or negative statement. Tap the wrong word, then type the right one."
+
+msgid "Earlier or less than expected — only seven — uses <0>alles</0>."
+msgstr "Earlier or less than expected — only seven — uses <0>alles</0>."
+
+msgid "Estonian"
+msgstr "Estonian"
+
+msgid "Everyone will celebrate moving in with cake"
+msgstr "Everyone will celebrate moving in with cake"
+
+msgid "Five time words"
+msgstr "Five time words"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "Go through the table once more, then try again."
+msgstr "Go through the table once more, then try again."
+
+msgid "Has not happened yet uses <0>ei … veel</0>."
+msgstr "Has not happened yet uses <0>ei … veel</0>."
+
+msgid "He or she came already yesterday."
+msgstr "He or she came already yesterday."
+
+msgid "He or she came only yesterday."
+msgstr "He or she came only yesterday."
+
+msgid "He or she has already arrived."
+msgstr "He or she has already arrived."
+
+msgid "He or she has only just arrived."
+msgstr "He or she has only just arrived."
+
+msgid "He or she is not home yet."
+msgstr "He or she is not home yet."
+
+msgid "He or she no longer lives here."
+msgstr "He or she no longer lives here."
+
+msgid "Hear each sentence and decide whether it means already (<0>juba</0>) or only / not until (<1>alles</1>)."
+msgstr "Hear each sentence and decide whether it means already (<0>juba</0>) or only / not until (<1>alles</1>)."
+
+msgid "I am still at work."
+msgstr "I am still at work."
+
+msgid "I have not eaten yet."
+msgstr "I have not eaten yet."
+
+msgid "I no longer live there."
+msgstr "I no longer live there."
+
+msgid "In a negative sentence, not yet uses <0>veel</0>, not <1>juba</1>."
+msgstr "In a negative sentence, not yet uses <0>veel</0>, not <1>juba</1>."
+
+msgid "In a sentence"
+msgstr "In a sentence"
+
+msgid "In lesson {perfect} you saw <0/> with the perfect tense. Estonian uses four short words to show whether something happened early, late, is still going on, or has stopped: <1/>, <2/>, <3/> and <4/>."
+msgstr "In lesson {perfect} you saw <0/> with the perfect tense. Estonian uses four short words to show whether something happened early, late, is still going on, or has stopped: <1/>, <2/>, <3/> and <4/>."
+
+msgid "In positive sentences, <0>veel</0> usually means still or more (<1>Ma olen veel tööl</1>); with <2>ei</2>, it means not yet (<3>Ta ei ole veel kodus</3>)."
+msgstr "In positive sentences, <0>veel</0> usually means still or more (<1>Ma olen veel tööl</1>); with <2>ei</2>, it means not yet (<3>Ta ei ole veel kodus</3>)."
+
+msgid "It is already eight o’clock."
+msgstr "It is already eight o’clock."
+
+msgid "It is already ten o’clock."
+msgstr "It is already ten o’clock."
+
+msgid "It is no longer raining."
+msgstr "It is no longer raining."
+
+msgid "It is only eight o’clock."
+msgstr "It is only eight o’clock."
+
+msgid "It is only seven o’clock."
+msgstr "It is only seven o’clock."
+
+msgid "Kati"
+msgstr "Kati"
+
+msgid "Kati calls Mart to ask how settling into his new flat is going. Listen and answer. You can play the conversation twice."
+msgstr "Kati calls Mart to ask how settling into his new flat is going. Listen and answer. You can play the conversation twice."
+
+msgid "Kell on alles seitse."
+msgstr "Kell on alles seitse."
+
+msgid "Kell on juba kümme."
+msgstr "Kell on juba kümme."
+
+msgid "Last month"
+msgstr "Last month"
+
+msgid "Late next Tuesday evening after work"
+msgstr "Late next Tuesday evening after work"
+
+msgid "Listen: Kati and Mart"
+msgstr "Listen: Kati and Mart"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Ma ei ela enam seal."
+msgstr "Ma ei ela enam seal."
+
+msgid "Ma olen veel tööl."
+msgstr "Ma olen veel tööl."
+
+msgid "Mart"
+msgstr "Mart"
+
+msgid "Mart has already finished unpacking every box in the new flat."
+msgstr "Mart has already finished unpacking every box in the new flat."
+
+msgid "Mart still lives part-time in his old flat."
+msgstr "Mart still lives part-time in his old flat."
+
+msgid "Match each Estonian word or phrase with its meaning."
+msgstr "Match each Estonian word or phrase with its meaning."
+
+msgid "Meaning"
+msgstr "Meaning"
+
+msgid "Most of the team is already working in the new office."
+msgstr "Most of the team is already working in the new office."
+
+msgid "Moving to a new office"
+msgstr "Moving to a new office"
+
+msgid "Nearly. Check the time word in the ones you missed."
+msgstr "Nearly. Check the time word in the ones you missed."
+
+msgid "Nearly. Check whether the sentence is positive or negative."
+msgstr "Nearly. Check whether the sentence is positive or negative."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "Nearly. Read the reason under each one you missed."
+msgstr "Nearly. Read the reason under each one you missed."
+
+msgid "Negative"
+msgstr "Negative"
+
+msgid "no longer"
+msgstr "no longer"
+
+msgid "No longer"
+msgstr "No longer"
+
+msgid "no longer (negative)"
+msgstr "no longer (negative)"
+
+msgid "No longer uses <0>ei … enam</0>, not <1>ei … juba</1>."
+msgstr "No longer uses <0>ei … enam</0>, not <1>ei … juba</1>."
+
+msgid "No longer uses <0>ei … enam</0>."
+msgstr "No longer uses <0>ei … enam</0>."
+
+msgid "no longer, not anymore"
+msgstr "no longer, not anymore"
+
+msgid "No longer: <et>ei … enam</et>"
+msgstr "No longer: <et>ei … enam</et>"
+
+msgid "Not until ten o’clock"
+msgstr "Not until ten o’clock"
+
+msgid "not yet"
+msgstr "not yet"
+
+msgid "Not yet"
+msgstr "Not yet"
+
+msgid "Not yet uses <0>ei … veel</0>, not <1>ei … juba</1>."
+msgstr "Not yet uses <0>ei … veel</0>, not <1>ei … juba</1>."
+
+msgid "Not yet uses <0>ei … veel</0>."
+msgstr "Not yet uses <0>ei … veel</0>."
+
+msgid "On Saturday"
+msgstr "On Saturday"
+
+msgid "Only / not until"
+msgstr "Only / not until"
+
+msgid "Only / not until (less or later)"
+msgstr "Only / not until (less or later)"
+
+msgid "Only after midday once lunch starts"
+msgstr "Only after midday once lunch starts"
+
+msgid "Only on Monday"
+msgstr "Only on Monday"
+
+msgid "Only seven o’clock uses <0>alles</0>, not <1>enam</1>."
+msgstr "Only seven o’clock uses <0>alles</0>, not <1>enam</1>."
+
+msgid "only yesterday"
+msgstr "only yesterday"
+
+msgid "Only yesterday (very recently) uses <0>alles</0>."
+msgstr "Only yesterday (very recently) uses <0>alles</0>."
+
+msgid "only, not until"
+msgstr "only, not until"
+
+msgid "only, not until, just"
+msgstr "only, not until, just"
+
+msgid "Pick <0>juba</0>, <1>veel</1>, <2>enam</2> or <3>alles</3> to complete each sentence."
+msgstr "Pick <0>juba</0>, <1>veel</1>, <2>enam</2> or <3>alles</3> to complete each sentence."
+
+msgid "Pick the word"
+msgstr "Pick the word"
+
+msgid "Positive"
+msgstr "Positive"
+
+msgid "Quiet packing"
+msgstr "Quiet packing"
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "Sentence type"
+msgstr "Sentence type"
+
+msgid "Settling into the new flat"
+msgstr "Settling into the new flat"
+
+msgid "Something continuing in a positive sentence uses <0>veel</0>."
+msgstr "Something continuing in a positive sentence uses <0>veel</0>."
+
+msgid "Sooner or later than expected — already ten — uses <0>juba</0>."
+msgstr "Sooner or later than expected — already ten — uses <0>juba</0>."
+
+msgid "Staff still need the old office keys every morning."
+msgstr "Staff still need the old office keys every morning."
+
+msgid "still"
+msgstr "still"
+
+msgid "Still"
+msgstr "Still"
+
+msgid "Still and not yet: <et>veel</et>"
+msgstr "Still and not yet: <et>veel</et>"
+
+msgid "still, more"
+msgstr "still, more"
+
+msgid "Stopped happening uses <0>ei … enam</0>."
+msgstr "Stopped happening uses <0>ei … enam</0>."
+
+msgid "Stopped raining uses <0>ei … enam</0>, not <1>ei … juba</1>."
+msgstr "Stopped raining uses <0>ei … enam</0>, not <1>ei … juba</1>."
+
+msgid "Tap a word"
+msgstr "Tap a word"
+
+msgid "Team update"
+msgstr "Team update"
+
+msgid "Tell five everyday time words apart: <0>juba</0> (already), <1>veel</1> (still), <2>ei … veel</2> (not yet), <3>ei … enam</3> (no longer) and <4>alles</4> (only, not until, just)."
+msgstr "Tell five everyday time words apart: <0>juba</0> (already), <1>veel</1> (still), <2>ei … veel</2> (not yet), <3>ei … enam</3> (no longer) and <4>alles</4> (only, not until, just)."
+
+msgid "The bus has not arrived yet."
+msgstr "The bus has not arrived yet."
+
+msgid "The bus has not come yet."
+msgstr "The bus has not come yet."
+
+msgid "The new sofa ordered from the shop"
+msgstr "The new sofa ordered from the shop"
+
+msgid "The shop is already open."
+msgstr "The shop is already open."
+
+msgid "The shop opens only at ten."
+msgstr "The shop opens only at ten."
+
+msgid "The sun has already come out from behind the clouds."
+msgstr "The sun has already come out from behind the clouds."
+
+msgid "Time adverbs in Estonian"
+msgstr "Time adverbs in Estonian"
+
+msgid "Tonight right after dinner"
+msgstr "Tonight right after dinner"
+
+msgid "Watch what happens with <0>ei</0>: Estonian usually does not say <1>ei … juba</1>. Instead, not yet is <2>ei … veel</2>, and no longer is <3>ei … enam</3>."
+msgstr "Watch what happens with <0>ei</0>: Estonian usually does not say <1>ei … juba</1>. Instead, not yet is <2>ei … veel</2>, and no longer is <3>ei … enam</3>."
+
+msgid "What does each word mean?"
+msgstr "What does each word mean?"
+
+msgid "What furniture has not arrived yet?"
+msgstr "What furniture has not arrived yet?"
+
+msgid "What is still missing in the new kitchen?"
+msgstr "What is still missing in the new kitchen?"
+
+msgid "What warm drink will Mart make when Kati visits? Write one word as he says it."
+msgstr "What warm drink will Mart make when Kati visits? Write one word as he says it."
+
+msgid "What will happen on Friday afternoon?"
+msgstr "What will happen on Friday afternoon?"
+
+msgid "When did Mart get the keys to the new flat?"
+msgstr "When did Mart get the keys to the new flat?"
+
+msgid "When does Kati suggest dropping by?"
+msgstr "When does Kati suggest dropping by?"
+
+msgid "When does the downstairs café open?"
+msgstr "When does the downstairs café open?"
+
+msgid "Which day did the internet start working? Write one word from the note."
+msgstr "Which day did the internet start working? Write one word from the note."
+
+msgid "Which day will the sofa arrive? Write one word as Mart says it."
+msgstr "Which day will the sofa arrive? Write one word as Mart says it."
+
+msgid "Which word fits?"
+msgstr "Which word fits?"
+
+msgid "With <0>ei</0>, <1>veel</1> usually means not yet and <2>enam</2> usually means no longer."
+msgstr "With <0>ei</0>, <1>veel</1> usually means not yet and <2>enam</2> usually means no longer."
+
+msgid "Word"
+msgstr "Word"
+
+msgid "Write each sentence in Estonian using the right time word."
+msgstr "Write each sentence in Estonian using the right time word."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"

@@ -278,6 +278,9 @@ msgstr "Безкоштовний урок естонської про особо
 msgid "A free Estonian lesson on saying when: hommikul and suvel with -l, mais with -s, hommikuti for every morning, nädala pärast and nädal tagasi, pärast tööd, and from and until with -st and -ni. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про те, як сказати «коли»: hommikul і suvel з -l, mais з -s, hommikuti — «щоранку», nädala pärast і nädal tagasi, pärast tööd, а також «від» і «до» з -st і -ni. Кожне речення озвучене."
 
+msgid "A free Estonian lesson on telling juba (already), veel (still, more), ei … veel (not yet), ei … enam (no longer) and alles (only, not until, just) apart in everyday sentences. Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про різницю між juba («уже»), veel («ще»), ei … veel («ще не»), ei … enam («більше не») і alles («лише, тільки») у повсякденних реченнях. Кожне речення озвучене."
+
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, minutes past and to, and writing the time in words. Every time is read aloud."
 msgstr "Безкоштовний урок естонської про те, як сказати, котра година: повні години, pool, veerand і kolmveerand, що називають наступну годину, хвилини до та після, а також як написати час словами. Кожен приклад озвучено."
 
@@ -508,6 +511,12 @@ msgstr "Усе, до кінця"
 
 msgid "All of it. Some of it is the partitive: *osta leiba!*"
 msgstr "Усе цілком. Якась кількість — партитив: *osta leiba!*"
+
+msgid "Already, still, not yet and only in Estonian"
+msgstr "«Уже», «ще», «ще не» і «лише» в естонській"
+
+msgid "Already, still, not yet, only"
+msgstr "Уже, ще, ще не, лише"
 
 msgid "Also after “it’s good”, “there’s time” and a question word."
 msgstr "І після «добре», «є час» та питального слова."

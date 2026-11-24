@@ -278,6 +278,9 @@ msgstr "A free Estonian lesson on personal pronouns: mina, sina, tema and the re
 msgid "A free Estonian lesson on saying when: hommikul and suvel with -l, mais with -s, hommikuti for every morning, nädala pärast and nädal tagasi, pärast tööd, and from and until with -st and -ni. Every sentence is read aloud."
 msgstr "A free Estonian lesson on saying when: hommikul and suvel with -l, mais with -s, hommikuti for every morning, nädala pärast and nädal tagasi, pärast tööd, and from and until with -st and -ni. Every sentence is read aloud."
 
+msgid "A free Estonian lesson on telling juba (already), veel (still, more), ei … veel (not yet), ei … enam (no longer) and alles (only, not until, just) apart in everyday sentences. Every sentence is read aloud."
+msgstr "A free Estonian lesson on telling juba (already), veel (still, more), ei … veel (not yet), ei … enam (no longer) and alles (only, not until, just) apart in everyday sentences. Every sentence is read aloud."
+
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, minutes past and to, and writing the time in words. Every time is read aloud."
 msgstr "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, minutes past and to, and writing the time in words. Every time is read aloud."
 
@@ -508,6 +511,12 @@ msgstr "All of it, finished"
 
 msgid "All of it. Some of it is the partitive: *osta leiba!*"
 msgstr "All of it. Some of it is the partitive: *osta leiba!*"
+
+msgid "Already, still, not yet and only in Estonian"
+msgstr "Already, still, not yet and only in Estonian"
+
+msgid "Already, still, not yet, only"
+msgstr "Already, still, not yet, only"
 
 msgid "Also after “it’s good”, “there’s time” and a question word."
 msgstr "Also after “it’s good”, “there’s time” and a question word."

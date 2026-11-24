@@ -1,0 +1,445 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 01:25+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+#. placeholder {0}: item.said
+#. placeholder {1}: i18n._(TELL_MEANS[item.id])
+msgid "<0>{0}</0> {1}"
+msgstr "<0>{0}</0> — {1}"
+
+msgid "<0>Alles</0> means only, just recently, or not until: <1>Kell on alles seitse.</1> <2>Ta tuli alles eile.</2>"
+msgstr "<0>Alles</0> означає «лише», «тільки щойно» або «не раніше ніж»: <1>Kell on alles seitse.</1> <2>Ta tuli alles eile.</2>"
+
+msgid "<0>Ei … enam</0> means no longer (<1>Ma ei ela enam seal</1>); <2>enam</2> usually appears only in negative sentences."
+msgstr "<0>Ei … enam</0> означає «більше не» (<1>Ma ei ela enam seal</1>); <2>enam</2> зазвичай трапляється лише в заперечних реченнях."
+
+msgid "<0>Enam</0> usually appears only in negative sentences; positive still is <1>veel</1>."
+msgstr "<0>Enam</0> зазвичай уживається лише в заперечних реченнях; ствердне «ще» — <1>veel</1>."
+
+msgid "<0>Juba</0> marks something sooner than expected; <1>alles</1> marks something less, later or just recent; <2>veel</2> means still or more."
+msgstr "<0>Juba</0> позначає те, що сталося раніше очікуваного; <1>alles</1> — менше, пізніше або зовсім недавно; <2>veel</2> означає «ще»."
+
+msgid "<0>Juba</0> means already (sooner or more than expected): <1>Kell on juba kümme.</1>"
+msgstr "<0>Juba</0> означає «уже» (раніше або більше, ніж очікувалося): <1>Kell on juba kümme.</1>"
+
+msgid "<0>Veel</0> also means “more” in offers and requests: <1>Kas sa tahad veel kohvi?</1> (Would you like more coffee?)."
+msgstr "<0>Veel</0> також означає «ще» в пропозиціях і проханнях: <1>Kas sa tahad veel kohvi?</1> («Хочеш ще кави?»)."
+
+msgid "<et>Ei … enam</et> means no longer; <et>enam</et> usually appears only in negative sentences."
+msgstr "<et>Ei … enam</et> означає «більше не»; <et>enam</et> зазвичай трапляється лише в заперечних реченнях."
+
+msgid "<et>Juba</et> means already (sooner than expected); <et>alles</et> means only, just recently, or not until."
+msgstr "<et>Juba</et> означає «уже» (раніше очікуваного); <et>alles</et> — «лише», «тільки недавно» або «не раніше»."
+
+msgid "<et>Veel</et> means still in a positive sentence and not yet with <et>ei</et>."
+msgstr "<et>Veel</et> означає «ще» у ствердному реченні та «ще не» з <et>ei</et>."
+
+msgid "20 minutes"
+msgstr "20 хвилин"
+
+msgid "7 exercises"
+msgstr "7 вправ"
+
+msgid "A coffee machine"
+msgstr "Кавомашина"
+
+msgid "A large refrigerator for the whole floor"
+msgstr "Великий холодильник для всього поверху"
+
+msgid "A quick team lunch"
+msgstr "Швидкий командний обід"
+
+msgid "A short update is posted on the team board after an office move. Read and answer."
+msgstr "Після переїзду офісу на дошці команди з’явилося коротке оголошення. Прочитай і дай відповіді."
+
+msgid "A small desk"
+msgstr "Малий стіл"
+
+msgid "A wooden dining table"
+msgstr "Дерев’яний обідній стіл"
+
+msgid "All eight right."
+msgstr "Усі вісім правильно."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All six sentences right."
+msgstr "Усі шість речень правильно."
+
+msgid "already"
+msgstr "уже"
+
+msgid "Already"
+msgstr "Уже"
+
+msgid "Already (sooner than expected)"
+msgstr "Уже (раніше очікуваного)"
+
+msgid "Already or only?"
+msgstr "Уже чи лише?"
+
+msgid "Already vs only: <et>juba, alles</et>"
+msgstr "«Уже» проти «лише»: <et>juba, alles</et>"
+
+msgid "Are you still at work?"
+msgstr "Ти ще на роботі?"
+
+msgid "At seven"
+msgstr "О сьомій"
+
+msgid "Back in early spring before Easter"
+msgstr "Ще на початку весни перед самим Великоднем"
+
+msgid "Chairs around the long table"
+msgstr "Стільці довкола довгого столу"
+
+msgid "Check the table above, then try again."
+msgstr "Переглянь таблицю вище й спробуй ще раз."
+
+msgid "Each sentence uses the wrong time word for a positive or negative statement. Tap the wrong word, then type the right one."
+msgstr "У кожному реченні дібрано неправильне слово часу для ствердного або заперечного речення. Натисни на помилкове слово й впиши правильне."
+
+msgid "Earlier or less than expected — only seven — uses <0>alles</0>."
+msgstr "Менше або раніше очікуваного — «лише сьома» — потребує <0>alles</0>."
+
+msgid "Estonian"
+msgstr "Естонська"
+
+msgid "Everyone will celebrate moving in with cake"
+msgstr "Усі відсвяткують переїзд із тортом"
+
+msgid "Five time words"
+msgstr "П’ять слів часу"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "Go through the table once more, then try again."
+msgstr "Переглянь таблицю ще раз і спробуй знову."
+
+msgid "Has not happened yet uses <0>ei … veel</0>."
+msgstr "Ще не сталося — це <0>ei … veel</0>."
+
+msgid "He or she came already yesterday."
+msgstr "Він чи вона приїхали вже вчора."
+
+msgid "He or she came only yesterday."
+msgstr "Він чи вона приїхали лише вчора."
+
+msgid "He or she has already arrived."
+msgstr "Він чи вона вже дісталися."
+
+msgid "He or she has only just arrived."
+msgstr "Він чи вона тільки-но дісталися."
+
+msgid "He or she is not home yet."
+msgstr "Він чи вона ще не вдома."
+
+msgid "He or she no longer lives here."
+msgstr "Він чи вона більше тут не живуть."
+
+msgid "Hear each sentence and decide whether it means already (<0>juba</0>) or only / not until (<1>alles</1>)."
+msgstr "Послухай кожне речення й визнач, чи воно означає «уже» (<0>juba</0>), чи «лише / тільки» (<1>alles</1>)."
+
+msgid "I am still at work."
+msgstr "Я ще на роботі."
+
+msgid "I have not eaten yet."
+msgstr "Я ще не їв."
+
+msgid "I no longer live there."
+msgstr "Я більше там не живу."
+
+msgid "In a negative sentence, not yet uses <0>veel</0>, not <1>juba</1>."
+msgstr "У заперечному реченні «ще не» — це <0>veel</0>, а не <1>juba</1>."
+
+msgid "In a sentence"
+msgstr "У реченні"
+
+msgid "In lesson {perfect} you saw <0/> with the perfect tense. Estonian uses four short words to show whether something happened early, late, is still going on, or has stopped: <1/>, <2/>, <3/> and <4/>."
+msgstr "В уроці {perfect} ти бачив <0/> у перфекті. Естонська використовує чотири короткі слова, щоб показати, чи сталося щось рано, пізно, ще триває або вже припинилося: <1/>, <2/>, <3/> та <4/>."
+
+msgid "In positive sentences, <0>veel</0> usually means still or more (<1>Ma olen veel tööl</1>); with <2>ei</2>, it means not yet (<3>Ta ei ole veel kodus</3>)."
+msgstr "У ствердних реченнях <0>veel</0> зазвичай означає «ще» (<1>Ma olen veel tööl</1>); з <2>ei</2> воно означає «ще не» (<3>Ta ei ole veel kodus</3>)."
+
+msgid "It is already eight o’clock."
+msgstr "Уже восьма година."
+
+msgid "It is already ten o’clock."
+msgstr "Уже десята година."
+
+msgid "It is no longer raining."
+msgstr "Дощ уже не йде."
+
+msgid "It is only eight o’clock."
+msgstr "Лише восьма година."
+
+msgid "It is only seven o’clock."
+msgstr "Лише сьома година."
+
+msgid "Kati"
+msgstr "Каті"
+
+msgid "Kati calls Mart to ask how settling into his new flat is going. Listen and answer. You can play the conversation twice."
+msgstr "Каті телефонує Марту спитати, як іде облаштування в новій квартирі. Послухай і дай відповіді. Розмову можна прослухати двічі."
+
+msgid "Kell on alles seitse."
+msgstr "Kell on alles seitse."
+
+msgid "Kell on juba kümme."
+msgstr "Kell on juba kümme."
+
+msgid "Last month"
+msgstr "Минулого місяця"
+
+msgid "Late next Tuesday evening after work"
+msgstr "Пізно наступного вівторка після роботи"
+
+msgid "Listen: Kati and Mart"
+msgstr "Послухай: Каті і Март"
+
+msgid "Listening only, no microphone"
+msgstr "Лише аудіювання, без мікрофона"
+
+msgid "Ma ei ela enam seal."
+msgstr "Ma ei ela enam seal."
+
+msgid "Ma olen veel tööl."
+msgstr "Ma olen veel tööl."
+
+msgid "Mart"
+msgstr "Март"
+
+msgid "Mart has already finished unpacking every box in the new flat."
+msgstr "Март уже закінчив розпаковувати всі коробки в новій квартирі."
+
+msgid "Mart still lives part-time in his old flat."
+msgstr "Март усе ще частково живе у старій квартирі."
+
+msgid "Match each Estonian word or phrase with its meaning."
+msgstr "З’єднай кожне естонське слово або фразу з його значенням."
+
+msgid "Meaning"
+msgstr "Значення"
+
+msgid "Most of the team is already working in the new office."
+msgstr "Більша частина команди вже працює в новому офісі."
+
+msgid "Moving to a new office"
+msgstr "Переїзд у новий офіс"
+
+msgid "Nearly. Check the time word in the ones you missed."
+msgstr "Майже. Перевір слово часу в реченнях із помилками."
+
+msgid "Nearly. Check whether the sentence is positive or negative."
+msgstr "Майже. Перевір, чи речення ствердне, чи заперечне."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Майже. Послухай ще раз ті речення, де були помилки."
+
+msgid "Nearly. Read the reason under each one you missed."
+msgstr "Майже. Прочитай пояснення під кожним помилковим реченням."
+
+msgid "Negative"
+msgstr "Заперечне"
+
+msgid "no longer"
+msgstr "більше не"
+
+msgid "No longer"
+msgstr "Більше не"
+
+msgid "no longer (negative)"
+msgstr "більше не (із запереченням)"
+
+msgid "No longer uses <0>ei … enam</0>, not <1>ei … juba</1>."
+msgstr "«Більше не» — це <0>ei … enam</0>, а не <1>ei … juba</1>."
+
+msgid "No longer uses <0>ei … enam</0>."
+msgstr "«Більше не» — це <0>ei … enam</0>."
+
+msgid "no longer, not anymore"
+msgstr "більше не, уже не"
+
+msgid "No longer: <et>ei … enam</et>"
+msgstr "«Більше не»: <et>ei … enam</et>"
+
+msgid "Not until ten o’clock"
+msgstr "Лише о десятій ранку"
+
+msgid "not yet"
+msgstr "ще не"
+
+msgid "Not yet"
+msgstr "Ще не"
+
+msgid "Not yet uses <0>ei … veel</0>, not <1>ei … juba</1>."
+msgstr "«Ще не» — це <0>ei … veel</0>, а не <1>ei … juba</1>."
+
+msgid "Not yet uses <0>ei … veel</0>."
+msgstr "«Ще не» — це <0>ei … veel</0>."
+
+msgid "On Saturday"
+msgstr "У суботу"
+
+msgid "Only / not until"
+msgstr "Лише / тільки"
+
+msgid "Only / not until (less or later)"
+msgstr "Лише / тільки (менше або пізніше)"
+
+msgid "Only after midday once lunch starts"
+msgstr "Тільки після полудня, коли починається обід"
+
+msgid "Only on Monday"
+msgstr "Лише в понеділок вранці"
+
+msgid "Only seven o’clock uses <0>alles</0>, not <1>enam</1>."
+msgstr "«Лише сьома» потребує <0>alles</0>, а не <1>enam</1>."
+
+msgid "only yesterday"
+msgstr "лише вчора"
+
+msgid "Only yesterday (very recently) uses <0>alles</0>."
+msgstr "«Лише вчора» (зовсім недавно) потребує <0>alles</0>."
+
+msgid "only, not until"
+msgstr "лише, тільки"
+
+msgid "only, not until, just"
+msgstr "лише, тільки, щойно"
+
+msgid "Pick <0>juba</0>, <1>veel</1>, <2>enam</2> or <3>alles</3> to complete each sentence."
+msgstr "Обери <0>juba</0>, <1>veel</1>, <2>enam</2> або <3>alles</3>, щоб доповнити кожне речення."
+
+msgid "Pick the word"
+msgstr "Обери слово"
+
+msgid "Positive"
+msgstr "Ствердне"
+
+msgid "Quiet packing"
+msgstr "Тихе пакування"
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Що запам’ятати» нижче й спробуй ще раз."
+
+msgid "Sentence type"
+msgstr "Тип речення"
+
+msgid "Settling into the new flat"
+msgstr "Облаштування в новій квартирі"
+
+msgid "Something continuing in a positive sentence uses <0>veel</0>."
+msgstr "Те, що триває у ствердному реченні, потребує <0>veel</0>."
+
+msgid "Sooner or later than expected — already ten — uses <0>juba</0>."
+msgstr "Раніше чи більше очікуваного — «уже десята» — потребує <0>juba</0>."
+
+msgid "Staff still need the old office keys every morning."
+msgstr "Співробітникам досі щоранку потрібні старі ключі від офісу."
+
+msgid "still"
+msgstr "ще"
+
+msgid "Still"
+msgstr "Ще"
+
+msgid "Still and not yet: <et>veel</et>"
+msgstr "«Ще» і «ще не»: <et>veel</et>"
+
+msgid "still, more"
+msgstr "ще, досі"
+
+msgid "Stopped happening uses <0>ei … enam</0>."
+msgstr "Дія, що припинилася, потребує <0>ei … enam</0>."
+
+msgid "Stopped raining uses <0>ei … enam</0>, not <1>ei … juba</1>."
+msgstr "«Дощ уже не йде» — це <0>ei … enam</0>, а не <1>ei … juba</1>."
+
+msgid "Tap a word"
+msgstr "Натисни на слово"
+
+msgid "Team update"
+msgstr "Новини команди"
+
+msgid "Tell five everyday time words apart: <0>juba</0> (already), <1>veel</1> (still), <2>ei … veel</2> (not yet), <3>ei … enam</3> (no longer) and <4>alles</4> (only, not until, just)."
+msgstr "Розрізняй п’ять повсякденних слів часу: <0>juba</0> («уже»), <1>veel</1> («ще»), <2>ei … veel</2> («ще не»), <3>ei … enam</3> («більше не») і <4>alles</4> («лише, тільки»)."
+
+msgid "The bus has not arrived yet."
+msgstr "Автобус ще не прийшов."
+
+msgid "The bus has not come yet."
+msgstr "Автобус ще не прийшов."
+
+msgid "The new sofa ordered from the shop"
+msgstr "Новий диван, замовлений у меблевому магазині"
+
+msgid "The shop is already open."
+msgstr "Магазин уже відчинений."
+
+msgid "The shop opens only at ten."
+msgstr "Магазин відчиняється лише о десятій."
+
+msgid "The sun has already come out from behind the clouds."
+msgstr "Сонце вже вийшло з-за хмар."
+
+msgid "Time adverbs in Estonian"
+msgstr "Слова часу в естонській"
+
+msgid "Tonight right after dinner"
+msgstr "Сьогодні ввечері після вечері"
+
+msgid "Watch what happens with <0>ei</0>: Estonian usually does not say <1>ei … juba</1>. Instead, not yet is <2>ei … veel</2>, and no longer is <3>ei … enam</3>."
+msgstr "Зверни увагу на <0>ei</0>: в естонській зазвичай не кажуть <1>ei … juba</1>. Замість цього «ще не» — це <2>ei … veel</2>, а «більше не» — <3>ei … enam</3>."
+
+msgid "What does each word mean?"
+msgstr "Що означає кожне слово?"
+
+msgid "What furniture has not arrived yet?"
+msgstr "Які меблі ще не привезли?"
+
+msgid "What is still missing in the new kitchen?"
+msgstr "Чого ще бракує на новій кухні?"
+
+msgid "What warm drink will Mart make when Kati visits? Write one word as he says it."
+msgstr "Який теплий напій Март приготує, коли прийде Каті? Напиши одне слово так, як він каже."
+
+msgid "What will happen on Friday afternoon?"
+msgstr "Що відбудеться в п’ятницю по обіді?"
+
+msgid "When did Mart get the keys to the new flat?"
+msgstr "Коли Март отримав ключі від нової квартири?"
+
+msgid "When does Kati suggest dropping by?"
+msgstr "Коли Каті пропонує зайти в гості?"
+
+msgid "When does the downstairs café open?"
+msgstr "Коли відчиняється кав’ярня на першому поверсі?"
+
+msgid "Which day did the internet start working? Write one word from the note."
+msgstr "У який день запрацював інтернет? Напиши одне слово з оголошення."
+
+msgid "Which day will the sofa arrive? Write one word as Mart says it."
+msgstr "У який день привезуть диван? Напиши одне слово так, як каже Март."
+
+msgid "Which word fits?"
+msgstr "Яке слово підходить?"
+
+msgid "With <0>ei</0>, <1>veel</1> usually means not yet and <2>enam</2> usually means no longer."
+msgstr "Із <0>ei</0> слово <1>veel</1> зазвичай означає «ще не», а <2>enam</2> — «більше не»."
+
+msgid "Word"
+msgstr "Слово"
+
+msgid "Write each sentence in Estonian using the right time word."
+msgstr "Напиши кожне речення естонською, використавши правильне слово часу."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"

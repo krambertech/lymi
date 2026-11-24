@@ -97,6 +97,11 @@ export function spacedAfter(after: string): boolean {
   return after !== "" && !CLOSES.test(after);
 }
 
+export function closingPunctuation(after: string): readonly [string, string] {
+  const closing = /^[.,!?;:…)\]»”’]+/u.exec(after)?.[0] ?? "";
+  return [closing, after.slice(closing.length)];
+}
+
 /** A gap's sentence with the word in it, spaced as it would be written. */
 export function gapLine(before: string, word: string, after: string): string {
   return `${before}${spacedBefore(before) ? " " : ""}${word}${spacedAfter(after) ? " " : ""}${after}`;

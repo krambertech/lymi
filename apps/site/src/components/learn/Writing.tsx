@@ -13,13 +13,14 @@ export interface WritingProps {
   title: ReactNode;
   prompt: ReactNode;
   model: readonly string[];
+  signOff?: readonly string[] | undefined;
   src?: string | undefined;
   checks: readonly { id: string; label: ReactNode }[];
 }
 
 type Step = "writing" | "checking" | "done";
 
-export function Writing({ id, title, prompt, model, src, checks }: WritingProps) {
+export function Writing({ id, title, prompt, model, signOff, src, checks }: WritingProps) {
   const { t } = useLingui();
   const { slug, finishSection } = useLesson();
   const section = useContext(SectionContext);
@@ -114,6 +115,15 @@ export function Writing({ id, title, prompt, model, src, checks }: WritingProps)
             <p lang="et" className="text-lg font-medium">
               {model.join(" ")}
             </p>
+            {signOff && signOff.length > 0 && (
+              <p lang="et" className="text-lg font-medium">
+                {signOff.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </p>
+            )}
           </div>
           <fieldset className="m-0 grid min-w-0 gap-2 border-0 p-0">
             <legend className="mb-1.5 text-md font-medium">

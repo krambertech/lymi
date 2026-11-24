@@ -18,6 +18,7 @@ import { saveAnswer } from "../../lib/learn/review";
 import { Button } from "../Button";
 import type { DrillSource, Question } from "./drill-banks";
 import { DrillRound, RichText } from "./DrillRound";
+import { KeepEndings } from "./endings";
 import { QuizCard, ResultDots, Score } from "./Quiz";
 
 interface Props {
@@ -142,7 +143,7 @@ export function DrillRunner(props: Props) {
       ) : (
         question && (
           <div ref={bodyRef} className="grid w-full grid-cols-1 justify-items-start gap-4">
-            <I18nProvider i18n={question.source.i18n}>
+            <I18nProvider i18n={question.source.i18n} defaultComponent={KeepEndings}>
               <div key={run.turn} className="grid w-full grid-cols-1 justify-items-start gap-4">
                 <DrillRound
                   item={question.item}
@@ -215,7 +216,7 @@ function RuleResults({
             />
             <span className="grid min-w-0 flex-1 gap-0.5">
               <span className="font-medium">
-                <I18nProvider i18n={source.i18n}>
+                <I18nProvider i18n={source.i18n} defaultComponent={KeepEndings}>
                   <RichText text={label} />
                 </I18nProvider>
               </span>

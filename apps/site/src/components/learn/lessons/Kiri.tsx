@@ -12,7 +12,7 @@ import {
   LETTER_FIX_ANSWERS,
   LETTER_GAPS,
   LETTER_MESSAGE,
-  LETTER_MODEL,
+  LETTER_MODEL_BODY,
   LETTER_MODEL_SIGN,
   LETTER_PHRASES,
   LETTER_SPARE,
@@ -748,7 +748,8 @@ export function KiriLesson() {
                     </ul>
                   </>
                 }
-                model={[...LETTER_MODEL, ...LETTER_MODEL_SIGN]}
+                model={LETTER_MODEL_BODY}
+                signOff={["Aitäh ette!", ...LETTER_MODEL_SIGN]}
                 src={src("p-model")}
                 checks={content.checks}
               />

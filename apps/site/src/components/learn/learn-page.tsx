@@ -5,6 +5,7 @@ import { lessonName } from "../../lib/learn/catalogue";
 import { learnI18n } from "../../lib/learn/i18n";
 import { reportLoadFailure } from "../../lib/learn/load-failure";
 import { Queries } from "../islands/Queries";
+import { KeepEndings } from "./endings";
 import "./learn.css";
 
 const LESSONS = import.meta.glob<Record<string, ComponentType>>("./lessons/*.tsx");
@@ -91,7 +92,7 @@ export async function prepareLearnPage(target: LearnTarget, locale: string): Pro
 export function LearnPage({ target, locale }: { target: LearnTarget; locale: string }) {
   const { i18n, View } = use(open(target, locale).shown);
   return (
-    <I18nProvider i18n={i18n}>
+    <I18nProvider i18n={i18n} defaultComponent={KeepEndings}>
       <Queries>
         <View />
       </Queries>

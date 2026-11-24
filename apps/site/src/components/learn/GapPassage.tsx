@@ -12,6 +12,7 @@ import {
   useState,
 } from "react";
 import {
+  closingPunctuation,
   type Fills,
   gapLine,
   placeWord,
@@ -140,16 +141,22 @@ function PassageLine({
       lang="et"
       className="max-w-[34ch] text-2xl/[1.75] font-medium tracking-tight max-sm:text-xl/[1.75]"
     >
-      {gaps.map((item, i) => (
-        <span key={item.id}>
-          {item.before}
-          {spacedBefore(item.before) && " "}
-          {gap(item, i + 1)}
-          {spacedAfter(item.after) && " "}
-          {item.after}
-          {item.after && " "}
-        </span>
-      ))}
+      {gaps.map((item, i) => {
+        const [closing, rest] = closingPunctuation(item.after);
+        return (
+          <span key={item.id}>
+            {item.before}
+            {spacedBefore(item.before) && " "}
+            <span className="whitespace-nowrap">
+              {gap(item, i + 1)}
+              {closing}
+            </span>
+            {spacedAfter(item.after) && " "}
+            {rest}
+            {item.after && " "}
+          </span>
+        );
+      })}
     </p>
   );
 }

@@ -11351,7 +11351,7 @@ export const LETTER_DIALOGUE = {
   "d-sina-4": "Aitäh, ma ootan teid.",
 } as const satisfies Record<string, Clip>;
 
-export const LETTER_MODEL = [
+export const LETTER_MODEL_BODY = [
   "Tere, härra Saar!",
   "Kirjutan teile, sest meie vannitoas ei tööta lamp.",
   "See läks eile õhtul katki.",
@@ -11359,8 +11359,9 @@ export const LETTER_MODEL = [
   "Kas te saaksite sel nädalal elektriku saata?",
   "Ma olen kodus neljapäeval ja reedel pärast kella kuut.",
   "Palun helistage mulle enne.",
-  "Aitäh ette!",
 ] as const;
+
+export const LETTER_MODEL = [...LETTER_MODEL_BODY, "Aitäh ette!"] as const;
 
 export const LETTER_MODEL_SIGN = ["Lugupidamisega", "Mari Mets"] as const;
 

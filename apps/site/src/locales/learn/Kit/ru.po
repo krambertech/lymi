@@ -251,6 +251,9 @@ msgstr "Бесплатный урок эстонского о пяти слов�
 msgid "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive, with sentences to write and fix and a phone call to follow. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о четырёх падежных окончаниях: -ga — «с» и «на чём» (sõbraga, bussiga), -ta — «без» (piimata), -ni — «до самого» (kella viieni, Tartuni) и -na — «как», в роли (arstina). Все они добавляются к родительному падежу. А ещё предложения, чтобы написать и исправить, и телефонный разговор. Каждое предложение озвучено."
 
+msgid "A free Estonian lesson on joining clauses: et (that, so that), sest and kuna (because), kui (when, if) and nii et (so); how to tell a reason from a result, the comma that usually comes before the linking word, and where the verb usually goes after it. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о соединении частей предложения: et («что», «чтобы»), sest и kuna («потому что», «поскольку»), kui («когда», «если») и nii et («поэтому»); как отличить причину от следствия, запятая, которая обычно стоит перед союзом, и где обычно стоит глагол после него. Каждое предложение озвучено."
+
 msgid "A free Estonian lesson on keegi, midagi, kuskil and kuhugi: question words with -gi or -ki for somebody and something, ei for nobody and nothing, mitte keegi on its own, and -gi or -ki on every case, as in kellelegi and kellestki, and which one to use. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о keegi, midagi, kuskil и kuhugi: вопросительные слова с -gi или -ki для «кто-то» и «что-то», ei для «никто» и «ничего», mitte keegi отдельно, а также -gi или -ki в каждом падеже, как в kellelegi и kellestki, и когда какое из них нужно. Каждое предложение озвучено."
 
@@ -259,6 +262,9 @@ msgstr "Бесплатный урок эстонского о том, как о�
 
 msgid "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о meeldima, «нравиться»: mulle meeldib и другие лица, meeldivad, когда нравится несколько вещей, meeldib с глаголом, ei meeldi, вопросы с kas и kellele и чувства, например mul on külm. Каждое предложение озвучено."
+
+msgid "A free Estonian lesson on participles used as adjectives: -tud for what was done to it (loetud raamat, suletud uks, tehtud töö), -nud for what it did or became (väsinud mees, kukkunud leht) and -v for what it is doing now (jooksev vesi, magav laps), how to tell them apart, and which of them usually change with the noun. Every example is read aloud."
+msgstr "Бесплатный урок эстонского о причастиях в роли прилагательных: -tud для того, что с ним сделали (loetud raamat, suletud uks, tehtud töö), -nud для того, что оно сделало или чем стало (väsinud mees, kukkunud leht), и -v для того, что оно делает сейчас (jooksev vesi, magav laps), как их различать и какие из них обычно меняются вместе с существительным. Каждый пример озвучен."
 
 msgid "A free Estonian lesson on particle verbs whose meaning you can’t guess from their parts: aru saama, kokku saama, läbi saama, hakkama saama, otsa saama, maha jääma, ära jääma, välja nägema, ära tundma, vastu võtma, järele mõtlema and alla andma; the case each one usually takes, and where the particle goes. Every example is read aloud."
 msgstr "Бесплатный урок эстонского о глаголах с частицами, значение которых не угадать по частям: aru saama, kokku saama, läbi saama, hakkama saama, otsa saama, maha jääma, ära jääma, välja nägema, ära tundma, vastu võtma, järele mõtlema и alla andma; какой падеж обычно нужен каждому и где стоит частица. Каждый пример озвучен."
@@ -731,6 +737,9 @@ msgstr "Эстонские степени сравнения прилагате�
 msgid "Estonian conditional mood"
 msgstr "Условное наклонение в эстонском языке"
 
+msgid "Estonian conjunctions and linking words"
+msgstr "Эстонские союзы: как соединять части предложения"
+
 msgid "Estonian consonant gradation"
 msgstr "Чередование согласных в эстонском языке"
 
@@ -772,6 +781,9 @@ msgstr "Числа на эстонском"
 
 msgid "Estonian ordinal numbers and dates"
 msgstr "Порядковые числительные и даты в эстонском языке"
+
+msgid "Estonian participles used as adjectives"
+msgstr "Эстонские причастия в роли прилагательных"
 
 msgid "Estonian particle verbs with new meanings"
 msgstr "Эстонские глаголы с частицами, у которых новое значение"

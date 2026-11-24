@@ -284,6 +284,9 @@ msgstr "Безкоштовний урок естонської про транс
 msgid "A free Estonian lesson on three endings that make new words from nouns: -lik for adjectives that usually mean like it, having it or to do with it (sõbralik, ohtlik, kohalik, tervislik), -tu for without (kodutu, töötu, veatu) and -ke for a small one (majake, tükike, linnake), and how each new word changes in a sentence. Every example is read aloud."
 msgstr "Безплатний урок естонської про три закінчення, які утворюють нові слова від іменників. Прикметники на -lik зазвичай передають подібність, наявність чогось або зв’язок із чимось (sõbralik, ohtlik, kohalik, tervislik). Суфікс -tu означає «без» (kodutu, töötu, veatu), а -ke позначає щось маленьке (majake, tükike, linnake). Дізнаєшся, як ці слова змінюються в реченні. Усі приклади озвучено."
 
+msgid "A free Estonian lesson on two verb forms that look alike: -des for doing something, usually at the same time (lugedes, süües, minnes) and -mata for without doing it (lugemata, ütlemata, söömata), how to make each from the -da and -ma forms, the case of the object after -mata, and where the phrase goes in the sentence. Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про дві схожі форми дієслова: -des для дії, що зазвичай відбувається водночас з іншою (lugedes, süües, minnes), і -mata для «без цієї дії» (lugemata, ütlemata, söömata); як утворити кожну від форм на -da і -ma, у якому відмінку стоїть додаток після -mata і де в реченні стоїть зворот. Кожне речення озвучено."
+
 msgid "A free Estonian lesson on word order: the verb usually in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про порядок слів: дієслово зазвичай на другому місці (täna lähen ma), питання на кшталт kus sa elad?, два дієслова з другим зазвичай у кінці і де стоїть ei. Кожне речення озвучене."
 
@@ -712,6 +715,9 @@ msgstr "Англійська"
 
 msgid "Estonian"
 msgstr "Естонська"
+
+msgid "Estonian -des and -mata forms: while and without"
+msgstr "Естонські форми -des і -mata: «водночас» і «без»"
 
 msgid "Estonian -ma, -mas and -mast: going, being and coming back"
 msgstr "Естонські форми на -ma, -mas і -mast: іду, там, повертаюся"

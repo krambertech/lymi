@@ -44,7 +44,7 @@ msgid "a dried-out flower"
 msgstr "засохший цветок"
 
 msgid "A fallen apple tree"
-msgstr "Яблоня, упавшая в саду"
+msgstr "Яблоня, упавшая на землю"
 
 msgid "a fallen leaf"
 msgstr "упавший лист"
@@ -379,11 +379,11 @@ msgstr "Форма на -nud"
 msgid "The -nud form usually means the noun has done it or changed: <0>väsinud</0> has got tired."
 msgstr "Форма на -nud обычно означает, что существительное это сделало или изменилось: <0>väsinud</0> — тот, кто устал."
 
-msgid "The -nud form usually says what the noun itself did or became: <0>väsinud</0> <1>mees</1>, <2>kukkunud leht</2>. The <3>-ma</3> of the verb becomes -nud; <4>tulema</4> gives <5>tulnud</5>."
-msgstr "Форма на -nud обычно говорит, что существительное само сделало или каким стало: <0>väsinud</0> <1>mees</1>, <2>kukkunud leht</2>. Окончание <3>-ma</3> у глагола становится -nud; из <4>tulema</4> получается <5>tulnud</5>."
+msgid "The -nud form usually says what the noun itself did or became: <0>väsinud</0> <1>mees</1>, <2>kukkunud leht</2>. The <3>-ma</3> of the verb usually becomes -nud; <4>tulema</4> gives <5>tulnud</5>."
+msgstr "Форма на -nud обычно говорит, что существительное само сделало или каким стало: <0>väsinud</0> <1>mees</1>, <2>kukkunud leht</2>. Окончание <3>-ma</3> у глагола обычно становится -nud; из <4>tulema</4> получается <5>tulnud</5>."
 
-msgid "The -nud form usually says what the noun itself did or became. Take the verb and change <0>-ma</0> to -nud: <1>väsima</1> gives <2>väsinud</2>, so <3/> is a man who has got tired. Nobody tired him; it happened to him."
-msgstr "Форма на -nud обычно говорит, что существительное само сделало или каким стало. Возьми глагол и замени <0>-ma</0> на -nud: из <1>väsima</1> получается <2>väsinud</2>, так что <3/> — это мужчина, который устал. Никто его не утомлял: это с ним случилось."
+msgid "The -nud form usually says what the noun itself did or became. Usually you take the verb and change <0>-ma</0> to -nud: <1>väsima</1> gives <2>väsinud</2>, so <3/> is a man who has got tired. Nobody tired him; it happened to him."
+msgstr "Форма на -nud обычно говорит, что существительное само сделало или каким стало. Обычно берут глагол и меняют <0>-ma</0> на -nud: из <1>väsima</1> получается <2>väsinud</2>, так что <3/> — это мужчина, который устал. Никто его не утомлял: это с ним случилось."
 
 msgid "The -tud form"
 msgstr "Форма на -tud"
@@ -412,17 +412,17 @@ msgstr "Форма на -v меняется вместе с существите
 msgid "The -v form is an adjective: it changes with its noun, <0>jooksva vee</0>, <1>jooksvat vett</1>."
 msgstr "Форма на -v — это прилагательное: она меняется вместе с существительным, <0>jooksva vee</0>, <1>jooksvat vett</1>."
 
-msgid "The -v form says what the noun is doing now. Take the he, she form of the verb and change -b to -v: <0>magab</0> gives <1>magav</1>, so <2/> is a child who is asleep, and <3/> is water that is running."
-msgstr "Форма на -v говорит, что существительное делает сейчас. Возьми форму «он, она» и замени -b на -v: из <0>magab</0> получается <1>magav</1>, так что <2/> — это ребёнок, который спит, а <3/> — вода, которая течёт."
-
 msgid "The -v form usually means the noun is doing it now: <0>magav</0> is sleeping."
 msgstr "Форма на -v обычно означает, что существительное делает это сейчас: <0>magav</0> — тот, кто спит."
 
 msgid "The -v form usually says what the noun is doing now: <0>jooksev vesi</0>, <1>magav laps</1>. The -b of the he, she form usually becomes -v."
 msgstr "Форма на -v обычно говорит, что существительное делает сейчас: <0>jooksev vesi</0>, <1>magav laps</1>. Окончание -b в форме «он, она» обычно становится -v."
 
-msgid "The <0>-ma</0> of the verb becomes -nud: <1>väsima</1> gives <2>väsinud</2>. <3>Tulema</3> gives <4>tulnud</4>."
-msgstr "Окончание <0>-ma</0> у глагола становится -nud: из <1>väsima</1> получается <2>väsinud</2>. Из <3>tulema</3> — <4>tulnud</4>."
+msgid "The -v form usually says what the noun is doing now. Usually you take the he, she form of the verb and change -b to -v: <0>magab</0> gives <1>magav</1>, so <2/> is a child who is asleep, and <3/> is water that is running."
+msgstr "Форма на -v обычно говорит, что существительное делает сейчас. Обычно берут форму «он, она» и меняют -b на -v: из <0>magab</0> получается <1>magav</1>, так что <2/> — это ребёнок, который спит, а <3/> — вода, которая течёт."
+
+msgid "The <0>-ma</0> of the verb usually becomes -nud: <1>väsima</1> gives <2>väsinud</2>. Some verbs shorten or change: <3>tulema</3> gives <4>tulnud</4>."
+msgstr "Окончание <0>-ma</0> у глагола обычно становится -nud: из <1>väsima</1> получается <2>väsinud</2>. Некоторые глаголы сокращаются или меняются: из <3>tulema</3> — <4>tulnud</4>."
 
 msgid "The <et>-nud</et> form usually means the noun has done it or changed."
 msgstr "Форма на <et>-nud</et> обычно означает, что существительное это сделало или изменилось."

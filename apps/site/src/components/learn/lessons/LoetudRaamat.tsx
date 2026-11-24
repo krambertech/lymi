@@ -136,8 +136,9 @@ function ParticipleTable({ kind }: { kind: Kind }) {
       </Trans>
     ) : kind === "nud" ? (
       <Trans>
-        The <b lang="et">-ma</b> of the verb becomes -nud: <b lang="et">väsima</b> gives{" "}
-        <b lang="et">väsinud</b>. <b lang="et">Tulema</b> gives <b lang="et">tulnud</b>.
+        The <b lang="et">-ma</b> of the verb usually becomes -nud: <b lang="et">väsima</b> gives{" "}
+        <b lang="et">väsinud</b>. Some verbs shorten or change: <b lang="et">tulema</b> gives{" "}
+        <b lang="et">tulnud</b>.
       </Trans>
     ) : (
       <Trans>
@@ -658,7 +659,7 @@ export function LoetudRaamatLesson() {
         <Trans key="2">
           The -nud form usually says what the noun itself did or became: <b lang="et">väsinud</b>{" "}
           <b lang="et">mees</b>, <b lang="et">kukkunud leht</b>. The <b lang="et">-ma</b> of the
-          verb becomes -nud; <b lang="et">tulema</b> gives <b lang="et">tulnud</b>.
+          verb usually becomes -nud; <b lang="et">tulema</b> gives <b lang="et">tulnud</b>.
         </Trans>,
         <Trans key="3">
           The -v form usually says what the noun is doing now: <b lang="et">jooksev vesi</b>,{" "}
@@ -726,8 +727,8 @@ export function LoetudRaamatLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The -nud form usually says what the noun itself did or became. Take the verb and
-                    change <b lang="et">-ma</b> to -nud: <b lang="et">väsima</b> gives{" "}
+                    The -nud form usually says what the noun itself did or became. Usually you take
+                    the verb and change <b lang="et">-ma</b> to -nud: <b lang="et">väsima</b> gives{" "}
                     <b lang="et">väsinud</b>, so <Word w="väsinud mees" /> is a man who has got
                     tired. Nobody tired him; it happened to him.
                   </Trans>
@@ -772,10 +773,10 @@ export function LoetudRaamatLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The -v form says what the noun is doing now. Take the he, she form of the verb
-                    and change -b to -v: <b lang="et">magab</b> gives <b lang="et">magav</b>, so{" "}
-                    <Word w="magav laps" /> is a child who is asleep, and <Word w="jooksev vesi" />{" "}
-                    is water that is running.
+                    The -v form usually says what the noun is doing now. Usually you take the he,
+                    she form of the verb and change -b to -v: <b lang="et">magab</b> gives{" "}
+                    <b lang="et">magav</b>, so <Word w="magav laps" /> is a child who is asleep, and{" "}
+                    <Word w="jooksev vesi" /> is water that is running.
                   </Trans>
                 </p>
                 <p>

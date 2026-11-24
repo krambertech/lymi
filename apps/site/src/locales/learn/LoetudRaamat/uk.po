@@ -44,7 +44,7 @@ msgid "a dried-out flower"
 msgstr "засохла квітка"
 
 msgid "A fallen apple tree"
-msgstr "Яблуня, що впала в саду"
+msgstr "Яблуня, що впала на землю"
 
 msgid "a fallen leaf"
 msgstr "листок, що впав"
@@ -269,7 +269,7 @@ msgid "melting ice"
 msgstr "лід, що тане"
 
 msgid "Melting snow came in."
-msgstr "Заніс сніг, що танув."
+msgstr "Потрапив сніг, що танув."
 
 msgid "Nearly. Check the participle and the noun in the ones you missed."
 msgstr "Майже. Перевір дієприкметник та іменник там, де помилився."
@@ -281,7 +281,7 @@ msgid "Nearly. Read the reason under each one you got wrong."
 msgstr "Майже. Прочитай пояснення під кожною помилкою."
 
 msgid "next week, the coming week"
-msgstr "наступного тижня, майбутній тиждень"
+msgstr "наступний тиждень, майбутній тиждень"
 
 msgid "Nominative"
 msgstr "Називний"
@@ -379,11 +379,11 @@ msgstr "Форма на -nud"
 msgid "The -nud form usually means the noun has done it or changed: <0>väsinud</0> has got tired."
 msgstr "Форма на -nud зазвичай означає, що іменник це зробив або змінився: <0>väsinud</0> — той, хто втомився."
 
-msgid "The -nud form usually says what the noun itself did or became: <0>väsinud</0> <1>mees</1>, <2>kukkunud leht</2>. The <3>-ma</3> of the verb becomes -nud; <4>tulema</4> gives <5>tulnud</5>."
-msgstr "Форма на -nud зазвичай каже, що іменник сам зробив або яким став: <0>väsinud</0> <1>mees</1>, <2>kukkunud leht</2>. Закінчення <3>-ma</3> у дієслові стає -nud; з <4>tulema</4> виходить <5>tulnud</5>."
+msgid "The -nud form usually says what the noun itself did or became: <0>väsinud</0> <1>mees</1>, <2>kukkunud leht</2>. The <3>-ma</3> of the verb usually becomes -nud; <4>tulema</4> gives <5>tulnud</5>."
+msgstr "Форма на -nud зазвичай каже, що іменник сам зробив або яким став: <0>väsinud</0> <1>mees</1>, <2>kukkunud leht</2>. Закінчення <3>-ma</3> у дієслові зазвичай стає -nud; з <4>tulema</4> виходить <5>tulnud</5>."
 
-msgid "The -nud form usually says what the noun itself did or became. Take the verb and change <0>-ma</0> to -nud: <1>väsima</1> gives <2>väsinud</2>, so <3/> is a man who has got tired. Nobody tired him; it happened to him."
-msgstr "Форма на -nud зазвичай каже, що іменник сам зробив або яким став. Візьми дієслово й заміни <0>-ma</0> на -nud: з <1>väsima</1> виходить <2>väsinud</2>, тож <3/> — це чоловік, який утомився. Ніхто його не втомлював: це з ним сталося."
+msgid "The -nud form usually says what the noun itself did or became. Usually you take the verb and change <0>-ma</0> to -nud: <1>väsima</1> gives <2>väsinud</2>, so <3/> is a man who has got tired. Nobody tired him; it happened to him."
+msgstr "Форма на -nud зазвичай каже, що іменник сам зробив або яким став. Зазвичай беруть дієслово й замінюють <0>-ma</0> на -nud: з <1>väsima</1> виходить <2>väsinud</2>, тож <3/> — це чоловік, який утомився. Ніхто його не втомлював: це з ним сталося."
 
 msgid "The -tud form"
 msgstr "Форма на -tud"
@@ -412,17 +412,17 @@ msgstr "Форма на -v змінюється разом з іменником
 msgid "The -v form is an adjective: it changes with its noun, <0>jooksva vee</0>, <1>jooksvat vett</1>."
 msgstr "Форма на -v — це прикметник: вона змінюється разом з іменником, <0>jooksva vee</0>, <1>jooksvat vett</1>."
 
-msgid "The -v form says what the noun is doing now. Take the he, she form of the verb and change -b to -v: <0>magab</0> gives <1>magav</1>, so <2/> is a child who is asleep, and <3/> is water that is running."
-msgstr "Форма на -v каже, що іменник робить зараз. Візьми форму «він, вона» і заміни -b на -v: з <0>magab</0> виходить <1>magav</1>, тож <2/> — це дитина, яка спить, а <3/> — вода, що тече."
-
 msgid "The -v form usually means the noun is doing it now: <0>magav</0> is sleeping."
 msgstr "Форма на -v зазвичай означає, що іменник робить це зараз: <0>magav</0> — той, хто спить."
 
 msgid "The -v form usually says what the noun is doing now: <0>jooksev vesi</0>, <1>magav laps</1>. The -b of the he, she form usually becomes -v."
 msgstr "Форма на -v зазвичай каже, що іменник робить зараз: <0>jooksev vesi</0>, <1>magav laps</1>. Закінчення -b у формі «він, вона» зазвичай стає -v."
 
-msgid "The <0>-ma</0> of the verb becomes -nud: <1>väsima</1> gives <2>väsinud</2>. <3>Tulema</3> gives <4>tulnud</4>."
-msgstr "Закінчення <0>-ma</0> у дієслові стає -nud: з <1>väsima</1> виходить <2>väsinud</2>. З <3>tulema</3> — <4>tulnud</4>."
+msgid "The -v form usually says what the noun is doing now. Usually you take the he, she form of the verb and change -b to -v: <0>magab</0> gives <1>magav</1>, so <2/> is a child who is asleep, and <3/> is water that is running."
+msgstr "Форма на -v зазвичай каже, що іменник робить зараз. Зазвичай беруть форму «він, вона» і замінюють -b на -v: з <0>magab</0> виходить <1>magav</1>, тож <2/> — це дитина, яка спить, а <3/> — вода, що тече."
+
+msgid "The <0>-ma</0> of the verb usually becomes -nud: <1>väsima</1> gives <2>väsinud</2>. Some verbs shorten or change: <3>tulema</3> gives <4>tulnud</4>."
+msgstr "Закінчення <0>-ma</0> у дієслові зазвичай стає -nud: з <1>väsima</1> виходить <2>väsinud</2>. Деякі дієслова скорочуються або змінюються: з <3>tulema</3> — <4>tulnud</4>."
 
 msgid "The <et>-nud</et> form usually means the noun has done it or changed."
 msgstr "Форма на <et>-nud</et> зазвичай означає, що іменник це зробив або змінився."
@@ -602,7 +602,7 @@ msgid "to write"
 msgstr "писати"
 
 msgid "Tõnu looked fresh and rested."
-msgstr "Тину видно було бадьорим і відпочилим."
+msgstr "Тину виглядав бадьорим і відпочилим."
 
 msgid "Tõnu thinks next week will be sunny."
 msgstr "Тину гадає, що наступного тижня буде сонячно."

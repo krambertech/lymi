@@ -520,7 +520,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 24,
         blurb: msg`A free Estonian lesson on three endings that make new words from nouns: -lik for adjectives that usually mean like it, having it or to do with it (sõbralik, ohtlik, kohalik, tervislik), -tu for without (kodutu, töötu, veatu) and -ke for a small one (majake, tükike, linnake), and how each new word changes in a sentence. Every example is read aloud.`,
       },
-      { name: msg`The -des and -mata forms`, et: "Lugedes, lugemata" },
+      {
+        slug: "lugedes-lugemata",
+        name: msg`The -des and -mata forms`,
+        title: msg`Estonian -des and -mata forms: while and without`,
+        et: "Lugedes, lugemata",
+        minutes: 24,
+        blurb: msg`A free Estonian lesson on two verb forms that look alike: -des for doing something, usually at the same time (lugedes, süües, minnes) and -mata for without doing it (lugemata, ütlemata, söömata), how to make each from the -da and -ma forms, the case of the object after -mata, and where the phrase goes in the sentence. Every sentence is read aloud.`,
+      },
       { name: msg`Participles`, et: "Loetud raamat" },
       {
         slug: "et-sest-kui",

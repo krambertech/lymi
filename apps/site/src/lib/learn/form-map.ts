@@ -109,7 +109,7 @@ const VERB_USES = [
     form: "ma",
     label: msg`Without doing it`,
     tip: msg`Also what isn’t done yet.`,
-    taught: { et: "Lugedes, lugemata" },
+    taught: { slug: "lugedes-lugemata" },
     examples: [
       { et: "Ta läks *söömata* tööle.", meaning: msg`He or she went to work without eating.` },
       { et: "Raamat on *lugemata*.", meaning: msg`The book is unread.` },
@@ -211,7 +211,7 @@ const VERB_USES = [
     form: "da",
     label: msg`While doing it`,
     tip: msg`Also says how something is done.`,
-    taught: { et: "Lugedes, lugemata" },
+    taught: { slug: "lugedes-lugemata" },
     examples: [
       { et: "Koju *jõudes* helistan sulle.", meaning: msg`I’ll call you when I get home.` },
       {

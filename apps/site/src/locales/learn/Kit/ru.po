@@ -731,6 +731,9 @@ msgstr "Эстонские формы на -ma, -mas и -mast: иду, там, �
 msgid "Estonian adjectives: agreeing with the noun"
 msgstr "Эстонские прилагательные: согласование по падежу"
 
+msgid "Estonian B1 practice: reading and listening to the news"
+msgstr "Практика эстонского B1: читаем и слушаем новости"
+
 msgid "Estonian comparatives and superlatives"
 msgstr "Эстонские степени сравнения прилагательных"
 
@@ -908,6 +911,9 @@ msgstr "Найдено, почти исправлено"
 
 msgid "Found, not fixed"
 msgstr "Найдено, не исправлено"
+
+msgid "Free Estonian B1 practice with news: read a local news story, tell stage 6 forms apart, fill a weather and traffic report, write and fix news sentences, follow a radio interview heard twice and write a short letter to the editor. Every sentence is read aloud."
+msgstr "Бесплатная практика эстонского B1 на материале новостей: прочитай местную новость, отличи формы 6-го этапа, заполни прогноз погоды и сводку о движении, напиши и исправь новостные предложения, прослушай радиоинтервью дважды и напиши короткое письмо в редакцию. Каждое предложение озвучено."
 
 msgid "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions, ask your own and write a short message. Every conversation and passage is read aloud."
 msgstr "Бесплатная разговорная практика эстонского для начинающих: скажи, как тебя зовут, откуда ты, где живёшь и работаешь, отвечай на вопросы «да или нет», задавай свои и напиши короткое сообщение. Каждый разговор и каждый текст озвучены."

@@ -553,7 +553,14 @@ export const STAGES: readonly Stage[] = [
         blurb: msg`A free Estonian lesson on relative clauses: mis, which usually follows a thing or an idea, and kes, which follows a person (raamat, mille ma ostsin; naine, kellega ma rääkisin), the case the word takes in its own clause (kelle, keda, mille, mida), kus for places, and the commas around the clause. Every sentence is read aloud.`,
       },
       { name: msg`Reported speech`, et: "Ta olevat haige" },
-      { name: msg`Practice: reading the news`, et: "Uudised" },
+      {
+        slug: "uudised",
+        name: msg`Practice: reading the news`,
+        title: msg`Estonian B1 practice: reading and listening to the news`,
+        et: "Uudised",
+        minutes: 25,
+        blurb: msg`Free Estonian B1 practice with news: read a local news story, tell stage 6 forms apart, fill a weather and traffic report, write and fix news sentences, follow a radio interview heard twice and write a short letter to the editor. Every sentence is read aloud.`,
+      },
     ],
   },
 ];

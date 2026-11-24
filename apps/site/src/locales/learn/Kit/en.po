@@ -245,14 +245,23 @@ msgstr "A free Estonian lesson on adjectives with nouns: suures majas and uut ra
 msgid "A free Estonian lesson on comparing: suurem and uuem built on the genitive, suurem kui Tartu and Tartust suurem, kõige suurem for the biggest, sama suur kui for as big as, and two odd ones, hea, parem, parim and väike, väiksem. Every sentence is read aloud."
 msgstr "A free Estonian lesson on comparing: suurem and uuem built on the genitive, suurem kui Tartu and Tartust suurem, kõige suurem for the biggest, sama suur kui for as big as, and two odd ones, hea, parem, parim and väike, väiksem. Every sentence is read aloud."
 
+msgid "A free Estonian lesson on five words for a way: läbi metsa (through), üle tee (across), mööda teed (along), järve ümber (around) and Riia kaudu (via); which take the genitive and which the partitive, and where each one goes. Every example is read aloud."
+msgstr "A free Estonian lesson on five words for a way: läbi metsa (through), üle tee (across), mööda teed (along), järve ümber (around) and Riia kaudu (via); which take the genitive and which the partitive, and where each one goes. Every example is read aloud."
+
 msgid "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive, with sentences to write and fix and a phone call to follow. Every sentence is read aloud."
 msgstr "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive, with sentences to write and fix and a phone call to follow. Every sentence is read aloud."
 
 msgid "A free Estonian lesson on keegi, midagi, kuskil and kuhugi: question words with -gi or -ki for somebody and something, ei for nobody and nothing, mitte keegi on its own, and -gi or -ki on every case, as in kellelegi and kellestki, and which one to use. Every sentence is read aloud."
 msgstr "A free Estonian lesson on keegi, midagi, kuskil and kuhugi: question words with -gi or -ki for somebody and something, ei for nobody and nothing, mitte keegi on its own, and -gi or -ki on every case, as in kellelegi and kellestki, and which one to use. Every sentence is read aloud."
 
+msgid "A free Estonian lesson on making nouns from verbs: -ja for the person who does it (õpetaja, müüja, lugeja; tegema gives tegija) and -mine for the doing (lugemine, ujumine, suitsetamine keelatud), how both change like any noun, and the case the verb around them asks for. Every example is read aloud."
+msgstr "A free Estonian lesson on making nouns from verbs: -ja for the person who does it (õpetaja, müüja, lugeja; tegema gives tegija) and -mine for the doing (lugemine, ujumine, suitsetamine keelatud), how both change like any noun, and the case the verb around them asks for. Every example is read aloud."
+
 msgid "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
 msgstr "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
+
+msgid "A free Estonian lesson on particle verbs whose meaning you can’t guess from their parts: aru saama, kokku saama, läbi saama, hakkama saama, otsa saama, maha jääma, ära jääma, välja nägema, ära tundma, vastu võtma, järele mõtlema and alla andma; the case each one usually takes, and where the particle goes. Every example is read aloud."
+msgstr "A free Estonian lesson on particle verbs whose meaning you can’t guess from their parts: aru saama, kokku saama, läbi saama, hakkama saama, otsa saama, maha jääma, ära jääma, välja nägema, ära tundma, vastu võtma, järele mõtlema and alla andma; the case each one usually takes, and where the particle goes. Every example is read aloud."
 
 msgid "A free Estonian lesson on personal pronouns in their cases: minuga and sinuta on the genitive, the short forms mulle, mul and mult, the partitive mind, sind, teda, and telling minu, mul and mind apart. Every sentence is read aloud."
 msgstr "A free Estonian lesson on personal pronouns in their cases: minuga and sinuta on the genitive, the short forms mulle, mul and mult, the partitive mind, sind, teda, and telling minu, mul and mind apart. Every sentence is read aloud."
@@ -268,6 +277,9 @@ msgstr "A free Estonian lesson on telling the time: full hours, pool, veerand an
 
 msgid "A free Estonian lesson on the translative case: -ks on the genitive for what someone becomes (Ta sai arstiks, Ma jäin haigeks), -na against -ks, reedeks for by Friday and nädalaks for a week, and heaks arstiks, where the adjective takes -ks too. Every sentence is read aloud."
 msgstr "A free Estonian lesson on the translative case: -ks on the genitive for what someone becomes (Ta sai arstiks, Ma jäin haigeks), -na against -ks, reedeks for by Friday and nädalaks for a week, and heaks arstiks, where the adjective takes -ks too. Every sentence is read aloud."
+
+msgid "A free Estonian lesson on three endings that make new words from nouns: -lik for like it or having it (sõbralik, kohalik, ohtlik), -tu for without (kodutu, töötu, veatu) and -ke for a small one (majake, tükike, linnake), and how each new word changes in a sentence. Every example is read aloud."
+msgstr "A free Estonian lesson on three endings that make new words from nouns: -lik for like it or having it (sõbralik, kohalik, ohtlik), -tu for without (kodutu, töötu, veatu) and -ke for a small one (majake, tükike, linnake), and how each new word changes in a sentence. Every example is read aloud."
 
 msgid "A free Estonian lesson on word order: the verb usually in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud."
 msgstr "A free Estonian lesson on word order: the verb usually in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud."
@@ -743,11 +755,17 @@ msgstr "Estonian modal verbs: can, may, must"
 msgid "Estonian noun stems"
 msgstr "Estonian noun stems"
 
+msgid "Estonian nouns made from verbs"
+msgstr "Estonian nouns made from verbs"
+
 msgid "Estonian numbers"
 msgstr "Estonian numbers"
 
 msgid "Estonian ordinal numbers and dates"
 msgstr "Estonian ordinal numbers and dates"
+
+msgid "Estonian particle verbs with new meanings"
+msgstr "Estonian particle verbs with new meanings"
 
 msgid "Estonian past tense"
 msgstr "Estonian past tense"
@@ -1375,6 +1393,9 @@ msgstr "Make a sentence from these words."
 
 msgid "Make the form"
 msgstr "Make the form"
+
+msgid "Making new Estonian words from nouns"
+msgstr "Making new Estonian words from nouns"
 
 msgid "Mari"
 msgstr "Mari"
@@ -2290,6 +2311,9 @@ msgstr "They won’t come tomorrow."
 
 msgid "This is Martin’s coffee."
 msgstr "This is Martin’s coffee."
+
+msgid "Through, across and along in Estonian"
+msgstr "Through, across and along in Estonian"
 
 msgid "Through, over, along"
 msgstr "Through, over, along"

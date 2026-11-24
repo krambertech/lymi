@@ -1,0 +1,704 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 19:53+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "“To get”"
+msgstr "“To get”"
+
+msgid "“To stay”"
+msgstr "“To stay”"
+
+msgid "<0/> and <1/> usually take <2>-ga</2>, so <3>Mari sai Jaaniga</3> can go on either way. The particle tells you whether she met him or got on with him. <4/> means to understand and <5/> means to manage."
+msgstr "<0/> and <1/> usually take <2>-ga</2>, so <3>Mari sai Jaaniga</3> can go on either way. The particle tells you whether she met him or got on with him. <4/> means to understand and <5/> means to manage."
+
+#. placeholder {0}: gap.answer
+#. placeholder {1}: gap.verb
+#. placeholder {2}: i18n._(MEANS[`${gap.answer} ${gap.verb}`] as MessageDescriptor)
+msgid "<0>{0} {1}</0>: {2}."
+msgstr "<0>{0} {1}</0>: {2}."
+
+msgid "<0>Aru saama</0> usually takes <1>-st</1>: <2>õpetajast</2>."
+msgstr "<0>Aru saama</0> usually takes <1>-st</1>: <2>õpetajast</2>."
+
+msgid "<0>Aru saama</0>: to understand."
+msgstr "<0>Aru saama</0>: to understand."
+
+msgid "<0>Hakkama saama</0>: to cope, to manage."
+msgstr "<0>Hakkama saama</0>: to cope, to manage."
+
+msgid "<0>Kokku saama</0>: to meet up."
+msgstr "<0>Kokku saama</0>: to meet up."
+
+msgid "<0>Läbi saama</0>: to get on with someone."
+msgstr "<0>Läbi saama</0>: to get on with someone."
+
+msgid "<0>Saan aru</0> is I understand, <1>saame kokku</1> is we meet up: a particle can give a verb a new meaning, so learn the two together."
+msgstr "<0>Saan aru</0> is I understand, <1>saame kokku</1> is we meet up: a particle can give a verb a new meaning, so learn the two together."
+
+msgid "<0>Vastu võtma</0> and <1>ära tundma</1> take an object, as lesson {object} showed: usually the genitive for a completed action in a statement, and the partitive after <2>ei</2>. <3>Ma tundsin su ära. Ma ei tundnud sind ära.</3>"
+msgstr "<0>Vastu võtma</0> and <1>ära tundma</1> take an object, as lesson {object} showed: usually the genitive for a completed action in a statement, and the partitive after <2>ei</2>. <3>Ma tundsin su ära. Ma ei tundnud sind ära.</3>"
+
+msgid "<et>Ära jääma</et>: to be called off."
+msgstr "<et>Ära jääma</et>: to be called off."
+
+msgid "<et>Aru saama</et> usually takes <et>-st</et>: <et>küsimusest</et>."
+msgstr "<et>Aru saama</et> usually takes <et>-st</et>: <et>küsimusest</et>."
+
+msgid "<et>Aru saama</et> usually takes <et>-st</et>: <et>õpetajast</et>."
+msgstr "<et>Aru saama</et> usually takes <et>-st</et>: <et>õpetajast</et>."
+
+msgid "<et>Maha jääma</et>: to miss a bus or a train."
+msgstr "<et>Maha jääma</et>: to miss a bus or a train."
+
+msgid "<et>Otsa saama</et>: to run out. The milk is the subject."
+msgstr "<et>Otsa saama</et>: to run out. The milk is the subject."
+
+msgid "<et>Välja nägema</et>: to look, to seem."
+msgstr "<et>Välja nägema</et>: to look, to seem."
+
+msgid "<et>Vastu võtma</et>: to accept."
+msgstr "<et>Vastu võtma</et>: to accept."
+
+msgid "24 minutes"
+msgstr "24 minutes"
+
+msgid "8 exercises"
+msgstr "8 exercises"
+
+msgid "A dictionary lists these under the verb, with the particle first: <0>aru saama</0>, <1>maha jääma</1>. That’s how this lesson writes them too."
+msgstr "A dictionary lists these under the verb, with the particle first: <0>aru saama</0>, <1>maha jääma</1>. That’s how this lesson writes them too."
+
+msgid "A friend"
+msgstr "A friend"
+
+msgid "A letter about a new job"
+msgstr "A letter about a new job"
+
+msgid "A particle can change what a verb means: <0>ma sain kirja</0>, I got a letter; <1>ma sain aru</1>, I understood. Learn the particle and the verb as one word."
+msgstr "A particle can change what a verb means: <0>ma sain kirja</0>, I got a letter; <1>ma sain aru</1>, I understood. Learn the particle and the verb as one word."
+
+msgid "A particle that changes the meaning"
+msgstr "A particle that changes the meaning"
+
+msgid "a particle: aru saama, to understand"
+msgstr "a particle: aru saama, to understand"
+
+msgid "A radio interview"
+msgstr "A radio interview"
+
+msgid "A week"
+msgstr "A week"
+
+msgid "About a month, until spring"
+msgstr "About a month, until spring"
+
+msgid "After <0>ei</0>, the object takes the partitive: <1>sind</1>."
+msgstr "After <0>ei</0>, the object takes the partitive: <1>sind</1>."
+
+msgid "After <0>pead</0>, this example puts the particle before <1>mõtlema</1>."
+msgstr "After <0>pead</0>, this example puts the particle before <1>mõtlema</1>."
+
+msgid "After <0>tahan</0>, this example puts the particle before <1>saada</1>."
+msgstr "After <0>tahan</0>, this example puts the particle before <1>saada</1>."
+
+msgid "After <et>ei</et>, the object takes the partitive: <et>teda</et>."
+msgstr "After <et>ei</et>, the object takes the partitive: <et>teda</et>."
+
+msgid "All eight: you heard the particle every time."
+msgstr "All eight: you heard the particle every time."
+
+msgid "All seven, each with its particle and case."
+msgstr "All seven, each with its particle and case."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six, each particle in its place."
+msgstr "All six, each particle in its place."
+
+msgid "All ten particles right."
+msgstr "All ten particles right."
+
+msgid "Ära anna alla!"
+msgstr "Ära anna alla!"
+
+msgid "Build each sentence from what it means."
+msgstr "Build each sentence from what it means."
+
+msgid "Build the sentence"
+msgstr "Build the sentence"
+
+msgid "Calls on the phone, when people speak fast"
+msgstr "Calls on the phone, when people speak fast"
+
+msgid "cope"
+msgstr "cope"
+
+msgid "Did you miss the bus?"
+msgstr "Did you miss the bus?"
+
+msgid "doesn’t want to"
+msgstr "doesn’t want to"
+
+msgid "Each of these has a meaning its verb alone doesn’t have."
+msgstr "Each of these has a meaning its verb alone doesn’t have."
+
+msgid "Each sentence has a gap for the particle. The verb on its own means what it says above the sentence; the rest of the sentence tells you which particle makes the meaning it needs. Pick it, then hear the sentence."
+msgstr "Each sentence has a gap for the particle. The verb on its own means what it says above the sentence; the rest of the sentence tells you which particle makes the meaning it needs. Pick it, then hear the sentence."
+
+msgid "Each sentence has one wrong word: a case, or the wrong particle. Tap it, then type it right."
+msgstr "Each sentence has one wrong word: a case, or the wrong particle. Tap it, then type it right."
+
+msgid "Each verb usually asks for its case: <0>aru saama</0> and <1>maha jääma</1> take <2>-st</2>; <3>kokku saama</3>, <4>läbi saama</4> and <5>hakkama saama</5> take <6>-ga</6>."
+msgstr "Each verb usually asks for its case: <0>aru saama</0> and <1>maha jääma</1> take <2>-st</2>; <3>kokku saama</3>, <4>läbi saama</4> and <5>hakkama saama</5> take <6>-ga</6>."
+
+msgid "Finding old books"
+msgstr "Finding old books"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "For a job"
+msgstr "For a job"
+
+msgid "Four meanings of one verb"
+msgstr "Four meanings of one verb"
+
+msgid "get on"
+msgstr "get on"
+
+msgid "Give her two pieces of advice."
+msgstr "Give her two pieces of advice."
+
+msgid "Go through the table once more, then try again."
+msgstr "Go through the table once more, then try again."
+
+msgid "Greet Kaisa."
+msgstr "Greet Kaisa."
+
+msgid "Hear a sentence, then pick what it means. Listen for the particle."
+msgstr "Hear a sentence, then pick what it means. Listen for the particle."
+
+msgid "Her boss"
+msgstr "Her boss"
+
+msgid "Her colleagues make jokes she can’t follow."
+msgstr "Her colleagues make jokes she can’t follow."
+
+msgid "Her mother"
+msgstr "Her mother"
+
+msgid "Her teacher"
+msgstr "Her teacher"
+
+msgid "Her village had become too small and quiet for her"
+msgstr "Her village had become too small and quiet for her"
+
+msgid "How long did Kaisa wait in the café? Write it as she does."
+msgstr "How long did Kaisa wait in the café? Write it as she does."
+
+msgid "How long did Olga think about the job?"
+msgstr "How long did Olga think about the job?"
+
+msgid "How to tell her boss about her colleagues"
+msgstr "How to tell her boss about her colleagues"
+
+msgid "I accepted the invitation."
+msgstr "I accepted the invitation."
+
+msgid "I can’t cope with this on my own."
+msgstr "I can’t cope with this on my own."
+
+msgid "I didn’t recognise him."
+msgstr "I didn’t recognise him."
+
+msgid "I didn’t understand the question."
+msgstr "I didn’t understand the question."
+
+msgid "I get on well with my brother."
+msgstr "I get on well with my brother."
+
+msgid "I get on well with my sister."
+msgstr "I get on well with my sister."
+
+msgid "I have to"
+msgstr "I have to"
+
+msgid "I want to"
+msgstr "I want to"
+
+msgid "I want to meet up with you."
+msgstr "I want to meet up with you."
+
+msgid "In a sentence"
+msgstr "In a sentence"
+
+msgid "In a simple sentence, the particle usually goes last: <0>Ma saan naabriga hästi läbi.</0> It usually stays last after <1>ei</1> and in a question."
+msgstr "In a simple sentence, the particle usually goes last: <0>Ma saan naabriga hästi läbi.</0> It usually stays last after <1>ei</1> and in a question."
+
+msgid "In both examples, <0>Jäi</0> comes second and <1>ära</1> comes last."
+msgstr "In both examples, <0>Jäi</0> comes second and <1>ära</1> comes last."
+
+msgid "In her first month, Olga wanted to give up."
+msgstr "In her first month, Olga wanted to give up."
+
+msgid "In this sentence the particle comes last, even after <0>ei</0>."
+msgstr "In this sentence the particle comes last, even after <0>ei</0>."
+
+msgid "In this sentence with <et>välja nägema</et>, the particle comes after <et>väsinud</et>."
+msgstr "In this sentence with <et>välja nägema</et>, the particle comes after <et>väsinud</et>."
+
+msgid "It was cold."
+msgstr "It was cold."
+
+msgid "Kaisa gets on well with her colleagues."
+msgstr "Kaisa gets on well with her colleagues."
+
+msgid "Kaisa writes"
+msgstr "Kaisa writes"
+
+msgid "Kaisa writes to a magazine for advice. Read her letter and answer the questions, as in the reading part of the B1 exam."
+msgstr "Kaisa writes to a magazine for advice. Read her letter and answer the questions, as in the reading part of the B1 exam."
+
+msgid "Kaisa’s boss is pleased with her work."
+msgstr "Kaisa’s boss is pleased with her work."
+
+msgid "Kalev"
+msgstr "Kalev"
+
+msgid "Kalev talks to Olga, who moved to Tartu three years ago, about her first years in Estonia."
+msgstr "Kalev talks to Olga, who moved to Tartu three years ago, about her first years in Estonia."
+
+msgid "Koosolek jääb ära."
+msgstr "Koosolek jääb ära."
+
+msgid "Las ma mõtlen järele."
+msgstr "Las ma mõtlen järele."
+
+msgid "Lent her money."
+msgstr "Lent her money."
+
+msgid "Lesson {particles} added particles such as up and out to verbs, where each part keeps its meaning. With some verbs, the pair means something new. On its own, <0/> is to get. With <1/>, it’s to understand: you can’t guess it from the parts."
+msgstr "Lesson {particles} added particles such as up and out to verbs, where each part keeps its meaning. With some verbs, the pair means something new. On its own, <0/> is to get. With <1/>, it’s to understand: you can’t guess it from the parts."
+
+msgid "Let’s meet up tomorrow."
+msgstr "Let’s meet up tomorrow."
+
+msgid "Like the verbs in lesson {government}, a particle verb usually asks for a set case. You understand of something: <0>Ma saan sellest aru.</0> You miss from a bus: <1>Ma jäin bussist maha.</1>"
+msgstr "Like the verbs in lesson {government}, a particle verb usually asks for a set case. You understand of something: <0>Ma saan sellest aru.</0> You miss from a bus: <1>Ma jäin bussist maha.</1>"
+
+msgid "Listen: Kalev and Olga"
+msgstr "Listen: Kalev and Olga"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Ma jäin bussist maha."
+msgstr "Ma jäin bussist maha."
+
+msgid "Ma tundsin su ära."
+msgstr "Ma tundsin su ära."
+
+msgid "Mari coped with the work."
+msgstr "Mari coped with the work."
+
+msgid "Mari got on well with Jaan."
+msgstr "Mari got on well with Jaan."
+
+msgid "Mari met Jaan."
+msgstr "Mari met Jaan."
+
+msgid "Mari understood Jaan."
+msgstr "Mari understood Jaan."
+
+msgid "Match each particle verb with its meaning."
+msgstr "Match each particle verb with its meaning."
+
+msgid "Meaning"
+msgstr "Meaning"
+
+msgid "meet up"
+msgstr "meet up"
+
+msgid "Nearly. Check the particle and the case in the ones you missed."
+msgstr "Nearly. Check the particle and the case in the ones you missed."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Nearly. Play the ones you got wrong once more."
+
+msgid "Nearly. Read the meaning under each one you got wrong."
+msgstr "Nearly. Read the meaning under each one you got wrong."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Nearly. Read the reason under each one you got wrong."
+
+msgid "neighbour"
+msgstr "neighbour"
+
+msgid "Nobody talks at all."
+msgstr "Nobody talks at all."
+
+msgid "Now answer Kaisa in about 80 words, then compare your letter with a model."
+msgstr "Now answer Kaisa in about 80 words, then compare your letter with a model."
+
+msgid "Of what: -st. Ma saan sellest aru."
+msgstr "Of what: -st. Ma saan sellest aru."
+
+msgid "Olga"
+msgstr "Olga"
+
+msgid "Olga is going to leave Tartu."
+msgstr "Olga is going to leave Tartu."
+
+msgid "Olga’s mother got on well with Olga’s friends."
+msgstr "Olga’s mother got on well with Olga’s friends."
+
+msgid "On its own, <0>jääma</0> is to stay: <1>Ma jään koju.</1>"
+msgstr "On its own, <0>jääma</0> is to stay: <1>Ma jään koju.</1>"
+
+msgid "On its own, <0>saama</0> is to get: <1>Ma sain kirja.</1> With a particle it can mean something else entirely."
+msgstr "On its own, <0>saama</0> is to get: <1>Ma sain kirja.</1> With a particle it can mean something else entirely."
+
+msgid "One evening"
+msgstr "One evening"
+
+msgid "Other verbs"
+msgstr "Other verbs"
+
+msgid "Particle verbs and their meanings"
+msgstr "Particle verbs and their meanings"
+
+msgid "Peeter"
+msgstr "Peeter"
+
+msgid "Pick a verb and tap the sentences. The first row is the verb on its own."
+msgstr "Pick a verb and tap the sentences. The first row is the verb on its own."
+
+msgid "Pick the particle"
+msgstr "Pick the particle"
+
+msgid "question"
+msgstr "question"
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "Read why under each one you missed, then try again."
+msgstr "Read why under each one you missed, then try again."
+
+msgid "Sa näed väsinud välja."
+msgstr "Sa näed väsinud välja."
+
+msgid "Said that wanting to give up is normal."
+msgstr "Said that wanting to give up is normal."
+
+msgid "Say that you understand her."
+msgstr "Say that you understand her."
+
+msgid "Sent her home."
+msgstr "Sent her home."
+
+msgid "Sent her the job advert."
+msgstr "Sent her the job advert."
+
+msgid "She couldn’t find a job for a long time."
+msgstr "She couldn’t find a job for a long time."
+
+msgid "She eats alone."
+msgstr "She eats alone."
+
+msgid "She missed the train."
+msgstr "She missed the train."
+
+msgid "She understood almost nothing."
+msgstr "She understood almost nothing."
+
+msgid "Sign with your name."
+msgstr "Sign with your name."
+
+msgid "Ta võttis töö vastu."
+msgstr "Ta võttis töö vastu."
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap the sentences under “To get” once more, then try again."
+msgstr "Tap the sentences under “To get” once more, then try again."
+
+msgid "The action is complete here, so the object is genitive: <0>kingituse</0>."
+msgstr "The action is complete here, so the object is genitive: <0>kingituse</0>."
+
+msgid "The action is complete here, so the object is genitive: <0>kutse</0>."
+msgstr "The action is complete here, so the object is genitive: <0>kutse</0>."
+
+msgid "The action is complete here, so the object is genitive: <et>kingituse</et>."
+msgstr "The action is complete here, so the object is genitive: <et>kingituse</et>."
+
+msgid "The case after a particle verb"
+msgstr "The case after a particle verb"
+
+msgid "The case after the verb"
+msgstr "The case after the verb"
+
+msgid "The concert was called off yesterday."
+msgstr "The concert was called off yesterday."
+
+msgid "The Friday meetings are never called off."
+msgstr "The Friday meetings are never called off."
+
+msgid "The milk is what runs out, so it’s the subject: <0>piim sai otsa</0>."
+msgstr "The milk is what runs out, so it’s the subject: <0>piim sai otsa</0>."
+
+msgid "The particle comes last in this question: <0>… maha?</0>"
+msgstr "The particle comes last in this question: <0>… maha?</0>"
+
+msgid "The particle comes last in this sentence."
+msgstr "The particle comes last in this sentence."
+
+msgid "The particle usually comes last. After <et>tahan</et> or <et>pean</et>, it usually comes before the infinitive."
+msgstr "The particle usually comes last. After <et>tahan</et> or <et>pean</et>, it usually comes before the infinitive."
+
+msgid "The particle usually goes last: <0>Ma ei saa sellest aru.</0> After a verb such as <1>tahan</1>, it usually goes just before the infinitive: <2>Ma tahan aru saada.</2>"
+msgstr "The particle usually goes last: <0>Ma ei saa sellest aru.</0> After a verb such as <1>tahan</1>, it usually goes just before the infinitive: <2>Ma tahan aru saada.</2>"
+
+msgid "The thing is the subject: Kohv sai otsa."
+msgstr "The thing is the subject: Kohv sai otsa."
+
+msgid "The verb"
+msgstr "The verb"
+
+msgid "They can cope with anything."
+msgstr "They can cope with anything."
+
+msgid "They get on well with each other."
+msgstr "They get on well with each other."
+
+msgid "They meet after work."
+msgstr "They meet after work."
+
+msgid "They understand Estonian."
+msgstr "They understand Estonian."
+
+msgid "to accept"
+msgstr "to accept"
+
+msgid "to accept, to receive"
+msgstr "to accept, to receive"
+
+msgid "to be called off"
+msgstr "to be called off"
+
+msgid "To be near her mother"
+msgstr "To be near her mother"
+
+msgid "to cope, to manage"
+msgstr "to cope, to manage"
+
+msgid "to get"
+msgstr "to get"
+
+msgid "to get on"
+msgstr "to get on"
+
+msgid "To get on is <0>läbi saama</0>. <1>Kokku saama</1> is to meet up."
+msgstr "To get on is <0>läbi saama</0>. <1>Kokku saama</1> is to meet up."
+
+msgid "to give"
+msgstr "to give"
+
+msgid "to give up"
+msgstr "to give up"
+
+msgid "to look"
+msgstr "to look"
+
+msgid "to look, to seem"
+msgstr "to look, to seem"
+
+msgid "to meet up"
+msgstr "to meet up"
+
+msgid "to miss a bus or train"
+msgstr "to miss a bus or train"
+
+msgid "to miss the train"
+msgstr "to miss the train"
+
+msgid "to recognise"
+msgstr "to recognise"
+
+msgid "to run out"
+msgstr "to run out"
+
+msgid "To say who you meet or get on with, or what you cope with, usually use <0>-ga</0>: <1>Ma saan temaga hästi läbi.</1> With <2>otsa saama</2> and <3>ära jääma</3>, the thing that runs out or is called off is the subject: <4>Kohv sai otsa.</4>"
+msgstr "To say who you meet or get on with, or what you cope with, usually use <0>-ga</0>: <1>Ma saan temaga hästi läbi.</1> With <2>otsa saama</2> and <3>ära jääma</3>, the thing that runs out or is called off is the subject: <4>Kohv sai otsa.</4>"
+
+msgid "to see"
+msgstr "to see"
+
+msgid "to stay"
+msgstr "to stay"
+
+msgid "to take"
+msgstr "to take"
+
+msgid "to think"
+msgstr "to think"
+
+msgid "to think over"
+msgstr "to think over"
+
+msgid "to understand"
+msgstr "to understand"
+
+msgid "train"
+msgstr "train"
+
+msgid "understand"
+msgstr "understand"
+
+msgid "Use two particle verbs from this lesson."
+msgstr "Use two particle verbs from this lesson."
+
+msgid "Verb"
+msgstr "Verb"
+
+msgid "Verbs"
+msgstr "Verbs"
+
+msgid "We can manage on our own."
+msgstr "We can manage on our own."
+
+msgid "We didn’t understand anything."
+msgstr "We didn’t understand anything."
+
+msgid "We get on well."
+msgstr "We get on well."
+
+msgid "We understand it."
+msgstr "We understand it."
+
+msgid "we want to"
+msgstr "we want to"
+
+msgid "We’re meeting tomorrow."
+msgstr "We’re meeting tomorrow."
+
+msgid "We’ve run out of milk."
+msgstr "We’ve run out of milk."
+
+msgid "What does it mean?"
+msgstr "What does it mean?"
+
+msgid "What does Kaisa want to know?"
+msgstr "What does Kaisa want to know?"
+
+msgid "What does Kaisa write?"
+msgstr "What does Kaisa write?"
+
+msgid "What happens at lunch?"
+msgstr "What happens at lunch?"
+
+msgid "What was hardest at work?"
+msgstr "What was hardest at work?"
+
+msgid "When does Olga meet her course friends? Write it as Olga says it."
+msgstr "When does Olga meet her course friends? Write it as Olga says it."
+
+msgid "When the verb is an infinitive after <0>tahan</0>, <1>pean</1> or <2>ei taha</2>, the particle usually goes just before it: <3>Ma tahan aru saada.</3> <4>Sa pead järele mõtlema.</4>"
+msgstr "When the verb is an infinitive after <0>tahan</0>, <1>pean</1> or <2>ei taha</2>, the particle usually goes just before it: <3>Ma tahan aru saada.</3> <4>Sa pead järele mõtlema.</4>"
+
+msgid "Where the particle goes"
+msgstr "Where the particle goes"
+
+msgid "Where to meet people"
+msgstr "Where to meet people"
+
+msgid "Whether to wait or look for a new job"
+msgstr "Whether to wait or look for a new job"
+
+msgid "Which particle, which meaning"
+msgstr "Which particle, which meaning"
+
+msgid "Which particle?"
+msgstr "Which particle?"
+
+msgid "Who did it?"
+msgstr "Who did it?"
+
+msgid "Who does the old lady say Olga looks like? Write it as Olga says it."
+msgstr "Who does the old lady say Olga looks like? Write it as Olga says it."
+
+msgid "Why did Kaisa move to a new town?"
+msgstr "Why did Kaisa move to a new town?"
+
+msgid "Why was it hard at first?"
+msgstr "Why was it hard at first?"
+
+msgid "With <0>saama</0>: <1>aru</1> understand, <2>kokku</2> meet up, <3>läbi</3> get on, <4>hakkama</4> cope, <5>otsa</5> run out."
+msgstr "With <0>saama</0>: <1>aru</1> understand, <2>kokku</2> meet up, <3>läbi</3> get on, <4>hakkama</4> cope, <5>otsa</5> run out."
+
+msgid "With <et>saama</et>: <et>aru</et> understand, <et>kokku</et> meet up, <et>läbi</et> get on, <et>hakkama</et> cope."
+msgstr "With <et>saama</et>: <et>aru</et> understand, <et>kokku</et> meet up, <et>läbi</et> get on, <et>hakkama</et> cope."
+
+msgid "With what: -ga. Ma saan hakkama."
+msgstr "With what: -ga. Ma saan hakkama."
+
+msgid "With whom: -ga. Ma saan temaga hästi läbi."
+msgstr "With whom: -ga. Ma saan temaga hästi läbi."
+
+msgid "With whom: -ga. Saame homme kokku."
+msgstr "With whom: -ga. Saame homme kokku."
+
+msgid "work, job"
+msgstr "work, job"
+
+msgid "Write back to Kaisa"
+msgstr "Write back to Kaisa"
+
+msgid "Write each sentence in Estonian."
+msgstr "Write each sentence in Estonian."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "Write to Kaisa. Say you understand her, give her two pieces of advice and use at least two particle verbs from this lesson."
+msgstr "Write to Kaisa. Say you understand her, give her two pieces of advice and use at least two particle verbs from this lesson."
+
+msgid "You cope with something: <0>sellega</0>."
+msgstr "You cope with something: <0>sellega</0>."
+
+msgid "You cope with something: <et>tööga</et>."
+msgstr "You cope with something: <et>tööga</et>."
+
+msgid "You get on with someone: <et>naabriga</et>."
+msgstr "You get on with someone: <et>naabriga</et>."
+
+msgid "You have to think it over first."
+msgstr "You have to think it over first."
+
+msgid "You look tired."
+msgstr "You look tired."
+
+msgid "You meet up with someone: <0>Mariga</0>."
+msgstr "You meet up with someone: <0>Mariga</0>."
+
+msgid "You meet up with someone: <et>Mariga</et>."
+msgstr "You meet up with someone: <et>Mariga</et>."
+
+msgid "You miss from the bus: <0>bussist</0>."
+msgstr "You miss from the bus: <0>bussist</0>."
+
+msgid "You miss from the train: <0>rongist</0>."
+msgstr "You miss from the train: <0>rongist</0>."
+
+msgid "You miss from the train: <et>rongist</et>."
+msgstr "You miss from the train: <et>rongist</et>."
+
+msgid "You understand of something: <0>küsimusest</0>."
+msgstr "You understand of something: <0>küsimusest</0>."

@@ -1,0 +1,704 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 19:53+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "“To get”"
+msgstr "«Отримувати»"
+
+msgid "“To stay”"
+msgstr "«Залишатися»"
+
+msgid "<0/> and <1/> usually take <2>-ga</2>, so <3>Mari sai Jaaniga</3> can go on either way. The particle tells you whether she met him or got on with him. <4/> means to understand and <5/> means to manage."
+msgstr "І <0/>, і <1/> зазвичай уживають з <2>-ga</2>. Почувши <3>Mari sai Jaaniga</3>, ще не знаєш, чи Марі зустрілася з Яаном, чи ладнала з ним. Це підкаже частка. <4/> означає «розуміти», а <5/> — «давати собі раду»."
+
+#. placeholder {0}: gap.answer
+#. placeholder {1}: gap.verb
+#. placeholder {2}: i18n._(MEANS[`${gap.answer} ${gap.verb}`] as MessageDescriptor)
+msgid "<0>{0} {1}</0>: {2}."
+msgstr "<0>{0} {1}</0>: {2}."
+
+msgid "<0>Aru saama</0> usually takes <1>-st</1>: <2>õpetajast</2>."
+msgstr "З <0>Aru saama</0> зазвичай уживають <1>-st</1>: <2>õpetajast</2>."
+
+msgid "<0>Aru saama</0>: to understand."
+msgstr "<0>Aru saama</0> — розуміти."
+
+msgid "<0>Hakkama saama</0>: to cope, to manage."
+msgstr "<0>Hakkama saama</0> — давати собі раду."
+
+msgid "<0>Kokku saama</0>: to meet up."
+msgstr "<0>Kokku saama</0> — зустрічатися."
+
+msgid "<0>Läbi saama</0>: to get on with someone."
+msgstr "<0>Läbi saama</0> — ладнати з кимось."
+
+msgid "<0>Saan aru</0> is I understand, <1>saame kokku</1> is we meet up: a particle can give a verb a new meaning, so learn the two together."
+msgstr "<0>Saan aru</0> — «я розумію», <1>saame kokku</1> — «ми зустрічаємося». Частка може змінити значення дієслова, тож вчи їх разом."
+
+msgid "<0>Vastu võtma</0> and <1>ära tundma</1> take an object, as lesson {object} showed: usually the genitive for a completed action in a statement, and the partitive after <2>ei</2>. <3>Ma tundsin su ära. Ma ei tundnud sind ära.</3>"
+msgstr "З <0>Vastu võtma</0> й <1>ära tundma</1> вживають додаток. Як в уроці {object}, у ствердженні про завершену дію це зазвичай родовий, а після <2>ei</2> — партитив. <3>Ma tundsin su ära. Ma ei tundnud sind ära.</3>"
+
+msgid "<et>Ära jääma</et>: to be called off."
+msgstr "<et>Ära jääma</et> — не відбутися."
+
+msgid "<et>Aru saama</et> usually takes <et>-st</et>: <et>küsimusest</et>."
+msgstr "З <et>Aru saama</et> зазвичай уживають <et>-st</et>: <et>küsimusest</et>."
+
+msgid "<et>Aru saama</et> usually takes <et>-st</et>: <et>õpetajast</et>."
+msgstr "З <et>Aru saama</et> зазвичай уживають <et>-st</et>: <et>õpetajast</et>."
+
+msgid "<et>Maha jääma</et>: to miss a bus or a train."
+msgstr "<et>Maha jääma</et> — запізнитися на автобус або поїзд."
+
+msgid "<et>Otsa saama</et>: to run out. The milk is the subject."
+msgstr "<et>Otsa saama</et> — закінчуватися. Молоко тут підмет."
+
+msgid "<et>Välja nägema</et>: to look, to seem."
+msgstr "<et>Välja nägema</et> — мати вигляд."
+
+msgid "<et>Vastu võtma</et>: to accept."
+msgstr "<et>Vastu võtma</et> — приймати."
+
+msgid "24 minutes"
+msgstr "24 хвилини"
+
+msgid "8 exercises"
+msgstr "8 вправ"
+
+msgid "A dictionary lists these under the verb, with the particle first: <0>aru saama</0>, <1>maha jääma</1>. That’s how this lesson writes them too."
+msgstr "У словнику шукай ці сполуки за дієсловом. Частку в записі ставлять першою: <0>aru saama</0>, <1>maha jääma</1>."
+
+msgid "A friend"
+msgstr "Подруга"
+
+msgid "A letter about a new job"
+msgstr "Лист про нову роботу"
+
+msgid "A particle can change what a verb means: <0>ma sain kirja</0>, I got a letter; <1>ma sain aru</1>, I understood. Learn the particle and the verb as one word."
+msgstr "Частка може змінити значення дієслова. <0>ma sain kirja</0> — «мені надійшов лист», а <1>ma sain aru</1> — «я зрозумів». Запам’ятовуй дієслово разом із часткою."
+
+msgid "A particle that changes the meaning"
+msgstr "Як частка змінює значення"
+
+msgid "a particle: aru saama, to understand"
+msgstr "з часткою: aru saama — розуміти"
+
+msgid "A radio interview"
+msgstr "Інтерв’ю на радіо"
+
+msgid "A week"
+msgstr "Тиждень"
+
+msgid "About a month, until spring"
+msgstr "Приблизно місяць, до весни"
+
+msgid "After <0>ei</0>, the object takes the partitive: <1>sind</1>."
+msgstr "Після <0>ei</0> додаток стоїть у партитиві: <1>sind</1>."
+
+msgid "After <0>pead</0>, this example puts the particle before <1>mõtlema</1>."
+msgstr "Після <0>pead</0> тут ставимо частку перед <1>mõtlema</1>."
+
+msgid "After <0>tahan</0>, this example puts the particle before <1>saada</1>."
+msgstr "Після <0>tahan</0> тут ставимо частку перед <1>saada</1>."
+
+msgid "After <et>ei</et>, the object takes the partitive: <et>teda</et>."
+msgstr "Після <et>ei</et> додаток стоїть у партитиві: <et>teda</et>."
+
+msgid "All eight: you heard the particle every time."
+msgstr "Усі вісім часток розпізнано."
+
+msgid "All seven, each with its particle and case."
+msgstr "У всіх семи реченнях правильні частки й відмінки."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All six, each particle in its place."
+msgstr "У всіх шести реченнях частка на своєму місці."
+
+msgid "All ten particles right."
+msgstr "Усі десять часток на місці."
+
+msgid "Ära anna alla!"
+msgstr "Ära anna alla!"
+
+msgid "Build each sentence from what it means."
+msgstr "Склади речення за перекладом."
+
+msgid "Build the sentence"
+msgstr "Склади речення"
+
+msgid "Calls on the phone, when people speak fast"
+msgstr "Телефонні розмови, коли говорять швидко"
+
+msgid "cope"
+msgstr "давати собі раду"
+
+msgid "Did you miss the bus?"
+msgstr "Ти запізнився на автобус?"
+
+msgid "doesn’t want to"
+msgstr "не хоче"
+
+msgid "Each of these has a meaning its verb alone doesn’t have."
+msgstr "З часткою кожне з цих дієслів має інше значення."
+
+msgid "Each sentence has a gap for the particle. The verb on its own means what it says above the sentence; the rest of the sentence tells you which particle makes the meaning it needs. Pick it, then hear the sentence."
+msgstr "У кожному реченні бракує частки. Над реченням є значення самого дієслова. За змістом вибери частку й прослухай речення."
+
+msgid "Each sentence has one wrong word: a case, or the wrong particle. Tap it, then type it right."
+msgstr "У кожному реченні одне слово неправильне: або відмінок, або частка. Торкнися його й напиши правильний варіант."
+
+msgid "Each verb usually asks for its case: <0>aru saama</0> and <1>maha jääma</1> take <2>-st</2>; <3>kokku saama</3>, <4>läbi saama</4> and <5>hakkama saama</5> take <6>-ga</6>."
+msgstr "Кожне дієслово зазвичай вимагає свого відмінка. З <0>aru saama</0> й <1>maha jääma</1> — <2>-st</2>, а з <3>kokku saama</3>, <4>läbi saama</4> й <5>hakkama saama</5> — <6>-ga</6>."
+
+msgid "Finding old books"
+msgstr "Пошук старих книжок"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "For a job"
+msgstr "Через роботу"
+
+msgid "Four meanings of one verb"
+msgstr "Чотири значення одного дієслова"
+
+msgid "get on"
+msgstr "ладнати"
+
+msgid "Give her two pieces of advice."
+msgstr "Дай їй дві поради."
+
+msgid "Go through the table once more, then try again."
+msgstr "Ще раз переглянь таблицю й повтори вправу."
+
+msgid "Greet Kaisa."
+msgstr "Привітайся з Кайсою."
+
+msgid "Hear a sentence, then pick what it means. Listen for the particle."
+msgstr "Прослухай речення й вибери його значення. Прислухайся до частки."
+
+msgid "Her boss"
+msgstr "Її керівник"
+
+msgid "Her colleagues make jokes she can’t follow."
+msgstr "Колеги жартують, а вона не розуміє їхніх жартів."
+
+msgid "Her mother"
+msgstr "Її мама"
+
+msgid "Her teacher"
+msgstr "Її вчитель"
+
+msgid "Her village had become too small and quiet for her"
+msgstr "Село стало для неї надто малим і тихим"
+
+msgid "How long did Kaisa wait in the café? Write it as she does."
+msgstr "Скільки Кайса чекала в кав’ярні? Напиши так, як у листі."
+
+msgid "How long did Olga think about the job?"
+msgstr "Скільки часу Ольга думала про роботу?"
+
+msgid "How to tell her boss about her colleagues"
+msgstr "Як розповісти керівникові про колег"
+
+msgid "I accepted the invitation."
+msgstr "Я прийняв запрошення."
+
+msgid "I can’t cope with this on my own."
+msgstr "Самотужки я з цим не впораюся."
+
+msgid "I didn’t recognise him."
+msgstr "Я його не впізнав."
+
+msgid "I didn’t understand the question."
+msgstr "Я не зрозумів запитання."
+
+msgid "I get on well with my brother."
+msgstr "Я добре ладнаю з братом."
+
+msgid "I get on well with my sister."
+msgstr "Я добре ладнаю із сестрою."
+
+msgid "I have to"
+msgstr "я маю"
+
+msgid "I want to"
+msgstr "я хочу"
+
+msgid "I want to meet up with you."
+msgstr "Я хочу зустрітися з тобою."
+
+msgid "In a sentence"
+msgstr "У реченні"
+
+msgid "In a simple sentence, the particle usually goes last: <0>Ma saan naabriga hästi läbi.</0> It usually stays last after <1>ei</1> and in a question."
+msgstr "У простому реченні частка зазвичай стоїть у кінці: <0>Ma saan naabriga hästi läbi.</0> Так само зазвичай і з <1>ei</1>, і в запитанні."
+
+msgid "In both examples, <0>Jäi</0> comes second and <1>ära</1> comes last."
+msgstr "У цих прикладах <0>Jäi</0> стоїть на другому місці, а <1>ära</1> — у кінці."
+
+msgid "In her first month, Olga wanted to give up."
+msgstr "У перший місяць Ольга хотіла все кинути."
+
+msgid "In this sentence the particle comes last, even after <0>ei</0>."
+msgstr "Після <0>ei</0> частка тут теж стоїть у кінці."
+
+msgid "In this sentence with <et>välja nägema</et>, the particle comes after <et>väsinud</et>."
+msgstr "З <et>Välja nägema</et> частка в цьому реченні стоїть після <et>väsinud</et>."
+
+msgid "It was cold."
+msgstr "Було холодно."
+
+msgid "Kaisa gets on well with her colleagues."
+msgstr "Кайса добре ладнає з колегами."
+
+msgid "Kaisa writes"
+msgstr "Лист Кайси"
+
+msgid "Kaisa writes to a magazine for advice. Read her letter and answer the questions, as in the reading part of the B1 exam."
+msgstr "Кайса пише до журналу й просить поради. Прочитай лист і дай відповіді, як у завданні з читання на іспиті B1."
+
+msgid "Kaisa’s boss is pleased with her work."
+msgstr "Керівник Кайси задоволений її роботою."
+
+msgid "Kalev"
+msgstr "Калев"
+
+msgid "Kalev talks to Olga, who moved to Tartu three years ago, about her first years in Estonia."
+msgstr "Калев розмовляє з Ольгою про її перші роки в Естонії. Три роки тому вона переїхала до Тарту."
+
+msgid "Koosolek jääb ära."
+msgstr "Koosolek jääb ära."
+
+msgid "Las ma mõtlen järele."
+msgstr "Las ma mõtlen järele."
+
+msgid "Lent her money."
+msgstr "Позичив їй гроші."
+
+msgid "Lesson {particles} added particles such as up and out to verbs, where each part keeps its meaning. With some verbs, the pair means something new. On its own, <0/> is to get. With <1/>, it’s to understand: you can’t guess it from the parts."
+msgstr "В уроці {particles} частки на зразок «угору» й «назовні» додають значення до дієслова. Іноді вся сполука означає щось інше. <0/> — «отримувати», а з <1/> — «розуміти»."
+
+msgid "Let’s meet up tomorrow."
+msgstr "Зустріньмося завтра."
+
+msgid "Like the verbs in lesson {government}, a particle verb usually asks for a set case. You understand of something: <0>Ma saan sellest aru.</0> You miss from a bus: <1>Ma jäin bussist maha.</1>"
+msgstr "Дієслово з часткою зазвичай вимагає певного відмінка, як в уроці {government}. Розуміти щось: <0>Ma saan sellest aru.</0> Запізнитися на автобус: <1>Ma jäin bussist maha.</1>"
+
+msgid "Listen: Kalev and Olga"
+msgstr "Послухай розмову Калева й Ольги"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Ma jäin bussist maha."
+msgstr "Ma jäin bussist maha."
+
+msgid "Ma tundsin su ära."
+msgstr "Ma tundsin su ära."
+
+msgid "Mari coped with the work."
+msgstr "Марі впоралася з роботою."
+
+msgid "Mari got on well with Jaan."
+msgstr "Марі добре ладнала з Яаном."
+
+msgid "Mari met Jaan."
+msgstr "Марі зустрілася з Яаном."
+
+msgid "Mari understood Jaan."
+msgstr "Марі зрозуміла Яана."
+
+msgid "Match each particle verb with its meaning."
+msgstr "Добери значення до кожного дієслова з часткою."
+
+msgid "Meaning"
+msgstr "Значення"
+
+msgid "meet up"
+msgstr "зустрічатися"
+
+msgid "Nearly. Check the particle and the case in the ones you missed."
+msgstr "Перевір частку й відмінок у реченнях із помилками."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Майже. Ще раз послухай ті, де є помилка."
+
+msgid "Nearly. Read the meaning under each one you got wrong."
+msgstr "Перечитай значення під відповідями з помилками."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Майже. Прочитай пояснення під кожною помилкою."
+
+msgid "neighbour"
+msgstr "сусід"
+
+msgid "Nobody talks at all."
+msgstr "Ніхто взагалі не розмовляє."
+
+msgid "Now answer Kaisa in about 80 words, then compare your letter with a model."
+msgstr "Напиши Кайсі відповідь приблизно на 80 слів і порівняй її зі зразком."
+
+msgid "Of what: -st. Ma saan sellest aru."
+msgstr "Про що: -st. Ma saan sellest aru."
+
+msgid "Olga"
+msgstr "Ольга"
+
+msgid "Olga is going to leave Tartu."
+msgstr "Ольга збирається поїхати з Тарту."
+
+msgid "Olga’s mother got on well with Olga’s friends."
+msgstr "Мама Ольги добре ладнала з її друзями."
+
+msgid "On its own, <0>jääma</0> is to stay: <1>Ma jään koju.</1>"
+msgstr "Без частки <0>jääma</0> означає «залишатися»: <1>Ma jään koju.</1>"
+
+msgid "On its own, <0>saama</0> is to get: <1>Ma sain kirja.</1> With a particle it can mean something else entirely."
+msgstr "Без частки <0>saama</0> означає «отримувати»: <1>Ma sain kirja.</1> З часткою значення може змінитися."
+
+msgid "One evening"
+msgstr "Один вечір"
+
+msgid "Other verbs"
+msgstr "Інші дієслова"
+
+msgid "Particle verbs and their meanings"
+msgstr "Дієслова з частками та їхні значення"
+
+msgid "Peeter"
+msgstr "Пеетер"
+
+msgid "Pick a verb and tap the sentences. The first row is the verb on its own."
+msgstr "Вибери дієслово й торкайся речень. У першому рядку дієслово без частки."
+
+msgid "Pick the particle"
+msgstr "Вибери частку"
+
+msgid "question"
+msgstr "питання"
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Що запам’ятати» нижче, потім спробуй знову."
+
+msgid "Read why under each one you missed, then try again."
+msgstr "Прочитай пояснення до тих, що не вдалися, і спробуй знову."
+
+msgid "Sa näed väsinud välja."
+msgstr "Sa näed väsinud välja."
+
+msgid "Said that wanting to give up is normal."
+msgstr "Пояснив, що бажання все кинути — звична річ."
+
+msgid "Say that you understand her."
+msgstr "Напиши, що розумієш її."
+
+msgid "Sent her home."
+msgstr "Відправив її додому."
+
+msgid "Sent her the job advert."
+msgstr "Надіслала їй оголошення про роботу."
+
+msgid "She couldn’t find a job for a long time."
+msgstr "Вона довго не могла знайти роботу."
+
+msgid "She eats alone."
+msgstr "Вона обідає сама."
+
+msgid "She missed the train."
+msgstr "Вона запізнилася на поїзд."
+
+msgid "She understood almost nothing."
+msgstr "Вона майже нічого не розуміла."
+
+msgid "Sign with your name."
+msgstr "Підпишися своїм іменем."
+
+msgid "Ta võttis töö vastu."
+msgstr "Ta võttis töö vastu."
+
+msgid "Tap a form"
+msgstr "Торкнися форми"
+
+msgid "Tap the sentences under “To get” once more, then try again."
+msgstr "Ще раз прослухай речення в розділі «Отримувати» й повтори вправу."
+
+msgid "The action is complete here, so the object is genitive: <0>kingituse</0>."
+msgstr "Тут дія завершена, тому додаток у родовому: <0>kingituse</0>."
+
+msgid "The action is complete here, so the object is genitive: <0>kutse</0>."
+msgstr "Тут дія завершена, тому додаток у родовому: <0>kutse</0>."
+
+msgid "The action is complete here, so the object is genitive: <et>kingituse</et>."
+msgstr "Тут дія завершена, тому додаток у родовому: <et>kingituse</et>."
+
+msgid "The case after a particle verb"
+msgstr "Відмінок при дієслові з часткою"
+
+msgid "The case after the verb"
+msgstr "Відмінок при дієслові"
+
+msgid "The concert was called off yesterday."
+msgstr "Учора концерт скасували."
+
+msgid "The Friday meetings are never called off."
+msgstr "П’ятничні наради ніколи не скасовують."
+
+msgid "The milk is what runs out, so it’s the subject: <0>piim sai otsa</0>."
+msgstr "Закінчилося молоко, тож воно й підмет: <0>piim sai otsa</0>."
+
+msgid "The particle comes last in this question: <0>… maha?</0>"
+msgstr "У цьому питанні частка теж стоїть у кінці: <0>… maha?</0>"
+
+msgid "The particle comes last in this sentence."
+msgstr "У цьому реченні частка стоїть у кінці."
+
+msgid "The particle usually comes last. After <et>tahan</et> or <et>pean</et>, it usually comes before the infinitive."
+msgstr "Частка зазвичай стоїть у кінці. Після <et>tahan</et> або <et>pean</et> — зазвичай перед інфінітивом."
+
+msgid "The particle usually goes last: <0>Ma ei saa sellest aru.</0> After a verb such as <1>tahan</1>, it usually goes just before the infinitive: <2>Ma tahan aru saada.</2>"
+msgstr "Частка зазвичай стоїть у кінці: <0>Ma ei saa sellest aru.</0> Після дієслова на зразок <1>tahan</1> вона зазвичай стоїть перед інфінітивом: <2>Ma tahan aru saada.</2>"
+
+msgid "The thing is the subject: Kohv sai otsa."
+msgstr "Те, що закінчилося, — підмет: Kohv sai otsa."
+
+msgid "The verb"
+msgstr "Дієслово"
+
+msgid "They can cope with anything."
+msgstr "Вони з усім дадуть собі раду."
+
+msgid "They get on well with each other."
+msgstr "Вони добре ладнають між собою."
+
+msgid "They meet after work."
+msgstr "Вони зустрічаються після роботи."
+
+msgid "They understand Estonian."
+msgstr "Вони розуміють естонську."
+
+msgid "to accept"
+msgstr "приймати"
+
+msgid "to accept, to receive"
+msgstr "приймати, отримувати"
+
+msgid "to be called off"
+msgstr "не відбутися"
+
+msgid "To be near her mother"
+msgstr "Щоб бути ближче до мами"
+
+msgid "to cope, to manage"
+msgstr "справлятися, давати собі раду"
+
+msgid "to get"
+msgstr "отримувати"
+
+msgid "to get on"
+msgstr "ладнати"
+
+msgid "To get on is <0>läbi saama</0>. <1>Kokku saama</1> is to meet up."
+msgstr "Ладнати — <0>läbi saama</0>. <1>Kokku saama</1> означає «зустрічатися»."
+
+msgid "to give"
+msgstr "давати"
+
+msgid "to give up"
+msgstr "здаватися"
+
+msgid "to look"
+msgstr "дивитися"
+
+msgid "to look, to seem"
+msgstr "мати вигляд"
+
+msgid "to meet up"
+msgstr "зустрічатися"
+
+msgid "to miss a bus or train"
+msgstr "запізнитися на автобус або поїзд"
+
+msgid "to miss the train"
+msgstr "запізнитися на поїзд"
+
+msgid "to recognise"
+msgstr "впізнати"
+
+msgid "to run out"
+msgstr "закінчуватися"
+
+msgid "To say who you meet or get on with, or what you cope with, usually use <0>-ga</0>: <1>Ma saan temaga hästi läbi.</1> With <2>otsa saama</2> and <3>ära jääma</3>, the thing that runs out or is called off is the subject: <4>Kohv sai otsa.</4>"
+msgstr "З дієсловами «зустрічатися», «ладнати» й «справлятися» зазвичай уживають <0>-ga</0>: <1>Ma saan temaga hästi läbi.</1> Для <2>otsa saama</2> й <3>ära jääma</3> те, що закінчується або скасовується, є підметом: <4>Kohv sai otsa.</4>"
+
+msgid "to see"
+msgstr "бачити"
+
+msgid "to stay"
+msgstr "залишатися"
+
+msgid "to take"
+msgstr "брати"
+
+msgid "to think"
+msgstr "думати"
+
+msgid "to think over"
+msgstr "обміркувати"
+
+msgid "to understand"
+msgstr "розуміти"
+
+msgid "train"
+msgstr "поїзд"
+
+msgid "understand"
+msgstr "розуміти"
+
+msgid "Use two particle verbs from this lesson."
+msgstr "Уживи два дієслова з частками з уроку."
+
+msgid "Verb"
+msgstr "Дієслово"
+
+msgid "Verbs"
+msgstr "Дієслова"
+
+msgid "We can manage on our own."
+msgstr "Ми впораємося самі."
+
+msgid "We didn’t understand anything."
+msgstr "Ми нічого не зрозуміли."
+
+msgid "We get on well."
+msgstr "Ми добре ладнаємо."
+
+msgid "We understand it."
+msgstr "Ми це розуміємо."
+
+msgid "we want to"
+msgstr "ми хочемо"
+
+msgid "We’re meeting tomorrow."
+msgstr "Ми зустрічаємося завтра."
+
+msgid "We’ve run out of milk."
+msgstr "У нас закінчилося молоко."
+
+msgid "What does it mean?"
+msgstr "Що це означає?"
+
+msgid "What does Kaisa want to know?"
+msgstr "Що Кайса хоче дізнатися?"
+
+msgid "What does Kaisa write?"
+msgstr "Про що пише Кайса?"
+
+msgid "What happens at lunch?"
+msgstr "Що відбувається за обідом?"
+
+msgid "What was hardest at work?"
+msgstr "Що було найважчим на роботі?"
+
+msgid "When does Olga meet her course friends? Write it as Olga says it."
+msgstr "Коли Ольга зустрічається з друзями з курсів? Напиши її словами."
+
+msgid "When the verb is an infinitive after <0>tahan</0>, <1>pean</1> or <2>ei taha</2>, the particle usually goes just before it: <3>Ma tahan aru saada.</3> <4>Sa pead järele mõtlema.</4>"
+msgstr "Після <0>tahan</0>, <1>pean</1> чи <2>ei taha</2> частка зазвичай стоїть перед інфінітивом: <3>Ma tahan aru saada.</3> <4>Sa pead järele mõtlema.</4>"
+
+msgid "Where the particle goes"
+msgstr "Місце частки в реченні"
+
+msgid "Where to meet people"
+msgstr "Де познайомитися з людьми"
+
+msgid "Whether to wait or look for a new job"
+msgstr "Чекати чи шукати нову роботу"
+
+msgid "Which particle, which meaning"
+msgstr "Частка й значення"
+
+msgid "Which particle?"
+msgstr "Яка тут частка?"
+
+msgid "Who did it?"
+msgstr "Хто це зробив?"
+
+msgid "Who does the old lady say Olga looks like? Write it as Olga says it."
+msgstr "На кого, за словами літньої жінки, схожа Ольга? Напиши словами Ольги."
+
+msgid "Why did Kaisa move to a new town?"
+msgstr "Чому Кайса переїхала до іншого міста?"
+
+msgid "Why was it hard at first?"
+msgstr "Чому спочатку було важко?"
+
+msgid "With <0>saama</0>: <1>aru</1> understand, <2>kokku</2> meet up, <3>läbi</3> get on, <4>hakkama</4> cope, <5>otsa</5> run out."
+msgstr "З <0>saama</0>: <1>aru</1> — розуміти, <2>kokku</2> — зустрічатися, <3>läbi</3> — ладнати, <4>hakkama</4> — справлятися, <5>otsa</5> — закінчуватися."
+
+msgid "With <et>saama</et>: <et>aru</et> understand, <et>kokku</et> meet up, <et>läbi</et> get on, <et>hakkama</et> cope."
+msgstr "З <et>saama</et>: <et>aru</et> — розуміти, <et>kokku</et> — зустрічатися, <et>läbi</et> — ладнати, <et>hakkama</et> — справлятися."
+
+msgid "With what: -ga. Ma saan hakkama."
+msgstr "Із чим: -ga. Ma saan hakkama."
+
+msgid "With whom: -ga. Ma saan temaga hästi läbi."
+msgstr "Із ким: -ga. Ma saan temaga hästi läbi."
+
+msgid "With whom: -ga. Saame homme kokku."
+msgstr "Із ким: -ga. Saame homme kokku."
+
+msgid "work, job"
+msgstr "робота"
+
+msgid "Write back to Kaisa"
+msgstr "Відповідь Кайсі"
+
+msgid "Write each sentence in Estonian."
+msgstr "Напиши кожне речення естонською."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "Write to Kaisa. Say you understand her, give her two pieces of advice and use at least two particle verbs from this lesson."
+msgstr "Напиши Кайсі. Скажи, що розумієш її, дай дві поради й уживи щонайменше два дієслова з частками з уроку."
+
+msgid "You cope with something: <0>sellega</0>."
+msgstr "Дати раду з чимось: <0>sellega</0>."
+
+msgid "You cope with something: <et>tööga</et>."
+msgstr "Упоратися з чимось: <et>tööga</et>."
+
+msgid "You get on with someone: <et>naabriga</et>."
+msgstr "Ладнати з кимось: <et>naabriga</et>."
+
+msgid "You have to think it over first."
+msgstr "Спочатку тобі треба це обміркувати."
+
+msgid "You look tired."
+msgstr "Ти маєш втомлений вигляд."
+
+msgid "You meet up with someone: <0>Mariga</0>."
+msgstr "Зустрітися з кимось: <0>Mariga</0>."
+
+msgid "You meet up with someone: <et>Mariga</et>."
+msgstr "Зустрітися з кимось: <et>Mariga</et>."
+
+msgid "You miss from the bus: <0>bussist</0>."
+msgstr "Запізнитися на автобус: <0>bussist</0> з -st."
+
+msgid "You miss from the train: <0>rongist</0>."
+msgstr "Запізнитися на поїзд: <0>rongist</0> з -st."
+
+msgid "You miss from the train: <et>rongist</et>."
+msgstr "Запізнитися на поїзд: <et>rongist</et>."
+
+msgid "You understand of something: <0>küsimusest</0>."
+msgstr "Зрозуміти запитання: <0>küsimusest</0> з -st."

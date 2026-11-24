@@ -1,0 +1,520 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 20:18+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0>-ja</0>: the person who does it."
+msgstr "<0>-ja</0> — той, хто виконує дію."
+
+msgid "<0>-ja</0>: who does it."
+msgstr "<0>-ja</0> — виконавець дії."
+
+msgid "<0>-ma</0>: the verb, as a dictionary lists it."
+msgstr "<0>-ma</0> — словникова форма дієслова."
+
+msgid "<0>-mine</0>: the doing itself."
+msgstr "<0>-mine</0> — сама дія."
+
+msgid "<0>Armastama</0> takes the partitive: <1>ujumist</1>."
+msgstr "З <0>Armastama</0> вживають партитив: <1>ujumist</1>."
+
+msgid "<0>Laulja</0>, <1>laulmine</1> and <2>laulma</2> start the same way, and only the end tells them apart. Hear a word, then pick what it means."
+msgstr "<0>Laulja</0>, <1>laulmine</1> і <2>laulma</2> починаються однаково. Різницю чути в кінці. Прослухай слово й вибери значення."
+
+msgid "<et>-ma</et> is the verb itself, as a dictionary lists it."
+msgstr "<et>-ma</et> — словникова форма дієслова."
+
+msgid "<et>Armastama</et> takes the partitive: <et>lugemist</et>."
+msgstr "З <et>Armastama</et> вживають партитив: <et>lugemist</et>."
+
+msgid "<et>Armastama</et> takes the partitive: <et>ujumist</et>."
+msgstr "З <et>Armastama</et> вживають партитив: <et>ujumist</et>."
+
+msgid "<et>Kuulama</et>, to listen, gives <et>kuulaja</et>; the plural is <et>kuulajad</et>."
+msgstr "Від <et>Kuulama</et> («слухати») утворюється <et>kuulaja</et>, у множині — <et>kuulajad</et>."
+
+msgid "24 minutes"
+msgstr "24 хвилини"
+
+msgid "7 exercises"
+msgstr "7 вправ"
+
+msgid "A <0>-mine</0> word changes like <1>inimene</1>: <2>lugemise</2> in the genitive, <3>lugemist</3> in the partitive."
+msgstr "Слово на <0>-mine</0> відмінюється, як <1>inimene</1>: <2>lugemise</2> в родовому й <3>lugemist</3> у партитиві."
+
+msgid "A bookshop needs a seller"
+msgstr "Книгарня шукає продавця"
+
+msgid "a buyer"
+msgstr "покупець"
+
+msgid "A café near the school"
+msgstr "Кав’ярня біля школи"
+
+msgid "A few common verbs prefer a shorter word: <0>minek</0> for going and <1>tulek</1> for coming are more usual than <2>minemine</2> and <3>tulemine</3>."
+msgstr "Від деяких поширених дієслів частіше вживають коротші іменники. Замість <2>minemine</2> і <3>tulemine</3> частіше кажуть <0>minek</0> («відхід») і <1>tulek</1> («прихід»)."
+
+msgid "A few verbs change a letter: <0>tegema</0> gives <1/>. Tap the forms to hear them."
+msgstr "У деяких словах змінюється літера: від <0>tegema</0> виходить <1/>. Торкнися форм, щоб їх прослухати."
+
+msgid "A job advert"
+msgstr "Оголошення про роботу"
+
+msgid "A library worker"
+msgstr "Працівник бібліотеки"
+
+msgid "A person"
+msgstr "Людина"
+
+msgid "A person who sings is <0>laulja</0>; <1>laulmine</1> is the singing."
+msgstr "Той, хто співає, — <0>laulja</0>. Сам спів — <1>laulmine</1>."
+
+msgid "A pupil’s mother"
+msgstr "Мама одного з учнів"
+
+msgid "A pupil’s mother gave Anne the idea for the club."
+msgstr "Ідею клубу Анне підказала мама одного з учнів."
+
+msgid "a reader"
+msgstr "читач"
+
+msgid "A reading club"
+msgstr "Книжковий клуб"
+
+msgid "a singer"
+msgstr "співак"
+
+msgid "All eight, typed in full."
+msgstr "Усі вісім, повністю написані."
+
+msgid "All seven, each word with its ending."
+msgstr "У всіх семи словах правильні суфікси."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All six: you heard the ending every time."
+msgstr "Усі шість: ти щоразу чув закінчення."
+
+msgid "All the readers are Estonian."
+msgstr "Усі читачі — естонці."
+
+msgid "An exception: <0>tegema</0> gives <1>tegija</1>, with <2>i</2>."
+msgstr "Виняток: від <0>tegema</0> маємо <1>tegija</1> з літерою <2>i</2>."
+
+msgid "Anne"
+msgstr "Анне"
+
+msgid "Anne mostly reads on her phone."
+msgstr "Анне переважно читає з телефона."
+
+msgid "Anne’s classroom, after lessons"
+msgstr "У класі Анне після уроків"
+
+msgid "Anne’s pupils"
+msgstr "Учні Анне"
+
+msgid "Asked about a reading club."
+msgstr "Запитала про книжковий клуб."
+
+msgid "At the library"
+msgstr "У бібліотеці"
+
+msgid "Both are ordinary nouns: <0>õpetajad</0>, <1>õpetajat</1>; <2>lugemise</2>, <3>lugemist</3>, like <4>inimene, inimese, inimest</4>."
+msgstr "Обидва — звичайні іменники: <0>õpetajad</0>, <1>õpetajat</1> та <2>lugemise</2>, <3>lugemist</3>. Порівняй <4>inimene, inimese, inimest</4>."
+
+msgid "buying"
+msgstr "купівля"
+
+msgid "Cleaning the shop every evening after closing"
+msgstr "Щовечора прибирати крамницю після закриття"
+
+msgid "doer, someone who gets things done"
+msgstr "виконавець, той, хто береться до справи"
+
+msgid "Each round gives a verb and asks for the person or the doing. Type the word."
+msgstr "У кожному завданні є дієслово. Напиши, як називається людина або сама дія."
+
+msgid "Each sentence has one wrong word: a person for the doing, or the wrong case. Tap it, then type it right."
+msgstr "У кожному реченні помилка в одному слові. Перевір, чи слово називає людину або дію і чи в потрібному воно відмінку. Торкнися помилки й виправ її."
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "For the doing itself, usually drop <0>-ma</0> and add <1>-mine</1>: <2>lugemine, ujumine, suitsetamine</2>."
+msgstr "Щоб назвати дію, зазвичай замінюють <0>-ma</0> на <1>-mine</1>: <2>lugemine, ujumine, suitsetamine</2>."
+
+msgid "For the doing itself, usually replace <0>-ma</0> with <1>-mine</1>: <2/> is reading, <3/> is swimming. Almost every verb has one, and signs use them a lot: <4>Suitsetamine keelatud</4>, no smoking."
+msgstr "Щоб назвати саму дію, зазвичай замінюють <0>-ma</0> на <1>-mine</1>. <2/> — читання, <3/> — плавання. Такі слова є майже в усіх дієслів. Їх часто видно на табличках: <4>Suitsetamine keelatud</4> — «Не палити»."
+
+msgid "For the doing, usually drop <et>-ma</et> and add <et>-mine</et>."
+msgstr "Щоб назвати дію, зазвичай замінюють <et>-ma</et> на <et>-mine</et>."
+
+msgid "For the person who does something, usually drop <0>-ma</0> and add <1>-ja</1>: <2>õpetama, õpetaja; müüma, müüja</2>. <3>Tegema</3> gives <4>tegija</4>."
+msgstr "Щоб назвати виконавця дії, зазвичай замінюють <0>-ma</0> на <1>-ja</1>: <2>õpetama, õpetaja; müüma, müüja</2>. Від <3>Tegema</3> — <4>tegija</4>."
+
+msgid "For the person, usually drop <et>-ma</et> and add <et>-ja</et>."
+msgstr "Щоб назвати виконавця дії, зазвичай замінюють <et>-ma</et> на <et>-ja</et>."
+
+msgid "From <0>õpetama</0>, to teach, comes <1>õpetaja</1>, a teacher; from <2>lugema</2>, to read, comes <3>lugemine</3>, reading. Two endings make new nouns from almost any verb."
+msgstr "Від <0>õpetama</0> («навчати») маємо <1>õpetaja</1> («учитель»), від <2>lugema</2> («читати») — <3>lugemine</3> («читання»). Два суфікси допомагають утворювати іменники майже від будь-яких дієслів."
+
+msgid "From lugema. Partitive: lugemist."
+msgstr "Від lugema. У партитиві — lugemist."
+
+msgid "From õpetama, to teach: one who teaches."
+msgstr "Від õpetama («навчати»): той, хто навчає."
+
+msgid "Good books"
+msgstr "Хороші книжки"
+
+msgid "Here the subject is plural and ends in <0>-d</0>: <1>õpetajad</1>."
+msgstr "Тут підмет у множині, тож у кінці <0>-d</0>: <1>õpetajad</1>."
+
+msgid "Here the subject is plural and ends in <et>-d</et>: <et>õpetajad</et>."
+msgstr "Тут підмет у множині, тож у кінці <et>-d</et>: <et>õpetajad</et>."
+
+#. placeholder {0}: item.answer
+msgid "Here, replace <0>-ma</0> with <1>-ja</1>: <2>{0}</2>."
+msgstr "Тут замість <0>-ma</0> додаємо <1>-ja</1>: <2>{0}</2>."
+
+msgid "Here, replace <0>-ma</0> with <1>-ja</1>: <2>õpetama, õpetaja</2>."
+msgstr "У цьому слові заміни <0>-ma</0> на <1>-ja</1>: <2>õpetama, õpetaja</2>."
+
+#. placeholder {0}: item.answer
+msgid "Here, replace <0>-ma</0> with <1>-mine</1>: <2>{0}</2>."
+msgstr "Тут замість <0>-ma</0> додаємо <1>-mine</1>: <2>{0}</2>."
+
+msgid "How many readers are in the club? Write it as Anne says it."
+msgstr "Скільки читачів у клубі? Напиши словами Анне."
+
+msgid "I like reading."
+msgstr "Мені подобається читати."
+
+msgid "In a sentence"
+msgstr "У реченні"
+
+msgid "Job adverts are full of these words. Read this one and answer the questions, as in the reading part of the B1 exam."
+msgstr "Такі слова часто є в оголошеннях про роботу. Прочитай це оголошення й дай відповіді, як у завданні з читання на іспиті B1."
+
+msgid "Joining the club costs money."
+msgstr "Участь у клубі платна."
+
+msgid "Kalev"
+msgstr "Калев"
+
+msgid "Kalev talks to Anne, a teacher who runs a reading club in Pärnu."
+msgstr "Калев розмовляє з учителькою Анне, яка веде книжковий клуб у Пярну."
+
+msgid "Learning Estonian takes time."
+msgstr "Вивчення естонської потребує часу."
+
+msgid "learning, studying"
+msgstr "навчання, вивчення"
+
+msgid "Listen: Kalev and Anne"
+msgstr "Послухай розмову Калева й Анне"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Make the word"
+msgstr "Утвори слово"
+
+msgid "Making the time to read"
+msgstr "Як знайти час на читання"
+
+msgid "My brother is a good singer."
+msgstr "Мій брат добре співає."
+
+msgid "My sister is a teacher."
+msgstr "Моя сестра — вчителька."
+
+msgid "Name your favourite book and say why."
+msgstr "Назви улюблену книжку й поясни, чому вона тобі подобається."
+
+msgid "Nearly. Check the ending in the ones you got wrong."
+msgstr "Майже. Перевір закінчення там, де є помилка."
+
+msgid "Nearly. Check the ending in the ones you missed."
+msgstr "Перевір суфікси у відповідях із помилками."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Майже. Ще раз послухай ті, де є помилка."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Майже. Прочитай пояснення під кожною помилкою."
+
+msgid "Now apply for the job in about 80 words, then compare your letter with a model."
+msgstr "Напиши відгук на вакансію приблизно на 80 слів і порівняй його зі зразком."
+
+msgid "Now sort the words: a person, or the doing?"
+msgstr "Розподіли слова за значенням: людина чи дія?"
+
+msgid "Now talk the most at meetings."
+msgstr "Тепер найбільше говорять на зустрічах."
+
+msgid "Ordering books"
+msgstr "Замовляти книжки"
+
+msgid "Partitive"
+msgstr "Партитив"
+
+msgid "Person or doing?"
+msgstr "Людина чи дія?"
+
+msgid "Person, doing or verb"
+msgstr "Людина, дія чи дієслово"
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Що запам’ятати» нижче, потім спробуй знову."
+
+msgid "reader"
+msgstr "читач"
+
+msgid "reading"
+msgstr "читання"
+
+msgid "Reading only the books you enjoy"
+msgstr "Читати книжки, які подобаються"
+
+msgid "Say hello and which job you want."
+msgstr "Привітайся й напиши, на яку посаду подаєшся."
+
+msgid "Say what work you have done."
+msgstr "Розкажи про свій досвід роботи."
+
+msgid "seller, shop assistant"
+msgstr "продавець, консультант у крамниці"
+
+msgid "She teaches English at a school."
+msgstr "Вона викладає англійську в школі."
+
+msgid "Sign off politely."
+msgstr "Увічливо попрощайся."
+
+msgid "singing"
+msgstr "спів"
+
+msgid "Smoking is not allowed here."
+msgstr "Тут не можна палити."
+
+msgid "Some jobs have a word of their own, and the <0>-ja</0> word can refer to anyone doing the action. A writer is <1>kirjanik</1>; <2>kirjutaja</2> is whoever is writing."
+msgstr "Деякі професії мають окрему назву. Тоді слово з <0>-ja</0> може називати того, хто виконує дію. <1>Kirjanik</1> — письменник, а <2>kirjutaja</2> — той, хто пише."
+
+msgid "Sometimes sends them out at nine."
+msgstr "Іноді розсилає їх о дев’ятій."
+
+msgid "swimming"
+msgstr "плавання"
+
+msgid "Swimming is good for your health."
+msgstr "Плавання корисне для здоров’я."
+
+msgid "Take the <0>-ma</0> infinitive from lesson {infinitives}, drop <1>-ma</1> and add <2>-ja</2>, and you usually have the person who does it. <3>Õpetama</3> is to teach, so <4/> is a teacher; <5>lugema</5> gives <6/>, a reader."
+msgstr "В інфінітиві на <0>-ma</0> з уроку {infinitives} зазвичай можна замінити <1>-ma</1> на <2>-ja</2>, щоб назвати виконавця дії. <3>Õpetama</3> — навчати, звідси <4/>, учитель. Від <5>lugema</5> маємо <6/>, читач."
+
+msgid "Tap a form"
+msgstr "Торкнися форми"
+
+msgid "Tap the words in both tables once more, then try again."
+msgstr "Ще раз прослухай слова в обох таблицях і повтори вправу."
+
+msgid "teacher"
+msgstr "учитель, учителька"
+
+msgid "The buyer paid in cash."
+msgstr "Покупець заплатив готівкою."
+
+msgid "the doing"
+msgstr "дія"
+
+msgid "The doing"
+msgstr "Дія"
+
+msgid "The doing itself"
+msgstr "Сама дія"
+
+msgid "The doing: <et>-mine</et>"
+msgstr "Дія: <et>-mine</et>"
+
+msgid "The library"
+msgstr "У бібліотеці"
+
+msgid "The person who does it"
+msgstr "Той, хто виконує дію"
+
+msgid "The person: <et>-ja</et>"
+msgstr "Виконавець: <et>-ja</et>"
+
+msgid "The readers from abroad"
+msgstr "Читачі з-за кордону"
+
+msgid "The shop assistant is very kind."
+msgstr "Продавець дуже привітний."
+
+msgid "The shop is open every day."
+msgstr "Крамниця відкрита щодня."
+
+msgid "The subject is a noun: <0>parkimine</0>, not the verb <1>parkima</1>."
+msgstr "Підмет тут — іменник <0>parkimine</0>. <1>Parkima</1> — це дієслово."
+
+msgid "The subject is a noun: <et>parkimine</et>."
+msgstr "Підмет тут — іменник <et>parkimine</et>."
+
+msgid "The verb around them picks the case: <0>mulle meeldib lugemine</0>, <1>ma armastan lugemist</1>, <2>ta töötab müüjana</2>."
+msgstr "Відмінок залежить від ролі іменника при дієслові: <0>mulle meeldib lugemine</0>, <1>ma armastan lugemist</1>, <2>ta töötab müüjana</2>."
+
+msgid "Their case in a sentence"
+msgstr "Відмінок у реченні"
+
+msgid "These are ordinary nouns, so the verb around them picks their case, as in lesson {government}. With <0>meeldima</0>, what you like is the subject: <1>Mulle meeldib lugemine.</1> <2>Armastama</2> takes the partitive: <3>Ma armastan lugemist.</3>"
+msgstr "Це звичайні іменники. Відмінок залежить від їхньої ролі при дієслові, як в уроці {government}. З <0>meeldima</0> те, що подобається, — підмет: <1>Mulle meeldib lugemine.</1> З <2>Armastama</2> вживають партитив: <3>Ma armastan lugemist.</3>"
+
+msgid "to buy"
+msgstr "купувати"
+
+msgid "to do, to make"
+msgstr "робити"
+
+msgid "to learn"
+msgstr "вчити"
+
+msgid "to learn, to study"
+msgstr "вчити, вчитися"
+
+msgid "to listen"
+msgstr "слухати"
+
+msgid "to park"
+msgstr "паркуватися"
+
+msgid "to read"
+msgstr "читати"
+
+msgid "to run"
+msgstr "бігати"
+
+msgid "to sell"
+msgstr "продавати"
+
+msgid "to sing"
+msgstr "співати"
+
+msgid "to sleep"
+msgstr "спати"
+
+msgid "to smoke"
+msgstr "палити"
+
+msgid "to swim"
+msgstr "плавати"
+
+msgid "to teach"
+msgstr "навчати"
+
+msgid "to work"
+msgstr "працювати"
+
+msgid "Type the word"
+msgstr "Напиши слово"
+
+msgid "Use at least one -ja word and one -mine word."
+msgstr "Уживи щонайменше по одному слову на -ja й на -mine."
+
+msgid "Usually replace <0>-ma</0> with <1>-mine</1>. The partitive ends in <2>-mist</2>."
+msgstr "Зазвичай замінюємо <0>-ma</0> на <1>-mine</1>. У партитиві буде <2>-mist</2>."
+
+msgid "What does Anne think matters most?"
+msgstr "Що, на думку Анне, найважливіше?"
+
+msgid "What does it mean?"
+msgstr "Що це означає?"
+
+msgid "What happens for children on Saturdays? Write one word, as the advert does."
+msgstr "Що організовують для дітей по суботах? Напиши одне слово з оголошення."
+
+msgid "What is Anne’s job?"
+msgstr "Ким працює Анне?"
+
+msgid "What is learnt usually goes in the genitive before it: <0>eesti keele õppimine</0>."
+msgstr "Те, що вивчають, зазвичай ставлять попереду в родовому: <0>eesti keele õppimine</0>."
+
+msgid "What is learnt usually goes in the genitive first: <et>eesti keele õppimine</et>."
+msgstr "Те, що вивчають, зазвичай ставлять попереду в родовому: <et>eesti keele õppimine</et>."
+
+msgid "What is part of the job?"
+msgstr "Що входить до обов’язків?"
+
+msgid "What should your letter say?"
+msgstr "Про що має бути лист?"
+
+msgid "When should you read for ten minutes? Write it as Anne says it."
+msgstr "Коли варто читати по десять хвилин? Напиши словами Анне."
+
+msgid "Where do they meet?"
+msgstr "Де вони зустрічаються?"
+
+msgid "who does it"
+msgstr "виконавець дії"
+
+msgid "Who does it"
+msgstr "Виконавець дії"
+
+msgid "Who does it?"
+msgstr "Хто виконує дію?"
+
+msgid "Who should you phone with questions? Write it as the advert does."
+msgstr "Кому телефонувати із запитаннями? Напиши, як в оголошенні."
+
+msgid "Why you want this job"
+msgstr "Чому ти хочеш цю роботу"
+
+msgid "With <0>meeldima</0>, the thing you like is the subject: <1>lugemine</1>."
+msgstr "З <0>meeldima</0> те, що подобається, — підмет: <1>lugemine</1>."
+
+msgid "With <0>meeldima</0>, what you like is the subject: <1>lugemine</1>."
+msgstr "З <0>meeldima</0> те, що подобається, — підмет: <1>lugemine</1>."
+
+msgid "With <et>meeldima</et>, what you like is the subject: <et>lugemine</et>."
+msgstr "З <et>meeldima</et> те, що подобається, — підмет: <et>lugemine</et>."
+
+msgid "Write a few sentences about a story."
+msgstr "Написати кілька речень про оповідання."
+
+msgid "Write each sentence in Estonian."
+msgstr "Напиши кожне речення естонською."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "Write to the bookshop. Say which job you want, what work you have done and which book you like best."
+msgstr "Напиши до книгарні. Розкажи, на яку посаду подаєшся, який маєш досвід і яка книжка твоя улюблена."
+
+msgid "Write: apply for the job"
+msgstr "Напиши відгук на вакансію"
+
+msgid "Writing"
+msgstr "Письмо"
+
+msgid "Writing books"
+msgstr "Писати книжки"
+
+msgid "You need work experience for this job."
+msgstr "Для цієї роботи потрібен досвід."
+
+msgid "You work as something: <0>-na</0>, <1>müüjana</1>."
+msgstr "Щоб сказати, ким працюєш, уживай <0>-na</0>: <1>müüjana</1>."
+
+msgid "You work as something: <et>müüjana</et>."
+msgstr "Тут сказано, ким вона працює: <et>müüjana</et>."
+
+msgid "Your favourite book, and why you like it"
+msgstr "Твоя улюблена книжка й чому вона тобі подобається"
+
+msgid "Your last job"
+msgstr "Твоя попередня робота"

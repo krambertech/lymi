@@ -12723,6 +12723,1565 @@ const WEEKEND_CLIPS: Record<string, Clip> = {
   "c-weekend": WEEKEND_TALK,
 };
 
+export const IDIOM_PARTICLES = [
+  "aru",
+  "kokku",
+  "läbi",
+  "hakkama",
+  "otsa",
+  "maha",
+  "ära",
+  "välja",
+  "vastu",
+  "järele",
+  "alla",
+] as const;
+
+export const IDIOM_VERBS = {
+  saama: [
+    { verb: "aru saama", said: "Ma ei saa sellest aru." },
+    { verb: "kokku saama", said: "Saame homme kohvikus kokku." },
+    { verb: "läbi saama", said: "Ma saan naabriga hästi läbi." },
+    { verb: "hakkama saama", said: "Ära muretse, ma saan hakkama." },
+    { verb: "otsa saama", said: "Kohv sai otsa." },
+  ],
+  jaama: [
+    { verb: "maha jääma", said: "Ma jäin bussist maha." },
+    { verb: "ära jääma", said: "Koosolek jääb täna ära." },
+  ],
+  other: [
+    { verb: "välja nägema", said: "Sa näed täna väsinud välja." },
+    { verb: "ära tundma", said: "Ma ei tundnud sind kohe ära." },
+    { verb: "vastu võtma", said: "Ta võttis uue töö vastu." },
+    { verb: "järele mõtlema", said: "Las ma mõtlen järele." },
+    { verb: "alla andma", said: "Ära anna alla!" },
+  ],
+} as const;
+
+export const IDIOM_PLAIN = [
+  { verb: "saama", said: "Ma sain kirja." },
+  { verb: "jääma", said: "Ma jään koju." },
+] as const;
+
+export const IDIOM_HEARD = [
+  {
+    id: "me",
+    kokku: "Me saame homme kokku.",
+    labi: "Me saame hästi läbi.",
+    aru: "Me saame sellest aru.",
+    hakkama: "Me saame ise hakkama.",
+  },
+  {
+    id: "mari",
+    kokku: "Mari sai Jaaniga kokku.",
+    labi: "Mari sai Jaaniga hästi läbi.",
+    aru: "Mari sai Jaanist aru.",
+    hakkama: "Mari sai tööga hakkama.",
+  },
+  {
+    id: "nad",
+    kokku: "Nad saavad pärast tööd kokku.",
+    labi: "Nad saavad omavahel hästi läbi.",
+    aru: "Nad saavad eesti keelest aru.",
+    hakkama: "Nad saavad kõigega hakkama.",
+  },
+] as const;
+
+export const IDIOM_GAPS = [
+  {
+    id: "aru",
+    verb: "saama",
+    before: "Vabandust, ma ei saanud küsimusest",
+    after: ".",
+    answer: "aru",
+    fits: [],
+  },
+  {
+    id: "kokku",
+    verb: "saama",
+    before: "Kas me saame homme pärast tööd",
+    after: "?",
+    answer: "kokku",
+    fits: ["hakkama"],
+  },
+  {
+    id: "labi",
+    verb: "saama",
+    before: "Mari saab oma kolleegidega hästi",
+    after: ".",
+    answer: "läbi",
+    fits: ["hakkama"],
+  },
+  {
+    id: "hakkama",
+    verb: "saama",
+    before: "Ära muretse, ma saan selle tööga",
+    after: ".",
+    answer: "hakkama",
+    fits: ["läbi"],
+  },
+  {
+    id: "maha",
+    verb: "jääma",
+    before: "Kiirusta, muidu jääme rongist",
+    after: ".",
+    answer: "maha",
+    fits: [],
+  },
+  {
+    id: "ara",
+    verb: "jääma",
+    before: "Täna on torm, nii et kontsert jääb",
+    after: ".",
+    answer: "ära",
+    fits: [],
+  },
+  {
+    id: "valja",
+    verb: "nägema",
+    before: "Sa näed selles kleidis väga ilus",
+    after: ".",
+    answer: "välja",
+    fits: [],
+  },
+  {
+    id: "vastu",
+    verb: "võtma",
+    before: "Kas sa võtad selle kutse",
+    after: "?",
+    answer: "vastu",
+    fits: ["ära", "välja"],
+  },
+  {
+    id: "jarele",
+    verb: "mõtlema",
+    before: "Ma ei tea veel, ma pean",
+    after: "mõtlema.",
+    answer: "järele",
+    fits: ["läbi", "välja"],
+  },
+  {
+    id: "alla",
+    verb: "andma",
+    before: "Sa oled peaaegu kohal, ära anna",
+    after: "!",
+    answer: "alla",
+    fits: ["ära", "välja", "vastu", "järele"],
+  },
+] as const;
+
+export const IDIOM_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Ma ei saanud küsimusest aru.": [
+    "Ma ei saanud küsimusest aru.",
+    "Ei saanud küsimusest aru.",
+    "Ma ei mõistnud küsimust.",
+    "Küsimusest ei saanud ma aru.",
+    "Küsimusest ei saanud aru.",
+    "Ma ei saanud aru, mida küsiti.",
+    "Mina ei saanud küsimusest aru.",
+    "Mina ei mõistnud küsimust.",
+    "Mina ei saanud aru, mida küsiti.",
+  ],
+  "Saame homme kokku.": [
+    "Saame homme kokku.",
+    "Saame kokku homme.",
+    "Homme saame kokku.",
+    "Me saame homme kokku.",
+    "Homme saame me kokku.",
+    "Kohtume homme.",
+    "Homme kohtume.",
+    "Me kohtume homme.",
+    "Meie saame homme kokku.",
+    "Meie kohtume homme.",
+  ],
+  "Ma saan oma õega hästi läbi.": [
+    "Ma saan oma õega hästi läbi.",
+    "Ma saan õega hästi läbi.",
+    "Ma saan enda õega hästi läbi.",
+    "Ma saan hästi läbi oma õega.",
+    "Oma õega saan ma hästi läbi.",
+    "Õega saan ma hästi läbi.",
+    "Mina saan oma õega hästi läbi.",
+    "Saan oma õega hästi läbi.",
+    "Mina saan õega hästi läbi.",
+    "Saan õega hästi läbi.",
+    "Mina saan enda õega hästi läbi.",
+    "Saan enda õega hästi läbi.",
+    "Mina saan hästi läbi oma õega.",
+    "Saan hästi läbi oma õega.",
+    "Oma õega saan mina hästi läbi.",
+    "Oma õega saan hästi läbi.",
+    "Õega saan mina hästi läbi.",
+    "Õega saan hästi läbi.",
+  ],
+  "Meil sai piim otsa.": [
+    "Meil sai piim otsa.",
+    "Piim sai otsa.",
+    "Piim sai meil otsa.",
+    "Meil sai piim läbi.",
+    "Piim sai läbi.",
+    "Meie piim sai otsa.",
+  ],
+  "Ta jäi rongist maha.": [
+    "Ta jäi rongist maha.",
+    "Rongist jäi ta maha.",
+    "Ta ei jõudnud rongile.",
+    "Ta hilines rongile.",
+    "Tema jäi rongist maha.",
+    "Tema ei jõudnud rongile.",
+  ],
+  "Sa näed väsinud välja.": [
+    "Sa näed väsinud välja.",
+    "Sa näed välja väsinud.",
+    "Te näete väsinud välja.",
+    "Te näete välja väsinud.",
+    "Sa paistad väsinud.",
+    "Te paistate väsinud.",
+    "Sina näed väsinud välja.",
+    "Näed väsinud välja.",
+    "Sina näed välja väsinud.",
+    "Näed välja väsinud.",
+    "Teie näete väsinud välja.",
+    "Näete väsinud välja.",
+    "Teie näete välja väsinud.",
+    "Näete välja väsinud.",
+    "Sina paistad väsinud.",
+    "Paistad väsinud.",
+    "Teie paistate väsinud.",
+    "Paistate väsinud.",
+  ],
+  "Ma võtsin kutse vastu.": [
+    "Ma võtsin kutse vastu.",
+    "Ma võtsin vastu kutse.",
+    "Kutse võtsin ma vastu.",
+    "Ma nõustusin kutsega.",
+    "Mina võtsin kutse vastu.",
+    "Võtsin kutse vastu.",
+    "Mina võtsin vastu kutse.",
+    "Võtsin vastu kutse.",
+    "Kutse võtsin mina vastu.",
+    "Kutse võtsin vastu.",
+    "Mina nõustusin kutsega.",
+    "Nõustusin kutsega.",
+  ],
+  "Ära anna alla!": ["Ära anna alla!", "Ärge andke alla!"],
+  "Ma ei tundnud teda ära.": [
+    "Ma ei tundnud teda ära.",
+    "Ei tundnud teda ära.",
+    "Teda ma ära ei tundnud.",
+    "Mina ei tundnud teda ära.",
+  ],
+};
+
+export const IDIOM_TRANSLATE = [
+  "Ma ei saanud küsimusest aru.",
+  "Saame homme kokku.",
+  "Ma saan oma õega hästi läbi.",
+  "Meil sai piim otsa.",
+  "Ta jäi rongist maha.",
+  "Sa näed väsinud välja.",
+  "Ma võtsin kutse vastu.",
+] as const;
+
+export const IDIOM_ORDER = [
+  {
+    id: "meet",
+    answers: [
+      "Ma tahan sinuga kokku saada.",
+      "Sinuga tahan ma kokku saada.",
+      "Ma tahan kokku saada sinuga.",
+      "Kokku tahan ma saada sinuga.",
+    ],
+  },
+  {
+    id: "nothing",
+    answers: [
+      "Me ei saanud millestki aru.",
+      "Me ei saanud aru millestki.",
+      "Millestki ei saanud me aru.",
+    ],
+  },
+  {
+    id: "bus",
+    answers: [
+      "Kas sa jäid bussist maha?",
+      "Kas sa jäid maha bussist?",
+      "Kas bussist jäid sa maha?",
+    ],
+  },
+  {
+    id: "alone",
+    answers: [
+      "Ma ei saa sellega üksi hakkama.",
+      "Ma ei saa üksi sellega hakkama.",
+      "Üksi ei saa ma sellega hakkama.",
+      "Sellega ei saa ma üksi hakkama.",
+      "Ma ei saa sellega hakkama üksi.",
+    ],
+  },
+  {
+    id: "concert",
+    answers: ["Kontsert jäi eile ära.", "Eile jäi kontsert ära.", "Kontsert jäi ära eile."],
+  },
+  {
+    id: "think",
+    answers: [
+      "Sa pead enne järele mõtlema.",
+      "Enne pead sa järele mõtlema.",
+      "Sa pead järele mõtlema enne.",
+    ],
+  },
+] as const;
+
+export const IDIOM_FIXES = [
+  { wrong: "Ma ei saanud õpetajat aru.", right: "Ma ei saanud õpetajast aru." },
+  { wrong: "Ma jäin bussi maha.", right: "Ma jäin bussist maha." },
+  { wrong: "Ma sain eile Marit kokku.", right: "Ma sain eile Mariga kokku." },
+  { wrong: "Kas sa saad selle hakkama?", right: "Kas sa saad sellega hakkama?" },
+  { wrong: "Ma ei tundnud sinu ära.", right: "Ma ei tundnud sind ära." },
+  { wrong: "Ma saan oma vennaga hästi kokku.", right: "Ma saan oma vennaga hästi läbi." },
+  { wrong: "Ta võttis kingitus vastu.", right: "Ta võttis kingituse vastu." },
+] as const;
+
+export const IDIOM_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  ...Object.fromEntries(IDIOM_FIXES.map(({ right }) => [right, [right]])),
+};
+
+export const IDIOM_REWRITE = [
+  { from: "Ma saan sellest aru.", answer: "Ma tahan sellest aru saada." },
+  { from: "Me saame homme kokku.", answer: "Me tahame homme kokku saada." },
+  { from: "Ma saan sellega hakkama.", answer: "Ma pean sellega hakkama saama." },
+  { from: "Ta jääb bussist maha.", answer: "Ta ei taha bussist maha jääda." },
+] as const;
+
+export const IDIOM_REWRITE_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Ma tahan sellest aru saada.": [
+    "Ma tahan sellest aru saada.",
+    "Ma tahan aru saada sellest.",
+    "Sellest tahan ma aru saada.",
+    "Mina tahan sellest aru saada.",
+    "Tahan sellest aru saada.",
+    "Mina tahan aru saada sellest.",
+    "Tahan aru saada sellest.",
+    "Sellest tahan mina aru saada.",
+    "Sellest tahan aru saada.",
+  ],
+  "Me tahame homme kokku saada.": [
+    "Me tahame homme kokku saada.",
+    "Homme tahame me kokku saada.",
+    "Me tahame kokku saada homme.",
+    "Meie tahame homme kokku saada.",
+    "Tahame homme kokku saada.",
+    "Meie tahame kokku saada homme.",
+    "Tahame kokku saada homme.",
+  ],
+  "Ma pean sellega hakkama saama.": [
+    "Ma pean sellega hakkama saama.",
+    "Sellega pean ma hakkama saama.",
+    "Ma pean hakkama saama sellega.",
+    "Mina pean sellega hakkama saama.",
+    "Pean sellega hakkama saama.",
+    "Sellega pean mina hakkama saama.",
+    "Sellega pean hakkama saama.",
+    "Mina pean hakkama saama sellega.",
+    "Pean hakkama saama sellega.",
+  ],
+  "Ta ei taha bussist maha jääda.": [
+    "Ta ei taha bussist maha jääda.",
+    "Ta ei taha maha jääda bussist.",
+    "Tema ei taha bussist maha jääda.",
+    "Tema ei taha maha jääda bussist.",
+  ],
+};
+
+export const IDIOM_LETTER = [
+  "Tere!",
+  "Mul on mure ja ma ei tea, mida teha.",
+  "Olen kolmkümmend kaks aastat vana ja töötan raamatupidajana.",
+  "Varem elasin väikeses külas, kus kõik tundsid üksteist.",
+  "Ma kolisin pool aastat tagasi uude linna, sest võtsin vastu töökoha suures firmas.",
+  "Töö ise meeldib mulle, aga kolleegidega ei saa ma hästi läbi.",
+  "Lõuna ajal räägivad nad omavahel ja ma ei saa nende naljadest aru.",
+  "Kui ma küsin, mis on naljakas, naeravad nad ja ütlevad, et see pole oluline.",
+  "Eelmisel nädalal pidime pärast tööd kokku saama, aga kohtumine jäi viimasel hetkel ära.",
+  "Keegi ei öelnud mulle midagi ja ma ootasin kohvikus üksi pool tundi.",
+  "Järgmisel päeval ütles üks kolleeg, et ta unustas mulle kirjutada.",
+  "Mu ema ütleb videokõnes, et ma näen kogu aeg väsinud välja.",
+  "Nädalavahetustel olen enamasti üksi kodus, sest mul ei ole siin veel ühtegi sõpra.",
+  "Mõnikord tahan alla anda ja tagasi koju kolida.",
+  "Teisalt saan ma tööga väga hästi hakkama ja ülemus kiitis mind eile koosolekul.",
+  "Kas ma peaksin veel järele mõtlema või kohe uut tööd otsima?",
+  "Kaisa.",
+] as const;
+
+export const IDIOM_REPLY = [
+  "Tere, Kaisa!",
+  "Ma saan sinust väga hästi aru, sest mul oli eelmisel aastal sama mure.",
+  "Ära anna veel alla.",
+  "Pool aastat on uues kohas lühike aeg.",
+  "Küsi ühelt kolleegilt, kas ta tahaks sinuga lõuna ajal kokku saada.",
+  "Kahekesi on lihtsam rääkida kui suures grupis.",
+  "Kui sa nende naljadest aru ei saa, küsi julgelt uuesti.",
+  "Ülemus on sinuga rahul ja see on väga oluline.",
+  "Mõtle veel paar kuud järele ja vaata, kas olukord läheb paremaks.",
+  "Edu!",
+  "Anne.",
+] as const;
+
+export const IDIOM_CONVERSATION: Conversation = {
+  turns: [
+    {
+      voice: "fourth",
+      text: [
+        "Tere tulemast saatesse!",
+        "Täna on meil külas Olga, kes kolis kolm aastat tagasi Ukrainast Tartusse.",
+        "Olga, kuidas sa alguses hakkama said?",
+      ],
+    },
+    {
+      voice: "third",
+      text: [
+        "Tere!",
+        "Alguses oli väga raske, sest ma ei saanud peaaegu millestki aru.",
+        "Poes ja bussis rääkisid kõik minu jaoks liiga kiiresti.",
+      ],
+    },
+    { voice: "fourth", text: "Kuidas sa siis eesti keelt õppima hakkasid?" },
+    {
+      voice: "third",
+      text: [
+        "Ma käisin kaks korda nädalas keelekursusel ja vaatasin õhtuti eesti filme.",
+        "Esimesel kuul tahtsin mitu korda alla anda, aga õpetaja ütles, et see on täiesti normaalne.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: ["Seda ütlevad kõik õpetajad.", "Kas sa said teiste kursuslastega hästi läbi?"],
+      say: "[laughs] Seda ütlevad kõik õpetajad. Kas sa said teiste kursuslastega hästi läbi?",
+    },
+    {
+      voice: "third",
+      text: [
+        "Väga hästi!",
+        "Me saame siiamaani igal reedel kokku ja räägime ainult eesti keeles.",
+        "Mõnikord jääb kohtumine ära, kui kellelgi on liiga palju tööd.",
+      ],
+    },
+    { voice: "fourth", text: ["Sa töötad praegu raamatukogus.", "Kuidas sa selle töö leidsid?"] },
+    {
+      voice: "third",
+      text: [
+        "Üks sõber saatis mulle kuulutuse.",
+        "Ma mõtlesin terve nädala järele, sest mu eesti keel ei olnud veel hea.",
+        "Lõpuks võtsin töökoha vastu ja ma ei kahetse seda üldse.",
+      ],
+    },
+    { voice: "fourth", text: "Kas su pere on ka Eestis?" },
+    {
+      voice: "third",
+      text: [
+        "Mu ema elab veel Kiievis, aga me räägime iga päev telefonis.",
+        "Ta tuli eelmisel suvel külla ja sai minu sõpradega kohe hästi läbi.",
+        "Nad rääkisid omavahel vene ja inglise keelt ning kätega.",
+      ],
+    },
+    { voice: "fourth", text: "Mis oli tööl kõige raskem?" },
+    {
+      voice: "third",
+      text: [
+        "Telefonikõned!",
+        "Telefonis on palju raskem aru saada kui näost näkku.",
+        "Ma palusin inimestel aeglasemalt rääkida ja kõik olid väga kannatlikud.",
+      ],
+    },
+    { voice: "fourth", text: "Kuidas sa oma naabritega läbi saad?" },
+    {
+      voice: "third",
+      text: [
+        "Hästi.",
+        "Minu naaber Peeter aitas mind esimesel talvel väga palju.",
+        "Kui mul sai raha otsa, laenas ta mulle ega küsinud kunagi, millal ma selle tagasi maksan.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: ["See on tõesti lahke.", "Kas sul on olnud ka naljakaid olukordi?"],
+    },
+    {
+      voice: "third",
+      text: [
+        "Muidugi.",
+        "Kord jäin hommikul bussist maha ja jooksin tööle.",
+        "Ma nägin nii väsinud välja, et ülemus saatis mu koju tagasi.",
+      ],
+      say: "[laughs] Muidugi. Kord jäin hommikul bussist maha ja jooksin tööle. Ma nägin nii väsinud välja, et ülemus saatis mu koju tagasi.",
+    },
+    { voice: "fourth", text: "Kuidas sa Eesti talvega hakkama said?" },
+    {
+      voice: "third",
+      text: [
+        "Esimene talv oli pikk ja pime ning ma jäin kaks korda haigeks.",
+        "Nüüd tean ma, et talvel tuleb palju väljas käia, isegi kui on külm.",
+        "Ma käin igal laupäeval naabriga metsas suusatamas.",
+      ],
+    },
+    { voice: "fourth", text: "Kas inimesed tunnevad sind nüüd tänaval ära?" },
+    {
+      voice: "third",
+      text: [
+        "Mõned lugejad tunnevad küll.",
+        "Eile ütles üks vanaproua poes, et ma näen välja nagu tema tütar.",
+      ],
+    },
+    { voice: "fourth", text: "Mida sa vabal ajal teed?" },
+    {
+      voice: "third",
+      text: [
+        "Ma laulan kooris.",
+        "Alguses oli raske laulude sõnadest aru saada, aga nüüd tean ma neid peast.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: "Mida sa soovitaksid inimestele, kes on alles Eestisse kolinud?",
+    },
+    {
+      voice: "third",
+      text: [
+        "Ärge kartke vigu teha ja ärge andke alla.",
+        "Kui sõnad otsa saavad, kasutage käsi ja naeratage.",
+        "Eestlased saavad aru, kui sa proovid.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: ["Aitäh, Olga!", "Ja viimane küsimus: kas sa jääd Tartusse?"],
+    },
+    {
+      voice: "third",
+      text: ["Jah, kindlasti.", "Ma saan siin väga hästi hakkama ja mul on palju sõpru."],
+    },
+  ],
+};
+
+const IDIOM_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...Object.values(IDIOM_VERBS).flatMap((verbs) =>
+      verbs.flatMap(({ verb, said }) => [verb, said]),
+    ),
+    ...IDIOM_PLAIN.flatMap(({ verb, said }) => [verb, said]),
+    ...IDIOM_HEARD.flatMap(({ kokku, labi, aru, hakkama }) => [kokku, labi, aru, hakkama]),
+    ...IDIOM_GAPS.map(
+      ({ before, answer, after }) =>
+        `${before} ${answer}${/^[.!?]$/.test(after) ? "" : " "}${after}`,
+    ),
+    ...IDIOM_TRANSLATE,
+    "Ära anna alla!",
+    "Ma ei tundnud teda ära.",
+    ...IDIOM_ORDER.map(({ answers }) => answers[0]),
+    ...IDIOM_FIXES.map(({ right }) => right),
+    ...IDIOM_REWRITE.map(({ answer }) => answer),
+  ]),
+  "c-olga": IDIOM_CONVERSATION,
+};
+
+export const ROUTE_WORDS = ["läbi", "üle", "mööda", "ümber", "kaudu"] as const;
+
+export const ROUTE_TABLE = [
+  { word: "läbi", phrase: "läbi |metsa", said: "Rong sõidab läbi metsa." },
+  { word: "üle", phrase: "üle |tee", said: "Lapsed jooksid üle tee." },
+  { word: "mööda", phrase: "mööda |teed", said: "Me kõndisime mööda teed." },
+  { word: "ümber", phrase: "|järve ümber", said: "Me sõitsime rattaga järve ümber." },
+  { word: "kaudu", phrase: "|Riia kaudu", said: "Me lendasime Riia kaudu." },
+] as const;
+
+export const ROUTE_PAIRS = [
+  { noun: "tee", across: "üle |tee", along: "mööda |teed" },
+  { noun: "jõgi", across: "üle |jõe", along: "mööda |jõge" },
+  { noun: "sild", across: "üle |silla", along: "mööda |silda" },
+  { noun: "tänav", across: "üle |tänava", along: "mööda |tänavat" },
+  { noun: "meri", across: "üle |mere", along: "mööda |merd" },
+] as const;
+
+export const ROUTE_HEARD = [
+  { means: "through", said: "Valgus tuleb läbi akna." },
+  { means: "through", said: "Ma lähen tööle läbi linna." },
+  { means: "across", said: "Lapsed jooksid üle tänava." },
+  { means: "across", said: "Me sõitsime praamiga üle mere." },
+  { means: "along", said: "Me jalutasime mööda randa." },
+  { means: "along", said: "Ta sõitis rattaga mööda jõge." },
+  { means: "around", said: "Pere istub laua ümber." },
+  { means: "around", said: "Koer jooksis ümber maja." },
+] as const;
+
+export const ROUTE_SORT = [
+  { form: "jõe", bin: "gen", after: "üle" },
+  { form: "jõge", bin: "part", after: "mööda" },
+  { form: "mäe", bin: "gen", after: "üle" },
+  { form: "mäge", bin: "part", after: "mööda" },
+  { form: "silla", bin: "gen", after: "üle" },
+  { form: "silda", bin: "part", after: "mööda" },
+  { form: "mere", bin: "gen", after: "üle" },
+  { form: "merd", bin: "part", after: "mööda" },
+] as const;
+
+export const ROUTE_FORMS = [
+  { noun: "aed", cue: "Kass tuli läbi … .", answer: "aia", said: "Kass tuli läbi aia." },
+  { noun: "sild", cue: "Me sõitsime üle … .", answer: "silla", said: "Me sõitsime üle silla." },
+  { noun: "tee", cue: "Ma kõnnin mööda … .", answer: "teed", said: "Ma kõnnin mööda teed." },
+  { noun: "laud", cue: "Me istusime … ümber.", answer: "laua", said: "Me istusime laua ümber." },
+  {
+    noun: "sõber",
+    cue: "Ma sain selle töö … kaudu.",
+    answer: "sõbra",
+    said: "Ma sain selle töö sõbra kaudu.",
+  },
+  { noun: "linn", cue: "Buss sõidab läbi … .", answer: "linna", said: "Buss sõidab läbi linna." },
+  {
+    noun: "tänav",
+    cue: "Nad jalutasid mööda … .",
+    answer: "tänavat",
+    said: "Nad jalutasid mööda tänavat.",
+  },
+  { noun: "jõgi", cue: "Me ujusime üle … .", answer: "jõe", said: "Me ujusime üle jõe." },
+] as const;
+
+export const ROUTE_TRANSLATE = [
+  "Me kõndisime läbi metsa.",
+  "Lapsed jooksid üle tee.",
+  "Ma kõnnin igal hommikul mööda randa.",
+  "Me istusime laua ümber.",
+  "Me lendasime Riia kaudu.",
+  "Kass hüppas läbi akna sisse.",
+  "Me sõitsime üle silla.",
+] as const;
+
+export const ROUTE_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Me kõndisime läbi metsa.": [
+    "Me kõndisime läbi metsa.",
+    "Me kõndisime metsa läbi.",
+    "Me kõndisime metsast läbi.",
+    "Me läksime läbi metsa.",
+    "Me jalutasime läbi metsa.",
+    "Meie kõndisime läbi metsa.",
+    "Kõndisime läbi metsa.",
+    "Meie kõndisime metsa läbi.",
+    "Kõndisime metsa läbi.",
+    "Meie kõndisime metsast läbi.",
+    "Kõndisime metsast läbi.",
+    "Meie läksime läbi metsa.",
+    "Läksime läbi metsa.",
+    "Meie jalutasime läbi metsa.",
+    "Jalutasime läbi metsa.",
+  ],
+  "Lapsed jooksid üle tee.": [
+    "Lapsed jooksid üle tee.",
+    "Lapsed jooksid teest üle.",
+    "Lapsed jooksid üle tänava.",
+    "Lapsed jooksid tänavast üle.",
+    "Üle tee jooksid lapsed.",
+    "Lapsed jooksid üle sõidutee.",
+  ],
+  "Ma kõnnin igal hommikul mööda randa.": [
+    "Ma kõnnin igal hommikul mööda randa.",
+    "Ma kõnnin mööda randa igal hommikul.",
+    "Ma käin igal hommikul mööda randa.",
+    "Igal hommikul jalutan ma randa mööda.",
+    "Igal hommikul kõnnin ma mööda randa.",
+    "Ma kõnnin igal hommikul randa mööda.",
+    "Igal hommikul kõnnin ma randa mööda.",
+    "Ma jalutan igal hommikul mööda randa.",
+    "Igal hommikul jalutan ma mööda randa.",
+    "Ma jalutan mööda randa igal hommikul.",
+    "Iga hommik kõnnin ma mööda randa.",
+    "Mina kõnnin igal hommikul mööda randa.",
+    "Kõnnin igal hommikul mööda randa.",
+    "Mina kõnnin mööda randa igal hommikul.",
+    "Kõnnin mööda randa igal hommikul.",
+    "Mina käin igal hommikul mööda randa.",
+    "Käin igal hommikul mööda randa.",
+    "Igal hommikul jalutan mina randa mööda.",
+    "Igal hommikul jalutan randa mööda.",
+    "Igal hommikul kõnnin mina mööda randa.",
+    "Igal hommikul kõnnin mööda randa.",
+    "Mina kõnnin igal hommikul randa mööda.",
+    "Kõnnin igal hommikul randa mööda.",
+    "Igal hommikul kõnnin mina randa mööda.",
+    "Igal hommikul kõnnin randa mööda.",
+    "Mina jalutan igal hommikul mööda randa.",
+    "Jalutan igal hommikul mööda randa.",
+    "Igal hommikul jalutan mina mööda randa.",
+    "Igal hommikul jalutan mööda randa.",
+    "Mina jalutan mööda randa igal hommikul.",
+    "Jalutan mööda randa igal hommikul.",
+    "Iga hommik kõnnin mina mööda randa.",
+    "Iga hommik kõnnin mööda randa.",
+  ],
+  "Me istusime laua ümber.": [
+    "Me istusime laua ümber.",
+    "Me istusime ümber laua.",
+    "Laua ümber istusime me.",
+    "Ümber laua istusime.",
+    "Meie istusime laua ümber.",
+    "Istusime laua ümber.",
+    "Meie istusime ümber laua.",
+    "Istusime ümber laua.",
+  ],
+  "Me lendasime Riia kaudu.": [
+    "Me lendasime Riia kaudu.",
+    "Me lendasime läbi Riia.",
+    "Riia kaudu lendasime me.",
+    "Läbi Riia lendasime.",
+    "Meie lendasime Riia kaudu.",
+    "Lendasime Riia kaudu.",
+    "Meie lendasime läbi Riia.",
+    "Lendasime läbi Riia.",
+  ],
+  "Kass hüppas läbi akna sisse.": [
+    "Kass hüppas läbi akna sisse.",
+    "Kass hüppas aknast sisse.",
+    "Kass hüppas akna kaudu sisse.",
+    "Kass hüppas aknast sisse tuppa.",
+    "Läbi akna hüppas kass sisse.",
+  ],
+  "Me sõitsime üle silla.": [
+    "Me sõitsime üle silla.",
+    "Me sõitsime sillast üle.",
+    "Üle silla sõitsime me.",
+    "Sõitsime autoga üle silla.",
+    "Meie sõitsime üle silla.",
+    "Sõitsime üle silla.",
+    "Meie sõitsime sillast üle.",
+    "Sõitsime sillast üle.",
+  ],
+};
+
+export const ROUTE_FIXES = [
+  { wrong: "Me kõndisime mööda tee.", right: "Me kõndisime mööda teed." },
+  { wrong: "Lapsed jooksid üle teed.", right: "Lapsed jooksid üle tee." },
+  { wrong: "Me sõitsime läbi linnas.", right: "Me sõitsime läbi linna." },
+  { wrong: "Nad istusid lauda ümber.", right: "Nad istusid laua ümber." },
+  { wrong: "Ma ujusin üle jõge.", right: "Ma ujusin üle jõe." },
+  { wrong: "Me jalutasime mööda jõe.", right: "Me jalutasime mööda jõge." },
+  { wrong: "Me lendasime Riiast kaudu.", right: "Me lendasime Riia kaudu." },
+] as const;
+
+export const ROUTE_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  ...Object.fromEntries(ROUTE_FIXES.map(({ right }) => [right, [right]])),
+};
+
+export const ROUTE_EXTRA = [
+  "Ma sõidan tööle Tartu kaudu.",
+  "Lind lendas üle maja.",
+  "Me sõitsime mööda merd.",
+  "Lapsed jooksid ümber maja.",
+] as const;
+
+export const ROUTE_TRAIL = [
+  "Kõrvemaa matkarada on kaheksa kilomeetrit pikk ja sobib ka lastega peredele.",
+  "Rada algab parklast, kus on infostend ja tualett.",
+  "Kõigepealt läheb rada läbi männimetsa, kus on alati vaikne ja jahe.",
+  "Umbes kahe kilomeetri pärast jõuate väikese jõe juurde.",
+  "Üle jõe viib kitsas puusild, nii et koeraga peab olema ettevaatlik.",
+  "Pärast silda läheb rada mööda jõge edasi ja siis rappa.",
+  "Rabas kõnnite mööda laudteed, sest maa on seal märg ja pehme.",
+  "Ärge astuge laudteelt maha!",
+  "Raba keskel on vaatetorn, kust näeb kaugele üle raba ja metsade.",
+  "Seejärel läheb rada ümber väikese järve, kus suvel saab ujuda.",
+  "Järve ääres on kolm lõkkekohta ja pingid, kus saab puhata.",
+  "Tagasi parklasse jõuate mööda vana metsateed.",
+  "Kogu ring võtab umbes kolm tundi.",
+  "Rada on avatud aasta ringi, aga talvel on laudtee libe.",
+  "Kevadel võib jõe ääres olla väga märg, nii et pange jalga kummikud.",
+  "Bussiga saab parklasse Tallinnast Aegviidu kaudu.",
+  "Palun võtke oma prügi endaga kaasa.",
+] as const;
+
+export const ROUTE_MODEL = [
+  "Ma elan Tartus Karlova linnaosas.",
+  "Igal hommikul sõidan ma rattaga tööle.",
+  "Kõigepealt sõidan ma mööda meie tänavat raudtee juurde.",
+  "Siis lähen ma üle raudtee ja sõidan läbi väikese pargi.",
+  "Pargis on alati palju koeri, nii et ma sõidan aeglaselt.",
+  "Pärast parki sõidan ma mööda jõge kesklinna poole.",
+  "Kesklinnas sõidan ma ümber Raekoja platsi, sest seal on palju inimesi.",
+  "Viimaks lähen ma üle silla ja olen tööl.",
+  "Tee võtab umbes kakskümmend minutit.",
+  "Kui sajab vihma, sõidan ma bussiga kesklinna kaudu.",
+] as const;
+
+export const ROUTE_CONVERSATION: Conversation = {
+  turns: [
+    { voice: "main", text: "Mari, kas sa oled laupäeva rattamatka plaani juba vaadanud?" },
+    {
+      voice: "second",
+      text: [
+        "Jah, ma vaatasin eile õhtul kaarti.",
+        "Me võiksime sõita Tartust Elvasse, see on umbes kolmkümmend kilomeetrit.",
+      ],
+    },
+    { voice: "main", text: "Kas me sõidame mööda suurt maanteed?" },
+    {
+      voice: "second",
+      text: [
+        "Ei, seal on liiga palju autosid.",
+        "Ma leidsin parema tee, mis läheb kõigepealt mööda jõge ja siis läbi metsa.",
+      ],
+    },
+    { voice: "main", text: ["Kõlab hästi.", "Kas seal on ka sild üle jõe?"] },
+    {
+      voice: "second",
+      text: [
+        "Jah, linnast väljas on üks väike sild.",
+        "Me sõidame üle silla ja siis mööda kruusateed lõuna poole.",
+      ],
+    },
+    {
+      voice: "main",
+      text: "Kruusateel on rattaga raske sõita, eriti kui on vihma sadanud.",
+    },
+    {
+      voice: "second",
+      text: [
+        "See on tõsi, aga kruusateed on ainult viis kilomeetrit.",
+        "Pärast seda tuleb uus rattatee, mis läheb otse Elvasse.",
+      ],
+    },
+    { voice: "main", text: "Ja mida me Elvas teeme?" },
+    {
+      voice: "second",
+      text: [
+        "Elvas on kaks järve.",
+        "Ma tahaksin ühe järve ümber jalutada ja siis kohvikus lõunat süüa.",
+        "Ma tean ühte kohvikut järve ääres, kus on väga head supid.",
+      ],
+    },
+    { voice: "main", text: "Kui kaua see sõit kestab?" },
+    {
+      voice: "second",
+      text: [
+        "Kui me sõidame rahulikult, siis umbes kaks ja pool tundi.",
+        "Metsas teeme ühe pausi, sest seal on ilus vaade üle jõe.",
+      ],
+    },
+    { voice: "main", text: "Kui ilm on soe, võiksime Elvas ka ujuma minna." },
+    {
+      voice: "second",
+      text: ["Septembris?", "Vesi on juba päris külm, aga sina võid proovida."],
+      say: "[laughs] Septembris? Vesi on juba päris külm, aga sina võid proovida.",
+    },
+    {
+      voice: "main",
+      text: ["Hea küll, vaatame.", "Kuidas me tagasi tuleme, kas jälle rattaga?"],
+    },
+    {
+      voice: "second",
+      text: [
+        "Ei, ma arvan, et see oleks liiga palju.",
+        "Elvast läheb rong Tartusse iga tunni tagant ja ratta võib rongi peale võtta.",
+      ],
+    },
+    { voice: "main", text: "Kas rongipilet tuleb ette osta?" },
+    {
+      voice: "second",
+      text: ["Ei pea, piletit saab osta ka rongis.", "Ratta eest tuleb natuke juurde maksta."],
+    },
+    { voice: "main", text: "Kas Peeter tuleb ka?" },
+    {
+      voice: "second",
+      text: [
+        "Peeter tahtis tulla, aga tal on laupäeval töö.",
+        "Ta ütles, et võib-olla tuleb ta pühapäeval autoga Elvasse.",
+        "Siis saame koos järve ümber jalutada.",
+      ],
+    },
+    { voice: "main", text: "Mis kell me hommikul alustame?" },
+    {
+      voice: "second",
+      text: [
+        "Kohtume kell üheksa minu maja ees.",
+        "Siis sõidame läbi kesklinna ja Raekoja platsi kaudu jõe äärde.",
+      ],
+    },
+    {
+      voice: "main",
+      text: [
+        "Raekoja platsil on laupäeva hommikul turg ja seal on palju inimesi.",
+        "Võib-olla on parem sõita ümber kesklinna?",
+      ],
+    },
+    {
+      voice: "second",
+      text: ["Hea mõte.", "Siis sõidame mööda Riia tänavat ja jõuame jõe äärde ülikooli juures."],
+    },
+    { voice: "main", text: "Mida ma pean kaasa võtma?" },
+    {
+      voice: "second",
+      text: ["Vett, midagi süüa ja vihmajope.", "Ilmateade lubab pilvist ilma, aga mitte vihma."],
+    },
+    { voice: "main", text: "Ja kui mul läheb rattarehv katki?" },
+    {
+      voice: "second",
+      text: [
+        "Ma võtan tööriistad kaasa.",
+        "Ma olen seda teed juba kaks korda sõitnud ja tean, et kõik läheb hästi.",
+      ],
+      say: "[laughs] Ma võtan tööriistad kaasa. Ma olen seda teed juba kaks korda sõitnud ja tean, et kõik läheb hästi.",
+    },
+    { voice: "main", text: "Väga hea, siis kohtume laupäeval kell üheksa!" },
+    { voice: "second", text: "Hästi, aga saada mulle sõnum, kui sul on veel küsimusi." },
+  ],
+};
+
+const ROUTE_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...ROUTE_WORDS,
+    ...ROUTE_TABLE.flatMap(({ phrase, said }) => [phrase.replace("|", ""), said]),
+    ...ROUTE_PAIRS.flatMap(({ across, along }) => [
+      across.replace("|", ""),
+      along.replace("|", ""),
+    ]),
+    ...ROUTE_HEARD.map(({ said }) => said),
+    ...ROUTE_SORT.map(({ form, after }) => `${after} ${form}`),
+    ...ROUTE_FORMS.map(({ said }) => said),
+    ...ROUTE_TRANSLATE,
+    ...ROUTE_FIXES.map(({ right }) => right),
+    ...ROUTE_EXTRA,
+  ]),
+  "c-elva": ROUTE_CONVERSATION,
+};
+
+export const AGENT_DOERS = [
+  { verb: "õpetama", doer: "õpeta|ja", said: "Minu õde on õpetaja." },
+  { verb: "müüma", doer: "müü|ja", said: "Müüja aitas mind." },
+  { verb: "lugema", doer: "luge|ja", said: "Raamat meeldis lugejatele." },
+  { verb: "laulma", doer: "laul|ja", said: "Laulja laulis kolm laulu." },
+  { verb: "ostma", doer: "ost|ja", said: "Ostja maksis kaardiga." },
+  { verb: "töötama", doer: "tööta|ja", said: "Firmas on sada töötajat." },
+  { verb: "tegema", doer: "tegi|ja", said: "Ta on tõeline tegija." },
+] as const;
+
+export const AGENT_ACTIONS = [
+  { verb: "lugema", action: "luge|mine", part: "luge|mist", said: "Mulle meeldib lugemine." },
+  { verb: "ujuma", action: "uju|mine", part: "uju|mist", said: "Ujumine on tervisele hea." },
+  {
+    verb: "õppima",
+    action: "õppi|mine",
+    part: "õppi|mist",
+    said: "Keele õppimine võtab aega.",
+  },
+  {
+    verb: "suitsetama",
+    action: "suitseta|mine",
+    part: "suitseta|mist",
+    said: "Suitsetamine on keelatud.",
+  },
+  { verb: "laulma", action: "laul|mine", part: "laul|mist", said: "Ma armastan laulmist." },
+  {
+    verb: "magama",
+    action: "maga|mine",
+    part: "maga|mist",
+    said: "Ma loen enne magamist.",
+  },
+] as const;
+
+export const AGENT_HEARD = [
+  { id: "laul", ja: "laulja", mine: "laulmine", ma: "laulma" },
+  { id: "luge", ja: "lugeja", mine: "lugemine", ma: "lugema" },
+  { id: "ost", ja: "ostja", mine: "ostmine", ma: "ostma" },
+] as const;
+
+export const AGENT_SORT = [
+  { w: "kuulaja", bin: "ja" },
+  { w: "sõitja", bin: "ja" },
+  { w: "õppija", bin: "ja" },
+  { w: "mängija", bin: "ja" },
+  { w: "kuulamine", bin: "mine" },
+  { w: "sõitmine", bin: "mine" },
+  { w: "parkimine", bin: "mine" },
+  { w: "mängimine", bin: "mine" },
+] as const;
+
+export const AGENT_FORMS = [
+  { verb: "õpetama", kind: "ja", answer: "õpetaja" },
+  { verb: "ujuma", kind: "mine", answer: "ujumine" },
+  { verb: "müüma", kind: "ja", answer: "müüja" },
+  { verb: "suitsetama", kind: "mine", answer: "suitsetamine" },
+  { verb: "jooksma", kind: "ja", answer: "jooksja" },
+  { verb: "parkima", kind: "mine", answer: "parkimine" },
+  { verb: "kuulama", kind: "ja", answer: "kuulaja" },
+  { verb: "õppima", kind: "mine", answer: "õppimine" },
+] as const;
+
+export const AGENT_TRANSLATE = [
+  "Mulle meeldib lugemine.",
+  "Ujumine on tervisele hea.",
+  "Mu õde on õpetaja.",
+  "Müüja on väga lahke.",
+  "Suitsetamine on siin keelatud.",
+  "Eesti keele õppimine võtab aega.",
+  "Ostja maksis sularahas.",
+] as const;
+
+export const AGENT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Mulle meeldib lugemine.": [
+    "Mulle meeldib lugemine.",
+    "Mulle meeldib lugeda.",
+    "Minule meeldib lugemine.",
+    "Minule meeldib lugeda.",
+    "Ma armastan lugemist.",
+    "Ma armastan lugeda.",
+    "Lugemine meeldib mulle.",
+    "Lugeda meeldib mulle.",
+    "Mina armastan lugemist.",
+    "Armastan lugemist.",
+    "Mina armastan lugeda.",
+    "Armastan lugeda.",
+  ],
+  "Ujumine on tervisele hea.": [
+    "Ujumine on tervisele hea.",
+    "Ujumine on hea tervisele.",
+    "Ujumine on tervisele kasulik.",
+    "Ujumine on tervislik.",
+    "Ujuda on tervisele hea.",
+    "Tervisele on ujumine hea.",
+    "Ujumine tuleb tervisele kasuks.",
+  ],
+  "Mu õde on õpetaja.": [
+    "Mu õde on õpetaja.",
+    "Minu õde on õpetaja.",
+    "Mu õde töötab õpetajana.",
+    "Minu õde töötab õpetajana.",
+    "Õpetajana töötab mu õde.",
+  ],
+  "Müüja on väga lahke.": [
+    "Müüja on väga lahke.",
+    "Müüja on väga sõbralik.",
+    "Müüja on väga kena.",
+    "Müüja on väga viisakas.",
+  ],
+  "Suitsetamine on siin keelatud.": [
+    "Suitsetamine on siin keelatud.",
+    "Siin on suitsetamine keelatud.",
+    "Siin ei tohi suitsetada.",
+    "Suitsetamine on keelatud siin.",
+    "Siin on keelatud suitsetada.",
+    "Siin ei ole suitsetamine lubatud.",
+  ],
+  "Eesti keele õppimine võtab aega.": [
+    "Eesti keele õppimine võtab aega.",
+    "Eesti keele õppimine nõuab aega.",
+    "Eesti keelt õppida võtab aega.",
+    "Eesti keele õppimiseks kulub aega.",
+  ],
+  "Ostja maksis sularahas.": [
+    "Ostja maksis sularahas.",
+    "Ostja maksis sularahaga.",
+    "Sularahas maksis ostja.",
+  ],
+};
+
+export const AGENT_FIXES = [
+  { wrong: "Mulle meeldib lugemist.", right: "Mulle meeldib lugemine." },
+  { wrong: "Ma armastan ujumine.", right: "Ma armastan ujumist." },
+  { wrong: "Ta töötab müüja.", right: "Ta töötab müüjana." },
+  { wrong: "Mu vend on hea laulmine.", right: "Mu vend on hea laulja." },
+  { wrong: "Siin on parkima keelatud.", right: "Siin on parkimine keelatud." },
+  { wrong: "Kõik õpetajat olid koosolekul.", right: "Kõik õpetajad olid koosolekul." },
+] as const;
+
+export const AGENT_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  ...Object.fromEntries(AGENT_FIXES.map(({ right }) => [right, [right]])),
+};
+
+export const AGENT_EXTRA = [
+  "Kuulajad plaksutasid.",
+  "Ta töötab müüjana.",
+  "Ma armastan lugemist.",
+  "Õppimine on raske.",
+] as const;
+
+export const AGENT_AD = [
+  "Tartu kesklinna raamatupood otsib uut müüjat.",
+  "Meie pood on avatud iga päev kella kümnest seitsmeni.",
+  "Müüja töö on klientide nõustamine, raamatute tellimine ja kassas töötamine.",
+  "Sobiv kandidaat armastab lugemist ja suhtlemist.",
+  "Eesti keele oskus peab olema heal tasemel.",
+  "Inglise ja vene keele oskus on plussiks.",
+  "Varasem töökogemus ei ole vajalik, sest uue töötaja koolitamine toimub poes.",
+  "Esimesel kuul aitab uut töötajat kogenud kolleeg.",
+  "Töö on graafiku alusel, ka nädalavahetustel.",
+  "Laupäeviti toimub poes lastele ettelugemine ja müüja aitab seda korraldada.",
+  "Pakume toredat meeskonda, paindlikku tööaega ja soodustust raamatute ostmisel.",
+  "Töötajad saavad tasuta osaleda kirjanike kohtumistel.",
+  "Saatke oma CV ja lühike kiri hiljemalt 15. märtsiks.",
+  "Kirjas kirjutage, milline on teie lemmikraamat ja miks.",
+  "Vestlused toimuvad märtsi lõpus.",
+  "Küsimuste korral helistage poe juhatajale Mari Tammele.",
+] as const;
+
+export const AGENT_MODEL = [
+  "Tere!",
+  "Mina olen Anna ja ma kandideerin teie poodi müüjaks.",
+  "Ma olen kolm aastat töötanud müüjana toidupoes.",
+  "Klientide nõustamine meeldib mulle ja ma olen kannatlik.",
+  "Lugemine on mu suurim hobi, ma loen igal õhtul enne magamist.",
+  "Minu lemmikraamat on Tammsaare „Tõde ja õigus”, sest see räägib Eesti elust.",
+  "Ma räägin eesti, vene ja inglise keelt.",
+  "Ma võin töötada ka nädalavahetustel.",
+  "Lugupidamisega,",
+  "Anna Kask.",
+] as const;
+
+export const AGENT_CONVERSATION: Conversation = {
+  turns: [
+    {
+      voice: "fourth",
+      text: [
+        "Tere tulemast saatesse „Hobid”!",
+        "Täna on stuudios Anne, kes on Pärnus inglise keele õpetaja ja juhib õhtuti lugejate klubi.",
+      ],
+    },
+    {
+      voice: "second",
+      text: ["Tere!", "Jah, ma olen olnud õpetaja viisteist aastat ja lugemine on mu suurim hobi."],
+    },
+    { voice: "fourth", text: "Kuidas teie klubi alguse sai?" },
+    {
+      voice: "second",
+      text: [
+        "Viis aastat tagasi küsis üks õpilase ema, kas ma tean mõnda lugejate klubi täiskasvanutele.",
+        "Ma ei teadnud ühtegi, nii et tegin ise ühe.",
+      ],
+    },
+    { voice: "fourth", text: "Kui palju lugejaid teil praegu on?" },
+    {
+      voice: "second",
+      text: [
+        "Meid on kaksteist, kõige noorem on kakskümmend kaks ja kõige vanem seitsekümmend viis.",
+        "Me saame kokku iga kuu esimesel neljapäeval raamatukogus.",
+      ],
+    },
+    { voice: "fourth", text: "Mida te kohtumistel teete?" },
+    {
+      voice: "second",
+      text: [
+        "Iga kuu valib üks lugeja raamatu ja kõik loevad selle läbi.",
+        "Kohtumisel räägime raamatust, joome teed ja sööme kooki.",
+        "Mõnikord on vaidlus nii tuline, et raamatukogu töötaja peab meid kell üheksa välja saatma.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: ["See kõlab lõbusalt.", "Kas kõik lugejad on eestlased?"],
+      say: "[laughs] See kõlab lõbusalt. Kas kõik lugejad on eestlased?",
+    },
+    {
+      voice: "second",
+      text: [
+        "Ei, meil on ka kaks soomlast ja üks naine Ukrainast.",
+        "Nende jaoks on eesti keeles lugemine hea keeleõpe.",
+        "Alguses oli neil raske, aga nüüd räägivad nad kohtumistel kõige rohkem.",
+      ],
+    },
+    { voice: "fourth", text: "Mis on teie arvates lugemise juures kõige tähtsam?" },
+    {
+      voice: "second",
+      text: [
+        "Minu arvates on kõige tähtsam aeg.",
+        "Inimesed ütlevad, et neil pole aega lugeda, aga telefonis on nad iga päev mitu tundi.",
+      ],
+    },
+    { voice: "fourth", text: "Kas te ise loete ka telefonist?" },
+    {
+      voice: "second",
+      text: [
+        "Harva.",
+        "Ma eelistan paberraamatut, aga bussis kuulan vahel audioraamatuid.",
+        "Kuulamine on ka lugemine, kui raamat on hea.",
+      ],
+    },
+    { voice: "fourth", text: "Milliseid raamatuid teie lugejad kõige rohkem armastavad?" },
+    {
+      voice: "second",
+      text: [
+        "Kõige populaarsemad on krimiromaanid ja reisiraamatud.",
+        "Luulet loeme harvem, aga detsembris on meil alati luuleõhtu, kus igaüks loeb ette ühe luuletuse.",
+      ],
+    },
+    { voice: "fourth", text: "Kas lugemine on ka teie tundides oluline?" },
+    {
+      voice: "second",
+      text: [
+        "Väga oluline.",
+        "Minu õpilased loevad igal nädalal ühe lühikese jutu ja kirjutavad selle kohta paar lauset.",
+        "Kirjutamine on raskem kui lugemine, aga see õpetab mõtlema.",
+      ],
+    },
+    { voice: "fourth", text: "Mida te soovitate inimesele, kes tahab rohkem lugeda?" },
+    {
+      voice: "second",
+      text: [
+        "Alustage lühikestest raamatutest ja lugege igal õhtul enne magamist kümme minutit.",
+        "Kümme minutit päevas teeb aastas üle kuuekümne tunni.",
+      ],
+    },
+    { voice: "fourth", text: "Kas teil on ka teisi hobisid?" },
+    {
+      voice: "second",
+      text: [
+        "Suvel käin ma ujumas ja talvel suusatamas.",
+        "Ujumine aitab mul pärast pikka koolipäeva puhata.",
+        "Ja ma laulan koguduse kooris, aga hea laulja ma just ei ole.",
+      ],
+      say: "Suvel käin ma ujumas ja talvel suusatamas. Ujumine aitab mul pärast pikka koolipäeva puhata. [laughs] Ja ma laulan koguduse kooris, aga hea laulja ma just ei ole.",
+    },
+    { voice: "fourth", text: "Kas uued lugejad võivad teie klubiga liituda?" },
+    {
+      voice: "second",
+      text: [
+        "Muidugi!",
+        "Tulge järgmisel neljapäeval kell kuus raamatukogu teisele korrusele.",
+        "Osalemine on tasuta, aga palun lugege enne raamat läbi.",
+      ],
+    },
+    { voice: "fourth", text: ["Aitäh, Anne!", "Ja mis raamatut te järgmiseks loete?"] },
+    {
+      voice: "second",
+      text: [
+        "Järgmisel korral loeme Tammsaare romaani.",
+        "See on pikk, nii et lugejatel on kaks kuud aega.",
+      ],
+    },
+  ],
+};
+
+const AGENT_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...AGENT_DOERS.flatMap(({ verb, doer, said }) => [verb, doer.replace("|", ""), said]),
+    ...AGENT_ACTIONS.flatMap(({ verb, action, part, said }) => [
+      verb,
+      action.replace("|", ""),
+      part.replace("|", ""),
+      said,
+    ]),
+    ...AGENT_HEARD.flatMap(({ ja, mine, ma }) => [ja, mine, ma]),
+    ...AGENT_SORT.map(({ w }) => w),
+    ...AGENT_FORMS.flatMap(({ verb, answer }) => [verb, answer]),
+    ...AGENT_TRANSLATE,
+    ...AGENT_FIXES.map(({ right }) => right),
+    ...AGENT_EXTRA,
+  ]),
+  "c-anne": AGENT_CONVERSATION,
+};
+
+export const SUFFIX_TABLE = {
+  lik: [
+    { from: "sõber", word: "sõbra|lik", said: "Uus naaber on väga sõbralik." },
+    { from: "laps", word: "lapse|lik", said: "Ära ole nii lapselik!" },
+    { from: "koht", word: "koha|lik", said: "Kohalik pood on pühapäeval kinni." },
+    { from: "oht", word: "oht|lik", said: "Talvel on see tee ohtlik." },
+    { from: "tervis", word: "tervis|lik", said: "Puuvili on tervislik." },
+  ],
+  tu: [
+    { from: "kodu", word: "kodu|tu", said: "Me leidsime kodutu kassi." },
+    { from: "töö", word: "töö|tu", said: "Mu vend on praegu töötu." },
+    { from: "maitse", word: "maitse|tu", said: "See supp on maitsetu." },
+    { from: "lõpp", word: "lõpu|tu", said: "Koosolek tundus lõputu." },
+    { from: "abi", word: "abi|tu", said: "Väike kassipoeg on veel abitu." },
+  ],
+  ke: [
+    { from: "maja", word: "maja|ke", said: "Nad elavad metsas väikeses majakeses." },
+    { from: "tükk", word: "tüki|ke", said: "Anna mulle tükike kooki." },
+    { from: "kass", word: "kassi|ke", said: "Väike kassike magab diivanil." },
+    { from: "poiss", word: "poisi|ke", said: "Väike poisike nuttis." },
+    { from: "linn", word: "linna|ke", said: "Haapsalu on armas linnake." },
+  ],
+} as const;
+
+export const SUFFIX_HEARD = [
+  { kind: "lik", said: "sõbralik" },
+  { kind: "lik", said: "kohalik" },
+  { kind: "lik", said: "lapselik" },
+  { kind: "lik", said: "ohtlik" },
+  { kind: "tu", said: "kodutu" },
+  { kind: "tu", said: "töötu" },
+  { kind: "tu", said: "mõttetu" },
+  { kind: "tu", said: "lõputu" },
+  { kind: "ke", said: "majake" },
+  { kind: "ke", said: "tükike" },
+  { kind: "ke", said: "linnake" },
+  { kind: "ke", said: "poisike" },
+] as const;
+
+export const SUFFIX_FORMS = [
+  { from: "kodu", kind: "tu", answer: "kodutu" },
+  { from: "maja", kind: "ke", answer: "majake" },
+  { from: "sõber", kind: "lik", answer: "sõbralik" },
+  { from: "töö", kind: "tu", answer: "töötu" },
+  { from: "tükk", kind: "ke", answer: "tükike" },
+  { from: "koht", kind: "lik", answer: "kohalik" },
+  { from: "viga", kind: "tu", answer: "veatu" },
+  { from: "laps", kind: "lik", answer: "lapselik" },
+] as const;
+
+export const SUFFIX_TRANSLATE = [
+  "Uus naaber on väga sõbralik.",
+  "See supp on maitsetu.",
+  "Me elame väikeses linnakeses.",
+  "Kohalik pood on kinni.",
+  "Talvel on tee ohtlik.",
+  "Me leidsime kodutu kassi.",
+  "Anna mulle tükike kooki.",
+] as const;
+
+export const SUFFIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Uus naaber on väga sõbralik.": [
+    "Uus naaber on väga sõbralik.",
+    "Uus naaber on väga lahke.",
+    "Uus naabrinaine on väga sõbralik.",
+  ],
+  "See supp on maitsetu.": [
+    "See supp on maitsetu.",
+    "Sellel supil pole maitset.",
+    "Sel supil ei ole maitset.",
+    "Sellel supil ei ole maitset.",
+  ],
+  "Me elame väikeses linnakeses.": [
+    "Me elame väikeses linnakeses.",
+    "Me elame linnakeses.",
+    "Me elame väikeses linnas.",
+    "Väikeses linnas elame.",
+    "Väikeses linnakeses elame.",
+    "Meie elame väikeses linnakeses.",
+    "Elame väikeses linnakeses.",
+    "Meie elame linnakeses.",
+    "Elame linnakeses.",
+    "Meie elame väikeses linnas.",
+    "Elame väikeses linnas.",
+  ],
+  "Kohalik pood on kinni.": [
+    "Kohalik pood on kinni.",
+    "Kohalik pood on suletud.",
+    "Kohalik kauplus on kinni.",
+    "Kohalik kauplus on suletud.",
+    "Kohalik pood ei ole lahti.",
+    "Kohalik kauplus pole avatud.",
+  ],
+  "Talvel on tee ohtlik.": [
+    "Talvel on tee ohtlik.",
+    "Tee on talvel ohtlik.",
+    "Talvel on see tee ohtlik.",
+    "See tee on talvel ohtlik.",
+  ],
+  "Me leidsime kodutu kassi.": [
+    "Me leidsime kodutu kassi.",
+    "Me leidsime ühe kodutu kassi.",
+    "Me leidsime hulkuva kassi.",
+    "Leidsime kassi, kellel polnud kodu.",
+    "Meie leidsime kodutu kassi.",
+    "Leidsime kodutu kassi.",
+    "Meie leidsime ühe kodutu kassi.",
+    "Leidsime ühe kodutu kassi.",
+    "Meie leidsime hulkuva kassi.",
+    "Leidsime hulkuva kassi.",
+  ],
+  "Anna mulle tükike kooki.": [
+    "Anna mulle tükike kooki.",
+    "Anna mulle üks tükike kooki.",
+    "Andke mulle tükike kooki.",
+    "Anna mulle väike tükk kooki.",
+    "Andke mulle väike tükk kooki.",
+    "Anna mulle palun tükike kooki.",
+    "Andke palun mulle tükike kooki.",
+    "Kas sa annaksid mulle tükikese kooki?",
+    "Kas te annaksite mulle tükikese kooki?",
+    "Kas sina annaksid mulle tükikese kooki?",
+    "Kas annaksid mulle tükikese kooki?",
+    "Kas teie annaksite mulle tükikese kooki?",
+    "Kas annaksite mulle tükikese kooki?",
+  ],
+};
+
+export const SUFFIX_FIXES = [
+  { wrong: "Nad elavad väikeses majake.", right: "Nad elavad väikeses majakeses." },
+  { wrong: "Ta rääkis sõbralik naisega.", right: "Ta rääkis sõbraliku naisega." },
+  { wrong: "Supp oli maitselik.", right: "Supp oli maitsetu." },
+  {
+    wrong: "Lapsed ehitasid liivast kaks majaket.",
+    right: "Lapsed ehitasid liivast kaks majakest.",
+  },
+  { wrong: "Ta on kolmkümmend, aga väga lapsetu.", right: "Ta on kolmkümmend, aga väga lapselik." },
+  { wrong: "Kodutu koerad otsivad toitu.", right: "Kodutud koerad otsivad toitu." },
+] as const;
+
+export const SUFFIX_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  ...Object.fromEntries(SUFFIX_FIXES.map(({ right }) => [right, [right]])),
+};
+
+export const SUFFIX_EXTRA = ["Ta on juba aasta töötu."] as const;
+
+export const SUFFIX_AD = [
+  "Üürile anda väike majake Saaremaal, mere ääres.",
+  "Majakeses on üks tuba, köök ja saun.",
+  "Toas on kaks suurt voodit ja üks väike voodi lastele.",
+  "Maja ümber on suur aed, kus lapsed saavad vabalt mängida.",
+  "Koht on vaikne ja rahulik, sest lähim naaber elab kilomeetri kaugusel.",
+  "Mereni on ainult kakssada meetrit ja rand on lastele ohutu.",
+  "Kohalik pood ja kohvik asuvad külas, kolme kilomeetri kaugusel.",
+  "Poes müüakse ka kohalikku leiba ja suitsukala.",
+  "Majakeses ei ole televiisorit ja internet on aeglane.",
+  "See on hea koht neile, kes tahavad puhata linna mürast.",
+  "Koerad on teretulnud, aga kasside jaoks on aed ohtlik, sest metsas elavad rebased.",
+  "Suitsetamine toas on keelatud.",
+  "Majake on vaba juunist augustini.",
+  "Hind on seitsekümmend eurot öö eest, nädala eest on hind odavam.",
+  "Omanik on sõbralik ja räägib eesti, inglise ja soome keelt.",
+  "Kui soovite majakest broneerida, kirjutage meile e-posti teel.",
+] as const;
+
+export const SUFFIX_MODEL = [
+  "Tere!",
+  "Mind huvitab teie majake Saaremaal.",
+  "Me oleme neljaliikmeline pere ja meil on üks väike sõbralik koer.",
+  "Kas majake on vaba juuli esimesel nädalal?",
+  "Kas aias on ka grill ja kas saunas võib igal õhtul käia?",
+  "Me tahaksime osta kohalikku kala, kas pood on ka pühapäeval avatud?",
+  "Kui palju maksab üks nädal koos koeraga?",
+  "Aitäh ette!",
+  "Parimate soovidega,",
+  "Liis Kask.",
+] as const;
+
+export const SUFFIX_CONVERSATION: Conversation = {
+  turns: [
+    {
+      voice: "fourth",
+      text: [
+        "Tere õhtust, kallid kuulajad!",
+        "Täna oleme Viljandis loomade varjupaigas ja minuga räägib Kati, kes töötab siin vabatahtlikuna.",
+        "Kati, mitu looma teil praegu on?",
+      ],
+    },
+    {
+      voice: "third",
+      text: [
+        "Tere!",
+        "Praegu on meil kakskümmend kaks koera ja peaaegu nelikümmend kassi.",
+        "Suvel on kodutuid loomi alati rohkem, sest mõned inimesed jätavad oma looma suvilasse maha.",
+      ],
+    },
+    { voice: "fourth", text: ["See on kurb.", "Kuidas loomad teie juurde jõuavad?"] },
+    {
+      voice: "third",
+      text: [
+        "Tavaliselt helistab meile mõni kohalik elanik, kes on näinud tänaval kodutut koera.",
+        "Siis sõidab meie töötaja kohale ja toob looma varjupaika.",
+        "Esimesed kaks nädalat elab loom eraldi, et arst saaks teda vaadata.",
+      ],
+    },
+    { voice: "fourth", text: "Kas kõik loomad on sõbralikud?" },
+    {
+      voice: "third",
+      text: [
+        "Enamik on väga sõbralikud, aga mõned kardavad alguses inimesi.",
+        "Meil on praegu üks suur must koer, Muki, kes oli kaks aastat ketis.",
+        "Esimesel kuul ei lasknud ta kedagi enda lähedale, aga nüüd tuleb ta ise pai küsima.",
+      ],
+    },
+    { voice: "fourth", text: ["Kui armas!", "Ja kassid?"] },
+    {
+      voice: "third",
+      text: [
+        "Praegu on meil viis kassikest, kes leiti ühest kastist bussipeatuse kõrval.",
+        "Nad olid väga väikesed ja abitud, aga nüüd on nad terved ja mängivad terve päeva.",
+      ],
+    },
+    { voice: "fourth", text: "Kas kassipoegadele on juba uued kodud leitud?" },
+    {
+      voice: "third",
+      text: [
+        "Kahele on, aga ülejäänud kolm on veel liiga pisikesed.",
+        "Neil on ka nimed: Muru, Kõrv ja Tükike, sest tema on kõige väiksem.",
+      ],
+    },
+    { voice: "fourth", text: "Kes teie juures vabatahtlikuna töötab?" },
+    {
+      voice: "third",
+      text: [
+        "Väga erinevad inimesed.",
+        "Meil on õpilasi, pensionäre ja ka töötuid, kes tahavad päeval midagi kasulikku teha.",
+        "Mina tulin siia kolm aastat tagasi, kui ma olin ise töötu.",
+      ],
+    },
+    { voice: "fourth", text: "Mida vabatahtlikud teevad?" },
+    {
+      voice: "third",
+      text: [
+        "Kõige tähtsam on koertega jalutamine.",
+        "Iga koer peab käima väljas vähemalt kaks korda päevas, aga töötajaid on ainult neli.",
+        "Vabatahtlikud aitavad ka koristada, loomi toita ja pilte teha, et loomad leiaksid kiiremini kodu.",
+      ],
+    },
+    { voice: "fourth", text: "Kuidas saab looma koju võtta?" },
+    {
+      voice: "third",
+      text: [
+        "Kõigepealt tuleb täita ankeet meie kodulehel.",
+        "Siis tulete varjupaika ja tutvute loomaga.",
+        "Me ei anna looma kohe kaasa, sest tahame, et loom ja pere sobiksid kokku.",
+      ],
+    },
+    { voice: "fourth", text: "Kas looma võtmine on tasuta?" },
+    {
+      voice: "third",
+      text: [
+        "Ei ole päris tasuta.",
+        "Koera eest maksab pere viiskümmend eurot ja kassi eest kolmkümmend.",
+        "Selle raha eest on loomal juba kõik vajalikud süstid tehtud.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: "Mida te soovitate inimestele, kes tahavad aidata, aga ei saa looma võtta?",
+    },
+    {
+      voice: "third",
+      text: [
+        "Tulge nädalavahetusel jalutama!",
+        "Iga koer on tänulik isegi lühikese jalutuskäigu eest.",
+        "Ja kui teil on kodus vanu tekke või rätikuid, tooge need meile, sest talvel on neid alati vähe.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Aitäh, Kati!",
+        "Kallid kuulajad, varjupaik on avatud iga päev kella kümnest neljani.",
+      ],
+    },
+    {
+      voice: "third",
+      text: "Ja Muki ootab teid juba!",
+      say: "[laughs] Ja Muki ootab teid juba!",
+    },
+  ],
+};
+
+const SUFFIX_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...Object.values(SUFFIX_TABLE).flatMap((rows) =>
+      rows.flatMap(({ from, word, said }) => [from, word.replace("|", ""), said]),
+    ),
+    ...SUFFIX_HEARD.map(({ said }) => said),
+    ...SUFFIX_FORMS.flatMap(({ from, answer }) => [from, answer]),
+    ...SUFFIX_TRANSLATE,
+    ...SUFFIX_FIXES.map(({ right }) => right),
+    ...SUFFIX_EXTRA,
+  ]),
+  "c-varjupaik": SUFFIX_CONVERSATION,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: {
     ...words(HAALDUS_WORDS),
@@ -12992,6 +14551,10 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "lahme-las": LETS_CLIPS,
   raagitakse: IMPERSONAL_CLIPS,
   "ootan-sind": GOVERNMENT_CLIPS,
+  "aru-saama": IDIOM_CLIPS,
+  "labi-metsa": ROUTE_CLIPS,
+  "opetaja-lugemine": AGENT_CLIPS,
+  "sobralik-kodutu": SUFFIX_CLIPS,
   kiri: LETTER_CLIPS,
   turul: MARKET_CLIPS,
   lihtminevik: PAST_CLIPS,

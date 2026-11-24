@@ -1,0 +1,520 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 20:18+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0>-ja</0>: the person who does it."
+msgstr "<0>-ja</0>: the person who does it."
+
+msgid "<0>-ja</0>: who does it."
+msgstr "<0>-ja</0>: who does it."
+
+msgid "<0>-ma</0>: the verb, as a dictionary lists it."
+msgstr "<0>-ma</0>: the verb, as a dictionary lists it."
+
+msgid "<0>-mine</0>: the doing itself."
+msgstr "<0>-mine</0>: the doing itself."
+
+msgid "<0>Armastama</0> takes the partitive: <1>ujumist</1>."
+msgstr "<0>Armastama</0> takes the partitive: <1>ujumist</1>."
+
+msgid "<0>Laulja</0>, <1>laulmine</1> and <2>laulma</2> start the same way, and only the end tells them apart. Hear a word, then pick what it means."
+msgstr "<0>Laulja</0>, <1>laulmine</1> and <2>laulma</2> start the same way, and only the end tells them apart. Hear a word, then pick what it means."
+
+msgid "<et>-ma</et> is the verb itself, as a dictionary lists it."
+msgstr "<et>-ma</et> is the verb itself, as a dictionary lists it."
+
+msgid "<et>Armastama</et> takes the partitive: <et>lugemist</et>."
+msgstr "<et>Armastama</et> takes the partitive: <et>lugemist</et>."
+
+msgid "<et>Armastama</et> takes the partitive: <et>ujumist</et>."
+msgstr "<et>Armastama</et> takes the partitive: <et>ujumist</et>."
+
+msgid "<et>Kuulama</et>, to listen, gives <et>kuulaja</et>; the plural is <et>kuulajad</et>."
+msgstr "<et>Kuulama</et>, to listen, gives <et>kuulaja</et>; the plural is <et>kuulajad</et>."
+
+msgid "24 minutes"
+msgstr "24 minutes"
+
+msgid "7 exercises"
+msgstr "7 exercises"
+
+msgid "A <0>-mine</0> word changes like <1>inimene</1>: <2>lugemise</2> in the genitive, <3>lugemist</3> in the partitive."
+msgstr "A <0>-mine</0> word changes like <1>inimene</1>: <2>lugemise</2> in the genitive, <3>lugemist</3> in the partitive."
+
+msgid "A bookshop needs a seller"
+msgstr "A bookshop needs a seller"
+
+msgid "a buyer"
+msgstr "a buyer"
+
+msgid "A café near the school"
+msgstr "A café near the school"
+
+msgid "A few common verbs prefer a shorter word: <0>minek</0> for going and <1>tulek</1> for coming are more usual than <2>minemine</2> and <3>tulemine</3>."
+msgstr "A few common verbs prefer a shorter word: <0>minek</0> for going and <1>tulek</1> for coming are more usual than <2>minemine</2> and <3>tulemine</3>."
+
+msgid "A few verbs change a letter: <0>tegema</0> gives <1/>. Tap the forms to hear them."
+msgstr "A few verbs change a letter: <0>tegema</0> gives <1/>. Tap the forms to hear them."
+
+msgid "A job advert"
+msgstr "A job advert"
+
+msgid "A library worker"
+msgstr "A library worker"
+
+msgid "A person"
+msgstr "A person"
+
+msgid "A person who sings is <0>laulja</0>; <1>laulmine</1> is the singing."
+msgstr "A person who sings is <0>laulja</0>; <1>laulmine</1> is the singing."
+
+msgid "A pupil’s mother"
+msgstr "A pupil’s mother"
+
+msgid "A pupil’s mother gave Anne the idea for the club."
+msgstr "A pupil’s mother gave Anne the idea for the club."
+
+msgid "a reader"
+msgstr "a reader"
+
+msgid "A reading club"
+msgstr "A reading club"
+
+msgid "a singer"
+msgstr "a singer"
+
+msgid "All eight, typed in full."
+msgstr "All eight, typed in full."
+
+msgid "All seven, each word with its ending."
+msgstr "All seven, each word with its ending."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six: you heard the ending every time."
+msgstr "All six: you heard the ending every time."
+
+msgid "All the readers are Estonian."
+msgstr "All the readers are Estonian."
+
+msgid "An exception: <0>tegema</0> gives <1>tegija</1>, with <2>i</2>."
+msgstr "An exception: <0>tegema</0> gives <1>tegija</1>, with <2>i</2>."
+
+msgid "Anne"
+msgstr "Anne"
+
+msgid "Anne mostly reads on her phone."
+msgstr "Anne mostly reads on her phone."
+
+msgid "Anne’s classroom, after lessons"
+msgstr "Anne’s classroom, after lessons"
+
+msgid "Anne’s pupils"
+msgstr "Anne’s pupils"
+
+msgid "Asked about a reading club."
+msgstr "Asked about a reading club."
+
+msgid "At the library"
+msgstr "At the library"
+
+msgid "Both are ordinary nouns: <0>õpetajad</0>, <1>õpetajat</1>; <2>lugemise</2>, <3>lugemist</3>, like <4>inimene, inimese, inimest</4>."
+msgstr "Both are ordinary nouns: <0>õpetajad</0>, <1>õpetajat</1>; <2>lugemise</2>, <3>lugemist</3>, like <4>inimene, inimese, inimest</4>."
+
+msgid "buying"
+msgstr "buying"
+
+msgid "Cleaning the shop every evening after closing"
+msgstr "Cleaning the shop every evening after closing"
+
+msgid "doer, someone who gets things done"
+msgstr "doer, someone who gets things done"
+
+msgid "Each round gives a verb and asks for the person or the doing. Type the word."
+msgstr "Each round gives a verb and asks for the person or the doing. Type the word."
+
+msgid "Each sentence has one wrong word: a person for the doing, or the wrong case. Tap it, then type it right."
+msgstr "Each sentence has one wrong word: a person for the doing, or the wrong case. Tap it, then type it right."
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "For the doing itself, usually drop <0>-ma</0> and add <1>-mine</1>: <2>lugemine, ujumine, suitsetamine</2>."
+msgstr "For the doing itself, usually drop <0>-ma</0> and add <1>-mine</1>: <2>lugemine, ujumine, suitsetamine</2>."
+
+msgid "For the doing itself, usually replace <0>-ma</0> with <1>-mine</1>: <2/> is reading, <3/> is swimming. Almost every verb has one, and signs use them a lot: <4>Suitsetamine keelatud</4>, no smoking."
+msgstr "For the doing itself, usually replace <0>-ma</0> with <1>-mine</1>: <2/> is reading, <3/> is swimming. Almost every verb has one, and signs use them a lot: <4>Suitsetamine keelatud</4>, no smoking."
+
+msgid "For the doing, usually drop <et>-ma</et> and add <et>-mine</et>."
+msgstr "For the doing, usually drop <et>-ma</et> and add <et>-mine</et>."
+
+msgid "For the person who does something, usually drop <0>-ma</0> and add <1>-ja</1>: <2>õpetama, õpetaja; müüma, müüja</2>. <3>Tegema</3> gives <4>tegija</4>."
+msgstr "For the person who does something, usually drop <0>-ma</0> and add <1>-ja</1>: <2>õpetama, õpetaja; müüma, müüja</2>. <3>Tegema</3> gives <4>tegija</4>."
+
+msgid "For the person, usually drop <et>-ma</et> and add <et>-ja</et>."
+msgstr "For the person, usually drop <et>-ma</et> and add <et>-ja</et>."
+
+msgid "From <0>õpetama</0>, to teach, comes <1>õpetaja</1>, a teacher; from <2>lugema</2>, to read, comes <3>lugemine</3>, reading. Two endings make new nouns from almost any verb."
+msgstr "From <0>õpetama</0>, to teach, comes <1>õpetaja</1>, a teacher; from <2>lugema</2>, to read, comes <3>lugemine</3>, reading. Two endings make new nouns from almost any verb."
+
+msgid "From lugema. Partitive: lugemist."
+msgstr "From lugema. Partitive: lugemist."
+
+msgid "From õpetama, to teach: one who teaches."
+msgstr "From õpetama, to teach: one who teaches."
+
+msgid "Good books"
+msgstr "Good books"
+
+msgid "Here the subject is plural and ends in <0>-d</0>: <1>õpetajad</1>."
+msgstr "Here the subject is plural and ends in <0>-d</0>: <1>õpetajad</1>."
+
+msgid "Here the subject is plural and ends in <et>-d</et>: <et>õpetajad</et>."
+msgstr "Here the subject is plural and ends in <et>-d</et>: <et>õpetajad</et>."
+
+#. placeholder {0}: item.answer
+msgid "Here, replace <0>-ma</0> with <1>-ja</1>: <2>{0}</2>."
+msgstr "Here, replace <0>-ma</0> with <1>-ja</1>: <2>{0}</2>."
+
+msgid "Here, replace <0>-ma</0> with <1>-ja</1>: <2>õpetama, õpetaja</2>."
+msgstr "Here, replace <0>-ma</0> with <1>-ja</1>: <2>õpetama, õpetaja</2>."
+
+#. placeholder {0}: item.answer
+msgid "Here, replace <0>-ma</0> with <1>-mine</1>: <2>{0}</2>."
+msgstr "Here, replace <0>-ma</0> with <1>-mine</1>: <2>{0}</2>."
+
+msgid "How many readers are in the club? Write it as Anne says it."
+msgstr "How many readers are in the club? Write it as Anne says it."
+
+msgid "I like reading."
+msgstr "I like reading."
+
+msgid "In a sentence"
+msgstr "In a sentence"
+
+msgid "Job adverts are full of these words. Read this one and answer the questions, as in the reading part of the B1 exam."
+msgstr "Job adverts are full of these words. Read this one and answer the questions, as in the reading part of the B1 exam."
+
+msgid "Joining the club costs money."
+msgstr "Joining the club costs money."
+
+msgid "Kalev"
+msgstr "Kalev"
+
+msgid "Kalev talks to Anne, a teacher who runs a reading club in Pärnu."
+msgstr "Kalev talks to Anne, a teacher who runs a reading club in Pärnu."
+
+msgid "Learning Estonian takes time."
+msgstr "Learning Estonian takes time."
+
+msgid "learning, studying"
+msgstr "learning, studying"
+
+msgid "Listen: Kalev and Anne"
+msgstr "Listen: Kalev and Anne"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Make the word"
+msgstr "Make the word"
+
+msgid "Making the time to read"
+msgstr "Making the time to read"
+
+msgid "My brother is a good singer."
+msgstr "My brother is a good singer."
+
+msgid "My sister is a teacher."
+msgstr "My sister is a teacher."
+
+msgid "Name your favourite book and say why."
+msgstr "Name your favourite book and say why."
+
+msgid "Nearly. Check the ending in the ones you got wrong."
+msgstr "Nearly. Check the ending in the ones you got wrong."
+
+msgid "Nearly. Check the ending in the ones you missed."
+msgstr "Nearly. Check the ending in the ones you missed."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Nearly. Play the ones you got wrong once more."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Nearly. Read the reason under each one you got wrong."
+
+msgid "Now apply for the job in about 80 words, then compare your letter with a model."
+msgstr "Now apply for the job in about 80 words, then compare your letter with a model."
+
+msgid "Now sort the words: a person, or the doing?"
+msgstr "Now sort the words: a person, or the doing?"
+
+msgid "Now talk the most at meetings."
+msgstr "Now talk the most at meetings."
+
+msgid "Ordering books"
+msgstr "Ordering books"
+
+msgid "Partitive"
+msgstr "Partitive"
+
+msgid "Person or doing?"
+msgstr "Person or doing?"
+
+msgid "Person, doing or verb"
+msgstr "Person, doing or verb"
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "reader"
+msgstr "reader"
+
+msgid "reading"
+msgstr "reading"
+
+msgid "Reading only the books you enjoy"
+msgstr "Reading only the books you enjoy"
+
+msgid "Say hello and which job you want."
+msgstr "Say hello and which job you want."
+
+msgid "Say what work you have done."
+msgstr "Say what work you have done."
+
+msgid "seller, shop assistant"
+msgstr "seller, shop assistant"
+
+msgid "She teaches English at a school."
+msgstr "She teaches English at a school."
+
+msgid "Sign off politely."
+msgstr "Sign off politely."
+
+msgid "singing"
+msgstr "singing"
+
+msgid "Smoking is not allowed here."
+msgstr "Smoking is not allowed here."
+
+msgid "Some jobs have a word of their own, and the <0>-ja</0> word can refer to anyone doing the action. A writer is <1>kirjanik</1>; <2>kirjutaja</2> is whoever is writing."
+msgstr "Some jobs have a word of their own, and the <0>-ja</0> word can refer to anyone doing the action. A writer is <1>kirjanik</1>; <2>kirjutaja</2> is whoever is writing."
+
+msgid "Sometimes sends them out at nine."
+msgstr "Sometimes sends them out at nine."
+
+msgid "swimming"
+msgstr "swimming"
+
+msgid "Swimming is good for your health."
+msgstr "Swimming is good for your health."
+
+msgid "Take the <0>-ma</0> infinitive from lesson {infinitives}, drop <1>-ma</1> and add <2>-ja</2>, and you usually have the person who does it. <3>Õpetama</3> is to teach, so <4/> is a teacher; <5>lugema</5> gives <6/>, a reader."
+msgstr "Take the <0>-ma</0> infinitive from lesson {infinitives}, drop <1>-ma</1> and add <2>-ja</2>, and you usually have the person who does it. <3>Õpetama</3> is to teach, so <4/> is a teacher; <5>lugema</5> gives <6/>, a reader."
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap the words in both tables once more, then try again."
+msgstr "Tap the words in both tables once more, then try again."
+
+msgid "teacher"
+msgstr "teacher"
+
+msgid "The buyer paid in cash."
+msgstr "The buyer paid in cash."
+
+msgid "the doing"
+msgstr "the doing"
+
+msgid "The doing"
+msgstr "The doing"
+
+msgid "The doing itself"
+msgstr "The doing itself"
+
+msgid "The doing: <et>-mine</et>"
+msgstr "The doing: <et>-mine</et>"
+
+msgid "The library"
+msgstr "The library"
+
+msgid "The person who does it"
+msgstr "The person who does it"
+
+msgid "The person: <et>-ja</et>"
+msgstr "The person: <et>-ja</et>"
+
+msgid "The readers from abroad"
+msgstr "The readers from abroad"
+
+msgid "The shop assistant is very kind."
+msgstr "The shop assistant is very kind."
+
+msgid "The shop is open every day."
+msgstr "The shop is open every day."
+
+msgid "The subject is a noun: <0>parkimine</0>, not the verb <1>parkima</1>."
+msgstr "The subject is a noun: <0>parkimine</0>, not the verb <1>parkima</1>."
+
+msgid "The subject is a noun: <et>parkimine</et>."
+msgstr "The subject is a noun: <et>parkimine</et>."
+
+msgid "The verb around them picks the case: <0>mulle meeldib lugemine</0>, <1>ma armastan lugemist</1>, <2>ta töötab müüjana</2>."
+msgstr "The verb around them picks the case: <0>mulle meeldib lugemine</0>, <1>ma armastan lugemist</1>, <2>ta töötab müüjana</2>."
+
+msgid "Their case in a sentence"
+msgstr "Their case in a sentence"
+
+msgid "These are ordinary nouns, so the verb around them picks their case, as in lesson {government}. With <0>meeldima</0>, what you like is the subject: <1>Mulle meeldib lugemine.</1> <2>Armastama</2> takes the partitive: <3>Ma armastan lugemist.</3>"
+msgstr "These are ordinary nouns, so the verb around them picks their case, as in lesson {government}. With <0>meeldima</0>, what you like is the subject: <1>Mulle meeldib lugemine.</1> <2>Armastama</2> takes the partitive: <3>Ma armastan lugemist.</3>"
+
+msgid "to buy"
+msgstr "to buy"
+
+msgid "to do, to make"
+msgstr "to do, to make"
+
+msgid "to learn"
+msgstr "to learn"
+
+msgid "to learn, to study"
+msgstr "to learn, to study"
+
+msgid "to listen"
+msgstr "to listen"
+
+msgid "to park"
+msgstr "to park"
+
+msgid "to read"
+msgstr "to read"
+
+msgid "to run"
+msgstr "to run"
+
+msgid "to sell"
+msgstr "to sell"
+
+msgid "to sing"
+msgstr "to sing"
+
+msgid "to sleep"
+msgstr "to sleep"
+
+msgid "to smoke"
+msgstr "to smoke"
+
+msgid "to swim"
+msgstr "to swim"
+
+msgid "to teach"
+msgstr "to teach"
+
+msgid "to work"
+msgstr "to work"
+
+msgid "Type the word"
+msgstr "Type the word"
+
+msgid "Use at least one -ja word and one -mine word."
+msgstr "Use at least one -ja word and one -mine word."
+
+msgid "Usually replace <0>-ma</0> with <1>-mine</1>. The partitive ends in <2>-mist</2>."
+msgstr "Usually replace <0>-ma</0> with <1>-mine</1>. The partitive ends in <2>-mist</2>."
+
+msgid "What does Anne think matters most?"
+msgstr "What does Anne think matters most?"
+
+msgid "What does it mean?"
+msgstr "What does it mean?"
+
+msgid "What happens for children on Saturdays? Write one word, as the advert does."
+msgstr "What happens for children on Saturdays? Write one word, as the advert does."
+
+msgid "What is Anne’s job?"
+msgstr "What is Anne’s job?"
+
+msgid "What is learnt usually goes in the genitive before it: <0>eesti keele õppimine</0>."
+msgstr "What is learnt usually goes in the genitive before it: <0>eesti keele õppimine</0>."
+
+msgid "What is learnt usually goes in the genitive first: <et>eesti keele õppimine</et>."
+msgstr "What is learnt usually goes in the genitive first: <et>eesti keele õppimine</et>."
+
+msgid "What is part of the job?"
+msgstr "What is part of the job?"
+
+msgid "What should your letter say?"
+msgstr "What should your letter say?"
+
+msgid "When should you read for ten minutes? Write it as Anne says it."
+msgstr "When should you read for ten minutes? Write it as Anne says it."
+
+msgid "Where do they meet?"
+msgstr "Where do they meet?"
+
+msgid "who does it"
+msgstr "who does it"
+
+msgid "Who does it"
+msgstr "Who does it"
+
+msgid "Who does it?"
+msgstr "Who does it?"
+
+msgid "Who should you phone with questions? Write it as the advert does."
+msgstr "Who should you phone with questions? Write it as the advert does."
+
+msgid "Why you want this job"
+msgstr "Why you want this job"
+
+msgid "With <0>meeldima</0>, the thing you like is the subject: <1>lugemine</1>."
+msgstr "With <0>meeldima</0>, the thing you like is the subject: <1>lugemine</1>."
+
+msgid "With <0>meeldima</0>, what you like is the subject: <1>lugemine</1>."
+msgstr "With <0>meeldima</0>, what you like is the subject: <1>lugemine</1>."
+
+msgid "With <et>meeldima</et>, what you like is the subject: <et>lugemine</et>."
+msgstr "With <et>meeldima</et>, what you like is the subject: <et>lugemine</et>."
+
+msgid "Write a few sentences about a story."
+msgstr "Write a few sentences about a story."
+
+msgid "Write each sentence in Estonian."
+msgstr "Write each sentence in Estonian."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "Write to the bookshop. Say which job you want, what work you have done and which book you like best."
+msgstr "Write to the bookshop. Say which job you want, what work you have done and which book you like best."
+
+msgid "Write: apply for the job"
+msgstr "Write: apply for the job"
+
+msgid "Writing"
+msgstr "Writing"
+
+msgid "Writing books"
+msgstr "Writing books"
+
+msgid "You need work experience for this job."
+msgstr "You need work experience for this job."
+
+msgid "You work as something: <0>-na</0>, <1>müüjana</1>."
+msgstr "You work as something: <0>-na</0>, <1>müüjana</1>."
+
+msgid "You work as something: <et>müüjana</et>."
+msgstr "You work as something: <et>müüjana</et>."
+
+msgid "Your favourite book, and why you like it"
+msgstr "Your favourite book, and why you like it"
+
+msgid "Your last job"
+msgstr "Your last job"

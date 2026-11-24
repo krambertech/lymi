@@ -236,6 +236,9 @@ msgstr "A fixed sentence, marked"
 msgid "a foot"
 msgstr "a foot"
 
+msgid "A free Estonian lesson for beginners: family words (ema, isa, vend, õde, laps), saying how many brothers, sisters and children you have, and the words on a registration form: first name, surname, address, phone number, age, birthday, country and town. Read a form, follow a conversation at a desk, fill in a form and write about yourself. Every sentence is read aloud."
+msgstr "A free Estonian lesson for beginners: family words (ema, isa, vend, õde, laps), saying how many brothers, sisters and children you have, and the words on a registration form: first name, surname, address, phone number, age, birthday, country and town. Read a form, follow a conversation at a desk, fill in a form and write about yourself. Every sentence is read aloud."
+
 msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the partitive. Every word is read aloud."
 msgstr "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the partitive. Every word is read aloud."
 
@@ -746,6 +749,9 @@ msgstr "Estonian consonant gradation"
 msgid "Estonian conversation practice: meeting someone"
 msgstr "Estonian conversation practice: meeting someone"
 
+msgid "Estonian family words and filling in a form"
+msgstr "Estonian family words and filling in a form"
+
 msgid "Estonian future tense: how to say “will”"
 msgstr "Estonian future tense: how to say “will”"
 
@@ -851,6 +857,9 @@ msgstr "Every word is in its group."
 msgctxt "the statement is false"
 msgid "False"
 msgstr "False"
+
+msgid "Family and a form"
+msgstr "Family and a form"
 
 msgid "Fill every gap first."
 msgstr "Fill every gap first."

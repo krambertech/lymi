@@ -142,6 +142,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 20,
         blurb: msg`Free Estonian practice for beginners: read opening hours and a message, sort times, prices and days, follow a voice message and a phone call with times and days, write what you hear, write short sentences in Estonian, fill in a plan for Saturday, talk with a friend at a café and write back. Every sentence is read aloud.`,
       },
+      {
+        slug: "pere-ja-ankeet",
+        name: msg`Family and a form`,
+        title: msg`Estonian family words and filling in a form`,
+        et: "Pere ja ankeet",
+        minutes: 25,
+        blurb: msg`A free Estonian lesson for beginners: family words (ema, isa, vend, õde, laps), saying how many brothers, sisters and children you have, and the words on a registration form: first name, surname, address, phone number, age, birthday, country and town. Read a form, follow a conversation at a desk, fill in a form and write about yourself. Every sentence is read aloud.`,
+      },
     ],
   },
   {

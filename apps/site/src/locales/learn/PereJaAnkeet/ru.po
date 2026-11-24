@@ -1,0 +1,671 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 01:31+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "<0/> is family. Each person has a word of their own: <1/>, mother; <2/>, father; <3/>, brother; <4/>, sister. Estonian puts <5/>, my, in front: <6/>"
+msgstr "<0/> — это семья. У каждого человека есть своё слово: <1/>, мама; <2/>, папа; <3/>, брат; <4/>, сестра. По-эстонски сначала ставят <5/>, «мой, моя»: <6/>"
+
+msgid "<0/> is one word for a husband or a wife. In <1/> and <2/> you can hear <3>vana</3>, old, and <4>ema</4> and <5>isa</5>."
+msgstr "<0/> — одно слово и для мужа, и для жены. В <1/> и <2/> слышно <3>vana</3>, «старый», а также <4>ema</4> и <5>isa</5>."
+
+msgid "<0/> is the place where you live, and a town answers it. In a sentence, the place usually takes <1>-s</1>, as lesson {places} shows: <2>Ma elan Tartus</2>."
+msgstr "<0/> — место, где ты живёшь, и ответить можно названием города. В предложении место обычно получает окончание <1>-s</1>, как показывает урок {places}: <2>Ma elan Tartus</2>."
+
+msgid "<0>Aadress</0> is a place, though it has a number in it."
+msgstr "<0>Aadress</0> — это место, хотя в нём есть число."
+
+msgid "<0>Eesnimi</0> and <1>perekonnanimi</1> are names."
+msgstr "<0>Eesnimi</0> и <1>perekonnanimi</1> — это имя и фамилия."
+
+msgid "<0>Linn</0>, <1>riik</1> and <2>aadress</2> say where."
+msgstr "<0>Linn</0>, <1>riik</1> и <2>aadress</2> отвечают на вопрос «где?»."
+
+msgid "<0>Mul on</0> means I have. After a number from two up, a family word usually changes: <1>kaks venda</1>, <2>kolm last</2>. A few stay as they are: <3>kaks õde</3>."
+msgstr "<0>Mul on</0> значит «у меня есть». После числа от двух слово о семье обычно меняется: <1>kaks venda</1>, <2>kolm last</2>. Некоторые слова не меняются: <3>kaks õde</3>."
+
+msgid "<0>Vanus</0> and <1>telefoninumber</1> are numbers."
+msgstr "<0>Vanus</0> и <1>telefoninumber</1> — это числа."
+
+msgid "<et>Minu</et> is my; <et>mina</et> is I."
+msgstr "<et>Minu</et> — «мой, моя», а <et>mina</et> — «я»."
+
+msgid "11 exercises"
+msgstr "11 упражнений"
+
+msgid "25 minutes"
+msgstr "25 минут"
+
+msgid "A family word after a number"
+msgstr "Слово о семье после числа"
+
+msgid "A form asks with one word for each thing: <0>eesnimi</0>, <1>perekonnanimi</1>, <2>aadress</2>, <3>vanus</3>. Answer with <4>Minu … on …</4>."
+msgstr "Анкета спрашивает о каждом пункте одним словом: <0>eesnimi</0>, <1>perekonnanimi</1>, <2>aadress</2>, <3>vanus</3>. Отвечай по образцу <4>Minu … on …</4>."
+
+msgid "A registration form, <0/>, asks for the same few things in the same words. <1/> is your first name and <2/> your surname; in the second you can hear <3/>, family."
+msgstr "Регистрационная анкета, <0/>, спрашивает об одном и том же одними и теми же словами. <1/> — твоё имя, <2/> — фамилия; во втором слове слышно <3/>, «семья»."
+
+msgid "address"
+msgstr "адрес"
+
+msgid "After a number"
+msgstr "После числа"
+
+msgid "After a number from two up, a family word usually changes: <et>kaks venda</et>, <et>kolm last</et>. A few stay, as <et>õde</et> does."
+msgstr "После числа от двух слово о семье обычно меняется: <et>kaks venda</et>, <et>kolm last</et>. Некоторые не меняются, как <et>õde</et>."
+
+msgid "After a number from two up, the family word usually changes: <0>vend</0> becomes <1/> and <2>laps</2> becomes <3/>. A few words stay as they are, such as <4>õde</4>: <5>kaks õde</5>."
+msgstr "После числа от двух слово о семье обычно меняется: <0>vend</0> становится <1/>, а <2>laps</2> — <3/>. Некоторые слова не меняются, как <4>õde</4>: <5>kaks õde</5>."
+
+msgid "age"
+msgstr "возраст"
+
+msgid "All six family words picked."
+msgstr "Все шесть слов о семье выбраны."
+
+msgid "All six sentences right."
+msgstr "Все шесть предложений верны."
+
+msgid "All six, each after its number."
+msgstr "Все шесть, каждое после своего числа."
+
+msgid "All six, each found and fixed."
+msgstr "Все шесть: каждая ошибка найдена и исправлена."
+
+msgid "All six, every sentence right."
+msgstr "Все шесть, каждое предложение верно."
+
+msgid "and"
+msgstr "и"
+
+msgid "Andres"
+msgstr "Андрес"
+
+msgid "Andres gives his phone number."
+msgstr "Андрес называет свой номер телефона."
+
+msgid "Andres has two sisters."
+msgstr "У Андреса две сестры."
+
+msgid "Andres signs up at a language school. The clerk asks for his details one at a time. Listen for each answer."
+msgstr "Андрес записывается в языковую школу. Администратор задаёт ему вопросы по одному. Слушай каждый ответ."
+
+msgid "Ask for a part of a form with <et>Mis on sinu …?</et>"
+msgstr "О пункте анкеты спрашивай так: <et>Mis on sinu …?</et>"
+
+msgid "at school, in a school"
+msgstr "в школе"
+
+msgid "At the desk"
+msgstr "На регистрации"
+
+msgid "birthday"
+msgstr "день рождения"
+
+msgid "brother"
+msgstr "брат"
+
+msgid "brother, after a number"
+msgstr "брат, после числа"
+
+msgid "Café"
+msgstr "Кафе"
+
+msgid "child"
+msgstr "ребёнок"
+
+msgid "child, after a number"
+msgstr "ребёнок, после числа"
+
+msgid "children"
+msgstr "дети"
+
+msgid "Clerk"
+msgstr "Администратор"
+
+msgid "country"
+msgstr "страна"
+
+msgid "Do you have a brother?"
+msgstr "Есть ли у тебя брат?"
+
+msgid "Each line answers one part of a form. Hear it and put it under name, place or number. An address counts as a place, even with a number in it."
+msgstr "Каждая строка отвечает на один пункт анкеты. Послушай и положи её в «имя», «место» или «число». Адрес — это место, даже когда в нём есть число."
+
+msgid "Each round gives a family word and a number. Type the word as it follows the number. Some words stay the same."
+msgstr "В каждом раунде есть слово о семье и число. Впиши слово так, как оно стоит после числа. Некоторые слова не меняются."
+
+msgid "eight"
+msgstr "восемь"
+
+msgid "family"
+msgstr "семья"
+
+msgid "Family words"
+msgstr "Слова о семье"
+
+msgid "father"
+msgstr "отец"
+
+msgid "Fill in the form"
+msgstr "Заполни анкету"
+
+msgid "Fill in your details"
+msgstr "Расскажи о себе в анкете"
+
+msgid "Fill the gaps"
+msgstr "Заполни пропуски"
+
+msgid "first name"
+msgstr "имя"
+
+msgid "five"
+msgstr "пять"
+
+msgid "Five"
+msgstr "Пять"
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
+
+msgid "form, questionnaire"
+msgstr "анкета, бланк"
+
+msgid "four"
+msgstr "четыре"
+
+msgid "Four"
+msgstr "Четыре"
+
+msgid "Four or five sentences: your first name and surname, where you live, your age and your family."
+msgstr "Четыре-пять предложений: твоё имя и фамилия, где ты живёшь, твой возраст и твоя семья."
+
+msgid "From töötama, to work."
+msgstr "От töötama, «работать»."
+
+msgid "Gives a first name and a surname with <0>eesnimi</0> and <1>perekonnanimi</1>."
+msgstr "Называет имя и фамилию со словами <0>eesnimi</0> и <1>perekonnanimi</1>."
+
+msgid "Gives an age with <0>vanus</0>."
+msgstr "Называет возраст со словом <0>vanus</0>."
+
+msgid "grandfather"
+msgstr "дедушка"
+
+msgid "grandmother"
+msgstr "бабушка"
+
+msgid "he or she"
+msgstr "он или она"
+
+msgid "Hear a sentence and pick the family word in it. Each round offers three."
+msgstr "Послушай предложение и выбери в нём слово о семье. В каждом раунде три варианта."
+
+msgid "Hearing the family"
+msgstr "Семья на слух"
+
+msgid "hello"
+msgstr "привет"
+
+msgid "How many brothers does he have?"
+msgstr "Сколько у него братьев?"
+
+msgid "How old is Andres?"
+msgstr "Сколько лет Андресу?"
+
+msgid "How old is Liis? Type the number in words."
+msgstr "Сколько лет Лийс? Впиши число словами."
+
+msgid "husband or wife"
+msgstr "муж или жена"
+
+msgid "I have"
+msgstr "Иметь"
+
+msgid "I have four brothers."
+msgstr "У меня четыре брата."
+
+msgid "I have one sister and two brothers."
+msgstr "У меня одна сестра и два брата."
+
+msgid "I have three children."
+msgstr "У меня трое детей."
+
+msgid "I have two brothers."
+msgstr "У меня два брата."
+
+msgid "I live in Pärnu."
+msgstr "Я живу в Пярну."
+
+msgid "I live in Tartu and my brother lives in Pärnu."
+msgstr "Я живу в Тарту, а мой брат живёт в Пярну."
+
+msgid "I’m 23."
+msgstr "Мне 23."
+
+msgid "I’m twenty-five."
+msgstr "Мне двадцать пять."
+
+msgid "in a café"
+msgstr "в кафе"
+
+msgid "In each sentence one word is wrong: a family word after a number, <0>mina</0> for <1>minu</1>, or a place without its ending. Tap the wrong word, then type it right."
+msgstr "В каждом предложении одно слово неверное: слово о семье после числа, <0>mina</0> вместо <1>minu</1> или место без окончания. Нажми на неверное слово, а потом впиши его правильно."
+
+msgid "In Pärnu"
+msgstr "В Пярну"
+
+msgid "In Tallinn"
+msgstr "В Таллине"
+
+msgid "In Tartu"
+msgstr "В Тарту"
+
+msgid "Jaan’s form is written out as sentences, with six gaps. Drag each word into the gap it names. Two of the words fit nowhere."
+msgstr "Анкета Яана записана предложениями, в ней шесть пропусков. Перетащи каждое слово в тот пропуск, который оно называет. Два слова не подходят никуда."
+
+msgid "Kaks venda: two brothers."
+msgstr "Kaks venda: два брата."
+
+msgid "Kolm last: three children."
+msgstr "Kolm last: трое детей."
+
+msgid "Kooli kaheksa: Kooli 8."
+msgstr "Kooli kaheksa: Kooli 8."
+
+msgid "Kooli, a street name"
+msgstr "Kooli — название улицы"
+
+msgid "Lesson {partitive} explains why the word changes after a number. For now, learn each family word with its number form: <0>vend, kaks venda</0>; <1>laps, kaks last</1>."
+msgstr "Почему слово меняется после числа, объясняет урок {partitive}. Пока учи каждое слово о семье вместе с формой после числа: <0>vend, kaks venda</0>; <1>laps, kaks last</1>."
+
+msgid "Liis fills in a form"
+msgstr "Лийс заполняет анкету"
+
+msgid "Liis has two sisters."
+msgstr "У Лийс две сестры."
+
+msgid "Liis lives in Tartu, not in Pärnu."
+msgstr "Лийс живёт в Тарту, а не в Пярну."
+
+msgid "Liis tells a language school about herself. Read it and answer the questions. Once you’ve answered, tap a word to see what it means."
+msgstr "Лийс рассказывает языковой школе о себе. Прочитай и ответь на вопросы. Когда ответишь, нажми на слово, чтобы увидеть, что оно значит."
+
+msgid "Liis writes"
+msgstr "Лийс пишет"
+
+msgid "Listen for the word after <et>minu</et>: it names the person."
+msgstr "Слушай слово после <et>minu</et>: оно называет человека."
+
+msgid "Listen: signing up"
+msgstr "Аудирование: запись"
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Listening: signing up"
+msgstr "На слух: запись"
+
+msgid "Market"
+msgstr "Рынок"
+
+msgid "Match each family word with its meaning. A right pair plays."
+msgstr "Соедини каждое слово о семье с его значением. Правильная пара звучит."
+
+msgid "Match the family"
+msgstr "Соедини семью"
+
+msgid "Monday"
+msgstr "понедельник"
+
+msgid "More than one <0/>, child, is <1/>. Lesson {plural} teaches the plural. Tap a word to hear it in a sentence."
+msgstr "Несколько <0/>, «ребёнок», — это <1/>. Множественное число объясняет урок {plural}. Нажми на слово, чтобы услышать его в предложении."
+
+msgid "mother"
+msgstr "мама"
+
+msgid "Mul on kaks venda: I have two brothers."
+msgstr "Mul on kaks venda: у меня два брата."
+
+msgid "my"
+msgstr "мой"
+
+msgid "My address is Kooli 5, Tartu."
+msgstr "Мой адрес — Kooli 5, Тарту."
+
+msgid "My address is Kooli 5."
+msgstr "Мой адрес — Kooli 5."
+
+msgid "My birthday is tomorrow."
+msgstr "Мой день рождения завтра."
+
+msgid "My brother studies in Tartu."
+msgstr "Мой брат учится в Тарту."
+
+msgid "My children are at school."
+msgstr "Мои дети в школе."
+
+msgid "My country is Estonia."
+msgstr "Моя страна — Эстония."
+
+msgid "My family lives in Tartu."
+msgstr "Моя семья живёт в Тарту."
+
+msgid "My father is at work."
+msgstr "Мой папа на работе."
+
+msgid "My first name is Mari."
+msgstr "Моё имя — Мари."
+
+msgid "My grandfather is at home."
+msgstr "Мой дедушка дома."
+
+msgid "My grandfather lives in Tallinn."
+msgstr "Мой дедушка живёт в Таллине."
+
+msgid "My grandmother is at home."
+msgstr "Моя бабушка дома."
+
+msgid "My husband is at work."
+msgstr "Мой муж на работе."
+
+msgid "My mother lives in Tartu."
+msgstr "Моя мама живёт в Тарту."
+
+msgid "My mother works in a café."
+msgstr "Моя мама работает в кафе."
+
+msgid "My phone number is 5234567."
+msgstr "Мой номер телефона — 5234567."
+
+msgid "My sister lives in Pärnu."
+msgstr "Моя сестра живёт в Пярну."
+
+msgid "My surname is Mägi."
+msgstr "Моя фамилия — Мяги."
+
+msgid "My surname is Tamm."
+msgstr "Моя фамилия — Тамм."
+
+msgid "My town is Tartu."
+msgstr "Мой город — Тарту."
+
+msgid "name"
+msgstr "имя"
+
+msgid "Name, place or number?"
+msgstr "Имя, место или число?"
+
+msgid "Nearly. <0>Vend</0> and <1>laps</1> usually change after a number; <2>õde</2> stays."
+msgstr "Почти. <0>Vend</0> и <1>laps</1> после числа обычно меняются, а <2>õde</2> — нет."
+
+msgid "Nearly. Check the word after the number and the ending of the place."
+msgstr "Почти. В пропущенных проверь слово после числа и окончание места."
+
+msgid "Nearly. Hear the ones you missed below, then try again with Slower."
+msgstr "Почти. Послушай ниже те, где была ошибка, а потом попробуй ещё раз с кнопкой «Медленнее»."
+
+msgid "Nearly. In the ones you missed, check <0>minu</0> and the ending of the place."
+msgstr "Почти. В пропущенных проверь <0>minu</0> и окончание места."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Почти. Переслушай те, где были ошибки."
+
+msgid "no; not"
+msgstr "нет; не"
+
+msgid "Now you sign up. The clerk asks and you answer in Estonian. If you pick a wrong reply, you see why, then hear the right one."
+msgstr "Теперь записываешься ты. Администратор спрашивает, а ты отвечаешь по-эстонски. Если выберешь неверный ответ, увидишь почему, а потом услышишь правильный."
+
+msgid "number"
+msgstr "число"
+
+msgid "On Monday"
+msgstr "В понедельник"
+
+msgid "one"
+msgstr "один"
+
+msgid "One"
+msgstr "Один"
+
+msgid "phone number"
+msgstr "номер телефона"
+
+msgid "place"
+msgstr "место"
+
+msgid "place where you live"
+msgstr "место, где ты живёшь"
+
+msgid "Play the lines below once more, then try again."
+msgstr "Ещё раз послушай строки ниже, а потом попробуй снова."
+
+msgid "Put <0>Minu</0> in front and <1>on</1> after it, and each word becomes a sentence you can say: <2/> Read a phone number one digit at a time, with the numbers from lesson {digits}, and say an age as one number."
+msgstr "Поставь перед словом <0>Minu</0>, а после него <1>on</1> — и каждое слово станет предложением, которое можно сказать: <2/> Номер телефона читай по одной цифре, числами из урока {digits}, а возраст называй одним числом."
+
+msgid "Read the examples with a number above once more, then try again."
+msgstr "Ещё раз прочитай примеры с числом выше, а потом попробуй снова."
+
+msgid "Read the family sentences above once more, then try again."
+msgstr "Ещё раз прочитай предложения о семье выше, а потом попробуй снова."
+
+msgid "Read the three examples above once more, then try again."
+msgstr "Ещё раз прочитай три примера выше, а потом попробуй снова."
+
+msgid "Say a phone number one digit at a time and an age as one number: <0>kakskümmend kolm</0>."
+msgstr "Номер телефона называй по одной цифре, а возраст — одним числом: <0>kakskümmend kolm</0>."
+
+msgid "Say where you live with a place that usually takes <0>-s</0>: <1>Ma elan Tartus</1>."
+msgstr "Где ты живёшь, говори местом, которое обычно получает окончание <0>-s</0>: <1>Ma elan Tartus</1>."
+
+msgid "Say who someone is with <0>minu</0> and the family word: <1>See on minu ema</1>, this is my mother. <2>Abikaasa</2> is a husband or a wife."
+msgstr "Кто это, говори с помощью <0>minu</0> и слова о семье: <1>See on minu ema</1> — это моя мама. <2>Abikaasa</2> — муж или жена."
+
+msgid "Saying how many you have"
+msgstr "Как сказать, сколько у тебя"
+
+msgid "Says where you live, with <0>-s</0> on the place."
+msgstr "Говорит, где ты живёшь, с <0>-s</0> на месте."
+
+msgid "Says who is in your family, with <0>mul on</0>."
+msgstr "Говорит, кто есть в твоей семье, со словами <0>mul on</0>."
+
+msgid "School"
+msgstr "Школа"
+
+msgid "seven"
+msgstr "семь"
+
+msgid "sister"
+msgstr "сестра"
+
+msgid "six"
+msgstr "шесть"
+
+msgid "Six short lines about a family and a form. Write each one as you hear it, numbers in words."
+msgstr "Шесть коротких строк о семье и анкете. Напиши каждую так, как слышишь, числа словами."
+
+msgid "Start with <et>Minu</et>, then the word on the form, then <et>on</et>."
+msgstr "Сначала <et>Minu</et>, потом слово из анкеты, потом <et>on</et>."
+
+msgid "surname"
+msgstr "фамилия"
+
+msgid "Talk: signing up"
+msgstr "Разговор: запись"
+
+msgid "Tap a word"
+msgstr "Нажми на слово"
+
+msgid "Tap the family words above once more, then try again."
+msgstr "Ещё раз нажми слова о семье выше, а потом попробуй снова."
+
+msgid "That gives a first name. The clerk asked for your surname."
+msgstr "Это имя. Администратор спрашивал фамилию."
+
+msgid "That gives a surname. The clerk asked for your first name."
+msgstr "Это фамилия. Администратор спрашивал имя."
+
+msgid "That is your age. The clerk asked where."
+msgstr "Это твой возраст. Администратор спрашивал, где ты живёшь."
+
+msgid "That says how many brothers you have."
+msgstr "Это о том, сколько у тебя братьев."
+
+msgid "That says where you don’t live."
+msgstr "Это о том, где ты не живёшь."
+
+msgid "The short form of minul."
+msgstr "Краткая форма от minul."
+
+msgid "The word after <et>minu</et> names the part of the form."
+msgstr "Слово после <et>minu</et> называет пункт анкеты."
+
+msgid "The words for your family, how to say how many brothers, sisters and children you have, and the words on a form: name, address, phone number, age."
+msgstr "Слова о семье, как сказать, сколько у тебя братьев, сестёр и детей, и слова из анкеты: имя, адрес, номер телефона, возраст."
+
+msgid "The words on a form"
+msgstr "Слова из анкеты"
+
+msgid "Thirteen"
+msgstr "Тринадцать"
+
+msgid "Thirty"
+msgstr "Тридцать"
+
+msgid "This is about <et>minu eesnimi</et>, not <et>mina</et>, so the verb is <et>on</et>."
+msgstr "Речь о <et>minu eesnimi</et>, а не о <et>mina</et>, поэтому глагол — <et>on</et>."
+
+msgid "This is my brother."
+msgstr "Это мой брат."
+
+msgid "This is my child."
+msgstr "Это мой ребёнок."
+
+msgid "This is my father."
+msgstr "Это мой папа."
+
+msgid "This is my grandfather."
+msgstr "Это мой дедушка."
+
+msgid "This is my grandmother."
+msgstr "Это моя бабушка."
+
+msgid "This is my husband or wife."
+msgstr "Это мой муж или моя жена."
+
+msgid "This is my mother."
+msgstr "Это моя мама."
+
+msgid "This is my sister."
+msgstr "Это моя сестра."
+
+msgid "three"
+msgstr "три"
+
+msgid "Three"
+msgstr "Три"
+
+msgid "To say how many brothers, sisters or children you have, start with <0/>, I have. Learn it as a phrase for now; lesson {mulOn} shows how it works."
+msgstr "Чтобы сказать, сколько у тебя братьев, сестёр или детей, начни с <0/>, «у меня есть». Пока учи это как готовую фразу; как она работает, показывает урок {mulOn}."
+
+msgid "To say where someone lives or is, the place usually takes <et>-s</et>: <et>Tartus</et>, <et>kodus</et>."
+msgstr "Чтобы сказать, где кто-то живёт или находится, место обычно получает окончание <et>-s</et>: <et>Tartus</et>, <et>kodus</et>."
+
+msgid "today"
+msgstr "сегодня"
+
+msgid "Today"
+msgstr "Сегодня"
+
+msgid "tomorrow"
+msgstr "завтра"
+
+msgid "Tomorrow"
+msgstr "Завтра"
+
+msgid "town, city"
+msgstr "город"
+
+msgid "Twenty"
+msgstr "Двадцать"
+
+msgid "twenty-six"
+msgstr "двадцать шесть"
+
+msgid "two"
+msgstr "два"
+
+msgid "Two"
+msgstr "Два"
+
+msgid "Type the word after the number"
+msgstr "Впиши слово после числа"
+
+msgid "What does Liis write?"
+msgstr "Что пишет Лийс?"
+
+msgid "What does the line fill in?"
+msgstr "Что заполняет эта строка?"
+
+msgid "What is Andres’s surname? Type it."
+msgstr "Какая фамилия у Андреса? Впиши её."
+
+msgid "What is Liis’s surname? Type it."
+msgstr "Какая фамилия у Лийс? Впиши её."
+
+msgid "What number does he give with his street?"
+msgstr "Какой номер дома он называет вместе с улицей?"
+
+msgid "When is Liis’s birthday?"
+msgstr "Когда у Лийс день рождения?"
+
+msgid "Where does Andres live?"
+msgstr "Где живёт Андрес?"
+
+msgid "Where does Liis live?"
+msgstr "Где живёт Лийс?"
+
+msgid "Where does Mati work?"
+msgstr "Где работает Мати?"
+
+msgid "Who is it?"
+msgstr "Кто это?"
+
+msgid "Words on a form"
+msgstr "Слова из анкеты"
+
+msgid "works"
+msgstr "работает"
+
+msgid "Write a few sentences for a form, then compare them with a model and tick what yours does. Nothing is marked for you here."
+msgstr "Напиши несколько предложений для анкеты, сравни их с образцом и отметь, что делает твой текст. Здесь ничего не оценивается."
+
+msgid "Write about yourself"
+msgstr "Напиши о себе"
+
+msgid "Write each sentence in Estonian. A family word usually takes the same form as in <0>kaks venda</0> after a number from two up, and a place usually takes <1>-s</1> to say where."
+msgstr "Напиши каждое предложение по-эстонски. Слово о семье после числа от двух обычно меняется, как в <0>kaks venda</0>, а место, чтобы сказать «где», обычно получает окончание <1>-s</1>."
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"
+
+msgid "Write the sentence"
+msgstr "Напиши предложение"
+
+msgid "Write what you hear"
+msgstr "Напиши, что слышишь"
+
+msgid "Yes, I have one brother."
+msgstr "Да, у меня один брат."
+
+msgid "You are Liis Mägi. You live in Tartu and you have one sister. The clerk speaks first; pick what you say back."
+msgstr "Ты — Лийс Мяги. Ты живёшь в Тарту, и у тебя одна сестра. Первым говорит администратор; выбери, что ответить."
+
+msgid "You’ll hear it in a sentence."
+msgstr "Услышишь его в предложении."

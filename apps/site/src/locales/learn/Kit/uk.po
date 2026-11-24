@@ -236,6 +236,9 @@ msgstr "Виправлене речення з оцінкою"
 msgid "a foot"
 msgstr "нога"
 
+msgid "A free Estonian lesson for beginners: family words (ema, isa, vend, õde, laps), saying how many brothers, sisters and children you have, and the words on a registration form: first name, surname, address, phone number, age, birthday, country and town. Read a form, follow a conversation at a desk, fill in a form and write about yourself. Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської для початківців: слова про родину (ema, isa, vend, õde, laps), як сказати, скільки в тебе братів, сестер і дітей, та слова з реєстраційної анкети: ім’я, прізвище, адреса, номер телефону, вік, день народження, країна й місто. Прочитай анкету, послухай розмову на реєстрації, заповни анкету й напиши про себе. Кожне речення озвучене."
+
 msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the partitive. Every word is read aloud."
 msgstr "Безкоштовний урок естонської про три основні форми іменника, põhivormid (kool, kooli, kooli; pood, poe, poodi): як їх подають словник і Sõnaveeb і як більшість слів на -ne та -us, а також односкладові слова на довгу голосну, підказують партитив. Кожне слово озвучене."
 
@@ -746,6 +749,9 @@ msgstr "Чергування приголосних в естонській мо
 msgid "Estonian conversation practice: meeting someone"
 msgstr "Розмовна практика естонської: знайомство"
 
+msgid "Estonian family words and filling in a form"
+msgstr "Слова про родину й заповнення анкети естонською"
+
 msgid "Estonian future tense: how to say “will”"
 msgstr "Майбутній час в естонській мові: як сказати «буду»"
 
@@ -851,6 +857,9 @@ msgstr "Кожне слово у своїй групі."
 msgctxt "the statement is false"
 msgid "False"
 msgstr "Неправда"
+
+msgid "Family and a form"
+msgstr "Родина й анкета"
 
 msgid "Fill every gap first."
 msgstr "Спершу заповни всі пропуски."

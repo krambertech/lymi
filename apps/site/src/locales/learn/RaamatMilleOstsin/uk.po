@@ -1,0 +1,801 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 00:36+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0/> is the owner, and it is usually the whole thing done too: <1>Raamat, mille ma ostsin, on huvitav.</1> I bought the whole book. <2/> is the part, as after <3>ei</3> and after verbs such as <4>ootama</4>, in lesson {object}: <5>Film, mida ma ootan.</5>"
+msgstr "<0/> означає «чий», а ще зазвичай «усе ціле, дію доведено до кінця»: <1>Raamat, mille ma ostsin, on huvitav.</1> Я купив цілу книжку. <2/> — це частина, як після <3>ei</3> і після дієслів на кшталт <4>ootama</4> в уроці {object}: <5>Film, mida ma ootan.</5>"
+
+msgid "<0/> is to a place and <1/> is from a place. Tap a sentence."
+msgstr "<0/> — до місця, куди йдеш, а <1/> — з місця, звідки йдеш. Торкнись речення."
+
+msgid "<0/> usually follows a thing or an idea, and <1/> follows a person: <2>Mees, kes elab siin, on arst.</2> The man who lives here is a doctor. They are the question words from lesson {questions}."
+msgstr "<0/> зазвичай стоїть після речі чи думки, а <1/> — після людини: <2>Mees, kes elab siin, on arst.</2> «Чоловік, що живе тут, — лікар.» Це ті самі питальні слова, що й в уроці {questions}."
+
+#. placeholder {0}: each.said
+#. placeholder {1}: i18n._(HEARD_MEANS[each.id])
+#. placeholder {1}: i18n._(PLACE_MEANS[each.id])
+#. placeholder {1}: i18n._(ROLE_MEANS[each.id])
+msgid "<0>{0}</0> {1}"
+msgstr "<0>{0}</0> — {1}"
+
+msgid "<0>Helistama</0> takes <1>-le</1>, so the friend is <2>kellele</2>."
+msgstr "<0>Helistama</0> вимагає <1>-le</1>, тому друг — <2>kellele</2>."
+
+msgid "<0>Helistama</0> takes <1>-le</1>: <2>kellele</2>, not <3>kellega</3>."
+msgstr "<0>Helistama</0> вимагає <1>-le</1>: <2>kellele</2>, а не <3>kellega</3>."
+
+msgid "<0>Kelle</0> and <1>mille</1> are the owner and, usually, the whole thing done. <2>Keda</2> and <3>mida</3> are the part, as after <4>ootama</4> and after <5>ei</5>."
+msgstr "<0>Kelle</0> і <1>mille</1> — це «чий» і зазвичай «усе ціле, дію доведено до кінця». <2>Keda</2> і <3>mida</3> — це частина, як після <4>ootama</4> і після <5>ei</5>."
+
+msgid "<0>Kes</0> follows a person."
+msgstr "<0>Kes</0> стоїть після людини."
+
+msgid "<0>mis</0> follows a thing or an idea, and <1>kes</1> follows a person."
+msgstr "<0>mis</0> стоїть після речі чи думки, а <1>kes</1> — після людини."
+
+msgid "<0>Mis</0> usually follows a thing."
+msgstr "<0>Mis</0> зазвичай стоїть після речі."
+
+msgid "<0>Ootama</0> takes the partitive, so the word is <1>keda</1>, not <2>kelle</2>."
+msgstr "<0>Ootama</0> вимагає партитива, тож слово — <1>keda</1>, а не <2>kelle</2>."
+
+msgid "<0>Raamat, mille ma ostsin</0> is the book I bought: a clause that says more about a noun, with <1>mis</1> for things and <2>kes</2> for people."
+msgstr "<0>Raamat, mille ma ostsin</0> — «книжка, яку я купив»: підрядне речення уточнює іменник, а починається воно з <1>mis</1> для речей і <2>kes</2> для людей."
+
+msgid "<0>Tundma</0> takes the partitive, so the man is <1>keda</1>."
+msgstr "<0>Tundma</0> вимагає партитива, тож чоловік — <1>keda</1>."
+
+msgid "<et>mis</et> or <et>kes</et>"
+msgstr "<et>mis</et> чи <et>kes</et>"
+
+msgid "<et>mis</et> usually follows a thing or an idea, and <et>kes</et> follows a person."
+msgstr "<et>mis</et> зазвичай стоїть після речі чи думки, а <et>kes</et> — після людини."
+
+msgid "28 minutes"
+msgstr "28 хвилин"
+
+msgid "9 exercises"
+msgstr "9 вправ"
+
+msgid "A book is a thing, so the word is <0>mis</0>, not <1>kes</1>."
+msgstr "Книжка — це річ, тож слово <0>mis</0>, а не <1>kes</1>."
+
+msgid "A cake he baked himself"
+msgstr "Пиріг, який він спік сам"
+
+msgid "A chair for the kitchen"
+msgstr "Стілець для кухні"
+
+msgid "A comma goes before <0>mis</0> or <1>kes</1>. In the middle of a sentence, a second comma closes the clause."
+msgstr "Кома стоїть перед <0>mis</0> або <1>kes</1>. Якщо підрядне речення посеред речення, друга кома його закриває."
+
+msgid "A comma goes before the clause. In the middle of a sentence a second comma closes it: <0>Mees, kes elab siin, on arst.</0>"
+msgstr "Кома стоїть перед підрядним реченням. Посеред речення друга кома його закриває: <0>Mees, kes elab siin, on arst.</0>"
+
+msgid "A cup of coffee"
+msgstr "Чашка кави"
+
+msgid "A letter about a new flat"
+msgstr "Лист про нову квартиру"
+
+msgid "A man is a person, so the word is <0>kes</0>, not <1>mis</1>."
+msgstr "Чоловік — це людина, тож слово <0>kes</0>, а не <1>mis</1>."
+
+msgid "A place where something happens is <0>kus</0>. <1>Milles</1> also works."
+msgstr "Місце, де щось відбувається, — це <0>kus</0>. <1>Milles</1> теж підходить."
+
+msgid "A place where something is or happens is <0>kus</0>."
+msgstr "Місце, де щось є або відбувається, — це <0>kus</0>."
+
+msgid "A relative clause is set off by commas. One goes before <0>mis</0> or <1>kes</1>: <2>Ma tunnen meest, kes elab siin.</2>"
+msgstr "Підрядне речення відділяють комами. Одна стоїть перед <0>mis</0> або <1>kes</1>: <2>Ma tunnen meest, kes elab siin.</2>"
+
+msgid "A relative clause says more about a noun: <0>Raamat, mis on laual, on uus.</0> The book that is on the table is new. The clause starts with <1/> or <2/> and works like a small sentence inside the big one."
+msgstr "Підрядне речення розповідає більше про іменник: <0>Raamat, mis on laual, on uus.</0> «Книжка, що лежить на столі, нова.» Воно починається з <1/> або <2/> і працює як маленьке речення всередині великого."
+
+msgid "A relative clause says more about a noun. <0>Mis</0> usually follows a thing or an idea and <1>kes</1> follows a person: <2>raamat, mis on laual</2>, <3>mees, kes elab siin</3>."
+msgstr "Підрядне речення розповідає більше про іменник. <0>Mis</0> зазвичай стоїть після речі чи думки, а <1>kes</1> — після людини: <2>raamat, mis on laual</2>, <3>mees, kes elab siin</3>."
+
+msgid "A thing that is described is <0>mis</0>."
+msgstr "Річ, яку описують, — це <0>mis</0>."
+
+msgid "about what, out of which"
+msgstr "про що, з чого"
+
+msgid "about whom, out of whom"
+msgstr "про кого, з кого"
+
+msgid "About, out of: -st"
+msgstr "Про, з: -st"
+
+msgid "All eight forms right."
+msgstr "Усі вісім форм правильні."
+
+msgid "All eight, each matched to its noun."
+msgstr "Усі вісім, кожне слово підібрано до іменника."
+
+msgid "All nine, with the ending heard each time."
+msgstr "Усі дев’ять, і закінчення кожного разу почуто."
+
+msgid "All seven, each with the right word."
+msgstr "Усі сім, і щоразу слово правильне."
+
+msgid "All six built."
+msgstr "Усі шість складено."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "An old car in the yard"
+msgstr "Стара машина у дворі"
+
+msgid "Ask what the word does in its own clause: whose it is, what is done to it, who is with it, who is given or sent something, or what it is about. Hear each sentence and pick the job."
+msgstr "Запитай, що слово робить у власному реченні: чиє воно, на що спрямована дія, хто з ним, кому щось дають чи надсилають або про що йдеться. Послухай кожне речення й обери роль."
+
+msgid "At a big market in town"
+msgstr "На великому ринку в місті"
+
+msgid "Big, and the evening was dull."
+msgstr "Велика, а вечір був нудний."
+
+msgid "Book, man"
+msgstr "Книжка, чоловік"
+
+msgid "Build each sentence from what it means."
+msgstr "Склади речення за перекладом."
+
+msgid "Build the sentence"
+msgstr "Склади речення"
+
+msgid "Car, woman"
+msgstr "Машина, жінка"
+
+msgid "Choose <0>mis</0>, <1>kes</1> or <2>kus</2>, put it in the case its clause needs, then write the whole sentence."
+msgstr "Обери <0>mis</0>, <1>kes</1> або <2>kus</2>, постав слово у відмінок, якого потребує підрядне речення, а потім напиши ціле речення."
+
+msgid "Clause at the end"
+msgstr "Підрядне речення в кінці"
+
+msgid "Clause in the middle"
+msgstr "Підрядне речення посередині"
+
+msgid "Cold, and nobody stayed late."
+msgstr "Холодна, і ніхто не засиджувався допізна."
+
+msgid "Each clause says more about a city or a house."
+msgstr "Кожне підрядне речення розповідає більше про місто чи будинок."
+
+msgid "Each sentence has one wrong relative word: the wrong word for the noun or the wrong case. Tap it, then type it right."
+msgstr "У кожному реченні одне неправильне відносне слово: не те слово для іменника або не той відмінок. Торкнись його, а потім напиши правильно."
+
+msgid "Film, child"
+msgstr "Фільм, дитина"
+
+msgid "Five"
+msgstr "П’ять"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "For a place where something is or happens, <et>kus</et> usually works. <et>Milles</et> also works."
+msgstr "Для місця, де щось є або відбувається, зазвичай підходить <et>kus</et>. <et>Milles</et> теж підходить."
+
+msgid "For a place you come from."
+msgstr "Для місця, звідки йдеш."
+
+msgid "For a place you go to."
+msgstr "Для місця, куди йдеш."
+
+msgid "For a place, <0/> usually works: <1>Linn, kus ma elan, on väike.</1> The city where I live is small. The same idea with <2>mis</2> is <3/>, which usually sounds more formal."
+msgstr "Для місця зазвичай підходить <0/>: <1>Linn, kus ma elan, on väike.</1> «Місто, де я живу, маленьке.» Те саме з <2>mis</2> — це <3/>, і воно зазвичай звучить офіційніше."
+
+msgid "For a place, <0>kus</0> usually works: <1>linn, kus ma elan</1>. <2>Kuhu</2> is to a place and <3>kust</3> is from a place."
+msgstr "Для місця зазвичай підходить <0>kus</0>: <1>linn, kus ma elan</1>. <2>Kuhu</2> — до місця, а <3>kust</3> — з місця."
+
+msgid "For a place, <0>kus</0> usually works. <1>Milles</1> also works."
+msgstr "Для місця зазвичай підходить <0>kus</0>. <1>Milles</1> теж підходить."
+
+msgid "Four hundred and fifty euros"
+msgstr "Чотириста п’ятдесят євро"
+
+msgid "from where"
+msgstr "звідки"
+
+msgid "From where"
+msgstr "Звідки"
+
+msgid "Genitive: whose"
+msgstr "Родовий: чий"
+
+msgid "Given or sent to"
+msgstr "Кому дають чи надсилають"
+
+msgid "Go through the table once more, then try again."
+msgstr "Ще раз переглянь таблицю й повтори вправу."
+
+msgid "Has, on: -l"
+msgstr "Має, на: -l"
+
+msgid "He had to work late."
+msgstr "Йому довелося працювати допізна."
+
+msgid "He was ill."
+msgstr "Він хворів."
+
+msgid "Hear each sentence and pick the word that starts its clause."
+msgstr "Послухай кожне речення й обери слово, яким починається підрядне речення."
+
+msgid "Helen bought the kitchen table from her grandmother."
+msgstr "Хелен купила кухонний стіл у своєї бабусі."
+
+msgid "Helen had drunk this coffee many times before."
+msgstr "Хелен уже багато разів пила цю каву."
+
+msgid "Helen writes"
+msgstr "Пише Хелен"
+
+msgid "Helen writes to a friend about her new flat and her neighbours. Read her letter and answer the questions, as in the reading part of the B1 exam."
+msgstr "Хелен пише подрузі про свою нову квартиру й сусідів. Прочитай її лист і дай відповіді на запитання, як у частині з читання на іспиті B1."
+
+msgid "House, teacher"
+msgstr "Будинок, учитель"
+
+msgid "How many candles are on the cake?"
+msgstr "Скільки свічок на торті?"
+
+msgid "How much does the flat cost a month?"
+msgstr "Скільки коштує квартира на місяць?"
+
+msgid "I am watching the film you are waiting for."
+msgstr "Я дивлюся фільм, на який ти чекаєш."
+
+msgid "I bought the whole book, so the object is <0>mille</0>. <1>Mida</1> also works when the buying is not finished or is not the point."
+msgstr "Я купив цілу книжку, тож додаток — <0>mille</0>. <1>Mida</1> теж підходить, коли купівля не завершена або це неважливо."
+
+msgid "I know the child who has a dog."
+msgstr "Я знаю дитину, в якої є собака."
+
+msgid "I know the man who lives here."
+msgstr "Я знаю чоловіка, що живе тут."
+
+msgid "I know the man you are waiting for."
+msgstr "Я знаю чоловіка, на якого ти чекаєш."
+
+msgid "I know the man you phoned."
+msgstr "Я знаю чоловіка, якому ти телефонував."
+
+msgid "I know the woman whose car is red."
+msgstr "Я знаю жінку, чия машина червона."
+
+msgid "I know the woman you talked with."
+msgstr "Я знаю жінку, з якою ти розмовляв."
+
+msgid "I read the book that is on the table."
+msgstr "Я прочитав книжку, що лежить на столі."
+
+msgid "I saw the car that stands outside."
+msgstr "Я бачив машину, що стоїть надворі."
+
+msgid "I saw the car you were driving."
+msgstr "Я бачив машину, якою ти їхав."
+
+msgid "I saw the house whose door is blue."
+msgstr "Я бачив будинок, двері якого сині."
+
+msgid "I watched the film you talked about."
+msgstr "Я дивився фільм, про який ти розповідав."
+
+msgid "In a library"
+msgstr "У бібліотеці"
+
+msgid "In an old bookshop"
+msgstr "У старому книжковому магазині"
+
+msgid "In which"
+msgstr "У якому"
+
+msgid "in which, in what"
+msgstr "у якому, у чому"
+
+msgid "In: -s"
+msgstr "У: -s"
+
+msgid "join with a relative clause"
+msgstr "об’єднай за допомогою підрядного речення"
+
+msgid "Kadri’s own"
+msgstr "Самої Кадрі"
+
+msgid "Keda sa ootad?"
+msgstr "Keda sa ootad?"
+
+msgid "Kelle auto see on?"
+msgstr "Kelle auto see on?"
+
+msgid "Kellega sa räägid?"
+msgstr "Kellega sa räägid?"
+
+msgid "Kellel on koer?"
+msgstr "Kellel on koer?"
+
+msgid "Kellele sa helistad?"
+msgstr "Kellele sa helistad?"
+
+msgid "Kellest sa räägid?"
+msgstr "Kellest sa räägid?"
+
+msgid "Kes elab siin?"
+msgstr "Kes elab siin?"
+
+msgid "Kuhu sa sõidad?"
+msgstr "Kuhu sa sõidad?"
+
+msgid "Kus sa elad?"
+msgstr "Kus sa elad?"
+
+msgid "Kust sa tuled?"
+msgstr "Kust sa tuled?"
+
+msgid "Listen: Tiina and Madis"
+msgstr "Послухай: Тііна й Мадіс"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Madis"
+msgstr "Мадіс"
+
+msgid "Madis wants to show the photos to a friend who couldn’t come."
+msgstr "Мадіс хоче показати фото другові, який не зміг прийти."
+
+msgid "Madis’s"
+msgstr "Мадіса"
+
+msgid "Madis’s friend from school"
+msgstr "Шкільний друг Мадіса"
+
+msgid "Make the form"
+msgstr "Утвори форму"
+
+msgid "Mida sa ootad?"
+msgstr "Mida sa ootad?"
+
+msgid "Millega sa kirjutad?"
+msgstr "Millega sa kirjutad?"
+
+msgid "Millel on suur aed?"
+msgstr "Millel on suur aed?"
+
+msgid "Millele sa vastad?"
+msgstr "Millele sa vastad?"
+
+msgid "Milles sa elad?"
+msgstr "Milles sa elad?"
+
+msgid "Millest sa räägid?"
+msgstr "Millest sa räägid?"
+
+msgid "Mis see on?"
+msgstr "Mis see on?"
+
+msgid "Nearly. Check the ones you missed against the table."
+msgstr "Майже. Звір ті, де помилився, з таблицею."
+
+msgid "Nearly. Check the relative word in the ones you missed."
+msgstr "Майже. Перевір відносне слово в тих реченнях, де помилився."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Майже. Переслухай ті, де були помилки."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Майже. Прочитай пояснення під кожною помилкою."
+
+msgid "Nobody at the party knew the words of the song."
+msgstr "Ніхто на вечірці не знав слів пісні."
+
+msgid "Nobody had told him about it."
+msgstr "Ніхто не сказав йому про це."
+
+msgid "Nominative: the subject"
+msgstr "Називний: підмет"
+
+msgid "Partitive: part of it"
+msgstr "Партитив: частина"
+
+msgid "People"
+msgstr "Люди"
+
+msgid "Pick <0>kus</0> or <1>mis</1>"
+msgstr "Обери <0>kus</0> або <1>mis</1>"
+
+msgid "Pick <0>mis</0> or <1>kes</1>"
+msgstr "Обери <0>mis</0> або <1>kes</1>"
+
+msgid "Places"
+msgstr "Місця"
+
+msgid "Places: <et>kus</et>"
+msgstr "Місця: <et>kus</et>"
+
+msgid "Raamat, mille ma ostsin."
+msgstr "Raamat, mille ma ostsin."
+
+msgid "Read the note under each one you missed, then try again."
+msgstr "Прочитай примітку під кожним реченням, де помилився, і спробуй ще раз."
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Що запам’ятати» нижче, а тоді спробуй знову."
+
+msgid "Relative clauses about a place"
+msgstr "Підрядні речення про місце"
+
+msgid "Relative clauses about things and people"
+msgstr "Підрядні речення про речі й людей"
+
+msgid "Relative words in every case"
+msgstr "Відносні слова в усіх відмінках"
+
+msgid "Seven"
+msgstr "Сім"
+
+msgid "Small, but fun."
+msgstr "Мала, але весело."
+
+msgid "So <0/> and <1/> have cases like a noun, and the endings are the ones you know from lesson {pronouns}. Tap a sentence and read what the lit word does in its clause."
+msgstr "Отже, <0/> і <1/> мають відмінки, як іменники, а закінчення ті самі, що ти знаєш з уроку {pronouns}. Торкнись речення й подивись, що виділене слово робить у своєму підрядному реченні."
+
+msgid "Tap a sentence"
+msgstr "Торкнись речення"
+
+msgid "Tap the sentences above once more, then try again."
+msgstr "Ще раз торкнись речень вище, а потім спробуй знову."
+
+msgid "Tap the table above once more, then try again."
+msgstr "Ще раз торкнись таблиці вище, а потім спробуй знову."
+
+msgid "The bag that is on the table is heavy."
+msgstr "Сумка, що лежить на столі, важка."
+
+msgid "The book"
+msgstr "Книжка"
+
+msgid "The book I bought is interesting."
+msgstr "Книжка, яку я купив, цікава."
+
+msgid "The book that is on the table is new."
+msgstr "Книжка, що лежить на столі, нова."
+
+msgid "The café where we drink coffee is cheap."
+msgstr "Кав’ярня, де ми п’ємо каву, недорога."
+
+msgid "The car"
+msgstr "Машина"
+
+msgid "The car belongs to the woman, so the word is in the genitive, like any owner."
+msgstr "Машина належить жінці, тож слово стоїть у родовому, як і будь-який власник."
+
+msgid "The car that stands outside is red."
+msgstr "Машина, що стоїть надворі, червона."
+
+msgid "the car you were driving"
+msgstr "машина, якою ти їхав"
+
+msgid "The case of the word"
+msgstr "Відмінок слова"
+
+msgid "The child has a dog, so the word takes -l."
+msgstr "У дитини є собака, тож слово отримує -l."
+
+msgid "The child has a dog, so the word takes <0>-l</0>: <1>kellel</1>."
+msgstr "У дитини є собака, тож слово отримує <0>-l</0>: <1>kellel</1>."
+
+msgid "the child who has a dog"
+msgstr "дитина, в якої є собака"
+
+msgid "The child who plays outside is my son."
+msgstr "Дитина, що грає надворі, — мій син."
+
+msgid "The city where I live is small."
+msgstr "Місто, де я живу, маленьке."
+
+msgid "The clause usually comes right after the noun it describes. A comma goes before it and, in the middle of a sentence, a second one after it. Inside the clause, the verb can come before or after the other words: <0>kes elab siin</0> or <1>kes siin elab</1>."
+msgstr "Підрядне речення зазвичай стоїть одразу після іменника, який воно описує. Кома стоїть перед ним, а посеред речення друга кома стоїть після нього. Усередині підрядного речення дієслово може стояти перед іншими словами або після них: <0>kes elab siin</0> або <1>kes siin elab</1>."
+
+msgid "The clause usually stands right after the noun it describes. When that noun starts the sentence, the clause ends in the middle, and a second comma closes it: <0>Mees, kes elab siin, on arst.</0>"
+msgstr "Підрядне речення зазвичай стоїть одразу після іменника, який воно описує. Коли цей іменник стоїть на початку речення, підрядне закінчується посередині, і друга кома його закриває: <0>Mees, kes elab siin, on arst.</0>"
+
+msgid "The door belongs to the house, so the word is in the genitive: <0>mille</0>."
+msgstr "Двері належать будинку, тож слово стоїть у родовому: <0>mille</0>."
+
+msgid "The film I am waiting for is long."
+msgstr "Фільм, якого я чекаю, довгий."
+
+msgid "The film that starts at eight is long."
+msgstr "Фільм, що починається о восьмій, довгий."
+
+msgid "the film you are waiting for"
+msgstr "фільм, якого ти чекаєш"
+
+msgid "the film you talked about"
+msgstr "фільм, про який ти розповідав"
+
+msgid "The friend I phoned is in Tallinn."
+msgstr "Друг, якому я телефонував, у Таллінні."
+
+msgid "The house that is big is old."
+msgstr "Будинок, що великий, старий."
+
+msgid "The house where I live is old."
+msgstr "Будинок, де я живу, старий."
+
+msgid "the house whose door is blue"
+msgstr "будинок, двері якого сині"
+
+msgid "The man"
+msgstr "Чоловік"
+
+msgid "The man I know lives in Tartu."
+msgstr "Чоловік, якого я знаю, живе в Тарту."
+
+msgid "The man is the subject of the clause, so the word stays in the nominative."
+msgstr "Чоловік — підмет підрядного речення, тож слово лишається в називному."
+
+msgid "The man who lives here is a doctor."
+msgstr "Чоловік, що живе тут, — лікар."
+
+msgid "the man you are waiting for"
+msgstr "чоловік, на якого ти чекаєш"
+
+msgid "the man you phoned"
+msgstr "чоловік, якому ти телефонував"
+
+msgid "The neighbour who plays the piano is friendly."
+msgstr "Сусід, що грає на фортепіано, привітний."
+
+msgid "The next party is in June."
+msgstr "Наступна вечірка буде в червні."
+
+msgid "The noisy street right under the window"
+msgstr "Галаслива вулиця просто під вікном"
+
+msgid "The owner of the car lives abroad."
+msgstr "Власник машини живе за кордоном."
+
+msgid "The park being far away from home"
+msgstr "Парк, що далеко від дому"
+
+msgid "The park where the children play is big."
+msgstr "Парк, де гуляють діти, великий."
+
+msgid "The same idea with mis in the -s case. It usually sounds more formal than kus."
+msgstr "Те саме з mis у відмінку на -s. Зазвичай звучить офіційніше, ніж kus."
+
+msgid "The usual word for a place where something is or happens."
+msgstr "Звичайне слово для місця, де щось є або відбувається."
+
+msgid "The woman I talked with is a teacher."
+msgstr "Жінка, з якою я розмовляв, — вчителька."
+
+msgid "The woman who works in the shop is my mother."
+msgstr "Жінка, що працює в магазині, — моя мама."
+
+msgid "The woman with the guitar is Tiina’s sister."
+msgstr "Жінка з гітарою — сестра Тііни."
+
+msgid "the woman you talked with"
+msgstr "жінка, з якою ти розмовляв"
+
+msgid "The word after the comma does not copy the noun’s case. It takes the case it would have if its clause stood alone. Take <0>Sa ootad meest.</0> You wait for the man, and <1>ootama</1> takes the partitive. The word that stands for the man in a relative clause is <2/>: <3>Ma tunnen meest, keda sa ootad.</3>"
+msgstr "Слово після коми не повторює відмінок іменника. Воно стоїть у відмінку, у якому було б, якби його речення стояло саме. Візьми <0>Sa ootad meest.</0> Ти чекаєш на чоловіка, а <1>ootama</1> вимагає партитива. Слово, що замінює чоловіка в підрядному реченні, — <2/>: <3>Ma tunnen meest, keda sa ootad.</3>"
+
+msgid "The word after the comma takes the case it would have inside its own clause."
+msgstr "Слово після коми стоїть у відмінку, у якому було б у власному реченні."
+
+msgid "The word takes its own case"
+msgstr "Слово має власний відмінок"
+
+msgid "The word takes the case it would have inside its own clause: <0>kelle</0>, <1>keda</1>, <2>kellega</2>, <3>kellele</3>, <4>kellest</4>, <5>kellel</5> and <6>mille</6>, <7>mida</7>, <8>millega</8>, <9>millele</9>, <10>millest</10>, <11>millel</11>."
+msgstr "Слово стоїть у відмінку, у якому було б у власному реченні: <0>kelle</0>, <1>keda</1>, <2>kellega</2>, <3>kellele</3>, <4>kellest</4>, <5>kellel</5> і <6>mille</6>, <7>mida</7>, <8>millega</8>, <9>millele</9>, <10>millest</10>, <11>millel</11>."
+
+msgid "Their grandfather’s"
+msgstr "Їхнього дідуся"
+
+msgid "Things"
+msgstr "Речі"
+
+msgid "Things and people"
+msgstr "Речі й люди"
+
+msgid "Three"
+msgstr "Три"
+
+msgid "Three hundred euros"
+msgstr "Триста євро"
+
+msgid "Tiina"
+msgstr "Тііна"
+
+msgid "Tiina had seen Maria often over the last ten years."
+msgstr "Тііна часто бачила Марію протягом останніх десяти років."
+
+msgid "Tiina has brought photos of a party, and Madis asks who is who. Listen to them twice and answer the questions."
+msgstr "Тііна принесла фото з вечірки, а Мадіс питає, хто є хто. Послухай їх двічі й дай відповіді на запитання."
+
+msgid "Tiina’s brother"
+msgstr "Брат Тііни"
+
+msgid "Tiina’s new colleague"
+msgstr "Нова колега Тііни"
+
+msgid "to what, to which"
+msgstr "до чого, до якого"
+
+msgid "to where"
+msgstr "куди"
+
+msgid "To where"
+msgstr "Куди"
+
+msgid "to whom"
+msgstr "кому"
+
+msgid "To: -le"
+msgstr "До: -le"
+
+msgid "Together with"
+msgstr "Разом із"
+
+msgid "Two friends look at photos"
+msgstr "Двоє друзів дивляться фото"
+
+msgid "Two hundred euros"
+msgstr "Двісті євро"
+
+msgid "Two things cause most mix-ups. <0/> and <1/> mean whose, and they are usually the whole thing done, while <2/> and <3/> are the part. And the endings <4>-ga</4>, <5>-le</5> and <6>-st</6> look alike."
+msgstr "Дві речі спричиняють більшість помилок. <0/> і <1/> значать «чий» і зазвичай «усе ціле, дію доведено до кінця», а <2/> і <3/> — це частина. До того ж закінчення <4>-ga</4>, <5>-le</5> і <6>-st</6> схожі."
+
+msgid "Type the form of <0>kes</0> or <1>mis</1> that fits the gap."
+msgstr "Впиши форму <0>kes</0> або <1>mis</1>, що пасує до пропуску."
+
+msgid "What did the neighbour bring her?"
+msgstr "Що приніс їй сусід?"
+
+msgid "What does Helen ask her friend to bring? Write it as Helen does."
+msgstr "Що Хелен просить друга принести? Напиши так, як у Хелен."
+
+msgid "What does Helen not like about the place?"
+msgstr "Що Хелен не подобається в цьому місці?"
+
+msgid "What does Helen write?"
+msgstr "Що пише Хелен?"
+
+msgid "What does the word do?"
+msgstr "Що робить слово?"
+
+msgid "What is done to"
+msgstr "На що спрямована дія"
+
+msgid "What is the name of the girl Tiina talks to? Write it as Tiina says it."
+msgstr "Як звати дівчину, з якою розмовляє Тііна? Напиши так, як каже Тііна."
+
+msgid "What it is about"
+msgstr "Про що йдеться"
+
+msgid "What was the café like?"
+msgstr "Якою була кав’ярня?"
+
+msgid "what, which (part)"
+msgstr "що, який (частина)"
+
+msgid "what, which, that"
+msgstr "що, який"
+
+msgid "When was Marten’s birthday? Write it as Tiina says it."
+msgstr "Коли був день народження Мартена? Напиши так, як каже Тііна."
+
+msgid "where"
+msgstr "де"
+
+msgid "Where"
+msgstr "Де"
+
+msgid "Where did Tiina find the book?"
+msgstr "Де Тііна знайшла книжку?"
+
+msgid "Where does the neighbour’s daughter work? Write it as Helen does."
+msgstr "Де працює дочка сусіда? Напиши так, як у Хелен."
+
+msgid "Where the clause goes and its commas"
+msgstr "Де стоїть підрядне речення і де його коми"
+
+msgid "Where the commas go"
+msgstr "Де стоять коми"
+
+msgid "Which form is it?"
+msgstr "Яка це форма?"
+
+msgid "which has, on which"
+msgstr "що має, на якому"
+
+msgid "which, that"
+msgstr "який, що"
+
+msgid "who"
+msgstr "хто"
+
+msgid "who has, on whom"
+msgstr "у кого є, на кому"
+
+msgid "Who is the man by the window?"
+msgstr "Хто той чоловік біля вікна?"
+
+msgid "whom, who (part)"
+msgstr "кого, хто (частина)"
+
+msgid "Whose car is <0>kelle auto</0>, the genitive. <1>Keda</1> is the partitive."
+msgstr "«Чия машина» — це <0>kelle auto</0>, родовий відмінок. <1>Keda</1> — партитив."
+
+msgid "Whose guitar is it?"
+msgstr "Чия це гітара?"
+
+msgid "Whose it is"
+msgstr "Чиє це"
+
+msgid "whose, of which; the whole thing done"
+msgstr "чий, чого; усе ціле, доведене до кінця"
+
+msgid "whose, whom"
+msgstr "чий, кого"
+
+msgid "Why wasn’t Madis at the party?"
+msgstr "Чому Мадіса не було на вечірці?"
+
+msgid "with what, with which"
+msgstr "з чим, з яким"
+
+msgid "with whom"
+msgstr "з ким"
+
+msgid "With: -ga"
+msgstr "З: -ga"
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "You drove in it, so the word takes <0>-ga</0>: <1>millega</1>."
+msgstr "Ти їхав у ній, тож слово отримує <0>-ga</0>: <1>millega</1>."
+
+msgid "You live in the house, so the word takes -s. It is the same idea as kus."
+msgstr "Ти живеш у будинку, тож слово отримує -s. Це та сама думка, що й у kus."
+
+msgid "You phoned him, so the word takes -le."
+msgstr "Ти телефонував йому, тож слово отримує -le."
+
+msgid "You phoned him, so the word takes <0>-le</0>: <1>kellele</1>."
+msgstr "Ти телефонував йому, тож слово отримує <0>-le</0>: <1>kellele</1>."
+
+msgid "You talked about her, so the word takes -st."
+msgstr "Ти говорив про неї, тож слово отримує -st."
+
+msgid "You talked about it, so the word takes <0>-st</0>: <1>millest</1>."
+msgstr "Ти говорив про це, тож слово отримує <0>-st</0>: <1>millest</1>."
+
+msgid "You talked with her, so the word takes -ga."
+msgstr "Ти розмовляв із нею, тож слово отримує -ga."
+
+msgid "You talked with her, so the word takes <0>-ga</0>: <1>kellega</1>."
+msgstr "Ти розмовляв із нею, тож слово отримує <0>-ga</0>: <1>kellega</1>."
+
+msgid "You wait for him, and <0>ootama</0> takes the partitive: <1>keda</1>."
+msgstr "Ти чекаєш на нього, а <0>ootama</0> вимагає партитива: <1>keda</1>."
+
+msgid "You wait for him, and ootama takes the partitive, so the word is in the partitive."
+msgstr "Ти чекаєш на нього, а ootama вимагає партитива, тож слово стоїть у партитиві."
+
+msgid "You wait for the film, and <0>ootama</0> takes the partitive: <1>mida</1>."
+msgstr "Ти чекаєш на фільм, а <0>ootama</0> вимагає партитива: <1>mida</1>."

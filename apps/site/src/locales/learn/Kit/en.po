@@ -269,6 +269,9 @@ msgstr "A free Estonian lesson on personal pronouns in their cases: minuga and s
 msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 msgstr "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 
+msgid "A free Estonian lesson on reporting what someone said: ütles, et and rääkis, et for statements and küsis, kas for yes-or-no questions, how the person words change while the verb usually keeps its tense (Ta ütles, et tal on kiire), and the -vat form (Ta olevat haige, Ta ei tulevat), which is mostly met in news and reports and usually names no source. Every sentence is read aloud."
+msgstr "A free Estonian lesson on reporting what someone said: ütles, et and rääkis, et for statements and küsis, kas for yes-or-no questions, how the person words change while the verb usually keeps its tense (Ta ütles, et tal on kiire), and the -vat form (Ta olevat haige, Ta ei tulevat), which is mostly met in news and reports and usually names no source. Every sentence is read aloud."
+
 msgid "A free Estonian lesson on saying when: hommikul and suvel with -l, mais with -s, hommikuti for every morning, nädala pärast and nädal tagasi, pärast tööd, and from and until with -st and -ni. Every sentence is read aloud."
 msgstr "A free Estonian lesson on saying when: hommikul and suvel with -l, mais with -s, hommikuti for every morning, nädala pärast and nädal tagasi, pärast tööd, and from and until with -st and -ni. Every sentence is read aloud."
 
@@ -811,6 +814,9 @@ msgstr "Estonian pronunciation"
 
 msgid "Estonian reading and listening practice: a day in Tallinn"
 msgstr "Estonian reading and listening practice: a day in Tallinn"
+
+msgid "Estonian reported speech and the -vat form"
+msgstr "Estonian reported speech and the -vat form"
 
 msgid "Estonian somebody and nobody: -gi and -ki"
 msgstr "Estonian somebody and nobody: -gi and -ki"

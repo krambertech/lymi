@@ -1,0 +1,745 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 00:32+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0>-vat</0> usually names no source and is mostly met in news and reports. In everyday talk people usually say who said it with <1>ütles, et</1>."
+msgstr "<0>-vat</0> зазвичай не називає джерела й трапляється здебільшого в новинах і звітах. У повсякденній мові зазвичай кажуть, хто це сказав, за допомогою <1>ütles, et</1>."
+
+msgid "<0>-vat</0> usually passes the news on without saying who said it."
+msgstr "<0>-vat</0> зазвичай переказує новину, не кажучи, хто це сказав."
+
+#. placeholder {0}: each.said
+#. placeholder {1}: i18n._(HEARD_MEANS[each.id])
+#. placeholder {1}: i18n._(STAYS_MEANS[each.id])
+msgid "<0>{0}</0> {1}"
+msgstr "<0>{0}</0> — {1}"
+
+msgid "<0>Ma</0> becomes <1>ta</1>, and the verb takes the new person’s ending: <2>tulen</2> becomes <3>tuleb</3>. <4>Homme</4> stays."
+msgstr "<0>Ma</0> стає <1>ta</1>, а дієслово отримує закінчення нової особи: <2>tulen</2> стає <3>tuleb</3>. <4>Homme</4> лишається."
+
+msgid "<0>Mida</0>, what, stays too. <1>Sa</1> becomes <2>ma</2>, and <3>teed</3> becomes <4>teen</4>."
+msgstr "<0>Mida</0>, «що», теж лишається. <1>Sa</1> стає <2>ma</2>, а <3>teed</3> стає <4>teen</4>."
+
+msgid "<0>Mu</0>, my, becomes <1>tema</1>, his or her."
+msgstr "<0>Mu</0>, «мій», стає <1>tema</1>, «його» чи «її»."
+
+msgid "<0>Mul</0> becomes <1>tal</1> when the person is someone else."
+msgstr "<0>Mul</0> стає <1>tal</1>, коли йдеться про іншу людину."
+
+msgid "<0>olema</0> without <1>-ma</1>, plus <2>-vat</2>: <3>olevat</3>."
+msgstr "<0>olema</0> без <1>-ma</1> плюс <2>-vat</2>: <3>olevat</3>."
+
+msgid "<0>Ta ütles, et tal on kiire</0> reports what someone said. <1>Ta olevat haige</1> passes on what is said about someone. Learn to make the first and to recognise the second."
+msgstr "<0>Ta ütles, et tal on kiire</0> переказує, що сказала людина. <1>Ta olevat haige</1> передає те, що кажуть про когось. Навчись будувати перше й упізнавати друге."
+
+msgid "<0>Ütles, et</0> and <1>rääkis, et</1> name who said it."
+msgstr "<0>Ütles, et</0> і <1>rääkis, et</1> називають того, хто це сказав."
+
+msgid "<0>Ütles, et</0> names the person. <1>-vat</1> usually names no one: it passes the news on."
+msgstr "<0>Ütles, et</0> називає людину. <1>-vat</1> зазвичай нікого не називає: воно передає новину далі."
+
+msgid "<et>Ütles, et</et> and <et>rääkis, et</et> name who said it. <et>-vat</et> usually passes the news on without saying who said it."
+msgstr "<et>Ütles, et</et> і <et>rääkis, et</et> називають того, хто це сказав. <et>-vat</et> зазвичай передає новину, не кажучи, хто це сказав."
+
+msgid "24 minutes"
+msgstr "24 хвилини"
+
+msgid "9 exercises"
+msgstr "9 вправ"
+
+msgid "A neighbour does not want a shop on the street because of the cars."
+msgstr "Сусід не хоче магазину на вулиці через машини."
+
+msgid "A question that starts with a question word keeps the word and drops <0>kas</0>: <1>Peeter küsis, millal ma tulen.</1> Tap a sentence to hear it."
+msgstr "Питання, що починається з питального слова, зберігає це слово й втрачає <0>kas</0>: <1>Peeter küsis, millal ma tulen.</1> Торкнись речення, щоб його почути."
+
+msgid "A question word stays as it is: <0>kus</0>, where. There is no <1>kas</1> and no <2>et</2>."
+msgstr "Питальне слово лишається як є: <0>kus</0>, «де». Немає ні <1>kas</1>, ні <2>et</2>."
+
+msgid "A statement after <0>rääkis</0> takes <1>et</1>. <2>Kas</2> is for yes-or-no questions."
+msgstr "Після <0>rääkis</0> розповідне речення приєднується через <1>et</1>. <2>Kas</2> — для питань «так чи ні»."
+
+msgid "A yes-or-no question after <0>küsis</0> takes <1>kas</1>, not <2>et</2>."
+msgstr "Після <0>küsis</0> питання «так чи ні» вводить <1>kas</1>, а не <2>et</2>."
+
+msgid "A yes-or-no question follows <0/> with <1>kas</1>, not <2>et</2>: <3>Mari küsis: „Kas sa tuled?“</3> becomes <4>Mari küsis, kas ma tulen.</4> The person changes as before."
+msgstr "Питання «так чи ні» після <0/> вводить <1>kas</1>, а не <2>et</2>: <3>Mari küsis: „Kas sa tuled?“</3> стає <4>Mari küsis, kas ma tulen.</4> Займенник змінюється так само, як раніше."
+
+msgid "A yes-or-no question follows <0>kas</0>, and a question word stays where it was."
+msgstr "Питання «так чи ні» йде після <0>kas</0>, а питальне слово лишається на своєму місці."
+
+msgid "A yes-or-no question follows <0>küsis</0> with <1>kas</1>, not <2>et</2>."
+msgstr "Після <0>küsis</0> питання «так чи ні» вводить <1>kas</1>, а не <2>et</2>."
+
+msgid "A yes-or-no question follows <0>küsis</0> with <1>kas</1>: <2>Mari küsis, kas ma tulen.</2> A question word stays and <3>kas</3> goes: <4>Peeter küsis, millal ma tulen.</4>"
+msgstr "Після <0>küsis</0> питання «так чи ні» вводить <1>kas</1>: <2>Mari küsis, kas ma tulen.</2> Питальне слово лишається, а <3>kas</3> зникає: <4>Peeter küsis, millal ma tulen.</4>"
+
+msgid "A yes-or-no question follows <et>küsis</et> with <et>kas</et>. A question word stays where it was."
+msgstr "Після <et>küsis</et> питання «так чи ні» вводить <et>kas</et>. Питальне слово лишається на своєму місці."
+
+msgid "A yes-or-no question keeps <0>kas</0>. Only the person changes: <1>sul</1> becomes <2>mul</2>."
+msgstr "У питанні «так чи ні» <0>kas</0> лишається. Змінюється лише особа: <1>sul</1> стає <2>mul</2>."
+
+msgid "According to the radio, what will fall on Saturday? Write it as Liisa says it."
+msgstr "Що, за словами радіо, випаде в суботу? Напиши це слово так, як каже Лійса."
+
+msgid "After <0>ütles</0> put a comma and <1>et</1>. Peeter’s <2>ma tulen</2> becomes <3>ta tuleb</3>."
+msgstr "Після <0>ütles</0> постав кому й <1>et</1>. Пеетерове <2>ma tulen</2> стає <3>ta tuleb</3>."
+
+msgid "After <et>ütles</et> or <et>rääkis</et>, put a comma and <et>et</et>. The person words change with the speaker, and the verb takes the new person’s ending."
+msgstr "Після <et>ütles</et> або <et>rääkis</et> постав кому й <et>et</et>. Займенники змінюються залежно від того, хто говорить, а дієслово отримує закінчення нової особи."
+
+msgid "All eight forms right."
+msgstr "Усі вісім форм правильні."
+
+msgid "All eight heard the right time."
+msgstr "Усі вісім разів час визначено правильно."
+
+msgid "All eight reported correctly."
+msgstr "Усі вісім речень переказано правильно."
+
+msgid "All eight, told apart by ear."
+msgstr "Усі вісім розрізнено на слух."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All six reported correctly."
+msgstr "Усі шість речень переказано правильно."
+
+msgid "All six written correctly."
+msgstr "Усі шість речень написано правильно."
+
+msgid "asked"
+msgstr "запитав, запитала"
+
+msgid "At half past eight"
+msgstr "О пів на дев’яту"
+
+msgid "At seven, when the doors open"
+msgstr "О сьомій, коли відкриють двері"
+
+msgid "At six, as on the ticket"
+msgstr "О шостій, як на квитку"
+
+msgid "at that moment"
+msgstr "у той момент"
+
+msgid "At that moment"
+msgstr "У той момент"
+
+msgid "Both can carry the same news, but they work differently. <0>Mari ütles, et ta on haige</0> names who said it. <1>Mari olevat haige</1> names no one: it passes on what is said, and the speaker is usually not vouching for it."
+msgstr "Обидві форми можуть нести ту саму новину, але працюють по-різному. <0>Mari ütles, et ta on haige</0> називає того, хто це сказав. <1>Mari olevat haige</1> нікого не називає: воно передає те, що кажуть, і мовець зазвичай не ручається за це."
+
+msgid "By the river"
+msgstr "Біля річки"
+
+#. placeholder {0}: each.inf
+#. placeholder {1}: each.form
+msgid "Drop <0>-ma</0> from <1>{0}</1> and add <2>-vat</2>: <3>{1}</3>."
+msgstr "Відкинь <0>-ma</0> від <1>{0}</1> і додай <2>-vat</2>: <3>{1}</3>."
+
+msgid "Drop <0>-ma</0> from <1>tulema</1> and add <2>-vat</2>: <3>tulevat</3>."
+msgstr "Відкинь <0>-ma</0> від <1>tulema</1> і додай <2>-vat</2>: <3>tulevat</3>."
+
+msgid "Drop <et>-ma</et> from the <et>-ma</et> form and add <et>-vat</et>. The form is the same for every person."
+msgstr "Відкинь <et>-ma</et> від форми на <et>-ma</et> і додай <et>-vat</et>. Форма однакова для всіх осіб."
+
+msgid "Each sentence has one wrong word: a person that did not change, the wrong link word, or a -vat form that does not exist. Tap it, then type it right."
+msgstr "У кожному реченні одне хибне слово: займенник, що не змінився, не те сполучне слово або форма на -vat, якої не існує. Торкнись його, а потім впиши правильно."
+
+msgid "earlier"
+msgstr "раніше"
+
+msgid "Earlier"
+msgstr "Раніше"
+
+msgid "English usually moves the verb back in time: “She said she was ill.” Estonian usually keeps the verb as it was said. <0>Mari ütles: „Ma olen haige.“</0> becomes <1>Mari ütles, et ta on haige</1>, with <2>on</2>, not <3>oli</3>."
+msgstr "В українській дієслово зазвичай лишається в тому часі, в якому його сказали: «Марі сказала, що вона хвора». В естонській так само: <0>Mari ütles: „Ma olen haige.“</0> стає <1>Mari ütles, et ta on haige</1>, з <2>on</2>, а не <3>oli</3>."
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "For no, put <0>ei</0> before it: <1>Ta ei tulevat homme.</1> For the past, add the <2>-nud</2> form from lesson {perfect}: <3>Ta olevat eile Tallinnas käinud.</3> He is said to have been in Tallinn yesterday."
+msgstr "Для заперечення постав перед ним <0>ei</0>: <1>Ta ei tulevat homme.</1> Для минулого додай форму на <2>-nud</2> з уроку {perfect}: <3>Ta olevat eile Tallinnas käinud.</3> Кажуть, що він учора був у Таллінні."
+
+msgid "For no, put <0>ei</0> before the <1>-vat</1> form."
+msgstr "Для заперечення постав <0>ei</0> перед формою на <1>-vat</1>."
+
+msgid "From a local news site"
+msgstr "З місцевого новинного сайту"
+
+msgid "Go through the table once more, then try again."
+msgstr "Ще раз переглянь таблицю й повтори вправу."
+
+msgid "He saw her there himself, by chance."
+msgstr "Він випадково сам побачив її там."
+
+msgid "How does Kalev know that Mari went to the cinema?"
+msgstr "Звідки Калев знає, що Марі ходила в кіно?"
+
+msgid "How many days will it be closed? Write the number word as the text does."
+msgstr "Скільки днів вона буде закрита? Напиши числівник так, як у тексті."
+
+msgid "I → he or she"
+msgstr "я → він чи вона"
+
+msgid "I asked if you speak Estonian."
+msgstr "Я запитав, чи ти говориш естонською."
+
+msgid "I have → he or she has"
+msgstr "у мене є → у нього чи в неї є"
+
+msgid "Infinitive"
+msgstr "Інфінітив"
+
+msgid "is said to be"
+msgstr "кажуть, що є"
+
+msgid "is said to come"
+msgstr "кажуть, що приходить"
+
+msgid "is said to do"
+msgstr "кажуть, що робить"
+
+msgid "is said to drink"
+msgstr "кажуть, що п’є"
+
+msgid "is said to eat"
+msgstr "кажуть, що їсть"
+
+msgid "is said to go"
+msgstr "кажуть, що йде"
+
+msgid "is said to live"
+msgstr "кажуть, що живе"
+
+msgid "is said to read"
+msgstr "кажуть, що читає"
+
+msgid "is said to sleep"
+msgstr "кажуть, що спить"
+
+msgid "is said to speak"
+msgstr "кажуть, що говорить"
+
+msgid "is said to work"
+msgstr "кажуть, що працює"
+
+msgid "It is said it will rain tomorrow."
+msgstr "Кажуть, що завтра буде дощ."
+
+msgid "Its owner is selling it."
+msgstr "Власник його продає."
+
+msgid "Kalev"
+msgstr "Калев"
+
+msgid "Kalev and Liisa talk the day before a concert. Listen to them twice and answer the questions."
+msgstr "Калев і Лійса розмовляють напередодні концерту. Послухай їх двічі й дай відповіді на запитання."
+
+msgid "Kalev is said to live in Tartu now."
+msgstr "Кажуть, що Калев тепер живе в Тарту."
+
+msgid "Kalev said he now lives in Tartu."
+msgstr "Калев сказав, що тепер живе в Тарту."
+
+msgid "Kalev’s brother wants a ticket too."
+msgstr "Брат Калева теж хоче квиток."
+
+msgid "later"
+msgstr "пізніше"
+
+msgid "Later"
+msgstr "Пізніше"
+
+msgid "Liisa"
+msgstr "Лійса"
+
+msgid "Liisa is said to be coming on Saturday."
+msgstr "Кажуть, що Лійса прийде в суботу."
+
+msgid "Liisa is sure that a new boss is coming in the autumn."
+msgstr "Лійса впевнена, що восени прийде новий начальник."
+
+msgid "Liisa said she is coming on Saturday."
+msgstr "Лійса сказала, що прийде в суботу."
+
+msgid "Listen, then pick when it was true for the person who spoke: at that moment, earlier or later."
+msgstr "Послухай і вибери, коли це було правдою для того, хто говорив: у той момент, раніше чи пізніше."
+
+msgid "Listen: Kalev and Liisa"
+msgstr "Послухай розмову Калева й Лійси"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Longer verbs"
+msgstr "Довші дієслова"
+
+msgid "Make the -vat form"
+msgstr "Утвори форму на -vat"
+
+msgid "Mari asked if I am coming."
+msgstr "Марі запитала, чи я прийду."
+
+msgid "Mari has already decided to come to the concert."
+msgstr "Марі вже вирішила піти на концерт."
+
+msgid "Mari is ill"
+msgstr "Марі хворіє"
+
+msgid "Mari said she is busy."
+msgstr "Марі сказала, що вона зайнята."
+
+msgid "Mari said she is going home tomorrow."
+msgstr "Марі сказала, що завтра піде додому."
+
+msgid "Mari said she is ill."
+msgstr "Марі сказала, що вона хвора."
+
+msgid "Mari said she is waiting for the bus."
+msgstr "Марі сказала, що чекає на автобус."
+
+msgid "Mari said she lives in Tartu."
+msgstr "Марі розповіла, що живе в Тарту."
+
+msgid "Mari said she was ill yesterday."
+msgstr "Марі сказала, що вчора хворіла."
+
+msgid "Mari said the concert begins at six."
+msgstr "Марі сказала, що концерт починається о шостій."
+
+msgid "Mari says she spent yesterday at home."
+msgstr "Марі каже, що вчора була вдома."
+
+msgid "Mari told him about it herself on the phone."
+msgstr "Марі сама розповіла йому про це по телефону."
+
+msgid "Mari’s <0>mul</0> becomes <1>tal</1> for you: it is about her."
+msgstr "Коли йдеться про Марі, <0>mul</0> стає <1>tal</1>: це про неї."
+
+msgid "my → his or her"
+msgstr "мій → його чи її"
+
+msgid "Nearly. Check the link word and the form in the ones you missed."
+msgstr "Майже. Перевір сполучне слово й форму в реченнях, де була помилка."
+
+msgid "Nearly. Check the ones you missed against the table."
+msgstr "Майже. Звір ті, де помилився, з таблицею."
+
+msgid "Nearly. Check the person words in the ones you missed."
+msgstr "Майже. Перевір займенники в реченнях, де була помилка."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Майже. Ще раз послухай ті, де є помилка."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Майже. Прочитай пояснення під кожною помилкою."
+
+msgid "News from the library"
+msgstr "Новини з бібліотеки"
+
+msgid "Next to the railway station"
+msgstr "Поруч із залізничним вокзалом"
+
+msgid "On Friday, if she feels better by then"
+msgstr "У п’ятницю, якщо їй до того часу стане краще"
+
+msgid "On Monday, if she is well"
+msgstr "У понеділок, якщо одужає"
+
+msgid "On the old town square"
+msgstr "На площі Старого міста"
+
+msgid "only passed on"
+msgstr "лише переказано"
+
+msgid "Only passed on"
+msgstr "Лише переказано"
+
+msgid "Passes it on"
+msgstr "Передає далі"
+
+msgid "Peeter asked if she is at home."
+msgstr "Пеетер запитав, чи вона вдома."
+
+msgid "Peeter is coming tomorrow"
+msgstr "Пеетер прийде завтра"
+
+msgid "Peeter said he drove to Tartu yesterday."
+msgstr "Пеетер сказав, що вчора поїхав до Тарту."
+
+msgid "Peeter said he is coming tomorrow."
+msgstr "Пеетер сказав, що прийде завтра."
+
+msgid "Peeter said he is studying Estonian."
+msgstr "Пеетер сказав, що вчить естонську."
+
+msgid "Peeter said he went to Tallinn yesterday."
+msgstr "Пеетер розповів, що вчора їздив до Таллінна."
+
+msgid "Peeter said he went to Tallinn."
+msgstr "Пеетер розповів, що їздив до Таллінна."
+
+msgid "Peeter said it will rain tomorrow."
+msgstr "Пеетер сказав, що завтра буде дощ."
+
+msgid "Questions, and how you report them"
+msgstr "Питання й те, як їх переказати"
+
+msgid "Read a short news item about a library, as in the reading part of the B1 exam. Notice which news comes from a named person and which only passes on what is said."
+msgstr "Прочитай коротку новину про бібліотеку, як у частині іспиту B1 на читання. Зверни увагу, яка новина йде від названої людини, а яка лише передає те, що кажуть."
+
+msgid "Read the explanation under each one you missed, then try again."
+msgstr "Прочитай пояснення під кожним реченням, де була помилка, і спробуй знову."
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Що запам’ятати» нижче, потім спробуй знову."
+
+msgid "Readers wanted a new name."
+msgstr "Читачі хотіли нової назви."
+
+msgid "Report each question."
+msgstr "Перекажи кожне питання."
+
+msgid "Report each sentence. Keep the tense, change the person."
+msgstr "Перекажи кожне речення. Час лишається, змінюється особа."
+
+msgid "report it"
+msgstr "перекажи"
+
+msgid "report the question"
+msgstr "перекажи питання"
+
+msgid "Reportedly, he is coming tomorrow."
+msgstr "Кажуть, що він прийде завтра."
+
+msgid "Reportedly, she is ill."
+msgstr "Кажуть, що вона хвора."
+
+msgid "Reportedly, she is ill. (use the -vat form)"
+msgstr "Кажуть, що вона хвора. (використай форму на -vat)"
+
+msgid "Reportedly, she isn’t coming tomorrow. (use the -vat form)"
+msgstr "Кажуть, що вона завтра не прийде. (використай форму на -vat)"
+
+msgid "Reporting with <et>küsis, kas</et>"
+msgstr "Переказ із <et>küsis, kas</et>"
+
+msgid "Reporting with <et>ütles, et</et>"
+msgstr "Переказ із <et>ütles, et</et>"
+
+msgid "said"
+msgstr "сказав, сказала"
+
+msgid "Said by someone, or passed on?"
+msgstr "Сказав хтось чи лише передано?"
+
+msgid "Said, or passed on"
+msgstr "Сказано чи передано"
+
+msgid "Said, or passed on?"
+msgstr "Сказано чи передано?"
+
+msgid "Say what they asked"
+msgstr "Перекажи, що вони запитали"
+
+msgid "Say what they said"
+msgstr "Перекажи, що вони сказали"
+
+msgid "Says who said it"
+msgstr "Називає того, хто сказав"
+
+msgid "Short verbs"
+msgstr "Короткі дієслова"
+
+msgid "So the tense tells you when the thing was true for the speaker: <0>ta oli eile haige</0> is about yesterday, and <1>ta tuleb homme</1> is about tomorrow, because the present tense also speaks about what comes next."
+msgstr "Отже, час показує, коли це було правдою для мовця: <0>ta oli eile haige</0> — про вчора, а <1>ta tuleb homme</1> — про завтра, бо теперішній час говорить і про те, що буде далі."
+
+msgid "someone named said it"
+msgstr "сказав названий хтось"
+
+msgid "Someone named said it"
+msgstr "Сказав названий хтось"
+
+msgid "Someone told him, but not who."
+msgstr "Хтось розповів, але не сказав хто."
+
+msgid "Spoken, <0>-vat</0> sounds almost the same as the <1>-vad</1> of <2>nad tulevad</2>, they are coming. The subject tells you which: <3>ta tulevat</3> or <4>nad tulevad</4>."
+msgstr "У мовленні <0>-vat</0> звучить майже так само, як <1>-vad</1> у <2>nad tulevad</2>, «вони приходять». Яка це форма, показує підмет: <3>ta tulevat</3> чи <4>nad tulevad</4>."
+
+msgid "Ta elavat nüüd Tartus."
+msgstr "Ta elavat nüüd Tartus."
+
+msgid "Ta joovat iga päev kohvi."
+msgstr "Ta joovat iga päev kohvi."
+
+msgid "Ta küsis, kas ma tulen."
+msgstr "Ta küsis, kas ma tulen."
+
+msgid "Ta lugevat iga päev ajalehte."
+msgstr "Ta lugevat iga päev ajalehte."
+
+msgid "Ta magavat terve päeva."
+msgstr "Ta magavat terve päeva."
+
+msgid "Ta minevat homme koju."
+msgstr "Ta minevat homme koju."
+
+msgid "Ta olevat haige."
+msgstr "Ta olevat haige."
+
+msgid "Ta rääkis, et ta käis Tallinnas."
+msgstr "Ta rääkis, et ta käis Tallinnas."
+
+msgid "Ta rääkivat hästi eesti keelt."
+msgstr "Ta rääkivat hästi eesti keelt."
+
+msgid "Ta söövat ainult kala."
+msgstr "Ta söövat ainult kala."
+
+msgid "Ta tegevat palju tööd."
+msgstr "Ta tegevat palju tööd."
+
+msgid "Ta töötavat koolis."
+msgstr "Ta töötavat koolis."
+
+msgid "Ta tulevat homme."
+msgstr "Ta tulevat homme."
+
+msgid "Ta ütles, et tal on kiire."
+msgstr "Ta ütles, et tal on kiire."
+
+msgid "Take the <0>-ma</0> form, drop <1>-ma</1> and add <2>-vat</2>: <3>tulema</3> gives <4/>. The form is the same for every person, so you never change it for <5>ma</5> or <6>nad</6>."
+msgstr "Візьми форму на <0>-ma</0>, відкинь <1>-ma</1> і додай <2>-vat</2>: з <3>tulema</3> виходить <4/>. Форма однакова для всіх осіб, тож її не змінюють ні для <5>ma</5>, ні для <6>nad</6>."
+
+msgid "Take the <0>-ma</0> form, drop <1>-ma</1> and add <2>-vat</2>: <3>tulema</3>, <4>tulevat</4>."
+msgstr "Візьми форму на <0>-ma</0>, відкинь <1>-ma</1> і додай <2>-vat</2>: <3>tulema</3>, <4>tulevat</4>."
+
+msgid "Tap a form"
+msgstr "Торкнися форми"
+
+msgid "Tap a sentence"
+msgstr "Торкнись речення"
+
+msgid "Tap the pairs above once more, then try again."
+msgstr "Ще раз торкнися пар речень угорі й спробуй знову."
+
+msgid "Tap the sentences above once more, then try again."
+msgstr "Ще раз торкнись речень вище, потім спробуй знову."
+
+msgid "Telling what someone asked"
+msgstr "Як переказати, про що запитали"
+
+msgid "Telling what someone said"
+msgstr "Як переказати, що сказали"
+
+msgid "That she is busy and cannot come in today."
+msgstr "Що вона дуже зайнята й сьогодні прийти не може."
+
+msgid "That she is going abroad."
+msgstr "Що вона їде за кордон."
+
+msgid "That she is ill and not coming to work."
+msgstr "Що вона хвора й не прийде на роботу."
+
+msgid "the -vat form"
+msgstr "форма на -vat"
+
+msgid "The -vat form"
+msgstr "Форма на -vat"
+
+msgid "the <0>-vat</0> form"
+msgstr "форма на <0>-vat</0>"
+
+msgid "The <0>-vat</0> form is the <1>-ma</1> form without <2>-ma</2>, plus <3>-vat</3>: <4>tulevat</4>, <5>olevat</5>. It has no person ending, and <6>ei</6> before it makes it no: <7>Ta ei tulevat.</7>"
+msgstr "Форма на <0>-vat</0> — це форма на <1>-ma</1> без <2>-ma</2> плюс <3>-vat</3>: <4>tulevat</4>, <5>olevat</5>. Особового закінчення вона не має, а <6>ei</6> перед нею робить заперечення: <7>Ta ei tulevat.</7>"
+
+msgid "The <0>-vat</0> form passes on what is said about someone, usually without saying who said it: <1/> in <2>Ta olevat haige.</2> He is said to be ill; they say he is ill."
+msgstr "Форма на <0>-vat</0> передає те, що кажуть про когось, зазвичай не називаючи, хто це сказав: <1/> у <2>Ta olevat haige.</2> Кажуть, що він хворий."
+
+msgid "The <et>-vat</et> form"
+msgstr "Форма на <et>-vat</et>"
+
+msgid "The city has already confirmed that a shop will open in the old building."
+msgstr "Місто вже підтвердило, що в старій будівлі відкриється магазин."
+
+msgid "The concert is said to begin at six."
+msgstr "Кажуть, що концерт починається о шостій."
+
+msgid "The form ends in <0>-vat</0>, whoever the person is: <1>olevat</1>."
+msgstr "Форма закінчується на <0>-vat</0>, хоч би про кого йшлося: <1>olevat</1>."
+
+msgid "The library will be closed for the whole time of the move."
+msgstr "Бібліотека буде закрита весь час переїзду."
+
+msgid "The old building is too small to hold all the books."
+msgstr "Стара будівля замала, щоб умістити всі книжки."
+
+msgid "The person changed to <0>ta</0>, so the verb changes too: <1>tuleb</1>, not <2>tulen</2>."
+msgstr "Особа змінилася на <0>ta</0>, тож дієслово теж змінюється: <1>tuleb</1>, а не <2>tulen</2>."
+
+msgid "The person words change with the speaker. Mari’s <0>ma</0> becomes <1>ta</1> and the verb follows: <2>olen</2> becomes <3>on</3>. Tap a sentence to hear it."
+msgstr "Займенники змінюються разом із мовцем. Слово <0>ma</0> у Марі стає <1>ta</1>, і дієслово йде за ним: <2>olen</2> стає <3>on</3>. Торкнись речення, щоб його почути."
+
+msgid "The present tense with <0>homme</0>, tomorrow, speaks about what comes next."
+msgstr "Теперішній час із <0>homme</0>, «завтра», говорить про те, що буде далі."
+
+msgid "The reported sentence follows <0>et</0>. The person words change; the rest stays."
+msgstr "Переказане речення йде після <0>et</0>. Займенники змінюються, решта лишається."
+
+msgid "The same news said by someone and passed on"
+msgstr "Та сама новина: сказана кимось і лише передана"
+
+msgid "The same rule works for short verbs: <0>olema</0>, <1>olevat</1>; <2>sööma</2>, <3>söövat</3>."
+msgstr "Те саме правило працює й для коротких дієслів: <0>olema</0>, <1>olevat</1>; <2>sööma</2>, <3>söövat</3>."
+
+msgid "The verb is in the past because the person spoke about something earlier."
+msgstr "Дієслово в минулому часі, бо людина говорила про щось раніше."
+
+msgid "The verb is in the present because the person spoke about the present."
+msgstr "Дієслово в теперішньому часі, бо людина говорила про теперішнє."
+
+msgid "The verb usually keeps its tense"
+msgstr "Дієслово зазвичай лишається в тому ж часі"
+
+msgid "The verb usually keeps the tense it had when it was said, so it shows when the thing was true for the speaker."
+msgstr "Дієслово зазвичай лишається в тому часі, в якому його сказали, тож воно показує, коли це було правдою для мовця."
+
+msgid "The verb usually keeps the tense it had when it was said: <0>Ta ütles, et ta on haige</0> for “I am ill”, <1>Ta ütles, et ta oli eile haige</1> for “I was ill yesterday”. English moves the verb back; Estonian usually does not."
+msgstr "Дієслово зазвичай лишається в тому часі, в якому його сказали: <0>Ta ütles, et ta on haige</0> для «я хворий», <1>Ta ütles, et ta oli eile haige</1> для «я вчора хворів». Українське дієслово поводиться так само."
+
+msgid "Things people said, and how you report them"
+msgstr "Те, що казали люди, і як це переказати"
+
+msgid "to be"
+msgstr "бути"
+
+msgid "to come"
+msgstr "приходити"
+
+msgid "to do, to make"
+msgstr "робити"
+
+msgid "to drink"
+msgstr "пити"
+
+msgid "to eat"
+msgstr "їсти"
+
+msgid "to go"
+msgstr "іти"
+
+msgid "to live"
+msgstr "жити"
+
+msgid "to read"
+msgstr "читати"
+
+msgid "To report what someone said, put a comma and <0>et</0> after <1/> or <2/>, then the sentence itself: <3>Mari ütles: „Ma olen väsinud.“</3> becomes <4>Mari ütles, et ta on väsinud.</4> Mari said she is tired."
+msgstr "Щоб переказати, що сказали, постав кому й <0>et</0> після <1/> або <2/>, а далі саме речення: <3>Mari ütles: „Ma olen väsinud.“</3> стає <4>Mari ütles, et ta on väsinud.</4> Марі сказала, що вона втомлена."
+
+msgid "To report what someone said, put a comma and <0>et</0> after <1>ütles</1> or <2>rääkis</2>. The person words change with the speaker: <3>ma</3> becomes <4>ta</4>, <5>mul</5> becomes <6>tal</6>, and the verb takes the new person’s ending."
+msgstr "Щоб переказати, що сказали, постав кому й <0>et</0> після <1>ütles</1> або <2>rääkis</2>. Займенники змінюються залежно від мовця: <3>ma</3> стає <4>ta</4>, <5>mul</5> стає <6>tal</6>, а дієслово отримує закінчення нової особи."
+
+msgid "to sleep"
+msgstr "спати"
+
+msgid "to talk, to tell"
+msgstr "говорити, розповідати"
+
+msgid "to work"
+msgstr "працювати"
+
+msgid "told, talked"
+msgstr "розповів, розповіла"
+
+msgid "Tomorrow, but only for a few hours"
+msgstr "Завтра, але лише на кілька годин"
+
+msgid "Two friends talk about a concert"
+msgstr "Двоє друзів говорять про концерт"
+
+msgid "Type the form for each verb."
+msgstr "Напиши форму для кожного дієслова."
+
+msgid "Verbs"
+msgstr "Дієслова"
+
+msgid "Verbs and their -vat forms"
+msgstr "Дієслова та їхні форми на -vat"
+
+msgid "what"
+msgstr "що"
+
+msgid "What did Kalev’s boss ask?"
+msgstr "Про що запитав начальник Калева?"
+
+msgid "What did Mari say when she phoned Liisa?"
+msgstr "Що сказала Марі, коли подзвонила Лійсі?"
+
+msgid "What is happening to the library?"
+msgstr "Що відбувається з бібліотекою?"
+
+msgid "What was said"
+msgstr "Що сказали"
+
+msgid "What you report"
+msgstr "Що ти переказуєш"
+
+msgid "When does Mari say she will be back at work?"
+msgstr "Коли, за словами Марі, вона повернеться на роботу?"
+
+msgid "When does the concert begin?"
+msgstr "Коли починається концерт?"
+
+msgid "When is the opening planned? Write it as the text does."
+msgstr "Коли заплановано відкриття? Напиши так, як у тексті."
+
+msgid "When the person was speaking to you, <0>sa</0> becomes <1>ma</1>, and the verb takes <2>ma</2>’s ending: <3>räägid</3> becomes <4>räägin</4>."
+msgstr "Коли людина говорила до тебе, <0>sa</0> стає <1>ma</1>, а дієслово отримує закінчення <2>ma</2>: <3>räägid</3> стає <4>räägin</4>."
+
+msgid "When was it true?"
+msgstr "Коли це було правдою?"
+
+msgid "where"
+msgstr "де"
+
+msgid "Where is the new building?"
+msgstr "Де нова будівля?"
+
+msgid "Whether anyone can work later on Friday."
+msgstr "Чи може хтось у п’ятницю працювати довше."
+
+msgid "Whether anyone has a concert ticket."
+msgstr "Чи в когось є квиток на концерт."
+
+msgid "Whether Mari is ill."
+msgstr "Чи Марі хвора."
+
+msgid "Who is said to come to the opening? Write it as the text does."
+msgstr "Хто, кажуть, прийде на відкриття? Напиши так, як у тексті."
+
+msgid "Why does the library move?"
+msgstr "Чому бібліотека переїжджає?"
+
+msgid "Write each sentence. Where the English says <0>reportedly</0>, use the <1>-vat</1> form; otherwise report with <2>et</2> or <3>kas</3>."
+msgstr "Напиши кожне речення. Де в англійській є <0>reportedly</0>, використай форму на <1>-vat</1>, в інших випадках перекажи через <2>et</2> або <3>kas</3>."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "yes or no"
+msgstr "так чи ні"
+
+msgid "you → I"
+msgstr "ти → я"
+
+msgid "You will meet <0>-vat</0> mainly in news and reports, such as <1>Kontsert algavat kell kuus.</1> In everyday talk people usually say who said it, with <2>ütles, et</2>. Tap the pairs, then listen and pick."
+msgstr "Форму на <0>-vat</0> ти найчастіше зустрінеш у новинах і звітах, наприклад <1>Kontsert algavat kell kuus.</1> У повсякденній мові зазвичай кажуть, хто це сказав, за допомогою <2>ütles, et</2>. Торкнись пар, а потім послухай і вибери."

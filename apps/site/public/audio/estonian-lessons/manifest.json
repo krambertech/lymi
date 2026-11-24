@@ -28987,5 +28987,712 @@
     "text": "Ma ostan leiba koju minnes.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/u2tles": {
+    "text": "ütles",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ra2a2kis": {
+    "text": "rääkis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ku2sis": {
+    "text": "küsis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ma-tulen-homme": {
+    "text": "Ma tulen homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-ta-tuleb-homme": {
+    "text": "Mari ütles, et ta tuleb homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mul-on-ku2lm": {
+    "text": "Mul on külm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-u2tles-et-tal-on-ku2lm": {
+    "text": "Peeter ütles, et tal on külm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/sa-ra2a2gid-ha2sti": {
+    "text": "Sa räägid hästi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-ma-ra2a2gin-ha2sti": {
+    "text": "Mari ütles, et ma räägin hästi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mu-vend-to2o2tab-koolis": {
+    "text": "Mu vend töötab koolis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ra2a2kis-et-tema-vend-to2o2tab-koolis": {
+    "text": "Peeter rääkis, et tema vend töötab koolis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/kas-sul-on-kiire": {
+    "text": "Kas sul on kiire?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ku2sis-kas-mul-on-kiire": {
+    "text": "Peeter küsis, kas mul on kiire.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/kus-sa-elad": {
+    "text": "Kus sa elad?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-ku2sis-kus-ma-elan": {
+    "text": "Mari küsis, kus ma elan.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mida-sa-teed": {
+    "text": "Mida sa teed?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ku2sis-mida-ma-teen": {
+    "text": "Peeter küsis, mida ma teen.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-ta-on-haige": {
+    "text": "Mari ütles, et ta on haige.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-ta-oli-eile-haige": {
+    "text": "Mari ütles, et ta oli eile haige.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-u2tles-et-ta-tuleb-homme": {
+    "text": "Peeter ütles, et ta tuleb homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ra2a2kis-et-ta-ka2is-eile-tallinnas": {
+    "text": "Peeter rääkis, et ta käis eile Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-ra2a2kis-et-ta-elab-tartus": {
+    "text": "Mari rääkis, et ta elab Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-ta-la2heb-homme-koju": {
+    "text": "Mari ütles, et ta läheb homme koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-u2tles-et-ta-o3pib-eesti-keelt": {
+    "text": "Peeter ütles, et ta õpib eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ra2a2kis-et-ta-so3itis-eile-tartusse": {
+    "text": "Peeter rääkis, et ta sõitis eile Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/tulema": {
+    "text": "tulema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/tulevat": {
+    "text": "tulevat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-tulevat-homme": {
+    "text": "Ta tulevat homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/lugema": {
+    "text": "lugema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/lugevat": {
+    "text": "lugevat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-lugevat-iga-pa2ev-ajalehte": {
+    "text": "Ta lugevat iga päev ajalehte.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/elama": {
+    "text": "elama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/elavat": {
+    "text": "elavat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-elavat-nu2u2d-tartus": {
+    "text": "Ta elavat nüüd Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/to2o2tama": {
+    "text": "töötama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/to2o2tavat": {
+    "text": "töötavat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-to2o2tavat-koolis": {
+    "text": "Ta töötavat koolis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ra2a2kima": {
+    "text": "rääkima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ra2a2kivat": {
+    "text": "rääkivat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-ra2a2kivat-ha2sti-eesti-keelt": {
+    "text": "Ta rääkivat hästi eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/magama": {
+    "text": "magama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/magavat": {
+    "text": "magavat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-magavat-terve-pa2eva": {
+    "text": "Ta magavat terve päeva.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/olema": {
+    "text": "olema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/olevat": {
+    "text": "olevat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-olevat-haige": {
+    "text": "Ta olevat haige.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/minema": {
+    "text": "minema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/minevat": {
+    "text": "minevat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-minevat-homme-koju": {
+    "text": "Ta minevat homme koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/tegema": {
+    "text": "tegema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/tegevat": {
+    "text": "tegevat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-tegevat-palju-to2o2d": {
+    "text": "Ta tegevat palju tööd.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/jooma": {
+    "text": "jooma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/joovat": {
+    "text": "joovat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-joovat-iga-pa2ev-kohvi": {
+    "text": "Ta joovat iga päev kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/so2o2ma": {
+    "text": "sööma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/so2o2vat": {
+    "text": "söövat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-so2o2vat-ainult-kala": {
+    "text": "Ta söövat ainult kala.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-olevat-haige": {
+    "text": "Mari olevat haige.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-tulevat-homme": {
+    "text": "Peeter tulevat homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/liisa-u2tles-et-ta-tuleb-laupa2eval": {
+    "text": "Liisa ütles, et ta tuleb laupäeval.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/liisa-tulevat-laupa2eval": {
+    "text": "Liisa tulevat laupäeval.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/kalev-ra2a2kis-et-ta-elab-nu2u2d-tartus": {
+    "text": "Kalev rääkis, et ta elab nüüd Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/kalev-elavat-nu2u2d-tartus": {
+    "text": "Kalev elavat nüüd Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/homme-sadavat-vihma": {
+    "text": "Homme sadavat vihma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-u2tles-et-homme-sajab-vihma": {
+    "text": "Peeter ütles, et homme sajab vihma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/kontsert-algavat-kell-kuus": {
+    "text": "Kontsert algavat kell kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-kontsert-algab-kell-kuus": {
+    "text": "Mari ütles, et kontsert algab kell kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-ta-on-va2sinud": {
+    "text": "Mari ütles, et ta on väsinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-u2tles-et-tal-on-kiire": {
+    "text": "Peeter ütles, et tal on kiire.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-ra2a2kis-et-ta-ka2is-eile-tallinnas": {
+    "text": "Mari rääkis, et ta käis eile Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-u2tles-et-ta-ei-tule": {
+    "text": "Peeter ütles, et ta ei tule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-mulle-et-ma-olen-va2sinud": {
+    "text": "Mari ütles mulle, et ma olen väsinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-ra2a2kis-et-tema-o3de-elab-tartus": {
+    "text": "Mari rääkis, et tema õde elab Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-u2tles-et-tal-ei-ole-aega": {
+    "text": "Peeter ütles, et tal ei ole aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-ra2a2kis-et-ta-o3pib-eesti-keelt": {
+    "text": "Mari rääkis, et ta õpib eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-ku2sis-kas-ma-tulen": {
+    "text": "Mari küsis, kas ma tulen.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ku2sis-kas-mul-on-aega": {
+    "text": "Peeter küsis, kas mul on aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-ku2sis-kas-peeter-on-kodus": {
+    "text": "Mari küsis, kas Peeter on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ma-ku2sisin-marilt-kas-ta-on-haige": {
+    "text": "Ma küsisin Marilt, kas ta on haige.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ku2sis-millal-ma-tulen": {
+    "text": "Peeter küsis, millal ma tulen.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-ku2sis-kas-ma-ra2a2gin-eesti-keelt": {
+    "text": "Mari küsis, kas ma räägin eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-ta-ootab-bussi": {
+    "text": "Mari ütles, et ta ootab bussi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ku2sis-kas-ta-on-kodus": {
+    "text": "Peeter küsis, kas ta on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ma-ku2sisin-kas-sa-ra2a2gid-eesti-keelt": {
+    "text": "Ma küsisin, kas sa räägid eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-ei-tulevat-homme": {
+    "text": "Ta ei tulevat homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-tal-on-kiire": {
+    "text": "Mari ütles, et tal on kiire.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ra2a2kis-et-ta-ka2is-tallinnas": {
+    "text": "Peeter rääkis, et ta käis Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/c-liisa": {
+    "text": "Tere, Liisa! Kuidas sul täna läheb? Tere, Kalev! Täna on mul väga kiire. Ülemus ütles hommikul, et ta tahab aruannet täna õhtuks. Kas ta küsis, kas sa jõuad? Küsis küll. Ma ütlesin, et ma proovin. Aga kõigepealt helistas mulle Mari. Mis ta ütles? Ta ütles, et ta on haige ja ei tule täna tööle. Oi, see ei ole hea. Kas ta tuleb laupäeval meiega kontserdile? Ma küsisin just seda. Ta ütles, et ta ei tea veel. Kas sa küsisid, kas ta vajab midagi? Küsisin. Ta ütles, et ta vajab ainult und. Hea. Kas ta ütles ka, millal ta tagasi tuleb? Ta ütles, et ta tuleb esmaspäeval, kui ta on terve. Aga mulle räägiti, et Mari olevat eile õhtul kinos käinud. Tõesti? Mari rääkis mulle, et ta oli eile terve päeva kodus. Siis ei ole see vist tõsi. Inimesed räägivad nii palju. Täpselt. Kuule, raadios öeldi, et laupäeval sadavat vihma. Siis võtame vihmavarju kaasa. Kas kontsert on õues? Ei, see on saalis. Piletil on kirjas, et kontsert algab kell kuus. Hea küll. Ma helistasin eile kassasse ja küsisin, kas piletid on veel alles. Mida nad vastasid? Nad ütlesid, et on küll, aga neid on väga vähe. Siis osta need varsti. Naabrid rääkisid, et kontsert olevat peaaegu välja müüdud. Jah, ma ostan need täna õhtul. Mu vend ütles, et ta tuleb ka. Ta küsis, kas ma saan talle pileti osta. Kas sa oled sellel kontserdil varem käinud? Jah, eelmisel aastal. Ma ütlesin siis kõigile, et see oli väga hea kontsert. Mu õde rääkis, et ta oli seal juba kolm korda. Kas talle meeldis? Ta ütles, et meeldis väga ja et ta läheb uuesti. Minu ülemus küsis täna, kas keegi tahab reedel kauem töötada. Ja mida sa ütlesid? Ma ütlesin, et ma tulen hea meelega. Mu ema helistas hommikul ja küsis, kas ma tulen pühapäeval sööma. Ma ütlesin, et ma ei saa, sest mul on kontsert. Ja mis ta vastas? Ta ütles, et siis tuleb ta ise meile. Kolleegid räägivad ka, et sügisel tulevat meile uus ülemus. Oi! Kes sulle seda rääkis? Ei tea. Keegi ütles seda koridoris. Siis ära usu liiga palju. Ma helistan Marile homme hommikul ja küsin, kas ta tuleb. Hästi. Anna mulle siis teada. Nägemist, Kalev! Nägemist, Liisa! Kohtume laupäeval.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Liisa!",
+          "Kuidas sul täna läheb?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Kalev!",
+          "Täna on mul väga kiire.",
+          "Ülemus ütles hommikul, et ta tahab aruannet täna õhtuks."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas ta küsis, kas sa jõuad?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Küsis küll.",
+          "Ma ütlesin, et ma proovin.",
+          "Aga kõigepealt helistas mulle Mari."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mis ta ütles?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ta ütles, et ta on haige ja ei tule täna tööle."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Oi, see ei ole hea.",
+          "Kas ta tuleb laupäeval meiega kontserdile?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ma küsisin just seda.",
+          "Ta ütles, et ta ei tea veel."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas sa küsisid, kas ta vajab midagi?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Küsisin.",
+          "Ta ütles, et ta vajab ainult und."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hea.",
+          "Kas ta ütles ka, millal ta tagasi tuleb?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ta ütles, et ta tuleb esmaspäeval, kui ta on terve."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Aga mulle räägiti, et Mari olevat eile õhtul kinos käinud."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tõesti?",
+          "Mari rääkis mulle, et ta oli eile terve päeva kodus."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Siis ei ole see vist tõsi.",
+          "Inimesed räägivad nii palju."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Täpselt.",
+          "Kuule, raadios öeldi, et laupäeval sadavat vihma."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Siis võtame vihmavarju kaasa.",
+          "Kas kontsert on õues?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, see on saalis.",
+          "Piletil on kirjas, et kontsert algab kell kuus."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hea küll.",
+          "Ma helistasin eile kassasse ja küsisin, kas piletid on veel alles."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mida nad vastasid?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Nad ütlesid, et on küll, aga neid on väga vähe."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Siis osta need varsti.",
+          "Naabrid rääkisid, et kontsert olevat peaaegu välja müüdud."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, ma ostan need täna õhtul.",
+          "Mu vend ütles, et ta tuleb ka.",
+          "Ta küsis, kas ma saan talle pileti osta."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas sa oled sellel kontserdil varem käinud?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, eelmisel aastal.",
+          "Ma ütlesin siis kõigile, et see oli väga hea kontsert."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mu õde rääkis, et ta oli seal juba kolm korda."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas talle meeldis?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ta ütles, et meeldis väga ja et ta läheb uuesti."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Minu ülemus küsis täna, kas keegi tahab reedel kauem töötada."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ja mida sa ütlesid?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma ütlesin, et ma tulen hea meelega."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mu ema helistas hommikul ja küsis, kas ma tulen pühapäeval sööma.",
+          "Ma ütlesin, et ma ei saa, sest mul on kontsert."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ja mis ta vastas?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ta ütles, et siis tuleb ta ise meile.",
+          "Kolleegid räägivad ka, et sügisel tulevat meile uus ülemus."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Oi!",
+          "Kes sulle seda rääkis?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei tea.",
+          "Keegi ütles seda koridoris."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Siis ära usu liiga palju.",
+          "Ma helistan Marile homme hommikul ja küsin, kas ta tuleb."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hästi.",
+          "Anna mulle siis teada.",
+          "Nägemist, Kalev!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Nägemist, Liisa!",
+          "Kohtume laupäeval."
+        ]
+      }
+    ]
   }
 }

@@ -544,7 +544,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 24,
         blurb: msg`A free Estonian lesson on joining clauses: et (that, so that), sest and kuna (because), kui (when, if) and nii et (so); how to tell a reason from a result, the comma that usually comes before the linking word, and where the verb usually goes after it. Every sentence is read aloud.`,
       },
-      { name: msg`Relative clauses`, et: "Raamat, mille ostsin" },
+      {
+        slug: "raamat-mille-ostsin",
+        name: msg`Relative clauses`,
+        title: msg`Estonian relative clauses: who, which and where`,
+        et: "Raamat, mille ostsin",
+        minutes: 28,
+        blurb: msg`A free Estonian lesson on relative clauses: mis, which usually follows a thing or an idea, and kes, which follows a person (raamat, mille ma ostsin; naine, kellega ma rääkisin), the case the word takes in its own clause (kelle, keda, mille, mida), kus for places, and the commas around the clause. Every sentence is read aloud.`,
+      },
       { name: msg`Reported speech`, et: "Ta olevat haige" },
       {
         slug: "uudised",

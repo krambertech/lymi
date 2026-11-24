@@ -13999,6 +13999,582 @@ const DES_CLIPS: Record<string, Clip> = {
   "c-liisa": DES_CONVERSATION,
 };
 
+const REL_BOUGHT: readonly [string, ...string[]] = [
+  "Raamat, mille ma ostsin, on huvitav.",
+  "Raamat, mida ma ostsin, on huvitav.",
+  "Raamat, mille mina ostsin, on huvitav.",
+  "Raamat, mille ostsin, on huvitav.",
+  "Raamat, mida mina ostsin, on huvitav.",
+  "Raamat, mida ostsin, on huvitav.",
+];
+
+const REL_KNOWN: readonly [string, ...string[]] = [
+  "Mees, keda ma tunnen, elab Tartus.",
+  "Tartus elab mees, keda ma tunnen.",
+  "Mees, keda mina tunnen, elab Tartus.",
+  "Mees, keda tunnen, elab Tartus.",
+  "Tartus elab mees, keda mina tunnen.",
+  "Tartus elab mees, keda tunnen.",
+];
+
+const REL_TALKED: readonly [string, ...string[]] = [
+  "Naine, kellega ma rääkisin, on õpetaja.",
+  "Õpetaja on naine, kellega ma rääkisin.",
+  "Naine, kellega mina rääkisin, on õpetaja.",
+  "Naine, kellega rääkisin, on õpetaja.",
+  "Õpetaja on naine, kellega mina rääkisin.",
+  "Õpetaja on naine, kellega rääkisin.",
+];
+
+const REL_WAITING: readonly [string, ...string[]] = [
+  "Film, mida ma ootan, on pikk.",
+  "Pikk on film, mida ma ootan.",
+  "Film, mida mina ootan, on pikk.",
+  "Film, mida ootan, on pikk.",
+  "Pikk on film, mida mina ootan.",
+  "Pikk on film, mida ootan.",
+];
+
+const REL_LIVE: readonly [string, ...string[]] = [
+  "Maja, kus ma elan, on vana.",
+  "Maja, milles ma elan, on vana.",
+  "Maja, kus mina elan, on vana.",
+  "Maja, kus elan, on vana.",
+  "Maja, milles mina elan, on vana.",
+  "Maja, milles elan, on vana.",
+];
+
+const REL_CHILD: readonly [string, ...string[]] = [
+  "Laps, kes mängib õues, on mu poeg.",
+  "Laps, kes mängib õues, on minu poeg.",
+  "Laps, kes õues mängib, on mu poeg.",
+  "Laps, kes õues mängib, on minu poeg.",
+  "Mu poeg on laps, kes mängib õues.",
+  "Minu poeg on laps, kes mängib õues.",
+  "Mu poeg on laps, kes õues mängib.",
+  "Minu poeg on laps, kes õues mängib.",
+];
+
+const REL_PHONED: readonly [string, ...string[]] = [
+  "Sõber, kellele ma helistasin, on Tallinnas.",
+  "Tallinnas on sõber, kellele ma helistasin.",
+  "Sõber, kellele mina helistasin, on Tallinnas.",
+  "Sõber, kellele helistasin, on Tallinnas.",
+  "Tallinnas on sõber, kellele mina helistasin.",
+  "Tallinnas on sõber, kellele helistasin.",
+];
+
+const REL_SHOP: readonly [string, ...string[]] = [
+  "Naine, kes töötab poes, on mu ema.",
+  "Naine, kes töötab poes, on minu ema.",
+  "Naine, kes poes töötab, on mu ema.",
+  "Naine, kes poes töötab, on minu ema.",
+  "Mu ema on naine, kes töötab poes.",
+  "Minu ema on naine, kes töötab poes.",
+  "Mu ema on naine, kes poes töötab.",
+  "Minu ema on naine, kes poes töötab.",
+];
+
+const REL_CAR: readonly [string, ...string[]] = [
+  "Auto, mis seisab õues, on punane.",
+  "Auto, mis õues seisab, on punane.",
+  "Punane on auto, mis seisab õues.",
+  "Punane on auto, mis õues seisab.",
+];
+
+const REL_WOMAN_TALK: readonly [string, ...string[]] = [
+  "Ma tunnen naist, kellega sa rääkisid.",
+  "Mina tunnen naist, kellega sa rääkisid.",
+  "Tunnen naist, kellega sa rääkisid.",
+  "Ma tunnen naist, kellega sina rääkisid.",
+  "Ma tunnen naist, kellega rääkisid.",
+  "Mina tunnen naist, kellega sina rääkisid.",
+  "Mina tunnen naist, kellega rääkisid.",
+  "Tunnen naist, kellega sina rääkisid.",
+  "Tunnen naist, kellega rääkisid.",
+];
+
+const REL_CAR_DRIVE: readonly [string, ...string[]] = [
+  "Ma nägin autot, millega sa sõitsid.",
+  "Mina nägin autot, millega sa sõitsid.",
+  "Nägin autot, millega sa sõitsid.",
+  "Ma nägin autot, millega sina sõitsid.",
+  "Ma nägin autot, millega sõitsid.",
+  "Mina nägin autot, millega sina sõitsid.",
+  "Mina nägin autot, millega sõitsid.",
+  "Nägin autot, millega sina sõitsid.",
+  "Nägin autot, millega sõitsid.",
+];
+
+const REL_MAN_WAIT: readonly [string, ...string[]] = [
+  "Ma tunnen meest, keda sa ootad.",
+  "Mina tunnen meest, keda sa ootad.",
+  "Tunnen meest, keda sa ootad.",
+  "Ma tunnen meest, keda sina ootad.",
+  "Ma tunnen meest, keda ootad.",
+  "Mina tunnen meest, keda sina ootad.",
+  "Mina tunnen meest, keda ootad.",
+  "Tunnen meest, keda sina ootad.",
+  "Tunnen meest, keda ootad.",
+];
+
+const REL_OWNER: readonly [string, ...string[]] = [
+  "Ma tunnen naist, kelle auto on punane.",
+  "Ma tunnen naist, kelle auto punane on.",
+  "Mina tunnen naist, kelle auto on punane.",
+  "Tunnen naist, kelle auto on punane.",
+  "Mina tunnen naist, kelle auto punane on.",
+  "Tunnen naist, kelle auto punane on.",
+];
+
+export const REL_TABLE = [
+  {
+    id: "subject",
+    mis: "Raamat, mis on laual, on uus.",
+    kes: "Mees, kes elab siin, on arst.",
+  },
+  {
+    id: "outside",
+    mis: "Auto, mis seisab õues, on punane.",
+    kes: "Naine, kes töötab poes, on mu ema.",
+  },
+  {
+    id: "starts",
+    mis: "Film, mis algab kell kaheksa, on pikk.",
+    kes: "Laps, kes mängib õues, on mu poeg.",
+  },
+  {
+    id: "big",
+    mis: "Maja, mis on suur, on vana.",
+    kes: "Õpetaja, kes räägib eesti keelt, on noor.",
+  },
+] as const;
+
+export const REL_HEARD = [
+  { id: "book", means: "mis", said: "Raamat, mis on laual, on uus." },
+  { id: "man", means: "kes", said: "Mees, kes elab siin, on arst." },
+  { id: "car", means: "mis", said: "Auto, mis seisab õues, on punane." },
+  { id: "woman", means: "kes", said: "Naine, kes töötab poes, on mu ema." },
+  { id: "bag", means: "mis", said: "Kott, mis on laual, on raske." },
+  { id: "neighbour", means: "kes", said: "Naaber, kes mängib klaverit, on sõbralik." },
+  { id: "film", means: "mis", said: "Film, mis algab kell kaheksa, on pikk." },
+  { id: "child", means: "kes", said: "Laps, kes mängib õues, on mu poeg." },
+] as const;
+
+export const REL_COMMAS = [
+  {
+    id: "man",
+    end: "Ma tunnen meest, kes elab siin.",
+    middle: "Mees, kes elab siin, on arst.",
+  },
+  {
+    id: "car",
+    end: "Ma nägin autot, mis seisab õues.",
+    middle: "Auto, mis seisab õues, on punane.",
+  },
+  {
+    id: "book",
+    end: "Ma lugesin raamatut, mis on laual.",
+    middle: "Raamat, mis on laual, on uus.",
+  },
+] as const;
+
+export const REL_CASES = [
+  {
+    id: "subject",
+    kes: "Ma tunnen meest, kes elab siin.",
+    mis: "Ma nägin autot, mis seisab õues.",
+  },
+  {
+    id: "owner",
+    kes: "Ma tunnen naist, kelle auto on punane.",
+    mis: "Ma nägin maja, mille uks on sinine.",
+  },
+  {
+    id: "part",
+    kes: "Ma tunnen meest, keda sa ootad.",
+    mis: "Ma vaatan filmi, mida sa ootad.",
+  },
+  {
+    id: "with",
+    kes: "Ma tunnen naist, kellega sa rääkisid.",
+    mis: "Ma nägin autot, millega sa sõitsid.",
+  },
+  {
+    id: "to",
+    kes: "Ma tunnen meest, kellele sa helistasid.",
+    mis: "Ma lugesin kirja, millele sa vastasid.",
+  },
+  {
+    id: "about",
+    kes: "Ma tunnen naist, kellest sa rääkisid.",
+    mis: "Ma vaatasin filmi, millest sa rääkisid.",
+  },
+  {
+    id: "has",
+    kes: "Ma tunnen last, kellel on koer.",
+    mis: "Ma nägin maja, millel on suur aed.",
+  },
+  {
+    id: "in",
+    kes: null,
+    mis: "Ma nägin maja, milles sa elad.",
+  },
+] as const;
+
+export const REL_FORMS = [
+  { id: "part-kes", base: "kes", form: "keda", said: "Ma tunnen meest, keda sa ootad." },
+  { id: "part-mis", base: "mis", form: "mida", said: "Ma vaatan filmi, mida sa ootad." },
+  { id: "with-kes", base: "kes", form: "kellega", said: "Ma tunnen naist, kellega sa rääkisid." },
+  { id: "with-mis", base: "mis", form: "millega", said: "Ma nägin autot, millega sa sõitsid." },
+  { id: "to-kes", base: "kes", form: "kellele", said: "Ma tunnen meest, kellele sa helistasid." },
+  {
+    id: "about-mis",
+    base: "mis",
+    form: "millest",
+    said: "Ma vaatasin filmi, millest sa rääkisid.",
+  },
+  { id: "has-kes", base: "kes", form: "kellel", said: "Ma tunnen last, kellel on koer." },
+  { id: "owner-mis", base: "mis", form: "mille", said: "Ma nägin maja, mille uks on sinine." },
+] as const;
+
+export const REL_ROLES = [
+  {
+    id: "owner-kes",
+    role: "owner",
+    slip: "object",
+    said: "Ma tunnen naist, kelle auto on punane.",
+  },
+  { id: "part-kes", role: "object", slip: "owner", said: "Ma tunnen meest, keda sa ootad." },
+  { id: "with-kes", role: "with", slip: "to", said: "Ma tunnen naist, kellega sa rääkisid." },
+  { id: "to-kes", role: "to", slip: "with", said: "Ma tunnen meest, kellele sa helistasid." },
+  { id: "about-mis", role: "about", slip: "with", said: "Ma vaatasin filmi, millest sa rääkisid." },
+  { id: "with-mis", role: "with", slip: "about", said: "Ma nägin autot, millega sa sõitsid." },
+  { id: "owner-mis", role: "owner", slip: "object", said: "Ma nägin maja, mille uks on sinine." },
+  { id: "part-mis", role: "object", slip: "owner", said: "Ma vaatan filmi, mida sa ootad." },
+  { id: "whole-mis", role: "object", slip: "owner", said: "Raamat, mille ma ostsin, on huvitav." },
+] as const;
+
+export const REL_PLACES = [
+  { id: "city", means: "kus", said: "Linn, kus ma elan, on väike." },
+  { id: "bag", means: "mis", said: "Kott, mis on laual, on raske." },
+  { id: "cafe", means: "kus", said: "Kohvik, kus me joome kohvi, on odav." },
+  { id: "big-house", means: "mis", said: "Maja, mis on suur, on vana." },
+  { id: "park", means: "kus", said: "Park, kus lapsed mängivad, on suur." },
+  { id: "car", means: "mis", said: "Auto, mis seisab õues, on punane." },
+  { id: "house", means: "kus", said: "Maja, kus ma elan, on vana." },
+  { id: "film", means: "mis", said: "Film, mis algab kell kaheksa, on pikk." },
+] as const;
+
+export const REL_WHERE = [
+  { id: "at", word: "kus", said: "Linn, kus ma elan, on väike." },
+  { id: "to", word: "kuhu", said: "Linn, kuhu ma sõidan, on suur." },
+  { id: "from", word: "kust", said: "Linn, kust ma tulen, on väike." },
+  { id: "in", word: "milles", said: "Maja, milles ma elan, on vana." },
+] as const;
+
+export const REL_ORDER = [
+  {
+    id: "man",
+    answers: [
+      "Mees, kes elab siin, on arst.",
+      "Mees, kes siin elab, on arst.",
+      "Arst on mees, kes elab siin.",
+      "Arst on mees, kes siin elab.",
+    ],
+  },
+  {
+    id: "know",
+    answers: ["Ma tunnen meest, kes elab siin.", "Ma tunnen meest, kes siin elab."],
+  },
+  {
+    id: "book",
+    answers: [
+      "Raamat, mis on laual, on uus.",
+      "Raamat, mis laual on, on uus.",
+      "Uus on raamat, mis on laual.",
+      "Uus on raamat, mis laual on.",
+    ],
+  },
+  {
+    id: "car",
+    answers: ["Ma nägin autot, mis seisab õues.", "Ma nägin autot, mis õues seisab."],
+  },
+  {
+    id: "woman",
+    answers: [
+      "Naine, kes töötab poes, on mu ema.",
+      "Naine, kes poes töötab, on mu ema.",
+      "Mu ema on naine, kes töötab poes.",
+      "Mu ema on naine, kes poes töötab.",
+    ],
+  },
+  {
+    id: "read",
+    answers: ["Ma lugesin raamatut, mis on laual.", "Ma lugesin raamatut, mis laual on."],
+  },
+] as const;
+
+export const REL_TRANSLATE = [
+  "Raamat, mille ma ostsin, on huvitav.",
+  "Mees, keda ma tunnen, elab Tartus.",
+  "Naine, kellega ma rääkisin, on õpetaja.",
+  "Film, mida ma ootan, on pikk.",
+  "Maja, kus ma elan, on vana.",
+  "Laps, kes mängib õues, on mu poeg.",
+  "Sõber, kellele ma helistasin, on Tallinnas.",
+] as const;
+
+export const REL_FIXES = [
+  { wrong: "Mees, mis elab siin, on arst.", right: "Mees, kes elab siin, on arst." },
+  { wrong: "Raamat, kes on laual, on uus.", right: "Raamat, mis on laual, on uus." },
+  { wrong: "Ma tunnen meest, kelle sa ootad.", right: "Ma tunnen meest, keda sa ootad." },
+  {
+    wrong: "Ma tunnen naist, keda auto on punane.",
+    right: "Ma tunnen naist, kelle auto on punane.",
+  },
+  {
+    wrong: "Ma tunnen meest, kellega sa helistasid.",
+    right: "Ma tunnen meest, kellele sa helistasid.",
+  },
+  { wrong: "Linn, mis ma elan, on väike.", right: "Linn, kus ma elan, on väike." },
+] as const;
+
+export const REL_REWRITE = [
+  {
+    from: "Ma nägin autot. Sa sõitsid sellega.",
+    answer: "Ma nägin autot, millega sa sõitsid.",
+  },
+  {
+    from: "Ma tunnen naist. Tema auto on punane.",
+    answer: "Ma tunnen naist, kelle auto on punane.",
+  },
+  { from: "Ma elan majas. Maja on vana.", answer: "Maja, kus ma elan, on vana." },
+] as const;
+
+export const REL_LETTER = [
+  "Eelmisel nädalal kolisin uude korterisse.",
+  "Maja, kus ma nüüd elan, on vana, aga korter on hele ja soe.",
+  "Korter, mille ma leidsin internetist, maksab kuus kolmsada eurot.",
+  "Köögis on laud, mille ma ostsin vanaemalt.",
+  "Naaber, kes elab minu korteri kõrval, on sõbralik vanem mees.",
+  "Ta teab kõiki inimesi, kes selles majas elavad.",
+  "Ta aitas mind kolimisel ja tõi mulle kooki, mille ta oli ise küpsetanud.",
+  "Eile õhtul tuli tema juurde ka tütar, kellega ma rääkisin pikalt.",
+  "Tütar töötab kohvikus, mis on meie majast ainult kahe minuti kaugusel.",
+  "Täna hommikul käisin seal ja jõin kohvi, mida ma pole kunagi varem joonud.",
+  "Kohvik, kus ta töötab, on väike, aga seal on alati palju inimesi.",
+  "Mõned neist on naabrid, keda ma juba tunnen.",
+  "Eile tutvusin ühe tudengiga, kellega ma läksin kinno.",
+  "Tänav, mille ääres maja seisab, on vaikne, ja park, kus lapsed mängivad, on lähedal.",
+  "Mulle meeldib see linnaosa, kus ma nüüd elan.",
+  "Ainult üks asi ei meeldi mulle.",
+  "Hoovis seisab vana auto, mis ei sõida enam kuhugi.",
+  "Naaber ütles, et omanik, kellele see auto kuulub, elab välismaal.",
+  "Ma loodan, et ta tuleb varsti ja viib auto ära.",
+  "Muidu on kõik hästi.",
+  "Tule külla ja too kaasa raamat, millest sa mulle rääkisid.",
+  "Siis joome koos kohvi, mida ma kohvikust toon.",
+  "Kohtumiseni, Helen.",
+] as const;
+
+export const REL_CONVERSATION: Conversation = {
+  turns: [
+    {
+      voice: "fourth",
+      text: ["Tere, Tiina!", "Kas sa tõid need fotod, millest sa rääkisid?"],
+    },
+    {
+      voice: "third",
+      text: [
+        "Tõin küll.",
+        "Vaata, siin on pidu, kus me kõik kokku saime.",
+        "Kohvik, kus me istusime, oli väike, aga õhtu oli väga lõbus.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "See on ilus koht.",
+        "Kas see on kohvik, kus te alati käite?",
+        "Mina pole seal ammu käinud.",
+      ],
+    },
+    {
+      voice: "third",
+      text: [
+        "Jah, igal reedel.",
+        "Peremees, kes tunneb meid kõiki, tõi meile teed.",
+        "Tule järgmisel reedel kaasa, siis näed kohvikut, mida sa nii hästi mäletad.",
+      ],
+    },
+    { voice: "fourth", text: "Kes on see mees, kes seisab akna juures?" },
+    {
+      voice: "third",
+      text: [
+        "See on mu uus töökaaslane, kellega ma nüüd koos töötan.",
+        "Ta on lahke inimene, kes aitab alati teisi.",
+      ],
+    },
+    { voice: "fourth", text: "Ja kes on see naine, kelle käes on kitarr?" },
+    {
+      voice: "third",
+      text: ["See on mu õde Kadri.", "Kitarr, mida ta mängib, on meie vanaisa oma."],
+    },
+    { voice: "fourth", text: "Kas ta mängis ka laule, mida sa tead?" },
+    {
+      voice: "third",
+      text: [
+        "Mängis küll.",
+        "Ta mängis laulu, mille sõnad me kõik teadsime, ja siis laulsime koos.",
+      ],
+      say: "[laughs] Mängis küll. Ta mängis laulu, mille sõnad me kõik teadsime, ja siis laulsime koos.",
+    },
+    { voice: "fourth", text: ["Mind seal ei olnud.", "Ma olin haige ja jäin koju."] },
+    {
+      voice: "third",
+      text: [
+        "Me mõtlesime sinule.",
+        "Meil jäi supp, mida keegi ei jõudnud ära süüa.",
+        "Ma toon sulle homme natuke.",
+      ],
+    },
+    { voice: "fourth", text: ["Aitäh, sa oled hea sõber.", "Kes on see mees, kes naerab nurgas?"] },
+    {
+      voice: "third",
+      text: [
+        "See on Kadri mees Joosep, kes tegi terve õhtu süüa.",
+        "Supp, mida ta tegi, oli väga hea, ja ma sõin kolm taldrikut.",
+      ],
+    },
+    { voice: "fourth", text: "Mis supp see oli?" },
+    { voice: "third", text: "Hea supp, mille retsepti ma juba küsisin." },
+    { voice: "fourth", text: "Kes on see tüdruk, kellele sa midagi ütled?" },
+    {
+      voice: "third",
+      text: [
+        "See on Maria, kellega ma koos koolis käisin.",
+        "Ma ei olnud teda kümme aastat näinud, aga ta on täpselt sama.",
+      ],
+    },
+    { voice: "fourth", text: "Siis oli teil kindlasti palju rääkida." },
+    {
+      voice: "third",
+      text: ["Oli küll.", "Me rääkisime koolist ja õpetajatest, keda me mõlemad mäletame."],
+    },
+    { voice: "fourth", text: "Mis raamat see on, mille sa talle kinkisid?" },
+    {
+      voice: "third",
+      text: [
+        "See on raamat, millest ta on alati unistanud.",
+        "Ma leidsin selle vanast raamatupoest, mis on pargi kõrval.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: ["Küll ta rõõmustas!", "Aga kes on see poiss, keda sa kallistad?"],
+      say: "[happy] Küll ta rõõmustas! Aga kes on see poiss, keda sa kallistad?",
+    },
+    {
+      voice: "third",
+      text: [
+        "See on mu vennapoeg Marten, kelle sünnipäev oli sel nädalal.",
+        "Ta tahtis kooki, mille peal on viis küünalt.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Mulle meeldib see pilt, kus kõik naeravad.",
+        "Kas sa saad mulle mõned fotod saata?",
+        "Siis näitan neid sõbrale, kes ei saanud tulla.",
+      ],
+    },
+    {
+      voice: "third",
+      text: ["Muidugi.", "Saadan need õhtul.", "Järgmine pidu on mais, tule ise kaasa!"],
+    },
+    { voice: "fourth", text: "Kes tuleb järgmisele peole?" },
+    {
+      voice: "third",
+      text: ["Kõik, kellele ma olen kutse saatnud, ja ka mõned, keda sa veel ei tunne."],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Siis ma tulen kindlasti.",
+        "Võtan kaasa oma sõbra, kes mängib kitarri.",
+        "Aitäh, Tiina!",
+      ],
+    },
+    { voice: "third", text: ["Suurepärane!", "Nägemist, Madis!"] },
+  ],
+};
+
+export const REL_WORDS = [
+  "kes",
+  "mis",
+  "kelle",
+  "mille",
+  "keda",
+  "mida",
+  "kellega",
+  "millega",
+  "kellele",
+  "millele",
+  "kellest",
+  "millest",
+  "kellel",
+  "millel",
+  "milles",
+  "kus",
+  "kuhu",
+  "kust",
+] as const;
+
+const REL_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...REL_TABLE.flatMap(({ mis, kes }) => [mis, kes]),
+    ...REL_HEARD.map(({ said }) => said),
+    ...REL_COMMAS.map(({ end }) => end),
+    ...REL_CASES.flatMap(({ mis, kes }) => (kes ? [mis, kes] : [mis])),
+    ...REL_FORMS.map(({ said }) => said),
+    ...REL_ROLES.map(({ said }) => said),
+    ...REL_PLACES.map(({ said }) => said),
+    ...REL_WHERE.map(({ said }) => said),
+    ...REL_ORDER.map(({ answers }) => answers[0]),
+    ...REL_TRANSLATE,
+    ...REL_FIXES.map(({ right }) => right),
+    ...REL_REWRITE.map(({ answer }) => answer),
+    ...REL_WORDS,
+  ]),
+  "c-tiina": REL_CONVERSATION,
+};
+
+export const REL_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Raamat, mille ma ostsin, on huvitav.": REL_BOUGHT,
+  "Mees, keda ma tunnen, elab Tartus.": REL_KNOWN,
+  "Naine, kellega ma rääkisin, on õpetaja.": REL_TALKED,
+  "Film, mida ma ootan, on pikk.": REL_WAITING,
+  "Maja, kus ma elan, on vana.": REL_LIVE,
+  "Laps, kes mängib õues, on mu poeg.": REL_CHILD,
+  "Sõber, kellele ma helistasin, on Tallinnas.": REL_PHONED,
+  "Naine, kes töötab poes, on mu ema.": REL_SHOP,
+  "Auto, mis seisab õues, on punane.": REL_CAR,
+  "Ma tunnen naist, kellega sa rääkisid.": REL_WOMAN_TALK,
+  "Ma nägin autot, millega sa sõitsid.": REL_CAR_DRIVE,
+  "Ma tunnen meest, keda sa ootad.": REL_MAN_WAIT,
+  "Ma tunnen naist, kelle auto on punane.": REL_OWNER,
+};
+
+export const REL_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  ...Object.fromEntries(REL_FIXES.map(({ right }) => [right, [right]])),
+  "Linn, kus ma elan, on väike.": [
+    "Linn, kus ma elan, on väike.",
+    "Linn, milles ma elan, on väike.",
+  ],
+};
+
 export const ROUTE_WORDS = ["läbi", "üle", "mööda", "ümber", "kaudu"] as const;
 
 export const ROUTE_TABLE = [
@@ -16627,6 +17203,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "ootan-sind": GOVERNMENT_CLIPS,
   "aru-saama": IDIOM_CLIPS,
   "lugedes-lugemata": DES_CLIPS,
+  "raamat-mille-ostsin": REL_CLIPS,
   "labi-metsa": ROUTE_CLIPS,
   "opetaja-lugemine": AGENT_CLIPS,
   "sobralik-kodutu": SUFFIX_CLIPS,

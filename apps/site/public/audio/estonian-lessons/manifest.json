@@ -23830,6 +23830,501 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "raamat-mille-ostsin/auto-mis-seisab-o3ues-on-punane": {
+    "text": "Auto, mis seisab õues, on punane.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/c-tiina": {
+    "text": "Tere, Tiina! Kas sa tõid need fotod, millest sa rääkisid? Tõin küll. Vaata, siin on pidu, kus me kõik kokku saime. Kohvik, kus me istusime, oli väike, aga õhtu oli väga lõbus. See on ilus koht. Kas see on kohvik, kus te alati käite? Mina pole seal ammu käinud. Jah, igal reedel. Peremees, kes tunneb meid kõiki, tõi meile teed. Tule järgmisel reedel kaasa, siis näed kohvikut, mida sa nii hästi mäletad. Kes on see mees, kes seisab akna juures? See on mu uus töökaaslane, kellega ma nüüd koos töötan. Ta on lahke inimene, kes aitab alati teisi. Ja kes on see naine, kelle käes on kitarr? See on mu õde Kadri. Kitarr, mida ta mängib, on meie vanaisa oma. Kas ta mängis ka laule, mida sa tead? Mängis küll. Ta mängis laulu, mille sõnad me kõik teadsime, ja siis laulsime koos. Mind seal ei olnud. Ma olin haige ja jäin koju. Me mõtlesime sinule. Meil jäi supp, mida keegi ei jõudnud ära süüa. Ma toon sulle homme natuke. Aitäh, sa oled hea sõber. Kes on see mees, kes naerab nurgas? See on Kadri mees Joosep, kes tegi terve õhtu süüa. Supp, mida ta tegi, oli väga hea, ja ma sõin kolm taldrikut. Mis supp see oli? Hea supp, mille retsepti ma juba küsisin. Kes on see tüdruk, kellele sa midagi ütled? See on Maria, kellega ma koos koolis käisin. Ma ei olnud teda kümme aastat näinud, aga ta on täpselt sama. Siis oli teil kindlasti palju rääkida. Oli küll. Me rääkisime koolist ja õpetajatest, keda me mõlemad mäletame. Mis raamat see on, mille sa talle kinkisid? See on raamat, millest ta on alati unistanud. Ma leidsin selle vanast raamatupoest, mis on pargi kõrval. Küll ta rõõmustas! Aga kes on see poiss, keda sa kallistad? See on mu vennapoeg Marten, kelle sünnipäev oli sel nädalal. Ta tahtis kooki, mille peal on viis küünalt. Mulle meeldib see pilt, kus kõik naeravad. Kas sa saad mulle mõned fotod saata? Siis näitan neid sõbrale, kes ei saanud tulla. Muidugi. Saadan need õhtul. Järgmine pidu on mais, tule ise kaasa! Kes tuleb järgmisele peole? Kõik, kellele ma olen kutse saatnud, ja ka mõned, keda sa veel ei tunne. Siis ma tulen kindlasti. Võtan kaasa oma sõbra, kes mängib kitarri. Aitäh, Tiina! Suurepärane! Nägemist, Madis!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Tiina!",
+          "Kas sa tõid need fotod, millest sa rääkisid?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tõin küll.",
+          "Vaata, siin on pidu, kus me kõik kokku saime.",
+          "Kohvik, kus me istusime, oli väike, aga õhtu oli väga lõbus."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "See on ilus koht.",
+          "Kas see on kohvik, kus te alati käite?",
+          "Mina pole seal ammu käinud."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, igal reedel.",
+          "Peremees, kes tunneb meid kõiki, tõi meile teed.",
+          "Tule järgmisel reedel kaasa, siis näed kohvikut, mida sa nii hästi mäletad."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kes on see mees, kes seisab akna juures?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "See on mu uus töökaaslane, kellega ma nüüd koos töötan.",
+          "Ta on lahke inimene, kes aitab alati teisi."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ja kes on see naine, kelle käes on kitarr?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "See on mu õde Kadri.",
+          "Kitarr, mida ta mängib, on meie vanaisa oma."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas ta mängis ka laule, mida sa tead?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mängis küll.",
+          "Ta mängis laulu, mille sõnad me kõik teadsime, ja siis laulsime koos."
+        ],
+        "say": "[laughs] Mängis küll. Ta mängis laulu, mille sõnad me kõik teadsime, ja siis laulsime koos."
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mind seal ei olnud.",
+          "Ma olin haige ja jäin koju."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Me mõtlesime sinule.",
+          "Meil jäi supp, mida keegi ei jõudnud ära süüa.",
+          "Ma toon sulle homme natuke."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Aitäh, sa oled hea sõber.",
+          "Kes on see mees, kes naerab nurgas?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "See on Kadri mees Joosep, kes tegi terve õhtu süüa.",
+          "Supp, mida ta tegi, oli väga hea, ja ma sõin kolm taldrikut."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mis supp see oli?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hea supp, mille retsepti ma juba küsisin."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kes on see tüdruk, kellele sa midagi ütled?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "See on Maria, kellega ma koos koolis käisin.",
+          "Ma ei olnud teda kümme aastat näinud, aga ta on täpselt sama."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Siis oli teil kindlasti palju rääkida."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Oli küll.",
+          "Me rääkisime koolist ja õpetajatest, keda me mõlemad mäletame."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mis raamat see on, mille sa talle kinkisid?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "See on raamat, millest ta on alati unistanud.",
+          "Ma leidsin selle vanast raamatupoest, mis on pargi kõrval."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Küll ta rõõmustas!",
+          "Aga kes on see poiss, keda sa kallistad?"
+        ],
+        "say": "[happy] Küll ta rõõmustas! Aga kes on see poiss, keda sa kallistad?"
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "See on mu vennapoeg Marten, kelle sünnipäev oli sel nädalal.",
+          "Ta tahtis kooki, mille peal on viis küünalt."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mulle meeldib see pilt, kus kõik naeravad.",
+          "Kas sa saad mulle mõned fotod saata?",
+          "Siis näitan neid sõbrale, kes ei saanud tulla."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Muidugi.",
+          "Saadan need õhtul.",
+          "Järgmine pidu on mais, tule ise kaasa!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kes tuleb järgmisele peole?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kõik, kellele ma olen kutse saatnud, ja ka mõned, keda sa veel ei tunne."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Siis ma tulen kindlasti.",
+          "Võtan kaasa oma sõbra, kes mängib kitarri.",
+          "Aitäh, Tiina!"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Suurepärane!",
+          "Nägemist, Madis!"
+        ]
+      }
+    ]
+  },
+  "raamat-mille-ostsin/film-mida-ma-ootan-on-pikk": {
+    "text": "Film, mida ma ootan, on pikk.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/film-mis-algab-kell-kaheksa-on-pikk": {
+    "text": "Film, mis algab kell kaheksa, on pikk.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/keda": {
+    "text": "keda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kelle": {
+    "text": "kelle",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kellega": {
+    "text": "kellega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kellel": {
+    "text": "kellel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kellele": {
+    "text": "kellele",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kellest": {
+    "text": "kellest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kes": {
+    "text": "kes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kohvik-kus-me-joome-kohvi-on-odav": {
+    "text": "Kohvik, kus me joome kohvi, on odav.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kott-mis-on-laual-on-raske": {
+    "text": "Kott, mis on laual, on raske.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kuhu": {
+    "text": "kuhu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kus": {
+    "text": "kus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kust": {
+    "text": "kust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/laps-kes-ma2ngib-o3ues-on-mu-poeg": {
+    "text": "Laps, kes mängib õues, on mu poeg.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/linn-kuhu-ma-so3idan-on-suur": {
+    "text": "Linn, kuhu ma sõidan, on suur.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/linn-kus-ma-elan-on-va2ike": {
+    "text": "Linn, kus ma elan, on väike.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/linn-kust-ma-tulen-on-va2ike": {
+    "text": "Linn, kust ma tulen, on väike.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-lugesin-kirja-millele-sa-vastasid": {
+    "text": "Ma lugesin kirja, millele sa vastasid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-lugesin-raamatut-mis-on-laual": {
+    "text": "Ma lugesin raamatut, mis on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-na2gin-autot-millega-sa-so3itsid": {
+    "text": "Ma nägin autot, millega sa sõitsid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-na2gin-autot-mis-seisab-o3ues": {
+    "text": "Ma nägin autot, mis seisab õues.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-na2gin-maja-mille-uks-on-sinine": {
+    "text": "Ma nägin maja, mille uks on sinine.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-na2gin-maja-millel-on-suur-aed": {
+    "text": "Ma nägin maja, millel on suur aed.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-na2gin-maja-milles-sa-elad": {
+    "text": "Ma nägin maja, milles sa elad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-tunnen-last-kellel-on-koer": {
+    "text": "Ma tunnen last, kellel on koer.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-tunnen-meest-keda-sa-ootad": {
+    "text": "Ma tunnen meest, keda sa ootad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-tunnen-meest-kellele-sa-helistasid": {
+    "text": "Ma tunnen meest, kellele sa helistasid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-tunnen-meest-kes-elab-siin": {
+    "text": "Ma tunnen meest, kes elab siin.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-tunnen-naist-kelle-auto-on-punane": {
+    "text": "Ma tunnen naist, kelle auto on punane.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-tunnen-naist-kellega-sa-ra2a2kisid": {
+    "text": "Ma tunnen naist, kellega sa rääkisid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-tunnen-naist-kellest-sa-ra2a2kisid": {
+    "text": "Ma tunnen naist, kellest sa rääkisid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-vaatan-filmi-mida-sa-ootad": {
+    "text": "Ma vaatan filmi, mida sa ootad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-vaatasin-filmi-millest-sa-ra2a2kisid": {
+    "text": "Ma vaatasin filmi, millest sa rääkisid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/maja-kus-ma-elan-on-vana": {
+    "text": "Maja, kus ma elan, on vana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/maja-milles-ma-elan-on-vana": {
+    "text": "Maja, milles ma elan, on vana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/maja-mis-on-suur-on-vana": {
+    "text": "Maja, mis on suur, on vana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/mees-keda-ma-tunnen-elab-tartus": {
+    "text": "Mees, keda ma tunnen, elab Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/mees-kes-elab-siin-on-arst": {
+    "text": "Mees, kes elab siin, on arst.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/mida": {
+    "text": "mida",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/mille": {
+    "text": "mille",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/millega": {
+    "text": "millega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/millel": {
+    "text": "millel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/millele": {
+    "text": "millele",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/milles": {
+    "text": "milles",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/millest": {
+    "text": "millest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/mis": {
+    "text": "mis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/naaber-kes-ma2ngib-klaverit-on-so3bralik": {
+    "text": "Naaber, kes mängib klaverit, on sõbralik.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/naine-kellega-ma-ra2a2kisin-on-o3petaja": {
+    "text": "Naine, kellega ma rääkisin, on õpetaja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/naine-kes-to2o2tab-poes-on-mu-ema": {
+    "text": "Naine, kes töötab poes, on mu ema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/o3petaja-kes-ra2a2gib-eesti-keelt-on-noor": {
+    "text": "Õpetaja, kes räägib eesti keelt, on noor.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/park-kus-lapsed-ma2ngivad-on-suur": {
+    "text": "Park, kus lapsed mängivad, on suur.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/raamat-mille-ma-ostsin-on-huvitav": {
+    "text": "Raamat, mille ma ostsin, on huvitav.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/raamat-mis-on-laual-on-uus": {
+    "text": "Raamat, mis on laual, on uus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/so3ber-kellele-ma-helistasin-on-tallinnas": {
+    "text": "Sõber, kellele ma helistasin, on Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "raamatuid-maju/auto": {
     "text": "auto",
     "model": "eleven_v4",

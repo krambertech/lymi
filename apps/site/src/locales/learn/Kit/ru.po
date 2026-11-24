@@ -275,6 +275,9 @@ msgstr "Бесплатный урок эстонского о склонении
 msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о личных местоимениях: mina, sina, tema и другие в полной и краткой форме, и глагол olema, «быть». Каждое предложение озвучено."
 
+msgid "A free Estonian lesson on relative clauses: mis, which usually follows a thing or an idea, and kes, which follows a person (raamat, mille ma ostsin; naine, kellega ma rääkisin), the case the word takes in its own clause (kelle, keda, mille, mida), kus for places, and the commas around the clause. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о придаточных предложениях: mis, который обычно стоит после вещи или мысли, и kes, который стоит после человека (raamat, mille ma ostsin; naine, kellega ma rääkisin), падеж слова в собственном предложении (kelle, keda, mille, mida), kus для мест и запятые вокруг придаточного. Каждое предложение озвучено."
+
 msgid "A free Estonian lesson on saying when: hommikul and suvel with -l, mais with -s, hommikuti for every morning, nädala pärast and nädal tagasi, pärast tööd, and from and until with -st and -ni. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о том, как сказать «когда»: hommikul и suvel с -l, mais с -s, hommikuti — «по утрам», nädala pärast и nädal tagasi, pärast tööd, а также «с» и «до» с -st и -ni. Каждое предложение озвучено."
 
@@ -826,6 +829,9 @@ msgstr "Эстонское произношение"
 
 msgid "Estonian reading and listening practice: a day in Tallinn"
 msgstr "Эстонский язык: чтение и аудирование. День в Таллине"
+
+msgid "Estonian relative clauses: who, which and where"
+msgstr "Эстонские придаточные предложения: кто, что и где"
 
 msgid "Estonian somebody and nobody: -gi and -ki"
 msgstr "Эстонские «кто-то» и «никто»: -gi и -ki"

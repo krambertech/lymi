@@ -1,0 +1,716 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-24 23:37+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0/> also gives a reason, and it can start the sentence: <1>Kuna väljas sajab, jääme koju.</1> A reason clause with <2>sest</2> usually comes after the clause it explains."
+msgstr "<0/> теж називає причину, і з нього може починатися речення: <1>Kuna väljas sajab, jääme koju.</1> Частина з <2>sest</2> зазвичай стоїть після того, що вона пояснює."
+
+msgid "<0/> gives a reason, and the reason is the second clause: <1>Me jäime koju, sest sadas.</1> <2/> gives a result, so the cause comes first: <3>Sadas, nii et me jäime koju.</3> The facts are the same, in the other order."
+msgstr "<0/> називає причину, і причина — це друга частина: <1>Me jäime koju, sest sadas.</1> <2/> називає наслідок, тож причина стоїть першою: <3>Sadas, nii et me jäime koju.</3> Факти ті самі, лише в іншому порядку."
+
+msgid "<0/> means both when and if, and the sentence decides which. <1/> also gives a purpose, as in <2>et siin tööd leida</2>. In a comparison, <3>kui</3> means than, as in lesson {comparing}."
+msgstr "<0/> означає і «коли», і «якщо»: яке значення, видно з речення. <1/> ще й виражає мету, як у <2>et siin tööd leida</2>. У порівнянні <3>kui</3> означає «ніж», як в уроці {comparing}."
+
+msgid "<0>Et</0> gives a purpose, with the <1>-da</1> infinitive or with <2>saaksin</2>."
+msgstr "<0>Et</0> виражає мету: з інфінітивом на <1>-da</1> або з формою <2>saaksin</2>."
+
+msgid "<0>Et</0> says what Mari wrote."
+msgstr "<0>Et</0> передає, що написала Марі."
+
+msgid "<0>Et</0> says what someone knows, says or intends. <1>Sest</1> and <2>kuna</2> give a reason, <3>kui</3> gives a time or condition and <4>nii et</4> gives a result."
+msgstr "<0>Et</0> передає, що хтось знає, каже або має на меті. <1>Sest</1> і <2>kuna</2> називають причину, <3>kui</3> — час або умову, а <4>nii et</4> — наслідок."
+
+msgid "<0>Et</0> says what someone knows, thinks or says."
+msgstr "<0>Et</0> передає, що хтось знає, думає або каже."
+
+msgid "<0>Et</0> says what you know."
+msgstr "<0>Et</0> передає, що ти знаєш."
+
+msgid "<0>Et</0> with the <1>-da</1> infinitive gives a purpose."
+msgstr "<0>Et</0> з інфінітивом на <1>-da</1> виражає мету."
+
+msgid "<0>Kui</0> gives the condition: if you have time."
+msgstr "<0>Kui</0> задає умову: якщо в тебе є час."
+
+msgid "<0>Kui</0> gives the condition. <1>Siis</1> can follow the comma, and the sentence is still right."
+msgstr "<0>Kui</0> задає умову. Після коми може стояти <1>siis</1>, і речення все одно правильне."
+
+msgid "<0>Kui</0> gives the time: when you get home."
+msgstr "<0>Kui</0> задає час: коли ти дістанешся додому."
+
+msgid "<0>Kuna</0> gives the reason, and here it comes first."
+msgstr "<0>Kuna</0> називає причину, і тут вона стоїть першою."
+
+msgid "<0>Kuna</0> gives the reason, here after the main clause."
+msgstr "<0>Kuna</0> називає причину, тут — після головного речення."
+
+msgid "<0>Kuna</0> gives the reason. <1>Sest</1> fits here too."
+msgstr "<0>Kuna</0> називає причину. <1>Sest</1> тут теж підходить."
+
+msgid "<0>Ma tean, et sa oled väsinud</0> has two clauses and a word that joins them. Learn what each linking word does, where the comma goes and where the verb usually stands."
+msgstr "У <0>Ma tean, et sa oled väsinud</0> дві частини й слово, що їх з’єднує. Дізнайся, що робить кожен сполучник, де стоїть кома і де зазвичай стоїть дієслово."
+
+msgid "<0>Nii et</0> gives the result of what came before."
+msgstr "<0>Nii et</0> називає наслідок того, що сталося раніше."
+
+msgid "<0>Nii et</0> gives the result, after the cause."
+msgstr "<0>Nii et</0> називає наслідок, після причини."
+
+msgid "<0>Nii et</0> gives the result, so the cause is the first part."
+msgstr "<0>Nii et</0> називає наслідок, тож причина — перша частина."
+
+msgid "<0>Nii et</0> gives the result: she was tired, so she went to bed."
+msgstr "<0>Nii et</0> називає наслідок: вона була втомлена, тож лягла спати."
+
+msgid "<0>Nii et</0> gives the result: the bus was late, so I was late."
+msgstr "<0>Nii et</0> називає наслідок: автобус запізнився, тож на роботу вийшло прийти пізно."
+
+msgid "<0>Sest</0> and <1>kuna</1> both give the reason."
+msgstr "<0>Sest</0> і <1>kuna</1> обидва називають причину."
+
+msgid "<0>Sest</0> gives the reason, so the cause is the second part."
+msgstr "<0>Sest</0> називає причину, тож причина — друга частина."
+
+msgid "<0>Sest</0> gives the reason: the old phone broke."
+msgstr "<0>Sest</0> називає причину: старий телефон зламався."
+
+msgid "<0>Sest</0> gives the reason. <1>Kuna</1> fits here too."
+msgstr "<0>Sest</0> називає причину. <1>Kuna</1> тут теж підходить."
+
+msgid "<et>Et</et> gives a purpose, with the <et>-da</et> infinitive or with <et>saaksin</et>."
+msgstr "<et>Et</et> виражає мету: з інфінітивом на <et>-da</et> або з формою <et>saaksin</et>."
+
+msgid "<et>Et</et> says what he says."
+msgstr "<et>Et</et> передає, що він каже."
+
+msgid "<et>Et</et> says what someone knows, thinks or says."
+msgstr "<et>Et</et> передає, що хтось знає, думає або каже."
+
+msgid "<et>Et</et> says what someone thinks."
+msgstr "<et>Et</et> передає, що хтось думає."
+
+msgid "<et>Kui</et> gives a time or a condition."
+msgstr "<et>Kui</et> задає час або умову."
+
+msgid "<et>Kui</et> gives the time: when I get home."
+msgstr "<et>Kui</et> задає час: коли я дістануся додому."
+
+msgid "<et>Nii et</et> gives the result of what came before."
+msgstr "<et>Nii et</et> називає наслідок того, що сталося раніше."
+
+msgid "<et>Nii et</et> gives the result, after the cause."
+msgstr "<et>Nii et</et> називає наслідок, після причини."
+
+msgid "<et>Nii et</et> gives the result, so the cause comes first."
+msgstr "<et>Nii et</et> називає наслідок, тож причина стоїть першою."
+
+msgid "<et>Nii et</et> gives the result."
+msgstr "<et>Nii et</et> називає наслідок."
+
+msgid "<et>Sest</et> and <et>kuna</et> both give the reason."
+msgstr "<et>Sest</et> і <et>kuna</et> обидва називають причину."
+
+msgid "<et>Sest</et> and <et>kuna</et> give the reason."
+msgstr "<et>Sest</et> і <et>kuna</et> називають причину."
+
+msgid "<et>Sest</et> gives the reason. <et>Kuna</et> fits here too."
+msgstr "<et>Sest</et> називає причину. <et>Kuna</et> тут теж підходить."
+
+msgid "24 minutes"
+msgstr "24 хвилини"
+
+msgid "9 exercises"
+msgstr "9 вправ"
+
+msgid "A boy tripped and fell yesterday."
+msgstr "Учора хлопчик перечепився й упав."
+
+msgid "A clause has its own verb. A linking word joins two clauses: <0>Ma tean, et sa oled väsinud.</0> The clauses are <1>ma tean</1> and <2>sa oled väsinud</2>, and <3/> joins them."
+msgstr "У кожній частині речення є своє дієслово. Сполучник з’єднує дві частини: <0>Ma tean, et sa oled väsinud.</0> Частини тут — <1>ma tean</1> і <2>sa oled väsinud</2>, а з’єднує їх <3/>."
+
+msgid "A comma usually separates the two clauses, and it comes before the linking word: <0>Ma tean, et sa oled väsinud.</0> <1>Me jäime koju, sest sadas.</1> Put it before <2>nii et</2> as a whole, not between the two words."
+msgstr "Кома зазвичай відділяє дві частини й стоїть перед сполучником: <0>Ma tean, et sa oled väsinud.</0> <1>Me jäime koju, sest sadas.</1> Перед <2>nii et</2> її ставлять перед обома словами, а не між ними."
+
+msgid "A linking word joins two clauses, and a comma usually comes before it: <0>Ma tean, et sa oled väsinud.</0> When the clause with <1>kui</1> or <2>kuna</2> comes first, the comma comes after it."
+msgstr "Сполучник з’єднує дві частини речення, і кома зазвичай стоїть перед ним: <0>Ma tean, et sa oled väsinud.</0> Коли частина з <1>kui</1> або <2>kuna</2> стоїть першою, кома стоїть після неї."
+
+msgid "A neighbour who can’t come should write to Tiiu."
+msgstr "Сусід, який не може прийти, має написати Тііу."
+
+msgid "A notice to the neighbours"
+msgstr "Оголошення для сусідів"
+
+msgid "A place or time word can come first, and the verb usually follows it: <0>väljas oli külm</0>."
+msgstr "Першим може стояти слово місця чи часу, і дієслово зазвичай іде за ним: <0>väljas oli külm</0>."
+
+msgid "A purpose with the <0>-da</0> infinitive needs <1>et</1>, not <2>sest</2>."
+msgstr "Мета з інфінітивом на <0>-da</0> потребує <1>et</1>, а не <2>sest</2>."
+
+msgid "A reason needs <0>sest</0> or <1>kuna</1>, not <2>et</2>."
+msgstr "Для причини потрібен <0>sest</0> або <1>kuna</1>, а не <2>et</2>."
+
+msgid "A reason needs <0>sest</0> or <1>kuna</1>, not <2>kui</2>."
+msgstr "Для причини потрібен <0>sest</0> або <1>kuna</1>, а не <2>kui</2>."
+
+msgid "A reason needs <et>sest</et> or <et>kuna</et>, not <et>et</et>."
+msgstr "Для причини потрібен <et>sest</et> або <et>kuna</et>, а не <et>et</et>."
+
+msgid "A reason needs <et>sest</et> or <et>kuna</et>, not <et>kui</et>."
+msgstr "Для причини потрібен <et>sest</et> або <et>kuna</et>, а не <et>kui</et>."
+
+msgid "A rented car"
+msgstr "Орендована машина"
+
+msgid "A time needs <0>kui</0>: when you get home."
+msgstr "Для часу потрібен <0>kui</0>: коли ти дістанешся додому."
+
+msgid "A time needs <et>kui</et>: when you get home."
+msgstr "Для часу потрібен <et>kui</et>: коли ти дістанешся додому."
+
+msgid "After <0>et</0>, <1>sest</1>, <2>kui</2> and <3>kuna</3>, the clause usually runs subject, then verb: <4>Ma tean, et ta tuleb homme.</4> If a time or place word comes first, the verb usually follows it: <5>sest väljas oli külm</5>."
+msgstr "Після <0>et</0>, <1>sest</1>, <2>kui</2> і <3>kuna</3> частина речення зазвичай іде в порядку «підмет, потім дієслово»: <4>Ma tean, et ta tuleb homme.</4> Якщо першим стоїть слово часу чи місця, дієслово зазвичай іде одразу за ним: <5>sest väljas oli külm</5>."
+
+msgid "After a first <et>kui</et> clause, the main clause usually starts with its verb."
+msgstr "Після першої частини з <et>kui</et> головне речення зазвичай починається з дієслова."
+
+msgid "After a linking word, the subject usually comes next, then the verb. A time or place word can come first, and the verb usually follows it. After a first <0>kui</0> or <1>kuna</1> clause, the main clause usually starts with its verb."
+msgstr "Після сполучника зазвичай іде підмет, потім дієслово. Першим може стояти слово часу чи місця, і дієслово зазвичай іде за ним. Після першої частини з <0>kui</0> або <1>kuna</1> головне речення зазвичай починається з дієслова."
+
+msgid "After a linking word, the subject usually comes next, then the verb. Other orders are possible."
+msgstr "Після сполучника зазвичай іде підмет, потім дієслово. Можливі й інші порядки."
+
+msgid "After the linking word, the subject usually comes next, then the verb. Other orders are possible."
+msgstr "Після сполучника зазвичай іде підмет, потім дієслово. Можливі й інші порядки."
+
+msgid "All eight, each with the right linking word."
+msgstr "Усі вісім, і в кожному правильний сполучник."
+
+msgid "All five commas in the right place."
+msgstr "Усі п’ять ком на своїх місцях."
+
+msgid "All six built in an order a teacher would accept."
+msgstr "Усі шість складено в порядку, який прийняв би вчитель."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All six: you heard which word gave the reason."
+msgstr "Усі шість: на слух зрозуміло, яке слово називало причину."
+
+msgid "All ten linking words right."
+msgstr "Усі десять сполучників правильні."
+
+msgid "Ask what the second clause does. It says what someone knows or says (<0/>), gives a reason (<1/> or <2/>), gives a result (<3/>) or gives a time or condition (<4/>)."
+msgstr "Запитай себе, що робить друга частина. Вона передає, що хтось знає або каже (<0/>), називає причину (<1/> або <2/>), називає наслідок (<3/>) або задає час чи умову (<4/>)."
+
+msgid "because"
+msgstr "тому що"
+
+msgid "Because I’m tired, I’m going to bed early."
+msgstr "Оскільки я втомився, я рано лягаю спати."
+
+msgid "Build each sentence from what it means. More than one order can be right."
+msgstr "Склади кожне речення за змістом. Правильних порядків може бути кілька."
+
+msgid "Build the sentence"
+msgstr "Склади речення"
+
+msgid "builders"
+msgstr "будівельники"
+
+msgid "but"
+msgstr "але"
+
+msgid "By bicycle"
+msgstr "На велосипеді"
+
+msgid "By motorbike"
+msgstr "На мотоциклі"
+
+msgid "Call me when you get home."
+msgstr "Зателефонуй мені, коли дістанешся додому."
+
+msgid "Come and visit us if you have time."
+msgstr "Заходь до нас у гості, якщо маєш час."
+
+msgid "Each gap needs one linking word. Where <0>sest</0> and <1>kuna</1> both fit, the options show only one of them. Pick it, then hear the sentence."
+msgstr "У кожному пропуску має бути один сполучник. Коли підходять і <0>sest</0>, і <1>kuna</1>, серед варіантів лише один із них. Вибери його, а потім послухай речення."
+
+msgid "Each sentence has one wrong linking word. Tap it, then type the right one. The meaning shown with the sentence says what it should say."
+msgstr "У кожному реченні один неправильний сполучник. Торкнися його й набери правильний. Значення, подане поруч із реченням, підказує, що воно має сказати."
+
+msgid "Five linking words do most of the work. Tap a sentence to hear it."
+msgstr "П’ять сполучників виконують більшу частину роботи. Торкнися речення, щоб почути його."
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "Forgot the food last time."
+msgstr "Минулого разу їжа лишилася вдома."
+
+msgid "from the rubbish pile"
+msgstr "з купи сміття"
+
+msgid "Give a reason with <0>sest</0> or <1>kuna</1>."
+msgstr "Назви причину зі <0>sest</0> або <1>kuna</1>."
+
+msgid "give the reason"
+msgstr "назви причину"
+
+msgid "gloves"
+msgstr "рукавиці"
+
+msgid "Go anyway."
+msgstr "Поїхати попри це."
+
+msgid "Go through the table once more, then try again."
+msgstr "Ще раз пройди таблицю, а тоді спробуй знову."
+
+msgid "Greet Tiiu."
+msgstr "Привітайся з Тііу."
+
+msgid "He is busy at eight."
+msgstr "О восьмій він зайнятий."
+
+msgid "He is not a morning person."
+msgstr "Він не жайворонок."
+
+msgid "He says he’ll be right back."
+msgstr "Він каже, що зараз повернеться."
+
+msgid "He works on Sunday."
+msgstr "У неділю він працює."
+
+msgid "Hear a sentence, then pick which part is the cause."
+msgstr "Послухай речення й вибери, яка частина — причина."
+
+msgid "How does Tiiu get past the rubbish pile in the morning?"
+msgstr "Як уранці Тііу проїжджає повз купу сміття?"
+
+msgid "How long will the work take if ten people come? Write the word from the text."
+msgstr "Скільки триватиме робота, якщо прийдуть десятеро людей? Напиши слово з тексту."
+
+msgid "I didn’t come because I had no time."
+msgstr "Я не прийшов, бо в мене не було часу."
+
+msgid "I didn’t go to school because I was ill."
+msgstr "Я не пішов до школи, бо захворів."
+
+msgid "I know she’s coming tomorrow."
+msgstr "Я знаю, що вона прийде завтра."
+
+msgid "I know that you’re tired."
+msgstr "Я знаю, що ти втомився (втомилася)."
+
+msgid "I know you’re tired."
+msgstr "Я знаю, що ти втомився (втомилася)."
+
+msgid "I stayed home because I was ill."
+msgstr "Я залишився вдома, бо захворів."
+
+msgid "I think it’s a good idea."
+msgstr "Я думаю, це гарна ідея."
+
+msgid "I’ll call you when I get home."
+msgstr "Я зателефоную тобі, коли дістануся додому."
+
+msgid "I’m buying a present because it’s her birthday tomorrow."
+msgstr "Купую подарунок, бо завтра в неї день народження."
+
+msgid "I’m learning Estonian so that I can find work here."
+msgstr "Я вчу естонську, щоб знайти тут роботу."
+
+msgid "I’m learning Estonian to find work here."
+msgstr "Я вчу естонську, щоб знайти тут роботу."
+
+msgid "If you have time, come and visit us."
+msgstr "Якщо маєш час, заходь до нас у гості."
+
+msgid "In a sentence"
+msgstr "У реченні"
+
+msgid "It rained, so we stayed home."
+msgstr "Ішов дощ, тож ми залишилися вдома."
+
+msgid "It was cold, so we went home."
+msgstr "Було холодно, тож ми пішли додому."
+
+msgid "It’s raining today, so we’re staying home."
+msgstr "Сьогодні йде дощ, тож ми лишаємося вдома."
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan has to work on Saturday."
+msgstr "Яан мусить працювати в суботу."
+
+msgid "Jaan’s car"
+msgstr "Машина Яана"
+
+msgid "Jaan’s sister has invited him to her birthday on Sunday evening."
+msgstr "Сестра Яана запросила його на день народження в неділю ввечері."
+
+msgid "Kui sul on aega, tule külla."
+msgstr "Kui sul on aega, tule külla."
+
+msgid "Kuna sajab, jääme koju."
+msgstr "Kuna sajab, jääme koju."
+
+msgid "Linking two clauses"
+msgstr "З’єднання двох частин речення"
+
+msgid "Linking words and their meanings"
+msgstr "Сполучники та їхні значення"
+
+msgid "Listen: Mari and Jaan"
+msgstr "Послухай: Марі та Яан"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Ma jään koju, sest ma olen haige."
+msgstr "Ma jään koju, sest ma olen haige."
+
+msgid "Ma tean, et sa tuled."
+msgstr "Ma tean, et sa tuled."
+
+msgid "Mari"
+msgstr "Марі"
+
+msgid "Mari calls Jaan about a hike on Saturday. Listen to how they change their plan."
+msgstr "Марі телефонує Яанові щодо походу в суботу. Послухай, як вони змінюють плани."
+
+msgid "Mari says Jaan must pay for the petrol."
+msgstr "Марі каже, що Яан має заплатити за бензин."
+
+msgid "Mari wrote that she can’t come."
+msgstr "Марі написала, що не може прийти."
+
+msgid "Mari’s car"
+msgstr "Машина Марі"
+
+msgid "Mari’s car is being repaired."
+msgstr "Машину Марі ремонтують."
+
+msgid "maritime museum"
+msgstr "морський музей"
+
+msgid "Match each linking word with what it means."
+msgstr "Поєднай кожен сполучник із його значенням."
+
+msgid "Meaning"
+msgstr "Значення"
+
+msgid "morning person"
+msgstr "жайворонок"
+
+msgid "most"
+msgstr "більшість"
+
+msgid "Move the hike to next Saturday."
+msgstr "Перенести похід на наступну суботу."
+
+msgid "Nearly. Check the linking word in the ones you missed."
+msgstr "Майже. Перевір сполучник у реченнях з помилками."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Майже. Увімкни ще раз ті речення, де була помилка."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Майже. Прочитай пояснення під кожною відповіддю з помилкою."
+
+msgid "Now answer Tiiu in about 80 words, then compare your message with a model."
+msgstr "Тепер напиши відповідь Тііу приблизно на 80 слів, а потім порівняй своє повідомлення зі зразком."
+
+msgid "On foot"
+msgstr "Пішки"
+
+msgid "Pick the linking word"
+msgstr "Вибери сполучник"
+
+msgid "Planning a hike"
+msgstr "Планування походу"
+
+msgid "Rain is forecast for Saturday."
+msgstr "На суботу прогнозують дощ."
+
+msgid "Read the lines above once more, then try again."
+msgstr "Ще раз прочитай рядки вище, а тоді спробуй знову."
+
+msgid "Read the reason under each one you missed, then try again."
+msgstr "Прочитай пояснення під кожною помилкою, а тоді спробуй знову."
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Що запам’ятати» нижче, потім спробуй знову."
+
+msgid "Read why under each one you missed, then try again."
+msgstr "Прочитай пояснення до тих, що не вдалися, і спробуй знову."
+
+msgid "Reason or result"
+msgstr "Причина чи наслідок"
+
+msgid "repairs, renovation"
+msgstr "ремонт"
+
+msgid "rubbish"
+msgstr "сміття"
+
+msgid "Sadas, nii et me jäime koju."
+msgstr "Sadas, nii et me jäime koju."
+
+msgid "Say that you will come, and why."
+msgstr "Скажи, що прийдеш, і чому."
+
+msgid "She is complaining about noisy children in the yard."
+msgstr "Вона скаржиться на галасливих дітей у дворі."
+
+msgid "She is looking for a lost bicycle in the yard."
+msgstr "Вона шукає у дворі загублений велосипед."
+
+msgid "She said she is coming tomorrow."
+msgstr "Вона сказала, що прийде завтра."
+
+msgid "She said that she isn’t coming."
+msgstr "Вона сказала, що не прийде."
+
+msgid "She wants help with the rubbish left in the yard."
+msgstr "Вона просить допомогти зі сміттям у дворі."
+
+msgid "She was ill, so she stayed home. Use <0>nii et</0>."
+msgstr "Вона хворіла, тож залишилася вдома. Використай <0>nii et</0>."
+
+msgid "Sign with your name."
+msgstr "Підпишися своїм ім’ям."
+
+msgid "Since she was ill, she didn’t come."
+msgstr "Оскільки вона хворіла, вона не прийшла."
+
+msgid "since, because"
+msgstr "оскільки, бо"
+
+msgid "so"
+msgstr "тож"
+
+msgid "So that nobody needs to buy anything."
+msgstr "Щоб ніхто нічого не купував."
+
+msgid "start with kui"
+msgstr "почни з kui"
+
+msgid "start with tule"
+msgstr "почни з tule"
+
+msgid "Stay in town."
+msgstr "Лишитися в місті."
+
+msgid "Tap a sentence"
+msgstr "Торкнися речення"
+
+msgid "that, so that"
+msgstr "що, щоб"
+
+msgid "The boy was badly hurt."
+msgstr "Хлопчик серйозно постраждав."
+
+msgid "The bus was late, so I was late for work."
+msgstr "Автобус запізнився, тож я запізнився на роботу."
+
+msgid "The cause comes first, then <0>nii et</0> and the result."
+msgstr "Спочатку причина, потім <0>nii et</0> і наслідок."
+
+msgid "The comma"
+msgstr "Кома"
+
+msgid "The comma comes before <0>et</0>."
+msgstr "Кома стоїть перед <0>et</0>."
+
+msgid "The comma comes before <0>kui</0>."
+msgstr "Кома стоїть перед <0>kui</0>."
+
+msgid "The comma comes before <0>nii et</0> as a whole."
+msgstr "Кома стоїть перед усім сполученням <0>nii et</0>."
+
+msgid "The comma comes before <0>sest</0>."
+msgstr "Кома стоїть перед <0>sest</0>."
+
+msgid "The first part"
+msgstr "Перша частина"
+
+msgid "The part after the comma is the second clause. The linking word starts it."
+msgstr "Частина після коми — друга. Починає її сполучник."
+
+msgid "The reason clause with <et>sest</et> usually comes second. <et>Kuna</et> can also come first."
+msgstr "Частина з причиною на <et>sest</et> зазвичай стоїть другою. <et>Kuna</et> може стояти й першою."
+
+msgid "The same two facts, in two orders: <0>Jäime koju, sest sadas.</0> and <1>Sadas, nii et jäime koju.</1> The cause usually comes after <2>sest</2> and before <3>nii et</3>."
+msgstr "Одні й ті самі два факти в двох порядках: <0>Jäime koju, sest sadas.</0> і <1>Sadas, nii et jäime koju.</1> Причина зазвичай стоїть після <2>sest</2> і перед <3>nii et</3>."
+
+msgid "The second part"
+msgstr "Друга частина"
+
+msgid "The typing exercises in this lesson don’t mark commas, so a missing comma is not counted wrong there. In real writing, add it. Hear a sentence, then pick how it is written."
+msgstr "У вправах цього уроку, де треба друкувати, коми не перевіряються, тож пропущена кома там не вважається помилкою. У справжньому письмі її потрібно ставити. Послухай речення й вибери, як воно записане."
+
+msgid "The word"
+msgstr "Слово"
+
+msgid "They are for the children."
+msgstr "Вони потрібні дітям для гри у дворі."
+
+msgid "They are on holiday until next month."
+msgstr "Вони у відпустці до наступного місяця."
+
+msgid "They don’t know where the building is."
+msgstr "Вони не знають, де будинок."
+
+msgid "They have a lot of other work."
+msgstr "У них багато іншої роботи."
+
+msgid "They were on sale."
+msgstr "Їх продавали зі знижкою."
+
+msgid "Tiiu pins a notice in the entrance of her building. Read it and answer the questions, as in the reading part of the B1 exam."
+msgstr "Тііу вивісила оголошення в під’їзді свого будинку. Прочитай його й дай відповіді на запитання, як у частині іспиту B1 з читання."
+
+msgid "Tiiu writes"
+msgstr "Тііу пише"
+
+msgid "tripped"
+msgstr "перечепився"
+
+msgid "Use <0>kui</0> once."
+msgstr "Використай <0>kui</0> один раз."
+
+msgid "Was in Käsmu in the summer."
+msgstr "Уже знає Кясму з літа."
+
+msgid "We stayed home because it was cold outside."
+msgstr "Ми залишилися вдома, бо надворі було холодно."
+
+msgid "We stayed home because it was raining."
+msgstr "Ми залишилися вдома, бо йшов дощ."
+
+msgid "We’re staying home today because it’s raining outside."
+msgstr "Сьогодні ми лишаємося вдома, бо надворі йде дощ."
+
+msgid "weather forecast"
+msgstr "прогноз погоди"
+
+msgid "What does it mean?"
+msgstr "Що це означає?"
+
+msgid "What does Mari want to see in Käsmu? Write it as Mari says it."
+msgstr "Що Марі хоче побачити в Кясму? Напиши так, як каже Марі."
+
+msgid "What does Tiiu write?"
+msgstr "Що пише Тііу?"
+
+msgid "what happened because of it"
+msgstr "що сталося внаслідок цього"
+
+msgid "What someone said follows <0>et</0>, not <1>kui</1>."
+msgstr "Те, що хтось сказав, вводить <0>et</0>, а не <1>kui</1>."
+
+msgid "What someone said follows <et>et</et>, not <et>kui</et>."
+msgstr "Те, що хтось сказав, вводить <et>et</et>, а не <et>kui</et>."
+
+msgid "what someone said or thought"
+msgstr "що хтось сказав або подумав"
+
+msgid "What someone thinks follows <0>et</0>, not <1>sest</1>."
+msgstr "Те, що хтось думає, вводить <0>et</0>, а не <1>sest</1>."
+
+msgid "What will they do if it rains on Sunday too?"
+msgstr "Що вони зроблять, якщо й у неділю буде дощ?"
+
+msgid "When I get home, I’ll call you."
+msgstr "Коли я дістануся додому, я зателефоную тобі."
+
+msgid "When the <0>kui</0> clause comes first, the comma comes after it."
+msgstr "Коли частина з <0>kui</0> стоїть першою, кома стоїть після неї."
+
+msgid "When the <0>kui</0> clause comes first, the main clause usually starts with its verb. The <1>kui</1> clause can also come second."
+msgstr "Коли частина з <0>kui</0> стоїть першою, головне речення зазвичай починається з дієслова. Частина з <1>kui</1> може стояти й другою."
+
+msgid "When the <0>kuna</0> clause comes first, the main clause usually starts with its verb. It can also come second."
+msgstr "Коли частина з <0>kuna</0> стоїть першою, головне речення зазвичай починається з дієслова. Вона може стояти й другою."
+
+msgid "When the clause with <0>kui</0> or <1>kuna</1> comes first, the comma comes after it: <2>Kui ma koju jõuan, helistan sulle.</2> A short comparison takes no comma: <3>suurem kui Tartu</3>, as in lesson {comparing}."
+msgstr "Коли частина з <0>kui</0> або <1>kuna</1> стоїть першою, кома стоїть після неї: <2>Kui ma koju jõuan, helistan sulle.</2> У короткому порівнянні коми немає: <3>suurem kui Tartu</3>, як в уроці {comparing}."
+
+msgid "When the clause with <0>kui</0> or <1>kuna</1> comes first, the main clause usually starts with its verb: <2>Kui ma koju jõuan, helistan sulle.</2> With <3>siis</3>, the subject can come first again: <4>Kui ma koju jõuan, siis ma helistan sulle.</4>"
+msgstr "Коли частина з <0>kui</0> або <1>kuna</1> стоїть першою, головне речення зазвичай починається з дієслова: <2>Kui ma koju jõuan, helistan sulle.</2> Із <3>siis</3> підмет знову може стояти першим: <4>Kui ma koju jõuan, siis ma helistan sulle.</4>"
+
+msgid "when, if"
+msgstr "коли, якщо"
+
+msgid "when, or on what condition"
+msgstr "коли або за якої умови"
+
+msgid "Where does the comma go?"
+msgstr "Де стоїть кома?"
+
+msgid "Where the verb goes"
+msgstr "Де стоїть дієслово"
+
+msgid "Which linking word"
+msgstr "Який сполучник"
+
+msgid "Which linking word?"
+msgstr "Який сполучник?"
+
+msgid "Which part is the cause?"
+msgstr "Яка частина — причина?"
+
+msgid "Who did it?"
+msgstr "Хто це зробив?"
+
+msgid "Whose car do they take?"
+msgstr "Чию машину вони беруть?"
+
+msgid "Why can’t the building firm come this week?"
+msgstr "Чому будівельна фірма не може прийти цього тижня?"
+
+msgid "Why do they move the hike to Sunday?"
+msgstr "Чому вони переносять похід на неділю?"
+
+msgid "Why does Tiiu write?"
+msgstr "Чому пише Тііу?"
+
+msgid "Why is eight o’clock early for Jaan?"
+msgstr "Чому восьма година — це рано для Яана?"
+
+msgid "why something happened"
+msgstr "причина того, що сталося"
+
+msgid "Why will Tiiu bring gloves and bags?"
+msgstr "Навіщо Тііу принесе рукавиці й мішки?"
+
+msgid "Will check the forecast in the morning."
+msgstr "Перевірить прогноз погоди вранці."
+
+msgid "with nii et"
+msgstr "з nii et"
+
+msgid "With the <et>kui</et> clause second, the main clause keeps its usual order."
+msgstr "Коли частина з <et>kui</et> стоїть другою, головне речення зберігає звичайний порядок."
+
+msgid "Word"
+msgstr "Слово"
+
+msgid "Write back to Tiiu"
+msgstr "Напиши відповідь Тііу"
+
+msgid "Write each sentence with a linking word. Where a reason fits both <0>sest</0> and <1>kuna</1>, both count."
+msgstr "Напиши кожне речення зі сполучником. Коли для причини підходять і <0>sest</0>, і <1>kuna</1>, зараховуються обидва."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "Write to Tiiu. Say that you will come on Saturday, give a reason, say what you can bring and use <0>kui</0> once."
+msgstr "Напиши Тііу. Скажи, що прийдеш у суботу, назви причину, скажи, що можеш принести, і використай <0>kui</0> один раз."

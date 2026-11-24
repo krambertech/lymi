@@ -1,0 +1,460 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 01:10+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+#. placeholder {0}: item.said
+#. placeholder {1}: i18n._(TELL_MEANS[item.id])
+msgid "<0>{0}</0> {1}"
+msgstr "<0>{0}</0> — {1}"
+
+msgid "<0>Käima</0> (going and coming back, visiting) usually takes the where form (<1>seal, poes, Tartus</1>), not <2>sinna</2> or <3>poodi</3>."
+msgstr "<0>Käima</0> (сходить и вернуться, бывать) обычно требует формы «где?» (<1>seal, poes, Tartus</1>), а не <2>sinna</2> или <3>poodi</3>."
+
+msgid "<0>Käima</0> usually takes <1>-s</1>: <2>poes</2>, not <3>poodi</3>."
+msgstr "<0>Käima</0> обычно берёт <1>-s</1>: <2>poes</2>, а не <3>poodi</3>."
+
+msgid "<0>Käima</0> usually takes the where form (<1>kus?</1>): <2>seal</2>."
+msgstr "<0>Käima</0> обычно берёт форму «где?» (<1>kus?</1>): <2>seal</2>."
+
+msgid "<0>Käima</0> usually takes the where form: <1>seal</1>, not <2>sinna</2>."
+msgstr "<0>Käima</0> обычно берёт форму «где?»: <1>seal</1>, а не <2>sinna</2>."
+
+msgid "<0>Minema</0> (going one way) usually takes the where-to form (<1>sinna, poodi</1>); <2>tulema</2> takes where-to or where-from (<3>siia, sealt</3>)."
+msgstr "<0>Minema</0> (движение в одну сторону) обычно берёт форму «куда?» (<1>sinna, poodi</1>); <2>tulema</2> — «куда?» или «откуда?» (<3>siia, sealt</3>)."
+
+msgid "<0>Minema</0> takes the where-to form (<1>sinna, poodi</1>), while <2>käima</2> usually takes the where form (<3>seal, poes</3>)."
+msgstr "<0>Minema</0> берёт форму «куда?» (<1>sinna, poodi</1>), а <2>käima</2> обычно — форму «где?» (<3>seal, poes</3>)."
+
+msgid "<0>Minema</0> takes the where-to form: <1>sinna</1>, not <2>seal</2>."
+msgstr "<0>Minema</0> берёт форму «куда?»: <1>sinna</1>, а не <2>seal</2>."
+
+msgid "<et>Minema</et> takes the where-to form (<et>sinna, poodi</et>); <et>käima</et> usually takes the where form (<et>seal, poes</et>)."
+msgstr "<et>Minema</et> берёт форму «куда?» (<et>sinna, poodi</et>); <et>käima</et> обычно берёт форму «где?» (<et>seal, poes</et>)."
+
+msgid "20 minutes"
+msgstr "20 минут"
+
+msgid "7 exercises"
+msgstr "7 упражнений"
+
+msgid "A good view of the park"
+msgstr "Хороший вид на парк"
+
+msgid "A message from Saaremaa"
+msgstr "Сообщение с Сааремаа"
+
+msgid "All eight directions right."
+msgstr "Все восемь направлений верно."
+
+msgid "All eight: you told one-way trips and visits apart."
+msgstr "Все восемь: ты различаешь движение в одну сторону и посещение."
+
+msgid "All six found and fixed."
+msgstr "Все шесть найдены и исправлены."
+
+msgid "All six sentences right."
+msgstr "Все шесть предложений верно."
+
+msgid "Because <0>käima</0> means visiting or going and returning, it usually pairs with <1>kus?</1> words: <2>käisin seal</2>, <3>käin tööl</3>, <4>käisime Tartus</4>."
+msgstr "Поскольку <0>käima</0> означает «бывать» или «сходить и вернуться», оно обычно сочетается со словами на вопрос <1>kus?</1>: <2>käisin seal</2>, <3>käin tööl</3>, <4>käisime Tartus</4>."
+
+msgid "Being in this place answers <0>kus?</0>: <1>siin</1>."
+msgstr "Нахождение в этом месте отвечает на <0>kus?</0>: <1>siin</1>."
+
+msgid "Buss sõidab siit Tartusse."
+msgstr "Buss sõidab siit Tartusse."
+
+msgid "By bus"
+msgstr "На автобусе"
+
+msgid "By ferry"
+msgstr "На пароме"
+
+msgid "By night train straight from Tartu"
+msgstr "Ночным поездом прямо из Тарту"
+
+msgid "Check the verb table above, then try again."
+msgstr "Посмотри таблицу глаголов выше и попробуй снова."
+
+msgid "Choose <0>siia, siin, siit</0> or <1>sinna, seal, sealt</1> to complete each sentence, then hear the whole line."
+msgstr "Выбери <0>siia, siin, siit</0> или <1>sinna, seal, sealt</1>, чтобы дополнить каждое предложение, и послушай его целиком."
+
+msgid "come here / from there"
+msgstr "приходить сюда / оттуда"
+
+msgid "Coming from a place takes <0>sealt</0>, not <1>seal</1>."
+msgstr "Движение из какого-то места требует <0>sealt</0>, а не <1>seal</1>."
+
+msgid "Coming from that place answers <0>kust?</0>: <1>sealt</1>."
+msgstr "Движение из того места отвечает на <0>kust?</0>: <1>sealt</1>."
+
+msgid "Coming to this place answers <0>kuhu?</0>: <1>siia</1>."
+msgstr "Движение к этому месту отвечает на <0>kuhu?</0>: <1>siia</1>."
+
+msgid "Each sentence uses the wrong direction or place form for its verb. Tap the wrong word, then type the right one."
+msgstr "В каждом предложении к глаголу подобрано неверное направление или форма места. Нажми на ошибочное слово и впиши правильное."
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
+
+msgid "from here"
+msgstr "отсюда"
+
+msgid "from there"
+msgstr "оттуда"
+
+msgid "go and come back / visit"
+msgstr "сходить и вернуться / бывать"
+
+msgid "go there (one way)"
+msgstr "идти туда (в одну сторону)"
+
+msgid "Go through the table once more, then try again."
+msgstr "Просмотри таблицу ещё раз и попробуй снова."
+
+msgid "Go, come and visit"
+msgstr "Идти, приходить и бывать"
+
+msgid "Going to that place answers <0>kuhu?</0>: <1>sinna</1>."
+msgstr "Движение к тому месту отвечает на <0>kuhu?</0>: <1>sinna</1>."
+
+msgid "He or she is going there in the evening."
+msgstr "Он или она идут туда вечером."
+
+msgid "He or she just came from there."
+msgstr "Он или она только что пришли оттуда."
+
+msgid "He or she lives here."
+msgstr "Он или она живут здесь."
+
+msgid "He or she often goes there."
+msgstr "Он или она часто туда ходят."
+
+msgid "He or she works there."
+msgstr "Он или она работают там."
+
+msgid "Heading there (one way)"
+msgstr "Идёт туда (в одну сторону)"
+
+msgid "Heading there or visiting?"
+msgstr "Идёт туда или бывает там?"
+
+msgid "Hear each sentence and pick whether someone is heading there one way or visiting."
+msgstr "Послушай каждое предложение и выбери, идёт ли человек туда в одну сторону или бывает там."
+
+msgid "here"
+msgstr "здесь"
+
+msgid "Here"
+msgstr "Здесь"
+
+msgid "Here and there each have three forms in Estonian (<0>siia, siin, siit</0> and <1>sinna, seal, sealt</1>), and <2>käima</2> usually pairs with the where form, not the where-to form."
+msgstr "«Здесь» и «там» в эстонском имеют по три формы (<0>siia, siin, siit</0> и <1>sinna, seal, sealt</1>), а <2>käima</2> обычно сочетается с формой «где?», а не «куда?»."
+
+msgid "Here and there in three directions"
+msgstr "«Здесь» и «там» в трёх направлениях"
+
+msgid "Here has three forms: <0>siia</0> (to here), <1>siin</1> (here) and <2>siit</2> (from here)."
+msgstr "«Здесь» имеет три формы: <0>siia</0> (сюда), <1>siin</1> (здесь) и <2>siit</2> (отсюда)."
+
+msgid "Here has three forms: <et>siia</et> (to here), <et>siin</et> (here), <et>siit</et> (from here)."
+msgstr "«Здесь» имеет три формы: <et>siia</et> (сюда), <et>siin</et> (здесь), <et>siit</et> (отсюда)."
+
+msgid "Here: <et>siia, siin, siit</et>"
+msgstr "Здесь: <et>siia, siin, siit</et>"
+
+msgid "How did Mart get to the station?"
+msgstr "Как Март добрался до вокзала?"
+
+msgid "How did Triin and Jaan get to Saaremaa?"
+msgstr "Как Трийн и Яан добрались до Сааремаа?"
+
+msgid "How many minutes is the café from the station on foot? Write the number word as Kati says it."
+msgstr "Сколько минут пешком от вокзала до кафе? Напиши числительное словом, как говорит Кати."
+
+msgid "I am going to the café now."
+msgstr "Я сейчас иду в кафе."
+
+msgid "I am going to the shop now."
+msgstr "Я сейчас иду в магазин."
+
+msgid "I live here."
+msgstr "Я живу здесь."
+
+msgid "I went there yesterday (and came back)."
+msgstr "Я ходил туда вчера (и вернулся)."
+
+msgid "I went to the café in the morning."
+msgstr "Утром я ходил в кафе."
+
+msgid "I went to the shop yesterday (and came back)."
+msgstr "Вчера я ходил в магазин (и вернулся)."
+
+msgid "In a friend’s car from outside the city"
+msgstr "На машине друга из-за города"
+
+msgid "In a sentence"
+msgstr "В предложении"
+
+msgid "In lesson {inner} you saw that Estonian places have three forms: into, in, and out of (<0>majja, majas, majast</0>). Here and there work the same way: <1/>, <2/>, <3/> and <4/>, <5/>, <6/>."
+msgstr "В уроке {inner} ты видел, что в эстонском названия мест имеют три формы: внутрь, внутри и наружу (<0>majja, majas, majast</0>). Так же работают «здесь» и «там»: <1/>, <2/>, <3/> и <4/>, <5/>, <6/>."
+
+msgid "Just like place endings, here and there each have three forms: going to, being at, and coming from."
+msgstr "Как и окончания места, «здесь» и «там» имеют по три формы: куда, где и откуда."
+
+msgid "Kati"
+msgstr "Кати"
+
+msgid "Kati has never been to the new café by the park before."
+msgstr "Кати ещё никогда не была в новом кафе у парка."
+
+msgid "Kati will arrive at the station in five minutes."
+msgstr "Кати придёт на вокзал через пять минут."
+
+msgid "Lesson {going} met <0/>, <1/> and <2/>. Watch which place form each verb usually takes: <3>Ma lähen poodi</3> (heading to the shop, one way), but <4>Ma käisin poes</4> (went to the shop and came back)."
+msgstr "В уроке {going} уже встречались <0/>, <1/> и <2/>. Обрати внимание, какую форму места обычно берёт каждый глагол: <3>Ma lähen poodi</3> (иду в магазин, в одну сторону), но <4>Ma käisin poes</4> (сходил в магазин и вернулся)."
+
+msgid "Listen: Kati and Mart"
+msgstr "Послушай: Кати и Март"
+
+msgid "Listening only, no microphone"
+msgstr "Только аудирование, без микрофона"
+
+msgid "Live piano music played every single afternoon"
+msgstr "Живая фортепианная музыка каждый день после обеда"
+
+msgid "Living somewhere answers <0>kus?</0>: <1>siin</1>, not <2>siia</2>."
+msgstr "Проживание где-то отвечает на <0>kus?</0>: <1>siin</1>, а не <2>siia</2>."
+
+msgid "Ma elan siin."
+msgstr "Ma elan siin."
+
+msgid "Ma käisin eile poes."
+msgstr "Ma käisin eile poes."
+
+msgid "Ma lähen praegu poodi."
+msgstr "Ma lähen praegu poodi."
+
+msgid "Mart"
+msgstr "Март"
+
+msgid "Mart has just arrived at the station and calls Kati. Listen and answer. You can play the conversation twice."
+msgstr "Март только что прибыл на вокзал и звонит Кати. Послушай и ответь на вопросы. Разговор можно включить дважды."
+
+msgid "Match each word with its direction."
+msgstr "Соедини каждое слово с его направлением."
+
+msgid "Me läheme homme sinna."
+msgstr "Me läheme homme sinna."
+
+msgid "Meaning"
+msgstr "Значение"
+
+msgid "Meeting at the station"
+msgstr "Встреча на вокзале"
+
+msgid "Monday afternoon right after lunch"
+msgstr "В понедельник днём сразу после обеда"
+
+msgid "Movement toward here takes <0>siia</0>, not <1>siin</1>."
+msgstr "Движение сюда требует <0>siia</0>, а не <1>siin</1>."
+
+msgid "Movement verbs: <et>minema, tulema, käima</et>"
+msgstr "Глаголы движения: <et>minema, tulema, käima</et>"
+
+msgid "Nearly. Check the direction word in the ones you missed."
+msgstr "Почти. Проверь слово направления в предложениях с ошибками."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Почти. Послушай ещё раз те предложения, где были ошибки."
+
+msgid "Nearly. Read the reason under each one you missed."
+msgstr "Почти. Прочитай объяснение под каждым ошибочным предложением."
+
+msgid "On a long walk through the pine forest outside town"
+msgstr "На долгую прогулку по сосновому лесу за городом"
+
+msgid "On a small evening flight"
+msgstr "Небольшим вечерним авиарейсом"
+
+msgid "On foot from the old town"
+msgstr "Пешком из старого города"
+
+msgid "On Sunday evening, reaching home at nine"
+msgstr "В воскресенье вечером, дома окажутся в девять"
+
+msgid "Pick the direction word"
+msgstr "Выбери слово направления"
+
+msgid "Please come here!"
+msgstr "Иди, пожалуйста, сюда!"
+
+msgid "Put the bag here."
+msgstr "Положи сумку сюда."
+
+msgid "Putting something onto a spot answers <0>kuhu?</0>: <1>siia</1>."
+msgstr "Класть что-то на место отвечает на <0>kuhu?</0>: <1>siia</1>."
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Что запомнить» ниже и попробуй ещё раз."
+
+msgid "Saturday morning"
+msgstr "В субботу утром"
+
+msgid "Starting from this place answers <0>kust?</0>: <1>siit</1>."
+msgstr "Отправление из этого места отвечает на <0>kust?</0>: <1>siit</1>."
+
+msgid "Ta töötab seal."
+msgstr "Ta töötab seal."
+
+msgid "Ta tuleb varsti siia."
+msgstr "Ta tuleb varsti siia."
+
+msgid "Ta tuli just sealt."
+msgstr "Ta tuli just sealt."
+
+msgid "Tap a sentence"
+msgstr "Нажми на предложение"
+
+msgid "Tap a word"
+msgstr "Нажми на слово"
+
+msgid "The bookshop, where she bought an Estonian book"
+msgstr "Из книжного, где она купила эстонскую книгу"
+
+msgid "The bus goes from here to Tartu."
+msgstr "Автобус едет отсюда в Тарту."
+
+msgid "The city library"
+msgstr "Из городской библиотеки"
+
+msgid "The morning food market"
+msgstr "С утреннего рынка"
+
+msgid "there"
+msgstr "там"
+
+msgid "There"
+msgstr "Там"
+
+msgid "There has three forms: <0>sinna</0> (to there), <1>seal</1> (there) and <2>sealt</2> (from there)."
+msgstr "«Там» имеет три формы: <0>sinna</0> (туда), <1>seal</1> (там) и <2>sealt</2> (оттуда)."
+
+msgid "There has three forms: <et>sinna</et> (to there), <et>seal</et> (there), <et>sealt</et> (from there)."
+msgstr "«Там» имеет три формы: <et>sinna</et> (туда), <et>seal</et> (там), <et>sealt</et> (оттуда)."
+
+msgid "There: <et>sinna, seal, sealt</et>"
+msgstr "Там: <et>sinna, seal, sealt</et>"
+
+msgid "They could not find a free table at the café."
+msgstr "Они не смогли найти свободный столик в кафе."
+
+msgid "They plan to walk there through the old town."
+msgstr "Они планируют пойти туда пешком через старый город."
+
+msgid "They visited Kuressaare Castle in the afternoon."
+msgstr "После обеда они побывали в замке Курессааре."
+
+msgid "Three movement verbs and their place forms"
+msgstr "Три глагола движения и их формы места"
+
+msgid "To a history museum"
+msgstr "В исторический музей"
+
+msgid "to come"
+msgstr "приходить"
+
+msgid "to go (one way)"
+msgstr "идти (в одну сторону)"
+
+msgid "to go and come back, to visit"
+msgstr "сходить и вернуться, бывать"
+
+msgid "to here"
+msgstr "сюда"
+
+msgid "To the beach, as the water is warm"
+msgstr "На пляж, потому что вода тёплая"
+
+msgid "to there"
+msgstr "туда"
+
+msgid "Triin writes"
+msgstr "Трийн пишет"
+
+msgid "Triin writes to her mother from a trip to Saaremaa. Read and answer."
+msgstr "Трийн пишет маме из поездки на Сааремаа. Прочитай и ответь на вопросы."
+
+msgid "Tule palun siia!"
+msgstr "Tule palun siia!"
+
+msgid "Under what does Mart wait at the station? Write two words as he says them."
+msgstr "Под чем Март ждёт на вокзале? Напиши два слова так, как он говорит."
+
+msgid "Verb"
+msgstr "Глагол"
+
+msgid "Very cheap coffee"
+msgstr "Очень дешёвый кофе"
+
+msgid "Visiting / round trip"
+msgstr "Бывал там / туда и обратно"
+
+msgid "We are going there tomorrow."
+msgstr "Мы едем туда завтра."
+
+msgid "We are going to Tartu tomorrow."
+msgstr "Мы едем в Тарту завтра."
+
+msgid "We visited Tartu in the summer."
+msgstr "Летом мы ездили в Тарту."
+
+msgid "What does Kati like about the new café besides the cake?"
+msgstr "Что ещё, кроме торта, нравится Кати в новом кафе?"
+
+msgid "What does Triin write?"
+msgstr "Что пишет Трийн?"
+
+msgid "What local food does Jaan want to buy at the small shop? Write one word from the letter."
+msgstr "Какую местную еду Яан хочет купить в маленьком магазине? Напиши одно слово из письма."
+
+msgid "When do they leave Saaremaa?"
+msgstr "Когда они уезжают с Сааремаа?"
+
+msgid "Where are they going tomorrow morning?"
+msgstr "Куда они собираются завтра утром?"
+
+msgid "Where did Kati just come from?"
+msgstr "Откуда только что пришла Кати?"
+
+msgid "Where from?"
+msgstr "Откуда?"
+
+msgid "Where to?"
+msgstr "Куда?"
+
+msgid "Where?"
+msgstr "Где?"
+
+msgid "Which direction?"
+msgstr "Какое направление?"
+
+msgid "Which word fits?"
+msgstr "Какое слово подходит?"
+
+msgid "Word"
+msgstr "Слово"
+
+msgid "Working in that place answers <0>kus?</0>: <1>seal</1>."
+msgstr "Работа в том месте отвечает на <0>kus?</0>: <1>seal</1>."
+
+msgid "Write each sentence in Estonian using the right place word."
+msgstr "Напиши каждое предложение по-эстонски с правильным словом места."
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"

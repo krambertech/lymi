@@ -263,6 +263,14 @@ export const STAGES: readonly Stage[] = [
         blurb: msg`A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud.`,
       },
       {
+        slug: "siia-siin-siit",
+        name: msg`Here and there with go, come and visit`,
+        title: msg`Estonian here and there: to, at and from`,
+        et: "Siia, siin, siit",
+        minutes: 20,
+        blurb: msg`A free Estonian lesson on siia, siin and siit (to here, here, from here) and sinna, seal and sealt (to there, there, from there), and how they pair with minema (go), tulema (come) and käima (visit, which usually takes the where form). Every sentence is read aloud.`,
+      },
+      {
         slug: "meeldima",
         name: msg`“To like” and feelings`,
         title: msg`How to say “I like” in Estonian`,

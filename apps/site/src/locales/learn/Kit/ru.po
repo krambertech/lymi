@@ -278,6 +278,9 @@ msgstr "Бесплатный урок эстонского о личных ме�
 msgid "A free Estonian lesson on saying when: hommikul and suvel with -l, mais with -s, hommikuti for every morning, nädala pärast and nädal tagasi, pärast tööd, and from and until with -st and -ni. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о том, как сказать «когда»: hommikul и suvel с -l, mais с -s, hommikuti — «по утрам», nädala pärast и nädal tagasi, pärast tööd, а также «с» и «до» с -st и -ni. Каждое предложение озвучено."
 
+msgid "A free Estonian lesson on siia, siin and siit (to here, here, from here) and sinna, seal and sealt (to there, there, from there), and how they pair with minema (go), tulema (come) and käima (visit, which usually takes the where form). Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского про siia, siin и siit (сюда, здесь, отсюда) и sinna, seal и sealt (туда, там, оттуда), а также про их сочетание с minema (идти), tulema (приходить) и käima (бывать, которое обычно берёт форму «где?»). Каждое предложение озвучено."
+
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, minutes past and to, and writing the time in words. Every time is read aloud."
 msgstr "Бесплатный урок эстонского о том, как сказать, который час: целые часы, pool, veerand и kolmveerand, которые называют следующий час, минуты до и после, а также как написать время словами. Каждый пример озвучен."
 
@@ -755,6 +758,9 @@ msgstr "Уроки эстонской грамматики"
 msgid "Estonian has both <0>{typed}</0> and <1>{right}</1>, and they don’t mean the same."
 msgstr "В эстонском есть и <0>{typed}</0>, и <1>{right}</1>, и значат они разное."
 
+msgid "Estonian here and there: to, at and from"
+msgstr "Эстонские «здесь» и «там»: куда, где и откуда"
+
 msgid "Estonian imperative: giving commands"
 msgstr "Повелительное наклонение в эстонском языке"
 
@@ -1059,6 +1065,9 @@ msgstr "Послушать весь разговор"
 
 msgid "Hear the whole passage"
 msgstr "Послушай весь текст"
+
+msgid "Here and there with go, come and visit"
+msgstr "«Здесь» и «там» с глаголами движения"
 
 msgid "How many cats do you have?"
 msgstr "Сколько у вас кошек?"

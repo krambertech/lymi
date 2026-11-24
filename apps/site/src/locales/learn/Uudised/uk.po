@@ -1,0 +1,539 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 00:24+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0>Et</0> introduces what you heard, and <1>ära jääma</1> means to be cancelled."
+msgstr "<0>Et</0> вводить те, що ти почув, а <1>ära jääma</1> означає «скасовуватися»."
+
+msgid "<0>Läbi</0> takes the genitive: <1>läbi metsa</1>."
+msgstr "<0>Läbi</0> вимагає родового відмінка: <1>läbi metsa</1>."
+
+msgid "<0>Läbi</0> takes the genitive: <1>läbi pargi</1>."
+msgstr "<0>Läbi</0> вимагає родового відмінка: <1>läbi pargi</1>."
+
+msgid "<et>Ära jääma</et> means to be cancelled, with <et>ära</et> at the end."
+msgstr "<et>Ära jääma</et> означає «скасовуватися», причому <et>ära</et> стоїть у кінці."
+
+msgid "<et>Et</et> introduces what you heard, and <et>ära jääma</et> means to be cancelled."
+msgstr "<et>Et</et> вводить те, що ти почув, а <et>ära jääma</et> означає «скасовуватися»."
+
+msgid "<et>Läbi</et> takes the genitive: <et>läbi metsa</et>."
+msgstr "<et>Läbi</et> вимагає родового відмінка: <et>läbi metsa</et>."
+
+msgid "<et>Läbi</et> takes the genitive: <et>läbi pargi</et>."
+msgstr "<et>Läbi</et> вимагає родового відмінка: <et>läbi pargi</et>."
+
+msgid "<et>Nii et</et> introduces the result."
+msgstr "<et>Nii et</et> вводить наслідок."
+
+msgid "<et>Ootama</et> usually takes the partitive: <et>uut bussi</et>."
+msgstr "<et>Ootama</et> зазвичай вимагає партитива: <et>uut bussi</et>."
+
+msgid "<et>Sest</et> and <et>kuna</et> give the reason."
+msgstr "<et>Sest</et> і <et>kuna</et> називають причину."
+
+msgid "25 minutes"
+msgstr "25 хвилин"
+
+msgid "7 exercises and a letter"
+msgstr "7 вправ і лист"
+
+msgid "A cycling race runs through the town centre."
+msgstr "Через центр міста проходить велогонка."
+
+msgid "A letter to the paper"
+msgstr "Лист до газети"
+
+msgid "A local choir closes the day at five."
+msgstr "Місцевий хор завершує день о п’ятій."
+
+msgid "A local news story"
+msgstr "Місцева новина"
+
+msgid "A polite letter to a newspaper opens with <0>Lugupeetud toimetus!</0> and usually closes with <1>Lugupidamisega</1>."
+msgstr "Ввічливий лист до газети починається з <0>Lugupeetud toimetus!</0> і зазвичай закінчується словом <1>Lugupidamisega</1>."
+
+msgid "A reason needs <0>sest</0> or <1>kuna</1>, not <2>et</2>."
+msgstr "Для причини потрібен <0>sest</0> або <1>kuna</1>, а не <2>et</2>."
+
+msgid "A reason needs <et>sest</et> or <et>kuna</et>, not <et>et</et>."
+msgstr "Для причини потрібен <et>sest</et> або <et>kuna</et>, а не <et>et</et>."
+
+msgid "About three thousand people came last year."
+msgstr "Торік прийшло близько трьох тисяч людей."
+
+msgid "All eight news sentences right."
+msgstr "Усі вісім новинних речень правильні."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All ten stage 6 forms right."
+msgstr "Усі десять форм 6-го етапу правильні."
+
+msgid "Along the river"
+msgstr "Уздовж річки"
+
+msgid "Around the old harbour"
+msgstr "Навколо старого порту"
+
+msgid "Behind the train station"
+msgstr "За залізничним вокзалом"
+
+msgid "Benches by the river"
+msgstr "Лавки біля річки"
+
+msgid "Between noon and eight"
+msgstr "Між полуднем і восьмою"
+
+msgid "Check What to remember below, then try again."
+msgstr "Переглянь «Що запам’ятати» нижче, а тоді спробуй знову."
+
+msgid "Children can cycle to school without crossing the busy main road."
+msgstr "Діти можуть їздити до школи велосипедом, не перетинаючи жваву головну дорогу."
+
+msgid "City centre buses run more often on Saturday."
+msgstr "У суботу автобуси в центрі міста ходять частіше."
+
+msgid "Close politely and sign your name."
+msgstr "Заверши лист ввічливо й підпишися своїм ім’ям."
+
+msgid "closed"
+msgstr "закритий"
+
+msgid "coming"
+msgstr "наступний"
+
+msgid "cycle path"
+msgstr "велодоріжка"
+
+msgid "cyclists"
+msgstr "велосипедисти"
+
+msgid "Doing something at the same time usually takes -des: <0>jalutades</0>."
+msgstr "Дія, що відбувається одночасно, зазвичай має закінчення -des: <0>jalutades</0>."
+
+msgid "Doing something at the same time usually takes -des: <0>oodates</0>."
+msgstr "Дія, що відбувається одночасно, зазвичай має закінчення -des: <0>oodates</0>."
+
+msgid "Doing something at the same time usually takes <et>-des</et>: <et>jalutades</et>."
+msgstr "Дія, що відбувається одночасно, зазвичай має закінчення <et>-des</et>: <et>jalutades</et>."
+
+msgid "Doing something at the same time usually takes <et>-des</et>: <et>oodates</et>."
+msgstr "Дія, що відбувається одночасно, зазвичай має закінчення <et>-des</et>: <et>oodates</et>."
+
+msgid "Doing two things at once usually uses -des: <0>kohvi juues</0>."
+msgstr "Дві одночасні дії зазвичай передають через -des: <0>kohvi juues</0>."
+
+msgid "Doing two things at once usually uses <et>-des</et>: <et>kohvi juues</et>."
+msgstr "Дві одночасні дії зазвичай передають через <et>-des</et>: <et>kohvi juues</et>."
+
+msgid "due to repairs"
+msgstr "через ремонт"
+
+msgid "Each sentence comes from a news report and mixes stage 6 forms: -tud, -nud, -v, -des, -mata, <0>-ja</0>, <1>-mine</1> and -lik. Type the form that fits."
+msgstr "Кожне речення взято з новин, і в ньому змішано форми 6-го етапу: -tud, -nud, -v, -des, -mata, <0>-ja</0>, <1>-mine</1> і -lik. Впиши потрібну форму."
+
+msgid "Each sentence has one wrong word. Tap it, then type the right form."
+msgstr "У кожному реченні одне неправильне слово. Торкнися його й впиши правильну форму."
+
+msgid "Enough rubbish bins at the north end"
+msgstr "Достатньої кількості смітників на півночі"
+
+msgid "Estonian"
+msgstr "Естонською"
+
+msgid "Estonian news often uses the impersonal when no person is named: <0>Uus tee avatakse reedel.</0>"
+msgstr "В естонських новинах часто вживають безособову форму, коли виконавця не названо: <0>Uus tee avatakse reedel.</0>"
+
+msgid "Evening radio news"
+msgstr "Вечірні радіоновини"
+
+msgid "event"
+msgstr "подія, захід"
+
+msgid "fallen"
+msgstr "який упав"
+
+msgid "Fill the bulletin"
+msgstr "Заповни зведення"
+
+msgid "Fill the radio weather and traffic bulletin from the word bank. Three words in the bank are spare."
+msgstr "Заповни радіозведення про погоду й рух словами з банку. Три слова в банку зайві."
+
+msgid "Fix the report"
+msgstr "Виправ повідомлення"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "Fixing common mistakes"
+msgstr "Виправлення типових помилок"
+
+msgid "friendly"
+msgstr "дружній"
+
+msgid "Fruit trees and autumn leaves"
+msgstr "Фруктові дерева й осіннє листя"
+
+msgid "gardeners"
+msgstr "садівники"
+
+msgid "Give a reason with <0>sest</0> or <1>kuna</1>."
+msgstr "Назви причину за допомогою <0>sest</0> або <1>kuna</1>."
+
+msgid "Greet the editorial office."
+msgstr "Привітайся з редакцією."
+
+msgid "I heard that the event is cancelled."
+msgstr "Я чув, що захід скасовується."
+
+msgid "I read the news while drinking coffee."
+msgstr "Я читаю новини, п’ючи каву."
+
+msgid "If it rains, the autumn day will be cancelled."
+msgstr "Якщо піде дощ, осінній день скасують."
+
+msgid "In the news"
+msgstr "У новинах"
+
+msgid "is cancelled"
+msgstr "скасовується"
+
+msgid "It rained, so the event was cancelled."
+msgstr "Йшов дощ, тож захід скасували."
+
+msgid "Kalev"
+msgstr "Калев"
+
+msgid "Kalev hosts the local evening news and talks to Liisa Tamm about Tartu’s autumn day. You can play the recording twice, as in the B1 exam."
+msgstr "Калев веде місцеві вечірні новини й розмовляє з Лійзою Тамм про осінній день у Тарту. Запис можна увімкнути двічі, як на іспиті B1."
+
+msgid "Keeping bees in city parks"
+msgstr "Розведення бджіл у міських парках"
+
+msgid "Liisa"
+msgstr "Лійза"
+
+msgid "Linking words connect facts with reasons and results: <0>et</0>, <1>sest</1>, <2>kuna</2>, <3>kui</3> and <4>nii et</4>."
+msgstr "Сполучники пов’язують факти з причинами та наслідками: <0>et</0>, <1>sest</1>, <2>kuna</2>, <3>kui</3> і <4>nii et</4>."
+
+msgid "Listen for <et>ilmateade</et> (weather forecast) and <et>nädalavahetusel</et>."
+msgstr "Прислухайся до <et>ilmateade</et> («прогноз погоди») і <et>nädalavahetusel</et>."
+
+msgid "Listen: evening news and interview"
+msgstr "Послухай: вечірні новини та інтерв’ю"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Local news uses the same grammar from stage 6: the impersonal, participles, particle verbs and linking words. Tap each sentence to hear it."
+msgstr "У місцевих новинах трапляється вся граматика 6-го етапу: безособова форма, дієприкметники, фразові дієслова й сполучники. Торкнися кожного речення, щоб почути його."
+
+msgid "Local residents are waiting for a new bus."
+msgstr "Місцеві жителі чекають на новий автобус."
+
+msgid "Market stalls and a stage are being set up."
+msgstr "Там встановлюють ярмаркові столи та сцену."
+
+msgid "Match each news word or phrase with what it means."
+msgstr "Поєднай кожне новинне слово чи вислів із його значенням."
+
+msgid "Match the news words"
+msgstr "Поєднай слова з новин"
+
+msgid "mayor"
+msgstr "мер"
+
+msgid "Meaning"
+msgstr "Значення"
+
+msgid "Name the news item or local place you are writing about."
+msgstr "Назви новину або місце, про яке пишеш."
+
+msgid "Nearly. Check the forms in the ones you missed."
+msgstr "Майже. Перевір форми в реченнях, де були помилки."
+
+msgid "Nearly. Read the reason under each one you missed."
+msgstr "Майже. Прочитай пояснення під кожною помилкою."
+
+msgid "news"
+msgstr "новини"
+
+msgid "News often uses the impersonal when no person is named: <0>avatakse</0>."
+msgstr "У новинах часто вживають безособову форму, коли виконавця не названо: <0>avatakse</0>."
+
+msgid "News often uses the impersonal when no person is named: <et>avatakse</et>."
+msgstr "У новинах часто вживають безособову форму, коли виконавця не названо: <et>avatakse</et>."
+
+msgid "Nobody came to the opening because of the rain."
+msgstr "Через дощ на відкриття ніхто не прийшов."
+
+msgid "On Sunday morning"
+msgstr "У неділю вранці"
+
+msgid "open, opened"
+msgstr "відкритий"
+
+msgid "organiser"
+msgstr "організатор"
+
+msgid "Pärnu local paper"
+msgstr "Місцева газета Пярну"
+
+msgid "Participles and -des/-mata pack extra facts into one sentence: <0>remondi tõttu suletud</0>, <1>suurt teed ületamata</1>."
+msgstr "Дієприкметники та форми на -des і -mata вміщують додаткові деталі в одне речення: <0>remondi tõttu suletud</0>, <1>suurt teed ületamata</1>."
+
+msgid "passenger, rider"
+msgstr "пасажир, їздець"
+
+msgid "pedestrians"
+msgstr "пішоходи"
+
+msgid "Planting spring flowers in pots on balconies"
+msgstr "Висаджування весняних квітів у горщиках на балконах"
+
+msgid "Prices have risen this year."
+msgstr "Цього року ціни зросли."
+
+msgid "Read a local news article, fill a weather and traffic report, follow a radio interview and write a short letter to the paper using everything from stage 6."
+msgstr "Прочитай місцеву статтю, заповни зведення про погоду й рух, послухай радіоінтерв’ю й напиши короткого листа до газети, використовуючи все з 6-го етапу."
+
+msgid "Read a short article from a town paper in Pärnu and answer the questions, as in the B1 reading exam."
+msgstr "Прочитай коротку статтю з міської газети Пярну й відповідай на запитання, як у частині читання на іспиті B1."
+
+msgid "Read the phrases at the top once more, then try again."
+msgstr "Прочитай вислови нагорі ще раз, а тоді спробуй знову."
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Що запам’ятати» нижче, а тоді спробуй знову."
+
+msgid "reading (noun)"
+msgstr "читання"
+
+msgid "resident"
+msgstr "житель"
+
+msgid "shelter"
+msgstr "навіс, укриття"
+
+msgid "Someone closed the road, so the -tud form usually fits: <0>suletud</0>."
+msgstr "Дорогу хтось закрив, тож зазвичай підходить форма на -tud: <0>suletud</0>."
+
+msgid "Someone closed the road, so the <et>-tud</et> form usually fits: <et>suletud</et>."
+msgstr "Дорогу хтось закрив, тож зазвичай підходить форма на <et>-tud</et>: <et>suletud</et>."
+
+msgid "Someone closed the road: <et>suletud</et>."
+msgstr "Дорогу хтось закрив: <et>suletud</et>."
+
+msgid "Someone closed the street, so the -tud form usually fits: <0>suletud</0>."
+msgstr "Вулицю хтось закрив, тож зазвичай підходить форма на -tud: <0>suletud</0>."
+
+msgid "Someone closed the street, so the <et>-tud</et> form usually fits: <et>suletud</et>."
+msgstr "Вулицю хтось закрив, тож зазвичай підходить форма на <et>-tud</et>: <et>suletud</et>."
+
+msgid "Someone opened the exhibition, so the -tud form usually fits: <0>avatud</0>."
+msgstr "Виставку хтось відкрив, тож зазвичай підходить форма на -tud: <0>avatud</0>."
+
+msgid "Someone opened the exhibition, so the <et>-tud</et> form usually fits: <et>avatud</et>."
+msgstr "Виставку хтось відкрив, тож зазвичай підходить форма на <et>-tud</et>: <et>avatud</et>."
+
+msgid "Stage 6 forms in the news"
+msgstr "Форми 6-го етапу в новинах"
+
+msgid "Street lamps along the southern side of the park"
+msgstr "Вуличні ліхтарі вздовж південного краю міського парку"
+
+msgid "Suggest one improvement with <0>kui</0> or the would form."
+msgstr "Запропонуй одне покращення з <0>kui</0> або умовним способом."
+
+msgid "Sunday stays dry, up to eleven degrees."
+msgstr "У неділю буде сухо, до одинадцяти градусів тепла."
+
+msgid "Tell the forms apart"
+msgstr "Розрізни форми"
+
+msgid "Ten in the morning until six in the evening"
+msgstr "Десята ранку — шоста вечора"
+
+msgid "The -lik ending makes an adjective from a noun: <0>sõbralik</0>."
+msgstr "Закінчення -lik утворює прикметник від іменника: <0>sõbralik</0>."
+
+msgid "The -v form changes with its noun <0>nädalat</0>: <1>tulevat</1>."
+msgstr "Форма на -v змінюється разом з іменником <0>nädalat</0>: <1>tulevat</1>."
+
+msgid "The -v form changes with its noun: <0>jooksvat vett</0>."
+msgstr "Форма на -v змінюється разом з іменником: <0>jooksvat vett</0>."
+
+msgid "The <0>-ja</0> ending names the person who does the verb: <1>sõitja</1>."
+msgstr "Закінчення <0>-ja</0> називає того, хто виконує дію: <1>sõitja</1>."
+
+msgid "The <0>-mine</0> ending turns a verb into the doing: <1>lugemine</1>."
+msgstr "Закінчення <0>-mine</0> перетворює дієслово на назву дії: <1>lugemine</1>."
+
+msgid "The <et>-ja</et> ending names the person who does it: <et>sõitja</et>."
+msgstr "Закінчення <et>-ja</et> називає того, хто виконує дію: <et>sõitja</et>."
+
+msgid "The <et>-lik</et> ending makes an adjective from a noun: <et>sõbralik</et>."
+msgstr "Закінчення <et>-lik</et> утворює прикметник від іменника: <et>sõbralik</et>."
+
+msgid "The <et>-mine</et> ending turns a verb into the doing: <et>lugemine</et>."
+msgstr "Закінчення <et>-mine</et> перетворює дієслово на назву дії: <et>lugemine</et>."
+
+msgid "The <et>-v</et> form changes with its noun: <et>jooksvat vett</et>."
+msgstr "Форма на <et>-v</et> змінюється разом з іменником: <et>jooksvat vett</et>."
+
+msgid "The <et>-v</et> form changes with its noun: <et>tulevat nädalat</et>."
+msgstr "Форма на <et>-v</et> змінюється разом з іменником: <et>tulevat nädalat</et>."
+
+msgid "The event is cancelled due to strong wind."
+msgstr "Захід скасовано через сильний вітер."
+
+msgid "The new library is opened on Friday."
+msgstr "Нову бібліотеку відкривають у п’ятницю."
+
+msgid "The new library opens on Friday."
+msgstr "Нова бібліотека відкривається в п’ятницю."
+
+msgid "The path goes right past their houses."
+msgstr "Доріжка проходить просто повз їхні будинки."
+
+msgid "The path goes through the park."
+msgstr "Доріжка йде через парк."
+
+msgid "The path is lit on dark autumn evenings."
+msgstr "Темними осінніми вечорами доріжка освітлена."
+
+msgid "The perfect uses <et>on</et> and the <et>-nud</et> form: <et>on tõusnud</et>."
+msgstr "Перфект складається з <et>on</et> і форми на <et>-nud</et>: <et>on tõusnud</et>."
+
+msgid "The road is closed for repairs."
+msgstr "Дорога закрита на ремонт."
+
+msgid "The small shelter for rain is already built."
+msgstr "Невеликий навіс від дощу вже збудовано."
+
+msgid "The town bought bicycles for local schools."
+msgstr "Місто купило велосипеди для місцевих шкіл."
+
+msgid "The tree fell itself, so the -nud form usually fits: <0>kukkunud</0>."
+msgstr "Дерево впало саме, тож зазвичай підходить форма на -nud: <0>kukkunud</0>."
+
+msgid "The tree fell itself, so the <et>-nud</et> form usually fits: <et>kukkunud</et>."
+msgstr "Дерево впало саме, тож зазвичай підходить форма на <et>-nud</et>: <et>kukkunud</et>."
+
+msgid "The weather forecast promises rain at the weekend."
+msgstr "Прогноз погоди обіцяє дощ на вихідних."
+
+msgid "town government, city council"
+msgstr "міська управа"
+
+msgid "traffic changes"
+msgstr "зміни в русі"
+
+msgid "Type the right form"
+msgstr "Впиши потрібну форму"
+
+msgid "Until when can new volunteers sign up? Write two words as Liisa says them."
+msgstr "До якого часу нові волонтери можуть записатися? Напиши два слова так, як каже Лійза."
+
+msgid "Visitors have to buy a ticket for the concerts."
+msgstr "На концерти відвідувачам треба купувати квиток."
+
+msgid "volunteers (partitive plural)"
+msgstr "волонтерів (партитив множини)"
+
+msgid "We didn’t go to the party because it rained."
+msgstr "Ми не пішли на свято, бо йшов дощ."
+
+msgid "We stayed home because it was raining."
+msgstr "Ми залишилися вдома, бо йшов дощ."
+
+msgid "Weather and traffic"
+msgstr "Погода й рух"
+
+msgid "weather forecast"
+msgstr "прогноз погоди"
+
+msgid "What do some local residents say is still missing?"
+msgstr "Чого, за словами деяких мешканців, досі бракує?"
+
+msgid "What does the article say?"
+msgstr "Про що йдеться у статті?"
+
+msgid "What is the sports club holding on Saturday? Write the word from the text."
+msgstr "Що спортивний клуб проводить у суботу? Напиши слово з тексту."
+
+msgid "What will the town gardener talk about?"
+msgstr "Про що розповість міський садівник?"
+
+msgid "When did building work start? Write two words as the text says."
+msgstr "Коли почалося будівництво? Напиши два слова так, як у тексті."
+
+msgid "When does the autumn day take place?"
+msgstr "Коли відбудеться осінній день?"
+
+msgid "Where does the new cycle path run?"
+msgstr "Де проходить нова велодоріжка?"
+
+msgid "While drinking takes -des (<0>juues</0>), not -mata (<1>joomata</1>, without drinking)."
+msgstr "«П’ючи» передає форма на -des (<0>juues</0>), а не -mata (<1>joomata</1> — «не п’ючи»)."
+
+msgid "While drinking takes <et>-des</et> (<et>juues</et>), not <et>-mata</et>."
+msgstr "«П’ючи» передає форма на <et>-des</et> (<et>juues</et>), а не <et>-mata</et>."
+
+msgid "while waiting"
+msgstr "чекаючи"
+
+msgid "while walking"
+msgstr "гуляючи"
+
+msgid "Who mentions each fact?"
+msgstr "Хто згадує кожен факт?"
+
+msgid "Why are many parents pleased?"
+msgstr "Чому багато батьків радіють?"
+
+msgid "Why is Ülikooli Street closed to cars?"
+msgstr "Чому вулицю Юлікоолі закрито для машин?"
+
+msgid "With no person named, Estonian uses the impersonal: <0>avatakse</0>."
+msgstr "Коли виконавця не названо, в естонській уживають безособову форму: <0>avatakse</0>."
+
+msgid "With no person named, Estonian uses the impersonal: <et>avatakse</et>."
+msgstr "Коли виконавця не названо, в естонській уживають безособову форму: <et>avatakse</et>."
+
+msgid "Without doing something usually takes -mata: <0>maksmata</0>."
+msgstr "«Не зробивши чогось» зазвичай передає форма на -mata: <0>maksmata</0>."
+
+msgid "Without doing something usually takes <et>-mata</et>: <et>maksmata</et>."
+msgstr "«Не зробивши чогось» зазвичай передає форма на <et>-mata</et>: <et>maksmata</et>."
+
+msgid "without paying"
+msgstr "не платячи"
+
+msgid "Workers are repairing water pipes under the road."
+msgstr "Працівники ремонтують водопровідні труби під дорогою."
+
+msgid "Write a short letter of about 90 words to a local paper about a path, park or bus line in your town, then compare it with a model."
+msgstr "Напиши короткого листа приблизно на 90 слів до місцевої газети про доріжку, парк або автобусну лінію у своєму місті, а потім порівняй зі зразком."
+
+msgid "Write each news sentence in Estonian."
+msgstr "Напиши кожне новинне речення естонською."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "Write to the editorial office"
+msgstr "Напиши до редакції"
+
+msgid "Write to the local newspaper. Thank them or comment on a local change, give a reason with <0>sest</0> or <1>kuna</1>, suggest one improvement and sign your name."
+msgstr "Напиши до місцевої газети. Подякуй або прокоментуй зміни в місті, назви причину зі <0>sest</0> або <1>kuna</1>, запропонуй одне покращення й підпишися."
+
+msgid "Writing news sentences"
+msgstr "Написання новинних речень"

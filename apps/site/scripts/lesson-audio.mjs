@@ -30,11 +30,18 @@ import {
   spokenText,
   tooManyCharacters,
 } from "../src/lib/learn/recording.ts";
+import {
+  ffmpeg,
+  levelConversation,
+  levelRecordedConversations,
+  seconds,
+} from "./conversation-levels.mjs";
 
 const { values: flags } = parseArgs({
   args: process.argv.slice(2).filter((arg) => arg !== "--"),
   options: {
     "dry-run": { type: "boolean", default: false },
+    "level-only": { type: "boolean", default: false },
     "max-characters": { type: "string", default: "20000" },
   },
 });
@@ -44,6 +51,11 @@ if (!Number.isInteger(mostCharacters) || mostCharacters < 0)
 
 const site = join(dirname(fileURLToPath(import.meta.url)), "..");
 const root = join(site, "public/audio/estonian-lessons");
+if (flags["level-only"]) {
+  if (flags["dry-run"]) throw new Error("--level-only writes audio. Run it without --dry-run.");
+  levelRecordedConversations(root);
+  process.exit(0);
+}
 const responses = join(site, ".lesson-audio/dialogue");
 const manifestPath = join(root, "manifest.json");
 const main = nativeSpeechVoice("et")?.voice;
@@ -106,18 +118,6 @@ if (plan.jobs.length)
 
 const saved = { ...manifest };
 const save = (data) => writeFileSync(manifestPath, `${JSON.stringify(data, null, 2)}\n`);
-const ffmpeg = (...args) =>
-  execFileSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", ...args]);
-
-function seconds(file) {
-  const read = execFileSync(
-    "ffprobe",
-    ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", file],
-    { encoding: "utf8" },
-  );
-  return Number(read);
-}
-
 const length = (file) => Math.round(seconds(file) * 100) / 100;
 
 function normalize(file) {
@@ -216,26 +216,27 @@ function spanOf(file) {
 function joinParts(name, parts, work) {
   const joined = parts.map(({ file, starts, speakers }, i) => {
     const span = spanOf(file);
-    const level = join(work, `${i}.wav`);
+    const trimmed = join(work, `trimmed-${i}.wav`);
     const trim = `atrim=${span.from}:${span.to},asetpts=PTS-STARTPTS`;
-    ffmpeg("-i", file, "-af", `${trim},${LOUDNESS}`, "-ar", "44100", "-ac", "1", level);
-    return { level, starts, speakers, span, length: seconds(level) };
+    ffmpeg("-i", file, "-af", trim, "-ar", "44100", "-ac", "1", "-c:a", "pcm_f32le", trimmed);
+    return { trimmed, starts, speakers, span, length: seconds(trimmed) };
   });
-  const out = join(work, "joined.mp3");
+  const out = join(work, "joined.wav");
   ffmpeg(
-    ...joined.flatMap(({ level }) => ["-i", level]),
+    ...joined.flatMap(({ trimmed }) => ["-i", trimmed]),
     "-filter_complex",
     joinFilter(joined.length),
     "-map",
     "[out]",
     "-ar",
     "44100",
-    "-b:a",
-    "64k",
+    "-c:a",
+    "pcm_f32le",
     out,
   );
-  writeFileSync(join(root, `${name}.mp3`), readFileSync(out));
-  writeFileSync(join(root, `${name}.json`), `${JSON.stringify(conversationTiming(joined))}\n`);
+  const timing = conversationTiming(joined);
+  levelConversation(out, timing, join(root, `${name}.mp3`));
+  writeFileSync(join(root, `${name}.json`), `${JSON.stringify(timing)}\n`);
 }
 
 async function makeConversation(job) {

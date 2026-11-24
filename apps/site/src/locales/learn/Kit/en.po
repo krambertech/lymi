@@ -260,6 +260,9 @@ msgstr "A free Estonian lesson on making nouns from verbs: -ja for the person wh
 msgid "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
 msgstr "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
 
+msgid "A free Estonian lesson on participles used as adjectives: -tud for what was done to it (loetud raamat, suletud uks, tehtud töö), -nud for what it did or became (väsinud mees, kukkunud leht) and -v for what it is doing now (jooksev vesi, magav laps), how to tell them apart, and which of them usually change with the noun. Every example is read aloud."
+msgstr "A free Estonian lesson on participles used as adjectives: -tud for what was done to it (loetud raamat, suletud uks, tehtud töö), -nud for what it did or became (väsinud mees, kukkunud leht) and -v for what it is doing now (jooksev vesi, magav laps), how to tell them apart, and which of them usually change with the noun. Every example is read aloud."
+
 msgid "A free Estonian lesson on particle verbs whose meaning you can’t guess from their parts: aru saama, kokku saama, läbi saama, hakkama saama, otsa saama, maha jääma, ära jääma, välja nägema, ära tundma, vastu võtma, järele mõtlema and alla andma; the case each one usually takes, and where the particle goes. Every example is read aloud."
 msgstr "A free Estonian lesson on particle verbs whose meaning you can’t guess from their parts: aru saama, kokku saama, läbi saama, hakkama saama, otsa saama, maha jääma, ära jääma, välja nägema, ära tundma, vastu võtma, järele mõtlema and alla andma; the case each one usually takes, and where the particle goes. Every example is read aloud."
 
@@ -772,6 +775,9 @@ msgstr "Estonian numbers"
 
 msgid "Estonian ordinal numbers and dates"
 msgstr "Estonian ordinal numbers and dates"
+
+msgid "Estonian participles used as adjectives"
+msgstr "Estonian participles used as adjectives"
 
 msgid "Estonian particle verbs with new meanings"
 msgstr "Estonian particle verbs with new meanings"

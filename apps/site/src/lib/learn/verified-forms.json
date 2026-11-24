@@ -1,8 +1,11 @@
 {
+  "anu": "anuma",
   "Eestis": "Eesti",
   "Esmaspäevast": "esmaspäev, esmaspäevane",
+  "jaanile": "jaan, Jaani",
   "Kodus": "kodu, kodused",
   "Läheb": "minema",
+  "mart": "mart",
   "Olen": "olema",
   "Pärnusse": "Pärnu",
   "Tahan": "tahtma",
@@ -3475,8 +3478,5 @@
   "üüri": "üür, üürima",
   "üürile": "üür",
   "üürileandja": "üürileandja",
-  "šokolaadi": "šokolaad",
-  "anu": "anuma",
-  "jaanile": "jaan, Jaani",
-  "mart": "mart"
+  "šokolaadi": "šokolaad"
 }

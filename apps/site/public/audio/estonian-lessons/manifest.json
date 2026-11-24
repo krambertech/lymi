@@ -30099,5 +30099,195 @@
     "text": "vanem",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/ma-tahan-lugeda": {
+    "text": "Ma tahan lugeda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/meile-meeldib-lugeda": {
+    "text": "Meile meeldib lugeda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/ta-tahab-ujuda": {
+    "text": "Ta tahab ujuda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/nad-tahavad-ra2a2kida": {
+    "text": "Nad tahavad rääkida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/ma-tahaksin-kohvi": {
+    "text": "Ma tahaksin kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/ra2a2kida": {
+    "text": "rääkida",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/p-letter": {
+    "text": "Tere, Anu! Ma elan nüüd Pärnus ja mulle meeldib siin väga. Mari ja mina elame koos. Meil on tuba, kass ja koer. Mulle meeldivad kassid, aga Marile meeldivad koerad. Mari õpib koolis ja talle meeldib lugeda. Mari räägib juba hästi eesti keelt. Mulle meeldib ujuda, aga Marile ei meeldi ujuda. Mulle meeldib rääkida, aga mulle ei meeldi kirjutada. Täna on Pärnus külm ja meil on igav. Ma tahan õppida eesti keelt hästi. Meile meeldib Pärnu, aga Tallinn ei meeldi meile. Meile meeldib kohv. Mari tahab ka kohvi. Kas sulle meeldib kohv? Tule laupäeval kell kaks meile! Siis läheme kohvikusse. Kohvikus on ka kass. Kas sa tuled?",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "meeldima/c-plans": {
+    "text": "Tere, Mart! Kas sa oled kodus? Tere, Liis! Jah, ma olen kodus. Mul on täna igav. Mul on ka igav. Tule homme kohvikusse! Seal on kass ja koer. Kas sulle meeldib kohv? Ei, mulle ei meeldi kohv. Aga mulle meeldivad kassid! Ma tulen hea meelega. Tore! Mulle meeldivad koerad. Kas sulle meeldivad koerad ka? Jah, mulle meeldivad koerad ja kassid. Kes veel tuleb? Jaan tuleb ka. Talle meeldib kohv. Aga talle ei meeldi koerad. Siis on Jaanil igav! Kas Jaan tuleb kell kaks? Jah, kell kaks. Pühapäeval lähen ma Pärnusse. Mulle meeldib ujuda. Kas sa tuled ka? Ei, mulle ei meeldi ujuda. Mul on külm. Mul on palav! Mis sa siis teed? Ma loen eesti raamatut. Mulle meeldib lugeda. Kas sulle meeldivad eesti raamatud? Jah, väga. Ma tahan õppida eesti keelt. Mulle meeldib ka eesti keel. Sa räägid juba hästi! Mulle meeldib sinu eesti keel. Aitäh, Liis! Mul on hea meel. Kas Jaan tuleb Pärnusse? Ei, Jaanile ei meeldi ujuda. Talle meeldib Tartu. Mulle meeldib Tartu ka. Homme kell kaks kohvikus! Jah, homme kell kaks. Head aega! Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Mart!",
+          "Kas sa oled kodus?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Liis!",
+          "Jah, ma olen kodus.",
+          "Mul on täna igav."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mul on ka igav.",
+          "Tule homme kohvikusse!",
+          "Seal on kass ja koer.",
+          "Kas sulle meeldib kohv?"
+        ],
+        "say": "[cheerful] Mul on ka igav. Tule homme kohvikusse! Seal on kass ja koer. Kas sulle meeldib kohv?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, mulle ei meeldi kohv.",
+          "Aga mulle meeldivad kassid!",
+          "Ma tulen hea meelega."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tore!",
+          "Mulle meeldivad koerad.",
+          "Kas sulle meeldivad koerad ka?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, mulle meeldivad koerad ja kassid.",
+          "Kes veel tuleb?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jaan tuleb ka.",
+          "Talle meeldib kohv.",
+          "Aga talle ei meeldi koerad."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Siis on Jaanil igav!",
+          "Kas Jaan tuleb kell kaks?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, kell kaks.",
+          "Pühapäeval lähen ma Pärnusse.",
+          "Mulle meeldib ujuda.",
+          "Kas sa tuled ka?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, mulle ei meeldi ujuda.",
+          "Mul on külm."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mul on palav!",
+          "Mis sa siis teed?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma loen eesti raamatut.",
+          "Mulle meeldib lugeda."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas sulle meeldivad eesti raamatud?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, väga.",
+          "Ma tahan õppida eesti keelt.",
+          "Mulle meeldib ka eesti keel."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Sa räägid juba hästi!",
+          "Mulle meeldib sinu eesti keel."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh, Liis!",
+          "Mul on hea meel.",
+          "Kas Jaan tuleb Pärnusse?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, Jaanile ei meeldi ujuda.",
+          "Talle meeldib Tartu."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mulle meeldib Tartu ka.",
+          "Homme kell kaks kohvikus!"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, homme kell kaks.",
+          "Head aega!"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Head aega!"
+        ]
+      }
+    ]
   }
 }

@@ -13298,6 +13298,564 @@ const IDIOM_CLIPS: Record<string, Clip> = {
   "c-olga": IDIOM_CONVERSATION,
 };
 
+export const DES_VERBS = {
+  most: [
+    { inf: "lugeda", form: "lugedes", said: "Ta joob kohvi ajalehte lugedes." },
+    { inf: "õppida", form: "õppides", said: "Ma kuulan muusikat õppides." },
+    { inf: "rääkida", form: "rääkides", said: "Me jalutasime rääkides." },
+    { inf: "oodata", form: "oodates", said: "Ma loen raamatut bussi oodates." },
+    { inf: "sõita", form: "sõites", said: "Ära kasuta telefoni sõites." },
+    { inf: "kuulata", form: "kuulates", said: "Ma kirjutan kõik üles õpetajat kuulates." },
+  ],
+  short: [
+    { inf: "süüa", form: "süües", said: "Ära räägi süües." },
+    { inf: "juua", form: "juues", said: "Ta vaatas filmi teed juues." },
+    { inf: "teha", form: "tehes", said: "Ta laulab süüa tehes." },
+  ],
+  double: [
+    { inf: "minna", form: "minnes", said: "Ma ostan leiba koju minnes." },
+    { inf: "tulla", form: "tulles", said: "Ma kuulan raadiot tööle tulles." },
+    { inf: "olla", form: "olles", said: "Ma õpin eesti keelt kodus olles." },
+  ],
+} as const;
+
+export const MATA_VERBS = {
+  most: [
+    { inf: "lugema", form: "lugemata", said: "Ta kirjutas lepingule alla seda lugemata." },
+    { inf: "ütlema", form: "ütlemata", said: "Ta lahkus midagi ütlemata." },
+    { inf: "küsima", form: "küsimata", said: "Ta võttis mu raamatu küsimata." },
+    { inf: "helistama", form: "helistamata", said: "Ära tule külla helistamata." },
+    { inf: "maksma", form: "maksmata", said: "Ta lahkus kohvikust maksmata." },
+  ],
+  odd: [
+    { inf: "sööma", form: "söömata", said: "Ma läksin tööle hommikusööki söömata." },
+    { inf: "jooma", form: "joomata", said: "Ma läksin tööle kohvi joomata." },
+    { inf: "minema", form: "minemata", said: "Ta jäi koosolekule minemata." },
+    { inf: "tulema", form: "tulemata", said: "Ta jäi eile tulemata." },
+    { inf: "magama", form: "magamata", said: "Ma olin terve öö magamata." },
+  ],
+} as const;
+
+export const DES_TYPED = [
+  "lugeda",
+  "õppida",
+  "oodata",
+  "sõita",
+  "süüa",
+  "juua",
+  "minna",
+  "tulla",
+] as const;
+
+export const MATA_TYPED = [
+  "lugema",
+  "ütlema",
+  "küsima",
+  "helistama",
+  "sööma",
+  "minema",
+  "tulema",
+  "magama",
+] as const;
+
+export const DES_HEARD = [
+  { id: "knock-des", key: "koputa", means: "des", said: "Ta tuli sisse koputades." },
+  { id: "knock-mata", key: "koputa", means: "mata", said: "Ta tuli sisse koputamata." },
+  { id: "smile-des", key: "naerata", means: "des", said: "Ta lahkus naeratades." },
+  { id: "smile-mata", key: "naerata", means: "mata", said: "Ta lahkus naeratamata." },
+  { id: "bye-des", key: "jata", means: "des", said: "Ta lahkus hüvasti jättes." },
+  { id: "bye-mata", key: "jata", means: "mata", said: "Ta lahkus hüvasti jätmata." },
+  { id: "read-des", key: "loe", means: "des", said: "Ma sõin hommikusööki ajalehte lugedes." },
+  { id: "eat-mata", key: "soo", means: "mata", said: "Ma läksin tööle hommikusööki söömata." },
+  { id: "tea-des", key: "joo", means: "des", said: "Ta vaatas filmi teed juues." },
+  { id: "ask-mata", key: "kusi", means: "mata", said: "Ta võttis mu raamatu küsimata." },
+  { id: "home-des", key: "mine", means: "des", said: "Ma ostan leiba koju minnes." },
+  { id: "go-mata", key: "mine", means: "mata", said: "Ta jäi koosolekule minemata." },
+] as const;
+
+export const DES_TRANSLATE = [
+  "Ta lahkus midagi ütlemata.",
+  "Ma kuulan muusikat õppides.",
+  "Ära kasuta telefoni sõites.",
+  "Ma ostan leiba koju minnes.",
+  "Ära tule külla helistamata.",
+  "Ta võttis mu raamatu küsimata.",
+  "Ta laulab süüa tehes.",
+] as const;
+
+export const DES_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Ta lahkus midagi ütlemata.": [
+    "Ta lahkus midagi ütlemata.",
+    "Ta lahkus ütlemata midagi.",
+    "Ta läks midagi ütlemata ära.",
+    "Ta läks ära midagi ütlemata.",
+    "Ta läks midagi ütlemata minema.",
+    "Ta läks minema midagi ütlemata.",
+    "Ta lahkus sõnagi ütlemata.",
+    "Ta läks sõnagi ütlemata ära.",
+    "Ta läks ära sõnagi ütlemata.",
+    "Ta läks sõnagi ütlemata minema.",
+    "Midagi ütlemata lahkus ta.",
+    "Midagi ütlemata läks ta ära.",
+    "Tema läks midagi ütlemata ära.",
+    "Tema läks ära midagi ütlemata.",
+    "Tema läks midagi ütlemata minema.",
+    "Tema läks minema midagi ütlemata.",
+    "Tema läks sõnagi ütlemata ära.",
+    "Tema läks ära sõnagi ütlemata.",
+    "Tema läks sõnagi ütlemata minema.",
+  ],
+  "Ma kuulan muusikat õppides.": [
+    "Ma kuulan muusikat õppides.",
+    "Ma kuulan õppides muusikat.",
+    "Õppides kuulan ma muusikat.",
+    "Muusikat kuulan ma õppides.",
+    "Kuulan muusikat õppides.",
+    "Kuulan õppides muusikat.",
+    "Õppides kuulan muusikat.",
+    "Muusikat kuulan õppides.",
+    "Ma kuulan muusikat, kui õpin.",
+    "Ma kuulan muusikat, kui ma õpin.",
+    "Mina kuulan muusikat, kui mina õpin.",
+    "Kuulan muusikat, kui mina õpin.",
+    "Kuulan muusikat, kui õpin.",
+    "Ma kuulan muusikat õppimise ajal.",
+    "Kuulan muusikat õppimise ajal.",
+    "Õppimise ajal kuulan muusikat.",
+    "Õppimise ajal ma kuulan muusikat.",
+    "Mina kuulan muusikat õppides.",
+    "Mina kuulan õppides muusikat.",
+    "Õppides kuulan mina muusikat.",
+    "Muusikat kuulan mina õppides.",
+    "Mina kuulan muusikat, kui õpin.",
+    "Mina kuulan muusikat, kui ma õpin.",
+    "Kuulan muusikat, kui ma õpin.",
+    "Ma kuulan muusikat, kui mina õpin.",
+    "Mina kuulan muusikat õppimise ajal.",
+    "Õppimise ajal mina kuulan muusikat.",
+  ],
+  "Ära kasuta telefoni sõites.": [
+    "Ära kasuta telefoni sõites.",
+    "Ära kasuta sõites telefoni.",
+    "Sõites ära kasuta telefoni.",
+    "Ära kasuta mobiili sõites.",
+    "Ära kasuta sõites mobiili.",
+    "Sõites ära kasuta mobiili.",
+    "Ära kasuta telefoni sõidu ajal.",
+    "Ära kasuta sõidu ajal telefoni.",
+    "Sõidu ajal ära kasuta telefoni.",
+    "Ära kasuta mobiili sõidu ajal.",
+    "Ära kasuta sõidu ajal mobiili.",
+    "Sõidu ajal ära kasuta mobiili.",
+    "Ärge kasutage telefoni sõites.",
+    "Ärge kasutage sõites telefoni.",
+    "Sõites ärge kasutage telefoni.",
+    "Ärge kasutage mobiili sõites.",
+    "Ärge kasutage sõites mobiili.",
+    "Sõites ärge kasutage mobiili.",
+  ],
+  "Ma ostan leiba koju minnes.": [
+    "Ma ostan leiba koju minnes.",
+    "Ma ostan koju minnes leiba.",
+    "Koju minnes ostan leiba.",
+    "Koju minnes ma ostan leiba.",
+    "Ostan leiba koju minnes.",
+    "Ostan koju minnes leiba.",
+    "Leiba ostan koju minnes.",
+    "Leiba ma ostan koju minnes.",
+    "Ma ostan leiva koju minnes.",
+    "Ma ostan koju minnes leiva.",
+    "Koju minnes ostan leiva.",
+    "Koju minnes ma ostan leiva.",
+    "Ostan leiva koju minnes.",
+    "Ostan koju minnes leiva.",
+    "Ma ostan leiba, kui koju lähen.",
+    "Ma ostan leiba, kui lähen koju.",
+    "Ostan leiba, kui koju lähen.",
+    "Ostan leiba, kui lähen koju.",
+    "Ma ostan leiba kodutee peal.",
+    "Ostan leiba kodutee peal.",
+    "Mina ostan leiba koju minnes.",
+    "Mina ostan koju minnes leiba.",
+    "Koju minnes mina ostan leiba.",
+    "Leiba mina ostan koju minnes.",
+    "Mina ostan leiva koju minnes.",
+    "Mina ostan koju minnes leiva.",
+    "Koju minnes mina ostan leiva.",
+    "Mina ostan leiba, kui koju lähen.",
+    "Mina ostan leiba, kui lähen koju.",
+    "Mina ostan leiba kodutee peal.",
+  ],
+  "Ära tule külla helistamata.": [
+    "Ära tule külla helistamata.",
+    "Ära tule helistamata külla.",
+    "Helistamata ära tule külla.",
+    "Ärge tulge külla helistamata.",
+    "Ärge tulge helistamata külla.",
+    "Helistamata ärge tulge külla.",
+    "Ära tule külla ilma helistamata.",
+  ],
+  "Ta võttis mu raamatu küsimata.": [
+    "Ta võttis mu raamatu küsimata.",
+    "Ta võttis minu raamatu küsimata.",
+    "Ta võttis küsimata mu raamatu.",
+    "Ta võttis küsimata minu raamatu.",
+    "Küsimata võttis ta mu raamatu.",
+    "Küsimata võttis ta minu raamatu.",
+    "Ta võttis mu raamatu ära küsimata.",
+    "Ta võttis minu raamatu ära küsimata.",
+    "Ta võttis mu raamatu ilma küsimata.",
+    "Ta võttis minu raamatu ilma küsimata.",
+    "Tema võttis mu raamatu küsimata.",
+    "Tema võttis minu raamatu küsimata.",
+    "Tema võttis küsimata mu raamatu.",
+    "Tema võttis küsimata minu raamatu.",
+    "Tema võttis mu raamatu ära küsimata.",
+    "Tema võttis minu raamatu ära küsimata.",
+    "Tema võttis mu raamatu ilma küsimata.",
+    "Tema võttis minu raamatu ilma küsimata.",
+  ],
+  "Ta laulab süüa tehes.": [
+    "Ta laulab süüa tehes.",
+    "Süüa tehes laulab ta.",
+    "Ta laulab toitu valmistades.",
+    "Toitu valmistades laulab ta.",
+    "Ta laulab, kui ta süüa teeb.",
+    "Ta laulab, kui süüa teeb.",
+    "Kui ta süüa teeb, laulab ta.",
+    "Ta laulab söögitegemise ajal.",
+    "Tema laulab süüa tehes.",
+    "Tema laulab toitu valmistades.",
+    "Tema laulab, kui ta süüa teeb.",
+    "Tema laulab, kui süüa teeb.",
+    "Tema laulab söögitegemise ajal.",
+  ],
+};
+
+export const DES_ORDER = [
+  {
+    id: "leave",
+    answers: [
+      "Ta lahkus midagi ütlemata.",
+      "Ta lahkus ütlemata midagi.",
+      "Midagi ütlemata lahkus ta.",
+    ],
+  },
+  {
+    id: "music",
+    answers: [
+      "Ma kuulan muusikat õppides.",
+      "Ma kuulan õppides muusikat.",
+      "Õppides kuulan ma muusikat.",
+      "Muusikat kuulan ma õppides.",
+    ],
+  },
+  {
+    id: "phone",
+    answers: [
+      "Ära kasuta telefoni sõites.",
+      "Ära kasuta sõites telefoni.",
+      "Sõites ära kasuta telefoni.",
+    ],
+  },
+  {
+    id: "visit",
+    answers: [
+      "Ära tule külla helistamata.",
+      "Ära tule helistamata külla.",
+      "Helistamata ära tule külla.",
+    ],
+  },
+  {
+    id: "book",
+    answers: [
+      "Ta võttis mu raamatu küsimata.",
+      "Ta võttis küsimata mu raamatu.",
+      "Küsimata võttis ta mu raamatu.",
+    ],
+  },
+  {
+    id: "homework",
+    answers: [
+      "Ma teen kodutööd raadiot kuulates.",
+      "Ma teen raadiot kuulates kodutööd.",
+      "Raadiot kuulates teen ma kodutööd.",
+      "Kodutööd teen ma raadiot kuulates.",
+    ],
+  },
+] as const;
+
+export const DES_FIXES = [
+  { wrong: "Ta lahkus sõnagi öeldes.", right: "Ta lahkus sõnagi ütlemata." },
+  { wrong: "Ta luges kirja söömata.", right: "Ta luges kirja süües." },
+  { wrong: "Ma ei tule kunagi helistades.", right: "Ma ei tule kunagi helistamata." },
+  { wrong: "Ma kuulan muusikat õppimata.", right: "Ma kuulan muusikat õppides." },
+  { wrong: "Ta jäi koosolekule minnemata.", right: "Ta jäi koosolekule minemata." },
+  { wrong: "Ma ostan leiba koju minedes.", right: "Ma ostan leiba koju minnes." },
+  {
+    wrong: "Ta kirjutas lepingule alla see lugemata.",
+    right: "Ta kirjutas lepingule alla seda lugemata.",
+  },
+] as const;
+
+export const DES_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  ...Object.fromEntries(DES_FIXES.map(({ right }) => [right, [right]])),
+};
+
+export const DES_REWRITE = [
+  {
+    from: "Ta joob kohvi ja loeb ajalehte.",
+    answer: "Ta joob kohvi ajalehte lugedes.",
+  },
+  { from: "Ta lahkus ja ei öelnud midagi.", answer: "Ta lahkus midagi ütlemata." },
+  { from: "Ma lähen koju ja ostan leiba.", answer: "Ma ostan leiba koju minnes." },
+  { from: "Ta võttis mu raamatu ega küsinud.", answer: "Ta võttis mu raamatu küsimata." },
+] as const;
+
+export const DES_REWRITE_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Ta joob kohvi ajalehte lugedes.": [
+    "Ta joob kohvi ajalehte lugedes.",
+    "Ta joob ajalehte lugedes kohvi.",
+    "Ajalehte lugedes joob ta kohvi.",
+    "Kohvi joob ta ajalehte lugedes.",
+    "Tema joob kohvi ajalehte lugedes.",
+    "Tema joob ajalehte lugedes kohvi.",
+  ],
+  "Ta lahkus midagi ütlemata.": [
+    "Ta lahkus midagi ütlemata.",
+    "Ta lahkus ütlemata midagi.",
+    "Ta läks midagi ütlemata ära.",
+    "Ta läks ära midagi ütlemata.",
+    "Ta läks midagi ütlemata minema.",
+    "Ta läks minema midagi ütlemata.",
+    "Midagi ütlemata lahkus ta.",
+    "Midagi ütlemata läks ta ära.",
+    "Tema läks midagi ütlemata ära.",
+    "Tema läks ära midagi ütlemata.",
+    "Tema läks midagi ütlemata minema.",
+    "Tema läks minema midagi ütlemata.",
+  ],
+  "Ma ostan leiba koju minnes.": [
+    "Ma ostan leiba koju minnes.",
+    "Ma ostan koju minnes leiba.",
+    "Koju minnes ostan leiba.",
+    "Koju minnes ma ostan leiba.",
+    "Ostan leiba koju minnes.",
+    "Ostan koju minnes leiba.",
+    "Leiba ostan koju minnes.",
+    "Leiba ma ostan koju minnes.",
+    "Mina ostan leiba koju minnes.",
+    "Mina ostan koju minnes leiba.",
+    "Koju minnes mina ostan leiba.",
+    "Leiba mina ostan koju minnes.",
+  ],
+  "Ta võttis mu raamatu küsimata.": [
+    "Ta võttis mu raamatu küsimata.",
+    "Ta võttis minu raamatu küsimata.",
+    "Ta võttis küsimata mu raamatu.",
+    "Ta võttis küsimata minu raamatu.",
+    "Küsimata võttis ta mu raamatu.",
+    "Küsimata võttis ta minu raamatu.",
+    "Tema võttis mu raamatu küsimata.",
+    "Tema võttis minu raamatu küsimata.",
+    "Tema võttis küsimata mu raamatu.",
+    "Tema võttis küsimata minu raamatu.",
+  ],
+};
+
+export const DES_DIARY = [
+  "Eelmisel nädalavahetusel sõitsime sõpradega Võrumaale vanaema juurde.",
+  "Ma olin terve öö magamata ega tahtnud autot juhtida.",
+  "Ma olin väsinud, aga õnnelik.",
+  "Päike paistis ja tee oli tühi.",
+  "Peeter sõitis ja mina vaatasin aknast välja raadiot kuulates.",
+  "Tavaliselt räägib Peeter sõites kogu aeg, aga seekord ta vaikis.",
+  "Ta oli hommikul kiirustanud ja joonud ainult kohvi, hommikusööki söömata.",
+  "Teel peatusime ühes väikeses kohvikus.",
+  "Peeter lahkus sealt maksmata ja pidi hiljem tagasi minema.",
+  "Kell kümme jõudsime külla, kus vanaema elab.",
+  "Õues oli soe ja lõhnas värske heina järele.",
+  "Ta ootas meid õues ja kutsus kohe kööki sööma.",
+  "Laual oli värske leib, mille ta oli hommikul vara küpsetanud.",
+  "Me sõime ja vanaema rääkis süües oma lapsepõlvest.",
+  "Ta ütles, et vanasti käisid kõik naabrid üksteisel külas helistamata, sest telefone polnud.",
+  "Pärast sööki läks Peeter metsa jalutama.",
+  "Mina jäin vanaemaga rääkima ja kuulasin teda kiirustamata.",
+  "Kui Peeter tagasi tuli, oli tal käes suur korv seeni.",
+  "Vanaema vaatas neid naeratades ja ütles, et need on mürgised.",
+  "Õhtul sõitsime Tartusse tagasi ja Peeter laulis sõites kõvasti.",
+  "Koju jõudes helistasin kohe emale ja rääkisin talle kõigest.",
+  "Ema küsis, kas vanaema oli meid hästi toitnud.",
+  "Ma vastasin, et ta ei lasknud kedagi näljasena minema.",
+  "Ma ei mäleta, millal ma viimati nii hästi puhkasin.",
+  "Nüüd ootan juba järgmist reisi.",
+] as const;
+
+export const DES_CONVERSATION: Conversation = {
+  turns: [
+    {
+      voice: "fourth",
+      text: [
+        "Tere, Liisa!",
+        "Kuidas sul uues korteris läheb?",
+        "Kas sa oled oma korterikaaslasega juba tuttavaks saanud?",
+      ],
+    },
+    {
+      voice: "third",
+      text: [
+        "Tere, Kalev!",
+        "Korter on väike, aga väga valge.",
+        "Korterikaaslane on sõbralik, aga ta teeb mõnda asja hoopis teisiti kui mina.",
+      ],
+    },
+    { voice: "fourth", text: "Näiteks mida?" },
+    {
+      voice: "third",
+      text: [
+        "Näiteks hommikul.",
+        "Ta joob kohvi telefoni vaadates ja ei vasta, kui ma midagi küsin.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Mina teen hommikul sedasama.",
+        "Ma loen uudiseid kohvi juues ja kellelgi ei ole selle vastu midagi.",
+      ],
+      say: "[laughs] Mina teen hommikul sedasama. Ma loen uudiseid kohvi juues ja kellelgi ei ole selle vastu midagi.",
+    },
+    {
+      voice: "third",
+      text: [
+        "Hommikul ma ei pahanda.",
+        "Aga eile tuli ta mu tuppa sisse koputamata, kui ma just õppisin.",
+        "Siis võttis ta mu laadija küsimata ja läks midagi ütlemata minema.",
+      ],
+    },
+    { voice: "fourth", text: ["See ei ole kena.", "Kas sa rääkisid temaga?"] },
+    {
+      voice: "third",
+      text: [
+        "Rääkisin õhtul.",
+        "Ütlesin, et ta võiks vähemalt koputada, enne kui sisse tuleb.",
+        "Ta vabandas ja ütles, et ei teadnud, et see mind häirib.",
+      ],
+    },
+    { voice: "fourth", text: ["Noh, siis on juba parem.", "Kas ta teeb ka midagi head?"] },
+    {
+      voice: "third",
+      text: [
+        "Teeb küll.",
+        "Õhtuti teeb ta süüa ja laulab seda tehes.",
+        "Eile kutsus ta mind sööma ja see oli väga hea.",
+      ],
+    },
+    { voice: "fourth", text: "Kas te koristate ka koos?" },
+    {
+      voice: "third",
+      text: [
+        "Ei, igaüks omal päeval.",
+        "Tema koristab pühapäeviti ja kuulab seda tehes valju muusikat.",
+        "Mõnikord olen terve öö magamata, sest ta räägib kodus olles valjusti telefoniga.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Oi, see ei ole hea.",
+        "Mul oli kunagi korterikaaslane, kes jättis üüri iga kuu maksmata.",
+        "Siis ma enam temaga hästi läbi ei saanud.",
+      ],
+    },
+    { voice: "third", text: ["Oi, see on palju hullem!", "Minu oma maksab vähemalt õigel ajal."] },
+    {
+      voice: "fourth",
+      text: ["Siis on sul vedanud.", "Kui ta hakkab veel koputama, pole sul millegi üle kurta."],
+    },
+    {
+      voice: "third",
+      text: ["Ma loodan seda.", "Kas sa arvad, et ma peaksin talle veel kord ütlema?"],
+    },
+    { voice: "fourth", text: ["Ei, oota nädal.", "Vaatame, kas ta jätab veel koputamata."] },
+    {
+      voice: "third",
+      text: ["Hea mõte.", "Aga sinul, Kalev?", "Kuidas sul eile õhtul läks?"],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Eile oli naljakas päev.",
+        "Ma lugesin bussi oodates raamatut ja ei märganud, et buss tuli.",
+        "Nii ma jäingi bussist maha.",
+      ],
+    },
+    { voice: "third", text: ["Oi!", "Mis sa siis tegid?"] },
+    {
+      voice: "fourth",
+      text: ["Kõndisin koju ja helistasin vanaemale.", "Ta naeris minu üle, aga mitte kurjalt."],
+    },
+    { voice: "third", text: ["Kas ta helistab sulle tihti?"] },
+    {
+      voice: "fourth",
+      text: ["Iga pühapäev.", "Ta ei jäta kunagi helistamata, isegi siis, kui ma ei vasta."],
+    },
+    {
+      voice: "third",
+      text: ["Siis ta hoolib sinust väga.", "Kuule, kas sa tuled laupäeval külla?"],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Tulen küll.",
+        "Ma ei tule kunagi helistamata, nii et helistan enne.",
+        "Ja ma toon kaasa head kooki.",
+      ],
+    },
+    {
+      voice: "third",
+      text: [
+        "Väga hea.",
+        "Siis ma ootan sind laupäeval kell kuus ja teen midagi head.",
+        "Ma ei tea veel, kas kalasuppi või köögiviljasuppi.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: ["Tee köögiviljasuppi.", "Ma ei söö kala, aga ma söön hea meelega kõike muud."],
+    },
+    {
+      voice: "third",
+      text: [
+        "Kokku lepitud.",
+        "Meie maja on teisel pool parki, nii et jalutad mööda jõge otse meie maja juurde.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: ["Hästi, siis jalutan kohale muusikat kuulates.", "Nägemist, Liisa!"],
+    },
+    { voice: "third", text: ["Nägemist, Kalev!", "Kohtume laupäeval."] },
+  ],
+};
+
+const DES_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...Object.values(DES_VERBS).flatMap((verbs) => verbs.flatMap(({ inf, said }) => [inf, said])),
+    ...Object.values(MATA_VERBS).flatMap((verbs) => verbs.flatMap(({ inf, said }) => [inf, said])),
+    ...Object.values(DES_VERBS).flatMap((verbs) => verbs.map(({ form }) => form)),
+    ...Object.values(MATA_VERBS).flatMap((verbs) => verbs.map(({ form }) => form)),
+    "koputades",
+    "koputamata",
+    ...DES_HEARD.map(({ said }) => said),
+    ...DES_TRANSLATE,
+    ...DES_ORDER.map(({ answers }) => answers[0]),
+    ...DES_FIXES.map(({ right }) => right),
+    ...DES_REWRITE.map(({ answer }) => answer),
+  ]),
+  "c-liisa": DES_CONVERSATION,
+};
+
 export const ROUTE_WORDS = ["läbi", "üle", "mööda", "ümber", "kaudu"] as const;
 
 export const ROUTE_TABLE = [
@@ -14581,6 +15139,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   raagitakse: IMPERSONAL_CLIPS,
   "ootan-sind": GOVERNMENT_CLIPS,
   "aru-saama": IDIOM_CLIPS,
+  "lugedes-lugemata": DES_CLIPS,
   "labi-metsa": ROUTE_CLIPS,
   "opetaja-lugemine": AGENT_CLIPS,
   "sobralik-kodutu": SUFFIX_CLIPS,

@@ -1,0 +1,698 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-24 22:41+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "-des: while"
+msgstr "-des: під час"
+
+msgid "-mata: without"
+msgstr "-mata: без"
+
+msgid "<0>-des</0> can also mean when, on doing something, or by doing it: <1>Koju jõudes helistasin emale.</1> When I got home, I phoned my mother. <2>Ma õpin raamatuid lugedes.</2> I learn by reading books."
+msgstr "<0>-des</0> може означати й «коли», «щойно» або «завдяки дії»: <1>Koju jõudes helistasin emale.</1> «Прийшовши додому, я зателефонував мамі.» <2>Ma õpin raamatuid lugedes.</2> «Я вчуся, читаючи книжки.»"
+
+msgid "<0>-des</0> goes on the <1>-da</1> form, which is <2>minna</2>, so <3>minnes</3>."
+msgstr "<0>-des</0> додають до форми на <1>-da</1>, а в цього дієслова вона <2>minna</2>, тож виходить <3>minnes</3>."
+
+msgid "<0>-des</0> usually means at the same time."
+msgstr "<0>-des</0> зазвичай означає «водночас»."
+
+msgid "<0>-des</0> usually means at the same time. Change the last <1>-a</1> of the <2>-da</2> form to <3>-es</3>: <4>lugeda</4>, <5>lugedes</5>; <6>süüa</6>, <7>süües</7>."
+msgstr "<0>-des</0> зазвичай означає «водночас». Остання <1>-a</1> у формі на <2>-da</2> змінюється на <3>-es</3>: <4>lugeda</4> — <5>lugedes</5>, <6>süüa</6> — <7>süües</7>."
+
+msgid "<0>-mata</0> goes on the <1>-ma</1> form, which is <2>minema</2>, so <3>minemata</3>."
+msgstr "<0>-mata</0> додають до форми на <1>-ma</1>, а в цього дієслова вона <2>minema</2>, тож виходить <3>minemata</3>."
+
+msgid "<0>-mata</0> means without doing it."
+msgstr "<0>-mata</0> означає «без цієї дії»."
+
+msgid "<0>-mata</0> means without doing it. Change <1>-ma</1> to <2>-mata</2>: <3>lugema</3>, <4>lugemata</4>; <5>sööma</5>, <6>söömata</6>."
+msgstr "<0>-mata</0> означає «без цієї дії». Замість <1>-ma</1> ставимо <2>-mata</2>: <3>lugema</3> — <4>lugemata</4>, <5>sööma</5> — <6>söömata</6>."
+
+#. placeholder {0}: each.said
+#. placeholder {1}: i18n._(HEARD_MEANS[each.id])
+msgid "<0>{0}</0> {1}"
+msgstr "<0>{0}</0> — {1}"
+
+msgid "<0>Lugedes</0> is while reading and <1>lugemata</1> is without reading: two endings that look alike and usually mean opposite things."
+msgstr "<0>Lugedes</0> — «читаючи», а <1>lugemata</1> — «не читаючи». Закінчення схожі, а значать зазвичай протилежне."
+
+msgid "<0>Minna</0> becomes <1>minnes</1>, with the double letter kept."
+msgstr "З <0>minna</0> виходить <1>minnes</1>: подвійна буква лишається."
+
+msgid "<0>Teha</0> becomes <1>tehes</1>."
+msgstr "З <0>teha</0> виходить <1>tehes</1>."
+
+msgid "<et>-des</et> goes on the <et>-da</et> form, which is <et>minna</et>, so <et>minnes</et>."
+msgstr "<et>-des</et> додають до форми на <et>-da</et>, а в цього дієслова вона <et>minna</et>, тож виходить <et>minnes</et>."
+
+msgid "<et>-des</et> usually means at the same time, and <et>-mata</et> means without doing it."
+msgstr "<et>-des</et> зазвичай означає «водночас», а <et>-mata</et> — «без цієї дії»."
+
+msgid "<et>-des</et> usually means at the same time. Change the last <et>-a</et> of the <et>-da</et> form to <et>-es</et>."
+msgstr "<et>-des</et> зазвичай означає «водночас». Остання <et>-a</et> у формі на <et>-da</et> змінюється на <et>-es</et>."
+
+msgid "<et>-mata</et> means without doing it. Change <et>-ma</et> to <et>-mata</et> on the <et>-ma</et> form."
+msgstr "<et>-mata</et> означає «без цієї дії». У формі на <et>-ma</et> замість <et>-ma</et> ставимо <et>-mata</et>."
+
+msgid "24 minutes"
+msgstr "24 хвилини"
+
+msgid "8 exercises"
+msgstr "8 вправ"
+
+msgid "A phrase with <0>-des</0> or <1>-mata</1> usually goes with the thing it describes and often comes last: <2>Ära kasuta telefoni sõites.</2>"
+msgstr "Зворот із <0>-des</0> чи <1>-mata</1> зазвичай стоїть біля слова, до якого належить, і нерідко завершує речення: <2>Ära kasuta telefoni sõites.</2>"
+
+msgid "A short <0>-da</0> form works the same way: <1>süüa</1>, <2>süües</2>."
+msgstr "Коротка форма на <0>-da</0> працює так само: <1>süüa</1> — <2>süües</2>."
+
+msgid "A weekend at grandmother’s"
+msgstr "Вихідні в бабусі"
+
+msgid "After <0>-mata</0>, the object usually takes the partitive, as after <1>ei</1> in lesson {object}: <2>seda lugemata</2>, <3>midagi ütlemata</3>. It can also describe what isn’t done yet: <4>Raamat on lugemata.</4> The book is unread."
+msgstr "Після <0>-mata</0> додаток зазвичай стоїть у партитиві, як і після <1>ei</1> в уроці {object}: <2>seda lugemata</2>, <3>midagi ütlemata</3>. Ця форма може описувати й те, чого ще не зроблено: <4>Raamat on lugemata.</4> «Книжку не прочитано.»"
+
+msgid "After <0>-mata</0>, the object usually takes the partitive, as after <1>ei</1>: <2>seda lugemata</2>."
+msgstr "Після <0>-mata</0> додаток зазвичай стоїть у партитиві, як і після <1>ei</1>: <2>seda lugemata</2>."
+
+msgid "After <0>-mata</0>, the object usually takes the partitive: <1>seda</1>."
+msgstr "Після <0>-mata</0> додаток зазвичай стоїть у партитиві: <1>seda</1>."
+
+msgid "All eight forms right."
+msgstr "Усі вісім форм правильні."
+
+msgid "All eight, with the ending heard each time."
+msgstr "Усі вісім: закінчення розпізнано щоразу."
+
+msgid "All seven, each with the right ending."
+msgstr "Усі сім, і щоразу з правильним закінченням."
+
+msgid "All six built."
+msgstr "Усі шість складено."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "Ära räägi süües."
+msgstr "Ära räägi süües."
+
+msgid "Ära tule külla helistamata."
+msgstr "Ära tule külla helistamata."
+
+msgid "at the same time"
+msgstr "водночас"
+
+msgid "At the same time as eating is <0>süües</0>. <1>Söömata</1> is without eating."
+msgstr "«Водночас з їдою» — це <0>süües</0>. <1>Söömata</1> — «не поївши»."
+
+msgid "At the same time as eating is <et>süües</et>. <et>Söömata</et> is without eating."
+msgstr "«Водночас з їдою» — це <et>süües</et>. <et>Söömata</et> — «не поївши»."
+
+msgid "Build each sentence from what it means."
+msgstr "Склади речення за перекладом."
+
+msgid "Build the sentence"
+msgstr "Склади речення"
+
+#. placeholder {0}: each.inf
+#. placeholder {1}: each.form
+msgid "Change <0>-ma</0> of <1>{0}</1> to <2>-mata</2>: <3>{1}</3>."
+msgstr "У <1>{0}</1> замінюємо <0>-ma</0> на <2>-mata</2>: <3>{1}</3>."
+
+#. placeholder {0}: each.inf
+#. placeholder {1}: each.form
+msgid "Change the last <0>-a</0> of <1>{0}</1> to <2>-es</2>: <3>{1}</3>."
+msgstr "У <1>{0}</1> остання <0>-a</0> змінюється на <2>-es</2>: <3>{1}</3>."
+
+msgid "Check which form the ending goes on: <0>-des</0> on the <1>-da</1> form, <2>-mata</2> on the <3>-ma</3> form. The verb <4>minema</4> gives <5>minnes</5> and <6>minemata</6>."
+msgstr "Дивись, до якої форми додається закінчення: <0>-des</0> — до форми на <1>-da</1>, <2>-mata</2> — до форми на <3>-ma</3>. Дієслово <4>minema</4> дає <5>minnes</5> і <6>minemata</6>."
+
+msgid "Clean the kitchen"
+msgstr "Прибирати кухню"
+
+msgid "Cook dinner for him"
+msgstr "Готувати для нього вечерю"
+
+msgid "Cooks breakfast and sings."
+msgstr "Готує сніданок і співає."
+
+msgid "Don’t come to visit without calling."
+msgstr "Не приходь у гості, не зателефонувавши."
+
+msgid "Don’t use the phone while driving."
+msgstr "Не користуйся телефоном за кермом."
+
+msgid "Each sentence has a moment of two things at once or of something left out. Choose <0>-des</0> or <1>-mata</1>, then write the whole sentence."
+msgstr "У кожному реченні або дві дії відбуваються водночас, або одну пропущено. Обери <0>-des</0> чи <1>-mata</1> і напиши все речення."
+
+msgid "Each sentence has one wrong word: the wrong ending, a form that doesn’t exist, or the wrong case. Tap it, then type it right."
+msgstr "У кожному реченні одне слово неправильне: не те закінчення, форма, якої немає, або не той відмінок. Торкнися його й напиши правильно."
+
+msgid "Fish soup"
+msgstr "Рибна юшка"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "Go through the table once more, then try again."
+msgstr "Ще раз переглянь таблицю й повтори вправу."
+
+msgid "He came in knocking."
+msgstr "Він зайшов, постукавши."
+
+msgid "He came in without knocking."
+msgstr "Він зайшов, не постукавши."
+
+msgid "He didn’t go to the meeting."
+msgstr "Він не пішов на збори."
+
+msgid "He felt ill at work."
+msgstr "Йому стало зле на роботі."
+
+msgid "He left saying goodbye."
+msgstr "Він пішов, попрощавшись."
+
+msgid "He left smiling."
+msgstr "Він пішов усміхаючись."
+
+msgid "He left without saying anything."
+msgstr "Він пішов, нічого не сказавши."
+
+msgid "He left without saying goodbye."
+msgstr "Він пішов, не попрощавшись."
+
+msgid "He left without smiling."
+msgstr "Він пішов, не всміхнувшись."
+
+msgid "He lost his phone at work."
+msgstr "Він загубив телефон на роботі."
+
+msgid "He missed a bus."
+msgstr "Він запізнився на автобус."
+
+msgid "He sang all the way."
+msgstr "Він співав усю дорогу."
+
+msgid "He slept all the way home."
+msgstr "Він проспав усю дорогу додому."
+
+msgid "He slept."
+msgstr "Він спав."
+
+msgid "He took my book without asking."
+msgstr "Він узяв мою книжку, не спитавши."
+
+msgid "He watched a film while drinking tea."
+msgstr "Він дивився фільм і пив чай."
+
+msgid "Her book"
+msgstr "Її книжка"
+
+msgid "Her charger"
+msgstr "Її зарядка"
+
+msgid "Her coffee cup"
+msgstr "Її чашка для кави"
+
+msgid "I ate breakfast while reading the paper."
+msgstr "Я снідав і читав газету."
+
+msgid "I do my homework while listening to the radio."
+msgstr "Я роблю домашнє завдання й слухаю радіо."
+
+msgid "I listen to music while studying."
+msgstr "Я слухаю музику, коли вчуся."
+
+msgid "I never come without calling."
+msgstr "Я ніколи не приходжу, не зателефонувавши."
+
+msgid "I went to work without eating breakfast."
+msgstr "Я пішов на роботу, не поснідавши."
+
+msgid "I’ll buy bread on my way home."
+msgstr "Куплю хліба дорогою додому."
+
+msgid "In a sentence"
+msgstr "У реченні"
+
+msgid "Infinitive"
+msgstr "Інфінітив"
+
+msgid "It can also start the sentence. The verb then comes next, as it does after any first phrase: <0>Sõites ära kasuta telefoni.</0>"
+msgstr "Зворот може стояти й на початку речення. Тоді одразу за ним іде дієслово, як і після будь-якого іншого першого звороту: <0>Sõites ära kasuta telefoni.</0>"
+
+msgid "Kalev"
+msgstr "Калев"
+
+msgid "Kalev phones Liisa, who has just moved into a new flat. Listen to them twice and answer the questions."
+msgstr "Калев телефонує Лійсі, яка щойно переїхала в нову квартиру. Послухай розмову двічі й дай відповіді на запитання."
+
+msgid "Kalev tells Liisa to talk to the flatmate again at once."
+msgstr "Калев радить Лійсі негайно ще раз поговорити із сусідкою по квартирі."
+
+msgid "Keep the double letter: <0>minna</0>, <1>minnes</1>."
+msgstr "Подвійна буква лишається: <0>minna</0> — <1>minnes</1>."
+
+msgid "Liisa"
+msgstr "Лійса"
+
+msgid "Listen: Kalev and Liisa"
+msgstr "Послухай розмову Калева й Лійси"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Looks at the phone while drinking coffee."
+msgstr "Дивиться в телефон і п’є каву."
+
+msgid "Ma kuulan raadiot tööle tulles."
+msgstr "Ma kuulan raadiot tööle tulles."
+
+msgid "Ma lähen lugema."
+msgstr "Ma lähen lugema."
+
+msgid "Ma lähen sööma."
+msgstr "Ma lähen sööma."
+
+msgid "Ma läksin tööle hommikusööki söömata."
+msgstr "Ma läksin tööle hommikusööki söömata."
+
+msgid "Ma õpin eesti keelt kodus olles."
+msgstr "Ma õpin eesti keelt kodus olles."
+
+msgid "Ma ostan leiba koju minnes."
+msgstr "Ma ostan leiba koju minnes."
+
+msgid "Ma pean minema."
+msgstr "Ma pean minema."
+
+msgid "Ma tahan lugeda."
+msgstr "Ma tahan lugeda."
+
+msgid "Make the -des form"
+msgstr "Утвори форму на -des"
+
+msgid "Make the -mata form"
+msgstr "Утвори форму на -mata"
+
+msgid "Mari listened to her grandmother without hurrying."
+msgstr "Марі слухала бабусю, не поспішаючи."
+
+msgid "Mari writes"
+msgstr "Марі пише"
+
+msgid "Mari writes about a weekend with friends in the countryside. Read her text and answer the questions, as in the reading part of the B1 exam."
+msgstr "Марі пише про вихідні з друзями на селі. Прочитай її текст і дай відповіді на запитання, як у частині з читання на іспиті B1."
+
+msgid "Meat soup"
+msgstr "М’ясний суп"
+
+msgid "Most verbs"
+msgstr "Більшість дієслів"
+
+msgid "Nearly. Check the ending in the ones you missed."
+msgstr "Майже. Перевір закінчення в тих реченнях, де помилився."
+
+msgid "Nearly. Check the ones you missed against the table."
+msgstr "Майже. Звір ті, де помилився, з таблицею."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Майже. Ще раз прослухай ті речення, де помилився."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Майже. Прочитай пояснення під кожним реченням, де помилився."
+
+msgid "on the way"
+msgstr "дорогою"
+
+msgid "Pay the rent"
+msgstr "Платити за житло"
+
+msgid "Peeter paid for his coffee at the café."
+msgstr "Пеетер заплатив за каву в кав’ярні."
+
+msgid "Peeter usually talks a lot when he drives."
+msgstr "Пеетер зазвичай багато говорить за кермом."
+
+msgid "Read the note under each one you missed, then try again."
+msgstr "Прочитай примітку під кожним реченням, де помилився, і спробуй ще раз."
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай нижче «Що запам’ятати» і спробуй ще раз."
+
+msgid "Reads the news over breakfast."
+msgstr "Читає новини за сніданком."
+
+msgid "She didn’t have a car."
+msgstr "У неї не було машини."
+
+msgid "She didn’t have a licence."
+msgstr "У неї не було прав."
+
+msgid "She hadn’t slept at all the night before."
+msgstr "Вона зовсім не спала попередньої ночі."
+
+msgid "She left without saying a word."
+msgstr "Вона пішла, не мовивши ні слова."
+
+msgid "She left without saying anything."
+msgstr "Вона пішла, нічого не сказавши."
+
+msgid "She read the letter while eating."
+msgstr "Вона читала листа, коли їла."
+
+msgid "She signed the contract without reading it."
+msgstr "Вона підписала договір, не прочитавши його."
+
+msgid "She sings while cooking."
+msgstr "Вона співає, коли готує."
+
+msgid "Short and irregular verbs"
+msgstr "Короткі й неправильні дієслова"
+
+msgid "Short verbs"
+msgstr "Короткі дієслова"
+
+msgid "Start from the <0>-da</0> form, which lesson {infinitives} taught, and change its last <1>-a</1> to <2>-es</2>: <3/> becomes <4/>. Pick a group of verbs and tap the sentences."
+msgstr "Візьми форму на <0>-da</0>, про яку розповідав урок {infinitives}, і заміни її останню <1>-a</1> на <2>-es</2>: з <3/> виходить <4/>. Обери групу дієслів і торкайся речень."
+
+msgid "Start from the <0>-ma</0> form and change <1>-ma</1> to <2>-mata</2>: <3/> becomes <4/>. Every verb works this way, even <5/> and <6/>."
+msgstr "Візьми форму на <0>-ma</0> і заміни <1>-ma</1> на <2>-mata</2>: з <3/> виходить <4/>. Так працює кожне дієслово, навіть <5/> і <6/>."
+
+msgid "Ta jäi koosolekule minemata."
+msgstr "Ta jäi koosolekule minemata."
+
+msgid "Ta joob kohvi ajalehte lugedes."
+msgstr "Ta joob kohvi ajalehte lugedes."
+
+msgid "Ta kirjutas lepingule alla seda lugemata."
+msgstr "Ta kirjutas lepingule alla seda lugemata."
+
+msgid "Ta lahkus midagi ütlemata."
+msgstr "Ta lahkus midagi ütlemata."
+
+msgid "Ta laulab süüa tehes."
+msgstr "Ta laulab süüa tehes."
+
+msgid "Ta tuli sisse koputades."
+msgstr "Ta tuli sisse koputades."
+
+msgid "Ta tuli sisse koputamata."
+msgstr "Ta tuli sisse koputamata."
+
+msgid "Ta vaatas filmi teed juues."
+msgstr "Ta vaatas filmi teed juues."
+
+msgid "Ta võttis mu raamatu küsimata."
+msgstr "Ta võttis mu raamatu küsimata."
+
+msgid "Take the <0>-da</0> form and change the last <1>-a</1> to <2>-es</2>: <3>lugeda</3>, <4>lugedes</4>."
+msgstr "Візьми форму на <0>-da</0> і заміни останню <1>-a</1> на <2>-es</2>: <3>lugeda</3> — <4>lugedes</4>."
+
+msgid "Take the <0>-ma</0> form and change <1>-ma</1> to <2>-mata</2>: <3>lugema</3>, <4>lugemata</4>."
+msgstr "Візьми форму на <0>-ma</0> і заміни <1>-ma</1> на <2>-mata</2>: <3>lugema</3> — <4>lugemata</4>."
+
+msgid "Tap a pair of sentences. Then hear a sentence and pick what the ending says."
+msgstr "Торкнися пари речень. Потім послухай речення й обери, що означає закінчення."
+
+msgid "Tap a sentence"
+msgstr "Торкнись речення"
+
+msgid "Tap the pairs above once more, then try again."
+msgstr "Ще раз торкнися пар речень угорі й спробуй знову."
+
+msgid "Telephone calls sometimes keep Liisa awake at night."
+msgstr "Через телефонні розмови Лійса іноді не може заснути вночі."
+
+msgid "the <0>-des</0> form"
+msgstr "форма на <0>-des</0>"
+
+msgid "the <0>-mata</0> form"
+msgstr "форма на <0>-mata</0>"
+
+msgid "the <et>-des</et> form"
+msgstr "форма на <et>-des</et>"
+
+msgid "The <et>-des</et> form"
+msgstr "Форма на <et>-des</et>"
+
+msgid "the <et>-mata</et> form"
+msgstr "форма на <et>-mata</et>"
+
+msgid "The <et>-mata</et> form"
+msgstr "Форма на <et>-mata</et>"
+
+msgid "The flatmate knocked before coming into Liisa’s room."
+msgstr "Сусідка по квартирі постукала, перш ніж зайти до кімнати Лійси."
+
+msgid "The phrase usually goes with the thing it describes and often comes last. It can also start the sentence, and the verb then comes next: <0>Õppides kuulan ma muusikat.</0>"
+msgstr "Зворот зазвичай стоїть біля слова, до якого належить, і нерідко завершує речення. Він може стояти й на початку, тоді одразу за ним іде дієслово: <0>Õppides kuulan ma muusikat.</0>"
+
+msgid "The phrase with <0>-des</0> or <1>-mata</1> usually goes with the thing it describes and often comes last. It can also start the sentence, and the verb comes next."
+msgstr "Зворот із <0>-des</0> чи <1>-mata</1> зазвичай стоїть біля слова, до якого належить, і нерідко завершує речення. Він може стояти й на початку, тоді одразу за ним іде дієслово."
+
+msgid "The same rule works for every verb: <0>minema</0>, <1>minemata</1>."
+msgstr "Те саме правило діє для кожного дієслова: <0>minema</0> — <1>minemata</1>."
+
+msgid "The same verb with -des and with -mata"
+msgstr "Те саме дієслово з -des і з -mata"
+
+msgid "The sentences differ in one ending: <0>-des</0> is at the same time, <1>-mata</1> is without it."
+msgstr "Речення різняться одним закінченням: <0>-des</0> — «водночас», <1>-mata</1> — «без цієї дії»."
+
+msgid "The two endings sit in the same place in a sentence and usually mean opposites: <0/> is while knocking and <1/> is without knocking. The last letters decide, so listen for them."
+msgstr "Обидва закінчення стоять на тому самому місці й зазвичай означають протилежне: <0/> — «стукаючи», а <1/> — «не стукаючи». Усе вирішують останні літери, тож слухай саме їх."
+
+msgid "They were poisonous."
+msgstr "Вони отруйні."
+
+msgid "They were very tasty and cheap."
+msgstr "Вони були дуже смачні й дешеві."
+
+msgid "They were very tasty and fresh."
+msgstr "Вони були дуже смачні й свіжі."
+
+msgid "to ask"
+msgstr "питати"
+
+msgid "to be"
+msgstr "бути"
+
+msgid "to come"
+msgstr "приходити"
+
+msgid "to do, to make"
+msgstr "робити"
+
+msgid "to drink"
+msgstr "пити"
+
+msgid "to drive, to ride"
+msgstr "їхати"
+
+msgid "to eat"
+msgstr "їсти"
+
+msgid "to go"
+msgstr "іти"
+
+msgid "to knock"
+msgstr "стукати"
+
+msgid "to listen to"
+msgstr "слухати"
+
+msgid "to pay"
+msgstr "платити"
+
+msgid "to phone"
+msgstr "дзвонити"
+
+msgid "to read"
+msgstr "читати"
+
+msgid "to say"
+msgstr "казати"
+
+msgid "to say goodbye"
+msgstr "прощатися"
+
+msgid "To say someone does something without doing another thing, put <0>-mata</0> on the second one: <1>Ta lahkus midagi ütlemata.</1> She left without saying anything."
+msgstr "Щоб сказати, що хтось робить одне, не роблячи іншого, додай <0>-mata</0> до другого дієслова: <1>Ta lahkus midagi ütlemata.</1> «Вона пішла, нічого не сказавши.»"
+
+msgid "To say someone does two things at once, put <0>-des</0> on the second one: <1>Ta joob kohvi ajalehte lugedes.</1> He drinks coffee while reading the paper. Usually the same person does both."
+msgstr "Щоб сказати, що хтось робить дві речі водночас, додай <0>-des</0> до другого дієслова: <1>Ta joob kohvi ajalehte lugedes.</1> «Він п’є каву й читає газету.» Зазвичай обидві дії виконує одна людина."
+
+msgid "to sleep"
+msgstr "спати"
+
+msgid "to smile"
+msgstr "усміхатися"
+
+msgid "to study"
+msgstr "вчитися"
+
+msgid "to talk"
+msgstr "розмовляти"
+
+msgid "to wait for"
+msgstr "чекати"
+
+msgid "Two friends talk about flatmates"
+msgstr "Двоє друзів говорять про сусідів по квартирі"
+
+msgid "Type the form for each verb."
+msgstr "Напиши форму для кожного дієслова."
+
+msgid "Vegetable soup"
+msgstr "Овочевий суп"
+
+msgid "Verbs"
+msgstr "Дієслова"
+
+msgid "Verbs and their -des forms"
+msgstr "Дієслова та їхні форми на -des"
+
+msgid "Verbs and their -mata forms"
+msgstr "Дієслова та їхні форми на -mata"
+
+msgid "Verbs ending in -nna, -lla"
+msgstr "Дієслова на -nna, -lla"
+
+msgid "What did Kalev’s old flatmate not do?"
+msgstr "Чого не робив колишній сусід Калева по квартирі?"
+
+msgid "What did Peeter do on the way back?"
+msgstr "Що робив Пеетер дорогою назад?"
+
+msgid "What did Peeter have for breakfast? Write it as Mari does."
+msgstr "Що Пеетер випив на сніданок? Напиши так, як у Марі."
+
+msgid "What did the flatmate take without asking?"
+msgstr "Що сусідка взяла, не спитавши?"
+
+msgid "What did the grandmother say about the mushrooms?"
+msgstr "Що бабуся сказала про гриби?"
+
+msgid "What does the flatmate do in the morning?"
+msgstr "Що робить сусідка вранці?"
+
+msgid "What happened at the weekend?"
+msgstr "Що сталося на вихідних?"
+
+msgid "What happened to Kalev yesterday?"
+msgstr "Що трапилося з Калевом учора?"
+
+msgid "What will Kalev bring on Saturday? Write it as Kalev says it."
+msgstr "Що Калев принесе в суботу? Напиши так, як каже Калев."
+
+msgid "What will Liisa cook on Saturday?"
+msgstr "Що Лійса приготує в суботу?"
+
+msgid "When does the flatmate clean? Write it as Liisa says it."
+msgstr "Коли сусідка прибирає? Напиши так, як каже Лійса."
+
+msgid "Where the phrase goes"
+msgstr "Місце звороту в реченні"
+
+msgid "while being, when you are"
+msgstr "перебуваючи, коли ти десь"
+
+msgid "while coming, on the way"
+msgstr "приходячи, дорогою"
+
+msgid "while doing it"
+msgstr "під час цієї дії"
+
+msgid "While doing it"
+msgstr "Під час дії"
+
+msgid "While doing something: -des"
+msgstr "Дві дії водночас: -des"
+
+msgid "while doing, while making"
+msgstr "роблячи, готуючи"
+
+msgid "while drinking"
+msgstr "п’ючи"
+
+msgid "while eating"
+msgstr "їдячи"
+
+msgid "while going, on the way"
+msgstr "ідучи, дорогою"
+
+msgid "while knocking"
+msgstr "стукаючи"
+
+msgid "While or without"
+msgstr "Водночас чи без"
+
+msgid "While or without?"
+msgstr "Водночас чи без?"
+
+msgid "while reading"
+msgstr "читаючи"
+
+msgid "While studying is <0>õppides</0>. <1>Õppimata</1> is without studying."
+msgstr "«Під час навчання» — це <0>õppides</0>. <1>Õppimata</1> — «не вчившись»."
+
+msgid "Who did Mari phone when she got home? Write it as Mari does."
+msgstr "Кому Марі зателефонувала, коли прийшла додому? Напиши так, як у Марі."
+
+msgid "Why didn’t Mari drive?"
+msgstr "Чому Марі не сіла за кермо?"
+
+msgid "without"
+msgstr "без"
+
+msgid "without asking"
+msgstr "не питаючи"
+
+msgid "Without calling is <0>helistamata</0>. <1>Helistades</1> is while calling."
+msgstr "«Не зателефонувавши» — це <0>helistamata</0>. <1>Helistades</1> — «телефонуючи»."
+
+msgid "Without calling is <et>helistamata</et>. <et>Helistades</et> is while calling."
+msgstr "«Не зателефонувавши» — це <et>helistamata</et>. <et>Helistades</et> — «телефонуючи»."
+
+msgid "without doing it"
+msgstr "без цієї дії"
+
+msgid "Without doing it"
+msgstr "Без дії"
+
+msgid "Without doing something: -mata"
+msgstr "Без дії: -mata"
+
+msgid "without eating"
+msgstr "не поївши"
+
+msgid "without going"
+msgstr "не пішовши"
+
+msgid "without knocking"
+msgstr "не стукаючи"
+
+msgid "without phoning"
+msgstr "не телефонуючи"
+
+msgid "without reading"
+msgstr "не читаючи"
+
+msgid "without saying"
+msgstr "нічого не кажучи"
+
+msgid "Without saying is <0>ütlemata</0>, not <1>öeldes</1>."
+msgstr "«Не сказавши» — це <0>ütlemata</0>, а не <1>öeldes</1>."
+
+msgid "Without saying is <0>ütlemata</0>; the object is usually partitive: <1>midagi</1>."
+msgstr "«Не сказавши» — це <0>ütlemata</0>; додаток зазвичай стоїть у партитиві: <1>midagi</1>."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"

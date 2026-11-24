@@ -1,0 +1,698 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-24 22:41+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "-des: while"
+msgstr "-des: while"
+
+msgid "-mata: without"
+msgstr "-mata: without"
+
+msgid "<0>-des</0> can also mean when, on doing something, or by doing it: <1>Koju jõudes helistasin emale.</1> When I got home, I phoned my mother. <2>Ma õpin raamatuid lugedes.</2> I learn by reading books."
+msgstr "<0>-des</0> can also mean when, on doing something, or by doing it: <1>Koju jõudes helistasin emale.</1> When I got home, I phoned my mother. <2>Ma õpin raamatuid lugedes.</2> I learn by reading books."
+
+msgid "<0>-des</0> goes on the <1>-da</1> form, which is <2>minna</2>, so <3>minnes</3>."
+msgstr "<0>-des</0> goes on the <1>-da</1> form, which is <2>minna</2>, so <3>minnes</3>."
+
+msgid "<0>-des</0> usually means at the same time."
+msgstr "<0>-des</0> usually means at the same time."
+
+msgid "<0>-des</0> usually means at the same time. Change the last <1>-a</1> of the <2>-da</2> form to <3>-es</3>: <4>lugeda</4>, <5>lugedes</5>; <6>süüa</6>, <7>süües</7>."
+msgstr "<0>-des</0> usually means at the same time. Change the last <1>-a</1> of the <2>-da</2> form to <3>-es</3>: <4>lugeda</4>, <5>lugedes</5>; <6>süüa</6>, <7>süües</7>."
+
+msgid "<0>-mata</0> goes on the <1>-ma</1> form, which is <2>minema</2>, so <3>minemata</3>."
+msgstr "<0>-mata</0> goes on the <1>-ma</1> form, which is <2>minema</2>, so <3>minemata</3>."
+
+msgid "<0>-mata</0> means without doing it."
+msgstr "<0>-mata</0> means without doing it."
+
+msgid "<0>-mata</0> means without doing it. Change <1>-ma</1> to <2>-mata</2>: <3>lugema</3>, <4>lugemata</4>; <5>sööma</5>, <6>söömata</6>."
+msgstr "<0>-mata</0> means without doing it. Change <1>-ma</1> to <2>-mata</2>: <3>lugema</3>, <4>lugemata</4>; <5>sööma</5>, <6>söömata</6>."
+
+#. placeholder {0}: each.said
+#. placeholder {1}: i18n._(HEARD_MEANS[each.id])
+msgid "<0>{0}</0> {1}"
+msgstr "<0>{0}</0> {1}"
+
+msgid "<0>Lugedes</0> is while reading and <1>lugemata</1> is without reading: two endings that look alike and usually mean opposite things."
+msgstr "<0>Lugedes</0> is while reading and <1>lugemata</1> is without reading: two endings that look alike and usually mean opposite things."
+
+msgid "<0>Minna</0> becomes <1>minnes</1>, with the double letter kept."
+msgstr "<0>Minna</0> becomes <1>minnes</1>, with the double letter kept."
+
+msgid "<0>Teha</0> becomes <1>tehes</1>."
+msgstr "<0>Teha</0> becomes <1>tehes</1>."
+
+msgid "<et>-des</et> goes on the <et>-da</et> form, which is <et>minna</et>, so <et>minnes</et>."
+msgstr "<et>-des</et> goes on the <et>-da</et> form, which is <et>minna</et>, so <et>minnes</et>."
+
+msgid "<et>-des</et> usually means at the same time, and <et>-mata</et> means without doing it."
+msgstr "<et>-des</et> usually means at the same time, and <et>-mata</et> means without doing it."
+
+msgid "<et>-des</et> usually means at the same time. Change the last <et>-a</et> of the <et>-da</et> form to <et>-es</et>."
+msgstr "<et>-des</et> usually means at the same time. Change the last <et>-a</et> of the <et>-da</et> form to <et>-es</et>."
+
+msgid "<et>-mata</et> means without doing it. Change <et>-ma</et> to <et>-mata</et> on the <et>-ma</et> form."
+msgstr "<et>-mata</et> means without doing it. Change <et>-ma</et> to <et>-mata</et> on the <et>-ma</et> form."
+
+msgid "24 minutes"
+msgstr "24 minutes"
+
+msgid "8 exercises"
+msgstr "8 exercises"
+
+msgid "A phrase with <0>-des</0> or <1>-mata</1> usually goes with the thing it describes and often comes last: <2>Ära kasuta telefoni sõites.</2>"
+msgstr "A phrase with <0>-des</0> or <1>-mata</1> usually goes with the thing it describes and often comes last: <2>Ära kasuta telefoni sõites.</2>"
+
+msgid "A short <0>-da</0> form works the same way: <1>süüa</1>, <2>süües</2>."
+msgstr "A short <0>-da</0> form works the same way: <1>süüa</1>, <2>süües</2>."
+
+msgid "A weekend at grandmother’s"
+msgstr "A weekend at grandmother’s"
+
+msgid "After <0>-mata</0>, the object usually takes the partitive, as after <1>ei</1> in lesson {object}: <2>seda lugemata</2>, <3>midagi ütlemata</3>. It can also describe what isn’t done yet: <4>Raamat on lugemata.</4> The book is unread."
+msgstr "After <0>-mata</0>, the object usually takes the partitive, as after <1>ei</1> in lesson {object}: <2>seda lugemata</2>, <3>midagi ütlemata</3>. It can also describe what isn’t done yet: <4>Raamat on lugemata.</4> The book is unread."
+
+msgid "After <0>-mata</0>, the object usually takes the partitive, as after <1>ei</1>: <2>seda lugemata</2>."
+msgstr "After <0>-mata</0>, the object usually takes the partitive, as after <1>ei</1>: <2>seda lugemata</2>."
+
+msgid "After <0>-mata</0>, the object usually takes the partitive: <1>seda</1>."
+msgstr "After <0>-mata</0>, the object usually takes the partitive: <1>seda</1>."
+
+msgid "All eight forms right."
+msgstr "All eight forms right."
+
+msgid "All eight, with the ending heard each time."
+msgstr "All eight, with the ending heard each time."
+
+msgid "All seven, each with the right ending."
+msgstr "All seven, each with the right ending."
+
+msgid "All six built."
+msgstr "All six built."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "Ära räägi süües."
+msgstr "Ära räägi süües."
+
+msgid "Ära tule külla helistamata."
+msgstr "Ära tule külla helistamata."
+
+msgid "at the same time"
+msgstr "at the same time"
+
+msgid "At the same time as eating is <0>süües</0>. <1>Söömata</1> is without eating."
+msgstr "At the same time as eating is <0>süües</0>. <1>Söömata</1> is without eating."
+
+msgid "At the same time as eating is <et>süües</et>. <et>Söömata</et> is without eating."
+msgstr "At the same time as eating is <et>süües</et>. <et>Söömata</et> is without eating."
+
+msgid "Build each sentence from what it means."
+msgstr "Build each sentence from what it means."
+
+msgid "Build the sentence"
+msgstr "Build the sentence"
+
+#. placeholder {0}: each.inf
+#. placeholder {1}: each.form
+msgid "Change <0>-ma</0> of <1>{0}</1> to <2>-mata</2>: <3>{1}</3>."
+msgstr "Change <0>-ma</0> of <1>{0}</1> to <2>-mata</2>: <3>{1}</3>."
+
+#. placeholder {0}: each.inf
+#. placeholder {1}: each.form
+msgid "Change the last <0>-a</0> of <1>{0}</1> to <2>-es</2>: <3>{1}</3>."
+msgstr "Change the last <0>-a</0> of <1>{0}</1> to <2>-es</2>: <3>{1}</3>."
+
+msgid "Check which form the ending goes on: <0>-des</0> on the <1>-da</1> form, <2>-mata</2> on the <3>-ma</3> form. The verb <4>minema</4> gives <5>minnes</5> and <6>minemata</6>."
+msgstr "Check which form the ending goes on: <0>-des</0> on the <1>-da</1> form, <2>-mata</2> on the <3>-ma</3> form. The verb <4>minema</4> gives <5>minnes</5> and <6>minemata</6>."
+
+msgid "Clean the kitchen"
+msgstr "Clean the kitchen"
+
+msgid "Cook dinner for him"
+msgstr "Cook dinner for him"
+
+msgid "Cooks breakfast and sings."
+msgstr "Cooks breakfast and sings."
+
+msgid "Don’t come to visit without calling."
+msgstr "Don’t come to visit without calling."
+
+msgid "Don’t use the phone while driving."
+msgstr "Don’t use the phone while driving."
+
+msgid "Each sentence has a moment of two things at once or of something left out. Choose <0>-des</0> or <1>-mata</1>, then write the whole sentence."
+msgstr "Each sentence has a moment of two things at once or of something left out. Choose <0>-des</0> or <1>-mata</1>, then write the whole sentence."
+
+msgid "Each sentence has one wrong word: the wrong ending, a form that doesn’t exist, or the wrong case. Tap it, then type it right."
+msgstr "Each sentence has one wrong word: the wrong ending, a form that doesn’t exist, or the wrong case. Tap it, then type it right."
+
+msgid "Fish soup"
+msgstr "Fish soup"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "Go through the table once more, then try again."
+msgstr "Go through the table once more, then try again."
+
+msgid "He came in knocking."
+msgstr "He came in knocking."
+
+msgid "He came in without knocking."
+msgstr "He came in without knocking."
+
+msgid "He didn’t go to the meeting."
+msgstr "He didn’t go to the meeting."
+
+msgid "He felt ill at work."
+msgstr "He felt ill at work."
+
+msgid "He left saying goodbye."
+msgstr "He left saying goodbye."
+
+msgid "He left smiling."
+msgstr "He left smiling."
+
+msgid "He left without saying anything."
+msgstr "He left without saying anything."
+
+msgid "He left without saying goodbye."
+msgstr "He left without saying goodbye."
+
+msgid "He left without smiling."
+msgstr "He left without smiling."
+
+msgid "He lost his phone at work."
+msgstr "He lost his phone at work."
+
+msgid "He missed a bus."
+msgstr "He missed a bus."
+
+msgid "He sang all the way."
+msgstr "He sang all the way."
+
+msgid "He slept all the way home."
+msgstr "He slept all the way home."
+
+msgid "He slept."
+msgstr "He slept."
+
+msgid "He took my book without asking."
+msgstr "He took my book without asking."
+
+msgid "He watched a film while drinking tea."
+msgstr "He watched a film while drinking tea."
+
+msgid "Her book"
+msgstr "Her book"
+
+msgid "Her charger"
+msgstr "Her charger"
+
+msgid "Her coffee cup"
+msgstr "Her coffee cup"
+
+msgid "I ate breakfast while reading the paper."
+msgstr "I ate breakfast while reading the paper."
+
+msgid "I do my homework while listening to the radio."
+msgstr "I do my homework while listening to the radio."
+
+msgid "I listen to music while studying."
+msgstr "I listen to music while studying."
+
+msgid "I never come without calling."
+msgstr "I never come without calling."
+
+msgid "I went to work without eating breakfast."
+msgstr "I went to work without eating breakfast."
+
+msgid "I’ll buy bread on my way home."
+msgstr "I’ll buy bread on my way home."
+
+msgid "In a sentence"
+msgstr "In a sentence"
+
+msgid "Infinitive"
+msgstr "Infinitive"
+
+msgid "It can also start the sentence. The verb then comes next, as it does after any first phrase: <0>Sõites ära kasuta telefoni.</0>"
+msgstr "It can also start the sentence. The verb then comes next, as it does after any first phrase: <0>Sõites ära kasuta telefoni.</0>"
+
+msgid "Kalev"
+msgstr "Kalev"
+
+msgid "Kalev phones Liisa, who has just moved into a new flat. Listen to them twice and answer the questions."
+msgstr "Kalev phones Liisa, who has just moved into a new flat. Listen to them twice and answer the questions."
+
+msgid "Kalev tells Liisa to talk to the flatmate again at once."
+msgstr "Kalev tells Liisa to talk to the flatmate again at once."
+
+msgid "Keep the double letter: <0>minna</0>, <1>minnes</1>."
+msgstr "Keep the double letter: <0>minna</0>, <1>minnes</1>."
+
+msgid "Liisa"
+msgstr "Liisa"
+
+msgid "Listen: Kalev and Liisa"
+msgstr "Listen: Kalev and Liisa"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Looks at the phone while drinking coffee."
+msgstr "Looks at the phone while drinking coffee."
+
+msgid "Ma kuulan raadiot tööle tulles."
+msgstr "Ma kuulan raadiot tööle tulles."
+
+msgid "Ma lähen lugema."
+msgstr "Ma lähen lugema."
+
+msgid "Ma lähen sööma."
+msgstr "Ma lähen sööma."
+
+msgid "Ma läksin tööle hommikusööki söömata."
+msgstr "Ma läksin tööle hommikusööki söömata."
+
+msgid "Ma õpin eesti keelt kodus olles."
+msgstr "Ma õpin eesti keelt kodus olles."
+
+msgid "Ma ostan leiba koju minnes."
+msgstr "Ma ostan leiba koju minnes."
+
+msgid "Ma pean minema."
+msgstr "Ma pean minema."
+
+msgid "Ma tahan lugeda."
+msgstr "Ma tahan lugeda."
+
+msgid "Make the -des form"
+msgstr "Make the -des form"
+
+msgid "Make the -mata form"
+msgstr "Make the -mata form"
+
+msgid "Mari listened to her grandmother without hurrying."
+msgstr "Mari listened to her grandmother without hurrying."
+
+msgid "Mari writes"
+msgstr "Mari writes"
+
+msgid "Mari writes about a weekend with friends in the countryside. Read her text and answer the questions, as in the reading part of the B1 exam."
+msgstr "Mari writes about a weekend with friends in the countryside. Read her text and answer the questions, as in the reading part of the B1 exam."
+
+msgid "Meat soup"
+msgstr "Meat soup"
+
+msgid "Most verbs"
+msgstr "Most verbs"
+
+msgid "Nearly. Check the ending in the ones you missed."
+msgstr "Nearly. Check the ending in the ones you missed."
+
+msgid "Nearly. Check the ones you missed against the table."
+msgstr "Nearly. Check the ones you missed against the table."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Nearly. Play the ones you got wrong once more."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Nearly. Read the reason under each one you got wrong."
+
+msgid "on the way"
+msgstr "on the way"
+
+msgid "Pay the rent"
+msgstr "Pay the rent"
+
+msgid "Peeter paid for his coffee at the café."
+msgstr "Peeter paid for his coffee at the café."
+
+msgid "Peeter usually talks a lot when he drives."
+msgstr "Peeter usually talks a lot when he drives."
+
+msgid "Read the note under each one you missed, then try again."
+msgstr "Read the note under each one you missed, then try again."
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "Reads the news over breakfast."
+msgstr "Reads the news over breakfast."
+
+msgid "She didn’t have a car."
+msgstr "She didn’t have a car."
+
+msgid "She didn’t have a licence."
+msgstr "She didn’t have a licence."
+
+msgid "She hadn’t slept at all the night before."
+msgstr "She hadn’t slept at all the night before."
+
+msgid "She left without saying a word."
+msgstr "She left without saying a word."
+
+msgid "She left without saying anything."
+msgstr "She left without saying anything."
+
+msgid "She read the letter while eating."
+msgstr "She read the letter while eating."
+
+msgid "She signed the contract without reading it."
+msgstr "She signed the contract without reading it."
+
+msgid "She sings while cooking."
+msgstr "She sings while cooking."
+
+msgid "Short and irregular verbs"
+msgstr "Short and irregular verbs"
+
+msgid "Short verbs"
+msgstr "Short verbs"
+
+msgid "Start from the <0>-da</0> form, which lesson {infinitives} taught, and change its last <1>-a</1> to <2>-es</2>: <3/> becomes <4/>. Pick a group of verbs and tap the sentences."
+msgstr "Start from the <0>-da</0> form, which lesson {infinitives} taught, and change its last <1>-a</1> to <2>-es</2>: <3/> becomes <4/>. Pick a group of verbs and tap the sentences."
+
+msgid "Start from the <0>-ma</0> form and change <1>-ma</1> to <2>-mata</2>: <3/> becomes <4/>. Every verb works this way, even <5/> and <6/>."
+msgstr "Start from the <0>-ma</0> form and change <1>-ma</1> to <2>-mata</2>: <3/> becomes <4/>. Every verb works this way, even <5/> and <6/>."
+
+msgid "Ta jäi koosolekule minemata."
+msgstr "Ta jäi koosolekule minemata."
+
+msgid "Ta joob kohvi ajalehte lugedes."
+msgstr "Ta joob kohvi ajalehte lugedes."
+
+msgid "Ta kirjutas lepingule alla seda lugemata."
+msgstr "Ta kirjutas lepingule alla seda lugemata."
+
+msgid "Ta lahkus midagi ütlemata."
+msgstr "Ta lahkus midagi ütlemata."
+
+msgid "Ta laulab süüa tehes."
+msgstr "Ta laulab süüa tehes."
+
+msgid "Ta tuli sisse koputades."
+msgstr "Ta tuli sisse koputades."
+
+msgid "Ta tuli sisse koputamata."
+msgstr "Ta tuli sisse koputamata."
+
+msgid "Ta vaatas filmi teed juues."
+msgstr "Ta vaatas filmi teed juues."
+
+msgid "Ta võttis mu raamatu küsimata."
+msgstr "Ta võttis mu raamatu küsimata."
+
+msgid "Take the <0>-da</0> form and change the last <1>-a</1> to <2>-es</2>: <3>lugeda</3>, <4>lugedes</4>."
+msgstr "Take the <0>-da</0> form and change the last <1>-a</1> to <2>-es</2>: <3>lugeda</3>, <4>lugedes</4>."
+
+msgid "Take the <0>-ma</0> form and change <1>-ma</1> to <2>-mata</2>: <3>lugema</3>, <4>lugemata</4>."
+msgstr "Take the <0>-ma</0> form and change <1>-ma</1> to <2>-mata</2>: <3>lugema</3>, <4>lugemata</4>."
+
+msgid "Tap a pair of sentences. Then hear a sentence and pick what the ending says."
+msgstr "Tap a pair of sentences. Then hear a sentence and pick what the ending says."
+
+msgid "Tap a sentence"
+msgstr "Tap a sentence"
+
+msgid "Tap the pairs above once more, then try again."
+msgstr "Tap the pairs above once more, then try again."
+
+msgid "Telephone calls sometimes keep Liisa awake at night."
+msgstr "Telephone calls sometimes keep Liisa awake at night."
+
+msgid "the <0>-des</0> form"
+msgstr "the <0>-des</0> form"
+
+msgid "the <0>-mata</0> form"
+msgstr "the <0>-mata</0> form"
+
+msgid "the <et>-des</et> form"
+msgstr "the <et>-des</et> form"
+
+msgid "The <et>-des</et> form"
+msgstr "The <et>-des</et> form"
+
+msgid "the <et>-mata</et> form"
+msgstr "the <et>-mata</et> form"
+
+msgid "The <et>-mata</et> form"
+msgstr "The <et>-mata</et> form"
+
+msgid "The flatmate knocked before coming into Liisa’s room."
+msgstr "The flatmate knocked before coming into Liisa’s room."
+
+msgid "The phrase usually goes with the thing it describes and often comes last. It can also start the sentence, and the verb then comes next: <0>Õppides kuulan ma muusikat.</0>"
+msgstr "The phrase usually goes with the thing it describes and often comes last. It can also start the sentence, and the verb then comes next: <0>Õppides kuulan ma muusikat.</0>"
+
+msgid "The phrase with <0>-des</0> or <1>-mata</1> usually goes with the thing it describes and often comes last. It can also start the sentence, and the verb comes next."
+msgstr "The phrase with <0>-des</0> or <1>-mata</1> usually goes with the thing it describes and often comes last. It can also start the sentence, and the verb comes next."
+
+msgid "The same rule works for every verb: <0>minema</0>, <1>minemata</1>."
+msgstr "The same rule works for every verb: <0>minema</0>, <1>minemata</1>."
+
+msgid "The same verb with -des and with -mata"
+msgstr "The same verb with -des and with -mata"
+
+msgid "The sentences differ in one ending: <0>-des</0> is at the same time, <1>-mata</1> is without it."
+msgstr "The sentences differ in one ending: <0>-des</0> is at the same time, <1>-mata</1> is without it."
+
+msgid "The two endings sit in the same place in a sentence and usually mean opposites: <0/> is while knocking and <1/> is without knocking. The last letters decide, so listen for them."
+msgstr "The two endings sit in the same place in a sentence and usually mean opposites: <0/> is while knocking and <1/> is without knocking. The last letters decide, so listen for them."
+
+msgid "They were poisonous."
+msgstr "They were poisonous."
+
+msgid "They were very tasty and cheap."
+msgstr "They were very tasty and cheap."
+
+msgid "They were very tasty and fresh."
+msgstr "They were very tasty and fresh."
+
+msgid "to ask"
+msgstr "to ask"
+
+msgid "to be"
+msgstr "to be"
+
+msgid "to come"
+msgstr "to come"
+
+msgid "to do, to make"
+msgstr "to do, to make"
+
+msgid "to drink"
+msgstr "to drink"
+
+msgid "to drive, to ride"
+msgstr "to drive, to ride"
+
+msgid "to eat"
+msgstr "to eat"
+
+msgid "to go"
+msgstr "to go"
+
+msgid "to knock"
+msgstr "to knock"
+
+msgid "to listen to"
+msgstr "to listen to"
+
+msgid "to pay"
+msgstr "to pay"
+
+msgid "to phone"
+msgstr "to phone"
+
+msgid "to read"
+msgstr "to read"
+
+msgid "to say"
+msgstr "to say"
+
+msgid "to say goodbye"
+msgstr "to say goodbye"
+
+msgid "To say someone does something without doing another thing, put <0>-mata</0> on the second one: <1>Ta lahkus midagi ütlemata.</1> She left without saying anything."
+msgstr "To say someone does something without doing another thing, put <0>-mata</0> on the second one: <1>Ta lahkus midagi ütlemata.</1> She left without saying anything."
+
+msgid "To say someone does two things at once, put <0>-des</0> on the second one: <1>Ta joob kohvi ajalehte lugedes.</1> He drinks coffee while reading the paper. Usually the same person does both."
+msgstr "To say someone does two things at once, put <0>-des</0> on the second one: <1>Ta joob kohvi ajalehte lugedes.</1> He drinks coffee while reading the paper. Usually the same person does both."
+
+msgid "to sleep"
+msgstr "to sleep"
+
+msgid "to smile"
+msgstr "to smile"
+
+msgid "to study"
+msgstr "to study"
+
+msgid "to talk"
+msgstr "to talk"
+
+msgid "to wait for"
+msgstr "to wait for"
+
+msgid "Two friends talk about flatmates"
+msgstr "Two friends talk about flatmates"
+
+msgid "Type the form for each verb."
+msgstr "Type the form for each verb."
+
+msgid "Vegetable soup"
+msgstr "Vegetable soup"
+
+msgid "Verbs"
+msgstr "Verbs"
+
+msgid "Verbs and their -des forms"
+msgstr "Verbs and their -des forms"
+
+msgid "Verbs and their -mata forms"
+msgstr "Verbs and their -mata forms"
+
+msgid "Verbs ending in -nna, -lla"
+msgstr "Verbs ending in -nna, -lla"
+
+msgid "What did Kalev’s old flatmate not do?"
+msgstr "What did Kalev’s old flatmate not do?"
+
+msgid "What did Peeter do on the way back?"
+msgstr "What did Peeter do on the way back?"
+
+msgid "What did Peeter have for breakfast? Write it as Mari does."
+msgstr "What did Peeter have for breakfast? Write it as Mari does."
+
+msgid "What did the flatmate take without asking?"
+msgstr "What did the flatmate take without asking?"
+
+msgid "What did the grandmother say about the mushrooms?"
+msgstr "What did the grandmother say about the mushrooms?"
+
+msgid "What does the flatmate do in the morning?"
+msgstr "What does the flatmate do in the morning?"
+
+msgid "What happened at the weekend?"
+msgstr "What happened at the weekend?"
+
+msgid "What happened to Kalev yesterday?"
+msgstr "What happened to Kalev yesterday?"
+
+msgid "What will Kalev bring on Saturday? Write it as Kalev says it."
+msgstr "What will Kalev bring on Saturday? Write it as Kalev says it."
+
+msgid "What will Liisa cook on Saturday?"
+msgstr "What will Liisa cook on Saturday?"
+
+msgid "When does the flatmate clean? Write it as Liisa says it."
+msgstr "When does the flatmate clean? Write it as Liisa says it."
+
+msgid "Where the phrase goes"
+msgstr "Where the phrase goes"
+
+msgid "while being, when you are"
+msgstr "while being, when you are"
+
+msgid "while coming, on the way"
+msgstr "while coming, on the way"
+
+msgid "while doing it"
+msgstr "while doing it"
+
+msgid "While doing it"
+msgstr "While doing it"
+
+msgid "While doing something: -des"
+msgstr "While doing something: -des"
+
+msgid "while doing, while making"
+msgstr "while doing, while making"
+
+msgid "while drinking"
+msgstr "while drinking"
+
+msgid "while eating"
+msgstr "while eating"
+
+msgid "while going, on the way"
+msgstr "while going, on the way"
+
+msgid "while knocking"
+msgstr "while knocking"
+
+msgid "While or without"
+msgstr "While or without"
+
+msgid "While or without?"
+msgstr "While or without?"
+
+msgid "while reading"
+msgstr "while reading"
+
+msgid "While studying is <0>õppides</0>. <1>Õppimata</1> is without studying."
+msgstr "While studying is <0>õppides</0>. <1>Õppimata</1> is without studying."
+
+msgid "Who did Mari phone when she got home? Write it as Mari does."
+msgstr "Who did Mari phone when she got home? Write it as Mari does."
+
+msgid "Why didn’t Mari drive?"
+msgstr "Why didn’t Mari drive?"
+
+msgid "without"
+msgstr "without"
+
+msgid "without asking"
+msgstr "without asking"
+
+msgid "Without calling is <0>helistamata</0>. <1>Helistades</1> is while calling."
+msgstr "Without calling is <0>helistamata</0>. <1>Helistades</1> is while calling."
+
+msgid "Without calling is <et>helistamata</et>. <et>Helistades</et> is while calling."
+msgstr "Without calling is <et>helistamata</et>. <et>Helistades</et> is while calling."
+
+msgid "without doing it"
+msgstr "without doing it"
+
+msgid "Without doing it"
+msgstr "Without doing it"
+
+msgid "Without doing something: -mata"
+msgstr "Without doing something: -mata"
+
+msgid "without eating"
+msgstr "without eating"
+
+msgid "without going"
+msgstr "without going"
+
+msgid "without knocking"
+msgstr "without knocking"
+
+msgid "without phoning"
+msgstr "without phoning"
+
+msgid "without reading"
+msgstr "without reading"
+
+msgid "without saying"
+msgstr "without saying"
+
+msgid "Without saying is <0>ütlemata</0>, not <1>öeldes</1>."
+msgstr "Without saying is <0>ütlemata</0>, not <1>öeldes</1>."
+
+msgid "Without saying is <0>ütlemata</0>; the object is usually partitive: <1>midagi</1>."
+msgstr "Without saying is <0>ütlemata</0>; the object is usually partitive: <1>midagi</1>."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"

@@ -15012,6 +15012,398 @@ const SUFFIX_CLIPS: Record<string, Clip> = {
   "c-varjupaik": SUFFIX_CONVERSATION,
 };
 
+export const NEWS_PHRASES = [
+  "Uus raamatukogu avatakse reedel.",
+  "Tee on remondi tõttu suletud.",
+  "Ilmateade lubab nädalavahetusel vihma.",
+  "Kohalikud elanikud ootavad uut bussi.",
+  "Üritus jääb tugeva tuule tõttu ära.",
+  "Hinnad on sel aastal tõusnud.",
+] as const;
+
+export const NEWS_TERMS = [
+  "uudised",
+  "ilmateade",
+  "elanik",
+  "üritus",
+  "remondi tõttu",
+  "jääb ära",
+] as const;
+
+export const NEWS_EXTRA_WORDS = [
+  "linnavalitsus",
+  "jalgrattatee",
+  "jalakäijad",
+  "linnapea",
+  "varjualune",
+  "korraldaja",
+] as const;
+
+export const NEWS_ARTICLE = [
+  "Pärnus avati sel nädalal uus kahe kilomeetri pikkune jalgrattatee, mis kulgeb mööda jõe äärt.",
+  "Linnavalitsus teatas, et ehitus algas juba eelmisel sügisel ja läks maksma ligi kolmsada tuhat eurot.",
+  "Varem pidid kohalikud elanikud kesklinna minnes kõndima kitsal tänaval, kus liikus palju autosid.",
+  "Nüüd saavad nii jalakäijad kui ka ratturid liikuda läbi pargi ohutult ja rahulikult.",
+  "Tee äärde paigaldati kolmkümmend uut pinki ja paarkümmend lampi, nii et seal on valge ka pimedatel sügisõhtutel.",
+  "Lisaks istutati pargi serva sada noort puud, mille valisid välja linna aednikud.",
+  "Avamispäeval kogunes kohale üle kahesaja inimese, kuigi hommikul sadas kerget vihma.",
+  "Linnapea ütles oma kõnes, et uus tee aitab inimestel rohkem liikuda ja vähem autot kasutada.",
+  "Paljud lapsevanemad rõõmustasid, sest lapsed saavad nüüd kooli sõita ohtlikku suurt teed ületamata.",
+  "Mõned ümbruskonna elanikud märkisid siiski, et pargi põhjapoolses otsas ei ole veel piisavalt prügikaste.",
+  "Linnavalitsus lubas, et uued prügikastid ja kaks joogikraani pannakse paika järgmise kuu alguses.",
+  "Sügisel plaanitakse raja äärde ehitada ka väike varjualune, kuhu inimesed saavad vihma eest varju minna.",
+  "Selle tööga alustatakse siis, kui kõik vajalikud load on kätte saadud.",
+  "Kohalik spordiklubi korraldab laupäeval kell üksteist uuel rajal tasuta perepäeva.",
+  "Kõik huvilised on oodatud kohale tulema jalgrattaga või jalgsi, sest pargi juures on parkimiskohti vähe.",
+  "Korraldajate sõnul pakutakse perepäeval sooja teed ja pirukaid ning lastele toimuvad väikesed võistlused.",
+] as const;
+
+export const NEWS_FORMS = [
+  { id: "closed", base: "sulgema", before: "Tänav on", answers: ["suletud"], after: "reedeni." },
+  {
+    id: "fallen",
+    base: "kukkuma",
+    before: "Töötajad viisid ära",
+    answers: ["kukkunud"],
+    after: "puu.",
+  },
+  {
+    id: "coming",
+    base: "tulema",
+    before: "Elanikud ootavad",
+    answers: ["tulevat"],
+    after: "nädalat.",
+  },
+  {
+    id: "walking",
+    base: "jalutama",
+    before: "Pargis",
+    answers: ["jalutades"],
+    after: "näeb uut silda.",
+  },
+  {
+    id: "paying",
+    base: "maksma",
+    before: "Lapsed pääsevad muuseumi",
+    answers: ["maksmata"],
+    after: "sisse.",
+  },
+  {
+    id: "reading",
+    base: "lugema",
+    before: "Ajalehe",
+    answers: ["lugemine"],
+    after: "võtab aega.",
+  },
+  { id: "rider", base: "sõitma", before: "Iga", answers: ["sõitja"], after: "ostab pileti." },
+  {
+    id: "friendly",
+    base: "sõber",
+    before: "Uus park on",
+    answers: ["sõbralik"],
+    after: "koht.",
+  },
+  {
+    id: "opened",
+    base: "avama",
+    before: "Eile näidati",
+    answers: ["avatud"],
+    after: "näitust.",
+  },
+  {
+    id: "waiting",
+    base: "ootama",
+    before: "Rongi",
+    answers: ["oodates"],
+    after: "loevad inimesed uudiseid.",
+  },
+] as const;
+
+export const NEWS_GAPS = [
+  {
+    id: "west",
+    before: "Homme hommikul liigub vihmapilv",
+    answer: "läbi",
+    after: "Lääne-Eesti ida poole.",
+  },
+  {
+    id: "clear",
+    before: "Pärastlõunal läheb ilm selgemaks,",
+    answer: "nii et",
+    after: "õhtul paistab jälle päike.",
+  },
+  { id: "cool", before: "Õues on jahe,", answer: "sest", after: "merelt puhub külm tuul." },
+  {
+    id: "street",
+    before: "Kesklinnas on üks tänav",
+    answer: "suletud",
+    after: ", kuna seal parandatakse torusid.",
+  },
+  { id: "bus", before: "Buss number neli sõidab", answer: "mööda", after: "teist tänavat." },
+  {
+    id: "drive",
+    before: "Autojuhtidel palutakse tööle",
+    answer: "sõites",
+    after: "rohkem aega varuda.",
+  },
+  { id: "storm", before: "Üritus", answer: "jääb ära", after: "ainult tugeva tormi korral." },
+  { id: "open", before: "Õhtul", answer: "avatakse", after: "tänav jälle liiklusele." },
+] as const;
+
+export const NEWS_SPARE = ["üle", "et", "suleti"] as const;
+
+export const NEWS_REPORT = NEWS_GAPS.map(({ before, answer, after }) =>
+  after.startsWith(",") ? `${before} ${answer}${after}` : `${before} ${answer} ${after}`,
+);
+
+const newsClosed = (sentences: readonly [string, ...string[]]): [string, ...string[]] => {
+  let now = withPronouns(sentences);
+  for (let i = 0; i < 3; i++) {
+    const next = withPronouns(now);
+    if (next.length === now.length) break;
+    now = next;
+  }
+  return now;
+};
+
+export const NEWS_TRANSLATE = [
+  "Uus raamatukogu avatakse reedel.",
+  "Tee on remondi tõttu suletud.",
+  "Ma kuulsin, et üritus jääb ära.",
+  "Me jäime koju, sest sadas.",
+  "Ma loen uudiseid kohvi juues.",
+  "Kohalikud elanikud ootavad uut bussi.",
+  "Tee läheb läbi pargi.",
+  "Sadas, nii et üritus jäi ära.",
+] as const;
+
+export const NEWS_ANSWERS: Record<(typeof NEWS_TRANSLATE)[number], readonly [string, ...string[]]> =
+  {
+    "Uus raamatukogu avatakse reedel.": [
+      "Uus raamatukogu avatakse reedel.",
+      "Reedel avatakse uus raamatukogu.",
+    ],
+    "Tee on remondi tõttu suletud.": [
+      "Tee on remondi tõttu suletud.",
+      "Tee on suletud remondi tõttu.",
+      "Remondi tõttu on tee suletud.",
+    ],
+    "Ma kuulsin, et üritus jääb ära.": newsClosed([
+      "Ma kuulsin, et üritus jääb ära.",
+      "Ma kuulsin, et üritus jäetakse ära.",
+    ]),
+    "Me jäime koju, sest sadas.": newsClosed([
+      "Me jäime koju, sest sadas.",
+      "Me jäime koju, kuna sadas.",
+      "Me jäime koju, sest vihma sadas.",
+      "Me jäime koju, kuna vihma sadas.",
+      "Me jäime koju, sest sadas vihma.",
+      "Me jäime koju, kuna sadas vihma.",
+      "Kuna sadas, jäime koju.",
+      "Kuna sadas, jäime me koju.",
+      "Kuna vihma sadas, jäime koju.",
+      "Kuna sadas vihma, jäime koju.",
+    ]),
+    "Ma loen uudiseid kohvi juues.": newsClosed([
+      "Ma loen uudiseid kohvi juues.",
+      "Ma loen kohvi juues uudiseid.",
+      "Kohvi juues loen ma uudiseid.",
+      "Kohvi juues loen uudiseid.",
+    ]),
+    "Kohalikud elanikud ootavad uut bussi.": [
+      "Kohalikud elanikud ootavad uut bussi.",
+      "Uut bussi ootavad kohalikud elanikud.",
+    ],
+    "Tee läheb läbi pargi.": [
+      "Tee läheb läbi pargi.",
+      "Läbi pargi läheb tee.",
+      "Rada läheb läbi pargi.",
+      "Läbi pargi läheb rada.",
+    ],
+    "Sadas, nii et üritus jäi ära.": [
+      "Sadas, nii et üritus jäi ära.",
+      "Vihma sadas, nii et üritus jäi ära.",
+      "Sadas vihma, nii et üritus jäi ära.",
+    ],
+  };
+
+export const NEWS_FIXES = [
+  {
+    id: "closed",
+    wrong: "Tee on remondi tõttu sulgenud.",
+    right: "Tee on remondi tõttu suletud.",
+  },
+  {
+    id: "forest",
+    wrong: "Lapsed läksid parki läbi mets.",
+    right: "Lapsed läksid parki läbi metsa.",
+  },
+  {
+    id: "coffee",
+    wrong: "Ma loen uudiseid kohvi joomata.",
+    right: "Ma loen uudiseid kohvi juues.",
+  },
+  {
+    id: "library",
+    wrong: "Uus raamatukogu avab reedel.",
+    right: "Uus raamatukogu avatakse reedel.",
+  },
+  {
+    id: "party",
+    wrong: "Me ei läinud peole, et sadas.",
+    right: "Me ei läinud peole, sest sadas.",
+  },
+  {
+    id: "water",
+    wrong: "Ma kuulen jooksev vett.",
+    right: "Ma kuulen jooksvat vett.",
+  },
+] as const;
+
+export const NEWS_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Tee on remondi tõttu suletud.": ["Tee on remondi tõttu suletud."],
+  "Lapsed läksid parki läbi metsa.": ["Lapsed läksid parki läbi metsa."],
+  "Ma loen uudiseid kohvi juues.": ["Ma loen uudiseid kohvi juues."],
+  "Uus raamatukogu avatakse reedel.": ["Uus raamatukogu avatakse reedel."],
+  "Me ei läinud peole, sest sadas.": [
+    "Me ei läinud peole, sest sadas.",
+    "Me ei läinud peole, kuna sadas.",
+  ],
+  "Ma kuulen jooksvat vett.": ["Ma kuulen jooksvat vett."],
+};
+
+export const NEWS_CONVERSATION: Conversation = {
+  turns: [
+    {
+      voice: "fourth",
+      text: [
+        "Tere õhtust, kallid kuulajad!",
+        "Kell on kuus ja algavad kohalikud uudised.",
+        "Täna räägime Tartu sügispäevast, mis toimub juba sel laupäeval.",
+        "Stuudios on külas ürituse korraldaja Liisa Tamm.",
+        "Tere tulemast, Liisa!",
+      ],
+    },
+    { voice: "third", text: "Tere õhtust ja aitäh kutse eest!" },
+    {
+      voice: "fourth",
+      text: "Paljud elanikud küsivad, mis kell sügispäev algab ja kus kõik toimub.",
+    },
+    {
+      voice: "third",
+      text: [
+        "Me alustame hommikul kell kümme raekoja platsil ja üritus kestab kella kuueni õhtul.",
+        "Kõik töötoad ja kontserdid on külastajatele tasuta, nii et kohale võib tulla kogu perega.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Kesklinnas on laupäeval ka mõned liiklusmuudatused.",
+        "Kas inimesed peaksid auto koju jätma?",
+      ],
+    },
+    {
+      voice: "third",
+      text: [
+        "Jah, seda me kindlasti soovitame.",
+        "Ülikooli tänav on hommikul kella kaheksast õhtul kella kaheksani autodele suletud, sest sinna pannakse püsti turulauad ja lava.",
+        "Linnabussid sõidavad aga tavapäraselt ja kesklinna liinidel liiguvad bussid laupäeval tihedamini.",
+      ],
+    },
+    { voice: "fourth", text: "Mida külastajad platsil teha ja vaadata saavad?" },
+    {
+      voice: "third",
+      text: [
+        "Päeva jooksul on avatud kohalike tegijate laat, kus müüakse värsket leiba, mett ja käsitööd.",
+        "Lastele korraldatakse pargis joonistamise töötuba ja kell kaksteist algab väike teatrietendus.",
+        "Lõuna ajal räägib linna aednik, kuidas sügisel viljapuid hoida ja vanu lehti kasutada.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Ilmateade lubas nädala alguses laupäevaks vihma ja tugevat tuult.",
+        "Mis siis saab, kui hakkab sadama?",
+      ],
+    },
+    {
+      voice: "third",
+      text: [
+        "Õnneks lubab uus prognoos kuiva ja jahedat ilma, umbes üheksa kraadi sooja.",
+        "Aga kui peaks siiski vihma sadama, ei jää üritus ära.",
+        "Meil on platsi servas kaks suurt telki, kuhu mahuvad nii esinejad kui ka kuulajad.",
+        "Soovitame siiski sooja jope selga panna, sest jõe ääres võib tuul olla jahe.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: "Kas te otsite veel vabatahtlikke, kes aitaksid päeva läbi viia?",
+    },
+    {
+      voice: "third",
+      text: [
+        "Meil on juba üle kolmekümne abilise, kes aitavad laudu üles panna ja külalistele teed juhatada.",
+        "Kuid kui keegi tahab veel liituda, saab ta meie kodulehel registreeruda kuni reede lõunani.",
+        "Iga abiline saab sooja lõunasöögi ja festivali särgi.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Eelmisel aastal käis sügispäeval ligi kolm tuhat inimest.",
+        "Kas te ootate sel aastal veel rohkem külastajaid?",
+      ],
+    },
+    {
+      voice: "third",
+      text: [
+        "Loodame küll, sest tänavu tulevad kohale ka külalised Viljandist ja Pärnust.",
+        "Õhtul kell viis astub lavale kohalik koor, kelle kontsert lõpetab päeva.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Aitäh stuudiosse tulemast, Liisa, ja ilusat sügispäeva!",
+        "Nüüd aga lühike ülevaade homsest ilmast.",
+        "Homme hommikul on taevas pilves, kuid pärastlõunal läheb selgemaks ja õhtul paistab päike.",
+        "Pühapäeval püsib kuiv ilm ning sooja on kuni üksteist kraadi.",
+      ],
+    },
+    {
+      voice: "third",
+      text: "Aitäh ja kohtumiseni laupäeval!",
+      say: "[warm] Aitäh ja kohtumiseni laupäeval!",
+    },
+  ],
+};
+
+export const NEWS_LETTER_BODY = [
+  "Lugupeetud toimetus!",
+  "Lugesin teie lehest artiklit uuest jalgrattateest jõe ääres ja tahan kohalike elanike nimel linna tänada.",
+  "Ma sõidan iga päev tööle rattaga ning varem oli kitsal tänaval sõitmine üsna ohtlik, sest autod sõitsid väga lähedalt mööda.",
+  "Uus tee läbi pargi on rahulik ja hästi valgustatud, nii et ka pimedatel õhtutel on meeldiv koju tulla.",
+  "Üks asi vajab siiski veel tähelepanu, kuna silla juures puudub hea ülekäigurada.",
+  "Kui linn paneks sinna selge märgi ja parema valgustuse, saaksid lapsed kooli minna veelgi turvalisemalt.",
+  "Loodan, et seda ettepanekut arutatakse juba sügisel.",
+] as const;
+
+export const NEWS_LETTER_SIGN = ["Lugupidamisega", "Mart Kask"] as const;
+
+const NEWS_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...NEWS_PHRASES,
+    ...NEWS_TERMS,
+    ...NEWS_EXTRA_WORDS,
+    ...NEWS_FORMS.map(({ before, answers, after }) => `${before} ${answers[0]} ${after}`),
+    ...NEWS_TRANSLATE,
+    ...NEWS_FIXES.map(({ right }) => right),
+  ]),
+  "p-ilmateade": { sentences: NEWS_REPORT, voice: "fourth" },
+  "c-raadio": NEWS_CONVERSATION,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: {
     ...words(HAALDUS_WORDS),
@@ -15286,6 +15678,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "labi-metsa": ROUTE_CLIPS,
   "opetaja-lugemine": AGENT_CLIPS,
   "sobralik-kodutu": SUFFIX_CLIPS,
+  uudised: NEWS_CLIPS,
   kiri: LETTER_CLIPS,
   turul: MARKET_CLIPS,
   lihtminevik: PAST_CLIPS,

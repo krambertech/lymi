@@ -6462,6 +6462,151 @@ export const MEELDIMA_DIALOGUE = {
   "d-sina-4": "Mulle meeldivad kassid!",
 } as const satisfies Record<string, Clip>;
 
+export const MEELDIMA_SAY = [
+  {
+    id: "kassid",
+    said: "Mulle meeldivad kassid.",
+    also: ["Minule meeldivad kassid.", "Kassid meeldivad mulle.", "Kassid meeldivad minule."],
+  },
+  {
+    id: "kassid-ei",
+    said: "Meile ei meeldi kassid.",
+    also: ["Kassid ei meeldi meile."],
+  },
+  {
+    id: "ujuda",
+    said: "Neile meeldib ujuda.",
+    also: ["Nendele meeldib ujuda.", "Ujuda meeldib neile.", "Ujuda meeldib nendele."],
+  },
+  {
+    id: "tallinn",
+    said: "Kas sulle meeldib Tallinn?",
+    also: [
+      "Kas sinule meeldib Tallinn?",
+      "Kas Tallinn meeldib sulle?",
+      "Kas Tallinn meeldib sinule?",
+      "Kas teile meeldib Tallinn?",
+      "Kas Tallinn meeldib teile?",
+    ],
+  },
+  {
+    id: "tahan",
+    said: "Ma tahan lugeda.",
+    also: ["Mina tahan lugeda.", "Tahan lugeda."],
+  },
+  { id: "kulm", said: "Mul on külm.", also: ["Minul on külm.", "Külm on mul."] },
+] as const;
+
+export const MEELDIMA_FIX = [
+  {
+    id: "mul",
+    wrong: "Mul meeldib kohv.",
+    right: "Mulle meeldib kohv.",
+    also: ["Minule meeldib kohv."],
+  },
+  { id: "kassid", wrong: "Mulle meeldib kassid.", right: "Mulle meeldivad kassid.", also: [] },
+  { id: "ei", wrong: "Talle ei meeldivad koerad.", right: "Talle ei meeldi koerad.", also: [] },
+  { id: "ujuda", wrong: "Neile meeldivad ujuda.", right: "Neile meeldib ujuda.", also: [] },
+  { id: "kulm", wrong: "Mulle on külm.", right: "Mul on külm.", also: ["Minul on külm."] },
+  { id: "lugema", wrong: "Meile meeldib lugema.", right: "Meile meeldib lugeda.", also: [] },
+] as const;
+
+export const MEELDIMA_WANT = [
+  { id: "lugeda", like: "Mulle meeldib lugeda.", want: "Ma tahan lugeda." },
+  { id: "ujuda", like: "Talle meeldib ujuda.", want: "Ta tahab ujuda." },
+  { id: "raakida", like: "Neile meeldib rääkida.", want: "Nad tahavad rääkida." },
+] as const;
+
+export const MEELDIMA_POLITE = {
+  said: "Ma tahaksin kohvi.",
+  also: ["Mina tahaksin kohvi.", "Tahaksin kohvi."],
+} as const;
+
+export const MEELDIMA_DRILL = [
+  "Meile meeldib eesti keel.",
+  "Neile meeldib kool.",
+  "Talle meeldivad koerad.",
+  "Meile meeldib raamat.",
+  "Neile meeldivad õunad.",
+  "lugeda",
+  "ujuda",
+  "rääkida",
+  "Talle ei meeldi koerad.",
+  "Mul on palav.",
+  "Tal on igav.",
+  "Mul on hea meel.",
+] as const;
+
+export const MEELDIMA_TALK = {
+  turns: [
+    { voice: "third", text: ["Tere, Mart!", "Kas sa oled kodus?"] },
+    { voice: "main", text: ["Tere, Liis!", "Jah, ma olen kodus.", "Mul on täna igav."] },
+    {
+      voice: "third",
+      text: [
+        "Mul on ka igav.",
+        "Tule homme kohvikusse!",
+        "Seal on kass ja koer.",
+        "Kas sulle meeldib kohv?",
+      ],
+      say: "[cheerful] Mul on ka igav. Tule homme kohvikusse! Seal on kass ja koer. Kas sulle meeldib kohv?",
+    },
+    {
+      voice: "main",
+      text: ["Ei, mulle ei meeldi kohv.", "Aga mulle meeldivad kassid!", "Ma tulen hea meelega."],
+    },
+    {
+      voice: "third",
+      text: ["Tore!", "Mulle meeldivad koerad.", "Kas sulle meeldivad koerad ka?"],
+    },
+    { voice: "main", text: ["Jah, mulle meeldivad koerad ja kassid.", "Kes veel tuleb?"] },
+    {
+      voice: "third",
+      text: ["Jaan tuleb ka.", "Talle meeldib kohv.", "Aga talle ei meeldi koerad."],
+    },
+    { voice: "main", text: ["Siis on Jaanil igav!", "Kas Jaan tuleb kell kaks?"] },
+    {
+      voice: "third",
+      text: [
+        "Jah, kell kaks.",
+        "Pühapäeval lähen ma Pärnusse.",
+        "Mulle meeldib ujuda.",
+        "Kas sa tuled ka?",
+      ],
+    },
+    { voice: "main", text: ["Ei, mulle ei meeldi ujuda.", "Mul on külm."] },
+    { voice: "third", text: ["Mul on palav!", "Mis sa siis teed?"] },
+    { voice: "main", text: ["Ma loen eesti raamatut.", "Mulle meeldib lugeda."] },
+    { voice: "third", text: "Kas sulle meeldivad eesti raamatud?" },
+    {
+      voice: "main",
+      text: ["Jah, väga.", "Ma tahan õppida eesti keelt.", "Mulle meeldib ka eesti keel."],
+    },
+    { voice: "third", text: ["Sa räägid juba hästi!", "Mulle meeldib sinu eesti keel."] },
+    { voice: "main", text: ["Aitäh, Liis!", "Mul on hea meel.", "Kas Jaan tuleb Pärnusse?"] },
+    { voice: "third", text: ["Ei, Jaanile ei meeldi ujuda.", "Talle meeldib Tartu."] },
+    { voice: "main", text: ["Mulle meeldib Tartu ka.", "Homme kell kaks kohvikus!"] },
+    { voice: "third", text: ["Jah, homme kell kaks.", "Head aega!"] },
+    { voice: "main", text: "Head aega!" },
+  ],
+} as const satisfies Conversation;
+
+export const MEELDIMA_LETTER = [
+  "Tere, Anu!",
+  "Ma elan nüüd Pärnus ja mulle meeldib siin väga.",
+  "Mari ja mina elame nüüd koos ja meil on kass ja koer.",
+  "Mulle meeldivad kassid, aga Marile meeldivad koerad.",
+  "Mari õpib koolis ja talle meeldib kodus lugeda.",
+  "Mulle meeldib ujuda, aga Marile ei meeldi ujuda.",
+  "Mulle meeldib rääkida, aga mulle ei meeldi kirjutada.",
+  "Mari räägib juba hästi eesti keelt ja mina tahan õppida eesti keelt hästi.",
+  "Täna on Pärnus külm ja meil on kodus igav.",
+  "Meile meeldib Pärnu väga, aga Tallinn ei meeldi meile.",
+  "Kas sulle meeldib kohv?",
+  "Tule laupäeval kell kaks meile, siis läheme koos kohvikusse.",
+  "Kas sa tuled laupäeval?",
+] as const;
+
 export const MEELDIMA_WORDS = [
   "meeldima",
   "meeldib",
@@ -6491,7 +6636,16 @@ const MEELDIMA_CLIPS: Record<string, Clip> = {
     ...MEELDIMA_FEELINGS,
     ...MEELDIMA_WORDS,
   ]),
+  ...words([
+    ...MEELDIMA_SAY.map(({ said }) => said),
+    ...MEELDIMA_FIX.map(({ right }) => right),
+    ...MEELDIMA_WANT.flatMap(({ like, want }) => [like, want]),
+    MEELDIMA_POLITE.said,
+    ...MEELDIMA_DRILL,
+  ]),
   "p-message": { sentences: MEELDIMA_PASSAGE },
+  "p-letter": { sentences: MEELDIMA_LETTER, voice: "third" },
+  "c-plans": MEELDIMA_TALK,
   ...MEELDIMA_DIALOGUE,
 };
 

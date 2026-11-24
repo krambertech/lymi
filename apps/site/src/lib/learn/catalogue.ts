@@ -267,8 +267,8 @@ export const STAGES: readonly Stage[] = [
         name: msg`“To like” and feelings`,
         title: msg`How to say “I like” in Estonian`,
         et: "Mulle meeldib",
-        minutes: 12,
-        blurb: msg`A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud.`,
+        minutes: 20,
+        blurb: msg`A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, liking against wanting (mulle meeldib lugeda, ma tahan lugeda), questions with kas and kellele, and feelings such as mul on külm. Write sentences, fix the mistakes learners make, and follow a conversation and a message. Every sentence is read aloud.`,
       },
       {
         slug: "turul",

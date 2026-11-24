@@ -6715,6 +6715,433 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "korter/c-talk": {
+    "text": "Tere, Jaan! Kas sa käisid täna korterit vaatamas? Tere, Liis! Jah, ma käisin kahes korteris. Üks on kesklinnas ja teine Annelinnas. Tore! Kumb on parem? Kesklinnas on korter suurem ja ilusam. Seal on kaks tuba ja suur köök. Köögis on ka pesumasin. Kui palju see maksab? Kuussada eurot. See on minu jaoks liiga kallis. Kas seal on ka rõdu? Jah, ja rõdult näeb jõge. See meeldib mulle väga. Aga kesklinnas ei ole vaikne. Ja teine korter? Teine on väiksem, ainult üks tuba ja väike köök. Aga see on palju odavam, nelisada eurot. Kas see on kesklinnast kaugel? Bussiga kakskümmend minutit. Bussipeatus on maja ees. See pole palju. Kas seal on vaikne? Jah, see on kõige vaiksem maja Annelinnas. Maja kõrval on park. Mis korrusel see on? Viiendal korrusel, aga majas on lift. Kas sa tahad elada üksi? Ei, ma tahan elada koos Katiga. Kati töötab Tallinnas, aga tuleb reedeks Tartusse. Kas keegi elab seal praegu? Ei, praegu ei ela seal keegi. Omanik üürib korteri välja üheks aastaks. Ja millal sa saad sisse kolida? Väike korter on vaba esimesest detsembrist. Suur korter on vaba alles jaanuarist. Siis on väike korter parem. Ja odavam ka! Sa ei vaja suurt korterit. Jah. Homme helistan ma omanikule. Kas ma tulen siis appi? Jah, palun! Mul on ainult kaks kasti ja voodi. Esimesel detsembril tõusen ma vara üles ja kolin sisse. Hästi. Ma võtan oma auto kaasa. Aitäh sulle! Õhtul läheme koos välja sööma.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Kas sa käisid täna korterit vaatamas?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Liis!",
+          "Jah, ma käisin kahes korteris.",
+          "Üks on kesklinnas ja teine Annelinnas."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tore!",
+          "Kumb on parem?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kesklinnas on korter suurem ja ilusam.",
+          "Seal on kaks tuba ja suur köök.",
+          "Köögis on ka pesumasin."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kui palju see maksab?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kuussada eurot.",
+          "See on minu jaoks liiga kallis."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas seal on ka rõdu?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, ja rõdult näeb jõge.",
+          "See meeldib mulle väga.",
+          "Aga kesklinnas ei ole vaikne."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja teine korter?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Teine on väiksem, ainult üks tuba ja väike köök.",
+          "Aga see on palju odavam, nelisada eurot."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas see on kesklinnast kaugel?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Bussiga kakskümmend minutit.",
+          "Bussipeatus on maja ees."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "See pole palju.",
+          "Kas seal on vaikne?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, see on kõige vaiksem maja Annelinnas.",
+          "Maja kõrval on park."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mis korrusel see on?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Viiendal korrusel, aga majas on lift."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sa tahad elada üksi?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, ma tahan elada koos Katiga.",
+          "Kati töötab Tallinnas, aga tuleb reedeks Tartusse."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas keegi elab seal praegu?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, praegu ei ela seal keegi.",
+          "Omanik üürib korteri välja üheks aastaks."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja millal sa saad sisse kolida?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Väike korter on vaba esimesest detsembrist.",
+          "Suur korter on vaba alles jaanuarist."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Siis on väike korter parem.",
+          "Ja odavam ka!",
+          "Sa ei vaja suurt korterit."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah.",
+          "Homme helistan ma omanikule."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas ma tulen siis appi?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, palun!",
+          "Mul on ainult kaks kasti ja voodi.",
+          "Esimesel detsembril tõusen ma vara üles ja kolin sisse."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Hästi.",
+          "Ma võtan oma auto kaasa."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh sulle!",
+          "Õhtul läheme koos välja sööma."
+        ]
+      }
+    ]
+  },
+  "korter/d-mari-1": {
+    "text": "Tere! Tulge sisse!",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "korter/d-mari-2": {
+    "text": "See on suur tuba. Siin on kaks akent.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "korter/d-mari-3": {
+    "text": "Köök on seal. Kas teil on kass?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "korter/d-mari-4": {
+    "text": "Hea. Millal te tahate sisse kolida?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "korter/d-sina-1": {
+    "text": "Tere! Aitäh.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/d-sina-2": {
+    "text": "Tuba on väga ilus. Kus on köök?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/d-sina-3": {
+    "text": "Ei, mul ei ole kassi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/d-sina-4": {
+    "text": "Esimesel detsembril.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/kas-ma-vo3in-homme-korterit-vaatama-tulla": {
+    "text": "Kas ma võin homme korterit vaatama tulla?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/kas-majas-on-lift": {
+    "text": "Kas majas on lift?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/kesklinnas": {
+    "text": "kesklinnas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ko2o2gis": {
+    "text": "köögis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ko2o2k": {
+    "text": "köök",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ko2o2k-on-va2ike-aga-uus": {
+    "text": "Köök on väike, aga uus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ko2o2k-on-va2iksem-kui-tuba": {
+    "text": "Köök on väiksem kui tuba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ko2o2ki": {
+    "text": "kööki",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korter": {
+    "text": "korter",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korter-on-kolmandal-korrusel": {
+    "text": "Korter on kolmandal korrusel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korter-on-vaba-esimesest-detsembrist": {
+    "text": "Korter on vaba esimesest detsembrist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korter-on-viiendal-korrusel": {
+    "text": "Korter on viiendal korrusel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korteris": {
+    "text": "korteris",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korteris-ei-ole-ro3du": {
+    "text": "Korteris ei ole rõdu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korterisse": {
+    "text": "korterisse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/kui-palju-on-u2u2r": {
+    "text": "Kui palju on üür?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/lift": {
+    "text": "lift",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-elan-neljandal-korrusel": {
+    "text": "Ma elan neljandal korrusel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-la2hen-korterisse": {
+    "text": "Ma lähen korterisse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-olen-ko2o2gis": {
+    "text": "Ma olen köögis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-tahan-reedel-sisse-kolida": {
+    "text": "Ma tahan reedel sisse kolida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-tahan-sisse-kolida": {
+    "text": "Ma tahan sisse kolida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-to2o2tan-tartus-o3petajana": {
+    "text": "Ma töötan Tartus õpetajana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/majas-ei-ole-lifti": {
+    "text": "Majas ei ole lifti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/mari-elab-teisel-korrusel": {
+    "text": "Mari elab teisel korrusel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/mari-to2o2tab-poes-mu2u2jana": {
+    "text": "Mari töötab poes müüjana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/mul-ei-ole-kassi": {
+    "text": "Mul ei ole kassi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/p-advert": {
+    "text": "Kahetoaline korter Tartu kesklinnas. Korter on kolmandal korrusel ja majas on lift. Maja on vana, aga korter on uus ja ilus. Suures toas on kaks suurt akent ja väike rõdu. Väiksem tuba on magamistuba. Toad on soojad ja valged. Köök on väike, aga seal on pesumasin. Köök on uuem kui toad. Korter on ilma mööblita, aga köögis on pliit. Korteris on ka vannituba. See on kesklinna kõige vaiksem maja. Naabrid on sõbralikud ja vaiksed. Üür on nelisada viiskümmend eurot kuus. Ma üürin korteri välja üheks aastaks. Korter on vaba esimesest detsembrist. Pood on maja kõrval ja bussipeatus on maja ees. Maja kõrval on ilus park ja väike kohvik. Bussiga on rongijaama viis minutit. Kass või koer ei saa korteris elada. Praegu ei ela korteris keegi. Korter sobib hästi ühele või kahele inimesele. Korterit saab vaadata esmaspäevast reedeni. Helistage mulle õhtul pärast kella kuut! Minuga saab rääkida ka inglise keeles. Mari Tamm, telefon 5555 1234.",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "korter/p-message": {
+    "text": "Tere, Mari! Mina olen Jaan ja ma nägin teie kuulutust. Ma töötan Tartus õpetajana. Ma tahan korteris elada üheks aastaks. Kas ma võin homme koos sõbraga korterit vaatama tulla? Ma tahan sisse kolida esimesel detsembril. Palun helistage mulle õhtul. Aitäh! Jaan.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/p-reply": {
+    "text": "Tere, Mari! Mina olen Jaan ja ma nägin teie kuulutust. Korter meeldib mulle väga. Ma töötan Tartus õpetajana. Mul ei ole kassi. Kas ma võin homme korterit vaatama tulla? Ma tahan sisse kolida esimesel detsembril. Kas köögis on ka pliit? Aitäh!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ro3du": {
+    "text": "rõdu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ro3dul": {
+    "text": "rõdul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ro3dule": {
+    "text": "rõdule",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/sisse-kolima": {
+    "text": "sisse kolima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/toas": {
+    "text": "toas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/tuba": {
+    "text": "tuba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/tuppa": {
+    "text": "tuppa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/u2u2r": {
+    "text": "üür",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "kusimused/a-ei": {
     "text": "Ei.",
     "model": "eleven_v4",
@@ -30097,6 +30524,66 @@
   },
   "vordlus/vanem": {
     "text": "vanem",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/helistage-mulle-o3htul": {
+    "text": "Helistage mulle õhtul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-tahan-korteri-u2heks-aastaks-u2u2rida": {
+    "text": "Ma tahan korteri üheks aastaks üürida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korter-on-suures-majas": {
+    "text": "Korter on suures majas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-tulen-koos-so3braga": {
+    "text": "Ma tulen koos sõbraga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korter-on-ilma-mo2o2blita": {
+    "text": "Korter on ilma mööblita.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/suures-toas-on-kaks-suurt-akent": {
+    "text": "Suures toas on kaks suurt akent.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/see-on-ko3ige-vaiksem-maja": {
+    "text": "See on kõige vaiksem maja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korteris-ei-ela-keegi": {
+    "text": "Korteris ei ela keegi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/tule-minuga-korterit-vaatama": {
+    "text": "Tule minuga korterit vaatama!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/kass-on-ro3dul": {
+    "text": "Kass on rõdul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/tule-ko2o2ki": {
+    "text": "Tule kööki!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-elan-siin-u2heks-aastaks": {
+    "text": "Ma elan siin üheks aastaks.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

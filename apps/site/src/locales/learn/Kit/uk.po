@@ -293,6 +293,9 @@ msgstr "Безкоштовний урок естонської про дві с�
 msgid "A free Estonian lesson on word order: the verb usually in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про порядок слів: дієслово зазвичай на другому місці (täna lähen ma), питання на кшталт kus sa elad?, два дієслова з другим зазвичай у кінці і де стоїть ei. Кожне речення озвучене."
 
+msgid "A free Estonian practice lesson on looking for a flat: read an advert, write to the owner, look round the flat, follow a call about two flats and write your own message. It practises floors and dates, -ga, -ta, -na and -ks, adjectives and comparing, keegi and particle verbs. Every sentence is read aloud."
+msgstr "Безкоштовний урок-практика з естонської про пошуки квартири: прочитай оголошення, напиши власниці, огляни квартиру, послухай розмову про дві квартири й напиши власне повідомлення. Тут повторюються поверхи й дати, -ga, -ta, -na та -ks, прикметники й порівняння, keegi та дієслова з частками. Кожне речення озвучене."
+
 msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
 msgstr "Безкоштовний урок естонської вимови: дев’ять голосних з õ, ä, ö та ü, наголос, зазвичай на першому складі, і те, як подвоєна літера може змінити слово. Кожне слово озвучено."
 
@@ -811,6 +814,9 @@ msgstr "Естонські післяйменники: на, під, за"
 
 msgid "Estonian practice: last weekend and next week"
 msgstr "Практика естонської: минулі вихідні й наступний тиждень"
+
+msgid "Estonian practice: looking for a flat"
+msgstr "Практика естонської: пошуки квартири"
 
 msgid "Estonian practice: shopping at the market"
 msgstr "Практика естонської: покупки на ринку"

@@ -1,13 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import type {
-  NEWS_TRANSLATE} from "../../../lib/learn/clips";
-import {
-  NEWS_ANSWERS,
-  NEWS_FIX_ANSWERS,
-  NEWS_FIXES,
-  NEWS_FORMS
-} from "../../../lib/learn/clips";
+import type { NEWS_TRANSLATE } from "../../../lib/learn/clips";
+import { NEWS_ANSWERS, NEWS_FIX_ANSWERS, NEWS_FIXES, NEWS_FORMS } from "../../../lib/learn/clips";
 import type { DrillBank, FixDrill, FormDrill, SentenceDrill } from "../../../lib/learn/drill";
 
 const FORM_GLOSS: Record<(typeof NEWS_FORMS)[number]["id"], MessageDescriptor> = {

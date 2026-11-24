@@ -16356,7 +16356,6 @@ const NEWS_CLIPS: Record<string, Clip> = {
   "c-raadio": NEWS_CONVERSATION,
 };
 
-
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: {
     ...words(HAALDUS_WORDS),

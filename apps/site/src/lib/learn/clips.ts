@@ -16080,23 +16080,14 @@ export const PV_ANSWERS: Record<(typeof PV_TRANSLATE)[number], readonly [string,
     "Pange palun uks kinni.",
     "Palun pange uks kinni.",
   ],
-  "Ma tegin akna lahti.": pvClosed([
-    "Ma tegin akna lahti.",
-    "Akna tegin ma lahti.",
-  ]),
-  "Ta läks juba ära.": pvClosed([
-    "Ta läks juba ära.",
-    "Ta läks ära juba.",
-  ]),
+  "Ma tegin akna lahti.": pvClosed(["Ma tegin akna lahti.", "Akna tegin ma lahti."]),
+  "Ta läks juba ära.": pvClosed(["Ta läks juba ära.", "Ta läks ära juba."]),
   "Ma tulen kell kuus tagasi.": pvClosed([
     "Ma tulen kell kuus tagasi.",
     "Kell kuus tulen ma tagasi.",
     "Ma tulen tagasi kell kuus.",
   ]),
-  "Ma kirjutan numbri üles.": pvClosed([
-    "Ma kirjutan numbri üles.",
-    "Numbri kirjutan ma üles.",
-  ]),
+  "Ma kirjutan numbri üles.": pvClosed(["Ma kirjutan numbri üles.", "Numbri kirjutan ma üles."]),
   "Ma pean vara üles tõusma.": pvClosed([
     "Ma pean vara üles tõusma.",
     "Vara pean ma üles tõusma.",
@@ -16150,10 +16141,7 @@ export const PV_CONVERSATION: Conversation = {
     { voice: "fourth", text: ["Panen kohe kinni.", "Kuhu me need suured kastid viime?"] },
     {
       voice: "third",
-      text: [
-        "Viime need alla auto juurde.",
-        "Aga enne võta palun köögist kohvitassid välja.",
-      ],
+      text: ["Viime need alla auto juurde.", "Aga enne võta palun köögist kohvitassid välja."],
     },
     { voice: "fourth", text: "Kas need vanad ajalehed lähevad kaasa?" },
     {
@@ -16211,7 +16199,6 @@ const PV_CLIPS: Record<string, Clip> = {
   ]),
   "c-kolimine": PV_CONVERSATION,
 };
-
 
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: {

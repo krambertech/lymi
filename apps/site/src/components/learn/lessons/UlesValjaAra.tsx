@@ -181,14 +181,14 @@ const ORDER_WHY: Record<(typeof PV_ORDER)[number]["id"], ReactNode> = {
   ),
   "must-rise": (
     <Trans>
-      With <b lang="et">pean</b>, the particle usually stays right before the{" "}
-      <b lang="et">-ma</b> verb: <b lang="et">üles tõusma</b>.
+      With <b lang="et">pean</b>, the particle usually stays right before the <b lang="et">-ma</b>{" "}
+      verb: <b lang="et">üles tõusma</b>.
     </Trans>
   ),
   "close-door": (
     <Trans>
-      With <b lang="et">saad</b>, the particle usually stays right before the{" "}
-      <b lang="et">-da</b> verb: <b lang="et">kinni panna</b>.
+      With <b lang="et">saad</b>, the particle usually stays right before the <b lang="et">-da</b>{" "}
+      verb: <b lang="et">kinni panna</b>.
     </Trans>
   ),
   "go-out": (
@@ -606,8 +606,8 @@ export function UlesValjaAraLesson() {
                 <p>
                   <Trans>
                     In a dictionary, the particle stands first. In a sentence with one verb, it
-                    usually moves after the verb: <b lang="et">Ma tõusen kell seitse üles.</b> Switch
-                    groups and tap a form to hear it.
+                    usually moves after the verb: <b lang="et">Ma tõusen kell seitse üles.</b>{" "}
+                    Switch groups and tap a form to hear it.
                   </Trans>
                 </p>
               </Prose>

@@ -97,8 +97,8 @@ function KesMisTable() {
           title: t`Tap a sentence`,
           tip: (
             <Trans>
-              <b lang="et">mis</b> follows a thing or an idea, and <b lang="et">kes</b> follows a
-              person.
+              <b lang="et">mis</b> usually follows a thing or an idea, and <b lang="et">kes</b>{" "}
+              follows a person.
             </Trans>
           ),
         }}

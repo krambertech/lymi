@@ -35,8 +35,8 @@ msgstr "<0>Kelle</0> і <1>mille</1> — це «чий» і зазвичай «�
 msgid "<0>Kes</0> follows a person."
 msgstr "<0>Kes</0> стоїть після людини."
 
-msgid "<0>mis</0> follows a thing or an idea, and <1>kes</1> follows a person."
-msgstr "<0>mis</0> стоїть після речі чи думки, а <1>kes</1> — після людини."
+msgid "<0>mis</0> usually follows a thing or an idea, and <1>kes</1> follows a person."
+msgstr "<0>mis</0> зазвичай стоїть після речі чи думки, а <1>kes</1> — після людини."
 
 msgid "<0>Mis</0> usually follows a thing."
 msgstr "<0>Mis</0> зазвичай стоїть після речі."
@@ -444,7 +444,7 @@ msgid "Seven"
 msgstr "Сім"
 
 msgid "Small, but fun."
-msgstr "Мала, але весело."
+msgstr "Маленька, але було весело."
 
 msgid "So <0/> and <1/> have cases like a noun, and the endings are the ones you know from lesson {pronouns}. Tap a sentence and read what the lit word does in its clause."
 msgstr "Отже, <0/> і <1/> мають відмінки, як іменники, а закінчення ті самі, що ти знаєш з уроку {pronouns}. Торкнись речення й подивись, що виділене слово робить у своєму підрядному реченні."
@@ -528,7 +528,7 @@ msgid "The friend I phoned is in Tallinn."
 msgstr "Друг, якому я телефонував, у Таллінні."
 
 msgid "The house that is big is old."
-msgstr "Будинок, що великий, старий."
+msgstr "Будинок, який великий, — старий."
 
 msgid "The house where I live is old."
 msgstr "Будинок, де я живу, старий."
@@ -630,7 +630,7 @@ msgid "Tiina’s brother"
 msgstr "Брат Тііни"
 
 msgid "Tiina’s new colleague"
-msgstr "Нова колега Тііни"
+msgstr "Новий колега Тііни"
 
 msgid "to what, to which"
 msgstr "до чого, до якого"

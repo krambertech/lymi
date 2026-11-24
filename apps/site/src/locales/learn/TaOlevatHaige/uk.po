@@ -41,7 +41,7 @@ msgid "<0>Ütles, et</0> and <1>rääkis, et</1> name who said it."
 msgstr "<0>Ütles, et</0> і <1>rääkis, et</1> називають того, хто це сказав."
 
 msgid "<0>Ütles, et</0> names the person. <1>-vat</1> usually names no one: it passes the news on."
-msgstr "<0>Ütles, et</0> називає людину. <1>-vat</1> зазвичай нікого не називає: воно передає новину далі."
+msgstr "<0>Ütles, et</0> називає людину. <1>-vat</1> зазвичай нікого не називає: ця форма просто передає новину далі."
 
 msgid "<et>Ütles, et</et> and <et>rääkis, et</et> name who said it. <et>-vat</et> usually passes the news on without saying who said it."
 msgstr "<et>Ütles, et</et> і <et>rääkis, et</et> називають того, хто це сказав. <et>-vat</et> зазвичай передає новину, не кажучи, хто це сказав."
@@ -134,7 +134,7 @@ msgid "At that moment"
 msgstr "У той момент"
 
 msgid "Both can carry the same news, but they work differently. <0>Mari ütles, et ta on haige</0> names who said it. <1>Mari olevat haige</1> names no one: it passes on what is said, and the speaker is usually not vouching for it."
-msgstr "Обидві форми можуть нести ту саму новину, але працюють по-різному. <0>Mari ütles, et ta on haige</0> називає того, хто це сказав. <1>Mari olevat haige</1> нікого не називає: воно передає те, що кажуть, і мовець зазвичай не ручається за це."
+msgstr "Обидві форми можуть нести ту саму новину, але працюють по-різному. <0>Mari ütles, et ta on haige</0> називає того, хто це сказав. <1>Mari olevat haige</1> нікого не називає: це переказ чужих слів, і мовець зазвичай не ручається за них."
 
 msgid "By the river"
 msgstr "Біля річки"
@@ -235,7 +235,7 @@ msgid "It is said it will rain tomorrow."
 msgstr "Кажуть, що завтра буде дощ."
 
 msgid "Its owner is selling it."
-msgstr "Власник його продає."
+msgstr "Власник продає будівлю."
 
 msgid "Kalev"
 msgstr "Калев"
@@ -463,10 +463,10 @@ msgid "So the tense tells you when the thing was true for the speaker: <0>ta oli
 msgstr "Отже, час показує, коли це було правдою для мовця: <0>ta oli eile haige</0> — про вчора, а <1>ta tuleb homme</1> — про завтра, бо теперішній час говорить і про те, що буде далі."
 
 msgid "someone named said it"
-msgstr "сказав названий хтось"
+msgstr "сказала конкретна людина"
 
 msgid "Someone named said it"
-msgstr "Сказав названий хтось"
+msgstr "Сказала конкретна людина"
 
 msgid "Someone told him, but not who."
 msgstr "Хтось розповів, але не сказав хто."
@@ -730,7 +730,7 @@ msgid "Why does the library move?"
 msgstr "Чому бібліотека переїжджає?"
 
 msgid "Write each sentence. Where the English says <0>reportedly</0>, use the <1>-vat</1> form; otherwise report with <2>et</2> or <3>kas</3>."
-msgstr "Напиши кожне речення. Де в англійській є <0>reportedly</0>, використай форму на <1>-vat</1>, в інших випадках перекажи через <2>et</2> або <3>kas</3>."
+msgstr "Напиши кожне речення. Де стоїть <0>кажуть</0>, використай форму на <1>-vat</1>, в інших випадках перекажи через <2>et</2> або <3>kas</3>."
 
 msgid "Write it in Estonian"
 msgstr "Напиши естонською"

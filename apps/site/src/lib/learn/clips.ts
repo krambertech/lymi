@@ -16932,6 +16932,242 @@ const NEWS_CLIPS: Record<string, Clip> = {
   "c-raadio": NEWS_CONVERSATION,
 };
 
+export const KOHVIKUS_ORDERING = {
+  "o-liis-1": { text: "Tere! Palun?", voice: "second" },
+  "o-sina-1": "Tere! Palun üks tee ja üks saiake.",
+  "o-liis-2": { text: "Siin või kaasa?", voice: "second" },
+  "o-sina-2": "Siin, palun.",
+  "o-liis-3": { text: "Palun! Suhkur on laual.", voice: "second" },
+  "o-sina-3": "Aitäh! Kas teil on piima?",
+  "o-liis-4": { text: "Jah, on. Palun! Kaardiga või sularahas?", voice: "second" },
+  "o-sina-4": "Kaardiga, palun.",
+  "o-liis-5": { text: "Palun! Head aega!", voice: "second" },
+  "o-sina-5": "Aitäh! Head aega!",
+} as const satisfies Record<string, Clip>;
+
+export const KOHVIKUS_PASSAGES = {
+  mari: [
+    "Tere, Liis!",
+    "Ma töötan kohvikus Tallinnas.",
+    "See on minu kohvik.",
+    "Meil on kohv, tee, vesi, mahl ja piim.",
+    "Meil on ka supp, kook, saiake ja võileib.",
+    "Suhkur on laual.",
+    "Kohv on väga hea.",
+    "Kook on ka väga hea.",
+    "Minu sõber Jaan joob siin palju kohvi.",
+    "Mina joon teed.",
+    "Siin või kaasa?",
+    "Kaardiga või sularahas?",
+    "Kas sa elad Tallinnas?",
+    "Head aega!",
+  ],
+} as const;
+
+export const KOHVIKUS_TALK: Conversation = {
+  turns: [
+    { voice: "second", text: ["Tere!", "Palun?"] },
+    { voice: "main", text: ["Tere!", "Palun üks kohv ja üks saiake."] },
+    { voice: "second", text: "Siin või kaasa?" },
+    { voice: "main", text: "Siin, palun." },
+    { voice: "second", text: ["Palun!", "Suhkur on laual."] },
+    { voice: "main", text: ["Aitäh!", "Kas teil on piima?"] },
+    { voice: "second", text: ["Jah, on.", "Siin on piim.", "Palun!"] },
+    { voice: "main", text: ["Aitäh!", "Kas teil on ka suppi?"] },
+    { voice: "second", text: ["Ei, suppi ei ole.", "Meil on kook ja võileib."] },
+    { voice: "main", text: "Kas kook on hea?" },
+    { voice: "second", text: "Jah, kook on väga hea." },
+    { voice: "main", text: ["Siis palun üks kook.", "Ja üks mahl, palun."] },
+    { voice: "second", text: ["Palun!", "Kaardiga või sularahas?"] },
+    { voice: "main", text: ["Kaardiga.", "Palun arve."] },
+    { voice: "second", text: ["Palun!", "Head isu!"] },
+    { voice: "main", text: ["Aitäh!", "Head aega!"] },
+    { voice: "second", text: "Head aega!" },
+  ],
+};
+
+export const KOHVIKUS_HEARD = [
+  { item: "mahl", said: "Palun üks mahl." },
+  { item: "piim", said: "Palun üks piim." },
+  { item: "supp", said: "Palun üks supp." },
+  { item: "kook", said: "Palun üks kook." },
+  { item: "vesi", said: "Palun üks vesi." },
+  { item: "võileib", said: "Palun üks võileib." },
+] as const;
+
+export const KOHVIKUS_MENU = [
+  "kohv",
+  "tee",
+  "vesi",
+  "mahl",
+  "piim",
+  "suhkur",
+  "kook",
+  "saiake",
+  "võileib",
+  "supp",
+  "arve",
+] as const;
+
+export const KOHVIKUS_SORTED = [
+  { w: "Palun üks kohv.", bin: "order" },
+  { w: "Kaardiga või sularahas?", bin: "pay" },
+  { w: "Kas teil on kooki?", bin: "order" },
+  { w: "Palun arve.", bin: "pay" },
+  { w: "Siin või kaasa?", bin: "order" },
+  { w: "Kui palju see maksab?", bin: "pay" },
+  { w: "Palun üks tee ja üks saiake.", bin: "order" },
+  { w: "Kaardiga, palun.", bin: "pay" },
+] as const;
+
+export const KOHVIKUS_HAVE = [
+  "Kas teil on piima?",
+  "Kas teil on suppi?",
+  "Kas teil on kooki?",
+  "Kas teil on mahla?",
+  "Kas teil on vett?",
+  "Kas teil on teed?",
+] as const;
+
+export const KOHVIKUS_TRANSLATED = [
+  {
+    kind: "order",
+    answers: [
+      "Palun üks kohv.",
+      "Üks kohv, palun.",
+      "Palun kohv.",
+      "Kohv, palun.",
+      "Palun kohvi.",
+      "Kohvi, palun.",
+      "Mulle üks kohv, palun.",
+      "Palun mulle üks kohv.",
+      "Mulle kohv, palun.",
+      "Palun mulle kohv.",
+    ],
+  },
+  {
+    kind: "order",
+    answers: [
+      "Palun üks tee ja üks saiake.",
+      "Üks tee ja üks saiake, palun.",
+      "Palun tee ja saiake.",
+      "Tee ja saiake, palun.",
+      "Palun üks tee ja saiake.",
+      "Palun tee ja üks saiake.",
+      "Üks tee ja saiake, palun.",
+      "Tee ja üks saiake, palun.",
+      "Mulle üks tee ja üks saiake, palun.",
+      "Palun mulle üks tee ja üks saiake.",
+      "Mulle tee ja saiake, palun.",
+      "Palun mulle tee ja saiake.",
+    ],
+  },
+  { kind: "order", answers: ["Siin või kaasa?", "Kas siin või kaasa?"] },
+  {
+    kind: "have",
+    answers: [
+      "Kas teil on suppi?",
+      "Kas teil suppi on?",
+      "On teil suppi?",
+      "Kas sul on suppi?",
+      "Kas sul suppi on?",
+      "On sul suppi?",
+    ],
+  },
+  {
+    kind: "have",
+    answers: [
+      "Kas teil on mahla?",
+      "Kas teil mahla on?",
+      "On teil mahla?",
+      "Kas sul on mahla?",
+      "Kas sul mahla on?",
+      "On sul mahla?",
+    ],
+  },
+  {
+    kind: "pay",
+    answers: [
+      "Kaardiga või sularahas?",
+      "Kas kaardiga või sularahas?",
+      "Sularahas või kaardiga?",
+      "Kas sularahas või kaardiga?",
+      "Kaardiga või sularahaga?",
+      "Kas kaardiga või sularahaga?",
+      "Sularahaga või kaardiga?",
+      "Kas sularahaga või kaardiga?",
+    ],
+  },
+  { kind: "pay", answers: ["Palun arve.", "Arve, palun.", "Palun arvet.", "Arvet, palun."] },
+  {
+    kind: "pay",
+    answers: [
+      "Kui palju see maksab?",
+      "Kui palju maksab see?",
+      "Kui palju see on?",
+      "Palju see maksab?",
+      "Palju maksab see?",
+    ],
+  },
+] as const;
+
+export const KOHVIKUS_FIXES = [
+  { wrong: "Aitäh üks kohv.", said: "Palun üks kohv.", kind: "order" },
+  { wrong: "Siin või kaasas?", said: "Siin või kaasa?", kind: "order" },
+  { wrong: "Kas te on piima?", said: "Kas teil on piima?", kind: "have" },
+  { wrong: "Kui palju see maksan?", said: "Kui palju see maksab?", kind: "pay" },
+  { wrong: "Kaardil või sularahas?", said: "Kaardiga või sularahas?", kind: "pay" },
+] as const;
+
+export const KOHVIKUS_DRILL_SAID = [
+  "Palun üks mahl ja üks kook.",
+  "Siin, palun.",
+  "Kas teil on kooki?",
+  "Kas teil on vett?",
+  "Kas teil on teed?",
+  "Kaardiga, palun.",
+] as const;
+
+export const KOHVIKUS_MESSAGE = [
+  "Tere!",
+  "Palun üks kohv ja üks kook.",
+  "Siin, palun.",
+  "Kaardiga, palun.",
+  "Aitäh!",
+] as const;
+
+export const KOHVIKUS_WORDS = [
+  "Aitäh!",
+  "Palun!",
+  ...KOHVIKUS_MENU,
+  "Kas teil on piima?",
+  "Siin või kaasa?",
+  "Kaardiga või sularahas?",
+  "Palun arve.",
+  "Kui palju see maksab?",
+  "Head isu!",
+  "on",
+  "meil",
+  "siis",
+  "Suhkur on laual.",
+] as const;
+
+const KOHVIKUS_CLIPS: Record<string, Clip> = {
+  ...words(KOHVIKUS_WORDS),
+  ...KOHVIKUS_ORDERING,
+  "p-mari": { sentences: KOHVIKUS_PASSAGES.mari, voice: "second" },
+  "d-kohvik": KOHVIKUS_TALK,
+  "p-order": { sentences: KOHVIKUS_MESSAGE },
+  ...words([
+    ...KOHVIKUS_HEARD.map(({ said }) => said),
+    ...KOHVIKUS_SORTED.map(({ w }) => w),
+    ...KOHVIKUS_HAVE,
+    ...KOHVIKUS_TRANSLATED.map(({ answers }) => answers[0]),
+    ...KOHVIKUS_FIXES.map(({ said }) => said),
+    ...KOHVIKUS_DRILL_SAID,
+  ]),
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: {
     ...words(HAALDUS_WORDS),
@@ -17062,6 +17298,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
       "Sa oled kodus.",
     ]),
   },
+  kohvikus: KOHVIKUS_CLIPS,
   kaskiv: {
     ...words([
       ...KASKIV_STEMS.flatMap(({ ma, stem }) => [`Ma ${ma}.`, commandTo(stem)]),

@@ -103,6 +103,14 @@ export const STAGES: readonly Stage[] = [
         blurb: msg`Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions, ask your own and write a short message. Every conversation and passage is read aloud.`,
       },
       {
+        slug: "kohvikus",
+        name: msg`At a café`,
+        title: msg`Ordering at a café in Estonian`,
+        et: "Palun üks kohv.",
+        minutes: 20,
+        blurb: msg`A free Estonian lesson for the café counter: ask for a drink and something to eat with palun, ask if they have it, answer here or to take away and card or cash, and ask for the bill. Every sentence is read aloud.`,
+      },
+      {
         slug: "numbrid",
         name: msg`Numbers`,
         title: msg`Estonian numbers`,

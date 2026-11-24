@@ -118,6 +118,15 @@ app.get("/.well-known/openai-apps-challenge", describe({ hide: true }), (c) => {
   return c.text(token, 200, { "cache-control": "no-store" });
 });
 
+app.get("/.well-known/google-connected-apps", describe({ hide: true }), (c) => {
+  const tokens = (c.env.GOOGLE_CONNECTED_APPS_TOKENS ?? "")
+    .split(",")
+    .map((token) => token.trim())
+    .filter(Boolean);
+  if (tokens.length === 0) return c.text("Not found", 404);
+  return c.json({ verification_tokens: tokens }, 200, { "cache-control": "no-store" });
+});
+
 // iOS reads which links open the phone app here: a deck's join link and Add to Lymi.
 app.get("/.well-known/apple-app-site-association", describe({ hide: true }), (c) => {
   const appID = c.env.APPLE_APP_ID?.trim();

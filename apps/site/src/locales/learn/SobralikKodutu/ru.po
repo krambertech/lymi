@@ -1,0 +1,523 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 20:18+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "<0>-ke</0> makes a thing small or dear. It usually joins the genitive."
+msgstr "<0>-ke</0> указывает на малый размер или придаёт ласковый оттенок. Обычно его добавляют к родительному."
+
+msgid "<0>-ke</0> makes something small or dear, and usually joins the genitive: <1>majake, tükike, linnake</1>. It changes like <2>-ne</2>: <3>majakese, majakest</3>."
+msgstr "<0>-ke</0> указывает на малый размер или придаёт ласковый оттенок. Обычно его добавляют к родительному: <1>majake, tükike, linnake</1>. Такие слова склоняются, как слова на <2>-ne</2>: <3>majakese, majakest</3>."
+
+msgid "<0>-ke</0>: a small one."
+msgstr "<0>-ke</0> — что-то маленькое."
+
+msgid "<0>-lik</0> usually makes an adjective meaning like it, having it or to do with it."
+msgstr "Суффикс <0>-lik</0> обычно образует прилагательное со значением сходства, наличия чего-либо или связи с чем-либо."
+
+msgid "<0>-lik</0> usually makes an adjective meaning like it, having it or to do with it. <1>Kohalik</1> means local, of the place. <2>Tervislik</2> means healthy, good for your health."
+msgstr "Суффикс <0>-lik</0> обычно образует прилагательное со значением сходства, наличия чего-либо или связи с чем-либо. <1>Kohalik</1> означает «местный», то есть связанный с местом. <2>Tervislik</2> означает «полезный для здоровья»."
+
+msgid "<0>-tu</0> and <1>-ke</1> usually join the genitive: <2>viga, vea, veatu</2>. Before <3>-lik</3> the stem varies: <4>sõbra-lik</4> but <5>oht-lik</5>. Pick an ending and tap the words."
+msgstr "<0>-tu</0> и <1>-ke</1> обычно добавляют к родительному: <2>viga, vea, veatu</2>. Перед <3>-lik</3> основа бывает разной: <4>sõbra-lik</4>, а вот <5>oht-lik</5>. Выбери суффикс и нажимай на слова."
+
+msgid "<0>-tu</0> gives an adjective the same meaning as the case ending <1>-ta</1> from lesson {without}: <2>koer on koduta</2> and <3>kodutu koer</3> both describe a dog without a home."
+msgstr "<0>-tu</0> передаёт в прилагательном то же «без», что и падеж на <1>-ta</1> из урока {without}. И <2>koer on koduta</2>, и <3>kodutu koer</3> описывают собаку без дома."
+
+msgid "<0>-tu</0> means without, and usually joins the genitive: <1>kodutu, töötu, veatu</1>."
+msgstr "<0>-tu</0> означает «без». Обычно его добавляют к родительному: <1>kodutu, töötu, veatu</1>."
+
+msgid "<0>-tu</0> means without, like English -less. It usually joins the genitive."
+msgstr "<0>-tu</0> означает «без», как в слове «безработный». Обычно его добавляют к родительному."
+
+msgid "<0>-tu</0>: without it."
+msgstr "<0>-tu</0> — без чего-то."
+
+#. placeholder {0}: item.answer
+#. placeholder {1}: i18n._(KIND_LABELS[item.kind])
+msgid "<0>{0}</0>: {1}."
+msgstr "<0>{0}</0>: {1}."
+
+msgid "<0>Sõber</0> gives <1>sõbralik</1>, friendly; <2>kodu</2> gives <3>kodutu</3>, homeless; <4>maja</4> gives <5>majake</5>, a little house. Three endings make new words from nouns you know."
+msgstr "От <0>Sõber</0> получается <1>sõbralik</1> («дружелюбный»), от <2>kodu</2> — <3>kodutu</3> («бездомный»), а от <4>maja</4> — <5>majake</5> («домик»). Три суффикса образуют новые слова от знакомых существительных."
+
+msgid "<et>-ke</et> makes something small or dear, and usually joins the genitive."
+msgstr "<et>-ke</et> указывает на малый размер или придаёт ласковый оттенок. Обычно его добавляют к родительному."
+
+msgid "<et>-ke</et>: a small one"
+msgstr "<et>-ke</et> — что-то маленькое"
+
+msgid "<et>-lik</et> usually makes an adjective meaning like it, having it or to do with it."
+msgstr "Суффикс <et>-lik</et> обычно образует прилагательное со значением сходства, наличия чего-либо или связи с чем-либо."
+
+msgid "<et>-tu</et> means without, and usually joins the genitive."
+msgstr "<et>-tu</et> означает «без». Обычно его добавляют к родительному."
+
+msgid "<et>-tu</et>: without it"
+msgstr "<et>-tu</et> — без чего-то"
+
+msgid "<et>Linnake</et>, a small town; in it, <et>linnakeses</et>."
+msgstr "<et>Linnake</et> — городок, а «в городке» — <et>linnakeses</et>."
+
+msgid "<et>Poisike</et> is a little boy, from <et>poiss</et>."
+msgstr "<et>Poisike</et> — маленький мальчик, от <et>poiss</et>."
+
+msgid "<et>Tükike</et> is a little piece; after it, the partitive: <et>kooki</et>."
+msgstr "<et>Tükike</et> — кусочек. Дальше нужен партитив: <et>kooki</et>."
+
+msgid "24 minutes"
+msgstr "24 минуты"
+
+msgid "7 exercises"
+msgstr "7 упражнений"
+
+msgid "A <0>-ke</0> word changes like <1>-ne</1>: <2>majakese</2>, so <3>majakeses</3>."
+msgstr "Слово на <0>-ke</0> склоняется, как слово на <1>-ne</1>: <2>majakese</2>, отсюда <3>majakeses</3>."
+
+msgid "A <et>-ke</et> word changes like <et>-ne</et>: <et>majakeses</et>."
+msgstr "Слово на <et>-ke</et> склоняется, как слово на <et>-ne</et>: <et>majakeses</et>."
+
+msgid "A busy road"
+msgstr "Оживлённая дорога"
+
+msgid "A cottage by the sea"
+msgstr "Домик у моря"
+
+msgid "A dog is grateful even for a short walk."
+msgstr "Собака благодарна даже за короткую прогулку."
+
+msgid "a little boy"
+msgstr "мальчик"
+
+msgid "a little cat"
+msgstr "котик"
+
+msgid "a little house"
+msgstr "домик"
+
+msgid "A little house on Saaremaa"
+msgstr "Домик на Сааремаа"
+
+msgid "a little piece"
+msgstr "кусочек"
+
+msgid "a small one"
+msgstr "что-то маленькое"
+
+msgid "A small one"
+msgstr "Что-то маленькое"
+
+msgid "a small town"
+msgstr "городок"
+
+msgid "Add an ending to a noun and you get a new word. <0/> is like a friend, so friendly. <1/> is without a home. <2/> is a little house."
+msgstr "Суффикс придаёт существительному новый смысл. <0/> — похожий на друга, то есть дружелюбный. <1/> — без дома. <2/> — маленький дом."
+
+msgid "Adjective with -lik"
+msgstr "Прилагательное на -lik"
+
+msgid "Adjectives with <et>-lik</et>"
+msgstr "Прилагательные на <et>-lik</et>"
+
+msgid "After <0>tükike</0>, use the partitive: <1>kooki</1>."
+msgstr "После <0>tükike</0> нужен партитив: <1>kooki</1>."
+
+msgid "All eight, typed in full."
+msgstr "Все восемь, написаны полностью."
+
+msgid "All nine: you heard the ending every time."
+msgstr "Все девять суффиксов распознаны на слух."
+
+msgid "All seven, each word with its ending."
+msgstr "Во всех семи словах верны суффиксы."
+
+msgid "All six found and fixed."
+msgstr "Все шесть найдены и исправлены."
+
+msgid "An animal shelter"
+msgstr "Приют для животных"
+
+msgid "Ask if the cottage is free when you want it."
+msgstr "Спроси, свободен ли домик в нужные дни."
+
+msgid "Ask two more questions."
+msgstr "Задай ещё два вопроса."
+
+msgid "Bring old blankets and towels."
+msgstr "Принесите старые одеяла и полотенца."
+
+msgid "Cheaper per night"
+msgstr "Дешевле за ночь"
+
+msgid "child"
+msgstr "ребёнок"
+
+msgid "childish"
+msgstr "ребячливый"
+
+msgid "Cleaning"
+msgstr "Уборка"
+
+msgid "dangerous"
+msgstr "опасный"
+
+msgid "Each round gives a noun and what to add. Type the new word. In these examples with <0>-tu</0> and <1>-ke</1>, start from the genitive."
+msgstr "В каждом задании есть существительное и суффикс. Напиши новое слово. С <0>-tu</0> и <1>-ke</1> здесь бери за основу родительный."
+
+msgid "Each sentence has one wrong word: the wrong ending, or a form that doesn’t agree. Tap it, then type it right."
+msgstr "В каждом предложении одно слово с ошибкой: неверный суффикс или форма. Нажми на слово и исправь его."
+
+msgid "Endings"
+msgstr "Суффиксы"
+
+msgid "endless"
+msgstr "бесконечный"
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
+
+msgid "Foxes live in the forest"
+msgstr "Лисы живут в лесу неподалёку"
+
+msgid "friend"
+msgstr "друг, подруга"
+
+msgid "friendly"
+msgstr "дружелюбный"
+
+msgid "From kodu, home."
+msgstr "От kodu («дом»)."
+
+msgid "From koht, place."
+msgstr "От koht («место»)."
+
+msgid "From maja. Majakeses, in the little house."
+msgstr "От maja. Majakeses — в домике."
+
+msgid "From sõber, friend."
+msgstr "От sõber («друг»)."
+
+msgid "From töö, work."
+msgstr "От töö («работа»)."
+
+msgid "From tükk, genitive tüki."
+msgstr "От tükk, в родительном — tüki."
+
+msgid "Give me a little piece of cake."
+msgstr "Дай мне кусочек торта."
+
+msgid "He’s thirty, but very childish."
+msgstr "Ему тридцать, а он ведёт себя совсем по-детски."
+
+msgid "healthy"
+msgstr "здоровый"
+
+msgid "Hear a word, then pick what its ending usually adds."
+msgstr "Послушай слово и выбери, какое значение ему обычно придаёт это окончание."
+
+msgid "helpless"
+msgstr "беспомощный"
+
+msgid "home"
+msgstr "дом"
+
+msgid "homeless"
+msgstr "бездомный"
+
+msgid "house"
+msgstr "дом"
+
+msgid "How many dogs does the shelter have now?"
+msgstr "Сколько собак сейчас в приюте?"
+
+msgid "How much does it cost to take a cat home? Write the number as Kati says it."
+msgstr "Сколько стоит забрать кота домой? Напиши число так, как сказала Кати."
+
+msgid "In a sentence"
+msgstr "В предложении"
+
+msgid "It can only be rented by the week in summer"
+msgstr "Летом домик сдают только на неделю"
+
+msgid "It costs the same as seven nights"
+msgstr "Цена за семь ночей та же"
+
+msgid "Kalev"
+msgstr "Калев"
+
+msgid "Kalev visits an animal shelter in Viljandi and talks to Kati, a volunteer."
+msgstr "Калев приезжает в приют для животных в Вильянди и беседует с волонтёром Кати."
+
+msgid "Kati"
+msgstr "Кати"
+
+msgid "Kati first came to the shelter when she had no job."
+msgstr "Кати впервые пришла в приют, когда у неё не было работы."
+
+msgid "Like a child is <0>lapselik</0>. With <1>-tu</1>, the word would mean without children."
+msgstr "Как ребёнок — <0>lapselik</0>. С <1>-tu</1> слово означало бы «без детей»."
+
+msgid "like it, having it or to do with it"
+msgstr "сходство, наличие или связь"
+
+msgid "Listen: Kalev and Kati"
+msgstr "Послушай разговор Калева с Кати"
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "local"
+msgstr "местный"
+
+msgid "Make the word"
+msgstr "Образуй слово"
+
+msgid "Match each word with its meaning."
+msgstr "Соедини каждое слово с его значением."
+
+msgid "Meaning"
+msgstr "Значение"
+
+msgid "mistake"
+msgstr "ошибка"
+
+msgid "Muki was friendly from the first day."
+msgstr "Муки был дружелюбным с первого дня."
+
+msgid "Nearly. Check the ending in the ones you missed."
+msgstr "Проверь суффиксы в ответах с ошибками."
+
+msgid "Nearly. Check the stem in the ones you got wrong."
+msgstr "Проверь основы слов в ответах с ошибками."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Почти. Ещё раз послушай те, где ошибка."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Почти. Прочитай объяснение под каждой ошибкой."
+
+msgid "New words from nouns"
+msgstr "Новые слова от существительных"
+
+msgid "Now write to the owner in about 80 words, then compare your letter with a model."
+msgstr "Напиши хозяину письмо примерно на 80 слов, затем сравни его с образцом."
+
+msgid "piece"
+msgstr "кусок"
+
+msgid "place"
+msgstr "место"
+
+msgid "Read an advert for a summer cottage and answer the questions, as in the reading part of the B1 exam."
+msgstr "Прочитай объявление об аренде летнего домика и ответь на вопросы, как в задании по чтению на экзамене B1."
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Что запомнить» ниже, потом попробуй снова."
+
+msgid "Say what you’re writing about."
+msgstr "Напиши, по какому поводу обращаешься."
+
+msgid "Sign off politely."
+msgstr "Вежливо попрощайся."
+
+msgid "Someone local who has seen a dog in the street"
+msgstr "Кто-то из местных, кто увидел собаку на улице"
+
+msgid "Taking photos of the animals for the website"
+msgstr "Фотографировать животных для сайта"
+
+msgid "Tap a form"
+msgstr "Нажми на форму"
+
+msgid "Tap the words for each ending once more, then try again."
+msgstr "Ещё раз послушай слова с каждым суффиксом и повтори упражнение."
+
+msgid "Tap the words in the table once more, then try again."
+msgstr "Ещё раз послушай слова в таблице и повтори упражнение."
+
+msgid "tasteless"
+msgstr "без вкуса"
+
+msgid "That’s sad."
+msgstr "Печально."
+
+msgid "The adjective and noun are both genitive here: <0>kodutu kassi</0>."
+msgstr "Здесь и существительное, и прилагательное в родительном: <0>kodutu kassi</0>."
+
+msgid "The adjective and noun are both genitive here: <et>kodutu kassi</et>."
+msgstr "Здесь и существительное, и прилагательное в родительном: <et>kodutu kassi</et>."
+
+msgid "The adjective is plural like its noun: <0>kodutud koerad</0>."
+msgstr "Здесь и существительное, и прилагательное во множественном числе: <0>kodutud koerad</0>."
+
+msgid "The adjective is plural like its noun: <et>kodutud koerad</et>."
+msgstr "Здесь и существительное, и прилагательное во множественном числе: <et>kodutud koerad</et>."
+
+msgid "The adjective takes the genitive before <0>-ga</0>: <1>sõbraliku naisega</1>."
+msgstr "Если у существительного <0>-ga</0>, прилагательное стоит в родительном: <1>sõbraliku naisega</1>."
+
+msgid "The adjective takes the genitive before <et>-ga</et>: <et>sõbraliku naisega</et>."
+msgstr "Если у существительного <et>-ga</et>, прилагательное стоит в родительном: <et>sõbraliku naisega</et>."
+
+msgid "The beach is safe for children."
+msgstr "Пляж безопасен для детей."
+
+msgid "The cottage has two rooms."
+msgstr "В домике две комнаты."
+
+msgid "The genitive of <0>tükk</0> is <1>tüki</1>, so <2>tükike</2>."
+msgstr "Родительный от <0>tükk</0> — <1>tüki</1>, отсюда <2>tükike</2>."
+
+msgid "The genitive of <0>viga</0> is <1>vea</1>, so <2>veatu</2>, without mistakes."
+msgstr "Родительный от <0>viga</0> — <1>vea</1>, отсюда <2>veatu</2> («без ошибок»)."
+
+msgid "The genitive of <et>tükk</et> is <et>tüki</et>, so <et>tükike</et>."
+msgstr "Родительный от <et>tükk</et> — <et>tüki</et>, отсюда <et>tükike</et>."
+
+msgid "The genitive of <et>viga</et> is <et>vea</et>, so <et>veatu</et>."
+msgstr "Родительный от <et>viga</et> — <et>vea</et>, отсюда <et>veatu</et>."
+
+msgid "The local shop is closed."
+msgstr "Местный магазин закрыт."
+
+msgid "The nearest neighbour lives a kilometre away"
+msgstr "Ближайший сосед живёт в километре"
+
+msgid "The new neighbour is very friendly."
+msgstr "Новый сосед очень дружелюбный."
+
+msgid "The new word"
+msgstr "Новое слово"
+
+msgid "The new words are ordinary adjectives and nouns, so they agree as lesson {adjectives} showed: <0>kodutu kass</0>, <1>kodutu kassi</1>, <2>kodutud kassid</2>. Write each sentence in Estonian."
+msgstr "Это обычные существительные и прилагательные. Они согласуются, как в уроке {adjectives}: <0>kodutu kass</0>, <1>kodutu kassi</1>, <2>kodutud kassid</2>. Напиши каждое предложение по-эстонски."
+
+msgid "The new words change like any adjective or noun: <0>sõbraliku naisega, kodutud koerad</0>."
+msgstr "Новые слова склоняются, как обычные прилагательные и существительные: <0>sõbraliku naisega, kodutud koerad</0>."
+
+msgid "The noun"
+msgstr "Существительное"
+
+msgid "The owners of the animals"
+msgstr "Хозяева животных"
+
+msgid "The partitive of <0>majake</0> is <1>majakest</1>."
+msgstr "Партитив от <0>majake</0> — <1>majakest</1>."
+
+msgid "The partitive of <et>majake</et> is <et>majakest</et>."
+msgstr "Партитив от <et>majake</et> — <et>majakest</et>."
+
+msgid "The police"
+msgstr "Полиция"
+
+msgid "The road is dangerous in winter."
+msgstr "Зимой дорога опасна."
+
+msgid "The sea is only two hundred metres away and cats can’t swim"
+msgstr "До моря всего двести метров, а кошки не умеют плавать"
+
+msgid "The shelter is open every day."
+msgstr "Приют открыт каждый день."
+
+msgid "The soup had no taste."
+msgstr "Суп был совсем без вкуса."
+
+msgid "There are more homeless animals in summer."
+msgstr "Летом бездомных животных больше."
+
+msgid "There’s no shop nearby"
+msgstr "Поблизости нет магазина"
+
+msgid "There’s no television"
+msgstr "Нет телевизора"
+
+msgid "This soup is tasteless."
+msgstr "Этот суп совсем без вкуса."
+
+msgid "Three endings"
+msgstr "Три окончания"
+
+msgid "Type the new word"
+msgstr "Напиши новое слово"
+
+msgid "unemployed"
+msgstr "безработный"
+
+msgid "Use one word with -lik, -tu or -ke."
+msgstr "Используй одно слово на -lik, -tu или -ke."
+
+msgid "Walking the dogs"
+msgstr "Выгуливать собак"
+
+msgid "We found a homeless cat."
+msgstr "Мы нашли бездомного кота."
+
+msgid "We live in a small town."
+msgstr "Мы живём в небольшом городе."
+
+msgid "What does it mean?"
+msgstr "Что это значит?"
+
+msgid "What does the advert say about a week?"
+msgstr "Что в объявлении сказано об аренде на неделю?"
+
+msgid "What does the ending add?"
+msgstr "Какой смысл добавляет суффикс?"
+
+msgid "What else local does the shop sell besides bread? Write it as the advert does."
+msgstr "Что ещё местного продаётся в магазине, кроме хлеба? Напиши, как в объявлении."
+
+msgid "What is the most important job for volunteers?"
+msgstr "Что важнее всего в работе волонтёров?"
+
+msgid "What the ending adds"
+msgstr "Что добавляет окончание"
+
+msgid "Where were the five kittens found? Write it as Kati says it."
+msgstr "Где нашли пятерых котят? Напиши словами Кати."
+
+msgid "Who says it?"
+msgstr "Кто это говорит?"
+
+msgid "Who usually calls the shelter?"
+msgstr "Кто обычно звонит в приют?"
+
+msgid "Why is it quiet there?"
+msgstr "Почему там тихо?"
+
+msgid "Why is the garden dangerous for cats?"
+msgstr "Чем сад опасен для кошек?"
+
+msgid "without it"
+msgstr "без чего-то"
+
+msgid "Without it"
+msgstr "Без чего-то"
+
+msgid "Without taste is <0>-tu</0>: <1>maitsetu</1>."
+msgstr "«Без вкуса» образуем с <0>-tu</0>: <1>maitsetu</1>."
+
+msgid "Word"
+msgstr "Слово"
+
+msgid "work"
+msgstr "работа"
+
+msgid "work, job"
+msgstr "работа"
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"
+
+msgid "Write to the owner"
+msgstr "Напиши хозяину"
+
+msgid "You can take an animal home on your first visit."
+msgstr "Животное можно забрать домой в первый же визит."
+
+msgid "You want to rent the cottage for a week in July. Ask if it’s free and ask two more questions."
+msgstr "Ты хочешь снять домик на неделю в июле. Спроси, свободен ли он, и задай ещё два вопроса."

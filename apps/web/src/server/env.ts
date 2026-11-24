@@ -73,6 +73,7 @@ export interface Bindings extends Omit<
   APP_PREVIEW_KEY?: string;
   /** The token OpenAI's plugin submission portal issues for domain verification. */
   OPENAI_APPS_CHALLENGE?: string;
+  GOOGLE_CONNECTED_APPS_TOKENS?: string;
   /** The phone app's Team ID and bundle, `TEAMID.app.lymi`; universal links are off without it. */
   APPLE_APP_ID?: string;
   /** Comma-separated SHA-256 fingerprints of the Android app's signing certificates; app links are off without them. */

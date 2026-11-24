@@ -29137,6 +29137,315 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "uudised/ajalehe-lugemine-vo3tab-aega": {
+    "text": "Ajalehe lugemine võtab aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/c-raadio": {
+    "text": "Tere õhtust, kallid kuulajad! Kell on kuus ja algavad kohalikud uudised. Täna räägime Tartu sügispäevast, mis toimub juba sel laupäeval. Stuudios on külas ürituse korraldaja Liisa Tamm. Tere tulemast, Liisa! Tere õhtust ja aitäh kutse eest! Paljud elanikud küsivad, mis kell sügispäev algab ja kus kõik toimub. Me alustame hommikul kell kümme raekoja platsil ja üritus kestab kella kuueni õhtul. Kõik töötoad ja kontserdid on külastajatele tasuta, nii et kohale võib tulla kogu perega. Kesklinnas on laupäeval ka mõned liiklusmuudatused. Kas inimesed peaksid auto koju jätma? Jah, seda me kindlasti soovitame. Ülikooli tänav on hommikul kella kaheksast õhtul kella kaheksani autodele suletud, sest sinna pannakse püsti turulauad ja lava. Linnabussid sõidavad aga tavapäraselt ja kesklinna liinidel liiguvad bussid laupäeval tihedamini. Mida külastajad platsil teha ja vaadata saavad? Päeva jooksul on avatud kohalike tegijate laat, kus müüakse värsket leiba, mett ja käsitööd. Lastele korraldatakse pargis joonistamise töötuba ja kell kaksteist algab väike teatrietendus. Lõuna ajal räägib linna aednik, kuidas sügisel viljapuid hoida ja vanu lehti kasutada. Ilmateade lubas nädala alguses laupäevaks vihma ja tugevat tuult. Mis siis saab, kui hakkab sadama? Õnneks lubab uus prognoos kuiva ja jahedat ilma, umbes üheksa kraadi sooja. Aga kui peaks siiski vihma sadama, ei jää üritus ära. Meil on platsi servas kaks suurt telki, kuhu mahuvad nii esinejad kui ka kuulajad. Soovitame siiski sooja jope selga panna, sest jõe ääres võib tuul olla jahe. Kas te otsite veel vabatahtlikke, kes aitaksid päeva läbi viia? Meil on juba üle kolmekümne abilise, kes aitavad laudu üles panna ja külalistele teed juhatada. Kuid kui keegi tahab veel liituda, saab ta meie kodulehel registreeruda kuni reede lõunani. Iga abiline saab sooja lõunasöögi ja festivali särgi. Eelmisel aastal käis sügispäeval ligi kolm tuhat inimest. Kas te ootate sel aastal veel rohkem külastajaid? Loodame küll, sest tänavu tulevad kohale ka külalised Viljandist ja Pärnust. Õhtul kell viis astub lavale kohalik koor, kelle kontsert lõpetab päeva. Aitäh stuudiosse tulemast, Liisa, ja ilusat sügispäeva! Nüüd aga lühike ülevaade homsest ilmast. Homme hommikul on taevas pilves, kuid pärastlõunal läheb selgemaks ja õhtul paistab päike. Pühapäeval püsib kuiv ilm ning sooja on kuni üksteist kraadi. Aitäh ja kohtumiseni laupäeval!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere õhtust, kallid kuulajad!",
+          "Kell on kuus ja algavad kohalikud uudised.",
+          "Täna räägime Tartu sügispäevast, mis toimub juba sel laupäeval.",
+          "Stuudios on külas ürituse korraldaja Liisa Tamm.",
+          "Tere tulemast, Liisa!"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere õhtust ja aitäh kutse eest!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Paljud elanikud küsivad, mis kell sügispäev algab ja kus kõik toimub."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Me alustame hommikul kell kümme raekoja platsil ja üritus kestab kella kuueni õhtul.",
+          "Kõik töötoad ja kontserdid on külastajatele tasuta, nii et kohale võib tulla kogu perega."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kesklinnas on laupäeval ka mõned liiklusmuudatused.",
+          "Kas inimesed peaksid auto koju jätma?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, seda me kindlasti soovitame.",
+          "Ülikooli tänav on hommikul kella kaheksast õhtul kella kaheksani autodele suletud, sest sinna pannakse püsti turulauad ja lava.",
+          "Linnabussid sõidavad aga tavapäraselt ja kesklinna liinidel liiguvad bussid laupäeval tihedamini."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mida külastajad platsil teha ja vaadata saavad?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Päeva jooksul on avatud kohalike tegijate laat, kus müüakse värsket leiba, mett ja käsitööd.",
+          "Lastele korraldatakse pargis joonistamise töötuba ja kell kaksteist algab väike teatrietendus.",
+          "Lõuna ajal räägib linna aednik, kuidas sügisel viljapuid hoida ja vanu lehti kasutada."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ilmateade lubas nädala alguses laupäevaks vihma ja tugevat tuult.",
+          "Mis siis saab, kui hakkab sadama?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Õnneks lubab uus prognoos kuiva ja jahedat ilma, umbes üheksa kraadi sooja.",
+          "Aga kui peaks siiski vihma sadama, ei jää üritus ära.",
+          "Meil on platsi servas kaks suurt telki, kuhu mahuvad nii esinejad kui ka kuulajad.",
+          "Soovitame siiski sooja jope selga panna, sest jõe ääres võib tuul olla jahe."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas te otsite veel vabatahtlikke, kes aitaksid päeva läbi viia?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Meil on juba üle kolmekümne abilise, kes aitavad laudu üles panna ja külalistele teed juhatada.",
+          "Kuid kui keegi tahab veel liituda, saab ta meie kodulehel registreeruda kuni reede lõunani.",
+          "Iga abiline saab sooja lõunasöögi ja festivali särgi."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Eelmisel aastal käis sügispäeval ligi kolm tuhat inimest.",
+          "Kas te ootate sel aastal veel rohkem külastajaid?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Loodame küll, sest tänavu tulevad kohale ka külalised Viljandist ja Pärnust.",
+          "Õhtul kell viis astub lavale kohalik koor, kelle kontsert lõpetab päeva."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Aitäh stuudiosse tulemast, Liisa, ja ilusat sügispäeva!",
+          "Nüüd aga lühike ülevaade homsest ilmast.",
+          "Homme hommikul on taevas pilves, kuid pärastlõunal läheb selgemaks ja õhtul paistab päike.",
+          "Pühapäeval püsib kuiv ilm ning sooja on kuni üksteist kraadi."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Aitäh ja kohtumiseni laupäeval!"
+        ],
+        "say": "[warm] Aitäh ja kohtumiseni laupäeval!"
+      }
+    ]
+  },
+  "uudised/eile-na2idati-avatud-na2itust": {
+    "text": "Eile näidati avatud näitust.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/elanik": {
+    "text": "elanik",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/elanikud-ootavad-tulevat-na2dalat": {
+    "text": "Elanikud ootavad tulevat nädalat.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/hinnad-on-sel-aastal-to3usnud": {
+    "text": "Hinnad on sel aastal tõusnud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/iga-so3itja-ostab-pileti": {
+    "text": "Iga sõitja ostab pileti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/ilmateade": {
+    "text": "ilmateade",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/ilmateade-lubab-na2dalavahetusel-vihma": {
+    "text": "Ilmateade lubab nädalavahetusel vihma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/ja2a2b-a2ra": {
+    "text": "jääb ära",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/jalaka2ijad": {
+    "text": "jalakäijad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/jalgrattatee": {
+    "text": "jalgrattatee",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/kohalikud-elanikud-ootavad-uut-bussi": {
+    "text": "Kohalikud elanikud ootavad uut bussi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/korraldaja": {
+    "text": "korraldaja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/lapsed-la2ksid-parki-la2bi-metsa": {
+    "text": "Lapsed läksid parki läbi metsa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/lapsed-pa2a2sevad-muuseumi-maksmata-sisse": {
+    "text": "Lapsed pääsevad muuseumi maksmata sisse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/linnapea": {
+    "text": "linnapea",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/linnavalitsus": {
+    "text": "linnavalitsus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/ma-kuulen-jooksvat-vett": {
+    "text": "Ma kuulen jooksvat vett.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/ma-kuulsin-et-u2ritus-ja2a2b-a2ra": {
+    "text": "Ma kuulsin, et üritus jääb ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/ma-loen-uudiseid-kohvi-juues": {
+    "text": "Ma loen uudiseid kohvi juues.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/me-ei-la2inud-peole-sest-sadas": {
+    "text": "Me ei läinud peole, sest sadas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/me-ja2ime-koju-sest-sadas": {
+    "text": "Me jäime koju, sest sadas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/p-ilmateade": {
+    "text": "Homme hommikul liigub vihmapilv läbi Lääne-Eesti ida poole. Pärastlõunal läheb ilm selgemaks, nii et õhtul paistab jälle päike. Õues on jahe, sest merelt puhub külm tuul. Kesklinnas on üks tänav suletud, kuna seal parandatakse torusid. Buss number neli sõidab mööda teist tänavat. Autojuhtidel palutakse tööle sõites rohkem aega varuda. Üritus jääb ära ainult tugeva tormi korral. Õhtul avatakse tänav jälle liiklusele.",
+    "model": "eleven_v4",
+    "voice": "0cuaFlR2we1Gl3woPjeJ"
+  },
+  "uudised/pargis-jalutades-na2eb-uut-silda": {
+    "text": "Pargis jalutades näeb uut silda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/remondi-to3ttu": {
+    "text": "remondi tõttu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/rongi-oodates-loevad-inimesed-uudiseid": {
+    "text": "Rongi oodates loevad inimesed uudiseid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/sadas-nii-et-u2ritus-ja2i-a2ra": {
+    "text": "Sadas, nii et üritus jäi ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/ta2nav-on-suletud-reedeni": {
+    "text": "Tänav on suletud reedeni.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/tee-la2heb-la2bi-pargi": {
+    "text": "Tee läheb läbi pargi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/tee-on-remondi-to3ttu-suletud": {
+    "text": "Tee on remondi tõttu suletud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/to2o2tajad-viisid-a2ra-kukkunud-puu": {
+    "text": "Töötajad viisid ära kukkunud puu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/u2ritus": {
+    "text": "üritus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/u2ritus-ja2a2b-tugeva-tuule-to3ttu-a2ra": {
+    "text": "Üritus jääb tugeva tuule tõttu ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/uudised": {
+    "text": "uudised",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/uus-park-on-so3bralik-koht": {
+    "text": "Uus park on sõbralik koht.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/uus-raamatukogu-avatakse-reedel": {
+    "text": "Uus raamatukogu avatakse reedel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "uudised/varjualune": {
+    "text": "varjualune",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "verbi-pohivormid/armastada": {
     "text": "armastada",
     "model": "eleven_v4",

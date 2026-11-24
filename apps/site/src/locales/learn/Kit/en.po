@@ -728,6 +728,9 @@ msgstr "Estonian -ma, -mas and -mast: going, being and coming back"
 msgid "Estonian adjectives: agreeing with the noun"
 msgstr "Estonian adjectives: agreeing with the noun"
 
+msgid "Estonian B1 practice: reading and listening to the news"
+msgstr "Estonian B1 practice: reading and listening to the news"
+
 msgid "Estonian comparatives and superlatives"
 msgstr "Estonian comparatives and superlatives"
 
@@ -902,6 +905,9 @@ msgstr "Found, nearly fixed"
 
 msgid "Found, not fixed"
 msgstr "Found, not fixed"
+
+msgid "Free Estonian B1 practice with news: read a local news story, tell stage 6 forms apart, fill a weather and traffic report, write and fix news sentences, follow a radio interview heard twice and write a short letter to the editor. Every sentence is read aloud."
+msgstr "Free Estonian B1 practice with news: read a local news story, tell stage 6 forms apart, fill a weather and traffic report, write and fix news sentences, follow a radio interview heard twice and write a short letter to the editor. Every sentence is read aloud."
 
 msgid "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions, ask your own and write a short message. Every conversation and passage is read aloud."
 msgstr "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions, ask your own and write a short message. Every conversation and passage is read aloud."

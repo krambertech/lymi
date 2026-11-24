@@ -229,7 +229,12 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
             <span
               lang="et"
               aria-hidden={!detail.form}
-              className="grid h-16 min-w-16 shrink-0 place-items-center rounded-tile bg-plate px-3 pb-1 text-3xl font-semibold whitespace-nowrap max-sm:text-2xl"
+              className={clsx(
+                "grid min-h-16 min-w-16 place-items-center rounded-tile bg-plate px-3 pb-1 font-semibold",
+                detail.form && /\s/.test(formText(detail.form))
+                  ? "max-w-full py-2 text-start text-xl max-sm:text-lg"
+                  : "h-16 shrink-0 text-3xl whitespace-nowrap max-sm:text-2xl",
+              )}
             >
               {detail.form ? (
                 <span>
@@ -273,6 +278,7 @@ function FormKey(props: {
 }) {
   const { cell, where, column, tinted, pressed, onPress } = props;
   const playing = usePlaying(cell.src);
+  const sentence = /\s/.test(formText(cell.form));
   return (
     <button
       type="button"
@@ -294,7 +300,10 @@ function FormKey(props: {
       )}
       <b
         lang="et"
-        className="max-w-full truncate text-xl font-semibold tracking-tight max-sm:text-lg"
+        className={clsx(
+          "max-w-full text-xl font-semibold tracking-tight max-sm:text-lg",
+          sentence ? "wrap-break-word" : "truncate",
+        )}
         title={formText(cell.form)}
       >
         <Lit form={cell.form} />

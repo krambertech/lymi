@@ -28367,5 +28367,625 @@
     "text": "Ta on kolmkümmend, aga väga lapselik.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/lugeda": {
+    "text": "lugeda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ta-joob-kohvi-ajalehte-lugedes": {
+    "text": "Ta joob kohvi ajalehte lugedes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/o3ppida": {
+    "text": "õppida",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ma-kuulan-muusikat-o3ppides": {
+    "text": "Ma kuulan muusikat õppides.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ra2a2kida": {
+    "text": "rääkida",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/me-jalutasime-ra2a2kides": {
+    "text": "Me jalutasime rääkides.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/oodata": {
+    "text": "oodata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ma-loen-raamatut-bussi-oodates": {
+    "text": "Ma loen raamatut bussi oodates.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/so3ita": {
+    "text": "sõita",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/a2ra-kasuta-telefoni-so3ites": {
+    "text": "Ära kasuta telefoni sõites.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/kuulata": {
+    "text": "kuulata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ma-kirjutan-ko3ik-u2les-o3petajat-kuulates": {
+    "text": "Ma kirjutan kõik üles õpetajat kuulates.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/su2u2a": {
+    "text": "süüa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/a2ra-ra2a2gi-su2u2es": {
+    "text": "Ära räägi süües.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/juua": {
+    "text": "juua",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ta-vaatas-filmi-teed-juues": {
+    "text": "Ta vaatas filmi teed juues.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/teha": {
+    "text": "teha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ta-laulab-su2u2a-tehes": {
+    "text": "Ta laulab süüa tehes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/minna": {
+    "text": "minna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/tulla": {
+    "text": "tulla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ma-kuulan-raadiot-to2o2le-tulles": {
+    "text": "Ma kuulan raadiot tööle tulles.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/olla": {
+    "text": "olla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ma-o3pin-eesti-keelt-kodus-olles": {
+    "text": "Ma õpin eesti keelt kodus olles.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/lugema": {
+    "text": "lugema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ta-kirjutas-lepingule-alla-seda-lugemata": {
+    "text": "Ta kirjutas lepingule alla seda lugemata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/u2tlema": {
+    "text": "ütlema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ta-lahkus-midagi-u2tlemata": {
+    "text": "Ta lahkus midagi ütlemata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ku2sima": {
+    "text": "küsima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ta-vo3ttis-mu-raamatu-ku2simata": {
+    "text": "Ta võttis mu raamatu küsimata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/helistama": {
+    "text": "helistama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/a2ra-tule-ku2lla-helistamata": {
+    "text": "Ära tule külla helistamata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/maksma": {
+    "text": "maksma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ta-lahkus-kohvikust-maksmata": {
+    "text": "Ta lahkus kohvikust maksmata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/so2o2ma": {
+    "text": "sööma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ma-la2ksin-to2o2le-hommikuso2o2ki-so2o2mata": {
+    "text": "Ma läksin tööle hommikusööki söömata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/jooma": {
+    "text": "jooma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ma-la2ksin-to2o2le-kohvi-joomata": {
+    "text": "Ma läksin tööle kohvi joomata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/minema": {
+    "text": "minema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ta-ja2i-koosolekule-minemata": {
+    "text": "Ta jäi koosolekule minemata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/tulema": {
+    "text": "tulema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ta-ja2i-eile-tulemata": {
+    "text": "Ta jäi eile tulemata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/magama": {
+    "text": "magama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ma-olin-terve-o2o2-magamata": {
+    "text": "Ma olin terve öö magamata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/lugedes": {
+    "text": "lugedes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/o3ppides": {
+    "text": "õppides",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ra2a2kides": {
+    "text": "rääkides",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/oodates": {
+    "text": "oodates",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/so3ites": {
+    "text": "sõites",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/kuulates": {
+    "text": "kuulates",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/su2u2es": {
+    "text": "süües",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/juues": {
+    "text": "juues",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/tehes": {
+    "text": "tehes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/minnes": {
+    "text": "minnes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/tulles": {
+    "text": "tulles",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/olles": {
+    "text": "olles",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/lugemata": {
+    "text": "lugemata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/u2tlemata": {
+    "text": "ütlemata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ku2simata": {
+    "text": "küsimata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/helistamata": {
+    "text": "helistamata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/maksmata": {
+    "text": "maksmata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/so2o2mata": {
+    "text": "söömata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/joomata": {
+    "text": "joomata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/minemata": {
+    "text": "minemata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/tulemata": {
+    "text": "tulemata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/magamata": {
+    "text": "magamata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/koputades": {
+    "text": "koputades",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/koputamata": {
+    "text": "koputamata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ta-tuli-sisse-koputades": {
+    "text": "Ta tuli sisse koputades.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ta-tuli-sisse-koputamata": {
+    "text": "Ta tuli sisse koputamata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ta-lahkus-naeratades": {
+    "text": "Ta lahkus naeratades.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ta-lahkus-naeratamata": {
+    "text": "Ta lahkus naeratamata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ta-lahkus-hu2vasti-ja2ttes": {
+    "text": "Ta lahkus hüvasti jättes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ta-lahkus-hu2vasti-ja2tmata": {
+    "text": "Ta lahkus hüvasti jätmata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ma-so3in-hommikuso2o2ki-ajalehte-lugedes": {
+    "text": "Ma sõin hommikusööki ajalehte lugedes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ma-teen-koduto2o2d-raadiot-kuulates": {
+    "text": "Ma teen kodutööd raadiot kuulates.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ta-lahkus-so3nagi-u2tlemata": {
+    "text": "Ta lahkus sõnagi ütlemata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ta-luges-kirja-su2u2es": {
+    "text": "Ta luges kirja süües.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/ma-ei-tule-kunagi-helistamata": {
+    "text": "Ma ei tule kunagi helistamata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "lugedes-lugemata/c-liisa": {
+    "text": "Tere, Liisa! Kuidas sul uues korteris läheb? Kas sa oled oma korterikaaslasega juba tuttavaks saanud? Tere, Kalev! Korter on väike, aga väga valge. Korterikaaslane on sõbralik, aga ta teeb mõnda asja hoopis teisiti kui mina. Näiteks mida? Näiteks hommikul. Ta joob kohvi telefoni vaadates ja ei vasta, kui ma midagi küsin. Mina teen hommikul sedasama. Ma loen uudiseid kohvi juues ja kellelgi ei ole selle vastu midagi. Hommikul ma ei pahanda. Aga eile tuli ta mu tuppa sisse koputamata, kui ma just õppisin. Siis võttis ta mu laadija küsimata ja läks midagi ütlemata minema. See ei ole kena. Kas sa rääkisid temaga? Rääkisin õhtul. Ütlesin, et ta võiks vähemalt koputada, enne kui sisse tuleb. Ta vabandas ja ütles, et ei teadnud, et see mind häirib. Noh, siis on juba parem. Kas ta teeb ka midagi head? Teeb küll. Õhtuti teeb ta süüa ja laulab seda tehes. Eile kutsus ta mind sööma ja see oli väga hea. Kas te koristate ka koos? Ei, igaüks omal päeval. Tema koristab pühapäeviti ja kuulab seda tehes valju muusikat. Mõnikord olen terve öö magamata, sest ta räägib kodus olles valjusti telefoniga. Oi, see ei ole hea. Mul oli kunagi korterikaaslane, kes jättis üüri iga kuu maksmata. Siis ma enam temaga hästi läbi ei saanud. Oi, see on palju hullem! Minu oma maksab vähemalt õigel ajal. Siis on sul vedanud. Kui ta hakkab veel koputama, pole sul millegi üle kurta. Ma loodan seda. Kas sa arvad, et ma peaksin talle veel kord ütlema? Ei, oota nädal. Vaatame, kas ta jätab veel koputamata. Hea mõte. Aga sinul, Kalev? Kuidas sul eile õhtul läks? Eile oli naljakas päev. Ma lugesin bussi oodates raamatut ja ei märganud, et buss tuli. Nii ma jäingi bussist maha. Oi! Mis sa siis tegid? Kõndisin koju ja helistasin vanaemale. Ta naeris minu üle, aga mitte kurjalt. Kas ta helistab sulle tihti? Iga pühapäev. Ta ei jäta kunagi helistamata, isegi siis, kui ma ei vasta. Siis ta hoolib sinust väga. Kuule, kas sa tuled laupäeval külla? Tulen küll. Ma ei tule kunagi helistamata, nii et helistan enne. Ja ma toon kaasa head kooki. Väga hea. Siis ma ootan sind laupäeval kell kuus ja teen midagi head. Ma ei tea veel, kas kalasuppi või köögiviljasuppi. Tee köögiviljasuppi. Ma ei söö kala, aga ma söön hea meelega kõike muud. Kokku lepitud. Meie maja on teisel pool parki, nii et jalutad mööda jõge otse meie maja juurde. Hästi, siis jalutan kohale muusikat kuulates. Nägemist, Liisa! Nägemist, Kalev! Kohtume laupäeval.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Liisa!",
+          "Kuidas sul uues korteris läheb?",
+          "Kas sa oled oma korterikaaslasega juba tuttavaks saanud?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Kalev!",
+          "Korter on väike, aga väga valge.",
+          "Korterikaaslane on sõbralik, aga ta teeb mõnda asja hoopis teisiti kui mina."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Näiteks mida?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Näiteks hommikul.",
+          "Ta joob kohvi telefoni vaadates ja ei vasta, kui ma midagi küsin."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mina teen hommikul sedasama.",
+          "Ma loen uudiseid kohvi juues ja kellelgi ei ole selle vastu midagi."
+        ],
+        "say": "[laughs] Mina teen hommikul sedasama. Ma loen uudiseid kohvi juues ja kellelgi ei ole selle vastu midagi."
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hommikul ma ei pahanda.",
+          "Aga eile tuli ta mu tuppa sisse koputamata, kui ma just õppisin.",
+          "Siis võttis ta mu laadija küsimata ja läks midagi ütlemata minema."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "See ei ole kena.",
+          "Kas sa rääkisid temaga?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Rääkisin õhtul.",
+          "Ütlesin, et ta võiks vähemalt koputada, enne kui sisse tuleb.",
+          "Ta vabandas ja ütles, et ei teadnud, et see mind häirib."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Noh, siis on juba parem.",
+          "Kas ta teeb ka midagi head?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Teeb küll.",
+          "Õhtuti teeb ta süüa ja laulab seda tehes.",
+          "Eile kutsus ta mind sööma ja see oli väga hea."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas te koristate ka koos?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, igaüks omal päeval.",
+          "Tema koristab pühapäeviti ja kuulab seda tehes valju muusikat.",
+          "Mõnikord olen terve öö magamata, sest ta räägib kodus olles valjusti telefoniga."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Oi, see ei ole hea.",
+          "Mul oli kunagi korterikaaslane, kes jättis üüri iga kuu maksmata.",
+          "Siis ma enam temaga hästi läbi ei saanud."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Oi, see on palju hullem!",
+          "Minu oma maksab vähemalt õigel ajal."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Siis on sul vedanud.",
+          "Kui ta hakkab veel koputama, pole sul millegi üle kurta."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ma loodan seda.",
+          "Kas sa arvad, et ma peaksin talle veel kord ütlema?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei, oota nädal.",
+          "Vaatame, kas ta jätab veel koputamata."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hea mõte.",
+          "Aga sinul, Kalev?",
+          "Kuidas sul eile õhtul läks?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Eile oli naljakas päev.",
+          "Ma lugesin bussi oodates raamatut ja ei märganud, et buss tuli.",
+          "Nii ma jäingi bussist maha."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Oi!",
+          "Mis sa siis tegid?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kõndisin koju ja helistasin vanaemale.",
+          "Ta naeris minu üle, aga mitte kurjalt."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas ta helistab sulle tihti?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Iga pühapäev.",
+          "Ta ei jäta kunagi helistamata, isegi siis, kui ma ei vasta."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Siis ta hoolib sinust väga.",
+          "Kuule, kas sa tuled laupäeval külla?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tulen küll.",
+          "Ma ei tule kunagi helistamata, nii et helistan enne.",
+          "Ja ma toon kaasa head kooki."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Väga hea.",
+          "Siis ma ootan sind laupäeval kell kuus ja teen midagi head.",
+          "Ma ei tea veel, kas kalasuppi või köögiviljasuppi."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tee köögiviljasuppi.",
+          "Ma ei söö kala, aga ma söön hea meelega kõike muud."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kokku lepitud.",
+          "Meie maja on teisel pool parki, nii et jalutad mööda jõge otse meie maja juurde."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hästi, siis jalutan kohale muusikat kuulates.",
+          "Nägemist, Liisa!"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Nägemist, Kalev!",
+          "Kohtume laupäeval."
+        ]
+      }
+    ]
+  },
+  "lugedes-lugemata/ma-ostan-leiba-koju-minnes": {
+    "text": "Ma ostan leiba koju minnes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

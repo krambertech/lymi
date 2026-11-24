@@ -1,0 +1,734 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-24 22:41+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "-des: while"
+msgstr "-des: во время"
+
+msgid "-mata: without"
+msgstr "-mata: без"
+
+msgid "<0>-des</0> can also mean when, on doing something, or by doing it: <1>Koju jõudes helistasin emale.</1> When I got home, I phoned my mother. <2>Ma õpin raamatuid lugedes.</2> I learn by reading books."
+msgstr "<0>-des</0> может значить и «когда», «как только», и «посредством действия»: <1>Koju jõudes helistasin emale.</1> «Придя домой, я позвонил маме.» <2>Ma õpin raamatuid lugedes.</2> «Я учусь, читая книги.»"
+
+msgid "<0>-des</0> goes on the <1>-da</1> form, which is <2>minna</2>, so <3>minnes</3>."
+msgstr "<0>-des</0> ставят на форму на <1>-da</1>, а у этого глагола она <2>minna</2>, поэтому получается <3>minnes</3>."
+
+msgid "<0>-des</0> usually means at the same time."
+msgstr "<0>-des</0> обычно значит «одновременно»."
+
+msgid "<0>-des</0> usually means at the same time. Change the last <1>-a</1> of the <2>-da</2> form to <3>-es</3>: <4>lugeda</4>, <5>lugedes</5>; <6>süüa</6>, <7>süües</7>."
+msgstr "<0>-des</0> обычно значит «одновременно». Последняя <1>-a</1> в форме на <2>-da</2> меняется на <3>-es</3>: <4>lugeda</4> — <5>lugedes</5>, <6>süüa</6> — <7>süües</7>."
+
+msgid "<0>-mata</0> goes on the <1>-ma</1> form, which is <2>minema</2>, so <3>minemata</3>."
+msgstr "<0>-mata</0> ставят на форму на <1>-ma</1>, а у этого глагола она <2>minema</2>, поэтому получается <3>minemata</3>."
+
+msgid "<0>-mata</0> means without doing it."
+msgstr "<0>-mata</0> значит «без этого действия»."
+
+msgid "<0>-mata</0> means without doing it. Change <1>-ma</1> to <2>-mata</2>: <3>lugema</3>, <4>lugemata</4>; <5>sööma</5>, <6>söömata</6>."
+msgstr "<0>-mata</0> значит «без этого действия». Вместо <1>-ma</1> ставим <2>-mata</2>: <3>lugema</3> — <4>lugemata</4>, <5>sööma</5> — <6>söömata</6>."
+
+#. placeholder {0}: each.said
+#. placeholder {1}: i18n._(HEARD_MEANS[each.id])
+msgid "<0>{0}</0> {1}"
+msgstr "<0>{0}</0> — {1}"
+
+msgid "<0>Lugedes</0> is while reading and <1>lugemata</1> is without reading: two endings that look alike and usually mean opposite things."
+msgstr "<0>Lugedes</0> — «читая», а <1>lugemata</1> — «не читая». Окончания похожи, а значат обычно противоположное."
+
+msgid "<0>Minna</0> becomes <1>minnes</1>, with the double letter kept."
+msgstr "Из <0>minna</0> получается <1>minnes</1>: двойная буква остаётся."
+
+msgid "<0>Teha</0> becomes <1>tehes</1>."
+msgstr "Из <0>teha</0> получается <1>tehes</1>."
+
+msgid "<et>-des</et> goes on the <et>-da</et> form, which is <et>minna</et>, so <et>minnes</et>."
+msgstr "<et>-des</et> ставят на форму на <et>-da</et>, а у этого глагола она <et>minna</et>, поэтому получается <et>minnes</et>."
+
+msgid "<et>-des</et> usually means at the same time, and <et>-mata</et> means without doing it."
+msgstr "<et>-des</et> обычно значит «одновременно», а <et>-mata</et> — «без этого действия»."
+
+msgid "<et>-des</et> usually means at the same time. Change the last <et>-a</et> of the <et>-da</et> form to <et>-es</et>."
+msgstr "<et>-des</et> обычно значит «одновременно». Последняя <et>-a</et> в форме на <et>-da</et> меняется на <et>-es</et>."
+
+msgid "<et>-mata</et> means without doing it. Change <et>-ma</et> to <et>-mata</et> on the <et>-ma</et> form."
+msgstr "<et>-mata</et> значит «без этого действия». В форме на <et>-ma</et> вместо <et>-ma</et> ставим <et>-mata</et>."
+
+msgid "24 minutes"
+msgstr "24 минуты"
+
+msgid "8 exercises"
+msgstr "8 упражнений"
+
+msgid "A phrase with <0>-des</0> or <1>-mata</1> usually goes with the thing it describes and often comes last: <2>Ära kasuta telefoni sõites.</2>"
+msgstr "Оборот с <0>-des</0> или <1>-mata</1> обычно стоит рядом со словом, к которому относится, и нередко завершает предложение: <2>Ära kasuta telefoni sõites.</2>"
+
+msgid "A short <0>-da</0> form works the same way: <1>süüa</1>, <2>süües</2>."
+msgstr "Короткая форма на <0>-da</0> работает так же: <1>süüa</1> — <2>süües</2>."
+
+msgid "A weekend at grandmother’s"
+msgstr "Выходные у бабушки"
+
+msgid "After <0>-mata</0>, the object usually takes the partitive, as after <1>ei</1> in lesson {object}: <2>seda lugemata</2>, <3>midagi ütlemata</3>. It can also describe what isn’t done yet: <4>Raamat on lugemata.</4> The book is unread."
+msgstr "После <0>-mata</0> дополнение обычно стоит в партитиве, как и после <1>ei</1> в уроке {object}: <2>seda lugemata</2>, <3>midagi ütlemata</3>. Эта форма может описывать и то, что ещё не сделано: <4>Raamat on lugemata.</4> «Книга не прочитана.»"
+
+msgid "After <0>-mata</0>, the object usually takes the partitive, as after <1>ei</1>: <2>seda lugemata</2>."
+msgstr "После <0>-mata</0> дополнение обычно стоит в партитиве, как и после <1>ei</1>: <2>seda lugemata</2>."
+
+msgid "After <0>-mata</0>, the object usually takes the partitive: <1>seda</1>."
+msgstr "После <0>-mata</0> дополнение обычно стоит в партитиве: <1>seda</1>."
+
+msgid "All eight forms right."
+msgstr "Все восемь форм правильные."
+
+msgid "All eight, with the ending heard each time."
+msgstr "Все восемь: окончание услышано каждый раз."
+
+msgid "All seven, each with the right ending."
+msgstr "Все семь, и каждый раз с правильным окончанием."
+
+msgid "All six built."
+msgstr "Все шесть собраны."
+
+msgid "All six found and fixed."
+msgstr "Все шесть найдены и исправлены."
+
+msgid "Ära räägi süües."
+msgstr "Ära räägi süües."
+
+msgid "Ära tule külla helistamata."
+msgstr "Ära tule külla helistamata."
+
+msgid "at the same time"
+msgstr "одновременно"
+
+msgid "At the same time as eating is <0>süües</0>. <1>Söömata</1> is without eating."
+msgstr "«Одновременно с едой» — это <0>süües</0>. <1>Söömata</1> — «не поев»."
+
+msgid "At the same time as eating is <et>süües</et>. <et>Söömata</et> is without eating."
+msgstr "«Одновременно с едой» — это <et>süües</et>. <et>Söömata</et> — «не поев»."
+
+msgid "Build each sentence from what it means."
+msgstr "Собери предложение по переводу."
+
+msgid "Build the sentence"
+msgstr "Собери предложение"
+
+#. placeholder {0}: each.inf
+#. placeholder {1}: each.form
+msgid "Change <0>-ma</0> of <1>{0}</1> to <2>-mata</2>: <3>{1}</3>."
+msgstr "У <1>{0}</1> меняем <0>-ma</0> на <2>-mata</2>: <3>{1}</3>."
+
+#. placeholder {0}: each.inf
+#. placeholder {1}: each.form
+msgid "Change the last <0>-a</0> of <1>{0}</1> to <2>-es</2>: <3>{1}</3>."
+msgstr "У <1>{0}</1> последняя <0>-a</0> меняется на <2>-es</2>: <3>{1}</3>."
+
+msgid "Check which form the ending goes on: <0>-des</0> on the <1>-da</1> form, <2>-mata</2> on the <3>-ma</3> form. The verb <4>minema</4> gives <5>minnes</5> and <6>minemata</6>."
+msgstr "Смотри, к какой форме добавляется окончание: <0>-des</0> — к форме на <1>-da</1>, <2>-mata</2> — к форме на <3>-ma</3>. Глагол <4>minema</4> даёт <5>minnes</5> и <6>minemata</6>."
+
+msgid "Clean the kitchen"
+msgstr "Убирать кухню"
+
+msgid "Cook dinner for him"
+msgstr "Готовить для него ужин"
+
+msgid "Cooks breakfast and sings."
+msgstr "Готовит завтрак и поёт."
+
+msgid "Don’t come to visit without calling."
+msgstr "Не приходи в гости, не позвонив."
+
+msgid "Don’t come to visit without calling. (use -des or -mata)"
+msgstr "Не приходи в гости, не позвонив. (используй -des или -mata)"
+
+msgid "Don’t talk while eating. (use -des or -mata)"
+msgstr "Не разговаривай за едой. (используй -des или -mata)"
+
+msgid "Don’t use the phone while driving."
+msgstr "Не пользуйся телефоном за рулём."
+
+msgid "Don’t use the phone while driving. (use -des or -mata)"
+msgstr "Не пользуйся телефоном за рулём. (используй -des или -mata)"
+
+msgid "Each sentence has a moment of two things at once or of something left out. Choose <0>-des</0> or <1>-mata</1>, then write the whole sentence."
+msgstr "В каждом предложении либо два действия происходят одновременно, либо одно пропущено. Выбери <0>-des</0> или <1>-mata</1> и напиши всё предложение."
+
+msgid "Each sentence has one wrong word: the wrong ending, a form that doesn’t exist, or the wrong case. Tap it, then type it right."
+msgstr "В каждом предложении одно слово неправильное: не то окончание, несуществующая форма или не тот падеж. Нажми на него и напиши правильно."
+
+msgid "Fish soup"
+msgstr "Рыбный суп"
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
+
+msgid "Go through the table once more, then try again."
+msgstr "Просмотри таблицу ещё раз и повтори упражнение."
+
+msgid "He came in knocking."
+msgstr "Он вошёл, постучав."
+
+msgid "He came in without knocking."
+msgstr "Он вошёл, не постучав."
+
+msgid "He didn’t come yesterday. (use -des or -mata)"
+msgstr "Вчера он не пришёл. (используй -des или -mata)"
+
+msgid "He didn’t go to the meeting."
+msgstr "Он не пошёл на собрание."
+
+msgid "He felt ill at work."
+msgstr "Ему стало плохо на работе."
+
+msgid "He left saying goodbye."
+msgstr "Он ушёл, попрощавшись."
+
+msgid "He left smiling."
+msgstr "Он ушёл, улыбаясь."
+
+msgid "He left without saying anything."
+msgstr "Он ушёл, ничего не сказав."
+
+msgid "He left without saying goodbye."
+msgstr "Он ушёл, не попрощавшись."
+
+msgid "He left without smiling."
+msgstr "Он ушёл, не улыбнувшись."
+
+msgid "He lost his phone at work."
+msgstr "Он потерял телефон на работе."
+
+msgid "He missed a bus."
+msgstr "Он опоздал на автобус."
+
+msgid "He sang loudly while driving."
+msgstr "Он громко пел за рулём."
+
+msgid "He stayed quiet the whole way."
+msgstr "Он молчал всю дорогу."
+
+msgid "He stopped at the café again."
+msgstr "Он снова остановился у кафе."
+
+msgid "He took my book without asking."
+msgstr "Он взял мою книгу, не спросив."
+
+msgid "He watched a film while drinking tea."
+msgstr "Он смотрел фильм и пил чай."
+
+msgid "He watched a film while drinking tea. (use -des or -mata)"
+msgstr "Он смотрел фильм и пил чай. (используй -des или -mata)"
+
+msgid "Her book"
+msgstr "Её книга"
+
+msgid "Her charger"
+msgstr "Её зарядка"
+
+msgid "Her coffee cup"
+msgstr "Её кофейная чашка"
+
+msgid "I ate breakfast while reading the paper."
+msgstr "Я завтракал и читал газету."
+
+msgid "I do my homework while listening to the radio."
+msgstr "Я делаю домашнее задание и слушаю радио."
+
+msgid "I listen to music while studying."
+msgstr "Я слушаю музыку, когда учусь."
+
+msgid "I listen to music while studying. (use -des or -mata)"
+msgstr "Я слушаю музыку, когда учусь. (используй -des или -mata)"
+
+msgid "I listen to the radio on my way to work. (use -des or -mata)"
+msgstr "Я слушаю радио по дороге на работу. (используй -des или -mata)"
+
+msgid "I never come without calling."
+msgstr "Я никогда не прихожу, не позвонив."
+
+msgid "I read a book while waiting for the bus. (use -des or -mata)"
+msgstr "Я читаю книгу, пока жду автобус. (используй -des или -mata)"
+
+msgid "I spent the whole night without sleep. (use -des or -mata)"
+msgstr "Я всю ночь не спал. (используй -des или -mata)"
+
+msgid "I went to work without drinking coffee. (use -des or -mata)"
+msgstr "Я пошёл на работу, не выпив кофе. (используй -des или -mata)"
+
+msgid "I went to work without eating breakfast."
+msgstr "Я пошёл на работу, не позавтракав."
+
+msgid "I’ll buy bread on my way home."
+msgstr "Куплю хлеб по дороге домой."
+
+msgid "In a sentence"
+msgstr "В предложении"
+
+msgid "Infinitive"
+msgstr "Инфинитив"
+
+msgid "It can also start the sentence. The verb then usually comes next, as it does after any first phrase: <0>Sõites ära kasuta telefoni.</0> The subject can also come before the verb: <1>Koju minnes ma ostan leiba.</1>"
+msgstr "Оборот может стоять и в начале предложения. Тогда обычно сразу за ним идёт глагол, как и после любого другого первого оборота: <0>Sõites ära kasuta telefoni.</0> Подлежащее тоже может стоять перед глаголом: <1>Koju minnes ma ostan leiba.</1>"
+
+msgid "Kalev"
+msgstr "Калев"
+
+msgid "Kalev phones Liisa, who has just moved into a new flat. Listen to them twice and answer the questions."
+msgstr "Калев звонит Лийсе, которая только что переехала в новую квартиру. Послушай разговор дважды и ответь на вопросы."
+
+msgid "Kalev tells Liisa to talk to the flatmate again at once."
+msgstr "Калев советует Лийсе немедленно ещё раз поговорить с соседкой по квартире."
+
+msgid "Keep the double letter: <0>minna</0>, <1>minnes</1>."
+msgstr "Двойная буква остаётся: <0>minna</0> — <1>minnes</1>."
+
+msgid "Liisa"
+msgstr "Лийса"
+
+msgid "Listen: Kalev and Liisa"
+msgstr "Послушай разговор Калева и Лийсы"
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Looks at the phone while drinking coffee."
+msgstr "Смотрит в телефон и пьёт кофе."
+
+msgid "Ma kuulan raadiot tööle tulles."
+msgstr "Ma kuulan raadiot tööle tulles."
+
+msgid "Ma lähen lugema."
+msgstr "Ma lähen lugema."
+
+msgid "Ma lähen sööma."
+msgstr "Ma lähen sööma."
+
+msgid "Ma läksin tööle hommikusööki söömata."
+msgstr "Ma läksin tööle hommikusööki söömata."
+
+msgid "Ma õpin eesti keelt kodus olles."
+msgstr "Ma õpin eesti keelt kodus olles."
+
+msgid "Ma ostan leiba koju minnes."
+msgstr "Ma ostan leiba koju minnes."
+
+msgid "Ma pean minema."
+msgstr "Ma pean minema."
+
+msgid "Ma tahan lugeda."
+msgstr "Ma tahan lugeda."
+
+msgid "Make the -des form"
+msgstr "Образуй форму на -des"
+
+msgid "Make the -mata form"
+msgstr "Образуй форму на -mata"
+
+msgid "Mari listened to her grandmother without hurrying."
+msgstr "Мари слушала бабушку, не торопясь."
+
+msgid "Mari writes"
+msgstr "Мари пишет"
+
+msgid "Mari writes about a weekend with friends in the countryside. Read her text and answer the questions, as in the reading part of the B1 exam."
+msgstr "Мари пишет о выходных с друзьями в деревне. Прочитай её текст и ответь на вопросы, как в части на чтение на экзамене B1."
+
+msgid "Meat soup"
+msgstr "Мясной суп"
+
+msgid "Most verbs"
+msgstr "Большинство глаголов"
+
+msgid "Nearly. Check the ending in the ones you missed."
+msgstr "Почти. Проверь окончание в тех предложениях, где ошибся."
+
+msgid "Nearly. Check the ones you missed against the table."
+msgstr "Почти. Сверь те, где ошибся, с таблицей."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Почти. Ещё раз прослушай те предложения, где ошибся."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Почти. Прочитай объяснение под каждым предложением, где ошибся."
+
+msgid "on the way"
+msgstr "по дороге"
+
+msgid "Pay the rent"
+msgstr "Платить за жильё"
+
+msgid "Peeter paid for his coffee at the café."
+msgstr "Пеэтер заплатил за кофе в кафе."
+
+msgid "Peeter usually talks a lot when he drives."
+msgstr "Пеэтер обычно много говорит за рулём."
+
+msgid "Read the note under each one you missed, then try again."
+msgstr "Прочитай примечание под каждым предложением, где ошибся, и попробуй ещё раз."
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай ниже «Что запомнить» и попробуй ещё раз."
+
+msgid "Reads the news over breakfast."
+msgstr "Читает новости за завтраком."
+
+msgid "She didn’t have a car."
+msgstr "У неё не было машины."
+
+msgid "She didn’t have a licence."
+msgstr "У неё не было прав."
+
+msgid "She hadn’t slept at all the night before."
+msgstr "Она совсем не спала прошлой ночью."
+
+msgid "She left the café without paying. (use -des or -mata)"
+msgstr "Она ушла из кафе, не заплатив. (используй -des или -mata)"
+
+msgid "She left without saying a word."
+msgstr "Она ушла, не сказав ни слова."
+
+msgid "She left without saying anything."
+msgstr "Она ушла, ничего не сказав."
+
+msgid "She read the letter while eating."
+msgstr "Она читала письмо, пока ела."
+
+msgid "She signed the contract without reading it."
+msgstr "Она подписала договор, не прочитав его."
+
+msgid "She sings while cooking."
+msgstr "Она поёт, пока готовит."
+
+msgid "She sings while cooking. (use -des or -mata)"
+msgstr "Она поёт, пока готовит. (используй -des или -mata)"
+
+msgid "Short and irregular verbs"
+msgstr "Короткие и неправильные глаголы"
+
+msgid "Short verbs"
+msgstr "Короткие глаголы"
+
+msgid "Start from the <0>-da</0> form, which lesson {infinitives} taught, and change its last <1>-a</1> to <2>-es</2>: <3/> becomes <4/>. Pick a group of verbs and tap the sentences."
+msgstr "Возьми форму на <0>-da</0>, о которой рассказывал урок {infinitives}, и замени её последнюю <1>-a</1> на <2>-es</2>: из <3/> получается <4/>. Выбери группу глаголов и нажимай на предложения."
+
+msgid "Start from the <0>-ma</0> form and change <1>-ma</1> to <2>-mata</2>: <3/> becomes <4/>. Every verb works this way, even <5/> and <6/>."
+msgstr "Возьми форму на <0>-ma</0> и замени <1>-ma</1> на <2>-mata</2>: из <3/> получается <4/>. Так работает каждый глагол, даже <5/> и <6/>."
+
+msgid "Ta jäi koosolekule minemata."
+msgstr "Ta jäi koosolekule minemata."
+
+msgid "Ta joob kohvi ajalehte lugedes."
+msgstr "Ta joob kohvi ajalehte lugedes."
+
+msgid "Ta kirjutas lepingule alla seda lugemata."
+msgstr "Ta kirjutas lepingule alla seda lugemata."
+
+msgid "Ta lahkus midagi ütlemata."
+msgstr "Ta lahkus midagi ütlemata."
+
+msgid "Ta laulab süüa tehes."
+msgstr "Ta laulab süüa tehes."
+
+msgid "Ta tuli sisse koputades."
+msgstr "Ta tuli sisse koputades."
+
+msgid "Ta tuli sisse koputamata."
+msgstr "Ta tuli sisse koputamata."
+
+msgid "Ta vaatas filmi teed juues."
+msgstr "Ta vaatas filmi teed juues."
+
+msgid "Ta võttis mu raamatu küsimata."
+msgstr "Ta võttis mu raamatu küsimata."
+
+msgid "Take the <0>-da</0> form and change the last <1>-a</1> to <2>-es</2>: <3>lugeda</3>, <4>lugedes</4>."
+msgstr "Возьми форму на <0>-da</0> и замени последнюю <1>-a</1> на <2>-es</2>: <3>lugeda</3> — <4>lugedes</4>."
+
+msgid "Take the <0>-ma</0> form and change <1>-ma</1> to <2>-mata</2>: <3>lugema</3>, <4>lugemata</4>."
+msgstr "Возьми форму на <0>-ma</0> и замени <1>-ma</1> на <2>-mata</2>: <3>lugema</3> — <4>lugemata</4>."
+
+msgid "Tap a pair of sentences. Then hear a sentence and pick what the ending says."
+msgstr "Нажми на пару предложений. Потом послушай предложение и выбери, что значит окончание."
+
+msgid "Tap a sentence"
+msgstr "Нажми на предложение"
+
+msgid "Tap the pairs above once more, then try again."
+msgstr "Ещё раз нажми на пары предложений выше и попробуй снова."
+
+msgid "Telephone calls sometimes keep Liisa awake at night."
+msgstr "Из-за телефонных разговоров Лийса иногда не спит ночью."
+
+msgid "the -des form"
+msgstr "форма на -des"
+
+msgid "the -mata form"
+msgstr "форма на -mata"
+
+msgid "the <0>-des</0> form"
+msgstr "форма на <0>-des</0>"
+
+msgid "the <0>-mata</0> form"
+msgstr "форма на <0>-mata</0>"
+
+msgid "The <et>-des</et> form"
+msgstr "Форма на <et>-des</et>"
+
+msgid "The <et>-mata</et> form"
+msgstr "Форма на <et>-mata</et>"
+
+msgid "The flatmate knocked before coming into Liisa’s room."
+msgstr "Соседка по квартире постучала, прежде чем войти в комнату Лийсы."
+
+msgid "The phrase usually goes with the thing it describes and often comes last. It can also start the sentence. The verb then usually comes next, but the subject can also come first: <0>Õppides kuulan ma muusikat</0> or <1>Õppides ma kuulan muusikat</1>."
+msgstr "Оборот обычно стоит рядом со словом, к которому относится, и нередко завершает предложение. Он может стоять и в начале: тогда глагол обычно идёт сразу за ним, но подлежащее может стоять и первым: <0>Õppides kuulan ma muusikat</0> или <1>Õppides ma kuulan muusikat</1>."
+
+msgid "The phrase with <0>-des</0> or <1>-mata</1> usually goes with the thing it describes and often comes last. It can also start the sentence. The verb then usually comes next, but the subject can also come first: <2>Koju minnes ostan ma leiba</2> or <3>Koju minnes ma ostan leiba</3>."
+msgstr "Оборот с <0>-des</0> или <1>-mata</1> обычно стоит рядом со словом, к которому относится, и нередко завершает предложение. Он может стоять и в начале: тогда глагол обычно идёт сразу за ним, но подлежащее может стоять и первым: <2>Koju minnes ostan ma leiba</2> или <3>Koju minnes ma ostan leiba</3>."
+
+msgid "The same rule works for every verb: <0>minema</0>, <1>minemata</1>."
+msgstr "То же правило работает для каждого глагола: <0>minema</0> — <1>minemata</1>."
+
+msgid "The same verb with -des and with -mata"
+msgstr "Один и тот же глагол с -des и с -mata"
+
+msgid "The sentences differ in one ending: <0>-des</0> usually means at the same time, <1>-mata</1> means without it."
+msgstr "Предложения различаются одним окончанием: <0>-des</0> обычно значит «одновременно», <1>-mata</1> — «без этого действия»."
+
+msgid "The two endings sit in the same place in a sentence and usually mean opposites: <0/> is while knocking and <1/> is without knocking. The last letters decide, so listen for them."
+msgstr "Оба окончания стоят на одном и том же месте и обычно значат противоположное: <0/> — «стуча», а <1/> — «не стуча». Всё решают последние буквы, поэтому слушай именно их."
+
+msgid "They were poisonous."
+msgstr "Они ядовитые."
+
+msgid "They were too old to cook."
+msgstr "Они были слишком старые, чтобы их готовить."
+
+msgid "They were very tasty and fresh."
+msgstr "Они были очень вкусные и свежие."
+
+msgid "to ask"
+msgstr "спрашивать"
+
+msgid "to be"
+msgstr "быть"
+
+msgid "to come"
+msgstr "приходить"
+
+msgid "to do, to make"
+msgstr "делать"
+
+msgid "to drink"
+msgstr "пить"
+
+msgid "to drive, to ride"
+msgstr "ехать"
+
+msgid "to eat"
+msgstr "есть"
+
+msgid "to go"
+msgstr "идти"
+
+msgid "to knock"
+msgstr "стучать"
+
+msgid "to listen to"
+msgstr "слушать"
+
+msgid "to pay"
+msgstr "платить"
+
+msgid "to phone"
+msgstr "звонить"
+
+msgid "to read"
+msgstr "читать"
+
+msgid "to say"
+msgstr "говорить, сказать"
+
+msgid "to say goodbye"
+msgstr "прощаться"
+
+msgid "To say someone does something without doing another thing, put <0>-mata</0> on the second one: <1>Ta lahkus midagi ütlemata.</1> She left without saying anything."
+msgstr "Чтобы сказать, что кто-то делает одно, не делая другого, добавь <0>-mata</0> ко второму глаголу: <1>Ta lahkus midagi ütlemata.</1> «Она ушла, ничего не сказав.»"
+
+msgid "To say someone does two things at once, put <0>-des</0> on the second one: <1>Ta joob kohvi ajalehte lugedes.</1> He drinks coffee while reading the paper. Usually the same person does both."
+msgstr "Чтобы сказать, что кто-то делает две вещи одновременно, добавь <0>-des</0> ко второму глаголу: <1>Ta joob kohvi ajalehte lugedes.</1> «Он пьёт кофе и читает газету.» Обычно оба действия выполняет один человек."
+
+msgid "to sleep"
+msgstr "спать"
+
+msgid "to smile"
+msgstr "улыбаться"
+
+msgid "to study"
+msgstr "учиться"
+
+msgid "to talk"
+msgstr "разговаривать"
+
+msgid "to wait for"
+msgstr "ждать"
+
+msgid "Two friends talk about flatmates"
+msgstr "Двое друзей говорят о соседях по квартире"
+
+msgid "Type the form for each verb."
+msgstr "Напиши форму для каждого глагола."
+
+msgid "Vegetable soup"
+msgstr "Овощной суп"
+
+msgid "Verbs"
+msgstr "Глаголы"
+
+msgid "Verbs and their -des forms"
+msgstr "Глаголы и их формы на -des"
+
+msgid "Verbs and their -mata forms"
+msgstr "Глаголы и их формы на -mata"
+
+msgid "Verbs ending in -nna, -lla"
+msgstr "Глаголы на -nna, -lla"
+
+msgid "What did Kalev’s old flatmate not do?"
+msgstr "Чего не делал прежний сосед Калева по квартире?"
+
+msgid "What did Peeter do on the way back?"
+msgstr "Что делал Пеэтер по дороге назад?"
+
+msgid "What did Peeter have for breakfast? Write it as Mari does."
+msgstr "Что Пеэтер выпил на завтрак? Напиши так, как у Мари."
+
+msgid "What did the flatmate take without asking?"
+msgstr "Что соседка взяла, не спросив?"
+
+msgid "What did the grandmother say about the mushrooms?"
+msgstr "Что бабушка сказала про грибы?"
+
+msgid "What does the flatmate do in the morning?"
+msgstr "Что делает соседка по утрам?"
+
+msgid "What happened at the weekend?"
+msgstr "Что случилось на выходных?"
+
+msgid "What happened to Kalev yesterday?"
+msgstr "Что случилось с Калевом вчера?"
+
+msgid "What will Kalev bring on Saturday? Write it as Kalev says it."
+msgstr "Что Калев принесёт в субботу? Напиши так, как говорит Калев."
+
+msgid "What will Liisa cook on Saturday?"
+msgstr "Что Лийса приготовит в субботу?"
+
+msgid "When does the flatmate clean? Write it as Liisa says it."
+msgstr "Когда соседка убирает? Напиши так, как говорит Лийса."
+
+msgid "Where the phrase goes"
+msgstr "Место оборота в предложении"
+
+msgid "while being, when you are"
+msgstr "находясь, когда ты где-то"
+
+msgid "while coming, on the way"
+msgstr "приходя, по дороге"
+
+msgid "while doing it"
+msgstr "во время этого действия"
+
+msgid "While doing it"
+msgstr "Во время действия"
+
+msgid "While doing something: -des"
+msgstr "Два действия одновременно: -des"
+
+msgid "while doing, while making"
+msgstr "делая, готовя"
+
+msgid "while drinking"
+msgstr "попивая"
+
+msgid "while eating"
+msgstr "за едой"
+
+msgid "while going, on the way"
+msgstr "идя, по дороге"
+
+msgid "while knocking"
+msgstr "стуча"
+
+msgid "While or without"
+msgstr "Одновременно или без"
+
+msgid "While or without?"
+msgstr "Одновременно или без?"
+
+msgid "while reading"
+msgstr "читая"
+
+msgid "While studying is <0>õppides</0>. <1>Õppimata</1> is without studying."
+msgstr "«Во время учёбы» — это <0>õppides</0>. <1>Õppimata</1> — «не учась»."
+
+msgid "Who did Mari phone when she got home? Write it as Mari does."
+msgstr "Кому Мари позвонила, когда пришла домой? Напиши так, как у Мари."
+
+msgid "Why didn’t Mari drive?"
+msgstr "Почему Мари не села за руль?"
+
+msgid "without"
+msgstr "без"
+
+msgid "without asking"
+msgstr "не спрашивая"
+
+msgid "Without calling is <0>helistamata</0>. <1>Helistades</1> is while calling."
+msgstr "«Не позвонив» — это <0>helistamata</0>. <1>Helistades</1> — «звоня»."
+
+msgid "Without calling is <et>helistamata</et>. <et>Helistades</et> is while calling."
+msgstr "«Не позвонив» — это <et>helistamata</et>. <et>Helistades</et> — «звоня»."
+
+msgid "without doing it"
+msgstr "без этого действия"
+
+msgid "Without doing it"
+msgstr "Без действия"
+
+msgid "Without doing something: -mata"
+msgstr "Без действия: -mata"
+
+msgid "without eating"
+msgstr "не поев"
+
+msgid "without going"
+msgstr "не пойдя"
+
+msgid "without knocking"
+msgstr "не стуча"
+
+msgid "without phoning"
+msgstr "не звоня"
+
+msgid "without reading"
+msgstr "не читая"
+
+msgid "without saying"
+msgstr "ничего не говоря"
+
+msgid "Without saying is <0>ütlemata</0>, not <1>öeldes</1>."
+msgstr "«Не сказав» — это <0>ütlemata</0>, а не <1>öeldes</1>."
+
+msgid "Without saying is <0>ütlemata</0>; the object is usually partitive: <1>midagi</1>."
+msgstr "«Не сказав» — это <0>ütlemata</0>; дополнение обычно стоит в партитиве: <1>midagi</1>."
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"

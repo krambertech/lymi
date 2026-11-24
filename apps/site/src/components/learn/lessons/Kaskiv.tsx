@@ -987,9 +987,11 @@ export function KaskivLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    A command to one person is the stem alone. To more than one, or politely, it
-                    ends in <span lang="et">-ge</span> or <span lang="et">-ke</span>. Sort the
-                    commands; tap one to hear it.
+                    A command to one person is usually the present without its ending (
+                    <span lang="et">loen → loe!</span>), though a few change, like{" "}
+                    <span lang="et">lähen → mine!</span> To more than one, or politely, it ends in{" "}
+                    <span lang="et">-ge</span> or <span lang="et">-ke</span>. Sort the commands; tap
+                    one to hear it.
                   </Trans>
                 </p>
               </Prose>

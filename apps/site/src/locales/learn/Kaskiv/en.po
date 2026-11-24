@@ -57,8 +57,8 @@ msgstr "4 quizzes, a sort, a conversation and a passage"
 msgid "a book"
 msgstr "a book"
 
-msgid "A command to one person is the stem alone. To more than one, or politely, it ends in <0>-ge</0> or <1>-ke</1>. Sort the commands; tap one to hear it."
-msgstr "A command to one person is the stem alone. To more than one, or politely, it ends in <0>-ge</0> or <1>-ke</1>. Sort the commands; tap one to hear it."
+msgid "A command to one person is usually the present without its ending (<0>loen → loe!</0>), though a few change, like <1>lähen → mine!</1> To more than one, or politely, it ends in <2>-ge</2> or <3>-ke</3>. Sort the commands; tap one to hear it."
+msgstr "A command to one person is usually the present without its ending (<0>loen → loe!</0>), though a few change, like <1>lähen → mine!</1> To more than one, or politely, it ends in <2>-ge</2> or <3>-ke</3>. Sort the commands; tap one to hear it."
 
 msgid "A teacher starts the class. Listen to who is told to do what."
 msgstr "A teacher starts the class. Listen to who is told to do what."

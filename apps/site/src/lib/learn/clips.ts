@@ -13999,360 +13999,580 @@ const DES_CLIPS: Record<string, Clip> = {
   "c-liisa": DES_CONVERSATION,
 };
 
-type Said = readonly [string, ...string[]];
+const REL_BOUGHT: readonly [string, ...string[]] = [
+  "Raamat, mille ma ostsin, on huvitav.",
+  "Raamat, mida ma ostsin, on huvitav.",
+  "Raamat, mille mina ostsin, on huvitav.",
+  "Raamat, mille ostsin, on huvitav.",
+  "Raamat, mida mina ostsin, on huvitav.",
+  "Raamat, mida ostsin, on huvitav.",
+];
 
-export const REP_SAY = [
-  { id: "tired", from: "Mari ütles: „Ma olen väsinud.“", cue: "ütles, et" },
-  { id: "busy", from: "Peeter ütles: „Mul on kiire.“", cue: "ütles, et" },
-  { id: "went", from: "Mari rääkis: „Ma käisin eile Tallinnas.“", cue: "rääkis, et" },
-  { id: "not", from: "Peeter ütles: „Ma ei tule.“", cue: "ütles, et" },
-  { id: "you", from: "Mari ütles mulle: „Sa oled väsinud.“", cue: "ütles, et" },
-  { id: "sister", from: "Mari rääkis: „Mu õde elab Tartus.“", cue: "rääkis, et" },
-  { id: "time", from: "Peeter ütles: „Mul ei ole aega.“", cue: "ütles, et" },
-  { id: "studies", from: "Mari rääkis: „Ma õpin eesti keelt.“", cue: "rääkis, et" },
-] as const;
+const REL_KNOWN: readonly [string, ...string[]] = [
+  "Mees, keda ma tunnen, elab Tartus.",
+  "Tartus elab mees, keda ma tunnen.",
+  "Mees, keda mina tunnen, elab Tartus.",
+  "Mees, keda tunnen, elab Tartus.",
+  "Tartus elab mees, keda mina tunnen.",
+  "Tartus elab mees, keda tunnen.",
+];
 
-export const REP_SAY_ANSWERS: Record<(typeof REP_SAY)[number]["id"], Said> = {
-  tired: ["Mari ütles, et ta on väsinud.", "Mari ütles, et tema on väsinud."],
-  busy: ["Peeter ütles, et tal on kiire.", "Peeter ütles, et temal on kiire."],
-  went: [
-    "Mari rääkis, et ta käis eile Tallinnas.",
-    "Mari rääkis, et ta käis Tallinnas eile.",
-    "Mari rääkis, et eile käis ta Tallinnas.",
-    "Mari rääkis, et tema käis eile Tallinnas.",
-    "Mari rääkis, et tema käis Tallinnas eile.",
-    "Mari rääkis, et eile käis tema Tallinnas.",
-  ],
-  not: ["Peeter ütles, et ta ei tule.", "Peeter ütles, et tema ei tule."],
-  you: [
-    "Mari ütles mulle, et ma olen väsinud.",
-    "Mari ütles mulle, et mina olen väsinud.",
-    "Mari ütles mulle, et olen väsinud.",
-  ],
-  sister: ["Mari rääkis, et tema õde elab Tartus.", "Mari rääkis, et ta õde elab Tartus."],
-  time: [
-    "Peeter ütles, et tal ei ole aega.",
-    "Peeter ütles, et tal pole aega.",
-    "Peeter ütles, et temal ei ole aega.",
-    "Peeter ütles, et temal pole aega.",
-  ],
-  studies: ["Mari rääkis, et ta õpib eesti keelt.", "Mari rääkis, et tema õpib eesti keelt."],
-};
+const REL_TALKED: readonly [string, ...string[]] = [
+  "Naine, kellega ma rääkisin, on õpetaja.",
+  "Õpetaja on naine, kellega ma rääkisin.",
+  "Naine, kellega mina rääkisin, on õpetaja.",
+  "Naine, kellega rääkisin, on õpetaja.",
+  "Õpetaja on naine, kellega mina rääkisin.",
+  "Õpetaja on naine, kellega rääkisin.",
+];
 
-export const REP_ASK = [
-  { id: "come", from: "Mari küsis: „Kas sa tuled?“", cue: "küsis, kas" },
-  { id: "time", from: "Peeter küsis: „Kas sul on aega?“", cue: "küsis, kas" },
-  { id: "home", from: "Mari küsis: „Kas Peeter on kodus?“", cue: "küsis, kas" },
-  { id: "ill", from: "Ma küsisin Marilt: „Kas sa oled haige?“", cue: "küsisin, kas" },
-  { id: "when", from: "Peeter küsis: „Millal sa tuled?“", cue: "küsis, millal" },
-  { id: "speak", from: "Mari küsis: „Kas sa räägid eesti keelt?“", cue: "küsis, kas" },
-] as const;
+const REL_WAITING: readonly [string, ...string[]] = [
+  "Film, mida ma ootan, on pikk.",
+  "Pikk on film, mida ma ootan.",
+  "Film, mida mina ootan, on pikk.",
+  "Film, mida ootan, on pikk.",
+  "Pikk on film, mida mina ootan.",
+  "Pikk on film, mida ootan.",
+];
 
-export const REP_ASK_ANSWERS: Record<(typeof REP_ASK)[number]["id"], Said> = {
-  come: ["Mari küsis, kas ma tulen.", "Mari küsis, kas mina tulen.", "Mari küsis, kas tulen."],
-  time: ["Peeter küsis, kas mul on aega."],
-  home: ["Mari küsis, kas Peeter on kodus."],
-  ill: [
-    "Ma küsisin Marilt, kas ta on haige.",
-    "Ma küsisin Marilt, kas tema on haige.",
-    "Mina küsisin Marilt, kas ta on haige.",
-    "Mina küsisin Marilt, kas tema on haige.",
-    "Küsisin Marilt, kas ta on haige.",
-    "Küsisin Marilt, kas tema on haige.",
-  ],
-  when: [
-    "Peeter küsis, millal ma tulen.",
-    "Peeter küsis, millal mina tulen.",
-    "Peeter küsis, millal tulen.",
-  ],
-  speak: [
-    "Mari küsis, kas ma räägin eesti keelt.",
-    "Mari küsis, kas mina räägin eesti keelt.",
-    "Mari küsis, kas räägin eesti keelt.",
-  ],
-};
+const REL_LIVE: readonly [string, ...string[]] = [
+  "Maja, kus ma elan, on vana.",
+  "Maja, milles ma elan, on vana.",
+  "Maja, kus mina elan, on vana.",
+  "Maja, kus elan, on vana.",
+  "Maja, milles mina elan, on vana.",
+  "Maja, milles elan, on vana.",
+];
 
-export const REP_TABLE = [
-  { id: "ma", direct: "Ma tulen homme.", said: "Mari ütles, et ta tuleb homme." },
-  { id: "mul", direct: "Mul on külm.", said: "Peeter ütles, et tal on külm." },
-  { id: "sa", direct: "Sa räägid hästi.", said: "Mari ütles, et ma räägin hästi." },
+const REL_CHILD: readonly [string, ...string[]] = [
+  "Laps, kes mängib õues, on mu poeg.",
+  "Laps, kes mängib õues, on minu poeg.",
+  "Laps, kes õues mängib, on mu poeg.",
+  "Laps, kes õues mängib, on minu poeg.",
+  "Mu poeg on laps, kes mängib õues.",
+  "Minu poeg on laps, kes mängib õues.",
+  "Mu poeg on laps, kes õues mängib.",
+  "Minu poeg on laps, kes õues mängib.",
+];
+
+const REL_PHONED: readonly [string, ...string[]] = [
+  "Sõber, kellele ma helistasin, on Tallinnas.",
+  "Tallinnas on sõber, kellele ma helistasin.",
+  "Sõber, kellele mina helistasin, on Tallinnas.",
+  "Sõber, kellele helistasin, on Tallinnas.",
+  "Tallinnas on sõber, kellele mina helistasin.",
+  "Tallinnas on sõber, kellele helistasin.",
+];
+
+const REL_SHOP: readonly [string, ...string[]] = [
+  "Naine, kes töötab poes, on mu ema.",
+  "Naine, kes töötab poes, on minu ema.",
+  "Naine, kes poes töötab, on mu ema.",
+  "Naine, kes poes töötab, on minu ema.",
+  "Mu ema on naine, kes töötab poes.",
+  "Minu ema on naine, kes töötab poes.",
+  "Mu ema on naine, kes poes töötab.",
+  "Minu ema on naine, kes poes töötab.",
+];
+
+const REL_CAR: readonly [string, ...string[]] = [
+  "Auto, mis seisab õues, on punane.",
+  "Auto, mis õues seisab, on punane.",
+  "Punane on auto, mis seisab õues.",
+  "Punane on auto, mis õues seisab.",
+];
+
+const REL_WOMAN_TALK: readonly [string, ...string[]] = [
+  "Ma tunnen naist, kellega sa rääkisid.",
+  "Mina tunnen naist, kellega sa rääkisid.",
+  "Tunnen naist, kellega sa rääkisid.",
+  "Ma tunnen naist, kellega sina rääkisid.",
+  "Ma tunnen naist, kellega rääkisid.",
+  "Mina tunnen naist, kellega sina rääkisid.",
+  "Mina tunnen naist, kellega rääkisid.",
+  "Tunnen naist, kellega sina rääkisid.",
+  "Tunnen naist, kellega rääkisid.",
+];
+
+const REL_CAR_DRIVE: readonly [string, ...string[]] = [
+  "Ma nägin autot, millega sa sõitsid.",
+  "Mina nägin autot, millega sa sõitsid.",
+  "Nägin autot, millega sa sõitsid.",
+  "Ma nägin autot, millega sina sõitsid.",
+  "Ma nägin autot, millega sõitsid.",
+  "Mina nägin autot, millega sina sõitsid.",
+  "Mina nägin autot, millega sõitsid.",
+  "Nägin autot, millega sina sõitsid.",
+  "Nägin autot, millega sõitsid.",
+];
+
+const REL_MAN_WAIT: readonly [string, ...string[]] = [
+  "Ma tunnen meest, keda sa ootad.",
+  "Mina tunnen meest, keda sa ootad.",
+  "Tunnen meest, keda sa ootad.",
+  "Ma tunnen meest, keda sina ootad.",
+  "Ma tunnen meest, keda ootad.",
+  "Mina tunnen meest, keda sina ootad.",
+  "Mina tunnen meest, keda ootad.",
+  "Tunnen meest, keda sina ootad.",
+  "Tunnen meest, keda ootad.",
+];
+
+const REL_OWNER: readonly [string, ...string[]] = [
+  "Ma tunnen naist, kelle auto on punane.",
+  "Ma tunnen naist, kelle auto punane on.",
+  "Mina tunnen naist, kelle auto on punane.",
+  "Tunnen naist, kelle auto on punane.",
+  "Mina tunnen naist, kelle auto punane on.",
+  "Tunnen naist, kelle auto punane on.",
+];
+
+export const REL_TABLE = [
   {
-    id: "mu",
-    direct: "Mu vend töötab koolis.",
-    said: "Peeter rääkis, et tema vend töötab koolis.",
+    id: "subject",
+    mis: "Raamat, mis on laual, on uus.",
+    kes: "Mees, kes elab siin, on arst.",
+  },
+  {
+    id: "outside",
+    mis: "Auto, mis seisab õues, on punane.",
+    kes: "Naine, kes töötab poes, on mu ema.",
+  },
+  {
+    id: "starts",
+    mis: "Film, mis algab kell kaheksa, on pikk.",
+    kes: "Laps, kes mängib õues, on mu poeg.",
+  },
+  {
+    id: "big",
+    mis: "Maja, mis on suur, on vana.",
+    kes: "Õpetaja, kes räägib eesti keelt, on noor.",
   },
 ] as const;
 
-export const REP_ASK_TABLE = [
-  { id: "kas", direct: "Kas sul on kiire?", said: "Peeter küsis, kas mul on kiire." },
-  { id: "kus", direct: "Kus sa elad?", said: "Mari küsis, kus ma elan." },
-  { id: "mida", direct: "Mida sa teed?", said: "Peeter küsis, mida ma teen." },
+export const REL_HEARD = [
+  { id: "book", means: "mis", said: "Raamat, mis on laual, on uus." },
+  { id: "man", means: "kes", said: "Mees, kes elab siin, on arst." },
+  { id: "car", means: "mis", said: "Auto, mis seisab õues, on punane." },
+  { id: "woman", means: "kes", said: "Naine, kes töötab poes, on mu ema." },
+  { id: "bag", means: "mis", said: "Kott, mis on laual, on raske." },
+  { id: "neighbour", means: "kes", said: "Naaber, kes mängib klaverit, on sõbralik." },
+  { id: "film", means: "mis", said: "Film, mis algab kell kaheksa, on pikk." },
+  { id: "child", means: "kes", said: "Laps, kes mängib õues, on mu poeg." },
 ] as const;
 
-export const REP_STAYS = [
-  { id: "ill-now", means: "now", said: "Mari ütles, et ta on haige." },
-  { id: "ill-before", means: "before", said: "Mari ütles, et ta oli eile haige." },
-  { id: "come-later", means: "later", said: "Peeter ütles, et ta tuleb homme." },
-  { id: "went-before", means: "before", said: "Peeter rääkis, et ta käis eile Tallinnas." },
-  { id: "lives-now", means: "now", said: "Mari rääkis, et ta elab Tartus." },
-  { id: "home-later", means: "later", said: "Mari ütles, et ta läheb homme koju." },
-  { id: "studies-now", means: "now", said: "Peeter ütles, et ta õpib eesti keelt." },
-  { id: "drove-before", means: "before", said: "Peeter rääkis, et ta sõitis eile Tartusse." },
-] as const;
-
-export const REP_VERBS = {
-  most: [
-    { inf: "tulema", form: "tulevat", said: "Ta tulevat homme." },
-    { inf: "lugema", form: "lugevat", said: "Ta lugevat iga päev ajalehte." },
-    { inf: "elama", form: "elavat", said: "Ta elavat nüüd Tartus." },
-    { inf: "töötama", form: "töötavat", said: "Ta töötavat koolis." },
-    { inf: "rääkima", form: "rääkivat", said: "Ta rääkivat hästi eesti keelt." },
-    { inf: "magama", form: "magavat", said: "Ta magavat terve päeva." },
-  ],
-  short: [
-    { inf: "olema", form: "olevat", said: "Ta olevat haige." },
-    { inf: "minema", form: "minevat", said: "Ta minevat homme koju." },
-    { inf: "tegema", form: "tegevat", said: "Ta tegevat palju tööd." },
-    { inf: "jooma", form: "joovat", said: "Ta joovat iga päev kohvi." },
-    { inf: "sööma", form: "söövat", said: "Ta söövat ainult kala." },
-  ],
-} as const;
-
-export const REP_TYPED = [
-  "tulema",
-  "lugema",
-  "elama",
-  "olema",
-  "minema",
-  "tegema",
-  "jooma",
-  "rääkima",
-] as const;
-
-export const REP_PAIRS = [
+export const REL_COMMAS = [
   {
-    id: "ill",
-    label: "ill",
-    said: "Mari ütles, et ta on haige.",
-    vat: "Mari olevat haige.",
+    id: "man",
+    end: "Ma tunnen meest, kes elab siin.",
+    middle: "Mees, kes elab siin, on arst.",
   },
   {
-    id: "coming",
-    label: "coming",
-    said: "Peeter ütles, et ta tuleb homme.",
-    vat: "Peeter tulevat homme.",
+    id: "car",
+    end: "Ma nägin autot, mis seisab õues.",
+    middle: "Auto, mis seisab õues, on punane.",
+  },
+  {
+    id: "book",
+    end: "Ma lugesin raamatut, mis on laual.",
+    middle: "Raamat, mis on laual, on uus.",
   },
 ] as const;
 
-export const REP_HEARD = [
-  { id: "liisa-said", means: "named", said: "Liisa ütles, et ta tuleb laupäeval." },
-  { id: "liisa-vat", means: "reported", said: "Liisa tulevat laupäeval." },
-  { id: "kalev-said", means: "named", said: "Kalev rääkis, et ta elab nüüd Tartus." },
-  { id: "kalev-vat", means: "reported", said: "Kalev elavat nüüd Tartus." },
-  { id: "rain-vat", means: "reported", said: "Homme sadavat vihma." },
-  { id: "rain-said", means: "named", said: "Peeter ütles, et homme sajab vihma." },
-  { id: "concert-vat", means: "reported", said: "Kontsert algavat kell kuus." },
-  { id: "concert-said", means: "named", said: "Mari ütles, et kontsert algab kell kuus." },
+export const REL_CASES = [
+  {
+    id: "subject",
+    kes: "Ma tunnen meest, kes elab siin.",
+    mis: "Ma nägin autot, mis seisab õues.",
+  },
+  {
+    id: "owner",
+    kes: "Ma tunnen naist, kelle auto on punane.",
+    mis: "Ma nägin maja, mille uks on sinine.",
+  },
+  {
+    id: "part",
+    kes: "Ma tunnen meest, keda sa ootad.",
+    mis: "Ma vaatan filmi, mida sa ootad.",
+  },
+  {
+    id: "with",
+    kes: "Ma tunnen naist, kellega sa rääkisid.",
+    mis: "Ma nägin autot, millega sa sõitsid.",
+  },
+  {
+    id: "to",
+    kes: "Ma tunnen meest, kellele sa helistasid.",
+    mis: "Ma lugesin kirja, millele sa vastasid.",
+  },
+  {
+    id: "about",
+    kes: "Ma tunnen naist, kellest sa rääkisid.",
+    mis: "Ma vaatasin filmi, millest sa rääkisid.",
+  },
+  {
+    id: "has",
+    kes: "Ma tunnen last, kellel on koer.",
+    mis: "Ma nägin maja, millel on suur aed.",
+  },
+  {
+    id: "in",
+    kes: null,
+    mis: "Ma nägin maja, milles sa elad.",
+  },
 ] as const;
 
-export const REP_WRITE = [
-  { id: "w1", said: "Peeter ütles, et ta tuleb homme." },
-  { id: "w2", said: "Mari ütles, et ta ootab bussi." },
-  { id: "w3", said: "Peeter küsis, kas ta on kodus." },
-  { id: "w4", said: "Ma küsisin, kas sa räägid eesti keelt." },
-  { id: "w5", said: "Ta olevat haige." },
-  { id: "w6", said: "Ta ei tulevat homme." },
+export const REL_FORMS = [
+  { id: "part-kes", base: "kes", form: "keda", said: "Ma tunnen meest, keda sa ootad." },
+  { id: "part-mis", base: "mis", form: "mida", said: "Ma vaatan filmi, mida sa ootad." },
+  { id: "with-kes", base: "kes", form: "kellega", said: "Ma tunnen naist, kellega sa rääkisid." },
+  { id: "with-mis", base: "mis", form: "millega", said: "Ma nägin autot, millega sa sõitsid." },
+  { id: "to-kes", base: "kes", form: "kellele", said: "Ma tunnen meest, kellele sa helistasid." },
+  {
+    id: "about-mis",
+    base: "mis",
+    form: "millest",
+    said: "Ma vaatasin filmi, millest sa rääkisid.",
+  },
+  { id: "has-kes", base: "kes", form: "kellel", said: "Ma tunnen last, kellel on koer." },
+  { id: "owner-mis", base: "mis", form: "mille", said: "Ma nägin maja, mille uks on sinine." },
 ] as const;
 
-export const REP_WRITE_ANSWERS: Record<string, Said> = {
-  "Peeter ütles, et ta tuleb homme.": [
-    "Peeter ütles, et ta tuleb homme.",
-    "Peeter ütles, et homme ta tuleb.",
-    "Peeter ütles, et tema tuleb homme.",
-    "Peeter ütles, et homme tema tuleb.",
-  ],
-  "Mari ütles, et ta ootab bussi.": [
-    "Mari ütles, et ta ootab bussi.",
-    "Mari ütles, et tema ootab bussi.",
-  ],
-  "Peeter küsis, kas ta on kodus.": [
-    "Peeter küsis, kas ta on kodus.",
-    "Peeter küsis, kas tema on kodus.",
-  ],
-  "Ma küsisin, kas sa räägid eesti keelt.": [
-    "Ma küsisin, kas sa räägid eesti keelt.",
-    "Küsisin, kas sa räägid eesti keelt.",
-    "Küsisin, kas räägid eesti keelt.",
-    "Ma küsisin, kas räägid eesti keelt.",
-    "Ma küsisin, kas sina räägid eesti keelt.",
-    "Küsisin, kas sina räägid eesti keelt.",
-    "Mina küsisin, kas sa räägid eesti keelt.",
-    "Mina küsisin, kas räägid eesti keelt.",
-    "Mina küsisin, kas sina räägid eesti keelt.",
-  ],
-  "Ta olevat haige.": ["Ta olevat haige.", "Tema olevat haige."],
-  "Ta ei tulevat homme.": [
-    "Ta ei tulevat homme.",
-    "Homme ta ei tulevat.",
-    "Tema ei tulevat homme.",
-    "Homme tema ei tulevat.",
-  ],
-};
-
-export const REP_FIXES = [
-  { wrong: "Mari ütles, et mul on kiire.", right: "Mari ütles, et tal on kiire." },
-  { wrong: "Mari küsis, et ma tulen.", right: "Mari küsis, kas ma tulen." },
-  { wrong: "Peeter rääkis, kas ta käis Tallinnas.", right: "Peeter rääkis, et ta käis Tallinnas." },
-  { wrong: "Ta tulemat homme.", right: "Ta tulevat homme." },
-  { wrong: "Ta olevad haige.", right: "Ta olevat haige." },
-  { wrong: "Peeter ütles, et ta tulen homme.", right: "Peeter ütles, et ta tuleb homme." },
+export const REL_ROLES = [
+  {
+    id: "owner-kes",
+    role: "owner",
+    slip: "object",
+    said: "Ma tunnen naist, kelle auto on punane.",
+  },
+  { id: "part-kes", role: "object", slip: "owner", said: "Ma tunnen meest, keda sa ootad." },
+  { id: "with-kes", role: "with", slip: "to", said: "Ma tunnen naist, kellega sa rääkisid." },
+  { id: "to-kes", role: "to", slip: "with", said: "Ma tunnen meest, kellele sa helistasid." },
+  { id: "about-mis", role: "about", slip: "with", said: "Ma vaatasin filmi, millest sa rääkisid." },
+  { id: "with-mis", role: "with", slip: "about", said: "Ma nägin autot, millega sa sõitsid." },
+  { id: "owner-mis", role: "owner", slip: "object", said: "Ma nägin maja, mille uks on sinine." },
+  { id: "part-mis", role: "object", slip: "owner", said: "Ma vaatan filmi, mida sa ootad." },
+  { id: "whole-mis", role: "object", slip: "owner", said: "Raamat, mille ma ostsin, on huvitav." },
 ] as const;
 
-export const REP_FIX_ANSWERS: Record<string, Said> = Object.fromEntries(
-  REP_FIXES.map(({ right }) => [right, [right]]),
-);
-
-export const REP_DIARY = [
-  "Linna raamatukogu kolib sügisel uude majja.",
-  "Uus maja on jõe ääres ja seal on palju rohkem ruumi.",
-  "Uue maja ehitamine võttis kaks aastat.",
-  "Raamatukogu juht ütles, et kolimine algab septembri lõpus.",
-  "Ta rääkis, et vana maja on liiga väike, sest raamatuid tuleb igal aastal juurde.",
-  "Uues majas olevat suur lugemissaal, kohvik ja mänguruum lastele.",
-  "Seal on rohkem laudu, kus saab õppida ja arvutiga töötada.",
-  "Uue maja lähedal on bussipeatus, nii et lugejatel on lihtne kohale tulla.",
-  "Raamatukogu töötajad ütlesid, et nad ootavad kolimist ja lugejaid.",
-  "Lugejatel on kolimise kohta palju küsimusi.",
-  "Üks lugeja küsis, kas raamatuid saab kolimise ajal laenutada.",
-  "Juht vastas, et raamatukogu on kinni ainult kolm päeva.",
-  "Ta lisas, et enne kolimist saab raamatuid veel tagasi tuua.",
-  "Üks vanem lugeja ütles, et ta käib siin juba kolmkümmend aastat.",
-  "Ta ütles ka, et uus maja meeldib talle juba praegu, kuigi ta ei ole seal veel käinud.",
-  "Linnas räägitakse ka, et vanasse majja tulevat sügisel kauplus.",
-  "Linnavalitsus pole seda veel kinnitanud.",
-  "Üks naaber rääkis, et ta ei taha seal poodi, sest tänaval on juba nii palju autosid.",
-  "Keegi ei tea veel, kas see jutt on tõsi.",
-  "Uue raamatukogu avamine olevat plaanis esimesel oktoobril.",
-  "Avamisele tulevat ka linnapea.",
-  "Raamatukogu juht ütles, et kõik lugejad on oodatud.",
+export const REL_PLACES = [
+  { id: "city", means: "kus", said: "Linn, kus ma elan, on väike." },
+  { id: "bag", means: "mis", said: "Kott, mis on laual, on raske." },
+  { id: "cafe", means: "kus", said: "Kohvik, kus me joome kohvi, on odav." },
+  { id: "big-house", means: "mis", said: "Maja, mis on suur, on vana." },
+  { id: "park", means: "kus", said: "Park, kus lapsed mängivad, on suur." },
+  { id: "car", means: "mis", said: "Auto, mis seisab õues, on punane." },
+  { id: "house", means: "kus", said: "Maja, kus ma elan, on vana." },
+  { id: "film", means: "mis", said: "Film, mis algab kell kaheksa, on pikk." },
 ] as const;
 
-export const REP_CONVERSATION: Conversation = {
+export const REL_WHERE = [
+  { id: "at", word: "kus", said: "Linn, kus ma elan, on väike." },
+  { id: "to", word: "kuhu", said: "Linn, kuhu ma sõidan, on suur." },
+  { id: "from", word: "kust", said: "Linn, kust ma tulen, on väike." },
+  { id: "in", word: "milles", said: "Maja, milles ma elan, on vana." },
+] as const;
+
+export const REL_ORDER = [
+  {
+    id: "man",
+    answers: [
+      "Mees, kes elab siin, on arst.",
+      "Mees, kes siin elab, on arst.",
+      "Arst on mees, kes elab siin.",
+      "Arst on mees, kes siin elab.",
+    ],
+  },
+  {
+    id: "know",
+    answers: ["Ma tunnen meest, kes elab siin.", "Ma tunnen meest, kes siin elab."],
+  },
+  {
+    id: "book",
+    answers: [
+      "Raamat, mis on laual, on uus.",
+      "Raamat, mis laual on, on uus.",
+      "Uus on raamat, mis on laual.",
+      "Uus on raamat, mis laual on.",
+    ],
+  },
+  {
+    id: "car",
+    answers: ["Ma nägin autot, mis seisab õues.", "Ma nägin autot, mis õues seisab."],
+  },
+  {
+    id: "woman",
+    answers: [
+      "Naine, kes töötab poes, on mu ema.",
+      "Naine, kes poes töötab, on mu ema.",
+      "Mu ema on naine, kes töötab poes.",
+      "Mu ema on naine, kes poes töötab.",
+    ],
+  },
+  {
+    id: "read",
+    answers: ["Ma lugesin raamatut, mis on laual.", "Ma lugesin raamatut, mis laual on."],
+  },
+] as const;
+
+export const REL_TRANSLATE = [
+  "Raamat, mille ma ostsin, on huvitav.",
+  "Mees, keda ma tunnen, elab Tartus.",
+  "Naine, kellega ma rääkisin, on õpetaja.",
+  "Film, mida ma ootan, on pikk.",
+  "Maja, kus ma elan, on vana.",
+  "Laps, kes mängib õues, on mu poeg.",
+  "Sõber, kellele ma helistasin, on Tallinnas.",
+] as const;
+
+export const REL_FIXES = [
+  { wrong: "Mees, mis elab siin, on arst.", right: "Mees, kes elab siin, on arst." },
+  { wrong: "Raamat, kes on laual, on uus.", right: "Raamat, mis on laual, on uus." },
+  { wrong: "Ma tunnen meest, kelle sa ootad.", right: "Ma tunnen meest, keda sa ootad." },
+  {
+    wrong: "Ma tunnen naist, keda auto on punane.",
+    right: "Ma tunnen naist, kelle auto on punane.",
+  },
+  {
+    wrong: "Ma tunnen meest, kellega sa helistasid.",
+    right: "Ma tunnen meest, kellele sa helistasid.",
+  },
+  { wrong: "Linn, mis ma elan, on väike.", right: "Linn, kus ma elan, on väike." },
+] as const;
+
+export const REL_REWRITE = [
+  {
+    from: "Ma nägin autot. Sa sõitsid sellega.",
+    answer: "Ma nägin autot, millega sa sõitsid.",
+  },
+  {
+    from: "Ma tunnen naist. Tema auto on punane.",
+    answer: "Ma tunnen naist, kelle auto on punane.",
+  },
+  { from: "Ma elan majas. Maja on vana.", answer: "Maja, kus ma elan, on vana." },
+] as const;
+
+export const REL_LETTER = [
+  "Eelmisel nädalal kolisin uude korterisse.",
+  "Maja, kus ma nüüd elan, on vana, aga korter on hele ja soe.",
+  "Korter, mille ma leidsin internetist, maksab kuus kolmsada eurot.",
+  "Köögis on laud, mille ma ostsin vanaemalt.",
+  "Naaber, kes elab minu korteri kõrval, on sõbralik vanem mees.",
+  "Ta teab kõiki inimesi, kes selles majas elavad.",
+  "Ta aitas mind kolimisel ja tõi mulle kooki, mille ta oli ise küpsetanud.",
+  "Eile õhtul tuli tema juurde ka tütar, kellega ma rääkisin pikalt.",
+  "Tütar töötab kohvikus, mis on meie majast ainult kahe minuti kaugusel.",
+  "Täna hommikul käisin seal ja jõin kohvi, mida ma pole kunagi varem joonud.",
+  "Kohvik, kus ta töötab, on väike, aga seal on alati palju inimesi.",
+  "Mõned neist on naabrid, keda ma juba tunnen.",
+  "Eile tutvusin ühe tudengiga, kellega ma läksin kinno.",
+  "Tänav, mille ääres maja seisab, on vaikne, ja park, kus lapsed mängivad, on lähedal.",
+  "Mulle meeldib see linnaosa, kus ma nüüd elan.",
+  "Ainult üks asi ei meeldi mulle.",
+  "Hoovis seisab vana auto, mis ei sõida enam kuhugi.",
+  "Naaber ütles, et omanik, kellele see auto kuulub, elab välismaal.",
+  "Ma loodan, et ta tuleb varsti ja viib auto ära.",
+  "Muidu on kõik hästi.",
+  "Tule külla ja too kaasa raamat, millest sa mulle rääkisid.",
+  "Siis joome koos kohvi, mida ma kohvikust toon.",
+  "Kohtumiseni, Helen.",
+] as const;
+
+export const REL_CONVERSATION: Conversation = {
   turns: [
-    { voice: "fourth", text: ["Tere, Liisa!", "Kuidas sul täna läheb?"] },
+    {
+      voice: "fourth",
+      text: ["Tere, Tiina!", "Kas sa tõid need fotod, millest sa rääkisid?"],
+    },
     {
       voice: "third",
       text: [
-        "Tere, Kalev!",
-        "Täna on mul väga kiire.",
-        "Ülemus ütles hommikul, et ta tahab aruannet täna õhtuks.",
-      ],
-    },
-    { voice: "fourth", text: "Kas ta küsis, kas sa jõuad?" },
-    {
-      voice: "third",
-      text: ["Küsis küll.", "Ma ütlesin, et ma proovin.", "Aga kõigepealt helistas mulle Mari."],
-    },
-    { voice: "fourth", text: "Mis ta ütles?" },
-    { voice: "third", text: "Ta ütles, et ta on haige ja ei tule täna tööle." },
-    {
-      voice: "fourth",
-      text: ["Oi, see ei ole hea.", "Kas ta tuleb laupäeval meiega kontserdile?"],
-    },
-    { voice: "third", text: ["Ma küsisin just seda.", "Ta ütles, et ta ei tea veel."] },
-    { voice: "fourth", text: "Kas sa küsisid, kas ta vajab midagi?" },
-    { voice: "third", text: ["Küsisin.", "Ta ütles, et ta vajab ainult und."] },
-    { voice: "fourth", text: ["Hea.", "Kas ta ütles ka, millal ta tagasi tuleb?"] },
-    { voice: "third", text: "Ta ütles, et ta tuleb esmaspäeval, kui ta on terve." },
-    { voice: "fourth", text: "Aga mulle räägiti, et Mari olevat eile õhtul kinos käinud." },
-    { voice: "third", text: ["Tõesti?", "Mari rääkis mulle, et ta oli eile terve päeva kodus."] },
-    { voice: "fourth", text: ["Siis ei ole see vist tõsi.", "Inimesed räägivad nii palju."] },
-    { voice: "third", text: ["Täpselt.", "Kuule, raadios öeldi, et laupäeval sadavat vihma."] },
-    { voice: "fourth", text: ["Siis võtame vihmavarju kaasa.", "Kas kontsert on õues?"] },
-    {
-      voice: "third",
-      text: ["Ei, see on saalis.", "Piletil on kirjas, et kontsert algab kell kuus."],
-    },
-    {
-      voice: "fourth",
-      text: ["Hea küll.", "Ma helistasin eile kassasse ja küsisin, kas piletid on veel alles."],
-    },
-    { voice: "third", text: "Mida nad vastasid?" },
-    { voice: "fourth", text: "Nad ütlesid, et on küll, aga neid on väga vähe." },
-    {
-      voice: "third",
-      text: [
-        "Siis osta need varsti.",
-        "Naabrid rääkisid, et kontsert olevat peaaegu välja müüdud.",
+        "Tõin küll.",
+        "Vaata, siin on pidu, kus me kõik kokku saime.",
+        "Kohvik, kus me istusime, oli väike, aga õhtu oli väga lõbus.",
       ],
     },
     {
       voice: "fourth",
       text: [
-        "Jah, ma ostan need täna õhtul.",
-        "Mu vend ütles, et ta tuleb ka.",
-        "Ta küsis, kas ma saan talle pileti osta.",
+        "See on ilus koht.",
+        "Kas see on kohvik, kus te alati käite?",
+        "Mina pole seal ammu käinud.",
       ],
     },
-    { voice: "third", text: "Kas sa oled sellel kontserdil varem käinud?" },
-    {
-      voice: "fourth",
-      text: ["Jah, eelmisel aastal.", "Ma ütlesin siis kõigile, et see oli väga hea kontsert."],
-    },
-    { voice: "third", text: "Mu õde rääkis, et ta oli seal juba kolm korda." },
-    { voice: "fourth", text: "Kas talle meeldis?" },
-    { voice: "third", text: "Ta ütles, et meeldis väga ja et ta läheb uuesti." },
-    { voice: "fourth", text: "Minu ülemus küsis täna, kas keegi tahab reedel kauem töötada." },
-    { voice: "third", text: "Ja mida sa ütlesid?" },
-    { voice: "fourth", text: "Ma ütlesin, et ma tulen hea meelega." },
     {
       voice: "third",
       text: [
-        "Mu ema helistas hommikul ja küsis, kas ma tulen pühapäeval sööma.",
-        "Ma ütlesin, et ma ei saa, sest mul on kontsert.",
+        "Jah, igal reedel.",
+        "Peremees, kes tunneb meid kõiki, tõi meile teed.",
+        "Tule järgmisel reedel kaasa, siis näed kohvikut, mida sa nii hästi mäletad.",
       ],
     },
-    { voice: "fourth", text: "Ja mis ta vastas?" },
+    { voice: "fourth", text: "Kes on see mees, kes seisab akna juures?" },
     {
       voice: "third",
       text: [
-        "Ta ütles, et siis tuleb ta ise meile.",
-        "Kolleegid räägivad ka, et sügisel tulevat meile uus ülemus.",
+        "See on mu uus töökaaslane, kellega ma nüüd koos töötan.",
+        "Ta on lahke inimene, kes aitab alati teisi.",
       ],
     },
-    { voice: "fourth", text: ["Oi!", "Kes sulle seda rääkis?"] },
-    { voice: "third", text: ["Ei tea.", "Keegi ütles seda koridoris."] },
+    { voice: "fourth", text: "Ja kes on see naine, kelle käes on kitarr?" },
+    {
+      voice: "third",
+      text: ["See on mu õde Kadri.", "Kitarr, mida ta mängib, on meie vanaisa oma."],
+    },
+    { voice: "fourth", text: "Kas ta mängis ka laule, mida sa tead?" },
+    {
+      voice: "third",
+      text: [
+        "Mängis küll.",
+        "Ta mängis laulu, mille sõnad me kõik teadsime, ja siis laulsime koos.",
+      ],
+      say: "[laughs] Mängis küll. Ta mängis laulu, mille sõnad me kõik teadsime, ja siis laulsime koos.",
+    },
+    { voice: "fourth", text: ["Mind seal ei olnud.", "Ma olin haige ja jäin koju."] },
+    {
+      voice: "third",
+      text: [
+        "Me mõtlesime sinule.",
+        "Meil jäi supp, mida keegi ei jõudnud ära süüa.",
+        "Ma toon sulle homme natuke.",
+      ],
+    },
+    { voice: "fourth", text: ["Aitäh, sa oled hea sõber.", "Kes on see mees, kes naerab nurgas?"] },
+    {
+      voice: "third",
+      text: [
+        "See on Kadri mees Joosep, kes tegi terve õhtu süüa.",
+        "Supp, mida ta tegi, oli väga hea, ja ma sõin kolm taldrikut.",
+      ],
+    },
+    { voice: "fourth", text: "Mis supp see oli?" },
+    { voice: "third", text: "Hea supp, mille retsepti ma juba küsisin." },
+    { voice: "fourth", text: "Kes on see tüdruk, kellele sa midagi ütled?" },
+    {
+      voice: "third",
+      text: [
+        "See on Maria, kellega ma koos koolis käisin.",
+        "Ma ei olnud teda kümme aastat näinud, aga ta on täpselt sama.",
+      ],
+    },
+    { voice: "fourth", text: "Siis oli teil kindlasti palju rääkida." },
+    {
+      voice: "third",
+      text: ["Oli küll.", "Me rääkisime koolist ja õpetajatest, keda me mõlemad mäletame."],
+    },
+    { voice: "fourth", text: "Mis raamat see on, mille sa talle kinkisid?" },
+    {
+      voice: "third",
+      text: [
+        "See on raamat, millest ta on alati unistanud.",
+        "Ma leidsin selle vanast raamatupoest, mis on pargi kõrval.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: ["Küll ta rõõmustas!", "Aga kes on see poiss, keda sa kallistad?"],
+      say: "[happy] Küll ta rõõmustas! Aga kes on see poiss, keda sa kallistad?",
+    },
+    {
+      voice: "third",
+      text: [
+        "See on mu vennapoeg Marten, kelle sünnipäev oli sel nädalal.",
+        "Ta tahtis kooki, mille peal on viis küünalt.",
+      ],
+    },
     {
       voice: "fourth",
       text: [
-        "Siis ära usu liiga palju.",
-        "Ma helistan Marile homme hommikul ja küsin, kas ta tuleb.",
+        "Mulle meeldib see pilt, kus kõik naeravad.",
+        "Kas sa saad mulle mõned fotod saata?",
+        "Siis näitan neid sõbrale, kes ei saanud tulla.",
       ],
     },
-    { voice: "third", text: ["Hästi.", "Anna mulle siis teada.", "Nägemist, Kalev!"] },
-    { voice: "fourth", text: ["Nägemist, Liisa!", "Kohtume laupäeval."] },
+    {
+      voice: "third",
+      text: ["Muidugi.", "Saadan need õhtul.", "Järgmine pidu on mais, tule ise kaasa!"],
+    },
+    { voice: "fourth", text: "Kes tuleb järgmisele peole?" },
+    {
+      voice: "third",
+      text: ["Kõik, kellele ma olen kutse saatnud, ja ka mõned, keda sa veel ei tunne."],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Siis ma tulen kindlasti.",
+        "Võtan kaasa oma sõbra, kes mängib kitarri.",
+        "Aitäh, Tiina!",
+      ],
+    },
+    { voice: "third", text: ["Suurepärane!", "Nägemist, Madis!"] },
   ],
 };
 
-const REP_CLIPS: Record<string, Clip> = {
+export const REL_WORDS = [
+  "kes",
+  "mis",
+  "kelle",
+  "mille",
+  "keda",
+  "mida",
+  "kellega",
+  "millega",
+  "kellele",
+  "millele",
+  "kellest",
+  "millest",
+  "kellel",
+  "millel",
+  "milles",
+  "kus",
+  "kuhu",
+  "kust",
+] as const;
+
+const REL_CLIPS: Record<string, Clip> = {
   ...words([
-    "ütles",
-    "rääkis",
-    "küsis",
-    ...REP_TABLE.flatMap(({ direct, said }) => [direct, said]),
-    ...REP_ASK_TABLE.flatMap(({ direct, said }) => [direct, said]),
-    ...REP_STAYS.map(({ said }) => said),
-    ...Object.values(REP_VERBS).flatMap((verbs) =>
-      verbs.flatMap(({ inf, form, said }) => [inf, form, said]),
-    ),
-    ...REP_PAIRS.flatMap(({ said, vat }) => [said, vat]),
-    ...REP_HEARD.map(({ said }) => said),
-    ...REP_SAY.map(({ id }) => REP_SAY_ANSWERS[id][0]),
-    ...REP_ASK.map(({ id }) => REP_ASK_ANSWERS[id][0]),
-    ...REP_WRITE.map(({ said }) => said),
-    ...REP_FIXES.map(({ right }) => right),
+    ...REL_TABLE.flatMap(({ mis, kes }) => [mis, kes]),
+    ...REL_HEARD.map(({ said }) => said),
+    ...REL_COMMAS.map(({ end }) => end),
+    ...REL_CASES.flatMap(({ mis, kes }) => (kes ? [mis, kes] : [mis])),
+    ...REL_FORMS.map(({ said }) => said),
+    ...REL_ROLES.map(({ said }) => said),
+    ...REL_PLACES.map(({ said }) => said),
+    ...REL_WHERE.map(({ said }) => said),
+    ...REL_ORDER.map(({ answers }) => answers[0]),
+    ...REL_TRANSLATE,
+    ...REL_FIXES.map(({ right }) => right),
+    ...REL_REWRITE.map(({ answer }) => answer),
+    ...REL_WORDS,
   ]),
-  "c-liisa": REP_CONVERSATION,
+  "c-tiina": REL_CONVERSATION,
+};
+
+export const REL_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Raamat, mille ma ostsin, on huvitav.": REL_BOUGHT,
+  "Mees, keda ma tunnen, elab Tartus.": REL_KNOWN,
+  "Naine, kellega ma rääkisin, on õpetaja.": REL_TALKED,
+  "Film, mida ma ootan, on pikk.": REL_WAITING,
+  "Maja, kus ma elan, on vana.": REL_LIVE,
+  "Laps, kes mängib õues, on mu poeg.": REL_CHILD,
+  "Sõber, kellele ma helistasin, on Tallinnas.": REL_PHONED,
+  "Naine, kes töötab poes, on mu ema.": REL_SHOP,
+  "Auto, mis seisab õues, on punane.": REL_CAR,
+  "Ma tunnen naist, kellega sa rääkisid.": REL_WOMAN_TALK,
+  "Ma nägin autot, millega sa sõitsid.": REL_CAR_DRIVE,
+  "Ma tunnen meest, keda sa ootad.": REL_MAN_WAIT,
+  "Ma tunnen naist, kelle auto on punane.": REL_OWNER,
+};
+
+export const REL_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  ...Object.fromEntries(REL_FIXES.map(({ right }) => [right, [right]])),
+  "Linn, kus ma elan, on väike.": [
+    "Linn, kus ma elan, on väike.",
+    "Linn, milles ma elan, on väike.",
+  ],
 };
 
 export const ROUTE_WORDS = ["läbi", "üle", "mööda", "ümber", "kaudu"] as const;
@@ -16320,6 +16540,752 @@ const CONJ_CLIPS: Record<string, Clip> = {
   "c-matk": CONJ_CONVERSATION,
 };
 
+export const NEWS_PHRASES = [
+  "Uus raamatukogu avatakse reedel.",
+  "Tee on remondi tõttu suletud.",
+  "Ilmateade lubab nädalavahetusel vihma.",
+  "Kohalikud elanikud ootavad uut bussi.",
+  "Üritus jääb tugeva tuule tõttu ära.",
+  "Hinnad on sel aastal tõusnud.",
+] as const;
+
+export const NEWS_TERMS = [
+  "uudised",
+  "ilmateade",
+  "elanik",
+  "üritus",
+  "remondi tõttu",
+  "jääb ära",
+] as const;
+
+export const NEWS_EXTRA_WORDS = [
+  "linnavalitsus",
+  "jalgrattatee",
+  "jalakäijad",
+  "linnapea",
+  "varjualune",
+  "korraldaja",
+] as const;
+
+export const NEWS_ARTICLE = [
+  "Pärnus avati sel nädalal uus kahe kilomeetri pikkune jalgrattatee, mis kulgeb mööda jõe äärt.",
+  "Linnavalitsus teatas, et ehitus algas juba eelmisel sügisel ja läks maksma ligi kolmsada tuhat eurot.",
+  "Varem pidid kohalikud elanikud kesklinna minnes kõndima kitsal tänaval, kus liikus palju autosid.",
+  "Nüüd saavad nii jalakäijad kui ka ratturid liikuda läbi pargi ohutult ja rahulikult.",
+  "Tee äärde paigaldati kolmkümmend uut pinki ja paarkümmend lampi, nii et seal on valge ka pimedatel sügisõhtutel.",
+  "Lisaks istutati pargi serva sada noort puud, mille valisid välja linna aednikud.",
+  "Avamispäeval kogunes kohale üle kahesaja inimese, kuigi hommikul sadas kerget vihma.",
+  "Linnapea ütles oma kõnes, et uus tee aitab inimestel rohkem liikuda ja vähem autot kasutada.",
+  "Paljud lapsevanemad rõõmustasid, sest lapsed saavad nüüd kooli sõita ohtlikku suurt teed ületamata.",
+  "Mõned ümbruskonna elanikud märkisid siiski, et pargi põhjapoolses otsas ei ole veel piisavalt prügikaste.",
+  "Linnavalitsus lubas, et uued prügikastid ja kaks joogikraani pannakse paika järgmise kuu alguses.",
+  "Sügisel plaanitakse raja äärde ehitada ka väike varjualune, kuhu inimesed saavad vihma eest varju minna.",
+  "Selle tööga alustatakse siis, kui kõik vajalikud load on kätte saadud.",
+  "Kohalik spordiklubi korraldab laupäeval kell üksteist uuel rajal tasuta perepäeva.",
+  "Kõik huvilised on oodatud kohale tulema jalgrattaga või jalgsi, sest pargi juures on parkimiskohti vähe.",
+  "Korraldajate sõnul pakutakse perepäeval sooja teed ja pirukaid ning lastele toimuvad väikesed võistlused.",
+] as const;
+
+export const NEWS_FORMS = [
+  { id: "closed", base: "sulgema", before: "Tänav on", answers: ["suletud"], after: "reedeni." },
+  {
+    id: "fallen",
+    base: "kukkuma",
+    before: "Töötajad viisid ära",
+    answers: ["kukkunud"],
+    after: "puu.",
+  },
+  {
+    id: "coming",
+    base: "tulema",
+    before: "Elanikud ootavad",
+    answers: ["tulevat"],
+    after: "nädalat.",
+  },
+  {
+    id: "walking",
+    base: "jalutama",
+    before: "Pargis",
+    answers: ["jalutades"],
+    after: "näeb uut silda.",
+  },
+  {
+    id: "paying",
+    base: "maksma",
+    before: "Lapsed pääsevad muuseumi",
+    answers: ["maksmata"],
+    after: "sisse.",
+  },
+  {
+    id: "reading",
+    base: "lugema",
+    before: "Ajalehe",
+    answers: ["lugemine"],
+    after: "võtab aega.",
+  },
+  { id: "rider", base: "sõitma", before: "Iga", answers: ["sõitja"], after: "ostab pileti." },
+  {
+    id: "friendly",
+    base: "sõber",
+    before: "Uus park on",
+    answers: ["sõbralik"],
+    after: "koht.",
+  },
+  {
+    id: "opened",
+    base: "avama",
+    before: "Eile näidati",
+    answers: ["avatud"],
+    after: "näitust.",
+  },
+  {
+    id: "waiting",
+    base: "ootama",
+    before: "Rongi",
+    answers: ["oodates"],
+    after: "loevad inimesed uudiseid.",
+  },
+] as const;
+
+export const NEWS_GAPS = [
+  {
+    id: "west",
+    before: "Homme hommikul liigub vihmapilv",
+    answer: "läbi",
+    after: "Lääne-Eesti ida poole.",
+  },
+  {
+    id: "clear",
+    before: "Pärastlõunal läheb ilm selgemaks,",
+    answer: "nii et",
+    after: "õhtul paistab jälle päike.",
+  },
+  { id: "cool", before: "Õues on jahe,", answer: "sest", after: "merelt puhub külm tuul." },
+  {
+    id: "street",
+    before: "Kesklinnas on üks tänav",
+    answer: "suletud",
+    after: ", kuna seal parandatakse torusid.",
+  },
+  { id: "bus", before: "Buss number neli sõidab", answer: "mööda", after: "teist tänavat." },
+  {
+    id: "drive",
+    before: "Autojuhtidel palutakse tööle",
+    answer: "sõites",
+    after: "rohkem aega varuda.",
+  },
+  { id: "storm", before: "Üritus", answer: "jääb ära", after: "ainult tugeva tormi korral." },
+  { id: "open", before: "Õhtul", answer: "avatakse", after: "tänav jälle liiklusele." },
+] as const;
+
+export const NEWS_SPARE = ["üle", "et", "suleti"] as const;
+
+export const NEWS_REPORT = NEWS_GAPS.map(({ before, answer, after }) =>
+  after.startsWith(",") ? `${before} ${answer}${after}` : `${before} ${answer} ${after}`,
+);
+
+const newsClosed = (sentences: readonly [string, ...string[]]): [string, ...string[]] => {
+  let now = withPronouns(sentences);
+  for (let i = 0; i < 3; i++) {
+    const next = withPronouns(now);
+    if (next.length === now.length) break;
+    now = next;
+  }
+  return now;
+};
+
+export const NEWS_TRANSLATE = [
+  "Uus raamatukogu avatakse reedel.",
+  "Tee on remondi tõttu suletud.",
+  "Ma kuulsin, et üritus jääb ära.",
+  "Me jäime koju, sest sadas.",
+  "Ma loen uudiseid kohvi juues.",
+  "Kohalikud elanikud ootavad uut bussi.",
+  "Tee läheb läbi pargi.",
+  "Sadas, nii et üritus jäi ära.",
+] as const;
+
+export const NEWS_ANSWERS: Record<(typeof NEWS_TRANSLATE)[number], readonly [string, ...string[]]> =
+  {
+    "Uus raamatukogu avatakse reedel.": [
+      "Uus raamatukogu avatakse reedel.",
+      "Reedel avatakse uus raamatukogu.",
+    ],
+    "Tee on remondi tõttu suletud.": [
+      "Tee on remondi tõttu suletud.",
+      "Tee on suletud remondi tõttu.",
+      "Remondi tõttu on tee suletud.",
+    ],
+    "Ma kuulsin, et üritus jääb ära.": newsClosed([
+      "Ma kuulsin, et üritus jääb ära.",
+      "Ma kuulsin, et üritus jäetakse ära.",
+    ]),
+    "Me jäime koju, sest sadas.": newsClosed([
+      "Me jäime koju, sest sadas.",
+      "Me jäime koju, kuna sadas.",
+      "Me jäime koju, sest vihma sadas.",
+      "Me jäime koju, kuna vihma sadas.",
+      "Me jäime koju, sest sadas vihma.",
+      "Me jäime koju, kuna sadas vihma.",
+      "Kuna sadas, jäime koju.",
+      "Kuna sadas, jäime me koju.",
+      "Kuna vihma sadas, jäime koju.",
+      "Kuna sadas vihma, jäime koju.",
+    ]),
+    "Ma loen uudiseid kohvi juues.": newsClosed([
+      "Ma loen uudiseid kohvi juues.",
+      "Ma loen kohvi juues uudiseid.",
+      "Kohvi juues loen ma uudiseid.",
+      "Kohvi juues loen uudiseid.",
+    ]),
+    "Kohalikud elanikud ootavad uut bussi.": [
+      "Kohalikud elanikud ootavad uut bussi.",
+      "Uut bussi ootavad kohalikud elanikud.",
+    ],
+    "Tee läheb läbi pargi.": [
+      "Tee läheb läbi pargi.",
+      "Läbi pargi läheb tee.",
+      "Rada läheb läbi pargi.",
+      "Läbi pargi läheb rada.",
+    ],
+    "Sadas, nii et üritus jäi ära.": [
+      "Sadas, nii et üritus jäi ära.",
+      "Vihma sadas, nii et üritus jäi ära.",
+      "Sadas vihma, nii et üritus jäi ära.",
+    ],
+  };
+
+export const NEWS_FIXES = [
+  {
+    id: "closed",
+    wrong: "Tee on remondi tõttu sulgenud.",
+    right: "Tee on remondi tõttu suletud.",
+  },
+  {
+    id: "forest",
+    wrong: "Lapsed läksid parki läbi mets.",
+    right: "Lapsed läksid parki läbi metsa.",
+  },
+  {
+    id: "coffee",
+    wrong: "Ma loen uudiseid kohvi joomata.",
+    right: "Ma loen uudiseid kohvi juues.",
+  },
+  {
+    id: "library",
+    wrong: "Uus raamatukogu avab reedel.",
+    right: "Uus raamatukogu avatakse reedel.",
+  },
+  {
+    id: "party",
+    wrong: "Me ei läinud peole, et sadas.",
+    right: "Me ei läinud peole, sest sadas.",
+  },
+  {
+    id: "water",
+    wrong: "Ma kuulen jooksev vett.",
+    right: "Ma kuulen jooksvat vett.",
+  },
+] as const;
+
+export const NEWS_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Tee on remondi tõttu suletud.": ["Tee on remondi tõttu suletud."],
+  "Lapsed läksid parki läbi metsa.": ["Lapsed läksid parki läbi metsa."],
+  "Ma loen uudiseid kohvi juues.": ["Ma loen uudiseid kohvi juues."],
+  "Uus raamatukogu avatakse reedel.": ["Uus raamatukogu avatakse reedel."],
+  "Me ei läinud peole, sest sadas.": [
+    "Me ei läinud peole, sest sadas.",
+    "Me ei läinud peole, kuna sadas.",
+  ],
+  "Ma kuulen jooksvat vett.": ["Ma kuulen jooksvat vett."],
+};
+
+export const NEWS_CONVERSATION: Conversation = {
+  turns: [
+    {
+      voice: "fourth",
+      text: [
+        "Tere õhtust, kallid kuulajad!",
+        "Kell on kuus ja algavad kohalikud uudised.",
+        "Täna räägime Tartu sügispäevast, mis toimub juba sel laupäeval.",
+        "Stuudios on külas ürituse korraldaja Liisa Tamm.",
+        "Tere tulemast, Liisa!",
+      ],
+    },
+    { voice: "third", text: "Tere õhtust ja aitäh kutse eest!" },
+    {
+      voice: "fourth",
+      text: "Paljud elanikud küsivad, mis kell sügispäev algab ja kus kõik toimub.",
+    },
+    {
+      voice: "third",
+      text: [
+        "Me alustame hommikul kell kümme raekoja platsil ja üritus kestab kella kuueni õhtul.",
+        "Kõik töötoad ja kontserdid on külastajatele tasuta, nii et kohale võib tulla kogu perega.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Kesklinnas on laupäeval ka mõned liiklusmuudatused.",
+        "Kas inimesed peaksid auto koju jätma?",
+      ],
+    },
+    {
+      voice: "third",
+      text: [
+        "Jah, seda me kindlasti soovitame.",
+        "Ülikooli tänav on hommikul kella kaheksast õhtul kella kaheksani autodele suletud, sest sinna pannakse püsti turulauad ja lava.",
+        "Linnabussid sõidavad aga tavapäraselt ja kesklinna liinidel liiguvad bussid laupäeval tihedamini.",
+      ],
+    },
+    { voice: "fourth", text: "Mida külastajad platsil teha ja vaadata saavad?" },
+    {
+      voice: "third",
+      text: [
+        "Päeva jooksul on avatud kohalike tegijate laat, kus müüakse värsket leiba, mett ja käsitööd.",
+        "Lastele korraldatakse pargis joonistamise töötuba ja kell kaksteist algab väike teatrietendus.",
+        "Lõuna ajal räägib linna aednik, kuidas sügisel viljapuid hoida ja vanu lehti kasutada.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Ilmateade lubas nädala alguses laupäevaks vihma ja tugevat tuult.",
+        "Mis siis saab, kui hakkab sadama?",
+      ],
+    },
+    {
+      voice: "third",
+      text: [
+        "Õnneks lubab uus prognoos kuiva ja jahedat ilma, umbes üheksa kraadi sooja.",
+        "Aga kui peaks siiski vihma sadama, ei jää üritus ära.",
+        "Meil on platsi servas kaks suurt telki, kuhu mahuvad nii esinejad kui ka kuulajad.",
+        "Soovitame siiski sooja jope selga panna, sest jõe ääres võib tuul olla jahe.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: "Kas te otsite veel vabatahtlikke, kes aitaksid päeva läbi viia?",
+    },
+    {
+      voice: "third",
+      text: [
+        "Meil on juba üle kolmekümne abilise, kes aitavad laudu üles panna ja külalistele teed juhatada.",
+        "Kuid kui keegi tahab veel liituda, saab ta meie kodulehel registreeruda kuni reede lõunani.",
+        "Iga abiline saab sooja lõunasöögi ja festivali särgi.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Eelmisel aastal käis sügispäeval ligi kolm tuhat inimest.",
+        "Kas te ootate sel aastal veel rohkem külastajaid?",
+      ],
+    },
+    {
+      voice: "third",
+      text: [
+        "Loodame küll, sest tänavu tulevad kohale ka külalised Viljandist ja Pärnust.",
+        "Õhtul kell viis astub lavale kohalik koor, kelle kontsert lõpetab päeva.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Aitäh stuudiosse tulemast, Liisa, ja ilusat sügispäeva!",
+        "Nüüd aga lühike ülevaade homsest ilmast.",
+        "Homme hommikul on taevas pilves, kuid pärastlõunal läheb selgemaks ja õhtul paistab päike.",
+        "Pühapäeval püsib kuiv ilm ning sooja on kuni üksteist kraadi.",
+      ],
+    },
+    {
+      voice: "third",
+      text: "Aitäh ja kohtumiseni laupäeval!",
+      say: "[warm] Aitäh ja kohtumiseni laupäeval!",
+    },
+  ],
+};
+
+export const NEWS_LETTER_BODY = [
+  "Lugupeetud toimetus!",
+  "Lugesin teie lehest artiklit uuest jalgrattateest jõe ääres ja tahan kohalike elanike nimel linna tänada.",
+  "Ma sõidan iga päev tööle rattaga ning varem oli kitsal tänaval sõitmine üsna ohtlik, sest autod sõitsid väga lähedalt mööda.",
+  "Uus tee läbi pargi on rahulik ja hästi valgustatud, nii et ka pimedatel õhtutel on meeldiv koju tulla.",
+  "Üks asi vajab siiski veel tähelepanu, kuna silla juures puudub hea ülekäigurada.",
+  "Kui linn paneks sinna selge märgi ja parema valgustuse, saaksid lapsed kooli minna veelgi turvalisemalt.",
+  "Loodan, et seda ettepanekut arutatakse juba sügisel.",
+] as const;
+
+export const NEWS_LETTER_SIGN = ["Lugupidamisega", "Mart Kask"] as const;
+
+const NEWS_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...NEWS_PHRASES,
+    ...NEWS_TERMS,
+    ...NEWS_EXTRA_WORDS,
+    ...NEWS_FORMS.map(({ before, answers, after }) => `${before} ${answers[0]} ${after}`),
+    ...NEWS_TRANSLATE,
+    ...NEWS_FIXES.map(({ right }) => right),
+  ]),
+  "p-ilmateade": { sentences: NEWS_REPORT, voice: "fourth" },
+  "c-raadio": NEWS_CONVERSATION,
+};
+
+export const REP_SAY = [
+  { id: "tired", from: "Mari ütles: „Ma olen väsinud.“", cue: "ütles, et" },
+  { id: "busy", from: "Peeter ütles: „Mul on kiire.“", cue: "ütles, et" },
+  { id: "went", from: "Mari rääkis: „Ma käisin eile Tallinnas.“", cue: "rääkis, et" },
+  { id: "not", from: "Peeter ütles: „Ma ei tule.“", cue: "ütles, et" },
+  { id: "you", from: "Mari ütles mulle: „Sa oled väsinud.“", cue: "ütles, et" },
+  { id: "sister", from: "Mari rääkis: „Mu õde elab Tartus.“", cue: "rääkis, et" },
+  { id: "time", from: "Peeter ütles: „Mul ei ole aega.“", cue: "ütles, et" },
+  { id: "studies", from: "Mari rääkis: „Ma õpin eesti keelt.“", cue: "rääkis, et" },
+] as const;
+
+export const REP_SAY_ANSWERS: Record<(typeof REP_SAY)[number]["id"], Said> = {
+  tired: ["Mari ütles, et ta on väsinud.", "Mari ütles, et tema on väsinud."],
+  busy: ["Peeter ütles, et tal on kiire.", "Peeter ütles, et temal on kiire."],
+  went: [
+    "Mari rääkis, et ta käis eile Tallinnas.",
+    "Mari rääkis, et ta käis Tallinnas eile.",
+    "Mari rääkis, et eile käis ta Tallinnas.",
+    "Mari rääkis, et tema käis eile Tallinnas.",
+    "Mari rääkis, et tema käis Tallinnas eile.",
+    "Mari rääkis, et eile käis tema Tallinnas.",
+  ],
+  not: ["Peeter ütles, et ta ei tule.", "Peeter ütles, et tema ei tule."],
+  you: [
+    "Mari ütles mulle, et ma olen väsinud.",
+    "Mari ütles mulle, et mina olen väsinud.",
+    "Mari ütles mulle, et olen väsinud.",
+  ],
+  sister: ["Mari rääkis, et tema õde elab Tartus.", "Mari rääkis, et ta õde elab Tartus."],
+  time: [
+    "Peeter ütles, et tal ei ole aega.",
+    "Peeter ütles, et tal pole aega.",
+    "Peeter ütles, et temal ei ole aega.",
+    "Peeter ütles, et temal pole aega.",
+  ],
+  studies: ["Mari rääkis, et ta õpib eesti keelt.", "Mari rääkis, et tema õpib eesti keelt."],
+};
+
+export const REP_ASK = [
+  { id: "come", from: "Mari küsis: „Kas sa tuled?“", cue: "küsis, kas" },
+  { id: "time", from: "Peeter küsis: „Kas sul on aega?“", cue: "küsis, kas" },
+  { id: "home", from: "Mari küsis: „Kas Peeter on kodus?“", cue: "küsis, kas" },
+  { id: "ill", from: "Ma küsisin Marilt: „Kas sa oled haige?“", cue: "küsisin, kas" },
+  { id: "when", from: "Peeter küsis: „Millal sa tuled?“", cue: "küsis, millal" },
+  { id: "speak", from: "Mari küsis: „Kas sa räägid eesti keelt?“", cue: "küsis, kas" },
+] as const;
+
+export const REP_ASK_ANSWERS: Record<(typeof REP_ASK)[number]["id"], Said> = {
+  come: ["Mari küsis, kas ma tulen.", "Mari küsis, kas mina tulen.", "Mari küsis, kas tulen."],
+  time: ["Peeter küsis, kas mul on aega."],
+  home: ["Mari küsis, kas Peeter on kodus."],
+  ill: [
+    "Ma küsisin Marilt, kas ta on haige.",
+    "Ma küsisin Marilt, kas tema on haige.",
+    "Mina küsisin Marilt, kas ta on haige.",
+    "Mina küsisin Marilt, kas tema on haige.",
+    "Küsisin Marilt, kas ta on haige.",
+    "Küsisin Marilt, kas tema on haige.",
+  ],
+  when: [
+    "Peeter küsis, millal ma tulen.",
+    "Peeter küsis, millal mina tulen.",
+    "Peeter küsis, millal tulen.",
+  ],
+  speak: [
+    "Mari küsis, kas ma räägin eesti keelt.",
+    "Mari küsis, kas mina räägin eesti keelt.",
+    "Mari küsis, kas räägin eesti keelt.",
+  ],
+};
+
+export const REP_TABLE = [
+  { id: "ma", direct: "Ma tulen homme.", said: "Mari ütles, et ta tuleb homme." },
+  { id: "mul", direct: "Mul on külm.", said: "Peeter ütles, et tal on külm." },
+  { id: "sa", direct: "Sa räägid hästi.", said: "Mari ütles, et ma räägin hästi." },
+  {
+    id: "mu",
+    direct: "Mu vend töötab koolis.",
+    said: "Peeter rääkis, et tema vend töötab koolis.",
+  },
+] as const;
+
+export const REP_ASK_TABLE = [
+  { id: "kas", direct: "Kas sul on kiire?", said: "Peeter küsis, kas mul on kiire." },
+  { id: "kus", direct: "Kus sa elad?", said: "Mari küsis, kus ma elan." },
+  { id: "mida", direct: "Mida sa teed?", said: "Peeter küsis, mida ma teen." },
+] as const;
+
+export const REP_STAYS = [
+  { id: "ill-now", means: "now", said: "Mari ütles, et ta on haige." },
+  { id: "ill-before", means: "before", said: "Mari ütles, et ta oli eile haige." },
+  { id: "come-later", means: "later", said: "Peeter ütles, et ta tuleb homme." },
+  { id: "went-before", means: "before", said: "Peeter rääkis, et ta käis eile Tallinnas." },
+  { id: "lives-now", means: "now", said: "Mari rääkis, et ta elab Tartus." },
+  { id: "home-later", means: "later", said: "Mari ütles, et ta läheb homme koju." },
+  { id: "studies-now", means: "now", said: "Peeter ütles, et ta õpib eesti keelt." },
+  { id: "drove-before", means: "before", said: "Peeter rääkis, et ta sõitis eile Tartusse." },
+] as const;
+
+export const REP_VERBS = {
+  most: [
+    { inf: "tulema", form: "tulevat", said: "Ta tulevat homme." },
+    { inf: "lugema", form: "lugevat", said: "Ta lugevat iga päev ajalehte." },
+    { inf: "elama", form: "elavat", said: "Ta elavat nüüd Tartus." },
+    { inf: "töötama", form: "töötavat", said: "Ta töötavat koolis." },
+    { inf: "rääkima", form: "rääkivat", said: "Ta rääkivat hästi eesti keelt." },
+    { inf: "magama", form: "magavat", said: "Ta magavat terve päeva." },
+  ],
+  short: [
+    { inf: "olema", form: "olevat", said: "Ta olevat haige." },
+    { inf: "minema", form: "minevat", said: "Ta minevat homme koju." },
+    { inf: "tegema", form: "tegevat", said: "Ta tegevat palju tööd." },
+    { inf: "jooma", form: "joovat", said: "Ta joovat iga päev kohvi." },
+    { inf: "sööma", form: "söövat", said: "Ta söövat ainult kala." },
+  ],
+} as const;
+
+export const REP_TYPED = [
+  "tulema",
+  "lugema",
+  "elama",
+  "olema",
+  "minema",
+  "tegema",
+  "jooma",
+  "rääkima",
+] as const;
+
+export const REP_PAIRS = [
+  {
+    id: "ill",
+    label: "ill",
+    said: "Mari ütles, et ta on haige.",
+    vat: "Mari olevat haige.",
+  },
+  {
+    id: "coming",
+    label: "coming",
+    said: "Peeter ütles, et ta tuleb homme.",
+    vat: "Peeter tulevat homme.",
+  },
+] as const;
+
+export const REP_HEARD = [
+  { id: "liisa-said", means: "named", said: "Liisa ütles, et ta tuleb laupäeval." },
+  { id: "liisa-vat", means: "reported", said: "Liisa tulevat laupäeval." },
+  { id: "kalev-said", means: "named", said: "Kalev rääkis, et ta elab nüüd Tartus." },
+  { id: "kalev-vat", means: "reported", said: "Kalev elavat nüüd Tartus." },
+  { id: "rain-vat", means: "reported", said: "Homme sadavat vihma." },
+  { id: "rain-said", means: "named", said: "Peeter ütles, et homme sajab vihma." },
+  { id: "concert-vat", means: "reported", said: "Kontsert algavat kell kuus." },
+  { id: "concert-said", means: "named", said: "Mari ütles, et kontsert algab kell kuus." },
+] as const;
+
+export const REP_WRITE = [
+  { id: "w1", said: "Peeter ütles, et ta tuleb homme." },
+  { id: "w2", said: "Mari ütles, et ta ootab bussi." },
+  { id: "w3", said: "Peeter küsis, kas ta on kodus." },
+  { id: "w4", said: "Ma küsisin, kas sa räägid eesti keelt." },
+  { id: "w5", said: "Ta olevat haige." },
+  { id: "w6", said: "Ta ei tulevat homme." },
+] as const;
+
+export const REP_WRITE_ANSWERS: Record<string, Said> = {
+  "Peeter ütles, et ta tuleb homme.": [
+    "Peeter ütles, et ta tuleb homme.",
+    "Peeter ütles, et homme ta tuleb.",
+    "Peeter ütles, et tema tuleb homme.",
+    "Peeter ütles, et homme tema tuleb.",
+  ],
+  "Mari ütles, et ta ootab bussi.": [
+    "Mari ütles, et ta ootab bussi.",
+    "Mari ütles, et tema ootab bussi.",
+  ],
+  "Peeter küsis, kas ta on kodus.": [
+    "Peeter küsis, kas ta on kodus.",
+    "Peeter küsis, kas tema on kodus.",
+  ],
+  "Ma küsisin, kas sa räägid eesti keelt.": [
+    "Ma küsisin, kas sa räägid eesti keelt.",
+    "Küsisin, kas sa räägid eesti keelt.",
+    "Küsisin, kas räägid eesti keelt.",
+    "Ma küsisin, kas räägid eesti keelt.",
+    "Ma küsisin, kas sina räägid eesti keelt.",
+    "Küsisin, kas sina räägid eesti keelt.",
+    "Mina küsisin, kas sa räägid eesti keelt.",
+    "Mina küsisin, kas räägid eesti keelt.",
+    "Mina küsisin, kas sina räägid eesti keelt.",
+  ],
+  "Ta olevat haige.": ["Ta olevat haige.", "Tema olevat haige."],
+  "Ta ei tulevat homme.": [
+    "Ta ei tulevat homme.",
+    "Homme ta ei tulevat.",
+    "Tema ei tulevat homme.",
+    "Homme tema ei tulevat.",
+  ],
+};
+
+export const REP_FIXES = [
+  { wrong: "Mari ütles, et mul on kiire.", right: "Mari ütles, et tal on kiire." },
+  { wrong: "Mari küsis, et ma tulen.", right: "Mari küsis, kas ma tulen." },
+  { wrong: "Peeter rääkis, kas ta käis Tallinnas.", right: "Peeter rääkis, et ta käis Tallinnas." },
+  { wrong: "Ta tulemat homme.", right: "Ta tulevat homme." },
+  { wrong: "Ta olevad haige.", right: "Ta olevat haige." },
+  { wrong: "Peeter ütles, et ta tulen homme.", right: "Peeter ütles, et ta tuleb homme." },
+] as const;
+
+export const REP_FIX_ANSWERS: Record<string, Said> = Object.fromEntries(
+  REP_FIXES.map(({ right }) => [right, [right]]),
+);
+
+export const REP_DIARY = [
+  "Linna raamatukogu kolib sügisel uude majja.",
+  "Uus maja on jõe ääres ja seal on palju rohkem ruumi.",
+  "Uue maja ehitamine võttis kaks aastat.",
+  "Raamatukogu juht ütles, et kolimine algab septembri lõpus.",
+  "Ta rääkis, et vana maja on liiga väike, sest raamatuid tuleb igal aastal juurde.",
+  "Uues majas olevat suur lugemissaal, kohvik ja mänguruum lastele.",
+  "Seal on rohkem laudu, kus saab õppida ja arvutiga töötada.",
+  "Uue maja lähedal on bussipeatus, nii et lugejatel on lihtne kohale tulla.",
+  "Raamatukogu töötajad ütlesid, et nad ootavad kolimist ja lugejaid.",
+  "Lugejatel on kolimise kohta palju küsimusi.",
+  "Üks lugeja küsis, kas raamatuid saab kolimise ajal laenutada.",
+  "Juht vastas, et raamatukogu on kinni ainult kolm päeva.",
+  "Ta lisas, et enne kolimist saab raamatuid veel tagasi tuua.",
+  "Üks vanem lugeja ütles, et ta käib siin juba kolmkümmend aastat.",
+  "Ta ütles ka, et uus maja meeldib talle juba praegu, kuigi ta ei ole seal veel käinud.",
+  "Linnas räägitakse ka, et vanasse majja tulevat sügisel kauplus.",
+  "Linnavalitsus pole seda veel kinnitanud.",
+  "Üks naaber rääkis, et ta ei taha seal poodi, sest tänaval on juba nii palju autosid.",
+  "Keegi ei tea veel, kas see jutt on tõsi.",
+  "Uue raamatukogu avamine olevat plaanis esimesel oktoobril.",
+  "Avamisele tulevat ka linnapea.",
+  "Raamatukogu juht ütles, et kõik lugejad on oodatud.",
+] as const;
+
+export const REP_CONVERSATION: Conversation = {
+  turns: [
+    { voice: "fourth", text: ["Tere, Liisa!", "Kuidas sul täna läheb?"] },
+    {
+      voice: "third",
+      text: [
+        "Tere, Kalev!",
+        "Täna on mul väga kiire.",
+        "Ülemus ütles hommikul, et ta tahab aruannet täna õhtuks.",
+      ],
+    },
+    { voice: "fourth", text: "Kas ta küsis, kas sa jõuad?" },
+    {
+      voice: "third",
+      text: ["Küsis küll.", "Ma ütlesin, et ma proovin.", "Aga kõigepealt helistas mulle Mari."],
+    },
+    { voice: "fourth", text: "Mis ta ütles?" },
+    { voice: "third", text: "Ta ütles, et ta on haige ja ei tule täna tööle." },
+    {
+      voice: "fourth",
+      text: ["Oi, see ei ole hea.", "Kas ta tuleb laupäeval meiega kontserdile?"],
+    },
+    { voice: "third", text: ["Ma küsisin just seda.", "Ta ütles, et ta ei tea veel."] },
+    { voice: "fourth", text: "Kas sa küsisid, kas ta vajab midagi?" },
+    { voice: "third", text: ["Küsisin.", "Ta ütles, et ta vajab ainult und."] },
+    { voice: "fourth", text: ["Hea.", "Kas ta ütles ka, millal ta tagasi tuleb?"] },
+    { voice: "third", text: "Ta ütles, et ta tuleb esmaspäeval, kui ta on terve." },
+    { voice: "fourth", text: "Aga mulle räägiti, et Mari olevat eile õhtul kinos käinud." },
+    { voice: "third", text: ["Tõesti?", "Mari rääkis mulle, et ta oli eile terve päeva kodus."] },
+    { voice: "fourth", text: ["Siis ei ole see vist tõsi.", "Inimesed räägivad nii palju."] },
+    { voice: "third", text: ["Täpselt.", "Kuule, raadios öeldi, et laupäeval sadavat vihma."] },
+    { voice: "fourth", text: ["Siis võtame vihmavarju kaasa.", "Kas kontsert on õues?"] },
+    {
+      voice: "third",
+      text: ["Ei, see on saalis.", "Piletil on kirjas, et kontsert algab kell kuus."],
+    },
+    {
+      voice: "fourth",
+      text: ["Hea küll.", "Ma helistasin eile kassasse ja küsisin, kas piletid on veel alles."],
+    },
+    { voice: "third", text: "Mida nad vastasid?" },
+    { voice: "fourth", text: "Nad ütlesid, et on küll, aga neid on väga vähe." },
+    {
+      voice: "third",
+      text: [
+        "Siis osta need varsti.",
+        "Naabrid rääkisid, et kontsert olevat peaaegu välja müüdud.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Jah, ma ostan need täna õhtul.",
+        "Mu vend ütles, et ta tuleb ka.",
+        "Ta küsis, kas ma saan talle pileti osta.",
+      ],
+    },
+    { voice: "third", text: "Kas sa oled sellel kontserdil varem käinud?" },
+    {
+      voice: "fourth",
+      text: ["Jah, eelmisel aastal.", "Ma ütlesin siis kõigile, et see oli väga hea kontsert."],
+    },
+    { voice: "third", text: "Mu õde rääkis, et ta oli seal juba kolm korda." },
+    { voice: "fourth", text: "Kas talle meeldis?" },
+    { voice: "third", text: "Ta ütles, et meeldis väga ja et ta läheb uuesti." },
+    { voice: "fourth", text: "Minu ülemus küsis täna, kas keegi tahab reedel kauem töötada." },
+    { voice: "third", text: "Ja mida sa ütlesid?" },
+    { voice: "fourth", text: "Ma ütlesin, et ma tulen hea meelega." },
+    {
+      voice: "third",
+      text: [
+        "Mu ema helistas hommikul ja küsis, kas ma tulen pühapäeval sööma.",
+        "Ma ütlesin, et ma ei saa, sest mul on kontsert.",
+      ],
+    },
+    { voice: "fourth", text: "Ja mis ta vastas?" },
+    {
+      voice: "third",
+      text: [
+        "Ta ütles, et siis tuleb ta ise meile.",
+        "Kolleegid räägivad ka, et sügisel tulevat meile uus ülemus.",
+      ],
+    },
+    { voice: "fourth", text: ["Oi!", "Kes sulle seda rääkis?"] },
+    { voice: "third", text: ["Ei tea.", "Keegi ütles seda koridoris."] },
+    {
+      voice: "fourth",
+      text: [
+        "Siis ära usu liiga palju.",
+        "Ma helistan Marile homme hommikul ja küsin, kas ta tuleb.",
+      ],
+    },
+    { voice: "third", text: ["Hästi.", "Anna mulle siis teada.", "Nägemist, Kalev!"] },
+    { voice: "fourth", text: ["Nägemist, Liisa!", "Kohtume laupäeval."] },
+  ],
+};
+
+const REP_CLIPS: Record<string, Clip> = {
+  ...words([
+    "ütles",
+    "rääkis",
+    "küsis",
+    ...REP_TABLE.flatMap(({ direct, said }) => [direct, said]),
+    ...REP_ASK_TABLE.flatMap(({ direct, said }) => [direct, said]),
+    ...REP_STAYS.map(({ said }) => said),
+    ...Object.values(REP_VERBS).flatMap((verbs) =>
+      verbs.flatMap(({ inf, form, said }) => [inf, form, said]),
+    ),
+    ...REP_PAIRS.flatMap(({ said, vat }) => [said, vat]),
+    ...REP_HEARD.map(({ said }) => said),
+    ...REP_SAY.map(({ id }) => REP_SAY_ANSWERS[id][0]),
+    ...REP_ASK.map(({ id }) => REP_ASK_ANSWERS[id][0]),
+    ...REP_WRITE.map(({ said }) => said),
+    ...REP_FIXES.map(({ right }) => right),
+  ]),
+  "c-liisa": REP_CONVERSATION,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: {
     ...words(HAALDUS_WORDS),
@@ -16591,7 +17557,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "ootan-sind": GOVERNMENT_CLIPS,
   "aru-saama": IDIOM_CLIPS,
   "lugedes-lugemata": DES_CLIPS,
-  "ta-olevat-haige": REP_CLIPS,
+  "raamat-mille-ostsin": REL_CLIPS,
   "labi-metsa": ROUTE_CLIPS,
   "opetaja-lugemine": AGENT_CLIPS,
   "sobralik-kodutu": SUFFIX_CLIPS,
@@ -16603,5 +17569,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "mineviku-eitus": PAST_NO_CLIPS,
   tulevik: FUTURE_CLIPS,
   nadalavahetusel: WEEKEND_CLIPS,
+  uudised: NEWS_CLIPS,
+  "ta-olevat-haige": REP_CLIPS,
   kit: KIT_CLIPS,
 };

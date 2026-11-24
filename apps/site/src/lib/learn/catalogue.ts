@@ -544,7 +544,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 24,
         blurb: msg`A free Estonian lesson on joining clauses: et (that, so that), sest and kuna (because), kui (when, if) and nii et (so); how to tell a reason from a result, the comma that usually comes before the linking word, and where the verb usually goes after it. Every sentence is read aloud.`,
       },
-      { name: msg`Relative clauses`, et: "Raamat, mille ostsin" },
+      {
+        slug: "raamat-mille-ostsin",
+        name: msg`Relative clauses`,
+        title: msg`Estonian relative clauses: who, which and where`,
+        et: "Raamat, mille ostsin",
+        minutes: 28,
+        blurb: msg`A free Estonian lesson on relative clauses: mis, which usually follows a thing or an idea, and kes, which follows a person (raamat, mille ma ostsin; naine, kellega ma rääkisin), the case the word takes in its own clause (kelle, keda, mille, mida), kus for places, and the commas around the clause. Every sentence is read aloud.`,
+      },
       {
         slug: "ta-olevat-haige",
         name: msg`Reported speech`,
@@ -553,7 +560,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 24,
         blurb: msg`A free Estonian lesson on reporting what someone said: ütles, et and rääkis, et for statements and küsis, kas for yes-or-no questions, how the person words change while the verb usually keeps its tense (Ta ütles, et tal on kiire), and the -vat form (Ta olevat haige, Ta ei tulevat), which is mostly met in news and reports and usually names no source. Every sentence is read aloud.`,
       },
-      { name: msg`Practice: reading the news`, et: "Uudised" },
+      {
+        slug: "uudised",
+        name: msg`Practice: reading the news`,
+        title: msg`Estonian B1 practice: reading and listening to the news`,
+        et: "Uudised",
+        minutes: 25,
+        blurb: msg`Free Estonian B1 practice with news: read a local news story, tell stage 6 forms apart, fill a weather and traffic report, write and fix news sentences, follow a radio interview heard twice and write a short letter to the editor. Every sentence is read aloud.`,
+      },
     ],
   },
 ];

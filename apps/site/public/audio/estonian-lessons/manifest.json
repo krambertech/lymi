@@ -1949,6 +1949,464 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "et-sest-kui/buss-hilines-nii-et-ma-tulin-to2o2le-hilja": {
+    "text": "Buss hilines, nii et ma tulin tööle hilja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/c-matk": {
+    "text": "Tere, Jaan! Kas sa kuulsid, et laupäeval hakkab sadama? Ei kuulnud. Ma lootsin, et me saame laupäeval Lahemaal matkata, sest ma olen sinna juba ammu tahtnud minna. Kui sajab terve päeva, ei ole seal midagi teha. Ilmateade ütleb, et pühapäeval paistab päike, nii et võime matka pühapäevale tõsta. Pühapäev sobib mulle, aga mu õel on sünnipäev. Ta kutsus mind õhtul külla, sest ta tahab, et kõik oleksid koos. Siis peame vara minema. Kui me sõidame hommikul kell kaheksa välja, oleme õhtul tagasi. Kell kaheksa on mulle vara, kuna ma ei ole hommikuinimene. Aga hea küll. Kes sõidab? Sinu auto on remondis, nii et sõidame minu autoga. Bensiini eest maksad sina, kui sa tahad. Sobib. Ma võtan võileivad ja tee kaasa, sest sa unustasid eelmisel korral toidu koju. See juhtus ainult üks kord! Aga võta ka šokolaadi, kui sul poes aega on. Hea küll. Mida me selga paneme? Kui hommikul veel sajab, võtan vihmajope. Pane soojad riided ja tugevad kingad, sest metsas on pärast vihma märg. Matk on kümme kilomeetrit, nii et vajame terve päeva. Kümme kilomeetrit on palju, aga ma proovin, sest mul on vaja liikuda. Mul on ainult vanad tossud, nii et ostan täna uued saapad. Hea mõte. Mina võtan kaasa kaardi, kuna metsas ei ole alati levi. Mina toon kuuma kohvi ja kaks tassi, sest metsas maitseb see kõige paremini. Kus me kohtume? Kui sa tuled mulle järele, pean ma sulle aadressi saatma. Ma tulen kell kaheksa sinu maja juurde, nii et ole palun õigel ajal väljas. Ma ei saa kaua oodata, sest seal on parkimine keelatud. Ma olen kümme minutit enne kaheksat väljas, kuna ma tean, et sulle ei meeldi oodata. Ma saadan sulle õhtul aadressi, et sa ei peaks hommikul küsima. Kuhu me lõunaks jõuame? Käsmusse. Ma tahan sinna minna, sest seal on väike meremuuseum ja ma ei ole seal kunagi käinud. Pärast saame minna mere äärde jalutama, kui ilm on ilus. Mina käisin seal suvel, nii et saan sulle kõike näidata. Aga kui pühapäeval ikkagi sajab, siis jääme linna. Siis läheme hoopis kinno. Kui sajab ainult natuke, lähme siiski. Vihm ei ole probleem, kui riided on õiged. Nõus. Aga kui tuul läheb tugevaks, pöörame tagasi, sest metsas on siis ohtlik. Kokku lepitud. Ma vaatan hommikul ilmateadet ja helistan sulle, kui me ikkagi läheme. Tore. Nägemist! Nägemist!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Jaan!",
+          "Kas sa kuulsid, et laupäeval hakkab sadama?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei kuulnud.",
+          "Ma lootsin, et me saame laupäeval Lahemaal matkata, sest ma olen sinna juba ammu tahtnud minna.",
+          "Kui sajab terve päeva, ei ole seal midagi teha."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ilmateade ütleb, et pühapäeval paistab päike, nii et võime matka pühapäevale tõsta."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Pühapäev sobib mulle, aga mu õel on sünnipäev.",
+          "Ta kutsus mind õhtul külla, sest ta tahab, et kõik oleksid koos."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Siis peame vara minema.",
+          "Kui me sõidame hommikul kell kaheksa välja, oleme õhtul tagasi."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kell kaheksa on mulle vara, kuna ma ei ole hommikuinimene.",
+          "Aga hea küll.",
+          "Kes sõidab?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Sinu auto on remondis, nii et sõidame minu autoga.",
+          "Bensiini eest maksad sina, kui sa tahad."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Sobib.",
+          "Ma võtan võileivad ja tee kaasa, sest sa unustasid eelmisel korral toidu koju."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "See juhtus ainult üks kord!",
+          "Aga võta ka šokolaadi, kui sul poes aega on."
+        ],
+        "say": "[laughs] See juhtus ainult üks kord! Aga võta ka šokolaadi, kui sul poes aega on."
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hea küll.",
+          "Mida me selga paneme?",
+          "Kui hommikul veel sajab, võtan vihmajope."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Pane soojad riided ja tugevad kingad, sest metsas on pärast vihma märg.",
+          "Matk on kümme kilomeetrit, nii et vajame terve päeva."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kümme kilomeetrit on palju, aga ma proovin, sest mul on vaja liikuda.",
+          "Mul on ainult vanad tossud, nii et ostan täna uued saapad."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hea mõte.",
+          "Mina võtan kaasa kaardi, kuna metsas ei ole alati levi.",
+          "Mina toon kuuma kohvi ja kaks tassi, sest metsas maitseb see kõige paremini."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kus me kohtume?",
+          "Kui sa tuled mulle järele, pean ma sulle aadressi saatma."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ma tulen kell kaheksa sinu maja juurde, nii et ole palun õigel ajal väljas.",
+          "Ma ei saa kaua oodata, sest seal on parkimine keelatud."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma olen kümme minutit enne kaheksat väljas, kuna ma tean, et sulle ei meeldi oodata.",
+          "Ma saadan sulle õhtul aadressi, et sa ei peaks hommikul küsima.",
+          "Kuhu me lõunaks jõuame?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Käsmusse.",
+          "Ma tahan sinna minna, sest seal on väike meremuuseum ja ma ei ole seal kunagi käinud.",
+          "Pärast saame minna mere äärde jalutama, kui ilm on ilus."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mina käisin seal suvel, nii et saan sulle kõike näidata.",
+          "Aga kui pühapäeval ikkagi sajab, siis jääme linna.",
+          "Siis läheme hoopis kinno."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kui sajab ainult natuke, lähme siiski.",
+          "Vihm ei ole probleem, kui riided on õiged."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Nõus.",
+          "Aga kui tuul läheb tugevaks, pöörame tagasi, sest metsas on siis ohtlik."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kokku lepitud.",
+          "Ma vaatan hommikul ilmateadet ja helistan sulle, kui me ikkagi läheme."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tore.",
+          "Nägemist!"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Nägemist!"
+        ]
+      }
+    ]
+  },
+  "et-sest-kui/ehitajad": {
+    "text": "ehitajad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/enamik": {
+    "text": "enamik",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/et": {
+    "text": "et",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/helista-mulle-kui-sa-koju-jo3uad": {
+    "text": "Helista mulle, kui sa koju jõuad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/helistan-sulle-kui-ma-koju-jo3uan": {
+    "text": "Helistan sulle, kui ma koju jõuan.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/hommikuinimene": {
+    "text": "hommikuinimene",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ilmateade": {
+    "text": "ilmateade",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ja2ime-koju-sest-sadas": {
+    "text": "Jäime koju, sest sadas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/kindad": {
+    "text": "kindad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/kohvik-oli-kinni-nii-et-me-la2ksime-koju": {
+    "text": "Kohvik oli kinni, nii et me läksime koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/komistas": {
+    "text": "komistas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/kui": {
+    "text": "kui",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/kui-ma-koju-jo3uan-helistan-sulle": {
+    "text": "Kui ma koju jõuan, helistan sulle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/kui-ma-va2sin-puhkan-natuke": {
+    "text": "Kui ma väsin, puhkan natuke.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/kui-sul-on-aega-tule-meile-ku2lla": {
+    "text": "Kui sul on aega, tule meile külla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/kuid": {
+    "text": "kuid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/kuna": {
+    "text": "kuna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/kuna-ma-olen-va2sinud-la2hen-vara-magama": {
+    "text": "Kuna ma olen väsinud, lähen vara magama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/kuna-ta-oli-haige-ei-tulnud-ta": {
+    "text": "Kuna ta oli haige, ei tulnud ta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/kuna-va2ljas-sajab-ja2a2me-koju": {
+    "text": "Kuna väljas sajab, jääme koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ma-arvan-et-see-on-hea-mo3te": {
+    "text": "Ma arvan, et see on hea mõte.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ma-ei-la2inud-kooli-sest-ma-olin-haige": {
+    "text": "Ma ei läinud kooli, sest ma olin haige.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ma-ei-tulnud-kuna-mul-polnud-aega": {
+    "text": "Ma ei tulnud, kuna mul polnud aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ma-ei-tulnud-sest-mul-ei-olnud-aega": {
+    "text": "Ma ei tulnud, sest mul ei olnud aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ma-ei-tulnud-sest-mul-polnud-aega": {
+    "text": "Ma ei tulnud, sest mul polnud aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ma-helistan-sulle-kui-ma-koju-jo3uan": {
+    "text": "Ma helistan sulle, kui ma koju jõuan.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ma-ja2in-koju-sest-ma-olin-haige": {
+    "text": "Ma jäin koju, sest ma olin haige.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ma-la2hen-vara-magama-kuna-ma-olen-va2sinud": {
+    "text": "Ma lähen vara magama, kuna ma olen väsinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ma-loodan-et-sa-tuled": {
+    "text": "Ma loodan, et sa tuled.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ma-o3pin-eesti-keelt-et-siin-to2o2d-leida": {
+    "text": "Ma õpin eesti keelt, et siin tööd leida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ma-ostan-kingituse-sest-tal-on-homme-su2nnipa2ev": {
+    "text": "Ma ostan kingituse, sest tal on homme sünnipäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ma-ostsin-uue-telefoni-sest-vana-la2ks-katki": {
+    "text": "Ma ostsin uue telefoni, sest vana läks katki.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ma-tean-et-sa-oled-va2sinud": {
+    "text": "Ma tean, et sa oled väsinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ma-tean-et-ta-tuleb-homme": {
+    "text": "Ma tean, et ta tuleb homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/mari-kirjutas-et-ta-ei-saa-tulla": {
+    "text": "Mari kirjutas, et ta ei saa tulla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/me-ja2ime-koju-sest-sadas": {
+    "text": "Me jäime koju, sest sadas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/me-ja2ime-koju-sest-va2ljas-oli-ku2lm": {
+    "text": "Me jäime koju, sest väljas oli külm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/meremuuseum": {
+    "text": "meremuuseum",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/nii-et": {
+    "text": "nii et",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/oli-ku2lm-nii-et-la2ksime-koju": {
+    "text": "Oli külm, nii et läksime koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/pru2gi": {
+    "text": "prügi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/remont": {
+    "text": "remont",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/sadas-nii-et-ja2ime-koju": {
+    "text": "Sadas, nii et jäime koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/sadas-nii-et-me-ja2ime-koju": {
+    "text": "Sadas, nii et me jäime koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/sest": {
+    "text": "sest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ta-ei-tulnud-sest-ta-oli-haige": {
+    "text": "Ta ei tulnud, sest ta oli haige.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ta-ja2i-koju-sest-tal-oli-palavik": {
+    "text": "Ta jäi koju, sest tal oli palavik.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ta-oli-haige-nii-et-ta-ja2i-koju": {
+    "text": "Ta oli haige, nii et ta jäi koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ta-oli-va2ga-va2sinud-nii-et-ta-la2ks-vara-magama": {
+    "text": "Ta oli väga väsinud, nii et ta läks vara magama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ta-u2tleb-et-ta-on-kohe-tagasi": {
+    "text": "Ta ütleb, et ta on kohe tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ta-u2tles-et-ta-ei-tule": {
+    "text": "Ta ütles, et ta ei tule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ta-u2tles-et-ta-tuleb-homme": {
+    "text": "Ta ütles, et ta tuleb homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ta2na-ja2a2me-koju-kuna-va2ljas-sajab": {
+    "text": "Täna jääme koju, kuna väljas sajab.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/ta2na-sajab-nii-et-me-ja2a2me-koju": {
+    "text": "Täna sajab, nii et me jääme koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/tule-ku2lla-kui-sul-on-aega": {
+    "text": "Tule külla, kui sul on aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "et-sest-kui/tule-meile-ku2lla-kui-sul-on-aega": {
+    "text": "Tule meile külla, kui sul on aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "haaldus/a2mblik": {
     "text": "ämblik",
     "model": "eleven_v4",

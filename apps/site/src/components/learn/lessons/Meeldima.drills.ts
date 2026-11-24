@@ -61,12 +61,7 @@ const WHO = {
 
 type Who = keyof typeof WHO;
 
-const whoLikes = (
-  id: string,
-  say: string,
-  who: Who,
-  wrong: readonly Who[],
-): ChoiceDrill => ({
+const whoLikes = (id: string, say: string, who: Who, wrong: readonly Who[]): ChoiceDrill => ({
   kind: "choice",
   id: `who-${id}`,
   rule: "le",
@@ -106,12 +101,7 @@ const FEELS = {
 
 type Feel = keyof typeof FEELS;
 
-const feeling = (
-  id: string,
-  say: string,
-  feel: Feel,
-  wrong: readonly Feel[],
-): ChoiceDrill => ({
+const feeling = (id: string, say: string, feel: Feel, wrong: readonly Feel[]): ChoiceDrill => ({
   kind: "choice",
   id: `feel-${id}`,
   rule: "feel",
@@ -255,14 +245,7 @@ export const DRILLS: DrillBank = {
     daForm("lugema", "lugema", msg`to read`, "lugeda"),
     daForm("raakima", "rääkima", msg`to speak, to talk`, "rääkida"),
     fix("lugema", "da", DA),
-    translate(
-      "tahan",
-      "da",
-      msg`I want to read.`,
-      sayOf("tahan").said,
-      sayOf("tahan").also,
-      DA,
-    ),
+    translate("tahan", "da", msg`I want to read.`, sayOf("tahan").said, sayOf("tahan").also, DA),
 
     rewrite("kohv", "no", "Mulle meeldib kohv.", "Mulle ei meeldi kohv.", NO),
     rewrite("koerad", "no", "Talle meeldivad koerad.", "Talle ei meeldi koerad.", NO),

@@ -6466,11 +6466,7 @@ export const MEELDIMA_SAY = [
   {
     id: "kassid",
     said: "Mulle meeldivad kassid.",
-    also: [
-      "Minule meeldivad kassid.",
-      "Kassid meeldivad mulle.",
-      "Kassid meeldivad minule.",
-    ],
+    also: ["Minule meeldivad kassid.", "Kassid meeldivad mulle.", "Kassid meeldivad minule."],
   },
   {
     id: "kassid-ei",
@@ -6559,9 +6555,15 @@ export const MEELDIMA_TALK = {
       voice: "main",
       text: ["Ei, mulle ei meeldi kohv.", "Aga mulle meeldivad kassid!", "Ma tulen hea meelega."],
     },
-    { voice: "third", text: ["Tore!", "Mulle meeldivad koerad.", "Kas sulle meeldivad koerad ka?"] },
+    {
+      voice: "third",
+      text: ["Tore!", "Mulle meeldivad koerad.", "Kas sulle meeldivad koerad ka?"],
+    },
     { voice: "main", text: ["Jah, mulle meeldivad koerad ja kassid.", "Kes veel tuleb?"] },
-    { voice: "third", text: ["Jaan tuleb ka.", "Talle meeldib kohv.", "Aga talle ei meeldi koerad."] },
+    {
+      voice: "third",
+      text: ["Jaan tuleb ka.", "Talle meeldib kohv.", "Aga talle ei meeldi koerad."],
+    },
     { voice: "main", text: ["Siis on Jaanil igav!", "Kas Jaan tuleb kell kaks?"] },
     {
       voice: "third",

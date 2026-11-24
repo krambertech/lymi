@@ -466,8 +466,8 @@ export function sayItems(i18n: I18n): SentenceItem[] {
 const FIX_WHY: Record<(typeof MEELDIMA_FIX)[number]["id"], ReactNode> = {
   mul: (
     <Trans>
-      Liking takes the <End>-le</End> form: <span lang="et">mulle meeldib</span>. The{" "}
-      <End>-l</End> form is for having and feelings.
+      Liking takes the <End>-le</End> form: <span lang="et">mulle meeldib</span>. The <End>-l</End>{" "}
+      form is for having and feelings.
     </Trans>
   ),
   kassid: (
@@ -478,8 +478,8 @@ const FIX_WHY: Record<(typeof MEELDIMA_FIX)[number]["id"], ReactNode> = {
   ),
   ei: (
     <Trans>
-      After <span lang="et">ei</span>, <span lang="et">meeldi</span> stays the same for one thing
-      or more: <span lang="et">ei meeldi koerad</span>.
+      After <span lang="et">ei</span>, <span lang="et">meeldi</span> stays the same for one thing or
+      more: <span lang="et">ei meeldi koerad</span>.
     </Trans>
   ),
   ujuda: (
@@ -1061,8 +1061,7 @@ export function MeeldimaLesson() {
                 <p>
                   <Trans>
                     The verb goes with the thing you like, so it usually changes when there’s more
-                    than one.{" "}
-                    <Word w="Mulle meeldib kass" /> is I like the cat, and{" "}
+                    than one. <Word w="Mulle meeldib kass" /> is I like the cat, and{" "}
                     <Word w="Mulle meeldivad kassid" /> is I like cats.
                   </Trans>
                 </p>
@@ -1155,18 +1154,14 @@ export function MeeldimaLesson() {
                   </Trans>
                 </p>
                 <p>
-                  <Trans>
-                    Tap a line to hear it, then tell the two apart by ear.
-                  </Trans>
+                  <Trans>Tap a line to hear it, then tell the two apart by ear.</Trans>
                 </p>
               </Prose>
-              <ListenRows
-                items={rows(MEELDIMA_WANT.flatMap(({ like, want }) => [like, want]))}
-              />
+              <ListenRows items={rows(MEELDIMA_WANT.flatMap(({ like, want }) => [like, want]))} />
               <Aside>
                 <Trans>
-                  To ask politely, people say <Word w="Ma tahaksin kohvi" />, I’d like coffee. It’s a
-                  would form, and lesson {conditional} explains it.
+                  To ask politely, people say <Word w="Ma tahaksin kohvi" />, I’d like coffee. It’s
+                  a would form, and lesson {conditional} explains it.
                 </Trans>
               </Aside>
               <Quiz
@@ -1216,10 +1211,10 @@ export function MeeldimaLesson() {
                 <p>
                   <Trans>
                     To ask yes or no, you usually start with <span lang="et">kas</span>, as in
-                    lesson {questions}, and usually answer with the verb alone: <Word w="Kas sulle meeldib Tallinn" />?{" "}
-                    <Word w="Jah, meeldib" />. To ask who, use <Word w="kellele" />, the{" "}
-                    <End>-le</End> form of <Word w="kes" />: <Word w="Kellele meeldib kohv" />?{" "}
-                    <Word w="Mulle" />!
+                    lesson {questions}, and usually answer with the verb alone:{" "}
+                    <Word w="Kas sulle meeldib Tallinn" />? <Word w="Jah, meeldib" />. To ask who,
+                    use <Word w="kellele" />, the <End>-le</End> form of <Word w="kes" />:{" "}
+                    <Word w="Kellele meeldib kohv" />? <Word w="Mulle" />!
                   </Trans>
                 </p>
               </Prose>
@@ -1249,9 +1244,7 @@ export function MeeldimaLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>
-                      All six, each with the right person form and the right verb.
-                    </Trans>
+                    <Trans>All six, each with the right person form and the right verb.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Most of them. Check the forms you missed above.</Trans>
                   ) : (
@@ -1277,8 +1270,8 @@ export function MeeldimaLesson() {
                   <Trans>
                     These feelings take the <End>-l</End> form of lesson {mulOn}, as having does:{" "}
                     <Word w="Mul on külm" />, I’m cold. Word for word, it’s “at me is cold”, with{" "}
-                    <span lang="et">mul</span>, not <span lang="et">mulle</span>. Other feelings usually
-                    use <span lang="et">ma olen</span>, as in lesson {pronouns}:{" "}
+                    <span lang="et">mul</span>, not <span lang="et">mulle</span>. Other feelings
+                    usually use <span lang="et">ma olen</span>, as in lesson {pronouns}:{" "}
                     <Word w="Ma olen väsinud" />, I’m tired.
                   </Trans>
                 </p>
@@ -1327,8 +1320,8 @@ export function MeeldimaLesson() {
                 <p>
                   <Trans>
                     Each sentence has one wrong word, the kind learners often write: the{" "}
-                    <End>-l</End> form for liking, one thing for more than one, or a verb that
-                    isn’t in its <End>-da</End> form. Tap it, then write it right.
+                    <End>-l</End> form for liking, one thing for more than one, or a verb that isn’t
+                    in its <End>-da</End> form. Tap it, then write it right.
                   </Trans>
                 </p>
               </Prose>

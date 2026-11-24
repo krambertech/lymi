@@ -1,6 +1,6 @@
 # MCP directory review
 
-This is how Lymi's MCP server at `https://my.lymi.app/mcp` gets through ChatGPT plugin review and into the Claude connector directory. Neither directory needs an interactive UI; Lymi has one ([ADR 0026](adr/0026-interactive-mcp-results-use-the-mcp-apps-standard.md)), so both review it. Issue [#83](https://github.com/krambertech/lymi/issues/83) tracks the work, and the public tool docs are at [lymi.app/docs/mcp](https://lymi.app/docs/mcp).
+This is how Lymi's MCP server at `https://my.lymi.app/mcp` gets through ChatGPT plugin review and into the Claude connector directory, with Google's Connected Apps Platform [below](#verify-the-domain-for-google). Neither directory needs an interactive UI; Lymi has one ([ADR 0026](adr/0026-interactive-mcp-results-use-the-mcp-apps-standard.md)), so both review it. Issue [#83](https://github.com/krambertech/lymi/issues/83) tracks the work, and the public tool docs are at [lymi.app/docs/mcp](https://lymi.app/docs/mcp).
 
 ## Accounts
 
@@ -46,6 +46,24 @@ pnpm --filter @lymi/web exec wrangler secret put OPENAI_APPS_CHALLENGE
 ```
 
 The route returns the bare token as `text/plain`, or 404 while the secret is unset.
+
+## Verify the domain for Google
+
+Google's [Connected Apps Platform](https://developers.google.com/connected-apps/mcp) lists an MCP server in the Gemini app and Search. It opened as a gated preview on 28 October 2026: access starts with an interest form, and the Google Connected Console only opens once Google accepts it. Before that, [Gemini Developer Mode](https://developers.google.com/connected-apps/mcp/dev-mode) can connect `https://my.lymi.app/mcp` as a custom app for testing.
+
+The Console issues a verification token, and Google reads it from `/.well-known/google-connected-apps` as `{ "verification_tokens": [...] }`, expecting a 200 with no redirect. Store the token as a production secret; several tokens go comma-separated:
+
+```bash
+pnpm --filter @lymi/web exec wrangler secret put GOOGLE_CONNECTED_APPS_TOKENS
+```
+
+The route returns 404 while the secret is unset. Google's [publishing steps](https://developers.google.com/connected-apps/gpc/perform-the-steps) add three constraints the other directories lack:
+
+- Tools declare `readOnlyHint` and `destructiveHint`, which Lymi already does; `destructiveHint: true` makes Gemini ask the learner to confirm.
+- A published version's tools are frozen. A changed tool list needs a new version on a new endpoint URL, and the category and connection type never change.
+- Review needs a seeded test account with two-step sign-in off, and testers of an unpublished app sign in with `@gmail.com` accounts.
+
+Checked against Google's pages on 24 November 2026.
 
 ## Starter prompts
 

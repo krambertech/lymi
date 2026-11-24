@@ -15964,6 +15964,172 @@ const CONJ_CLIPS: Record<string, Clip> = {
   "c-matk": CONJ_CONVERSATION,
 };
 
+export const ADV_GROUPS = {
+  lt: [
+    { adj: "aeglane", gen: "aeglase", adv: "aeglaselt", said: "Palun räägi aeglaselt." },
+    { adj: "vaikne", gen: "vaikse", adv: "vaikselt", said: "Laps magab vaikselt." },
+    { adj: "selge", gen: "selge", adv: "selgelt", said: "Õpetaja räägib selgelt." },
+    { adj: "lihtne", gen: "lihtsa", adv: "lihtsalt", said: "Ta selgitab seda lihtsalt." },
+    {
+      adj: "tavaline",
+      gen: "tavalise",
+      adv: "tavaliselt",
+      said: "Tavaliselt joon ma hommikul teed.",
+    },
+    { adj: "rahulik", gen: "rahuliku", adv: "rahulikult", said: "Kõik läks rahulikult." },
+    { adj: "täpne", gen: "täpse", adv: "täpselt", said: "Rong saabus täpselt kell kolm." },
+  ],
+  sti: [
+    { adj: "kiire", gen: "kiire", adv: "kiiresti", said: "Rong sõidab kiiresti." },
+    { adj: "kindel", gen: "kindla", adv: "kindlasti", said: "Ma tulen kindlasti." },
+    { adj: "ilus", gen: "ilusa", adv: "ilusasti", said: "Ta kirjutab ilusasti." },
+    { adj: "kõva", gen: "kõva", adv: "kõvasti", said: "Väljas sajab kõvasti vihma." },
+    { adj: "hea", gen: "hea", adv: "hästi", said: "Ta räägib eesti keelt hästi." },
+    { adj: "halb", gen: "halva", adv: "halvasti", said: "Ma magasin öösel halvasti." },
+  ],
+} as const;
+
+export const ADV_MATCH = [
+  "aeglaselt",
+  "kiiresti",
+  "vaikselt",
+  "hästi",
+  "tavaliselt",
+  "kindlasti",
+] as const;
+
+export const ADV_FORMS = [
+  { id: "slow", base: "aeglane", answer: "aeglaselt", before: "Palun räägi", after: "." },
+  { id: "quiet", base: "vaikne", answer: "vaikselt", before: "Laps magab", after: "." },
+  { id: "clear", base: "selge", answer: "selgelt", before: "Õpetaja räägib", after: "." },
+  { id: "simple", base: "lihtne", answer: "lihtsalt", before: "Ta selgitab seda", after: "." },
+  { id: "fast", base: "kiire", answer: "kiiresti", before: "Rong sõidab", after: "." },
+  { id: "good", base: "hea", answer: "hästi", before: "Ta räägib eesti keelt", after: "." },
+  { id: "bad", base: "halb", answer: "halvasti", before: "Ma magasin öösel", after: "." },
+  { id: "sure", base: "kindel", answer: "kindlasti", before: "Ma tulen", after: "." },
+] as const;
+
+export const ADV_TELL = [
+  { id: "fast-adj", kind: "adj", said: "See on kiire rong." },
+  { id: "fast-adv", kind: "adv", said: "Rong sõidab kiiresti." },
+  { id: "quiet-adj", kind: "adj", said: "See on vaikne tuba." },
+  { id: "quiet-adv", kind: "adv", said: "Laps magab vaikselt." },
+  { id: "good-adj", kind: "adj", said: "See on hea raamat." },
+  { id: "good-adv", kind: "adv", said: "Ta räägib eesti keelt hästi." },
+  { id: "slow-adj", kind: "adj", said: "See on aeglane buss." },
+  { id: "slow-adv", kind: "adv", said: "Buss sõidab aeglaselt." },
+] as const;
+
+export const ADV_TRANSLATE = [
+  "Ta räägib eesti keelt hästi.",
+  "Palun räägi aeglaselt.",
+  "Rong sõidab kiiresti.",
+  "Laps magab vaikselt.",
+  "Ma tulen kindlasti.",
+  "Ta vastas selgelt.",
+] as const;
+
+export const ADV_ANSWERS: Record<(typeof ADV_TRANSLATE)[number], readonly [string, ...string[]]> = {
+  "Ta räägib eesti keelt hästi.": [
+    "Ta räägib eesti keelt hästi.",
+    "Tema räägib eesti keelt hästi.",
+    "Ta räägib hästi eesti keelt.",
+    "Tema räägib hästi eesti keelt.",
+  ],
+  "Palun räägi aeglaselt.": [
+    "Palun räägi aeglaselt.",
+    "Räägi palun aeglaselt.",
+    "Räägi aeglaselt, palun.",
+  ],
+  "Rong sõidab kiiresti.": ["Rong sõidab kiiresti."],
+  "Laps magab vaikselt.": ["Laps magab vaikselt."],
+  "Ma tulen kindlasti.": [
+    "Ma tulen kindlasti.",
+    "Mina tulen kindlasti.",
+    "Tulen kindlasti.",
+    "Kindlasti tulen.",
+    "Kindlasti ma tulen.",
+    "Kindlasti mina tulen.",
+    "Kindlasti tulen ma.",
+    "Kindlasti tulen mina.",
+  ],
+  "Ta vastas selgelt.": ["Ta vastas selgelt.", "Tema vastas selgelt."],
+};
+
+export const ADV_FIXES = [
+  { id: "good", wrong: "Ta räägib eesti keelt hea.", right: "Ta räägib eesti keelt hästi." },
+  { id: "slow", wrong: "Räägi palun aeglane.", right: "Räägi palun aeglaselt." },
+  { id: "fast", wrong: "Buss sõidab kiire.", right: "Buss sõidab kiiresti." },
+  { id: "clear", wrong: "Ta selgitas seda selge.", right: "Ta selgitas seda selgelt." },
+  { id: "bad", wrong: "Ma magasin öösel halb.", right: "Ma magasin öösel halvasti." },
+  { id: "quiet", wrong: "Me tulime vaikne sisse.", right: "Me tulime vaikselt sisse." },
+] as const;
+
+export const ADV_NOTE = [
+  "Tere, head õpilased!",
+  "Homme on meie viimane eesti keele tund enne suve.",
+  "Tund algab täpselt kell kümme.",
+  "Tavaliselt me loeme pikki tekste, aga homme me ainult räägime.",
+  "Ärge kartke vigu teha, vaid rääkige rahulikult ja selgelt.",
+  "Kui te ei saa kohe aru, küsige julgelt uuesti.",
+  "Mõned inimesed räägivad alguses väga kiiresti, aga aeglaselt rääkides on kõik paremini kuulda.",
+  "Te olete sel kevadel väga hästi õppinud.",
+  "Pärast tundi joome koos teed ja sööme kooki, nii et tulge kindlasti kohale.",
+  "Kohtumiseni homme, õpetaja Kadri.",
+] as const;
+
+export const ADV_CONVERSATION: Conversation = {
+  turns: [
+    { voice: "third", text: ["Tere, Mart!", "Kuidas sinu esimene sõidutund läks?"] },
+    {
+      voice: "fourth",
+      text: ["Tere, Kati!", "Alguses ma kartsin natuke, aga lõpuks läks kõik üsna hästi."],
+    },
+    { voice: "third", text: "Kas õpetaja oli rahulik?" },
+    {
+      voice: "fourth",
+      text: [
+        "Jah, ta rääkis alati vaikselt ja selgelt.",
+        "Kui ma midagi valesti tegin, selgitas ta lihtsalt uuesti.",
+      ],
+    },
+    { voice: "third", text: "Kus te täna sõitsite?" },
+    {
+      voice: "fourth",
+      text: [
+        "Kõigepealt sõitsime tühjal platsil väga aeglaselt.",
+        "Siis läksime vaiksele tänavale pargi kõrval.",
+        "Suurel tänaval sõidavad autod nii kiiresti, aga sinna me veel ei läinud.",
+      ],
+    },
+    { voice: "third", text: "Kas sul oli midagi rasket ka?" },
+    {
+      voice: "fourth",
+      text: [
+        "Parkimine läks esimesel korral halvasti.",
+        "Aga kolmandal korral seisis auto juba täpselt joone vahel.",
+      ],
+    },
+    { voice: "third", text: "Millal sul järgmine tund on?" },
+    {
+      voice: "fourth",
+      text: ["Neljapäeval kell neli.", "Siis ma tahan kindlasti ka kesklinnas sõita."],
+    },
+    { voice: "third", text: "Tubli! Siis saad suveks loa kätte." },
+  ],
+};
+
+const ADV_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...ADV_GROUPS.lt.flatMap(({ adj, adv, said }) => [adj, adv, said]),
+    ...ADV_GROUPS.sti.flatMap(({ adj, adv, said }) => [adj, adv, said]),
+    ...ADV_TELL.map(({ said }) => said),
+    ...ADV_TRANSLATE,
+    ...ADV_FIXES.map(({ right }) => right),
+  ]),
+  "c-soit": ADV_CONVERSATION,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: {
     ...words(HAALDUS_WORDS),
@@ -16246,5 +16412,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "mineviku-eitus": PAST_NO_CLIPS,
   tulevik: FUTURE_CLIPS,
   nadalavahetusel: WEEKEND_CLIPS,
+  "kiiresti-aeglaselt": ADV_CLIPS,
   kit: KIT_CLIPS,
 };

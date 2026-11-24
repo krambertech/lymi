@@ -30099,5 +30099,329 @@
     "text": "vanem",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/aeglane": {
+    "text": "aeglane",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/aeglaselt": {
+    "text": "aeglaselt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/palun-ra2a2gi-aeglaselt": {
+    "text": "Palun räägi aeglaselt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/vaikne": {
+    "text": "vaikne",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/vaikselt": {
+    "text": "vaikselt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/laps-magab-vaikselt": {
+    "text": "Laps magab vaikselt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/selge": {
+    "text": "selge",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/selgelt": {
+    "text": "selgelt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/o3petaja-ra2a2gib-selgelt": {
+    "text": "Õpetaja räägib selgelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/lihtne": {
+    "text": "lihtne",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/lihtsalt": {
+    "text": "lihtsalt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/ta-selgitab-seda-lihtsalt": {
+    "text": "Ta selgitab seda lihtsalt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/tavaline": {
+    "text": "tavaline",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/tavaliselt": {
+    "text": "tavaliselt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/tavaliselt-joon-ma-hommikul-teed": {
+    "text": "Tavaliselt joon ma hommikul teed.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/rahulik": {
+    "text": "rahulik",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/rahulikult": {
+    "text": "rahulikult",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/ko3ik-la2ks-rahulikult": {
+    "text": "Kõik läks rahulikult.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/ta2pne": {
+    "text": "täpne",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/ta2pselt": {
+    "text": "täpselt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/rong-saabus-ta2pselt-kell-kolm": {
+    "text": "Rong saabus täpselt kell kolm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/kiire": {
+    "text": "kiire",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/kiiresti": {
+    "text": "kiiresti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/rong-so3idab-kiiresti": {
+    "text": "Rong sõidab kiiresti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/kindel": {
+    "text": "kindel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/kindlasti": {
+    "text": "kindlasti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/ma-tulen-kindlasti": {
+    "text": "Ma tulen kindlasti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/ilus": {
+    "text": "ilus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/ilusasti": {
+    "text": "ilusasti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/ta-kirjutab-ilusasti": {
+    "text": "Ta kirjutab ilusasti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/ko3va": {
+    "text": "kõva",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/ko3vasti": {
+    "text": "kõvasti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/va2ljas-sajab-ko3vasti-vihma": {
+    "text": "Väljas sajab kõvasti vihma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/hea": {
+    "text": "hea",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/ha2sti": {
+    "text": "hästi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/ta-ra2a2gib-eesti-keelt-ha2sti": {
+    "text": "Ta räägib eesti keelt hästi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/halb": {
+    "text": "halb",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/halvasti": {
+    "text": "halvasti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/ma-magasin-o2o2sel-halvasti": {
+    "text": "Ma magasin öösel halvasti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/see-on-kiire-rong": {
+    "text": "See on kiire rong.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/see-on-vaikne-tuba": {
+    "text": "See on vaikne tuba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/see-on-hea-raamat": {
+    "text": "See on hea raamat.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/see-on-aeglane-buss": {
+    "text": "See on aeglane buss.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/buss-so3idab-aeglaselt": {
+    "text": "Buss sõidab aeglaselt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/ta-vastas-selgelt": {
+    "text": "Ta vastas selgelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/ra2a2gi-palun-aeglaselt": {
+    "text": "Räägi palun aeglaselt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/buss-so3idab-kiiresti": {
+    "text": "Buss sõidab kiiresti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/ta-selgitas-seda-selgelt": {
+    "text": "Ta selgitas seda selgelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/me-tulime-vaikselt-sisse": {
+    "text": "Me tulime vaikselt sisse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kiiresti-aeglaselt/c-soit": {
+    "text": "Tere, Mart! Kuidas sinu esimene sõidutund läks? Tere, Kati! Alguses ma kartsin natuke, aga lõpuks läks kõik üsna hästi. Kas õpetaja oli rahulik? Jah, ta rääkis alati vaikselt ja selgelt. Kui ma midagi valesti tegin, selgitas ta lihtsalt uuesti. Kus te täna sõitsite? Kõigepealt sõitsime tühjal platsil väga aeglaselt. Siis läksime vaiksele tänavale pargi kõrval. Suurel tänaval sõidavad autod nii kiiresti, aga sinna me veel ei läinud. Kas sul oli midagi rasket ka? Parkimine läks esimesel korral halvasti. Aga kolmandal korral seisis auto juba täpselt joone vahel. Millal sul järgmine tund on? Neljapäeval kell neli. Siis ma tahan kindlasti ka kesklinnas sõita. Tubli! Siis saad suveks loa kätte.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Mart!",
+          "Kuidas sinu esimene sõidutund läks?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Kati!",
+          "Alguses ma kartsin natuke, aga lõpuks läks kõik üsna hästi."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas õpetaja oli rahulik?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, ta rääkis alati vaikselt ja selgelt.",
+          "Kui ma midagi valesti tegin, selgitas ta lihtsalt uuesti."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kus te täna sõitsite?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kõigepealt sõitsime tühjal platsil väga aeglaselt.",
+          "Siis läksime vaiksele tänavale pargi kõrval.",
+          "Suurel tänaval sõidavad autod nii kiiresti, aga sinna me veel ei läinud."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas sul oli midagi rasket ka?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Parkimine läks esimesel korral halvasti.",
+          "Aga kolmandal korral seisis auto juba täpselt joone vahel."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Millal sul järgmine tund on?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Neljapäeval kell neli.",
+          "Siis ma tahan kindlasti ka kesklinnas sõita."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tubli! Siis saad suveks loa kätte."
+        ]
+      }
+    ]
   }
 }

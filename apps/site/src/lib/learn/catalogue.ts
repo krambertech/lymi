@@ -375,6 +375,14 @@ export const STAGES: readonly Stage[] = [
         blurb: msg`A free Estonian lesson on comparing: suurem and uuem built on the genitive, suurem kui Tartu and Tartust suurem, kõige suurem for the biggest, sama suur kui for as big as, and two odd ones, hea, parem, parim and väike, väiksem. Every sentence is read aloud.`,
       },
       {
+        slug: "kiiresti-aeglaselt",
+        name: msg`Adverbs: how you do something`,
+        title: msg`Estonian adverbs with -lt and -sti`,
+        et: "Kiiresti, aeglaselt",
+        minutes: 20,
+        blurb: msg`A free Estonian lesson on adverbs of manner: adding -lt to the genitive (aeglaselt, vaikselt, selgelt, tavaliselt), common -sti adverbs (kiiresti, kindlasti), the two everyday odd ones hästi and halvasti, and telling an adjective apart from an adverb. Every sentence is read aloud.`,
+      },
+      {
         slug: "saav",
         name: msg`The translative case`,
         title: msg`The Estonian translative case: becoming, by and for`,

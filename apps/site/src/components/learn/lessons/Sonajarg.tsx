@@ -2,7 +2,7 @@ import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type ReactNode, useMemo, useState } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -399,7 +399,7 @@ export function SonajargLesson() {
   const { t, i18n } = useLingui();
   const content = useContent();
   const infinitives = lessonBySlug("tegevusnimed")?.n;
-  const conjunctions = LESSONS.find((lesson) => lesson.et === "Et, sest, kui")?.n;
+  const conjunctions = lessonBySlug("et-sest-kui")?.n;
   const questions = lessonBySlug("kusimused")?.n;
   const when = lessonBySlug("millal")?.n;
   const negation = lessonBySlug("eitus")?.n;

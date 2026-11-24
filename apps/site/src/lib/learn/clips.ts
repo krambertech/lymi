@@ -15012,6 +15012,307 @@ const SUFFIX_CLIPS: Record<string, Clip> = {
   "c-varjupaik": SUFFIX_CONVERSATION,
 };
 
+export const PART_TUD = [
+  { verb: "lugema", impersonal: "loetakse", form: "loetud", noun: "loetud raamat" },
+  { verb: "sulgema", impersonal: "suletakse", form: "suletud", noun: "suletud uks" },
+  { verb: "tegema", impersonal: "tehakse", form: "tehtud", noun: "tehtud töö" },
+  { verb: "avama", impersonal: "avatakse", form: "avatud", noun: "avatud aken" },
+  { verb: "kirjutama", impersonal: "kirjutatakse", form: "kirjutatud", noun: "kirjutatud kiri" },
+  { verb: "pesema", impersonal: "pestakse", form: "pestud", noun: "pestud nõud" },
+  { verb: "müüma", impersonal: "müüakse", form: "müüdud", noun: "müüdud maja" },
+  { verb: "tooma", impersonal: "tuuakse", form: "toodud", noun: "toodud kingitus" },
+] as const;
+
+export const PART_NUD = [
+  { verb: "väsima", form: "väsinud", noun: "väsinud mees" },
+  { verb: "kukkuma", form: "kukkunud", noun: "kukkunud leht" },
+  { verb: "kuivama", form: "kuivanud", noun: "kuivanud lill" },
+  { verb: "külmuma", form: "külmunud", noun: "külmunud järv" },
+  { verb: "sulama", form: "sulanud", noun: "sulanud lumi" },
+  { verb: "kaduma", form: "kadunud", noun: "kadunud kass" },
+  { verb: "tulema", form: "tulnud", noun: "tulnud külaline" },
+] as const;
+
+export const PART_V = [
+  { verb: "jooksma", ta: "jookseb", form: "jooksev", noun: "jooksev vesi" },
+  { verb: "magama", ta: "magab", form: "magav", noun: "magav laps" },
+  { verb: "kasvama", ta: "kasvab", form: "kasvav", noun: "kasvav puu" },
+  { verb: "töötama", ta: "töötab", form: "töötav", noun: "töötav masin" },
+  { verb: "lendama", ta: "lendab", form: "lendav", noun: "lendav lind" },
+  { verb: "sulama", ta: "sulab", form: "sulav", noun: "sulav jää" },
+  { verb: "tulema", ta: "tuleb", form: "tulev", noun: "tulev nädal" },
+  { verb: "lugema", ta: "loeb", form: "lugev", noun: "lugev laps" },
+] as const;
+
+export const PART_CASES = {
+  v: ["jooksev vesi", "jooksva vee", "jooksvat vett", "jooksvas vees"],
+  tud: ["loetud raamat", "loetud raamatu", "loetud raamatut", "loetud raamatus"],
+} as const;
+
+export const PART_HEARD = [
+  { id: "sleeping", kind: "now", said: "Magav laps on voodis." },
+  { id: "tired", kind: "did", said: "Väsinud mees istus pingile." },
+  { id: "closed", kind: "done", said: "Ta avas suletud ukse." },
+  { id: "water", kind: "now", said: "Jooksev vesi on väga külm." },
+  { id: "leaf", kind: "did", said: "Kukkunud leht on maas." },
+  { id: "dishes", kind: "done", said: "Pestud nõud on kapis." },
+  { id: "ice", kind: "now", said: "Sulav jää on ohtlik." },
+  { id: "cat", kind: "did", said: "Kadunud kass tuli koju." },
+  { id: "house", kind: "done", said: "Müüdud maja on praegu tühi." },
+] as const;
+
+export const PART_GAPS = [
+  { id: "closed", base: "sulgema", before: "Ta avas", answers: ["suletud"], after: "ukse." },
+  { id: "book", base: "lugema", before: "Laual on", answers: ["loetud"], after: "raamat." },
+  { id: "tired", base: "väsima", before: "Seal istub", answers: ["väsinud"], after: "mees." },
+  { id: "water", base: "jooksma", before: "Ma kuulen", answers: ["jooksvat"], after: "vett." },
+  { id: "child", base: "magama", before: "Ma nägin voodis", answers: ["magavat"], after: "last." },
+  {
+    id: "flower",
+    base: "kuivama",
+    before: "Ta viskas ära",
+    answers: ["kuivanud"],
+    after: "lille.",
+  },
+  { id: "work", base: "tegema", before: "", answers: ["Tehtud"], after: "töö on laual." },
+  {
+    id: "letter",
+    base: "kirjutama",
+    before: "Ma sain käsitsi",
+    answers: ["kirjutatud"],
+    after: "kirja.",
+  },
+  {
+    id: "week",
+    base: "tulema",
+    before: "Ma ootan",
+    answers: ["tulevat"],
+    after: "nädalavahetust.",
+  },
+  { id: "cat", base: "kaduma", before: "Me otsime", answers: ["kadunud"], after: "kassi." },
+] as const;
+
+export const PART_TRANSLATE = [
+  {
+    id: "car",
+    said: "Ma ostsin kasutatud auto.",
+    answers: withPronouns(["Ma ostsin kasutatud auto.", "Kasutatud auto ostsin ma."]),
+  },
+  {
+    id: "leaf",
+    said: "Kukkunud leht on maas.",
+    answers: withPronouns(["Kukkunud leht on maas.", "Maas on kukkunud leht."]),
+  },
+  {
+    id: "water",
+    said: "Ma kuulen jooksvat vett.",
+    answers: withPronouns(["Ma kuulen jooksvat vett.", "Jooksvat vett kuulen ma."]),
+  },
+  {
+    id: "man",
+    said: "Väsinud mees istus pingile.",
+    answers: withPronouns([
+      "Väsinud mees istus pingile.",
+      "Pingile istus väsinud mees.",
+      "Väsinud mees istus pingi peale.",
+      "Väsinud mees istus pingile maha.",
+      "Väsinud mees istus maha pingile.",
+    ]),
+  },
+  {
+    id: "door",
+    said: "Ta avas suletud ukse.",
+    answers: withPronouns(["Ta avas suletud ukse.", "Suletud ukse avas ta."]),
+  },
+  {
+    id: "cat",
+    said: "Me otsime kadunud kassi.",
+    answers: withPronouns(["Me otsime kadunud kassi.", "Kadunud kassi otsime me."]),
+  },
+  {
+    id: "weekend",
+    said: "Ma ootan tulevat nädalavahetust.",
+    answers: withPronouns(["Ma ootan tulevat nädalavahetust.", "Tulevat nädalavahetust ootan ma."]),
+  },
+  {
+    id: "work",
+    said: "Tehtud töö on laual.",
+    answers: withPronouns([
+      "Tehtud töö on laual.",
+      "Laual on tehtud töö.",
+      "Tehtud töö on laua peal.",
+      "Laua peal on tehtud töö.",
+    ]),
+  },
+] as const;
+
+export const PART_FIXES = [
+  { wrong: "Ta ostis kasutanud auto.", right: "Ta ostis kasutatud auto." },
+  { wrong: "Kukkuv leht on maas.", right: "Kukkunud leht on maas." },
+  { wrong: "Ma nägin voodis magav last.", right: "Ma nägin voodis magavat last." },
+  { wrong: "Ma ootan tulev nädalavahetust.", right: "Ma ootan tulevat nädalavahetust." },
+  { wrong: "Me otsime kadunud kass.", right: "Me otsime kadunud kassi." },
+  { wrong: "Ma kuulen jooksev vett.", right: "Ma kuulen jooksvat vett." },
+] as const;
+
+export const PART_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = Object.fromEntries(
+  PART_FIXES.map(({ right }) => [right, [right]]),
+);
+
+export const PART_LETTER = [
+  "Eile õhtul oli meie külas tugev torm ja öösel ma peaaegu ei maganud.",
+  "Hommikul läksin vara õue ja ei uskunud oma silmi.",
+  "Aias oli kukkunud puu ning kõikjal lebasid märjad lehed.",
+  "Naabri hoovis oli kukkunud ka vana kask ja tee peal seisis suur loik.",
+  "Aia taga oli ojas tavalisest rohkem jooksvat vett ja kõikjal kostis vee kohin.",
+  "Mõned oksad olid nii suured, et neid ei jõudnud üks inimene tõsta.",
+  "Ma kutsusin naabri Tõnu appi, sest üksi ma sellega hakkama ei saa.",
+  "Tõnu tuli kohe, kuigi ta nägi väga väsinud välja.",
+  "Me kogusime kokku kõik kukkunud oksad ja viisime need metsa.",
+  "Töö oli raske, sest märjad oksad olid rasked ja käed said väga külmaks.",
+  "Lõpuks istusime köögis ja jõime kuuma kohvi.",
+  "Tõnu tõi kaasa ka värskelt küpsetatud saia ja me sõime seda hea meelega.",
+  "Raadios öeldi, et enamik teid on nüüd vabad.",
+  "Tõnu ütles, et tulev nädal tuleb päikeseline ja soe.",
+  "Ma loodan, et tal on õigus, sest aias on veel palju teha.",
+  "Vanaema ütles alati, et pärast tormi on õhk kõige puhtam.",
+  "Ta teadis ilmast alati rohkem kui raadio.",
+  "Õhtuks oli kogu pooleli jäänud töö tehtud ja suletud uks tundus jälle turvaline.",
+  "Ma istusin diivanile ja vaatasin akna taga magavat küla.",
+  "Üle pika aja olin rahul, kuigi olin väga väsinud.",
+] as const;
+
+export const PART_CONVERSATION: Conversation = {
+  turns: [
+    {
+      voice: "fourth",
+      text: [
+        "Tere, Liis! Aitäh, et sa nii kaugele tulid.",
+        "See vana talu on nüüd minu, sest onu jättis selle mulle.",
+      ],
+    },
+    { voice: "third", text: ["Oi, kui vaikne koht!", "Kas siin on keegi viimasel ajal elanud?"] },
+    {
+      voice: "fourth",
+      text: [
+        "Ei ole, vähemalt kümme aastat mitte.",
+        "Uks on suletud, aga võti on mul kaasas.",
+        "Vaata, aias on kukkunud õunapuu, torm oli vist suur.",
+      ],
+    },
+    { voice: "third", text: ["Kui kurb!", "Kuivanud oksi võib ahjus siiski hästi kasutada."] },
+    {
+      voice: "fourth",
+      text: ["See on hea mõte.", "Tule sisse ja ava see aken, siin on nii hapu õhk."],
+    },
+    {
+      voice: "third",
+      text: ["Oi, siin on külm ja pime.", "Kas elekter töötab, või peame küünlaid ostma?"],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Elekter töötab, aga majas ei ole jooksvat vett.",
+        "Kaev on aias ja seal on väga hea vesi.",
+      ],
+    },
+    { voice: "third", text: ["Siis on siin palju tööd.", "Mis köögis on?"] },
+    {
+      voice: "fourth",
+      text: ["Seal on vana laud ja kuus tooli.", "Laual on veel onu loetud ajalehed."],
+    },
+    { voice: "third", text: "Kas su onu luges tõesti nii palju?" },
+    {
+      voice: "fourth",
+      text: ["Jah, ta oli väga palju lugenud inimene.", "Ta luges iga päev, kuni silmad väsisid."],
+    },
+    { voice: "third", text: ["Näe, diivanil on magav kass!", "Kas see on sinu oma?"] },
+    {
+      voice: "fourth",
+      text: [
+        "Ei ole, aga naaber Mari otsib kadunud kassi.",
+        "Võib-olla see ongi tema, sest uks oli terve nädala lahti.",
+      ],
+    },
+    {
+      voice: "third",
+      text: ["Siis anname talle kohe teada.", "Aga mida sa selle majaga teha tahad?"],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Ma ei tea veel, kas parem on maja müüa või remontida.",
+        "Linnas on korter kallis ja siin on palju ruumi.",
+      ],
+    },
+    {
+      voice: "third",
+      text: [
+        "Müüdud maja ei ole enam sinu.",
+        "Mina tahaksin siia kolida, kui mul oleks selline koht.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: ["Ma olen sama mõelnud.", "Tulev suvi on minu jaoks vaba, nii et saan siin töötada."],
+    },
+    {
+      voice: "third",
+      text: [
+        "Siis alustame kohe, enne kui sa meelt muudad.",
+        "Ma tõin kuuma kohvi ja värskelt küpsetatud saia.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: ["Oh, see on nii armas!", "Ma olen täna väga väsinud, sest ma sõitsin terve öö."],
+    },
+    {
+      voice: "third",
+      text: ["Istu siis maha ja söö.", "Väsinud inimene ei peaks üksi suurt tööd tegema."],
+    },
+    {
+      voice: "fourth",
+      text: ["Hea küll, sul on õigus.", "Pärast kohvi vaatame ülakorrust ja otsustame, mida teha."],
+    },
+    { voice: "third", text: "Kas seal on kõik aknad kinni?" },
+    {
+      voice: "fourth",
+      text: ["Üks on lahti, ja sulav lumi tuli kevadel tuppa.", "Põrand on seal veel märg."],
+    },
+    {
+      voice: "third",
+      text: ["Oh ei, siis tuleb kõigepealt põrand kuivaks teha.", "Mul on kaasas ka vana rätik."],
+    },
+    {
+      voice: "fourth",
+      text: ["See aitab.", "Pärast seda pesen kõik nõud ära ja siis teeme lõunat."],
+    },
+    {
+      voice: "third",
+      text: ["Hea küll, tööle!", "Õhtul oleme väsinud ja külmunud, aga väga rahul."],
+    },
+    { voice: "fourth", text: ["Täpselt nii.", "Aitäh, et sa mind aitad, Liis."] },
+  ],
+};
+
+const PART_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...PART_TUD.flatMap(({ verb, impersonal, noun }) => [verb, impersonal, noun]),
+    ...PART_NUD.flatMap(({ verb, form, noun }) => [verb, form, noun]),
+    ...PART_V.flatMap(({ verb, ta, noun }) => [verb, ta, noun]),
+    ...PART_CASES.v,
+    ...PART_CASES.tud,
+    ...PART_HEARD.map(({ said }) => said),
+    ...PART_GAPS.map(({ before, answers, after }) =>
+      [before, answers[0], after].filter(Boolean).join(" "),
+    ),
+    ...PART_TRANSLATE.map(({ said }) => said),
+    ...PART_FIXES.map(({ right }) => right),
+  ]),
+  "c-liis": PART_CONVERSATION,
+};
+
 export const CONJ_WORDS = ["et", "sest", "kui", "kuna", "nii et"] as const;
 
 export const CONJ_EXTRA_WORDS = [
@@ -15937,6 +16238,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "labi-metsa": ROUTE_CLIPS,
   "opetaja-lugemine": AGENT_CLIPS,
   "sobralik-kodutu": SUFFIX_CLIPS,
+  "loetud-raamat": PART_CLIPS,
   "et-sest-kui": CONJ_CLIPS,
   kiri: LETTER_CLIPS,
   turul: MARKET_CLIPS,

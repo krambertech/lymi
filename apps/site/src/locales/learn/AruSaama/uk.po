@@ -238,20 +238,26 @@ msgstr "Я хочу зустрітися з тобою."
 msgid "In a sentence"
 msgstr "У реченні"
 
-msgid "In a simple sentence, the particle usually goes last: <0>Ma saan naabriga hästi läbi.</0> It usually stays last after <1>ei</1> and in a question."
-msgstr "У простому реченні частка зазвичай стоїть у кінці: <0>Ma saan naabriga hästi läbi.</0> Так само зазвичай і з <1>ei</1>, і в запитанні."
-
-msgid "In both examples, <0>Jäi</0> comes second and <1>ära</1> comes last."
-msgstr "У цих прикладах <0>Jäi</0> стоїть на другому місці, а <1>ära</1> — у кінці."
-
 msgid "In her first month, Olga wanted to give up."
 msgstr "У перший місяць Ольга хотіла все кинути."
 
-msgid "In this sentence the particle comes last, even after <0>ei</0>."
-msgstr "Після <0>ei</0> частка тут теж стоїть у кінці."
+msgid "In neutral word order, <0>ära</0> usually comes last. A time word like <1>eile</1> can follow it."
+msgstr "У нейтральному порядку слів <0>ära</0> зазвичай стоїть у кінці. Після нього може стояти слово на позначення часу, як-от <1>eile</1>."
 
-msgid "In this sentence with <et>välja nägema</et>, the particle comes after <et>väsinud</et>."
-msgstr "З <et>Välja nägema</et> частка в цьому реченні стоїть після <et>väsinud</et>."
+msgid "In neutral word order, <et>välja</et> usually comes last. A detail like <et>väsinud</et> can follow it."
+msgstr "У нейтральному порядку слів <et>välja</et> зазвичай стоїть у кінці. Після нього може стояти уточнення, як-от <et>väsinud</et>."
+
+msgid "In neutral word order, the particle usually comes last, including in questions and negatives. A place, time or other detail can follow it, as in <0>Kontsert jäi ära eile.</0>"
+msgstr "У нейтральному порядку слів частка зазвичай стоїть у кінці, зокрема в питаннях і запереченнях. Після неї можна уточнити місце, час чи іншу деталь, як у реченні <0>Kontsert jäi ära eile.</0>"
+
+msgid "In neutral word order, the particle usually comes last. A place, time or other detail can follow it. After <et>tahan</et> or <et>pean</et>, it usually comes before the infinitive."
+msgstr "У нейтральному порядку слів частка зазвичай стоїть у кінці. Після неї можна уточнити місце, час чи іншу деталь. Після <et>tahan</et> або <et>pean</et> частка зазвичай стоїть перед інфінітивом."
+
+msgid "In neutral word order, the particle usually comes last. A place, time or other detail can follow it. After a verb such as <0>tahan</0>, it usually goes just before the infinitive: <1>Ma tahan aru saada.</1>"
+msgstr "У нейтральному порядку слів частка зазвичай стоїть у кінці. Після неї можна уточнити місце, час чи іншу деталь. З дієсловом на зразок <0>tahan</0> частка зазвичай стоїть безпосередньо перед інфінітивом, як у <1>Ma tahan aru saada.</1>"
+
+msgid "In neutral word order, the particle usually comes last. An extra detail can follow it."
+msgstr "У нейтральному порядку слів частка зазвичай стоїть у кінці. Після неї може стояти уточнення."
 
 msgid "It was cold."
 msgstr "Було холодно."
@@ -453,18 +459,6 @@ msgstr "П’ятничні наради ніколи не скасовують.
 
 msgid "The milk is what runs out, so it’s the subject: <0>piim sai otsa</0>."
 msgstr "Закінчилося молоко, тож воно й підмет: <0>piim sai otsa</0>."
-
-msgid "The particle comes last in this question: <0>… maha?</0>"
-msgstr "У цьому питанні частка теж стоїть у кінці: <0>… maha?</0>"
-
-msgid "The particle comes last in this sentence."
-msgstr "У цьому реченні частка стоїть у кінці."
-
-msgid "The particle usually comes last. After <et>tahan</et> or <et>pean</et>, it usually comes before the infinitive."
-msgstr "Частка зазвичай стоїть у кінці. Після <et>tahan</et> або <et>pean</et> — зазвичай перед інфінітивом."
-
-msgid "The particle usually goes last: <0>Ma ei saa sellest aru.</0> After a verb such as <1>tahan</1>, it usually goes just before the infinitive: <2>Ma tahan aru saada.</2>"
-msgstr "Частка зазвичай стоїть у кінці: <0>Ma ei saa sellest aru.</0> Після дієслова на зразок <1>tahan</1> вона зазвичай стоїть перед інфінітивом: <2>Ma tahan aru saada.</2>"
 
 msgid "The thing is the subject: Kohv sai otsa."
 msgstr "Те, що закінчилося, — підмет: Kohv sai otsa."

@@ -298,6 +298,11 @@ function useContent() {
       concert: msg`The concert was called off yesterday.`,
       think: msg`You have to think it over first.`,
     };
+    const neutralOrder = (
+      <Trans>
+        In neutral word order, the particle usually comes last. An extra detail can follow it.
+      </Trans>
+    );
     const orderWhy: Record<(typeof IDIOM_ORDER)[number]["id"], ReactNode> = {
       meet: (
         <Trans>
@@ -305,20 +310,13 @@ function useContent() {
           .
         </Trans>
       ),
-      nothing: (
-        <Trans>
-          In this sentence the particle comes last, even after <b lang="et">ei</b>.
-        </Trans>
-      ),
-      bus: (
-        <Trans>
-          The particle comes last in this question: <b lang="et">… maha?</b>
-        </Trans>
-      ),
-      alone: <Trans>The particle comes last in this sentence.</Trans>,
+      nothing: neutralOrder,
+      bus: neutralOrder,
+      alone: neutralOrder,
       concert: (
         <Trans>
-          In both examples, <b lang="et">Jäi</b> comes second and <b lang="et">ära</b> comes last.
+          In neutral word order, <b lang="et">ära</b> usually comes last. A time word like{" "}
+          <b lang="et">eile</b> can follow it.
         </Trans>
       ),
       think: (
@@ -649,9 +647,9 @@ export function AruSaamaLesson() {
           out.
         </Trans>,
         <Trans key="3">
-          The particle usually goes last: <b lang="et">Ma ei saa sellest aru.</b> After a verb such
-          as <b lang="et">tahan</b>, it usually goes just before the infinitive:{" "}
-          <b lang="et">Ma tahan aru saada.</b>
+          In neutral word order, the particle usually comes last. A place, time or other detail can
+          follow it. After a verb such as <b lang="et">tahan</b>, it usually goes just before the
+          infinitive: <b lang="et">Ma tahan aru saada.</b>
         </Trans>,
         <Trans key="4">
           Each verb usually asks for its case: <b lang="et">aru saama</b> and{" "}
@@ -793,9 +791,9 @@ export function AruSaamaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    In a simple sentence, the particle usually goes last:{" "}
-                    <b lang="et">Ma saan naabriga hästi läbi.</b> It usually stays last after{" "}
-                    <b lang="et">ei</b> and in a question.
+                    In neutral word order, the particle usually comes last, including in questions
+                    and negatives. A place, time or other detail can follow it, as in{" "}
+                    <b lang="et">Kontsert jäi ära eile.</b>
                   </Trans>
                 </p>
                 <p>

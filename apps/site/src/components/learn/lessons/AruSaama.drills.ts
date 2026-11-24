@@ -3,7 +3,7 @@ import { IDIOM_ANSWERS, IDIOM_FIX_ANSWERS, IDIOM_REWRITE_ANSWERS } from "../../.
 import type { ChoiceDrill, DrillBank, FormDrill } from "../../../lib/learn/drill";
 
 const SAAMA = msg`With <et>saama</et>: <et>aru</et> understand, <et>kokku</et> meet up, <et>läbi</et> get on, <et>hakkama</et> cope.`;
-const ORDER = msg`The particle usually comes last. After <et>tahan</et> or <et>pean</et>, it usually comes before the infinitive.`;
+const ORDER = msg`In neutral word order, the particle usually comes last. A place, time or other detail can follow it. After <et>tahan</et> or <et>pean</et>, it usually comes before the infinitive.`;
 
 const MEANS = {
   kokku: msg`meet up`,
@@ -285,7 +285,7 @@ export const DRILLS: DrillBank = {
       prompt: msg`You look tired.`,
       answers: IDIOM_ANSWERS["Sa näed väsinud välja."] as readonly [string, ...string[]],
       say: "Sa näed väsinud välja.",
-      explain: msg`In this sentence with <et>välja nägema</et>, the particle comes after <et>väsinud</et>.`,
+      explain: msg`In neutral word order, <et>välja</et> usually comes last. A detail like <et>väsinud</et> can follow it.`,
     },
     {
       kind: "translate",

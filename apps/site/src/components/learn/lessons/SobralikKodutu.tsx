@@ -12,6 +12,7 @@ import {
   SUFFIX_FIX_ANSWERS,
   SUFFIX_FIXES,
   SUFFIX_FORMS,
+  HOUSE_DIMINUTIVES,
   SUFFIX_HEARD,
   SUFFIX_MODEL,
   SUFFIX_TABLE,
@@ -80,14 +81,15 @@ function SuffixTable() {
   const { t, i18n } = useLingui();
   const [kind, setKind] = useState<Kind>("lik");
   const labels: Record<Kind, string> = {
-    lik: t`Like it`,
+    lik: t`Adjective with -lik`,
     tu: t`Without it`,
     ke: t`A small one`,
   };
   const tips: Record<Kind, ReactNode> = {
     lik: (
       <Trans>
-        <b lang="et">-lik</b> makes an adjective: like it, or having it.
+        <b lang="et">-lik</b> usually makes an adjective meaning like it, having it or to do with
+        it.
       </Trans>
     ),
     tu: (
@@ -131,7 +133,7 @@ function SuffixTable() {
 }
 
 const KIND_LABELS: Record<Kind, MessageDescriptor> = {
-  lik: msg`like it, having it`,
+  lik: msg`like it, having it or to do with it`,
   tu: msg`without it`,
   ke: msg`a small one`,
 };
@@ -153,7 +155,8 @@ function useContent() {
     const heardWhy: Record<Kind, ReactNode> = {
       lik: (
         <Trans>
-          <b lang="et">-lik</b>: like it, or having it.
+          <b lang="et">-lik</b> usually makes an adjective meaning like it, having it or to do with
+          it.
         </Trans>
       ),
       tu: (
@@ -187,7 +190,7 @@ function useContent() {
     }));
 
     const cues: Record<Kind, string> = {
-      lik: t`like it, having it`,
+      lik: t`like it, having it or to do with it`,
       tu: t`without it`,
       ke: t`a small one`,
     };
@@ -195,7 +198,7 @@ function useContent() {
       base: item.from,
       gloss: i18n._(NOUNS[item.from] as MessageDescriptor),
       cue: cues[item.kind],
-      answers: [item.answer],
+      answers: item.answer === HOUSE_DIMINUTIVES[0] ? HOUSE_DIMINUTIVES : [item.answer],
       src: src(item.answer),
       explain:
         item.answer === "veatu" ? (
@@ -492,9 +495,9 @@ export function SobralikKodutuLesson() {
       words={["sõbralik", "kohalik", "kodutu", "töötu", "majake", "tükike"]}
       recap={[
         <Trans key="1">
-          <b lang="et">-lik</b> makes an adjective, like it or having it:{" "}
-          <b lang="et">sõbralik, kohalik, ohtlik</b>. Learn each one, since the stem before it
-          varies.
+          <b lang="et">-lik</b> usually makes an adjective meaning like it, having it or to do with
+          it. <b lang="et">Kohalik</b> means local, of the place. <b lang="et">Tervislik</b> means
+          healthy, good for your health.
         </Trans>,
         <Trans key="2">
           <b lang="et">-tu</b> means without, and usually joins the genitive:{" "}
@@ -551,16 +554,13 @@ export function SobralikKodutuLesson() {
         },
         {
           id: "hear",
-          title: t`Like, without or small`,
+          title: t`What the ending adds`,
           quiz: true,
           children: (
             <>
               <Prose>
                 <p>
-                  <Trans>
-                    Hear a word, then pick what its ending adds. You don’t need to know the word:
-                    the ending tells you.
-                  </Trans>
+                  <Trans>Hear a word, then pick what its ending usually adds.</Trans>
                 </p>
               </Prose>
               <Quiz

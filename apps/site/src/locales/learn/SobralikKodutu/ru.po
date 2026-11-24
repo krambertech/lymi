@@ -16,14 +16,11 @@ msgstr "<0>-ke</0> указывает на малый размер или при
 msgid "<0>-ke</0>: a small one."
 msgstr "<0>-ke</0> — что-то маленькое."
 
-msgid "<0>-lik</0> makes an adjective, like it or having it: <1>sõbralik, kohalik, ohtlik</1>. Learn each one, since the stem before it varies."
-msgstr "<0>-lik</0> образует прилагательные со значением сходства или признака: <1>sõbralik, kohalik, ohtlik</1>. Запоминай слова целиком, потому что основы перед суффиксом различаются."
+msgid "<0>-lik</0> usually makes an adjective meaning like it, having it or to do with it."
+msgstr "Суффикс <0>-lik</0> обычно образует прилагательное со значением сходства, наличия чего-либо или связи с чем-либо."
 
-msgid "<0>-lik</0> makes an adjective: like it, or having it."
-msgstr "<0>-lik</0> образует прилагательное со значением сходства или признака."
-
-msgid "<0>-lik</0>: like it, or having it."
-msgstr "<0>-lik</0> — сходство или признак."
+msgid "<0>-lik</0> usually makes an adjective meaning like it, having it or to do with it. <1>Kohalik</1> means local, of the place. <2>Tervislik</2> means healthy, good for your health."
+msgstr "Суффикс <0>-lik</0> обычно образует прилагательное со значением сходства, наличия чего-либо или связи с чем-либо. <1>Kohalik</1> означает «местный», то есть связанный с местом. <2>Tervislik</2> означает «полезный для здоровья»."
 
 msgid "<0>-tu</0> and <1>-ke</1> usually join the genitive: <2>viga, vea, veatu</2>. Before <3>-lik</3> the stem varies: <4>sõbra-lik</4> but <5>oht-lik</5>. Pick an ending and tap the words."
 msgstr "<0>-tu</0> и <1>-ke</1> обычно добавляют к родительному: <2>viga, vea, veatu</2>. Перед <3>-lik</3> основа бывает разной: <4>sõbra-lik</4>, а вот <5>oht-lik</5>. Выбери суффикс и нажимай на слова."
@@ -54,11 +51,8 @@ msgstr "<et>-ke</et> указывает на малый размер или пр
 msgid "<et>-ke</et>: a small one"
 msgstr "<et>-ke</et> — что-то маленькое"
 
-msgid "<et>-lik</et> makes an adjective: like it, or having it."
-msgstr "<et>-lik</et> образует прилагательное со значением сходства или признака."
-
-msgid "<et>-lik</et>: like it"
-msgstr "<et>-lik</et> — сходство"
+msgid "<et>-lik</et> usually makes an adjective meaning like it, having it or to do with it."
+msgstr "Суффикс <et>-lik</et> обычно образует прилагательное со значением сходства, наличия чего-либо или связи с чем-либо."
 
 msgid "<et>-tu</et> means without, and usually joins the genitive."
 msgstr "<et>-tu</et> означает «без». Обычно его добавляют к родительному."
@@ -122,6 +116,12 @@ msgstr "городок"
 
 msgid "Add an ending to a noun and you get a new word. <0/> is like a friend, so friendly. <1/> is without a home. <2/> is a little house."
 msgstr "Суффикс придаёт существительному новый смысл. <0/> — похожий на друга, то есть дружелюбный. <1/> — без дома. <2/> — маленький дом."
+
+msgid "Adjective with -lik"
+msgstr "Прилагательное на -lik"
+
+msgid "Adjectives with <et>-lik</et>"
+msgstr "Прилагательные на <et>-lik</et>"
 
 msgid "After <0>tükike</0>, use the partitive: <1>kooki</1>."
 msgstr "После <0>tükike</0> нужен партитив: <1>kooki</1>."
@@ -216,8 +216,8 @@ msgstr "Ему тридцать, а он ведёт себя совсем по-�
 msgid "healthy"
 msgstr "здоровый"
 
-msgid "Hear a word, then pick what its ending adds. You don’t need to know the word: the ending tells you."
-msgstr "Послушай слово и выбери, какой смысл добавляет суффикс. Достаточно услышать суффикс, даже если само слово незнакомо."
+msgid "Hear a word, then pick what its ending usually adds."
+msgstr "Послушай слово и выбери, какое значение ему обычно придаёт это окончание."
 
 msgid "helpless"
 msgstr "беспомощный"
@@ -261,14 +261,8 @@ msgstr "Кати впервые пришла в приют, когда у неё
 msgid "Like a child is <0>lapselik</0>. With <1>-tu</1>, the word would mean without children."
 msgstr "Как ребёнок — <0>lapselik</0>. С <1>-tu</1> слово означало бы «без детей»."
 
-msgid "Like it"
-msgstr "Похожий"
-
-msgid "like it, having it"
-msgstr "похожий или с таким признаком"
-
-msgid "Like, without or small"
-msgstr "Сходство, отсутствие или малый размер"
+msgid "like it, having it or to do with it"
+msgstr "сходство, наличие или связь"
 
 msgid "Listen: Kalev and Kati"
 msgstr "Послушай разговор Калева с Кати"
@@ -479,6 +473,9 @@ msgstr "Что ещё местного продаётся в магазине, �
 
 msgid "What is the most important job for volunteers?"
 msgstr "Что важнее всего в работе волонтёров?"
+
+msgid "What the ending adds"
+msgstr "Что добавляет окончание"
 
 msgid "Where were the five kittens found? Write it as Kati says it."
 msgstr "Где нашли пятерых котят? Напиши словами Кати."

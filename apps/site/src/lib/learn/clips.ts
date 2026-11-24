@@ -12874,11 +12874,14 @@ export const IDIOM_ANSWERS: Record<string, readonly [string, ...string[]]> = {
   "Ma ei saanud küsimusest aru.": [
     "Ma ei saanud küsimusest aru.",
     "Ei saanud küsimusest aru.",
+    "Ma ei saanud aru küsimusest.",
+    "Ei saanud aru küsimusest.",
     "Ma ei mõistnud küsimust.",
     "Küsimusest ei saanud ma aru.",
     "Küsimusest ei saanud aru.",
     "Ma ei saanud aru, mida küsiti.",
     "Mina ei saanud küsimusest aru.",
+    "Mina ei saanud aru küsimusest.",
     "Mina ei mõistnud küsimust.",
     "Mina ei saanud aru, mida küsiti.",
   ],
@@ -12888,10 +12891,12 @@ export const IDIOM_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Homme saame kokku.",
     "Me saame homme kokku.",
     "Homme saame me kokku.",
+    "Me saame kokku homme.",
     "Kohtume homme.",
     "Homme kohtume.",
     "Me kohtume homme.",
     "Meie saame homme kokku.",
+    "Meie saame kokku homme.",
     "Meie kohtume homme.",
   ],
   "Ma saan oma õega hästi läbi.": [
@@ -12925,9 +12930,12 @@ export const IDIOM_ANSWERS: Record<string, readonly [string, ...string[]]> = {
   "Ta jäi rongist maha.": [
     "Ta jäi rongist maha.",
     "Rongist jäi ta maha.",
+    "Ta jäi maha rongist.",
+    "Jäi rongist maha.",
     "Ta ei jõudnud rongile.",
     "Ta hilines rongile.",
     "Tema jäi rongist maha.",
+    "Tema jäi maha rongist.",
     "Tema ei jõudnud rongile.",
   ],
   "Sa näed väsinud välja.": [
@@ -12969,7 +12977,11 @@ export const IDIOM_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Ma ei tundnud teda ära.",
     "Ei tundnud teda ära.",
     "Teda ma ära ei tundnud.",
+    "Ma ei tundnud ära teda.",
+    "Ei tundnud ära teda.",
+    "Teda ei tundnud ära.",
     "Mina ei tundnud teda ära.",
+    "Mina ei tundnud ära teda.",
   ],
 };
 
@@ -13069,6 +13081,7 @@ export const IDIOM_REWRITE_ANSWERS: Record<string, readonly [string, ...string[]
   "Me tahame homme kokku saada.": [
     "Me tahame homme kokku saada.",
     "Homme tahame me kokku saada.",
+    "Homme tahame kokku saada.",
     "Me tahame kokku saada homme.",
     "Meie tahame homme kokku saada.",
     "Tahame homme kokku saada.",
@@ -13421,6 +13434,7 @@ export const ROUTE_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Me istusime laua ümber.",
     "Me istusime ümber laua.",
     "Laua ümber istusime me.",
+    "Laua ümber istusime.",
     "Ümber laua istusime.",
     "Meie istusime laua ümber.",
     "Istusime laua ümber.",
@@ -13431,6 +13445,7 @@ export const ROUTE_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Me lendasime Riia kaudu.",
     "Me lendasime läbi Riia.",
     "Riia kaudu lendasime me.",
+    "Riia kaudu lendasime.",
     "Läbi Riia lendasime.",
     "Meie lendasime Riia kaudu.",
     "Lendasime Riia kaudu.",
@@ -13448,6 +13463,7 @@ export const ROUTE_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Me sõitsime üle silla.",
     "Me sõitsime sillast üle.",
     "Üle silla sõitsime me.",
+    "Üle silla sõitsime.",
     "Sõitsime autoga üle silla.",
     "Meie sõitsime üle silla.",
     "Sõitsime üle silla.",
@@ -13732,7 +13748,9 @@ export const AGENT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Ma armastan lugemist.",
     "Ma armastan lugeda.",
     "Lugemine meeldib mulle.",
+    "Lugemine meeldib minule.",
     "Lugeda meeldib mulle.",
+    "Lugeda meeldib minule.",
     "Mina armastan lugemist.",
     "Armastan lugemist.",
     "Mina armastan lugeda.",
@@ -13753,6 +13771,7 @@ export const AGENT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Mu õde töötab õpetajana.",
     "Minu õde töötab õpetajana.",
     "Õpetajana töötab mu õde.",
+    "Õpetajana töötab minu õde.",
   ],
   "Müüja on väga lahke.": [
     "Müüja on väga lahke.",
@@ -13764,6 +13783,9 @@ export const AGENT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Suitsetamine on siin keelatud.",
     "Siin on suitsetamine keelatud.",
     "Siin ei tohi suitsetada.",
+    "Siin ei või suitsetada.",
+    "Suitsetada siin ei tohi.",
+    "Suitsetada siin ei või.",
     "Suitsetamine on keelatud siin.",
     "Siin on keelatud suitsetada.",
     "Siin ei ole suitsetamine lubatud.",
@@ -13792,6 +13814,7 @@ export const AGENT_FIXES = [
 
 export const AGENT_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
   ...Object.fromEntries(AGENT_FIXES.map(({ right }) => [right, [right]])),
+  "Siin on parkimine keelatud.": ["Siin on parkimine keelatud.", "Siin on parkida keelatud."],
 };
 
 export const AGENT_EXTRA = [
@@ -14014,9 +14037,11 @@ export const SUFFIX_HEARD = [
   { kind: "ke", said: "poisike" },
 ] as const;
 
+export const HOUSE_DIMINUTIVES = ["majake", "majakene"] as const;
+
 export const SUFFIX_FORMS = [
   { from: "kodu", kind: "tu", answer: "kodutu" },
-  { from: "maja", kind: "ke", answer: "majake" },
+  { from: "maja", kind: "ke", answer: HOUSE_DIMINUTIVES[0] },
   { from: "sõber", kind: "lik", answer: "sõbralik" },
   { from: "töö", kind: "tu", answer: "töötu" },
   { from: "tükk", kind: "ke", answer: "tükike" },
@@ -14053,6 +14078,8 @@ export const SUFFIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Me elame väikeses linnas.",
     "Väikeses linnas elame.",
     "Väikeses linnakeses elame.",
+    "Väikeses linnas elame me.",
+    "Väikeses linnakeses elame me.",
     "Meie elame väikeses linnakeses.",
     "Elame väikeses linnakeses.",
     "Meie elame linnakeses.",
@@ -14093,6 +14120,8 @@ export const SUFFIX_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Anna mulle väike tükk kooki.",
     "Andke mulle väike tükk kooki.",
     "Anna mulle palun tükike kooki.",
+    "Palun anna mulle tükike kooki.",
+    "Palun andke mulle tükike kooki.",
     "Andke palun mulle tükike kooki.",
     "Kas sa annaksid mulle tükikese kooki?",
     "Kas te annaksite mulle tükikese kooki?",

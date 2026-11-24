@@ -238,20 +238,26 @@ msgstr "I want to meet up with you."
 msgid "In a sentence"
 msgstr "In a sentence"
 
-msgid "In a simple sentence, the particle usually goes last: <0>Ma saan naabriga hästi läbi.</0> It usually stays last after <1>ei</1> and in a question."
-msgstr "In a simple sentence, the particle usually goes last: <0>Ma saan naabriga hästi läbi.</0> It usually stays last after <1>ei</1> and in a question."
-
-msgid "In both examples, <0>Jäi</0> comes second and <1>ära</1> comes last."
-msgstr "In both examples, <0>Jäi</0> comes second and <1>ära</1> comes last."
-
 msgid "In her first month, Olga wanted to give up."
 msgstr "In her first month, Olga wanted to give up."
 
-msgid "In this sentence the particle comes last, even after <0>ei</0>."
-msgstr "In this sentence the particle comes last, even after <0>ei</0>."
+msgid "In neutral word order, <0>ära</0> usually comes last. A time word like <1>eile</1> can follow it."
+msgstr "In neutral word order, <0>ära</0> usually comes last. A time word like <1>eile</1> can follow it."
 
-msgid "In this sentence with <et>välja nägema</et>, the particle comes after <et>väsinud</et>."
-msgstr "In this sentence with <et>välja nägema</et>, the particle comes after <et>väsinud</et>."
+msgid "In neutral word order, <et>välja</et> usually comes last. A detail like <et>väsinud</et> can follow it."
+msgstr "In neutral word order, <et>välja</et> usually comes last. A detail like <et>väsinud</et> can follow it."
+
+msgid "In neutral word order, the particle usually comes last, including in questions and negatives. A place, time or other detail can follow it, as in <0>Kontsert jäi ära eile.</0>"
+msgstr "In neutral word order, the particle usually comes last, including in questions and negatives. A place, time or other detail can follow it, as in <0>Kontsert jäi ära eile.</0>"
+
+msgid "In neutral word order, the particle usually comes last. A place, time or other detail can follow it. After <et>tahan</et> or <et>pean</et>, it usually comes before the infinitive."
+msgstr "In neutral word order, the particle usually comes last. A place, time or other detail can follow it. After <et>tahan</et> or <et>pean</et>, it usually comes before the infinitive."
+
+msgid "In neutral word order, the particle usually comes last. A place, time or other detail can follow it. After a verb such as <0>tahan</0>, it usually goes just before the infinitive: <1>Ma tahan aru saada.</1>"
+msgstr "In neutral word order, the particle usually comes last. A place, time or other detail can follow it. After a verb such as <0>tahan</0>, it usually goes just before the infinitive: <1>Ma tahan aru saada.</1>"
+
+msgid "In neutral word order, the particle usually comes last. An extra detail can follow it."
+msgstr "In neutral word order, the particle usually comes last. An extra detail can follow it."
 
 msgid "It was cold."
 msgstr "It was cold."
@@ -453,18 +459,6 @@ msgstr "The Friday meetings are never called off."
 
 msgid "The milk is what runs out, so it’s the subject: <0>piim sai otsa</0>."
 msgstr "The milk is what runs out, so it’s the subject: <0>piim sai otsa</0>."
-
-msgid "The particle comes last in this question: <0>… maha?</0>"
-msgstr "The particle comes last in this question: <0>… maha?</0>"
-
-msgid "The particle comes last in this sentence."
-msgstr "The particle comes last in this sentence."
-
-msgid "The particle usually comes last. After <et>tahan</et> or <et>pean</et>, it usually comes before the infinitive."
-msgstr "The particle usually comes last. After <et>tahan</et> or <et>pean</et>, it usually comes before the infinitive."
-
-msgid "The particle usually goes last: <0>Ma ei saa sellest aru.</0> After a verb such as <1>tahan</1>, it usually goes just before the infinitive: <2>Ma tahan aru saada.</2>"
-msgstr "The particle usually goes last: <0>Ma ei saa sellest aru.</0> After a verb such as <1>tahan</1>, it usually goes just before the infinitive: <2>Ma tahan aru saada.</2>"
 
 msgid "The thing is the subject: Kohv sai otsa."
 msgstr "The thing is the subject: Kohv sai otsa."

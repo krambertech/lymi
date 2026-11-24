@@ -1,13 +1,13 @@
 import { msg } from "@lingui/core/macro";
-import { SUFFIX_ANSWERS, SUFFIX_FIX_ANSWERS } from "../../../lib/learn/clips";
+import { HOUSE_DIMINUTIVES, SUFFIX_ANSWERS, SUFFIX_FIX_ANSWERS } from "../../../lib/learn/clips";
 import type { ChoiceDrill, DrillBank, FormDrill } from "../../../lib/learn/drill";
 
-const LIK = msg`<et>-lik</et> makes an adjective: like it, or having it.`;
+const LIK = msg`<et>-lik</et> usually makes an adjective meaning like it, having it or to do with it.`;
 const TU = msg`<et>-tu</et> means without, and usually joins the genitive.`;
 const KE = msg`<et>-ke</et> makes something small or dear, and usually joins the genitive.`;
 
 const LABELS = {
-  lik: msg`like it, having it`,
+  lik: msg`like it, having it or to do with it`,
   tu: msg`without it`,
   ke: msg`a small one`,
 } as const;
@@ -31,7 +31,7 @@ const make = (
   kind: Kind,
   from: string,
   gloss: FormDrill["gloss"],
-  answer: string,
+  answer: string | readonly [string, ...string[]],
   explain: FormDrill["explain"] = WHY[kind],
 ): FormDrill => ({
   kind: "form",
@@ -40,17 +40,17 @@ const make = (
   base: from,
   gloss,
   cue: LABELS[kind],
-  answers: [answer],
-  say: answer,
+  answers: typeof answer === "string" ? [answer] : answer,
+  say: typeof answer === "string" ? answer : answer[0],
   explain,
 });
 
 export const DRILLS: DrillBank = {
   rules: {
-    lik: { label: msg`<et>-lik</et>: like it`, section: "endings" },
+    lik: { label: msg`Adjectives with <et>-lik</et>`, section: "endings" },
     tu: { label: msg`<et>-tu</et>: without it`, section: "endings" },
     ke: { label: msg`<et>-ke</et>: a small one`, section: "endings" },
-    hear: { label: msg`Like, without or small`, section: "hear" },
+    hear: { label: msg`What the ending adds`, section: "hear" },
   },
   items: [
     hear("hear-ohtlik", "lik", "ohtlik"),
@@ -131,7 +131,7 @@ export const DRILLS: DrillBank = {
       explain: msg`The adjective is plural like its noun: <et>kodutud koerad</et>.`,
     },
 
-    make("make-majake", "ke", "maja", msg`house`, "majake"),
+    make("make-majake", "ke", "maja", msg`house`, HOUSE_DIMINUTIVES),
     make(
       "make-tukike",
       "ke",

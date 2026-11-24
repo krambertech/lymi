@@ -278,7 +278,7 @@ function useContent() {
       ),
       "Siin on parkimine keelatud.": (
         <Trans>
-          The subject is a noun: <b lang="et">parkimine</b>, not the verb <b lang="et">parkima</b>.
+          Use the noun <b lang="et">parkimine</b> or the -da infinitive <b lang="et">parkida</b>.
         </Trans>
       ),
       "Kõik õpetajad olid koosolekul.": (
@@ -369,9 +369,9 @@ function useContent() {
         id: "work",
         ask: t`What is Anne’s job?`,
         options: [
-          { id: "library", label: t`At the library` },
+          { id: "library", label: t`She works as a librarian.` },
           { id: "teacher", label: t`She teaches English at a school.` },
-          { id: "writer", label: t`Writing books` },
+          { id: "writer", label: t`She writes books for a living.` },
         ],
         answer: "teacher",
         line: 1,

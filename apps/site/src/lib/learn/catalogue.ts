@@ -518,7 +518,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Making new Estonian words from nouns`,
         et: "Sõbralik, kodutu",
         minutes: 24,
-        blurb: msg`A free Estonian lesson on three endings that make new words from nouns: -lik for like it or having it (sõbralik, kohalik, ohtlik), -tu for without (kodutu, töötu, veatu) and -ke for a small one (majake, tükike, linnake), and how each new word changes in a sentence. Every example is read aloud.`,
+        blurb: msg`A free Estonian lesson on three endings that make new words from nouns: -lik for adjectives that usually mean like it, having it or to do with it (sõbralik, ohtlik, kohalik, tervislik), -tu for without (kodutu, töötu, veatu) and -ke for a small one (majake, tükike, linnake), and how each new word changes in a sentence. Every example is read aloud.`,
       },
       { name: msg`The -des and -mata forms`, et: "Lugedes, lugemata" },
       { name: msg`Participles`, et: "Loetud raamat" },

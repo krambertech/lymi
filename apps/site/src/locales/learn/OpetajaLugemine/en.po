@@ -121,9 +121,6 @@ msgstr "Anne’s pupils"
 msgid "Asked about a reading club."
 msgstr "Asked about a reading club."
 
-msgid "At the library"
-msgstr "At the library"
-
 msgid "Both are ordinary nouns: <0>õpetajad</0>, <1>õpetajat</1>; <2>lugemise</2>, <3>lugemist</3>, like <4>inimene, inimese, inimest</4>."
 msgstr "Both are ordinary nouns: <0>õpetajad</0>, <1>õpetajat</1>; <2>lugemise</2>, <3>lugemist</3>, like <4>inimene, inimese, inimest</4>."
 
@@ -294,6 +291,12 @@ msgstr "seller, shop assistant"
 msgid "She teaches English at a school."
 msgstr "She teaches English at a school."
 
+msgid "She works as a librarian."
+msgstr "She works as a librarian."
+
+msgid "She writes books for a living."
+msgstr "She writes books for a living."
+
 msgid "Sign off politely."
 msgstr "Sign off politely."
 
@@ -360,12 +363,6 @@ msgstr "The shop assistant is very kind."
 msgid "The shop is open every day."
 msgstr "The shop is open every day."
 
-msgid "The subject is a noun: <0>parkimine</0>, not the verb <1>parkima</1>."
-msgstr "The subject is a noun: <0>parkimine</0>, not the verb <1>parkima</1>."
-
-msgid "The subject is a noun: <et>parkimine</et>."
-msgstr "The subject is a noun: <et>parkimine</et>."
-
 msgid "The verb around them picks the case: <0>mulle meeldib lugemine</0>, <1>ma armastan lugemist</1>, <2>ta töötab müüjana</2>."
 msgstr "The verb around them picks the case: <0>mulle meeldib lugemine</0>, <1>ma armastan lugemist</1>, <2>ta töötab müüjana</2>."
 
@@ -425,6 +422,12 @@ msgstr "Type the word"
 
 msgid "Use at least one -ja word and one -mine word."
 msgstr "Use at least one -ja word and one -mine word."
+
+msgid "Use the noun <0>parkimine</0> or the -da infinitive <1>parkida</1>."
+msgstr "Use the noun <0>parkimine</0> or the -da infinitive <1>parkida</1>."
+
+msgid "Use the noun <et>parkimine</et> or the -da infinitive <et>parkida</et>."
+msgstr "Use the noun <et>parkimine</et> or the -da infinitive <et>parkida</et>."
 
 msgid "Usually replace <0>-ma</0> with <1>-mine</1>. The partitive ends in <2>-mist</2>."
 msgstr "Usually replace <0>-ma</0> with <1>-mine</1>. The partitive ends in <2>-mist</2>."
@@ -500,9 +503,6 @@ msgstr "Write: apply for the job"
 
 msgid "Writing"
 msgstr "Writing"
-
-msgid "Writing books"
-msgstr "Writing books"
 
 msgid "You need work experience for this job."
 msgstr "You need work experience for this job."

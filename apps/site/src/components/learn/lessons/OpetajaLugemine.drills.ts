@@ -101,7 +101,7 @@ export const DRILLS: DrillBank = {
       wrong: "Siin on parkima keelatud.",
       answers: AGENT_FIX_ANSWERS["Siin on parkimine keelatud."] as readonly [string, ...string[]],
       say: "Siin on parkimine keelatud.",
-      explain: msg`The subject is a noun: <et>parkimine</et>.`,
+      explain: msg`Use the noun <et>parkimine</et> or the -da infinitive <et>parkida</et>.`,
     },
 
     {

@@ -16,14 +16,11 @@ msgstr "<0>-ke</0> додає значення малого розміру аб�
 msgid "<0>-ke</0>: a small one."
 msgstr "<0>-ke</0> — щось маленьке."
 
-msgid "<0>-lik</0> makes an adjective, like it or having it: <1>sõbralik, kohalik, ohtlik</1>. Learn each one, since the stem before it varies."
-msgstr "<0>-lik</0> утворює прикметники зі значенням схожості або ознаки: <1>sõbralik, kohalik, ohtlik</1>. Запам’ятовуй їх цілими словами, бо основи перед суфіксом різні."
+msgid "<0>-lik</0> usually makes an adjective meaning like it, having it or to do with it."
+msgstr "Суфікс <0>-lik</0> зазвичай утворює прикметник зі значенням подібності, наявності чогось або зв’язку з чимось."
 
-msgid "<0>-lik</0> makes an adjective: like it, or having it."
-msgstr "<0>-lik</0> утворює прикметник зі значенням схожості або ознаки."
-
-msgid "<0>-lik</0>: like it, or having it."
-msgstr "<0>-lik</0> — схожість або ознака."
+msgid "<0>-lik</0> usually makes an adjective meaning like it, having it or to do with it. <1>Kohalik</1> means local, of the place. <2>Tervislik</2> means healthy, good for your health."
+msgstr "Суфікс <0>-lik</0> зазвичай утворює прикметник зі значенням подібності, наявності чогось або зв’язку з чимось. <1>Kohalik</1> означає «місцевий», тобто пов’язаний із місцем. <2>Tervislik</2> означає «корисний для здоров’я»."
 
 msgid "<0>-tu</0> and <1>-ke</1> usually join the genitive: <2>viga, vea, veatu</2>. Before <3>-lik</3> the stem varies: <4>sõbra-lik</4> but <5>oht-lik</5>. Pick an ending and tap the words."
 msgstr "<0>-tu</0> й <1>-ke</1> зазвичай додають до родового: <2>viga, vea, veatu</2>. Перед <3>-lik</3> основа буває різною: <4>sõbra-lik</4>, а от <5>oht-lik</5>. Вибери суфікс і торкайся слів."
@@ -54,11 +51,8 @@ msgstr "<et>-ke</et> додає значення малого розміру а�
 msgid "<et>-ke</et>: a small one"
 msgstr "<et>-ke</et> — щось маленьке"
 
-msgid "<et>-lik</et> makes an adjective: like it, or having it."
-msgstr "<et>-lik</et> утворює прикметник зі значенням схожості або ознаки."
-
-msgid "<et>-lik</et>: like it"
-msgstr "<et>-lik</et> — схожість"
+msgid "<et>-lik</et> usually makes an adjective meaning like it, having it or to do with it."
+msgstr "Суфікс <et>-lik</et> зазвичай утворює прикметник зі значенням подібності, наявності чогось або зв’язку з чимось."
 
 msgid "<et>-tu</et> means without, and usually joins the genitive."
 msgstr "<et>-tu</et> означає «без». Його зазвичай додають до родового."
@@ -122,6 +116,12 @@ msgstr "містечко"
 
 msgid "Add an ending to a noun and you get a new word. <0/> is like a friend, so friendly. <1/> is without a home. <2/> is a little house."
 msgstr "Суфікс додає іменнику нове значення. <0/> — схожий на друга, тобто дружній. <1/> — без дому. <2/> — маленький будинок."
+
+msgid "Adjective with -lik"
+msgstr "Прикметник на -lik"
+
+msgid "Adjectives with <et>-lik</et>"
+msgstr "Прикметники на <et>-lik</et>"
 
 msgid "After <0>tükike</0>, use the partitive: <1>kooki</1>."
 msgstr "Після <0>tükike</0> потрібен партитив: <1>kooki</1>."
@@ -216,8 +216,8 @@ msgstr "Йому тридцять, а поводиться він зовсім �
 msgid "healthy"
 msgstr "здоровий"
 
-msgid "Hear a word, then pick what its ending adds. You don’t need to know the word: the ending tells you."
-msgstr "Прослухай слово й вибери, як суфікс змінює значення. Досить почути суфікс, навіть якщо саме слово незнайоме."
+msgid "Hear a word, then pick what its ending usually adds."
+msgstr "Послухай слово й обери, якого значення зазвичай надає йому це закінчення."
 
 msgid "helpless"
 msgstr "безпорадний"
@@ -261,14 +261,8 @@ msgstr "Каті вперше прийшла до притулку, коли н�
 msgid "Like a child is <0>lapselik</0>. With <1>-tu</1>, the word would mean without children."
 msgstr "По-дитячому — <0>lapselik</0>. З <1>-tu</1> слово означало б «без дітей»."
 
-msgid "Like it"
-msgstr "Схожий"
-
-msgid "like it, having it"
-msgstr "схожий або з такою ознакою"
-
-msgid "Like, without or small"
-msgstr "Схожість, відсутність або малий розмір"
+msgid "like it, having it or to do with it"
+msgstr "схожий, наділений або пов’язаний"
 
 msgid "Listen: Kalev and Kati"
 msgstr "Послухай розмову Калева й Каті"
@@ -479,6 +473,9 @@ msgstr "Що ще місцевого продають у крамниці, кр�
 
 msgid "What is the most important job for volunteers?"
 msgstr "Що найважливіше в роботі волонтерів?"
+
+msgid "What the ending adds"
+msgstr "Що додає закінчення"
 
 msgid "Where were the five kittens found? Write it as Kati says it."
 msgstr "Де знайшли п’ятьох кошенят? Напиши словами Каті."

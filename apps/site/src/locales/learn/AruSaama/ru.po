@@ -238,20 +238,26 @@ msgstr "Я хочу с тобой встретиться."
 msgid "In a sentence"
 msgstr "В предложении"
 
-msgid "In a simple sentence, the particle usually goes last: <0>Ma saan naabriga hästi läbi.</0> It usually stays last after <1>ei</1> and in a question."
-msgstr "В простом предложении частица обычно стоит в конце: <0>Ma saan naabriga hästi läbi.</0> Как правило, так же и с <1>ei</1>, и в вопросе."
-
-msgid "In both examples, <0>Jäi</0> comes second and <1>ära</1> comes last."
-msgstr "В этих примерах <0>Jäi</0> стоит на втором месте, а <1>ära</1> — в конце."
-
 msgid "In her first month, Olga wanted to give up."
 msgstr "В первый месяц Ольга хотела всё бросить."
 
-msgid "In this sentence the particle comes last, even after <0>ei</0>."
-msgstr "После <0>ei</0> частица здесь тоже стоит в конце."
+msgid "In neutral word order, <0>ära</0> usually comes last. A time word like <1>eile</1> can follow it."
+msgstr "При нейтральном порядке слов <0>ära</0> обычно стоит в конце. После него может стоять слово со значением времени, например <1>eile</1>."
 
-msgid "In this sentence with <et>välja nägema</et>, the particle comes after <et>väsinud</et>."
-msgstr "В этом предложении с <et>Välja nägema</et> частица стоит после <et>väsinud</et>."
+msgid "In neutral word order, <et>välja</et> usually comes last. A detail like <et>väsinud</et> can follow it."
+msgstr "При нейтральном порядке слов <et>välja</et> обычно стоит в конце. После него может идти уточнение, например <et>väsinud</et>."
+
+msgid "In neutral word order, the particle usually comes last, including in questions and negatives. A place, time or other detail can follow it, as in <0>Kontsert jäi ära eile.</0>"
+msgstr "При нейтральном порядке слов частица обычно стоит в конце, в том числе в вопросах и отрицаниях. После неё можно уточнить место, время или другую деталь, как в предложении <0>Kontsert jäi ära eile.</0>"
+
+msgid "In neutral word order, the particle usually comes last. A place, time or other detail can follow it. After <et>tahan</et> or <et>pean</et>, it usually comes before the infinitive."
+msgstr "При нейтральном порядке слов частица обычно стоит в конце. После неё можно уточнить место, время или другую деталь. С <et>tahan</et> или <et>pean</et> частица обычно стоит перед инфинитивом."
+
+msgid "In neutral word order, the particle usually comes last. A place, time or other detail can follow it. After a verb such as <0>tahan</0>, it usually goes just before the infinitive: <1>Ma tahan aru saada.</1>"
+msgstr "При нейтральном порядке слов частица обычно стоит в конце. После неё можно уточнить место, время или другую деталь. С глаголами вроде <0>tahan</0> частица обычно стоит прямо перед инфинитивом, как в <1>Ma tahan aru saada.</1>"
+
+msgid "In neutral word order, the particle usually comes last. An extra detail can follow it."
+msgstr "При нейтральном порядке слов частица обычно стоит в конце. После неё может идти уточнение."
 
 msgid "It was cold."
 msgstr "Было холодно."
@@ -453,18 +459,6 @@ msgstr "Пятничные совещания никогда не отменяю
 
 msgid "The milk is what runs out, so it’s the subject: <0>piim sai otsa</0>."
 msgstr "Закончилось молоко, поэтому оно и есть подлежащее: <0>piim sai otsa</0>."
-
-msgid "The particle comes last in this question: <0>… maha?</0>"
-msgstr "В этом вопросе частица тоже стоит в конце: <0>… maha?</0>"
-
-msgid "The particle comes last in this sentence."
-msgstr "В этом предложении частица стоит в конце."
-
-msgid "The particle usually comes last. After <et>tahan</et> or <et>pean</et>, it usually comes before the infinitive."
-msgstr "Частица обычно стоит в конце. После <et>tahan</et> или <et>pean</et> — обычно перед инфинитивом."
-
-msgid "The particle usually goes last: <0>Ma ei saa sellest aru.</0> After a verb such as <1>tahan</1>, it usually goes just before the infinitive: <2>Ma tahan aru saada.</2>"
-msgstr "Частица обычно стоит в конце: <0>Ma ei saa sellest aru.</0> После глагола вроде <1>tahan</1> она обычно стоит перед инфинитивом: <2>Ma tahan aru saada.</2>"
 
 msgid "The thing is the subject: Kohv sai otsa."
 msgstr "То, что закончилось, — подлежащее: Kohv sai otsa."

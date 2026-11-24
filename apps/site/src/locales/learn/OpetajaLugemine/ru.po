@@ -121,9 +121,6 @@ msgstr "Ученики Анне"
 msgid "Asked about a reading club."
 msgstr "Спросила о книжном клубе."
 
-msgid "At the library"
-msgstr "В библиотеке"
-
 msgid "Both are ordinary nouns: <0>õpetajad</0>, <1>õpetajat</1>; <2>lugemise</2>, <3>lugemist</3>, like <4>inimene, inimese, inimest</4>."
 msgstr "Оба слова — обычные существительные: <0>õpetajad</0>, <1>õpetajat</1> и <2>lugemise</2>, <3>lugemist</3>. Сравни <4>inimene, inimese, inimest</4>."
 
@@ -294,6 +291,12 @@ msgstr "продавец, консультант в магазине"
 msgid "She teaches English at a school."
 msgstr "Она преподаёт английский в школе."
 
+msgid "She works as a librarian."
+msgstr "Она работает библиотекарем."
+
+msgid "She writes books for a living."
+msgstr "Она писательница."
+
 msgid "Sign off politely."
 msgstr "Вежливо попрощайся."
 
@@ -360,12 +363,6 @@ msgstr "Продавец очень приветливый."
 msgid "The shop is open every day."
 msgstr "Магазин открыт каждый день."
 
-msgid "The subject is a noun: <0>parkimine</0>, not the verb <1>parkima</1>."
-msgstr "Подлежащее здесь — существительное <0>parkimine</0>. <1>Parkima</1> — глагол."
-
-msgid "The subject is a noun: <et>parkimine</et>."
-msgstr "Подлежащее здесь — существительное <et>parkimine</et>."
-
 msgid "The verb around them picks the case: <0>mulle meeldib lugemine</0>, <1>ma armastan lugemist</1>, <2>ta töötab müüjana</2>."
 msgstr "Падеж зависит от роли существительного при глаголе: <0>mulle meeldib lugemine</0>, <1>ma armastan lugemist</1>, <2>ta töötab müüjana</2>."
 
@@ -425,6 +422,12 @@ msgstr "Напиши слово"
 
 msgid "Use at least one -ja word and one -mine word."
 msgstr "Используй хотя бы по одному слову на -ja и на -mine."
+
+msgid "Use the noun <0>parkimine</0> or the -da infinitive <1>parkida</1>."
+msgstr "Здесь подойдёт существительное <0>parkimine</0> или инфинитив на -da <1>parkida</1>."
+
+msgid "Use the noun <et>parkimine</et> or the -da infinitive <et>parkida</et>."
+msgstr "Здесь подойдёт существительное <et>parkimine</et> или инфинитив на -da <et>parkida</et>."
 
 msgid "Usually replace <0>-ma</0> with <1>-mine</1>. The partitive ends in <2>-mist</2>."
 msgstr "Обычно <0>-ma</0> заменяют на <1>-mine</1>. В партитиве будет <2>-mist</2>."
@@ -500,9 +503,6 @@ msgstr "Напиши отклик на вакансию"
 
 msgid "Writing"
 msgstr "Письмо"
-
-msgid "Writing books"
-msgstr "Писать книги"
 
 msgid "You need work experience for this job."
 msgstr "Для этой работы нужен опыт."

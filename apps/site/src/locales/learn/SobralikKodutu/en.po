@@ -16,14 +16,11 @@ msgstr "<0>-ke</0> makes something small or dear, and usually joins the genitive
 msgid "<0>-ke</0>: a small one."
 msgstr "<0>-ke</0>: a small one."
 
-msgid "<0>-lik</0> makes an adjective, like it or having it: <1>sõbralik, kohalik, ohtlik</1>. Learn each one, since the stem before it varies."
-msgstr "<0>-lik</0> makes an adjective, like it or having it: <1>sõbralik, kohalik, ohtlik</1>. Learn each one, since the stem before it varies."
+msgid "<0>-lik</0> usually makes an adjective meaning like it, having it or to do with it."
+msgstr "<0>-lik</0> usually makes an adjective meaning like it, having it or to do with it."
 
-msgid "<0>-lik</0> makes an adjective: like it, or having it."
-msgstr "<0>-lik</0> makes an adjective: like it, or having it."
-
-msgid "<0>-lik</0>: like it, or having it."
-msgstr "<0>-lik</0>: like it, or having it."
+msgid "<0>-lik</0> usually makes an adjective meaning like it, having it or to do with it. <1>Kohalik</1> means local, of the place. <2>Tervislik</2> means healthy, good for your health."
+msgstr "<0>-lik</0> usually makes an adjective meaning like it, having it or to do with it. <1>Kohalik</1> means local, of the place. <2>Tervislik</2> means healthy, good for your health."
 
 msgid "<0>-tu</0> and <1>-ke</1> usually join the genitive: <2>viga, vea, veatu</2>. Before <3>-lik</3> the stem varies: <4>sõbra-lik</4> but <5>oht-lik</5>. Pick an ending and tap the words."
 msgstr "<0>-tu</0> and <1>-ke</1> usually join the genitive: <2>viga, vea, veatu</2>. Before <3>-lik</3> the stem varies: <4>sõbra-lik</4> but <5>oht-lik</5>. Pick an ending and tap the words."
@@ -54,11 +51,8 @@ msgstr "<et>-ke</et> makes something small or dear, and usually joins the geniti
 msgid "<et>-ke</et>: a small one"
 msgstr "<et>-ke</et>: a small one"
 
-msgid "<et>-lik</et> makes an adjective: like it, or having it."
-msgstr "<et>-lik</et> makes an adjective: like it, or having it."
-
-msgid "<et>-lik</et>: like it"
-msgstr "<et>-lik</et>: like it"
+msgid "<et>-lik</et> usually makes an adjective meaning like it, having it or to do with it."
+msgstr "<et>-lik</et> usually makes an adjective meaning like it, having it or to do with it."
 
 msgid "<et>-tu</et> means without, and usually joins the genitive."
 msgstr "<et>-tu</et> means without, and usually joins the genitive."
@@ -122,6 +116,12 @@ msgstr "a small town"
 
 msgid "Add an ending to a noun and you get a new word. <0/> is like a friend, so friendly. <1/> is without a home. <2/> is a little house."
 msgstr "Add an ending to a noun and you get a new word. <0/> is like a friend, so friendly. <1/> is without a home. <2/> is a little house."
+
+msgid "Adjective with -lik"
+msgstr "Adjective with -lik"
+
+msgid "Adjectives with <et>-lik</et>"
+msgstr "Adjectives with <et>-lik</et>"
 
 msgid "After <0>tükike</0>, use the partitive: <1>kooki</1>."
 msgstr "After <0>tükike</0>, use the partitive: <1>kooki</1>."
@@ -216,8 +216,8 @@ msgstr "He’s thirty, but very childish."
 msgid "healthy"
 msgstr "healthy"
 
-msgid "Hear a word, then pick what its ending adds. You don’t need to know the word: the ending tells you."
-msgstr "Hear a word, then pick what its ending adds. You don’t need to know the word: the ending tells you."
+msgid "Hear a word, then pick what its ending usually adds."
+msgstr "Hear a word, then pick what its ending usually adds."
 
 msgid "helpless"
 msgstr "helpless"
@@ -261,14 +261,8 @@ msgstr "Kati first came to the shelter when she had no job."
 msgid "Like a child is <0>lapselik</0>. With <1>-tu</1>, the word would mean without children."
 msgstr "Like a child is <0>lapselik</0>. With <1>-tu</1>, the word would mean without children."
 
-msgid "Like it"
-msgstr "Like it"
-
-msgid "like it, having it"
-msgstr "like it, having it"
-
-msgid "Like, without or small"
-msgstr "Like, without or small"
+msgid "like it, having it or to do with it"
+msgstr "like it, having it or to do with it"
 
 msgid "Listen: Kalev and Kati"
 msgstr "Listen: Kalev and Kati"
@@ -479,6 +473,9 @@ msgstr "What else local does the shop sell besides bread? Write it as the advert
 
 msgid "What is the most important job for volunteers?"
 msgstr "What is the most important job for volunteers?"
+
+msgid "What the ending adds"
+msgstr "What the ending adds"
 
 msgid "Where were the five kittens found? Write it as Kati says it."
 msgstr "Where were the five kittens found? Write it as Kati says it."

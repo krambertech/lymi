@@ -1,0 +1,522 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 20:04+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0>Kaudu</0> goes after the genitive: <1>Riia kaudu</1>."
+msgstr "<0>Kaudu</0> стоїть після родового: <1>Riia kaudu</1>."
+
+msgid "<0>Kaudu</0> takes the genitive: <1>Riia</1>."
+msgstr "З <0>Kaudu</0> потрібен родовий: <1>Riia</1>."
+
+msgid "<0>Läbi metsa</0>, through the forest; <1>üle tee</1>, across the road; <2>mööda teed</2>, along the road: five words for a way, and the case each one takes."
+msgstr "<0>Läbi metsa</0> — крізь ліс, <1>üle tee</1> — через дорогу, <2>mööda teed</2> — уздовж дороги. П’ять слів, що описують шлях, і відмінки при них."
+
+msgid "<0>Läbi, üle, ümber</0> and <1>kaudu</1> take the genitive: <2>läbi metsa, üle jõe, laua ümber, Riia kaudu</2>."
+msgstr "З <0>Läbi, üle, ümber</0> та <1>kaudu</1> вживають родовий: <2>läbi metsa, üle jõe, laua ümber, Riia kaudu</2>."
+
+msgid "<0>Läbi, üle, ümber</0> and <1>kaudu</1> take the genitive: <2>üle tee</2>. <3>Mööda</3> takes the partitive, from lesson {partitive}: <4>mööda teed</4>. With many nouns the two look different, so the word before tells you which to use."
+msgstr "З <0>Läbi, üle, ümber</0> і <1>kaudu</1> вживають родовий: <2>üle tee</2>. З <3>Mööda</3> — партитив з уроку {partitive}: <4>mööda teed</4>. У багатьох іменників ці форми різні. Потрібну підказує слово поруч."
+
+msgid "<0>Läbi, üle</0> and <1>mööda</1> usually go before the noun; <2>ümber</2> usually goes after it, and <3>kaudu</3> always does."
+msgstr "<0>Läbi, üle</0> й <1>mööda</1> зазвичай стоять перед іменником, <2>ümber</2> — зазвичай після нього, а <3>kaudu</3> — завжди після."
+
+msgid "<0>Läbi, üle</0> and <1>mööda</1> usually go before the noun. <2>Ümber</2> usually goes after it, and <3>kaudu</3> always does. Tap the forms to hear them."
+msgstr "<0>Läbi, üle</0> й <1>mööda</1> зазвичай стоять перед іменником. <2>Ümber</2> — зазвичай після нього, а <3>kaudu</3> — завжди після. Торкнися форм, щоб їх прослухати."
+
+msgid "<0>Läbi</0> takes the genitive, not <1>-s</1>: <2>linna</2>."
+msgstr "З <0>Läbi</0> потрібен родовий: <2>linna</2>. Тут закінчення <1>-s</1> зайве."
+
+msgid "<0>Läbi</0> takes the genitive: <1>akna</1>, from <2>aken</2>."
+msgstr "З <0>Läbi</0> вживають родовий: <1>akna</1> від <2>aken</2>."
+
+msgid "<0>Läbi</0> through, <1>üle</1> across, <2>mööda</2> along, <3>ümber</3> around, <4>kaudu</4> via."
+msgstr "<0>Läbi</0> — крізь, <1>üle</1> — через, <2>mööda</2> — уздовж, <3>ümber</3> — навколо, <4>kaudu</4> — через проміжне місце."
+
+msgid "<0>Läbi</0>: through."
+msgstr "<0>Läbi</0> — крізь."
+
+#. placeholder {0}: item.answer
+msgid "<0>Mööda</0> takes the partitive: <1>{0}</1>."
+msgstr "З <0>Mööda</0> вживають партитив: <1>{0}</1>."
+
+msgid "<0>Mööda</0> takes the partitive: <1>jõge</1>."
+msgstr "З <0>Mööda</0> вживають партитив: <1>jõge</1>."
+
+msgid "<0>Mööda</0> takes the partitive: <1>mööda teed, mööda jõge</1>."
+msgstr "З <0>Mööda</0> вживають партитив: <1>mööda teed, mööda jõge</1>."
+
+msgid "<0>Mööda</0> takes the partitive: <1>randa</1>."
+msgstr "З <0>Mööda</0> вживають партитив: <1>randa</1>."
+
+msgid "<0>Mööda</0> takes the partitive: <1>teed</1>."
+msgstr "З <0>Mööda</0> вживають партитив: <1>teed</1>."
+
+msgid "<0>Mööda</0>: along."
+msgstr "<0>Mööda</0> — уздовж."
+
+msgid "<0>Üle</0> takes the genitive: <1>jõe</1>."
+msgstr "З <0>Üle</0> вживають родовий: <1>jõe</1>."
+
+msgid "<0>Üle</0> takes the genitive: <1>tee</1>."
+msgstr "З <0>Üle</0> вживають родовий: <1>tee</1>."
+
+msgid "<0>Üle</0>: across, over."
+msgstr "<0>Üle</0> — через, над."
+
+msgid "<0>Ümber</0> takes the genitive: <1>laua</1>."
+msgstr "З <0>Ümber</0> вживають родовий: <1>laua</1>."
+
+msgid "<0>Ümber</0>: around, before or after the noun."
+msgstr "<0>Ümber</0> означає «навколо». Може стояти до або після іменника."
+
+msgid "<et>Kaudu</et> goes after the genitive: <et>Riia kaudu</et>."
+msgstr "<et>Kaudu</et> стоїть після родового: <et>Riia kaudu</et>."
+
+msgid "<et>Kaudu</et> goes after the genitive: <et>sõbra kaudu</et>."
+msgstr "<et>Kaudu</et> стоїть після родового: <et>sõbra kaudu</et>."
+
+msgid "<et>Kaudu</et> goes after the noun: <et>Tartu kaudu</et>."
+msgstr "<et>Kaudu</et> стоїть після іменника: <et>Tartu kaudu</et>."
+
+msgid "<et>Kaudu</et> takes the genitive: <et>Riia</et>."
+msgstr "З <et>Kaudu</et> вживають родовий: <et>Riia</et>."
+
+msgid "<et>Läbi</et>, <et>üle</et>, <et>ümber</et> and <et>kaudu</et> take the genitive."
+msgstr "Зі словами <et>Läbi</et>, <et>üle</et>, <et>ümber</et> і <et>kaudu</et> вживають родовий."
+
+msgid "<et>Läbi</et>: through."
+msgstr "<et>Läbi</et> — крізь."
+
+msgid "<et>Mööda</et>, along, takes the partitive."
+msgstr "З <et>Mööda</et> («уздовж») уживають партитив."
+
+msgid "<et>Mööda</et>: along."
+msgstr "<et>Mööda</et> — уздовж."
+
+msgid "<et>Üle</et>: across."
+msgstr "<et>Üle</et> — через."
+
+msgid "<et>Ümber</et> takes the genitive: <et>laua</et>."
+msgstr "З <et>Ümber</et> уживають родовий: <et>laua</et>."
+
+msgid "<et>Ümber</et> usually goes after the genitive: <et>laua ümber</et>."
+msgstr "<et>Ümber</et> зазвичай стоїть після родового: <et>laua ümber</et>."
+
+msgid "<et>Ümber</et>: around."
+msgstr "<et>Ümber</et> — навколо."
+
+msgid "15 kilometres"
+msgstr "15 кілометрів"
+
+msgid "24 minutes"
+msgstr "24 хвилини"
+
+msgid "8 exercises"
+msgstr "8 вправ"
+
+msgid "A bike trip to Elva"
+msgstr "Велопрогулянка до Елви"
+
+msgid "A bridge"
+msgstr "Міст"
+
+msgid "A hiking trail"
+msgstr "Піший маршрут"
+
+msgid "A raincoat and a hat, in case of rain"
+msgstr "Дощовик і капелюх на випадок дощу"
+
+msgid "About 30 kilometres"
+msgstr "Близько 30 кілометрів"
+
+msgid "across"
+msgstr "через"
+
+msgid "Across"
+msgstr "Через"
+
+msgid "Across or along"
+msgstr "Через чи вздовж"
+
+msgid "across, over"
+msgstr "через, над"
+
+msgid "After the genitive: Riia kaudu."
+msgstr "Після родового: Riia kaudu."
+
+msgid "After which word?"
+msgstr "Після якого слова?"
+
+msgid "All eight ways heard right."
+msgstr "Усі вісім напрямків розпізнано на слух."
+
+msgid "All eight, typed in full."
+msgstr "Усі вісім, повністю написані."
+
+msgid "All seven, each with its case."
+msgstr "У всіх семи реченнях правильні відмінки."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "along"
+msgstr "уздовж"
+
+msgid "Along"
+msgstr "Уздовж"
+
+msgid "around"
+msgstr "навколо"
+
+msgid "boardwalk"
+msgstr "настил"
+
+msgid "bog"
+msgstr "болото"
+
+msgid "bridge"
+msgstr "міст"
+
+msgid "By boat"
+msgstr "Човном"
+
+msgid "Each round gives a noun and a sentence with a gap. Type the form the word before or after the gap needs."
+msgstr "У кожному завданні є іменник і речення з пропуском. Напиши форму, якої вимагає слово перед пропуском або після нього."
+
+msgid "Each sentence has one word in the wrong case. Tap it, then type it right."
+msgstr "У кожному реченні одне слово стоїть не в тому відмінку. Натисни на нього, потім напиши правильно."
+
+msgid "Estonian often says the same with a case and an adverb: <0>metsast läbi</0>, <1>teest üle</1>, <2>aknast sisse</2>. Both ways count here."
+msgstr "Той самий шлях часто описують відмінком і прислівником: <0>metsast läbi</0>, <1>teest üle</1>, <2>aknast sisse</2>. У вправі підходять обидва способи."
+
+msgid "Five words for a way"
+msgstr "П’ять слів для опису шляху"
+
+msgid "Fix the case"
+msgstr "Виправ відмінок"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "For bikes"
+msgstr "Для велосипедів"
+
+msgid "friend"
+msgstr "друг, подруга"
+
+msgid "garden, fence"
+msgstr "сад, огорожа"
+
+msgid "Genitive or partitive"
+msgstr "Родовий чи партитив"
+
+msgid "Genitive or partitive after the word"
+msgstr "Де родовий, а де партитив"
+
+msgid "Hear a sentence, then pick which way it goes."
+msgstr "Прослухай речення й вибери напрямок."
+
+msgid "hiking trail"
+msgstr "піший маршрут"
+
+msgid "How do you cross the river?"
+msgstr "Як перейти річку?"
+
+msgid "How far is Elva from Tartu, as Mari says?"
+msgstr "Як далеко Елва від Тарту, за словами Марі?"
+
+msgid "I walk along the beach every morning."
+msgstr "Щоранку я ходжу вздовж пляжу."
+
+msgid "In a sentence"
+msgstr "У реченні"
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan gets tired"
+msgstr "Яан втомлюється"
+
+msgid "Jaan thinks gravel is hard to ride on after rain."
+msgstr "Яан вважає, що після дощу важко їхати по гравію."
+
+msgid "Lesson {places} put words such as <0>peal</0> and <1>all</1> after a noun in the genitive: <2>laua peal</2>. These five say which way something goes: <3/>, <4/>, <5/>, <6/> and <7/>."
+msgstr "В уроці {places} слова на зразок <0>peal</0> і <1>all</1> стояли після іменника в родовому: <2>laua peal</2>. Ці п’ять слів указують шлях: <3/>, <4/>, <5/>, <6/> і <7/>."
+
+msgid "Listen: Mari and Jaan"
+msgstr "Послухай: Марі й Яан"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Mari"
+msgstr "Марі"
+
+msgid "Mari and Jaan plan a Saturday bike trip from Tartu to Elva."
+msgstr "Марі та Яан планують у суботу поїхати велосипедами з Тарту до Елви."
+
+msgid "Match each word with its meaning."
+msgstr "З’єднай кожне слово з його значенням."
+
+msgid "Meaning"
+msgstr "Значення"
+
+msgid "Nearly. Check the case in the ones you missed."
+msgstr "Перевір відмінки у відповідях із помилками."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Майже. Ще раз послухай ті, де є помилка."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Майже. Прочитай пояснення під кожною помилкою."
+
+msgid "Nearly. Was it after mööda? Then it’s the partitive."
+msgstr "Перевір, де стоїть mööda. З ним потрібен партитив."
+
+msgid "Now describe your own way to work or school in about 80 words, then compare it with a model."
+msgstr "Опиши свою дорогу на роботу чи навчання приблизно 80 словами. Тоді порівняй із зразком."
+
+msgid "On a narrow wooden bridge"
+msgstr "Вузьким дерев’яним мостом"
+
+msgid "On stones, when the water is low enough"
+msgstr "По каменях, якщо вода досить низька"
+
+msgid "One noun, two cases: the genitive after <0>üle</0>, the partitive after <1>mööda</1>."
+msgstr "Один іменник, два відмінки: з <0>üle</0> — родовий, з <1>mööda</1> — партитив."
+
+msgid "Over 50, too far for one day"
+msgstr "Понад 50, задовго для одного дня"
+
+msgid "Peeter might come on Sunday."
+msgstr "Пеетер, можливо, приїде в неділю."
+
+msgid "Put each form under the word it can follow."
+msgstr "Постав кожну форму під словом, із яким її вживають."
+
+msgid "Read the sign at the start of a hiking trail and answer the questions, as in the reading part of the B1 exam."
+msgstr "Прочитай табличку на початку маршруту й дай відповіді, як у завданні з читання на іспиті B1."
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Що запам’ятати» нижче, потім спробуй знову."
+
+msgid "river"
+msgstr "річка"
+
+msgid "road"
+msgstr "дорога"
+
+msgid "road, way"
+msgstr "дорога, шлях"
+
+msgid "Rubber boots"
+msgstr "Гумові чоботи"
+
+msgid "Say how long the way takes."
+msgstr "Напиши, скільки часу займає дорога."
+
+msgid "Say where you start, which way you go and how long it takes. Use at least three of the five words."
+msgstr "Напиши, звідки виходиш, яким шляхом ідеш і скільки це триває. Уживи щонайменше три з п’яти слів."
+
+msgid "Say where you start."
+msgstr "Напиши, звідки виходиш."
+
+msgid "sea"
+msgstr "море"
+
+msgid "So nobody gets lost"
+msgstr "Щоб не заблукати"
+
+msgid "street"
+msgstr "вулиця"
+
+msgid "table"
+msgstr "стіл"
+
+msgid "Tap a form"
+msgstr "Торкнися форми"
+
+msgid "Tap the forms in the second table once more, then try again."
+msgstr "Ще раз прослухай форми в другій таблиці й повтори вправу."
+
+msgid "Tap the sentences in the first table once more, then try again."
+msgstr "Ще раз прослухай речення в першій таблиці й повтори вправу."
+
+msgid "The cat jumped in through the window."
+msgstr "Кіт застрибнув через вікно."
+
+msgid "The children ran across the road."
+msgstr "Діти перебігли дорогу."
+
+#. placeholder {0}: plain(each.across)
+msgid "The genitive: <0>{0}</0>."
+msgstr "Родовий: <0>{0}</0>."
+
+msgid "The genitive: <0>jõe, mäe, silla, mere</0>."
+msgstr "Родовий: <0>jõe, mäe, silla, mere</0>."
+
+msgid "The ground there is wet and soft."
+msgstr "Там під ногами мокра й м’яка земля."
+
+msgid "The Kõrvemaa trail"
+msgstr "Маршрут у Кирвемаа"
+
+msgid "The main road, where the cars are"
+msgstr "Головною дорогою, де їздять машини"
+
+msgid "The noun takes a case: <0>metsa</0> and <1>tee</1> are genitives, <2>teed</2> is a partitive."
+msgstr "Іменник набуває потрібного відмінка: <0>metsa</0> й <1>tee</1> — родовий, <2>teed</2> — партитив."
+
+#. placeholder {0}: plain(each.along)
+msgid "The partitive: <0>{0}</0>."
+msgstr "Партитив: <0>{0}</0>."
+
+msgid "The partitive: <0>jõge, mäge, silda, merd</0>."
+msgstr "Партитив: <0>jõge, mäge, silda, merd</0>."
+
+msgid "The railway line"
+msgstr "Залізницю"
+
+msgid "The trail is closed in winter."
+msgstr "Узимку маршрут закритий."
+
+msgid "The trail is too hard for families with children."
+msgstr "Маршрут надто складний для сімей із дітьми."
+
+msgid "The water is too cold by now."
+msgstr "Вода вже надто холодна."
+
+msgid "There’s a beautiful view over the river."
+msgstr "Звідти гарно видно річку."
+
+msgid "There’s a market in the square."
+msgstr "На площі є ринок."
+
+msgid "They have to buy the train tickets in advance."
+msgstr "Квитки на поїзд треба купити заздалегідь."
+
+msgid "They’ll ride along the main road."
+msgstr "Вони поїдуть головною дорогою."
+
+#. placeholder {0}: item.answer
+msgid "This word takes the genitive: <0>{0}</0>."
+msgstr "З цим словом потрібен родовий: <0>{0}</0>."
+
+msgid "through"
+msgstr "крізь"
+
+msgid "Through, across, along or around"
+msgstr "Крізь, через, уздовж чи навколо"
+
+msgid "Through, across, along, around"
+msgstr "Крізь, через, уздовж, навколо"
+
+msgid "To eat"
+msgstr "Щоб поїсти"
+
+msgid "town"
+msgstr "місто"
+
+msgid "Type the form"
+msgstr "Напиши форму"
+
+msgid "Use at least three of the five words."
+msgstr "Уживи щонайменше три з п’яти слів."
+
+msgid "Use the partitive after mööda."
+msgstr "З mööda вживай партитив."
+
+msgid "Usually after the genitive: järve ümber."
+msgstr "Зазвичай після родового: järve ümber."
+
+msgid "via"
+msgstr "через"
+
+msgid "via, by way of"
+msgstr "через, транзитом через"
+
+msgid "viewing tower"
+msgstr "оглядова вежа"
+
+msgid "Warm clothes"
+msgstr "Теплий одяг для прогулянки"
+
+msgid "We drove across the bridge."
+msgstr "Ми переїхали міст."
+
+msgid "We flew via Riga."
+msgstr "Ми летіли через Ригу."
+
+msgid "We sat around the table."
+msgstr "Ми сиділи навколо столу."
+
+msgid "We walked through the forest."
+msgstr "Ми пройшли крізь ліс."
+
+msgid "What do they cross outside the town?"
+msgstr "Що вони перетинають за містом?"
+
+msgid "What does it mean?"
+msgstr "Що це означає?"
+
+msgid "What does Mari want to walk around in Elva? Write it as Mari says it."
+msgstr "Навколо чого Марі хоче прогулятися в Елві? Напиши її словами."
+
+msgid "What if I get a flat tyre?"
+msgstr "А якщо я проколю шину?"
+
+msgid "What should you wear in spring?"
+msgstr "Що варто вдягнути навесні?"
+
+msgid "Where will they meet? Write it as Mari says it."
+msgstr "Де вони зустрінуться? Напиши словами Марі."
+
+msgid "Which place does the bus from Tallinn go through? Write it as the text does."
+msgstr "Через який населений пункт їде автобус із Таллінна? Напиши, як у тексті."
+
+msgid "Which way?"
+msgstr "Яким шляхом?"
+
+msgid "Who says it?"
+msgstr "Хто це каже?"
+
+msgid "Why is there a boardwalk in the bog?"
+msgstr "Навіщо на болоті настил?"
+
+msgid "Why will they stop in the forest?"
+msgstr "Навіщо вони зупиняться в лісі?"
+
+msgid "With a noun"
+msgstr "З іменником"
+
+msgid "With the genitive: läbi metsa."
+msgstr "З родовим: läbi metsa."
+
+msgid "With the genitive: üle tee."
+msgstr "З родовим: üle tee."
+
+msgid "With the partitive: mööda teed."
+msgstr "З партитивом: mööda teed."
+
+msgid "Word"
+msgstr "Слово"
+
+msgid "Words that go after the noun"
+msgstr "Слова після іменника"
+
+msgid "Write each sentence in Estonian. Pick the word for the way first, then its case."
+msgstr "Напиши кожне речення естонською. Спершу вибери слово для опису шляху, потім його відмінок."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "Write: my way to work"
+msgstr "Напиши про свою дорогу на роботу"
+
+msgid "You can swim in the lake in summer."
+msgstr "Улітку в озері можна купатися."

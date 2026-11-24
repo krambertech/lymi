@@ -1,0 +1,522 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 20:04+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0>Kaudu</0> goes after the genitive: <1>Riia kaudu</1>."
+msgstr "<0>Kaudu</0> goes after the genitive: <1>Riia kaudu</1>."
+
+msgid "<0>Kaudu</0> takes the genitive: <1>Riia</1>."
+msgstr "<0>Kaudu</0> takes the genitive: <1>Riia</1>."
+
+msgid "<0>Läbi metsa</0>, through the forest; <1>üle tee</1>, across the road; <2>mööda teed</2>, along the road: five words for a way, and the case each one takes."
+msgstr "<0>Läbi metsa</0>, through the forest; <1>üle tee</1>, across the road; <2>mööda teed</2>, along the road: five words for a way, and the case each one takes."
+
+msgid "<0>Läbi, üle, ümber</0> and <1>kaudu</1> take the genitive: <2>läbi metsa, üle jõe, laua ümber, Riia kaudu</2>."
+msgstr "<0>Läbi, üle, ümber</0> and <1>kaudu</1> take the genitive: <2>läbi metsa, üle jõe, laua ümber, Riia kaudu</2>."
+
+msgid "<0>Läbi, üle, ümber</0> and <1>kaudu</1> take the genitive: <2>üle tee</2>. <3>Mööda</3> takes the partitive, from lesson {partitive}: <4>mööda teed</4>. With many nouns the two look different, so the word before tells you which to use."
+msgstr "<0>Läbi, üle, ümber</0> and <1>kaudu</1> take the genitive: <2>üle tee</2>. <3>Mööda</3> takes the partitive, from lesson {partitive}: <4>mööda teed</4>. With many nouns the two look different, so the word before tells you which to use."
+
+msgid "<0>Läbi, üle</0> and <1>mööda</1> usually go before the noun; <2>ümber</2> usually goes after it, and <3>kaudu</3> always does."
+msgstr "<0>Läbi, üle</0> and <1>mööda</1> usually go before the noun; <2>ümber</2> usually goes after it, and <3>kaudu</3> always does."
+
+msgid "<0>Läbi, üle</0> and <1>mööda</1> usually go before the noun. <2>Ümber</2> usually goes after it, and <3>kaudu</3> always does. Tap the forms to hear them."
+msgstr "<0>Läbi, üle</0> and <1>mööda</1> usually go before the noun. <2>Ümber</2> usually goes after it, and <3>kaudu</3> always does. Tap the forms to hear them."
+
+msgid "<0>Läbi</0> takes the genitive, not <1>-s</1>: <2>linna</2>."
+msgstr "<0>Läbi</0> takes the genitive, not <1>-s</1>: <2>linna</2>."
+
+msgid "<0>Läbi</0> takes the genitive: <1>akna</1>, from <2>aken</2>."
+msgstr "<0>Läbi</0> takes the genitive: <1>akna</1>, from <2>aken</2>."
+
+msgid "<0>Läbi</0> through, <1>üle</1> across, <2>mööda</2> along, <3>ümber</3> around, <4>kaudu</4> via."
+msgstr "<0>Läbi</0> through, <1>üle</1> across, <2>mööda</2> along, <3>ümber</3> around, <4>kaudu</4> via."
+
+msgid "<0>Läbi</0>: through."
+msgstr "<0>Läbi</0>: through."
+
+#. placeholder {0}: item.answer
+msgid "<0>Mööda</0> takes the partitive: <1>{0}</1>."
+msgstr "<0>Mööda</0> takes the partitive: <1>{0}</1>."
+
+msgid "<0>Mööda</0> takes the partitive: <1>jõge</1>."
+msgstr "<0>Mööda</0> takes the partitive: <1>jõge</1>."
+
+msgid "<0>Mööda</0> takes the partitive: <1>mööda teed, mööda jõge</1>."
+msgstr "<0>Mööda</0> takes the partitive: <1>mööda teed, mööda jõge</1>."
+
+msgid "<0>Mööda</0> takes the partitive: <1>randa</1>."
+msgstr "<0>Mööda</0> takes the partitive: <1>randa</1>."
+
+msgid "<0>Mööda</0> takes the partitive: <1>teed</1>."
+msgstr "<0>Mööda</0> takes the partitive: <1>teed</1>."
+
+msgid "<0>Mööda</0>: along."
+msgstr "<0>Mööda</0>: along."
+
+msgid "<0>Üle</0> takes the genitive: <1>jõe</1>."
+msgstr "<0>Üle</0> takes the genitive: <1>jõe</1>."
+
+msgid "<0>Üle</0> takes the genitive: <1>tee</1>."
+msgstr "<0>Üle</0> takes the genitive: <1>tee</1>."
+
+msgid "<0>Üle</0>: across, over."
+msgstr "<0>Üle</0>: across, over."
+
+msgid "<0>Ümber</0> takes the genitive: <1>laua</1>."
+msgstr "<0>Ümber</0> takes the genitive: <1>laua</1>."
+
+msgid "<0>Ümber</0>: around, before or after the noun."
+msgstr "<0>Ümber</0>: around, before or after the noun."
+
+msgid "<et>Kaudu</et> goes after the genitive: <et>Riia kaudu</et>."
+msgstr "<et>Kaudu</et> goes after the genitive: <et>Riia kaudu</et>."
+
+msgid "<et>Kaudu</et> goes after the genitive: <et>sõbra kaudu</et>."
+msgstr "<et>Kaudu</et> goes after the genitive: <et>sõbra kaudu</et>."
+
+msgid "<et>Kaudu</et> goes after the noun: <et>Tartu kaudu</et>."
+msgstr "<et>Kaudu</et> goes after the noun: <et>Tartu kaudu</et>."
+
+msgid "<et>Kaudu</et> takes the genitive: <et>Riia</et>."
+msgstr "<et>Kaudu</et> takes the genitive: <et>Riia</et>."
+
+msgid "<et>Läbi</et>, <et>üle</et>, <et>ümber</et> and <et>kaudu</et> take the genitive."
+msgstr "<et>Läbi</et>, <et>üle</et>, <et>ümber</et> and <et>kaudu</et> take the genitive."
+
+msgid "<et>Läbi</et>: through."
+msgstr "<et>Läbi</et>: through."
+
+msgid "<et>Mööda</et>, along, takes the partitive."
+msgstr "<et>Mööda</et>, along, takes the partitive."
+
+msgid "<et>Mööda</et>: along."
+msgstr "<et>Mööda</et>: along."
+
+msgid "<et>Üle</et>: across."
+msgstr "<et>Üle</et>: across."
+
+msgid "<et>Ümber</et> takes the genitive: <et>laua</et>."
+msgstr "<et>Ümber</et> takes the genitive: <et>laua</et>."
+
+msgid "<et>Ümber</et> usually goes after the genitive: <et>laua ümber</et>."
+msgstr "<et>Ümber</et> usually goes after the genitive: <et>laua ümber</et>."
+
+msgid "<et>Ümber</et>: around."
+msgstr "<et>Ümber</et>: around."
+
+msgid "15 kilometres"
+msgstr "15 kilometres"
+
+msgid "24 minutes"
+msgstr "24 minutes"
+
+msgid "8 exercises"
+msgstr "8 exercises"
+
+msgid "A bike trip to Elva"
+msgstr "A bike trip to Elva"
+
+msgid "A bridge"
+msgstr "A bridge"
+
+msgid "A hiking trail"
+msgstr "A hiking trail"
+
+msgid "A raincoat and a hat, in case of rain"
+msgstr "A raincoat and a hat, in case of rain"
+
+msgid "About 30 kilometres"
+msgstr "About 30 kilometres"
+
+msgid "across"
+msgstr "across"
+
+msgid "Across"
+msgstr "Across"
+
+msgid "Across or along"
+msgstr "Across or along"
+
+msgid "across, over"
+msgstr "across, over"
+
+msgid "After the genitive: Riia kaudu."
+msgstr "After the genitive: Riia kaudu."
+
+msgid "After which word?"
+msgstr "After which word?"
+
+msgid "All eight ways heard right."
+msgstr "All eight ways heard right."
+
+msgid "All eight, typed in full."
+msgstr "All eight, typed in full."
+
+msgid "All seven, each with its case."
+msgstr "All seven, each with its case."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "along"
+msgstr "along"
+
+msgid "Along"
+msgstr "Along"
+
+msgid "around"
+msgstr "around"
+
+msgid "boardwalk"
+msgstr "boardwalk"
+
+msgid "bog"
+msgstr "bog"
+
+msgid "bridge"
+msgstr "bridge"
+
+msgid "By boat"
+msgstr "By boat"
+
+msgid "Each round gives a noun and a sentence with a gap. Type the form the word before or after the gap needs."
+msgstr "Each round gives a noun and a sentence with a gap. Type the form the word before or after the gap needs."
+
+msgid "Each sentence has one word in the wrong case. Tap it, then type it right."
+msgstr "Each sentence has one word in the wrong case. Tap it, then type it right."
+
+msgid "Estonian often says the same with a case and an adverb: <0>metsast läbi</0>, <1>teest üle</1>, <2>aknast sisse</2>. Both ways count here."
+msgstr "Estonian often says the same with a case and an adverb: <0>metsast läbi</0>, <1>teest üle</1>, <2>aknast sisse</2>. Both ways count here."
+
+msgid "Five words for a way"
+msgstr "Five words for a way"
+
+msgid "Fix the case"
+msgstr "Fix the case"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "For bikes"
+msgstr "For bikes"
+
+msgid "friend"
+msgstr "friend"
+
+msgid "garden, fence"
+msgstr "garden, fence"
+
+msgid "Genitive or partitive"
+msgstr "Genitive or partitive"
+
+msgid "Genitive or partitive after the word"
+msgstr "Genitive or partitive after the word"
+
+msgid "Hear a sentence, then pick which way it goes."
+msgstr "Hear a sentence, then pick which way it goes."
+
+msgid "hiking trail"
+msgstr "hiking trail"
+
+msgid "How do you cross the river?"
+msgstr "How do you cross the river?"
+
+msgid "How far is Elva from Tartu, as Mari says?"
+msgstr "How far is Elva from Tartu, as Mari says?"
+
+msgid "I walk along the beach every morning."
+msgstr "I walk along the beach every morning."
+
+msgid "In a sentence"
+msgstr "In a sentence"
+
+msgid "Jaan"
+msgstr "Jaan"
+
+msgid "Jaan gets tired"
+msgstr "Jaan gets tired"
+
+msgid "Jaan thinks gravel is hard to ride on after rain."
+msgstr "Jaan thinks gravel is hard to ride on after rain."
+
+msgid "Lesson {places} put words such as <0>peal</0> and <1>all</1> after a noun in the genitive: <2>laua peal</2>. These five say which way something goes: <3/>, <4/>, <5/>, <6/> and <7/>."
+msgstr "Lesson {places} put words such as <0>peal</0> and <1>all</1> after a noun in the genitive: <2>laua peal</2>. These five say which way something goes: <3/>, <4/>, <5/>, <6/> and <7/>."
+
+msgid "Listen: Mari and Jaan"
+msgstr "Listen: Mari and Jaan"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Mari"
+msgstr "Mari"
+
+msgid "Mari and Jaan plan a Saturday bike trip from Tartu to Elva."
+msgstr "Mari and Jaan plan a Saturday bike trip from Tartu to Elva."
+
+msgid "Match each word with its meaning."
+msgstr "Match each word with its meaning."
+
+msgid "Meaning"
+msgstr "Meaning"
+
+msgid "Nearly. Check the case in the ones you missed."
+msgstr "Nearly. Check the case in the ones you missed."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Nearly. Play the ones you got wrong once more."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Nearly. Read the reason under each one you got wrong."
+
+msgid "Nearly. Was it after mööda? Then it’s the partitive."
+msgstr "Nearly. Was it after mööda? Then it’s the partitive."
+
+msgid "Now describe your own way to work or school in about 80 words, then compare it with a model."
+msgstr "Now describe your own way to work or school in about 80 words, then compare it with a model."
+
+msgid "On a narrow wooden bridge"
+msgstr "On a narrow wooden bridge"
+
+msgid "On stones, when the water is low enough"
+msgstr "On stones, when the water is low enough"
+
+msgid "One noun, two cases: the genitive after <0>üle</0>, the partitive after <1>mööda</1>."
+msgstr "One noun, two cases: the genitive after <0>üle</0>, the partitive after <1>mööda</1>."
+
+msgid "Over 50, too far for one day"
+msgstr "Over 50, too far for one day"
+
+msgid "Peeter might come on Sunday."
+msgstr "Peeter might come on Sunday."
+
+msgid "Put each form under the word it can follow."
+msgstr "Put each form under the word it can follow."
+
+msgid "Read the sign at the start of a hiking trail and answer the questions, as in the reading part of the B1 exam."
+msgstr "Read the sign at the start of a hiking trail and answer the questions, as in the reading part of the B1 exam."
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "river"
+msgstr "river"
+
+msgid "road"
+msgstr "road"
+
+msgid "road, way"
+msgstr "road, way"
+
+msgid "Rubber boots"
+msgstr "Rubber boots"
+
+msgid "Say how long the way takes."
+msgstr "Say how long the way takes."
+
+msgid "Say where you start, which way you go and how long it takes. Use at least three of the five words."
+msgstr "Say where you start, which way you go and how long it takes. Use at least three of the five words."
+
+msgid "Say where you start."
+msgstr "Say where you start."
+
+msgid "sea"
+msgstr "sea"
+
+msgid "So nobody gets lost"
+msgstr "So nobody gets lost"
+
+msgid "street"
+msgstr "street"
+
+msgid "table"
+msgstr "table"
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap the forms in the second table once more, then try again."
+msgstr "Tap the forms in the second table once more, then try again."
+
+msgid "Tap the sentences in the first table once more, then try again."
+msgstr "Tap the sentences in the first table once more, then try again."
+
+msgid "The cat jumped in through the window."
+msgstr "The cat jumped in through the window."
+
+msgid "The children ran across the road."
+msgstr "The children ran across the road."
+
+#. placeholder {0}: plain(each.across)
+msgid "The genitive: <0>{0}</0>."
+msgstr "The genitive: <0>{0}</0>."
+
+msgid "The genitive: <0>jõe, mäe, silla, mere</0>."
+msgstr "The genitive: <0>jõe, mäe, silla, mere</0>."
+
+msgid "The ground there is wet and soft."
+msgstr "The ground there is wet and soft."
+
+msgid "The Kõrvemaa trail"
+msgstr "The Kõrvemaa trail"
+
+msgid "The main road, where the cars are"
+msgstr "The main road, where the cars are"
+
+msgid "The noun takes a case: <0>metsa</0> and <1>tee</1> are genitives, <2>teed</2> is a partitive."
+msgstr "The noun takes a case: <0>metsa</0> and <1>tee</1> are genitives, <2>teed</2> is a partitive."
+
+#. placeholder {0}: plain(each.along)
+msgid "The partitive: <0>{0}</0>."
+msgstr "The partitive: <0>{0}</0>."
+
+msgid "The partitive: <0>jõge, mäge, silda, merd</0>."
+msgstr "The partitive: <0>jõge, mäge, silda, merd</0>."
+
+msgid "The railway line"
+msgstr "The railway line"
+
+msgid "The trail is closed in winter."
+msgstr "The trail is closed in winter."
+
+msgid "The trail is too hard for families with children."
+msgstr "The trail is too hard for families with children."
+
+msgid "The water is too cold by now."
+msgstr "The water is too cold by now."
+
+msgid "There’s a beautiful view over the river."
+msgstr "There’s a beautiful view over the river."
+
+msgid "There’s a market in the square."
+msgstr "There’s a market in the square."
+
+msgid "They have to buy the train tickets in advance."
+msgstr "They have to buy the train tickets in advance."
+
+msgid "They’ll ride along the main road."
+msgstr "They’ll ride along the main road."
+
+#. placeholder {0}: item.answer
+msgid "This word takes the genitive: <0>{0}</0>."
+msgstr "This word takes the genitive: <0>{0}</0>."
+
+msgid "through"
+msgstr "through"
+
+msgid "Through, across, along or around"
+msgstr "Through, across, along or around"
+
+msgid "Through, across, along, around"
+msgstr "Through, across, along, around"
+
+msgid "To eat"
+msgstr "To eat"
+
+msgid "town"
+msgstr "town"
+
+msgid "Type the form"
+msgstr "Type the form"
+
+msgid "Use at least three of the five words."
+msgstr "Use at least three of the five words."
+
+msgid "Use the partitive after mööda."
+msgstr "Use the partitive after mööda."
+
+msgid "Usually after the genitive: järve ümber."
+msgstr "Usually after the genitive: järve ümber."
+
+msgid "via"
+msgstr "via"
+
+msgid "via, by way of"
+msgstr "via, by way of"
+
+msgid "viewing tower"
+msgstr "viewing tower"
+
+msgid "Warm clothes"
+msgstr "Warm clothes"
+
+msgid "We drove across the bridge."
+msgstr "We drove across the bridge."
+
+msgid "We flew via Riga."
+msgstr "We flew via Riga."
+
+msgid "We sat around the table."
+msgstr "We sat around the table."
+
+msgid "We walked through the forest."
+msgstr "We walked through the forest."
+
+msgid "What do they cross outside the town?"
+msgstr "What do they cross outside the town?"
+
+msgid "What does it mean?"
+msgstr "What does it mean?"
+
+msgid "What does Mari want to walk around in Elva? Write it as Mari says it."
+msgstr "What does Mari want to walk around in Elva? Write it as Mari says it."
+
+msgid "What if I get a flat tyre?"
+msgstr "What if I get a flat tyre?"
+
+msgid "What should you wear in spring?"
+msgstr "What should you wear in spring?"
+
+msgid "Where will they meet? Write it as Mari says it."
+msgstr "Where will they meet? Write it as Mari says it."
+
+msgid "Which place does the bus from Tallinn go through? Write it as the text does."
+msgstr "Which place does the bus from Tallinn go through? Write it as the text does."
+
+msgid "Which way?"
+msgstr "Which way?"
+
+msgid "Who says it?"
+msgstr "Who says it?"
+
+msgid "Why is there a boardwalk in the bog?"
+msgstr "Why is there a boardwalk in the bog?"
+
+msgid "Why will they stop in the forest?"
+msgstr "Why will they stop in the forest?"
+
+msgid "With a noun"
+msgstr "With a noun"
+
+msgid "With the genitive: läbi metsa."
+msgstr "With the genitive: läbi metsa."
+
+msgid "With the genitive: üle tee."
+msgstr "With the genitive: üle tee."
+
+msgid "With the partitive: mööda teed."
+msgstr "With the partitive: mööda teed."
+
+msgid "Word"
+msgstr "Word"
+
+msgid "Words that go after the noun"
+msgstr "Words that go after the noun"
+
+msgid "Write each sentence in Estonian. Pick the word for the way first, then its case."
+msgstr "Write each sentence in Estonian. Pick the word for the way first, then its case."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "Write: my way to work"
+msgstr "Write: my way to work"
+
+msgid "You can swim in the lake in summer."
+msgstr "You can swim in the lake in summer."

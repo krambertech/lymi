@@ -245,14 +245,23 @@ msgstr "Безкоштовний урок естонської про прикм
 msgid "A free Estonian lesson on comparing: suurem and uuem built on the genitive, suurem kui Tartu and Tartust suurem, kõige suurem for the biggest, sama suur kui for as big as, and two odd ones, hea, parem, parim and väike, väiksem. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про порівняння: suurem і uuem, утворені від родового, suurem kui Tartu і Tartust suurem, kõige suurem — «найбільший», sama suur kui — «такий самий великий, як», і два особливі слова: hea, parem, parim та väike, väiksem. Кожне речення озвучене."
 
+msgid "A free Estonian lesson on five words for a way: läbi metsa (through), üle tee (across), mööda teed (along), järve ümber (around) and Riia kaudu (via); which take the genitive and which the partitive, and where each one goes. Every example is read aloud."
+msgstr "Безкоштовний урок естонської про п’ять слів, що описують шлях: läbi metsa (крізь), üle tee (через), mööda teed (уздовж), järve ümber (навколо) і Riia kaudu (через, транзитом); які з них вимагають родового відмінка, а які партитива, і де кожне стоїть. Кожен приклад озвучено."
+
 msgid "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive, with sentences to write and fix and a phone call to follow. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про чотири відмінкові закінчення: -ga — «з» і «чим» (sõbraga, bussiga), -ta — «без» (piimata), -ni — «аж до» (kella viieni, Tartuni) і -na — «як», у ролі (arstina). Усі вони додаються до родового відмінка. А ще речення, щоб написати й виправити, і телефонна розмова. Кожне речення озвучене."
 
 msgid "A free Estonian lesson on keegi, midagi, kuskil and kuhugi: question words with -gi or -ki for somebody and something, ei for nobody and nothing, mitte keegi on its own, and -gi or -ki on every case, as in kellelegi and kellestki, and which one to use. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про keegi, midagi, kuskil і kuhugi: питальні слова з -gi чи -ki для «хтось» і «щось», ei для «ніхто» і «нічого», mitte keegi окремо, а також -gi чи -ki у кожному відмінку, як у kellelegi і kellestki, і коли яке з них уживати. Кожне речення озвучене."
 
+msgid "A free Estonian lesson on making nouns from verbs: -ja for the person who does it (õpetaja, müüja, lugeja; tegema gives tegija) and -mine for the doing (lugemine, ujumine, suitsetamine keelatud), how both change like any noun, and the case the verb around them asks for. Every example is read aloud."
+msgstr "Безкоштовний урок естонської про те, як утворювати іменники від дієслів: -ja для того, хто виконує дію (õpetaja, müüja, lugeja; від tegema — tegija), і -mine для самої дії (lugemine, ujumine, suitsetamine keelatud); як обидва відмінюються, мов звичайні іменники, і якого відмінка вимагає дієслово поруч. Кожен приклад озвучено."
+
 msgid "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про meeldima, «подобатися»: mulle meeldib та інші особи, meeldivad, коли подобається кілька речей, meeldib з дієсловом, ei meeldi, питання з kas і kellele та почуття, як-от mul on külm. Кожне речення озвучене."
+
+msgid "A free Estonian lesson on particle verbs whose meaning you can’t guess from their parts: aru saama, kokku saama, läbi saama, hakkama saama, otsa saama, maha jääma, ära jääma, välja nägema, ära tundma, vastu võtma, järele mõtlema and alla andma; the case each one usually takes, and where the particle goes. Every example is read aloud."
+msgstr "Безкоштовний урок естонської про дієслова з частками, значення яких не вгадаєш зі складових: aru saama, kokku saama, läbi saama, hakkama saama, otsa saama, maha jääma, ära jääma, välja nägema, ära tundma, vastu võtma, järele mõtlema і alla andma; який відмінок зазвичай потрібен кожному і де стоїть частка. Кожен приклад озвучено."
 
 msgid "A free Estonian lesson on personal pronouns in their cases: minuga and sinuta on the genitive, the short forms mulle, mul and mult, the partitive mind, sind, teda, and telling minu, mul and mind apart. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про відмінювання особових займенників: minuga і sinuta від родового відмінка, короткі форми mulle, mul і mult, партитив mind, sind, teda і як не сплутати minu, mul і mind. Кожне речення озвучене."
@@ -268,6 +277,9 @@ msgstr "Безкоштовний урок естонської про те, як
 
 msgid "A free Estonian lesson on the translative case: -ks on the genitive for what someone becomes (Ta sai arstiks, Ma jäin haigeks), -na against -ks, reedeks for by Friday and nädalaks for a week, and heaks arstiks, where the adjective takes -ks too. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про транслатив: -ks до родового для того, ким хтось стає (Ta sai arstiks, Ma jäin haigeks), -na проти -ks, reedeks — «до п’ятниці» і nädalaks — «на тиждень», і heaks arstiks, де -ks отримує й прикметник. Кожне речення озвучене."
+
+msgid "A free Estonian lesson on three endings that make new words from nouns: -lik for adjectives that usually mean like it, having it or to do with it (sõbralik, ohtlik, kohalik, tervislik), -tu for without (kodutu, töötu, veatu) and -ke for a small one (majake, tükike, linnake), and how each new word changes in a sentence. Every example is read aloud."
+msgstr "Безплатний урок естонської про три закінчення, які утворюють нові слова від іменників. Прикметники на -lik зазвичай передають подібність, наявність чогось або зв’язок із чимось (sõbralik, ohtlik, kohalik, tervislik). Суфікс -tu означає «без» (kodutu, töötu, veatu), а -ke позначає щось маленьке (majake, tükike, linnake). Дізнаєшся, як ці слова змінюються в реченні. Усі приклади озвучено."
 
 msgid "A free Estonian lesson on word order: the verb usually in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про порядок слів: дієслово зазвичай на другому місці (täna lähen ma), питання на кшталт kus sa elad?, два дієслова з другим зазвичай у кінці і де стоїть ei. Кожне речення озвучене."
@@ -743,11 +755,17 @@ msgstr "Модальні дієслова в естонській мові: вм
 msgid "Estonian noun stems"
 msgstr "Основа іменника в естонській"
 
+msgid "Estonian nouns made from verbs"
+msgstr "Естонські іменники, утворені від дієслів"
+
 msgid "Estonian numbers"
 msgstr "Числа естонською"
 
 msgid "Estonian ordinal numbers and dates"
 msgstr "Порядкові числівники й дати в естонській мові"
+
+msgid "Estonian particle verbs with new meanings"
+msgstr "Естонські дієслова з частками, що мають нове значення"
 
 msgid "Estonian past tense"
 msgstr "Минулий час в естонській мові"
@@ -1375,6 +1393,9 @@ msgstr "Склади речення з цих слів."
 
 msgid "Make the form"
 msgstr "Утвори форму"
+
+msgid "Making new Estonian words from nouns"
+msgstr "Нові естонські слова від іменників"
 
 msgid "Mari"
 msgstr "Марі"
@@ -2290,6 +2311,9 @@ msgstr "Завтра вони не прийдуть."
 
 msgid "This is Martin’s coffee."
 msgstr "Це кава Мартіна."
+
+msgid "Through, across and along in Estonian"
+msgstr "Крізь, через і вздовж естонською"
 
 msgid "Through, over, along"
 msgstr "Крізь, через, уздовж"

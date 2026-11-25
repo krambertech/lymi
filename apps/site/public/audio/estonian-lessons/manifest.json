@@ -31862,7 +31862,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "eksam-a2/p-a2-voice": {
-    "text": "Tere, Mart! Siin räägib Kati. Ma helistan sulle laupäevase sünnipäeva kohta. Pidu algab minu kodus kell kuus, mitte kell viis nagu ma varem kirjutasin. Meie maja asub uue pargi kõrval, kolmandal korrusel, korter number seitse. Süüa pole vaja kaasa tuua, sest ma teen ise suure salati ja koogi. Kui sa tuled autoga, saad tasuta parkida maja taga hoovis. Helista mulle tagasi, kui sa ei leia õiget ust üles. Näeme laupäeval!",
+    "text": "Tere, Mart! Siin räägib Kati. Ma helistan sulle laupäevase sünnipäeva kohta. Pidu algab minu kodus kell kuus, mitte kell viis nagu ma varem kirjutasin. Meie maja asub uue pargi kõrval ja ma elan kolmandal korrusel, korter number seitse. Süüa pole vaja kaasa tuua, sest ma teen ise suure salati ja koogi. Kui sa tuled autoga, saad tasuta parkida maja taga hoovis. Helista mulle tagasi, kui sa ei leia õiget ust üles. Näeme laupäeval!",
     "model": "eleven_v4",
     "voice": "xd3ufyLcuKKZZXDZO9H7"
   },
@@ -31970,11 +31970,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "eksam-b1/see-on-minu-ko3ige-lemmikum-loetud-raamat": {
-    "text": "See on minu kõige lemmikum loetud raamat.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "eksam-b1/selles-koolis-ra2a2gitakse-kahte-vo3o3rkeelt": {
     "text": "Selles koolis räägitakse kahte võõrkeelt.",
     "model": "eleven_v4",
@@ -32016,7 +32011,7 @@
     "voice": "xd3ufyLcuKKZZXDZO9H7"
   },
   "eksam-b1/c-b1-interview": {
-    "text": "Tere tulemast stuudiosse, Kadri! Teie ettevõte läks pool aastat tagasi üle paindlikule tööajale. Kuidas see on toiminud? Tere! Alguses olime natuke ettevaatlikud, aga praegu oleme tulemusega väga rahul. Mida paindlik tööaeg teie meeskonnas täpselt tähendab? Töötajad saavad ise valida, kas alustavad hommikul kell seitse või kell kümme. Peamine on see, et kella kümnest kuni kella kaheni oleme kõik kättesaadavad. Kas inimesed töötavad endiselt ka kontoris või peamiselt kodust? Enamik käib kontoris kaks või kolm korda nädalas, sest ühiseid arutelusid on näost näkku lihtsam pidada. Kas sellisel korraldusel on olnud ka mingeid puudusi? Uutel töötajatel võtab algus vahel veidi kauem aega, kui kogu tiim ei ole iga päev samas ruumis. Sellepärast lepime uue kolleegi esimeseks kuuks kokku rohkem ühiseid päevi kontoris. Ja kas te märkate muutust ka selles, kuidas inimesed tööle tulevad? Jah, kuna hommikune tipptund ei survesta enam nii palju, tuleb üha rohkem kolleege tööle jalgsi või rattaga. Suur aitäh kogemust jagamast, Kadri!",
+    "text": "Tere tulemast stuudiosse, Kadri! Teie ettevõte läks pool aastat tagasi üle paindlikule tööajale. Kuidas see on toiminud? Tere! Alguses olime natuke ettevaatlikud, aga praegu oleme tulemusega väga rahul. Mida paindlik tööaeg teie meeskonnas täpselt tähendab? Töötajad saavad ise valida, kas alustavad hommikul kell seitse või kell kümme. Peamine on see, et kella kümnest kuni kella kaheni oleme kõik kättesaadavad. Kas inimesed töötavad endiselt ka kontoris või peamiselt kodust? Enamik käib kontoris kaks või kolm korda nädalas, sest ühiseid arutelusid on näost näkku lihtsam pidada. Kas sellisel korraldusel on olnud ka mingeid puudusi? Uutel töötajatel võtab algus vahel veidi kauem aega, kui kogu tiim ei ole iga päev samas ruumis. Sellepärast lepime uue kolleegi esimeseks kuuks kokku rohkem ühiseid päevi kontoris. Ja kas te märkate muutust ka selles, kuidas inimesed tööle tulevad? Jah, kuna hommikuse tipptunni ajal ei pea enam kõik korraga liikuma, tuleb üha rohkem kolleege tööle jalgsi või rattaga. Suur aitäh kogemust jagamast, Kadri!",
     "model": "eleven_v4",
     "turns": [
       {
@@ -32076,7 +32071,7 @@
       {
         "voice": "0cuaFlR2we1Gl3woPjeJ",
         "sentences": [
-          "Jah, kuna hommikune tipptund ei survesta enam nii palju, tuleb üha rohkem kolleege tööle jalgsi või rattaga."
+          "Jah, kuna hommikuse tipptunni ajal ei pea enam kõik korraga liikuma, tuleb üha rohkem kolleege tööle jalgsi või rattaga."
         ]
       },
       {
@@ -32086,5 +32081,10 @@
         ]
       }
     ]
+  },
+  "eksam-b1/ma-ostsin-eile-kasutatud-auto": {
+    "text": "Ma ostsin eile kasutatud auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

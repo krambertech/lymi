@@ -43,7 +43,7 @@ const GLOSSARY: Glossary = {
   kutse: { en: msg`invitation` },
 };
 
-const A2_SPARE = ["rongis", "reedel"] as const;
+const A2_SPARE = ["rongis", "reede"] as const;
 
 const WRITE_PROMPTS: Record<(typeof EXAM_A2_WRITE)[number], MessageDescriptor> = {
   "Ma käisin eile õhtul sõbraga kinos.": msg`I went to the cinema with a friend yesterday evening.`,
@@ -57,7 +57,7 @@ const WRITE_PROMPTS: Record<(typeof EXAM_A2_WRITE)[number], MessageDescriptor> =
 const WRITE_WHY: Partial<Record<(typeof EXAM_A2_WRITE)[number], ReactNode>> = {
   "Ma käisin eile õhtul sõbraga kinos.": (
     <Trans>
-      <b lang="et">Käima</b> takes the static place form: <b lang="et">kinos</b>.
+      <b lang="et">Käima</b> usually takes the static place form: <b lang="et">kinos</b>.
     </Trans>
   ),
   "Kas sa saaksid mulle homme helistada?": (
@@ -74,7 +74,7 @@ const WRITE_WHY: Partial<Record<(typeof EXAM_A2_WRITE)[number], ReactNode>> = {
   ),
   "Minu vend töötab Tartus arstina.": (
     <Trans>
-      A role or job uses <b lang="et">-na</b>: <b lang="et">arstina</b>.
+      A role or job usually uses <b lang="et">-na</b>: <b lang="et">arstina</b>.
     </Trans>
   ),
   "Ma ei läinud eile tööle, sest mul oli palavik.": (
@@ -166,7 +166,7 @@ function useContent() {
         ask: t`When does the sports centre sauna reopen on Wednesday?`,
         options: [
           { id: "morning", label: t`At nine` },
-          { id: "noon", label: t`At twelve noon in the afternoon` },
+          { id: "noon", label: t`At twelve noon` },
           { id: "two", label: t`At two in the afternoon` },
         ],
         answer: "two",
@@ -244,7 +244,7 @@ function useContent() {
         id: "reply-by",
         kind: "short",
         ask: t`By which day should Peeter write back? Write one word from the email.`,
-        answers: ["neljapäevaks"],
+        answers: ["neljapäevaks", "neljapäev", "neljapäeval"],
         line: 7,
       },
     ];
@@ -257,7 +257,7 @@ function useContent() {
         answer: "sõin",
         why: (
           <Trans>
-            <b lang="et">Eile õhtul</b> needs the past tense: <b lang="et">sõin</b>.
+            <b lang="et">Eile õhtul</b> usually asks for the past tense: <b lang="et">sõin</b>.
           </Trans>
         ),
       },
@@ -279,7 +279,7 @@ function useContent() {
         answer: "rongiga",
         why: (
           <Trans>
-            Transport uses <b lang="et">-ga</b>: <b lang="et">rongiga</b>.
+            Transport usually uses <b lang="et">-ga</b>: <b lang="et">rongiga</b>.
           </Trans>
         ),
       },
@@ -290,7 +290,7 @@ function useContent() {
         answer: "reedeks",
         why: (
           <Trans>
-            A deadline uses <b lang="et">-ks</b>: <b lang="et">reedeks</b>.
+            A deadline usually uses <b lang="et">-ks</b>: <b lang="et">reedeks</b>.
           </Trans>
         ),
       },
@@ -301,7 +301,7 @@ function useContent() {
         answer: "aega",
         why: (
           <Trans>
-            After <b lang="et">ei olnud</b>, the missing thing takes the partitive:{" "}
+            After <b lang="et">ei olnud</b>, the missing thing usually takes the partitive:{" "}
             <b lang="et">aega</b>.
           </Trans>
         ),
@@ -448,7 +448,7 @@ function useContent() {
         id: "checkin",
         kind: "short",
         ask: t`From what time is the room ready on Friday? Write the word from the call.`,
-        answers: ["kolmest", "kella kolmest", "kell kolm", "3"],
+        answers: ["kolmest", "kella kolmest", "alates kolmest", "kell kolm", "kolm", "3"],
         line: 12,
       },
       {
@@ -508,15 +508,16 @@ export function EksamA2Lesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">30 minutes</Trans>,
+        <Trans key="m">60 minutes</Trans>,
         <Trans key="q">7 marked parts and a writing task</Trans>,
         <Trans key="l">Listening played twice, as in the exam</Trans>,
       ]}
       words={[]}
       recap={[
         <Trans key="1">
-          In the real Harno A2 exam, reading and writing run together and each listening recording
-          plays twice.
+          In the real Harno A2 exam, reading (50 minutes), listening (30 minutes) and writing (30
+          minutes) are separate timed tests, and each listening recording plays twice. This mock is
+          a shorter version of all three.
         </Trans>,
         <Trans key="2">
           Read the questions before you press play on a listening part so you know which time, place
@@ -534,11 +535,11 @@ export function EksamA2Lesson() {
           quiz: true,
           children: (
             <>
-              <ExamTimer minutes={30} />
+              <ExamTimer minutes={60} />
               <Prose>
                 <p>
                   <Trans>
-                    Start the 30-minute timer if you want exam conditions, or work through the test
+                    Start the 60-minute timer if you want exam conditions, or work through the test
                     at your own pace. Read six short public notices and answer the questions.
                   </Trans>
                 </p>
@@ -739,7 +740,7 @@ export function EksamA2Lesson() {
                 prompt={
                   <p>
                     <Trans>
-                      Mari invited you to visit Tartu on Saturday. Thank her for the invitation, say
+                      Mari invited you to visit Pärnu on Saturday. Thank her for the invitation, say
                       that you are coming, tell her how and when you arrive, ask one question about
                       the plan or the weather, and sign your name.
                     </Trans>

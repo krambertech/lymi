@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Clock, Pause, Play, RotateCcw } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "../Button";
 
 function formatTime(seconds: number): string {
@@ -14,26 +14,35 @@ export function ExamTimer({ minutes }: { minutes: number }) {
   const total = minutes * 60;
   const [left, setLeft] = useState(total);
   const [running, setRunning] = useState(false);
+  const deadline = useRef(0);
+
+  const remaining = () => Math.max(0, Math.ceil((deadline.current - Date.now()) / 1000));
 
   useEffect(() => {
-    if (!running || left <= 0) return;
+    if (!running) return;
     const id = window.setInterval(() => {
-      setLeft((prev) => {
-        if (prev <= 1) {
-          setRunning(false);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+      const next = remaining();
+      setLeft(next);
+      if (next === 0) setRunning(false);
+    }, 250);
     return () => window.clearInterval(id);
-  }, [running, left]);
+  }, [running]);
+
+  const toggle = () => {
+    if (running) {
+      setLeft(remaining());
+      setRunning(false);
+      return;
+    }
+    deadline.current = Date.now() + left * 1000;
+    setRunning(true);
+  };
 
   const progress = Math.max(0, Math.min(100, (left / total) * 100));
   const announcement =
     left === 0
       ? t`Time is up. You can still finish and check your answers.`
-      : left === 300
+      : left <= 300
         ? t`Five minutes remaining.`
         : "";
 
@@ -51,7 +60,7 @@ export function ExamTimer({ minutes }: { minutes: number }) {
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {left > 0 && (
-            <Button variant="secondary" size="sm" onClick={() => setRunning((prev) => !prev)}>
+            <Button variant="secondary" size="sm" onClick={toggle}>
               {running ? (
                 <>
                   <Pause aria-hidden="true" data-icon="inline-start" />

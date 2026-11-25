@@ -10,20 +10,17 @@ msgstr ""
 msgid "<0>Aru saama</0> takes <1>-st</1> (<2>sinu kirjast</2>), and <3>ära jääma</3> means to be cancelled."
 msgstr "<0>Aru saama</0> требует <1>-st</1> (<2>sinu kirjast</2>), а <3>ära jääma</3> означает «отменяться»."
 
-msgid "<0>Soovitama</0> takes the partitive relative pronoun: <1>mida</1>."
-msgstr "После <0>soovitama</0> относительное местоимение стоит в партитиве: <1>mida</1>."
-
-msgid "40 minutes"
-msgstr "40 минут"
+msgid "<0>Soovitama</0> usually takes the partitive relative pronoun: <1>mida</1>."
+msgstr "После <0>soovitama</0> относительное местоимение обычно стоит в партитиве: <1>mida</1>."
 
 msgid "7 marked parts and a formal letter"
 msgstr "7 оцениваемых частей и официальное письмо"
 
-msgid "A book that has been read takes the passive participle <0>-tud</0>: <1>loetud</1>."
-msgstr "Для прочитанной книги нужно страдательное причастие на <0>-tud</0>: <1>loetud</1>."
+msgid "75 minutes"
+msgstr "75 минут"
 
-msgid "A completed object in a relative clause uses <0>mille</0> for things."
-msgstr "Завершённое дополнение в придаточном предложении для вещей берёт <0>mille</0>."
+msgid "A completed object in a relative clause usually uses <0>mille</0> for things."
+msgstr "Завершённое дополнение в придаточном предложении для вещей обычно берёт <0>mille</0>."
 
 msgid "A full timed practice test modelled on Estonia’s official B1 exam: a news report and official notice, grammar structure, sentence fixes and translations, radio news and an interview played twice, and a formal letter."
 msgstr "Полный пробный экзамен с таймером по образцу официального экзамена B1 в Эстонии: новость и официальное уведомление, грамматика, исправление и перевод предложений, радионовости и интервью по два прослушивания и официальное письмо."
@@ -178,6 +175,9 @@ msgstr "Сколько дополнительного времени совет�
 msgid "How should you report a radiator that stays cold afterwards?"
 msgstr "Как сообщить о батарее, которая осталась холодной после проверки?"
 
+msgid "I bought a used car yesterday."
+msgstr "Вчера я купил подержанную машину."
+
 msgid "I stayed home because I was ill."
 msgstr "Я остался дома, потому что болел."
 
@@ -187,8 +187,8 @@ msgstr "Я понял из твоего письма, что встреча от
 msgid "In a formal B1 letter, state the problem, give a clear reason, propose a solution with the would form and close with <0>Lugupidamisega</0>."
 msgstr "В официальном письме уровня B1 опиши проблему, укажи причину, предложи решение через условное наклонение и заверши письмо словом <0>Lugupidamisega</0>."
 
-msgid "In the real Harno B1 exam, you read authentic news and notices, listen twice to radio clips and interviews, and write both an everyday message and a semi-formal letter."
-msgstr "На настоящем экзамене Harno B1 ты читаешь новости и объявления, дважды слушаешь радиозаписи и интервью и пишешь как повседневное сообщение, так и полуофициальное письмо."
+msgid "In the real Harno B1 exam, reading (50 minutes), listening (30–35 minutes) and writing (35 minutes) are separate timed tests. You read adapted news and notices, hear each recording twice, and write both a short message and a longer text. This mock is a shorter version of all three."
+msgstr "На настоящем экзамене Harno B1 чтение (50 минут), аудирование (30–35 минут) и письмо (35 минут) — отдельные тесты со своим временем. Ты читаешь адаптированные новости и объявления, слушаешь каждую запись дважды и пишешь и короткое сообщение, и более длинный текст. Эта пробная версия короче всех трёх."
 
 msgid "It clears and calms down."
 msgstr "Прояснится и стихнет."
@@ -310,11 +310,14 @@ msgstr "Говорит, что общие обсуждения проще про
 msgid "Six months ago"
 msgstr "Прошло полгода"
 
+msgid "Something that has been used usually takes the passive participle <0>-tud</0>: <1>kasutatud</1>."
+msgstr "Для того, что уже использовали, обычно нужно страдательное причастие на <0>-tud</0>: <1>kasutatud</1>."
+
 msgid "Speaking with someone takes <0>-ga</0>: <1>kellega</1>."
 msgstr "Разговор с кем-то требует окончания <0>-ga</0>: <1>kellega</1>."
 
-msgid "Start the 40-minute timer if you want exam conditions, or work through the test at your own pace. Read the local news report from Tartu and answer six questions."
-msgstr "Включи 40-минутный таймер для экзаменационных условий или проходи тест в своём темпе. Прочитай местную новость из Тарту и ответь на шесть вопросов."
+msgid "Start the 75-minute timer if you want exam conditions, or work through the test at your own pace. Read the local news report from Tartu and answer six questions."
+msgstr "Включи 75-минутный таймер для экзаменационных условий или проходи тест в своём темпе. Прочитай местную новость из Тарту и ответь на шесть вопросов."
 
 msgid "Stronger wind and much heavier evening showers arrive."
 msgstr "Ветер усилится, а вечером придут более сильные ливни."
@@ -349,8 +352,8 @@ msgstr "Они сокращают первую рабочую неделю."
 msgid "Thick fog spreads across the inland towns."
 msgstr "Во внутренних районах страны опустится густой туман."
 
-msgid "This is my favourite book that has been read."
-msgstr "Это моя самая любимая прочитанная книга."
+msgid "Things usually take <0>mis</0> and people <1>kes</1>."
+msgstr "Вещи обычно берут <0>mis</0>, а люди — <1>kes</1>."
 
 msgid "Through a place takes the preposition <0>läbi</0> + genitive."
 msgstr "Значение «сквозь, через» передаёт предлог <0>läbi</0> + генитив."
@@ -369,9 +372,6 @@ msgstr "В этой школе говорят на двух иностранны
 
 msgid "Two suburban bus routes stopped running."
 msgstr "Два пригородных маршрута перестали ходить."
-
-msgid "Use <0>mis</0> for things and <1>kes</1> for people."
-msgstr "Для вещей используется <0>mis</0>, а для людей — <1>kes</1>."
 
 msgid "Use the postbox"
 msgstr "Почтовый ящик"

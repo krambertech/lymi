@@ -42,7 +42,7 @@ const GLOSSARY: Glossary = {
   paindlik: { en: msg`flexible` },
 };
 
-const B1_SPARE = ["avatud", "kuigi"] as const;
+const B1_SPARE = ["avatud", "kes"] as const;
 
 const WRITE_PROMPTS: Record<(typeof EXAM_B1_WRITE)[number], MessageDescriptor> = {
   "Ma sain sinu kirjast aru, et koosolek jääb ära.": msg`I understood from your letter that the meeting is cancelled.`,
@@ -67,7 +67,7 @@ const WRITE_WHY: Partial<Record<(typeof EXAM_B1_WRITE)[number], ReactNode>> = {
   ),
   "Raamat, mille ma eile ostsin, on väga põnev.": (
     <Trans>
-      A completed object in a relative clause uses <b lang="et">mille</b> for things.
+      A completed object in a relative clause usually uses <b lang="et">mille</b> for things.
     </Trans>
   ),
   "Koju jalutades kuulasin ma raadiot.": (
@@ -88,7 +88,7 @@ const FIX_PROMPTS: Partial<Record<(typeof EXAM_B1_FIXES)[number]["id"], MessageD
   sest: msg`I stayed home because I was ill.`,
   soomata: msg`He went out in the morning without eating.`,
   kellega: msg`The woman with whom I spoke lives in Tartu.`,
-  loetud: msg`This is my favourite book that has been read.`,
+  kasutatud: msg`I bought a used car yesterday.`,
   raagitakse: msg`Two foreign languages are spoken in this school.`,
 };
 
@@ -101,7 +101,7 @@ const FIX_ANSWERS: Partial<
 const FIX_WHY: Record<(typeof EXAM_B1_FIXES)[number]["id"], ReactNode> = {
   mis: (
     <Trans>
-      Use <b lang="et">mis</b> for things and <b lang="et">kes</b> for people.
+      Things usually take <b lang="et">mis</b> and people <b lang="et">kes</b>.
     </Trans>
   ),
   sest: (
@@ -120,10 +120,10 @@ const FIX_WHY: Record<(typeof EXAM_B1_FIXES)[number]["id"], ReactNode> = {
       Speaking with someone takes <b lang="et">-ga</b>: <b lang="et">kellega</b>.
     </Trans>
   ),
-  loetud: (
+  kasutatud: (
     <Trans>
-      A book that has been read takes the passive participle <b lang="et">-tud</b>:{" "}
-      <b lang="et">loetud</b>.
+      Something that has been used usually takes the passive participle <b lang="et">-tud</b>:{" "}
+      <b lang="et">kasutatud</b>.
     </Trans>
   ),
   raagitakse: (
@@ -251,7 +251,7 @@ function useContent() {
         id: "who-sent",
         kind: "short",
         ask: t`Who issued the notice? Write two words from the end of the text.`,
-        answers: ["korteriühistu juhatus", "juhatus"],
+        answers: ["korteriühistu juhatus", "korteriühistu", "juhatus"],
         line: 6,
       },
     ];
@@ -287,7 +287,8 @@ function useContent() {
         answer: "mida",
         why: (
           <Trans>
-            <b lang="et">Soovitama</b> takes the partitive relative pronoun: <b lang="et">mida</b>.
+            <b lang="et">Soovitama</b> usually takes the partitive relative pronoun:{" "}
+            <b lang="et">mida</b>.
           </Trans>
         ),
       },
@@ -305,7 +306,7 @@ function useContent() {
       {
         id: "b1g5",
         before: "Tee läheb otse",
-        after: "pargi ja jõe äärde.",
+        after: "pargi jõe äärde.",
         answer: "läbi",
         why: (
           <Trans>
@@ -532,15 +533,17 @@ export function EksamB1Lesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">40 minutes</Trans>,
+        <Trans key="m">75 minutes</Trans>,
         <Trans key="q">7 marked parts and a formal letter</Trans>,
         <Trans key="l">Listening played twice, as in the exam</Trans>,
       ]}
       words={[]}
       recap={[
         <Trans key="1">
-          In the real Harno B1 exam, you read authentic news and notices, listen twice to radio
-          clips and interviews, and write both an everyday message and a semi-formal letter.
+          In the real Harno B1 exam, reading (50 minutes), listening (30–35 minutes) and writing (35
+          minutes) are separate timed tests. You read adapted news and notices, hear each recording
+          twice, and write both a short message and a longer text. This mock is a shorter version of
+          all three.
         </Trans>,
         <Trans key="2">
           Watch for B1 links and forms that change meaning: <b lang="et">kuigi</b> vs{" "}
@@ -559,11 +562,11 @@ export function EksamB1Lesson() {
           quiz: true,
           children: (
             <>
-              <ExamTimer minutes={40} />
+              <ExamTimer minutes={75} />
               <Prose>
                 <p>
                   <Trans>
-                    Start the 40-minute timer if you want exam conditions, or work through the test
+                    Start the 75-minute timer if you want exam conditions, or work through the test
                     at your own pace. Read the local news report from Tartu and answer six
                     questions.
                   </Trans>

@@ -10,14 +10,14 @@ msgstr ""
 msgid "<0>Eile õhtul</0> asks for the past tense: <1>sõin</1>."
 msgstr "<0>Eile õhtul</0> вимагає минулого часу: <1>sõin</1>."
 
-msgid "<0>Eile õhtul</0> needs the past tense: <1>sõin</1>."
-msgstr "<0>Eile õhtul</0> потребує минулого часу: <1>sõin</1>."
+msgid "<0>Eile õhtul</0> usually asks for the past tense: <1>sõin</1>."
+msgstr "<0>Eile õhtul</0> зазвичай потребує минулого часу: <1>sõin</1>."
 
 msgid "<0>Helistama</0> takes the <1>-le</1> pronoun: <2>mulle</2>."
 msgstr "Після <0>helistama</0> вживається займенник на <1>-le</1>: <2>mulle</2>."
 
-msgid "<0>Käima</0> takes the static place form: <1>kinos</1>."
-msgstr "Дієслово <0>käima</0> вимагає форми місця перебування: <1>kinos</1>."
+msgid "<0>Käima</0> usually takes the static place form: <1>kinos</1>."
+msgstr "Дієслово <0>käima</0> зазвичай поєднується з формою «де?»: <1>kinos</1>."
 
 msgid "<0>Käima</0> usually takes the static place form: <1>poes</1>."
 msgstr "Дієслово <0>käima</0> зазвичай поєднується з формою «де?»: <1>poes</1>."
@@ -28,14 +28,11 @@ msgstr "Після <0>ootama</0> додаток стоїть у партитив
 msgid "<0>Oskama</0> takes the <1>-da</1> infinitive: <2>ujuda</2>."
 msgstr "Після <0>oskama</0> вживається інфінітив на <1>-da</1>: <2>ujuda</2>."
 
-msgid "30 minutes"
-msgstr "30 хвилин"
+msgid "60 minutes"
+msgstr "60 хвилин"
 
 msgid "7 marked parts and a writing task"
 msgstr "7 оцінюваних частин і письмове завдання"
-
-msgid "A deadline uses <0>-ks</0>: <1>reedeks</1>."
-msgstr "Кінцевий термін позначає закінчення <0>-ks</0>: <1>reedeks</1>."
 
 msgid "A deadline usually takes <0>-ks</0> (<1>reedeks</1>), and a finished object takes the genitive (<2>selle raamatu</2>)."
 msgstr "Кінцевий термін зазвичай бере <0>-ks</0> (<1>reedeks</1>), а завершений додаток — генитив (<2>selle raamatu</2>)."
@@ -43,14 +40,17 @@ msgstr "Кінцевий термін зазвичай бере <0>-ks</0> (<1>r
 msgid "A deadline usually takes the translative <0>-ks</0>: <1>reedeks</1>."
 msgstr "Кінцевий термін зазвичай бере транслатив <0>-ks</0>: <1>reedeks</1>."
 
+msgid "A deadline usually uses <0>-ks</0>: <1>reedeks</1>."
+msgstr "Кінцевий термін зазвичай позначає закінчення <0>-ks</0>: <1>reedeks</1>."
+
 msgid "A full timed practice test modelled on Estonia’s official A2 exam: two readings, language structure, sentence fixes and translations, two listening parts played twice, and a short reply to a friend."
 msgstr "Повний пробний тест із таймером за зразком офіційного іспиту A2 в Естонії: два тексти для читання, граматика, виправлення й переклад речень, два аудіювання по два прослуховування та коротка відповідь другу."
 
 msgid "A private sauna"
 msgstr "Власна сауна"
 
-msgid "A role or job uses <0>-na</0>: <1>arstina</1>."
-msgstr "Роль або професія бере закінчення <0>-na</0>: <1>arstina</1>."
+msgid "A role or job usually uses <0>-na</0>: <1>arstina</1>."
+msgstr "Роль або професія зазвичай бере закінчення <0>-na</0>: <1>arstina</1>."
 
 msgid "A terrace facing the garden"
 msgstr "Тераса з видом на сад"
@@ -61,8 +61,8 @@ msgstr "Чудовий краєвид на море і власний балко
 msgid "After <0>ei ole</0>, what is missing usually takes the partitive: <1>aega</1>."
 msgstr "Після <0>ei ole</0> те, чого бракує, зазвичай стоїть у партитиві: <1>aega</1>."
 
-msgid "After <0>ei olnud</0>, the missing thing takes the partitive: <1>aega</1>."
-msgstr "Після <0>ei olnud</0> те, чого не було, стоїть у партитиві: <1>aega</1>."
+msgid "After <0>ei olnud</0>, the missing thing usually takes the partitive: <1>aega</1>."
+msgstr "Після <0>ei olnud</0> те, чого не було, зазвичай стоїть у партитиві: <1>aega</1>."
 
 msgid "All six A2 errors found and fixed."
 msgstr "Усі шість помилок рівня A2 знайдено й виправлено."
@@ -91,8 +91,8 @@ msgstr "О сьомій годині"
 msgid "At six o’clock"
 msgstr "О шостій годині"
 
-msgid "At twelve noon in the afternoon"
-msgstr "Рівно о дванадцятій годині дня"
+msgid "At twelve noon"
+msgstr "Рівно о дванадцятій"
 
 msgid "At two in the afternoon"
 msgstr "О другій годині дня"
@@ -223,8 +223,8 @@ msgstr "У дворі за будинком"
 msgid "In the large cloakroom on the second floor"
 msgstr "У великому гардеробі на другому поверсі"
 
-msgid "In the real Harno A2 exam, reading and writing run together and each listening recording plays twice."
-msgstr "На справжньому іспиті Harno A2 читання й письмо йдуть разом, а кожен запис аудіювання вмикають двічі."
+msgid "In the real Harno A2 exam, reading (50 minutes), listening (30 minutes) and writing (30 minutes) are separate timed tests, and each listening recording plays twice. This mock is a shorter version of all three."
+msgstr "На справжньому іспиті Harno A2 читання (50 хвилин), аудіювання (30 хвилин) і письмо (30 хвилин) — окремі тести з власним часом, а кожен запис аудіювання вмикають двічі. Цей пробний іспит — коротша версія всіх трьох."
 
 msgid "In the underground shop car park"
 msgstr "На підземній парковці магазину"
@@ -259,8 +259,8 @@ msgstr "Аудіювання 2: бронювання номера в готел�
 msgid "Listening played twice, as in the exam"
 msgstr "Аудіювання двічі, як на іспиті"
 
-msgid "Mari invited you to visit Tartu on Saturday. Thank her for the invitation, say that you are coming, tell her how and when you arrive, ask one question about the plan or the weather, and sign your name."
-msgstr "Марі запросила тебе в суботу до Тарту. Подякуй за запрошення, напиши, що приїдеш, повідом, чим і о котрій прибуваєш, постав одне запитання про плани чи погоду та підпишись."
+msgid "Mari invited you to visit Pärnu on Saturday. Thank her for the invitation, say that you are coming, tell her how and when you arrive, ask one question about the plan or the weather, and sign your name."
+msgstr "Марі запросила тебе в суботу до Пярну. Подякуй за запрошення, напиши, що приїдеш, повідом, чим і о котрій прибуваєш, постав одне запитання про плани чи погоду та підпишись."
 
 msgid "Mari plans to leave Pärnu on Saturday evening."
 msgstr "Марі планує виїхати з Пярну в суботу ввечері."
@@ -364,8 +364,8 @@ msgstr "Вона вміє добре плавати."
 msgid "Sixty"
 msgstr "Шістдесят"
 
-msgid "Start the 30-minute timer if you want exam conditions, or work through the test at your own pace. Read six short public notices and answer the questions."
-msgstr "Увімкни 30-хвилинний таймер для умов іспиту або проходь тест у своєму темпі. Прочитай шість коротких оголошень і дай відповідь на запитання."
+msgid "Start the 60-minute timer if you want exam conditions, or work through the test at your own pace. Read six short public notices and answer the questions."
+msgstr "Увімкни 60-хвилинний таймер для умов іспиту або проходь тест у своєму темпі. Прочитай шість коротких оголошень і дай відповідь на запитання."
 
 msgid "stop (bus or tram)"
 msgstr "зупинка"
@@ -403,8 +403,8 @@ msgstr "бронювати"
 msgid "To the market"
 msgstr "На ринок"
 
-msgid "Transport uses <0>-ga</0>: <1>rongiga</1>."
-msgstr "Для транспорту вживається закінчення <0>-ga</0>: <1>rongiga</1>."
+msgid "Transport usually uses <0>-ga</0>: <1>rongiga</1>."
+msgstr "Для транспорту зазвичай вживається закінчення <0>-ga</0>: <1>rongiga</1>."
 
 msgid "Two nights"
 msgstr "Дві ночі"

@@ -488,6 +488,14 @@ export const STAGES: readonly Stage[] = [
         blurb: msg`A free lesson on the case many Estonian verbs ask for: ootama keda (ootan sind), rääkima kellest (räägin sinust), helistama kellele (helistan sulle), kohtuma kellega (kohtun sinuga) and küsima kellelt (küsin sinult), where English and Estonian disagree. Every sentence is read aloud.`,
       },
       {
+        slug: "telefonikone",
+        name: msg`On the phone`,
+        title: msg`On the phone in Estonian`,
+        et: "Halloo! Kas Mart on seal?",
+        minutes: 25,
+        blurb: msg`Free Estonian practice for phone calls: answer a call (halloo, Mari kuuleb), ask for someone (kas ma saaksin rääkida Mardiga), ask to repeat or speak slower (kas te saaksite korrata, ühendus on halb), leave a message and give a number. Every sentence is read aloud.`,
+      },
+      {
         slug: "kiri",
         name: msg`Practice: a message to the landlord`,
         title: msg`Estonian writing practice: a message to the landlord`,

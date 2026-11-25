@@ -234,11 +234,11 @@ function useContent() {
           { line: WORK_DIALOGUE[0].right, right: true },
           {
             line: WORK_DIALOGUE[0].wrong1,
-            why: t`Anna is asking whether you have a moment, not selling train tickets.`,
+            why: t`Anna asks whether you have a moment, not what time it is.`,
           },
           {
             line: WORK_DIALOGUE[0].wrong2,
-            why: t`That talks about back pain rather than answering your colleague.`,
+            why: t`That mentions a contract and does not say whether you have time.`,
           },
         ],
       },
@@ -249,12 +249,12 @@ function useContent() {
         replies: [
           {
             line: WORK_DIALOGUE[1].wrong1,
-            why: t`She asked about the report deadline, not about pets.`,
+            why: t`Going on holiday on Friday is not an answer about the report.`,
           },
           { line: WORK_DIALOGUE[1].right, right: true },
           {
             line: WORK_DIALOGUE[1].wrong2,
-            why: t`That gives directions to a café instead of confirming the report.`,
+            why: t`That is about meeting a colleague yesterday, not about the report.`,
           },
         ],
       },
@@ -265,11 +265,11 @@ function useContent() {
         replies: [
           {
             line: WORK_DIALOGUE[2].wrong1,
-            why: t`Anna asked whether you are coming to tomorrow’s meeting.`,
+            why: t`That is about sending the report, not about the meeting.`,
           },
           {
             line: WORK_DIALOGUE[2].wrong2,
-            why: t`That mentions a bus departure instead of confirming attendance.`,
+            why: t`The meeting is tomorrow, and this puts it in the past.`,
           },
           { line: WORK_DIALOGUE[2].right, right: true },
         ],
@@ -282,11 +282,11 @@ function useContent() {
           { line: WORK_DIALOGUE[3].right, right: true },
           {
             line: WORK_DIALOGUE[3].wrong1,
-            why: t`You are finishing a chat at work, not paying in a shop.`,
+            why: t`Eile means yesterday, but you will see Anna tomorrow.`,
           },
           {
             line: WORK_DIALOGUE[3].wrong2,
-            why: t`Say goodbye until tomorrow instead of asking for a pharmacy.`,
+            why: t`That talks about yesterday, while Anna is saying see you tomorrow.`,
           },
         ],
       },
@@ -332,7 +332,7 @@ function useContent() {
       {
         id: "leave-late",
         kind: "truefalse",
-        ask: t`Anna says staff can wait until August to enter summer leave dates.`,
+        ask: t`Staff can enter their summer leave dates after the end of the month.`,
         answer: false,
         line: 5,
       },
@@ -355,8 +355,8 @@ function useContent() {
         ask: t`What are the usual office hours?`,
         options: [
           { id: "eight", label: t`From eight to four` },
-          { id: "nine", label: t`Nine to five` },
           { id: "ten", label: t`From ten to six` },
+          { id: "nine", label: t`Nine to five` },
         ],
         answer: "nine",
         line: 4,
@@ -391,8 +391,8 @@ function useContent() {
         ask: t`How much annual leave does the company offer?`,
         options: [
           { id: "twenty", label: t`Twenty days` },
-          { id: "twenty8", label: t`Twenty-eight days` },
           { id: "thirty5", label: t`Thirty-five days` },
+          { id: "twenty8", label: t`Twenty-eight days` },
         ],
         answer: "twenty8",
         line: 12,
@@ -415,8 +415,8 @@ function useContent() {
         id: "weeks",
         ask: t`How long is Mart’s planned leave?`,
         options: [
-          { id: "one", label: t`One single week` },
           { id: "two", label: t`Two weeks` },
+          { id: "one", label: t`One single week` },
           { id: "four", label: t`Four full weeks` },
         ],
         answer: "two",
@@ -465,7 +465,7 @@ export function TookohtLesson() {
           <b lang="et">Kas te saaksite selle reedeks saata?</b>
         </Trans>,
         <Trans key="4">
-          Talking or meeting with a colleague takes <b lang="et">-ga</b>:{" "}
+          Talking or meeting with a colleague usually takes <b lang="et">-ga</b>:{" "}
           <b lang="et">rääkisin ülemusega</b>, <b lang="et">kohtusin kolleegiga</b>.
         </Trans>,
       ]}
@@ -473,6 +473,7 @@ export function TookohtLesson() {
         {
           id: "words",
           title: t`At the office`,
+          quiz: true,
           children: (
             <>
               <Prose>

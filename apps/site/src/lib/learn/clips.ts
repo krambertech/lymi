@@ -17135,7 +17135,7 @@ export const WORK_TRANSLATE = [
 export const WORK_ANSWERS: Record<(typeof WORK_TRANSLATE)[number], readonly [string, ...string[]]> =
   {
     "Ma töötan kontoris.": ["Ma töötan kontoris.", "Mina töötan kontoris.", "Töötan kontoris."],
-    "Koosolek algab kell kümme.": ["Koosolek algab kell kümme."],
+    "Koosolek algab kell kümme.": ["Koosolek algab kell kümme.", "Kell kümme algab koosolek."],
     "Kas te saaksite selle reedeks saata?": [
       "Kas te saaksite selle reedeks saata?",
       "Kas teie saaksite selle reedeks saata?",
@@ -17143,6 +17143,10 @@ export const WORK_ANSWERS: Record<(typeof WORK_TRANSLATE)[number], readonly [str
       "Kas teie saaksite saata selle reedeks?",
       "Kas saaksite selle reedeks saata?",
       "Kas saaksite saata selle reedeks?",
+      "Kas sa saaksid selle reedeks saata?",
+      "Kas sa saaksid saata selle reedeks?",
+      "Kas saaksid selle reedeks saata?",
+      "Kas saaksid saata selle reedeks?",
     ],
     "Ma lähen juulis puhkusele.": [
       "Ma lähen juulis puhkusele.",
@@ -17151,6 +17155,9 @@ export const WORK_ANSWERS: Record<(typeof WORK_TRANSLATE)[number], readonly [str
       "Juulis lähen ma puhkusele.",
       "Juulis lähen mina puhkusele.",
       "Juulis lähen puhkusele.",
+      "Ma lähen puhkusele juulis.",
+      "Mina lähen puhkusele juulis.",
+      "Lähen puhkusele juulis.",
     ],
     "Ma pean selle aruande täna valmis saama.": [
       "Ma pean selle aruande täna valmis saama.",
@@ -17159,6 +17166,10 @@ export const WORK_ANSWERS: Record<(typeof WORK_TRANSLATE)[number], readonly [str
       "Ma pean täna selle aruande valmis saama.",
       "Mina pean täna selle aruande valmis saama.",
       "Pean täna selle aruande valmis saama.",
+      "Täna pean ma selle aruande valmis saama.",
+      "Täna pean selle aruande valmis saama.",
+      "Ma pean selle aruande täna valmis tegema.",
+      "Pean selle aruande täna valmis tegema.",
     ],
     "Ma rääkisin täna oma ülemusega.": [
       "Ma rääkisin täna oma ülemusega.",
@@ -17167,6 +17178,10 @@ export const WORK_ANSWERS: Record<(typeof WORK_TRANSLATE)[number], readonly [str
       "Ma rääkisin oma ülemusega täna.",
       "Mina rääkisin oma ülemusega täna.",
       "Rääkisin oma ülemusega täna.",
+      "Täna rääkisin ma oma ülemusega.",
+      "Täna rääkisin oma ülemusega.",
+      "Ma rääkisin täna ülemusega.",
+      "Rääkisin täna ülemusega.",
     ],
   };
 
@@ -17207,26 +17222,26 @@ export const WORK_DIALOGUE = [
   {
     hear: "Tere, Mart! Kas sul on hetk aega?",
     right: "Tere, Anna! Jah, muidugi, räägi.",
-    wrong1: "Tere! Palun üks pilet Tartusse.",
-    wrong2: "Ei, mul valutab selg.",
+    wrong1: "Tere, Anna! Praegu on kell kümme.",
+    wrong2: "Tere, Anna! Jah, mul on uus leping.",
   },
   {
     hear: "Kas sa saaksid uue aruande reedeks valmis teha?",
     right: "Jah, ma saadan selle neljapäeva õhtul.",
-    wrong1: "Mul on kaks kassi ja üks koer.",
-    wrong2: "Kohvik on siin vasakul.",
+    wrong1: "Jah, ma lähen reedel puhkusele.",
+    wrong2: "Jah, ma kohtusin eile kolleegiga.",
   },
   {
     hear: "Väga hea! Kas sa tuled ka homsele koosolekule?",
     right: "Jah, ma olen kell kümme kontoris.",
-    wrong1: "Ma ostsin eile uue jope.",
-    wrong2: "Buss väljub kell üheksa.",
+    wrong1: "Jah, ma saatsin aruande eile.",
+    wrong2: "Jah, koosolek algas eile kell kümme.",
   },
   {
     hear: "Suurepärane, näeme siis homme!",
     right: "Aitäh, näeme homme!",
-    wrong1: "Kas te võtate kaarti?",
-    wrong2: "Kus on lähim apteek?",
+    wrong1: "Aitäh, näeme eile!",
+    wrong2: "Aitäh, ma käisin eile kontoris.",
   },
 ] as const;
 

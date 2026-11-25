@@ -77,7 +77,7 @@ const tellItem = (index: number): ChoiceDrill => {
     say: item.said,
     answer: TELL_LABELS[item.kind],
     wrong: [TELL_LABELS[item.kind === "now" ? "plan" : "now"]],
-    explain: item.kind === "now" ? PLACE_RULE : DEADLINE_RULE,
+    explain: VOCAB_RULE,
   };
 };
 
@@ -170,7 +170,7 @@ export const DRILLS: DrillBank = {
       const rule =
         said.includes("kontoris") || said.includes("puhkusele")
           ? "place"
-          : said.includes("reedeks") || said.includes("aruande")
+          : said.includes("reedeks")
             ? "deadline"
             : said.includes("ülemusega")
               ? "with"
@@ -194,11 +194,13 @@ export const DRILLS: DrillBank = {
     }),
     ...WORK_FIXES.map((item) => {
       const rule =
-        item.id === "kontoris" || item.id === "toole" || item.id === "kell-kuus"
+        item.id === "kontoris" || item.id === "toole"
           ? "place"
           : item.id === "reedeks"
             ? "deadline"
-            : "with";
+            : item.id === "kell-kuus"
+              ? "vocab"
+              : "with";
       return {
         kind: "fix" as const,
         id: `fix-${item.id}`,
@@ -207,7 +209,14 @@ export const DRILLS: DrillBank = {
         prompt: FIX_PROMPTS[item.id],
         answers: [item.right] as readonly [string, ...string[]],
         say: item.right,
-        explain: rule === "place" ? PLACE_RULE : rule === "deadline" ? DEADLINE_RULE : WITH_RULE,
+        explain:
+          rule === "place"
+            ? PLACE_RULE
+            : rule === "deadline"
+              ? DEADLINE_RULE
+              : rule === "vocab"
+                ? VOCAB_RULE
+                : WITH_RULE,
       };
     }),
   ],

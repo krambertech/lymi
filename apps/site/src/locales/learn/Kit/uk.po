@@ -939,6 +939,9 @@ msgstr "Безкоштовна практика естонської на рин
 msgid "Free Estonian practice for beginners: read opening hours and a message, sort times, prices and days, follow a voice message and a phone call with times and days, write what you hear, write short sentences in Estonian, fill in a plan for Saturday, talk with a friend at a café and write back. Every sentence is read aloud."
 msgstr "Безкоштовна практика естонської для початківців: прочитай години роботи й повідомлення, розрізни час, ціну й день, зрозумій голосове повідомлення й телефонну розмову, де йдеться про час і дні, запиши почуте, напиши короткі речення естонською, заповни план на суботу, поговори з подругою в кав’ярні й напиши їй відповідь. Кожне речення озвучене."
 
+msgid "Free Estonian practice for phone calls: answer a call (halloo, Mari kuuleb), ask for someone (kas ma saaksin rääkida Mardiga), ask to repeat or speak slower (kas te saaksite korrata, ühendus on halb), leave a message and give a number. Every sentence is read aloud."
+msgstr "Безкоштовна практика естонської для телефонних розмов: відповісти на дзвінок (halloo, Mari kuuleb), попросити когось до телефону (kas ma saaksin rääkida Mardiga), попросити повторити чи говорити повільніше (kas te saaksite korrata, ühendus on halb), залишити повідомлення й назвати номер. Кожне речення озвучене."
+
 msgid "Free Estonian practice in the past and the future: read about a friend’s weekend and write back, say what you did and didn’t do (olin, ei läinud), what you will do (homme lähen, hakkan õppima, kavatsen tulla), fix verbs in the wrong form, and follow a conversation you can play twice. Every sentence is read aloud."
 msgstr "Безкоштовна практика естонської в минулому й майбутньому: прочитай про вихідні подруги й відповідай, скажи, що ти робив і чого не робив (olin, ei läinud), що робитимеш (homme lähen, hakkan õppima, kavatsen tulla), виправ дієслова в хибній формі й зрозумій розмову, яку можна прослухати двічі. Кожне речення озвучене."
 
@@ -1623,6 +1626,12 @@ msgstr "на"
 
 msgid "On a surface, at work or at a market: -l."
 msgstr "На поверхні, на роботі чи на ринку: -l."
+
+msgid "On the phone"
+msgstr "У телефонній розмові"
+
+msgid "On the phone in Estonian"
+msgstr "Телефонна розмова естонською"
 
 msgid "on the table"
 msgstr "на столі"

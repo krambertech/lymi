@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
-msgid "<0/> has the <1>-vad</1> of they from lesson {present}, and <2/> is the plural of lesson {plural}. The person never changes the verb: <3/> is they like the apple. Switch between One thing and More than one, and tap a line to hear it."
-msgstr "<0/> has the <1>-vad</1> of they from lesson {present}, and <2/> is the plural of lesson {plural}. The person never changes the verb: <3/> is they like the apple. Switch between One thing and More than one, and tap a line to hear it."
+msgid "<0/> has the <1>-vad</1> of they from lesson {present}, and <2/> is the plural of lesson {plural}. The person doesn’t change the verb: <3/> is they like the apple. Switch between One thing and More than one, and tap a line to hear it."
+msgstr "<0/> has the <1>-vad</1> of they from lesson {present}, and <2/> is the plural of lesson {plural}. The person doesn’t change the verb: <3/> is they like the apple. Switch between One thing and More than one, and tap a line to hear it."
 
 msgid "<0/> means gladly. <1>Jah, hea meelega!</1> says yes to an invitation."
 msgstr "<0/> means gladly. <1>Jah, hea meelega!</1> says yes to an invitation."
@@ -25,20 +25,26 @@ msgstr "<0>Ei meeldi</0> is the same for one thing or more."
 msgid "<0>Kassid</0> is more than one, so it’s <1>meeldivad</1>."
 msgstr "<0>Kassid</0> is more than one, so it’s <1>meeldivad</1>."
 
+msgid "<0>Kassid</0> is more than one, so the verb is <1>meeldivad</1>."
+msgstr "<0>Kassid</0> is more than one, so the verb is <1>meeldivad</1>."
+
 msgid "<0>Kassid</0> is more than one: <1>meeldivad</1>."
 msgstr "<0>Kassid</0> is more than one: <1>meeldivad</1>."
 
 msgid "<0>Kohv</0> is one thing, so it’s <1>meeldib</1>."
 msgstr "<0>Kohv</0> is one thing, so it’s <1>meeldib</1>."
 
+msgid "<0>Meeldib</0> and <1>tahan</1> from lesson {modals} both take a verb’s <2>-da</2> form, but they say different things. <3/> says you enjoy reading. With <4>tahan</4> the person is the one who acts: <5/>, I want to read."
+msgstr "<0>Meeldib</0> and <1>tahan</1> from lesson {modals} both take a verb’s <2>-da</2> form, but they say different things. <3/> says you enjoy reading. With <4>tahan</4> the person is the one who acts: <5/>, I want to read."
+
 msgid "<0>Meeldib</0> for one thing"
 msgstr "<0>Meeldib</0> for one thing"
 
-msgid "<0>Meeldib</0> goes with one thing or a verb, <1>meeldivad</1> with more than one thing: <2>Mulle meeldib lugeda. Mulle meeldivad kassid.</2>"
-msgstr "<0>Meeldib</0> goes with one thing or a verb, <1>meeldivad</1> with more than one thing: <2>Mulle meeldib lugeda. Mulle meeldivad kassid.</2>"
-
 msgid "<0>Meeldib</0> or <1>meeldivad</1>"
 msgstr "<0>Meeldib</0> or <1>meeldivad</1>"
+
+msgid "<0>Meeldib</0> usually goes with one thing or a verb, <1>meeldivad</1> with more than one thing: <2>Mulle meeldib lugeda. Mulle meeldivad kassid.</2>"
+msgstr "<0>Meeldib</0> usually goes with one thing or a verb, <1>meeldivad</1> with more than one thing: <2>Mulle meeldib lugeda. Mulle meeldivad kassid.</2>"
 
 msgid "<0>Meeldivad</0> for more than one"
 msgstr "<0>Meeldivad</0> for more than one"
@@ -52,14 +58,53 @@ msgstr "<0>Mulle meeldib</0> or <1>mulle meeldivad</1>?"
 msgid "<0>Ujuda</0> is a verb, and a verb takes <1>meeldib</1>."
 msgstr "<0>Ujuda</0> is a verb, and a verb takes <1>meeldib</1>."
 
-msgid "12 minutes"
-msgstr "12 minutes"
+msgid "<et>Ei meeldi</et> is the same for one thing or more than one."
+msgstr "<et>Ei meeldi</et> is the same for one thing or more than one."
 
-msgid "3 quizzes, a message and a conversation"
-msgstr "3 quizzes, a message and a conversation"
+msgid "<et>Ma tahaksin</et> is a polite way to say <et>ma tahan</et>."
+msgstr "<et>Ma tahaksin</et> is a polite way to say <et>ma tahan</et>."
+
+msgid "<et>Ma tahan</et>: I choose to do it."
+msgstr "<et>Ma tahan</et>: I choose to do it."
+
+msgid "<et>Meeldib</et> or <et>meeldivad</et>"
+msgstr "<et>Meeldib</et> or <et>meeldivad</et>"
+
+msgid "<et>Mulle meeldib</et>: the thing or the action pleases me."
+msgstr "<et>Mulle meeldib</et>: the thing or the action pleases me."
+
+msgid "<et>Sulle</et>, the <et>-le</et> form of <et>sina</et>, and <et>meeldib</et> for one place."
+msgstr "<et>Sulle</et>, the <et>-le</et> form of <et>sina</et>, and <et>meeldib</et> for one place."
+
+msgid "20 minutes"
+msgstr "20 minutes"
+
+msgid "A feeling takes the <et>-l</et> form, as having does: <et>mul on</et>, <et>tal on</et>."
+msgstr "A feeling takes the <et>-l</et> form, as having does: <et>mul on</et>, <et>tal on</et>."
 
 msgid "A friend you miss is coming to visit."
 msgstr "A friend you miss is coming to visit."
+
+msgid "A verb after <et>meeldib</et> and <et>tahan</et>"
+msgstr "A verb after <et>meeldib</et> and <et>tahan</et>"
+
+msgid "After <0>ei</0>, <1>meeldi</1> stays the same for one thing or more: <2>ei meeldi koerad</2>."
+msgstr "After <0>ei</0>, <1>meeldi</1> stays the same for one thing or more: <2>ei meeldi koerad</2>."
+
+msgid "After <0>meeldib</0>, a verb takes its <1>-da</1> form: <2>meeldib lugeda</2>."
+msgstr "After <0>meeldib</0>, a verb takes its <1>-da</1> form: <2>meeldib lugeda</2>."
+
+msgid "After <et>meeldib</et> or <et>tahan</et>, a verb takes its <et>-da</et> form."
+msgstr "After <et>meeldib</et> or <et>tahan</et>, a verb takes its <et>-da</et> form."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six, each with the right person form and the right verb."
+msgstr "All six, each with the right person form and the right verb."
+
+msgid "All six. You heard <0>meeldib</0> and <1>tahan</1> apart."
+msgstr "All six. You heard <0>meeldib</0> and <1>tahan</1> apart."
 
 msgid "All six. You knew each person by their <0>-le</0> form."
 msgstr "All six. You knew each person by their <0>-le</0> form."
@@ -70,23 +115,41 @@ msgstr "Are you cold?"
 msgid "As lesson {infinitives} showed, <0>meeldib</0> takes a verb’s <1>-da</1> form: <2/>, I like reading."
 msgstr "As lesson {infinitives} showed, <0>meeldib</0> takes a verb’s <1>-da</1> form: <2/>, I like reading."
 
-msgid "Ask with <0>kas</0> or <1>kellele</1>: <2>Kas sulle meeldib Tallinn? Kellele meeldib kohv?</2>"
-msgstr "Ask with <0>kas</0> or <1>kellele</1>: <2>Kas sulle meeldib Tallinn? Kellele meeldib kohv?</2>"
+msgid "Bored"
+msgstr "Bored"
 
 msgid "cats"
 msgstr "cats"
 
+msgid "Cats and dogs"
+msgstr "Cats and dogs"
+
+msgid "Check the person form, <0>meeldib</0> or <1>meeldivad</1>, and the <2>-da</2> form, then try again."
+msgstr "Check the person form, <0>meeldib</0> or <1>meeldivad</1>, and the <2>-da</2> form, then try again."
+
 msgid "Choosing the verb"
 msgstr "Choosing the verb"
 
+msgid "Coffee"
+msgstr "Coffee"
+
+msgid "Coffee and cake"
+msgstr "Coffee and cake"
+
 msgid "Coffee tastes good to me."
 msgstr "Coffee tastes good to me."
+
+msgid "Cold"
+msgstr "Cold"
 
 msgid "Do you like cats?"
 msgstr "Do you like cats?"
 
 msgid "Do you like Tallinn?"
 msgstr "Do you like Tallinn?"
+
+msgid "Do you like Tallinn? You ask one friend."
+msgstr "Do you like Tallinn? You ask one friend."
 
 msgid "Does it taste good to you?"
 msgstr "Does it taste good to you?"
@@ -97,6 +160,9 @@ msgstr "Doesn’t like"
 
 msgid "doesn’t please"
 msgstr "doesn’t please"
+
+msgid "Each sentence has one wrong word, the kind learners often write: the <0>-l</0> form for liking, one thing for more than one, or a verb that isn’t in its <1>-da</1> form. Tap it, then write it right."
+msgstr "Each sentence has one wrong word, the kind learners often write: the <0>-l</0> form for liking, one thing for more than one, or a verb that isn’t in its <1>-da</1> form. Tap it, then write it right."
 
 msgid "Estonian says I like coffee the other way round: <0/>. Word for word, it’s “to me pleases coffee”. The coffee does the pleasing, so <1/> ends in <2>-b</2>, as for he or she in lesson {present}."
 msgstr "Estonian says I like coffee the other way round: <0/>. Word for word, it’s “to me pleases coffee”. The coffee does the pleasing, so <1/> ends in <2>-b</2>, as for he or she in lesson {present}."
@@ -110,8 +176,17 @@ msgstr "Feeling bored takes the <0>-l</0> form: <1>mul on igav</1>."
 msgid "Feeling cold takes the <0>-l</0> form, as having does: <1>mul on külm</1>."
 msgstr "Feeling cold takes the <0>-l</0> form, as having does: <1>mul on külm</1>."
 
+msgid "Feelings with the <et>-l</et> form"
+msgstr "Feelings with the <et>-l</et> form"
+
 msgid "Fill the gaps: Mari’s message"
 msgstr "Fill the gaps: Mari’s message"
+
+msgid "Find and fix the mistake"
+msgstr "Find and fix the mistake"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
 
 msgid "For food and drink there’s also <0/>, from <1>maitsma</1>, to taste. It takes the <2>-le</2> form too: <3/>, coffee tastes good to me. <4/>? asks whether you like what you’re eating."
 msgstr "For food and drink there’s also <0/>, from <1>maitsma</1>, to taste. It takes the <2>-le</2> form too: <3/>, coffee tastes good to me. <4/>? asks whether you like what you’re eating."
@@ -143,8 +218,20 @@ msgstr "From tema, he or she."
 msgid "gladly"
 msgstr "gladly"
 
+msgid "Go back to the table of who likes it and the sections on one thing or more, then try again."
+msgstr "Go back to the table of who likes it and the sections on one thing or more, then try again."
+
 msgid "Has"
 msgstr "Has"
+
+msgid "He doesn’t like swimming."
+msgstr "He doesn’t like swimming."
+
+msgid "He has no money."
+msgstr "He has no money."
+
+msgid "He has to work."
+msgstr "He has to work."
 
 msgid "He or she"
 msgstr "He or she"
@@ -177,11 +264,20 @@ msgstr "He or she likes the cat."
 msgid "He or she likes the dog."
 msgstr "He or she likes the dog."
 
+msgid "He or she wants to swim."
+msgstr "He or she wants to swim."
+
 msgid "Hear a sentence and pick who likes the thing. Listen for the word that ends in <0>-le</0>."
 msgstr "Hear a sentence and pick who likes the thing. Listen for the word that ends in <0>-le</0>."
 
 msgid "Hearing who likes it"
 msgstr "Hearing who likes it"
+
+msgid "How does Mart feel at the start?"
+msgstr "How does Mart feel at the start?"
+
+msgid "I"
+msgstr "I"
 
 msgctxt "person"
 msgid "I"
@@ -206,6 +302,9 @@ msgstr "I like cats."
 msgid "I like coffee."
 msgstr "I like coffee."
 
+msgid "I like it"
+msgstr "I like it"
+
 msgid "I like reading."
 msgstr "I like reading."
 
@@ -214,6 +313,18 @@ msgstr "I like Tartu."
 
 msgid "I like the cat."
 msgstr "I like the cat."
+
+msgid "I want to"
+msgstr "I want to"
+
+msgid "I want to read."
+msgstr "I want to read."
+
+msgid "I’d like coffee. A polite request."
+msgstr "I’d like coffee. A polite request."
+
+msgid "I’d like coffee. You are ordering politely."
+msgstr "I’d like coffee. You are ordering politely."
 
 msgid "I’m bored."
 msgstr "I’m bored."
@@ -227,11 +338,23 @@ msgstr "I’m glad."
 msgid "I’m hot."
 msgstr "I’m hot."
 
+msgid "I’m sorry."
+msgstr "I’m sorry."
+
 msgid "I’m sorry. It’s a pity."
 msgstr "I’m sorry. It’s a pity."
 
 msgid "I’m tired."
 msgstr "I’m tired."
+
+msgid "In Pärnu"
+msgstr "In Pärnu"
+
+msgid "In Tallinn"
+msgstr "In Tallinn"
+
+msgid "In Tartu"
+msgstr "In Tartu"
 
 msgid "It’s −15 °C outside."
 msgstr "It’s −15 °C outside."
@@ -245,11 +368,35 @@ msgstr "It’s a cold day, and you like coffee and cats. Liis speaks first; pick
 msgid "It’s the same for other people: <0/>, he or she is bored. <1/>? asks whether you’re cold. Tap a feeling to hear it."
 msgstr "It’s the same for other people: <0/>, he or she is bored. <1/>? asks whether you’re cold. Tap a feeling to hear it."
 
+msgid "its -da form"
+msgstr "its -da form"
+
+msgid "Jaan"
+msgstr "Jaan"
+
 msgid "Jah, hea meelega! Yes, gladly."
 msgstr "Jah, hea meelega! Yes, gladly."
 
+msgid "Kati"
+msgstr "Kati"
+
+msgid "Kati and Mari have a cat and a dog."
+msgstr "Kati and Mari have a cat and a dog."
+
+msgid "Kati likes writing."
+msgstr "Kati likes writing."
+
+msgid "Kati writes"
+msgstr "Kati writes"
+
+msgid "Kati writes to her friend Anu. Read the message, then answer the questions."
+msgstr "Kati writes to her friend Anu. Read the message, then answer the questions."
+
 msgid "Liis"
 msgstr "Liis"
+
+msgid "Liis calls Mart on Friday. They talk about what they like and where to meet. Read the questions first. You can play the recording twice, as in the A2 exam."
+msgstr "Liis calls Mart on Friday. They talk about what they like and where to meet. Read the questions first. You can play the recording twice, as in the A2 exam."
 
 msgid "Liis invites you out. Each reply says how you feel or what you like; pick the one that fits."
 msgstr "Liis invites you out. Each reply says how you feel or what you like; pick the one that fits."
@@ -261,14 +408,35 @@ msgstr "Likes"
 msgid "Likes or doesn’t like"
 msgstr "Likes or doesn’t like"
 
+msgid "Likes or wants to?"
+msgstr "Likes or wants to?"
+
+msgid "Liking and wanting are different: <0>Mulle meeldib lugeda</0> says you enjoy it, <1>Ma tahan lugeda</1> says you want to do it."
+msgstr "Liking and wanting are different: <0>Mulle meeldib lugeda</0> says you enjoy it, <1>Ma tahan lugeda</1> says you want to do it."
+
+msgid "Liking or wanting"
+msgstr "Liking or wanting"
+
 msgid "Liking takes the <0>-le</0> form, and so does not liking: <1>mulle ei meeldi</1>."
 msgstr "Liking takes the <0>-le</0> form, and so does not liking: <1>mulle ei meeldi</1>."
 
 msgid "Liking takes the <0>-le</0> form: <1>mulle meeldib</1>, not <2>mul</2>."
 msgstr "Liking takes the <0>-le</0> form: <1>mulle meeldib</1>, not <2>mul</2>."
 
+msgid "Liking takes the <0>-le</0> form: <1>mulle meeldib</1>. The <2>-l</2> form is for having and feelings."
+msgstr "Liking takes the <0>-le</0> form: <1>mulle meeldib</1>. The <2>-l</2> form is for having and feelings."
+
 msgid "Liking to do something"
 msgstr "Liking to do something"
+
+msgid "Listen for the person: <0>mulle</0> likes, <1>ma</1> wants. Then try again."
+msgstr "Listen for the person: <0>mulle</0> likes, <1>ma</1> wants. Then try again."
+
+msgid "Listen: Liis and Mart"
+msgstr "Listen: Liis and Mart"
+
+msgid "Listen: plans for the weekend"
+msgstr "Listen: plans for the weekend"
 
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
@@ -276,8 +444,20 @@ msgstr "Listening only, no microphone"
 msgid "Making plans"
 msgstr "Making plans"
 
+msgid "Mari"
+msgstr "Mari"
+
+msgid "Mari likes swimming."
+msgstr "Mari likes swimming."
+
 msgid "Mari writes to Jaan. Fill each gap: the <0>-l</0> form for a feeling, the <1>-le</1> form for liking and for “to me”, and <2>meeldib</2> or <3>meeldivad</3> for what she likes."
 msgstr "Mari writes to Jaan. Fill each gap: the <0>-l</0> form for a feeling, the <1>-le</1> form for liking and for “to me”, and <2>meeldib</2> or <3>meeldivad</3> for what she likes."
+
+msgid "Mart"
+msgstr "Mart"
+
+msgid "Mart likes coffee."
+msgstr "Mart likes coffee."
 
 msgid "Match each feeling to when you’d say it."
 msgstr "Match each feeling to when you’d say it."
@@ -289,8 +469,20 @@ msgstr "More than one"
 msgid "more than one thing"
 msgstr "more than one thing"
 
-msgid "More than one thing takes <0>meeldivad</0>: <1>Mulle meeldivad koerad.</1>"
-msgstr "More than one thing takes <0>meeldivad</0>: <1>Mulle meeldivad koerad.</1>"
+msgid "More than one thing"
+msgstr "More than one thing"
+
+msgid "More than one thing usually takes <0>meeldivad</0>: <1>Mulle meeldivad koerad.</1>"
+msgstr "More than one thing usually takes <0>meeldivad</0>: <1>Mulle meeldivad koerad.</1>"
+
+msgid "More than one thing usually takes <et>meeldivad</et>."
+msgstr "More than one thing usually takes <et>meeldivad</et>."
+
+msgid "Most of them. Check the forms you missed above."
+msgstr "Most of them. Check the forms you missed above."
+
+msgid "Most of them. Look again at the ones you missed."
+msgstr "Most of them. Look again at the ones you missed."
 
 msgid "Mulle ei meeldi: I don’t like it. On its own, it answers no."
 msgstr "Mulle ei meeldi: I don’t like it. On its own, it answers no."
@@ -307,8 +499,11 @@ msgstr "Nearly. Play the ones you missed once more."
 msgid "No, I don’t."
 msgstr "No, I don’t."
 
-msgid "Not liking is <0>ei meeldi</0>, for one thing or more: <1>Mulle ei meeldi koerad.</1>"
-msgstr "Not liking is <0>ei meeldi</0>, for one thing or more: <1>Mulle ei meeldi koerad.</1>"
+msgid "Not liking is <0>ei meeldi</0>, for one thing or more: <1>Mulle ei meeldi koerad.</1> You usually ask with <2>kas</2> or <3>kellele</3>: <4>Kas sulle meeldib Tallinn?</4>"
+msgstr "Not liking is <0>ei meeldi</0>, for one thing or more: <1>Mulle ei meeldi koerad.</1> You usually ask with <2>kas</2> or <3>kellele</3>: <4>Kas sulle meeldib Tallinn?</4>"
+
+msgid "Not liking: <et>ei meeldi</et>"
+msgstr "Not liking: <et>ei meeldi</et>"
 
 msgid "One thing"
 msgstr "One thing"
@@ -322,8 +517,11 @@ msgstr "One thing or more"
 msgid "one thing, or a verb"
 msgstr "one thing, or a verb"
 
-msgid "One thing, or a verb in its <0>-da</0> form, takes <1>meeldib</1>: <2>Mulle meeldib kohv. Mulle meeldib lugeda.</2>"
-msgstr "One thing, or a verb in its <0>-da</0> form, takes <1>meeldib</1>: <2>Mulle meeldib kohv. Mulle meeldib lugeda.</2>"
+msgid "One thing, or a verb in its <0>-da</0> form, usually takes <1>meeldib</1>: <2>Mulle meeldib kohv. Mulle meeldib lugeda.</2>"
+msgstr "One thing, or a verb in its <0>-da</0> form, usually takes <1>meeldib</1>: <2>Mulle meeldib kohv. Mulle meeldib lugeda.</2>"
+
+msgid "One thing, or a verb, usually takes <et>meeldib</et>."
+msgstr "One thing, or a verb, usually takes <et>meeldib</et>."
 
 msgctxt "meeldima"
 msgid "please"
@@ -334,6 +532,18 @@ msgstr "pleases"
 
 msgid "Put each word under the verb it takes after <0>mulle</0>: <1>meeldib</1> for one thing or a verb, <2>meeldivad</2> for more than one thing."
 msgstr "Put each word under the verb it takes after <0>mulle</0>: <1>meeldib</1> for one thing or a verb, <2>meeldivad</2> for more than one thing."
+
+msgid "Read: Kati’s message"
+msgstr "Read: Kati’s message"
+
+msgid "Reading"
+msgstr "Reading"
+
+msgid "Say it in Estonian"
+msgstr "Say it in Estonian"
+
+msgid "say no"
+msgstr "say no"
 
 msgid "Saying how you feel"
 msgstr "Saying how you feel"
@@ -347,11 +557,20 @@ msgstr "Saying who likes something"
 msgid "Some feelings take the <0>-l</0> form, as having does: <1>Mul on külm.</1> <2>Mul on hea meel.</2>"
 msgstr "Some feelings take the <0>-l</0> form, as having does: <1>Mul on külm.</1> <2>Mul on hea meel.</2>"
 
+msgid "Swimming"
+msgstr "Swimming"
+
+msgid "Swimming in Pärnu"
+msgstr "Swimming in Pärnu"
+
 msgid "Talk: making plans with Liis"
 msgstr "Talk: making plans with Liis"
 
 msgid "Tap a form to hear it in a sentence."
 msgstr "Tap a form to hear it in a sentence."
+
+msgid "Tap a line to hear it, then tell the two apart by ear."
+msgstr "Tap a line to hear it, then tell the two apart by ear."
 
 msgid "Tap the forms in the Likes column above once more, then try again."
 msgstr "Tap the forms in the Likes column above once more, then try again."
@@ -371,20 +590,26 @@ msgstr "That says you like the cold."
 msgid "That says you’re sorry. Liis asked you to come."
 msgstr "That says you’re sorry. Liis asked you to come."
 
+msgid "The <et>-le</et> form for who likes it"
+msgstr "The <et>-le</et> form for who likes it"
+
+msgid "the form for who likes it"
+msgstr "the form for who likes it"
+
 msgid "The same whoever likes it: <0>mulle</0>, <1>talle</1>, <2>meile</2> or <3>neile</3>."
 msgstr "The same whoever likes it: <0>mulle</0>, <1>talle</1>, <2>meile</2> or <3>neile</3>."
 
-msgid "The thing is plural, so the verb takes <0>-vad</0>."
-msgstr "The thing is plural, so the verb takes <0>-vad</0>."
+msgid "The thing is plural, so the verb usually takes <0>-vad</0>."
+msgstr "The thing is plural, so the verb usually takes <0>-vad</0>."
 
-msgid "The verb goes with the thing you like, so it changes when there’s more than one. <0/> is I like the cat, and <1/> is I like cats."
-msgstr "The verb goes with the thing you like, so it changes when there’s more than one. <0/> is I like the cat, and <1/> is I like cats."
+msgid "The verb goes with the thing you like, so it usually changes when there’s more than one. <0/> is I like the cat, and <1/> is I like cats."
+msgstr "The verb goes with the thing you like, so it usually changes when there’s more than one. <0/> is I like the cat, and <1/> is I like cats."
 
 msgid "There’s nothing to do all evening."
 msgstr "There’s nothing to do all evening."
 
-msgid "These feelings take the <0>-l</0> form of lesson {mulOn}, as having does: <1/>, I’m cold. Word for word, it’s “at me is cold”, with <2>mul</2>, not <3>mulle</3>. Other feelings use <4>ma olen</4>, as in lesson {pronouns}: <5/>, I’m tired."
-msgstr "These feelings take the <0>-l</0> form of lesson {mulOn}, as having does: <1/>, I’m cold. Word for word, it’s “at me is cold”, with <2>mul</2>, not <3>mulle</3>. Other feelings use <4>ma olen</4>, as in lesson {pronouns}: <5/>, I’m tired."
+msgid "These feelings take the <0>-l</0> form of lesson {mulOn}, as having does: <1/>, I’m cold. Word for word, it’s “at me is cold”, with <2>mul</2>, not <3>mulle</3>. Other feelings usually use <4>ma olen</4>, as in lesson {pronouns}: <5/>, I’m tired."
+msgstr "These feelings take the <0>-l</0> form of lesson {mulOn}, as having does: <1/>, I’m cold. Word for word, it’s “at me is cold”, with <2>mul</2>, not <3>mulle</3>. Other feelings usually use <4>ma olen</4>, as in lesson {pronouns}: <5/>, I’m tired."
 
 msgid "They"
 msgstr "They"
@@ -417,8 +642,17 @@ msgstr "They like the apple."
 msgid "They like the cat."
 msgstr "They like the cat."
 
-msgid "To ask, start with <0>kas</0>, as in lesson {questions}, and answer with the verb alone: <1/>? <2/>. To ask who, use <3/>, the <4>-le</4> form of <5/>: <6/>? <7/>!"
-msgstr "To ask, start with <0>kas</0>, as in lesson {questions}, and answer with the verb alone: <1/>? <2/>. To ask who, use <3/>, the <4>-le</4> form of <5/>: <6/>? <7/>!"
+msgid "They want to talk."
+msgstr "They want to talk."
+
+msgid "Tired"
+msgstr "Tired"
+
+msgid "To ask politely, people say <0/>, I’d like coffee. It’s a would form, and lesson {conditional} explains it."
+msgstr "To ask politely, people say <0/>, I’d like coffee. It’s a would form, and lesson {conditional} explains it."
+
+msgid "To ask yes or no, you usually start with <0>kas</0>, as in lesson {questions}, and usually answer with the verb alone: <1/>? <2/>. To ask who, use <3/>, the <4>-le</4> form of <5/>: <6/>? <7/>!"
+msgstr "To ask yes or no, you usually start with <0>kas</0>, as in lesson {questions}, and usually answer with the verb alone: <1/>? <2/>. To ask who, use <3/>, the <4>-le</4> form of <5/>: <6/>? <7/>!"
 
 msgid "to him or her"
 msgstr "to him or her"
@@ -429,14 +663,20 @@ msgstr "to me"
 msgid "to please"
 msgstr "to please"
 
-msgid "To say who likes something, put the person in the <0>-le</0> form: <1>Mulle meeldib kohv.</1>"
-msgstr "To say who likes something, put the person in the <0>-le</0> form: <1>Mulle meeldib kohv.</1>"
+msgid "to read"
+msgstr "to read"
 
-msgid "To say you don’t like something, put <0>ei</0> before the verb and drop its ending, as in lesson {negation}: <1/>. It’s <2/> for more than one thing too: <3/>."
-msgstr "To say you don’t like something, put <0>ei</0> before the verb and drop its ending, as in lesson {negation}: <1/>. It’s <2/> for more than one thing too: <3/>."
+msgid "To say who likes something, use the <0>-le</0> form of the person: <1>Mulle meeldib kohv.</1>"
+msgstr "To say who likes something, use the <0>-le</0> form of the person: <1>Mulle meeldib kohv.</1>"
 
-msgid "To say you like something, put the person in the <0>-le</0> form before <1>meeldib</1>: <2>Mulle meeldib kohv</2> is I like coffee. Some feelings take the <3>-l</3> form instead: <4>Mul on külm</4>, I’m cold."
-msgstr "To say you like something, put the person in the <0>-le</0> form before <1>meeldib</1>: <2>Mulle meeldib kohv</2> is I like coffee. Some feelings take the <3>-l</3> form instead: <4>Mul on külm</4>, I’m cold."
+msgid "To say you don’t like something, use <0>ei</0> with the verb without its ending, as in lesson {negation}: <1/>. It’s <2/> for more than one thing too: <3/>."
+msgstr "To say you don’t like something, use <0>ei</0> with the verb without its ending, as in lesson {negation}: <1/>. It’s <2/> for more than one thing too: <3/>."
+
+msgid "To say you like something, use the <0>-le</0> form of the person with <1>meeldib</1>: <2>Mulle meeldib kohv</2> is I like coffee. Some feelings take the <3>-l</3> form instead: <4>Mul on külm</4>, I’m cold."
+msgstr "To say you like something, use the <0>-le</0> form of the person with <1>meeldib</1>: <2>Mulle meeldib kohv</2> is I like coffee. Some feelings take the <3>-l</3> form instead: <4>Mul on külm</4>, I’m cold."
+
+msgid "to speak, to talk"
+msgstr "to speak, to talk"
 
 msgid "to them"
 msgstr "to them"
@@ -452,6 +692,12 @@ msgstr "to you, more than one; polite"
 
 msgid "to you, one person"
 msgstr "to you, one person"
+
+msgid "Typed sentences, a talk, a listening and a reading"
+msgstr "Typed sentences, a talk, a listening and a reading"
+
+msgid "Wants to"
+msgstr "Wants to"
 
 msgid "We"
 msgstr "We"
@@ -484,14 +730,44 @@ msgstr "We like the book."
 msgid "We like the cat."
 msgstr "We like the cat."
 
+msgid "What does Kati ask Anu?"
+msgstr "What does Kati ask Anu?"
+
+msgid "What does Kati want to learn well? Write two words in Estonian."
+msgstr "What does Kati want to learn well? Write two words in Estonian."
+
+msgid "What does Kati write?"
+msgstr "What does Kati write?"
+
+msgid "What does Mart say he likes?"
+msgstr "What does Mart say he likes?"
+
 msgid "When would you say it?"
 msgstr "When would you say it?"
 
 msgid "When you’d say it"
 msgstr "When you’d say it"
 
+msgid "Where do Kati and Mari live now?"
+msgstr "Where do Kati and Mari live now?"
+
+msgid "Where does Liis go on Sunday? Write one word in Estonian."
+msgstr "Where does Liis go on Sunday? Write one word in Estonian."
+
+msgid "Whether she is cold"
+msgstr "Whether she is cold"
+
+msgid "Whether she likes coffee"
+msgstr "Whether she likes coffee"
+
+msgid "Whether she likes Tallinn"
+msgstr "Whether she likes Tallinn"
+
 msgid "who"
 msgstr "who"
+
+msgid "Who doesn’t like dogs?"
+msgstr "Who doesn’t like dogs?"
 
 msgid "Who has and who likes, for each person"
 msgstr "Who has and who likes, for each person"
@@ -499,14 +775,32 @@ msgstr "Who has and who likes, for each person"
 msgid "Who likes coffee?"
 msgstr "Who likes coffee?"
 
+msgid "Who likes dogs?"
+msgstr "Who likes dogs?"
+
+msgid "Who likes it takes the <et>-le</et> form: <et>mulle</et>, <et>sulle</et>, <et>talle</et>, <et>meile</et>, <et>teile</et>, <et>neile</et>."
+msgstr "Who likes it takes the <et>-le</et> form: <et>mulle</et>, <et>sulle</et>, <et>talle</et>, <et>meile</et>, <et>teile</et>, <et>neile</et>."
+
 msgid "Who likes it?"
 msgstr "Who likes it?"
 
-msgid "With a verb it’s always <0>meeldib</0>, whoever likes it: <1/>, they like talking. Tap a line to hear it."
-msgstr "With a verb it’s always <0>meeldib</0>, whoever likes it: <1/>, they like talking. Tap a line to hear it."
+msgid "Who likes what?"
+msgstr "Who likes what?"
+
+msgid "Why doesn’t Mart go to Pärnu?"
+msgstr "Why doesn’t Mart go to Pärnu?"
+
+msgid "With a verb it’s <0>meeldib</0>, whoever likes it: <1/>, they like talking. Tap a line to hear it."
+msgstr "With a verb it’s <0>meeldib</0>, whoever likes it: <1/>, they like talking. Tap a line to hear it."
 
 msgid "With the -le form of a person, it says what they like."
 msgstr "With the -le form of a person, it says what they like."
+
+msgid "Write each sentence in Estonian. Use the <0>-le</0> form of the person to say who likes it, and a verb in its <1>-da</1> form after <2>meeldib</2> or <3>tahan</3>."
+msgstr "Write each sentence in Estonian. Use the <0>-le</0> form of the person to say who likes it, and a verb in its <1>-da</1> form after <2>meeldib</2> or <3>tahan</3>."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
 
 msgid "Write to me: the <0>-le</0> form says to whom, as in <1>mulle meeldib</1>."
 msgstr "Write to me: the <0>-le</0> form says to whom, as in <1>mulle meeldib</1>."

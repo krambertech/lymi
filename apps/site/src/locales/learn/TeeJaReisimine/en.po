@@ -168,8 +168,8 @@ msgstr "Minge otse edasi."
 msgid "Near a big hotel"
 msgstr "Near a big hotel"
 
-msgid "Nearby (where)"
-msgstr "Nearby (where)"
+msgid "Bus stop on the left (where)"
+msgstr "Bus stop on the left (where)"
 
 msgid "Nearly. Check the direction ending in the ones you missed."
 msgstr "Nearly. Check the direction ending in the ones you missed."

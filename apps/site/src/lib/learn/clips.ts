@@ -16941,7 +16941,7 @@ export const TRAVEL_GROUPS = {
   side: [
     { id: "onLeft", word: "vasakul", said: "Kohvik on vasakul." },
     { id: "onRight", word: "paremal", said: "Jaam on paremal." },
-    { id: "near", word: "peatus", said: "Kus on bussipeatus?" },
+    { id: "stop", word: "peatus", said: "Bussipeatus on vasakul." },
   ],
 } as const;
 
@@ -16980,12 +16980,33 @@ export const TRAVEL_ANSWERS: Record<
   (typeof TRAVEL_TRANSLATE)[number],
   readonly [string, ...string[]]
 > = {
-  "Kus on bussipeatus?": ["Kus on bussipeatus?", "Kus bussipeatus on?"],
-  "Palun üks pilet Tartusse.": ["Palun üks pilet Tartusse.", "Üks pilet Tartusse, palun."],
-  "Minge otse edasi.": ["Minge otse edasi.", "Minge otse.", "Mine otse edasi.", "Mine otse."],
-  "Pöörake vasakule.": ["Pöörake vasakule.", "Pööra vasakule."],
-  "Jaam on paremal.": ["Jaam on paremal.", "Rongijaam on paremal."],
-  "Mis kell rong väljub?": ["Mis kell rong väljub?", "Mis kell rong läheb?"],
+  "Kus on bussipeatus?": [
+    "Kus on bussipeatus?",
+    "Kus bussipeatus on?",
+    "Kus on peatus?",
+    "Kus peatus on?",
+  ],
+  "Palun üks pilet Tartusse.": [
+    "Palun üks pilet Tartusse.",
+    "Üks pilet Tartusse, palun.",
+    "Palun, üks pilet Tartusse.",
+    "Üks pilet Tartusse palun.",
+  ],
+  "Minge otse edasi.": ["Minge otse edasi.", "Minge otse.", "Minge edasi otse."],
+  "Pöörake vasakule.": ["Pöörake vasakule."],
+  "Jaam on paremal.": [
+    "Jaam on paremal.",
+    "Rongijaam on paremal.",
+    "Paremal on jaam.",
+    "Paremal on rongijaam.",
+  ],
+  "Mis kell rong väljub?": [
+    "Mis kell rong väljub?",
+    "Mis kell rong läheb?",
+    "Mis kell väljub rong?",
+    "Mis kell läheb rong?",
+    "Mis kell see rong väljub?",
+  ],
 };
 
 export const TRAVEL_FIXES = [
@@ -17043,7 +17064,7 @@ export const TRAVEL_CONVERSATION: Conversation = {
     { voice: "third", text: "Kas soovite ainult ühe suuna piletit või edasi-tagasi?" },
     { voice: "fourth", text: "Ainult ühe suuna, aitäh. Tulen tagasi alles pühapäeval." },
     { voice: "third", text: "See maksab kaksteist eurot. Kas maksate kaardiga või sularahas?" },
-    { voice: "fourth", text: "Kaardiga, palun. Kus teine tee on?" },
+    { voice: "fourth", text: "Kaardiga, palun. Kus on teine tee?" },
     { voice: "third", text: "Minge siit uksest otse välja ja pöörake paremale." },
     { voice: "third", text: "Rong ootab teisel teel paremal. Head reisi!" },
     { voice: "fourth", text: "Suur aitäh!", say: "[warm] Suur aitäh!" },

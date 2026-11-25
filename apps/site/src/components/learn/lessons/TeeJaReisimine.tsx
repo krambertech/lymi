@@ -62,7 +62,7 @@ const ROW_LABELS: Record<string, MessageDescriptor> = {
   turnRight: msg`Turn right (where to)`,
   onLeft: msg`On the left (where)`,
   onRight: msg`On the right (where)`,
-  near: msg`Nearby (where)`,
+  stop: msg`Bus stop on the left (where)`,
 };
 
 function DirectionsTable() {

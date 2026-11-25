@@ -168,8 +168,8 @@ msgstr "Идите прямо вперёд."
 msgid "Near a big hotel"
 msgstr "У большого отеля"
 
-msgid "Nearby (where)"
-msgstr "Рядом (где)"
+msgid "Bus stop on the left (where)"
+msgstr "Остановка слева (где)"
 
 msgid "Nearly. Check the direction ending in the ones you missed."
 msgstr "Почти. Проверь окончание направления там, где была ошибка."

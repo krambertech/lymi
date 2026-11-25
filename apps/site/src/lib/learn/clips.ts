@@ -16022,15 +16022,23 @@ export const PV_TELL = [
 export const PV_ORDER = [
   {
     id: "rise",
-    answers: ["Ma tõusen kell seitse üles.", "Kell seitse tõusen ma üles."],
+    answers: [
+      "Ma tõusen kell seitse üles.",
+      "Kell seitse tõusen ma üles.",
+      "Ma tõusen üles kell seitse.",
+    ],
   },
   {
     id: "write",
-    answers: ["Ma kirjutan numbri üles.", "Numbri kirjutan ma üles."],
+    answers: ["Ma kirjutan numbri üles.", "Numbri kirjutan ma üles.", "Ma kirjutan üles numbri."],
   },
   {
     id: "must-rise",
-    answers: ["Ma pean vara üles tõusma.", "Vara pean ma üles tõusma."],
+    answers: [
+      "Ma pean vara üles tõusma.",
+      "Vara pean ma üles tõusma.",
+      "Ma pean üles tõusma vara.",
+    ],
   },
   {
     id: "close-door",
@@ -16038,11 +16046,16 @@ export const PV_ORDER = [
   },
   {
     id: "go-out",
-    answers: ["Me läheme õhtul välja.", "Õhtul läheme me välja."],
+    answers: ["Me läheme õhtul välja.", "Õhtul läheme me välja.", "Me läheme välja õhtul."],
   },
   {
     id: "give-back",
-    answers: ["Ma annan raamatu homme tagasi.", "Homme annan ma raamatu tagasi."],
+    answers: [
+      "Ma annan raamatu homme tagasi.",
+      "Homme annan ma raamatu tagasi.",
+      "Ma annan homme raamatu tagasi.",
+      "Ma annan raamatu tagasi homme.",
+    ],
   },
 ] as const;
 
@@ -16077,8 +16090,10 @@ export const PV_ANSWERS: Record<(typeof PV_TRANSLATE)[number], readonly [string,
     "Pane palun uks kinni.",
     "Palun pane uks kinni.",
     "Pane uks kinni, palun.",
+    "Pane uks palun kinni.",
     "Pange palun uks kinni.",
     "Palun pange uks kinni.",
+    "Pange uks palun kinni.",
   ],
   "Ma tegin akna lahti.": pvClosed(["Ma tegin akna lahti.", "Akna tegin ma lahti."]),
   "Ta läks juba ära.": pvClosed(["Ta läks juba ära.", "Ta läks ära juba."]),
@@ -16087,7 +16102,11 @@ export const PV_ANSWERS: Record<(typeof PV_TRANSLATE)[number], readonly [string,
     "Kell kuus tulen ma tagasi.",
     "Ma tulen tagasi kell kuus.",
   ]),
-  "Ma kirjutan numbri üles.": pvClosed(["Ma kirjutan numbri üles.", "Numbri kirjutan ma üles."]),
+  "Ma kirjutan numbri üles.": pvClosed([
+    "Ma kirjutan numbri üles.",
+    "Numbri kirjutan ma üles.",
+    "Ma kirjutan üles numbri.",
+  ]),
   "Ma pean vara üles tõusma.": pvClosed([
     "Ma pean vara üles tõusma.",
     "Vara pean ma üles tõusma.",

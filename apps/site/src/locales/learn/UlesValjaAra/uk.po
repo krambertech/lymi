@@ -191,7 +191,7 @@ msgid "He burnt toast."
 msgstr "Він підпалив тост."
 
 msgid "He or she already left."
-msgstr "Він чи вона вже пішли."
+msgstr "Він чи вона вже пішов(-ла)."
 
 msgid "He painted the wall."
 msgstr "Він пофарбував стіну."
@@ -263,7 +263,7 @@ msgid "Lend it to Jaan until Monday morning"
 msgstr "Позичити Яанові аж до ранку понеділка"
 
 msgid "Lesson {commands} showed <0/> for saying don’t: <1>Ära mine!</1> As a particle after the verb, <2>ära</2> usually means away or finished: <3>Ta läks ära</3> (he left) and <4>Ma sõin võileiva ära</4> (I ate the sandwich up)."
-msgstr "Урок {commands} показав <0/> для заборони: <1>Ära mine!</1> Як частка після дієслова <2>ära</2> зазвичай означає «геть» або завершеність: <3>Ta läks ära</3> (він пішов геть) і <4>Ma sõin võileiva ära</4> (я доїв бутерброд)."
+msgstr "Урок {commands} показав <0/> для заборони: <1>Ära mine!</1> Як частка після дієслова <2>ära</2> зазвичай означає «геть» або завершеність: <3>Ta läks ära</3> (він пішов геть) і <4>Ma sõin võileiva ära</4> (я з’їв бутерброд)."
 
 msgid "Lesson {order} showed that the main verb usually stands second. With one verb, the particle usually goes after the verb, often to the end: <0>Ma kirjutan numbri üles.</0>"
 msgstr "Урок {order} показав, що основне дієслово зазвичай стоїть на другому місці. Коли дієслово одне, частка зазвичай іде після нього, часто в самий кінець: <0>Ma kirjutan numbri üles.</0>"

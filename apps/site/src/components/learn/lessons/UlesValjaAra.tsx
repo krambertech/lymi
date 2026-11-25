@@ -412,8 +412,8 @@ function useContent() {
         id: "window",
         ask: t`Why did Peeter open the kitchen window?`,
         options: [
-          { id: "warm", label: t`The morning air felt warm outside.` },
           { id: "smoke", label: t`He burnt toast.` },
+          { id: "warm", label: t`The morning air felt warm outside.` },
           { id: "paint", label: t`He painted the wall.` },
         ],
         answer: "warm",
@@ -437,8 +437,8 @@ function useContent() {
         id: "papers",
         ask: t`What should Kati do with the old newspapers?`,
         options: [
-          { id: "keep", label: t`Put them in a box in the hallway` },
           { id: "throw", label: t`Throw them in the bin` },
+          { id: "keep", label: t`Put them in a box in the hallway` },
           { id: "give", label: t`Give them to the neighbour downstairs` },
         ],
         answer: "throw",
@@ -456,8 +456,8 @@ function useContent() {
         ask: t`What should Kati tell the brother if he calls?`,
         options: [
           { id: "visit", label: t`To come round at five` },
-          { id: "call", label: t`That Peeter will call back later` },
           { id: "email", label: t`To write Peeter an email about the weekend` },
+          { id: "call", label: t`That Peeter will call back later` },
         ],
         answer: "call",
         line: 9,
@@ -476,9 +476,9 @@ function useContent() {
         id: "door",
         ask: t`Why does Mari ask Jaan to close the door?`,
         options: [
-          { id: "cold", label: t`Cold air comes in from the hallway.` },
           { id: "noise", label: t`Loud music plays next door.` },
           { id: "cat", label: t`The cat might escape.` },
+          { id: "cold", label: t`Cold air comes in from the hallway.` },
         ],
         answer: "cold",
         line: 5,
@@ -494,8 +494,8 @@ function useContent() {
         id: "book",
         ask: t`What must Mari do with the blue book tomorrow?`,
         options: [
-          { id: "pack", label: t`Pack it away` },
           { id: "return", label: t`Bring back the library copy` },
+          { id: "pack", label: t`Pack it away` },
           { id: "lend", label: t`Lend it to Jaan until Monday morning` },
         ],
         answer: "return",

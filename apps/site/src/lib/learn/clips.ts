@@ -6353,6 +6353,158 @@ export const PAST_SORT = [
   { verb: "jooma", past: "jõin", bin: "i" },
 ] as const;
 
+export const PAST_TRANSLATE = [
+  "Eile ma lugesin raamatut.",
+  "Me käisime eile poes.",
+  "Ta läks eile koju.",
+  "Ma sõin hommikul leiba.",
+  "Nad tulid eile Tartust.",
+  "Ma töötasin eile kodus.",
+] as const;
+
+export const PAST_ANSWERS: Record<(typeof PAST_TRANSLATE)[number], readonly [string, ...string[]]> =
+  {
+    "Eile ma lugesin raamatut.": [
+      "Eile ma lugesin raamatut.",
+      "Eile lugesin ma raamatut.",
+      "Eile lugesin raamatut.",
+      "Ma lugesin eile raamatut.",
+      "Mina lugesin eile raamatut.",
+      "Lugesin eile raamatut.",
+      "Eile mina lugesin raamatut.",
+      "Eile lugesin mina raamatut.",
+      "Ma lugesin raamatut eile.",
+      "Mina lugesin raamatut eile.",
+      "Lugesin raamatut eile.",
+    ],
+    "Me käisime eile poes.": [
+      "Me käisime eile poes.",
+      "Meie käisime eile poes.",
+      "Käisime eile poes.",
+      "Eile käisime me poes.",
+      "Eile käisime meie poes.",
+      "Eile käisime poes.",
+      "Eile me käisime poes.",
+      "Eile meie käisime poes.",
+      "Me käisime poes eile.",
+      "Meie käisime poes eile.",
+      "Käisime poes eile.",
+      "Me läksime eile poodi.",
+      "Meie läksime eile poodi.",
+      "Läksime eile poodi.",
+      "Eile läksime me poodi.",
+      "Eile läksime meie poodi.",
+      "Eile läksime poodi.",
+      "Eile me läksime poodi.",
+      "Eile meie läksime poodi.",
+      "Me läksime poodi eile.",
+      "Meie läksime poodi eile.",
+      "Läksime poodi eile.",
+    ],
+    "Ta läks eile koju.": [
+      "Ta läks eile koju.",
+      "Tema läks eile koju.",
+      "Eile läks ta koju.",
+      "Eile läks tema koju.",
+      "Eile ta läks koju.",
+      "Eile tema läks koju.",
+      "Ta läks koju eile.",
+      "Tema läks koju eile.",
+    ],
+    "Ma sõin hommikul leiba.": [
+      "Ma sõin hommikul leiba.",
+      "Mina sõin hommikul leiba.",
+      "Sõin hommikul leiba.",
+      "Hommikul sõin ma leiba.",
+      "Hommikul sõin mina leiba.",
+      "Hommikul sõin leiba.",
+      "Hommikul ma sõin leiba.",
+      "Hommikul mina sõin leiba.",
+      "Ma sõin leiba hommikul.",
+      "Mina sõin leiba hommikul.",
+      "Sõin leiba hommikul.",
+    ],
+    "Nad tulid eile Tartust.": [
+      "Nad tulid eile Tartust.",
+      "Nemad tulid eile Tartust.",
+      "Eile tulid nad Tartust.",
+      "Eile tulid nemad Tartust.",
+      "Eile nad tulid Tartust.",
+      "Eile nemad tulid Tartust.",
+      "Nad tulid Tartust eile.",
+      "Nemad tulid Tartust eile.",
+    ],
+    "Ma töötasin eile kodus.": [
+      "Ma töötasin eile kodus.",
+      "Mina töötasin eile kodus.",
+      "Töötasin eile kodus.",
+      "Eile töötasin ma kodus.",
+      "Eile töötasin mina kodus.",
+      "Eile töötasin kodus.",
+      "Eile ma töötasin kodus.",
+      "Eile mina töötasin kodus.",
+      "Ma töötasin kodus eile.",
+      "Mina töötasin kodus eile.",
+      "Töötasin kodus eile.",
+    ],
+  };
+
+export const PAST_FIXES = [
+  { id: "read", wrong: "Ma loesin eile raamatut.", right: "Ma lugesin eile raamatut." },
+  {
+    id: "lived",
+    wrong: "Ta elasid eelmisel aastal Tartus.",
+    right: "Ta elas eelmisel aastal Tartus.",
+  },
+  { id: "went", wrong: "Ma minin hommikul tööle.", right: "Ma läksin hommikul tööle." },
+  { id: "ate", wrong: "Ta söis eile suppi.", right: "Ta sõi eile suppi." },
+  { id: "we", wrong: "Me elasin varem Tallinnas.", right: "Me elasime varem Tallinnas." },
+  { id: "came", wrong: "Ta tules õhtul koju.", right: "Ta tuli õhtul koju." },
+] as const;
+
+export const PAST_CONVERSATION: Conversation = {
+  turns: [
+    { voice: "fourth", text: ["Tere, Mari!", "Kuidas sinu nädalavahetus läks?"] },
+    {
+      voice: "third",
+      text: ["Tere, Jaan!", "Väga hästi.", "Reede õhtul sõitsin ma Tartusse õe juurde."],
+    },
+    { voice: "fourth", text: "Mida te laupäeval tegite?" },
+    {
+      voice: "third",
+      text: [
+        "Hommikul käisime me turul.",
+        "Ma ostsin sealt leiba ja magusaid õunu.",
+        "Pärast läksime kohvikusse.",
+      ],
+    },
+    { voice: "fourth", text: "Kas te sõite seal lõunat?" },
+    {
+      voice: "third",
+      text: [
+        "Jah, me sõime kuuma suppi ja jõime kohvi.",
+        "Seal nägin ma ka oma vana sõpra Peetrit.",
+        "Me rääkisime temaga peaaegu tund aega.",
+      ],
+    },
+    { voice: "fourth", text: "Aga mida sa õhtul tegid?" },
+    {
+      voice: "third",
+      text: ["Õhtul olime kodus.", "Ma lugesin uut raamatut ja läksin vara magama."],
+    },
+    { voice: "fourth", text: "Millal sa täna Tallinnasse tulid?" },
+    {
+      voice: "third",
+      text: [
+        "Ma tulin rongiga kell kolm.",
+        "Õde saatis mind jaama.",
+        "Kodus jõin veel teed ja puhkasin.",
+      ],
+    },
+    { voice: "fourth", text: "Tore, siis oli sul mõnus nädalavahetus." },
+  ],
+};
+
 const PAST_CLIPS: Record<string, Clip> = {
   ...words(PAST_WORDS),
   ...words(
@@ -6363,7 +6515,10 @@ const PAST_CLIPS: Record<string, Clip> = {
   ...words(PAST_I_VERBS.flatMap(({ verb, ma, ta }) => [verb, ma, ta])),
   ...words(PAST_TIMELINE.map(({ sentence }) => sentence)),
   ...words(PAST_NOW_OR_THEN.flatMap(({ now, past }) => [now, past])),
+  ...words(PAST_TRANSLATE),
+  ...words(PAST_FIXES.map(({ right }) => right)),
   "p-saturday": { sentences: PAST_SATURDAY },
+  "c-puhapaev": PAST_CONVERSATION,
   ...PAST_DIALOGUE,
 };
 

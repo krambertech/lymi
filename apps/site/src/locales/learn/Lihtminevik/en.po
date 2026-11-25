@@ -131,11 +131,11 @@ msgstr "Bread and cheese"
 msgid "Build the past verb from its <et>-ma</et> stem with <et>-si-</et> or its <et>-i-</et> form, matching the person."
 msgstr "Build the past verb from its <et>-ma</et> stem with <et>-si-</et> or its <et>-i-</et> form, matching the person."
 
-msgid "By bus early"
-msgstr "By bus early"
+msgid "By bus early in the morning"
+msgstr "By bus early in the morning"
 
-msgid "By train in the afternoon at three"
-msgstr "By train in the afternoon at three"
+msgid "By train at three"
+msgstr "By train at three"
 
 msgid "Cheese and coffee"
 msgstr "Cheese and coffee"
@@ -257,8 +257,8 @@ msgstr "Her neighbour"
 msgid "Her old friend Peeter"
 msgstr "Her old friend Peeter"
 
-msgid "Her younger brother who lives nearby"
-msgstr "Her younger brother who lives nearby"
+msgid "Her younger brother"
+msgstr "Her younger brother"
 
 msgid "How did Mari travel back to Tallinn on Sunday?"
 msgstr "How did Mari travel back to Tallinn on Sunday?"
@@ -361,9 +361,6 @@ msgstr "Last week I read a lot."
 msgid "Last week, yesterday and today"
 msgstr "Last week, yesterday and today"
 
-msgid "Listen to the verb ending: <et>-b</et> is present, <et>-s</et> or <et>-i</et> is past."
-msgstr "Listen to the verb ending: <et>-b</et> is present, <et>-s</et> or <et>-i</et> is past."
-
 msgid "Listen: Mari and Jaan"
 msgstr "Listen: Mari and Jaan"
 
@@ -382,8 +379,8 @@ msgstr "Mari went to the cinema on Saturday evening."
 msgid "Mari’s Saturday"
 msgstr "Mari’s Saturday"
 
-msgid "Mari’s sister walked her to the station."
-msgstr "Mari’s sister walked her to the station."
+msgid "Mari’s sister went with her to the station."
+msgstr "Mari’s sister went with her to the station."
 
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Most of them. Play the ones you missed once more."
@@ -557,6 +554,9 @@ msgstr "to be"
 msgid "to buy"
 msgstr "to buy"
 
+msgid "To buy a coat"
+msgstr "To buy a coat"
+
 msgid "to come"
 msgstr "to come"
 
@@ -580,9 +580,6 @@ msgstr "to learn, to study"
 
 msgid "to live"
 msgstr "to live"
-
-msgid "To pick up a winter coat"
-msgstr "To pick up a winter coat"
 
 msgid "to read"
 msgstr "to read"
@@ -680,6 +677,9 @@ msgstr "With <0>me</0>, the past ending is <1>sime</1>: <2>me elasime</2>."
 
 msgid "With <0>ta</0>, a <1>si-</1> verb ends in <2>s</2>: <3>ta elas</3>."
 msgstr "With <0>ta</0>, a <1>si-</1> verb ends in <2>s</2>: <3>ta elas</3>."
+
+msgid "With <et>ta</et>, listen to the verb ending: <et>-b</et> is usually present, <et>-s</et> or <et>-i</et> is past."
+msgstr "With <et>ta</et>, listen to the verb ending: <et>-b</et> is usually present, <et>-s</et> or <et>-i</et> is past."
 
 msgid "Word for word: simple past."
 msgstr "Word for word: simple past."

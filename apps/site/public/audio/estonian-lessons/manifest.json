@@ -30161,7 +30161,7 @@
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "lihtminevik/c-puhapaev": {
-    "text": "Tere, Mari! Kuidas sinu nädalavahetus läks? Tere, Jaan! Väga hästi. Reede õhtul sõitsin ma Tartusse õe juurde. Mida te laupäeval tegite? Hommikul käisime me turul. Ma ostsin sealt leiba ja magusaid õunu. Pärast läksime kohvikusse. Kas te sõite seal lõunat? Jah, me sõime kuuma suppi ja jõime kohvi. Seal nägin ma ka oma vana sõpra Peetrit. Me rääkisime temaga peaaegu tund aega. Aga mida sa õhtul tegid? Õhtul olime kodus. Ma lugesin uut raamatut ja läksin vara magama. Millal sa täna Tallinnasse tulid? Ma tulin rongiga kell kolm. Õde saatis mu jaama. Kodus jõin veel teed ja puhkasin. Tore, siis oli sul mõnus nädalavahetus.",
+    "text": "Tere, Mari! Kuidas sinu nädalavahetus läks? Tere, Jaan! Väga hästi. Reede õhtul sõitsin ma Tartusse õe juurde. Mida te laupäeval tegite? Hommikul käisime me turul. Ma ostsin sealt leiba ja magusaid õunu. Pärast läksime kohvikusse. Kas te sõite seal lõunat? Jah, me sõime kuuma suppi ja jõime kohvi. Seal nägin ma ka oma vana sõpra Peetrit. Me rääkisime temaga peaaegu tund aega. Aga mida sa õhtul tegid? Õhtul olime kodus. Ma lugesin uut raamatut ja läksin vara magama. Millal sa täna Tallinnasse tulid? Ma tulin rongiga kell kolm. Õde saatis mind jaama. Kodus jõin veel teed ja puhkasin. Tore, siis oli sul mõnus nädalavahetus.",
     "model": "eleven_v4",
     "turns": [
       {
@@ -30230,7 +30230,7 @@
         "voice": "xd3ufyLcuKKZZXDZO9H7",
         "sentences": [
           "Ma tulin rongiga kell kolm.",
-          "Õde saatis mu jaama.",
+          "Õde saatis mind jaama.",
           "Kodus jõin veel teed ja puhkasin."
         ]
       },

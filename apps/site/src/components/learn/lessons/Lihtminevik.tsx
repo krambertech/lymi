@@ -726,7 +726,7 @@ function useContent() {
         options: [
           { id: "sister", label: t`To see her sister` },
           { id: "work", label: t`To attend a meeting at the university` },
-          { id: "coat", label: t`To pick up a winter coat` },
+          { id: "coat", label: t`To buy a coat` },
         ],
         answer: "sister",
         line: 4,
@@ -751,7 +751,7 @@ function useContent() {
         options: [
           { id: "neighbour", label: t`Her neighbour` },
           { id: "peeter", label: t`Her old friend Peeter` },
-          { id: "brother", label: t`Her younger brother who lives nearby` },
+          { id: "brother", label: t`Her younger brother` },
         ],
         answer: "peeter",
         line: 11,
@@ -774,9 +774,9 @@ function useContent() {
         id: "return-how",
         ask: t`How did Mari travel back to Tallinn on Sunday?`,
         options: [
-          { id: "bus", label: t`By bus early` },
+          { id: "bus", label: t`By bus early in the morning` },
           { id: "car", label: t`In her sister’s red car` },
-          { id: "train", label: t`By train in the afternoon at three` },
+          { id: "train", label: t`By train at three` },
         ],
         answer: "train",
         line: 17,
@@ -784,7 +784,7 @@ function useContent() {
       {
         id: "station",
         kind: "truefalse",
-        ask: t`Mari’s sister walked her to the station.`,
+        ask: t`Mari’s sister went with her to the station.`,
         answer: true,
         line: 18,
       },

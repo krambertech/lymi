@@ -131,11 +131,11 @@ msgstr "Хлеб и сыр"
 msgid "Build the past verb from its <et>-ma</et> stem with <et>-si-</et> or its <et>-i-</et> form, matching the person."
 msgstr "Образуй прошедшее время от основы <et>-ma</et> с <et>-si-</et> или через форму на <et>-i-</et>, согласовав с лицом."
 
-msgid "By bus early"
-msgstr "Ранним автобусом"
+msgid "By bus early in the morning"
+msgstr "Автобусом рано утром"
 
-msgid "By train in the afternoon at three"
-msgstr "Поездом днём ровно в три часа"
+msgid "By train at three"
+msgstr "Поездом в три часа"
 
 msgid "Cheese and coffee"
 msgstr "Сыр и кофе"
@@ -257,8 +257,8 @@ msgstr "Своего соседа"
 msgid "Her old friend Peeter"
 msgstr "Старого друга Пеэтера"
 
-msgid "Her younger brother who lives nearby"
-msgstr "Младшего брата, который живёт рядом"
+msgid "Her younger brother"
+msgstr "Младшего брата"
 
 msgid "How did Mari travel back to Tallinn on Sunday?"
 msgstr "Как Мари вернулась в Таллин в воскресенье?"
@@ -361,9 +361,6 @@ msgstr "На прошлой неделе я много читал(а)."
 msgid "Last week, yesterday and today"
 msgstr "На прошлой неделе, вчера и сегодня"
 
-msgid "Listen to the verb ending: <et>-b</et> is present, <et>-s</et> or <et>-i</et> is past."
-msgstr "Слушай окончание глагола: <et>-b</et> — настоящее время, <et>-s</et> или <et>-i</et> — прошедшее."
-
 msgid "Listen: Mari and Jaan"
 msgstr "Послушай: Мари и Яан"
 
@@ -382,8 +379,8 @@ msgstr "Мари ходила в кино в субботу вечером."
 msgid "Mari’s Saturday"
 msgstr "Суббота Мари"
 
-msgid "Mari’s sister walked her to the station."
-msgstr "Сестра Мари проводила её до вокзала."
+msgid "Mari’s sister went with her to the station."
+msgstr "Сестра Мари пошла с ней на вокзал."
 
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Почти все. Переслушай ещё раз те, где были ошибки."
@@ -557,6 +554,9 @@ msgstr "быть"
 msgid "to buy"
 msgstr "покупать"
 
+msgid "To buy a coat"
+msgstr "Купить пальто"
+
 msgid "to come"
 msgstr "приходить"
 
@@ -580,9 +580,6 @@ msgstr "учить, учиться"
 
 msgid "to live"
 msgstr "жить"
-
-msgid "To pick up a winter coat"
-msgstr "Забрать своё зимнее пальто"
 
 msgid "to read"
 msgstr "читать"
@@ -680,6 +677,9 @@ msgstr "С <0>me</0> окончание прошедшего времени — 
 
 msgid "With <0>ta</0>, a <1>si-</1> verb ends in <2>s</2>: <3>ta elas</3>."
 msgstr "С <0>ta</0> глагол на <1>si-</1> оканчивается на <2>s</2>: <3>ta elas</3>."
+
+msgid "With <et>ta</et>, listen to the verb ending: <et>-b</et> is usually present, <et>-s</et> or <et>-i</et> is past."
+msgstr "С <et>ta</et> слушай окончание глагола: <et>-b</et> обычно значит настоящее время, <et>-s</et> или <et>-i</et> — прошедшее."
 
 msgid "Word for word: simple past."
 msgstr "Дословно: «простое прошедшее»."

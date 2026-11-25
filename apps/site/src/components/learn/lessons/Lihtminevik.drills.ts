@@ -10,7 +10,7 @@ import type { ChoiceDrill, DrillBank, FormDrill } from "../../../lib/learn/drill
 
 const SI_RULE = msg`Most verbs usually add <et>-si-</et> to the <et>-ma</et> stem (<et>lugema</et> → <et>lugesin</et>); <et>ta</et> takes only <et>-s</et> and <et>nad</et> takes <et>-sid</et>.`;
 const I_RULE = msg`Seven common verbs take <et>-i-</et> instead of <et>-si-</et>: <et>olin, tulin, läksin, tegin, nägin, sõin, jõin</et>.`;
-const WHEN_RULE = msg`Listen to the verb ending: <et>-b</et> is present, <et>-s</et> or <et>-i</et> is past.`;
+const WHEN_RULE = msg`With <et>ta</et>, listen to the verb ending: <et>-b</et> is usually present, <et>-s</et> or <et>-i</et> is past.`;
 const USE_RULE = msg`Build the past verb from its <et>-ma</et> stem with <et>-si-</et> or its <et>-i-</et> form, matching the person.`;
 
 const WHEN_LABELS = {

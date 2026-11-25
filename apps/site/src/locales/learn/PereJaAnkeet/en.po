@@ -34,8 +34,8 @@ msgstr "<0>Vanus</0> and <1>telefoninumber</1> are numbers."
 msgid "<et>Minu</et> is my; <et>mina</et> is I."
 msgstr "<et>Minu</et> is my; <et>mina</et> is I."
 
-msgid "11 exercises"
-msgstr "11 exercises"
+msgid "12 exercises"
+msgstr "12 exercises"
 
 msgid "25 minutes"
 msgstr "25 minutes"

@@ -34,8 +34,8 @@ msgstr "<0>Vanus</0> и <1>telefoninumber</1> — это числа."
 msgid "<et>Minu</et> is my; <et>mina</et> is I."
 msgstr "<et>Minu</et> — «мой, моя», а <et>mina</et> — «я»."
 
-msgid "11 exercises"
-msgstr "11 упражнений"
+msgid "12 exercises"
+msgstr "12 упражнений"
 
 msgid "25 minutes"
 msgstr "25 минут"
@@ -224,7 +224,7 @@ msgid "husband or wife"
 msgstr "муж или жена"
 
 msgid "I have"
-msgstr "Иметь"
+msgstr "у меня есть"
 
 msgid "I have four brothers."
 msgstr "У меня четыре брата."

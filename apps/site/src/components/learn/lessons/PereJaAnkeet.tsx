@@ -276,7 +276,7 @@ export function PereJaAnkeetLesson() {
   const familyKeys: KeyItem[] = FAMILY_KEYS.map(({ word, said }) => ({
     label: word,
     sub: <span lang={i18n.locale}>{i18n._(FAMILY_MEANS[word as Family])}</span>,
-    src: src(word),
+    src: src(said),
     detail: {
       title: <span lang="et">{said}</span>,
       tip: i18n._(WITH_MEANS(said)),
@@ -642,7 +642,7 @@ export function PereJaAnkeetLesson() {
       }
       facts={[
         <Trans key="m">25 minutes</Trans>,
-        <Trans key="q">11 exercises</Trans>,
+        <Trans key="q">12 exercises</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[

@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
-msgid "<0/> has the <1>-vad</1> of they from lesson {present}, and <2/> is the plural of lesson {plural}. The person never changes the verb: <3/> is they like the apple. Switch between One thing and More than one, and tap a line to hear it."
-msgstr "У <0/> окончание <1>-vad</1>, как у «они» в уроке {present}, а <2/> — множественное число из урока {plural}. От того, кому нравится, глагол не меняется: <3/> — им нравится яблоко. Переключайся между «Что-то одно» и «Несколько»; нажми на строку, чтобы её услышать."
+msgid "<0/> has the <1>-vad</1> of they from lesson {present}, and <2/> is the plural of lesson {plural}. The person doesn’t change the verb: <3/> is they like the apple. Switch between One thing and More than one, and tap a line to hear it."
+msgstr "У <0/> то же <1>-vad</1>, что и у «они» из урока {present}, а <2/> — множественное число из урока {plural}. Лицо глагол не меняет: <3/> — «им нравится яблоко». Переключай «Что-то одно» и «Несколько» и нажимай на строку, чтобы её услышать."
 
 msgid "<0/> means gladly. <1>Jah, hea meelega!</1> says yes to an invitation."
 msgstr "<0/> значит «с удовольствием». <1>Jah, hea meelega!</1> — так соглашаются на приглашение."
@@ -25,20 +25,26 @@ msgstr "<0>Ei meeldi</0> — и когда что-то одно, и когда �
 msgid "<0>Kassid</0> is more than one, so it’s <1>meeldivad</1>."
 msgstr "<0>Kassid</0> — множественное число, поэтому нужно <1>meeldivad</1>."
 
+msgid "<0>Kassid</0> is more than one, so the verb is <1>meeldivad</1>."
+msgstr "<0>Kassid</0> — это несколько, поэтому глагол должен быть <1>meeldivad</1>."
+
 msgid "<0>Kassid</0> is more than one: <1>meeldivad</1>."
 msgstr "<0>Kassid</0> — множественное число: <1>meeldivad</1>."
 
 msgid "<0>Kohv</0> is one thing, so it’s <1>meeldib</1>."
 msgstr "<0>Kohv</0> — что-то одно, поэтому нужно <1>meeldib</1>."
 
+msgid "<0>Meeldib</0> and <1>tahan</1> from lesson {modals} both take a verb’s <2>-da</2> form, but they say different things. <3/> says you enjoy reading. With <4>tahan</4> the person is the one who acts: <5/>, I want to read."
+msgstr "<0>Meeldib</0> и <1>tahan</1> из урока {modals} берут глагол в форме на <2>-da</2>, но говорят о разном. <3/> значит, что тебе нравится читать. С <4>tahan</4> человек сам действует: <5/>, я хочу читать."
+
 msgid "<0>Meeldib</0> for one thing"
 msgstr "<0>Meeldib</0>, когда что-то одно"
 
-msgid "<0>Meeldib</0> goes with one thing or a verb, <1>meeldivad</1> with more than one thing: <2>Mulle meeldib lugeda. Mulle meeldivad kassid.</2>"
-msgstr "<0>Meeldib</0> — когда нравится что-то одно или действие, <1>meeldivad</1> — когда несколько: <2>Mulle meeldib lugeda. Mulle meeldivad kassid.</2>"
-
 msgid "<0>Meeldib</0> or <1>meeldivad</1>"
 msgstr "<0>Meeldib</0> или <1>meeldivad</1>"
+
+msgid "<0>Meeldib</0> usually goes with one thing or a verb, <1>meeldivad</1> with more than one thing: <2>Mulle meeldib lugeda. Mulle meeldivad kassid.</2>"
+msgstr "<0>Meeldib</0> обычно стоит, когда что-то одно или глагол, а <1>meeldivad</1> — когда несколько: <2>Mulle meeldib lugeda. Mulle meeldivad kassid.</2>"
 
 msgid "<0>Meeldivad</0> for more than one"
 msgstr "<0>Meeldivad</0>, когда несколько"
@@ -52,14 +58,53 @@ msgstr "<0>Mulle meeldib</0> или <1>mulle meeldivad</1>?"
 msgid "<0>Ujuda</0> is a verb, and a verb takes <1>meeldib</1>."
 msgstr "<0>Ujuda</0> — глагол, а с глаголом всегда <1>meeldib</1>."
 
-msgid "12 minutes"
-msgstr "12 минут"
+msgid "<et>Ei meeldi</et> is the same for one thing or more than one."
+msgstr "<et>Ei meeldi</et> одинаково и для одного, и для нескольких."
 
-msgid "3 quizzes, a message and a conversation"
-msgstr "3 теста, записка и разговор"
+msgid "<et>Ma tahaksin</et> is a polite way to say <et>ma tahan</et>."
+msgstr "<et>Ma tahaksin</et> — вежливый способ сказать <et>ma tahan</et>."
+
+msgid "<et>Ma tahan</et>: I choose to do it."
+msgstr "<et>Ma tahan</et>: я хочу это делать."
+
+msgid "<et>Meeldib</et> or <et>meeldivad</et>"
+msgstr "<et>Meeldib</et> или <et>meeldivad</et>"
+
+msgid "<et>Mulle meeldib</et>: the thing or the action pleases me."
+msgstr "<et>Mulle meeldib</et>: мне нравится вещь или занятие."
+
+msgid "<et>Sulle</et>, the <et>-le</et> form of <et>sina</et>, and <et>meeldib</et> for one place."
+msgstr "<et>Sulle</et> — форма на <et>-le</et> от <et>sina</et>, а <et>meeldib</et> — потому что место одно."
+
+msgid "20 minutes"
+msgstr "20 минут"
+
+msgid "A feeling takes the <et>-l</et> form, as having does: <et>mul on</et>, <et>tal on</et>."
+msgstr "Чувство выражает форма на <et>-l</et>, как и «есть»: <et>mul on</et>, <et>tal on</et>."
 
 msgid "A friend you miss is coming to visit."
 msgstr "К тебе в гости едет друг, по которому ты скучаешь."
+
+msgid "A verb after <et>meeldib</et> and <et>tahan</et>"
+msgstr "Глагол после <et>meeldib</et> и <et>tahan</et>"
+
+msgid "After <0>ei</0>, <1>meeldi</1> stays the same for one thing or more: <2>ei meeldi koerad</2>."
+msgstr "После <0>ei</0> слово <1>meeldi</1> не меняется, одно это или несколько: <2>ei meeldi koerad</2>."
+
+msgid "After <0>meeldib</0>, a verb takes its <1>-da</1> form: <2>meeldib lugeda</2>."
+msgstr "После <0>meeldib</0> глагол стоит в форме на <1>-da</1>: <2>meeldib lugeda</2>."
+
+msgid "After <et>meeldib</et> or <et>tahan</et>, a verb takes its <et>-da</et> form."
+msgstr "После <et>meeldib</et> или <et>tahan</et> глагол стоит в форме на <et>-da</et>."
+
+msgid "All six found and fixed."
+msgstr "Все шесть найдены и исправлены."
+
+msgid "All six, each with the right person form and the right verb."
+msgstr "Все шесть: в каждом верная форма лица и верный глагол."
+
+msgid "All six. You heard <0>meeldib</0> and <1>tahan</1> apart."
+msgstr "Все шесть. Ты различаешь на слух <0>meeldib</0> и <1>tahan</1>."
 
 msgid "All six. You knew each person by their <0>-le</0> form."
 msgstr "Все шесть. Ты узнаёшь каждое лицо по форме на <0>-le</0>."
@@ -70,23 +115,41 @@ msgstr "Тебе холодно?"
 msgid "As lesson {infinitives} showed, <0>meeldib</0> takes a verb’s <1>-da</1> form: <2/>, I like reading."
 msgstr "Как показал урок {infinitives}, после <0>meeldib</0> глагол стоит в форме на <1>-da</1>: <2/>, мне нравится читать."
 
-msgid "Ask with <0>kas</0> or <1>kellele</1>: <2>Kas sulle meeldib Tallinn? Kellele meeldib kohv?</2>"
-msgstr "Спрашивай с <0>kas</0> или <1>kellele</1>: <2>Kas sulle meeldib Tallinn? Kellele meeldib kohv?</2>"
+msgid "Bored"
+msgstr "Ему скучно"
 
 msgid "cats"
 msgstr "кошки"
 
+msgid "Cats and dogs"
+msgstr "Кошки и собаки"
+
+msgid "Check the person form, <0>meeldib</0> or <1>meeldivad</1>, and the <2>-da</2> form, then try again."
+msgstr "Проверь форму лица, <0>meeldib</0> или <1>meeldivad</1> и форму на <2>-da</2>, а потом попробуй ещё раз."
+
 msgid "Choosing the verb"
 msgstr "Какой глагол выбрать"
 
+msgid "Coffee"
+msgstr "Кофе"
+
+msgid "Coffee and cake"
+msgstr "Кофе и пирожное"
+
 msgid "Coffee tastes good to me."
 msgstr "Мне нравится вкус кофе."
+
+msgid "Cold"
+msgstr "Ему холодно"
 
 msgid "Do you like cats?"
 msgstr "Тебе нравятся кошки?"
 
 msgid "Do you like Tallinn?"
 msgstr "Тебе нравится Таллин?"
+
+msgid "Do you like Tallinn? You ask one friend."
+msgstr "Тебе нравится Таллин? Ты спрашиваешь одного друга."
 
 msgid "Does it taste good to you?"
 msgstr "Тебе вкусно?"
@@ -97,6 +160,9 @@ msgstr "Не нравится"
 
 msgid "doesn’t please"
 msgstr "не нравится"
+
+msgid "Each sentence has one wrong word, the kind learners often write: the <0>-l</0> form for liking, one thing for more than one, or a verb that isn’t in its <1>-da</1> form. Tap it, then write it right."
+msgstr "В каждом предложении одно неправильное слово — из тех, что часто пишут ученики: форма на <0>-l</0> вместо формы для «нравится», одно вместо нескольких или глагол не в форме на <1>-da</1>. Нажми на него и напиши правильно."
 
 msgid "Estonian says I like coffee the other way round: <0/>. Word for word, it’s “to me pleases coffee”. The coffee does the pleasing, so <1/> ends in <2>-b</2>, as for he or she in lesson {present}."
 msgstr "По-эстонски «мне нравится» строят так же, как по-русски: <0/>. Дословно — «мне нравится кофе». Нравится кофе, поэтому <1/> оканчивается на <2>-b</2>, как для «он или она» в уроке {present}."
@@ -110,8 +176,17 @@ msgstr "Чтобы сказать, что скучно, нужна форма н
 msgid "Feeling cold takes the <0>-l</0> form, as having does: <1>mul on külm</1>."
 msgstr "Чтобы сказать, что холодно, нужна форма на <0>-l</0>, как и для «у меня есть»: <1>mul on külm</1>."
 
+msgid "Feelings with the <et>-l</et> form"
+msgstr "Чувства с формой на <et>-l</et>"
+
 msgid "Fill the gaps: Mari’s message"
 msgstr "Заполни пропуски: записка Мари"
+
+msgid "Find and fix the mistake"
+msgstr "Найди и исправь ошибку"
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
 
 msgid "For food and drink there’s also <0/>, from <1>maitsma</1>, to taste. It takes the <2>-le</2> form too: <3/>, coffee tastes good to me. <4/>? asks whether you like what you’re eating."
 msgstr "О еде и напитках говорят ещё <0/>, от <1>maitsma</1>, «быть по вкусу». С ним тоже форма на <2>-le</2>: <3/>, мне нравится вкус кофе. <4/>? — так спрашивают, вкусно ли тебе то, что ты ешь."
@@ -143,8 +218,20 @@ msgstr "От tema, «он или она»."
 msgid "gladly"
 msgstr "с удовольствием"
 
+msgid "Go back to the table of who likes it and the sections on one thing or more, then try again."
+msgstr "Вернись к таблице о том, кому что нравится, и к разделам про одно и несколько, а потом попробуй ещё раз."
+
 msgid "Has"
 msgstr "Есть"
+
+msgid "He doesn’t like swimming."
+msgstr "Ему не нравится плавать."
+
+msgid "He has no money."
+msgstr "У него нет денег."
+
+msgid "He has to work."
+msgstr "Ему нужно работать."
 
 msgid "He or she"
 msgstr "Он или она"
@@ -177,11 +264,20 @@ msgstr "Ему или ей нравится кошка."
 msgid "He or she likes the dog."
 msgstr "Ему или ей нравится собака."
 
+msgid "He or she wants to swim."
+msgstr "Он или она хочет плавать."
+
 msgid "Hear a sentence and pick who likes the thing. Listen for the word that ends in <0>-le</0>."
 msgstr "Послушай предложение и выбери, кому нравится. Слушай слово, которое оканчивается на <0>-le</0>."
 
 msgid "Hearing who likes it"
 msgstr "Кому нравится: на слух"
+
+msgid "How does Mart feel at the start?"
+msgstr "Что чувствует Март в начале?"
+
+msgid "I"
+msgstr "я"
 
 msgctxt "person"
 msgid "I"
@@ -206,6 +302,9 @@ msgstr "Мне нравятся кошки."
 msgid "I like coffee."
 msgstr "Мне нравится кофе."
 
+msgid "I like it"
+msgstr "Мне нравится"
+
 msgid "I like reading."
 msgstr "Мне нравится читать."
 
@@ -214,6 +313,18 @@ msgstr "Мне нравится Тарту."
 
 msgid "I like the cat."
 msgstr "Мне нравится кошка."
+
+msgid "I want to"
+msgstr "Я хочу"
+
+msgid "I want to read."
+msgstr "Я хочу читать."
+
+msgid "I’d like coffee. A polite request."
+msgstr "Мне бы кофе. Вежливая просьба."
+
+msgid "I’d like coffee. You are ordering politely."
+msgstr "Мне бы кофе. Ты вежливо заказываешь."
 
 msgid "I’m bored."
 msgstr "Мне скучно."
@@ -227,11 +338,23 @@ msgstr "Я рад, я рада."
 msgid "I’m hot."
 msgstr "Мне жарко."
 
+msgid "I’m sorry."
+msgstr "Мне жаль."
+
 msgid "I’m sorry. It’s a pity."
 msgstr "Мне жаль."
 
 msgid "I’m tired."
 msgstr "Я устал, я устала."
+
+msgid "In Pärnu"
+msgstr "В Пярну"
+
+msgid "In Tallinn"
+msgstr "В Таллине"
+
+msgid "In Tartu"
+msgstr "В Тарту"
 
 msgid "It’s −15 °C outside."
 msgstr "На улице −15 °C."
@@ -245,11 +368,35 @@ msgstr "День холодный, а ты любишь кофе и кошек. 
 msgid "It’s the same for other people: <0/>, he or she is bored. <1/>? asks whether you’re cold. Tap a feeling to hear it."
 msgstr "С другими людьми так же: <0/>, ему или ей скучно. <1/>? — так спрашивают, холодно ли тебе. Нажми на чувство, чтобы его услышать."
 
+msgid "its -da form"
+msgstr "форма на -da"
+
+msgid "Jaan"
+msgstr "Яан"
+
 msgid "Jah, hea meelega! Yes, gladly."
 msgstr "Jah, hea meelega! Да, с удовольствием."
 
+msgid "Kati"
+msgstr "Кати"
+
+msgid "Kati and Mari have a cat and a dog."
+msgstr "У Кати и Мари есть кот и собака."
+
+msgid "Kati likes writing."
+msgstr "Кати нравится писать."
+
+msgid "Kati writes"
+msgstr "Кати пишет"
+
+msgid "Kati writes to her friend Anu. Read the message, then answer the questions."
+msgstr "Кати пишет своей подруге Ану. Прочитай сообщение и ответь на вопросы."
+
 msgid "Liis"
 msgstr "Лийс"
+
+msgid "Liis calls Mart on Friday. They talk about what they like and where to meet. Read the questions first. You can play the recording twice, as in the A2 exam."
+msgstr "В пятницу Лийс звонит Марту. Они говорят о том, что им нравится, и о том, где встретиться. Сначала прочитай вопросы. Запись можно прослушать дважды, как на экзамене A2."
 
 msgid "Liis invites you out. Each reply says how you feel or what you like; pick the one that fits."
 msgstr "Лийс зовёт тебя куда-нибудь пойти. Каждый ответ говорит, что ты чувствуешь или что тебе нравится; выбери подходящий."
@@ -261,14 +408,35 @@ msgstr "Нравится"
 msgid "Likes or doesn’t like"
 msgstr "Нравится или нет"
 
+msgid "Likes or wants to?"
+msgstr "Нравится или хочет?"
+
+msgid "Liking and wanting are different: <0>Mulle meeldib lugeda</0> says you enjoy it, <1>Ma tahan lugeda</1> says you want to do it."
+msgstr "Любить и хотеть — разное: <0>Mulle meeldib lugeda</0> значит, что тебе это нравится, а <1>Ma tahan lugeda</1> — что ты хочешь это сделать."
+
+msgid "Liking or wanting"
+msgstr "Нравится или хочется"
+
 msgid "Liking takes the <0>-le</0> form, and so does not liking: <1>mulle ei meeldi</1>."
 msgstr "«Нравится» — с формой на <0>-le</0>, и «не нравится» тоже: <1>mulle ei meeldi</1>."
 
 msgid "Liking takes the <0>-le</0> form: <1>mulle meeldib</1>, not <2>mul</2>."
 msgstr "«Нравится» — с формой на <0>-le</0>: <1>mulle meeldib</1>, а не <2>mul</2>."
 
+msgid "Liking takes the <0>-le</0> form: <1>mulle meeldib</1>. The <2>-l</2> form is for having and feelings."
+msgstr "Для «нравится» нужна форма на <0>-le</0>: <1>mulle meeldib</1>. Форма на <2>-l</2> — для «есть» и для чувств."
+
 msgid "Liking to do something"
 msgstr "Нравится что-то делать"
+
+msgid "Listen for the person: <0>mulle</0> likes, <1>ma</1> wants. Then try again."
+msgstr "Слушай, кто говорит: <0>mulle</0> — нравится, <1>ma</1> — хочет. Потом попробуй ещё раз."
+
+msgid "Listen: Liis and Mart"
+msgstr "Послушай: Лийс и Март"
+
+msgid "Listen: plans for the weekend"
+msgstr "Послушай: планы на выходные"
 
 msgid "Listening only, no microphone"
 msgstr "Только на слух, без микрофона"
@@ -276,8 +444,20 @@ msgstr "Только на слух, без микрофона"
 msgid "Making plans"
 msgstr "Договариваемся"
 
+msgid "Mari"
+msgstr "Мари"
+
+msgid "Mari likes swimming."
+msgstr "Мари нравится плавать."
+
 msgid "Mari writes to Jaan. Fill each gap: the <0>-l</0> form for a feeling, the <1>-le</1> form for liking and for “to me”, and <2>meeldib</2> or <3>meeldivad</3> for what she likes."
 msgstr "Мари пишет Яану. Заполни каждый пропуск: форма на <0>-l</0> — для чувств, форма на <1>-le</1> — для «нравится» и «кому», а <2>meeldib</2> или <3>meeldivad</3> — в зависимости от того, что ей нравится."
+
+msgid "Mart"
+msgstr "Март"
+
+msgid "Mart likes coffee."
+msgstr "Марту нравится кофе."
 
 msgid "Match each feeling to when you’d say it."
 msgstr "Соедини каждое чувство с ситуацией, в которой так говорят."
@@ -289,8 +469,20 @@ msgstr "Несколько"
 msgid "more than one thing"
 msgstr "несколько"
 
-msgid "More than one thing takes <0>meeldivad</0>: <1>Mulle meeldivad koerad.</1>"
-msgstr "Когда нравится несколько, нужно <0>meeldivad</0>: <1>Mulle meeldivad koerad.</1>"
+msgid "More than one thing"
+msgstr "Несколько"
+
+msgid "More than one thing usually takes <0>meeldivad</0>: <1>Mulle meeldivad koerad.</1>"
+msgstr "Когда несколько, обычно нужно <0>meeldivad</0>: <1>Mulle meeldivad koerad.</1>"
+
+msgid "More than one thing usually takes <et>meeldivad</et>."
+msgstr "Когда несколько, обычно нужно <et>meeldivad</et>."
+
+msgid "Most of them. Check the forms you missed above."
+msgstr "Большинство верно. Проверь выше формы, где была ошибка."
+
+msgid "Most of them. Look again at the ones you missed."
+msgstr "Большинство верно. Ещё раз посмотри на те, где была ошибка."
 
 msgid "Mulle ei meeldi: I don’t like it. On its own, it answers no."
 msgstr "Mulle ei meeldi: мне не нравится. Отдельно это ответ «нет»."
@@ -307,8 +499,11 @@ msgstr "Почти. Переслушай те, где были ошибки."
 msgid "No, I don’t."
 msgstr "Нет, у меня нет."
 
-msgid "Not liking is <0>ei meeldi</0>, for one thing or more: <1>Mulle ei meeldi koerad.</1>"
-msgstr "«Не нравится» — это <0>ei meeldi</0>, и для одного, и для нескольких: <1>Mulle ei meeldi koerad.</1>"
+msgid "Not liking is <0>ei meeldi</0>, for one thing or more: <1>Mulle ei meeldi koerad.</1> You usually ask with <2>kas</2> or <3>kellele</3>: <4>Kas sulle meeldib Tallinn?</4>"
+msgstr "«Не нравится» — это <0>ei meeldi</0>, и для одного, и для нескольких: <1>Mulle ei meeldi koerad.</1> Спрашивают обычно с <2>kas</2> или <3>kellele</3>: <4>Kas sulle meeldib Tallinn?</4>"
+
+msgid "Not liking: <et>ei meeldi</et>"
+msgstr "«Не нравится»: <et>ei meeldi</et>"
 
 msgid "One thing"
 msgstr "Что-то одно"
@@ -322,8 +517,11 @@ msgstr "Одно или несколько"
 msgid "one thing, or a verb"
 msgstr "что-то одно или действие"
 
-msgid "One thing, or a verb in its <0>-da</0> form, takes <1>meeldib</1>: <2>Mulle meeldib kohv. Mulle meeldib lugeda.</2>"
-msgstr "Когда нравится что-то одно или глагол в форме на <0>-da</0>, нужно <1>meeldib</1>: <2>Mulle meeldib kohv. Mulle meeldib lugeda.</2>"
+msgid "One thing, or a verb in its <0>-da</0> form, usually takes <1>meeldib</1>: <2>Mulle meeldib kohv. Mulle meeldib lugeda.</2>"
+msgstr "Что-то одно или глагол в форме на <0>-da</0> обычно требует <1>meeldib</1>: <2>Mulle meeldib kohv. Mulle meeldib lugeda.</2>"
+
+msgid "One thing, or a verb, usually takes <et>meeldib</et>."
+msgstr "Что-то одно или глагол обычно требует <et>meeldib</et>."
 
 msgctxt "meeldima"
 msgid "please"
@@ -334,6 +532,18 @@ msgstr "нравится"
 
 msgid "Put each word under the verb it takes after <0>mulle</0>: <1>meeldib</1> for one thing or a verb, <2>meeldivad</2> for more than one thing."
 msgstr "Для каждого слова выбери, что будет после <0>mulle</0>: <1>meeldib</1>, когда что-то одно или действие, или <2>meeldivad</2>, когда несколько."
+
+msgid "Read: Kati’s message"
+msgstr "Прочитай: сообщение Кати"
+
+msgid "Reading"
+msgstr "Чтение"
+
+msgid "Say it in Estonian"
+msgstr "Скажи по-эстонски"
+
+msgid "say no"
+msgstr "с отрицанием"
 
 msgid "Saying how you feel"
 msgstr "Как ты себя чувствуешь"
@@ -347,11 +557,20 @@ msgstr "Кому что нравится"
 msgid "Some feelings take the <0>-l</0> form, as having does: <1>Mul on külm.</1> <2>Mul on hea meel.</2>"
 msgstr "Некоторые чувства берут форму на <0>-l</0>, как и «у меня есть»: <1>Mul on külm.</1> <2>Mul on hea meel.</2>"
 
+msgid "Swimming"
+msgstr "Плавание"
+
+msgid "Swimming in Pärnu"
+msgstr "Плавание в Пярну"
+
 msgid "Talk: making plans with Liis"
 msgstr "Разговор: договариваемся с Лийс"
 
 msgid "Tap a form to hear it in a sentence."
 msgstr "Нажми на форму, чтобы услышать её в предложении."
+
+msgid "Tap a line to hear it, then tell the two apart by ear."
+msgstr "Нажми на строку, чтобы её услышать, а потом различай эти два на слух."
 
 msgid "Tap the forms in the Likes column above once more, then try again."
 msgstr "Ещё раз нажми на формы в столбце «Нравится» выше, а потом попробуй снова."
@@ -371,20 +590,26 @@ msgstr "Так ты говоришь, что тебе нравится холо�
 msgid "That says you’re sorry. Liis asked you to come."
 msgstr "Так ты говоришь, что тебе жаль. А Лийс звала тебя прийти."
 
+msgid "The <et>-le</et> form for who likes it"
+msgstr "Форма на <et>-le</et> для того, кому нравится"
+
+msgid "the form for who likes it"
+msgstr "форма для того, кому нравится"
+
 msgid "The same whoever likes it: <0>mulle</0>, <1>talle</1>, <2>meile</2> or <3>neile</3>."
 msgstr "Неважно, кому нравится: <0>mulle</0>, <1>talle</1>, <2>meile</2> или <3>neile</3>."
 
-msgid "The thing is plural, so the verb takes <0>-vad</0>."
-msgstr "Того, что нравится, несколько, поэтому у глагола <0>-vad</0>."
+msgid "The thing is plural, so the verb usually takes <0>-vad</0>."
+msgstr "Предметов несколько, поэтому глагол обычно получает <0>-vad</0>."
 
-msgid "The verb goes with the thing you like, so it changes when there’s more than one. <0/> is I like the cat, and <1/> is I like cats."
-msgstr "Глагол согласуется с тем, что нравится, поэтому меняется, когда этого несколько. <0/> — мне нравится кошка, а <1/> — мне нравятся кошки."
+msgid "The verb goes with the thing you like, so it usually changes when there’s more than one. <0/> is I like the cat, and <1/> is I like cats."
+msgstr "Глагол согласуется с тем, что нравится, поэтому обычно меняется, когда предметов несколько. <0/> — «мне нравится кот», а <1/> — «мне нравятся коты»."
 
 msgid "There’s nothing to do all evening."
 msgstr "Весь вечер нечего делать."
 
-msgid "These feelings take the <0>-l</0> form of lesson {mulOn}, as having does: <1/>, I’m cold. Word for word, it’s “at me is cold”, with <2>mul</2>, not <3>mulle</3>. Other feelings use <4>ma olen</4>, as in lesson {pronouns}: <5/>, I’m tired."
-msgstr "С этими чувствами — форма на <0>-l</0> из урока {mulOn}, как и с «у меня есть»: <1/>, мне холодно. Дословно — «у меня холодно»: <2>mul</2>, а не <3>mulle</3>, хотя по-русски говорим «мне». Другие чувства — с <4>ma olen</4>, как в уроке {pronouns}: <5/>, я устал."
+msgid "These feelings take the <0>-l</0> form of lesson {mulOn}, as having does: <1/>, I’m cold. Word for word, it’s “at me is cold”, with <2>mul</2>, not <3>mulle</3>. Other feelings usually use <4>ma olen</4>, as in lesson {pronouns}: <5/>, I’m tired."
+msgstr "Эти чувства берут форму на <0>-l</0> из урока {mulOn}, как и «есть»: <1/>, мне холодно. Дословно это «у меня холодно», и тут <2>mul</2>, а не <3>mulle</3>. Другие состояния обычно передают через <4>ma olen</4>, как в уроке {pronouns}: <5/>, я устал, я устала."
 
 msgid "They"
 msgstr "Они"
@@ -417,8 +642,17 @@ msgstr "Им нравится яблоко."
 msgid "They like the cat."
 msgstr "Им нравится кошка."
 
-msgid "To ask, start with <0>kas</0>, as in lesson {questions}, and answer with the verb alone: <1/>? <2/>. To ask who, use <3/>, the <4>-le</4> form of <5/>: <6/>? <7/>!"
-msgstr "Вопрос начинай с <0>kas</0>, как в уроке {questions}, а отвечай одним глаголом: <1/>? <2/>. Чтобы спросить «кому?», бери <3/>, форму на <4>-le</4> от <5/>: <6/>? <7/>!"
+msgid "They want to talk."
+msgstr "Они хотят разговаривать."
+
+msgid "Tired"
+msgstr "Он устал"
+
+msgid "To ask politely, people say <0/>, I’d like coffee. It’s a would form, and lesson {conditional} explains it."
+msgstr "Чтобы вежливо попросить, говорят <0/> — «мне бы кофе». Это форма условного наклонения, её объясняет урок {conditional}."
+
+msgid "To ask yes or no, you usually start with <0>kas</0>, as in lesson {questions}, and usually answer with the verb alone: <1/>? <2/>. To ask who, use <3/>, the <4>-le</4> form of <5/>: <6/>? <7/>!"
+msgstr "Чтобы спросить «да или нет», обычно начинают с <0>kas</0>, как в уроке {questions}, а отвечают чаще всего одним глаголом: <1/>? <2/>. Чтобы спросить «кому», говорят <3/> — форма на <4>-le</4> от <5/>: <6/>? <7/>!"
 
 msgid "to him or her"
 msgstr "ему или ей"
@@ -429,14 +663,20 @@ msgstr "мне"
 msgid "to please"
 msgstr "нравиться"
 
-msgid "To say who likes something, put the person in the <0>-le</0> form: <1>Mulle meeldib kohv.</1>"
-msgstr "Чтобы сказать, кому что-то нравится, поставь местоимение в форму на <0>-le</0>: <1>Mulle meeldib kohv.</1>"
+msgid "to read"
+msgstr "читать"
 
-msgid "To say you don’t like something, put <0>ei</0> before the verb and drop its ending, as in lesson {negation}: <1/>. It’s <2/> for more than one thing too: <3/>."
-msgstr "Чтобы сказать, что что-то не нравится, поставь <0>ei</0> перед глаголом и убери окончание, как в уроке {negation}: <1/>. Когда этого несколько, тоже <2/>: <3/>."
+msgid "To say who likes something, use the <0>-le</0> form of the person: <1>Mulle meeldib kohv.</1>"
+msgstr "Чтобы сказать, кому что-то нравится, возьми форму лица на <0>-le</0>: <1>Mulle meeldib kohv.</1>"
 
-msgid "To say you like something, put the person in the <0>-le</0> form before <1>meeldib</1>: <2>Mulle meeldib kohv</2> is I like coffee. Some feelings take the <3>-l</3> form instead: <4>Mul on külm</4>, I’m cold."
-msgstr "Чтобы сказать, что тебе что-то нравится, поставь местоимение в форму на <0>-le</0> перед <1>meeldib</1>: <2>Mulle meeldib kohv</2> — мне нравится кофе. А некоторые чувства берут форму на <3>-l</3>: <4>Mul on külm</4>, мне холодно."
+msgid "To say you don’t like something, use <0>ei</0> with the verb without its ending, as in lesson {negation}: <1/>. It’s <2/> for more than one thing too: <3/>."
+msgstr "Чтобы сказать, что тебе что-то не нравится, используй <0>ei</0> и глагол без окончания, как в уроке {negation}: <1/>. Для нескольких предметов тоже <2/>: <3/>."
+
+msgid "To say you like something, use the <0>-le</0> form of the person with <1>meeldib</1>: <2>Mulle meeldib kohv</2> is I like coffee. Some feelings take the <3>-l</3> form instead: <4>Mul on külm</4>, I’m cold."
+msgstr "Чтобы сказать, что тебе что-то нравится, возьми форму лица на <0>-le</0> вместе с <1>meeldib</1>: <2>Mulle meeldib kohv</2> — «мне нравится кофе». Некоторые чувства вместо этого берут форму на <3>-l</3>: <4>Mul on külm</4> — «мне холодно»."
+
+msgid "to speak, to talk"
+msgstr "говорить, разговаривать"
 
 msgid "to them"
 msgstr "им"
@@ -452,6 +692,12 @@ msgstr "вам: нескольким людям или вежливо"
 
 msgid "to you, one person"
 msgstr "тебе"
+
+msgid "Typed sentences, a talk, a listening and a reading"
+msgstr "Письменные предложения, разговор, аудирование и чтение"
+
+msgid "Wants to"
+msgstr "Хочет"
 
 msgid "We"
 msgstr "Мы"
@@ -484,14 +730,44 @@ msgstr "Нам нравится книга."
 msgid "We like the cat."
 msgstr "Нам нравится кошка."
 
+msgid "What does Kati ask Anu?"
+msgstr "О чём Кати спрашивает Ану?"
+
+msgid "What does Kati want to learn well? Write two words in Estonian."
+msgstr "Что Кати хочет хорошо выучить? Напиши два слова по-эстонски."
+
+msgid "What does Kati write?"
+msgstr "Что пишет Кати?"
+
+msgid "What does Mart say he likes?"
+msgstr "Что, по его словам, нравится Марту?"
+
 msgid "When would you say it?"
 msgstr "Когда так говорят?"
 
 msgid "When you’d say it"
 msgstr "Когда это сказать"
 
+msgid "Where do Kati and Mari live now?"
+msgstr "Где теперь живут Кати и Мари?"
+
+msgid "Where does Liis go on Sunday? Write one word in Estonian."
+msgstr "Куда Лийс едет в воскресенье? Напиши одно слово по-эстонски."
+
+msgid "Whether she is cold"
+msgstr "Холодно ли ей"
+
+msgid "Whether she likes coffee"
+msgstr "Нравится ли ей кофе"
+
+msgid "Whether she likes Tallinn"
+msgstr "Нравится ли ей Таллин"
+
 msgid "who"
 msgstr "кто"
+
+msgid "Who doesn’t like dogs?"
+msgstr "Кому не нравятся собаки?"
 
 msgid "Who has and who likes, for each person"
 msgstr "У кого есть и кому нравится, для каждого лица"
@@ -499,14 +775,32 @@ msgstr "У кого есть и кому нравится, для каждого
 msgid "Who likes coffee?"
 msgstr "Кому нравится кофе?"
 
+msgid "Who likes dogs?"
+msgstr "Кому нравятся собаки?"
+
+msgid "Who likes it takes the <et>-le</et> form: <et>mulle</et>, <et>sulle</et>, <et>talle</et>, <et>meile</et>, <et>teile</et>, <et>neile</et>."
+msgstr "Тот, кому нравится, стоит в форме на <et>-le</et>: <et>mulle</et>, <et>sulle</et>, <et>talle</et>, <et>meile</et>, <et>teile</et>, <et>neile</et>."
+
 msgid "Who likes it?"
 msgstr "Кому нравится?"
 
-msgid "With a verb it’s always <0>meeldib</0>, whoever likes it: <1/>, they like talking. Tap a line to hear it."
-msgstr "С глаголом всегда <0>meeldib</0>, кому бы ни нравилось: <1/>, им нравится разговаривать. Нажми на строку, чтобы её услышать."
+msgid "Who likes what?"
+msgstr "Кто что любит?"
+
+msgid "Why doesn’t Mart go to Pärnu?"
+msgstr "Почему Март не едет в Пярну?"
+
+msgid "With a verb it’s <0>meeldib</0>, whoever likes it: <1/>, they like talking. Tap a line to hear it."
+msgstr "С глаголом стоит <0>meeldib</0>, кто бы ни любил: <1/>, «им нравится разговаривать». Нажми на строку, чтобы её услышать."
 
 msgid "With the -le form of a person, it says what they like."
 msgstr "С формой на -le того, кому нравится: mulle meeldib, мне нравится."
+
+msgid "Write each sentence in Estonian. Use the <0>-le</0> form of the person to say who likes it, and a verb in its <1>-da</1> form after <2>meeldib</2> or <3>tahan</3>."
+msgstr "Напиши каждое предложение по-эстонски. Чтобы сказать, кому нравится, возьми форму лица на <0>-le</0>, а после <2>meeldib</2> или <3>tahan</3> ставь глагол в форме на <1>-da</1>."
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"
 
 msgid "Write to me: the <0>-le</0> form says to whom, as in <1>mulle meeldib</1>."
 msgstr "Напиши мне: форма на <0>-le</0> отвечает на вопрос «кому?», как в <1>mulle meeldib</1>."

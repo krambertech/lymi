@@ -16694,6 +16694,322 @@ const CONJ_CLIPS: Record<string, Clip> = {
   "c-matk": CONJ_CONVERSATION,
 };
 
+export const FLAT_PASSAGES = {
+  advert: [
+    "Kahetoaline korter Tartu kesklinnas.",
+    "Korter on kolmandal korrusel ja majas on lift.",
+    "Maja on vana, aga korter on uus ja ilus.",
+    "Suures toas on kaks suurt akent ja väike rõdu.",
+    "Väiksem tuba on magamistuba.",
+    "Toad on soojad ja valged.",
+    "Köök on väike, aga seal on pesumasin.",
+    "Köök on uuem kui toad.",
+    "Korter on ilma mööblita, aga köögis on pliit.",
+    "Korteris on ka vannituba.",
+    "See on kesklinna kõige vaiksem maja.",
+    "Naabrid on sõbralikud ja vaiksed.",
+    "Üür on nelisada viiskümmend eurot kuus.",
+    "Ma üürin korteri välja üheks aastaks.",
+    "Korter on vaba esimesest detsembrist.",
+    "Pood on maja kõrval ja bussipeatus on maja ees.",
+    "Maja kõrval on ilus park ja väike kohvik.",
+    "Bussiga on rongijaama viis minutit.",
+    "Kass või koer ei saa korteris elada.",
+    "Praegu ei ela korteris keegi.",
+    "Korter sobib hästi ühele või kahele inimesele.",
+    "Korterit saab vaadata esmaspäevast reedeni.",
+    "Helistage mulle õhtul pärast kella kuut!",
+    "Minuga saab rääkida ka inglise keeles.",
+    "Mari Tamm, telefon 5555 1234.",
+  ],
+  reply: [
+    "Tere, Mari!",
+    "Mina olen Jaan ja ma nägin teie kuulutust.",
+    "Korter meeldib mulle väga.",
+    "Ma töötan Tartus õpetajana.",
+    "Mul ei ole kassi.",
+    "Kas ma võin homme korterit vaatama tulla?",
+    "Ma tahan sisse kolida esimesel detsembril.",
+    "Kas köögis on ka pliit?",
+    "Aitäh!",
+  ],
+} as const;
+
+export const FLAT_SORT = [
+  { w: "korteris", bin: "kus" },
+  { w: "korterisse", bin: "kuhu" },
+  { w: "köögis", bin: "kus" },
+  { w: "kööki", bin: "kuhu" },
+  { w: "toas", bin: "kus" },
+  { w: "tuppa", bin: "kuhu" },
+  { w: "rõdul", bin: "kus" },
+  { w: "rõdule", bin: "kuhu" },
+] as const;
+
+const FLAT_CALL = [
+  "Helistage mulle õhtul.",
+  "Helista mulle õhtul.",
+  "Palun helistage mulle õhtul.",
+  "Palun helista mulle õhtul.",
+  "Helistage õhtul mulle.",
+  "Helista õhtul mulle.",
+  "Õhtul helistage mulle.",
+  "Õhtul helista mulle.",
+  "Helistage mulle palun õhtul.",
+  "Helista mulle palun õhtul.",
+  "Helistage palun mulle õhtul.",
+  "Helista palun mulle õhtul.",
+  "Palun helistage õhtul mulle.",
+  "Palun helista õhtul mulle.",
+  "Õhtul palun helistage mulle.",
+  "Õhtul palun helista mulle.",
+] as const;
+
+const FLAT_YEAR = ["korteri", "korterit"].flatMap((flat) => [
+  `Ma tahan ${flat} üheks aastaks üürida.`,
+  `Ma tahan üheks aastaks ${flat} üürida.`,
+  `Ma tahan üürida ${flat} üheks aastaks.`,
+  `Ma tahan ${flat} üürida üheks aastaks.`,
+  `Üheks aastaks tahan ma ${flat} üürida.`,
+  `Üheks aastaks ma tahan ${flat} üürida.`,
+]);
+
+export const FLAT_SAY = [
+  { id: "korrusel", answers: ["Korter on kolmandal korrusel.", "Korter on 3. korrusel."] },
+  { id: "lift", answers: ["Kas majas on lift?", "Kas maja on liftiga?", "Kas majas lift on?"] },
+  {
+    id: "uur",
+    answers: [
+      "Kui palju on üür?",
+      "Kui suur on üür?",
+      "Mis on üür?",
+      "Kui palju üür maksab?",
+      "Kui palju maksab üür?",
+      "Kui suur üür on?",
+      "Kui palju üür on?",
+    ],
+  },
+  {
+    id: "kolida",
+    answers: withPronouns([
+      "Ma tahan reedel sisse kolida.",
+      "Reedel tahan ma sisse kolida.",
+      "Reedel ma tahan sisse kolida.",
+      "Ma tahan sisse kolida reedel.",
+      "Ma tahan reedel kolida sisse.",
+    ]),
+  },
+  {
+    id: "kook",
+    answers: [
+      "Köök on väike, aga uus.",
+      "Köök on väike, kuid uus.",
+      "Köök on küll väike, aga uus.",
+      "Köök on väike, aga see on uus.",
+    ],
+  },
+  {
+    id: "vaatama",
+    answers: withPronouns([
+      "Kas ma võin homme korterit vaatama tulla?",
+      "Kas ma võin homme tulla korterit vaatama?",
+      "Kas ma saan homme korterit vaatama tulla?",
+      "Kas ma saan homme tulla korterit vaatama?",
+      "Kas võin homme tulla korterit vaatama?",
+      "Kas ma võin korterit homme vaatama tulla?",
+      "Kas ma võin tulla homme korterit vaatama?",
+      "Kas ma saan korterit homme vaatama tulla?",
+      "Kas ma saan tulla homme korterit vaatama?",
+      "Kas ma võin homme tulla ja korterit vaadata?",
+      "Kas ma saan homme tulla ja korterit vaadata?",
+    ]),
+  },
+  { id: "helista", answers: FLAT_CALL },
+  { id: "aasta", answers: withPronouns(FLAT_YEAR as [string, ...string[]]) },
+] as const;
+
+export const FLAT_FIX = [
+  {
+    id: "kolmandal",
+    wrong: "Korter on kolmas korrusel.",
+    answers: ["Korter on kolmandal korrusel.", "Korter on 3. korrusel."],
+  },
+  { id: "lifti", wrong: "Majas ei ole lift.", answers: ["Majas ei ole lifti."] },
+  { id: "kolida", wrong: "Ma tahan sisse kolima.", answers: ["Ma tahan sisse kolida."] },
+  {
+    id: "vaiksem",
+    wrong: "Köök on väikem kui tuba.",
+    answers: ["Köök on väiksem kui tuba.", "Köök on väikesem kui tuba."],
+  },
+  {
+    id: "esimesest",
+    wrong: "Korter on vaba esimene detsembrist.",
+    answers: ["Korter on vaba esimesest detsembrist.", "Korter on vaba 1. detsembrist."],
+  },
+  { id: "suures", wrong: "Korter on suur majas.", answers: ["Korter on suures majas."] },
+  { id: "korterisse", wrong: "Ma lähen korteris.", answers: ["Ma lähen korterisse."] },
+] as const;
+
+export const FLAT_DIALOGUE = {
+  "d-mari-1": { text: "Tere! Tulge sisse!", voice: "second" },
+  "d-sina-1": "Tere! Aitäh.",
+  "d-mari-2": { text: "See on suur tuba. Siin on kaks akent.", voice: "second" },
+  "d-sina-2": "Tuba on väga ilus. Kus on köök?",
+  "d-mari-3": { text: "Köök on seal. Kas teil on kass?", voice: "second" },
+  "d-sina-3": "Ei, mul ei ole kassi.",
+  "d-mari-4": { text: "Hea. Millal te tahate sisse kolida?", voice: "second" },
+  "d-sina-4": "Esimesel detsembril.",
+} as const;
+
+export const FLAT_MESSAGE = [
+  "Tere, Mari!",
+  "Mina olen Jaan ja ma nägin teie kuulutust.",
+  "Ma töötan Tartus õpetajana.",
+  "Ma tahan korteris elada üheks aastaks.",
+  "Kas ma võin homme koos sõbraga korterit vaatama tulla?",
+  "Ma tahan sisse kolida esimesel detsembril.",
+  "Palun helistage mulle õhtul.",
+  "Aitäh!",
+  "Jaan.",
+] as const;
+
+export const FLAT_TALK: Conversation = {
+  turns: [
+    { voice: "second", text: ["Tere, Jaan!", "Kas sa käisid täna korterit vaatamas?"] },
+    {
+      voice: "main",
+      text: [
+        "Tere, Liis!",
+        "Jah, ma käisin kahes korteris.",
+        "Üks on kesklinnas ja teine Annelinnas.",
+      ],
+    },
+    { voice: "second", text: ["Tore!", "Kumb on parem?"] },
+    {
+      voice: "main",
+      text: [
+        "Kesklinnas on korter suurem ja ilusam.",
+        "Seal on kaks tuba ja suur köök.",
+        "Köögis on ka pesumasin.",
+      ],
+    },
+    { voice: "second", text: ["Kui palju see maksab?"] },
+    { voice: "main", text: ["Kuussada eurot.", "See on minu jaoks liiga kallis."] },
+    { voice: "second", text: ["Kas seal on ka rõdu?"] },
+    {
+      voice: "main",
+      text: [
+        "Jah, ja rõdult näeb jõge.",
+        "See meeldib mulle väga.",
+        "Aga kesklinnas ei ole vaikne.",
+      ],
+    },
+    { voice: "second", text: ["Ja teine korter?"] },
+    {
+      voice: "main",
+      text: [
+        "Teine on väiksem, ainult üks tuba ja väike köök.",
+        "Aga see on palju odavam, nelisada eurot.",
+      ],
+    },
+    { voice: "second", text: ["Kas see on kesklinnast kaugel?"] },
+    { voice: "main", text: ["Bussiga kakskümmend minutit.", "Bussipeatus on maja ees."] },
+    { voice: "second", text: ["See pole palju.", "Kas seal on vaikne?"] },
+    {
+      voice: "main",
+      text: ["Jah, see on kõige vaiksem maja Annelinnas.", "Maja kõrval on park."],
+    },
+    { voice: "second", text: ["Mis korrusel see on?"] },
+    { voice: "main", text: ["Viiendal korrusel, aga majas on lift."] },
+    { voice: "second", text: ["Kas sa tahad elada üksi?"] },
+    {
+      voice: "main",
+      text: [
+        "Ei, ma tahan elada koos Katiga.",
+        "Kati töötab Tallinnas, aga tuleb reedeks Tartusse.",
+      ],
+    },
+    { voice: "second", text: ["Kas keegi elab seal praegu?"] },
+    {
+      voice: "main",
+      text: ["Ei, praegu ei ela seal keegi.", "Omanik üürib korteri välja üheks aastaks."],
+    },
+    { voice: "second", text: ["Ja millal sa saad sisse kolida?"] },
+    {
+      voice: "main",
+      text: [
+        "Väike korter on vaba esimesest detsembrist.",
+        "Suur korter on vaba alles jaanuarist.",
+      ],
+    },
+    {
+      voice: "second",
+      text: ["Siis on väike korter parem.", "Ja odavam ka!", "Sa ei vaja suurt korterit."],
+    },
+    { voice: "main", text: ["Jah.", "Homme helistan ma omanikule."] },
+    { voice: "second", text: ["Kas ma tulen siis appi?"] },
+    {
+      voice: "main",
+      text: [
+        "Jah, palun!",
+        "Mul on ainult kaks kasti ja voodi.",
+        "Esimesel detsembril tõusen ma vara üles ja kolin sisse.",
+      ],
+    },
+    { voice: "second", text: ["Hästi.", "Ma võtan oma auto kaasa."] },
+    { voice: "main", text: ["Aitäh sulle!", "Õhtul läheme koos välja sööma."] },
+  ],
+};
+
+export const FLAT_WORDS = [
+  "korter",
+  "tuba",
+  "köök",
+  "rõdu",
+  "üür",
+  "lift",
+  "kesklinnas",
+  "sisse kolima",
+] as const;
+
+export const FLAT_DRILL = [
+  "Kass on rõdul.",
+  "Ma olen köögis.",
+  "Tule kööki!",
+  "Mul ei ole kassi.",
+  "Korteris ei ole rõdu.",
+  "Mari elab teisel korrusel.",
+  "Ma elan neljandal korrusel.",
+  "Korter on viiendal korrusel.",
+  "Ma tulen koos sõbraga.",
+  "Korter on ilma mööblita.",
+  "Ma töötan Tartus õpetajana.",
+  "Mari töötab poes müüjana.",
+  "Ma elan siin üheks aastaks.",
+  "Suures toas on kaks suurt akent.",
+  "Köök on väiksem kui tuba.",
+  "See on kõige vaiksem maja.",
+  "Korteris ei ela keegi.",
+  "Tule minuga korterit vaatama!",
+] as const;
+
+const FLAT_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...new Set([
+      ...FLAT_WORDS,
+      ...FLAT_SORT.map(({ w }) => w),
+      ...FLAT_SAY.map(({ answers }) => answers[0]),
+      ...FLAT_FIX.map(({ answers }) => answers[0]),
+      ...FLAT_DRILL,
+    ]),
+  ]),
+  "p-advert": { sentences: FLAT_PASSAGES.advert, voice: "third" },
+  "p-reply": { sentences: FLAT_PASSAGES.reply, voice: "main" },
+  ...FLAT_DIALOGUE,
+  "p-message": { sentences: FLAT_MESSAGE, voice: "main" },
+  "c-talk": FLAT_TALK,
+};
+
 export const NEWS_PHRASES = [
   "Uus raamatukogu avatakse reedel.",
   "Tee on remondi tõttu suletud.",
@@ -17725,6 +18041,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "mineviku-eitus": PAST_NO_CLIPS,
   tulevik: FUTURE_CLIPS,
   nadalavahetusel: WEEKEND_CLIPS,
+  korter: FLAT_CLIPS,
   uudised: NEWS_CLIPS,
   "ta-olevat-haige": REP_CLIPS,
   kit: KIT_CLIPS,

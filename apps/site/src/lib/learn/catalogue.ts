@@ -391,7 +391,14 @@ export const STAGES: readonly Stage[] = [
         blurb: msg`A free Estonian lesson on keegi, midagi, kuskil and kuhugi: question words with -gi or -ki for somebody and something, ei for nobody and nothing, mitte keegi on its own, and -gi or -ki on every case, as in kellelegi and kellestki, and which one to use. Every sentence is read aloud.`,
       },
       { name: msg`Particle verbs: up, out, away`, et: "Üles, välja, ära" },
-      { name: msg`Practice: looking for a flat`, et: "Korter" },
+      {
+        slug: "korter",
+        name: msg`Practice: looking for a flat`,
+        title: msg`Estonian practice: looking for a flat`,
+        et: "Korter",
+        minutes: 25,
+        blurb: msg`A free Estonian practice lesson on looking for a flat: read an advert, write to the owner, look round the flat, follow a call about two flats and write your own message. It practises floors and dates, -ga, -ta, -na and -ks, adjectives and comparing, keegi and particle verbs. Every sentence is read aloud.`,
+      },
     ],
   },
   {

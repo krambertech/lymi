@@ -14,6 +14,7 @@ export const localizedPages = {
   estonian: "/languages/estonian",
   learn: "/estonian/learn",
   learnReview: "/estonian/learn/review",
+  learnPlacement: "/estonian/learn/tasemetest",
   ...languagePages,
   assistants: "/ai-assistants",
   grokAssistant: "/ai-assistants/grok-bot",
@@ -41,7 +42,7 @@ export type LocalizedPage = keyof typeof localizedPages;
  * Pages built and reachable in every locale but not launched: kept out of the sitemap, out of
  * search with `noindex`, and linked from nowhere. Launching one is removing it from this list.
  */
-export const prelaunchPages: readonly LocalizedPage[] = ["learn", "learnReview"];
+export const prelaunchPages: readonly LocalizedPage[] = ["learn", "learnReview", "learnPlacement"];
 export const isPrelaunch = (page: LocalizedPage | undefined): boolean =>
   !!page && prelaunchPages.includes(page);
 

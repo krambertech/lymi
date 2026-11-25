@@ -1,0 +1,13 @@
+---
+import LearnPlacementPage, { PLACEMENT_BLURB, PLACEMENT_TITLE } from "../../../components/islands/LearnPlacementPage";
+import { prepareLearnPage } from "../../../components/learn/learn-page";
+import LearnReload from "../../../components/islands/LearnReload";
+import MarketingLayout from "../../../layouts/MarketingLayout.astro";
+
+await prepareLearnPage({ kind: "placement" }, "en");
+---
+
+<MarketingLayout page="learnPlacement" title={PLACEMENT_TITLE} blurb={PLACEMENT_BLURB}>
+  <LearnPlacementPage client:load locale="en" />
+  <LearnReload client:load locale="en" />
+</MarketingLayout>

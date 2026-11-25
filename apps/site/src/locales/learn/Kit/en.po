@@ -716,6 +716,9 @@ msgstr "Each way an answer can come out: right, nearly right, another form, word
 msgid "Ei before the bare verb says not: ei loe."
 msgstr "Ei before the bare verb says not: ei loe."
 
+msgid "Eighteen short questions from A1 basics to B1 sentences. No hints beforehand — at the end we suggest where in the course to start."
+msgstr "Eighteen short questions from A1 basics to B1 sentences. No hints beforehand — at the end we suggest where in the course to start."
+
 msgid "Elative"
 msgstr "Elative"
 
@@ -842,6 +845,18 @@ msgstr "Estonian reported speech and the -vat form"
 msgid "Estonian somebody and nobody: -gi and -ki"
 msgstr "Estonian somebody and nobody: -gi and -ki"
 
+msgid "Estonian stage 3 checkpoint"
+msgstr "Estonian stage 3 checkpoint"
+
+msgid "Estonian stage 4 checkpoint"
+msgstr "Estonian stage 4 checkpoint"
+
+msgid "Estonian stage 5 checkpoint"
+msgstr "Estonian stage 5 checkpoint"
+
+msgid "Estonian stage 6 checkpoint"
+msgstr "Estonian stage 6 checkpoint"
+
 msgid "Estonian time expressions: when things happen"
 msgstr "Estonian time expressions: when things happen"
 
@@ -872,6 +887,9 @@ msgstr "Fill the gap"
 
 msgid "Fill the gaps"
 msgstr "Fill the gaps"
+
+msgid "Find your level"
+msgstr "Find your level"
 
 msgid "Fix the sentence"
 msgstr "Fix the sentence"
@@ -935,6 +953,18 @@ msgstr "Free Estonian practice for beginners: read opening hours and a message, 
 
 msgid "Free Estonian practice in the past and the future: read about a friend’s weekend and write back, say what you did and didn’t do (olin, ei läinud), what you will do (homme lähen, hakkan õppima, kavatsen tulla), fix verbs in the wrong form, and follow a conversation you can play twice. Every sentence is read aloud."
 msgstr "Free Estonian practice in the past and the future: read about a friend’s weekend and write back, say what you did and didn’t do (olin, ei läinud), what you will do (homme lähen, hakkan õppima, kavatsen tulla), fix verbs in the wrong form, and follow a conversation you can play twice. Every sentence is read aloud."
+
+msgid "Free Estonian stage 3 checkpoint: twenty mixed questions on verbs, modals, liking, past tense and the future, with no hints beforehand and a score per rule linked to its lesson."
+msgstr "Free Estonian stage 3 checkpoint: twenty mixed questions on verbs, modals, liking, past tense and the future, with no hints beforehand and a score per rule linked to its lesson."
+
+msgid "Free Estonian stage 4 checkpoint: twenty mixed questions on cases, pronouns, dates, word order, adjectives, comparing and -gi / -ki, with no hints beforehand and a score per rule linked to its lesson."
+msgstr "Free Estonian stage 4 checkpoint: twenty mixed questions on cases, pronouns, dates, word order, adjectives, comparing and -gi / -ki, with no hints beforehand and a score per rule linked to its lesson."
+
+msgid "Free Estonian stage 5 checkpoint: twenty mixed questions on gradation, total and partial object, plural cases, perfect, conditional, impersonal and verb cases, with no hints beforehand and a score per rule linked to its lesson."
+msgstr "Free Estonian stage 5 checkpoint: twenty mixed questions on gradation, total and partial object, plural cases, perfect, conditional, impersonal and verb cases, with no hints beforehand and a score per rule linked to its lesson."
+
+msgid "Free Estonian stage 6 checkpoint: twenty mixed questions on B1 particle verbs, word building, -des and -mata, participles, conjunctions, relative clauses and reported speech, with no hints beforehand and a score per rule linked to its lesson."
+msgstr "Free Estonian stage 6 checkpoint: twenty mixed questions on B1 particle verbs, word building, -des and -mata, participles, conjunctions, relative clauses and reported speech, with no hints beforehand and a score per rule linked to its lesson."
 
 msgid "Free Estonian writing practice: read a message to a landlady, learn the phrases for a polite message (kas te saaksite, aitäh ette, lugupidamisega), follow a phone call about a cold radiator, then write your own message and compare it with a model. Every sentence is read aloud."
 msgstr "Free Estonian writing practice: read a message to a landlady, learn the phrases for a polite message (kas te saaksite, aitäh ette, lugupidamisega), follow a phone call about a cold radiator, then write your own message and compare it with a model. Every sentence is read aloud."
@@ -1642,6 +1672,10 @@ msgstr "One word is wrong. Tap it, then write it right."
 msgid "Onto and off in Estonian: -le and -lt"
 msgstr "Onto and off in Estonian: -le and -lt"
 
+#. placeholder {0}: i18n._(startLesson.name)
+msgid "Open {0}"
+msgstr "Open {0}"
+
 msgid "or *pole*"
 msgstr "or *pole*"
 
@@ -1723,6 +1757,9 @@ msgstr "Pick up where you left off"
 
 msgid "Place words: on, under, behind"
 msgstr "Place words: on, under, behind"
+
+msgid "Placement test"
+msgstr "Placement test"
 
 msgid "Play"
 msgstr "Play"
@@ -1853,6 +1890,13 @@ msgstr "Read it again"
 
 msgid "Reading"
 msgstr "Reading"
+
+msgid "Ready for B1 practice ({sourceCount} lessons checked)"
+msgstr "Ready for B1 practice ({sourceCount} lessons checked)"
+
+#. placeholder {0}: targetStage?.level
+msgid "Recommended start · Stage {targetNumber} ({0})"
+msgstr "Recommended start · Stage {targetNumber} ({0})"
 
 msgid "Relative clauses"
 msgstr "Relative clauses"
@@ -2009,8 +2053,32 @@ msgstr "Speak more slowly, please."
 msgid "Speed"
 msgstr "Speed"
 
+#. placeholder {0}: index + 1
+#. placeholder {1}: stage.level
+#. placeholder {2}: i18n._(stage.name)
+msgid "Stage {0} · {1} · {2}"
+msgstr "Stage {0} · {1} · {2}"
+
+msgid "Stage 3 checkpoint"
+msgstr "Stage 3 checkpoint"
+
+msgid "Stage 4 checkpoint"
+msgstr "Stage 4 checkpoint"
+
+msgid "Stage 5 checkpoint"
+msgstr "Stage 5 checkpoint"
+
+msgid "Stage 6 checkpoint"
+msgstr "Stage 6 checkpoint"
+
+msgid "Stage checkpoint"
+msgstr "Stage checkpoint"
+
 msgid "Start"
 msgstr "Start"
+
+msgid "Start checkpoint"
+msgstr "Start checkpoint"
 
 msgid "Start here"
 msgstr "Start here"
@@ -2018,8 +2086,15 @@ msgstr "Start here"
 msgid "Start lesson 1"
 msgstr "Start lesson 1"
 
+msgid "Start placement test"
+msgstr "Start placement test"
+
 msgid "Start the conversation"
 msgstr "Start the conversation"
+
+#. placeholder {0}: i18n._(targetStage.name)
+msgid "Start with {0}"
+msgstr "Start with {0}"
 
 msgid "Stem changes"
 msgstr "Stem changes"
@@ -2045,8 +2120,14 @@ msgstr "Table of forms"
 msgid "Table of forms, a verb"
 msgstr "Table of forms, a verb"
 
+msgid "Take again"
+msgstr "Take again"
+
 msgid "Take an umbrella!"
 msgstr "Take an umbrella!"
+
+msgid "Takes about 10 minutes. Includes audio and short typed answers."
+msgstr "Takes about 10 minutes. Includes audio and short typed answers."
 
 msgid "Talk: meeting Mari"
 msgstr "Talk: meeting Mari"
@@ -2397,6 +2478,9 @@ msgctxt "the statement is true"
 msgid "True"
 msgstr "True"
 
+msgid "Try a new set"
+msgstr "Try a new set"
+
 msgid "Try again"
 msgstr "Try again"
 
@@ -2684,6 +2768,9 @@ msgstr "Yesterday I studied Estonian."
 
 msgid "you"
 msgstr "you"
+
+msgid "You already handle A1 to B1 fundamentals well."
+msgstr "You already handle A1 to B1 fundamentals well."
 
 msgid "You are Jaan, a doctor from Tartu. Mari speaks first; pick what you say back."
 msgstr "You are Jaan, a doctor from Tartu. Mari speaks first; pick what you say back."

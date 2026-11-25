@@ -2595,6 +2595,9 @@ msgstr "Эстонский A1 · осенний курс"
 msgid "Estonian A2 · Tuesdays"
 msgstr "Эстонский A2 · по вторникам"
 
+msgid "Estonian placement test · Lymi"
+msgstr "Тест на уровень эстонского · Lymi"
+
 msgid "Estonian startup"
 msgstr "Эстонский стартап"
 
@@ -2864,6 +2867,9 @@ msgstr "Фильтр"
 
 msgid "Finance and accounting"
 msgstr "Финансы и бухгалтерия"
+
+msgid "Find where to start in the free Estonian grammar course: eighteen questions from A1 basics to B1 sentences, with a suggested starting stage and links to each rule."
+msgstr "Узнай, с какого этапа начать бесплатный курс эстонской грамматики: восемнадцать вопросов от основ A1 до предложений B1, с рекомендованным стартом и ссылками на каждое правило."
 
 msgid "Find your exam"
 msgstr "Найти свой экзамен"

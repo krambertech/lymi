@@ -1,6 +1,6 @@
 const LESSON_MODULE = /\/apps\/site\/src\/(?:components\/learn|lib\/learn|locales\/learn)\//;
 const LESSON_ENTRY =
-  /\/components\/islands\/(?:LearnHubPage|LearnLessonPage|LearnReload|LearnReviewPage|LessonKitPage|LessonKitReload)\.tsx$/;
+  /\/components\/islands\/(?:LearnHubPage|LearnLessonPage|LearnPlacementPage|LearnReload|LearnReviewPage|LessonKitPage|LessonKitReload)\.tsx$/;
 
 /** @type {(bundle: Record<string, { type: string, fileName: string, moduleIds?: string[], imports?: string[], dynamicImports?: string[], isEntry?: boolean, facadeModuleId?: string | null }>) => string[]} */
 export const leakedLessonChunks = (bundle) => {

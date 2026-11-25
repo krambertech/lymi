@@ -22,19 +22,21 @@ import { KeepEndings } from "./endings";
 import { QuizCard, ResultDots, Score } from "./Quiz";
 
 interface Props {
-  id: "drill" | "warm-up" | "review";
+  id: "drill" | "warm-up" | "review" | "checkpoint" | "placement";
   lesson: string;
   title: ReactNode;
   questions: readonly Question[];
   sources: readonly DrillSource[];
   repeats: boolean;
   bandEnd?: ReactNode;
+  afterScore?: (scores: ReturnType<typeof ruleScores>) => ReactNode;
   onFinish?: () => void;
   end: ReactNode;
 }
 
 export function DrillRunner(props: Props) {
-  const { id, lesson, title, questions, sources, repeats, bandEnd, onFinish, end } = props;
+  const { id, lesson, title, questions, sources, repeats, bandEnd, afterScore, onFinish, end } =
+    props;
   const { t } = useLingui();
   const [run, dispatch] = useReducer(drillReducer, { items: questions, repeats }, startRun);
   const [autoplay, setAutoplay] = useState(false);
@@ -135,6 +137,7 @@ export function DrillRunner(props: Props) {
               src: clipUrl(source.lesson, clipId(item.say)),
             }))}
           />
+          {afterScore?.(ruleScores(run))}
           <RuleResults scores={ruleScores(run)} sources={sources} lesson={lesson} />
           <div ref={endRef} className="flex w-full flex-wrap gap-2.5">
             {end}

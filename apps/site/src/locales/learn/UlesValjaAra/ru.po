@@ -1,0 +1,572 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 00:34+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "<0>Alla viima</0> is to take down."
+msgstr "<0>Alla viima</0> означает «снести вниз»."
+
+msgid "<0>Ära sööma</0> is to eat something all up."
+msgstr "<0>Ära sööma</0> означает «съесть всё до конца»."
+
+msgid "<0>Ära</0> after a verb usually means away or completely (<1>Ta läks ära</1>); <2>ära</2> before a command means don’t (<3>Ära mine!</3>)."
+msgstr "<0>Ära</0> после глагола обычно означает «прочь» или завершённое действие (<1>Ta läks ära</1>); <2>ära</2> перед командой означает запрет «не» (<3>Ära mine!</3>)."
+
+msgid "<0>Ära</0> means away or finished, <1>tagasi</1> back, <2>lahti</2> open and <3>kinni</3> closed."
+msgstr "<0>Ära</0> означает «прочь» или завершённость, <1>tagasi</1> — «назад», <2>lahti</2> — «открыто», а <3>kinni</3> — «закрыто»."
+
+msgid "<0>Kinni panema</0> is to close."
+msgstr "<0>Kinni panema</0> означает «закрывать»."
+
+msgid "<0>Lahti tegema</0> is to open."
+msgstr "<0>Lahti tegema</0> означает «открывать»."
+
+msgid "<0>Sisse tulema</0> is to come in."
+msgstr "<0>Sisse tulema</0> означает «заходить»."
+
+msgid "<0>Sisse</0> is in, and <1>välja</1> is out."
+msgstr "<0>Sisse</0> означает «внутрь», а <1>välja</1> — «наружу»."
+
+msgid "<0>Tagasi tulema</0> is to come back."
+msgstr "<0>Tagasi tulema</0> означает «возвращаться»."
+
+msgid "<0>Üles tõusma</0> is to get up."
+msgstr "<0>Üles tõusma</0> означает «вставать»."
+
+msgid "<0>Üles</0> is up, <1>alla</1> is down, and <2>maha</2> is down onto a surface."
+msgstr "<0>Üles</0> означает «вверх», <1>alla</1> — «вниз», а <2>maha</2> — «вниз, на поверхность»."
+
+msgid "<0>Välja minema</0> is to go out."
+msgstr "<0>Välja minema</0> означает «выходить»."
+
+msgid "<et>Alla viima</et> is to take down."
+msgstr "<et>Alla viima</et> означает «сносить вниз»."
+
+msgid "<et>Ära minema</et> is to leave."
+msgstr "<et>Ära minema</et> означает «уйти прочь»."
+
+msgid "<et>Ära sööma</et> is to eat something all up."
+msgstr "<et>Ära sööma</et> означает «съесть всё до конца»."
+
+msgid "<et>Kinni panema</et> is to close, with <et>kinni</et> at the end."
+msgstr "<et>Kinni panema</et> означает «закрывать», причём <et>kinni</et> стоит в конце."
+
+msgid "<et>Kinni panema</et> is to close."
+msgstr "<et>Kinni panema</et> означает «закрывать»."
+
+msgid "<et>Lahti tegema</et> is to open."
+msgstr "<et>Lahti tegema</et> означает «открывать»."
+
+msgid "<et>Sisse tulema</et> is to come in."
+msgstr "<et>Sisse tulema</et> означает «заходить»."
+
+msgid "<et>Tagasi tulema</et> is to come back."
+msgstr "<et>Tagasi tulema</et> означает «возвращаться»."
+
+msgid "<et>Üles kirjutama</et> is to write down."
+msgstr "<et>Üles kirjutama</et> означает «записать»."
+
+msgid "<et>Üles tõusma</et> is to get up."
+msgstr "<et>Üles tõusma</et> означает «вставать»."
+
+msgid "<et>Välja minema</et> is to go out."
+msgstr "<et>Välja minema</et> означает «выходить»."
+
+msgid "20 minutes"
+msgstr "20 минут"
+
+msgid "8 exercises"
+msgstr "8 упражнений"
+
+msgid "A note on the kitchen table"
+msgstr "Записка на кухонном столе"
+
+msgid "A small word like <0>üles</0>, <1>välja</1> or <2>ära</2> adds direction or completion to a verb: <3>Ma tõusen kell seitse üles.</3>"
+msgstr "Короткое слово вроде <0>üles</0>, <1>välja</1> или <2>ära</2> добавляет глаголу направление или завершённость: <3>Ma tõusen kell seitse üles.</3>"
+
+msgid "After the verb, <0>ära</0> usually means away or finished."
+msgstr "После глагола <0>ära</0> обычно означает «прочь» или завершённое действие."
+
+msgid "After the verb, <et>ära</et> usually means away or finished."
+msgstr "После глагола <et>ära</et> обычно означает «прочь» или завершённое действие."
+
+msgid "After work around five in the evening"
+msgstr "После работы около пяти часов вечера"
+
+msgid "All eight particle verbs right."
+msgstr "Все восемь глаголов с частицами верно."
+
+msgid "All eight particles right."
+msgstr "Все восемь частиц верно."
+
+msgid "All six found and fixed."
+msgstr "Все шесть найдены и исправлены."
+
+msgid "All six in a natural order."
+msgstr "Все шесть в естественном порядке слов."
+
+msgid "All six: you told both uses of <0>ära</0> apart."
+msgstr "Все шесть: ты различаешь оба значения <0>ära</0>."
+
+msgid "At two o’clock"
+msgstr "В два часа"
+
+msgid "Away or don’t?"
+msgstr "Прочь или «не»?"
+
+msgid "Away or finished"
+msgstr "Прочь или до конца"
+
+msgid "Away, back, open"
+msgstr "Прочь, назад, открыто"
+
+msgid "away, completely"
+msgstr "прочь, до конца"
+
+msgid "back"
+msgstr "назад"
+
+msgid "Before a command, <0>ära</0> says don’t."
+msgstr "Перед командой <0>ära</0> означает запрет «не»."
+
+msgid "Before a command, <et>ära</et> says don’t."
+msgstr "Перед командой <et>ära</et> означает запрет «не»."
+
+msgid "Bring back the library copy"
+msgstr "Вернуть её в библиотеку"
+
+msgid "Build the sentence"
+msgstr "Собери предложение"
+
+msgid "Can you close the door?"
+msgstr "Ты можешь закрыть дверь?"
+
+msgid "Check where <0>ära</0> stands in the sentence, then try again."
+msgstr "Посмотри, где в предложении стоит <0>ära</0>, и попробуй ещё раз."
+
+msgid "closed, shut"
+msgstr "закрыто, заперто"
+
+msgid "Cold air comes in from the hallway."
+msgstr "Из коридора тянет холодным воздухом."
+
+msgid "Come in, it’s warm here!"
+msgstr "Заходи, здесь тепло!"
+
+msgid "Dictionary"
+msgstr "Словарная форма"
+
+msgid "Don’t do it"
+msgstr "Запрет «не»"
+
+msgid "down"
+msgstr "вниз"
+
+msgid "Each sentence uses the wrong particle for its meaning. Tap the wrong word, then type the right one."
+msgstr "В каждом предложении стоит неподходящая по смыслу частица. Нажми на ошибочное слово и впиши правильное."
+
+msgid "Estonian builds everyday verbs by adding a direction word to a verb: <0/> is to get up, <1/> is to open and <2/> is to close."
+msgstr "В эстонском многие повседневные глаголы строятся с помощью слова направления: <0/> — вставать, <1/> — открывать, а <2/> — закрывать."
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
+
+msgid "Give them to the neighbour downstairs"
+msgstr "Отдать их соседу снизу"
+
+msgid "Go through the table once more, then try again."
+msgstr "Просмотри таблицу ещё раз и попробуй снова."
+
+msgid "Group"
+msgstr "Группа"
+
+msgid "He ate up the whole cake."
+msgstr "Он съел весь торт."
+
+msgid "He burnt toast."
+msgstr "Он поджёг тост."
+
+msgid "He or she already left."
+msgstr "Он или она уже ушёл (ушла)."
+
+msgid "He painted the wall."
+msgstr "Он покрасил стену."
+
+msgid "Hear each sentence and pick which job <0>ära</0> is doing."
+msgstr "Послушай каждое предложение и выбери, какую роль играет <0>ära</0>."
+
+msgid "I get up at seven."
+msgstr "Я встаю в семь."
+
+msgid "I have to get up early."
+msgstr "Мне нужно встать рано."
+
+msgid "I opened the window."
+msgstr "Я открыл окно."
+
+msgid "I’ll come back at six."
+msgstr "Я вернусь в шесть."
+
+msgid "I’ll give the book back tomorrow."
+msgstr "Я верну книгу завтра."
+
+msgid "I’ll write down the number."
+msgstr "Я запишу номер."
+
+msgid "I’ll write the number down."
+msgstr "Я запишу номер."
+
+msgid "I’m coming back tomorrow."
+msgstr "Я возвращаюсь завтра."
+
+msgid "In a dictionary, the particle stands first. In a sentence with one verb, it usually moves after the verb: <0>Ma tõusen kell seitse üles.</0> Switch groups and tap a form to hear it."
+msgstr "В словаре частица стоит первой. В предложении с одним глаголом она обычно уходит после глагола: <0>Ma tõusen kell seitse üles.</0> Переключай группы и нажимай на форму, чтобы послушать её."
+
+msgid "In a normal statement with one verb, the particle usually moves after the verb, often to the end: <0>Ma tõusen kell seitse üles.</0>"
+msgstr "В обычном утвердительном предложении с одним глаголом частица обычно уходит после глагола, часто в самый конец: <0>Ma tõusen kell seitse üles.</0>"
+
+msgid "In a sentence"
+msgstr "В предложении"
+
+msgid "In a statement with one verb, <0>tagasi</0> usually comes at the end."
+msgstr "В утвердительном предложении с одним глаголом <0>tagasi</0> обычно стоит в конце."
+
+msgid "In a statement with one verb, <0>välja</0> usually comes at the end."
+msgstr "В утвердительном предложении с одним глаголом <0>välja</0> обычно стоит в конце."
+
+msgid "In a statement with one verb, the particle usually comes after the object: <0>kirjutan numbri üles</0>."
+msgstr "В утвердительном предложении с одним глаголом частица обычно идёт после дополнения: <0>kirjutan numbri üles</0>."
+
+msgid "In a statement with one verb, the particle usually goes to the end: <0>tõusen … üles</0>."
+msgstr "В утвердительном предложении с одним глаголом частица обычно уходит в конец: <0>tõusen … üles</0>."
+
+msgid "In and out"
+msgstr "Внутрь и наружу"
+
+msgid "in, inside"
+msgstr "внутрь, внутри"
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan comes to help Mari move out of her flat. Listen and answer. You can play the conversation twice."
+msgstr "Яан приходит помочь Мари съехать с квартиры. Послушай и ответь на вопросы. Разговор можно включить дважды."
+
+msgid "Jaan writes down the owner’s phone number."
+msgstr "Яан записывает номер телефона хозяина."
+
+msgid "Lend it to Jaan until Monday morning"
+msgstr "Одолжить Яану до утра понедельника"
+
+msgid "Lesson {commands} showed <0/> for saying don’t: <1>Ära mine!</1> As a particle after the verb, <2>ära</2> usually means away or finished: <3>Ta läks ära</3> (he left) and <4>Ma sõin võileiva ära</4> (I ate the sandwich up)."
+msgstr "Урок {commands} показал <0/> для запрета: <1>Ära mine!</1> Как частица после глагола <2>ära</2> обычно означает «прочь» или завершённость: <3>Ta läks ära</3> (он ушёл прочь) и <4>Ma sõin võileiva ära</4> (я съел бутерброд)."
+
+msgid "Lesson {order} showed that the main verb usually stands second. With one verb, the particle usually goes after the verb, often to the end: <0>Ma kirjutan numbri üles.</0>"
+msgstr "Урок {order} показал, что основной глагол обычно стоит на втором месте. Когда глагол один, частица обычно идёт после него, часто в самый конец: <0>Ma kirjutan numbri üles.</0>"
+
+msgid "Listen: Mari and Jaan"
+msgstr "Послушай: Мари и Яан"
+
+msgid "Listening only, no microphone"
+msgstr "Только аудирование, без микрофона"
+
+msgid "Loud music plays next door."
+msgstr "За стеной играет громкая музыка."
+
+msgid "Ma tegin akna lahti."
+msgstr "Ma tegin akna lahti."
+
+msgid "Ma tõusen kell seitse üles."
+msgstr "Ma tõusen kell seitse üles."
+
+msgid "Ma tulen kell kuus tagasi."
+msgstr "Ma tulen kell kuus tagasi."
+
+msgid "Mari"
+msgstr "Мари"
+
+msgid "Mari wants to take the old newspapers to the new flat."
+msgstr "Мари хочет забрать старые газеты в новую квартиру."
+
+msgid "Match each particle with its meaning."
+msgstr "Соедини каждую частицу с её значением."
+
+msgid "Me läheme õhtul välja."
+msgstr "Me läheme õhtul välja."
+
+msgid "Meaning"
+msgstr "Значение"
+
+msgid "Nearly. Check the particle and its place in the ones you missed."
+msgstr "Почти. Проверь частицу и её место в предложениях с ошибками."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Почти. Послушай ещё раз те предложения, где были ошибки."
+
+msgid "Nearly. Read the reason under each one you missed."
+msgstr "Почти. Прочитай объяснение под каждым ошибочным предложением."
+
+msgid "Notice <0/>: Estonian writes things “up” (<1>üles</1>), where English says write down."
+msgstr "Обрати внимание на <0/>: по-эстонски вещи «записывают вверх» (<1>üles</1>)."
+
+msgid "open"
+msgstr "открыто"
+
+msgid "Open the window, it’s hot here."
+msgstr "Открой окно, здесь жарко."
+
+msgid "out"
+msgstr "наружу"
+
+msgid "Pack it away"
+msgstr "Убрать подальше"
+
+msgid "Packing for a new flat"
+msgstr "Сборы к переезду"
+
+msgid "Pane palun uks kinni."
+msgstr "Pane palun uks kinni."
+
+msgid "Particle"
+msgstr "Частица"
+
+msgid "Particle verbs"
+msgstr "Глаголы с частицами"
+
+msgid "Particles add direction or completion to a verb: <0>üles tõusma</0> (get up), <1>välja minema</1> (go out), <2>kinni panema</2> (close)."
+msgstr "Частицы добавляют глаголу направление или завершённость: <0>üles tõusma</0> (вставать), <1>välja minema</1> (выходить), <2>kinni panema</2> (закрывать)."
+
+msgid "Peeter comes back from work at six."
+msgstr "Пеэтер возвращается с работы в шесть."
+
+msgid "Peeter leaves a morning note for Kati. Read it and answer."
+msgstr "Пеэтер оставляет Кати утреннюю записку. Прочитай её и ответь на вопросы."
+
+msgid "Peeter writes"
+msgstr "Пеэтер пишет"
+
+msgid "Pick the particle"
+msgstr "Выбери частицу"
+
+msgid "Pick the particle that completes each sentence, then hear the whole line."
+msgstr "Выбери частицу, которая дополняет каждое предложение, и послушай его целиком."
+
+msgid "Please close the door."
+msgstr "Закрой, пожалуйста, дверь."
+
+msgid "Please come in, it’s warm here."
+msgstr "Заходи, пожалуйста, здесь тепло."
+
+msgid "Put them in a box in the hallway"
+msgstr "Сложить их в коробку в коридоре"
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Что запомнить» ниже и попробуй ещё раз."
+
+msgid "Read why under each one you missed, then try again."
+msgstr "Прочитай объяснение под каждым ошибочным вариантом и попробуй ещё раз."
+
+msgid "Right before lunch at noon"
+msgstr "В полдень прямо перед обедом"
+
+msgid "Small words that steer the verb"
+msgstr "Короткие слова, управляющие глаголом"
+
+msgid "Ta läks juba ära."
+msgstr "Ta läks juba ära."
+
+msgid "Tap a form"
+msgstr "Нажми на форму"
+
+msgid "That Peeter will call back later"
+msgstr "Что Пеэтер перезвонит позже"
+
+msgid "The cat might escape."
+msgstr "Кот может убежать."
+
+msgid "The morning air felt warm outside."
+msgstr "Утренний воздух на улице уже был тёплым."
+
+msgid "There is still plenty of bread left at home."
+msgstr "Дома ещё осталось много хлеба."
+
+msgid "They plan to go out to eat for lunch once the boxes are in the car."
+msgstr "Они собираются пойти пообедать, когда коробки будут в машине."
+
+msgid "Throw them in the bin"
+msgstr "Выбросить в мусор"
+
+msgid "to close"
+msgstr "закрывать"
+
+msgid "To close is <0>kinni panema</0>, not <1>lahti</1>."
+msgstr "«Закрывать» — это <0>kinni panema</0>, а не <1>lahti</1>."
+
+msgid "To close is <et>kinni panema</et>, not <et>lahti</et>."
+msgstr "«Закрывать» — это <et>kinni panema</et>, а не <et>lahti</et>."
+
+msgid "to come back"
+msgstr "возвращаться"
+
+msgid "To come back is <0>tagasi tulema</0>, not <1>ära</1>."
+msgstr "«Возвращаться» — это <0>tagasi tulema</0>, а не <1>ära</1>."
+
+msgid "To come back is <et>tagasi tulema</et>, not <et>ära</et>."
+msgstr "«Возвращаться» — это <et>tagasi tulema</et>, а не <et>ära</et>."
+
+msgid "to come down"
+msgstr "спускаться вниз"
+
+msgid "to come in"
+msgstr "заходить"
+
+msgid "To come in is <0>sisse tulema</0>, not <1>välja</1>."
+msgstr "«Заходить» — это <0>sisse tulema</0>, а не <1>välja</1>."
+
+msgid "To come in is <et>sisse tulema</et>, not <et>välja</et>."
+msgstr "«Заходить» — это <et>sisse tulema</et>, а не <et>välja</et>."
+
+msgid "To come round at five"
+msgstr "Зайти в пять"
+
+msgid "to eat up"
+msgstr "съесть всё"
+
+msgid "to get up"
+msgstr "вставать"
+
+msgid "To get up is <0>üles tõusma</0>, not <1>alla</1>."
+msgstr "«Вставать» — это <0>üles tõusma</0>, а не <1>alla</1>."
+
+msgid "To get up is <et>üles tõusma</et>, not <et>alla</et>."
+msgstr "«Вставать» — это <et>üles tõusma</et>, а не <et>alla</et>."
+
+msgid "to go in"
+msgstr "заходить"
+
+msgid "to go out"
+msgstr "выходить"
+
+msgid "to leave, to go away"
+msgstr "уйти прочь, уехать"
+
+msgid "to open"
+msgstr "открывать"
+
+msgid "To open is <0>lahti tegema</0>, not <1>kinni</1>."
+msgstr "«Открывать» — это <0>lahti tegema</0>, а не <1>kinni</1>."
+
+msgid "To open is <et>lahti tegema</et>, not <et>kinni</et>."
+msgstr "«Открывать» — это <et>lahti tegema</et>, а не <et>kinni</et>."
+
+msgid "to sit down"
+msgstr "садиться"
+
+msgid "to take out"
+msgstr "выносить"
+
+msgid "to throw away"
+msgstr "выбрасывать"
+
+msgid "to wake up"
+msgstr "просыпаться"
+
+msgid "to write down"
+msgstr "записывать"
+
+msgid "To write down is <0>üles kirjutama</0>, literally write up."
+msgstr "«Записывать» — это <0>üles kirjutama</0>, буквально «записывать вверх»."
+
+msgid "To write down is <et>üles kirjutama</et>."
+msgstr "«Записывать» — это <et>üles kirjutama</et>."
+
+msgid "To write Peeter an email about the weekend"
+msgstr "Написать Пеэтеру письмо про выходные"
+
+msgid "Tule palun alla!"
+msgstr "Tule palun alla!"
+
+msgid "Tule sisse!"
+msgstr "Tule sisse!"
+
+msgid "Two jobs of ära"
+msgstr "Две роли слова ära"
+
+msgid "up"
+msgstr "вверх"
+
+msgid "Up and down"
+msgstr "Вверх и вниз"
+
+msgid "We’re going out in the evening."
+msgstr "Вечером мы идём гулять."
+
+msgid "We’re taking the boxes down."
+msgstr "Мы сносим коробки вниз."
+
+msgid "What does each particle mean?"
+msgstr "Что означает каждая частица?"
+
+msgid "What does Peeter write?"
+msgstr "Что пишет Пеэтер?"
+
+msgid "What fruit should Kati buy at the shop? Write the word from the note."
+msgstr "Какие фрукты Кати нужно купить в магазине? Напиши слово из записки."
+
+msgid "What must Mari do with the blue book tomorrow?"
+msgstr "Что Мари должна сделать завтра с синей книгой?"
+
+msgid "What should Kati do with the old newspapers?"
+msgstr "Что Кати должна сделать со старыми газетами?"
+
+msgid "What should Kati tell the brother if he calls?"
+msgstr "Что Кати должна передать брату, если он позвонит?"
+
+msgid "What time did Mari wake up? Write two words as she says them."
+msgstr "Во сколько проснулась Мари? Напиши два слова так, как она говорит."
+
+msgid "When another verb such as <0>pean</0> or <1>saan</1> comes first, the particle usually stays right before the second verb: <2>Ma pean vara üles tõusma.</2> Build each sentence from its meaning."
+msgstr "Когда первым идёт другой глагол, например <0>pean</0> или <1>saan</1>, частица обычно остаётся прямо перед вторым глаголом: <2>Ma pean vara üles tõusma.</2> Собери каждое предложение по смыслу."
+
+msgid "When does the owner of the new flat arrive?"
+msgstr "Когда приедет хозяин новой квартиры?"
+
+msgid "Where the particle usually goes"
+msgstr "Где обычно стоит частица"
+
+msgid "Which particle"
+msgstr "Какая частица"
+
+msgid "Which particle fits?"
+msgstr "Какая частица подходит?"
+
+msgid "Why did Peeter open the kitchen window?"
+msgstr "Почему Пеэтер открыл кухонное окно?"
+
+msgid "Why does Mari ask Jaan to close the door?"
+msgstr "Почему Мари просит Яана закрыть дверь?"
+
+msgid "With <0>pean</0>, the particle usually stays right before the <1>-ma</1> verb: <2>üles tõusma</2>."
+msgstr "После <0>pean</0> частица обычно остаётся прямо перед глаголом на <1>-ma</1>: <2>üles tõusma</2>."
+
+msgid "With <0>saad</0>, the particle usually stays right before the <1>-da</1> verb: <2>kinni panna</2>."
+msgstr "После <0>saad</0> частица обычно остаётся прямо перед глаголом на <1>-da</1>: <2>kinni panna</2>."
+
+msgid "With <et>pean</et>, <et>üles</et> usually stays before <et>tõusma</et>."
+msgstr "После <et>pean</et> частица <et>üles</et> обычно стоит перед <et>tõusma</et>."
+
+msgid "With a second verb, the particle usually stays right before the infinitive: <0>Ma pean vara üles tõusma.</0>"
+msgstr "Когда есть второй глагол, частица обычно остаётся прямо перед инфинитивом: <0>Ma pean vara üles tõusma.</0>"
+
+msgid "With one verb, <et>üles</et> usually goes to the end."
+msgstr "Когда глагол один, <et>üles</et> обычно уходит в конец."
+
+msgid "Write each sentence in Estonian using a particle verb."
+msgstr "Напиши каждое предложение по-эстонски, используя глагол с частицей."
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"

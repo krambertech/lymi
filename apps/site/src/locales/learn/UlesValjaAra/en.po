@@ -1,0 +1,572 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 00:34+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0>Alla viima</0> is to take down."
+msgstr "<0>Alla viima</0> is to take down."
+
+msgid "<0>Ära sööma</0> is to eat something all up."
+msgstr "<0>Ära sööma</0> is to eat something all up."
+
+msgid "<0>Ära</0> after a verb usually means away or completely (<1>Ta läks ära</1>); <2>ära</2> before a command means don’t (<3>Ära mine!</3>)."
+msgstr "<0>Ära</0> after a verb usually means away or completely (<1>Ta läks ära</1>); <2>ära</2> before a command means don’t (<3>Ära mine!</3>)."
+
+msgid "<0>Ära</0> means away or finished, <1>tagasi</1> back, <2>lahti</2> open and <3>kinni</3> closed."
+msgstr "<0>Ära</0> means away or finished, <1>tagasi</1> back, <2>lahti</2> open and <3>kinni</3> closed."
+
+msgid "<0>Kinni panema</0> is to close."
+msgstr "<0>Kinni panema</0> is to close."
+
+msgid "<0>Lahti tegema</0> is to open."
+msgstr "<0>Lahti tegema</0> is to open."
+
+msgid "<0>Sisse tulema</0> is to come in."
+msgstr "<0>Sisse tulema</0> is to come in."
+
+msgid "<0>Sisse</0> is in, and <1>välja</1> is out."
+msgstr "<0>Sisse</0> is in, and <1>välja</1> is out."
+
+msgid "<0>Tagasi tulema</0> is to come back."
+msgstr "<0>Tagasi tulema</0> is to come back."
+
+msgid "<0>Üles tõusma</0> is to get up."
+msgstr "<0>Üles tõusma</0> is to get up."
+
+msgid "<0>Üles</0> is up, <1>alla</1> is down, and <2>maha</2> is down onto a surface."
+msgstr "<0>Üles</0> is up, <1>alla</1> is down, and <2>maha</2> is down onto a surface."
+
+msgid "<0>Välja minema</0> is to go out."
+msgstr "<0>Välja minema</0> is to go out."
+
+msgid "<et>Alla viima</et> is to take down."
+msgstr "<et>Alla viima</et> is to take down."
+
+msgid "<et>Ära minema</et> is to leave."
+msgstr "<et>Ära minema</et> is to leave."
+
+msgid "<et>Ära sööma</et> is to eat something all up."
+msgstr "<et>Ära sööma</et> is to eat something all up."
+
+msgid "<et>Kinni panema</et> is to close, with <et>kinni</et> at the end."
+msgstr "<et>Kinni panema</et> is to close, with <et>kinni</et> at the end."
+
+msgid "<et>Kinni panema</et> is to close."
+msgstr "<et>Kinni panema</et> is to close."
+
+msgid "<et>Lahti tegema</et> is to open."
+msgstr "<et>Lahti tegema</et> is to open."
+
+msgid "<et>Sisse tulema</et> is to come in."
+msgstr "<et>Sisse tulema</et> is to come in."
+
+msgid "<et>Tagasi tulema</et> is to come back."
+msgstr "<et>Tagasi tulema</et> is to come back."
+
+msgid "<et>Üles kirjutama</et> is to write down."
+msgstr "<et>Üles kirjutama</et> is to write down."
+
+msgid "<et>Üles tõusma</et> is to get up."
+msgstr "<et>Üles tõusma</et> is to get up."
+
+msgid "<et>Välja minema</et> is to go out."
+msgstr "<et>Välja minema</et> is to go out."
+
+msgid "20 minutes"
+msgstr "20 minutes"
+
+msgid "8 exercises"
+msgstr "8 exercises"
+
+msgid "A note on the kitchen table"
+msgstr "A note on the kitchen table"
+
+msgid "A small word like <0>üles</0>, <1>välja</1> or <2>ära</2> adds direction or completion to a verb: <3>Ma tõusen kell seitse üles.</3>"
+msgstr "A small word like <0>üles</0>, <1>välja</1> or <2>ära</2> adds direction or completion to a verb: <3>Ma tõusen kell seitse üles.</3>"
+
+msgid "After the verb, <0>ära</0> usually means away or finished."
+msgstr "After the verb, <0>ära</0> usually means away or finished."
+
+msgid "After the verb, <et>ära</et> usually means away or finished."
+msgstr "After the verb, <et>ära</et> usually means away or finished."
+
+msgid "After work around five in the evening"
+msgstr "After work around five in the evening"
+
+msgid "All eight particle verbs right."
+msgstr "All eight particle verbs right."
+
+msgid "All eight particles right."
+msgstr "All eight particles right."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six in a natural order."
+msgstr "All six in a natural order."
+
+msgid "All six: you told both uses of <0>ära</0> apart."
+msgstr "All six: you told both uses of <0>ära</0> apart."
+
+msgid "At two o’clock"
+msgstr "At two o’clock"
+
+msgid "Away or don’t?"
+msgstr "Away or don’t?"
+
+msgid "Away or finished"
+msgstr "Away or finished"
+
+msgid "Away, back, open"
+msgstr "Away, back, open"
+
+msgid "away, completely"
+msgstr "away, completely"
+
+msgid "back"
+msgstr "back"
+
+msgid "Before a command, <0>ära</0> says don’t."
+msgstr "Before a command, <0>ära</0> says don’t."
+
+msgid "Before a command, <et>ära</et> says don’t."
+msgstr "Before a command, <et>ära</et> says don’t."
+
+msgid "Bring back the library copy"
+msgstr "Bring back the library copy"
+
+msgid "Build the sentence"
+msgstr "Build the sentence"
+
+msgid "Can you close the door?"
+msgstr "Can you close the door?"
+
+msgid "Check where <0>ära</0> stands in the sentence, then try again."
+msgstr "Check where <0>ära</0> stands in the sentence, then try again."
+
+msgid "closed, shut"
+msgstr "closed, shut"
+
+msgid "Cold air comes in from the hallway."
+msgstr "Cold air comes in from the hallway."
+
+msgid "Come in, it’s warm here!"
+msgstr "Come in, it’s warm here!"
+
+msgid "Dictionary"
+msgstr "Dictionary"
+
+msgid "Don’t do it"
+msgstr "Don’t do it"
+
+msgid "down"
+msgstr "down"
+
+msgid "Each sentence uses the wrong particle for its meaning. Tap the wrong word, then type the right one."
+msgstr "Each sentence uses the wrong particle for its meaning. Tap the wrong word, then type the right one."
+
+msgid "Estonian builds everyday verbs by adding a direction word to a verb: <0/> is to get up, <1/> is to open and <2/> is to close."
+msgstr "Estonian builds everyday verbs by adding a direction word to a verb: <0/> is to get up, <1/> is to open and <2/> is to close."
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "Give them to the neighbour downstairs"
+msgstr "Give them to the neighbour downstairs"
+
+msgid "Go through the table once more, then try again."
+msgstr "Go through the table once more, then try again."
+
+msgid "Group"
+msgstr "Group"
+
+msgid "He ate up the whole cake."
+msgstr "He ate up the whole cake."
+
+msgid "He burnt toast."
+msgstr "He burnt toast."
+
+msgid "He or she already left."
+msgstr "He or she already left."
+
+msgid "He painted the wall."
+msgstr "He painted the wall."
+
+msgid "Hear each sentence and pick which job <0>ära</0> is doing."
+msgstr "Hear each sentence and pick which job <0>ära</0> is doing."
+
+msgid "I get up at seven."
+msgstr "I get up at seven."
+
+msgid "I have to get up early."
+msgstr "I have to get up early."
+
+msgid "I opened the window."
+msgstr "I opened the window."
+
+msgid "I’ll come back at six."
+msgstr "I’ll come back at six."
+
+msgid "I’ll give the book back tomorrow."
+msgstr "I’ll give the book back tomorrow."
+
+msgid "I’ll write down the number."
+msgstr "I’ll write down the number."
+
+msgid "I’ll write the number down."
+msgstr "I’ll write the number down."
+
+msgid "I’m coming back tomorrow."
+msgstr "I’m coming back tomorrow."
+
+msgid "In a dictionary, the particle stands first. In a sentence with one verb, it usually moves after the verb: <0>Ma tõusen kell seitse üles.</0> Switch groups and tap a form to hear it."
+msgstr "In a dictionary, the particle stands first. In a sentence with one verb, it usually moves after the verb: <0>Ma tõusen kell seitse üles.</0> Switch groups and tap a form to hear it."
+
+msgid "In a normal statement with one verb, the particle usually moves after the verb, often to the end: <0>Ma tõusen kell seitse üles.</0>"
+msgstr "In a normal statement with one verb, the particle usually moves after the verb, often to the end: <0>Ma tõusen kell seitse üles.</0>"
+
+msgid "In a sentence"
+msgstr "In a sentence"
+
+msgid "In a statement with one verb, <0>tagasi</0> usually comes at the end."
+msgstr "In a statement with one verb, <0>tagasi</0> usually comes at the end."
+
+msgid "In a statement with one verb, <0>välja</0> usually comes at the end."
+msgstr "In a statement with one verb, <0>välja</0> usually comes at the end."
+
+msgid "In a statement with one verb, the particle usually comes after the object: <0>kirjutan numbri üles</0>."
+msgstr "In a statement with one verb, the particle usually comes after the object: <0>kirjutan numbri üles</0>."
+
+msgid "In a statement with one verb, the particle usually goes to the end: <0>tõusen … üles</0>."
+msgstr "In a statement with one verb, the particle usually goes to the end: <0>tõusen … üles</0>."
+
+msgid "In and out"
+msgstr "In and out"
+
+msgid "in, inside"
+msgstr "in, inside"
+
+msgid "Jaan"
+msgstr "Jaan"
+
+msgid "Jaan comes to help Mari move out of her flat. Listen and answer. You can play the conversation twice."
+msgstr "Jaan comes to help Mari move out of her flat. Listen and answer. You can play the conversation twice."
+
+msgid "Jaan writes down the owner’s phone number."
+msgstr "Jaan writes down the owner’s phone number."
+
+msgid "Lend it to Jaan until Monday morning"
+msgstr "Lend it to Jaan until Monday morning"
+
+msgid "Lesson {commands} showed <0/> for saying don’t: <1>Ära mine!</1> As a particle after the verb, <2>ära</2> usually means away or finished: <3>Ta läks ära</3> (he left) and <4>Ma sõin võileiva ära</4> (I ate the sandwich up)."
+msgstr "Lesson {commands} showed <0/> for saying don’t: <1>Ära mine!</1> As a particle after the verb, <2>ära</2> usually means away or finished: <3>Ta läks ära</3> (he left) and <4>Ma sõin võileiva ära</4> (I ate the sandwich up)."
+
+msgid "Lesson {order} showed that the main verb usually stands second. With one verb, the particle usually goes after the verb, often to the end: <0>Ma kirjutan numbri üles.</0>"
+msgstr "Lesson {order} showed that the main verb usually stands second. With one verb, the particle usually goes after the verb, often to the end: <0>Ma kirjutan numbri üles.</0>"
+
+msgid "Listen: Mari and Jaan"
+msgstr "Listen: Mari and Jaan"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Loud music plays next door."
+msgstr "Loud music plays next door."
+
+msgid "Ma tegin akna lahti."
+msgstr "Ma tegin akna lahti."
+
+msgid "Ma tõusen kell seitse üles."
+msgstr "Ma tõusen kell seitse üles."
+
+msgid "Ma tulen kell kuus tagasi."
+msgstr "Ma tulen kell kuus tagasi."
+
+msgid "Mari"
+msgstr "Mari"
+
+msgid "Mari wants to take the old newspapers to the new flat."
+msgstr "Mari wants to take the old newspapers to the new flat."
+
+msgid "Match each particle with its meaning."
+msgstr "Match each particle with its meaning."
+
+msgid "Me läheme õhtul välja."
+msgstr "Me läheme õhtul välja."
+
+msgid "Meaning"
+msgstr "Meaning"
+
+msgid "Nearly. Check the particle and its place in the ones you missed."
+msgstr "Nearly. Check the particle and its place in the ones you missed."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "Nearly. Read the reason under each one you missed."
+msgstr "Nearly. Read the reason under each one you missed."
+
+msgid "Notice <0/>: Estonian writes things “up” (<1>üles</1>), where English says write down."
+msgstr "Notice <0/>: Estonian writes things “up” (<1>üles</1>), where English says write down."
+
+msgid "open"
+msgstr "open"
+
+msgid "Open the window, it’s hot here."
+msgstr "Open the window, it’s hot here."
+
+msgid "out"
+msgstr "out"
+
+msgid "Pack it away"
+msgstr "Pack it away"
+
+msgid "Packing for a new flat"
+msgstr "Packing for a new flat"
+
+msgid "Pane palun uks kinni."
+msgstr "Pane palun uks kinni."
+
+msgid "Particle"
+msgstr "Particle"
+
+msgid "Particle verbs"
+msgstr "Particle verbs"
+
+msgid "Particles add direction or completion to a verb: <0>üles tõusma</0> (get up), <1>välja minema</1> (go out), <2>kinni panema</2> (close)."
+msgstr "Particles add direction or completion to a verb: <0>üles tõusma</0> (get up), <1>välja minema</1> (go out), <2>kinni panema</2> (close)."
+
+msgid "Peeter comes back from work at six."
+msgstr "Peeter comes back from work at six."
+
+msgid "Peeter leaves a morning note for Kati. Read it and answer."
+msgstr "Peeter leaves a morning note for Kati. Read it and answer."
+
+msgid "Peeter writes"
+msgstr "Peeter writes"
+
+msgid "Pick the particle"
+msgstr "Pick the particle"
+
+msgid "Pick the particle that completes each sentence, then hear the whole line."
+msgstr "Pick the particle that completes each sentence, then hear the whole line."
+
+msgid "Please close the door."
+msgstr "Please close the door."
+
+msgid "Please come in, it’s warm here."
+msgstr "Please come in, it’s warm here."
+
+msgid "Put them in a box in the hallway"
+msgstr "Put them in a box in the hallway"
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "Read why under each one you missed, then try again."
+msgstr "Read why under each one you missed, then try again."
+
+msgid "Right before lunch at noon"
+msgstr "Right before lunch at noon"
+
+msgid "Small words that steer the verb"
+msgstr "Small words that steer the verb"
+
+msgid "Ta läks juba ära."
+msgstr "Ta läks juba ära."
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "That Peeter will call back later"
+msgstr "That Peeter will call back later"
+
+msgid "The cat might escape."
+msgstr "The cat might escape."
+
+msgid "The morning air felt warm outside."
+msgstr "The morning air felt warm outside."
+
+msgid "There is still plenty of bread left at home."
+msgstr "There is still plenty of bread left at home."
+
+msgid "They plan to go out to eat for lunch once the boxes are in the car."
+msgstr "They plan to go out to eat for lunch once the boxes are in the car."
+
+msgid "Throw them in the bin"
+msgstr "Throw them in the bin"
+
+msgid "to close"
+msgstr "to close"
+
+msgid "To close is <0>kinni panema</0>, not <1>lahti</1>."
+msgstr "To close is <0>kinni panema</0>, not <1>lahti</1>."
+
+msgid "To close is <et>kinni panema</et>, not <et>lahti</et>."
+msgstr "To close is <et>kinni panema</et>, not <et>lahti</et>."
+
+msgid "to come back"
+msgstr "to come back"
+
+msgid "To come back is <0>tagasi tulema</0>, not <1>ära</1>."
+msgstr "To come back is <0>tagasi tulema</0>, not <1>ära</1>."
+
+msgid "To come back is <et>tagasi tulema</et>, not <et>ära</et>."
+msgstr "To come back is <et>tagasi tulema</et>, not <et>ära</et>."
+
+msgid "to come down"
+msgstr "to come down"
+
+msgid "to come in"
+msgstr "to come in"
+
+msgid "To come in is <0>sisse tulema</0>, not <1>välja</1>."
+msgstr "To come in is <0>sisse tulema</0>, not <1>välja</1>."
+
+msgid "To come in is <et>sisse tulema</et>, not <et>välja</et>."
+msgstr "To come in is <et>sisse tulema</et>, not <et>välja</et>."
+
+msgid "To come round at five"
+msgstr "To come round at five"
+
+msgid "to eat up"
+msgstr "to eat up"
+
+msgid "to get up"
+msgstr "to get up"
+
+msgid "To get up is <0>üles tõusma</0>, not <1>alla</1>."
+msgstr "To get up is <0>üles tõusma</0>, not <1>alla</1>."
+
+msgid "To get up is <et>üles tõusma</et>, not <et>alla</et>."
+msgstr "To get up is <et>üles tõusma</et>, not <et>alla</et>."
+
+msgid "to go in"
+msgstr "to go in"
+
+msgid "to go out"
+msgstr "to go out"
+
+msgid "to leave, to go away"
+msgstr "to leave, to go away"
+
+msgid "to open"
+msgstr "to open"
+
+msgid "To open is <0>lahti tegema</0>, not <1>kinni</1>."
+msgstr "To open is <0>lahti tegema</0>, not <1>kinni</1>."
+
+msgid "To open is <et>lahti tegema</et>, not <et>kinni</et>."
+msgstr "To open is <et>lahti tegema</et>, not <et>kinni</et>."
+
+msgid "to sit down"
+msgstr "to sit down"
+
+msgid "to take out"
+msgstr "to take out"
+
+msgid "to throw away"
+msgstr "to throw away"
+
+msgid "to wake up"
+msgstr "to wake up"
+
+msgid "to write down"
+msgstr "to write down"
+
+msgid "To write down is <0>üles kirjutama</0>, literally write up."
+msgstr "To write down is <0>üles kirjutama</0>, literally write up."
+
+msgid "To write down is <et>üles kirjutama</et>."
+msgstr "To write down is <et>üles kirjutama</et>."
+
+msgid "To write Peeter an email about the weekend"
+msgstr "To write Peeter an email about the weekend"
+
+msgid "Tule palun alla!"
+msgstr "Tule palun alla!"
+
+msgid "Tule sisse!"
+msgstr "Tule sisse!"
+
+msgid "Two jobs of ära"
+msgstr "Two jobs of ära"
+
+msgid "up"
+msgstr "up"
+
+msgid "Up and down"
+msgstr "Up and down"
+
+msgid "We’re going out in the evening."
+msgstr "We’re going out in the evening."
+
+msgid "We’re taking the boxes down."
+msgstr "We’re taking the boxes down."
+
+msgid "What does each particle mean?"
+msgstr "What does each particle mean?"
+
+msgid "What does Peeter write?"
+msgstr "What does Peeter write?"
+
+msgid "What fruit should Kati buy at the shop? Write the word from the note."
+msgstr "What fruit should Kati buy at the shop? Write the word from the note."
+
+msgid "What must Mari do with the blue book tomorrow?"
+msgstr "What must Mari do with the blue book tomorrow?"
+
+msgid "What should Kati do with the old newspapers?"
+msgstr "What should Kati do with the old newspapers?"
+
+msgid "What should Kati tell the brother if he calls?"
+msgstr "What should Kati tell the brother if he calls?"
+
+msgid "What time did Mari wake up? Write two words as she says them."
+msgstr "What time did Mari wake up? Write two words as she says them."
+
+msgid "When another verb such as <0>pean</0> or <1>saan</1> comes first, the particle usually stays right before the second verb: <2>Ma pean vara üles tõusma.</2> Build each sentence from its meaning."
+msgstr "When another verb such as <0>pean</0> or <1>saan</1> comes first, the particle usually stays right before the second verb: <2>Ma pean vara üles tõusma.</2> Build each sentence from its meaning."
+
+msgid "When does the owner of the new flat arrive?"
+msgstr "When does the owner of the new flat arrive?"
+
+msgid "Where the particle usually goes"
+msgstr "Where the particle usually goes"
+
+msgid "Which particle"
+msgstr "Which particle"
+
+msgid "Which particle fits?"
+msgstr "Which particle fits?"
+
+msgid "Why did Peeter open the kitchen window?"
+msgstr "Why did Peeter open the kitchen window?"
+
+msgid "Why does Mari ask Jaan to close the door?"
+msgstr "Why does Mari ask Jaan to close the door?"
+
+msgid "With <0>pean</0>, the particle usually stays right before the <1>-ma</1> verb: <2>üles tõusma</2>."
+msgstr "With <0>pean</0>, the particle usually stays right before the <1>-ma</1> verb: <2>üles tõusma</2>."
+
+msgid "With <0>saad</0>, the particle usually stays right before the <1>-da</1> verb: <2>kinni panna</2>."
+msgstr "With <0>saad</0>, the particle usually stays right before the <1>-da</1> verb: <2>kinni panna</2>."
+
+msgid "With <et>pean</et>, <et>üles</et> usually stays before <et>tõusma</et>."
+msgstr "With <et>pean</et>, <et>üles</et> usually stays before <et>tõusma</et>."
+
+msgid "With a second verb, the particle usually stays right before the infinitive: <0>Ma pean vara üles tõusma.</0>"
+msgstr "With a second verb, the particle usually stays right before the infinitive: <0>Ma pean vara üles tõusma.</0>"
+
+msgid "With one verb, <et>üles</et> usually goes to the end."
+msgstr "With one verb, <et>üles</et> usually goes to the end."
+
+msgid "Write each sentence in Estonian using a particle verb."
+msgstr "Write each sentence in Estonian using a particle verb."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"

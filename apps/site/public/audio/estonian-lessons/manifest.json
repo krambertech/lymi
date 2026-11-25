@@ -2233,6 +2233,292 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "eksam-a2/c-a2-trip": {
+    "text": "Hotell Mere, tere! Kuidas saan teid aidata? Tere! Ma sooviksin broneerida ühe toa Haapsalus. Millal te tulete ja mitmeks ööks? Ma saabun reedel, kümnendal juulil, ja jään kaheks ööks. Kas te soovite tuba ühele või kahele inimesele? Kahele inimesele, palun. Kas rõduga tuba on veel vaba? Jah, meil on teisel korrusel üks vaba tuba merevaate ja rõduga. Suurepärane! Kui palju see maksab ja kas hommikusöök on hinna sees? Üks öö maksab kaheksakümmend eurot. Hommikusöök on hinna sees kella seitsmest kümneni. Kas hotellis on ka tasuta parkimine? Jah, hoovis on külalistele tasuta parkla. Väga hea, ma võtan selle toa. Minu nimi on Mart Tamm. Aitäh, broneering on tehtud. Ootame teid reedel alates kella kolmest!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hotell Mere, tere! Kuidas saan teid aidata?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere! Ma sooviksin broneerida ühe toa Haapsalus."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Millal te tulete ja mitmeks ööks?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma saabun reedel, kümnendal juulil, ja jään kaheks ööks."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas te soovite tuba ühele või kahele inimesele?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kahele inimesele, palun. Kas rõduga tuba on veel vaba?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, meil on teisel korrusel üks vaba tuba merevaate ja rõduga."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Suurepärane! Kui palju see maksab ja kas hommikusöök on hinna sees?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Üks öö maksab kaheksakümmend eurot. Hommikusöök on hinna sees kella seitsmest kümneni."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas hotellis on ka tasuta parkimine?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, hoovis on külalistele tasuta parkla."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Väga hea, ma võtan selle toa. Minu nimi on Mart Tamm."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Aitäh, broneering on tehtud. Ootame teid reedel alates kella kolmest!"
+        ]
+      }
+    ]
+  },
+  "eksam-a2/eile-o3htul-ma-so3in-kala": {
+    "text": "Eile õhtul ma sõin kala.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-a2/kas-sa-saaksid-mulle-homme-helistada": {
+    "text": "Kas sa saaksid mulle homme helistada?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-a2/ma-ei-la2inud-eile-to2o2le-sest-mul-oli-palavik": {
+    "text": "Ma ei läinud eile tööle, sest mul oli palavik.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-a2/ma-ka2isin-eile-o3htul-so3braga-kinos": {
+    "text": "Ma käisin eile õhtul sõbraga kinos.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-a2/ma-ka2isin-eile-poes": {
+    "text": "Ma käisin eile poes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-a2/ma-ootan-sind-jaamas": {
+    "text": "Ma ootan sind jaamas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-a2/ma-pean-selle-raamatu-reedeks-la2bi-lugema": {
+    "text": "Ma pean selle raamatu reedeks läbi lugema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-a2/me-kohtume-laupa2eval-kell-kolm-kohviku-ees": {
+    "text": "Me kohtume laupäeval kell kolm kohviku ees.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-a2/minu-vend-to2o2tab-tartus-arstina": {
+    "text": "Minu vend töötab Tartus arstina.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-a2/mul-ei-ole-ta2na-aega": {
+    "text": "Mul ei ole täna aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-a2/p-a2-voice": {
+    "text": "Tere, Mart! Siin räägib Kati. Ma helistan sulle laupäevase sünnipäeva kohta. Pidu algab minu kodus kell kuus, mitte kell viis nagu ma varem kirjutasin. Meie maja asub uue pargi kõrval ja ma elan kolmandal korrusel, korter number seitse. Süüa pole vaja kaasa tuua, sest ma teen ise suure salati ja koogi. Kui sa tuled autoga, saad tasuta parkida maja taga hoovis. Helista mulle tagasi, kui sa ei leia õiget ust üles. Näeme laupäeval!",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "eksam-a2/see-to2o2-peab-valmis-olema-reedeks": {
+    "text": "See töö peab valmis olema reedeks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-a2/ta-oskab-ha2sti-ujuda": {
+    "text": "Ta oskab hästi ujuda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-b1/c-b1-interview": {
+    "text": "Tere tulemast stuudiosse, Kadri! Teie ettevõte läks pool aastat tagasi üle paindlikule tööajale. Kuidas see on toiminud? Tere! Alguses olime natuke ettevaatlikud, aga praegu oleme tulemusega väga rahul. Mida paindlik tööaeg teie meeskonnas täpselt tähendab? Töötajad saavad ise valida, kas alustavad hommikul kell seitse või kell kümme. Peamine on see, et kella kümnest kuni kella kaheni oleme kõik kättesaadavad. Kas inimesed töötavad endiselt ka kontoris või peamiselt kodust? Enamik käib kontoris kaks või kolm korda nädalas, sest ühiseid arutelusid on näost näkku lihtsam pidada. Kas sellisel korraldusel on olnud ka mingeid puudusi? Uutel töötajatel võtab algus vahel veidi kauem aega, kui kogu tiim ei ole iga päev samas ruumis. Sellepärast lepime uue kolleegi esimeseks kuuks kokku rohkem ühiseid päevi kontoris. Ja kas te märkate muutust ka selles, kuidas inimesed tööle tulevad? Jah, kuna hommikuse tipptunni ajal ei pea enam kõik korraga liikuma, tuleb üha rohkem kolleege tööle jalgsi või rattaga. Suur aitäh kogemust jagamast, Kadri!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere tulemast stuudiosse, Kadri! Teie ettevõte läks pool aastat tagasi üle paindlikule tööajale. Kuidas see on toiminud?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere! Alguses olime natuke ettevaatlikud, aga praegu oleme tulemusega väga rahul."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mida paindlik tööaeg teie meeskonnas täpselt tähendab?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Töötajad saavad ise valida, kas alustavad hommikul kell seitse või kell kümme. Peamine on see, et kella kümnest kuni kella kaheni oleme kõik kättesaadavad."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas inimesed töötavad endiselt ka kontoris või peamiselt kodust?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Enamik käib kontoris kaks või kolm korda nädalas, sest ühiseid arutelusid on näost näkku lihtsam pidada."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas sellisel korraldusel on olnud ka mingeid puudusi?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Uutel töötajatel võtab algus vahel veidi kauem aega, kui kogu tiim ei ole iga päev samas ruumis. Sellepärast lepime uue kolleegi esimeseks kuuks kokku rohkem ühiseid päevi kontoris."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ja kas te märkate muutust ka selles, kuidas inimesed tööle tulevad?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, kuna hommikuse tipptunni ajal ei pea enam kõik korraga liikuma, tuleb üha rohkem kolleege tööle jalgsi või rattaga."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Suur aitäh kogemust jagamast, Kadri!"
+        ]
+      }
+    ]
+  },
+  "eksam-b1/kas-sa-tead-millal-see-kauplus-avatakse": {
+    "text": "Kas sa tead, millal see kauplus avatakse?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-b1/koju-jalutades-kuulasin-ma-raadiot": {
+    "text": "Koju jalutades kuulasin ma raadiot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-b1/ma-ja2in-koju-sest-ma-olin-haige": {
+    "text": "Ma jäin koju, sest ma olin haige.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-b1/ma-ostsin-eile-kasutatud-auto": {
+    "text": "Ma ostsin eile kasutatud auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-b1/ma-sain-sinu-kirjast-aru-et-koosolek-ja2a2b-a2ra": {
+    "text": "Ma sain sinu kirjast aru, et koosolek jääb ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-b1/me-peame-enne-reisi-ko3ik-dokumendid-u2le-vaatama": {
+    "text": "Me peame enne reisi kõik dokumendid üle vaatama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-b1/naine-kellega-ma-ra2a2kisin-elab-tartus": {
+    "text": "Naine, kellega ma rääkisin, elab Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-b1/p-b1-radio": {
+    "text": "Tere hommikust, head kuulajad! Kell on kaheksa ja eetris on lühike uudistesaade. Täna algab Tallinna ja Tartu vahelisel raudteel uus sõiduplaan, mis lisab tööpäevadele kaks kiirrongi. Ettevõtte sõnul väheneb reisijate ooteaeg eriti hommikuse tipptunni ajal. Pärnu maanteel käivad aga endiselt teetööd, mistõttu palutakse autojuhtidel varuda vähemalt viisteist minutit lisaaega. Nüüd ilmateade. Täna ennelõunal on pilves ja Lääne-Eestis sajab kohati vihma. Õhtupoolikul pilved hajuvad, tuul vaibub ning sooja on neliteist kuni seitseteist kraadi. Homme püsib kuiv ja päikeseline ilm üle kogu Eesti.",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "eksam-b1/raamat-mille-ma-eile-ostsin-on-va2ga-po3nev": {
+    "text": "Raamat, mille ma eile ostsin, on väga põnev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-b1/raamat-mis-on-laual-on-minu": {
+    "text": "Raamat, mis on laual, on minu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-b1/selles-koolis-ra2a2gitakse-kahte-vo3o3rkeelt": {
+    "text": "Selles koolis räägitakse kahte võõrkeelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-b1/ta-la2ks-hommikul-va2lja-so2o2mata": {
+    "text": "Ta läks hommikul välja söömata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eksam-b1/ta-olevat-kolinud-eelmisel-kuul-pa2rnusse": {
+    "text": "Ta olevat kolinud eelmisel kuul Pärnusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "emal-ema-juures/arsti-juurde": {
     "text": "arsti juurde",
     "model": "eleven_v4",

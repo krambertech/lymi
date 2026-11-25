@@ -1,0 +1,452 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 02:16+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "<0>Aru saama</0> takes <1>-st</1> (<2>sinu kirjast</2>), and <3>ära jääma</3> means to be cancelled."
+msgstr "<0>Aru saama</0> требует <1>-st</1> (<2>sinu kirjast</2>), а <3>ära jääma</3> означает «отменяться»."
+
+msgid "<0>Soovitama</0> usually takes the partitive relative pronoun: <1>mida</1>."
+msgstr "После <0>soovitama</0> относительное местоимение обычно стоит в партитиве: <1>mida</1>."
+
+msgid "7 marked parts and a formal letter"
+msgstr "7 оцениваемых частей и официальное письмо"
+
+msgid "75 minutes"
+msgstr "75 минут"
+
+msgid "A completed object in a relative clause usually uses <0>mille</0> for things."
+msgstr "Завершённое дополнение в придаточном предложении для вещей обычно берёт <0>mille</0>."
+
+msgid "A full timed practice test modelled on Estonia’s official B1 exam: a news report and official notice, grammar structure, sentence fixes and translations, radio news and an interview played twice, and a formal letter."
+msgstr "Полный пробный экзамен с таймером по образцу официального экзамена B1 в Эстонии: новость и официальное уведомление, грамматика, исправление и перевод предложений, радионовости и интервью по два прослушивания и официальное письмо."
+
+msgid "A radio host talks to Kadri about flexible working hours at her company. Listen up to twice and answer all seven questions."
+msgstr "Радиоведущий беседует с Кадри о гибком рабочем графике в её компании. Прослушай запись до двух раз и ответь на все семь вопросов."
+
+msgid "A reason needs <0>sest</0> or <1>kuna</1>, not <2>kuigi</2> (although)."
+msgstr "Для причины нужны <0>sest</0> или <1>kuna</1>, а не <2>kuigi</2> («хотя»)."
+
+msgid "A reason takes <0>kuna</0> or <1>sest</1>."
+msgstr "Причину вводят союзы <0>kuna</0> или <1>sest</1>."
+
+msgid "A sleeper train"
+msgstr "Ночной поезд"
+
+msgid "access"
+msgstr "доступ"
+
+msgid "All six B1 errors found and fixed."
+msgstr "Все шесть ошибок уровня B1 найдены и исправлены."
+
+msgid "All six sentences right — strong B1 control."
+msgstr "Все шесть предложений верны — уверенный уровень B1."
+
+msgid "An old river bridge closed."
+msgstr "Закрыли старый мост."
+
+msgid "Apparently she moved to Pärnu last month."
+msgstr "Говорят, она в прошлом месяце переехала в Пярну."
+
+msgid "Asks whether flexible hours have had any drawbacks"
+msgstr "Спрашивает, были ли минусы у гибкого графика"
+
+msgid "At least fifteen minutes"
+msgstr "Не менее пятнадцати минут"
+
+msgid "Borrowing town bikes requires no deposit anymore."
+msgstr "Для проката городских велосипедов больше не нужен залог."
+
+msgid "Both hot and cold water will be turned off during the work."
+msgstr "Во время работ отключат и горячую, и холодную воду."
+
+msgid "building manager"
+msgstr "управляющий домом"
+
+msgid "By calling the city’s twenty-four-hour emergency line"
+msgstr "Позвонив на круглосуточную городскую аварийную линию"
+
+msgid "By email straight away"
+msgstr "Сразу по почте"
+
+msgid "By visiting the management office in person"
+msgstr "Лично зайдя в офис управляющего"
+
+msgid "Campus garages charge no fee near lecture halls."
+msgstr "Студенческие паркинги у корпусов не берут плату."
+
+msgid "Check the explanations below, then try once more."
+msgstr "Посмотри пояснения ниже и попробуй ещё раз."
+
+msgid "Close formally and sign with your full name."
+msgstr "Официально попрощайся и подпишись полным именем."
+
+msgid "Close. Read the note under each sentence you missed."
+msgstr "Почти. Прочитай подсказку под каждым предложением с ошибкой."
+
+msgid "cycle path"
+msgstr "велодорожка"
+
+msgid "Describe the local traffic or street problem clearly."
+msgstr "Чётко опиши проблему с движением или улицей."
+
+msgid "Do you know when this shop is opened?"
+msgstr "Ты знаешь, когда открывают этот магазин?"
+
+msgid "Doing two things at once usually takes <0>-des</0>: <1>koju jalutades</1>."
+msgstr "Два одновременных действия обычно передаёт форма на <0>-des</0>: <1>koju jalutades</1>."
+
+msgid "Dozens of street parking spaces vanished."
+msgstr "Исчезли десятки парковочных мест."
+
+msgid "Each B1 sentence has one wrong word. Tap it and type the right form."
+msgstr "В каждом предложении уровня B1 есть одно неверное слово. Нажми на него и введи правильную форму."
+
+msgid "Eight to twelve"
+msgstr "До полудня"
+
+msgid "Entry tolls are coming."
+msgstr "Введут платный въезд."
+
+msgid "essential, urgently needed"
+msgstr "крайне необходимый"
+
+msgid "Explain why it matters with <0>kuna</0> or <1>sest</1>."
+msgstr "Объясни причину с помощью <0>kuna</0> или <1>sest</1>."
+
+msgid "Fill each gap with the right B1 form from the word bank. Two words in the bank are spare."
+msgstr "Заполни каждый пропуск подходящей формой уровня B1 из списка слов. Два слова лишние."
+
+msgid "Fill the sentences"
+msgstr "Заполни предложения"
+
+msgid "Five minutes"
+msgstr "Пять минут"
+
+msgid "Fix one wrong word"
+msgstr "Исправь одно слово"
+
+msgid "flexible"
+msgstr "гибкий"
+
+msgid "Free weekend city buses."
+msgstr "Бесплатные автобусы по выходным."
+
+msgid "From ten until two"
+msgstr "Между десятью утра и двумя"
+
+msgid "From twelve noon until four in the afternoon"
+msgstr "С двенадцати часов дня до четырёх часов вечера"
+
+msgid "Half an hour or even longer"
+msgstr "Полчаса или даже ещё больше времени"
+
+msgid "Half-price morning fares"
+msgstr "Скидки на утренние билеты"
+
+msgid "He went out in the morning without eating."
+msgstr "Он вышел утром не поев."
+
+msgid "heating system"
+msgstr "система отопления"
+
+msgid "Host"
+msgstr "Ведущий"
+
+msgid "How does the team help new employees settle in?"
+msgstr "Как команда помогает новым сотрудникам освоиться?"
+
+msgid "How does the weather change in the afternoon?"
+msgstr "Как изменится погода во второй половине дня?"
+
+msgid "How long ago did Kadri’s company switch to flexible hours?"
+msgstr "Как давно компания Кадри перешла на гибкий график?"
+
+msgid "How many new benches were installed along the path? Write the number word from the article."
+msgstr "Сколько новых скамеек установили вдоль дорожки? Напиши числительное словом из статьи."
+
+msgid "How much extra time are drivers on Pärnu Road advised to allow?"
+msgstr "Сколько дополнительного времени советуют заложить водителям на Пярнуском шоссе?"
+
+msgid "How should you report a radiator that stays cold afterwards?"
+msgstr "Как сообщить о батарее, которая осталась холодной после проверки?"
+
+msgid "I bought a used car yesterday."
+msgstr "Вчера я купил подержанную машину."
+
+msgid "I stayed home because I was ill."
+msgstr "Я остался дома, потому что болел."
+
+msgid "I understood from your letter that the meeting is cancelled."
+msgstr "Я понял из твоего письма, что встреча отменяется."
+
+msgid "In a formal B1 letter, state the problem, give a clear reason, propose a solution with the would form and close with <0>Lugupidamisega</0>."
+msgstr "В официальном письме уровня B1 опиши проблему, укажи причину, предложи решение через условное наклонение и заверши письмо словом <0>Lugupidamisega</0>."
+
+msgid "In the real Harno B1 exam, reading (50 minutes), listening (30–35 minutes) and writing (35 minutes) are separate timed tests. You read adapted news and notices, hear each recording twice, and write both a short message and a longer text. This mock is a shorter version of all three."
+msgstr "На настоящем экзамене Harno B1 чтение (50 минут), аудирование (30–35 минут) и письмо (35 минут) — отдельные тесты со своим временем. Ты читаешь адаптированные новости и объявления, слушаешь каждую запись дважды и пишешь и короткое сообщение, и более длинный текст. Эта пробная версия короче всех трёх."
+
+msgid "It clears and calms down."
+msgstr "Прояснится и стихнет."
+
+msgid "Just at the start of last month"
+msgstr "Только в начале прошлого месяца"
+
+msgid "Kadri"
+msgstr "Кадри"
+
+msgid "Leave a key with a trusted neighbour or arrange a new time"
+msgstr "Оставить ключ надёжному соседу или согласовать новое время"
+
+msgid "Listen to a short morning news and weather bulletin. You can play the recording twice, as in the B1 exam."
+msgstr "Послушай короткий утренний выпуск новостей и прогноз погоды. Запись можно включить дважды, как на экзамене B1."
+
+msgid "Listening 1: morning radio news"
+msgstr "Аудирование 1: утренние радионовости"
+
+msgid "Listening 2: flexible working hours"
+msgstr "Аудирование 2: гибкий рабочий график"
+
+msgid "Listening played twice, as in the exam"
+msgstr "Аудирование дважды, как на экзамене"
+
+msgid "Make one or two concrete proposals using the would form (<0>võiks</0>, <1>muudaks</1>)."
+msgstr "Сделай одно-два конкретных предложения в условном наклонении (<0>võiks</0>, <1>muudaks</1>)."
+
+msgid "Monday morning"
+msgstr "В понедельник утром"
+
+msgid "More people now drive to work because of the flexible start times."
+msgstr "Из-за гибкого начала дня теперь больше людей ездит на работу на машине."
+
+msgid "More than two years ago"
+msgstr "Более двух лет назад"
+
+msgid "Most colleagues come to the office two or three times a week."
+msgstr "Большинство коллег приходит в офис два или три раза в неделю."
+
+msgid "Nearly there. Compare the forms in the sentences you missed."
+msgstr "Почти идеально. Сравни формы в предложениях с ошибками."
+
+msgid "News announcements without a named subject usually use the impersonal: <0>avatakse</0>."
+msgstr "В новостных сообщениях без названного исполнителя обычно используется безличная форма: <0>avatakse</0>."
+
+msgid "Next Tuesday from nine until one"
+msgstr "В следующий вторник с девяти до часу"
+
+msgid "Next Wednesday from ten in the morning until two"
+msgstr "В следующую среду с десяти часов утра до двух"
+
+msgid "Only half of the new cycle path has street lighting."
+msgstr "Только половина новой велодорожки освещена."
+
+msgid "Open formally to the transport office or town council."
+msgstr "Обратись официально в транспортный департамент или городскую управу."
+
+msgid "Part 1: Reading a news report"
+msgstr "Часть 1: Чтение новости"
+
+msgid "Part 2: Reading an official notice"
+msgstr "Часть 2: Чтение официального уведомления"
+
+msgid "Part 3: Language structure"
+msgstr "Часть 3: Грамматика"
+
+msgid "Part 4: Fix the mistake"
+msgstr "Часть 4: Исправь ошибку"
+
+msgid "Part 5: Write in Estonian"
+msgstr "Часть 5: Напиши по-эстонски"
+
+msgid "Part 6: Listening to radio news"
+msgstr "Часть 6: Аудирование радионовостей"
+
+msgid "Part 7: Listening to a studio interview"
+msgstr "Часть 7: Аудирование интервью в студии"
+
+msgid "Part 8: Writing a formal letter"
+msgstr "Часть 8: Официальное письмо"
+
+msgid "pavement, sidewalk"
+msgstr "тротуар"
+
+msgid "Read the notes under each answer, then try again."
+msgstr "Прочитай пояснения под ответами и попробуй ещё раз."
+
+msgid "Read the notice from a housing association board about a building inspection and answer six questions."
+msgstr "Прочитай объявление правления квартирного товарищества о проверке в доме и ответь на шесть вопросов."
+
+msgid "Reading 1: Tartu’s new cycle path"
+msgstr "Чтение 1: новая велодорожка в Тарту"
+
+msgid "Reading 2: heating system inspection"
+msgstr "Чтение 2: проверка системы отопления"
+
+msgid "Reported speech for a past event uses <0>olevat</0> + <1>-nud</1>."
+msgstr "Косвенная речь о прошлом событии строится через <0>olevat</0> + <1>-nud</1>."
+
+msgid "Reported speech uses <0>olevat</0> + the <1>-nud</1> participle for a past event."
+msgstr "Для прошлого события в косвенной речи используется <0>olevat</0> + причастие на <1>-nud</1>."
+
+msgid "residential district"
+msgstr "жилой район"
+
+msgid "Residents can ask questions and suggest ideas at Thursday’s meeting."
+msgstr "На встрече в четверг жители могут задавать вопросы и предлагать идеи."
+
+msgid "roadworks"
+msgstr "дорожные работы"
+
+msgid "rush hour"
+msgstr "час пик"
+
+msgid "Says shared discussions are easier face to face"
+msgstr "Говорит, что общие обсуждения проще проводить очно"
+
+msgid "Six months ago"
+msgstr "Прошло полгода"
+
+msgid "Something that has been used usually takes the passive participle <0>-tud</0>: <1>kasutatud</1>."
+msgstr "Для того, что уже использовали, обычно нужно страдательное причастие на <0>-tud</0>: <1>kasutatud</1>."
+
+msgid "Speaking with someone takes <0>-ga</0>: <1>kellega</1>."
+msgstr "Разговор с кем-то требует окончания <0>-ga</0>: <1>kellega</1>."
+
+msgid "Start the 75-minute timer if you want exam conditions, or work through the test at your own pace. Read the local news report from Tartu and answer six questions."
+msgstr "Включи 75-минутный таймер для экзаменационных условий или проходи тест в своём темпе. Прочитай местную новость из Тарту и ответь на шесть вопросов."
+
+msgid "Stronger wind and much heavier evening showers arrive."
+msgstr "Ветер усилится, а вечером придут более сильные ливни."
+
+msgid "The book that I bought yesterday is very exciting."
+msgstr "Книга, которую я вчера купил, очень увлекательная."
+
+msgid "The book that is on the table is mine."
+msgstr "Книга, которая лежит на столе, — моя."
+
+msgid "The city lowered the speed limit across every single main street."
+msgstr "Город снизил ограничение скорости на каждой главной улице."
+
+msgid "The number of cyclists has grown sharply over the last three years."
+msgstr "Число велосипедистов заметно выросло за последние три года."
+
+msgid "The technician needs access to the radiators inside each flat."
+msgstr "Мастеру нужен доступ к батареям в каждой квартире."
+
+msgid "The woman with whom I spoke lives in Tartu."
+msgstr "Женщина, с которой я разговаривал, живёт в Тарту."
+
+msgid "They agree on extra shared office days during the first month."
+msgstr "В первый месяц они договариваются о большем числе общих дней в офисе."
+
+msgid "They hand out a short guide."
+msgstr "Выдают краткий гид."
+
+msgid "They shorten the first work week."
+msgstr "Они сокращают первую рабочую неделю."
+
+msgid "Thick fog spreads across the inland towns."
+msgstr "Во внутренних районах страны опустится густой туман."
+
+msgid "Things usually take <0>mis</0> and people <1>kes</1>."
+msgstr "Вещи обычно берут <0>mis</0>, а люди — <1>kes</1>."
+
+msgid "Through a place takes the preposition <0>läbi</0> + genitive."
+msgstr "Значение «сквозь, через» передаёт предлог <0>läbi</0> + генитив."
+
+msgid "timetable, schedule"
+msgstr "расписание движения"
+
+msgid "Tomorrow will be rainy across most of Estonia."
+msgstr "Завтра на большей части Эстонии будет дождливо."
+
+msgid "Two extra express trains on weekdays"
+msgstr "Два дополнительных скоростных поезда по будням"
+
+msgid "Two foreign languages are spoken in this school."
+msgstr "В этой школе говорят на двух иностранных языках."
+
+msgid "Two suburban bus routes stopped running."
+msgstr "Два пригородных маршрута перестали ходить."
+
+msgid "Use the postbox"
+msgstr "Почтовый ящик"
+
+msgid "Wait until next year’s inspection"
+msgstr "Ждать следующего года"
+
+msgid "Watch for B1 links and forms that change meaning: <0>kuigi</0> vs <1>kuna</1>, <2>-des</2> vs <3>-mata</3>, impersonal verbs and reported <4>olevat</4>."
+msgstr "Обращай внимание на союзы и формы уровня B1, меняющие смысл: <0>kuigi</0> против <1>kuna</1>, <2>-des</2> против <3>-mata</3>, безличные глаголы и косвенную речь с <4>olevat</4>."
+
+msgid "We have to look over all the documents before the trip."
+msgstr "Перед поездкой нам нужно просмотреть все документы."
+
+msgid "Western Estonia may see patches of rain this morning."
+msgstr "Сегодня утром на западе Эстонии местами возможен дождь."
+
+msgid "What changes for university students from September?"
+msgstr "Что изменится для студентов с сентября?"
+
+msgid "What does the new Tallinn–Tartu timetable add on weekdays?"
+msgstr "Что добавляет новое расписание на линии Таллинн–Тарту по будням?"
+
+msgid "What is the earliest hour staff can start work? Write the word from the interview."
+msgstr "Во сколько самое раннее сотрудники могут начинать работу? Напиши слово из интервью."
+
+msgid "What is the highest temperature mentioned for today? Write the word from the forecast."
+msgstr "Какая самая высокая температура названа на сегодня? Напиши слово из прогноза."
+
+msgid "What should residents do if they cannot stay at home?"
+msgstr "Что должны сделать жильцы, если не смогут остаться дома?"
+
+msgid "When does the heating inspection take place?"
+msgstr "Когда состоится проверка системы отопления?"
+
+msgid "When must everyone in Kadri’s team be reachable?"
+msgstr "В какие часы вся команда Кадри должна быть на связи?"
+
+msgid "When no subject is named, Estonian usually uses the impersonal: <0>avatakse</0>."
+msgstr "Когда исполнитель не назван, в эстонском обычно используется безличная форма: <0>avatakse</0>."
+
+msgid "While doing something takes <0>-des</0>: <1>oodates</1>."
+msgstr "Одновременное действие передаёт форма на <0>-des</0>: <1>oodates</1>."
+
+msgid "While walking home, I listened to the radio."
+msgstr "Идя домой, я слушал радио."
+
+msgid "Who issued the notice? Write two words from the end of the text."
+msgstr "Кто выпустил объявление? Напиши два слова из конца текста."
+
+msgid "Who raises or states each point?"
+msgstr "Кто поднимает или утверждает каждую мысль?"
+
+msgid "Why are some car drivers unhappy?"
+msgstr "Почему некоторые водители недовольны?"
+
+msgid "Why did the city representative say the new path was essential?"
+msgstr "Почему представитель городской управы назвал новую дорожку крайне необходимой?"
+
+msgid "With no named speaker, Estonian usually uses the impersonal: <0>räägitakse</0>."
+msgstr "Когда говорящий не назван, в эстонском обычно используется безличная форма: <0>räägitakse</0>."
+
+msgid "Without doing something usually takes <0>-mata</0>: <1>söömata</1>."
+msgstr "Несовершённое действие обычно передаёт форма на <0>-mata</0>: <1>söömata</1>."
+
+msgid "Write a formal letter of about 90–120 words to the town transport office about a busy junction near a school, then check it against the checklist and model."
+msgstr "Напиши официальное письмо на 90–120 слов в городской транспортный департамент об оживлённом перекрёстке у школы, а затем проверь его по чек-листу и образцу."
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"
+
+msgid "Write six B1 sentences in Estonian using relative clauses, impersonal verbs, <0>-des</0> and reported speech."
+msgstr "Напиши шесть предложений уровня B1 по-эстонски, используя придаточные предложения, безличные глаголы, <0>-des</0> и косвенную речь."
+
+msgid "Write to the local transport office about a busy junction near a school. Describe the problem, explain why parents are worried, propose two concrete improvements using the would form and close formally."
+msgstr "Напиши в местный транспортный департамент об оживлённом перекрёстке у школы. Опиши проблему, объясни, почему родители волнуются, предложи два конкретных улучшения в условном наклонении и официально попрощайся."
+
+msgid "Write to the transport office"
+msgstr "Письмо в транспортный департамент"

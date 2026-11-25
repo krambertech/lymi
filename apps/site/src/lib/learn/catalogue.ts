@@ -399,7 +399,14 @@ export const STAGES: readonly Stage[] = [
         blurb: msg`A free Estonian lesson on keegi, midagi, kuskil and kuhugi: question words with -gi or -ki for somebody and something, ei for nobody and nothing, mitte keegi on its own, and -gi or -ki on every case, as in kellelegi and kellestki, and which one to use. Every sentence is read aloud.`,
       },
       { name: msg`Particle verbs: up, out, away`, et: "Üles, välja, ära" },
-      { name: msg`Practice: looking for a flat`, et: "Korter" },
+      {
+        slug: "korter",
+        name: msg`Practice: looking for a flat`,
+        title: msg`Estonian practice: looking for a flat`,
+        et: "Korter",
+        minutes: 25,
+        blurb: msg`A free Estonian practice lesson on looking for a flat: read an advert, write to the owner, look round the flat, follow a call about two flats and write your own message. It practises floors and dates, -ga, -ta, -na and -ks, adjectives and comparing, keegi and particle verbs. Every sentence is read aloud.`,
+      },
     ],
   },
   {
@@ -560,7 +567,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 28,
         blurb: msg`A free Estonian lesson on relative clauses: mis, which usually follows a thing or an idea, and kes, which follows a person (raamat, mille ma ostsin; naine, kellega ma rääkisin), the case the word takes in its own clause (kelle, keda, mille, mida), kus for places, and the commas around the clause. Every sentence is read aloud.`,
       },
-      { name: msg`Reported speech`, et: "Ta olevat haige" },
+      {
+        slug: "ta-olevat-haige",
+        name: msg`Reported speech`,
+        title: msg`Estonian reported speech and the -vat form`,
+        et: "Ta olevat haige",
+        minutes: 24,
+        blurb: msg`A free Estonian lesson on reporting what someone said: ütles, et and rääkis, et for statements and küsis, kas for yes-or-no questions, how the person words change while the verb usually keeps its tense (Ta ütles, et tal on kiire), and the -vat form (Ta olevat haige, Ta ei tulevat), which is mostly met in news and reports and usually names no source. Every sentence is read aloud.`,
+      },
       {
         slug: "uudised",
         name: msg`Practice: reading the news`,

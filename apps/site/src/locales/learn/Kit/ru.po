@@ -281,6 +281,9 @@ msgstr "Бесплатный урок эстонского о личных ме�
 msgid "A free Estonian lesson on relative clauses: mis, which usually follows a thing or an idea, and kes, which follows a person (raamat, mille ma ostsin; naine, kellega ma rääkisin), the case the word takes in its own clause (kelle, keda, mille, mida), kus for places, and the commas around the clause. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о придаточных предложениях: mis, который обычно стоит после вещи или мысли, и kes, который стоит после человека (raamat, mille ma ostsin; naine, kellega ma rääkisin), падеж слова в собственном предложении (kelle, keda, mille, mida), kus для мест и запятые вокруг придаточного. Каждое предложение озвучено."
 
+msgid "A free Estonian lesson on reporting what someone said: ütles, et and rääkis, et for statements and küsis, kas for yes-or-no questions, how the person words change while the verb usually keeps its tense (Ta ütles, et tal on kiire), and the -vat form (Ta olevat haige, Ta ei tulevat), which is mostly met in news and reports and usually names no source. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о косвенной речи: ütles, et и rääkis, et для утверждений и küsis, kas для вопросов «да или нет», как меняются местоимения, пока глагол обычно сохраняет своё время (Ta ütles, et tal on kiire), а также форма на -vat (Ta olevat haige, Ta ei tulevat), которая встречается в основном в новостях и обычно не называет источник. Каждое предложение озвучено."
+
 msgid "A free Estonian lesson on saying when: hommikul and suvel with -l, mais with -s, hommikuti for every morning, nädala pärast and nädal tagasi, pärast tööd, and from and until with -st and -ni. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о том, как сказать «когда»: hommikul и suvel с -l, mais с -s, hommikuti — «по утрам», nädala pärast и nädal tagasi, pärast tööd, а также «с» и «до» с -st и -ni. Каждое предложение озвучено."
 
@@ -298,6 +301,9 @@ msgstr "Бесплатный урок эстонского о двух похо�
 
 msgid "A free Estonian lesson on word order: the verb usually in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о порядке слов: глагол обычно на втором месте (täna lähen ma), вопросы вроде kus sa elad?, два глагола со вторым обычно в конце и где стоит ei. Каждое предложение озвучено."
+
+msgid "A free Estonian practice lesson on looking for a flat: read an advert, write to the owner, look round the flat, follow a call about two flats and write your own message. It practises floors and dates, -ga, -ta, -na and -ks, adjectives and comparing, keegi and particle verbs. Every sentence is read aloud."
+msgstr "Бесплатный урок-практика по эстонскому о поиске квартиры: прочитай объявление, напиши владелице, осмотри квартиру, послушай разговор о двух квартирах и напиши своё сообщение. Здесь повторяются этажи и даты, -ga, -ta, -na и -ks, прилагательные и сравнение, keegi и глаголы с частицами. Каждое предложение озвучено."
 
 msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
 msgstr "Бесплатный урок эстонского произношения: девять гласных с õ, ä, ö и ü, ударение, обычно на первом слоге, и то, как удвоенная буква может изменить слово. Каждое слово озвучено."
@@ -824,6 +830,9 @@ msgstr "Эстонские послелоги: на, под, за"
 msgid "Estonian practice: last weekend and next week"
 msgstr "Практика эстонского: прошлые выходные и следующая неделя"
 
+msgid "Estonian practice: looking for a flat"
+msgstr "Практика эстонского: поиск квартиры"
+
 msgid "Estonian practice: shopping at the market"
 msgstr "Практика эстонского: покупки на рынке"
 
@@ -838,6 +847,9 @@ msgstr "Эстонский язык: чтение и аудирование. Д�
 
 msgid "Estonian relative clauses: who, which and where"
 msgstr "Эстонские придаточные предложения: кто, что и где"
+
+msgid "Estonian reported speech and the -vat form"
+msgstr "Косвенная речь и форма на -vat в эстонском"
 
 msgid "Estonian somebody and nobody: -gi and -ki"
 msgstr "Эстонские «кто-то» и «никто»: -gi и -ki"

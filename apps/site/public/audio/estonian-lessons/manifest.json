@@ -31093,5 +31093,328 @@
         ]
       }
     ]
+  },
+  "telefonikone/halloo": {
+    "text": "Halloo!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/hetk": {
+    "text": "hetk",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/korrata": {
+    "text": "korrata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/tagasi": {
+    "text": "tagasi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/so3num": {
+    "text": "sõnum",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/u2hendus": {
+    "text": "ühendus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/mari-kuuleb": {
+    "text": "Mari kuuleb.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/kas-mart-on-seal": {
+    "text": "Kas Mart on seal?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/kas-ma-saaksin-ra2a2kida-mardiga": {
+    "text": "Kas ma saaksin rääkida Mardiga?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/hetk-palun": {
+    "text": "Hetk, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/kas-te-saaksite-korrata": {
+    "text": "Kas te saaksite korrata?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/palun-ra2a2kige-aeglasemalt": {
+    "text": "Palun rääkige aeglasemalt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/u2hendus-on-halb": {
+    "text": "Ühendus on halb.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/ma-ei-kuule-teid-ha2sti": {
+    "text": "Ma ei kuule teid hästi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/kas-ma-vo3in-so3numi-ja2tta": {
+    "text": "Kas ma võin sõnumi jätta?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/palun-helistage-mulle-tagasi": {
+    "text": "Palun helistage mulle tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/ma-helistasin-sulle-eile": {
+    "text": "Ma helistasin sulle eile.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/ma-helistan-sulle-homme": {
+    "text": "Ma helistan sulle homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/ta-helistas-mulle-hommikul": {
+    "text": "Ta helistas mulle hommikul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/mart-helistas-o3htul": {
+    "text": "Mart helistas õhtul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/ma-ja2tsin-so3numi": {
+    "text": "Ma jätsin sõnumi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/ma-helistan-sulle-varsti-tagasi": {
+    "text": "Ma helistan sulle varsti tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/ta-helistab-o3htul": {
+    "text": "Ta helistab õhtul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/ma-helistan-hiljem-tagasi": {
+    "text": "Ma helistan hiljem tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/kas-ma-saaksin-ra2a2kida-arstiga": {
+    "text": "Kas ma saaksin rääkida arstiga?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/ma-helistan-teile-kell-kolm-tagasi": {
+    "text": "Ma helistan teile kell kolm tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/d-kati-1": {
+    "text": "Halloo! Kati kuuleb.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "telefonikone/d-sina-1": {
+    "text": "Tere! Kas ma saaksin rääkida Mardiga?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/d-kati-2": {
+    "text": "Mart ei ole praegu kohal. Kas soovite sõnumi jätta?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "telefonikone/d-sina-2": {
+    "text": "Jah. Palun helistage mulle tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/d-kati-3": {
+    "text": "Mis on teie number?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "telefonikone/d-sina-3": {
+    "text": "Minu number on viis kaks üks neli kolm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/d-kati-4": {
+    "text": "Hästi, Mart helistab teile varsti tagasi.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "telefonikone/d-sina-4": {
+    "text": "Aitäh! Head aega!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/p-note": {
+    "text": "Tere, Mari! Eile õhtul helistasin sulle, aga sa ei vastanud. Siis helistasin Jaanile ja ta vastas kohe. Ühendus oli väga halb ja ma ei kuulnud teda hästi. Ta rääkis aeglasemalt, aga ma ei saanud ikka aru. Siis kirjutasin talle sõnumi. Ma jätsin talle ka sinu numbri. Täna hommikul helistas Jaan mulle tagasi. Ühendus oli nüüd hea ja me rääkisime kaua. Ta tahab homme kell kolm kohvikus sinuga kohtuda. Mul on homme kell kolm tööl, aga sina võid minna. Kas sa saaksid talle varsti helistada? Täna õhtul on ta kodus. Ma ootan sinu vastust kell kuus. Aitäh abi eest!",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "telefonikone/c-office": {
+    "text": "Halloo! Peeter kuuleb. Tere, mina olen Mari. Kas ma saaksin rääkida Katiga? Vabandust, ma ei kuule teid hästi. Ühendus on väga halb. Kas te kuulete mind nüüd? Ma helistasin teile ka eile, aga keegi ei vastanud. Jah, nüüd kuulen. Eile õhtul ei olnud keegi kontoris. Kati ei ole praegu kohal. Ma tahan temaga homme kohtuda. Millal ta tuleb tagasi? Ta tuleb homme hommikul kell kaheksa või üheksa tagasi. Vabandust, kas te saaksite korrata? Palun rääkige aeglasemalt. Homme hommikul, kell kaheksa või üheksa. Aitäh! Siis ma tulen homme kell kümme teie kontorisse. Kas see on hea aeg? Jah, kell kümme on hea aeg. Siis on Kati kohal. Kas ma võin sõnumi jätta? Jah, palun. Kas te saaksite öelda ka oma nime? Minu nimi on Mari Mägi. Mis on teie number? Minu number on viis kaks üks neli kolm. Viis kaks üks neli neli? Ei, viis kaks üks neli kolm. Palun helistage mulle tagasi. Hästi, kolm. Kati helistab teile homme. Kas teil on veel midagi? Ei, aitäh. Head aega! Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Halloo!",
+          "Peeter kuuleb."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, mina olen Mari.",
+          "Kas ma saaksin rääkida Katiga?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Vabandust, ma ei kuule teid hästi.",
+          "Ühendus on väga halb."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas te kuulete mind nüüd?",
+          "Ma helistasin teile ka eile, aga keegi ei vastanud."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, nüüd kuulen.",
+          "Eile õhtul ei olnud keegi kontoris.",
+          "Kati ei ole praegu kohal."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ma tahan temaga homme kohtuda.",
+          "Millal ta tuleb tagasi?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ta tuleb homme hommikul kell kaheksa või üheksa tagasi."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Vabandust, kas te saaksite korrata?",
+          "Palun rääkige aeglasemalt."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Homme hommikul, kell kaheksa või üheksa."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Aitäh!",
+          "Siis ma tulen homme kell kümme teie kontorisse.",
+          "Kas see on hea aeg?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, kell kümme on hea aeg.",
+          "Siis on Kati kohal."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas ma võin sõnumi jätta?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, palun.",
+          "Kas te saaksite öelda ka oma nime?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Minu nimi on Mari Mägi."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mis on teie number?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Minu number on viis kaks üks neli kolm."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Viis kaks üks neli neli?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, viis kaks üks neli kolm.",
+          "Palun helistage mulle tagasi."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hästi, kolm.",
+          "Kati helistab teile homme.",
+          "Kas teil on veel midagi?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, aitäh.",
+          "Head aega!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Head aega!"
+        ]
+      }
+    ]
   }
 }

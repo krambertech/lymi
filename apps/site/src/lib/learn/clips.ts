@@ -12163,6 +12163,172 @@ const LETTER_CLIPS: Record<string, Clip> = {
   "c-radiator": LETTER_CONVERSATION,
 };
 
+export const PHONE_WORDS = ["halloo", "hetk", "korrata", "tagasi", "sõnum", "ühendus"] as const;
+
+export const PHONE_ASK = [
+  "Halloo!",
+  "Mari kuuleb.",
+  "Kas Mart on seal?",
+  "Kas ma saaksin rääkida Mardiga?",
+] as const;
+
+export const PHONE_AGAIN = [
+  "Hetk, palun.",
+  "Kas te saaksite korrata?",
+  "Palun rääkige aeglasemalt.",
+  "Ühendus on halb.",
+  "Ma ei kuule teid hästi.",
+] as const;
+
+export const PHONE_MESSAGE = [
+  "Kas ma võin sõnumi jätta?",
+  "Palun helistage mulle tagasi.",
+  "Ma helistasin sulle eile.",
+  "Ma helistan sulle homme.",
+] as const;
+
+export const PHONE_HEARD = [
+  { said: "Ma helistasin sulle eile.", when: "past" },
+  { said: "Ta helistas mulle hommikul.", when: "past" },
+  { said: "Mart helistas õhtul.", when: "past" },
+  { said: "Ma jätsin sõnumi.", when: "past" },
+  { said: "Ma helistan sulle homme.", when: "future" },
+  { said: "Ma helistan sulle varsti tagasi.", when: "future" },
+  { said: "Ta helistab õhtul.", when: "future" },
+  { said: "Ma helistan hiljem tagasi.", when: "future" },
+] as const;
+
+export const PHONE_SAY = [
+  { id: "seal", said: "Kas Mart on seal?" },
+  { id: "arst", said: "Kas ma saaksin rääkida arstiga?" },
+  { id: "kuule", said: "Ma ei kuule teid hästi." },
+  { id: "sonum", said: "Kas ma võin sõnumi jätta?" },
+  { id: "tagasi", said: "Palun helistage mulle tagasi." },
+  { id: "kolm", said: "Ma helistan teile kell kolm tagasi." },
+] as const;
+
+export const PHONE_FIX = [
+  { id: "mart", wrong: "Kas ma saaksin rääkida Mart?", right: "Kas ma saaksin rääkida Mardiga?" },
+  { id: "mind", wrong: "Palun helistage mind tagasi.", right: "Palun helistage mulle tagasi." },
+  { id: "aeglasem", wrong: "Palun rääkige aeglasem.", right: "Palun rääkige aeglasemalt." },
+  { id: "saaksin", wrong: "Kas te saaksin korrata?", right: "Kas te saaksite korrata?" },
+  { id: "eile", wrong: "Ma helistan sulle eile.", right: "Ma helistasin sulle eile." },
+  { id: "homme", wrong: "Ma helistasin sulle homme.", right: "Ma helistan sulle homme." },
+  { id: "kuulen", wrong: "Ma ei kuulen teid hästi.", right: "Ma ei kuule teid hästi." },
+] as const;
+
+export const PHONE_DIALOGUE = {
+  "d-kati-1": { text: "Halloo! Kati kuuleb.", voice: "second" },
+  "d-sina-1": "Tere! Kas ma saaksin rääkida Mardiga?",
+  "d-kati-2": { text: "Mart ei ole praegu kohal. Kas soovite sõnumi jätta?", voice: "second" },
+  "d-sina-2": "Jah. Palun helistage mulle tagasi.",
+  "d-kati-3": { text: "Mis on teie number?", voice: "second" },
+  "d-sina-3": "Minu number on viis kaks üks neli kolm.",
+  "d-kati-4": { text: "Hästi, Mart helistab teile varsti tagasi.", voice: "second" },
+  "d-sina-4": "Aitäh! Head aega!",
+} as const satisfies Record<string, Clip>;
+
+export const PHONE_NOTE = [
+  "Tere, Mari!",
+  "Eile õhtul helistasin sulle, aga sa ei vastanud.",
+  "Siis helistasin Jaanile ja ta vastas kohe.",
+  "Ühendus oli väga halb ja ma ei kuulnud teda hästi.",
+  "Ta rääkis aeglasemalt, aga ma ei saanud ikka aru.",
+  "Siis kirjutasin talle sõnumi.",
+  "Ma jätsin talle ka sinu numbri.",
+  "Täna hommikul helistas Jaan mulle tagasi.",
+  "Ühendus oli nüüd hea ja me rääkisime kaua.",
+  "Ta tahab homme kell kolm kohvikus sinuga kohtuda.",
+  "Mul on homme kell kolm tööl, aga sina võid minna.",
+  "Kas sa saaksid talle varsti helistada?",
+  "Täna õhtul on ta kodus.",
+  "Ma ootan sinu vastust kell kuus.",
+  "Aitäh abi eest!",
+] as const;
+
+export const PHONE_TALK = {
+  turns: [
+    { voice: "fourth", text: ["Halloo!", "Peeter kuuleb."] },
+    { voice: "third", text: ["Tere, mina olen Mari.", "Kas ma saaksin rääkida Katiga?"] },
+    { voice: "fourth", text: ["Vabandust, ma ei kuule teid hästi.", "Ühendus on väga halb."] },
+    {
+      voice: "third",
+      text: ["Kas te kuulete mind nüüd?", "Ma helistasin teile ka eile, aga keegi ei vastanud."],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Jah, nüüd kuulen.",
+        "Eile õhtul ei olnud keegi kontoris.",
+        "Kati ei ole praegu kohal.",
+      ],
+    },
+    { voice: "third", text: ["Ma tahan temaga homme kohtuda.", "Millal ta tuleb tagasi?"] },
+    { voice: "fourth", text: "Ta tuleb homme hommikul kell kaheksa või üheksa tagasi." },
+    { voice: "third", text: ["Vabandust, kas te saaksite korrata?", "Palun rääkige aeglasemalt."] },
+    { voice: "fourth", text: "Homme hommikul, kell kaheksa või üheksa." },
+    {
+      voice: "third",
+      text: ["Aitäh!", "Siis ma tulen homme kell kümme teie kontorisse.", "Kas see on hea aeg?"],
+    },
+    { voice: "fourth", text: ["Jah, kell kümme on hea aeg.", "Siis on Kati kohal."] },
+    { voice: "third", text: "Kas ma võin sõnumi jätta?" },
+    { voice: "fourth", text: ["Jah, palun.", "Kas te saaksite öelda ka oma nime?"] },
+    { voice: "third", text: "Minu nimi on Mari Mägi." },
+    { voice: "fourth", text: "Mis on teie number?" },
+    { voice: "third", text: "Minu number on viis kaks üks neli kolm." },
+    { voice: "fourth", text: "Viis kaks üks neli neli?" },
+    { voice: "third", text: ["Ei, viis kaks üks neli kolm.", "Palun helistage mulle tagasi."] },
+    {
+      voice: "fourth",
+      text: ["Hästi, kolm.", "Kati helistab teile homme.", "Kas teil on veel midagi?"],
+    },
+    { voice: "third", text: ["Ei, aitäh.", "Head aega!"] },
+    { voice: "fourth", text: "Head aega!" },
+  ],
+} as const satisfies Conversation;
+
+export const PHONE_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Kas Mart on seal?": withPronouns(["Kas Mart on seal?"]),
+  "Kas ma saaksin rääkida arstiga?": withPronouns([
+    "Kas ma saaksin rääkida arstiga?",
+    "Kas ma võin arstiga rääkida?",
+    "Kas ma saaksin arstiga rääkida?",
+    "Kas ma võiksin arstiga rääkida?",
+    "Kas ma võiksin rääkida arstiga?",
+  ]),
+  "Ma ei kuule teid hästi.": withPronouns(["Ma ei kuule teid hästi."]),
+  "Ma jätsin sõnumi.": withPronouns(["Ma jätsin sõnumi."]),
+  "Ma helistasin sulle eile.": withPronouns(["Ma helistasin sulle eile."]),
+  "Kas ma võin sõnumi jätta?": withPronouns([
+    "Kas ma võin sõnumi jätta?",
+    "Kas ma saaksin sõnumi jätta?",
+    "Kas ma võiksin sõnumi jätta?",
+  ]),
+  "Palun helistage mulle tagasi.": [
+    "Palun helistage mulle tagasi.",
+    "Helistage mulle palun tagasi.",
+  ],
+  "Ma helistan teile kell kolm tagasi.": withPronouns([
+    "Ma helistan teile kell kolm tagasi.",
+    "Ma helistan teile tagasi kell kolm.",
+    "Kell kolm helistan ma teile tagasi.",
+  ]),
+};
+
+const PHONE_CLIPS: Record<string, Clip> = {
+  ...words(PHONE_WORDS),
+  ...words(PHONE_ASK),
+  ...words(PHONE_AGAIN),
+  ...words(PHONE_MESSAGE),
+  ...words(PHONE_HEARD.map(({ said }) => said)),
+  ...words(PHONE_SAY.map(({ said }) => said)),
+  ...words(PHONE_FIX.map(({ right }) => right)),
+  ...PHONE_DIALOGUE,
+  "p-note": { sentences: PHONE_NOTE, voice: "third" },
+  "c-office": PHONE_TALK,
+};
+
 export const PAST_NO_PERSONS = ["ma", "sa", "ta", "me", "te", "nad"] as const;
 
 export const PAST_NO_TABLE = [
@@ -17365,6 +17531,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "et-sest-kui": CONJ_CLIPS,
   kiri: LETTER_CLIPS,
   turul: MARKET_CLIPS,
+  telefonikone: PHONE_CLIPS,
   lihtminevik: PAST_CLIPS,
   "mineviku-eitus": PAST_NO_CLIPS,
   tulevik: FUTURE_CLIPS,

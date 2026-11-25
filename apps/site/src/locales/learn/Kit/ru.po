@@ -236,6 +236,9 @@ msgstr "Исправленное предложение с оценкой"
 msgid "a foot"
 msgstr "нога"
 
+msgid "A free Estonian lesson for beginners: family words (ema, isa, vend, õde, laps), saying how many brothers, sisters and children you have, and the words on a registration form: first name, surname, address, phone number, age, birthday, country and town. Read a form, follow a conversation at a desk, fill in a form and write about yourself. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского для начинающих: слова о семье (ema, isa, vend, õde, laps), как сказать, сколько у тебя братьев, сестёр и детей, и слова из регистрационной анкеты: имя, фамилия, адрес, номер телефона, возраст, день рождения, страна и город. Прочитай анкету, послушай разговор на регистрации, заполни анкету и напиши о себе. Каждое предложение озвучено."
+
 msgid "A free Estonian lesson for the café counter: ask for a drink and something to eat with palun, ask if they have it, answer here or to take away and card or cash, and ask for the bill. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского для кафе: как попросить напиток и что-нибудь поесть со словом palun, спросить, есть ли это, ответить «здесь или с собой» и «картой или наличными» и попросить счёт. Каждое предложение озвучено."
 
@@ -767,6 +770,9 @@ msgstr "Чередование согласных в эстонском язык
 msgid "Estonian conversation practice: meeting someone"
 msgstr "Разговорная практика эстонского: знакомство"
 
+msgid "Estonian family words and filling in a form"
+msgstr "Слова о семье и заполнение анкеты по-эстонски"
+
 msgid "Estonian future tense: how to say “will”"
 msgstr "Будущее время в эстонском языке: как сказать «буду»"
 
@@ -881,6 +887,9 @@ msgstr "Каждое слово в своей группе."
 msgctxt "the statement is false"
 msgid "False"
 msgstr "Неверно"
+
+msgid "Family and a form"
+msgstr "Семья и анкета"
 
 msgid "Fill every gap first."
 msgstr "Сначала заполни все пропуски."

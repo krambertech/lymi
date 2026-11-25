@@ -17604,6 +17604,278 @@ const NEWS_CLIPS: Record<string, Clip> = {
   "c-raadio": NEWS_CONVERSATION,
 };
 
+export const PERE_FAMILY = [
+  { word: "ema", said: "See on minu ema." },
+  { word: "isa", said: "See on minu isa." },
+  { word: "vend", said: "See on minu vend." },
+  { word: "õde", said: "See on minu õde." },
+  { word: "vanaema", said: "See on minu vanaema." },
+  { word: "vanaisa", said: "See on minu vanaisa." },
+  { word: "abikaasa", said: "See on minu abikaasa." },
+  { word: "laps", said: "See on minu laps." },
+  { word: "lapsed", said: "Minu lapsed on koolis." },
+  { word: "pere", said: "Minu pere elab Tartus." },
+] as const;
+
+export const PERE_HAVE = [
+  { q: "Kas sul on vend?", a: ["Jah, mul on üks vend."] },
+  { q: "Mul on üks õde ja kaks venda.", a: [] },
+  { q: "Mul on kolm last.", a: [] },
+] as const;
+
+export const PERE_COUNTED = [
+  { base: "vend", number: "kaks", form: "venda", said: "Mul on kaks venda." },
+  { base: "laps", number: "kolm", form: "last", said: "Mul on kolm last." },
+  { base: "õde", number: "kaks", form: "õde", said: "Mul on kaks õde." },
+  { base: "vend", number: "neli", form: "venda", said: "Mul on neli venda." },
+  { base: "laps", number: "kaks", form: "last", said: "Mul on kaks last." },
+  { base: "õde", number: "kolm", form: "õde", said: "Mul on kolm õde." },
+] as const;
+
+export const PERE_HEARD = [
+  { word: "ema", said: "Minu ema töötab kohvikus." },
+  { word: "isa", said: "Minu isa on tööl." },
+  { word: "vend", said: "Minu vend õpib Tartus." },
+  { word: "õde", said: "Minu õde elab Pärnus." },
+  { word: "vanaema", said: "Minu vanaema on kodus." },
+  { word: "vanaisa", said: "Minu vanaisa elab Tallinnas." },
+] as const;
+
+export const PERE_FIELDS = [
+  { word: "eesnimi", said: "Minu eesnimi on Mari." },
+  { word: "perekonnanimi", said: "Minu perekonnanimi on Tamm." },
+  { word: "aadress", said: "Minu aadress on Kooli viis, Tartu." },
+  {
+    word: "telefoninumber",
+    said: "Minu telefoninumber on viis, kaks, kolm, neli, viis, kuus, seitse.",
+  },
+  { word: "vanus", said: "Minu vanus on kakskümmend kolm." },
+  { word: "sünnipäev", said: "Minu sünnipäev on homme." },
+  { word: "riik", said: "Minu riik on Eesti." },
+  { word: "linn", said: "Minu linn on Tartu." },
+  { word: "elukoht", said: "Minu elukoht on Pärnu." },
+] as const;
+
+export const PERE_SORTED = [
+  { w: "Minu eesnimi on Jaan.", bin: "nimi" },
+  { w: "Minu perekonnanimi on Kask.", bin: "nimi" },
+  { w: "Minu perekonnanimi on Mägi.", bin: "nimi" },
+  { w: "Minu linn on Pärnu.", bin: "koht" },
+  { w: "Minu riik on Soome.", bin: "koht" },
+  { w: "Minu aadress on Kooli neli, Pärnu.", bin: "koht" },
+  { w: "Minu vanus on kakskümmend viis.", bin: "arv" },
+  { w: "Minu vanus on kolmkümmend neli.", bin: "arv" },
+  { w: "Minu telefoninumber on viis, kuus, null, kaks, seitse.", bin: "arv" },
+] as const;
+
+export const PERE_READING = [
+  "Tere! Minu eesnimi on Liis ja minu perekonnanimi on Mägi.",
+  "Minu vanus on kakskümmend kuus.",
+  "Minu riik on Eesti ja minu linn on Tartu.",
+  "Minu aadress on Kooli kaheksa, Tartu.",
+  "Mul on üks õde ja kaks venda.",
+  "Minu abikaasa on Mati ja ta töötab koolis.",
+  "Minu telefoninumber on viis, kaks, kolm, neli, viis, kuus, seitse.",
+  "Täna on esmaspäev ja minu sünnipäev on homme.",
+] as const;
+
+export const PERE_FORM = [
+  "Tere! Minu eesnimi on Jaan.",
+  "Minu perekonnanimi on Tamm.",
+  "Minu vanus on kolmkümmend neli.",
+  "Minu riik on Eesti.",
+  "Minu telefoninumber on viis, kaks, kolm, neli, viis, kuus, seitse.",
+  "Minu sünnipäev on homme.",
+] as const;
+
+export const PERE_TALK: Conversation = {
+  turns: [
+    { voice: "second", text: ["Tere!", "Mis on sinu eesnimi?"] },
+    { voice: "main", text: "Minu eesnimi on Andres." },
+    { voice: "second", text: "Ja sinu perekonnanimi?" },
+    { voice: "main", text: "Minu perekonnanimi on Kask." },
+    { voice: "second", text: "Mis on sinu vanus?" },
+    { voice: "main", text: "Minu vanus on kolmkümmend." },
+    { voice: "second", text: "Kus sa elad?" },
+    { voice: "main", text: ["Ma elan Pärnus.", "Minu aadress on Kooli neli."] },
+    { voice: "second", text: "Mis on sinu telefoninumber?" },
+    { voice: "main", text: "Minu telefoninumber on kuus, kaks, kolm, neli, viis." },
+    { voice: "second", text: "Kas sul on õde?" },
+    { voice: "main", text: "Jah, mul on üks õde ja kaks venda." },
+    { voice: "second", text: "Hästi, aitäh!" },
+  ],
+};
+
+export const PERE_DIALOGUE = {
+  "d-clerk-1": { text: "Tere! Mis on sinu eesnimi?", voice: "second" },
+  "d-you-1": "Minu eesnimi on Liis.",
+  "d-clerk-2": { text: "Ja sinu perekonnanimi?", voice: "second" },
+  "d-you-2": "Minu perekonnanimi on Mägi.",
+  "d-clerk-3": { text: "Kus sa elad?", voice: "second" },
+  "d-you-3": "Ma elan Tartus.",
+  "d-clerk-4": { text: "Kas sul on õde?", voice: "second" },
+  "d-you-4": "Jah, mul on üks õde.",
+} as const satisfies Record<string, Clip>;
+
+export const PERE_WRITTEN = [
+  { kind: "family", said: "Minu vanaema elab Pärnus." },
+  { kind: "count", said: "Mul on neli õde." },
+  { kind: "form", said: "Minu eesnimi on Jaan." },
+  { kind: "form", said: "Minu aadress on Kooli kolm." },
+  { kind: "number", said: "Minu vanus on kolmkümmend kaks." },
+  { kind: "family", said: "Minu abikaasa õpib Tallinnas." },
+] as const;
+
+export const PERE_TRANSLATED = [
+  {
+    kind: "family",
+    answers: ["Minu ema elab Tartus.", "Tartus elab minu ema."],
+  },
+  {
+    kind: "count",
+    answers: ["Mul on üks õde ja kaks venda.", "Mul on kaks venda ja üks õde."],
+  },
+  { kind: "form", answers: ["Minu eesnimi on Mari.", "Mari on minu eesnimi."] },
+  { kind: "family", answers: ["Minu vanaisa on kodus.", "Kodus on minu vanaisa."] },
+  {
+    kind: "family",
+    answers: [
+      "Minu abikaasa on tööl.",
+      "Tööl on minu abikaasa.",
+      "Minu mees on tööl.",
+      "Tööl on minu mees.",
+    ],
+  },
+  {
+    kind: "family",
+    answers: [
+      "Ma elan Tartus ja minu vend elab Pärnus.",
+      "Mina elan Tartus ja minu vend elab Pärnus.",
+      "Elan Tartus ja minu vend elab Pärnus.",
+      "Minu vend elab Pärnus ja ma elan Tartus.",
+      "Minu vend elab Pärnus ja mina elan Tartus.",
+      "Minu vend elab Pärnus ja elan Tartus.",
+    ],
+  },
+] as const;
+
+export const PERE_FIXES = [
+  { kind: "count", wrong: "Mul on kaks vend.", said: "Mul on kaks venda." },
+  { kind: "olema", wrong: "Minu eesnimi olen Mari.", said: "Minu eesnimi on Mari." },
+  { kind: "place", wrong: "Minu ema elab Tartu.", said: "Minu ema elab Tartus." },
+  { kind: "count", wrong: "Mul on kolm laps.", said: "Mul on kolm last." },
+  {
+    kind: "minu",
+    wrong: "Mina vanus on kakskümmend viis.",
+    said: "Minu vanus on kakskümmend viis.",
+  },
+  { kind: "place", wrong: "Minu vanaisa on kodu.", said: "Minu vanaisa on kodus." },
+] as const;
+
+export const PERE_WRITING = [
+  "Tere! Minu eesnimi on Kati ja minu perekonnanimi on Kuusk.",
+  "Ma elan Tallinnas.",
+  "Minu vanus on kakskümmend kaheksa.",
+  "Mul on üks õde ja kaks venda.",
+  "Minu telefoninumber on viis, kuus, null, kaks, seitse.",
+] as const;
+
+export const PERE_DRILL_HEARD = [
+  { word: "isa", said: "Minu isa õpib koolis." },
+  { word: "vend", said: "Minu vend on kodus." },
+  { word: "õde", said: "Minu õde töötab kohvikus." },
+  { word: "vanaema", said: "Minu vanaema elab Tallinnas." },
+] as const;
+
+export const PERE_DRILL_FIELDS = [
+  { word: "perekonnanimi", said: "Minu perekonnanimi on Mägi." },
+  { word: "vanus", said: "Minu vanus on kolmkümmend." },
+  { word: "linn", said: "Minu linn on Tallinn." },
+  { word: "eesnimi", said: "Minu eesnimi on Liis." },
+] as const;
+
+export const PERE_DRILL_COUNTED = [
+  { base: "vend", number: "viis", form: "venda", said: "Mul on viis venda." },
+  { base: "laps", number: "neli", form: "last", said: "Mul on neli last." },
+  { base: "õde", number: "viis", form: "õde", said: "Mul on viis õde." },
+  { base: "vend", number: "kolm", form: "venda", said: "Mul on kolm venda." },
+] as const;
+
+export const PERE_DRILL_ASKED = [
+  {
+    reply: "Minu eesnimi on Mari.",
+    answers: [
+      "Mis on sinu eesnimi?",
+      "Mis on su eesnimi?",
+      "Mis sinu eesnimi on?",
+      "Mis su eesnimi on?",
+      "Mis on teie eesnimi?",
+      "Mis teie eesnimi on?",
+    ],
+  },
+  {
+    reply: "Minu perekonnanimi on Tamm.",
+    answers: [
+      "Mis on sinu perekonnanimi?",
+      "Mis on su perekonnanimi?",
+      "Mis sinu perekonnanimi on?",
+      "Mis su perekonnanimi on?",
+      "Mis on teie perekonnanimi?",
+      "Mis teie perekonnanimi on?",
+    ],
+  },
+  {
+    reply: "Minu vanus on kakskümmend viis.",
+    answers: [
+      "Mis on sinu vanus?",
+      "Mis on su vanus?",
+      "Mis sinu vanus on?",
+      "Mis su vanus on?",
+      "Mis on teie vanus?",
+      "Mis teie vanus on?",
+    ],
+  },
+] as const;
+
+export const PERE_DRILL_TRANSLATED = [
+  { kind: "family", answers: ["Minu vend õpib Tartus.", "Tartus õpib minu vend."] },
+  { kind: "count", answers: ["Mul on kolm last."] },
+  { kind: "form", answers: ["Minu perekonnanimi on Mägi.", "Mägi on minu perekonnanimi."] },
+] as const;
+
+export const PERE_DRILL_FIXES = [
+  { kind: "count", wrong: "Mul on neli vend.", said: "Mul on neli venda." },
+  { kind: "form", wrong: "Minu aadress olen Kooli viis.", said: "Minu aadress on Kooli viis." },
+] as const;
+
+const PERE_CLIPS: Record<string, Clip> = {
+  ...words([
+    "minu",
+    "Mul on",
+    "ankeet",
+    ...PERE_FAMILY.flatMap(({ word, said }) => [word, said]),
+    ...PERE_HAVE.flatMap(({ q, a }) => [q, ...a]),
+    ...PERE_COUNTED.flatMap(({ said, form }) => [said, form]),
+    ...PERE_HEARD.map(({ said }) => said),
+    ...PERE_FIELDS.flatMap(({ word, said }) => [word, said]),
+    ...PERE_SORTED.map(({ w }) => w),
+    ...PERE_WRITTEN.map(({ said }) => said),
+    ...PERE_TRANSLATED.map(({ answers }) => answers[0]),
+    ...PERE_FIXES.map(({ said }) => said),
+    ...PERE_DRILL_HEARD.map(({ said }) => said),
+    ...PERE_DRILL_FIELDS.map(({ said }) => said),
+    ...PERE_DRILL_COUNTED.flatMap(({ said, form }) => [said, form]),
+    ...PERE_DRILL_ASKED.map(({ answers }) => answers[0]),
+    ...PERE_DRILL_TRANSLATED.map(({ answers }) => answers[0]),
+    ...PERE_DRILL_FIXES.map(({ said }) => said),
+  ]),
+  "d-desk": PERE_TALK,
+  "p-liis": { sentences: PERE_READING },
+  "p-form": { sentences: PERE_FORM },
+  "p-writing": { sentences: PERE_WRITING },
+  ...PERE_DIALOGUE,
+};
+
 export const TRAVEL_GROUPS = {
   turn: [
     { id: "straight", word: "otse", said: "Minge otse edasi." },
@@ -18655,5 +18927,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   uudised: NEWS_CLIPS,
   "ta-olevat-haige": REP_CLIPS,
   "tee-ja-reisimine": TRAVEL_CLIPS,
+  "pere-ja-ankeet": PERE_CLIPS,
   kit: KIT_CLIPS,
 };

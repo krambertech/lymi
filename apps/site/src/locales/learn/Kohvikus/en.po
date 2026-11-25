@@ -1,0 +1,539 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 01:40+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0>Kaardiga või sularahas?</0> is the café’s question, and it comes later."
+msgstr "<0>Kaardiga või sularahas?</0> is the café’s question, and it comes later."
+
+msgid "<0>Kaardiga</0> is how you pay. She asked where you’ll have it."
+msgstr "<0>Kaardiga</0> is how you pay. She asked where you’ll have it."
+
+msgid "<0>Palun</0> is what she says when she hands you things. You thank her."
+msgstr "<0>Palun</0> is what she says when she hands you things. You thank her."
+
+msgid "<0>Siin või kaasa?</0> gives two choices, so <1>jah</1> doesn’t answer it."
+msgstr "<0>Siin või kaasa?</0> gives two choices, so <1>jah</1> doesn’t answer it."
+
+msgid "<0>Siin või kaasa?</0> is the question the café asks you."
+msgstr "<0>Siin või kaasa?</0> is the question the café asks you."
+
+msgid "<0>Siin</0> answers here or to take away. She asked how you’ll pay."
+msgstr "<0>Siin</0> answers here or to take away. She asked how you’ll pay."
+
+msgid "<0>Tere</0> is hello, and you’re leaving. Say goodbye."
+msgstr "<0>Tere</0> is hello, and you’re leaving. Say goodbye."
+
+msgid "20 minutes"
+msgstr "20 minutes"
+
+msgid "A bun and a tea"
+msgstr "A bun and a tea"
+
+msgid "A café uses the same few phrases whatever you order. You ask with <0/>, please, and thank with <1/>. The person at the counter usually answers <2/> when they hand you something."
+msgstr "A café uses the same few phrases whatever you order. You ask with <0/>, please, and thank with <1/>. The person at the counter usually answers <2/> when they hand you something."
+
+msgid "A café usually asks two questions, and you answer with one of the choices: <0>Siin või kaasa? Siin, palun.</0> <1>Kaardiga või sularahas? Kaardiga, palun.</1>"
+msgstr "A café usually asks two questions, and you answer with one of the choices: <0>Siin või kaasa? Siin, palun.</0> <1>Kaardiga või sularahas? Kaardiga, palun.</1>"
+
+msgid "A cake and a juice"
+msgstr "A cake and a juice"
+
+msgid "A coffee and a bun"
+msgstr "A coffee and a bun"
+
+msgid "A coffee, please."
+msgstr "A coffee, please."
+
+msgid "A lot of coffee"
+msgstr "A lot of coffee"
+
+msgid "A lot of juice"
+msgstr "A lot of juice"
+
+msgid "A lot of tea"
+msgstr "A lot of tea"
+
+msgid "A note from Mari"
+msgstr "A note from Mari"
+
+msgid "A question to the café is usually <0>Kas teil on …?</0>, with <1>teil</1>."
+msgstr "A question to the café is usually <0>Kas teil on …?</0>, with <1>teil</1>."
+
+msgid "A tea and a bun, please."
+msgstr "A tea and a bun, please."
+
+msgid "A tea and a cake"
+msgstr "A tea and a cake"
+
+msgid "A water and a sandwich"
+msgstr "A water and a sandwich"
+
+msgid "After Kas teil on the word usually takes an ending: kook becomes kooki."
+msgstr "After Kas teil on the word usually takes an ending: kook becomes kooki."
+
+msgid "After Kas teil on the word usually takes an ending: mahl becomes mahla."
+msgstr "After Kas teil on the word usually takes an ending: mahl becomes mahla."
+
+msgid "After Kas teil on the word usually takes an ending: piim becomes piima."
+msgstr "After Kas teil on the word usually takes an ending: piim becomes piima."
+
+msgid "After Kas teil on the word usually takes an ending: supp becomes suppi."
+msgstr "After Kas teil on the word usually takes an ending: supp becomes suppi."
+
+msgid "After Kas teil on the word usually takes an ending: tee becomes teed."
+msgstr "After Kas teil on the word usually takes an ending: tee becomes teed."
+
+msgid "After Kas teil on the word usually takes an ending: vesi becomes vett."
+msgstr "After Kas teil on the word usually takes an ending: vesi becomes vett."
+
+msgid "All five, each found and fixed."
+msgstr "All five, each found and fixed."
+
+msgid "All six, every phrase right."
+msgstr "All six, every phrase right."
+
+msgid "All six. You heard every word."
+msgstr "All six. You heard every word."
+
+msgid "also; too"
+msgstr "also; too"
+
+msgid "and"
+msgstr "and"
+
+msgid "Andres"
+msgstr "Andres"
+
+msgid "Andres orders at the counter and Liis serves him. Listen for what he asks for, what the café doesn’t have, and how he pays."
+msgstr "Andres orders at the counter and Liis serves him. Listen for what he asks for, what the café doesn’t have, and how he pays."
+
+msgid "Ask if they have something with <0>Kas teil on …?</0> The thing usually takes an ending after <1>on</1>: <2>Kas teil on piima? Kas teil on suppi?</2>"
+msgstr "Ask if they have something with <0>Kas teil on …?</0> The thing usually takes an ending after <1>on</1>: <2>Kas teil on piima? Kas teil on suppi?</2>"
+
+msgid "Asking <et>Kas teil on …?</et>"
+msgstr "Asking <et>Kas teil on …?</et>"
+
+msgid "asking for things"
+msgstr "asking for things"
+
+msgid "Behind a counter"
+msgstr "Behind a counter"
+
+msgid "bill"
+msgstr "bill"
+
+msgid "bun"
+msgstr "bun"
+
+msgid "bun; a small roll"
+msgstr "bun; a small roll"
+
+msgid "by card"
+msgstr "by card"
+
+msgid "By card"
+msgstr "By card"
+
+msgid "By card or in cash?"
+msgstr "By card or in cash?"
+
+msgid "Café in Tallinn"
+msgstr "Café in Tallinn"
+
+msgid "cake"
+msgstr "cake"
+
+msgid "Card or cash?"
+msgstr "Card or cash?"
+
+msgid "coffee"
+msgstr "coffee"
+
+msgid "costs"
+msgstr "costs"
+
+msgid "Do you have cake?"
+msgstr "Do you have cake?"
+
+msgid "Do you have juice?"
+msgstr "Do you have juice?"
+
+msgid "Do you have milk?"
+msgstr "Do you have milk?"
+
+msgid "Do you have soup?"
+msgstr "Do you have soup?"
+
+msgid "Do you have tea?"
+msgstr "Do you have tea?"
+
+msgid "Do you have water?"
+msgstr "Do you have water?"
+
+msgid "Each line is something you’d say at the counter. Write it in Estonian. Several answers are right, so write what you would say."
+msgstr "Each line is something you’d say at the counter. Write it in Estonian. Several answers are right, so write what you would say."
+
+msgid "Each sentence asks for one thing. Listen and pick the word you hear."
+msgstr "Each sentence asks for one thing. Listen and pick the word you hear."
+
+msgid "Enjoy your meal"
+msgstr "Enjoy your meal"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "From maksma, to cost; also to pay."
+msgstr "From maksma, to cost; also to pay."
+
+msgid "Go through Ordering at the counter once more, then try again."
+msgstr "Go through Ordering at the counter once more, then try again."
+
+msgid "He asks to pay later"
+msgstr "He asks to pay later"
+
+msgid "He doesn’t say"
+msgstr "He doesn’t say"
+
+msgid "He takes it away"
+msgstr "He takes it away"
+
+msgid "here"
+msgstr "here"
+
+msgid "Here or to take away?"
+msgstr "Here or to take away?"
+
+msgid "Here you are! You’re welcome!"
+msgstr "Here you are! You’re welcome!"
+
+msgid "How does he pay?"
+msgstr "How does he pay?"
+
+msgid "How much is it?"
+msgstr "How much is it?"
+
+msgid "in a café"
+msgstr "in a café"
+
+msgid "in cash"
+msgstr "in cash"
+
+msgid "In cash"
+msgstr "In cash"
+
+msgid "In each sentence one word is wrong. Tap it, then type it right."
+msgstr "In each sentence one word is wrong. Tap it, then type it right."
+
+msgid "In the café"
+msgstr "In the café"
+
+msgid "is; has"
+msgstr "is; has"
+
+msgid "Joob kohvi: drinks coffee. Learn it as a phrase for now."
+msgstr "Joob kohvi: drinks coffee. Learn it as a phrase for now."
+
+msgid "juice"
+msgstr "juice"
+
+msgid "Kaart, card, with -ga: with the card."
+msgstr "Kaart, card, with -ga: with the card."
+
+msgid "Kas teil on …? is polite, to a stranger. To a friend, Kas sul on …?"
+msgstr "Kas teil on …? is polite, to a stranger. To a friend, Kas sul on …?"
+
+msgid "Liis"
+msgstr "Liis"
+
+msgid "Liis says the cake is good."
+msgstr "Liis says the cake is good."
+
+msgid "Liis says where the sugar is."
+msgstr "Liis says where the sugar is."
+
+msgid "Liis works at the café. Pick each of your replies; a wrong one says why. Everything you need is in the phrases above."
+msgstr "Liis works at the café. Pick each of your replies; a wrong one says why. Everything you need is in the phrases above."
+
+msgid "Listen: Andres at the café"
+msgstr "Listen: Andres at the café"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Listening: at the café"
+msgstr "Listening: at the café"
+
+msgid "Look at the phrases at the top once more, then try again."
+msgstr "Look at the phrases at the top once more, then try again."
+
+msgid "Mari drinks coffee."
+msgstr "Mari drinks coffee."
+
+msgid "Mari works at a café and writes to her friend Liis about it. Read the note and answer the questions. Once you’ve answered, tap a word to see what it means."
+msgstr "Mari works at a café and writes to her friend Liis about it. Read the note and answer the questions. Once you’ve answered, tap a word to see what it means."
+
+msgid "Mari writes"
+msgstr "Mari writes"
+
+msgid "Match the words"
+msgstr "Match the words"
+
+msgid "Meil on kook: we have cake."
+msgstr "Meil on kook: we have cake."
+
+msgid "milk"
+msgstr "milk"
+
+msgid "Nearly. Check the words you missed in the phrases above."
+msgstr "Nearly. Check the words you missed in the phrases above."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "Nearly. Read the sentence out loud and listen for the odd word."
+msgstr "Nearly. Read the sentence out loud and listen for the odd word."
+
+msgid "Next to cups"
+msgstr "Next to cups"
+
+msgid "Office in Pärnu"
+msgstr "Office in Pärnu"
+
+msgid "on the table"
+msgstr "on the table"
+
+msgid "On the table"
+msgstr "On the table"
+
+msgid "or"
+msgstr "or"
+
+msgid "Order a drink and something to eat in Estonian, answer the two questions every café asks, and pay."
+msgstr "Order a drink and something to eat in Estonian, answer the two questions every café asks, and pay."
+
+msgid "Ordering"
+msgstr "Ordering"
+
+msgid "Ordering at the counter"
+msgstr "Ordering at the counter"
+
+msgid "Ordering or paying?"
+msgstr "Ordering or paying?"
+
+msgid "Ordering with <et>palun</et>"
+msgstr "Ordering with <et>palun</et>"
+
+msgid "Orders something with <0>palun</0>."
+msgstr "Orders something with <0>palun</0>."
+
+msgid "Paying"
+msgstr "Paying"
+
+msgid "Paying and asking the price"
+msgstr "Paying and asking the price"
+
+msgid "please; here you are; you’re welcome"
+msgstr "please; here you are; you’re welcome"
+
+msgid "sandwich"
+msgstr "sandwich"
+
+msgid "Says <0>aitäh</0>."
+msgstr "Says <0>aitäh</0>."
+
+msgid "Says hello."
+msgstr "Says hello."
+
+msgid "Says here or to take away."
+msgstr "Says here or to take away."
+
+msgid "Says how you pay."
+msgstr "Says how you pay."
+
+msgid "School in Tartu"
+msgstr "School in Tartu"
+
+msgid "Siin või kaasa? Here or to take away?"
+msgstr "Siin või kaasa? Here or to take away?"
+
+msgid "Situation: at the counter"
+msgstr "Situation: at the counter"
+
+msgid "Some phrases ask for things and some are about the bill. Put each phrase under what it is for."
+msgstr "Some phrases ask for things and some are about the bill. Put each phrase under what it is for."
+
+msgid "soup"
+msgstr "soup"
+
+msgid "Soup and tea"
+msgstr "Soup and tea"
+
+msgid "sugar"
+msgstr "sugar"
+
+msgid "Sularaha, cash, with -s: in cash."
+msgstr "Sularaha, cash, with -s: in cash."
+
+msgid "Talk: at the counter"
+msgstr "Talk: at the counter"
+
+msgid "Tap the words above once more, then try again."
+msgstr "Tap the words above once more, then try again."
+
+msgid "tea"
+msgstr "tea"
+
+msgid "thank you"
+msgstr "thank you"
+
+msgid "Thank you!"
+msgstr "Thank you!"
+
+msgid "That’s the café’s question. You want milk first."
+msgstr "That’s the café’s question. You want milk first."
+
+msgid "the bill and the price"
+msgstr "the bill and the price"
+
+msgid "The bill, please"
+msgstr "The bill, please"
+
+msgid "The bill, please."
+msgstr "The bill, please."
+
+msgid "The café has soup today."
+msgstr "The café has soup today."
+
+msgid "The café has soup."
+msgstr "The café has soup."
+
+msgid "The paper you pay from."
+msgstr "The paper you pay from."
+
+msgid "The phrases at the counter"
+msgstr "The phrases at the counter"
+
+msgid "The question gives two choices, so just say one: <0>sularahas</0>."
+msgstr "The question gives two choices, so just say one: <0>sularahas</0>."
+
+msgid "The sugar is on the table"
+msgstr "The sugar is on the table"
+
+msgid "The thing comes after <et>palun üks</et>: <et>{item}</et>."
+msgstr "The thing comes after <et>palun üks</et>: <et>{item}</et>."
+
+msgid "then; in that case"
+msgstr "then; in that case"
+
+msgid "These are the words you’ll see on a menu and hear at a counter. Tap a word to hear it. Then match eight of them with what they mean."
+msgstr "These are the words you’ll see on a menu and hear at a counter. Tap a word to hear it. Then match eight of them with what they mean."
+
+msgid "Things on the counter"
+msgstr "Things on the counter"
+
+msgid "this; it"
+msgstr "this; it"
+
+msgid "Three to five short lines: say hello, order something with <0>palun</0>, answer here or to take away, say how you pay and say thank you."
+msgstr "Three to five short lines: say hello, order something with <0>palun</0>, answer here or to take away, say how you pay and say thank you."
+
+msgid "To ask if they have something, start with <0/>. The thing you ask for usually takes an ending after <1/>, as milk does here: <2>piim</2> becomes <3>piima</3>. A later lesson explains that ending. For now, learn each question as it is."
+msgstr "To ask if they have something, start with <0/>. The thing you ask for usually takes an ending after <1/>, as milk does here: <2>piim</2> becomes <3>piima</3>. A later lesson explains that ending. For now, learn each question as it is."
+
+msgid "to take away; along"
+msgstr "to take away; along"
+
+msgid "water"
+msgstr "water"
+
+msgid "we have; at our place"
+msgstr "we have; at our place"
+
+msgid "What did they ask for?"
+msgstr "What did they ask for?"
+
+msgid "What does he ask for first?"
+msgstr "What does he ask for first?"
+
+msgid "What does he order after that?"
+msgstr "What does he order after that?"
+
+msgid "What does Jaan drink at the café?"
+msgstr "What does Jaan drink at the café?"
+
+msgid "What does Mari write?"
+msgstr "What does Mari write?"
+
+msgid "What’s on the counter"
+msgstr "What’s on the counter"
+
+msgid "Where does Mari work?"
+msgstr "Where does Mari work?"
+
+msgid "Where is the sugar?"
+msgstr "Where is the sugar?"
+
+msgid "Where will he have it?"
+msgstr "Where will he have it?"
+
+msgid "Which thing?"
+msgstr "Which thing?"
+
+msgid "Word for word: “good appetite”."
+msgstr "Word for word: “good appetite”."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "Write what you’d say at the counter, then compare it with a model and tick what yours does. Nothing is marked for you here."
+msgstr "Write what you’d say at the counter, then compare it with a model and tick what yours does. Nothing is marked for you here."
+
+msgid "Write your order"
+msgstr "Write your order"
+
+msgid "You already said <0>siin</0>. Ask for the milk."
+msgstr "You already said <0>siin</0>. Ask for the milk."
+
+msgid "You are Andres. You want a tea and a bun and some milk, and you’ll pay by card."
+msgstr "You are Andres. You want a tea and a bun and some milk, and you’ll pay by card."
+
+msgid "You ask with it, you hand something over with it, and you answer Aitäh with it."
+msgstr "You ask with it, you hand something over with it, and you answer Aitäh with it."
+
+msgid "You can pay only by card."
+msgstr "You can pay only by card."
+
+msgid "you have"
+msgstr "you have"
+
+msgid "You usually ask for the bill with <0>Palun arve.</0> and the price with <1>Kui palju see maksab?</1>"
+msgstr "You usually ask for the bill with <0>Palun arve.</0> and the price with <1>Kui palju see maksab?</1>"
+
+msgid "You usually ask for things with <0>palun</0> or <1>Kas teil on …?</1>, and the café asks <2>Siin või kaasa?</2>"
+msgstr "You usually ask for things with <0>palun</0> or <1>Kas teil on …?</1>, and the café asks <2>Siin või kaasa?</2>"
+
+msgid "You usually ask with <0>palun</0> and the thing: <1>Palun üks kohv. Palun üks tee ja üks saiake.</1> Thank with <2>Aitäh!</2>, and answer it with <3>Palun!</3>"
+msgstr "You usually ask with <0>palun</0> and the thing: <1>Palun üks kohv. Palun üks tee ja üks saiake.</1> Thank with <2>Aitäh!</2>, and answer it with <3>Palun!</3>"
+
+msgid "You usually ask with <0>palun</0>, and the café asks <1>Siin või kaasa?</1>"
+msgstr "You usually ask with <0>palun</0>, and the café asks <1>Siin või kaasa?</1>"
+
+msgid "You usually ask with <et>Kas teil on …?</et>, and the thing usually takes an ending after <et>on</et>."
+msgstr "You usually ask with <et>Kas teil on …?</et>, and the thing usually takes an ending after <et>on</et>."
+
+msgid "You usually ask with <et>palun</et>, and the café asks <et>Siin või kaasa?</et>"
+msgstr "You usually ask with <et>palun</et>, and the café asks <et>Siin või kaasa?</et>"
+
+msgid "You usually pay <et>kaardiga</et>, by card, or <et>sularahas</et>, in cash, and ask the price with <et>Kui palju see maksab?</et>"
+msgstr "You usually pay <et>kaardiga</et>, by card, or <et>sularahas</et>, in cash, and ask the price with <et>Kui palju see maksab?</et>"
+
+msgid "You usually pay by card with <0>kaardiga</0>, and ask the price with <1>Kui palju see maksab?</1>"
+msgstr "You usually pay by card with <0>kaardiga</0>, and ask the price with <1>Kui palju see maksab?</1>"
+
+msgid "You usually pay with <0>kaardiga</0> or <1>sularahas</1>, ask <2>Palun arve</2> for the bill and <3>Kui palju?</3> for the price."
+msgstr "You usually pay with <0>kaardiga</0> or <1>sularahas</1>, ask <2>Palun arve</2> for the bill and <3>Kui palju?</3> for the price."

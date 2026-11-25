@@ -1,0 +1,490 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 01:04+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+#. placeholder {0}: item.said
+#. placeholder {1}: i18n._(TELL_MEANS[item.id])
+msgid "<0>{0}</0> {1}"
+msgstr "<0>{0}</0> {1}"
+
+msgid "<0>Kiire</0> takes <1>-sti</1>: <2>kiiresti</2>."
+msgstr "<0>Kiire</0> takes <1>-sti</1>: <2>kiiresti</2>."
+
+msgid "20 minutes"
+msgstr "20 minutes"
+
+msgid "7 exercises"
+msgstr "7 exercises"
+
+msgid "A message from the teacher"
+msgstr "A message from the teacher"
+
+msgid "Adjective"
+msgstr "Adjective"
+
+msgid "Adjective or adverb"
+msgstr "Adjective or adverb"
+
+msgid "Adjectives and adverbs"
+msgstr "Adjectives and adverbs"
+
+msgid "Adverb"
+msgstr "Adverb"
+
+msgid "Adverbs with <et>-lt</et>"
+msgstr "Adverbs with <et>-lt</et>"
+
+msgid "Adverbs with <et>-sti</et> and <et>hästi</et>"
+msgstr "Adverbs with <et>-sti</et> and <et>hästi</et>"
+
+msgid "All eight adverbs right."
+msgstr "All eight adverbs right."
+
+msgid "All eight: you told adjectives and adverbs apart by ear."
+msgstr "All eight: you told adjectives and adverbs apart by ear."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six sentences right."
+msgstr "All six sentences right."
+
+msgid "All the way out toward Tartu on the motorway"
+msgstr "All the way out toward Tartu on the motorway"
+
+msgid "Along a busy avenue"
+msgstr "Along a busy avenue"
+
+msgid "An adjective describes a noun (<0>kiire rong</0>); an adverb says how an action happens (<1>rong sõidab kiiresti</1>)."
+msgstr "An adjective describes a noun (<0>kiire rong</0>); an adverb says how an action happens (<1>rong sõidab kiiresti</1>)."
+
+msgid "An adjective describes a noun (<et>kiire rong</et>); an adverb says how an action happens (<et>rong sõidab kiiresti</et>)."
+msgstr "An adjective describes a noun (<et>kiire rong</et>); an adverb says how an action happens (<et>rong sõidab kiiresti</et>)."
+
+msgid "bad"
+msgstr "bad"
+
+msgid "badly"
+msgstr "badly"
+
+msgid "Beside a quiet suburban park"
+msgstr "Beside a quiet suburban park"
+
+msgid "Building adverbs from adjectives"
+msgstr "Building adverbs from adjectives"
+
+msgid "By the third try, the car stood right between the lines."
+msgstr "By the third try, the car stood right between the lines."
+
+msgid "calm"
+msgstr "calm"
+
+msgid "calmly"
+msgstr "calmly"
+
+msgid "Calmly, softly, clearly"
+msgstr "Calmly, softly, clearly"
+
+msgid "certainly, definitely"
+msgstr "certainly, definitely"
+
+msgid "clear"
+msgstr "clear"
+
+msgid "clearly"
+msgstr "clearly"
+
+msgid "Compare <0>See on kiire rong</0> (describing the train) with <1>Rong sõidab kiiresti</1> (saying how it moves). Listen to each sentence and pick which one you hear."
+msgstr "Compare <0>See on kiire rong</0> (describing the train) with <1>Rong sõidab kiiresti</1> (saying how it moves). Listen to each sentence and pick which one you hear."
+
+msgid "Describes a thing"
+msgstr "Describes a thing"
+
+msgid "Downtown"
+msgstr "Downtown"
+
+msgid "Each sentence uses an adjective where Estonian needs an adverb. Tap the wrong word, then type the right form."
+msgstr "Each sentence uses an adjective where Estonian needs an adverb. Tap the wrong word, then type the right form."
+
+msgid "Ending"
+msgstr "Ending"
+
+msgid "Everyone can hear each word better."
+msgstr "Everyone can hear each word better."
+
+msgid "exact"
+msgstr "exact"
+
+msgid "exactly, on time"
+msgstr "exactly, on time"
+
+msgid "fast"
+msgstr "fast"
+
+msgid "Fast, never explaining anything twice"
+msgstr "Fast, never explaining anything twice"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "Genitive <0>aeglase</0> plus <1>-lt</1> gives <2>aeglaselt</2>."
+msgstr "Genitive <0>aeglase</0> plus <1>-lt</1> gives <2>aeglaselt</2>."
+
+msgid "Genitive <0>halva</0> plus <1>-sti</1> gives <2>halvasti</2>."
+msgstr "Genitive <0>halva</0> plus <1>-sti</1> gives <2>halvasti</2>."
+
+msgid "Genitive <0>kindla</0> plus <1>-sti</1> gives <2>kindlasti</2>."
+msgstr "Genitive <0>kindla</0> plus <1>-sti</1> gives <2>kindlasti</2>."
+
+msgid "Genitive <0>lihtsa</0> plus <1>-lt</1> gives <2>lihtsalt</2>."
+msgstr "Genitive <0>lihtsa</0> plus <1>-lt</1> gives <2>lihtsalt</2>."
+
+msgid "Genitive <0>selge</0> plus <1>-lt</1> gives <2>selgelt</2>."
+msgstr "Genitive <0>selge</0> plus <1>-lt</1> gives <2>selgelt</2>."
+
+msgid "Genitive <0>vaikse</0> plus <1>-lt</1> gives <2>vaikselt</2>."
+msgstr "Genitive <0>vaikse</0> plus <1>-lt</1> gives <2>vaikselt</2>."
+
+msgid "Go through the table once more, then try again."
+msgstr "Go through the table once more, then try again."
+
+msgid "good"
+msgstr "good"
+
+msgid "hard, loud"
+msgstr "hard, loud"
+
+msgid "hard, loudly"
+msgstr "hard, loudly"
+
+msgid "He or she answered clearly."
+msgstr "He or she answered clearly."
+
+msgid "He or she explained it clearly."
+msgstr "He or she explained it clearly."
+
+msgid "He or she speaks Estonian well."
+msgstr "He or she speaks Estonian well."
+
+msgid "How did Mart’s driving teacher speak?"
+msgstr "How did Mart’s driving teacher speak?"
+
+msgid "How did parking go on Mart’s first try? Write one word as he says it."
+msgstr "How did parking go on Mart’s first try? Write one word as he says it."
+
+msgid "How it was explained takes <0>selgelt</0>, not <1>selge</1>."
+msgstr "How it was explained takes <0>selgelt</0>, not <1>selge</1>."
+
+msgid "How the bus goes takes <0>kiiresti</0>, not <1>kiire</1>."
+msgstr "How the bus goes takes <0>kiiresti</0>, not <1>kiire</1>."
+
+msgid "How to speak takes the adverb <0>aeglaselt</0>, not <1>aeglane</1>."
+msgstr "How to speak takes the adverb <0>aeglaselt</0>, not <1>aeglane</1>."
+
+msgid "How you came in takes <0>vaikselt</0>, not <1>vaikne</1>."
+msgstr "How you came in takes <0>vaikselt</0>, not <1>vaikne</1>."
+
+msgid "How you slept takes <0>halvasti</0>, not <1>halb</1>."
+msgstr "How you slept takes <0>halvasti</0>, not <1>halb</1>."
+
+msgid "I slept badly at night."
+msgstr "I slept badly at night."
+
+msgid "I will definitely come."
+msgstr "I will definitely come."
+
+msgid "in a simple way"
+msgstr "in a simple way"
+
+msgid "In lesson {adjectives} you used adjectives with nouns: <0>aeglane buss</0>, a slow bus. To say how an action happens, Estonian often adds <1>-lt</1> to the genitive stem from lesson {genitive}, above all with adjectives ending in <2>-ne</2>: <3/>, <4/>, <5/>."
+msgstr "In lesson {adjectives} you used adjectives with nouns: <0>aeglane buss</0>, a slow bus. To say how an action happens, Estonian often adds <1>-lt</1> to the genitive stem from lesson {genitive}, above all with adjectives ending in <2>-ne</2>: <3/>, <4/>, <5/>."
+
+msgid "Into town"
+msgstr "Into town"
+
+msgid "Kadri thinks the class studied poorly this spring."
+msgstr "Kadri thinks the class studied poorly this spring."
+
+msgid "Kadri writes"
+msgstr "Kadri writes"
+
+msgid "Kati"
+msgstr "Kati"
+
+msgid "Kati asks Mart how his first driving lesson went. Listen and answer. You can play the conversation twice."
+msgstr "Kati asks Mart how his first driving lesson went. Listen and answer. You can play the conversation twice."
+
+msgid "Kõik läks rahulikult."
+msgstr "Kõik läks rahulikult."
+
+msgid "Laps magab vaikselt."
+msgstr "Laps magab vaikselt."
+
+msgid "Listen for the ending at the end of the word, then try again."
+msgstr "Listen for the ending at the end of the word, then try again."
+
+msgid "Listen: Kati and Mart"
+msgstr "Listen: Kati and Mart"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Loudly, rushing"
+msgstr "Loudly, rushing"
+
+msgid "Ma magasin öösel halvasti."
+msgstr "Ma magasin öösel halvasti."
+
+msgid "Ma tulen kindlasti."
+msgstr "Ma tulen kindlasti."
+
+msgid "Make the adverb"
+msgstr "Make the adverb"
+
+msgid "Many adjectives, above all those ending in <0>-ne</0>, usually add <1>-lt</1> to the genitive stem: <2>aeglane → aeglase → aeglaselt</2>."
+msgstr "Many adjectives, above all those ending in <0>-ne</0>, usually add <1>-lt</1> to the genitive stem: <2>aeglane → aeglase → aeglaselt</2>."
+
+msgid "Many adjectives, above all those ending in <0>-ne</0>, usually build their adverb by adding <1>-lt</1> to the genitive stem: <2>aeglane → aeglase → aeglaselt</2>, <3>vaikne → vaikse → vaikselt</3>."
+msgstr "Many adjectives, above all those ending in <0>-ne</0>, usually build their adverb by adding <1>-lt</1> to the genitive stem: <2>aeglane → aeglase → aeglaselt</2>, <3>vaikne → vaikse → vaikselt</3>."
+
+msgid "Many adjectives, above all those ending in <et>-ne</et>, usually add <et>-lt</et> to the genitive stem: <et>aeglane</et> → <et>aeglaselt</et>, <et>vaikne</et> → <et>vaikselt</et>."
+msgstr "Many adjectives, above all those ending in <et>-ne</et>, usually add <et>-lt</et> to the genitive stem: <et>aeglane</et> → <et>aeglaselt</et>, <et>vaikne</et> → <et>vaikselt</et>."
+
+msgid "Many other adjectives take <0>-sti</0> instead: <1/>, <2/>, <3/>. And <4>hea</4> becomes <5/>, while <6>halb</6> becomes <7/>. Switch groups and tap a form to hear it."
+msgstr "Many other adjectives take <0>-sti</0> instead: <1/>, <2/>, <3/>. And <4>hea</4> becomes <5/>, while <6>halb</6> becomes <7/>. Switch groups and tap a form to hear it."
+
+msgid "Many other adjectives take <0>-sti</0> on the genitive stem, and <1>hea</1> becomes <2>hästi</2>."
+msgstr "Many other adjectives take <0>-sti</0> on the genitive stem, and <1>hea</1> becomes <2>hästi</2>."
+
+msgid "Many other adjectives take <0>-sti</0> on the genitive stem: <1>kiiresti</1>, <2>kindlasti</2>, <3>ilusasti</3>, <4>kõvasti</4>."
+msgstr "Many other adjectives take <0>-sti</0> on the genitive stem: <1>kiiresti</1>, <2>kindlasti</2>, <3>ilusasti</3>, <4>kõvasti</4>."
+
+msgid "Many other adjectives take <et>-sti</et> on the genitive stem (<et>kiiresti</et>, <et>kindlasti</et>), and <et>hea</et> becomes <et>hästi</et>."
+msgstr "Many other adjectives take <et>-sti</et> on the genitive stem (<et>kiiresti</et>, <et>kindlasti</et>), and <et>hea</et> becomes <et>hästi</et>."
+
+msgid "Mart"
+msgstr "Mart"
+
+msgid "Mart drove on the big main street during this first lesson."
+msgstr "Mart drove on the big main street during this first lesson."
+
+msgid "Mart felt completely calm from the very start of the lesson."
+msgstr "Mart felt completely calm from the very start of the lesson."
+
+msgid "Mart’s first driving lesson"
+msgstr "Mart’s first driving lesson"
+
+msgid "Match each adverb with its meaning."
+msgstr "Match each adverb with its meaning."
+
+msgid "Meaning"
+msgstr "Meaning"
+
+msgid "Nearly. Check the adverb ending in the ones you missed."
+msgstr "Nearly. Check the adverb ending in the ones you missed."
+
+msgid "Nearly. Check the stem and ending in the ones you missed."
+msgstr "Nearly. Check the stem and ending in the ones you missed."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "Nearly. Read the reason under each one you missed."
+msgstr "Nearly. Read the reason under each one you missed."
+
+msgid "neatly, prettily"
+msgstr "neatly, prettily"
+
+msgid "On which day is Mart’s next driving lesson? Write the word as he says it."
+msgstr "On which day is Mart’s next driving lesson? Write the word as he says it."
+
+msgid "Only talk"
+msgstr "Only talk"
+
+msgid "Õpetaja räägib selgelt."
+msgstr "Õpetaja räägib selgelt."
+
+msgid "Palun räägi aeglaselt."
+msgstr "Palun räägi aeglaselt."
+
+msgid "Please speak slowly."
+msgstr "Please speak slowly."
+
+msgid "pretty, lovely"
+msgstr "pretty, lovely"
+
+msgid "quickly, fast"
+msgstr "quickly, fast"
+
+msgid "quiet"
+msgstr "quiet"
+
+msgid "quietly"
+msgstr "quietly"
+
+msgid "Read one long text together"
+msgstr "Read one long text together"
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "Rong saabus täpselt kell kolm."
+msgstr "Rong saabus täpselt kell kolm."
+
+msgid "Rong sõidab kiiresti."
+msgstr "Rong sõidab kiiresti."
+
+msgid "Says how it happens"
+msgstr "Says how it happens"
+
+msgid "simple"
+msgstr "simple"
+
+msgid "slow"
+msgstr "slow"
+
+msgid "slowly"
+msgstr "slowly"
+
+msgid "Slowly across an empty training lot"
+msgstr "Slowly across an empty training lot"
+
+msgid "Some adjectives take either ending: <0>kiiresti</0> or <1>kiirelt</1>, <2>ilusasti</2> or <3>ilusalt</3>. The exercises ask for the form in the table."
+msgstr "Some adjectives take either ending: <0>kiiresti</0> or <1>kiirelt</1>, <2>ilusasti</2> or <3>ilusalt</3>. The exercises ask for the form in the table."
+
+msgid "Students have to copy every sentence into a notebook."
+msgstr "Students have to copy every sentence into a notebook."
+
+msgid "sure"
+msgstr "sure"
+
+msgid "Ta kirjutab ilusasti."
+msgstr "Ta kirjutab ilusasti."
+
+msgid "Ta räägib eesti keelt hästi."
+msgstr "Ta räägib eesti keelt hästi."
+
+msgid "Ta selgitab seda lihtsalt."
+msgstr "Ta selgitab seda lihtsalt."
+
+msgid "Take a written test"
+msgstr "Take a written test"
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tavaliselt joon ma hommikul teed."
+msgstr "Tavaliselt joon ma hommikul teed."
+
+msgid "Teacher Kadri sends a message before the last Estonian lesson of the spring. Read it and answer."
+msgstr "Teacher Kadri sends a message before the last Estonian lesson of the spring. Read it and answer."
+
+msgid "The adverb from <0>hea</0> is <1>hästi</1>."
+msgstr "The adverb from <0>hea</0> is <1>hästi</1>."
+
+msgid "The bus goes fast."
+msgstr "The bus goes fast."
+
+msgid "The bus goes slowly."
+msgstr "The bus goes slowly."
+
+msgid "The child sleeps quietly."
+msgstr "The child sleeps quietly."
+
+msgid "The lesson finishes early."
+msgstr "The lesson finishes early."
+
+msgid "The teacher tells students to ask again if they do not understand right away."
+msgstr "The teacher tells students to ask again if they do not understand right away."
+
+msgid "The train goes fast."
+msgstr "The train goes fast."
+
+msgid "They will drink tea and eat cake together."
+msgstr "They will drink tea and eat cake together."
+
+msgid "They will get new homework."
+msgstr "They will get new homework."
+
+msgid "They will go outside."
+msgstr "They will go outside."
+
+msgid "Thing or how?"
+msgstr "Thing or how?"
+
+msgid "This is a fast train."
+msgstr "This is a fast train."
+
+msgid "This is a good book."
+msgstr "This is a good book."
+
+msgid "This is a quiet room."
+msgstr "This is a quiet room."
+
+msgid "This is a slow bus."
+msgstr "This is a slow bus."
+
+msgid "To say how someone speaks, use <0>hästi</0>, not the adjective <1>hea</1>."
+msgstr "To say how someone speaks, use <0>hästi</0>, not the adjective <1>hea</1>."
+
+msgid "Turn an adjective into a word that says how something happens: many adjectives, above all those ending in <0>-ne</0>, usually add <1>-lt</1> to the genitive (<2>aeglaselt</2>), many others take <3>-sti</3> (<4>kiiresti</4>), and <5>hea</5> becomes <6>hästi</6>."
+msgstr "Turn an adjective into a word that says how something happens: many adjectives, above all those ending in <0>-ne</0>, usually add <1>-lt</1> to the genitive (<2>aeglaselt</2>), many others take <3>-sti</3> (<4>kiiresti</4>), and <5>hea</5> becomes <6>hästi</6>."
+
+msgid "Two everyday adverbs to know by heart: <0>hea → hästi</0> (well) and <1>halb → halvasti</1> (badly)."
+msgstr "Two everyday adverbs to know by heart: <0>hea → hästi</0> (well) and <1>halb → halvasti</1> (badly)."
+
+msgid "Type the adverb"
+msgstr "Type the adverb"
+
+msgid "Type the adverb form of each adjective to complete the sentence, then hear the whole line."
+msgstr "Type the adverb form of each adjective to complete the sentence, then hear the whole line."
+
+msgid "usual"
+msgstr "usual"
+
+msgid "usually"
+msgstr "usually"
+
+msgid "Väljas sajab kõvasti vihma."
+msgstr "Väljas sajab kõvasti vihma."
+
+msgid "We came in quietly."
+msgstr "We came in quietly."
+
+msgid "well"
+msgstr "well"
+
+msgid "What does each adverb mean?"
+msgstr "What does each adverb mean?"
+
+msgid "What does Kadri write?"
+msgstr "What does Kadri write?"
+
+msgid "What time does tomorrow’s lesson start? Write two words from the message."
+msgstr "What time does tomorrow’s lesson start? Write two words from the message."
+
+msgid "What will happen right after the lesson ends?"
+msgstr "What will happen right after the lesson ends?"
+
+msgid "What will the class do tomorrow instead of reading long texts?"
+msgstr "What will the class do tomorrow instead of reading long texts?"
+
+msgid "Where did Mart drive first?"
+msgstr "Where did Mart drive first?"
+
+msgid "Where does Mart want to drive next time?"
+msgstr "Where does Mart want to drive next time?"
+
+msgid "Why does Kadri advise speaking slowly?"
+msgstr "Why does Kadri advise speaking slowly?"
+
+msgid "Write each sentence in Estonian using an adverb."
+msgstr "Write each sentence in Estonian using an adverb."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"

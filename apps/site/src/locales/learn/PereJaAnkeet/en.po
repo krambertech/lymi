@@ -1,0 +1,668 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 01:31+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0/> is family. Each person has a word of their own: <1/>, mother; <2/>, father; <3/>, brother; <4/>, sister. Estonian puts <5/>, my, in front: <6/>"
+msgstr "<0/> is family. Each person has a word of their own: <1/>, mother; <2/>, father; <3/>, brother; <4/>, sister. Estonian puts <5/>, my, in front: <6/>"
+
+msgid "<0/> is one word for a husband or a wife. In <1/> and <2/> you can hear <3>vana</3>, old, and <4>ema</4> and <5>isa</5>."
+msgstr "<0/> is one word for a husband or a wife. In <1/> and <2/> you can hear <3>vana</3>, old, and <4>ema</4> and <5>isa</5>."
+
+msgid "<0/> is the place where you live, and a town answers it. In a sentence, the place usually takes <1>-s</1>, as lesson {places} shows: <2>Ma elan Tartus</2>."
+msgstr "<0/> is the place where you live, and a town answers it. In a sentence, the place usually takes <1>-s</1>, as lesson {places} shows: <2>Ma elan Tartus</2>."
+
+msgid "<0>Aadress</0> is a place, though it has a number in it."
+msgstr "<0>Aadress</0> is a place, though it has a number in it."
+
+msgid "<0>Eesnimi</0> and <1>perekonnanimi</1> are names."
+msgstr "<0>Eesnimi</0> and <1>perekonnanimi</1> are names."
+
+msgid "<0>Linn</0>, <1>riik</1> and <2>aadress</2> say where."
+msgstr "<0>Linn</0>, <1>riik</1> and <2>aadress</2> say where."
+
+msgid "<0>Mul on</0> means I have. After a number from two up, a family word usually changes: <1>kaks venda</1>, <2>kolm last</2>. A few stay as they are: <3>kaks õde</3>."
+msgstr "<0>Mul on</0> means I have. After a number from two up, a family word usually changes: <1>kaks venda</1>, <2>kolm last</2>. A few stay as they are: <3>kaks õde</3>."
+
+msgid "<0>Vanus</0> and <1>telefoninumber</1> are numbers."
+msgstr "<0>Vanus</0> and <1>telefoninumber</1> are numbers."
+
+msgid "<et>Minu</et> is my; <et>mina</et> is I."
+msgstr "<et>Minu</et> is my; <et>mina</et> is I."
+
+msgid "12 exercises"
+msgstr "12 exercises"
+
+msgid "25 minutes"
+msgstr "25 minutes"
+
+msgid "A family word after a number"
+msgstr "A family word after a number"
+
+msgid "A form asks with one word for each thing: <0>eesnimi</0>, <1>perekonnanimi</1>, <2>aadress</2>, <3>vanus</3>. Answer with <4>Minu … on …</4>."
+msgstr "A form asks with one word for each thing: <0>eesnimi</0>, <1>perekonnanimi</1>, <2>aadress</2>, <3>vanus</3>. Answer with <4>Minu … on …</4>."
+
+msgid "A registration form, <0/>, asks for the same few things in the same words. <1/> is your first name and <2/> your surname; in the second you can hear <3/>, family."
+msgstr "A registration form, <0/>, asks for the same few things in the same words. <1/> is your first name and <2/> your surname; in the second you can hear <3/>, family."
+
+msgid "address"
+msgstr "address"
+
+msgid "After a number"
+msgstr "After a number"
+
+msgid "After a number from two up, a family word usually changes: <et>kaks venda</et>, <et>kolm last</et>. A few stay, as <et>õde</et> does."
+msgstr "After a number from two up, a family word usually changes: <et>kaks venda</et>, <et>kolm last</et>. A few stay, as <et>õde</et> does."
+
+msgid "After a number from two up, the family word usually changes: <0>vend</0> becomes <1/> and <2>laps</2> becomes <3/>. A few words stay as they are, such as <4>õde</4>: <5>kaks õde</5>."
+msgstr "After a number from two up, the family word usually changes: <0>vend</0> becomes <1/> and <2>laps</2> becomes <3/>. A few words stay as they are, such as <4>õde</4>: <5>kaks õde</5>."
+
+msgid "age"
+msgstr "age"
+
+msgid "All six family words picked."
+msgstr "All six family words picked."
+
+msgid "All six sentences right."
+msgstr "All six sentences right."
+
+msgid "All six, each after its number."
+msgstr "All six, each after its number."
+
+msgid "All six, each found and fixed."
+msgstr "All six, each found and fixed."
+
+msgid "All six, every sentence right."
+msgstr "All six, every sentence right."
+
+msgid "and"
+msgstr "and"
+
+msgid "Andres"
+msgstr "Andres"
+
+msgid "Andres gives his phone number."
+msgstr "Andres gives his phone number."
+
+msgid "Andres has two sisters."
+msgstr "Andres has two sisters."
+
+msgid "Andres signs up at a language school. The clerk asks for his details one at a time. Listen for each answer."
+msgstr "Andres signs up at a language school. The clerk asks for his details one at a time. Listen for each answer."
+
+msgid "Ask for a part of a form with <et>Mis on sinu …?</et>"
+msgstr "Ask for a part of a form with <et>Mis on sinu …?</et>"
+
+msgid "at school, in a school"
+msgstr "at school, in a school"
+
+msgid "At the desk"
+msgstr "At the desk"
+
+msgid "birthday"
+msgstr "birthday"
+
+msgid "brother"
+msgstr "brother"
+
+msgid "brother, after a number"
+msgstr "brother, after a number"
+
+msgid "Café"
+msgstr "Café"
+
+msgid "child"
+msgstr "child"
+
+msgid "child, after a number"
+msgstr "child, after a number"
+
+msgid "children"
+msgstr "children"
+
+msgid "Clerk"
+msgstr "Clerk"
+
+msgid "country"
+msgstr "country"
+
+msgid "Do you have a brother?"
+msgstr "Do you have a brother?"
+
+msgid "Each line answers one part of a form. Hear it and put it under name, place or number. An address counts as a place, even with a number in it."
+msgstr "Each line answers one part of a form. Hear it and put it under name, place or number. An address counts as a place, even with a number in it."
+
+msgid "Each round gives a family word and a number. Type the word as it follows the number. Some words stay the same."
+msgstr "Each round gives a family word and a number. Type the word as it follows the number. Some words stay the same."
+
+msgid "eight"
+msgstr "eight"
+
+msgid "family"
+msgstr "family"
+
+msgid "Family words"
+msgstr "Family words"
+
+msgid "father"
+msgstr "father"
+
+msgid "Fill in the form"
+msgstr "Fill in the form"
+
+msgid "Fill in your details"
+msgstr "Fill in your details"
+
+msgid "Fill the gaps"
+msgstr "Fill the gaps"
+
+msgid "first name"
+msgstr "first name"
+
+msgid "five"
+msgstr "five"
+
+msgid "Five"
+msgstr "Five"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "form, questionnaire"
+msgstr "form, questionnaire"
+
+msgid "four"
+msgstr "four"
+
+msgid "Four"
+msgstr "Four"
+
+msgid "Four or five sentences: your first name and surname, where you live, your age and your family."
+msgstr "Four or five sentences: your first name and surname, where you live, your age and your family."
+
+msgid "From töötama, to work."
+msgstr "From töötama, to work."
+
+msgid "Gives a first name and a surname with <0>eesnimi</0> and <1>perekonnanimi</1>."
+msgstr "Gives a first name and a surname with <0>eesnimi</0> and <1>perekonnanimi</1>."
+
+msgid "Gives an age with <0>vanus</0>."
+msgstr "Gives an age with <0>vanus</0>."
+
+msgid "grandfather"
+msgstr "grandfather"
+
+msgid "grandmother"
+msgstr "grandmother"
+
+msgid "he or she"
+msgstr "he or she"
+
+msgid "Hear a sentence and pick the family word in it. Each round offers three."
+msgstr "Hear a sentence and pick the family word in it. Each round offers three."
+
+msgid "Hearing the family"
+msgstr "Hearing the family"
+
+msgid "hello"
+msgstr "hello"
+
+msgid "How many brothers does he have?"
+msgstr "How many brothers does he have?"
+
+msgid "How old is Andres?"
+msgstr "How old is Andres?"
+
+msgid "How old is Liis? Type the number in words."
+msgstr "How old is Liis? Type the number in words."
+
+msgid "husband or wife"
+msgstr "husband or wife"
+
+msgid "I have"
+msgstr "I have"
+
+msgid "I have four brothers."
+msgstr "I have four brothers."
+
+msgid "I have one sister and two brothers."
+msgstr "I have one sister and two brothers."
+
+msgid "I have three children."
+msgstr "I have three children."
+
+msgid "I have two brothers."
+msgstr "I have two brothers."
+
+msgid "I live in Pärnu."
+msgstr "I live in Pärnu."
+
+msgid "I live in Tartu and my brother lives in Pärnu."
+msgstr "I live in Tartu and my brother lives in Pärnu."
+
+msgid "I’m 23."
+msgstr "I’m 23."
+
+msgid "I’m twenty-five."
+msgstr "I’m twenty-five."
+
+msgid "in a café"
+msgstr "in a café"
+
+msgid "In each sentence one word is wrong: a family word after a number, <0>mina</0> for <1>minu</1>, or a place without its ending. Tap the wrong word, then type it right."
+msgstr "In each sentence one word is wrong: a family word after a number, <0>mina</0> for <1>minu</1>, or a place without its ending. Tap the wrong word, then type it right."
+
+msgid "In Pärnu"
+msgstr "In Pärnu"
+
+msgid "In Tallinn"
+msgstr "In Tallinn"
+
+msgid "In Tartu"
+msgstr "In Tartu"
+
+msgid "Jaan’s form is written out as sentences, with six gaps. Drag each word into the gap it names. Two of the words fit nowhere."
+msgstr "Jaan’s form is written out as sentences, with six gaps. Drag each word into the gap it names. Two of the words fit nowhere."
+
+msgid "Kaks venda: two brothers."
+msgstr "Kaks venda: two brothers."
+
+msgid "Kolm last: three children."
+msgstr "Kolm last: three children."
+
+msgid "Kooli kaheksa: Kooli 8."
+msgstr "Kooli kaheksa: Kooli 8."
+
+msgid "Kooli, a street name"
+msgstr "Kooli, a street name"
+
+msgid "Lesson {partitive} explains why the word changes after a number. For now, learn each family word with its number form: <0>vend, kaks venda</0>; <1>laps, kaks last</1>."
+msgstr "Lesson {partitive} explains why the word changes after a number. For now, learn each family word with its number form: <0>vend, kaks venda</0>; <1>laps, kaks last</1>."
+
+msgid "Liis fills in a form"
+msgstr "Liis fills in a form"
+
+msgid "Liis has two sisters."
+msgstr "Liis has two sisters."
+
+msgid "Liis lives in Tartu, not in Pärnu."
+msgstr "Liis lives in Tartu, not in Pärnu."
+
+msgid "Liis tells a language school about herself. Read it and answer the questions. Once you’ve answered, tap a word to see what it means."
+msgstr "Liis tells a language school about herself. Read it and answer the questions. Once you’ve answered, tap a word to see what it means."
+
+msgid "Liis writes"
+msgstr "Liis writes"
+
+msgid "Listen for the word after <et>minu</et>: it names the person."
+msgstr "Listen for the word after <et>minu</et>: it names the person."
+
+msgid "Listen: signing up"
+msgstr "Listen: signing up"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Listening: signing up"
+msgstr "Listening: signing up"
+
+msgid "Market"
+msgstr "Market"
+
+msgid "Match each family word with its meaning. A right pair plays."
+msgstr "Match each family word with its meaning. A right pair plays."
+
+msgid "Match the family"
+msgstr "Match the family"
+
+msgid "Monday"
+msgstr "Monday"
+
+msgid "More than one <0/>, child, is <1/>. Lesson {plural} teaches the plural. Tap a word to hear it in a sentence."
+msgstr "More than one <0/>, child, is <1/>. Lesson {plural} teaches the plural. Tap a word to hear it in a sentence."
+
+msgid "mother"
+msgstr "mother"
+
+msgid "Mul on kaks venda: I have two brothers."
+msgstr "Mul on kaks venda: I have two brothers."
+
+msgid "my"
+msgstr "my"
+
+msgid "My address is Kooli 5, Tartu."
+msgstr "My address is Kooli 5, Tartu."
+
+msgid "My address is Kooli 5."
+msgstr "My address is Kooli 5."
+
+msgid "My birthday is tomorrow."
+msgstr "My birthday is tomorrow."
+
+msgid "My brother studies in Tartu."
+msgstr "My brother studies in Tartu."
+
+msgid "My children are at school."
+msgstr "My children are at school."
+
+msgid "My country is Estonia."
+msgstr "My country is Estonia."
+
+msgid "My family lives in Tartu."
+msgstr "My family lives in Tartu."
+
+msgid "My father is at work."
+msgstr "My father is at work."
+
+msgid "My first name is Mari."
+msgstr "My first name is Mari."
+
+msgid "My grandfather is at home."
+msgstr "My grandfather is at home."
+
+msgid "My grandfather lives in Tallinn."
+msgstr "My grandfather lives in Tallinn."
+
+msgid "My grandmother is at home."
+msgstr "My grandmother is at home."
+
+msgid "My husband is at work."
+msgstr "My husband is at work."
+
+msgid "My mother lives in Tartu."
+msgstr "My mother lives in Tartu."
+
+msgid "My mother works in a café."
+msgstr "My mother works in a café."
+
+msgid "My phone number is 5234567."
+msgstr "My phone number is 5234567."
+
+msgid "My sister lives in Pärnu."
+msgstr "My sister lives in Pärnu."
+
+msgid "My surname is Mägi."
+msgstr "My surname is Mägi."
+
+msgid "My surname is Tamm."
+msgstr "My surname is Tamm."
+
+msgid "My town is Tartu."
+msgstr "My town is Tartu."
+
+msgid "name"
+msgstr "name"
+
+msgid "Name, place or number?"
+msgstr "Name, place or number?"
+
+msgid "Nearly. <0>Vend</0> and <1>laps</1> usually change after a number; <2>õde</2> stays."
+msgstr "Nearly. <0>Vend</0> and <1>laps</1> usually change after a number; <2>õde</2> stays."
+
+msgid "Nearly. Check the word after the number and the ending of the place."
+msgstr "Nearly. Check the word after the number and the ending of the place."
+
+msgid "Nearly. Hear the ones you missed below, then try again with Slower."
+msgstr "Nearly. Hear the ones you missed below, then try again with Slower."
+
+msgid "Nearly. In the ones you missed, check <0>minu</0> and the ending of the place."
+msgstr "Nearly. In the ones you missed, check <0>minu</0> and the ending of the place."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "no; not"
+msgstr "no; not"
+
+msgid "Now you sign up. The clerk asks and you answer in Estonian. If you pick a wrong reply, you see why, then hear the right one."
+msgstr "Now you sign up. The clerk asks and you answer in Estonian. If you pick a wrong reply, you see why, then hear the right one."
+
+msgid "number"
+msgstr "number"
+
+msgid "On Monday"
+msgstr "On Monday"
+
+msgid "one"
+msgstr "one"
+
+msgid "One"
+msgstr "One"
+
+msgid "phone number"
+msgstr "phone number"
+
+msgid "place"
+msgstr "place"
+
+msgid "place where you live"
+msgstr "place where you live"
+
+msgid "Play the lines below once more, then try again."
+msgstr "Play the lines below once more, then try again."
+
+msgid "Put <0>Minu</0> in front and <1>on</1> after it, and each word becomes a sentence you can say: <2/> Tap a line below to hear each one. Read a phone number one digit at a time, with the numbers from lesson {digits}, and say an age as one number."
+msgstr "Put <0>Minu</0> in front and <1>on</1> after it, and each word becomes a sentence you can say: <2/> Tap a line below to hear each one. Read a phone number one digit at a time, with the numbers from lesson {digits}, and say an age as one number."
+
+msgid "Read the examples with a number above once more, then try again."
+msgstr "Read the examples with a number above once more, then try again."
+
+msgid "Read the family sentences above once more, then try again."
+msgstr "Read the family sentences above once more, then try again."
+
+msgid "Read the three examples above once more, then try again."
+msgstr "Read the three examples above once more, then try again."
+
+msgid "Say a phone number one digit at a time and an age as one number: <0>kakskümmend kolm</0>."
+msgstr "Say a phone number one digit at a time and an age as one number: <0>kakskümmend kolm</0>."
+
+msgid "Say where you live with a place that usually takes <0>-s</0>: <1>Ma elan Tartus</1>."
+msgstr "Say where you live with a place that usually takes <0>-s</0>: <1>Ma elan Tartus</1>."
+
+msgid "Say who someone is with <0>minu</0> and the family word: <1>See on minu ema</1>, this is my mother. <2>Abikaasa</2> is a husband or a wife."
+msgstr "Say who someone is with <0>minu</0> and the family word: <1>See on minu ema</1>, this is my mother. <2>Abikaasa</2> is a husband or a wife."
+
+msgid "Saying how many you have"
+msgstr "Saying how many you have"
+
+msgid "Says where you live, with <0>-s</0> on the place."
+msgstr "Says where you live, with <0>-s</0> on the place."
+
+msgid "Says who is in your family, with <0>mul on</0>."
+msgstr "Says who is in your family, with <0>mul on</0>."
+
+msgid "School"
+msgstr "School"
+
+msgid "seven"
+msgstr "seven"
+
+msgid "sister"
+msgstr "sister"
+
+msgid "six"
+msgstr "six"
+
+msgid "Six short lines about a family and a form. Write each one as you hear it, numbers in words."
+msgstr "Six short lines about a family and a form. Write each one as you hear it, numbers in words."
+
+msgid "Start with <et>Minu</et>, then the word on the form, then <et>on</et>."
+msgstr "Start with <et>Minu</et>, then the word on the form, then <et>on</et>."
+
+msgid "surname"
+msgstr "surname"
+
+msgid "Talk: signing up"
+msgstr "Talk: signing up"
+
+msgid "Tap a word"
+msgstr "Tap a word"
+
+msgid "Tap the family words above once more, then try again."
+msgstr "Tap the family words above once more, then try again."
+
+msgid "That gives a first name. The clerk asked for your surname."
+msgstr "That gives a first name. The clerk asked for your surname."
+
+msgid "That gives a surname. The clerk asked for your first name."
+msgstr "That gives a surname. The clerk asked for your first name."
+
+msgid "That is your age. The clerk asked where."
+msgstr "That is your age. The clerk asked where."
+
+msgid "That says how many brothers you have."
+msgstr "That says how many brothers you have."
+
+msgid "That says where you don’t live."
+msgstr "That says where you don’t live."
+
+msgid "The short form of minul."
+msgstr "The short form of minul."
+
+msgid "The word after <et>minu</et> names the part of the form."
+msgstr "The word after <et>minu</et> names the part of the form."
+
+msgid "The words for your family, how to say how many brothers, sisters and children you have, and the words on a form: name, address, phone number, age."
+msgstr "The words for your family, how to say how many brothers, sisters and children you have, and the words on a form: name, address, phone number, age."
+
+msgid "The words on a form"
+msgstr "The words on a form"
+
+msgid "Thirteen"
+msgstr "Thirteen"
+
+msgid "Thirty"
+msgstr "Thirty"
+
+msgid "This is about <et>minu eesnimi</et>, not <et>mina</et>, so the verb is <et>on</et>."
+msgstr "This is about <et>minu eesnimi</et>, not <et>mina</et>, so the verb is <et>on</et>."
+
+msgid "This is my brother."
+msgstr "This is my brother."
+
+msgid "This is my child."
+msgstr "This is my child."
+
+msgid "This is my father."
+msgstr "This is my father."
+
+msgid "This is my grandfather."
+msgstr "This is my grandfather."
+
+msgid "This is my grandmother."
+msgstr "This is my grandmother."
+
+msgid "This is my husband or wife."
+msgstr "This is my husband or wife."
+
+msgid "This is my mother."
+msgstr "This is my mother."
+
+msgid "This is my sister."
+msgstr "This is my sister."
+
+msgid "three"
+msgstr "three"
+
+msgid "Three"
+msgstr "Three"
+
+msgid "To say how many brothers, sisters or children you have, start with <0/>, I have. Learn it as a phrase for now; lesson {mulOn} shows how it works."
+msgstr "To say how many brothers, sisters or children you have, start with <0/>, I have. Learn it as a phrase for now; lesson {mulOn} shows how it works."
+
+msgid "To say where someone lives or is, the place usually takes <et>-s</et>: <et>Tartus</et>, <et>kodus</et>."
+msgstr "To say where someone lives or is, the place usually takes <et>-s</et>: <et>Tartus</et>, <et>kodus</et>."
+
+msgid "today"
+msgstr "today"
+
+msgid "Today"
+msgstr "Today"
+
+msgid "tomorrow"
+msgstr "tomorrow"
+
+msgid "Tomorrow"
+msgstr "Tomorrow"
+
+msgid "town, city"
+msgstr "town, city"
+
+msgid "Twenty"
+msgstr "Twenty"
+
+msgid "twenty-six"
+msgstr "twenty-six"
+
+msgid "two"
+msgstr "two"
+
+msgid "Two"
+msgstr "Two"
+
+msgid "Type the word after the number"
+msgstr "Type the word after the number"
+
+msgid "What does Liis write?"
+msgstr "What does Liis write?"
+
+msgid "What does the line fill in?"
+msgstr "What does the line fill in?"
+
+msgid "What is Andres’s surname? Type it."
+msgstr "What is Andres’s surname? Type it."
+
+msgid "What is Liis’s surname? Type it."
+msgstr "What is Liis’s surname? Type it."
+
+msgid "What number does he give with his street?"
+msgstr "What number does he give with his street?"
+
+msgid "When is Liis’s birthday?"
+msgstr "When is Liis’s birthday?"
+
+msgid "Where does Andres live?"
+msgstr "Where does Andres live?"
+
+msgid "Where does Liis live?"
+msgstr "Where does Liis live?"
+
+msgid "Where does Mati work?"
+msgstr "Where does Mati work?"
+
+msgid "Who is it?"
+msgstr "Who is it?"
+
+msgid "works"
+msgstr "works"
+
+msgid "Write a few sentences for a form, then compare them with a model and tick what yours does. Nothing is marked for you here."
+msgstr "Write a few sentences for a form, then compare them with a model and tick what yours does. Nothing is marked for you here."
+
+msgid "Write about yourself"
+msgstr "Write about yourself"
+
+msgid "Write each sentence in Estonian. A family word usually takes the same form as in <0>kaks venda</0> after a number from two up, and a place usually takes <1>-s</1> to say where."
+msgstr "Write each sentence in Estonian. A family word usually takes the same form as in <0>kaks venda</0> after a number from two up, and a place usually takes <1>-s</1> to say where."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "Write the sentence"
+msgstr "Write the sentence"
+
+msgid "Write what you hear"
+msgstr "Write what you hear"
+
+msgid "Yes, I have one brother."
+msgstr "Yes, I have one brother."
+
+msgid "You are Liis Mägi. You live in Tartu and you have one sister. The clerk speaks first; pick what you say back."
+msgstr "You are Liis Mägi. You live in Tartu and you have one sister. The clerk speaks first; pick what you say back."
+
+msgid "You’ll hear it in a sentence."
+msgstr "You’ll hear it in a sentence."

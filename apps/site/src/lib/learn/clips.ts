@@ -14948,7 +14948,7 @@ export const ROUTE_TRAIL = [
   "Palun võtke oma prügi endaga kaasa.",
   "Kui soovite pikemat matka, võite järve äärest pöörata mööda kitsast metsateed põhja poole ja kõndida veel neli kilomeetrit üle küngaste.",
   "Sellel pikemal ringil läheb tee läbi vana kuusemetsa, kus sügisel kasvab palju seeni ja mustikaid.",
-  "Suvel on raba kohal sageli palju sääski, nii et pange selga pikad varrukad ja võtke kaasa joogivesi.",
+  "Suvel on raba kohal sageli palju sääski, nii et pange selga pikkade varrukatega riided ja võtke kaasa joogivesi.",
   "Parkla kõrval asub väike puhkemaja, kust saab nädalavahetustel osta kuuma teed, suppi ja värsket saiakest.",
   "Õhtul enne pimedat tasub kindlasti tagasi jõuda, sest metsas ei ole valgustust.",
 ] as const;
@@ -15284,7 +15284,7 @@ export const AGENT_AD = [
   "Meie pood on tegutsenud juba kaksteist aastat ning siin käivad nii tudengid, õpetajad kui ka kohalikud pered.",
   "Lisaks müümisele ja riiulite korrastamisele aitab müüja korraldada ka väikesi õhtuid ja kohtumisi autoritega.",
   "Sügisel ja enne jõule on tööpäevad kiiremad, kuid vaiksematel hommikutel jääb aega uute raamatutega tutvumiseks.",
-  "Palk sõltub kogemusest ja töökoormusest, ning täiskohaga töötajale pakume igal aastal ka tasuta koolitusi.",
+  "Palk sõltub kogemusest ja töökoormusest ning täiskohaga töötajale pakume igal aastal ka tasuta koolitusi.",
   "Tööle asumine on planeeritud aprilli algusesse, aga täpse kuupäeva saame koos kokku leppida.",
   "Ootame rõõmsameelset ja abivalmis inimest, kellele meeldib lugejatega suhelda ja häid raamatuid soovitada.",
 ] as const;

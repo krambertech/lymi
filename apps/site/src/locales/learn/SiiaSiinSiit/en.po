@@ -1,0 +1,460 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 01:10+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+#. placeholder {0}: item.said
+#. placeholder {1}: i18n._(TELL_MEANS[item.id])
+msgid "<0>{0}</0> {1}"
+msgstr "<0>{0}</0> {1}"
+
+msgid "<0>Käima</0> (going and coming back, visiting) usually takes the where form (<1>seal, poes, Tartus</1>), not <2>sinna</2> or <3>poodi</3>."
+msgstr "<0>Käima</0> (going and coming back, visiting) usually takes the where form (<1>seal, poes, Tartus</1>), not <2>sinna</2> or <3>poodi</3>."
+
+msgid "<0>Käima</0> usually takes <1>-s</1>: <2>poes</2>, not <3>poodi</3>."
+msgstr "<0>Käima</0> usually takes <1>-s</1>: <2>poes</2>, not <3>poodi</3>."
+
+msgid "<0>Käima</0> usually takes the where form (<1>kus?</1>): <2>seal</2>."
+msgstr "<0>Käima</0> usually takes the where form (<1>kus?</1>): <2>seal</2>."
+
+msgid "<0>Käima</0> usually takes the where form: <1>seal</1>, not <2>sinna</2>."
+msgstr "<0>Käima</0> usually takes the where form: <1>seal</1>, not <2>sinna</2>."
+
+msgid "<0>Minema</0> (going one way) usually takes the where-to form (<1>sinna, poodi</1>); <2>tulema</2> takes where-to or where-from (<3>siia, sealt</3>)."
+msgstr "<0>Minema</0> (going one way) usually takes the where-to form (<1>sinna, poodi</1>); <2>tulema</2> takes where-to or where-from (<3>siia, sealt</3>)."
+
+msgid "<0>Minema</0> takes the where-to form (<1>sinna, poodi</1>), while <2>käima</2> usually takes the where form (<3>seal, poes</3>)."
+msgstr "<0>Minema</0> takes the where-to form (<1>sinna, poodi</1>), while <2>käima</2> usually takes the where form (<3>seal, poes</3>)."
+
+msgid "<0>Minema</0> takes the where-to form: <1>sinna</1>, not <2>seal</2>."
+msgstr "<0>Minema</0> takes the where-to form: <1>sinna</1>, not <2>seal</2>."
+
+msgid "<et>Minema</et> takes the where-to form (<et>sinna, poodi</et>); <et>käima</et> usually takes the where form (<et>seal, poes</et>)."
+msgstr "<et>Minema</et> takes the where-to form (<et>sinna, poodi</et>); <et>käima</et> usually takes the where form (<et>seal, poes</et>)."
+
+msgid "20 minutes"
+msgstr "20 minutes"
+
+msgid "7 exercises"
+msgstr "7 exercises"
+
+msgid "A good view of the park"
+msgstr "A good view of the park"
+
+msgid "A message from Saaremaa"
+msgstr "A message from Saaremaa"
+
+msgid "All eight directions right."
+msgstr "All eight directions right."
+
+msgid "All eight: you told one-way trips and visits apart."
+msgstr "All eight: you told one-way trips and visits apart."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six sentences right."
+msgstr "All six sentences right."
+
+msgid "Because <0>käima</0> means visiting or going and returning, it usually pairs with <1>kus?</1> words: <2>käisin seal</2>, <3>käin tööl</3>, <4>käisime Tartus</4>."
+msgstr "Because <0>käima</0> means visiting or going and returning, it usually pairs with <1>kus?</1> words: <2>käisin seal</2>, <3>käin tööl</3>, <4>käisime Tartus</4>."
+
+msgid "Being in this place answers <0>kus?</0>: <1>siin</1>."
+msgstr "Being in this place answers <0>kus?</0>: <1>siin</1>."
+
+msgid "Buss sõidab siit Tartusse."
+msgstr "Buss sõidab siit Tartusse."
+
+msgid "By bus"
+msgstr "By bus"
+
+msgid "By ferry"
+msgstr "By ferry"
+
+msgid "By night train straight from Tartu"
+msgstr "By night train straight from Tartu"
+
+msgid "Check the verb table above, then try again."
+msgstr "Check the verb table above, then try again."
+
+msgid "Choose <0>siia, siin, siit</0> or <1>sinna, seal, sealt</1> to complete each sentence, then hear the whole line."
+msgstr "Choose <0>siia, siin, siit</0> or <1>sinna, seal, sealt</1> to complete each sentence, then hear the whole line."
+
+msgid "come here / from there"
+msgstr "come here / from there"
+
+msgid "Coming from a place takes <0>sealt</0>, not <1>seal</1>."
+msgstr "Coming from a place takes <0>sealt</0>, not <1>seal</1>."
+
+msgid "Coming from that place answers <0>kust?</0>: <1>sealt</1>."
+msgstr "Coming from that place answers <0>kust?</0>: <1>sealt</1>."
+
+msgid "Coming to this place answers <0>kuhu?</0>: <1>siia</1>."
+msgstr "Coming to this place answers <0>kuhu?</0>: <1>siia</1>."
+
+msgid "Each sentence uses the wrong direction or place form for its verb. Tap the wrong word, then type the right one."
+msgstr "Each sentence uses the wrong direction or place form for its verb. Tap the wrong word, then type the right one."
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "from here"
+msgstr "from here"
+
+msgid "from there"
+msgstr "from there"
+
+msgid "go and come back / visit"
+msgstr "go and come back / visit"
+
+msgid "go there (one way)"
+msgstr "go there (one way)"
+
+msgid "Go through the table once more, then try again."
+msgstr "Go through the table once more, then try again."
+
+msgid "Go, come and visit"
+msgstr "Go, come and visit"
+
+msgid "Going to that place answers <0>kuhu?</0>: <1>sinna</1>."
+msgstr "Going to that place answers <0>kuhu?</0>: <1>sinna</1>."
+
+msgid "He or she is going there in the evening."
+msgstr "He or she is going there in the evening."
+
+msgid "He or she just came from there."
+msgstr "He or she just came from there."
+
+msgid "He or she lives here."
+msgstr "He or she lives here."
+
+msgid "He or she often goes there."
+msgstr "He or she often goes there."
+
+msgid "He or she works there."
+msgstr "He or she works there."
+
+msgid "Heading there (one way)"
+msgstr "Heading there (one way)"
+
+msgid "Heading there or visiting?"
+msgstr "Heading there or visiting?"
+
+msgid "Hear each sentence and pick whether someone is heading there one way or visiting."
+msgstr "Hear each sentence and pick whether someone is heading there one way or visiting."
+
+msgid "here"
+msgstr "here"
+
+msgid "Here"
+msgstr "Here"
+
+msgid "Here and there each have three forms in Estonian (<0>siia, siin, siit</0> and <1>sinna, seal, sealt</1>), and <2>käima</2> usually pairs with the where form, not the where-to form."
+msgstr "Here and there each have three forms in Estonian (<0>siia, siin, siit</0> and <1>sinna, seal, sealt</1>), and <2>käima</2> usually pairs with the where form, not the where-to form."
+
+msgid "Here and there in three directions"
+msgstr "Here and there in three directions"
+
+msgid "Here has three forms: <0>siia</0> (to here), <1>siin</1> (here) and <2>siit</2> (from here)."
+msgstr "Here has three forms: <0>siia</0> (to here), <1>siin</1> (here) and <2>siit</2> (from here)."
+
+msgid "Here has three forms: <et>siia</et> (to here), <et>siin</et> (here), <et>siit</et> (from here)."
+msgstr "Here has three forms: <et>siia</et> (to here), <et>siin</et> (here), <et>siit</et> (from here)."
+
+msgid "Here: <et>siia, siin, siit</et>"
+msgstr "Here: <et>siia, siin, siit</et>"
+
+msgid "How did Mart get to the station?"
+msgstr "How did Mart get to the station?"
+
+msgid "How did Triin and Jaan get to Saaremaa?"
+msgstr "How did Triin and Jaan get to Saaremaa?"
+
+msgid "How many minutes is the café from the station on foot? Write the number word as Kati says it."
+msgstr "How many minutes is the café from the station on foot? Write the number word as Kati says it."
+
+msgid "I am going to the café now."
+msgstr "I am going to the café now."
+
+msgid "I am going to the shop now."
+msgstr "I am going to the shop now."
+
+msgid "I live here."
+msgstr "I live here."
+
+msgid "I went there yesterday (and came back)."
+msgstr "I went there yesterday (and came back)."
+
+msgid "I went to the café in the morning."
+msgstr "I went to the café in the morning."
+
+msgid "I went to the shop yesterday (and came back)."
+msgstr "I went to the shop yesterday (and came back)."
+
+msgid "In a friend’s car from outside the city"
+msgstr "In a friend’s car from outside the city"
+
+msgid "In a sentence"
+msgstr "In a sentence"
+
+msgid "In lesson {inner} you saw that Estonian places have three forms: into, in, and out of (<0>majja, majas, majast</0>). Here and there work the same way: <1/>, <2/>, <3/> and <4/>, <5/>, <6/>."
+msgstr "In lesson {inner} you saw that Estonian places have three forms: into, in, and out of (<0>majja, majas, majast</0>). Here and there work the same way: <1/>, <2/>, <3/> and <4/>, <5/>, <6/>."
+
+msgid "Just like place endings, here and there each have three forms: going to, being at, and coming from."
+msgstr "Just like place endings, here and there each have three forms: going to, being at, and coming from."
+
+msgid "Kati"
+msgstr "Kati"
+
+msgid "Kati has never been to the new café by the park before."
+msgstr "Kati has never been to the new café by the park before."
+
+msgid "Kati will arrive at the station in five minutes."
+msgstr "Kati will arrive at the station in five minutes."
+
+msgid "Lesson {going} met <0/>, <1/> and <2/>. Watch which place form each verb usually takes: <3>Ma lähen poodi</3> (heading to the shop, one way), but <4>Ma käisin poes</4> (went to the shop and came back)."
+msgstr "Lesson {going} met <0/>, <1/> and <2/>. Watch which place form each verb usually takes: <3>Ma lähen poodi</3> (heading to the shop, one way), but <4>Ma käisin poes</4> (went to the shop and came back)."
+
+msgid "Listen: Kati and Mart"
+msgstr "Listen: Kati and Mart"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Live piano music played every single afternoon"
+msgstr "Live piano music played every single afternoon"
+
+msgid "Living somewhere answers <0>kus?</0>: <1>siin</1>, not <2>siia</2>."
+msgstr "Living somewhere answers <0>kus?</0>: <1>siin</1>, not <2>siia</2>."
+
+msgid "Ma elan siin."
+msgstr "Ma elan siin."
+
+msgid "Ma käisin eile poes."
+msgstr "Ma käisin eile poes."
+
+msgid "Ma lähen praegu poodi."
+msgstr "Ma lähen praegu poodi."
+
+msgid "Mart"
+msgstr "Mart"
+
+msgid "Mart has just arrived at the station and calls Kati. Listen and answer. You can play the conversation twice."
+msgstr "Mart has just arrived at the station and calls Kati. Listen and answer. You can play the conversation twice."
+
+msgid "Match each word with its direction."
+msgstr "Match each word with its direction."
+
+msgid "Me läheme homme sinna."
+msgstr "Me läheme homme sinna."
+
+msgid "Meaning"
+msgstr "Meaning"
+
+msgid "Meeting at the station"
+msgstr "Meeting at the station"
+
+msgid "Monday afternoon right after lunch"
+msgstr "Monday afternoon right after lunch"
+
+msgid "Movement toward here takes <0>siia</0>, not <1>siin</1>."
+msgstr "Movement toward here takes <0>siia</0>, not <1>siin</1>."
+
+msgid "Movement verbs: <et>minema, tulema, käima</et>"
+msgstr "Movement verbs: <et>minema, tulema, käima</et>"
+
+msgid "Nearly. Check the direction word in the ones you missed."
+msgstr "Nearly. Check the direction word in the ones you missed."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "Nearly. Read the reason under each one you missed."
+msgstr "Nearly. Read the reason under each one you missed."
+
+msgid "On a long walk through the pine forest outside town"
+msgstr "On a long walk through the pine forest outside town"
+
+msgid "On a small evening flight"
+msgstr "On a small evening flight"
+
+msgid "On foot from the old town"
+msgstr "On foot from the old town"
+
+msgid "On Sunday evening, reaching home at nine"
+msgstr "On Sunday evening, reaching home at nine"
+
+msgid "Pick the direction word"
+msgstr "Pick the direction word"
+
+msgid "Please come here!"
+msgstr "Please come here!"
+
+msgid "Put the bag here."
+msgstr "Put the bag here."
+
+msgid "Putting something onto a spot answers <0>kuhu?</0>: <1>siia</1>."
+msgstr "Putting something onto a spot answers <0>kuhu?</0>: <1>siia</1>."
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "Saturday morning"
+msgstr "Saturday morning"
+
+msgid "Starting from this place answers <0>kust?</0>: <1>siit</1>."
+msgstr "Starting from this place answers <0>kust?</0>: <1>siit</1>."
+
+msgid "Ta töötab seal."
+msgstr "Ta töötab seal."
+
+msgid "Ta tuleb varsti siia."
+msgstr "Ta tuleb varsti siia."
+
+msgid "Ta tuli just sealt."
+msgstr "Ta tuli just sealt."
+
+msgid "Tap a sentence"
+msgstr "Tap a sentence"
+
+msgid "Tap a word"
+msgstr "Tap a word"
+
+msgid "The bookshop, where she bought an Estonian book"
+msgstr "The bookshop, where she bought an Estonian book"
+
+msgid "The bus goes from here to Tartu."
+msgstr "The bus goes from here to Tartu."
+
+msgid "The city library"
+msgstr "The city library"
+
+msgid "The morning food market"
+msgstr "The morning food market"
+
+msgid "there"
+msgstr "there"
+
+msgid "There"
+msgstr "There"
+
+msgid "There has three forms: <0>sinna</0> (to there), <1>seal</1> (there) and <2>sealt</2> (from there)."
+msgstr "There has three forms: <0>sinna</0> (to there), <1>seal</1> (there) and <2>sealt</2> (from there)."
+
+msgid "There has three forms: <et>sinna</et> (to there), <et>seal</et> (there), <et>sealt</et> (from there)."
+msgstr "There has three forms: <et>sinna</et> (to there), <et>seal</et> (there), <et>sealt</et> (from there)."
+
+msgid "There: <et>sinna, seal, sealt</et>"
+msgstr "There: <et>sinna, seal, sealt</et>"
+
+msgid "They could not find a free table at the café."
+msgstr "They could not find a free table at the café."
+
+msgid "They plan to walk there through the old town."
+msgstr "They plan to walk there through the old town."
+
+msgid "They visited Kuressaare Castle in the afternoon."
+msgstr "They visited Kuressaare Castle in the afternoon."
+
+msgid "Three movement verbs and their place forms"
+msgstr "Three movement verbs and their place forms"
+
+msgid "To a history museum"
+msgstr "To a history museum"
+
+msgid "to come"
+msgstr "to come"
+
+msgid "to go (one way)"
+msgstr "to go (one way)"
+
+msgid "to go and come back, to visit"
+msgstr "to go and come back, to visit"
+
+msgid "to here"
+msgstr "to here"
+
+msgid "To the beach, as the water is warm"
+msgstr "To the beach, as the water is warm"
+
+msgid "to there"
+msgstr "to there"
+
+msgid "Triin writes"
+msgstr "Triin writes"
+
+msgid "Triin writes to her mother from a trip to Saaremaa. Read and answer."
+msgstr "Triin writes to her mother from a trip to Saaremaa. Read and answer."
+
+msgid "Tule palun siia!"
+msgstr "Tule palun siia!"
+
+msgid "Under what does Mart wait at the station? Write two words as he says them."
+msgstr "Under what does Mart wait at the station? Write two words as he says them."
+
+msgid "Verb"
+msgstr "Verb"
+
+msgid "Very cheap coffee"
+msgstr "Very cheap coffee"
+
+msgid "Visiting / round trip"
+msgstr "Visiting / round trip"
+
+msgid "We are going there tomorrow."
+msgstr "We are going there tomorrow."
+
+msgid "We are going to Tartu tomorrow."
+msgstr "We are going to Tartu tomorrow."
+
+msgid "We visited Tartu in the summer."
+msgstr "We visited Tartu in the summer."
+
+msgid "What does Kati like about the new café besides the cake?"
+msgstr "What does Kati like about the new café besides the cake?"
+
+msgid "What does Triin write?"
+msgstr "What does Triin write?"
+
+msgid "What local food does Jaan want to buy at the small shop? Write one word from the letter."
+msgstr "What local food does Jaan want to buy at the small shop? Write one word from the letter."
+
+msgid "When do they leave Saaremaa?"
+msgstr "When do they leave Saaremaa?"
+
+msgid "Where are they going tomorrow morning?"
+msgstr "Where are they going tomorrow morning?"
+
+msgid "Where did Kati just come from?"
+msgstr "Where did Kati just come from?"
+
+msgid "Where from?"
+msgstr "Where from?"
+
+msgid "Where to?"
+msgstr "Where to?"
+
+msgid "Where?"
+msgstr "Where?"
+
+msgid "Which direction?"
+msgstr "Which direction?"
+
+msgid "Which word fits?"
+msgstr "Which word fits?"
+
+msgid "Word"
+msgstr "Word"
+
+msgid "Working in that place answers <0>kus?</0>: <1>seal</1>."
+msgstr "Working in that place answers <0>kus?</0>: <1>seal</1>."
+
+msgid "Write each sentence in Estonian using the right place word."
+msgstr "Write each sentence in Estonian using the right place word."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"

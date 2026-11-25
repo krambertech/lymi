@@ -520,6 +520,14 @@ export const STAGES: readonly Stage[] = [
         blurb: msg`Free Estonian practice for phone calls: answer a call (halloo, Mari kuuleb), ask for someone (kas ma saaksin rääkida Mardiga), ask to repeat or speak slower (kas te saaksite korrata, ühendus on halb), leave a message and give a number. Every sentence is read aloud.`,
       },
       {
+        slug: "tookoht",
+        name: msg`At work`,
+        title: msg`At work in Estonian`,
+        et: "Töö, koosolek, puhkus",
+        minutes: 20,
+        blurb: msg`A free Estonian situation lesson for work and the office: meetings, deadlines with -ks, polite requests with conditional verbs, reading a manager’s email and talking about schedules, remote days and leave. Every sentence is read aloud.`,
+      },
+      {
         slug: "kiri",
         name: msg`Practice: a message to the landlord`,
         title: msg`Estonian writing practice: a message to the landlord`,

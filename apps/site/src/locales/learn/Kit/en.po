@@ -314,6 +314,9 @@ msgstr "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö an
 msgid "A free Estonian situation lesson for a visit to the doctor: body parts, mul valutab for pain, mul on palavik and köha for symptoms, booking an appointment by phone, reading clinic instructions and following a consultation. Every sentence is read aloud."
 msgstr "A free Estonian situation lesson for a visit to the doctor: body parts, mul valutab for pain, mul on palavik and köha for symptoms, booking an appointment by phone, reading clinic instructions and following a consultation. Every sentence is read aloud."
 
+msgid "A free Estonian situation lesson for work and the office: meetings, deadlines with -ks, polite requests with conditional verbs, reading a manager’s email and talking about schedules, remote days and leave. Every sentence is read aloud."
+msgstr "A free Estonian situation lesson for work and the office: meetings, deadlines with -ks, polite requests with conditional verbs, reading a manager’s email and talking about schedules, remote days and leave. Every sentence is read aloud."
+
 msgid "A free Estonian situation lesson on asking the way and getting around: otse (straight), vasakule (left), paremale (right), peatus (stop), pilet (ticket), buying a ticket, and following directions on the street. Every sentence is read aloud."
 msgstr "A free Estonian situation lesson on asking the way and getting around: otse (straight), vasakule (left), paremale (right), peatus (stop), pilet (ticket), buying a ticket, and following directions on the street. Every sentence is read aloud."
 
@@ -607,6 +610,12 @@ msgstr "at the market"
 
 msgid "at work"
 msgstr "at work"
+
+msgid "At work"
+msgstr "At work"
+
+msgid "At work in Estonian"
+msgstr "At work in Estonian"
 
 msgid "Back 5 seconds"
 msgstr "Back 5 seconds"

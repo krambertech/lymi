@@ -17604,6 +17604,222 @@ const NEWS_CLIPS: Record<string, Clip> = {
   "c-raadio": NEWS_CONVERSATION,
 };
 
+export const WORK_GROUPS = {
+  office: [
+    { id: "meeting", form: "koosolek", said: "Koosolek algab kell kümme." },
+    { id: "office", form: "kontor", said: "Ma töötan kontoris." },
+    { id: "colleague", form: "kolleeg", said: "Ma kohtusin uue kolleegiga." },
+    { id: "manager", form: "ülemus", said: "Ma rääkisin täna oma ülemusega." },
+  ],
+  terms: [
+    { id: "contract", form: "leping", said: "Me allkirjastame uue lepingu." },
+    { id: "deadline", form: "tähtaeg", said: "Aruande tähtaeg on reedel." },
+    { id: "salary", form: "palk", said: "Palk tuleb iga kuu viiendal päeval." },
+    { id: "leave", form: "puhkus", said: "Ma lähen juulis puhkusele." },
+  ],
+} as const;
+
+export const WORK_MATCH = [
+  "koosolek",
+  "kontor",
+  "kolleeg",
+  "ülemus",
+  "leping",
+  "tähtaeg",
+  "palk",
+  "puhkus",
+] as const;
+
+export const WORK_TELL = [
+  { id: "now-office", said: "Ma töötan kontoris.", kind: "now" as const },
+  { id: "plan-friday", said: "Kas te saaksite selle reedeks saata?", kind: "plan" as const },
+  { id: "now-meeting", said: "Koosolek algab kell kümme.", kind: "now" as const },
+  { id: "plan-leave", said: "Ma lähen juulis puhkusele.", kind: "plan" as const },
+  { id: "now-boss", said: "Ma rääkisin täna oma ülemusega.", kind: "now" as const },
+  { id: "plan-report", said: "Ma pean selle aruande täna valmis saama.", kind: "plan" as const },
+  { id: "now-salary", said: "Palk tuleb iga kuu viiendal päeval.", kind: "now" as const },
+  { id: "plan-contract", said: "Me allkirjastame uue lepingu.", kind: "plan" as const },
+] as const;
+
+export const WORK_TRANSLATE = [
+  "Ma töötan kontoris.",
+  "Koosolek algab kell kümme.",
+  "Kas te saaksite selle reedeks saata?",
+  "Ma lähen juulis puhkusele.",
+  "Ma pean selle aruande täna valmis saama.",
+  "Ma rääkisin täna oma ülemusega.",
+] as const;
+
+export const WORK_ANSWERS: Record<(typeof WORK_TRANSLATE)[number], readonly [string, ...string[]]> =
+  {
+    "Ma töötan kontoris.": ["Ma töötan kontoris.", "Mina töötan kontoris.", "Töötan kontoris."],
+    "Koosolek algab kell kümme.": ["Koosolek algab kell kümme.", "Kell kümme algab koosolek."],
+    "Kas te saaksite selle reedeks saata?": [
+      "Kas te saaksite selle reedeks saata?",
+      "Kas teie saaksite selle reedeks saata?",
+      "Kas te saaksite saata selle reedeks?",
+      "Kas teie saaksite saata selle reedeks?",
+      "Kas saaksite selle reedeks saata?",
+      "Kas saaksite saata selle reedeks?",
+      "Kas sina saaksid selle reedeks saata?",
+      "Kas sina saaksid saata selle reedeks?",
+      "Kas sa saaksid selle reedeks saata?",
+      "Kas sa saaksid saata selle reedeks?",
+      "Kas saaksid selle reedeks saata?",
+      "Kas saaksid saata selle reedeks?",
+    ],
+    "Ma lähen juulis puhkusele.": [
+      "Ma lähen juulis puhkusele.",
+      "Mina lähen juulis puhkusele.",
+      "Lähen juulis puhkusele.",
+      "Juulis lähen ma puhkusele.",
+      "Juulis lähen mina puhkusele.",
+      "Juulis lähen puhkusele.",
+      "Ma lähen puhkusele juulis.",
+      "Mina lähen puhkusele juulis.",
+      "Lähen puhkusele juulis.",
+    ],
+    "Ma pean selle aruande täna valmis saama.": [
+      "Ma pean selle aruande täna valmis saama.",
+      "Mina pean selle aruande täna valmis saama.",
+      "Pean selle aruande täna valmis saama.",
+      "Ma pean täna selle aruande valmis saama.",
+      "Mina pean täna selle aruande valmis saama.",
+      "Pean täna selle aruande valmis saama.",
+      "Täna pean ma selle aruande valmis saama.",
+      "Täna pean mina selle aruande valmis saama.",
+      "Mina pean selle aruande täna valmis tegema.",
+      "Täna pean selle aruande valmis saama.",
+      "Ma pean selle aruande täna valmis tegema.",
+      "Pean selle aruande täna valmis tegema.",
+    ],
+    "Ma rääkisin täna oma ülemusega.": [
+      "Ma rääkisin täna oma ülemusega.",
+      "Mina rääkisin täna oma ülemusega.",
+      "Rääkisin täna oma ülemusega.",
+      "Ma rääkisin oma ülemusega täna.",
+      "Mina rääkisin oma ülemusega täna.",
+      "Rääkisin oma ülemusega täna.",
+      "Täna rääkisin ma oma ülemusega.",
+      "Täna rääkisin mina oma ülemusega.",
+      "Mina rääkisin täna ülemusega.",
+      "Täna rääkisin oma ülemusega.",
+      "Ma rääkisin täna ülemusega.",
+      "Rääkisin täna ülemusega.",
+    ],
+  };
+
+export const WORK_FIXES = [
+  {
+    id: "kontoris",
+    wrong: "Ma olen täna kontori.",
+    right: "Ma olen täna kontoris.",
+  },
+  {
+    id: "toole",
+    wrong: "Ta läheb homme töö.",
+    right: "Ta läheb homme tööle.",
+  },
+  {
+    id: "reedeks",
+    wrong: "Aruanne peab valmis olema reede.",
+    right: "Aruanne peab valmis olema reedeks.",
+  },
+  {
+    id: "kolleegiga",
+    wrong: "Ma kohtusin eile uue kolleegi.",
+    right: "Ma kohtusin eile uue kolleegiga.",
+  },
+  {
+    id: "tooga",
+    wrong: "Kas sa saad mind aidata selle töö?",
+    right: "Kas sa saad mind aidata selle tööga?",
+  },
+  {
+    id: "kell-kuus",
+    wrong: "Ma läksin eile töölt koju kell kuuele.",
+    right: "Ma läksin eile töölt koju kell kuus.",
+  },
+] as const;
+
+export const WORK_DIALOGUE = [
+  {
+    hear: "Tere, Mart! Kas sul on hetk aega?",
+    right: "Tere, Anna! Jah, muidugi, räägi.",
+    wrong1: "Tere, Anna! Praegu on kell kümme.",
+    wrong2: "Tere, Anna! Jah, mul on uus leping.",
+  },
+  {
+    hear: "Kas sa saaksid uue aruande reedeks valmis teha?",
+    right: "Jah, ma saadan selle neljapäeva õhtul.",
+    wrong1: "Jah, ma lähen reedel puhkusele.",
+    wrong2: "Jah, ma kohtusin eile kolleegiga.",
+  },
+  {
+    hear: "Väga hea! Kas sa tuled ka homsele koosolekule?",
+    right: "Jah, ma olen kell kümme kontoris.",
+    wrong1: "Jah, ma saatsin aruande eile.",
+    wrong2: "Jah, koosolek algas eile kell kümme.",
+  },
+  {
+    hear: "Suurepärane, näeme siis homme!",
+    right: "Aitäh, näeme homme!",
+    wrong1: "Aitäh, näeme eile!",
+    wrong2: "Aitäh, ma käisin eile kontoris.",
+  },
+] as const;
+
+export const WORK_NOTE = [
+  "Tere, kolleegid!",
+  "Tuletan meelde, et meie nädala koosolek toimub esmaspäeval kell kümme kolmandas ruumis.",
+  "Palun saatke oma kuu aruanne mulle hiljemalt kolmapäevaks.",
+  "Kolmapäeval ja neljapäeval võivad kõik soovijad kodust töötada.",
+  "Reedel tuleb kontorisse uus praktikant ja me joome kell kaks koos kohvi.",
+  "Kes soovib suvel puhkusele minna, pange oma kuupäevad tabelisse enne kuu lõppu.",
+  "Head nädalat! Anna.",
+] as const;
+
+export const WORK_CONVERSATION: Conversation = {
+  turns: [
+    { voice: "third", text: "Tere tulemast tiimi, Mart! Kuidas esimene nädal läinud on?" },
+    { voice: "fourth", text: "Aitäh, Anna! Väga hästi, kolleegid on toredad ja töö on huvitav." },
+    { voice: "third", text: "Rõõm kuulda. Vaatame üle mõned praktilised asjad." },
+    { voice: "fourth", text: "Jah, mul on paar küsimust tööaja ja kodukontori kohta." },
+    { voice: "third", text: "Tööpäev algab tavaliselt kell üheksa ja lõpeb kell viis." },
+    { voice: "fourth", text: "Kas ma võin ka mõnel päeval kodust töötada?" },
+    {
+      voice: "third",
+      text: "Muidugi. Pärast esimest kuud võid töötada kaks päeva nädalas kodust.",
+    },
+    { voice: "fourth", text: "See sobib hästi. Millal meie tiimi koosolek toimub?" },
+    { voice: "third", text: "Igal teisipäeval kell kümme, tavaliselt siin kontoris." },
+    { voice: "fourth", text: "Selge. Millal palk tavaliselt üle tuleb?" },
+    { voice: "third", text: "Iga kuu viiendal päeval. Kui see on nädalavahetus, siis reedel." },
+    { voice: "fourth", text: "Hea teada. Kuidas puhkusega on?" },
+    {
+      voice: "third",
+      text: "Meil on kakskümmend kaheksa päeva puhkust aastas. Anna lihtsalt kuu aega varem teada.",
+    },
+    { voice: "fourth", text: "Ma tahaksin augustis kaheks nädalaks puhkusele minna." },
+    { voice: "third", text: "Sobib, märgime selle juba kalendrisse ära." },
+    { voice: "fourth", text: "Suur aitäh, Anna! Kõik on nüüd selge." },
+  ],
+};
+
+const WORK_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...WORK_MATCH,
+    ...WORK_GROUPS.office.map((r) => r.said),
+    ...WORK_GROUPS.terms.map((r) => r.said),
+    ...WORK_TRANSLATE,
+    ...WORK_FIXES.map((f) => f.right),
+    ...WORK_DIALOGUE.flatMap((d) => [d.hear, d.right]),
+    "Palun saatke aruanne mulle kolmapäevaks.",
+  ]),
+  "p-note": { sentences: WORK_NOTE, voice: "third" },
+  "c-work": WORK_CONVERSATION,
+};
+
 export const DOCTOR_GROUPS = {
   pain: [
     { id: "head", form: "pea", said: "Mul valutab pea." },
@@ -19142,5 +19358,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "tee-ja-reisimine": TRAVEL_CLIPS,
   "pere-ja-ankeet": PERE_CLIPS,
   "arsti-juures": DOCTOR_CLIPS,
+  tookoht: WORK_CLIPS,
   kit: KIT_CLIPS,
 };

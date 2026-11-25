@@ -30114,6 +30114,278 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "tookoht/aita2h-na2eme-homme": {
+    "text": "Aitäh, näeme homme!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/aruande-ta2htaeg-on-reedel": {
+    "text": "Aruande tähtaeg on reedel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/aruanne-peab-valmis-olema-reedeks": {
+    "text": "Aruanne peab valmis olema reedeks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/c-work": {
+    "text": "Tere tulemast tiimi, Mart! Kuidas esimene nädal läinud on? Aitäh, Anna! Väga hästi, kolleegid on toredad ja töö on huvitav. Rõõm kuulda. Vaatame üle mõned praktilised asjad. Jah, mul on paar küsimust tööaja ja kodukontori kohta. Tööpäev algab tavaliselt kell üheksa ja lõpeb kell viis. Kas ma võin ka mõnel päeval kodust töötada? Muidugi. Pärast esimest kuud võid töötada kaks päeva nädalas kodust. See sobib hästi. Millal meie tiimi koosolek toimub? Igal teisipäeval kell kümme, tavaliselt siin kontoris. Selge. Millal palk tavaliselt üle tuleb? Iga kuu viiendal päeval. Kui see on nädalavahetus, siis reedel. Hea teada. Kuidas puhkusega on? Meil on kakskümmend kaheksa päeva puhkust aastas. Anna lihtsalt kuu aega varem teada. Ma tahaksin augustis kaheks nädalaks puhkusele minna. Sobib, märgime selle juba kalendrisse ära. Suur aitäh, Anna! Kõik on nüüd selge.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere tulemast tiimi, Mart! Kuidas esimene nädal läinud on?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Aitäh, Anna! Väga hästi, kolleegid on toredad ja töö on huvitav."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Rõõm kuulda. Vaatame üle mõned praktilised asjad."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, mul on paar küsimust tööaja ja kodukontori kohta."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tööpäev algab tavaliselt kell üheksa ja lõpeb kell viis."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas ma võin ka mõnel päeval kodust töötada?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Muidugi. Pärast esimest kuud võid töötada kaks päeva nädalas kodust."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "See sobib hästi. Millal meie tiimi koosolek toimub?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Igal teisipäeval kell kümme, tavaliselt siin kontoris."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Selge. Millal palk tavaliselt üle tuleb?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Iga kuu viiendal päeval. Kui see on nädalavahetus, siis reedel."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hea teada. Kuidas puhkusega on?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Meil on kakskümmend kaheksa päeva puhkust aastas. Anna lihtsalt kuu aega varem teada."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma tahaksin augustis kaheks nädalaks puhkusele minna."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Sobib, märgime selle juba kalendrisse ära."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Suur aitäh, Anna! Kõik on nüüd selge."
+        ]
+      }
+    ]
+  },
+  "tookoht/jah-ma-olen-kell-ku2mme-kontoris": {
+    "text": "Jah, ma olen kell kümme kontoris.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/jah-ma-saadan-selle-neljapa2eva-o3htul": {
+    "text": "Jah, ma saadan selle neljapäeva õhtul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/kas-sa-saad-mind-aidata-selle-to2o2ga": {
+    "text": "Kas sa saad mind aidata selle tööga?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/kas-sa-saaksid-uue-aruande-reedeks-valmis-teha": {
+    "text": "Kas sa saaksid uue aruande reedeks valmis teha?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/kas-te-saaksite-selle-reedeks-saata": {
+    "text": "Kas te saaksite selle reedeks saata?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/kolleeg": {
+    "text": "kolleeg",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/kontor": {
+    "text": "kontor",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/koosolek": {
+    "text": "koosolek",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/koosolek-algab-kell-ku2mme": {
+    "text": "Koosolek algab kell kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/leping": {
+    "text": "leping",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ma-kohtusin-eile-uue-kolleegiga": {
+    "text": "Ma kohtusin eile uue kolleegiga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ma-kohtusin-uue-kolleegiga": {
+    "text": "Ma kohtusin uue kolleegiga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ma-la2hen-juulis-puhkusele": {
+    "text": "Ma lähen juulis puhkusele.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ma-la2ksin-eile-to2o2lt-koju-kell-kuus": {
+    "text": "Ma läksin eile töölt koju kell kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ma-olen-ta2na-kontoris": {
+    "text": "Ma olen täna kontoris.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ma-pean-selle-aruande-ta2na-valmis-saama": {
+    "text": "Ma pean selle aruande täna valmis saama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ma-ra2a2kisin-ta2na-oma-u2lemusega": {
+    "text": "Ma rääkisin täna oma ülemusega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ma-to2o2tan-kontoris": {
+    "text": "Ma töötan kontoris.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/me-allkirjastame-uue-lepingu": {
+    "text": "Me allkirjastame uue lepingu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/p-note": {
+    "text": "Tere, kolleegid! Tuletan meelde, et meie nädala koosolek toimub esmaspäeval kell kümme kolmandas ruumis. Palun saatke oma kuu aruanne mulle hiljemalt kolmapäevaks. Kolmapäeval ja neljapäeval võivad kõik soovijad kodust töötada. Reedel tuleb kontorisse uus praktikant ja me joome kell kaks koos kohvi. Kes soovib suvel puhkusele minna, pange oma kuupäevad tabelisse enne kuu lõppu. Head nädalat! Anna.",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "tookoht/palk": {
+    "text": "palk",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/palk-tuleb-iga-kuu-viiendal-pa2eval": {
+    "text": "Palk tuleb iga kuu viiendal päeval.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/palun-saatke-aruanne-mulle-kolmapa2evaks": {
+    "text": "Palun saatke aruanne mulle kolmapäevaks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/puhkus": {
+    "text": "puhkus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/suurepa2rane-na2eme-siis-homme": {
+    "text": "Suurepärane, näeme siis homme!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ta-la2heb-homme-to2o2le": {
+    "text": "Ta läheb homme tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ta2htaeg": {
+    "text": "tähtaeg",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/tere-anna-jah-muidugi-ra2a2gi": {
+    "text": "Tere, Anna! Jah, muidugi, räägi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/tere-mart-kas-sul-on-hetk-aega": {
+    "text": "Tere, Mart! Kas sul on hetk aega?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/u2lemus": {
+    "text": "ülemus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/va2ga-hea-kas-sa-tuled-ka-homsele-koosolekule": {
+    "text": "Väga hea! Kas sa tuled ka homsele koosolekule?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "tulevik/c-plans": {
     "text": "Tere, Jaan! Mida sa järgmisel nädalal teed? Esmaspäeval hakkan Tallinnas töötama. Seal hakkan ka elama. Tallinnas? Aga sinu kass? Kass tuleb ka Tallinnasse. Kas sa hakkad Tallinnas eesti keelt õppima? Jah, ma hakkan iga päev eesti keelt õppima. Ma tahan tööl eesti keelt rääkida. Millal sa Tartusse tuled? Ma kavatsen reedel tulla. Laupäeval olen Tartus. Laupäeval lähen turule. Kas sa tuled ka? Jah, ma tulen. Kell kümme? Kell kümme on hea. Kell üksteist joome kohvikus kohvi. Aga pühapäeval pean ma Tallinnas olema. Miks? Esmaspäeval hakkan kell kaheksa töötama. Hästi. Head aega! Head aega!",
     "model": "eleven_v4",

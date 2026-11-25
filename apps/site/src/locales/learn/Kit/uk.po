@@ -314,6 +314,9 @@ msgstr "Безкоштовний урок естонської вимови: д�
 msgid "A free Estonian situation lesson for a visit to the doctor: body parts, mul valutab for pain, mul on palavik and köha for symptoms, booking an appointment by phone, reading clinic instructions and following a consultation. Every sentence is read aloud."
 msgstr "Безкоштовний ситуаційний урок естонської для візиту до лікаря: частини тіла, mul valutab для болю, mul on palavik і köha для симптомів, запис телефоном, пам’ятка з клініки й прийом у лікаря. Кожне речення озвучено."
 
+msgid "A free Estonian situation lesson for work and the office: meetings, deadlines with -ks, polite requests with conditional verbs, reading a manager’s email and talking about schedules, remote days and leave. Every sentence is read aloud."
+msgstr "Безкоштовний ситуаційний урок естонської для роботи й офісу: зустрічі, терміни з -ks, ввічливі прохання в умовному способі, робочий лист і розмова про графік, дистанційні дні та відпустку. Кожне речення озвучено."
+
 msgid "A free Estonian situation lesson on asking the way and getting around: otse (straight), vasakule (left), paremale (right), peatus (stop), pilet (ticket), buying a ticket, and following directions on the street. Every sentence is read aloud."
 msgstr "Безкоштовний ситуаційний урок естонської про дорогу й транспорт: otse (прямо), vasakule (ліворуч), paremale (праворуч), peatus (зупинка), pilet (квиток), купівля квитка й орієнтування на вулиці. Кожне речення озвучено."
 
@@ -607,6 +610,12 @@ msgstr "на ринку"
 
 msgid "at work"
 msgstr "на роботі"
+
+msgid "At work"
+msgstr "На роботі"
+
+msgid "At work in Estonian"
+msgstr "На роботі естонською"
 
 msgid "Back 5 seconds"
 msgstr "Назад на 5 секунд"

@@ -308,6 +308,9 @@ msgstr "Бесплатный урок-практика по эстонскому
 msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
 msgstr "Бесплатный урок эстонского произношения: девять гласных с õ, ä, ö и ü, ударение, обычно на первом слоге, и то, как удвоенная буква может изменить слово. Каждое слово озвучено."
 
+msgid "A free Estonian situation lesson on asking the way and getting around: otse (straight), vasakule (left), paremale (right), peatus (stop), pilet (ticket), buying a ticket, and following directions on the street. Every sentence is read aloud."
+msgstr "Бесплатный ситуативный урок эстонского о дороге и транспорте: otse (прямо), vasakule (налево), paremale (направо), peatus (остановка), pilet (билет), покупка билета и ориентирование на улице. Каждое предложение озвучено."
+
 msgid "A free lesson on consonant gradation in Estonian: why jalg becomes jala and tuba becomes toa, which forms take the strong or the weak stem, the four usual ways a consonant weakens (kapp, kapi; pank, panga; pood, poe; lind, linnu), words that go the other way (mõte, mõtte), and the same change in verbs (lugema, loen). Every sentence is read aloud."
 msgstr "Бесплатный урок о чередовании согласных в эстонском: почему jalg становится jala, а tuba — toa, какие формы имеют сильную или слабую основу, четыре обычных способа ослабления согласного (kapp, kapi; pank, panga; pood, poe; lind, linnu), слова, которые идут наоборот (mõte, mõtte), и то же изменение в глаголах (lugema, loen). Каждое предложение озвучено."
 
@@ -571,6 +574,9 @@ msgstr "Сначала ответь на все вопросы."
 
 msgid "Answers"
 msgstr "Варианты ответа"
+
+msgid "Asking for directions and travelling in Estonian"
+msgstr "Дорога и транспорт по-эстонски"
 
 msgid "Asking questions in Estonian"
 msgstr "Вопросы в эстонском языке"
@@ -2416,6 +2422,9 @@ msgstr "Завтра я буду есть дома."
 
 msgid "Tööl, at work, takes -l like a market does."
 msgstr "Tööl, на работе, берёт -l, как и рынок."
+
+msgid "Travel and directions"
+msgstr "Дорога и транспорт"
 
 msgctxt "the statement is true"
 msgid "True"

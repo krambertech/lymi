@@ -17604,6 +17604,155 @@ const NEWS_CLIPS: Record<string, Clip> = {
   "c-raadio": NEWS_CONVERSATION,
 };
 
+export const TRAVEL_GROUPS = {
+  turn: [
+    { id: "straight", word: "otse", said: "Minge otse edasi." },
+    { id: "turnLeft", word: "vasakule", said: "Pöörake vasakule." },
+    { id: "turnRight", word: "paremale", said: "Pöörake paremale." },
+  ],
+  side: [
+    { id: "onLeft", word: "vasakul", said: "Kohvik on vasakul." },
+    { id: "onRight", word: "paremal", said: "Jaam on paremal." },
+    { id: "stop", word: "peatus", said: "Bussipeatus on vasakul." },
+  ],
+} as const;
+
+export const TRAVEL_MATCH = ["otse", "vasakule", "paremale", "peatus", "pilet", "jaam"] as const;
+
+export const TRAVEL_TELL = [
+  { id: "left-turn", kind: "turn", said: "Pöörake vasakule." },
+  { id: "left-side", kind: "side", said: "Kohvik on vasakul." },
+  { id: "right-turn", kind: "turn", said: "Pöörake paremale!" },
+  { id: "right-side", kind: "side", said: "Jaam on paremal." },
+  { id: "corner-turn", kind: "turn", said: "Minge pargi juures vasakule." },
+  { id: "corner-side", kind: "side", said: "Bussipeatus on vasakul." },
+  { id: "shop-turn", kind: "turn", said: "Pöörake kooli juures paremale." },
+  { id: "shop-side", kind: "side", said: "Pood on paremal." },
+] as const;
+
+export const TRAVEL_FORMS = [
+  { id: "turn-left", base: "vasak", before: "Pöörake", answer: "vasakule", after: "." },
+  { id: "turn-right", base: "parem", before: "Pöörake", answer: "paremale", after: "!" },
+  { id: "on-left", base: "vasak", before: "Kohvik on", answer: "vasakul", after: "." },
+  { id: "on-right", base: "parem", before: "Jaam on", answer: "paremal", after: "." },
+  { id: "to-tartu", base: "Tartu", before: "Palun üks pilet", answer: "Tartusse", after: "." },
+  { id: "straight", base: "otse", before: "Minge", answer: "otse", after: "edasi." },
+] as const;
+
+export const TRAVEL_TRANSLATE = [
+  "Kus on bussipeatus?",
+  "Palun üks pilet Tartusse.",
+  "Minge otse edasi.",
+  "Pöörake vasakule.",
+  "Jaam on paremal.",
+  "Mis kell rong väljub?",
+] as const;
+
+export const TRAVEL_ANSWERS: Record<
+  (typeof TRAVEL_TRANSLATE)[number],
+  readonly [string, ...string[]]
+> = {
+  "Kus on bussipeatus?": [
+    "Kus on bussipeatus?",
+    "Kus bussipeatus on?",
+    "Kus on peatus?",
+    "Kus peatus on?",
+  ],
+  "Palun üks pilet Tartusse.": ["Palun üks pilet Tartusse.", "Üks pilet Tartusse, palun."],
+  "Minge otse edasi.": ["Minge otse edasi.", "Minge otse.", "Minge edasi otse."],
+  "Pöörake vasakule.": ["Pöörake vasakule."],
+  "Jaam on paremal.": [
+    "Jaam on paremal.",
+    "Rongijaam on paremal.",
+    "Paremal on jaam.",
+    "Paremal on rongijaam.",
+  ],
+  "Mis kell rong väljub?": [
+    "Mis kell rong väljub?",
+    "Mis kell rong läheb?",
+    "Mis kell väljub rong?",
+    "Mis kell läheb rong?",
+    "Mis kell see rong väljub?",
+  ],
+};
+
+export const TRAVEL_FIXES = [
+  { id: "turnLeft", wrong: "Pöörake vasakul.", right: "Pöörake vasakule." },
+  { id: "turnRight", wrong: "Pöörake paremal!", right: "Pöörake paremale!" },
+  { id: "onLeft", wrong: "Kohvik on vasakule.", right: "Kohvik on vasakul." },
+  { id: "onRight", wrong: "Jaam on paremale.", right: "Jaam on paremal." },
+  { id: "toTartu", wrong: "Palun üks pilet Tartus.", right: "Palun üks pilet Tartusse." },
+  { id: "whereStop", wrong: "Kuhu on bussipeatus?", right: "Kus on bussipeatus?" },
+] as const;
+
+export const TRAVEL_DIALOGUE = [
+  {
+    hear: "Tere! Kuidas ma saan teid aidata?",
+    right: "Vabandage, kus on rongijaam?",
+    wrong1: "Ma elan Tallinnas.",
+    wrong2: "Palun üks kohv.",
+  },
+  {
+    hear: "Minge otse edasi ja siis pöörake pargi juures vasakule.",
+    right: "Kas see on kaugel?",
+    wrong1: "Palun üks pilet Tartusse.",
+    wrong2: "Mis teie nimi on?",
+  },
+  {
+    hear: "Ei, ainult viis minutit jalgsi.",
+    right: "Kas jaam on paremal?",
+    wrong1: "Ma ei tea.",
+    wrong2: "Mis kell on?",
+  },
+  {
+    hear: "Jah, suur punane maja paremal.",
+    right: "Suur aitäh! Head päeva!",
+    wrong1: "Kus on bussipeatus?",
+    wrong2: "Kui palju pilet maksab?",
+  },
+] as const;
+
+export const TRAVEL_NOTE = [
+  "Tere! Siin on homse reisi info.",
+  "Buss Pärnusse väljub kell üheksa hommikul.",
+  "Neljas platvorm on suure saali vasakul küljel.",
+  "Ootesaali kõrval on väike kiosk, kust saab kohvi ja vett osta.",
+  "Buss jõuab Pärnusse kell üksteist.",
+  "Jaamast läheme randa jalgsi, sest meri ei ole kaugel.",
+  "Mari ootab meid kohe jaama vastas pargi juures.",
+] as const;
+
+export const TRAVEL_CONVERSATION: Conversation = {
+  turns: [
+    { voice: "third", text: "Tere! Kuhu te soovite sõita?" },
+    { voice: "fourth", text: "Tere! Palun üks pilet Tartusse." },
+    { voice: "fourth", text: "Mis kell järgmine rong väljub?" },
+    { voice: "third", text: "Järgmine rong väljub kahekümne minuti pärast." },
+    { voice: "third", text: "Kas soovite ainult ühe suuna piletit või edasi-tagasi?" },
+    { voice: "fourth", text: "Ainult ühe suuna, aitäh. Tulen tagasi alles pühapäeval." },
+    { voice: "third", text: "See maksab kaksteist eurot. Kas maksate kaardiga või sularahas?" },
+    { voice: "fourth", text: "Kaardiga, palun. Kus on teine tee?" },
+    { voice: "third", text: "Minge siit uksest otse välja ja pöörake paremale." },
+    { voice: "third", text: "Rong ootab teisel teel paremal. Head reisi!" },
+    { voice: "fourth", text: "Suur aitäh!", say: "[warm] Suur aitäh!" },
+  ],
+};
+
+const TRAVEL_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...TRAVEL_MATCH,
+    "vasakul",
+    "paremal",
+    ...TRAVEL_GROUPS.turn.map(({ said }) => said),
+    ...TRAVEL_GROUPS.side.map(({ said }) => said),
+    ...TRAVEL_TELL.map(({ said }) => said),
+    ...TRAVEL_TRANSLATE,
+    ...TRAVEL_FIXES.map(({ right }) => right),
+    ...TRAVEL_DIALOGUE.flatMap(({ hear, right }) => [hear, right]),
+  ]),
+  "c-rong": TRAVEL_CONVERSATION,
+};
+
 export const KOHVIKUS_ORDERING = {
   "o-liis-1": { text: "Tere! Palun?", voice: "second" },
   "o-sina-1": "Tere! Palun üks tee ja üks saiake.",
@@ -18505,5 +18654,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   korter: FLAT_CLIPS,
   uudised: NEWS_CLIPS,
   "ta-olevat-haige": REP_CLIPS,
+  "tee-ja-reisimine": TRAVEL_CLIPS,
   kit: KIT_CLIPS,
 };

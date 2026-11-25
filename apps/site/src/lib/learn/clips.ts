@@ -16982,11 +16982,17 @@ export const DOCTOR_ANSWERS: Record<
   (typeof DOCTOR_TRANSLATE)[number],
   readonly [string, ...string[]]
 > = {
-  "Mul valutab pea.": ["Mul valutab pea.", "Minul valutab pea.", "Pea valutab."],
+  "Mul valutab pea.": [
+    "Mul valutab pea.",
+    "Minul valutab pea.",
+    "Pea valutab.",
+    "Minu pea valutab.",
+  ],
   "Mul on palavik ja köha.": [
     "Mul on palavik ja köha.",
     "Minul on palavik ja köha.",
     "Mul on köha ja palavik.",
+    "Minul on köha ja palavik.",
   ],
   "Ma tahan arsti juurde tulla.": [
     "Ma tahan arsti juurde tulla.",
@@ -17000,10 +17006,15 @@ export const DOCTOR_ANSWERS: Record<
     "Mul valutab kurk juba kolm päeva.",
     "Minul valutab kurk juba kolm päeva.",
     "Kurk valutab juba kolm päeva.",
+    "Minu kurk valutab juba kolm päeva.",
+    "Kurk valutab mul juba kolm päeva.",
   ],
   "Võtke seda rohtu kaks korda päevas.": [
     "Võtke seda rohtu kaks korda päevas.",
     "Võtke rohtu kaks korda päevas.",
+    "Võtke seda rohtu päevas kaks korda.",
+    "Võta seda rohtu kaks korda päevas.",
+    "Võta rohtu kaks korda päevas.",
   ],
   "Ma pean kaks päeva kodus puhkama.": [
     "Ma pean kaks päeva kodus puhkama.",

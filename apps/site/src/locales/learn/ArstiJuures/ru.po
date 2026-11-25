@@ -61,7 +61,7 @@ msgid "Before your visit"
 msgstr "Перед приёмом"
 
 msgid "Being at the doctor’s uses <0>juures</0>, not <1>juurde</1>."
-msgstr "Нахождение у врача требует <0>juures</0>, а не <1>juurde</1>."
+msgstr "Чтобы сказать «быть у врача», нужно <0>juures</0>, а не <1>juurde</1>."
 
 msgid "Book an appointment"
 msgstr "Запись на приём"
@@ -439,7 +439,7 @@ msgid "Which parts of Mart’s body feel fine?"
 msgstr "Какие части тела у Марта не болят?"
 
 msgid "With a high fever"
-msgstr "При жаре"
+msgstr "При высокой температуре"
 
 msgid "with water"
 msgstr "с водой"

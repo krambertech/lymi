@@ -92,7 +92,7 @@ function HealthTable() {
       <Paradigm
         key={group}
         label={t`Doctor vocabulary in Estonian`}
-        columns={[t`Meaning`, t`Word`, t`In a sentence`]}
+        columns={[t`Word`, t`In a sentence`]}
         rows={rows}
       />
     </Panel>
@@ -388,7 +388,7 @@ function useContent() {
         id: "days",
         kind: "short",
         ask: t`For how many days must Mart take the medicine? Write the number word.`,
-        answers: ["viis"],
+        answers: ["viis", "viis päeva"],
         line: 12,
       },
       {

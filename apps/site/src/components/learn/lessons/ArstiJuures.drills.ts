@@ -78,7 +78,7 @@ const tellItem = (index: number): ChoiceDrill => {
   return {
     kind: "choice",
     id: `tell-${item.id}`,
-    rule: "symptom",
+    rule: item.kind,
     say: item.said,
     answer: TELL_LABELS[item.kind],
     wrong: [TELL_LABELS[item.kind === "pain" ? "symptom" : "pain"]],

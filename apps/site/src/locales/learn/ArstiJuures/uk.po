@@ -61,7 +61,7 @@ msgid "Before your visit"
 msgstr "Перед прийомом"
 
 msgid "Being at the doctor’s uses <0>juures</0>, not <1>juurde</1>."
-msgstr "Перебування в лікаря потребує <0>juures</0>, а не <1>juurde</1>."
+msgstr "Щоб сказати «бути в лікаря», потрібне <0>juures</0>, а не <1>juurde</1>."
 
 msgid "Book an appointment"
 msgstr "Запис на прийом"
@@ -322,7 +322,7 @@ msgid "Stomach"
 msgstr "Живіт"
 
 msgid "Stomach and back"
-msgstr "Живіт та вся спина"
+msgstr "Живіт і спина"
 
 msgid "Symptom or medicine"
 msgstr "Симптом або ліки"
@@ -439,7 +439,7 @@ msgid "Which parts of Mart’s body feel fine?"
 msgstr "Які частини тіла в Марта не болять?"
 
 msgid "With a high fever"
-msgstr "За температури"
+msgstr "За високої температури"
 
 msgid "with water"
 msgstr "з водою"

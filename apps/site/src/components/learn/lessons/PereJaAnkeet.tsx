@@ -25,7 +25,7 @@ import {
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
-import { type KeyItem, Keys, Panel } from "../Explore";
+import { type KeyItem, Keys, ListenRows, Panel, type RowItem } from "../Explore";
 import { type FixItem, FixRound, fixRecall } from "../FixRound";
 import { type FormItem, FormRound, formRecall } from "../FormRound";
 import { GapPassage } from "../GapPassage";
@@ -283,14 +283,10 @@ export function PereJaAnkeetLesson() {
     },
   }));
 
-  const fieldKeys: KeyItem[] = PERE_FIELDS.map(({ word, said }) => ({
-    label: word,
-    sub: <span lang={i18n.locale}>{i18n._(FIELD_MEANS[word as Field])}</span>,
-    src: src(word),
-    detail: {
-      title: <span lang="et">{said}</span>,
-      tip: i18n._(WITH_MEANS(said)),
-    },
+  const fieldRows: RowItem[] = PERE_FIELDS.map(({ word, said }) => ({
+    main: said,
+    sub: `${i18n._(FIELD_MEANS[word as Field])}: ${i18n._(WITH_MEANS(said))}`,
+    src: src(said),
   }));
 
   const matchPairs: MatchPair[] = MATCH_FAMILY.map((word) => ({
@@ -879,24 +875,13 @@ export function PereJaAnkeetLesson() {
                 <p>
                   <Trans>
                     Put <b lang="et">Minu</b> in front and <b lang="et">on</b> after it, and each
-                    word becomes a sentence you can say: <Word w="Minu eesnimi on Mari." /> Read a
-                    phone number one digit at a time, with the numbers from lesson {digits}, and say
-                    an age as one number.
+                    word becomes a sentence you can say: <Word w="Minu eesnimi on Mari." /> Tap a
+                    line below to hear each one. Read a phone number one digit at a time, with the
+                    numbers from lesson {digits}, and say an age as one number.
                   </Trans>
                 </p>
               </Prose>
-              <Panel>
-                <Keys
-                  label={t`Words on a form`}
-                  items={fieldKeys}
-                  columns={3}
-                  phoneColumns={2}
-                  empty={{
-                    title: t`Tap a word`,
-                    tip: t`You’ll hear it in a sentence.`,
-                  }}
-                />
-              </Panel>
+              <ListenRows items={fieldRows} />
               <Aside>
                 <Trans>
                   <Word w="Elukoht" /> is the place where you live, and a town answers it. In a

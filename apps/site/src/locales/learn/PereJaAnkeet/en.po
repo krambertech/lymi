@@ -445,8 +445,8 @@ msgstr "place where you live"
 msgid "Play the lines below once more, then try again."
 msgstr "Play the lines below once more, then try again."
 
-msgid "Put <0>Minu</0> in front and <1>on</1> after it, and each word becomes a sentence you can say: <2/> Read a phone number one digit at a time, with the numbers from lesson {digits}, and say an age as one number."
-msgstr "Put <0>Minu</0> in front and <1>on</1> after it, and each word becomes a sentence you can say: <2/> Read a phone number one digit at a time, with the numbers from lesson {digits}, and say an age as one number."
+msgid "Put <0>Minu</0> in front and <1>on</1> after it, and each word becomes a sentence you can say: <2/> Tap a line below to hear each one. Read a phone number one digit at a time, with the numbers from lesson {digits}, and say an age as one number."
+msgstr "Put <0>Minu</0> in front and <1>on</1> after it, and each word becomes a sentence you can say: <2/> Tap a line below to hear each one. Read a phone number one digit at a time, with the numbers from lesson {digits}, and say an age as one number."
 
 msgid "Read the examples with a number above once more, then try again."
 msgstr "Read the examples with a number above once more, then try again."
@@ -636,9 +636,6 @@ msgstr "Where does Mati work?"
 
 msgid "Who is it?"
 msgstr "Who is it?"
-
-msgid "Words on a form"
-msgstr "Words on a form"
 
 msgid "works"
 msgstr "works"

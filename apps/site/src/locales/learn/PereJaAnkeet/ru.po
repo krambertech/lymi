@@ -445,8 +445,8 @@ msgstr "место, где ты живёшь"
 msgid "Play the lines below once more, then try again."
 msgstr "Ещё раз послушай строки ниже, а потом попробуй снова."
 
-msgid "Put <0>Minu</0> in front and <1>on</1> after it, and each word becomes a sentence you can say: <2/> Read a phone number one digit at a time, with the numbers from lesson {digits}, and say an age as one number."
-msgstr "Поставь перед словом <0>Minu</0>, а после него <1>on</1> — и каждое слово станет предложением, которое можно сказать: <2/> Номер телефона читай по одной цифре, числами из урока {digits}, а возраст называй одним числом."
+msgid "Put <0>Minu</0> in front and <1>on</1> after it, and each word becomes a sentence you can say: <2/> Tap a line below to hear each one. Read a phone number one digit at a time, with the numbers from lesson {digits}, and say an age as one number."
+msgstr "Поставь перед словом <0>Minu</0>, а после него <1>on</1> — и каждое слово станет предложением, которое можно сказать: <2/> Нажми на строку ниже, чтобы услышать каждое. Номер телефона читай по одной цифре, числами из урока {digits}, а возраст называй одним числом."
 
 msgid "Read the examples with a number above once more, then try again."
 msgstr "Ещё раз прочитай примеры с числом выше, а потом попробуй снова."
@@ -636,9 +636,6 @@ msgstr "Где работает Мати?"
 
 msgid "Who is it?"
 msgstr "Кто это?"
-
-msgid "Words on a form"
-msgstr "Слова из анкеты"
 
 msgid "works"
 msgstr "работает"

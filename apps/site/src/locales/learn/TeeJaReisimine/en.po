@@ -1,0 +1,421 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 01:40+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+#. placeholder {0}: item.said
+#. placeholder {1}: i18n._(TELL_MEANS[item.id])
+msgid "<0>{0}</0> {1}"
+msgstr "<0>{0}</0> {1}"
+
+msgid "18 minutes"
+msgstr "18 minutes"
+
+msgid "7 exercises"
+msgstr "7 exercises"
+
+msgid "A friend sends bus details before a trip to Pärnu. Read and answer."
+msgstr "A friend sends bus details before a trip to Pärnu. Read and answer."
+
+msgid "A ticket to a city takes the into form: <0>Tartusse</0>, not <1>Tartus</1>."
+msgstr "A ticket to a city takes the into form: <0>Tartusse</0>, not <1>Tartus</1>."
+
+msgid "All eight right."
+msgstr "All eight right."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six sentences right."
+msgstr "All six sentences right."
+
+msgid "Ask for directions and buy a ticket: <0>otse</0> (straight ahead), <1>vasakule</1> and <2>paremale</2> for turning, <3>vasakul</3> and <4>paremal</4> for which side something is on, and everyday station phrases."
+msgstr "Ask for directions and buy a ticket: <0>otse</0> (straight ahead), <1>vasakule</1> and <2>paremale</2> for turning, <3>vasakul</3> and <4>paremal</4> for which side something is on, and everyday station phrases."
+
+msgid "Ask the way"
+msgstr "Ask the way"
+
+msgid "Asking where something is uses <0>Kus</0>, not <1>Kuhu</1>."
+msgstr "Asking where something is uses <0>Kus</0>, not <1>Kuhu</1>."
+
+msgid "At a station or stop, three words come up right away: <0/>, <1/> and <2/>."
+msgstr "At a station or stop, three words come up right away: <0/>, <1/> and <2/>."
+
+msgid "At eleven o’clock"
+msgstr "At eleven o’clock"
+
+msgid "At her own home"
+msgstr "At her own home"
+
+msgid "At nine o’clock"
+msgstr "At nine o’clock"
+
+msgid "At seven at night"
+msgstr "At seven at night"
+
+msgid "At the station: <et>pilet, peatus, jaam</et>"
+msgstr "At the station: <et>pilet, peatus, jaam</et>"
+
+msgid "At the train station"
+msgstr "At the train station"
+
+msgid "Behind the café"
+msgstr "Behind the café"
+
+msgid "Bus stop on the left (where)"
+msgstr "Bus stop on the left (where)"
+
+msgid "Bus to Pärnu"
+msgstr "Bus to Pärnu"
+
+msgid "Check the table above, then try again."
+msgstr "Check the table above, then try again."
+
+msgid "Clerk"
+msgstr "Clerk"
+
+msgid "Directions follow the same <0>-le</0> / <1>-l</1> pattern from lesson {surface}: <2/> and <3/> mean turning toward a side, while <4/> and <5/> say which side a place is on. Straight ahead is <6/>."
+msgstr "Directions follow the same <0>-le</0> / <1>-l</1> pattern from lesson {surface}: <2/> and <3/> mean turning toward a side, while <4/> and <5/> say which side a place is on. Straight ahead is <6/>."
+
+msgid "Directions in Estonian"
+msgstr "Directions in Estonian"
+
+msgid "Each sentence has one wrong direction or place word. Tap the wrong word, then type the right one."
+msgstr "Each sentence has one wrong direction or place word. Tap the wrong word, then type the right one."
+
+msgid "Estonian"
+msgstr "Estonian"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "Go straight ahead (polite)."
+msgstr "Go straight ahead (polite)."
+
+msgid "Go to the left at the park."
+msgstr "Go to the left at the park."
+
+msgid "Hear each sentence and decide whether it tells you which way to turn (<0>-le</0>) or which side a place is on (<1>-l</1>)."
+msgstr "Hear each sentence and decide whether it tells you which way to turn (<0>-le</0>) or which side a place is on (<1>-l</1>)."
+
+msgid "How many euros does the ticket cost? Write the number word as the clerk says it."
+msgstr "How many euros does the ticket cost? Write the number word as the clerk says it."
+
+msgid "In a sentence"
+msgstr "In a sentence"
+
+msgid "In ten minutes"
+msgstr "In ten minutes"
+
+msgid "In twenty minutes"
+msgstr "In twenty minutes"
+
+msgid "In two full hours"
+msgstr "In two full hours"
+
+msgid "Jaam on paremal."
+msgstr "Jaam on paremal."
+
+msgid "Kind"
+msgstr "Kind"
+
+msgid "Kohvik on vasakul."
+msgstr "Kohvik on vasakul."
+
+msgid "Kus on bussipeatus?"
+msgstr "Kus on bussipeatus?"
+
+msgid "Left, right and straight ahead"
+msgstr "Left, right and straight ahead"
+
+msgid "Listen: at the ticket desk"
+msgstr "Listen: at the ticket desk"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Location"
+msgstr "Location"
+
+msgid "Location (which side)"
+msgstr "Location (which side)"
+
+msgid "Location: <et>vasakul, paremal</et>"
+msgstr "Location: <et>vasakul, paremal</et>"
+
+msgid "Mart"
+msgstr "Mart"
+
+msgid "Mart buys a return ticket for the same evening."
+msgstr "Mart buys a return ticket for the same evening."
+
+msgid "Mart buys a train ticket to Tartu at the station. Listen and answer. You can play the conversation twice."
+msgstr "Mart buys a train ticket to Tartu at the station. Listen and answer. You can play the conversation twice."
+
+msgid "Mart pays by card."
+msgstr "Mart pays by card."
+
+msgid "Match each Estonian travel word with its meaning."
+msgstr "Match each Estonian travel word with its meaning."
+
+msgid "Meaning"
+msgstr "Meaning"
+
+msgid "Minge otse edasi."
+msgstr "Minge otse edasi."
+
+msgid "Near a big hotel"
+msgstr "Near a big hotel"
+
+msgid "Nearly. Check the direction ending in the ones you missed."
+msgstr "Nearly. Check the direction ending in the ones you missed."
+
+msgid "Nearly. Listen for -le versus -l at the end."
+msgstr "Nearly. Listen for -le versus -l at the end."
+
+msgid "Nearly. Read the reason under each one you missed."
+msgstr "Nearly. Read the reason under each one you missed."
+
+msgid "on the left"
+msgstr "on the left"
+
+msgid "On the left (where)"
+msgstr "On the left (where)"
+
+msgid "On the left side"
+msgstr "On the left side"
+
+msgid "on the right"
+msgstr "on the right"
+
+msgid "On the right (where)"
+msgstr "On the right (where)"
+
+msgid "On the right side"
+msgstr "On the right side"
+
+msgid "On the street"
+msgstr "On the street"
+
+msgid "One ticket to Tartu, please."
+msgstr "One ticket to Tartu, please."
+
+msgid "Palun üks pilet Tartusse."
+msgstr "Palun üks pilet Tartusse."
+
+msgid "Passer-by"
+msgstr "Passer-by"
+
+msgid "Pöörake paremale."
+msgstr "Pöörake paremale."
+
+msgid "Pöörake vasakule."
+msgstr "Pöörake vasakule."
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "Right by the park"
+msgstr "Right by the park"
+
+msgid "Rongijaam on siin lähedal."
+msgstr "Rongijaam on siin lähedal."
+
+msgid "Saying which side a place is on takes <0>-l</0>: <1>Kohvik on vasakul</1>, <2>Jaam on paremal</2>."
+msgstr "Saying which side a place is on takes <0>-l</0>: <1>Kohvik on vasakul</1>, <2>Jaam on paremal</2>."
+
+msgid "Saying which side a place is on takes <et>-l</et>: <et>Kohvik on vasakul</et>, <et>Jaam on paremal</et>."
+msgstr "Saying which side a place is on takes <et>-l</et>: <et>Kohvik on vasakul</et>, <et>Jaam on paremal</et>."
+
+msgid "Saying which side something is on takes <0>-l</0>: <1>paremal</1>, not <2>paremale</2>."
+msgstr "Saying which side something is on takes <0>-l</0>: <1>paremal</1>, not <2>paremale</2>."
+
+msgid "Saying which side something is on takes <0>-l</0>: <1>vasakul</1> (on the left) and <2>paremal</2> (on the right)."
+msgstr "Saying which side something is on takes <0>-l</0>: <1>vasakul</1> (on the left) and <2>paremal</2> (on the right)."
+
+msgid "Saying which side something is on takes <0>-l</0>: <1>vasakul</1>, not <2>vasakule</2>."
+msgstr "Saying which side something is on takes <0>-l</0>: <1>vasakul</1>, not <2>vasakule</2>."
+
+msgid "station"
+msgstr "station"
+
+msgid "stop (bus, tram)"
+msgstr "stop (bus, tram)"
+
+msgid "straight ahead"
+msgstr "straight ahead"
+
+msgid "Straight ahead"
+msgstr "Straight ahead"
+
+msgid "Tap a word"
+msgstr "Tap a word"
+
+msgid "That asks for coffee, not directions to the station."
+msgstr "That asks for coffee, not directions to the station."
+
+msgid "That asks their name rather than how far the station is."
+msgstr "That asks their name rather than how far the station is."
+
+msgid "That asks what time it is, not which side the station is on."
+msgstr "That asks what time it is, not which side the station is on."
+
+msgid "That says where you live instead of asking for the railway station."
+msgstr "That says where you live instead of asking for the railway station."
+
+msgid "That says you do not know, instead of checking whether the station is on the right."
+msgstr "That says you do not know, instead of checking whether the station is on the right."
+
+msgid "The bus stop is on the left."
+msgstr "The bus stop is on the left."
+
+msgid "The café is on the left."
+msgstr "The café is on the left."
+
+msgid "The passer-by is not selling tickets; ask whether it is far."
+msgstr "The passer-by is not selling tickets; ask whether it is far."
+
+msgid "The shop is on the right."
+msgstr "The shop is on the right."
+
+msgid "The station is on the right."
+msgstr "The station is on the right."
+
+msgid "There is a small kiosk next to the waiting hall."
+msgstr "There is a small kiosk next to the waiting hall."
+
+msgid "They will take a taxi from Pärnu bus station to the beach."
+msgstr "They will take a taxi from Pärnu bus station to the beach."
+
+msgid "ticket"
+msgstr "ticket"
+
+msgid "To a stranger on the street, Estonians usually use polite <0>te</0> commands: <1>Minge otse</1> (go straight), <2>Pöörake vasakule</2> (turn left)."
+msgstr "To a stranger on the street, Estonians usually use polite <0>te</0> commands: <1>Minge otse</1> (go straight), <2>Pöörake vasakule</2> (turn left)."
+
+msgid "to Tartu"
+msgstr "to Tartu"
+
+msgid "to the left"
+msgstr "to the left"
+
+msgid "to the right"
+msgstr "to the right"
+
+msgid "Track four on the left"
+msgstr "Track four on the left"
+
+msgid "Track one by the exit"
+msgstr "Track one by the exit"
+
+msgid "Track two on the right"
+msgstr "Track two on the right"
+
+msgid "Trip details"
+msgstr "Trip details"
+
+msgid "Turn left (polite)."
+msgstr "Turn left (polite)."
+
+msgid "Turn left (where to)"
+msgstr "Turn left (where to)"
+
+msgid "Turn left!"
+msgstr "Turn left!"
+
+msgid "Turn right (where to)"
+msgstr "Turn right (where to)"
+
+msgid "Turn right at the school."
+msgstr "Turn right at the school."
+
+msgid "Turn right!"
+msgstr "Turn right!"
+
+msgid "Turning"
+msgstr "Turning"
+
+msgid "Turning (where to)"
+msgstr "Turning (where to)"
+
+msgid "Turning or location?"
+msgstr "Turning or location?"
+
+msgid "Turning takes <0>-le</0>: <1>paremale</1>, not <2>paremal</2>."
+msgstr "Turning takes <0>-le</0>: <1>paremale</1>, not <2>paremal</2>."
+
+msgid "Turning takes <0>-le</0>: <1>Pöörake vasakule</1> (turn left), <2>Pöörake paremale</2> (turn right); straight ahead is <3>otse</3>."
+msgstr "Turning takes <0>-le</0>: <1>Pöörake vasakule</1> (turn left), <2>Pöörake paremale</2> (turn right); straight ahead is <3>otse</3>."
+
+msgid "Turning takes <0>-le</0>: <1>vasakule</1> (to the left) and <2>paremale</2> (to the right)."
+msgstr "Turning takes <0>-le</0>: <1>vasakule</1> (to the left) and <2>paremale</2> (to the right)."
+
+msgid "Turning takes <0>-le</0>: <1>vasakule</1>, not <2>vasakul</2>."
+msgstr "Turning takes <0>-le</0>: <1>vasakule</1>, not <2>vasakul</2>."
+
+msgid "Turning toward a side takes <et>-le</et>: <et>Pöörake vasakule</et>, <et>Pöörake paremale</et>."
+msgstr "Turning toward a side takes <et>-le</et>: <et>Pöörake vasakule</et>, <et>Pöörake paremale</et>."
+
+msgid "Turning: <et>otse, vasakule, paremale</et>"
+msgstr "Turning: <et>otse, vasakule, paremale</et>"
+
+msgid "Useful station phrases: <et>Kus on bussipeatus?</et>, <et>Palun üks pilet Tartusse.</et>, <et>Mis kell rong väljub?</et>"
+msgstr "Useful station phrases: <et>Kus on bussipeatus?</et>, <et>Palun üks pilet Tartusse.</et>, <et>Mis kell rong väljub?</et>"
+
+msgid "Useful travel questions: <0>Kus on bussipeatus?</0>, <1>Palun üks pilet Tartusse.</1>, <2>Mis kell rong väljub?</2>"
+msgstr "Useful travel questions: <0>Kus on bussipeatus?</0>, <1>Palun üks pilet Tartusse.</1>, <2>Mis kell rong väljub?</2>"
+
+msgid "Wait until the station to buy a ticket."
+msgstr "Wait until the station to buy a ticket."
+
+msgid "What does each word mean?"
+msgstr "What does each word mean?"
+
+msgid "What time does the bus to Pärnu leave? Write two words from the message."
+msgstr "What time does the bus to Pärnu leave? Write two words from the message."
+
+msgid "What time does the train leave?"
+msgstr "What time does the train leave?"
+
+msgid "When does the bus reach Pärnu?"
+msgstr "When does the bus reach Pärnu?"
+
+msgid "When does the next train leave?"
+msgstr "When does the next train leave?"
+
+msgid "Where does the train leave from?"
+msgstr "Where does the train leave from?"
+
+msgid "Where is Mari waiting in Pärnu?"
+msgstr "Where is Mari waiting in Pärnu?"
+
+msgid "Where is the bus stop?"
+msgstr "Where is the bus stop?"
+
+msgid "Which city is Mart buying a train ticket to? Write one word as he says it."
+msgstr "Which city is Mart buying a train ticket to? Write one word as he says it."
+
+msgid "Which side is platform four on?"
+msgstr "Which side is platform four on?"
+
+msgid "Word"
+msgstr "Word"
+
+msgid "Write each travel phrase in Estonian."
+msgstr "Write each travel phrase in Estonian."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "You already have the directions — thank the person and say goodbye."
+msgstr "You already have the directions — thank the person and say goodbye."
+
+msgid "You are asking a passer-by for the way to the railway station."
+msgstr "You are asking a passer-by for the way to the railway station."
+
+msgid "You are looking for the railway station. Listen to the passer-by and pick the right reply."
+msgstr "You are looking for the railway station. Listen to the passer-by and pick the right reply."

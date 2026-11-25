@@ -1,0 +1,490 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 01:04+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+#. placeholder {0}: item.said
+#. placeholder {1}: i18n._(TELL_MEANS[item.id])
+msgid "<0>{0}</0> {1}"
+msgstr "<0>{0}</0> — {1}"
+
+msgid "<0>Kiire</0> takes <1>-sti</1>: <2>kiiresti</2>."
+msgstr "<0>Kiire</0> берёт <1>-sti</1>: <2>kiiresti</2>."
+
+msgid "20 minutes"
+msgstr "20 минут"
+
+msgid "7 exercises"
+msgstr "7 упражнений"
+
+msgid "A message from the teacher"
+msgstr "Сообщение от учительницы"
+
+msgid "Adjective"
+msgstr "Прилагательное"
+
+msgid "Adjective or adverb"
+msgstr "Прилагательное или наречие"
+
+msgid "Adjectives and adverbs"
+msgstr "Прилагательные и наречия"
+
+msgid "Adverb"
+msgstr "Наречие"
+
+msgid "Adverbs with <et>-lt</et>"
+msgstr "Наречия на <et>-lt</et>"
+
+msgid "Adverbs with <et>-sti</et> and <et>hästi</et>"
+msgstr "Наречия на <et>-sti</et> и <et>hästi</et>"
+
+msgid "All eight adverbs right."
+msgstr "Все восемь наречий верно."
+
+msgid "All eight: you told adjectives and adverbs apart by ear."
+msgstr "Все восемь: ты различаешь прилагательные и наречия на слух."
+
+msgid "All six found and fixed."
+msgstr "Все шесть найдены и исправлены."
+
+msgid "All six sentences right."
+msgstr "Все шесть предложений верно."
+
+msgid "All the way out toward Tartu on the motorway"
+msgstr "До самого Тарту по скоростной трассе"
+
+msgid "Along a busy avenue"
+msgstr "По шумной улице"
+
+msgid "An adjective describes a noun (<0>kiire rong</0>); an adverb says how an action happens (<1>rong sõidab kiiresti</1>)."
+msgstr "Прилагательное описывает предмет (<0>kiire rong</0>), а наречие говорит, как происходит действие (<1>rong sõidab kiiresti</1>)."
+
+msgid "An adjective describes a noun (<et>kiire rong</et>); an adverb says how an action happens (<et>rong sõidab kiiresti</et>)."
+msgstr "Прилагательное описывает предмет (<et>kiire rong</et>), а наречие говорит, как происходит действие (<et>rong sõidab kiiresti</et>)."
+
+msgid "bad"
+msgstr "плохой"
+
+msgid "badly"
+msgstr "плохо"
+
+msgid "Beside a quiet suburban park"
+msgstr "Возле тихого пригородного парка"
+
+msgid "Building adverbs from adjectives"
+msgstr "Как образовать наречие от прилагательного"
+
+msgid "By the third try, the car stood right between the lines."
+msgstr "С третьей попытки машина стояла ровно между линиями."
+
+msgid "calm"
+msgstr "спокойный"
+
+msgid "calmly"
+msgstr "спокойно"
+
+msgid "Calmly, softly, clearly"
+msgstr "Спокойно, тихо и чётко"
+
+msgid "certainly, definitely"
+msgstr "обязательно, точно"
+
+msgid "clear"
+msgstr "чёткий, ясный"
+
+msgid "clearly"
+msgstr "чётко, ясно"
+
+msgid "Compare <0>See on kiire rong</0> (describing the train) with <1>Rong sõidab kiiresti</1> (saying how it moves). Listen to each sentence and pick which one you hear."
+msgstr "Сравни <0>See on kiire rong</0> (описание поезда) и <1>Rong sõidab kiiresti</1> (как он едет). Послушай каждое предложение и выбери, что именно слышишь."
+
+msgid "Describes a thing"
+msgstr "Описывает предмет"
+
+msgid "Downtown"
+msgstr "В центре"
+
+msgid "Each sentence uses an adjective where Estonian needs an adverb. Tap the wrong word, then type the right form."
+msgstr "В каждом предложении стоит прилагательное там, где в эстонском нужно наречие. Нажми на ошибочное слово и впиши правильную форму."
+
+msgid "Ending"
+msgstr "Окончание"
+
+msgid "Everyone can hear each word better."
+msgstr "Каждое слово лучше слышно всем."
+
+msgid "exact"
+msgstr "точный"
+
+msgid "exactly, on time"
+msgstr "точно, ровно"
+
+msgid "fast"
+msgstr "быстрый"
+
+msgid "Fast, never explaining anything twice"
+msgstr "Быстро, ничего не объясняя дважды"
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
+
+msgid "Genitive <0>aeglase</0> plus <1>-lt</1> gives <2>aeglaselt</2>."
+msgstr "Родительный <0>aeglase</0> плюс <1>-lt</1> даёт <2>aeglaselt</2>."
+
+msgid "Genitive <0>halva</0> plus <1>-sti</1> gives <2>halvasti</2>."
+msgstr "Родительный <0>halva</0> плюс <1>-sti</1> даёт <2>halvasti</2>."
+
+msgid "Genitive <0>kindla</0> plus <1>-sti</1> gives <2>kindlasti</2>."
+msgstr "Родительный <0>kindla</0> плюс <1>-sti</1> даёт <2>kindlasti</2>."
+
+msgid "Genitive <0>lihtsa</0> plus <1>-lt</1> gives <2>lihtsalt</2>."
+msgstr "Родительный <0>lihtsa</0> плюс <1>-lt</1> даёт <2>lihtsalt</2>."
+
+msgid "Genitive <0>selge</0> plus <1>-lt</1> gives <2>selgelt</2>."
+msgstr "Родительный <0>selge</0> плюс <1>-lt</1> даёт <2>selgelt</2>."
+
+msgid "Genitive <0>vaikse</0> plus <1>-lt</1> gives <2>vaikselt</2>."
+msgstr "Родительный <0>vaikse</0> плюс <1>-lt</1> даёт <2>vaikselt</2>."
+
+msgid "Go through the table once more, then try again."
+msgstr "Просмотри таблицу ещё раз и попробуй снова."
+
+msgid "good"
+msgstr "хороший"
+
+msgid "hard, loud"
+msgstr "сильный, громкий"
+
+msgid "hard, loudly"
+msgstr "сильно, громко"
+
+msgid "He or she answered clearly."
+msgstr "Он или она ответили чётко."
+
+msgid "He or she explained it clearly."
+msgstr "Он или она объяснили это чётко."
+
+msgid "He or she speaks Estonian well."
+msgstr "Он или она хорошо говорят по-эстонски."
+
+msgid "How did Mart’s driving teacher speak?"
+msgstr "Как говорил инструктор Марта?"
+
+msgid "How did parking go on Mart’s first try? Write one word as he says it."
+msgstr "Как прошла парковка с первой попытки? Напиши одно слово так, как говорит Март."
+
+msgid "How it was explained takes <0>selgelt</0>, not <1>selge</1>."
+msgstr "«Как объяснили» требует <0>selgelt</0>, а не <1>selge</1>."
+
+msgid "How the bus goes takes <0>kiiresti</0>, not <1>kiire</1>."
+msgstr "«Как едет автобус» требует <0>kiiresti</0>, а не <1>kiire</1>."
+
+msgid "How to speak takes the adverb <0>aeglaselt</0>, not <1>aeglane</1>."
+msgstr "«Как говорить» требует наречия <0>aeglaselt</0>, а не <1>aeglane</1>."
+
+msgid "How you came in takes <0>vaikselt</0>, not <1>vaikne</1>."
+msgstr "«Как вошли» требует <0>vaikselt</0>, а не <1>vaikne</1>."
+
+msgid "How you slept takes <0>halvasti</0>, not <1>halb</1>."
+msgstr "«Как спалось» требует <0>halvasti</0>, а не <1>halb</1>."
+
+msgid "I slept badly at night."
+msgstr "Ночью я плохо спал."
+
+msgid "I will definitely come."
+msgstr "Я обязательно приду."
+
+msgid "in a simple way"
+msgstr "просто"
+
+msgid "In lesson {adjectives} you used adjectives with nouns: <0>aeglane buss</0>, a slow bus. To say how an action happens, Estonian often adds <1>-lt</1> to the genitive stem from lesson {genitive}, above all with adjectives ending in <2>-ne</2>: <3/>, <4/>, <5/>."
+msgstr "В уроке {adjectives} ты сочетал прилагательные с существительными: <0>aeglane buss</0> («медленный автобус»). Чтобы сказать, как происходит действие, эстонский часто добавляет <1>-lt</1> к основе родительного падежа из урока {genitive}, чаще всего у прилагательных на <2>-ne</2>: <3/>, <4/>, <5/>."
+
+msgid "Into town"
+msgstr "В центр"
+
+msgid "Kadri thinks the class studied poorly this spring."
+msgstr "Кадри считает, что этой весной группа училась плохо."
+
+msgid "Kadri writes"
+msgstr "Кадри пишет"
+
+msgid "Kati"
+msgstr "Кати"
+
+msgid "Kati asks Mart how his first driving lesson went. Listen and answer. You can play the conversation twice."
+msgstr "Кати расспрашивает Марта, как прошёл его первый урок вождения. Послушай и ответь на вопросы. Разговор можно включить дважды."
+
+msgid "Kõik läks rahulikult."
+msgstr "Kõik läks rahulikult."
+
+msgid "Laps magab vaikselt."
+msgstr "Laps magab vaikselt."
+
+msgid "Listen for the ending at the end of the word, then try again."
+msgstr "Прислушайся к окончанию слова и попробуй ещё раз."
+
+msgid "Listen: Kati and Mart"
+msgstr "Послушай: Кати и Март"
+
+msgid "Listening only, no microphone"
+msgstr "Только аудирование, без микрофона"
+
+msgid "Loudly, rushing"
+msgstr "Громко, второпях"
+
+msgid "Ma magasin öösel halvasti."
+msgstr "Ma magasin öösel halvasti."
+
+msgid "Ma tulen kindlasti."
+msgstr "Ma tulen kindlasti."
+
+msgid "Make the adverb"
+msgstr "Образуй наречие"
+
+msgid "Many adjectives, above all those ending in <0>-ne</0>, usually add <1>-lt</1> to the genitive stem: <2>aeglane → aeglase → aeglaselt</2>."
+msgstr "Многие прилагательные, чаще всего на <0>-ne</0>, обычно добавляют <1>-lt</1> к основе родительного падежа: <2>aeglane → aeglase → aeglaselt</2>."
+
+msgid "Many adjectives, above all those ending in <0>-ne</0>, usually build their adverb by adding <1>-lt</1> to the genitive stem: <2>aeglane → aeglase → aeglaselt</2>, <3>vaikne → vaikse → vaikselt</3>."
+msgstr "Многие прилагательные, чаще всего на <0>-ne</0>, обычно образуют наречие, добавляя <1>-lt</1> к основе родительного: <2>aeglane → aeglase → aeglaselt</2>, <3>vaikne → vaikse → vaikselt</3>."
+
+msgid "Many adjectives, above all those ending in <et>-ne</et>, usually add <et>-lt</et> to the genitive stem: <et>aeglane</et> → <et>aeglaselt</et>, <et>vaikne</et> → <et>vaikselt</et>."
+msgstr "Многие прилагательные, чаще всего на <et>-ne</et>, обычно добавляют <et>-lt</et> к основе родительного падежа: <et>aeglane</et> → <et>aeglaselt</et>, <et>vaikne</et> → <et>vaikselt</et>."
+
+msgid "Many other adjectives take <0>-sti</0> instead: <1/>, <2/>, <3/>. And <4>hea</4> becomes <5/>, while <6>halb</6> becomes <7/>. Switch groups and tap a form to hear it."
+msgstr "Многие другие прилагательные берут <0>-sti</0>: <1/>, <2/>, <3/>. А <4>hea</4> превращается в <5/>, тогда как <6>halb</6> — в <7/>. Переключай группы и нажимай на форму, чтобы услышать её."
+
+msgid "Many other adjectives take <0>-sti</0> on the genitive stem, and <1>hea</1> becomes <2>hästi</2>."
+msgstr "Многие другие прилагательные берут <0>-sti</0> к основе родительного, а <1>hea</1> превращается в <2>hästi</2>."
+
+msgid "Many other adjectives take <0>-sti</0> on the genitive stem: <1>kiiresti</1>, <2>kindlasti</2>, <3>ilusasti</3>, <4>kõvasti</4>."
+msgstr "Многие другие прилагательные берут <0>-sti</0> к основе родительного: <1>kiiresti</1>, <2>kindlasti</2>, <3>ilusasti</3>, <4>kõvasti</4>."
+
+msgid "Many other adjectives take <et>-sti</et> on the genitive stem (<et>kiiresti</et>, <et>kindlasti</et>), and <et>hea</et> becomes <et>hästi</et>."
+msgstr "Многие другие прилагательные берут <et>-sti</et> к основе родительного (<et>kiiresti</et>, <et>kindlasti</et>), а <et>hea</et> превращается в <et>hästi</et>."
+
+msgid "Mart"
+msgstr "Март"
+
+msgid "Mart drove on the big main street during this first lesson."
+msgstr "На первом уроке Март ездил по большой главной улице."
+
+msgid "Mart felt completely calm from the very start of the lesson."
+msgstr "Март чувствовал себя совершенно спокойно с самого начала урока."
+
+msgid "Mart’s first driving lesson"
+msgstr "Первый урок вождения Марта"
+
+msgid "Match each adverb with its meaning."
+msgstr "Соедини каждое наречие с его значением."
+
+msgid "Meaning"
+msgstr "Значение"
+
+msgid "Nearly. Check the adverb ending in the ones you missed."
+msgstr "Почти. Проверь окончание наречия в предложениях с ошибками."
+
+msgid "Nearly. Check the stem and ending in the ones you missed."
+msgstr "Почти. Проверь основу и окончание в словах с ошибками."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Почти. Послушай ещё раз те предложения, где были ошибки."
+
+msgid "Nearly. Read the reason under each one you missed."
+msgstr "Почти. Прочитай объяснение под каждым ошибочным предложением."
+
+msgid "neatly, prettily"
+msgstr "красиво, аккуратно"
+
+msgid "On which day is Mart’s next driving lesson? Write the word as he says it."
+msgstr "В какой день у Марта следующий урок вождения? Напиши слово так, как он говорит."
+
+msgid "Only talk"
+msgstr "Только говорить"
+
+msgid "Õpetaja räägib selgelt."
+msgstr "Õpetaja räägib selgelt."
+
+msgid "Palun räägi aeglaselt."
+msgstr "Palun räägi aeglaselt."
+
+msgid "Please speak slowly."
+msgstr "Говори, пожалуйста, медленно."
+
+msgid "pretty, lovely"
+msgstr "красивый, симпатичный"
+
+msgid "quickly, fast"
+msgstr "быстро"
+
+msgid "quiet"
+msgstr "тихий"
+
+msgid "quietly"
+msgstr "тихо"
+
+msgid "Read one long text together"
+msgstr "Вместе прочитать один длинный текст"
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Что запомнить» ниже и попробуй ещё раз."
+
+msgid "Rong saabus täpselt kell kolm."
+msgstr "Rong saabus täpselt kell kolm."
+
+msgid "Rong sõidab kiiresti."
+msgstr "Rong sõidab kiiresti."
+
+msgid "Says how it happens"
+msgstr "Говорит, как происходит действие"
+
+msgid "simple"
+msgstr "простой"
+
+msgid "slow"
+msgstr "медленный"
+
+msgid "slowly"
+msgstr "медленно"
+
+msgid "Slowly across an empty training lot"
+msgstr "Медленно по пустой учебной площадке"
+
+msgid "Some adjectives take either ending: <0>kiiresti</0> or <1>kiirelt</1>, <2>ilusasti</2> or <3>ilusalt</3>. The exercises ask for the form in the table."
+msgstr "Некоторые прилагательные принимают оба окончания: <0>kiiresti</0> или <1>kiirelt</1>, <2>ilusasti</2> или <3>ilusalt</3>. В упражнениях нужна форма из таблицы."
+
+msgid "Students have to copy every sentence into a notebook."
+msgstr "Ученики должны переписывать каждое предложение в тетрадь."
+
+msgid "sure"
+msgstr "уверенный"
+
+msgid "Ta kirjutab ilusasti."
+msgstr "Ta kirjutab ilusasti."
+
+msgid "Ta räägib eesti keelt hästi."
+msgstr "Ta räägib eesti keelt hästi."
+
+msgid "Ta selgitab seda lihtsalt."
+msgstr "Ta selgitab seda lihtsalt."
+
+msgid "Take a written test"
+msgstr "Писать письменную контрольную"
+
+msgid "Tap a form"
+msgstr "Нажми на форму"
+
+msgid "Tavaliselt joon ma hommikul teed."
+msgstr "Tavaliselt joon ma hommikul teed."
+
+msgid "Teacher Kadri sends a message before the last Estonian lesson of the spring. Read it and answer."
+msgstr "Учительница Кадри отправляет сообщение перед последним весенним уроком эстонского. Прочитай его и ответь на вопросы."
+
+msgid "The adverb from <0>hea</0> is <1>hästi</1>."
+msgstr "Наречие от <0>hea</0> — <1>hästi</1>."
+
+msgid "The bus goes fast."
+msgstr "Автобус едет быстро."
+
+msgid "The bus goes slowly."
+msgstr "Автобус едет медленно."
+
+msgid "The child sleeps quietly."
+msgstr "Ребёнок спит тихо."
+
+msgid "The lesson finishes early."
+msgstr "Урок закончится раньше."
+
+msgid "The teacher tells students to ask again if they do not understand right away."
+msgstr "Учительница советует переспрашивать, если что-то непонятно сразу."
+
+msgid "The train goes fast."
+msgstr "Поезд едет быстро."
+
+msgid "They will drink tea and eat cake together."
+msgstr "Они вместе будут пить чай и есть торт."
+
+msgid "They will get new homework."
+msgstr "Получат новое задание."
+
+msgid "They will go outside."
+msgstr "Пойдут на улицу."
+
+msgid "Thing or how?"
+msgstr "Предмет или действие?"
+
+msgid "This is a fast train."
+msgstr "Это быстрый поезд."
+
+msgid "This is a good book."
+msgstr "Это хорошая книга."
+
+msgid "This is a quiet room."
+msgstr "Это тихая комната."
+
+msgid "This is a slow bus."
+msgstr "Это медленный автобус."
+
+msgid "To say how someone speaks, use <0>hästi</0>, not the adjective <1>hea</1>."
+msgstr "Чтобы сказать, как кто-то говорит, используй <0>hästi</0>, а не прилагательное <1>hea</1>."
+
+msgid "Turn an adjective into a word that says how something happens: many adjectives, above all those ending in <0>-ne</0>, usually add <1>-lt</1> to the genitive (<2>aeglaselt</2>), many others take <3>-sti</3> (<4>kiiresti</4>), and <5>hea</5> becomes <6>hästi</6>."
+msgstr "Преврати прилагательное в слово, которое объясняет, как происходит действие: многие прилагательные, чаще всего на <0>-ne</0>, обычно добавляют <1>-lt</1> к родительному (<2>aeglaselt</2>), многие другие берут <3>-sti</3> (<4>kiiresti</4>), а <5>hea</5> превращается в <6>hästi</6>."
+
+msgid "Two everyday adverbs to know by heart: <0>hea → hästi</0> (well) and <1>halb → halvasti</1> (badly)."
+msgstr "Два повседневных наречия, которые стоит запомнить: <0>hea → hästi</0> («хорошо») и <1>halb → halvasti</1> («плохо»)."
+
+msgid "Type the adverb"
+msgstr "Напиши наречие"
+
+msgid "Type the adverb form of each adjective to complete the sentence, then hear the whole line."
+msgstr "Впиши форму наречия от каждого прилагательного, чтобы дополнить предложение, и послушай его целиком."
+
+msgid "usual"
+msgstr "обычный"
+
+msgid "usually"
+msgstr "обычно"
+
+msgid "Väljas sajab kõvasti vihma."
+msgstr "Väljas sajab kõvasti vihma."
+
+msgid "We came in quietly."
+msgstr "Мы вошли тихо."
+
+msgid "well"
+msgstr "хорошо"
+
+msgid "What does each adverb mean?"
+msgstr "Что означает каждое наречие?"
+
+msgid "What does Kadri write?"
+msgstr "Что пишет Кадри?"
+
+msgid "What time does tomorrow’s lesson start? Write two words from the message."
+msgstr "Во сколько начинается завтрашний урок? Напиши два слова из сообщения."
+
+msgid "What will happen right after the lesson ends?"
+msgstr "Что произойдёт сразу после окончания урока?"
+
+msgid "What will the class do tomorrow instead of reading long texts?"
+msgstr "Что группа будет делать завтра вместо чтения длинных текстов?"
+
+msgid "Where did Mart drive first?"
+msgstr "Где Март ездил сначала?"
+
+msgid "Where does Mart want to drive next time?"
+msgstr "Где Март хочет поездить в следующий раз?"
+
+msgid "Why does Kadri advise speaking slowly?"
+msgstr "Почему Кадри советует говорить медленно?"
+
+msgid "Write each sentence in Estonian using an adverb."
+msgstr "Напиши каждое предложение по-эстонски, используя наречие."
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"

@@ -27,8 +27,17 @@ msgstr "20 хвилин"
 msgid "7 exercises"
 msgstr "7 вправ"
 
+msgid "A cold"
+msgstr "Застуда"
+
 msgid "a friend has"
 msgstr "у друга є"
+
+msgid "A sore knee"
+msgstr "Хворе коліно"
+
+msgid "A yearly eye check-up"
+msgstr "Щорічна перевірка зору"
 
 msgid "All eight forms right."
 msgstr "Усі вісім форм правильно."
@@ -42,11 +51,14 @@ msgstr "Усі шість знайдено й виправлено."
 msgid "All six sentences right."
 msgstr "Усі шість речень правильно."
 
-msgid "Annual eye test"
-msgstr "Перевірка зору"
+msgid "At a friend’s"
+msgstr "У друга"
 
 msgid "at a friend’s place"
 msgstr "у друга вдома"
+
+msgid "At a hotel"
+msgstr "У готелі"
 
 msgid "At her grandmother’s"
 msgstr "Вдома в бабусі"
@@ -71,6 +83,9 @@ msgstr "У когось удома: <et>juures, juurde, juurest</et>"
 
 msgid "at the doctor’s"
 msgstr "у лікаря"
+
+msgid "At the station"
+msgstr "На вокзалі"
 
 msgid "At their place"
 msgstr "У них удома"
@@ -103,7 +118,7 @@ msgid "Being at, going to or coming from a person’s place usually uses the gen
 msgstr "Щоб сказати «у когось», «до когось» або «від когось», зазвичай вживають родовий плюс <0>juures</0>, <1>juurde</1> або <2>juurest</2>."
 
 msgid "Being at, going to or coming from a person’s place usually uses the genitive plus <et>juures, juurde, juurest</et>."
-msgstr "Для місця в людини зазвичай вживають родовий плюс <et>juures, juurde, juurest</et>."
+msgstr "Щоб сказати «у когось», «до когось» чи «від когось», зазвичай вживають родовий плюс <et>juures, juurde, juurest</et>."
 
 msgid "Being at, going to or coming from someone’s place usually uses the genitive plus <0>juures</0> (at), <1>juurde</1> (to) or <2>juurest</2> (from): <3>ema juures</3>, <4>arsti juurde</4>, <5>sõbra juurest</5>."
 msgstr "Перебування чи рух до когось або від когось зазвичай виражають родовим плюс <0>juures</0> (у), <1>juurde</1> (до) або <2>juurest</2> (від): <3>ema juures</3>, <4>arsti juurde</4>, <5>sõbra juurest</5>."
@@ -143,9 +158,6 @@ msgstr "Естонська"
 
 msgid "Fix the sentence"
 msgstr "Виправ речення"
-
-msgid "For a quick check on his injured knee"
-msgstr "Швидко перевірити ушкоджене коліно"
 
 msgid "Form"
 msgstr "Форма"
@@ -228,14 +240,14 @@ msgstr "Він чи вона щойно прийшли від друга."
 msgid "Hear each sentence and decide whether it is about having, giving or getting, or about being at, going to or coming from someone’s place."
 msgstr "Послухай кожне речення й визнач: ідеться про володіння, давання чи отримання, чи про перебування в когось, похід до когось або повернення від когось."
 
+msgid "Her cousin from Tartu"
+msgstr "Двоюрідна сестра з Тарту"
+
 msgid "Her grandmother"
 msgstr "Бабуся Каті"
 
 msgid "Her uncle"
 msgstr "Дядько"
-
-msgid "Her younger sister from university"
-msgstr "Її молодша сестра з університету"
 
 msgid "I am at my mother’s place today."
 msgstr "Сьогодні я в мами."
@@ -273,9 +285,6 @@ msgstr "У реченні"
 msgid "In lesson {having} you saw <0/> for what mother has: <1>Emal on auto</1>. In the same way, <2/> means to mother (giving or calling) and <3/> means from mother (receiving or asking)."
 msgstr "В уроці {having} ти бачив <0/>, коли йдеться про те, що має мама: <1>Emal on auto</1>. Так само <2/> означає «мамі» (дати чи зателефонувати), а <3/> — «від мами» (отримати чи запитати)."
 
-msgid "Inside a small wooden inn beside the harbour"
-msgstr "У маленькому дерев’яному готелі біля порту"
-
 msgid "Kati"
 msgstr "Каті"
 
@@ -293,9 +302,6 @@ msgstr "Каті пише"
 
 msgid "Kati’s grandmother has a small apple orchard behind her house."
 msgstr "За будинком у бабусі Каті є невеликий яблуневий сад."
-
-msgid "Late next Wednesday night after her train arrives"
-msgstr "Пізно наступної середи ввечері після прибуття потяга"
 
 msgid "Listen: Kati and Mart"
 msgstr "Послухай: Каті і Март"
@@ -354,8 +360,14 @@ msgstr "Майже. Послухай ще раз ті речення, де бу�
 msgid "Nearly. Read the reason under each one you missed."
 msgstr "Майже. Прочитай пояснення під кожним помилковим реченням."
 
+msgid "On Friday evening"
+msgstr "У п’ятницю ввечері"
+
 msgid "On Saturday"
 msgstr "У суботу"
+
+msgid "On Wednesday evening"
+msgstr "У середу ввечері"
 
 msgid "Person endings and place words"
 msgstr "Закінчення з людьми та слова місця"
@@ -371,9 +383,6 @@ msgstr "Коли в когось вихідний, до <1>venna</1> додає�
 
 msgid "Saying someone has something uses <0>-l</0>: <1>Emal on</1>."
 msgstr "Коли в когось щось є, додається <0>-l</0>: <1>Emal on</1>."
-
-msgid "Sore throat"
-msgstr "Біль у горлі"
 
 msgid "Staying at a person’s place usually takes the genitive plus <0>juures</0>: <1>ema juures</1>."
 msgstr "Перебування в когось удома зазвичай бере родовий плюс <0>juures</0>: <1>ema juures</1>."
@@ -405,8 +414,8 @@ msgstr "до друга"
 msgid "To borrow a warm jacket"
 msgstr "Позичити теплу куртку"
 
-msgid "To eat dinner"
-msgstr "Повечеряти"
+msgid "To have dinner with Mart"
+msgstr "Повечеряти з Мартом"
 
 msgid "to mother"
 msgstr "мамі"
@@ -420,8 +429,8 @@ msgstr "до мами"
 msgid "to my place"
 msgstr "до мене"
 
-msgid "To return the novel she borrowed last week"
-msgstr "Повернути книжку, яку позичила минулого тижня"
+msgid "To return a book"
+msgstr "Повернути книжку"
 
 msgid "To say you are physically at, going to or coming from someone’s place, Estonian usually uses the genitive from lesson {genitive} plus <0/> (<1>kus?</1>), <2/> (<3>kuhu?</3>) or <4/> (<5>kust?</5>): <6>Olen ema juures</6>, <7>Lähen arsti juurde</7>, <8>Tulen sõbra juurest</8>."
 msgstr "Щоб сказати, що ти фізично в когось, ідеш до когось або повертаєшся від когось, естонська зазвичай бере родовий відмінок з уроку {genitive} плюс <0/> (<1>kus?</1>), <2/> (<3>kuhu?</3>) або <4/> (<5>kust?</5>): <6>Olen ema juures</6>, <7>Lähen arsti juurde</7>, <8>Tulen sõbra juurest</8>."
@@ -435,9 +444,6 @@ msgstr "до лікаря"
 msgid "To their place"
 msgstr "До них"
 
-msgid "Tomorrow afternoon around four"
-msgstr "Завтра вдень близько четвертої"
-
 msgid "Tule õhtul minu juurde!"
 msgstr "Tule õhtul minu juurde!"
 
@@ -446,9 +452,6 @@ msgstr "Впиши або форму з <0>-l / -le / -lt</0>, або родов
 
 msgid "Use <0>-l</0>, <1>-le</1> and <2>-lt</2> on a person for having, giving and getting (<3>Emal on auto</3>), and the genitive plus <4>juures</4>, <5>juurde</5> and <6>juurest</6> for being at, going to or coming from someone’s place (<7>Olen ema juures</7>)."
 msgstr "Вживай <0>-l</0>, <1>-le</1> і <2>-lt</2> із людиною для володіння, давання й отримання (<3>Emal on auto</3>), а родовий плюс <4>juures</4>, <5>juurde</5> і <6>juurest</6> — коли йдеться про перебування чи рух до когось (<7>Olen ema juures</7>)."
-
-msgid "Waiting outside the main railway station"
-msgstr "Чекає надворі біля головного вокзалу"
 
 msgid "Weekend at grandmother’s"
 msgstr "Вихідні в бабусі"
@@ -482,9 +485,6 @@ msgstr "Чому Март ходив до лікаря?"
 
 msgid "Why is Kati going to Mart’s place on Sunday evening?"
 msgstr "Чому Каті зайде до Марта в неділю ввечері?"
-
-msgid "With an old friend in Pärnu"
-msgstr "У давнього друга в Пярну"
 
 msgid "With pronouns, use the genitive before <0>juures</0>: <1>minu juures</1> (at my place), not <2>mul juures</2>."
 msgstr "Із займенниками перед <0>juures</0> ставиться родовий відмінок: <1>minu juures</1> («у мене»), а не <2>mul juures</2>."

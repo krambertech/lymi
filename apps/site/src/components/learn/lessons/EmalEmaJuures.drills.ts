@@ -139,7 +139,7 @@ export const DRILLS: DrillBank = {
         rule: (isGen ? "genitive" : "place") as "have" | "place" | "genitive",
         wrong: item.wrong,
         prompt: FIX_PROMPTS[item.id],
-        answers: [item.right] as readonly [string, ...string[]],
+        answers: item.answers,
         say: item.right,
         explain: isGen ? GEN_RULE : PLACE_RULE,
       };

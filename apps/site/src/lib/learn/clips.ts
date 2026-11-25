@@ -16492,7 +16492,9 @@ export const EMAL_ANSWERS: Record<(typeof EMAL_TRANSLATE)[number], readonly [str
     ],
     "Ma sain õelt kirja.": newsClosed([
       "Ma sain õelt kirja.",
+      "Ma sain kirja õelt.",
       "Ma sain oma õelt kirja.",
+      "Ma sain kirja oma õelt.",
       "Õelt sain ma kirja.",
       "Õelt ma sain kirja.",
     ]),
@@ -16507,12 +16509,42 @@ export const EMAL_ANSWERS: Record<(typeof EMAL_TRANSLATE)[number], readonly [str
   };
 
 export const EMAL_FIXES = [
-  { id: "at", wrong: "Ma olen täna ema juurde.", right: "Ma olen täna ema juures." },
-  { id: "to", wrong: "Ma lähen homme arsti juures.", right: "Ma lähen homme arsti juurde." },
-  { id: "from", wrong: "Ta tuli just sõbra juures.", right: "Ta tuli just sõbra juurest." },
-  { id: "genEma", wrong: "Ma lähen homme emale juurde.", right: "Ma lähen homme ema juurde." },
-  { id: "genSober", wrong: "Ta on täna sõbrale juures.", right: "Ta on täna sõbra juures." },
-  { id: "genMina", wrong: "Tule õhtul mul juurde!", right: "Tule õhtul minu juurde!" },
+  {
+    id: "at",
+    wrong: "Ma olen täna ema juurde.",
+    right: "Ma olen täna ema juures.",
+    answers: ["Ma olen täna ema juures."],
+  },
+  {
+    id: "to",
+    wrong: "Ma lähen homme arsti juures.",
+    right: "Ma lähen homme arsti juurde.",
+    answers: ["Ma lähen homme arsti juurde."],
+  },
+  {
+    id: "from",
+    wrong: "Ta tuli just sõbra juures.",
+    right: "Ta tuli just sõbra juurest.",
+    answers: ["Ta tuli just sõbra juurest."],
+  },
+  {
+    id: "genEma",
+    wrong: "Ma lähen homme emale juurde.",
+    right: "Ma lähen homme ema juurde.",
+    answers: ["Ma lähen homme ema juurde."],
+  },
+  {
+    id: "genSober",
+    wrong: "Ta on täna sõbrale juures.",
+    right: "Ta on täna sõbra juures.",
+    answers: ["Ta on täna sõbra juures."],
+  },
+  {
+    id: "genMina",
+    wrong: "Tule õhtul mul juurde!",
+    right: "Tule õhtul minu juurde!",
+    answers: ["Tule õhtul minu juurde!", "Tule õhtul mu juurde!"],
+  },
 ] as const;
 
 export const EMAL_NOTE = [

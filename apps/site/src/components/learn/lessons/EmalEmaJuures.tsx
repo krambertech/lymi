@@ -320,7 +320,7 @@ function useContent() {
       id: `fix-${item.id}`,
       wrong: item.wrong,
       prompt: i18n._(FIX_PROMPTS[item.id]),
-      answers: [item.right],
+      answers: item.answers,
       src: src(item.right),
       explain: FIX_WHY[item.id],
     }));
@@ -331,8 +331,8 @@ function useContent() {
         ask: t`Where is Kati staying this weekend?`,
         options: [
           { id: "grandma", label: t`At her grandmother’s` },
-          { id: "friend", label: t`With an old friend in Pärnu` },
-          { id: "hotel", label: t`Inside a small wooden inn beside the harbour` },
+          { id: "friend", label: t`At a friend’s` },
+          { id: "hotel", label: t`At a hotel` },
         ],
         answer: "grandma",
         line: 1,
@@ -350,7 +350,7 @@ function useContent() {
         options: [
           { id: "uncle", label: t`Her uncle` },
           { id: "grandma", label: t`Her grandmother` },
-          { id: "sister", label: t`Her younger sister from university` },
+          { id: "sister", label: t`Her cousin from Tartu` },
         ],
         answer: "grandma",
         line: 3,
@@ -373,9 +373,9 @@ function useContent() {
         id: "sunday",
         ask: t`Why is Kati going to Mart’s place on Sunday evening?`,
         options: [
-          { id: "soup", label: t`To eat dinner` },
+          { id: "soup", label: t`To have dinner with Mart` },
           { id: "coat", label: t`To borrow a warm jacket` },
-          { id: "book", label: t`To return the novel she borrowed last week` },
+          { id: "book", label: t`To return a book` },
         ],
         answer: "book",
         line: 6,
@@ -389,7 +389,7 @@ function useContent() {
         options: [
           { id: "office", label: t`At work` },
           { id: "parents", label: t`At his parents’ house` },
-          { id: "station", label: t`Waiting outside the main railway station` },
+          { id: "station", label: t`At the station` },
         ],
         answer: "parents",
         line: 2,
@@ -405,9 +405,9 @@ function useContent() {
         id: "why-doc",
         ask: t`Why did Mart see the doctor?`,
         options: [
-          { id: "throat", label: t`Sore throat` },
-          { id: "eyes", label: t`Annual eye test` },
-          { id: "knee", label: t`For a quick check on his injured knee` },
+          { id: "throat", label: t`A cold` },
+          { id: "eyes", label: t`A yearly eye check-up` },
+          { id: "knee", label: t`A sore knee` },
         ],
         answer: "knee",
         line: 5,
@@ -438,8 +438,8 @@ function useContent() {
         ask: t`When is Kati coming to Mart’s place?`,
         options: [
           { id: "sat", label: t`On Saturday` },
-          { id: "tomorrow", label: t`Tomorrow afternoon around four` },
-          { id: "wed", label: t`Late next Wednesday night after her train arrives` },
+          { id: "tomorrow", label: t`On Friday evening` },
+          { id: "wed", label: t`On Wednesday evening` },
         ],
         answer: "sat",
         line: 12,

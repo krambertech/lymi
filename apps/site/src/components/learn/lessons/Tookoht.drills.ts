@@ -132,6 +132,15 @@ export const DRILLS: DrillBank = {
       "Aruanne peab valmis olema reedeks.",
     ),
     formItem(
+      "kolmapaevaks",
+      "deadline",
+      "kolmapäev",
+      msg`by Wednesday`,
+      "Palun saatke aruanne mulle ___.",
+      "kolmapäevaks",
+      "Palun saatke aruanne mulle kolmapäevaks.",
+    ),
+    formItem(
       "kolleegiga",
       "with",
       "kolleeg",

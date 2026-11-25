@@ -278,6 +278,9 @@ msgstr "A free Estonian lesson on personal pronouns: mina, sina, tema and the re
 msgid "A free Estonian lesson on relative clauses: mis, which usually follows a thing or an idea, and kes, which follows a person (raamat, mille ma ostsin; naine, kellega ma rääkisin), the case the word takes in its own clause (kelle, keda, mille, mida), kus for places, and the commas around the clause. Every sentence is read aloud."
 msgstr "A free Estonian lesson on relative clauses: mis, which usually follows a thing or an idea, and kes, which follows a person (raamat, mille ma ostsin; naine, kellega ma rääkisin), the case the word takes in its own clause (kelle, keda, mille, mida), kus for places, and the commas around the clause. Every sentence is read aloud."
 
+msgid "A free Estonian lesson on reporting what someone said: ütles, et and rääkis, et for statements and küsis, kas for yes-or-no questions, how the person words change while the verb usually keeps its tense (Ta ütles, et tal on kiire), and the -vat form (Ta olevat haige, Ta ei tulevat), which is mostly met in news and reports and usually names no source. Every sentence is read aloud."
+msgstr "A free Estonian lesson on reporting what someone said: ütles, et and rääkis, et for statements and küsis, kas for yes-or-no questions, how the person words change while the verb usually keeps its tense (Ta ütles, et tal on kiire), and the -vat form (Ta olevat haige, Ta ei tulevat), which is mostly met in news and reports and usually names no source. Every sentence is read aloud."
+
 msgid "A free Estonian lesson on saying when: hommikul and suvel with -l, mais with -s, hommikuti for every morning, nädala pärast and nädal tagasi, pärast tööd, and from and until with -st and -ni. Every sentence is read aloud."
 msgstr "A free Estonian lesson on saying when: hommikul and suvel with -l, mais with -s, hommikuti for every morning, nädala pärast and nädal tagasi, pärast tööd, and from and until with -st and -ni. Every sentence is read aloud."
 
@@ -295,6 +298,9 @@ msgstr "A free Estonian lesson on two verb forms that look alike: -des for doing
 
 msgid "A free Estonian lesson on word order: the verb usually in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud."
 msgstr "A free Estonian lesson on word order: the verb usually in second place (täna lähen ma), questions like kus sa elad?, two verbs with the second one usually last, and where ei goes. Every sentence is read aloud."
+
+msgid "A free Estonian practice lesson on looking for a flat: read an advert, write to the owner, look round the flat, follow a call about two flats and write your own message. It practises floors and dates, -ga, -ta, -na and -ks, adjectives and comparing, keegi and particle verbs. Every sentence is read aloud."
+msgstr "A free Estonian practice lesson on looking for a flat: read an advert, write to the owner, look round the flat, follow a call about two flats and write your own message. It practises floors and dates, -ga, -ta, -na and -ks, adjectives and comparing, keegi and particle verbs. Every sentence is read aloud."
 
 msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
 msgstr "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
@@ -827,6 +833,9 @@ msgstr "Estonian postpositions: on, under, behind"
 msgid "Estonian practice: last weekend and next week"
 msgstr "Estonian practice: last weekend and next week"
 
+msgid "Estonian practice: looking for a flat"
+msgstr "Estonian practice: looking for a flat"
+
 msgid "Estonian practice: shopping at the market"
 msgstr "Estonian practice: shopping at the market"
 
@@ -841,6 +850,9 @@ msgstr "Estonian reading and listening practice: a day in Tallinn"
 
 msgid "Estonian relative clauses: who, which and where"
 msgstr "Estonian relative clauses: who, which and where"
+
+msgid "Estonian reported speech and the -vat form"
+msgstr "Estonian reported speech and the -vat form"
 
 msgid "Estonian somebody and nobody: -gi and -ki"
 msgstr "Estonian somebody and nobody: -gi and -ki"

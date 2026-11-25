@@ -48,17 +48,11 @@ msgstr "Анна"
 msgid "Anna and Mart go through office hours, remote work, payday and leave. Listen and answer. You can play the conversation twice."
 msgstr "Анна й Март обговорюють робочий графік, дистанційну роботу, зарплату та відпустку. Послухай і відповідай. Розмову можна увімкнути двічі."
 
-msgid "Anna asked whether you are coming to tomorrow’s meeting."
-msgstr "Анна спитала, чи ти прийдеш на завтрашню зустріч."
-
-msgid "Anna is asking whether you have a moment, not selling train tickets."
-msgstr "Анна питає, чи є в тебе хвилинка, а не продає квитки на поїзд."
+msgid "Anna asks whether you have a moment, not what time it is."
+msgstr "Анна питає, чи є в тебе хвилинка, а не котра година."
 
 msgid "Anna says one day of notice is enough before taking leave."
 msgstr "Анна каже, що достатньо попередити про відпустку за один день."
-
-msgid "Anna says staff can wait until August to enter summer leave dates."
-msgstr "Анна каже, що дати літньої відпустки можна внести аж у серпні."
 
 msgid "Anna sends a weekly update to the team. Read and answer."
 msgstr "Анна надсилає команді тижневий лист. Прочитай і відповідай."
@@ -77,6 +71,9 @@ msgstr "Перебування в офісі потребує <0>-s</0>: <1>kont
 
 msgid "by Friday"
 msgstr "до п’ятниці"
+
+msgid "by Wednesday"
+msgstr "до середи"
 
 msgid "By Wednesday"
 msgstr "До середи"
@@ -123,6 +120,9 @@ msgstr "Терміни: <et>reedeks</et>"
 msgid "Each sentence has one wrong word. Tap the wrong word, then type the right one."
 msgstr "У кожному реченні одне слово хибне. Натисни на нього й впиши правильне."
 
+msgid "Eile means yesterday, but you will see Anna tomorrow."
+msgstr "Eile означає «учора», а ви побачитеся з Анною завтра."
+
 msgid "Estonian"
 msgstr "Естонською"
 
@@ -155,6 +155,9 @@ msgstr "З восьмої до четвертої"
 
 msgid "From ten to six"
 msgstr "З десятої до шостої"
+
+msgid "Going on holiday on Friday is not an answer about the report."
+msgstr "Відпустка в п’ятницю не відповідає на питання про звіт."
 
 msgid "Going on holiday uses <0>-le</0> (<1>puhkusele</1>), and being on holiday uses <2>-l</2> (<3>puhkusel</3>), just like <4>tööle / tööl</4>."
 msgstr "Йти у відпустку — з <0>-le</0> (<1>puhkusele</1>), бути у відпустці — з <2>-l</2> (<3>puhkusel</3>), так само як <4>tööle / tööl</4>."
@@ -333,14 +336,11 @@ msgstr "Зарплата"
 msgid "Salary arrives on the fifth of each month."
 msgstr "Зарплата приходить п’ятого числа щомісяця."
 
-msgid "Say goodbye until tomorrow instead of asking for a pharmacy."
-msgstr "Попрощайся до завтра замість питати про аптеку."
-
 msgid "Saying with this work takes <0>-ga</0>: <1>tööga</1>, not <2>töö</2>."
 msgstr "«З цією роботою» потребує <0>-ga</0>: <1>tööga</1>, а не <2>töö</2>."
 
-msgid "She asked about the report deadline, not about pets."
-msgstr "Вона питала про термін звіту, а не про домашніх тварин."
+msgid "Staff can enter their summer leave dates after the end of the month."
+msgstr "Працівники можуть внести дати літньої відпустки й після кінця місяця."
 
 msgid "Staff may work from home on Wednesday and Thursday."
 msgstr "Працівники можуть працювати з дому в середу й четвер."
@@ -351,8 +351,8 @@ msgstr "Говори про робочий графік, зустрічі, те�
 msgid "Talk with a colleague"
 msgstr "Розмова з колегою"
 
-msgid "Talking or meeting with a colleague takes <0>-ga</0>: <1>rääkisin ülemusega</1>, <2>kohtusin kolleegiga</2>."
-msgstr "Розмова чи зустріч із колегою потребує <0>-ga</0>: <1>rääkisin ülemusega</1>, <2>kohtusin kolleegiga</2>."
+msgid "Talking or meeting with a colleague usually takes <0>-ga</0>: <1>rääkisin ülemusega</1>, <2>kohtusin kolleegiga</2>."
+msgstr "Розмова чи зустріч із колегою зазвичай потребує <0>-ga</0>: <1>rääkisin ülemusega</1>, <2>kohtusin kolleegiga</2>."
 
 msgid "Team email"
 msgstr "Командний лист"
@@ -366,14 +366,20 @@ msgstr "У договорах і планах часто трапляються 
 msgid "Terms and schedule"
 msgstr "Умови та графік"
 
-msgid "That gives directions to a café instead of confirming the report."
-msgstr "Це підказка дороги до кав’ярні, а не підтвердження звіту."
+msgid "That is about meeting a colleague yesterday, not about the report."
+msgstr "Це про вчорашню зустріч із колегою, а не про звіт."
 
-msgid "That mentions a bus departure instead of confirming attendance."
-msgstr "Це про відправлення автобуса, а не підтвердження участі."
+msgid "That is about sending the report, not about the meeting."
+msgstr "Це про надсилання звіту, а не про зустріч."
 
-msgid "That talks about back pain rather than answering your colleague."
-msgstr "Це про біль у спині, а не відповідь колезі."
+msgid "That mentions a contract and does not say whether you have time."
+msgstr "Тут ідеться про договір, а чи є в тебе час, не сказано."
+
+msgid "That talks about yesterday, while Anna is saying see you tomorrow."
+msgstr "Це про вчора, а Анна каже «до завтра»."
+
+msgid "The meeting is tomorrow, and this puts it in the past."
+msgstr "Зустріч завтра, а тут вона в минулому."
 
 msgid "The meeting starts at ten."
 msgstr "Зустріч починається о десятій."
@@ -443,9 +449,6 @@ msgstr "Напиши кожне робоче речення естонською
 
 msgid "Write it in Estonian"
 msgstr "Напиши естонською"
-
-msgid "You are finishing a chat at work, not paying in a shop."
-msgstr "Ти завершуєш розмову на роботі, а не розраховуєшся в магазині."
 
 msgid "Your manager Anna asks about a report and a meeting."
 msgstr "Твоя керівниця Анна питає про звіт і зустріч."

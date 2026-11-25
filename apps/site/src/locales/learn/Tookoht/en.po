@@ -48,17 +48,11 @@ msgstr "Anna"
 msgid "Anna and Mart go through office hours, remote work, payday and leave. Listen and answer. You can play the conversation twice."
 msgstr "Anna and Mart go through office hours, remote work, payday and leave. Listen and answer. You can play the conversation twice."
 
-msgid "Anna asked whether you are coming to tomorrow’s meeting."
-msgstr "Anna asked whether you are coming to tomorrow’s meeting."
-
-msgid "Anna is asking whether you have a moment, not selling train tickets."
-msgstr "Anna is asking whether you have a moment, not selling train tickets."
+msgid "Anna asks whether you have a moment, not what time it is."
+msgstr "Anna asks whether you have a moment, not what time it is."
 
 msgid "Anna says one day of notice is enough before taking leave."
 msgstr "Anna says one day of notice is enough before taking leave."
-
-msgid "Anna says staff can wait until August to enter summer leave dates."
-msgstr "Anna says staff can wait until August to enter summer leave dates."
 
 msgid "Anna sends a weekly update to the team. Read and answer."
 msgstr "Anna sends a weekly update to the team. Read and answer."
@@ -77,6 +71,9 @@ msgstr "Being in the office takes <0>-s</0>: <1>kontoris</1>, not <2>kontori</2>
 
 msgid "by Friday"
 msgstr "by Friday"
+
+msgid "by Wednesday"
+msgstr "by Wednesday"
 
 msgid "By Wednesday"
 msgstr "By Wednesday"
@@ -123,6 +120,9 @@ msgstr "Deadlines: <et>reedeks</et>"
 msgid "Each sentence has one wrong word. Tap the wrong word, then type the right one."
 msgstr "Each sentence has one wrong word. Tap the wrong word, then type the right one."
 
+msgid "Eile means yesterday, but you will see Anna tomorrow."
+msgstr "Eile means yesterday, but you will see Anna tomorrow."
+
 msgid "Estonian"
 msgstr "Estonian"
 
@@ -155,6 +155,9 @@ msgstr "From eight to four"
 
 msgid "From ten to six"
 msgstr "From ten to six"
+
+msgid "Going on holiday on Friday is not an answer about the report."
+msgstr "Going on holiday on Friday is not an answer about the report."
 
 msgid "Going on holiday uses <0>-le</0> (<1>puhkusele</1>), and being on holiday uses <2>-l</2> (<3>puhkusel</3>), just like <4>tööle / tööl</4>."
 msgstr "Going on holiday uses <0>-le</0> (<1>puhkusele</1>), and being on holiday uses <2>-l</2> (<3>puhkusel</3>), just like <4>tööle / tööl</4>."
@@ -333,14 +336,11 @@ msgstr "Salary"
 msgid "Salary arrives on the fifth of each month."
 msgstr "Salary arrives on the fifth of each month."
 
-msgid "Say goodbye until tomorrow instead of asking for a pharmacy."
-msgstr "Say goodbye until tomorrow instead of asking for a pharmacy."
-
 msgid "Saying with this work takes <0>-ga</0>: <1>tööga</1>, not <2>töö</2>."
 msgstr "Saying with this work takes <0>-ga</0>: <1>tööga</1>, not <2>töö</2>."
 
-msgid "She asked about the report deadline, not about pets."
-msgstr "She asked about the report deadline, not about pets."
+msgid "Staff can enter their summer leave dates after the end of the month."
+msgstr "Staff can enter their summer leave dates after the end of the month."
 
 msgid "Staff may work from home on Wednesday and Thursday."
 msgstr "Staff may work from home on Wednesday and Thursday."
@@ -351,8 +351,8 @@ msgstr "Talk about office routines, meetings, deadlines and leave: <0>koosolek</
 msgid "Talk with a colleague"
 msgstr "Talk with a colleague"
 
-msgid "Talking or meeting with a colleague takes <0>-ga</0>: <1>rääkisin ülemusega</1>, <2>kohtusin kolleegiga</2>."
-msgstr "Talking or meeting with a colleague takes <0>-ga</0>: <1>rääkisin ülemusega</1>, <2>kohtusin kolleegiga</2>."
+msgid "Talking or meeting with a colleague usually takes <0>-ga</0>: <1>rääkisin ülemusega</1>, <2>kohtusin kolleegiga</2>."
+msgstr "Talking or meeting with a colleague usually takes <0>-ga</0>: <1>rääkisin ülemusega</1>, <2>kohtusin kolleegiga</2>."
 
 msgid "Team email"
 msgstr "Team email"
@@ -366,14 +366,20 @@ msgstr "Terms and plans bring up <0/>, <1/>, <2/> and <3/>."
 msgid "Terms and schedule"
 msgstr "Terms and schedule"
 
-msgid "That gives directions to a café instead of confirming the report."
-msgstr "That gives directions to a café instead of confirming the report."
+msgid "That is about meeting a colleague yesterday, not about the report."
+msgstr "That is about meeting a colleague yesterday, not about the report."
 
-msgid "That mentions a bus departure instead of confirming attendance."
-msgstr "That mentions a bus departure instead of confirming attendance."
+msgid "That is about sending the report, not about the meeting."
+msgstr "That is about sending the report, not about the meeting."
 
-msgid "That talks about back pain rather than answering your colleague."
-msgstr "That talks about back pain rather than answering your colleague."
+msgid "That mentions a contract and does not say whether you have time."
+msgstr "That mentions a contract and does not say whether you have time."
+
+msgid "That talks about yesterday, while Anna is saying see you tomorrow."
+msgstr "That talks about yesterday, while Anna is saying see you tomorrow."
+
+msgid "The meeting is tomorrow, and this puts it in the past."
+msgstr "The meeting is tomorrow, and this puts it in the past."
 
 msgid "The meeting starts at ten."
 msgstr "The meeting starts at ten."
@@ -443,9 +449,6 @@ msgstr "Write each workplace sentence in Estonian."
 
 msgid "Write it in Estonian"
 msgstr "Write it in Estonian"
-
-msgid "You are finishing a chat at work, not paying in a shop."
-msgstr "You are finishing a chat at work, not paying in a shop."
 
 msgid "Your manager Anna asks about a report and a meeting."
 msgstr "Your manager Anna asks about a report and a meeting."

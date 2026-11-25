@@ -1,0 +1,454 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 01:57+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+#. placeholder {0}: item.said
+#. placeholder {1}: i18n._(TELL_MEANS[item.id])
+msgid "<0>{0}</0> {1}"
+msgstr "<0>{0}</0> {1}"
+
+msgid "<et>Rääkima</et> and <et>kohtuma</et> with someone usually take <et>-ga</et>."
+msgstr "<et>Rääkima</et> and <et>kohtuma</et> with someone usually take <et>-ga</et>."
+
+msgid "20 minutes"
+msgstr "20 minutes"
+
+msgid "7 exercises"
+msgstr "7 exercises"
+
+msgid "A deadline with “by” usually takes <0>-ks</0>: <1>reedeks</1>, <2>kolmapäevaks</2>."
+msgstr "A deadline with “by” usually takes <0>-ks</0>: <1>reedeks</1>, <2>kolmapäevaks</2>."
+
+msgid "A deadline with “by” usually takes <0>-ks</0>: <1>reedeks</1>, not <2>reede</2>."
+msgstr "A deadline with “by” usually takes <0>-ks</0>: <1>reedeks</1>, not <2>reede</2>."
+
+msgid "A deadline with “by” usually takes <et>-ks</et>: <et>reedeks</et>."
+msgstr "A deadline with “by” usually takes <et>-ks</et>: <et>reedeks</et>."
+
+msgid "A trip to the port"
+msgstr "A trip to the port"
+
+msgid "All eight right."
+msgstr "All eight right."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six sentences right."
+msgstr "All six sentences right."
+
+msgid "Anna"
+msgstr "Anna"
+
+msgid "Anna and Mart go through office hours, remote work, payday and leave. Listen and answer. You can play the conversation twice."
+msgstr "Anna and Mart go through office hours, remote work, payday and leave. Listen and answer. You can play the conversation twice."
+
+msgid "Anna asked whether you are coming to tomorrow’s meeting."
+msgstr "Anna asked whether you are coming to tomorrow’s meeting."
+
+msgid "Anna is asking whether you have a moment, not selling train tickets."
+msgstr "Anna is asking whether you have a moment, not selling train tickets."
+
+msgid "Anna says one day of notice is enough before taking leave."
+msgstr "Anna says one day of notice is enough before taking leave."
+
+msgid "Anna says staff can wait until August to enter summer leave dates."
+msgstr "Anna says staff can wait until August to enter summer leave dates."
+
+msgid "Anna sends a weekly update to the team. Read and answer."
+msgstr "Anna sends a weekly update to the team. Read and answer."
+
+msgid "Aruande tähtaeg on reedel."
+msgstr "Aruande tähtaeg on reedel."
+
+msgid "At the desk"
+msgstr "At the desk"
+
+msgid "At the office"
+msgstr "At the office"
+
+msgid "Being in the office takes <0>-s</0>: <1>kontoris</1>, not <2>kontori</2>."
+msgstr "Being in the office takes <0>-s</0>: <1>kontoris</1>, not <2>kontori</2>."
+
+msgid "by Friday"
+msgstr "by Friday"
+
+msgid "By Wednesday"
+msgstr "By Wednesday"
+
+msgid "By which day must the monthly report be sent?"
+msgstr "By which day must the monthly report be sent?"
+
+msgid "Can you help me with this work?"
+msgstr "Can you help me with this work?"
+
+msgid "Check the table above, then try again."
+msgstr "Check the table above, then try again."
+
+msgid "Coffee with the intern"
+msgstr "Coffee with the intern"
+
+msgid "colleague"
+msgstr "colleague"
+
+msgid "Colleague"
+msgstr "Colleague"
+
+msgid "contract"
+msgstr "contract"
+
+msgid "Contract"
+msgstr "Contract"
+
+msgid "Core workplace nouns used in schedules, contracts and leave requests."
+msgstr "Core workplace nouns used in schedules, contracts and leave requests."
+
+msgid "Could you send this by Friday?"
+msgstr "Could you send this by Friday?"
+
+msgid "deadline"
+msgstr "deadline"
+
+msgid "Deadline"
+msgstr "Deadline"
+
+msgid "Deadlines: <et>reedeks</et>"
+msgstr "Deadlines: <et>reedeks</et>"
+
+msgid "Each sentence has one wrong word. Tap the wrong word, then type the right one."
+msgstr "Each sentence has one wrong word. Tap the wrong word, then type the right one."
+
+msgid "Estonian"
+msgstr "Estonian"
+
+msgid "Every Friday"
+msgstr "Every Friday"
+
+msgid "Every Thursday"
+msgstr "Every Thursday"
+
+msgid "Every Tuesday"
+msgstr "Every Tuesday"
+
+msgid "Everyday work conversations revolve around a few core nouns: <0/>, <1/>, <2/> and <3/>."
+msgstr "Everyday work conversations revolve around a few core nouns: <0/>, <1/>, <2/> and <3/>."
+
+msgid "First week check-in"
+msgstr "First week check-in"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "Four full weeks"
+msgstr "Four full weeks"
+
+msgid "Friday afternoon"
+msgstr "Friday afternoon"
+
+msgid "From eight to four"
+msgstr "From eight to four"
+
+msgid "From ten to six"
+msgstr "From ten to six"
+
+msgid "Going on holiday uses <0>-le</0> (<1>puhkusele</1>), and being on holiday uses <2>-l</2> (<3>puhkusel</3>), just like <4>tööle / tööl</4>."
+msgstr "Going on holiday uses <0>-le</0> (<1>puhkusele</1>), and being on holiday uses <2>-l</2> (<3>puhkusel</3>), just like <4>tööle / tööl</4>."
+
+msgid "Going to work takes <0>-le</0>: <1>tööle</1>, not <2>töö</2>."
+msgstr "Going to work takes <0>-le</0>: <1>tööle</1>, not <2>töö</2>."
+
+msgid "Group"
+msgstr "Group"
+
+msgid "Hear each office sentence and decide whether it states a routine or fact, or a request, deadline or plan."
+msgstr "Hear each office sentence and decide whether it states a routine or fact, or a request, deadline or plan."
+
+msgid "holiday, leave"
+msgstr "holiday, leave"
+
+msgid "Holiday, leave"
+msgstr "Holiday, leave"
+
+msgid "How long is Mart’s planned leave?"
+msgstr "How long is Mart’s planned leave?"
+
+msgid "How many days a week can Mart work from home after the first month? Write the number word."
+msgstr "How many days a week can Mart work from home after the first month? Write the number word."
+
+msgid "How much annual leave does the company offer?"
+msgstr "How much annual leave does the company offer?"
+
+msgid "I am going on holiday in July."
+msgstr "I am going on holiday in July."
+
+msgid "I am in the office today."
+msgstr "I am in the office today."
+
+msgid "I have to finish this report today."
+msgstr "I have to finish this report today."
+
+msgid "I met a new colleague yesterday."
+msgstr "I met a new colleague yesterday."
+
+msgid "I spoke with my manager today."
+msgstr "I spoke with my manager today."
+
+msgid "I went home from work at six yesterday."
+msgstr "I went home from work at six yesterday."
+
+msgid "I work in an office."
+msgstr "I work in an office."
+
+msgid "If the fifth falls on a weekend, salary is paid on Friday."
+msgstr "If the fifth falls on a weekend, salary is paid on Friday."
+
+msgid "In a sentence"
+msgstr "In a sentence"
+
+msgid "In room one"
+msgstr "In room one"
+
+msgid "In room three"
+msgstr "In room three"
+
+msgid "In room two"
+msgstr "In room two"
+
+msgid "In which month does Mart want to take leave? Write one word as he says it."
+msgstr "In which month does Mart want to take leave? Write one word as he says it."
+
+msgid "Koosolek algab kell kümme."
+msgstr "Koosolek algab kell kümme."
+
+msgid "Listen: first week at work"
+msgstr "Listen: first week at work"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Lunch with a client team"
+msgstr "Lunch with a client team"
+
+msgid "Ma kohtusin uue kolleegiga."
+msgstr "Ma kohtusin uue kolleegiga."
+
+msgid "Ma lähen juulis puhkusele."
+msgstr "Ma lähen juulis puhkusele."
+
+msgid "Ma rääkisin täna oma ülemusega."
+msgstr "Ma rääkisin täna oma ülemusega."
+
+msgid "Ma töötan kontoris."
+msgstr "Ma töötan kontoris."
+
+msgid "Manager"
+msgstr "Manager"
+
+msgid "manager, boss"
+msgstr "manager, boss"
+
+msgid "Mart"
+msgstr "Mart"
+
+msgid "Match each Estonian work word with its meaning."
+msgstr "Match each Estonian work word with its meaning."
+
+msgid "Me allkirjastame uue lepingu."
+msgstr "Me allkirjastame uue lepingu."
+
+msgid "Meaning"
+msgstr "Meaning"
+
+msgid "meeting"
+msgstr "meeting"
+
+msgid "Meeting"
+msgstr "Meeting"
+
+msgid "Monday evening"
+msgstr "Monday evening"
+
+msgid "Monday update"
+msgstr "Monday update"
+
+msgid "Nearly. Check the endings in the ones you missed."
+msgstr "Nearly. Check the endings in the ones you missed."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "Nearly. Read the reason under each one you missed."
+msgstr "Nearly. Read the reason under each one you missed."
+
+msgid "Nine to five"
+msgstr "Nine to five"
+
+msgid "office"
+msgstr "office"
+
+msgid "Office"
+msgstr "Office"
+
+msgid "Office terms: <et>koosolek, leping, tähtaeg, palk</et>"
+msgstr "Office terms: <et>koosolek, leping, tähtaeg, palk</et>"
+
+msgid "On which day is the team meeting held?"
+msgstr "On which day is the team meeting held?"
+
+msgid "One single week"
+msgstr "One single week"
+
+msgid "Palk tuleb iga kuu viiendal päeval."
+msgstr "Palk tuleb iga kuu viiendal päeval."
+
+msgid "People and office"
+msgstr "People and office"
+
+msgid "Polite workplace requests usually use the conditional from lesson {cond}: <0>Kas te saaksite selle reedeks saata?</0>"
+msgstr "Polite workplace requests usually use the conditional from lesson {cond}: <0>Kas te saaksite selle reedeks saata?</0>"
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "Request, deadline or plan"
+msgstr "Request, deadline or plan"
+
+msgid "Routine or fact"
+msgstr "Routine or fact"
+
+msgid "Routine or plan?"
+msgstr "Routine or plan?"
+
+msgid "salary"
+msgstr "salary"
+
+msgid "Salary"
+msgstr "Salary"
+
+msgid "Salary arrives on the fifth of each month."
+msgstr "Salary arrives on the fifth of each month."
+
+msgid "Say goodbye until tomorrow instead of asking for a pharmacy."
+msgstr "Say goodbye until tomorrow instead of asking for a pharmacy."
+
+msgid "Saying with this work takes <0>-ga</0>: <1>tööga</1>, not <2>töö</2>."
+msgstr "Saying with this work takes <0>-ga</0>: <1>tööga</1>, not <2>töö</2>."
+
+msgid "She asked about the report deadline, not about pets."
+msgstr "She asked about the report deadline, not about pets."
+
+msgid "Staff may work from home on Wednesday and Thursday."
+msgstr "Staff may work from home on Wednesday and Thursday."
+
+msgid "Talk about office routines, meetings, deadlines and leave: <0>koosolek</0>, <1>reedeks</1>, <2>puhkusele</2> and polite workplace requests with <3>Kas te saaksite…</3>."
+msgstr "Talk about office routines, meetings, deadlines and leave: <0>koosolek</0>, <1>reedeks</1>, <2>puhkusele</2> and polite workplace requests with <3>Kas te saaksite…</3>."
+
+msgid "Talk with a colleague"
+msgstr "Talk with a colleague"
+
+msgid "Talking or meeting with a colleague takes <0>-ga</0>: <1>rääkisin ülemusega</1>, <2>kohtusin kolleegiga</2>."
+msgstr "Talking or meeting with a colleague takes <0>-ga</0>: <1>rääkisin ülemusega</1>, <2>kohtusin kolleegiga</2>."
+
+msgid "Team email"
+msgstr "Team email"
+
+msgid "Telling what time something happened uses <0>kell</0> plus the basic number: <1>kell kuus</1>."
+msgstr "Telling what time something happened uses <0>kell</0> plus the basic number: <1>kell kuus</1>."
+
+msgid "Terms and plans bring up <0/>, <1/>, <2/> and <3/>."
+msgstr "Terms and plans bring up <0/>, <1/>, <2/> and <3/>."
+
+msgid "Terms and schedule"
+msgstr "Terms and schedule"
+
+msgid "That gives directions to a café instead of confirming the report."
+msgstr "That gives directions to a café instead of confirming the report."
+
+msgid "That mentions a bus departure instead of confirming attendance."
+msgstr "That mentions a bus departure instead of confirming attendance."
+
+msgid "That talks about back pain rather than answering your colleague."
+msgstr "That talks about back pain rather than answering your colleague."
+
+msgid "The meeting starts at ten."
+msgstr "The meeting starts at ten."
+
+msgid "The report must be ready by Friday."
+msgstr "The report must be ready by Friday."
+
+msgid "The verb <0>kohtuma</0> usually takes <1>-ga</1>: <2>kolleegiga</2>, not <3>kolleegi</3>."
+msgstr "The verb <0>kohtuma</0> usually takes <1>-ga</1>: <2>kolleegiga</2>, not <3>kolleegi</3>."
+
+msgid "They are going to work tomorrow."
+msgstr "They are going to work tomorrow."
+
+msgid "Thirty-five days"
+msgstr "Thirty-five days"
+
+msgid "to work"
+msgstr "to work"
+
+msgid "Twenty days"
+msgstr "Twenty days"
+
+msgid "Twenty-eight days"
+msgstr "Twenty-eight days"
+
+msgid "Two weeks"
+msgstr "Two weeks"
+
+msgid "We are signing a new contract."
+msgstr "We are signing a new contract."
+
+msgid "What are the usual office hours?"
+msgstr "What are the usual office hours?"
+
+msgid "What does each word mean?"
+msgstr "What does each word mean?"
+
+msgid "What happens on Friday at two o’clock?"
+msgstr "What happens on Friday at two o’clock?"
+
+msgid "What time does Monday’s meeting start? Write two words from the email."
+msgstr "What time does Monday’s meeting start? Write two words from the email."
+
+msgid "Where is the weekly meeting held?"
+msgstr "Where is the weekly meeting held?"
+
+msgid "With people and tasks: <et>kolleegiga, ülemusega, tööga</et>"
+msgstr "With people and tasks: <et>kolleegiga, ülemusega, tööga</et>"
+
+msgid "Word"
+msgstr "Word"
+
+msgid "Work places follow the endings you know: <0>tööl / tööle / töölt</0> and <1>kontoris / kontorisse / kontorist</1>."
+msgstr "Work places follow the endings you know: <0>tööl / tööle / töölt</0> and <1>kontoris / kontorisse / kontorist</1>."
+
+msgid "Work places follow the regular place endings: <et>kontoris</et>, <et>tööle</et>, <et>puhkusele</et>."
+msgstr "Work places follow the regular place endings: <et>kontoris</et>, <et>tööle</et>, <et>puhkusele</et>."
+
+msgid "Work places: <et>kontoris, tööle, puhkusele</et>"
+msgstr "Work places: <et>kontoris, tööle, puhkusele</et>"
+
+msgid "Work vocabulary in Estonian"
+msgstr "Work vocabulary in Estonian"
+
+msgid "Write each workplace sentence in Estonian."
+msgstr "Write each workplace sentence in Estonian."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "You are finishing a chat at work, not paying in a shop."
+msgstr "You are finishing a chat at work, not paying in a shop."
+
+msgid "Your manager Anna asks about a report and a meeting."
+msgstr "Your manager Anna asks about a report and a meeting."
+
+msgid "Your manager Anna stops by your desk about a report and tomorrow’s meeting. Listen and pick the right reply."
+msgstr "Your manager Anna stops by your desk about a report and tomorrow’s meeting. Listen and pick the right reply."

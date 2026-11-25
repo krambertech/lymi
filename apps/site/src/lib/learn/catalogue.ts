@@ -473,6 +473,14 @@ export const STAGES: readonly Stage[] = [
         blurb: msg`A free lesson on the case many Estonian verbs ask for: ootama keda (ootan sind), rääkima kellest (räägin sinust), helistama kellele (helistan sulle), kohtuma kellega (kohtun sinuga) and küsima kellelt (küsin sinult), where English and Estonian disagree. Every sentence is read aloud.`,
       },
       {
+        slug: "tookoht",
+        name: msg`At work`,
+        title: msg`At work in Estonian`,
+        et: "Töö, koosolek, puhkus",
+        minutes: 20,
+        blurb: msg`A free Estonian situation lesson for work and the office: meetings, deadlines with -ks, polite requests with conditional verbs, reading a manager’s email and talking about schedules, remote days and leave. Every sentence is read aloud.`,
+      },
+      {
         slug: "kiri",
         name: msg`Practice: a message to the landlord`,
         title: msg`Estonian writing practice: a message to the landlord`,

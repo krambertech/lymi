@@ -299,6 +299,9 @@ msgstr "Бесплатный урок эстонского о порядке с�
 msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
 msgstr "Бесплатный урок эстонского произношения: девять гласных с õ, ä, ö и ü, ударение, обычно на первом слоге, и то, как удвоенная буква может изменить слово. Каждое слово озвучено."
 
+msgid "A free Estonian situation lesson for work and the office: meetings, deadlines with -ks, polite requests with conditional verbs, reading a manager’s email and talking about schedules, remote days and leave. Every sentence is read aloud."
+msgstr "Бесплатный ситуативный урок эстонского для работы и офиса: встречи, сроки с -ks, вежливые просьбы в условном наклонении, рабочее письмо и разговор о графике, удалённых днях и отпуске. Каждое предложение озвучено."
+
 msgid "A free lesson on consonant gradation in Estonian: why jalg becomes jala and tuba becomes toa, which forms take the strong or the weak stem, the four usual ways a consonant weakens (kapp, kapi; pank, panga; pood, poe; lind, linnu), words that go the other way (mõte, mõtte), and the same change in verbs (lugema, loen). Every sentence is read aloud."
 msgstr "Бесплатный урок о чередовании согласных в эстонском: почему jalg становится jala, а tuba — toa, какие формы имеют сильную или слабую основу, четыре обычных способа ослабления согласного (kapp, kapi; pank, panga; pood, poe; lind, linnu), слова, которые идут наоборот (mõte, mõtte), и то же изменение в глаголах (lugema, loen). Каждое предложение озвучено."
 
@@ -577,6 +580,12 @@ msgstr "на рынке"
 
 msgid "at work"
 msgstr "на работе"
+
+msgid "At work"
+msgstr "На работе"
+
+msgid "At work in Estonian"
+msgstr "На работе по-эстонски"
 
 msgid "Back 5 seconds"
 msgstr "Назад на 5 секунд"

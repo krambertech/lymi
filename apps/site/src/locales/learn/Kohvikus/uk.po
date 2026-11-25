@@ -73,23 +73,23 @@ msgstr "Чай і торт"
 msgid "A water and a sandwich"
 msgstr "Вода й бутерброд"
 
-msgid "After Kas teil on the word takes an ending: kook becomes kooki."
-msgstr "Після Kas teil on слово отримує закінчення: kook стає kooki."
+msgid "After Kas teil on the word usually takes an ending: kook becomes kooki."
+msgstr "Після Kas teil on слово зазвичай отримує закінчення: kook стає kooki."
 
-msgid "After Kas teil on the word takes an ending: mahl becomes mahla."
-msgstr "Після Kas teil on слово отримує закінчення: mahl стає mahla."
+msgid "After Kas teil on the word usually takes an ending: mahl becomes mahla."
+msgstr "Після Kas teil on слово зазвичай отримує закінчення: mahl стає mahla."
 
-msgid "After Kas teil on the word takes an ending: piim becomes piima."
-msgstr "Після Kas teil on слово отримує закінчення: piim стає piima."
+msgid "After Kas teil on the word usually takes an ending: piim becomes piima."
+msgstr "Після Kas teil on слово зазвичай отримує закінчення: piim стає piima."
 
-msgid "After Kas teil on the word takes an ending: supp becomes suppi."
-msgstr "Після Kas teil on слово отримує закінчення: supp стає suppi."
+msgid "After Kas teil on the word usually takes an ending: supp becomes suppi."
+msgstr "Після Kas teil on слово зазвичай отримує закінчення: supp стає suppi."
 
-msgid "After Kas teil on the word takes an ending: tee becomes teed."
-msgstr "Після Kas teil on слово отримує закінчення: tee стає teed."
+msgid "After Kas teil on the word usually takes an ending: tee becomes teed."
+msgstr "Після Kas teil on слово зазвичай отримує закінчення: tee стає teed."
 
-msgid "After Kas teil on the word takes an ending: vesi becomes vett."
-msgstr "Після Kas teil on слово отримує закінчення: vesi стає vett."
+msgid "After Kas teil on the word usually takes an ending: vesi becomes vett."
+msgstr "Після Kas teil on слово зазвичай отримує закінчення: vesi стає vett."
 
 msgid "All five, each found and fixed."
 msgstr "Усі п’ять: кожну помилку знайдено й виправлено."

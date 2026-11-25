@@ -122,25 +122,28 @@ const GLOSSARY: Glossary = {
   siis: { en: msg`then; in that case` },
   piima: {
     en: msg`milk`,
-    note: msg`After Kas teil on the word takes an ending: piim becomes piima.`,
+    note: msg`After Kas teil on the word usually takes an ending: piim becomes piima.`,
   },
   suppi: {
     en: msg`soup`,
-    note: msg`After Kas teil on the word takes an ending: supp becomes suppi.`,
+    note: msg`After Kas teil on the word usually takes an ending: supp becomes suppi.`,
   },
   kooki: {
     en: msg`cake`,
-    note: msg`After Kas teil on the word takes an ending: kook becomes kooki.`,
+    note: msg`After Kas teil on the word usually takes an ending: kook becomes kooki.`,
   },
   mahla: {
     en: msg`juice`,
-    note: msg`After Kas teil on the word takes an ending: mahl becomes mahla.`,
+    note: msg`After Kas teil on the word usually takes an ending: mahl becomes mahla.`,
   },
   vett: {
     en: msg`water`,
-    note: msg`After Kas teil on the word takes an ending: vesi becomes vett.`,
+    note: msg`After Kas teil on the word usually takes an ending: vesi becomes vett.`,
   },
-  teed: { en: msg`tea`, note: msg`After Kas teil on the word takes an ending: tee becomes teed.` },
+  teed: {
+    en: msg`tea`,
+    note: msg`After Kas teil on the word usually takes an ending: tee becomes teed.`,
+  },
   kohvi: { en: msg`coffee`, note: msg`Joob kohvi: drinks coffee. Learn it as a phrase for now.` },
   laual: { en: msg`on the table` },
   kohvikus: { en: msg`in a café` },
@@ -350,8 +353,8 @@ function useContent() {
       id: "first-order",
       ask: t`What does he ask for first?`,
       options: [
-        { id: "tea-cake", label: t`A tea and a cake` },
         { id: "coffee-bun", label: t`A coffee and a bun` },
+        { id: "tea-cake", label: t`A tea and a cake` },
         { id: "water-sandwich", label: t`A water and a sandwich` },
       ],
       answer: "coffee-bun",
@@ -394,8 +397,8 @@ function useContent() {
       ask: t`What does he order after that?`,
       options: [
         { id: "bun-tea", label: t`A bun and a tea` },
-        { id: "cake-juice", label: t`A cake and a juice` },
         { id: "soup-tea", label: t`Soup and tea` },
+        { id: "cake-juice", label: t`A cake and a juice` },
       ],
       answer: "cake-juice",
       line: 19,
@@ -405,8 +408,8 @@ function useContent() {
       ask: t`How does he pay?`,
       options: [
         { id: "cash", label: t`In cash` },
-        { id: "card", label: t`By card` },
         { id: "later", label: t`He asks to pay later` },
+        { id: "card", label: t`By card` },
       ],
       answer: "card",
       line: 23,

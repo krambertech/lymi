@@ -73,23 +73,23 @@ msgstr "Чай и торт"
 msgid "A water and a sandwich"
 msgstr "Вода и бутерброд"
 
-msgid "After Kas teil on the word takes an ending: kook becomes kooki."
-msgstr "После Kas teil on слово получает окончание: kook становится kooki."
+msgid "After Kas teil on the word usually takes an ending: kook becomes kooki."
+msgstr "После Kas teil on слово обычно получает окончание: kook становится kooki."
 
-msgid "After Kas teil on the word takes an ending: mahl becomes mahla."
-msgstr "После Kas teil on слово получает окончание: mahl становится mahla."
+msgid "After Kas teil on the word usually takes an ending: mahl becomes mahla."
+msgstr "После Kas teil on слово обычно получает окончание: mahl становится mahla."
 
-msgid "After Kas teil on the word takes an ending: piim becomes piima."
-msgstr "После Kas teil on слово получает окончание: piim становится piima."
+msgid "After Kas teil on the word usually takes an ending: piim becomes piima."
+msgstr "После Kas teil on слово обычно получает окончание: piim становится piima."
 
-msgid "After Kas teil on the word takes an ending: supp becomes suppi."
-msgstr "После Kas teil on слово получает окончание: supp становится suppi."
+msgid "After Kas teil on the word usually takes an ending: supp becomes suppi."
+msgstr "После Kas teil on слово обычно получает окончание: supp становится suppi."
 
-msgid "After Kas teil on the word takes an ending: tee becomes teed."
-msgstr "После Kas teil on слово получает окончание: tee становится teed."
+msgid "After Kas teil on the word usually takes an ending: tee becomes teed."
+msgstr "После Kas teil on слово обычно получает окончание: tee становится teed."
 
-msgid "After Kas teil on the word takes an ending: vesi becomes vett."
-msgstr "После Kas teil on слово получает окончание: vesi становится vett."
+msgid "After Kas teil on the word usually takes an ending: vesi becomes vett."
+msgstr "После Kas teil on слово обычно получает окончание: vesi становится vett."
 
 msgid "All five, each found and fixed."
 msgstr "Все пять: каждая ошибка найдена и исправлена."

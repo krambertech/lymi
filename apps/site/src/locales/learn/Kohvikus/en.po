@@ -73,23 +73,23 @@ msgstr "A tea and a cake"
 msgid "A water and a sandwich"
 msgstr "A water and a sandwich"
 
-msgid "After Kas teil on the word takes an ending: kook becomes kooki."
-msgstr "After Kas teil on the word takes an ending: kook becomes kooki."
+msgid "After Kas teil on the word usually takes an ending: kook becomes kooki."
+msgstr "After Kas teil on the word usually takes an ending: kook becomes kooki."
 
-msgid "After Kas teil on the word takes an ending: mahl becomes mahla."
-msgstr "After Kas teil on the word takes an ending: mahl becomes mahla."
+msgid "After Kas teil on the word usually takes an ending: mahl becomes mahla."
+msgstr "After Kas teil on the word usually takes an ending: mahl becomes mahla."
 
-msgid "After Kas teil on the word takes an ending: piim becomes piima."
-msgstr "After Kas teil on the word takes an ending: piim becomes piima."
+msgid "After Kas teil on the word usually takes an ending: piim becomes piima."
+msgstr "After Kas teil on the word usually takes an ending: piim becomes piima."
 
-msgid "After Kas teil on the word takes an ending: supp becomes suppi."
-msgstr "After Kas teil on the word takes an ending: supp becomes suppi."
+msgid "After Kas teil on the word usually takes an ending: supp becomes suppi."
+msgstr "After Kas teil on the word usually takes an ending: supp becomes suppi."
 
-msgid "After Kas teil on the word takes an ending: tee becomes teed."
-msgstr "After Kas teil on the word takes an ending: tee becomes teed."
+msgid "After Kas teil on the word usually takes an ending: tee becomes teed."
+msgstr "After Kas teil on the word usually takes an ending: tee becomes teed."
 
-msgid "After Kas teil on the word takes an ending: vesi becomes vett."
-msgstr "After Kas teil on the word takes an ending: vesi becomes vett."
+msgid "After Kas teil on the word usually takes an ending: vesi becomes vett."
+msgstr "After Kas teil on the word usually takes an ending: vesi becomes vett."
 
 msgid "All five, each found and fixed."
 msgstr "All five, each found and fixed."

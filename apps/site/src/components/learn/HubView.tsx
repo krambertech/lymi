@@ -11,6 +11,7 @@ import {
 } from "../../lib/learn/catalogue";
 import { type Progress, useProgress } from "../../lib/learn/progress";
 import { dueIds, localDay, useReview } from "../../lib/learn/review";
+import { localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
 import { drillSlugs } from "./drill-banks";
 import { LearnLayout } from "./LearnLayout";
@@ -93,13 +94,21 @@ function Resume() {
               <span lang="et">{next.et}</span>
             </span>
           </p>
-          <a
-            href={lessonPath(next.slug as string, i18n.locale)}
-            className={buttonClass("primary", "lg", "justify-self-start")}
-          >
-            {begun ? <Trans>Continue</Trans> : <Trans>Start lesson 1</Trans>}
-            <ArrowRight aria-hidden="true" data-icon="inline-end" />
-          </a>
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href={lessonPath(next.slug as string, i18n.locale)}
+              className={buttonClass("primary", "lg", "justify-self-start")}
+            >
+              {begun ? <Trans>Continue</Trans> : <Trans>Start lesson 1</Trans>}
+              <ArrowRight aria-hidden="true" data-icon="inline-end" />
+            </a>
+            <a
+              href={localizedPath("learnPlacement", i18n.locale)}
+              className={buttonClass("secondary", "md", "justify-self-start")}
+            >
+              <Trans>Find your level</Trans>
+            </a>
+          </div>
         </>
       ) : (
         <>

@@ -1,0 +1,26 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 02:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "15 minutes"
+msgstr "15 хвилин"
+
+msgid "20 mixed questions"
+msgstr "20 змішаних запитань"
+
+msgid "Check what Stage 5 taught: consonant gradation, total and partial object, plural partitive and plural cases, perfect and pluperfect, conditional, let’s, impersonal and verb cases — mixed, with no hints beforehand."
+msgstr "Перевір матеріал етапу 5: чергування приголосних, повний і частковий додаток, множинний партитив і відмінки множини, перфект і плюсквамперфект, умовний спосіб, спонукання, безособова форма й керування дієслів — без підказок наперед."
+
+msgid "Checkpoint"
+msgstr "Контрольна"
+
+msgid "Stage 5 checkpoint"
+msgstr "Контрольна етапу 5"
+
+msgid "Twenty mixed questions from Stage 5. At the end you see your score for each rule with a link back to the lesson that teaches it."
+msgstr "Двадцять змішаних запитань з етапу 5. Наприкінці ти побачиш результат за кожним правилом із посиланням на відповідний урок."

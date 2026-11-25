@@ -1,0 +1,26 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 02:08+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "15 minutes"
+msgstr "15 minutes"
+
+msgid "20 mixed questions"
+msgstr "20 mixed questions"
+
+msgid "Check what Stage 6 taught: particle verbs, through and along, word building, -des and -mata, participles, conjunctions, relative clauses and reported speech — mixed, with no hints beforehand."
+msgstr "Check what Stage 6 taught: particle verbs, through and along, word building, -des and -mata, participles, conjunctions, relative clauses and reported speech — mixed, with no hints beforehand."
+
+msgid "Checkpoint"
+msgstr "Checkpoint"
+
+msgid "Stage 6 checkpoint"
+msgstr "Stage 6 checkpoint"
+
+msgid "Twenty mixed questions from Stage 6. At the end you see your score for each rule with a link back to the lesson that teaches it."
+msgstr "Twenty mixed questions from Stage 6. At the end you see your score for each rule with a link back to the lesson that teaches it."

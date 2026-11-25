@@ -47,10 +47,19 @@ const reviewPage = async (locale: string): Promise<Page> => {
   return { i18n, View: ReviewView };
 };
 
+const placementPage = async (locale: string): Promise<Page> => {
+  const [{ PlacementView }, i18n] = await Promise.all([
+    import("./PlacementView"),
+    learnI18n(locale),
+  ]);
+  return { i18n, View: PlacementView };
+};
+
 export type LearnTarget =
   | { kind: "lesson"; slug: string }
   | { kind: "hub" }
   | { kind: "review" }
+  | { kind: "placement" }
   | { kind: "kit" };
 
 function load(target: LearnTarget, locale: string): Promise<Page> {
@@ -61,6 +70,8 @@ function load(target: LearnTarget, locale: string): Promise<Page> {
       return hubPage(locale);
     case "review":
       return reviewPage(locale);
+    case "placement":
+      return placementPage(locale);
     case "kit":
       return kitPage(locale);
   }

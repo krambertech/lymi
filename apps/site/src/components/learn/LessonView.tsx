@@ -45,7 +45,8 @@ export function LessonView({ slug, sub, facts, glossary, sections: taught, recap
   const sections = drillSlugs.has(slug) ? [...taught, drillSection(t`Drill`)] : taught;
   const lesson = lessonBySlug(slug);
   if (!lesson) throw new Error(`No lesson ${slug}`);
-  const all = [...sections.map((s) => s.id), "recap"];
+  const hasRecap = recap.length > 0 || words.length > 0;
+  const all = hasRecap ? [...sections.map((s) => s.id), "recap"] : sections.map((s) => s.id);
   const number = lesson.n;
   const level = lesson.stage.level;
 
@@ -113,7 +114,11 @@ export function LessonView({ slug, sub, facts, glossary, sections: taught, recap
           </div>
           <ReadBar
             title={i18n._(lesson.name)}
-            sections={[...sections, { id: "recap", title: t`What to remember`, children: null }]}
+            sections={
+              hasRecap
+                ? [...sections, { id: "recap", title: t`What to remember`, children: null }]
+                : sections
+            }
           />
           <div className="mx-auto max-w-[720px] px-5">
             {sections.map((section) => (
@@ -121,16 +126,24 @@ export function LessonView({ slug, sub, facts, glossary, sections: taught, recap
                 {section.children}
               </Section>
             ))}
-            <Section id="recap" title={t`What to remember`}>
-              <ol className="m-0 grid list-decimal gap-2.5 rounded-xl bg-(--tray) py-5.5 ps-11 pe-5.5 text-lg marker:font-medium marker:text-(--form) max-sm:-mx-1">
-                {recap.map((line, i) => (
-                  // oxlint-disable-next-line react/no-array-index-key -- the recap is fixed and numbered
-                  <li key={i}>{line}</li>
-                ))}
-              </ol>
-              <LessonWords words={words} />
-            </Section>
-            <NextLesson slug={slug} locale={i18n.locale} onFinish={() => finishSection("recap")} />
+            {hasRecap && (
+              <Section id="recap" title={t`What to remember`}>
+                <ol className="m-0 grid list-decimal gap-2.5 rounded-xl bg-(--tray) py-5.5 ps-11 pe-5.5 text-lg marker:font-medium marker:text-(--form) max-sm:-mx-1">
+                  {recap.map((line, i) => (
+                    // oxlint-disable-next-line react/no-array-index-key -- the recap is fixed and numbered
+                    <li key={i}>{line}</li>
+                  ))}
+                </ol>
+                <LessonWords words={words} />
+              </Section>
+            )}
+            <NextLesson
+              slug={slug}
+              locale={i18n.locale}
+              onFinish={() => {
+                if (hasRecap) finishSection("recap");
+              }}
+            />
           </div>
         </LearnLayout>
       </WordCards>

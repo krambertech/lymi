@@ -536,6 +536,14 @@ export const STAGES: readonly Stage[] = [
         blurb: msg`A free Estonian situation lesson for work and the office: meetings, deadlines with -ks, polite requests with conditional verbs, reading a manager’s email and talking about schedules, remote days and leave. Every sentence is read aloud.`,
       },
       {
+        slug: "juba-veel-alles",
+        name: msg`Already, still, not yet, only`,
+        title: msg`Already, still, not yet and only in Estonian`,
+        et: "Juba, veel, alles",
+        minutes: 20,
+        blurb: msg`A free Estonian lesson on telling juba (already), veel (still, more), ei … veel (not yet), ei … enam (no longer) and alles (only, not until, just) apart in everyday sentences. Every sentence is read aloud.`,
+      },
+      {
         slug: "kiri",
         name: msg`Practice: a message to the landlord`,
         title: msg`Estonian writing practice: a message to the landlord`,

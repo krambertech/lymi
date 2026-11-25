@@ -17604,6 +17604,147 @@ const NEWS_CLIPS: Record<string, Clip> = {
   "c-raadio": NEWS_CONVERSATION,
 };
 
+export const JUBA_GROUPS = {
+  yes: [
+    { id: "already", word: "juba", said: "Kell on juba kümme." },
+    { id: "still", word: "veel", said: "Ma olen veel tööl." },
+    { id: "only", word: "alles", said: "Kell on alles seitse." },
+  ],
+  no: [
+    { id: "notYet", word: "veel mitte", said: "Ta ei ole veel kodus." },
+    { id: "noLonger", word: "mitte enam", said: "Ma ei ela enam seal." },
+  ],
+} as const;
+
+export const JUBA_MATCH = ["juba", "veel", "alles", "enam", "veel mitte", "mitte enam"] as const;
+
+export const JUBA_TELL = [
+  { id: "eight-juba", kind: "juba", said: "Kell on juba kaheksa." },
+  { id: "eight-alles", kind: "alles", said: "Kell on alles kaheksa." },
+  { id: "arrived-juba", kind: "juba", said: "Ta jõudis juba kohale." },
+  { id: "arrived-alles", kind: "alles", said: "Ta jõudis alles kohale." },
+  { id: "yesterday-juba", kind: "juba", said: "Ta tuli juba eile." },
+  { id: "yesterday-alles", kind: "alles", said: "Ta tuli alles eile." },
+  { id: "open-juba", kind: "juba", said: "Pood on juba lahti." },
+  { id: "open-alles", kind: "alles", said: "Pood avatakse alles kell kümme." },
+] as const;
+
+export const JUBA_GAPS = [
+  { id: "already-ten", before: "Kell on", answer: "juba", after: "kümme." },
+  { id: "only-seven", before: "Kell on", answer: "alles", after: "seitse." },
+  { id: "still-work", before: "Ma olen", answer: "veel", after: "tööl." },
+  { id: "not-yet-home", before: "Ta ei ole", answer: "veel", after: "kodus." },
+  { id: "no-longer-live", before: "Ma ei ela", answer: "enam", after: "seal." },
+  { id: "only-yesterday", before: "Ta tuli", answer: "alles", after: "eile." },
+  { id: "no-longer-rain", before: "Vihma ei saja", answer: "enam", after: "." },
+  { id: "not-yet-bus", before: "Buss ei ole", answer: "veel", after: "tulnud." },
+] as const;
+
+export const JUBA_TRANSLATE = [
+  "Kell on juba kümme.",
+  "Kell on alles seitse.",
+  "Ta ei ole veel kodus.",
+  "Ma ei ela enam seal.",
+  "Kas sa oled veel tööl?",
+  "Ta tuli alles eile.",
+] as const;
+
+export const JUBA_ANSWERS: Record<(typeof JUBA_TRANSLATE)[number], readonly [string, ...string[]]> =
+  {
+    "Kell on juba kümme.": ["Kell on juba kümme."],
+    "Kell on alles seitse.": ["Kell on alles seitse."],
+    "Ta ei ole veel kodus.": newsClosed([
+      "Ta ei ole veel kodus.",
+      "Ta pole veel kodus.",
+      "Ta ei ole kodus veel.",
+    ]),
+    "Ma ei ela enam seal.": newsClosed(["Ma ei ela enam seal.", "Ma ei ela seal enam."]),
+    "Kas sa oled veel tööl?": newsClosed([
+      "Kas sa oled veel tööl?",
+      "Kas te olete veel tööl?",
+      "Oled sa veel tööl?",
+    ]),
+    "Ta tuli alles eile.": newsClosed(["Ta tuli alles eile.", "Ta tuli eile alles."]),
+  };
+
+export const JUBA_FIXES = [
+  { id: "eaten", wrong: "Ma ei ole juba söönud.", right: "Ma ei ole veel söönud." },
+  { id: "live", wrong: "Ta ei ela juba siin.", right: "Ta ei ela enam siin." },
+  { id: "bus", wrong: "Buss ei ole juba tulnud.", right: "Buss ei ole veel tulnud." },
+  { id: "work", wrong: "Ma olen enam tööl.", right: "Ma olen veel tööl." },
+  { id: "seven", wrong: "Kell on enam seitse.", right: "Kell on alles seitse." },
+  { id: "rain", wrong: "Vihma ei saja juba.", right: "Vihma ei saja enam." },
+] as const;
+
+export const JUBA_NOTE = [
+  "Tere, kolleegid!",
+  "Enamik meeskonnast töötab juba uues kontoris, aga kolm inimest kolivad alles neljapäeval.",
+  "Internet hakkas tööle alles eile õhtul, kuid nüüd töötab kõik kiiresti.",
+  "Köögis on suur laud ja külmkapp juba olemas, aga kohvimasin ei ole veel kohale jõudnud.",
+  "Vana kontori võtmeid ei ole enam vaja, nii et palun tooge need homme tagasi.",
+  "Maja esimesel korrusel on kohvik, mis avatakse alles kell kümme.",
+  "Kui kellelgi on veel vanu kaste laua all, tõstke need palun koridori.",
+  "Reedel kell neli tähistame uude kontorisse kolimist koos tordiga!",
+] as const;
+
+export const JUBA_CONVERSATION: Conversation = {
+  turns: [
+    { voice: "third", text: "Tere, Mart! Kas sa oled juba uude korterisse sisse kolinud?" },
+    { voice: "fourth", text: "Tere, Kati! Suurem osa asjadest on juba siin." },
+    {
+      voice: "fourth",
+      text: "Aga kõik kastid ei ole veel lahti pakitud, sest kogu nädal oli kiire.",
+    },
+    {
+      voice: "fourth",
+      text: "Ma sain uue korteri võtmed kätte alles esmaspäeval.",
+    },
+    { voice: "third", text: "Kas sa käid veel vanas korteris ka?" },
+    {
+      voice: "fourth",
+      text: "Ei, seal ma ei ela enam üldse. Andsin vanad võtmed eile omanikule tagasi.",
+    },
+    { voice: "third", text: "Kas kogu mööbel on juba paigas?" },
+    {
+      voice: "fourth",
+      text: "Laud ja voodi on juba toas, aga uus diivan ei ole veel poest kohale tulnud.",
+    },
+    {
+      voice: "fourth",
+      text: "Pood helistas ja ütles, et see jõuab alles reedel.",
+    },
+    { voice: "third", text: "Kas väljas sajab ikka veel vihma? Mõtlesin poodi minna." },
+    {
+      voice: "fourth",
+      text: "Ei, vihma ei saja enam ja päike tuli juba pilve tagant välja.",
+    },
+    { voice: "third", text: "Hea kuulda! Millal ma võin sinu uut kodu vaatama tulla?" },
+    {
+      voice: "third",
+      text: "Kas laupäev sobib sulle?",
+    },
+    {
+      voice: "fourth",
+      text: "Muidugi! Laupäeval on diivan juba kohal ja ma teen sulle head kohvi.",
+      say: "[warm] Muidugi! Laupäeval on diivan juba kohal ja ma teen sulle head kohvi.",
+    },
+  ],
+};
+
+const JUBA_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...JUBA_MATCH,
+    ...JUBA_TELL.map(({ said }) => said),
+    ...JUBA_GAPS.map(
+      ({ before, answer, after }) =>
+        `${before} ${answer}${/^[.,!?]/.test(after) ? "" : " "}${after}`,
+    ),
+    ...JUBA_TRANSLATE,
+    ...JUBA_FIXES.map(({ right }) => right),
+  ]),
+  "c-kolimine": JUBA_CONVERSATION,
+};
+
 export const EMAL_GROUPS = {
   place: [
     { id: "at", form: "ema juures", said: "Ma olen täna ema juures." },
@@ -19631,5 +19772,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "arsti-juures": DOCTOR_CLIPS,
   tookoht: WORK_CLIPS,
   "emal-ema-juures": EMAL_CLIPS,
+  "juba-veel-alles": JUBA_CLIPS,
   kit: KIT_CLIPS,
 };

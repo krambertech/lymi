@@ -293,6 +293,9 @@ msgstr "A free Estonian lesson on saying when: hommikul and suvel with -l, mais 
 msgid "A free Estonian lesson on telling -l, -le and -lt on a person (emal on auto, helistan sõbrale, sain emalt kirja) apart from the genitive plus juures, juurde and juurest (olen ema juures, lähen arsti juurde, tulen sõbra juurest) for being at, going to or coming from someone’s place. Every sentence is read aloud."
 msgstr "A free Estonian lesson on telling -l, -le and -lt on a person (emal on auto, helistan sõbrale, sain emalt kirja) apart from the genitive plus juures, juurde and juurest (olen ema juures, lähen arsti juurde, tulen sõbra juurest) for being at, going to or coming from someone’s place. Every sentence is read aloud."
 
+msgid "A free Estonian lesson on telling juba (already), veel (still, more), ei … veel (not yet), ei … enam (no longer) and alles (only, not until, just) apart in everyday sentences. Every sentence is read aloud."
+msgstr "A free Estonian lesson on telling juba (already), veel (still, more), ei … veel (not yet), ei … enam (no longer) and alles (only, not until, just) apart in everyday sentences. Every sentence is read aloud."
+
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, minutes past and to, and writing the time in words. Every time is read aloud."
 msgstr "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, minutes past and to, and writing the time in words. Every time is read aloud."
 
@@ -535,6 +538,12 @@ msgstr "All of it, finished"
 
 msgid "All of it. Some of it is the partitive: *osta leiba!*"
 msgstr "All of it. Some of it is the partitive: *osta leiba!*"
+
+msgid "Already, still, not yet and only in Estonian"
+msgstr "Already, still, not yet and only in Estonian"
+
+msgid "Already, still, not yet, only"
+msgstr "Already, still, not yet, only"
 
 msgid "Also after “it’s good”, “there’s time” and a question word."
 msgstr "Also after “it’s good”, “there’s time” and a question word."

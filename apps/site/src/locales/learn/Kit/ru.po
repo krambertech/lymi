@@ -293,6 +293,9 @@ msgstr "Бесплатный урок эстонского о том, как с�
 msgid "A free Estonian lesson on telling -l, -le and -lt on a person (emal on auto, helistan sõbrale, sain emalt kirja) apart from the genitive plus juures, juurde and juurest (olen ema juures, lähen arsti juurde, tulen sõbra juurest) for being at, going to or coming from someone’s place. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о разнице между -l, -le, -lt с человеком (emal on auto, helistan sõbrale, sain emalt kirja) и родительным с juures, juurde и juurest (olen ema juures, lähen arsti juurde, tulen sõbra juurest) для нахождения или движения к кому-то. Каждое предложение озвучено."
 
+msgid "A free Estonian lesson on telling juba (already), veel (still, more), ei … veel (not yet), ei … enam (no longer) and alles (only, not until, just) apart in everyday sentences. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о разнице между juba («уже»), veel («ещё»), ei … veel («ещё не»), ei … enam («больше не») и alles («только, лишь») в повседневных предложениях. Каждое предложение озвучено."
+
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, minutes past and to, and writing the time in words. Every time is read aloud."
 msgstr "Бесплатный урок эстонского о том, как сказать, который час: целые часы, pool, veerand и kolmveerand, которые называют следующий час, минуты до и после, а также как написать время словами. Каждый пример озвучен."
 
@@ -535,6 +538,12 @@ msgstr "Всё, до конца"
 
 msgid "All of it. Some of it is the partitive: *osta leiba!*"
 msgstr "Всё целиком. Какое-то количество — партитив: *osta leiba!*"
+
+msgid "Already, still, not yet and only in Estonian"
+msgstr "«Уже», «ещё», «ещё не» и «только» в эстонском"
+
+msgid "Already, still, not yet, only"
+msgstr "Уже, ещё, ещё не, только"
 
 msgid "Also after “it’s good”, “there’s time” and a question word."
 msgstr "И после «хорошо», «есть время» и вопросительного слова."

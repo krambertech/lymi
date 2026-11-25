@@ -17604,6 +17604,226 @@ const NEWS_CLIPS: Record<string, Clip> = {
   "c-raadio": NEWS_CONVERSATION,
 };
 
+export const DIR_TABLE = [
+  {
+    id: "to",
+    q: "kuhu?",
+    here: "siia",
+    there: "sinna",
+    hereSaid: "Tule palun siia!",
+    thereSaid: "Me läheme homme sinna.",
+  },
+  {
+    id: "at",
+    q: "kus?",
+    here: "siin",
+    there: "seal",
+    hereSaid: "Ma elan siin.",
+    thereSaid: "Ta töötab seal.",
+  },
+  {
+    id: "from",
+    q: "kust?",
+    here: "siit",
+    there: "sealt",
+    hereSaid: "Buss sõidab siit Tartusse.",
+    thereSaid: "Ta tuli just sealt.",
+  },
+] as const;
+
+export const DIR_VERBS = [
+  { id: "go", verb: "minema", place: "sinna / poodi", said: "Ma lähen praegu poodi." },
+  { id: "come", verb: "tulema", place: "siia / poest", said: "Ta tuleb varsti siia." },
+  { id: "visit", verb: "käima", place: "seal / poes", said: "Ma käisin eile poes." },
+] as const;
+
+export const DIR_MATCH = ["siia", "siin", "siit", "sinna", "seal", "sealt"] as const;
+
+export const DIR_GAPS = [
+  { id: "come-here", before: "Tule palun", answer: "siia", after: "!" },
+  { id: "live-here", before: "Ma elan", answer: "siin", after: "." },
+  { id: "bus-from", before: "Buss sõidab", answer: "siit", after: "Tartusse." },
+  { id: "go-there", before: "Me läheme homme", answer: "sinna", after: "." },
+  { id: "work-there", before: "Ta töötab", answer: "seal", after: "." },
+  { id: "came-from", before: "Ta tuli just", answer: "sealt", after: "." },
+  { id: "visited-there", before: "Ma käisin eile", answer: "seal", after: "." },
+  { id: "put-here", before: "Pane kott", answer: "siia", after: "." },
+] as const;
+
+export const DIR_TELL = [
+  { id: "go-shop", kind: "go", said: "Ma lähen praegu poodi." },
+  { id: "visit-shop", kind: "visit", said: "Ma käisin eile poes." },
+  { id: "go-tartu", kind: "go", said: "Me läheme homme Tartusse." },
+  { id: "visit-tartu", kind: "visit", said: "Me käisime suvel Tartus." },
+  { id: "go-there", kind: "go", said: "Ta läheb õhtul sinna." },
+  { id: "visit-there", kind: "visit", said: "Ta käib tihti seal." },
+  { id: "go-cafe", kind: "go", said: "Ma lähen nüüd kohvikusse." },
+  { id: "visit-cafe", kind: "visit", said: "Ma käisin hommikul kohvikus." },
+] as const;
+
+export const DIR_TRANSLATE = [
+  "Tule palun siia!",
+  "Ma elan siin.",
+  "Buss sõidab siit Tartusse.",
+  "Me läheme homme sinna.",
+  "Ma käisin eile seal.",
+  "Ta tuli just sealt.",
+] as const;
+
+export const DIR_ANSWERS: Record<(typeof DIR_TRANSLATE)[number], readonly [string, ...string[]]> = {
+  "Tule palun siia!": [
+    "Tule palun siia!",
+    "Palun tule siia!",
+    "Tule siia, palun!",
+    "Tulge palun siia!",
+    "Palun tulge siia!",
+    "Tulge siia, palun!",
+  ],
+  "Ma elan siin.": [
+    "Ma elan siin.",
+    "Mina elan siin.",
+    "Elan siin.",
+    "Siin ma elan.",
+    "Siin mina elan.",
+    "Siin elan ma.",
+    "Siin elan mina.",
+    "Siin elan.",
+  ],
+  "Buss sõidab siit Tartusse.": [
+    "Buss sõidab siit Tartusse.",
+    "Siit sõidab buss Tartusse.",
+    "Buss sõidab Tartusse siit.",
+    "Buss läheb siit Tartusse.",
+    "Siit läheb buss Tartusse.",
+    "Buss läheb Tartusse siit.",
+  ],
+  "Me läheme homme sinna.": [
+    "Me läheme homme sinna.",
+    "Meie läheme homme sinna.",
+    "Läheme homme sinna.",
+    "Me lähme homme sinna.",
+    "Meie lähme homme sinna.",
+    "Lähme homme sinna.",
+    "Homme läheme me sinna.",
+    "Homme läheme meie sinna.",
+    "Homme läheme sinna.",
+    "Homme me läheme sinna.",
+    "Homme meie läheme sinna.",
+    "Homme lähme me sinna.",
+    "Homme lähme meie sinna.",
+    "Homme lähme sinna.",
+    "Homme me lähme sinna.",
+    "Homme meie lähme sinna.",
+    "Me läheme sinna homme.",
+    "Meie läheme sinna homme.",
+    "Läheme sinna homme.",
+    "Me lähme sinna homme.",
+    "Meie lähme sinna homme.",
+    "Lähme sinna homme.",
+  ],
+  "Ma käisin eile seal.": [
+    "Ma käisin eile seal.",
+    "Mina käisin eile seal.",
+    "Käisin eile seal.",
+    "Eile käisin ma seal.",
+    "Eile käisin mina seal.",
+    "Eile käisin seal.",
+    "Eile ma käisin seal.",
+    "Eile mina käisin seal.",
+    "Ma käisin seal eile.",
+    "Mina käisin seal eile.",
+    "Käisin seal eile.",
+  ],
+  "Ta tuli just sealt.": [
+    "Ta tuli just sealt.",
+    "Tema tuli just sealt.",
+    "Ta tuli sealt just.",
+    "Tema tuli sealt just.",
+  ],
+};
+
+export const DIR_FIXES = [
+  { id: "come", wrong: "Tule palun siin!", right: "Tule palun siia!" },
+  { id: "visited", wrong: "Ma käisin eile sinna.", right: "Ma käisin eile seal." },
+  { id: "live", wrong: "Ta elab siia.", right: "Ta elab siin." },
+  { id: "go", wrong: "Me läheme homme seal.", right: "Me läheme homme sinna." },
+  { id: "shop", wrong: "Ma käisin eile poodi.", right: "Ma käisin eile poes." },
+  { id: "from", wrong: "Ta tuli just seal.", right: "Ta tuli just sealt." },
+] as const;
+
+export const DIR_NOTE = [
+  "Tere, ema!",
+  "Me oleme praegu Saaremaal ja ilm on siin väga ilus.",
+  "Eile hommikul sõitsime me praamiga siia ja jõudsime kohale kell üks.",
+  "Pärastlõunal käisime me Kuressaare lossis ja jalutasime pargis.",
+  "Seal oli palju turiste, aga kohvikus leidsime kohe vaba laua.",
+  "Homme hommikul läheme me randa, sest vesi on soe.",
+  "Pärast randa tahab Jaan minna ühte väikesesse poodi, kus müüakse kohalikku leiba.",
+  "Me tuleme siit ära pühapäeva õhtul ja jõuame koju kell üheksa.",
+  "Tule kindlasti esmaspäeval meie juurde, siis näitame sulle pilte.",
+  "Kallistused, Triin.",
+] as const;
+
+export const DIR_CONVERSATION: Conversation = {
+  turns: [
+    { voice: "third", text: ["Tere, Mart!", "Kus sa praegu oled?"] },
+    {
+      voice: "fourth",
+      text: ["Tere, Kati!", "Ma olen juba jaamas.", "Tulin just bussiga siia."],
+    },
+    { voice: "third", text: ["Väga hea.", "Ma tulen viie minuti pärast sinna."] },
+    {
+      voice: "fourth",
+      text: ["Kas me läheme pärast sinna uude kohvikusse pargi ääres?"],
+    },
+    {
+      voice: "third",
+      text: [
+        "Jah, ma käisin eelmisel nädalal seal ja kook oli väga hea.",
+        "Sealt on ka hea vaade pargile.",
+      ],
+    },
+    { voice: "fourth", text: ["Kui kaugel see kohvik siit on?"] },
+    {
+      voice: "third",
+      text: [
+        "Siit on sinna ainult kümme minutit jalgsi.",
+        "Me saame rahulikult läbi vanalinna minna.",
+      ],
+    },
+    { voice: "fourth", text: ["Kas sa käisid täna ka raamatupoes?"] },
+    {
+      voice: "third",
+      text: [
+        "Jah, ma tulin just sealt.",
+        "Ostsin sulle selle eesti keele raamatu, millest me rääkisime.",
+      ],
+    },
+    { voice: "fourth", text: ["Suur aitäh!", "Ma ootan sind siin suure kella all."] },
+    { voice: "third", text: ["Kohe näeme!"] },
+  ],
+};
+
+const DIR_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...DIR_TABLE.flatMap(({ here, there, hereSaid, thereSaid }) => [
+      here,
+      there,
+      hereSaid,
+      thereSaid,
+    ]),
+    ...DIR_VERBS.flatMap(({ verb, said }) => [verb, said]),
+    ...DIR_GAPS.map(
+      ({ before, answer, after }) =>
+        `${before} ${answer}${/^[.,!?]/.test(after) ? "" : " "}${after}`,
+    ),
+    ...DIR_TELL.map(({ said }) => said),
+    ...DIR_TRANSLATE,
+    ...DIR_FIXES.map(({ right }) => right),
+  ]),
+  "c-jaam": DIR_CONVERSATION,
+};
+
 export const JUBA_GROUPS = {
   yes: [
     { id: "already", word: "juba", said: "Kell on juba kümme." },
@@ -19773,5 +19993,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   tookoht: WORK_CLIPS,
   "emal-ema-juures": EMAL_CLIPS,
   "juba-veel-alles": JUBA_CLIPS,
+  "siia-siin-siit": DIR_CLIPS,
   kit: KIT_CLIPS,
 };

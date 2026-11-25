@@ -27838,6 +27838,221 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "siia-siin-siit/buss-so3idab-siit-tartusse": {
+    "text": "Buss sõidab siit Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/c-jaam": {
+    "text": "Tere, Mart! Kus sa praegu oled? Tere, Kati! Ma olen juba jaamas. Tulin just bussiga siia. Väga hea. Ma tulen viie minuti pärast sinna. Kas me läheme pärast sinna uude kohvikusse pargi ääres? Jah, ma käisin eelmisel nädalal seal ja kook oli väga hea. Sealt on ka hea vaade pargile. Kui kaugel see kohvik siit on? Siit on sinna ainult kümme minutit jalgsi. Me saame rahulikult läbi vanalinna minna. Kas sa käisid täna ka raamatupoes? Jah, ma tulin just sealt. Ostsin sulle selle eesti keele raamatu, millest me rääkisime. Suur aitäh! Ma ootan sind siin suure kella all. Kohe näeme!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Mart!",
+          "Kus sa praegu oled?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Kati!",
+          "Ma olen juba jaamas.",
+          "Tulin just bussiga siia."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Väga hea.",
+          "Ma tulen viie minuti pärast sinna."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas me läheme pärast sinna uude kohvikusse pargi ääres?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, ma käisin eelmisel nädalal seal ja kook oli väga hea.",
+          "Sealt on ka hea vaade pargile."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kui kaugel see kohvik siit on?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Siit on sinna ainult kümme minutit jalgsi.",
+          "Me saame rahulikult läbi vanalinna minna."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas sa käisid täna ka raamatupoes?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, ma tulin just sealt.",
+          "Ostsin sulle selle eesti keele raamatu, millest me rääkisime."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Suur aitäh!",
+          "Ma ootan sind siin suure kella all."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kohe näeme!"
+        ]
+      }
+    ]
+  },
+  "siia-siin-siit/ka2ima": {
+    "text": "käima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/ma-elan-siin": {
+    "text": "Ma elan siin.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/ma-ka2isin-eile-poes": {
+    "text": "Ma käisin eile poes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/ma-ka2isin-eile-seal": {
+    "text": "Ma käisin eile seal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/ma-ka2isin-hommikul-kohvikus": {
+    "text": "Ma käisin hommikul kohvikus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/ma-la2hen-nu2u2d-kohvikusse": {
+    "text": "Ma lähen nüüd kohvikusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/ma-la2hen-praegu-poodi": {
+    "text": "Ma lähen praegu poodi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/me-ka2isime-suvel-tartus": {
+    "text": "Me käisime suvel Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/me-la2heme-homme-sinna": {
+    "text": "Me läheme homme sinna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/me-la2heme-homme-tartusse": {
+    "text": "Me läheme homme Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/minema": {
+    "text": "minema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/pane-kott-siia": {
+    "text": "Pane kott siia.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/seal": {
+    "text": "seal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/sealt": {
+    "text": "sealt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/siia": {
+    "text": "siia",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/siin": {
+    "text": "siin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/siit": {
+    "text": "siit",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/sinna": {
+    "text": "sinna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/ta-elab-siin": {
+    "text": "Ta elab siin.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/ta-ka2ib-tihti-seal": {
+    "text": "Ta käib tihti seal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/ta-la2heb-o3htul-sinna": {
+    "text": "Ta läheb õhtul sinna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/ta-to2o2tab-seal": {
+    "text": "Ta töötab seal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/ta-tuleb-varsti-siia": {
+    "text": "Ta tuleb varsti siia.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/ta-tuli-just-sealt": {
+    "text": "Ta tuli just sealt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/tule-palun-siia": {
+    "text": "Tule palun siia!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "siia-siin-siit/tulema": {
+    "text": "tulema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "sobraga-rahata/aega": {
     "text": "aega",
     "model": "eleven_v4",

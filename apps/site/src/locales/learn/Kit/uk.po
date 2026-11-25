@@ -290,6 +290,9 @@ msgstr "Безкоштовний урок естонської про непря
 msgid "A free Estonian lesson on saying when: hommikul and suvel with -l, mais with -s, hommikuti for every morning, nädala pärast and nädal tagasi, pärast tööd, and from and until with -st and -ni. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про те, як сказати «коли»: hommikul і suvel з -l, mais з -s, hommikuti — «щоранку», nädala pärast і nädal tagasi, pärast tööd, а також «від» і «до» з -st і -ni. Кожне речення озвучене."
 
+msgid "A free Estonian lesson on siia, siin and siit (to here, here, from here) and sinna, seal and sealt (to there, there, from there), and how they pair with minema (go), tulema (come) and käima (visit, which usually takes the where form). Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про siia, siin і siit (сюди, тут, звідси) та sinna, seal і sealt (туди, там, звідти), а також про їх поєднання з minema (іти), tulema (приходити) й käima (бувати, яке зазвичай бере форму «де?»). Кожне речення озвучене."
+
 msgid "A free Estonian lesson on telling -l, -le and -lt on a person (emal on auto, helistan sõbrale, sain emalt kirja) apart from the genitive plus juures, juurde and juurest (olen ema juures, lähen arsti juurde, tulen sõbra juurest) for being at, going to or coming from someone’s place. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про різницю між -l, -le, -lt із людиною (emal on auto, helistan sõbrale, sain emalt kirja) та родовим із juures, juurde і juurest (olen ema juures, lähen arsti juurde, tulen sõbra juurest) для перебування чи руху до когось. Кожне речення озвучене."
 
@@ -812,6 +815,9 @@ msgstr "Уроки естонської граматики"
 msgid "Estonian has both <0>{typed}</0> and <1>{right}</1>, and they don’t mean the same."
 msgstr "В естонській є і <0>{typed}</0>, і <1>{right}</1>, і значать вони різне."
 
+msgid "Estonian here and there: to, at and from"
+msgstr "Естонські «тут» і «там»: куди, де і звідки"
+
 msgid "Estonian imperative: giving commands"
 msgstr "Наказовий спосіб в естонській мові"
 
@@ -1137,6 +1143,9 @@ msgstr "Послухати всю розмову"
 
 msgid "Hear the whole passage"
 msgstr "Послухай увесь текст"
+
+msgid "Here and there with go, come and visit"
+msgstr "«Тут» і «там» із дієсловами руху"
 
 msgid "How many cats do you have?"
 msgstr "Скільки у вас котів?"

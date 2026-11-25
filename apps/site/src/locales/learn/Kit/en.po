@@ -290,6 +290,9 @@ msgstr "A free Estonian lesson on reporting what someone said: ütles, et and r�
 msgid "A free Estonian lesson on saying when: hommikul and suvel with -l, mais with -s, hommikuti for every morning, nädala pärast and nädal tagasi, pärast tööd, and from and until with -st and -ni. Every sentence is read aloud."
 msgstr "A free Estonian lesson on saying when: hommikul and suvel with -l, mais with -s, hommikuti for every morning, nädala pärast and nädal tagasi, pärast tööd, and from and until with -st and -ni. Every sentence is read aloud."
 
+msgid "A free Estonian lesson on siia, siin and siit (to here, here, from here) and sinna, seal and sealt (to there, there, from there), and how they pair with minema (go), tulema (come) and käima (visit, which usually takes the where form). Every sentence is read aloud."
+msgstr "A free Estonian lesson on siia, siin and siit (to here, here, from here) and sinna, seal and sealt (to there, there, from there), and how they pair with minema (go), tulema (come) and käima (visit, which usually takes the where form). Every sentence is read aloud."
+
 msgid "A free Estonian lesson on telling -l, -le and -lt on a person (emal on auto, helistan sõbrale, sain emalt kirja) apart from the genitive plus juures, juurde and juurest (olen ema juures, lähen arsti juurde, tulen sõbra juurest) for being at, going to or coming from someone’s place. Every sentence is read aloud."
 msgstr "A free Estonian lesson on telling -l, -le and -lt on a person (emal on auto, helistan sõbrale, sain emalt kirja) apart from the genitive plus juures, juurde and juurest (olen ema juures, lähen arsti juurde, tulen sõbra juurest) for being at, going to or coming from someone’s place. Every sentence is read aloud."
 
@@ -812,6 +815,9 @@ msgstr "Estonian grammar lessons"
 msgid "Estonian has both <0>{typed}</0> and <1>{right}</1>, and they don’t mean the same."
 msgstr "Estonian has both <0>{typed}</0> and <1>{right}</1>, and they don’t mean the same."
 
+msgid "Estonian here and there: to, at and from"
+msgstr "Estonian here and there: to, at and from"
+
 msgid "Estonian imperative: giving commands"
 msgstr "Estonian imperative: giving commands"
 
@@ -1137,6 +1143,9 @@ msgstr "Hear the whole conversation"
 
 msgid "Hear the whole passage"
 msgstr "Hear the whole passage"
+
+msgid "Here and there with go, come and visit"
+msgstr "Here and there with go, come and visit"
 
 msgid "How many cats do you have?"
 msgstr "How many cats do you have?"

@@ -78,7 +78,7 @@ const tellItem = (index: number): ChoiceDrill => {
   return {
     kind: "choice",
     id: `tell-${item.id}`,
-    rule: item.kind,
+    rule: "tell",
     say: item.said,
     answer: TELL_LABELS[item.kind],
     wrong: [TELL_LABELS[item.kind === "pain" ? "symptom" : "pain"]],
@@ -90,6 +90,7 @@ export const DRILLS: DrillBank = {
   rules: {
     pain: { label: msg`What hurts: <et>Mul valutab pea</et>`, section: "words" },
     symptom: { label: msg`Symptoms: <et>Mul on palavik, köha, nohu</et>`, section: "words" },
+    tell: { label: msg`Pain or symptom: <et>valutab</et> or <et>mul on</et>`, section: "tell" },
     visit: { label: msg`At the doctor’s: <et>arsti juurde, arsti juures</et>`, section: "write" },
     advice: {
       label: msg`Doctor’s advice: <et>Võtke seda rohtu, Puhake kodus</et>`,
@@ -151,6 +152,24 @@ export const DRILLS: DrillBank = {
       "Puhake kodus kolm ___.",
       "päeva",
       "Puhake kodus kolm päeva.",
+    ),
+    formItem(
+      "on-palavik",
+      "symptom",
+      "olema",
+      msg`I have`,
+      "Mul ___ kõrge palavik.",
+      "on",
+      "Mul on kõrge palavik.",
+    ),
+    formItem(
+      "on-koha",
+      "symptom",
+      "olema",
+      msg`I have`,
+      "Mul ___ tugev köha.",
+      "on",
+      "Mul on tugev köha.",
     ),
     tellItem(0),
     tellItem(1),

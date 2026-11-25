@@ -138,6 +138,9 @@ msgstr "Послухай кожне речення і визнач, чи вон�
 msgid "How should Mart take the medicine?"
 msgstr "Як Март має приймати ліки?"
 
+msgid "I have"
+msgstr "у мене є"
+
 msgid "I have a fever and a cough."
 msgstr "У мене температура й кашель."
 
@@ -272,6 +275,9 @@ msgstr "З однією частиною тіла вживається одни�
 
 msgid "Pain and symptoms"
 msgstr "Біль і симптоми"
+
+msgid "Pain or symptom: <et>valutab</et> or <et>mul on</et>"
+msgstr "Біль чи симптом: <et>valutab</et> чи <et>mul on</et>"
 
 msgid "Pain or symptom?"
 msgstr "Біль чи симптом?"
@@ -439,7 +445,7 @@ msgid "Which parts of Mart’s body feel fine?"
 msgstr "Які частини тіла в Марта не болять?"
 
 msgid "With a high fever"
-msgstr "За високої температури"
+msgstr "За температури"
 
 msgid "with water"
 msgstr "з водою"

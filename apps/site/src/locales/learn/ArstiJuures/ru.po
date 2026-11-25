@@ -138,6 +138,9 @@ msgstr "Послушай каждое предложение и реши, гов
 msgid "How should Mart take the medicine?"
 msgstr "Как Март должен принимать лекарство?"
 
+msgid "I have"
+msgstr "у меня есть"
+
 msgid "I have a fever and a cough."
 msgstr "У меня температура и кашель."
 
@@ -272,6 +275,9 @@ msgstr "С одной частью тела ставится единствен�
 
 msgid "Pain and symptoms"
 msgstr "Боль и симптомы"
+
+msgid "Pain or symptom: <et>valutab</et> or <et>mul on</et>"
+msgstr "Боль или симптом: <et>valutab</et> или <et>mul on</et>"
 
 msgid "Pain or symptom?"
 msgstr "Боль или симптом?"
@@ -439,7 +445,7 @@ msgid "Which parts of Mart’s body feel fine?"
 msgstr "Какие части тела у Марта не болят?"
 
 msgid "With a high fever"
-msgstr "При высокой температуре"
+msgstr "При температуре"
 
 msgid "with water"
 msgstr "с водой"

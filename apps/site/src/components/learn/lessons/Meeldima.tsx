@@ -13,9 +13,15 @@ import {
   MEELDIMA_DIALOGUE,
   MEELDIMA_DOING,
   MEELDIMA_FEELINGS,
+  MEELDIMA_FIX,
+  MEELDIMA_LETTER,
   MEELDIMA_MORE,
   MEELDIMA_NO,
   MEELDIMA_PERSONS,
+  MEELDIMA_POLITE,
+  MEELDIMA_SAY,
+  MEELDIMA_TALK,
+  MEELDIMA_WANT,
   MEELDIMA_WHICH,
   MEELDIMA_WHO,
   type MeeldimaPerson,
@@ -24,12 +30,15 @@ import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, ListenRows, Panel } from "../Explore";
+import { type FixItem, FixRound, fixRecall } from "../FixRound";
 import { type GapItem, GapPassage } from "../GapPassage";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
 import { Match, type MatchPair } from "../Match";
 import { Paradigm, type ParadigmRow } from "../Paradigm";
+import { Listening, type PassageQuestion, Reading } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
 import { Sort, type SortBin, type SortItem } from "../Sort";
 import { Playing } from "../Sound";
 import { Word } from "../Word";
@@ -90,6 +99,10 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Ma olen väsinud.": msg`I’m tired.`,
   "Mulle maitseb kohv.": msg`Coffee tastes good to me.`,
   "Kas sulle maitseb?": msg`Does it taste good to you?`,
+  "Ma tahan lugeda.": msg`I want to read.`,
+  "Ta tahab ujuda.": msg`He or she wants to swim.`,
+  "Nad tahavad rääkida.": msg`They want to talk.`,
+  "Ma tahaksin kohvi.": msg`I’d like coffee. A polite request.`,
 };
 
 const bare = (said: string) => said.replace(/[.!?]$/, "");
@@ -316,7 +329,7 @@ function MoreFlip() {
           }
           tip={
             <Trans>
-              The thing is plural, so the verb takes{" "}
+              The thing is plural, so the verb usually takes{" "}
               <span lang="et" className="whitespace-nowrap">
                 -vad
               </span>
@@ -431,6 +444,251 @@ const FEELING_WHEN: readonly {
   { said: "Mul on kahju.", when: msg`Your friend is ill and can’t come.` },
 ];
 
+const SAY_PROMPTS: Record<(typeof MEELDIMA_SAY)[number]["id"], MessageDescriptor> = {
+  kassid: msg`I like cats.`,
+  "kassid-ei": msg`We don’t like cats.`,
+  ujuda: msg`They like swimming.`,
+  tallinn: msg`Do you like Tallinn? You ask one friend.`,
+  tahan: msg`I want to read.`,
+  kulm: msg`I’m cold.`,
+};
+
+export function sayItems(i18n: I18n): SentenceItem[] {
+  return MEELDIMA_SAY.map(({ id, said, also }) => ({
+    kind: "translate",
+    id: `say-${id}`,
+    prompt: i18n._(SAY_PROMPTS[id]),
+    src: src(said),
+    answers: [said, ...also],
+  }));
+}
+
+const FIX_WHY: Record<(typeof MEELDIMA_FIX)[number]["id"], ReactNode> = {
+  mul: (
+    <Trans>
+      Liking takes the <End>-le</End> form: <span lang="et">mulle meeldib</span>. The <End>-l</End>{" "}
+      form is for having and feelings.
+    </Trans>
+  ),
+  kassid: (
+    <Trans>
+      <span lang="et">Kassid</span> is more than one, so the verb is{" "}
+      <span lang="et">meeldivad</span>.
+    </Trans>
+  ),
+  ei: (
+    <Trans>
+      After <span lang="et">ei</span>, <span lang="et">meeldi</span> stays the same for one thing or
+      more: <span lang="et">ei meeldi koerad</span>.
+    </Trans>
+  ),
+  ujuda: (
+    <Trans>
+      <span lang="et">Ujuda</span> is a verb, and a verb takes <span lang="et">meeldib</span>.
+    </Trans>
+  ),
+  kulm: (
+    <Trans>
+      Feeling cold takes the <End>-l</End> form, as having does: <span lang="et">mul on külm</span>.
+    </Trans>
+  ),
+  lugema: (
+    <Trans>
+      After <span lang="et">meeldib</span>, a verb takes its <End>-da</End> form:{" "}
+      <span lang="et">meeldib lugeda</span>.
+    </Trans>
+  ),
+};
+
+export function fixItems(): FixItem[] {
+  return MEELDIMA_FIX.map(({ id, wrong, right, also }) => ({
+    kind: "fix",
+    id: `fix-${id}`,
+    wrong,
+    answers: [right, ...also],
+    src: src(right),
+    explain: FIX_WHY[id],
+  }));
+}
+
+type Want = "like" | "want";
+type WantItem = ChoiceItem & { said: string; pair: readonly [string, string] };
+
+const WANT_LABELS: Record<Want, MessageDescriptor> = {
+  like: msg({ message: "Likes", context: "meeldima" }),
+  want: msg`Wants to`,
+};
+
+const wantOptions = (kinds: readonly Want[], i18n: I18n) =>
+  kinds.map((kind) => ({
+    id: kind,
+    label: <span lang={i18n.locale}>{i18n._(WANT_LABELS[kind])}</span>,
+  }));
+
+export function wantItems(i18n: I18n): WantItem[] {
+  return MEELDIMA_WANT.flatMap((each, i) =>
+    (["like", "want"] as const).map((kind, k) => {
+      const said = each[kind];
+      return {
+        said,
+        src: src(said),
+        answer: kind,
+        pair: [each.id, `${each.id}-${kind}`] as const,
+        options: wantOptions((i + k) % 2 === 0 ? ["like", "want"] : ["want", "like"], i18n),
+        explain: <Said said={said} />,
+      };
+    }),
+  );
+}
+
+const TALK_NAMES = { third: "Liis", main: "Mart" } as const;
+
+const talkQuestions = (i18n: I18n): PassageQuestion[] => {
+  const label = (text: MessageDescriptor) => i18n._(text);
+  return [
+    {
+      id: "mart-feels",
+      ask: label(msg`How does Mart feel at the start?`),
+      options: [
+        { id: "bored", label: label(msg`Bored`) },
+        { id: "tired", label: label(msg`Tired`) },
+        { id: "cold", label: label(msg`Cold`) },
+      ],
+      answer: "bored",
+      line: 4,
+    },
+    {
+      kind: "truefalse",
+      id: "mart-coffee",
+      ask: label(msg`Mart likes coffee.`),
+      answer: false,
+      line: 9,
+    },
+    {
+      id: "mart-likes",
+      ask: label(msg`What does Mart say he likes?`),
+      options: [
+        { id: "pets", label: label(msg`Cats and dogs`) },
+        { id: "coffee", label: label(msg`Coffee and cake`) },
+        { id: "swimming", label: label(msg`Swimming in Pärnu`) },
+      ],
+      answer: "pets",
+      line: 15,
+    },
+    {
+      id: "no-dogs",
+      ask: label(msg`Who doesn’t like dogs?`),
+      options: [
+        { id: "liis", label: label(msg`Liis`) },
+        { id: "mart", label: label(msg`Mart`) },
+        { id: "jaan", label: label(msg`Jaan`) },
+      ],
+      answer: "jaan",
+      line: 19,
+    },
+    {
+      kind: "short",
+      id: "sunday",
+      ask: label(msg`Where does Liis go on Sunday? Write one word in Estonian.`),
+      answers: ["Pärnusse", "Pärnu"],
+      line: 23,
+    },
+    {
+      kind: "match",
+      id: "who-likes-what",
+      ask: label(msg`Who likes what?`),
+      options: [
+        { id: "coffee", label: label(msg`Coffee`) },
+        { id: "reading", label: label(msg`Reading`) },
+        { id: "swimming", label: label(msg`Swimming`) },
+      ],
+      statements: [
+        { id: "jaan", label: label(msg`Jaan`), answer: "coffee", line: 18 },
+        { id: "liis", label: label(msg`Liis`), answer: "swimming", line: 24 },
+        { id: "mart", label: label(msg`Mart`), answer: "reading", line: 31 },
+      ],
+    },
+    {
+      id: "not-swimming",
+      ask: label(msg`Why doesn’t Mart go to Pärnu?`),
+      options: [
+        { id: "swim", label: label(msg`He doesn’t like swimming.`) },
+        { id: "work", label: label(msg`He has to work.`) },
+        { id: "money", label: label(msg`He has no money.`) },
+      ],
+      answer: "swim",
+      line: 26,
+    },
+  ];
+};
+
+const letterQuestions = (i18n: I18n): PassageQuestion[] => {
+  const label = (text: MessageDescriptor) => i18n._(text);
+  return [
+    {
+      id: "where-live",
+      ask: label(msg`Where do Kati and Mari live now?`),
+      options: [
+        { id: "tallinn", label: label(msg`In Tallinn`) },
+        { id: "tartu", label: label(msg`In Tartu`) },
+        { id: "parnu", label: label(msg`In Pärnu`) },
+      ],
+      answer: "parnu",
+      line: 1,
+    },
+    {
+      kind: "truefalse",
+      id: "pets",
+      ask: label(msg`Kati and Mari have a cat and a dog.`),
+      answer: true,
+      line: 2,
+    },
+    {
+      id: "dogs",
+      ask: label(msg`Who likes dogs?`),
+      options: [
+        { id: "kati", label: label(msg`Kati`) },
+        { id: "mari", label: label(msg`Mari`) },
+        { id: "liis", label: label(msg`Liis`) },
+      ],
+      answer: "mari",
+      line: 3,
+    },
+    {
+      kind: "truefalse",
+      id: "mari-swims",
+      ask: label(msg`Mari likes swimming.`),
+      answer: false,
+      line: 5,
+    },
+    {
+      kind: "truefalse",
+      id: "kati-writes",
+      ask: label(msg`Kati likes writing.`),
+      answer: false,
+      line: 6,
+    },
+    {
+      kind: "short",
+      id: "learn",
+      ask: label(msg`What does Kati want to learn well? Write two words in Estonian.`),
+      answers: ["eesti keelt", "eesti keel"],
+      line: 7,
+    },
+    {
+      id: "asks",
+      ask: label(msg`What does Kati ask Anu?`),
+      options: [
+        { id: "coffee", label: label(msg`Whether she likes coffee`) },
+        { id: "cold", label: label(msg`Whether she is cold`) },
+        { id: "tallinn", label: label(msg`Whether she likes Tallinn`) },
+      ],
+      answer: "coffee",
+      line: 10,
+    },
+  ];
+};
+
 export function MeeldimaLesson() {
   const { t, i18n } = useLingui();
   const present = lessonBySlug("olevik")?.n;
@@ -441,6 +699,8 @@ export function MeeldimaLesson() {
   const plural = lessonBySlug("mitmus")?.n;
   const onto = lessonBySlug("laual-lauale-laualt")?.n;
   const infinitives = lessonBySlug("tegevusnimed")?.n;
+  const modals = lessonBySlug("modaalverbid")?.n;
+  const conditional = lessonBySlug("laheksin")?.n;
 
   const whoItems = useMemo<WhoItem[]>(
     () =>
@@ -470,7 +730,8 @@ export function MeeldimaLesson() {
       hint: t`one thing, or a verb`,
       rule: (
         <Trans>
-          One thing, or a verb in its <End>-da</End> form, takes <span lang="et">meeldib</span>:{" "}
+          One thing, or a verb in its <End>-da</End> form, usually takes{" "}
+          <span lang="et">meeldib</span>:{" "}
           <span lang="et">Mulle meeldib kohv. Mulle meeldib lugeda.</span>
         </Trans>
       ),
@@ -481,13 +742,25 @@ export function MeeldimaLesson() {
       hint: t`more than one thing`,
       rule: (
         <Trans>
-          More than one thing takes <span lang="et">meeldivad</span>:{" "}
+          More than one thing usually takes <span lang="et">meeldivad</span>:{" "}
           <span lang="et">Mulle meeldivad koerad.</span>
         </Trans>
       ),
     },
   ];
   const sorted: SortItem[] = MEELDIMA_WHICH.map(({ w, verb }) => ({ w, bin: verb, src: src(w) }));
+
+  const fixContent = useMemo(() => fixItems(), []);
+  const sayContent = useMemo(() => sayItems(i18n), [i18n]);
+  const wantContent = useMemo(() => wantItems(i18n), [i18n]);
+  const talkContent = useMemo(() => talkQuestions(i18n), [i18n]);
+  const letterContent = useMemo(() => letterQuestions(i18n), [i18n]);
+  const wantRun = (items: readonly WantItem[], pinned?: WantItem): WantItem[] =>
+    eachPairFirst(items, pinned).map((item) =>
+      item === pinned
+        ? item
+        : { ...item, options: wantOptions(shuffle<Want>(["like", "want"]), i18n) },
+    );
 
   const pairs: MatchPair[] = FEELING_WHEN.map(({ said, when }) => ({
     id: clipId(said),
@@ -659,15 +932,15 @@ export function MeeldimaLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          To say you like something, put the person in the <End>-le</End> form before{" "}
+          To say you like something, use the <End>-le</End> form of the person with{" "}
           <span lang="et">meeldib</span>: <span lang="et">Mulle meeldib kohv</span> is I like
           coffee. Some feelings take the <End>-l</End> form instead:{" "}
           <span lang="et">Mul on külm</span>, I’m cold.
         </Trans>
       }
       facts={[
-        <Trans key="m">12 minutes</Trans>,
-        <Trans key="q">3 quizzes, a message and a conversation</Trans>,
+        <Trans key="m">20 minutes</Trans>,
+        <Trans key="q">Typed sentences, a talk, a listening and a reading</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -687,27 +960,29 @@ export function MeeldimaLesson() {
         "mul on kahju",
         "hea meelega",
         "mulle maitseb kohv",
+        "ma tahaksin kohvi",
       ]}
       recap={[
         <Trans key="1">
-          To say who likes something, put the person in the <End>-le</End> form:{" "}
+          To say who likes something, use the <End>-le</End> form of the person:{" "}
           <b lang="et">Mulle meeldib kohv.</b>
         </Trans>,
         <Trans key="2">
-          <b lang="et">Meeldib</b> goes with one thing or a verb, <b lang="et">meeldivad</b> with
-          more than one thing: <b lang="et">Mulle meeldib lugeda. Mulle meeldivad kassid.</b>
+          <b lang="et">Meeldib</b> usually goes with one thing or a verb, <b lang="et">meeldivad</b>{" "}
+          with more than one thing: <b lang="et">Mulle meeldib lugeda. Mulle meeldivad kassid.</b>
         </Trans>,
         <Trans key="3">
           Not liking is <b lang="et">ei meeldi</b>, for one thing or more:{" "}
-          <b lang="et">Mulle ei meeldi koerad.</b>
+          <b lang="et">Mulle ei meeldi koerad.</b> You usually ask with <b lang="et">kas</b> or{" "}
+          <b lang="et">kellele</b>: <b lang="et">Kas sulle meeldib Tallinn?</b>
         </Trans>,
         <Trans key="4">
-          Ask with <b lang="et">kas</b> or <b lang="et">kellele</b>:{" "}
-          <b lang="et">Kas sulle meeldib Tallinn? Kellele meeldib kohv?</b>
-        </Trans>,
-        <Trans key="5">
           Some feelings take the <End>-l</End> form, as having does: <b lang="et">Mul on külm.</b>{" "}
           <b lang="et">Mul on hea meel.</b>
+        </Trans>,
+        <Trans key="5">
+          Liking and wanting are different: <b lang="et">Mulle meeldib lugeda</b> says you enjoy it,{" "}
+          <b lang="et">Ma tahan lugeda</b> says you want to do it.
         </Trans>,
       ]}
       sections={[
@@ -785,16 +1060,16 @@ export function MeeldimaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The verb goes with the thing you like, so it changes when there’s more than one.{" "}
-                    <Word w="Mulle meeldib kass" /> is I like the cat, and{" "}
+                    The verb goes with the thing you like, so it usually changes when there’s more
+                    than one. <Word w="Mulle meeldib kass" /> is I like the cat, and{" "}
                     <Word w="Mulle meeldivad kassid" /> is I like cats.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
                     <Word w="Meeldivad" /> has the <End>-vad</End> of they from lesson {present},
-                    and <Word w="kassid" /> is the plural of lesson {plural}. The person never
-                    changes the verb: <Word w="Neile meeldib õun" /> is they like the apple. Switch
+                    and <Word w="kassid" /> is the plural of lesson {plural}. The person doesn’t
+                    change the verb: <Word w="Neile meeldib õun" /> is they like the apple. Switch
                     between One thing and More than one, and tap a line to hear it.
                   </Trans>
                 </p>
@@ -825,7 +1100,7 @@ export function MeeldimaLesson() {
                 </p>
                 <p>
                   <Trans>
-                    With a verb it’s always <span lang="et">meeldib</span>, whoever likes it:{" "}
+                    With a verb it’s <span lang="et">meeldib</span>, whoever likes it:{" "}
                     <Word w="Neile meeldib rääkida" />, they like talking. Tap a line to hear it.
                   </Trans>
                 </p>
@@ -863,6 +1138,60 @@ export function MeeldimaLesson() {
           ),
         },
         {
+          id: "want",
+          title: t`Liking or wanting`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    <span lang="et">Meeldib</span> and <span lang="et">tahan</span> from lesson{" "}
+                    {modals} both take a verb’s <End>-da</End> form, but they say different things.{" "}
+                    <Word w="Mulle meeldib lugeda" /> says you enjoy reading. With{" "}
+                    <span lang="et">tahan</span> the person is the one who acts:{" "}
+                    <Word w="Ma tahan lugeda" />, I want to read.
+                  </Trans>
+                </p>
+                <p>
+                  <Trans>Tap a line to hear it, then tell the two apart by ear.</Trans>
+                </p>
+              </Prose>
+              <ListenRows items={rows(MEELDIMA_WANT.flatMap(({ like, want }) => [like, want]))} />
+              <Aside>
+                <Trans>
+                  To ask politely, people say <Word w="Ma tahaksin kohvi" />, I’d like coffee. It’s
+                  a would form, and lesson {conditional} explains it.
+                </Trans>
+              </Aside>
+              <Quiz
+                id="like-or-want"
+                title={<Trans>Likes or wants to?</Trans>}
+                items={wantContent}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>
+                      All six. You heard <span lang="et">meeldib</span> and{" "}
+                      <span lang="et">tahan</span> apart.
+                    </Trans>
+                  ) : share >= 0.6 ? (
+                    <Trans>Nearly. Play the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>
+                      Listen for the person: <span lang="et">mulle</span> likes,{" "}
+                      <span lang="et">ma</span> wants. Then try again.
+                    </Trans>
+                  )
+                }
+                recall={(item) => ({ label: item.said, src: item.src })}
+                order={wantRun}
+                round={(props) => <ChoiceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
           id: "no",
           title: t`Saying no and asking`,
           children: (
@@ -870,8 +1199,8 @@ export function MeeldimaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    To say you don’t like something, put <span lang="et">ei</span> before the verb
-                    and drop its ending, as in lesson {negation}: <Word w="Mulle ei meeldi kohv" />.
+                    To say you don’t like something, use <span lang="et">ei</span> with the verb
+                    without its ending, as in lesson {negation}: <Word w="Mulle ei meeldi kohv" />.
                     It’s <Word w="ei meeldi" /> for more than one thing too:{" "}
                     <Word w="Talle ei meeldi koerad" />.
                   </Trans>
@@ -881,15 +1210,53 @@ export function MeeldimaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    To ask, start with <span lang="et">kas</span>, as in lesson {questions}, and
-                    answer with the verb alone: <Word w="Kas sulle meeldib Tallinn" />?{" "}
-                    <Word w="Jah, meeldib" />. To ask who, use <Word w="kellele" />, the{" "}
-                    <End>-le</End> form of <Word w="kes" />: <Word w="Kellele meeldib kohv" />?{" "}
-                    <Word w="Mulle" />!
+                    To ask yes or no, you usually start with <span lang="et">kas</span>, as in
+                    lesson {questions}, and usually answer with the verb alone:{" "}
+                    <Word w="Kas sulle meeldib Tallinn" />? <Word w="Jah, meeldib" />. To ask who,
+                    use <Word w="kellele" />, the <End>-le</End> form of <Word w="kes" />:{" "}
+                    <Word w="Kellele meeldib kohv" />? <Word w="Mulle" />!
                   </Trans>
                 </p>
               </Prose>
               <ListenRows items={rows(MEELDIMA_ASK)} />
+            </>
+          ),
+        },
+        {
+          id: "say-it",
+          title: t`Say it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write each sentence in Estonian. Use the <End>-le</End> form of the person to
+                    say who likes it, and a verb in its <End>-da</End> form after{" "}
+                    <span lang="et">meeldib</span> or <span lang="et">tahan</span>.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="say-it"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={sayContent}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, each with the right person form and the right verb.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Check the forms you missed above.</Trans>
+                  ) : (
+                    <Trans>
+                      Go back to the table of who likes it and the sections on one thing or more,
+                      then try again.
+                    </Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                round={(props) => <SentenceRound {...props} />}
+              />
             </>
           ),
         },
@@ -903,8 +1270,8 @@ export function MeeldimaLesson() {
                   <Trans>
                     These feelings take the <End>-l</End> form of lesson {mulOn}, as having does:{" "}
                     <Word w="Mul on külm" />, I’m cold. Word for word, it’s “at me is cold”, with{" "}
-                    <span lang="et">mul</span>, not <span lang="et">mulle</span>. Other feelings use{" "}
-                    <span lang="et">ma olen</span>, as in lesson {pronouns}:{" "}
+                    <span lang="et">mul</span>, not <span lang="et">mulle</span>. Other feelings
+                    usually use <span lang="et">ma olen</span>, as in lesson {pronouns}:{" "}
                     <Word w="Ma olen väsinud" />, I’m tired.
                   </Trans>
                 </p>
@@ -940,6 +1307,44 @@ export function MeeldimaLesson() {
                 </p>
               </Prose>
               <Match id="when" title={<Trans>When would you say it?</Trans>} pairs={pairs} />
+            </>
+          ),
+        },
+        {
+          id: "fix-it",
+          title: t`Fix the sentence`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each sentence has one wrong word, the kind learners often write: the{" "}
+                    <End>-l</End> form for liking, one thing for more than one, or a verb that isn’t
+                    in its <End>-da</End> form. Tap it, then write it right.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="fix-it"
+                title={<Trans>Find and fix the mistake</Trans>}
+                items={fixContent}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six found and fixed.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Look again at the ones you missed.</Trans>
+                  ) : (
+                    <Trans>
+                      Check the person form, <span lang="et">meeldib</span> or{" "}
+                      <span lang="et">meeldivad</span>, and the <End>-da</End> form, then try again.
+                    </Trans>
+                  )
+                }
+                recall={fixRecall}
+                round={(props) => <FixRound {...props} />}
+              />
             </>
           ),
         },
@@ -994,6 +1399,56 @@ export function MeeldimaLesson() {
                 }
                 them={t`Liis`}
                 turns={dialogue}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listen: plans for the weekend`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Liis calls Mart on Friday. They talk about what they like and where to meet.
+                    Read the questions first. You can play the recording twice, as in the A2 exam.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="plans-listening"
+                title={<Trans>Listen: Liis and Mart</Trans>}
+                clip="c-plans"
+                turns={MEELDIMA_TALK.turns}
+                names={TALK_NAMES}
+                questions={talkContent}
+                plays={2}
+              />
+            </>
+          ),
+        },
+        {
+          id: "read",
+          title: t`Read: Kati’s message`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Kati writes to her friend Anu. Read the message, then answer the questions.
+                  </Trans>
+                </p>
+              </Prose>
+              <Reading
+                id="kati-message"
+                title={<Trans>What does Kati write?</Trans>}
+                by={t`Kati writes`}
+                clip="p-letter"
+                sentences={MEELDIMA_LETTER}
+                questions={letterContent}
               />
             </>
           ),

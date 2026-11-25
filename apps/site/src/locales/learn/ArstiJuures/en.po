@@ -138,6 +138,9 @@ msgstr "Hear each sentence and decide whether it says what hurts (<0>valutab</0>
 msgid "How should Mart take the medicine?"
 msgstr "How should Mart take the medicine?"
 
+msgid "I have"
+msgstr "I have"
+
 msgid "I have a fever and a cough."
 msgstr "I have a fever and a cough."
 
@@ -272,6 +275,9 @@ msgstr "One aching part takes the singular verb <0>valutab</0>, not <1>valutavad
 
 msgid "Pain and symptoms"
 msgstr "Pain and symptoms"
+
+msgid "Pain or symptom: <et>valutab</et> or <et>mul on</et>"
+msgstr "Pain or symptom: <et>valutab</et> or <et>mul on</et>"
 
 msgid "Pain or symptom?"
 msgstr "Pain or symptom?"

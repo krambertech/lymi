@@ -1,0 +1,421 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 01:40+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+#. placeholder {0}: item.said
+#. placeholder {1}: i18n._(TELL_MEANS[item.id])
+msgid "<0>{0}</0> {1}"
+msgstr "<0>{0}</0> {1}"
+
+msgid "18 minutes"
+msgstr "18 хвилин"
+
+msgid "7 exercises"
+msgstr "7 вправ"
+
+msgid "A friend sends bus details before a trip to Pärnu. Read and answer."
+msgstr "Подруга надсилає деталі про автобус перед поїздкою до Пярну. Прочитай і відповідай."
+
+msgid "A ticket to a city takes the into form: <0>Tartusse</0>, not <1>Tartus</1>."
+msgstr "Квиток до міста потребує форми напрямку «куди»: <0>Tartusse</0>, а не <1>Tartus</1>."
+
+msgid "All eight right."
+msgstr "Усі вісім правильно."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All six sentences right."
+msgstr "Усі шість речень правильно."
+
+msgid "Ask for directions and buy a ticket: <0>otse</0> (straight ahead), <1>vasakule</1> and <2>paremale</2> for turning, <3>vasakul</3> and <4>paremal</4> for which side something is on, and everyday station phrases."
+msgstr "Запитай дорогу й купи квиток: <0>otse</0> (прямо), <1>vasakule</1> і <2>paremale</2> для повороту, <3>vasakul</3> і <4>paremal</4> для того, з якого боку щось розташоване, та повсякденні фрази на вокзалі."
+
+msgid "Ask the way"
+msgstr "Запитай дорогу"
+
+msgid "Asking where something is uses <0>Kus</0>, not <1>Kuhu</1>."
+msgstr "Щоб спитати, де щось знаходиться, потрібне слово <0>Kus</0>, а не <1>Kuhu</1>."
+
+msgid "At a station or stop, three words come up right away: <0/>, <1/> and <2/>."
+msgstr "На вокзалі чи зупинці одразу знадобляться три слова: <0/>, <1/> і <2/>."
+
+msgid "At eleven o’clock"
+msgstr "Об одинадцятій годині"
+
+msgid "At her own home"
+msgstr "У себе вдома"
+
+msgid "At nine o’clock"
+msgstr "О дев’ятій годині"
+
+msgid "At seven at night"
+msgstr "О сьомій увечері"
+
+msgid "At the station: <et>pilet, peatus, jaam</et>"
+msgstr "На вокзалі: <et>pilet, peatus, jaam</et>"
+
+msgid "At the train station"
+msgstr "На залізничному вокзалі"
+
+msgid "Behind the café"
+msgstr "За кав’ярнею"
+
+msgid "Bus to Pärnu"
+msgstr "Автобус до Пярну"
+
+msgid "Check the table above, then try again."
+msgstr "Зазирни в таблицю вище й спробуй ще раз."
+
+msgid "Clerk"
+msgstr "Касирка"
+
+msgid "Directions follow the same <0>-le</0> / <1>-l</1> pattern from lesson {surface}: <2/> and <3/> mean turning toward a side, while <4/> and <5/> say which side a place is on. Straight ahead is <6/>."
+msgstr "Напрямки дотримуються тієї самої схеми <0>-le</0> / <1>-l</1> з уроку {surface}: <2/> і <3/> означають поворот у певний бік, а <4/> і <5/> кажуть, з якого боку місце. Прямо — це <6/>."
+
+msgid "Directions in Estonian"
+msgstr "Напрямки естонською"
+
+msgid "Each sentence has one wrong direction or place word. Tap the wrong word, then type the right one."
+msgstr "У кожному реченні одне слово напрямку чи місця хибне. Натисни на нього й впиши правильне."
+
+msgid "Estonian"
+msgstr "Естонською"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "Go straight ahead (polite)."
+msgstr "Ідіть прямо (ввічливо)."
+
+msgid "Go to the left at the park."
+msgstr "Іди ліворуч біля парку."
+
+msgid "Hear each sentence and decide whether it tells you which way to turn (<0>-le</0>) or which side a place is on (<1>-l</1>)."
+msgstr "Послухай кожне речення і визнач, чи воно підказує, куди повернути (<0>-le</0>), чи з якого боку розташоване місце (<1>-l</1>)."
+
+msgid "How many euros does the ticket cost? Write the number word as the clerk says it."
+msgstr "Скільки євро коштує квиток? Напиши числівник словом, як каже касирка."
+
+msgid "In a sentence"
+msgstr "У реченні"
+
+msgid "In ten minutes"
+msgstr "За десять хвилин"
+
+msgid "In twenty minutes"
+msgstr "За двадцять хвилин"
+
+msgid "In two full hours"
+msgstr "За дві повні години"
+
+msgid "Jaam on paremal."
+msgstr "Вокзал праворуч."
+
+msgid "Kind"
+msgstr "Значення"
+
+msgid "Kohvik on vasakul."
+msgstr "Кав’ярня ліворуч."
+
+msgid "Kus on bussipeatus?"
+msgstr "Де автобусна зупинка?"
+
+msgid "Left, right and straight ahead"
+msgstr "Ліворуч, праворуч і прямо"
+
+msgid "Listen: at the ticket desk"
+msgstr "Послухай: біля каси"
+
+msgid "Listening only, no microphone"
+msgstr "Лише аудіо, без мікрофона"
+
+msgid "Location"
+msgstr "Розташування"
+
+msgid "Location (which side)"
+msgstr "Розташування (з якого боку)"
+
+msgid "Location: <et>vasakul, paremal</et>"
+msgstr "Розташування: <et>vasakul, paremal</et>"
+
+msgid "Mart"
+msgstr "Март"
+
+msgid "Mart buys a return ticket for the same evening."
+msgstr "Март купує квиток туди й назад на той самий вечір."
+
+msgid "Mart buys a train ticket to Tartu at the station. Listen and answer. You can play the conversation twice."
+msgstr "Март купує на вокзалі квиток на поїзд до Тарту. Послухай і відповідай. Розмову можна увімкнути двічі."
+
+msgid "Mart pays by card."
+msgstr "Март платить карткою."
+
+msgid "Match each Estonian travel word with its meaning."
+msgstr "З’єднай кожне естонське слово для подорожі з його значенням."
+
+msgid "Meaning"
+msgstr "Значення"
+
+msgid "Minge otse edasi."
+msgstr "Ідіть прямо вперед."
+
+msgid "Near a big hotel"
+msgstr "Біля готелю"
+
+msgid "Nearby (where)"
+msgstr "Поблизу (де)"
+
+msgid "Nearly. Check the direction ending in the ones you missed."
+msgstr "Майже. Перевір закінчення напрямку в реченнях із помилками."
+
+msgid "Nearly. Listen for -le versus -l at the end."
+msgstr "Майже. Прислухайся до закінчення -le проти -l у кінці."
+
+msgid "Nearly. Read the reason under each one you missed."
+msgstr "Майже. Прочитай пояснення під кожним реченням із помилкою."
+
+msgid "on the left"
+msgstr "ліворуч (де)"
+
+msgid "On the left (where)"
+msgstr "Ліворуч (де)"
+
+msgid "On the left side"
+msgstr "З лівого боку"
+
+msgid "on the right"
+msgstr "праворуч (де)"
+
+msgid "On the right (where)"
+msgstr "Праворуч (де)"
+
+msgid "On the right side"
+msgstr "З правого боку"
+
+msgid "On the street"
+msgstr "На вулиці"
+
+msgid "One ticket to Tartu, please."
+msgstr "Один квиток до Тарту, будь ласка."
+
+msgid "Palun üks pilet Tartusse."
+msgstr "Будь ласка, один квиток до Тарту."
+
+msgid "Passer-by"
+msgstr "Перехожий"
+
+msgid "Pöörake paremale."
+msgstr "Поверніть праворуч."
+
+msgid "Pöörake vasakule."
+msgstr "Поверніть ліворуч."
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Що запам’ятати» нижче й спробуй ще раз."
+
+msgid "Right by the park"
+msgstr "Біля парку"
+
+msgid "Rongijaam on siin lähedal."
+msgstr "Залізничний вокзал тут поблизу."
+
+msgid "Saying which side a place is on takes <0>-l</0>: <1>Kohvik on vasakul</1>, <2>Jaam on paremal</2>."
+msgstr "Щоб сказати, з якого боку місце, потрібне закінчення <0>-l</0>: <1>Kohvik on vasakul</1>, <2>Jaam on paremal</2>."
+
+msgid "Saying which side a place is on takes <et>-l</et>: <et>Kohvik on vasakul</et>, <et>Jaam on paremal</et>."
+msgstr "Щоб сказати, з якого боку місце, потрібне закінчення <et>-l</et>: <et>Kohvik on vasakul</et>, <et>Jaam on paremal</et>."
+
+msgid "Saying which side something is on takes <0>-l</0>: <1>paremal</1>, not <2>paremale</2>."
+msgstr "Щоб сказати, з якого боку щось розташоване, потрібне <0>-l</0>: <1>paremal</1>, а не <2>paremale</2>."
+
+msgid "Saying which side something is on takes <0>-l</0>: <1>vasakul</1> (on the left) and <2>paremal</2> (on the right)."
+msgstr "Щоб сказати, з якого боку щось розташоване, потрібне <0>-l</0>: <1>vasakul</1> (ліворуч) і <2>paremal</2> (праворуч)."
+
+msgid "Saying which side something is on takes <0>-l</0>: <1>vasakul</1>, not <2>vasakule</2>."
+msgstr "Щоб сказати, з якого боку щось розташоване, потрібне <0>-l</0>: <1>vasakul</1>, а не <2>vasakule</2>."
+
+msgid "station"
+msgstr "вокзал, станція"
+
+msgid "stop (bus, tram)"
+msgstr "зупинка"
+
+msgid "straight ahead"
+msgstr "прямо"
+
+msgid "Straight ahead"
+msgstr "Прямо"
+
+msgid "Tap a word"
+msgstr "Натисни на слово"
+
+msgid "That asks for coffee, not directions to the station."
+msgstr "Це прохання дати каву, а не запитання про дорогу до вокзалу."
+
+msgid "That asks their name rather than how far the station is."
+msgstr "Це запитання про ім’я, а не про те, чи далеко вокзал."
+
+msgid "That asks what time it is, not which side the station is on."
+msgstr "Це запитання про час, а не про те, з якого боку вокзал."
+
+msgid "That says where you live instead of asking for the railway station."
+msgstr "Це фраза про те, де ти живеш, а не запитання про залізничний вокзал."
+
+msgid "That says you do not know, instead of checking whether the station is on the right."
+msgstr "Це означає «я не знаю», а не уточнення, чи вокзал праворуч."
+
+msgid "The bus stop is on the left."
+msgstr "Автобусна зупинка ліворуч."
+
+msgid "The café is on the left."
+msgstr "Кав’ярня ліворуч."
+
+msgid "The passer-by is not selling tickets; ask whether it is far."
+msgstr "Перехожий не продає квитки; запитай, чи далеко йти."
+
+msgid "The shop is on the right."
+msgstr "Магазин праворуч."
+
+msgid "The station is on the right."
+msgstr "Вокзал праворуч."
+
+msgid "There is a small kiosk next to the waiting hall."
+msgstr "Поруч із залою очікування є невеликий кіоск."
+
+msgid "They will take a taxi from Pärnu bus station to the beach."
+msgstr "Вони поїдуть на таксі від автовокзалу Пярну до пляжу."
+
+msgid "ticket"
+msgstr "квиток"
+
+msgid "To a stranger on the street, Estonians usually use polite <0>te</0> commands: <1>Minge otse</1> (go straight), <2>Pöörake vasakule</2> (turn left)."
+msgstr "До незнайомця на вулиці в Естонії зазвичай звертаються ввічливо на <0>te</0>: <1>Minge otse</1> (ідіть прямо), <2>Pöörake vasakule</2> (поверніть ліворуч)."
+
+msgid "to Tartu"
+msgstr "до Тарту"
+
+msgid "to the left"
+msgstr "ліворуч (куди)"
+
+msgid "to the right"
+msgstr "праворуч (куди)"
+
+msgid "Track four on the left"
+msgstr "Четверта колія ліворуч"
+
+msgid "Track one by the exit"
+msgstr "Перша колія біля виходу"
+
+msgid "Track two on the right"
+msgstr "Друга колія праворуч"
+
+msgid "Trip details"
+msgstr "Деталі поїздки"
+
+msgid "Turn left (polite)."
+msgstr "Поверніть ліворуч (ввічливо)."
+
+msgid "Turn left (where to)"
+msgstr "Поверни ліворуч (куди)"
+
+msgid "Turn left!"
+msgstr "Поверни ліворуч!"
+
+msgid "Turn right (where to)"
+msgstr "Поверни праворуч (куди)"
+
+msgid "Turn right at the school."
+msgstr "Поверни праворуч біля школи."
+
+msgid "Turn right!"
+msgstr "Поверни праворуч!"
+
+msgid "Turning"
+msgstr "Поворот"
+
+msgid "Turning (where to)"
+msgstr "Поворот (куди)"
+
+msgid "Turning or location?"
+msgstr "Поворот чи розташування?"
+
+msgid "Turning takes <0>-le</0>: <1>paremale</1>, not <2>paremal</2>."
+msgstr "Поворот потребує <0>-le</0>: <1>paremale</1>, а не <2>paremal</2>."
+
+msgid "Turning takes <0>-le</0>: <1>Pöörake vasakule</1> (turn left), <2>Pöörake paremale</2> (turn right); straight ahead is <3>otse</3>."
+msgstr "Поворот потребує <0>-le</0>: <1>Pöörake vasakule</1> (поверніть ліворуч), <2>Pöörake paremale</2> (поверніть праворуч); прямо — це <3>otse</3>."
+
+msgid "Turning takes <0>-le</0>: <1>vasakule</1> (to the left) and <2>paremale</2> (to the right)."
+msgstr "Поворот потребує <0>-le</0>: <1>vasakule</1> (ліворуч) і <2>paremale</2> (праворуч)."
+
+msgid "Turning takes <0>-le</0>: <1>vasakule</1>, not <2>vasakul</2>."
+msgstr "Поворот потребує <0>-le</0>: <1>vasakule</1>, а не <2>vasakul</2>."
+
+msgid "Turning toward a side takes <et>-le</et>: <et>Pöörake vasakule</et>, <et>Pöörake paremale</et>."
+msgstr "Поворот у певний бік потребує <et>-le</et>: <et>Pöörake vasakule</et>, <et>Pöörake paremale</et>."
+
+msgid "Turning: <et>otse, vasakule, paremale</et>"
+msgstr "Поворот: <et>otse, vasakule, paremale</et>"
+
+msgid "Useful station phrases: <et>Kus on bussipeatus?</et>, <et>Palun üks pilet Tartusse.</et>, <et>Mis kell rong väljub?</et>"
+msgstr "Корисні фрази на вокзалі: <et>Kus on bussipeatus?</et>, <et>Palun üks pilet Tartusse.</et>, <et>Mis kell rong väljub?</et>"
+
+msgid "Useful travel questions: <0>Kus on bussipeatus?</0>, <1>Palun üks pilet Tartusse.</1>, <2>Mis kell rong väljub?</2>"
+msgstr "Корисні фрази в дорозі: <0>Kus on bussipeatus?</0>, <1>Palun üks pilet Tartusse.</1>, <2>Mis kell rong väljub?</2>"
+
+msgid "Wait until the station to buy a ticket."
+msgstr "Квиток купиш уже на вокзалі."
+
+msgid "What does each word mean?"
+msgstr "Що означає кожне слово?"
+
+msgid "What time does the bus to Pärnu leave? Write two words from the message."
+msgstr "О котрій годині вирушає автобус до Пярну? Напиши два слова з повідомлення."
+
+msgid "What time does the train leave?"
+msgstr "О котрій годині вирушає поїзд?"
+
+msgid "When does the bus reach Pärnu?"
+msgstr "Коли автобус прибуває до Пярну?"
+
+msgid "When does the next train leave?"
+msgstr "Коли вирушає наступний поїзд?"
+
+msgid "Where does the train leave from?"
+msgstr "Звідки вирушає поїзд?"
+
+msgid "Where is Mari waiting in Pärnu?"
+msgstr "Де Марі чекає в Пярну?"
+
+msgid "Where is the bus stop?"
+msgstr "Де автобусна зупинка?"
+
+msgid "Which city is Mart buying a train ticket to? Write one word as he says it."
+msgstr "До якого міста Март купує квиток на поїзд? Напиши одне слово так, як він його каже."
+
+msgid "Which side is platform four on?"
+msgstr "З якого боку четверта платформа?"
+
+msgid "Word"
+msgstr "Слово"
+
+msgid "Write each travel phrase in Estonian."
+msgstr "Напиши кожну фразу для подорожі естонською."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "You already have the directions — thank the person and say goodbye."
+msgstr "Дорогу тобі вже пояснили — подякуй і попрощайся."
+
+msgid "You are asking a passer-by for the way to the railway station."
+msgstr "Ти питаєш у перехожого дорогу до залізничного вокзалу."
+
+msgid "You are looking for the railway station. Listen to the passer-by and pick the right reply."
+msgstr "Ти шукаєш залізничний вокзал. Послухай перехожого й обери правильну відповідь."

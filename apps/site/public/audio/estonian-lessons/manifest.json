@@ -30903,5 +30903,218 @@
     "text": "vanem",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/otse": {
+    "text": "otse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/vasakule": {
+    "text": "vasakule",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/paremale": {
+    "text": "paremale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/peatus": {
+    "text": "peatus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/pilet": {
+    "text": "pilet",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/jaam": {
+    "text": "jaam",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/vasakul": {
+    "text": "vasakul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/paremal": {
+    "text": "paremal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/minge-otse-edasi": {
+    "text": "Minge otse edasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/po2o2rake-vasakule": {
+    "text": "Pöörake vasakule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/po2o2rake-paremale": {
+    "text": "Pöörake paremale!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/kohvik-on-vasakul": {
+    "text": "Kohvik on vasakul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/jaam-on-paremal": {
+    "text": "Jaam on paremal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/kus-on-bussipeatus": {
+    "text": "Kus on bussipeatus?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/minge-pargi-juures-vasakule": {
+    "text": "Minge pargi juures vasakule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/bussipeatus-on-vasakul": {
+    "text": "Bussipeatus on vasakul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/po2o2rake-kooli-juures-paremale": {
+    "text": "Pöörake kooli juures paremale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/pood-on-paremal": {
+    "text": "Pood on paremal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/palun-u2ks-pilet-tartusse": {
+    "text": "Palun üks pilet Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/mis-kell-rong-va2ljub": {
+    "text": "Mis kell rong väljub?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/tere-kuidas-ma-saan-teid-aidata": {
+    "text": "Tere! Kuidas ma saan teid aidata?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/vabandage-kus-on-rongijaam": {
+    "text": "Vabandage, kus on rongijaam?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/minge-otse-edasi-ja-siis-po2o2rake-pargi-juures-vasakule": {
+    "text": "Minge otse edasi ja siis pöörake pargi juures vasakule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/kas-see-on-kaugel": {
+    "text": "Kas see on kaugel?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/ei-ainult-viis-minutit-jalgsi": {
+    "text": "Ei, ainult viis minutit jalgsi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/kas-jaam-on-paremal": {
+    "text": "Kas jaam on paremal?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/jah-suur-punane-maja-paremal": {
+    "text": "Jah, suur punane maja paremal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/suur-aita2h-head-pa2eva": {
+    "text": "Suur aitäh! Head päeva!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/c-rong": {
+    "text": "Tere! Kuhu te soovite sõita? Tere! Palun üks pilet Tartusse. Mis kell järgmine rong väljub? Järgmine rong väljub kahekümne minuti pärast. Kas soovite ainult ühe suuna piletit või edasi-tagasi? Ainult ühe suuna, aitäh. Tulen tagasi alles pühapäeval. See maksab kaksteist eurot. Kas maksate kaardiga või sularahas? Kaardiga, palun. Kus teine tee on? Minge siit uksest otse välja ja pöörake paremale. Rong ootab teisel teel paremal. Head reisi! Suur aitäh!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere! Kuhu te soovite sõita?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere! Palun üks pilet Tartusse."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mis kell järgmine rong väljub?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Järgmine rong väljub kahekümne minuti pärast."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas soovite ainult ühe suuna piletit või edasi-tagasi?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ainult ühe suuna, aitäh. Tulen tagasi alles pühapäeval."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "See maksab kaksteist eurot. Kas maksate kaardiga või sularahas?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kaardiga, palun. Kus teine tee on?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Minge siit uksest otse välja ja pöörake paremale."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Rong ootab teisel teel paremal. Head reisi!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Suur aitäh!"
+        ],
+        "say": "[warm] Suur aitäh!"
+      }
+    ]
   }
 }

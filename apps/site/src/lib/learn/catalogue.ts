@@ -222,6 +222,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 22,
         blurb: msg`A free lesson on Estonian postpositions of place: peal, all, taga, ees, kõrval and sees (on, under, behind, in front of, next to, inside), the genitive before them (laua peal, poe ees), their kuhu and kust forms (peale, pealt; taha, tagant; sisse, seest) and juures for a person’s place. Every sentence is read aloud.`,
       },
+      {
+        slug: "tee-ja-reisimine",
+        name: msg`Travel and directions`,
+        title: msg`Asking for directions and travelling in Estonian`,
+        et: "Otse, vasakule, paremale",
+        minutes: 18,
+        blurb: msg`A free Estonian situation lesson on asking the way and getting around: otse (straight), vasakule (left), paremale (right), peatus (stop), pilet (ticket), buying a ticket, and following directions on the street. Every sentence is read aloud.`,
+      },
     ],
   },
   {

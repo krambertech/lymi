@@ -398,6 +398,12 @@ msgstr "Безкоштовний урок про три основні форм�
 msgid "A free lesson on which Estonian verbs take the -da infinitive after them and which take the -ma infinitive: tahan lugeda but pean lugema, with võin, saan, oskan, tohin, proovin, armastan and mulle meeldib on one side and hakkan, lähen, tule and jään on the other. Every sentence is read aloud."
 msgstr "Безкоштовний урок про те, після яких естонських дієслів іде інфінітив на -da, а після яких — на -ma: tahan lugeda, але pean lugema. Інфінітив на -da вимагають ще võin, saan, oskan, tohin, proovin, armastan і mulle meeldib, інфінітив на -ma — hakkan, lähen, tule і jään. Кожне речення озвучене."
 
+msgid "A free timed Estonian A2 mock exam in Harno format: notices and an email to read, grammar gaps, fixing and writing sentences, two listening recordings played twice, and a short writing task with a model."
+msgstr "Безкоштовний пробний іспит з естонської A2 з таймером у форматі Harno: оголошення й лист для читання, граматичні пропуски, виправлення й написання речень, два аудіювання по два прослуховування та коротке письмове завдання зі зразком."
+
+msgid "A free timed Estonian B1 mock exam in Harno format: a news article and building notice to read, B1 grammar gaps, fixing and writing sentences, a radio brief and interview played twice, and a formal writing task with a model."
+msgstr "Безкоштовний пробний іспит з естонської B1 з таймером у форматі Harno: новина й оголошення будинку для читання, граматичні пропуски B1, виправлення й написання речень, радіовипуск та інтерв’ю по два прослуховування й офіційне письмове завдання зі зразком."
+
 msgid "a friend"
 msgstr "друг"
 
@@ -469,6 +475,9 @@ msgstr "Три форми слова й те, що від кожної утво�
 
 msgid "A written sentence, marked"
 msgstr "Написане речення з оцінкою"
+
+msgid "A2 mock exam"
+msgstr "Пробний іспит A2"
 
 msgid "about many"
 msgstr "про багатьох"
@@ -580,6 +589,9 @@ msgstr "на ринку"
 
 msgid "at work"
 msgstr "на роботі"
+
+msgid "B1 mock exam"
+msgstr "Пробний іспит B1"
 
 msgid "Back 5 seconds"
 msgstr "Назад на 5 секунд"
@@ -731,8 +743,14 @@ msgstr "Естонські форми -des і -mata: «водночас» і «�
 msgid "Estonian -ma, -mas and -mast: going, being and coming back"
 msgstr "Естонські форми на -ma, -mas і -mast: іду, там, повертаюся"
 
+msgid "Estonian A2 mock exam"
+msgstr "Пробний іспит з естонської A2"
+
 msgid "Estonian adjectives: agreeing with the noun"
 msgstr "Естонські прикметники: узгодження з іменником"
+
+msgid "Estonian B1 mock exam"
+msgstr "Пробний іспит з естонської B1"
 
 msgid "Estonian B1 practice: reading and listening to the news"
 msgstr "Практика естонської B1: читаємо й слухаємо новини"
@@ -860,6 +878,9 @@ msgstr "Усі слова в групах. Можна перевіряти."
 msgid "Every word is in its group."
 msgstr "Кожне слово у своїй групі."
 
+msgid "Exam timer"
+msgstr "Таймер іспиту"
+
 msgctxt "the statement is false"
 msgid "False"
 msgstr "Неправда"
@@ -872,6 +893,9 @@ msgstr "Заповни пропуск"
 
 msgid "Fill the gaps"
 msgstr "Заповни пропуски"
+
+msgid "Five minutes remaining."
+msgstr "Залишилося п’ять хвилин."
 
 msgid "Fix the sentence"
 msgstr "Виправ речення"
@@ -1860,6 +1884,12 @@ msgstr "Підрядні речення з «який»"
 msgid "Reported speech"
 msgstr "Непряма мова"
 
+msgid "Reset"
+msgstr "Скинути"
+
+msgid "Resume"
+msgstr "Продовжити"
+
 msgid "Review"
 msgstr "Повторення"
 
@@ -2020,6 +2050,9 @@ msgstr "Почати урок 1"
 
 msgid "Start the conversation"
 msgstr "Почати розмову"
+
+msgid "Start timer"
+msgstr "Запустити таймер"
 
 msgid "Stem changes"
 msgstr "Зміни основи"
@@ -2359,6 +2392,9 @@ msgstr "Познач, що є у твоєму тексті."
 
 msgid "Time expressions: when things happen"
 msgstr "Вирази часу: коли що відбувається"
+
+msgid "Time is up. You can still finish and check your answers."
+msgstr "Час вийшов. Ти все одно можеш завершити й перевірити відповіді."
 
 msgid "Timeline"
 msgstr "Лінія часу"

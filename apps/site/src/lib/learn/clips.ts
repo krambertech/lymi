@@ -17442,6 +17442,309 @@ const REP_CLIPS: Record<string, Clip> = {
   "c-liisa": REP_CONVERSATION,
 };
 
+export const EXAM_A2_NOTICES = [
+  "Tartu linnaraamatukogu on esmaspäevast reedeni avatud kella üheksast seitsmeni ja laupäeval kella kümnest neljani.",
+  "Pühapäeval on raamatukogu suletud.",
+  "Buss number seitse ei peatu täna kooli juures, vaid ajutises peatuses pargi kõrval.",
+  "Spordikeskuse saun on kolmapäeva hommikul remondis ja avatakse uuesti kell kaks.",
+  "Linnamuuseumi sissepääs on iga kuu esimesel reedel kõigile tasuta.",
+  "Palun jätke suured kotid esimesel korrusel kappi.",
+] as const;
+
+export const EXAM_A2_EMAIL = [
+  "Tere, Peeter!",
+  "Kuidas sul läheb? Ma kirjutan sulle järgmise nädalavahetuse kohta.",
+  "Ma sõidan reedel pärast tööd rongiga Pärnusse ja jään sinna pühapäeva õhtuni.",
+  "Minu hotell asub kesklinnas, umbes kümne minuti kaugusel rannast.",
+  "Laupäeval kell kaksteist tahan ma minna uude kohvikusse jõe ääres.",
+  "Pärast lõunat võime koos vanalinnas jalutada või muuseumis käia.",
+  "Kui sul on aega, tule kindlasti kaasa ja võta soe jakk ühes, sest mere ääres on tuul.",
+  "Kirjuta mulle neljapäevaks, kas see plaan sobib sulle.",
+  "Tervitades, Mari",
+] as const;
+
+export const EXAM_A2_FIXES = [
+  { id: "poes", wrong: "Ma käisin eile poodi.", right: "Ma käisin eile poes." },
+  { id: "aega", wrong: "Mul ei ole täna aeg.", right: "Mul ei ole täna aega." },
+  { id: "ujuda", wrong: "Ta oskab hästi ujuma.", right: "Ta oskab hästi ujuda." },
+  { id: "sind", wrong: "Ma ootan sinu jaamas.", right: "Ma ootan sind jaamas." },
+  { id: "soin", wrong: "Eile õhtul ma söön kala.", right: "Eile õhtul ma sõin kala." },
+  {
+    id: "reedeks",
+    wrong: "See töö peab valmis olema reede.",
+    right: "See töö peab valmis olema reedeks.",
+  },
+] as const;
+
+export const EXAM_A2_WRITE = [
+  "Ma käisin eile õhtul sõbraga kinos.",
+  "Kas sa saaksid mulle homme helistada?",
+  "Ma pean selle raamatu reedeks läbi lugema.",
+  "Minu vend töötab Tartus arstina.",
+  "Ma ei läinud eile tööle, sest mul oli palavik.",
+  "Me kohtume laupäeval kell kolm kohviku ees.",
+] as const;
+
+export const EXAM_A2_ANSWERS: Record<
+  (typeof EXAM_A2_WRITE)[number],
+  readonly [string, ...string[]]
+> = {
+  "Ma käisin eile õhtul sõbraga kinos.": [
+    "Ma käisin eile õhtul sõbraga kinos.",
+    "Mina käisin eile õhtul sõbraga kinos.",
+    "Käisin eile õhtul sõbraga kinos.",
+    "Eile õhtul käisin ma sõbraga kinos.",
+    "Eile õhtul käisin mina sõbraga kinos.",
+    "Eile õhtul käisin sõbraga kinos.",
+  ],
+  "Kas sa saaksid mulle homme helistada?": [
+    "Kas sa saaksid mulle homme helistada?",
+    "Kas sina saaksid mulle homme helistada?",
+    "Kas saaksid mulle homme helistada?",
+    "Kas sa saaksid homme mulle helistada?",
+    "Kas sina saaksid homme mulle helistada?",
+    "Kas saaksid homme mulle helistada?",
+  ],
+  "Ma pean selle raamatu reedeks läbi lugema.": [
+    "Ma pean selle raamatu reedeks läbi lugema.",
+    "Mina pean selle raamatu reedeks läbi lugema.",
+    "Pean selle raamatu reedeks läbi lugema.",
+  ],
+  "Minu vend töötab Tartus arstina.": [
+    "Minu vend töötab Tartus arstina.",
+    "Mu vend töötab Tartus arstina.",
+    "Minu vend töötab arstina Tartus.",
+    "Mu vend töötab arstina Tartus.",
+  ],
+  "Ma ei läinud eile tööle, sest mul oli palavik.": [
+    "Ma ei läinud eile tööle, sest mul oli palavik.",
+    "Mina ei läinud eile tööle, sest mul oli palavik.",
+    "Ma ei läinud eile tööle, sest minul oli palavik.",
+    "Mina ei läinud eile tööle, sest minul oli palavik.",
+  ],
+  "Me kohtume laupäeval kell kolm kohviku ees.": [
+    "Me kohtume laupäeval kell kolm kohviku ees.",
+    "Meie kohtume laupäeval kell kolm kohviku ees.",
+    "Kohtume laupäeval kell kolm kohviku ees.",
+  ],
+};
+
+export const EXAM_A2_VOICE = [
+  "Tere, Mart! Siin räägib Kati.",
+  "Ma helistan sulle laupäevase sünnipäeva kohta.",
+  "Pidu algab minu kodus kell kuus, mitte kell viis nagu ma varem kirjutasin.",
+  "Meie maja asub uue pargi kõrval, kolmandal korrusel, korter number seitse.",
+  "Süüa pole vaja kaasa tuua, sest ma teen ise suure salati ja koogi.",
+  "Kui sa tuled autoga, saad tasuta parkida maja taga hoovis.",
+  "Helista mulle tagasi, kui sa ei leia õiget ust üles. Näeme laupäeval!",
+] as const;
+
+export const EXAM_A2_CONVERSATION: Conversation = {
+  turns: [
+    { voice: "third", text: "Hotell Mere, tere! Kuidas saan teid aidata?" },
+    { voice: "fourth", text: "Tere! Ma sooviksin broneerida ühe toa Haapsalus." },
+    { voice: "third", text: "Millal te tulete ja mitmeks ööks?" },
+    { voice: "fourth", text: "Ma saabun reedel, kümnendal juulil, ja jään kaheks ööks." },
+    { voice: "third", text: "Kas te soovite tuba ühele või kahele inimesele?" },
+    { voice: "fourth", text: "Kahele inimesele, palun. Kas rõduga tuba on veel vaba?" },
+    { voice: "third", text: "Jah, meil on teisel korrusel üks vaba tuba merevaate ja rõduga." },
+    {
+      voice: "fourth",
+      text: "Suurepärane! Kui palju see maksab ja kas hommikusöök on hinna sees?",
+    },
+    {
+      voice: "third",
+      text: "Üks öö maksab kaheksakümmend eurot. Hommikusöök on hinna sees kella seitsmest kümneni.",
+    },
+    { voice: "fourth", text: "Kas hotellis on ka tasuta parkimine?" },
+    { voice: "third", text: "Jah, hoovis on külalistele tasuta parkla." },
+    { voice: "fourth", text: "Väga hea, ma võtan selle toa. Minu nimi on Mart Tamm." },
+    {
+      voice: "third",
+      text: "Aitäh, broneering on tehtud. Ootame teid reedel alates kella kolmest!",
+    },
+  ],
+};
+
+export const EXAM_A2_MODEL = [
+  "Tere, Mari!",
+  "Suur aitäh kutse eest! Ma tulen hea meelega laupäeval Tartusse.",
+  "Ma sõidan hommikul rongiga ja jõuan jaama kell üksteist.",
+  "Kas me võime kõigepealt kohvikus kohtuda?",
+  "Mis ilma laupäevaks lubatakse?",
+] as const;
+
+export const EXAM_A2_SIGN = ["Näeme varsti!", "Peeter"] as const;
+
+const EXAM_A2_CLIPS: Record<string, Clip> = {
+  ...words([...EXAM_A2_FIXES.map((f) => f.right), ...EXAM_A2_WRITE]),
+  "p-a2-voice": { sentences: EXAM_A2_VOICE, voice: "third" },
+  "c-a2-trip": EXAM_A2_CONVERSATION,
+};
+
+export const EXAM_B1_ARTICLE = [
+  "Tartu linn avas sel nädalal uue nelja kilomeetri pikkuse jalgrattatee, mis ühendab kesklinna kahe suure elamurajooniga.",
+  "Linnavalitsuse esindaja sõnul oli uus tee hädavajalik, sest viimase kolme aasta jooksul on rattaga sõitjate arv märgatavalt kasvanud.",
+  "Varem pidid jalgratturid jagama kitsast kõnniteed jalakäijatega, mistõttu tekkis tipptunnil sageli ohtlikke olukordi.",
+  "Uus tee on eraldatud madala äärekiviga ning valgustatud kogu ulatuses, nii et seda saab turvaliselt kasutada ka pimedatel sügisõhtutel.",
+  "Lisaks paigaldati tee äärde kolm prügikasti ja kakskümmend uut pinki.",
+  "Samal ajal teatas linnavalitsus, et alates septembrist saavad kõik üliõpilased nädalavahetustel linnaliinibussidega tasuta sõita.",
+  "Kuigi enamik elanikke tervitab muudatusi, kurdavad mõned autojuhid, et uue tee tõttu kadus tänava äärest mitukümmend parkimiskohta.",
+  "Linn korraldab neljapäeval kell kuus kultuurikeskuses avaliku kohtumise, kus elanikud saavad esitada küsimusi ja pakkuda ideid järgmise aasta plaanideks.",
+] as const;
+
+export const EXAM_B1_NOTICE = [
+  "Lugupeetud majaelanikud!",
+  "Teatame, et järgmisel teisipäeval kella üheksast kuni kella üheni toimub kogu majas küttesüsteemi iga-aastane kontroll.",
+  "Tööde ajal on soe vesi ajutiselt välja lülitatud, kuid külm vesi jääb alles.",
+  "Palume tagada tehnikule ligipääs kõigile radiaatoritele.",
+  "Kui te ei saa sel ajal kodus viibida, palume jätta võti usaldusväärse naabri kätte või leppida halduriga kokku uus aeg.",
+  "Kui pärast kontrolli jääb mõni radiaator külmaks, andke sellest kohe teada e-posti teel.",
+  "Vabandame ebamugavuste pärast! Korteriühistu juhatus.",
+] as const;
+
+export const EXAM_B1_FIXES = [
+  { id: "mis", wrong: "Raamat, kes on laual, on minu.", right: "Raamat, mis on laual, on minu." },
+  {
+    id: "sest",
+    wrong: "Ma jäin koju, kuigi ma olin haige.",
+    right: "Ma jäin koju, sest ma olin haige.",
+  },
+  {
+    id: "soomata",
+    wrong: "Ta läks hommikul välja söödes.",
+    right: "Ta läks hommikul välja söömata.",
+  },
+  {
+    id: "kellega",
+    wrong: "Naine, keda ma rääkisin, elab Tartus.",
+    right: "Naine, kellega ma rääkisin, elab Tartus.",
+  },
+  {
+    id: "loetud",
+    wrong: "See on minu kõige lemmikum lugenud raamat.",
+    right: "See on minu kõige lemmikum loetud raamat.",
+  },
+  {
+    id: "raagitakse",
+    wrong: "Selles koolis räägib kahte võõrkeelt.",
+    right: "Selles koolis räägitakse kahte võõrkeelt.",
+  },
+] as const;
+
+export const EXAM_B1_WRITE = [
+  "Ma sain sinu kirjast aru, et koosolek jääb ära.",
+  "Kas sa tead, millal see kauplus avatakse?",
+  "Raamat, mille ma eile ostsin, on väga põnev.",
+  "Koju jalutades kuulasin ma raadiot.",
+  "Ta olevat kolinud eelmisel kuul Pärnusse.",
+  "Me peame enne reisi kõik dokumendid üle vaatama.",
+] as const;
+
+export const EXAM_B1_ANSWERS: Record<
+  (typeof EXAM_B1_WRITE)[number],
+  readonly [string, ...string[]]
+> = {
+  "Ma sain sinu kirjast aru, et koosolek jääb ära.": [
+    "Ma sain sinu kirjast aru, et koosolek jääb ära.",
+    "Mina sain sinu kirjast aru, et koosolek jääb ära.",
+    "Sain sinu kirjast aru, et koosolek jääb ära.",
+    "Ma sain su kirjast aru, et koosolek jääb ära.",
+    "Mina sain su kirjast aru, et koosolek jääb ära.",
+    "Sain su kirjast aru, et koosolek jääb ära.",
+  ],
+  "Kas sa tead, millal see kauplus avatakse?": [
+    "Kas sa tead, millal see kauplus avatakse?",
+    "Kas sina tead, millal see kauplus avatakse?",
+    "Kas tead, millal see kauplus avatakse?",
+  ],
+  "Raamat, mille ma eile ostsin, on väga põnev.": [
+    "Raamat, mille ma eile ostsin, on väga põnev.",
+    "Raamat, mille mina eile ostsin, on väga põnev.",
+    "Raamat, mille eile ostsin, on väga põnev.",
+  ],
+  "Koju jalutades kuulasin ma raadiot.": [
+    "Koju jalutades kuulasin ma raadiot.",
+    "Koju jalutades kuulasin mina raadiot.",
+    "Koju jalutades kuulasin raadiot.",
+    "Ma kuulasin koju jalutades raadiot.",
+    "Mina kuulasin koju jalutades raadiot.",
+    "Kuulasin koju jalutades raadiot.",
+  ],
+  "Ta olevat kolinud eelmisel kuul Pärnusse.": [
+    "Ta olevat kolinud eelmisel kuul Pärnusse.",
+    "Tema olevat kolinud eelmisel kuul Pärnusse.",
+    "Ta olevat eelmisel kuul Pärnusse kolinud.",
+    "Tema olevat eelmisel kuul Pärnusse kolinud.",
+  ],
+  "Me peame enne reisi kõik dokumendid üle vaatama.": [
+    "Me peame enne reisi kõik dokumendid üle vaatama.",
+    "Meie peame enne reisi kõik dokumendid üle vaatama.",
+    "Peame enne reisi kõik dokumendid üle vaatama.",
+  ],
+};
+
+export const EXAM_B1_RADIO = [
+  "Tere hommikust, head kuulajad! Kell on kaheksa ja eetris on lühike uudistesaade.",
+  "Täna algab Tallinna ja Tartu vahelisel raudteel uus sõiduplaan, mis lisab tööpäevadele kaks kiirrongi.",
+  "Ettevõtte sõnul väheneb reisijate ooteaeg eriti hommikuse tipptunni ajal.",
+  "Pärnu maanteel käivad aga endiselt teetööd, mistõttu palutakse autojuhtidel varuda vähemalt viisteist minutit lisaaega.",
+  "Nüüd ilmateade. Täna ennelõunal on pilves ja Lääne-Eestis sajab kohati vihma.",
+  "Õhtupoolikul pilved hajuvad, tuul vaibub ning sooja on neliteist kuni seitseteist kraadi.",
+  "Homme püsib kuiv ja päikeseline ilm üle kogu Eesti.",
+] as const;
+
+export const EXAM_B1_CONVERSATION: Conversation = {
+  turns: [
+    {
+      voice: "third",
+      text: "Tere tulemast stuudiosse, Kadri! Teie ettevõte läks pool aastat tagasi üle paindlikule tööajale. Kuidas see on toiminud?",
+    },
+    {
+      voice: "fourth",
+      text: "Tere! Alguses olime natuke ettevaatlikud, aga praegu oleme tulemusega väga rahul.",
+    },
+    { voice: "third", text: "Mida paindlik tööaeg teie meeskonnas täpselt tähendab?" },
+    {
+      voice: "fourth",
+      text: "Töötajad saavad ise valida, kas alustavad hommikul kell seitse või kell kümme. Peamine on see, et kella kümnest kuni kella kaheni oleme kõik kättesaadavad.",
+    },
+    { voice: "third", text: "Kas inimesed töötavad endiselt ka kontoris või peamiselt kodust?" },
+    {
+      voice: "fourth",
+      text: "Enamik käib kontoris kaks või kolm korda nädalas, sest ühiseid arutelusid on näost näkku lihtsam pidada.",
+    },
+    { voice: "third", text: "Kas sellisel korraldusel on olnud ka mingeid puudusi?" },
+    {
+      voice: "fourth",
+      text: "Uutel töötajatel võtab algus vahel veidi kauem aega, kui kogu tiim ei ole iga päev samas ruumis. Sellepärast lepime uue kolleegi esimeseks kuuks kokku rohkem ühiseid päevi kontoris.",
+    },
+    { voice: "third", text: "Ja kas te märkate muutust ka selles, kuidas inimesed tööle tulevad?" },
+    {
+      voice: "fourth",
+      text: "Jah, kuna hommikune tipptund ei survesta enam nii palju, tuleb üha rohkem kolleege tööle jalgsi või rattaga.",
+    },
+    { voice: "third", text: "Suur aitäh kogemust jagamast, Kadri!" },
+  ],
+};
+
+export const EXAM_B1_MODEL = [
+  "Lugupeetud transpordiamet!",
+  "Kirjutan teile seoses kooli juures asuva ristmikuga, kus hommikuti on väga tihe liiklus.",
+  "Kuna autode kiirus on seal sageli liiga suur ja ülekäigurada on halvasti valgustatud, tunnevad lapsevanemad laste turvalisuse pärast muret.",
+  "Teeksin kaks ettepanekut: esiteks võiks ristmikule lisada parema valgustuse ning teiseks alandada piirkiirust kooli ees kolmekümne kilomeetrini tunnis.",
+  "Need sammud muudaksid koolitee palju turvalisemaks nii jalakäijatele kui ka jalgratturitele.",
+  "Oleksin tänulik, kui annaksite teada, kas selliseid muudatusi on lähiajal plaanis arutada.",
+] as const;
+
+export const EXAM_B1_SIGN = ["Lugupidamisega", "Mart Kask"] as const;
+
+const EXAM_B1_CLIPS: Record<string, Clip> = {
+  ...words([...EXAM_B1_FIXES.map((f) => f.right), ...EXAM_B1_WRITE]),
+  "p-b1-radio": { sentences: EXAM_B1_RADIO, voice: "third" },
+  "c-b1-interview": EXAM_B1_CONVERSATION,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: {
     ...words(HAALDUS_WORDS),
@@ -17727,5 +18030,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   nadalavahetusel: WEEKEND_CLIPS,
   uudised: NEWS_CLIPS,
   "ta-olevat-haige": REP_CLIPS,
+  "eksam-a2": EXAM_A2_CLIPS,
+  "eksam-b1": EXAM_B1_CLIPS,
   kit: KIT_CLIPS,
 };

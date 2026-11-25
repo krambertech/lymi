@@ -16423,7 +16423,14 @@ export const DIR_TRANSLATE = [
 ] as const;
 
 export const DIR_ANSWERS: Record<(typeof DIR_TRANSLATE)[number], readonly [string, ...string[]]> = {
-  "Tule palun siia!": ["Tule palun siia!", "Palun tule siia!", "Tule siia, palun!"],
+  "Tule palun siia!": [
+    "Tule palun siia!",
+    "Palun tule siia!",
+    "Tule siia, palun!",
+    "Tulge palun siia!",
+    "Palun tulge siia!",
+    "Tulge siia, palun!",
+  ],
   "Ma elan siin.": [
     "Ma elan siin.",
     "Mina elan siin.",
@@ -16434,7 +16441,14 @@ export const DIR_ANSWERS: Record<(typeof DIR_TRANSLATE)[number], readonly [strin
     "Siin elan mina.",
     "Siin elan.",
   ],
-  "Buss sõidab siit Tartusse.": ["Buss sõidab siit Tartusse.", "Siit sõidab buss Tartusse."],
+  "Buss sõidab siit Tartusse.": [
+    "Buss sõidab siit Tartusse.",
+    "Siit sõidab buss Tartusse.",
+    "Buss sõidab Tartusse siit.",
+    "Buss läheb siit Tartusse.",
+    "Siit läheb buss Tartusse.",
+    "Buss läheb Tartusse siit.",
+  ],
   "Me läheme homme sinna.": [
     "Me läheme homme sinna.",
     "Meie läheme homme sinna.",

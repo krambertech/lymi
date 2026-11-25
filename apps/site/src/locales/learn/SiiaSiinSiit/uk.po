@@ -124,19 +124,19 @@ msgid "Going to that place answers <0>kuhu?</0>: <1>sinna</1>."
 msgstr "Рух до того місця відповідає на <0>kuhu?</0>: <1>sinna</1>."
 
 msgid "He or she is going there in the evening."
-msgstr "Він чи вона йдуть туди ввечері."
+msgstr "Він чи вона йде туди ввечері."
 
 msgid "He or she just came from there."
-msgstr "Він чи вона щойно прийшли звідти."
+msgstr "Він чи вона щойно прийшов чи прийшла звідти."
 
 msgid "He or she lives here."
-msgstr "Він чи вона живуть тут."
+msgstr "Він чи вона живе тут."
 
 msgid "He or she often goes there."
-msgstr "Він чи вона часто туди ходять."
+msgstr "Він чи вона часто туди ходить."
 
 msgid "He or she works there."
-msgstr "Він чи вона працюють там."
+msgstr "Він чи вона працює там."
 
 msgid "Heading there (one way)"
 msgstr "Іде туди (в один бік)"
@@ -202,7 +202,7 @@ msgid "In a sentence"
 msgstr "У реченні"
 
 msgid "In lesson {inner} you saw that Estonian places have three forms: into, in, and out of (<0>majja, majas, majast</0>). Here and there work the same way: <1/>, <2/>, <3/> and <4/>, <5/>, <6/>."
-msgstr "В уроці {inner} ти бачив, що в естонській назви місць мають три форми: всередину, всередині й назовні (<0>majja, majas, majast</0>). Так само працюють «тут» і «там»: <1/>, <2/>, <3/> та <4/>, <5/>, <6/>."
+msgstr "В уроці {inner} ти бачив, що в естонській назви місць мають три форми: усередину, усередині й зсередини (<0>majja, majas, majast</0>). Так само працюють «тут» і «там»: <1/>, <2/>, <3/> та <4/>, <5/>, <6/>."
 
 msgid "Just like place endings, here and there each have three forms: going to, being at, and coming from."
 msgstr "Як і закінчення місця, «тут» і «там» мають по три форми: куди, де й звідки."

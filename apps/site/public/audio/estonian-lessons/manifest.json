@@ -6715,6 +6715,477 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "kohvikus/aita2h": {
+    "text": "Aitäh!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/arve": {
+    "text": "arve",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/d-kohvik": {
+    "text": "Tere! Palun? Tere! Palun üks kohv ja üks saiake. Siin või kaasa? Siin, palun. Palun! Suhkur on laual. Aitäh! Kas teil on piima? Jah, on. Siin on piim. Palun! Aitäh! Kas teil on ka suppi? Ei, suppi ei ole. Meil on kook ja võileib. Kas kook on hea? Jah, kook on väga hea. Siis palun üks kook. Ja üks mahl, palun. Palun! Kaardiga või sularahas? Kaardiga. Palun arve. Palun! Head isu! Aitäh! Head aega! Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere!",
+          "Palun?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere!",
+          "Palun üks kohv ja üks saiake."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Siin või kaasa?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Siin, palun."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Palun!",
+          "Suhkur on laual."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh!",
+          "Kas teil on piima?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, on.",
+          "Siin on piim.",
+          "Palun!"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh!",
+          "Kas teil on ka suppi?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, suppi ei ole.",
+          "Meil on kook ja võileib."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas kook on hea?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, kook on väga hea."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Siis palun üks kook.",
+          "Ja üks mahl, palun."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Palun!",
+          "Kaardiga või sularahas?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kaardiga.",
+          "Palun arve."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Palun!",
+          "Head isu!"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh!",
+          "Head aega!"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Head aega!"
+        ]
+      }
+    ]
+  },
+  "kohvikus/head-isu": {
+    "text": "Head isu!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/ja": {
+    "text": "ja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/ka": {
+    "text": "ka",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kaardiga": {
+    "text": "kaardiga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kaardiga-palun": {
+    "text": "Kaardiga, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kaardiga-vo3i-sularahas": {
+    "text": "Kaardiga või sularahas?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kaasa": {
+    "text": "kaasa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-kooki": {
+    "text": "Kas teil on kooki?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-mahla": {
+    "text": "Kas teil on mahla?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-piima": {
+    "text": "Kas teil on piima?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-suppi": {
+    "text": "Kas teil on suppi?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-teed": {
+    "text": "Kas teil on teed?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-vett": {
+    "text": "Kas teil on vett?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kohv": {
+    "text": "kohv",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kohvi": {
+    "text": "kohvi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kohvikus": {
+    "text": "kohvikus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kook": {
+    "text": "kook",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kooki": {
+    "text": "kooki",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kui-palju-see-maksab": {
+    "text": "Kui palju see maksab?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/laual": {
+    "text": "laual",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/mahl": {
+    "text": "mahl",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/mahla": {
+    "text": "mahla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/maksab": {
+    "text": "maksab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/meil": {
+    "text": "meil",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/o-liis-1": {
+    "text": "Tere! Palun?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/o-liis-2": {
+    "text": "Siin või kaasa?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/o-liis-3": {
+    "text": "Palun! Suhkur on laual.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/o-liis-4": {
+    "text": "Jah, on. Palun! Kaardiga või sularahas?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/o-liis-5": {
+    "text": "Palun! Head aega!",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/o-sina-1": {
+    "text": "Tere! Palun üks tee ja üks saiake.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/o-sina-2": {
+    "text": "Siin, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/o-sina-3": {
+    "text": "Aitäh! Kas teil on piima?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/o-sina-4": {
+    "text": "Kaardiga, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/o-sina-5": {
+    "text": "Aitäh! Head aega!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/on": {
+    "text": "on",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/p-mari": {
+    "text": "Tere, Liis! Ma töötan kohvikus Tallinnas. See on minu kohvik. Meil on kohv, tee, vesi, mahl ja piim. Meil on ka supp, kook, saiake ja võileib. Suhkur on laual. Kohv on väga hea. Kook on ka väga hea. Minu sõber Jaan joob siin palju kohvi. Mina joon teed. Siin või kaasa? Kaardiga või sularahas? Kas sa elad Tallinnas? Head aega!",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/p-order": {
+    "text": "Tere! Palun üks kohv ja üks kook. Siin, palun. Kaardiga, palun. Aitäh!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun": {
+    "text": "Palun!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-arve": {
+    "text": "Palun arve.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-kohv": {
+    "text": "Palun üks kohv.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-kook": {
+    "text": "Palun üks kook.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-mahl": {
+    "text": "Palun üks mahl.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-mahl-ja-u2ks-kook": {
+    "text": "Palun üks mahl ja üks kook.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-piim": {
+    "text": "Palun üks piim.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-supp": {
+    "text": "Palun üks supp.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-tee-ja-u2ks-saiake": {
+    "text": "Palun üks tee ja üks saiake.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-vesi": {
+    "text": "Palun üks vesi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-vo3ileib": {
+    "text": "Palun üks võileib.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/piim": {
+    "text": "piim",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/piima": {
+    "text": "piima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/saiake": {
+    "text": "saiake",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/see": {
+    "text": "see",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/siin": {
+    "text": "siin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/siin-palun": {
+    "text": "Siin, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/siin-vo3i-kaasa": {
+    "text": "Siin või kaasa?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/siis": {
+    "text": "siis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/suhkur": {
+    "text": "suhkur",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/suhkur-on-laual": {
+    "text": "Suhkur on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/sularahas": {
+    "text": "sularahas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/supp": {
+    "text": "supp",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/suppi": {
+    "text": "suppi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/tee": {
+    "text": "tee",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/teed": {
+    "text": "teed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/teil": {
+    "text": "teil",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/vesi": {
+    "text": "vesi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/vett": {
+    "text": "vett",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/vo3i": {
+    "text": "või",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/vo3ileib": {
+    "text": "võileib",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "kusimused/a-ei": {
     "text": "Ei.",
     "model": "eleven_v4",
@@ -28103,6 +28574,219 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "tee-ja-reisimine/bussipeatus-on-vasakul": {
+    "text": "Bussipeatus on vasakul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/c-rong": {
+    "text": "Tere! Kuhu te soovite sõita? Tere! Palun üks pilet Tartusse. Mis kell järgmine rong väljub? Järgmine rong väljub kahekümne minuti pärast. Kas soovite ainult ühe suuna piletit või edasi-tagasi? Ainult ühe suuna, aitäh. Tulen tagasi alles pühapäeval. See maksab kaksteist eurot. Kas maksate kaardiga või sularahas? Kaardiga, palun. Kus on teine tee? Minge siit uksest otse välja ja pöörake paremale. Rong ootab teisel teel paremal. Head reisi! Suur aitäh!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere! Kuhu te soovite sõita?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere! Palun üks pilet Tartusse."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mis kell järgmine rong väljub?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Järgmine rong väljub kahekümne minuti pärast."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas soovite ainult ühe suuna piletit või edasi-tagasi?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ainult ühe suuna, aitäh. Tulen tagasi alles pühapäeval."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "See maksab kaksteist eurot. Kas maksate kaardiga või sularahas?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kaardiga, palun. Kus on teine tee?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Minge siit uksest otse välja ja pöörake paremale."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Rong ootab teisel teel paremal. Head reisi!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Suur aitäh!"
+        ],
+        "say": "[warm] Suur aitäh!"
+      }
+    ]
+  },
+  "tee-ja-reisimine/ei-ainult-viis-minutit-jalgsi": {
+    "text": "Ei, ainult viis minutit jalgsi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/jaam": {
+    "text": "jaam",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/jaam-on-paremal": {
+    "text": "Jaam on paremal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/jah-suur-punane-maja-paremal": {
+    "text": "Jah, suur punane maja paremal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/kas-jaam-on-paremal": {
+    "text": "Kas jaam on paremal?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/kas-see-on-kaugel": {
+    "text": "Kas see on kaugel?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/kohvik-on-vasakul": {
+    "text": "Kohvik on vasakul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/kus-on-bussipeatus": {
+    "text": "Kus on bussipeatus?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/minge-otse-edasi": {
+    "text": "Minge otse edasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/minge-otse-edasi-ja-siis-po2o2rake-pargi-juures-vasakule": {
+    "text": "Minge otse edasi ja siis pöörake pargi juures vasakule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/minge-pargi-juures-vasakule": {
+    "text": "Minge pargi juures vasakule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/mis-kell-rong-va2ljub": {
+    "text": "Mis kell rong väljub?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/otse": {
+    "text": "otse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/palun-u2ks-pilet-tartusse": {
+    "text": "Palun üks pilet Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/paremal": {
+    "text": "paremal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/paremale": {
+    "text": "paremale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/peatus": {
+    "text": "peatus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/pilet": {
+    "text": "pilet",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/po2o2rake-kooli-juures-paremale": {
+    "text": "Pöörake kooli juures paremale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/po2o2rake-paremale": {
+    "text": "Pöörake paremale!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/po2o2rake-vasakule": {
+    "text": "Pöörake vasakule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/pood-on-paremal": {
+    "text": "Pood on paremal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/suur-aita2h-head-pa2eva": {
+    "text": "Suur aitäh! Head päeva!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/tere-kuidas-ma-saan-teid-aidata": {
+    "text": "Tere! Kuidas ma saan teid aidata?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/vabandage-kus-on-rongijaam": {
+    "text": "Vabandage, kus on rongijaam?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/vasakul": {
+    "text": "vasakul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/vasakule": {
+    "text": "vasakule",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "tegevusnimed/armastan": {
     "text": "armastan",
     "model": "eleven_v4",
@@ -32288,217 +32972,327 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/otse": {
-    "text": "otse",
+  "telefonikone/halloo": {
+    "text": "Halloo!",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/vasakule": {
-    "text": "vasakule",
+  "telefonikone/hetk": {
+    "text": "hetk",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/paremale": {
-    "text": "paremale",
+  "telefonikone/korrata": {
+    "text": "korrata",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/peatus": {
-    "text": "peatus",
+  "telefonikone/tagasi": {
+    "text": "tagasi",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/pilet": {
-    "text": "pilet",
+  "telefonikone/so3num": {
+    "text": "sõnum",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/jaam": {
-    "text": "jaam",
+  "telefonikone/u2hendus": {
+    "text": "ühendus",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/vasakul": {
-    "text": "vasakul",
+  "telefonikone/mari-kuuleb": {
+    "text": "Mari kuuleb.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/paremal": {
-    "text": "paremal",
+  "telefonikone/kas-mart-on-seal": {
+    "text": "Kas Mart on seal?",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/minge-otse-edasi": {
-    "text": "Minge otse edasi.",
+  "telefonikone/kas-ma-saaksin-ra2a2kida-mardiga": {
+    "text": "Kas ma saaksin rääkida Mardiga?",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/po2o2rake-vasakule": {
-    "text": "Pöörake vasakule.",
+  "telefonikone/hetk-palun": {
+    "text": "Hetk, palun.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/po2o2rake-paremale": {
-    "text": "Pöörake paremale!",
+  "telefonikone/kas-te-saaksite-korrata": {
+    "text": "Kas te saaksite korrata?",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/kohvik-on-vasakul": {
-    "text": "Kohvik on vasakul.",
+  "telefonikone/palun-ra2a2kige-aeglasemalt": {
+    "text": "Palun rääkige aeglasemalt.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/jaam-on-paremal": {
-    "text": "Jaam on paremal.",
+  "telefonikone/u2hendus-on-halb": {
+    "text": "Ühendus on halb.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/kus-on-bussipeatus": {
-    "text": "Kus on bussipeatus?",
+  "telefonikone/ma-ei-kuule-teid-ha2sti": {
+    "text": "Ma ei kuule teid hästi.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/minge-pargi-juures-vasakule": {
-    "text": "Minge pargi juures vasakule.",
+  "telefonikone/kas-ma-vo3in-so3numi-ja2tta": {
+    "text": "Kas ma võin sõnumi jätta?",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/bussipeatus-on-vasakul": {
-    "text": "Bussipeatus on vasakul.",
+  "telefonikone/palun-helistage-mulle-tagasi": {
+    "text": "Palun helistage mulle tagasi.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/po2o2rake-kooli-juures-paremale": {
-    "text": "Pöörake kooli juures paremale.",
+  "telefonikone/ma-helistasin-sulle-eile": {
+    "text": "Ma helistasin sulle eile.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/pood-on-paremal": {
-    "text": "Pood on paremal.",
+  "telefonikone/ma-helistan-sulle-homme": {
+    "text": "Ma helistan sulle homme.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/palun-u2ks-pilet-tartusse": {
-    "text": "Palun üks pilet Tartusse.",
+  "telefonikone/ta-helistas-mulle-hommikul": {
+    "text": "Ta helistas mulle hommikul.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/mis-kell-rong-va2ljub": {
-    "text": "Mis kell rong väljub?",
+  "telefonikone/mart-helistas-o3htul": {
+    "text": "Mart helistas õhtul.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/tere-kuidas-ma-saan-teid-aidata": {
-    "text": "Tere! Kuidas ma saan teid aidata?",
+  "telefonikone/ma-ja2tsin-so3numi": {
+    "text": "Ma jätsin sõnumi.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/vabandage-kus-on-rongijaam": {
-    "text": "Vabandage, kus on rongijaam?",
+  "telefonikone/ma-helistan-sulle-varsti-tagasi": {
+    "text": "Ma helistan sulle varsti tagasi.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/minge-otse-edasi-ja-siis-po2o2rake-pargi-juures-vasakule": {
-    "text": "Minge otse edasi ja siis pöörake pargi juures vasakule.",
+  "telefonikone/ma-helistan-hiljem-tagasi": {
+    "text": "Ma helistan hiljem tagasi.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/kas-see-on-kaugel": {
-    "text": "Kas see on kaugel?",
+  "telefonikone/kas-ma-saaksin-ra2a2kida-arstiga": {
+    "text": "Kas ma saaksin rääkida arstiga?",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/ei-ainult-viis-minutit-jalgsi": {
-    "text": "Ei, ainult viis minutit jalgsi.",
+  "telefonikone/ma-helistan-teile-kell-kolm-tagasi": {
+    "text": "Ma helistan teile kell kolm tagasi.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/kas-jaam-on-paremal": {
-    "text": "Kas jaam on paremal?",
+  "telefonikone/d-kati-1": {
+    "text": "Halloo! Kati kuuleb.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "telefonikone/d-sina-1": {
+    "text": "Tere! Kas ma saaksin rääkida Mardiga?",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/jah-suur-punane-maja-paremal": {
-    "text": "Jah, suur punane maja paremal.",
+  "telefonikone/d-kati-2": {
+    "text": "Mart ei ole praegu kohal. Kas soovite sõnumi jätta?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "telefonikone/d-sina-2": {
+    "text": "Jah. Palun helistage mulle tagasi.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/suur-aita2h-head-pa2eva": {
-    "text": "Suur aitäh! Head päeva!",
+  "telefonikone/d-kati-3": {
+    "text": "Mis on teie number?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "telefonikone/d-sina-3": {
+    "text": "Minu number on viis kaks üks neli kolm.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "tee-ja-reisimine/c-rong": {
-    "text": "Tere! Kuhu te soovite sõita? Tere! Palun üks pilet Tartusse. Mis kell järgmine rong väljub? Järgmine rong väljub kahekümne minuti pärast. Kas soovite ainult ühe suuna piletit või edasi-tagasi? Ainult ühe suuna, aitäh. Tulen tagasi alles pühapäeval. See maksab kaksteist eurot. Kas maksate kaardiga või sularahas? Kaardiga, palun. Kus on teine tee? Minge siit uksest otse välja ja pöörake paremale. Rong ootab teisel teel paremal. Head reisi! Suur aitäh!",
+  "telefonikone/d-kati-4": {
+    "text": "Hästi, Mart helistab teile varsti tagasi.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "telefonikone/d-sina-4": {
+    "text": "Aitäh! Head aega!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/p-note": {
+    "text": "Tere, Mari! Eile õhtul helistasin sulle, aga sa ei vastanud. Siis helistasin Jaanile ja ta vastas kohe. Ühendus oli väga halb ja ma ei kuulnud teda hästi. Ta rääkis aeglasemalt, aga ma ei saanud ikka aru. Siis kirjutasin talle sõnumi. Ma jätsin talle ka sinu numbri. Täna hommikul helistas Jaan mulle tagasi. Ühendus oli nüüd hea ja me rääkisime kaua. Ta tahab homme kell kolm kohvikus sinuga kohtuda. Ma olen homme kell kolm tööl, aga sina võid minna. Kas sa saaksid talle varsti helistada? Täna õhtul on ta kodus. Ma ootan sinu vastust kell kuus. Aitäh abi eest!",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "telefonikone/c-office": {
+    "text": "Halloo! Peeter kuuleb. Tere, mina olen Mari. Kas ma saaksin rääkida Katiga? Vabandust, ma ei kuule teid hästi. Ühendus on väga halb. Kas te kuulete mind nüüd? Ma helistasin teile ka eile, aga keegi ei vastanud. Jah, nüüd kuulen. Eile õhtul ei olnud keegi kontoris. Kati ei ole praegu kohal. Ma tahan temaga homme kohtuda. Millal ta tuleb tagasi? Ta tuleb homme hommikul kell kaheksa või üheksa tagasi. Vabandust, kas te saaksite korrata? Palun rääkige aeglasemalt. Homme hommikul, kell kaheksa või üheksa. Aitäh! Siis ma tulen homme kell kümme teie kontorisse. Kas see on hea aeg? Jah, kell kümme on hea aeg. Siis on Kati kohal. Kas ma võin sõnumi jätta? Jah, palun. Kas te saaksite öelda ka oma nime? Minu nimi on Mari Mägi. Mis on teie number? Minu number on viis kaks üks neli kolm. Viis kaks üks neli neli? Ei, viis kaks üks neli kolm. Palun helistage mulle tagasi. Hästi, kolm. Kati helistab teile homme. Kas teil on veel midagi? Ei, aitäh. Head aega! Head aega!",
     "model": "eleven_v4",
     "turns": [
       {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Halloo!",
+          "Peeter kuuleb."
+        ]
+      },
+      {
         "voice": "xd3ufyLcuKKZZXDZO9H7",
         "sentences": [
-          "Tere! Kuhu te soovite sõita?"
+          "Tere, mina olen Mari.",
+          "Kas ma saaksin rääkida Katiga?"
         ]
       },
       {
         "voice": "0cuaFlR2we1Gl3woPjeJ",
         "sentences": [
-          "Tere! Palun üks pilet Tartusse."
+          "Vabandust, ma ei kuule teid hästi.",
+          "Ühendus on väga halb."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas te kuulete mind nüüd?",
+          "Ma helistasin teile ka eile, aga keegi ei vastanud."
         ]
       },
       {
         "voice": "0cuaFlR2we1Gl3woPjeJ",
         "sentences": [
-          "Mis kell järgmine rong väljub?"
+          "Jah, nüüd kuulen.",
+          "Eile õhtul ei olnud keegi kontoris.",
+          "Kati ei ole praegu kohal."
         ]
       },
       {
         "voice": "xd3ufyLcuKKZZXDZO9H7",
         "sentences": [
-          "Järgmine rong väljub kahekümne minuti pärast."
-        ]
-      },
-      {
-        "voice": "xd3ufyLcuKKZZXDZO9H7",
-        "sentences": [
-          "Kas soovite ainult ühe suuna piletit või edasi-tagasi?"
+          "Ma tahan temaga homme kohtuda.",
+          "Millal ta tuleb tagasi?"
         ]
       },
       {
         "voice": "0cuaFlR2we1Gl3woPjeJ",
         "sentences": [
-          "Ainult ühe suuna, aitäh. Tulen tagasi alles pühapäeval."
+          "Ta tuleb homme hommikul kell kaheksa või üheksa tagasi."
         ]
       },
       {
         "voice": "xd3ufyLcuKKZZXDZO9H7",
         "sentences": [
-          "See maksab kaksteist eurot. Kas maksate kaardiga või sularahas?"
+          "Vabandust, kas te saaksite korrata?",
+          "Palun rääkige aeglasemalt."
         ]
       },
       {
         "voice": "0cuaFlR2we1Gl3woPjeJ",
         "sentences": [
-          "Kaardiga, palun. Kus on teine tee?"
+          "Homme hommikul, kell kaheksa või üheksa."
         ]
       },
       {
         "voice": "xd3ufyLcuKKZZXDZO9H7",
         "sentences": [
-          "Minge siit uksest otse välja ja pöörake paremale."
-        ]
-      },
-      {
-        "voice": "xd3ufyLcuKKZZXDZO9H7",
-        "sentences": [
-          "Rong ootab teisel teel paremal. Head reisi!"
+          "Aitäh!",
+          "Siis ma tulen homme kell kümme teie kontorisse.",
+          "Kas see on hea aeg?"
         ]
       },
       {
         "voice": "0cuaFlR2we1Gl3woPjeJ",
         "sentences": [
-          "Suur aitäh!"
-        ],
-        "say": "[warm] Suur aitäh!"
+          "Jah, kell kümme on hea aeg.",
+          "Siis on Kati kohal."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas ma võin sõnumi jätta?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, palun.",
+          "Kas te saaksite öelda ka oma nime?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Minu nimi on Mari Mägi."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mis on teie number?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Minu number on viis kaks üks neli kolm."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Viis kaks üks neli neli?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, viis kaks üks neli kolm.",
+          "Palun helistage mulle tagasi."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hästi, kolm.",
+          "Kati helistab teile homme.",
+          "Kas teil on veel midagi?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, aitäh.",
+          "Head aega!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Head aega!"
+        ]
       }
     ]
+  },
+  "telefonikone/ta-helistab-homme": {
+    "text": "Ta helistab homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

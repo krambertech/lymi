@@ -66,6 +66,9 @@ msgstr "На железнодорожном вокзале"
 msgid "Behind the café"
 msgstr "За кофейней"
 
+msgid "Bus stop on the left (where)"
+msgstr "Остановка слева (где)"
+
 msgid "Bus to Pärnu"
 msgstr "Автобус в Пярну"
 
@@ -167,9 +170,6 @@ msgstr "Идите прямо вперёд."
 
 msgid "Near a big hotel"
 msgstr "У большого отеля"
-
-msgid "Bus stop on the left (where)"
-msgstr "Остановка слева (где)"
 
 msgid "Nearly. Check the direction ending in the ones you missed."
 msgstr "Почти. Проверь окончание направления там, где была ошибка."

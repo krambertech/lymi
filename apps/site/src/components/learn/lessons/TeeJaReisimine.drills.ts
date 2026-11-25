@@ -69,7 +69,7 @@ const tellItem = (index: number): ChoiceDrill => {
   return {
     kind: "choice",
     id: `tell-${item.id}`,
-    rule: item.kind,
+    rule: "side",
     say: item.said,
     answer: TELL_LABELS[item.kind],
     wrong: [TELL_LABELS[item.kind === "turn" ? "side" : "turn"]],

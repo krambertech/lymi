@@ -66,6 +66,9 @@ msgstr "At the train station"
 msgid "Behind the café"
 msgstr "Behind the café"
 
+msgid "Bus stop on the left (where)"
+msgstr "Bus stop on the left (where)"
+
 msgid "Bus to Pärnu"
 msgstr "Bus to Pärnu"
 
@@ -167,9 +170,6 @@ msgstr "Minge otse edasi."
 
 msgid "Near a big hotel"
 msgstr "Near a big hotel"
-
-msgid "Bus stop on the left (where)"
-msgstr "Bus stop on the left (where)"
 
 msgid "Nearly. Check the direction ending in the ones you missed."
 msgstr "Nearly. Check the direction ending in the ones you missed."

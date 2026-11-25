@@ -335,10 +335,10 @@ msgid "my"
 msgstr "мой"
 
 msgid "My address is Kooli 5, Tartu."
-msgstr "Мой адрес — Kooli 5, Тарту."
+msgstr "Мой адрес — Кооли 5, Тарту."
 
 msgid "My address is Kooli 5."
-msgstr "Мой адрес — Kooli 5."
+msgstr "Мой адрес — Кооли 5."
 
 msgid "My birthday is tomorrow."
 msgstr "Мой день рождения завтра."

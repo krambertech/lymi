@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/react/macro";
 import { useCallback, useContext } from "react";
 import { STAGES } from "../../lib/learn/catalogue";
-import { shuffle } from "../../lib/learn/quiz";
+import { drawBalanced } from "../../lib/learn/placement";
 import { Button } from "../Button";
 import { LoadProblem } from "./Drill";
 import { type DrillSource, drillSlugs, type Question, questionsOf } from "./drill-banks";
@@ -11,28 +11,7 @@ import { SectionContext, useLesson } from "./lesson-context";
 import { QuizCard } from "./Quiz";
 
 function drawStageQuestions(sources: readonly DrillSource[], count: number): Question[] {
-  const byRule = new Map<string, Question[]>();
-  for (const question of shuffle(questionsOf(sources))) {
-    const list = byRule.get(question.rule) ?? [];
-    list.push(question);
-    byRule.set(question.rule, list);
-  }
-  const rules = shuffle([...byRule.keys()]);
-  const picked: Question[] = [];
-  let round = 0;
-  while (picked.length < count) {
-    let added = false;
-    for (const rule of rules) {
-      const next = byRule.get(rule)?.[round];
-      if (next && picked.length < count) {
-        picked.push(next);
-        added = true;
-      }
-    }
-    if (!added) break;
-    round += 1;
-  }
-  return shuffle(picked);
+  return drawBalanced(questionsOf(sources), count, (question) => question.source.lesson);
 }
 
 export function Checkpoint({ stageIndex, count = 20 }: { stageIndex: number; count?: number }) {

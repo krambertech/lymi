@@ -572,6 +572,9 @@ msgstr "Asking questions in Estonian"
 msgid "at home"
 msgstr "at home"
 
+msgid "At least two of three right in every stage"
+msgstr "At least two of three right in every stage"
+
 msgid "at school"
 msgstr "at school"
 
@@ -1891,9 +1894,6 @@ msgstr "Read it again"
 msgid "Reading"
 msgstr "Reading"
 
-msgid "Ready for B1 practice ({sourceCount} lessons checked)"
-msgstr "Ready for B1 practice ({sourceCount} lessons checked)"
-
 #. placeholder {0}: targetStage?.level
 msgid "Recommended start · Stage {targetNumber} ({0})"
 msgstr "Recommended start · Stage {targetNumber} ({0})"
@@ -2769,11 +2769,11 @@ msgstr "Yesterday I studied Estonian."
 msgid "you"
 msgstr "you"
 
-msgid "You already handle A1 to B1 fundamentals well."
-msgstr "You already handle A1 to B1 fundamentals well."
-
 msgid "You are Jaan, a doctor from Tartu. Mari speaks first; pick what you say back."
 msgstr "You are Jaan, a doctor from Tartu. Mari speaks first; pick what you say back."
+
+msgid "You can start at the end of the course."
+msgstr "You can start at the end of the course."
 
 msgid "You don’t have a car."
 msgstr "You don’t have a car."

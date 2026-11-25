@@ -572,6 +572,9 @@ msgstr "Вопросы в эстонском языке"
 msgid "at home"
 msgstr "дома"
 
+msgid "At least two of three right in every stage"
+msgstr "В каждом этапе верно не меньше двух из трёх"
+
 msgid "at school"
 msgstr "в школе"
 
@@ -1891,9 +1894,6 @@ msgstr "Перечитать"
 msgid "Reading"
 msgstr "Чтение"
 
-msgid "Ready for B1 practice ({sourceCount} lessons checked)"
-msgstr "Готовность к практике B1 (проверено {sourceCount} уроков)"
-
 #. placeholder {0}: targetStage?.level
 msgid "Recommended start · Stage {targetNumber} ({0})"
 msgstr "Рекомендованный старт · Этап {targetNumber} ({0})"
@@ -2769,11 +2769,11 @@ msgstr "Вчера я учил(а) эстонский."
 msgid "you"
 msgstr "ты"
 
-msgid "You already handle A1 to B1 fundamentals well."
-msgstr "Ты уже уверенно владеешь основами от A1 до B1."
-
 msgid "You are Jaan, a doctor from Tartu. Mari speaks first; pick what you say back."
 msgstr "Ты Яан, врач из Тарту. Мари говорит первой; выбирай, что ответить."
+
+msgid "You can start at the end of the course."
+msgstr "Можно начинать с конца курса."
 
 msgid "You don’t have a car."
 msgstr "У тебя нет машины."

@@ -2,7 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { lessonPath, STAGES } from "../../lib/learn/catalogue";
 import type { ruleScores } from "../../lib/learn/drill";
-import { shuffle } from "../../lib/learn/quiz";
+import { drawPlacementStage, firstFailedStage, PER_STAGE } from "../../lib/learn/placement";
 import { localizedPath } from "../../lib/routes";
 import { Button, buttonClass } from "../Button";
 import { LoadProblem } from "./Drill";
@@ -11,8 +11,6 @@ import { useDrillSession } from "./drill-session";
 import { DrillRunner } from "./DrillRunner";
 import { LearnLayout } from "./LearnLayout";
 import { QuizCard } from "./Quiz";
-
-const PER_STAGE = 3;
 
 function placementSlugs(): string[] {
   return STAGES.flatMap((stage) => {
@@ -27,36 +25,15 @@ function placementSlugs(): string[] {
 
 function drawPlacement(sources: readonly DrillSource[]): Question[] {
   const bySlug = new Map(sources.map((source) => [source.lesson, source]));
-  const picked: Question[] = [];
-  for (const stage of STAGES) {
+  return STAGES.flatMap((stage) => {
     const stageSources = stage.lessons
       .map((lesson) => (lesson.slug ? bySlug.get(lesson.slug) : undefined))
       .filter((source): source is DrillSource => !!source);
-    const pool = shuffle(questionsOf(stageSources));
-    const seenRules = new Set<string>();
-    const chosen: Question[] = [];
-    for (const q of pool) {
-      if (chosen.length >= PER_STAGE) break;
-      if (seenRules.has(q.rule)) continue;
-      seenRules.add(q.rule);
-      chosen.push(q);
-    }
-    for (const q of pool) {
-      if (chosen.length >= PER_STAGE) break;
-      if (!chosen.includes(q)) chosen.push(q);
-    }
-    picked.push(...chosen);
-  }
-  return picked;
+    return drawPlacementStage(questionsOf(stageSources), (question) => question.source.lesson);
+  });
 }
 
-function PlacementResult({
-  scores,
-  sources,
-}: {
-  scores: ReturnType<typeof ruleScores>;
-  sources: readonly DrillSource[];
-}) {
+function PlacementResult({ scores }: { scores: ReturnType<typeof ruleScores> }) {
   const { i18n } = useLingui();
   const stageOfLesson = new Map<string, number>();
   STAGES.forEach((stage, index) => {
@@ -65,12 +42,7 @@ function PlacementResult({
     }
   });
 
-  const totals = STAGES.map((stage, index) => ({
-    index,
-    stage,
-    right: 0,
-    total: 0,
-  }));
+  const totals = STAGES.map((stage, index) => ({ index, stage, right: 0, total: 0 }));
   for (const score of scores) {
     const slug = score.rule.split("/")[0] ?? "";
     const idx = stageOfLesson.get(slug);
@@ -80,13 +52,13 @@ function PlacementResult({
     }
   }
   const active = totals.filter((entry) => entry.total > 0);
-  const weak = active.find((entry) => entry.right / entry.total < 2 / 3);
+  const failed = firstFailedStage(totals);
+  const weak = failed === undefined ? undefined : totals[failed];
   const targetStage = weak?.stage ?? STAGES[STAGES.length - 1];
   const targetNumber = (weak?.index ?? STAGES.length - 1) + 1;
   const startLesson = weak
     ? targetStage?.lessons.find((lesson) => lesson.slug)
     : targetStage?.lessons.findLast((lesson) => lesson.slug);
-  const sourceCount = sources.length;
 
   return (
     <div className="grid w-full gap-4 rounded-xl bg-(--tray) p-4.5">
@@ -97,14 +69,14 @@ function PlacementResult({
               Recommended start · Stage {targetNumber} ({targetStage?.level})
             </Trans>
           ) : (
-            <Trans>Ready for B1 practice ({sourceCount} lessons checked)</Trans>
+            <Trans>At least two of three right in every stage</Trans>
           )}
         </span>
         <p className="text-xl/snug font-semibold tracking-tight">
           {weak && targetStage ? (
             <Trans>Start with {i18n._(targetStage.name)}</Trans>
           ) : (
-            <Trans>You already handle A1 to B1 fundamentals well.</Trans>
+            <Trans>You can start at the end of the course.</Trans>
           )}
         </p>
         {startLesson?.slug && (
@@ -171,7 +143,7 @@ export function PlacementView() {
             questions={session.questions}
             sources={session.sources}
             repeats={false}
-            afterScore={(scores) => <PlacementResult scores={scores} sources={session.sources} />}
+            afterScore={(scores) => <PlacementResult scores={scores} />}
             end={
               <Button variant="secondary" onClick={more}>
                 <Trans>Take again</Trans>

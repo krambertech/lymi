@@ -17820,6 +17820,219 @@ const WORK_CLIPS: Record<string, Clip> = {
   "c-work": WORK_CONVERSATION,
 };
 
+export const DOCTOR_GROUPS = {
+  pain: [
+    { id: "head", form: "pea", said: "Mul valutab pea." },
+    { id: "throat", form: "kurk", said: "Mul valutab kurk." },
+    { id: "stomach", form: "kõht", said: "Mul valutab kõht." },
+    { id: "back", form: "selg", said: "Mul valutab selg." },
+  ],
+  symptoms: [
+    { id: "fever", form: "palavik", said: "Mul on kõrge palavik." },
+    { id: "cough", form: "köha", said: "Mul on tugev köha." },
+    { id: "cold", form: "nohu", said: "Mul on nohu." },
+    { id: "rx", form: "retsept", said: "Arst kirjutab mulle retsepti." },
+  ],
+} as const;
+
+export const DOCTOR_MATCH = [
+  "pea",
+  "kurk",
+  "kõht",
+  "selg",
+  "palavik",
+  "köha",
+  "nohu",
+  "retsept",
+] as const;
+
+export const DOCTOR_TELL = [
+  { id: "pain-head", said: "Mul valutab pea.", kind: "pain" as const },
+  { id: "sym-fever", said: "Mul on kõrge palavik.", kind: "symptom" as const },
+  { id: "pain-throat", said: "Mul valutab kurk.", kind: "pain" as const },
+  { id: "sym-cough", said: "Mul on tugev köha.", kind: "symptom" as const },
+  { id: "pain-stomach", said: "Mul valutab kõht.", kind: "pain" as const },
+  { id: "sym-cold", said: "Mul on nohu.", kind: "symptom" as const },
+  { id: "pain-back", said: "Mul valutab selg.", kind: "pain" as const },
+  { id: "sym-rx", said: "Arst kirjutab mulle retsepti.", kind: "symptom" as const },
+] as const;
+
+export const DOCTOR_TRANSLATE = [
+  "Mul valutab pea.",
+  "Mul on palavik ja köha.",
+  "Ma tahan arsti juurde tulla.",
+  "Mul valutab kurk juba kolm päeva.",
+  "Võtke seda rohtu kaks korda päevas.",
+  "Ma pean kaks päeva kodus puhkama.",
+] as const;
+
+export const DOCTOR_ANSWERS: Record<
+  (typeof DOCTOR_TRANSLATE)[number],
+  readonly [string, ...string[]]
+> = {
+  "Mul valutab pea.": [
+    "Mul valutab pea.",
+    "Minul valutab pea.",
+    "Pea valutab.",
+    "Minu pea valutab.",
+  ],
+  "Mul on palavik ja köha.": [
+    "Mul on palavik ja köha.",
+    "Minul on palavik ja köha.",
+    "Mul on köha ja palavik.",
+    "Minul on köha ja palavik.",
+  ],
+  "Ma tahan arsti juurde tulla.": [
+    "Ma tahan arsti juurde tulla.",
+    "Mina tahan arsti juurde tulla.",
+    "Tahan arsti juurde tulla.",
+    "Ma tahan tulla arsti juurde.",
+    "Mina tahan tulla arsti juurde.",
+    "Tahan tulla arsti juurde.",
+  ],
+  "Mul valutab kurk juba kolm päeva.": [
+    "Mul valutab kurk juba kolm päeva.",
+    "Minul valutab kurk juba kolm päeva.",
+    "Kurk valutab juba kolm päeva.",
+    "Minu kurk valutab juba kolm päeva.",
+    "Kurk valutab mul juba kolm päeva.",
+  ],
+  "Võtke seda rohtu kaks korda päevas.": [
+    "Võtke seda rohtu kaks korda päevas.",
+    "Võtke rohtu kaks korda päevas.",
+    "Võtke seda rohtu päevas kaks korda.",
+    "Võta seda rohtu kaks korda päevas.",
+    "Võta rohtu kaks korda päevas.",
+  ],
+  "Ma pean kaks päeva kodus puhkama.": [
+    "Ma pean kaks päeva kodus puhkama.",
+    "Mina pean kaks päeva kodus puhkama.",
+    "Pean kaks päeva kodus puhkama.",
+    "Ma pean kodus kaks päeva puhkama.",
+    "Mina pean kodus kaks päeva puhkama.",
+    "Pean kodus kaks päeva puhkama.",
+    "Ma pean puhkama kaks päeva kodus.",
+    "Mina pean puhkama kaks päeva kodus.",
+    "Pean puhkama kaks päeva kodus.",
+  ],
+};
+
+export const DOCTOR_FIXES = [
+  {
+    id: "mul-valutab",
+    wrong: "Ma valutab pea.",
+    right: "Mul valutab pea.",
+  },
+  {
+    id: "valutab-sg",
+    wrong: "Mul valutavad kurk.",
+    right: "Mul valutab kurk.",
+  },
+  {
+    id: "arsti-juures",
+    wrong: "Ta on täna arsti juurde.",
+    right: "Ta on täna arsti juures.",
+  },
+  {
+    id: "apteegis",
+    wrong: "Ma käisin eile apteeki.",
+    right: "Ma käisin eile apteegis.",
+  },
+  {
+    id: "veega",
+    wrong: "Võtke seda rohtu vee.",
+    right: "Võtke seda rohtu veega.",
+  },
+  {
+    id: "kolm-paeva",
+    wrong: "Puhake kodus kolm päev.",
+    right: "Puhake kodus kolm päeva.",
+  },
+] as const;
+
+export const DOCTOR_DIALOGUE = [
+  {
+    hear: "Perearstikeskus, tere!",
+    right: "Tere! Ma soovin arsti juurde aega panna.",
+    wrong1: "Tere! Palun mulle üks suur kohv piimaga ja saiake.",
+    wrong2: "Tere! Ma elan Tartus.",
+  },
+  {
+    hear: "Mis teil viga on?",
+    right: "Mul on palavik ja kurk valutab.",
+    wrong1: "Mul on suur koer ja väike kass.",
+    wrong2: "Ilm on täna väga soe.",
+  },
+  {
+    hear: "Kas homme kell kümme sobib?",
+    right: "Jah, homme kell kümme sobib hästi.",
+    wrong1: "Ei, mul ei ole autot.",
+    wrong2: "Ma lähen kohe pärast tööd suurde poodi piima ostma.",
+  },
+  {
+    hear: "Palun võtke isikutunnistus kaasa. Head päeva!",
+    right: "Aitäh! Nägemist!",
+    wrong1: "Mis kell rong väljub?",
+    wrong2: "Palun üks pilet Pärnusse.",
+  },
+] as const;
+
+export const DOCTOR_NOTE = [
+  "Tere, Mart!",
+  "Teie aeg perearsti juures on homme kell kümme.",
+  "Meie keskus asub kolmandal korrusel, kabinet kaksteist.",
+  "Palun tulge kümme minutit varem ja võtke isikutunnistus kaasa.",
+  "Kui teil on kõrge palavik, pange palun mask ette.",
+  "Enne vastuvõttu jooge vett, aga ärge sööge kaks tundi.",
+  "Kui te ei saa tulla, helistage meile täna enne kella viit.",
+  "Head paranemist! Õde Kati.",
+] as const;
+
+export const DOCTOR_CONVERSATION: Conversation = {
+  turns: [
+    { voice: "third", text: "Tere, Mart! Istuge palun. Mis mureks?" },
+    { voice: "fourth", text: "Tere, doktor! Mul valutab kurk ja mul on ka tugev köha." },
+    { voice: "third", text: "Millal see algas?" },
+    {
+      voice: "fourth",
+      text: "Juba teisipäeval. Eile õhtul tõusis ka palavik, kolmkümmend kaheksa.",
+    },
+    { voice: "third", text: "Kas pea või selg ka valutab?" },
+    { voice: "fourth", text: "Pea valutab natuke, aga kõht ja selg on korras." },
+    { voice: "third", text: "Selge, vaatame kurku. Palun tehke suu lahti ja hingake sügavalt." },
+    { voice: "fourth", text: "Olgu, doktor." },
+    { voice: "third", text: "Kurk on punane, aga kopsud on puhtad. See on tavaline külmetus." },
+    { voice: "fourth", text: "Kas ma pean rohtu võtma?" },
+    {
+      voice: "third",
+      text: "Jah, ma kirjutan teile retsepti. Võtke seda rohtu kaks korda päevas koos veega.",
+    },
+    { voice: "fourth", text: "Mitu päeva ma pean seda võtma?" },
+    {
+      voice: "third",
+      text: "Viis päeva. Apteek on siin samas esimesel korrusel, kohe ukse kõrval.",
+    },
+    { voice: "fourth", text: "Kas ma võin homme tööle minna?" },
+    { voice: "third", text: "Parem ärge minge. Puhake kodus reedeni ja jooge palju sooja teed." },
+    { voice: "fourth", text: "Olgu, ma jään koju. Mis siis, kui palavik ei lähe ära?" },
+    { voice: "third", text: "Kui esmaspäeval on veel palavik, helistage meile ja tulge tagasi." },
+    { voice: "fourth", text: "Suur aitäh, doktor! Head päeva!" },
+  ],
+};
+
+const DOCTOR_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...DOCTOR_MATCH,
+    ...DOCTOR_GROUPS.pain.map((r) => r.said),
+    ...DOCTOR_GROUPS.symptoms.map((r) => r.said),
+    ...DOCTOR_TRANSLATE,
+    ...DOCTOR_FIXES.map((f) => f.right),
+    ...DOCTOR_DIALOGUE.flatMap((d) => [d.hear, d.right]),
+  ]),
+  "p-note": { sentences: DOCTOR_NOTE, voice: "third" },
+  "c-doctor": DOCTOR_CONVERSATION,
+};
+
 export const PERE_FAMILY = [
   { word: "ema", said: "See on minu ema." },
   { word: "isa", said: "See on minu isa." },
@@ -19144,6 +19357,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "ta-olevat-haige": REP_CLIPS,
   "tee-ja-reisimine": TRAVEL_CLIPS,
   "pere-ja-ankeet": PERE_CLIPS,
+  "arsti-juures": DOCTOR_CLIPS,
   tookoht: WORK_CLIPS,
   kit: KIT_CLIPS,
 };

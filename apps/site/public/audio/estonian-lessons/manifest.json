@@ -6715,6 +6715,477 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "kohvikus/aita2h": {
+    "text": "Aitäh!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/arve": {
+    "text": "arve",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/d-kohvik": {
+    "text": "Tere! Palun? Tere! Palun üks kohv ja üks saiake. Siin või kaasa? Siin, palun. Palun! Suhkur on laual. Aitäh! Kas teil on piima? Jah, on. Siin on piim. Palun! Aitäh! Kas teil on ka suppi? Ei, suppi ei ole. Meil on kook ja võileib. Kas kook on hea? Jah, kook on väga hea. Siis palun üks kook. Ja üks mahl, palun. Palun! Kaardiga või sularahas? Kaardiga. Palun arve. Palun! Head isu! Aitäh! Head aega! Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere!",
+          "Palun?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere!",
+          "Palun üks kohv ja üks saiake."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Siin või kaasa?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Siin, palun."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Palun!",
+          "Suhkur on laual."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh!",
+          "Kas teil on piima?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, on.",
+          "Siin on piim.",
+          "Palun!"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh!",
+          "Kas teil on ka suppi?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, suppi ei ole.",
+          "Meil on kook ja võileib."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas kook on hea?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, kook on väga hea."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Siis palun üks kook.",
+          "Ja üks mahl, palun."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Palun!",
+          "Kaardiga või sularahas?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kaardiga.",
+          "Palun arve."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Palun!",
+          "Head isu!"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh!",
+          "Head aega!"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Head aega!"
+        ]
+      }
+    ]
+  },
+  "kohvikus/head-isu": {
+    "text": "Head isu!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/ja": {
+    "text": "ja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/ka": {
+    "text": "ka",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kaardiga": {
+    "text": "kaardiga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kaardiga-palun": {
+    "text": "Kaardiga, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kaardiga-vo3i-sularahas": {
+    "text": "Kaardiga või sularahas?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kaasa": {
+    "text": "kaasa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-kooki": {
+    "text": "Kas teil on kooki?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-mahla": {
+    "text": "Kas teil on mahla?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-piima": {
+    "text": "Kas teil on piima?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-suppi": {
+    "text": "Kas teil on suppi?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-teed": {
+    "text": "Kas teil on teed?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-vett": {
+    "text": "Kas teil on vett?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kohv": {
+    "text": "kohv",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kohvi": {
+    "text": "kohvi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kohvikus": {
+    "text": "kohvikus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kook": {
+    "text": "kook",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kooki": {
+    "text": "kooki",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kui-palju-see-maksab": {
+    "text": "Kui palju see maksab?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/laual": {
+    "text": "laual",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/mahl": {
+    "text": "mahl",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/mahla": {
+    "text": "mahla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/maksab": {
+    "text": "maksab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/meil": {
+    "text": "meil",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/o-liis-1": {
+    "text": "Tere! Palun?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/o-liis-2": {
+    "text": "Siin või kaasa?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/o-liis-3": {
+    "text": "Palun! Suhkur on laual.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/o-liis-4": {
+    "text": "Jah, on. Palun! Kaardiga või sularahas?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/o-liis-5": {
+    "text": "Palun! Head aega!",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/o-sina-1": {
+    "text": "Tere! Palun üks tee ja üks saiake.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/o-sina-2": {
+    "text": "Siin, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/o-sina-3": {
+    "text": "Aitäh! Kas teil on piima?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/o-sina-4": {
+    "text": "Kaardiga, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/o-sina-5": {
+    "text": "Aitäh! Head aega!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/on": {
+    "text": "on",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/p-mari": {
+    "text": "Tere, Liis! Ma töötan kohvikus Tallinnas. See on minu kohvik. Meil on kohv, tee, vesi, mahl ja piim. Meil on ka supp, kook, saiake ja võileib. Suhkur on laual. Kohv on väga hea. Kook on ka väga hea. Minu sõber Jaan joob siin palju kohvi. Mina joon teed. Siin või kaasa? Kaardiga või sularahas? Kas sa elad Tallinnas? Head aega!",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/p-order": {
+    "text": "Tere! Palun üks kohv ja üks kook. Siin, palun. Kaardiga, palun. Aitäh!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun": {
+    "text": "Palun!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-arve": {
+    "text": "Palun arve.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-kohv": {
+    "text": "Palun üks kohv.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-kook": {
+    "text": "Palun üks kook.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-mahl": {
+    "text": "Palun üks mahl.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-mahl-ja-u2ks-kook": {
+    "text": "Palun üks mahl ja üks kook.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-piim": {
+    "text": "Palun üks piim.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-supp": {
+    "text": "Palun üks supp.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-tee-ja-u2ks-saiake": {
+    "text": "Palun üks tee ja üks saiake.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-vesi": {
+    "text": "Palun üks vesi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-vo3ileib": {
+    "text": "Palun üks võileib.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/piim": {
+    "text": "piim",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/piima": {
+    "text": "piima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/saiake": {
+    "text": "saiake",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/see": {
+    "text": "see",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/siin": {
+    "text": "siin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/siin-palun": {
+    "text": "Siin, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/siin-vo3i-kaasa": {
+    "text": "Siin või kaasa?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/siis": {
+    "text": "siis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/suhkur": {
+    "text": "suhkur",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/suhkur-on-laual": {
+    "text": "Suhkur on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/sularahas": {
+    "text": "sularahas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/supp": {
+    "text": "supp",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/suppi": {
+    "text": "suppi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/tee": {
+    "text": "tee",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/teed": {
+    "text": "teed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/teil": {
+    "text": "teil",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/vesi": {
+    "text": "vesi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/vett": {
+    "text": "vett",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/vo3i": {
+    "text": "või",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/vo3ileib": {
+    "text": "võileib",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "kusimused/a-ei": {
     "text": "Ei.",
     "model": "eleven_v4",

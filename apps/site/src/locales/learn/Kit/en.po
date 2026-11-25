@@ -236,6 +236,9 @@ msgstr "A fixed sentence, marked"
 msgid "a foot"
 msgstr "a foot"
 
+msgid "A free Estonian lesson for the café counter: ask for a drink and something to eat with palun, ask if they have it, answer here or to take away and card or cash, and ask for the bill. Every sentence is read aloud."
+msgstr "A free Estonian lesson for the café counter: ask for a drink and something to eat with palun, ask if they have it, answer here or to take away and card or cash, and ask for the bill. Every sentence is read aloud."
+
 msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the partitive. Every word is read aloud."
 msgstr "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the partitive. Every word is read aloud."
 
@@ -571,6 +574,9 @@ msgstr "Answers"
 
 msgid "Asking questions in Estonian"
 msgstr "Asking questions in Estonian"
+
+msgid "At a café"
+msgstr "At a café"
 
 msgid "at home"
 msgstr "at home"
@@ -1659,6 +1665,9 @@ msgstr "Onto and off in Estonian: -le and -lt"
 
 msgid "or *pole*"
 msgstr "or *pole*"
+
+msgid "Ordering at a café in Estonian"
+msgstr "Ordering at a café in Estonian"
 
 msgid "Ordinals and dates"
 msgstr "Ordinals and dates"

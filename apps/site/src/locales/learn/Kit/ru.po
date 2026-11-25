@@ -236,6 +236,9 @@ msgstr "Исправленное предложение с оценкой"
 msgid "a foot"
 msgstr "нога"
 
+msgid "A free Estonian lesson for the café counter: ask for a drink and something to eat with palun, ask if they have it, answer here or to take away and card or cash, and ask for the bill. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского для кафе: как попросить напиток и что-нибудь поесть со словом palun, спросить, есть ли это, ответить «здесь или с собой» и «картой или наличными» и попросить счёт. Каждое предложение озвучено."
+
 msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the partitive. Every word is read aloud."
 msgstr "Бесплатный урок эстонского о трёх основных формах существительного, põhivormid (kool, kooli, kooli; pood, poe, poodi): как их приводят словарь и Sõnaveeb и как большинство слов на -ne и -us, а также односложные слова на долгую гласную, подсказывают партитив. Каждое слово озвучено."
 
@@ -571,6 +574,9 @@ msgstr "Варианты ответа"
 
 msgid "Asking questions in Estonian"
 msgstr "Вопросы в эстонском языке"
+
+msgid "At a café"
+msgstr "В кафе"
 
 msgid "at home"
 msgstr "дома"
@@ -1659,6 +1665,9 @@ msgstr "На стол и со стола: -le и -lt по-эстонски"
 
 msgid "or *pole*"
 msgstr "или *pole*"
+
+msgid "Ordering at a café in Estonian"
+msgstr "Заказ в кафе по-эстонски"
 
 msgid "Ordinals and dates"
 msgstr "Порядковые числительные и даты"

@@ -13,14 +13,14 @@ msgstr "15 хвилин"
 msgid "20 mixed questions"
 msgstr "20 змішаних запитань"
 
-msgid "Check what Stage 3 taught: verb base forms, infinitives, modals, going and coming back, liking, past tense, negation in the past and the future — mixed, with no hints beforehand."
-msgstr "Перевір матеріал етапу 3: основні форми дієслів, інфінітиви, модальні дієслова, рух, уподобання, минулий час, заперечення в минулому й майбутній час — усе разом і без підказок наперед."
+msgid "Check what Stage 3 taught: the three forms of a verb, infinitives, modals, going and coming back, liking, past tense, negation in the past and the future — mixed, with no hints beforehand."
+msgstr "Перевір матеріал етапу 3: три форми дієслова, інфінітиви, модальні дієслова, «іду» й «повертаюся», «мені подобається», минулий час, заперечення в минулому й майбутньому — усе разом і без підказок наперед."
 
-msgid "Checkpoint"
-msgstr "Контрольна"
+msgid "Final challenge"
+msgstr "Підсумкове завдання"
 
-msgid "Stage 3 checkpoint"
-msgstr "Контрольна етапу 3"
+msgid "Mixed questions"
+msgstr "Змішані запитання"
 
 msgid "Twenty mixed questions from Stage 3. At the end you see your score for each rule with a link back to the lesson that teaches it."
 msgstr "Двадцять змішаних запитань з етапу 3. Наприкінці ти побачиш результат за кожним правилом із посиланням на відповідний урок."

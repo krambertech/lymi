@@ -45,12 +45,6 @@ msgstr "Заперечення тепер і в майбутньому"
 msgid "“Have done”"
 msgstr "Уже сталося"
 
-msgid "“To have”"
-msgstr "«Мати»"
-
-msgid "“To like” and feelings"
-msgstr "«Подобатися» і почуття"
-
 msgid "“Would”"
 msgstr "З часткою «би»"
 
@@ -226,6 +220,9 @@ msgstr "Кіт і будинок"
 
 msgid "A conversation in two voices: the learner picks each reply. Shown first, then sound only for a harder one."
 msgstr "Розмова у два голоси: учень обирає кожну відповідь. Спершу з текстом, потім лише на слух — складніший рівень."
+
+msgid "A day in Tallinn"
+msgstr "Один день у Таллінні"
 
 msgid "A drawing on the tray: pressing a place, on a key or on the drawing, moves the cat there and plays the sentence."
 msgstr "Малюнок на підкладці: натискання на місце, на клавіші чи на малюнку, переносить туди кота й програє речення."
@@ -431,12 +428,6 @@ msgstr "Безкоштовний урок про три основні форм�
 msgid "A free lesson on which Estonian verbs take the -da infinitive after them and which take the -ma infinitive: tahan lugeda but pean lugema, with võin, saan, oskan, tohin, proovin, armastan and mulle meeldib on one side and hakkan, lähen, tule and jään on the other. Every sentence is read aloud."
 msgstr "Безкоштовний урок про те, після яких естонських дієслів іде інфінітив на -da, а після яких — на -ma: tahan lugeda, але pean lugema. Інфінітив на -da вимагають ще võin, saan, oskan, tohin, proovin, armastan і mulle meeldib, інфінітив на -ma — hakkan, lähen, tule і jään. Кожне речення озвучене."
 
-msgid "A free timed Estonian A2 mock exam in Harno format: notices and an email to read, grammar gaps, fixing and writing sentences, two listening recordings played twice, and a short writing task with a model."
-msgstr "Безкоштовний пробний іспит з естонської A2 з таймером у форматі Harno: оголошення й лист для читання, граматичні пропуски, виправлення й написання речень, два аудіювання по два прослуховування та коротке письмове завдання зі зразком."
-
-msgid "A free timed Estonian B1 mock exam in Harno format: a news article and building notice to read, B1 grammar gaps, fixing and writing sentences, a radio brief and interview played twice, and a formal writing task with a model."
-msgstr "Безкоштовний пробний іспит з естонської B1 з таймером у форматі Harno: новина й оголошення будинку для читання, граматичні пропуски B1, виправлення й написання речень, радіовипуск та інтерв’ю по два прослуховування й офіційне письмове завдання зі зразком."
-
 msgid "a friend"
 msgstr "друг"
 
@@ -509,17 +500,14 @@ msgstr "Три форми слова й те, що від кожної утво�
 msgid "A written sentence, marked"
 msgstr "Написане речення з оцінкою"
 
-msgid "A2 mock exam"
-msgstr "Пробний іспит A2"
-
 msgid "about many"
 msgstr "про багатьох"
 
-msgid "Adjective agreement"
-msgstr "Узгодження прикметників"
+msgid "Adjectives with nouns"
+msgstr "Прикметники з іменниками"
 
-msgid "Adverbs: how you do something"
-msgstr "Прислівники: як щось робиться"
+msgid "Adverbs"
+msgstr "Прислівники"
 
 msgid "After “one”"
 msgstr "Після «один»"
@@ -563,8 +551,8 @@ msgstr "Усе цілком. Якась кількість — партитив:
 msgid "Already, still, not yet and only in Estonian"
 msgstr "«Уже», «ще», «ще не» і «лише» в естонській"
 
-msgid "Already, still, not yet, only"
-msgstr "Уже, ще, ще не, лише"
+msgid "Already, still, only"
+msgstr "Уже, ще, лише"
 
 msgid "Also after “it’s good”, “there’s time” and a question word."
 msgstr "І після «добре», «є час» та питального слова."
@@ -620,6 +608,9 @@ msgstr "Варіанти відповіді"
 msgid "Asking for directions and travelling in Estonian"
 msgstr "Дорога й транспорт естонською"
 
+msgid "Asking questions"
+msgstr "Питання"
+
 msgid "Asking questions in Estonian"
 msgstr "Питання в естонській мові"
 
@@ -635,6 +626,9 @@ msgstr "У кожному етапі правильно щонайменше д�
 msgid "at school"
 msgstr "у школі"
 
+msgid "At someone’s place"
+msgstr "У гостях"
+
 msgid "At the doctor"
 msgstr "У лікаря"
 
@@ -643,6 +637,9 @@ msgstr "У лікаря естонською"
 
 msgid "at the market"
 msgstr "на ринку"
+
+msgid "At the market"
+msgstr "На ринку"
 
 msgid "at work"
 msgstr "на роботі"
@@ -653,11 +650,11 @@ msgstr "На роботі"
 msgid "At work in Estonian"
 msgstr "На роботі естонською"
 
-msgid "B1 mock exam"
-msgstr "Пробний іспит B1"
-
 msgid "Back 5 seconds"
 msgstr "Назад на 5 секунд"
+
+msgid "Becoming something"
+msgstr "Стати кимось"
 
 msgid "Before words like “under”"
 msgstr "Перед словами на зразок «під»"
@@ -714,14 +711,8 @@ msgstr "Ідіть сюди!"
 msgid "Commands"
 msgstr "Наказовий спосіб"
 
-msgid "Comparatives and superlatives"
-msgstr "Вищий і найвищий ступені порівняння"
-
-msgid "Conditional mood"
-msgstr "Умовний спосіб"
-
-msgid "Conjunctions and word order"
-msgstr "Сполучники і порядок слів"
+msgid "Comparing"
+msgstr "Порівняння"
 
 msgid "Consonant gradation"
 msgstr "Чергування приголосних"
@@ -734,6 +725,9 @@ msgstr "Чи не допоможеш мені?"
 
 msgid "Counted on your first answer to each question."
 msgstr "Враховано першу відповідь на кожне запитання."
+
+msgid "Dates"
+msgstr "Дати"
 
 msgid "Days of the week"
 msgstr "Дні тижня"
@@ -809,17 +803,11 @@ msgstr "Естонські форми -des і -mata: «водночас» і «�
 msgid "Estonian -ma, -mas and -mast: going, being and coming back"
 msgstr "Естонські форми на -ma, -mas і -mast: іду, там, повертаюся"
 
-msgid "Estonian A2 mock exam"
-msgstr "Пробний іспит з естонської A2"
-
 msgid "Estonian adjectives: agreeing with the noun"
 msgstr "Естонські прикметники: узгодження з іменником"
 
 msgid "Estonian adverbs with -lt and -sti"
 msgstr "Естонські прислівники на -lt і -sti"
-
-msgid "Estonian B1 mock exam"
-msgstr "Пробний іспит з естонської B1"
 
 msgid "Estonian B1 practice: reading and listening to the news"
 msgstr "Практика естонської B1: читаємо й слухаємо новини"
@@ -941,17 +929,23 @@ msgstr "Непряма мова та форма на -vat в естонські�
 msgid "Estonian somebody and nobody: -gi and -ki"
 msgstr "Естонські «хтось» і «ніхто»: -gi та -ki"
 
-msgid "Estonian stage 3 checkpoint"
-msgstr "Контрольна робота 3 етапу естонської"
+msgid "Estonian stage 1 final challenge"
+msgstr "Підсумкове завдання етапу 1 з естонської мови"
 
-msgid "Estonian stage 4 checkpoint"
-msgstr "Контрольна робота 4 етапу естонської"
+msgid "Estonian stage 2 final challenge"
+msgstr "Підсумкове завдання етапу 2 з естонської мови"
 
-msgid "Estonian stage 5 checkpoint"
-msgstr "Контрольна робота 5 етапу естонської"
+msgid "Estonian stage 3 final challenge"
+msgstr "Підсумкове завдання етапу 3 з естонської мови"
 
-msgid "Estonian stage 6 checkpoint"
-msgstr "Контрольна робота 6 етапу естонської"
+msgid "Estonian stage 4 final challenge"
+msgstr "Підсумкове завдання етапу 4 з естонської мови"
+
+msgid "Estonian stage 5 final challenge"
+msgstr "Підсумкове завдання етапу 5 з естонської мови"
+
+msgid "Estonian stage 6 final challenge"
+msgstr "Підсумкове завдання етапу 6 з естонської мови"
 
 msgid "Estonian time expressions: when things happen"
 msgstr "Як сказати «коли» естонською"
@@ -971,15 +965,12 @@ msgstr "Усі слова в групах. Можна перевіряти."
 msgid "Every word is in its group."
 msgstr "Кожне слово у своїй групі."
 
-msgid "Exam timer"
-msgstr "Таймер іспиту"
-
 msgctxt "the statement is false"
 msgid "False"
 msgstr "Неправда"
 
-msgid "Family and a form"
-msgstr "Родина й анкета"
+msgid "Family and forms"
+msgstr "Родина й анкети"
 
 msgid "Fill every gap first."
 msgstr "Спершу заповни всі пропуски."
@@ -990,11 +981,11 @@ msgstr "Заповни пропуск"
 msgid "Fill the gaps"
 msgstr "Заповни пропуски"
 
+msgid "Final challenge"
+msgstr "Підсумкове завдання"
+
 msgid "Find your level"
 msgstr "Визнач свій рівень"
-
-msgid "Five minutes remaining."
-msgstr "Залишилося п’ять хвилин."
 
 msgid "Fix the sentence"
 msgstr "Виправ речення"
@@ -1062,18 +1053,6 @@ msgstr "Безкоштовна практика естонської для те
 msgid "Free Estonian practice in the past and the future: read about a friend’s weekend and write back, say what you did and didn’t do (olin, ei läinud), what you will do (homme lähen, hakkan õppima, kavatsen tulla), fix verbs in the wrong form, and follow a conversation you can play twice. Every sentence is read aloud."
 msgstr "Безкоштовна практика естонської в минулому й майбутньому: прочитай про вихідні подруги й відповідай, скажи, що ти робив і чого не робив (olin, ei läinud), що робитимеш (homme lähen, hakkan õppima, kavatsen tulla), виправ дієслова в хибній формі й зрозумій розмову, яку можна прослухати двічі. Кожне речення озвучене."
 
-msgid "Free Estonian stage 3 checkpoint: twenty mixed questions on verbs, modals, liking, past tense and the future, with no hints beforehand and a score per rule linked to its lesson."
-msgstr "Безкоштовна контрольна 3 етапу естонської: двадцять змішаних запитань на дієслова, модальні дієслова, уподобання, минулий і майбутній час, без підказок наперед та з результатом за кожним правилом."
-
-msgid "Free Estonian stage 4 checkpoint: twenty mixed questions on cases, pronouns, dates, word order, adjectives, comparing and -gi / -ki, with no hints beforehand and a score per rule linked to its lesson."
-msgstr "Безкоштовна контрольна 4 етапу естонської: двадцять змішаних запитань на відмінки, займенники, дати, порядок слів, прикметники, порівняння та -gi / -ki, без підказок наперед та з результатом за кожним правилом."
-
-msgid "Free Estonian stage 5 checkpoint: twenty mixed questions on gradation, total and partial object, plural cases, perfect, conditional, impersonal and verb cases, with no hints beforehand and a score per rule linked to its lesson."
-msgstr "Безкоштовна контрольна 5 етапу естонської: двадцять змішаних запитань на чергування, повний і частковий додаток, множинні відмінки, перфект, умовний спосіб, безособову форму й керування дієслів, без підказок наперед."
-
-msgid "Free Estonian stage 6 checkpoint: twenty mixed questions on B1 particle verbs, word building, -des and -mata, participles, conjunctions, relative clauses and reported speech, with no hints beforehand and a score per rule linked to its lesson."
-msgstr "Безкоштовна контрольна 6 етапу естонської: двадцять змішаних запитань на дієслова з частками B1, словотвір, -des і -mata, дієприкметники, сполучники, підрядні речення та непряму мову, без підказок наперед."
-
 msgid "Free Estonian writing practice: read a message to a landlady, learn the phrases for a polite message (kas te saaksite, aitäh ette, lugupidamisega), follow a phone call about a cold radiator, then write your own message and compare it with a model. Every sentence is read aloud."
 msgstr "Безкоштовна практика письма естонською: прочитай лист власниці квартири, вивчи фрази для ввічливого листа (kas te saaksite, aitäh ette, lugupidamisega), послухай телефонну розмову про холодну батарею, а тоді напиши свій лист і порівняй його зі зразком. Кожне речення озвучене."
 
@@ -1129,11 +1108,14 @@ msgctxt "a noun's form on the form map"
 msgid "Genitive"
 msgstr "Родовий"
 
+msgid "Getting around"
+msgstr "Як дістатися"
+
 msgid "Go to the lesson"
 msgstr "До уроку"
 
-msgid "Going, being, coming back: -ma, -mas, -mast"
-msgstr "Іти, бути там, повертатися: -ma, -mas, -mast"
+msgid "Going, doing, coming back"
+msgstr "Іду, роблю, повертаюся"
 
 msgid "Greets Mari."
 msgstr "Є привітання."
@@ -1147,11 +1129,11 @@ msgstr "Складна граматика"
 msgid "Have a good day!"
 msgstr "Гарного тобі дня!"
 
+msgid "Have done, had done"
+msgstr "Перфект і плюсквамперфект"
+
 msgid "Have you been to Tartu?"
 msgstr "Ти бував чи бувала в Тарту?"
-
-msgid "Having or staying at"
-msgstr "Має чи гостює"
 
 msgid "Having or staying at someone’s place in Estonian"
 msgstr "«У когось є» проти «у когось удома» в естонській"
@@ -1216,11 +1198,14 @@ msgstr "Послухати всю розмову"
 msgid "Hear the whole passage"
 msgstr "Послухай увесь текст"
 
-msgid "Here and there with go, come and visit"
-msgstr "«Тут» і «там» із дієсловами руху"
+msgid "Here and there"
+msgstr "Тут і там"
 
 msgid "How many cats do you have?"
 msgstr "Скільки у вас котів?"
+
+msgid "How nouns change"
+msgstr "Як змінюються іменники"
 
 msgid "How to say “I have” in Estonian"
 msgstr "Як сказати «у мене є» естонською"
@@ -1236,6 +1221,9 @@ msgstr "Як сказати «ні» в минулому часі естонсь
 
 msgid "I"
 msgstr "я"
+
+msgid "I am, you are"
+msgstr "Займенники і «бути»"
 
 msgid "I bought the book."
 msgstr "Я купив чи купила книжку."
@@ -1348,9 +1336,6 @@ msgstr "Я вже поїв чи поїла."
 msgid "Illative"
 msgstr "Ілатив"
 
-msgid "Impersonal voice"
-msgstr "Безособова форма"
-
 msgid "In a command"
 msgstr "У наказі"
 
@@ -1404,9 +1389,6 @@ msgstr "«В» і «на» естонською: -s і -l"
 
 msgid "Inessive"
 msgstr "Інесив"
-
-msgid "Infinitives after other verbs"
-msgstr "Інфінітив після інших дієслів"
 
 msgid "inside"
 msgstr "всередині"
@@ -1493,6 +1475,9 @@ msgstr "Kodu — дім; kodus — удома."
 msgid "Language"
 msgstr "Мова"
 
+msgid "Last weekend, next week"
+msgstr "Минулі вихідні, наступний тиждень"
+
 msgid "Left column"
 msgstr "Ліва колонка"
 
@@ -1525,6 +1510,9 @@ msgstr "«Ходімо» і «нехай»"
 
 msgid "Let’s and let them in Estonian"
 msgstr "«Ходімо» і «нехай» в естонській мові"
+
+msgid "Linking sentences"
+msgstr "З’єднання речень"
 
 msgid "Listen"
 msgstr "Послухати"
@@ -1559,6 +1547,9 @@ msgstr "слухає"
 msgid "Longer sentences"
 msgstr "Складні речення"
 
+msgid "Looking for a flat"
+msgstr "Пошук квартири"
+
 msgid "looks like the nominative"
 msgstr "як у називному"
 
@@ -1579,6 +1570,9 @@ msgstr "Утвори форму"
 
 msgid "Making new Estonian words from nouns"
 msgstr "Нові естонські слова від іменників"
+
+msgid "Making new words"
+msgstr "Нові слова з відомих"
 
 msgid "Mari"
 msgstr "Марі"
@@ -1613,8 +1607,14 @@ msgstr "ринок"
 msgid "Match"
 msgstr "Пари"
 
+msgid "Me, to me, with me"
+msgstr "Я, мені, зі мною"
+
 msgid "Me, we, takes -me: elame."
 msgstr "Me, ми, бере -me: elame."
+
+msgid "Meeting someone"
+msgstr "Знайомство"
 
 msgid "Mina takes -n: loen."
 msgstr "Mina бере -n: loen."
@@ -1624,6 +1624,9 @@ msgstr "Mina, я, бере olen."
 
 msgid "Missing: <0>{right}</0>."
 msgstr "Бракує: <0>{right}</0>."
+
+msgid "Mixed questions"
+msgstr "Змішані запитання"
 
 msgid "More are on the way."
 msgstr "Нові вже в роботі."
@@ -1667,9 +1670,6 @@ msgstr "Майже правильно: помилка у двох літерах
 
 msgid "Nearly right."
 msgstr "Майже правильно."
-
-msgid "Negation"
-msgstr "Заперечення"
 
 msgid "Next"
 msgstr "Далі"
@@ -1722,6 +1722,9 @@ msgstr "Іменники"
 
 msgid "Nouns and cases"
 msgstr "Іменники та відмінки"
+
+msgid "Nouns from verbs"
+msgstr "Іменники від дієслів"
 
 msgid "Now"
 msgstr "Зараз"
@@ -1805,9 +1808,6 @@ msgstr "або *pole*"
 msgid "Ordering at a café in Estonian"
 msgstr "Замовлення в кав’ярні естонською"
 
-msgid "Ordinals and dates"
-msgstr "Порядкові числівники й дати"
-
 msgid "Out doing it"
 msgstr "За цим заняттям або вже після"
 
@@ -1831,12 +1831,6 @@ msgstr "Частина чогось, а також після числівник
 
 msgid "Participles"
 msgstr "Дієприкметники"
-
-msgid "Particle verbs with new meanings"
-msgstr "Дієслова з частками: нові значення"
-
-msgid "Particle verbs: up, out, away"
-msgstr "Дієслова з частками: вгору, назовні, геть"
 
 msgid "partitive"
 msgstr "партитив"
@@ -1863,12 +1857,6 @@ msgstr "Пауза"
 msgid "Peeter is ta, he, so: on."
 msgstr "Пеетер — це ta, він, тож: on."
 
-msgid "Perfect and pluperfect"
-msgstr "Перфект і плюсквамперфект"
-
-msgid "Personal pronouns and “to be”"
-msgstr "Особові займенники і «бути»"
-
 msgid "Pick a word first."
 msgstr "Спершу вибери слово."
 
@@ -1880,9 +1868,6 @@ msgstr "Обери слово для пропуску"
 
 msgid "Pick up where you left off"
 msgstr "Продовж з того ж місця"
-
-msgid "Place words: on, under, behind"
-msgstr "Де що: на, під, за"
 
 msgid "Placement test"
 msgstr "Тест на рівень"
@@ -1935,41 +1920,14 @@ msgstr "Відтворюється"
 msgid "Pluperfect"
 msgstr "Давноминулий"
 
-msgid "Plural"
-msgstr "Множина"
-
 msgid "Plural cases"
 msgstr "Відмінки в множині"
-
-msgid "Plural partitive"
-msgstr "Партитив множини"
 
 msgid "Poe- plus -s: in a shop."
 msgstr "Poe- плюс -s: у крамниці."
 
 msgid "Practice parts"
 msgstr "Частини для практики"
-
-msgid "Practice: a day in Tallinn"
-msgstr "Практика: день у Таллінні"
-
-msgid "Practice: a message to the landlord"
-msgstr "Практика: лист орендодавцю"
-
-msgid "Practice: at the market"
-msgstr "Практика: на ринку"
-
-msgid "Practice: last weekend, next week"
-msgstr "Практика: минулі вихідні, наступний тиждень"
-
-msgid "Practice: looking for a flat"
-msgstr "Практика: шукаємо квартиру"
-
-msgid "Practice: meeting someone"
-msgstr "Практика: знайомство"
-
-msgid "Practice: reading the news"
-msgstr "Практика: читаємо новини"
 
 msgid "Present"
 msgstr "Теперішній"
@@ -1983,9 +1941,6 @@ msgstr "Перфект"
 
 msgid "Present tense"
 msgstr "Теперішній час"
-
-msgid "Pronouns in every case"
-msgstr "Займенники в усіх відмінках"
 
 msgid "Pronunciation"
 msgstr "Вимова"
@@ -2002,9 +1957,6 @@ msgstr "Розстав слова по порядку"
 msgid "Question"
 msgstr "Питання"
 
-msgid "Questions"
-msgstr "Питання"
-
 msgid "Questions done: {settled} of {total}"
 msgstr "Запитань пройдено: {settled} з {total}"
 
@@ -2017,21 +1969,15 @@ msgstr "Перечитати"
 msgid "Reading"
 msgstr "Читання"
 
+msgid "Reading the news"
+msgstr "Читаємо новини"
+
 #. placeholder {0}: targetStage?.level
 msgid "Recommended start · Stage {targetNumber} ({0})"
 msgstr "Рекомендований старт · Етап {targetNumber} ({0})"
 
-msgid "Relative clauses"
-msgstr "Підрядні речення з «який»"
-
 msgid "Reported speech"
 msgstr "Непряма мова"
-
-msgid "Reset"
-msgstr "Скинути"
-
-msgid "Resume"
-msgstr "Продовжити"
 
 msgid "Review"
 msgstr "Повторення"
@@ -2082,11 +2028,26 @@ msgstr "Скажи, хто ти, що робиш і де живеш, запит�
 msgid "Say with whom and without what, give a date and a time, put words in the right order, describe and compare things, and say what someone became."
 msgstr "Скажи, з ким і без чого, назви дату й час, став слова в правильному порядку, описуй і порівнюй речі та розкажи, ким хтось став."
 
+msgid "Saying “I have”"
+msgstr "Як сказати «у мене є»"
+
+msgid "Saying “I like”"
+msgstr "Як сказати «мені подобається»"
+
+msgid "Saying “would”"
+msgstr "Як сказати «я б»"
+
+msgid "Saying no"
+msgstr "Заперечення"
+
 msgid "Saying no in the past"
 msgstr "Заперечення в минулому"
 
-msgid "Saying where: -s and -l"
-msgstr "Як сказати, де: закінчення -s і -l"
+msgid "Saying when"
+msgstr "Як сказати, коли"
+
+msgid "Saying where"
+msgstr "Як сказати, де"
 
 msgid "Says what you do."
 msgstr "Сказано, чим ти займаєшся."
@@ -2163,8 +2124,8 @@ msgstr "Повільніше"
 msgid "Some of it"
 msgstr "Якась кількість"
 
-msgid "Somebody, nobody: -gi and -ki"
-msgstr "Хтось, ніхто: -gi і -ki"
+msgid "Somebody, nobody"
+msgstr "Хтось, ніхто"
 
 msgid "Soon"
 msgstr "Скоро"
@@ -2188,26 +2149,8 @@ msgstr "Швидкість"
 msgid "Stage {0} · {1} · {2}"
 msgstr "Етап {0} · {1} · {2}"
 
-msgid "Stage 3 checkpoint"
-msgstr "Контрольна етапу 3"
-
-msgid "Stage 4 checkpoint"
-msgstr "Контрольна етапу 4"
-
-msgid "Stage 5 checkpoint"
-msgstr "Контрольна етапу 5"
-
-msgid "Stage 6 checkpoint"
-msgstr "Контрольна етапу 6"
-
-msgid "Stage checkpoint"
-msgstr "Контрольна робота"
-
 msgid "Start"
 msgstr "Почати"
-
-msgid "Start checkpoint"
-msgstr "Почати контрольну"
 
 msgid "Start here"
 msgstr "Почни звідси"
@@ -2221,15 +2164,12 @@ msgstr "Почати тест на рівень"
 msgid "Start the conversation"
 msgstr "Почати розмову"
 
-msgid "Start timer"
-msgstr "Запустити таймер"
+msgid "Start the questions"
+msgstr "Почати"
 
 #. placeholder {0}: i18n._(targetStage.name)
 msgid "Start with {0}"
 msgstr "Почни з теми «{0}»"
-
-msgid "Stem changes"
-msgstr "Зміни основи"
 
 msgid "Still going on"
 msgstr "Ще триває"
@@ -2336,9 +2276,6 @@ msgstr "Це питання, хто вона, а вона вже сказала.
 msgid "That’s good morning; Mari is leaving."
 msgstr "Це «доброго ранку», а Марі йде."
 
-msgid "The -des and -mata forms"
-msgstr "Форми на -des і -mata"
-
 msgid "the -ma infinitive"
 msgstr "інфінітив на -ma"
 
@@ -2420,6 +2357,24 @@ msgstr "Естонський транслатив: ставати, до і на"
 msgid "The form isn’t <0>{wrote}</0>."
 msgstr "Форма не <0>{wrote}</0>."
 
+msgid "The free Estonian stage 1 final challenge: twenty mixed questions on pronouns and “to be”, the present tense, saying no, questions, saying where, numbers, the time, the days and commands, with no hints beforehand and a score per rule linked to its lesson."
+msgstr "Безкоштовне підсумкове завдання етапу 1 з естонської: двадцять змішаних запитань про займенники й «бути», теперішній час, заперечення, питання, «де», числа, час, дні тижня й наказовий спосіб. Без підказок наперед, а результат за кожним правилом веде до його уроку."
+
+msgid "The free Estonian stage 2 final challenge: twenty mixed questions on noun stems, the genitive, saying “I have”, the partitive, the plural, in and into, on and onto, and place words, with no hints beforehand and a score per rule linked to its lesson."
+msgstr "Безкоштовне підсумкове завдання етапу 2 з естонської: двадцять змішаних запитань про основу іменника, родовий відмінок, «у мене є», партитив, множину, «в» і «у», «на» і «на (куди)», а також слова місця. Без підказок наперед, а результат за кожним правилом веде до його уроку."
+
+msgid "The free Estonian stage 3 final challenge: twenty mixed questions on verbs, modals, liking, past tense and the future, with no hints beforehand and a score per rule linked to its lesson."
+msgstr "Безкоштовне підсумкове завдання етапу 3 з естонської: двадцять змішаних запитань про дієслова, модальні дієслова, «мені подобається», минулий і майбутній час. Без підказок наперед, а результат за кожним правилом веде до його уроку."
+
+msgid "The free Estonian stage 4 final challenge: twenty mixed questions on cases, pronouns, dates, word order, adjectives, comparing and -gi / -ki, with no hints beforehand and a score per rule linked to its lesson."
+msgstr "Безкоштовне підсумкове завдання етапу 4 з естонської: двадцять змішаних запитань про відмінки, займенники, дати, порядок слів, прикметники, порівняння та -gi / -ki. Без підказок наперед, а результат за кожним правилом веде до його уроку."
+
+msgid "The free Estonian stage 5 final challenge: twenty mixed questions on stage 5 grammar with a score per rule, then notices and an email to read, a message to fill, sentences to fix and write, a voice message and a phone call played twice, and a short email to write. It asks about as much as an A2 exam does."
+msgstr "Безкоштовне підсумкове завдання етапу 5 з естонської: двадцять змішаних запитань із граматики етапу 5 з результатом за кожним правилом, а далі оголошення й лист для читання, повідомлення з пропусками, речення для виправлення й складання, голосове повідомлення та телефонна розмова (кожну можна почути двічі) і короткий лист для письма. Обсягом приблизно як іспит A2."
+
+msgid "The free Estonian stage 6 final challenge: twenty mixed questions on stage 6 grammar with a score per rule, then a news report and a notice to read, a text to fill, sentences to fix and write, radio news and an interview played twice, and a formal letter to write. It asks about as much as a B1 exam does."
+msgstr "Безкоштовне підсумкове завдання етапу 6 з естонської: двадцять змішаних запитань із граматики етапу 6 з результатом за кожним правилом, а далі новинний репортаж і оголошення для читання, текст із пропусками, речення для виправлення й складання, радіоновини та інтерв’ю (кожне можна почути двічі) і офіційний лист для письма. Обсягом приблизно як іспит B1."
+
 msgid "The future"
 msgstr "Майбутнє"
 
@@ -2432,11 +2387,14 @@ msgstr "g зникає, а з’являється a."
 msgid "The g drops and the u becomes o: loe-, plus -n for ma."
 msgstr "g зникає, а u стає o: loe-, плюс -n для ma."
 
-msgid "The genitive case"
+msgid "The genitive"
 msgstr "Родовий відмінок"
 
 msgid "The genitive with *-d*."
 msgstr "Родовий і *-d*."
+
+msgid "The impersonal"
+msgstr "Безособова форма"
 
 msgid "The lesson kit’s parts for practice after a rule is taught: listening, a passage with gaps, reading, a dialogue, sorting, matching, building a sentence, making a form, writing a sentence and fixing one. docs/design/estonian-lessons.md says when to use each."
 msgstr "Частини набору для вправ після правила: слухання, текст із пропусками, читання, діалог, сортування, пари, складання речення, утворення форми, написання речення та виправлення. Коли яку брати, пояснює docs/design/estonian-lessons.md."
@@ -2453,16 +2411,13 @@ msgstr "Молоко коштує два євро."
 msgid "The most common words, each brought back on the day you’d forget it."
 msgstr "Найуживаніші слова, і кожне повертається саме тоді, коли ти б його забув."
 
-msgid "The object: whole or part"
-msgstr "Додаток: ціле чи частина"
-
 msgid "The od drops and an e comes in: poe- carries most forms."
 msgstr "od зникає, а з’являється e: від poe- утворюється більшість форм."
 
 msgid "The owner comes first."
 msgstr "Власник стоїть першим."
 
-msgid "The partitive case"
+msgid "The partitive"
 msgstr "Партитив"
 
 msgid "The partitive of muusika."
@@ -2473,6 +2428,12 @@ msgstr "Текст"
 
 msgid "The past of <0>joob</0> is <1>jõi</1>."
 msgstr "Минуле від <0>joob</0> — <1>jõi</1>."
+
+msgid "The plural"
+msgstr "Множина"
+
+msgid "The plural partitive"
+msgstr "Партитив множини"
 
 msgid "The questions didn’t load. Check your connection and try again."
 msgstr "Запитання не завантажилися. Перевір з’єднання і спробуй ще раз."
@@ -2513,20 +2474,11 @@ msgstr "Таблиця одного слова поверх сторінки, в
 msgid "The table is in the middle of the room."
 msgstr "Стіл посеред кімнати."
 
-msgid "The three forms of a noun"
-msgstr "Три основні форми іменника"
-
-msgid "The three forms of a verb"
-msgstr "Три основні форми дієслова"
-
 msgid "The three forms of an Estonian noun"
 msgstr "Три основні форми естонського іменника"
 
 msgid "The three forms of an Estonian verb"
 msgstr "Три основні форми естонського дієслова"
-
-msgid "The translative case"
-msgstr "Транслатив"
 
 msgid "The verb stays second, whichever word comes first."
 msgstr "Дієслово лишається другим, хоч би яке слово стояло першим."
@@ -2561,6 +2513,12 @@ msgstr "Завтра вони не прийдуть."
 msgid "This is Martin’s coffee."
 msgstr "Це кава Мартіна."
 
+msgid "Three forms of a noun"
+msgstr "Три форми іменника"
+
+msgid "Three forms of a verb"
+msgstr "Три форми дієслова"
+
 msgid "Through, across and along in Estonian"
 msgstr "Крізь, через і вздовж естонською"
 
@@ -2569,12 +2527,6 @@ msgstr "Крізь, через, уздовж"
 
 msgid "Tick what your text does."
 msgstr "Познач, що є у твоєму тексті."
-
-msgid "Time expressions: when things happen"
-msgstr "Вирази часу: коли що відбувається"
-
-msgid "Time is up. You can still finish and check your answers."
-msgstr "Час вийшов. Ти все одно можеш завершити й перевірити відповіді."
 
 msgid "Timeline"
 msgstr "Лінія часу"
@@ -2609,9 +2561,6 @@ msgstr "Завтра я їстиму вдома."
 msgid "Tööl, at work, takes -l like a market does."
 msgstr "Tööl, на роботі, бере -l, як і ринок."
 
-msgid "Travel and directions"
-msgstr "Дорога й транспорт"
-
 msgctxt "the statement is true"
 msgid "True"
 msgstr "Правда"
@@ -2624,6 +2573,9 @@ msgstr "Спробувати ще раз"
 
 msgid "Turg becomes turu- before an ending: turul."
 msgstr "Перед закінченням turg стає turu-: turul."
+
+msgid "Two verbs together"
+msgstr "Два дієслова разом"
 
 msgid "Type <0>{letter}</0>"
 msgstr "Ввести <0>{letter}</0>"
@@ -2646,6 +2598,12 @@ msgstr "Напиши слово"
 msgid "under"
 msgstr "під"
 
+msgid "Under, behind, next to"
+msgstr "Під, за, поруч"
+
+msgid "Up, out, away"
+msgstr "Угору, назовні, геть"
+
 msgid "Use"
 msgstr "Випадок"
 
@@ -2667,8 +2625,14 @@ msgstr "Зазвичай, коли таке слово стоїть після �
 msgid "Verbs"
 msgstr "Дієслова"
 
+msgid "Verbs and their cases"
+msgstr "Дієслова й відмінки"
+
 msgid "Verbs or nouns"
 msgstr "Дієслова чи іменники"
+
+msgid "Verbs with new meanings"
+msgstr "Дієслова з новим значенням"
 
 msgid "Warm-up"
 msgstr "Розминка"
@@ -2766,8 +2730,8 @@ msgstr "Куди йде кіт"
 msgid "Where the cat is"
 msgstr "Де кіт"
 
-msgid "Which case a verb takes"
-msgstr "Який відмінок потрібен дієслову"
+msgid "Which and who"
+msgstr "Речення з «який»"
 
 msgid "Which case an Estonian verb takes"
 msgstr "Який відмінок потрібен естонському дієслову"
@@ -2780,6 +2744,9 @@ msgstr "У якому місті живе Марі? Напиши так, як в
 
 msgid "While doing it"
 msgstr "Під час дії"
+
+msgid "While doing, without doing"
+msgstr "Роблячи, не роблячи"
 
 msgid "Who is Mari?"
 msgstr "Хто така Марі?"
@@ -2795,6 +2762,9 @@ msgstr "Про кого чи про що йдеться"
 
 msgid "Who says it?"
 msgstr "Хто це каже?"
+
+msgid "Whole or partial object"
+msgstr "Повний і частковий додаток"
 
 msgid "Whose it is"
 msgstr "Чиє це"
@@ -2823,8 +2793,8 @@ msgstr "Як змінюється слово"
 msgid "Word meanings open once you have answered."
 msgstr "Значення слів відкриються, коли відповіси."
 
-msgid "Word order: the verb usually comes second"
-msgstr "Порядок слів: дієслово зазвичай на другому місці"
+msgid "Word order"
+msgstr "Порядок слів"
 
 msgid "Word pairs"
 msgstr "Пари слів"
@@ -2837,12 +2807,6 @@ msgstr "Слова"
 
 msgid "Words from this lesson"
 msgstr "Слова з цього уроку"
-
-msgid "Words from verbs: -ja, -mine"
-msgstr "Слова від дієслів: -ja, -mine"
-
-msgid "Words from words: -lik, -tu, -ke"
-msgstr "Слова від слів: -lik, -tu, -ke"
 
 msgid "Words in colour open their meaning."
 msgstr "Кольорові слова показують своє значення."
@@ -2894,6 +2858,9 @@ msgstr "Напиши, що чуєш"
 
 msgid "Writing"
 msgstr "Письмо"
+
+msgid "Writing to a landlord"
+msgstr "Лист власникові житла"
 
 msgid "Yes, she is"
 msgstr "Так"

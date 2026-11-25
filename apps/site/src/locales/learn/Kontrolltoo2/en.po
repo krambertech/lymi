@@ -1,0 +1,26 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 14:38+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "15 minutes"
+msgstr "15 minutes"
+
+msgid "20 mixed questions"
+msgstr "20 mixed questions"
+
+msgid "Check what Stage 2 taught: how nouns change, the genitive, saying “I have”, the partitive, the plural, in and into, on and onto, and place words — mixed, with no hints beforehand."
+msgstr "Check what Stage 2 taught: how nouns change, the genitive, saying “I have”, the partitive, the plural, in and into, on and onto, and place words — mixed, with no hints beforehand."
+
+msgid "Final challenge"
+msgstr "Final challenge"
+
+msgid "Mixed questions"
+msgstr "Mixed questions"
+
+msgid "Twenty mixed questions from Stage 2. At the end you see your score for each rule with a link back to the lesson that teaches it."
+msgstr "Twenty mixed questions from Stage 2. At the end you see your score for each rule with a link back to the lesson that teaches it."

@@ -12,12 +12,13 @@ export function Kontrolltoo3Lesson() {
       glossary={{}}
       sub={
         <Trans>
-          Check what Stage 3 taught: verb base forms, infinitives, modals, going and coming back,
-          liking, past tense, negation in the past and the future — mixed, with no hints beforehand.
+          Check what Stage 3 taught: the three forms of a verb, infinitives, modals, going and
+          coming back, liking, past tense, negation in the past and the future — mixed, with no
+          hints beforehand.
         </Trans>
       }
       facts={[
-        <Trans key="t">Checkpoint</Trans>,
+        <Trans key="t">Final challenge</Trans>,
         <Trans key="m">15 minutes</Trans>,
         <Trans key="q">20 mixed questions</Trans>,
       ]}
@@ -26,7 +27,7 @@ export function Kontrolltoo3Lesson() {
       sections={[
         {
           id: "test",
-          title: t`Stage 3 checkpoint`,
+          title: t`Mixed questions`,
           quiz: true,
           children: (
             <>

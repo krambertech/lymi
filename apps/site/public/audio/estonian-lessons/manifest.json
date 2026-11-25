@@ -1,4 +1,288 @@
 {
+  "arsti-juures/aita2h-na2gemist": {
+    "text": "Aitäh! Nägemist!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/arst-kirjutab-mulle-retsepti": {
+    "text": "Arst kirjutab mulle retsepti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/c-doctor": {
+    "text": "Tere, Mart! Istuge palun. Mis mureks? Tere, doktor! Mul valutab kurk ja mul on ka tugev köha. Millal see algas? Juba teisipäeval. Eile õhtul tõusis ka palavik, kolmkümmend kaheksa. Kas pea või selg ka valutab? Pea valutab natuke, aga kõht ja selg on korras. Selge, vaatame kurku. Palun tehke suu lahti ja hingake sügavalt. Olgu, doktor. Kurk on punane, aga kopsud on puhtad. See on tavaline külmetus. Kas ma pean rohtu võtma? Jah, ma kirjutan teile retsepti. Võtke seda rohtu kaks korda päevas koos veega. Mitu päeva ma pean seda võtma? Viis päeva. Apteek on siin samas esimesel korrusel, kohe ukse kõrval. Kas ma võin homme tööle minna? Parem ärge minge. Puhake kodus reedeni ja jooge palju sooja teed. Olgu, ma jään koju. Mis siis, kui palavik ei lähe ära? Kui esmaspäeval on veel palavik, helistage meile ja tulge tagasi. Suur aitäh, doktor! Head päeva!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Mart! Istuge palun. Mis mureks?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, doktor! Mul valutab kurk ja mul on ka tugev köha."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Millal see algas?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Juba teisipäeval. Eile õhtul tõusis ka palavik, kolmkümmend kaheksa."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas pea või selg ka valutab?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Pea valutab natuke, aga kõht ja selg on korras."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Selge, vaatame kurku. Palun tehke suu lahti ja hingake sügavalt."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Olgu, doktor."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kurk on punane, aga kopsud on puhtad. See on tavaline külmetus."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas ma pean rohtu võtma?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, ma kirjutan teile retsepti. Võtke seda rohtu kaks korda päevas koos veega."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mitu päeva ma pean seda võtma?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Viis päeva. Apteek on siin samas esimesel korrusel, kohe ukse kõrval."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas ma võin homme tööle minna?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Parem ärge minge. Puhake kodus reedeni ja jooge palju sooja teed."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Olgu, ma jään koju. Mis siis, kui palavik ei lähe ära?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kui esmaspäeval on veel palavik, helistage meile ja tulge tagasi."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Suur aitäh, doktor! Head päeva!"
+        ]
+      }
+    ]
+  },
+  "arsti-juures/jah-homme-kell-ku2mme-sobib-ha2sti": {
+    "text": "Jah, homme kell kümme sobib hästi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/kas-homme-kell-ku2mme-sobib": {
+    "text": "Kas homme kell kümme sobib?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/ko2ha": {
+    "text": "köha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/ko3ht": {
+    "text": "kõht",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/kurk": {
+    "text": "kurk",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/ma-ka2isin-eile-apteegis": {
+    "text": "Ma käisin eile apteegis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/ma-pean-kaks-pa2eva-kodus-puhkama": {
+    "text": "Ma pean kaks päeva kodus puhkama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/ma-tahan-arsti-juurde-tulla": {
+    "text": "Ma tahan arsti juurde tulla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mis-teil-viga-on": {
+    "text": "Mis teil viga on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-on-ko3rge-palavik": {
+    "text": "Mul on kõrge palavik.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-on-nohu": {
+    "text": "Mul on nohu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-on-palavik-ja-ko2ha": {
+    "text": "Mul on palavik ja köha.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-on-palavik-ja-kurk-valutab": {
+    "text": "Mul on palavik ja kurk valutab.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-on-tugev-ko2ha": {
+    "text": "Mul on tugev köha.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-valutab-ko3ht": {
+    "text": "Mul valutab kõht.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-valutab-kurk": {
+    "text": "Mul valutab kurk.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-valutab-kurk-juba-kolm-pa2eva": {
+    "text": "Mul valutab kurk juba kolm päeva.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-valutab-pea": {
+    "text": "Mul valutab pea.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-valutab-selg": {
+    "text": "Mul valutab selg.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/nohu": {
+    "text": "nohu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/p-note": {
+    "text": "Tere, Mart! Teie aeg perearsti juures on homme kell kümme. Meie keskus asub kolmandal korrusel, kabinet kaksteist. Palun tulge kümme minutit varem ja võtke isikutunnistus kaasa. Kui teil on kõrge palavik, pange palun mask ette. Enne vastuvõttu jooge vett, aga ärge sööge kaks tundi. Kui te ei saa tulla, helistage meile täna enne kella viit. Head paranemist! Õde Kati.",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "arsti-juures/palavik": {
+    "text": "palavik",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/palun-vo3tke-isikutunnistus-kaasa-head-pa2eva": {
+    "text": "Palun võtke isikutunnistus kaasa. Head päeva!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/pea": {
+    "text": "pea",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/perearstikeskus-tere": {
+    "text": "Perearstikeskus, tere!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/puhake-kodus-kolm-pa2eva": {
+    "text": "Puhake kodus kolm päeva.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/retsept": {
+    "text": "retsept",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/selg": {
+    "text": "selg",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/ta-on-ta2na-arsti-juures": {
+    "text": "Ta on täna arsti juures.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/tere-ma-soovin-arsti-juurde-aega-panna": {
+    "text": "Tere! Ma soovin arsti juurde aega panna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/vo3tke-seda-rohtu-kaks-korda-pa2evas": {
+    "text": "Võtke seda rohtu kaks korda päevas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/vo3tke-seda-rohtu-veega": {
+    "text": "Võtke seda rohtu veega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "aru-saama/a2ra-anna-alla": {
     "text": "Ära anna alla!",
     "model": "eleven_v4",
@@ -1946,6 +2230,257 @@
   },
   "eitus/te-to2o2tate": {
     "text": "Te töötate.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/arsti-juurde": {
+    "text": "arsti juurde",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/c-kula": {
+    "text": "Tere, Mart! Kuidas sul täna läheb? Tere, Kati! Juba paremini, aitäh küsimast. Ma olen praegu vanemate juures, sest siin on rahulikum puhata. Kas sa käisid hommikul arsti juures ära? Jah, ma läksin hommikul kella üheksaks arsti juurde. Arst vaatas mu haiget põlve ja ütles, et midagi hullu ei ole. Sain arstilt retsepti ja läksin kohe apteeki rohtu ostma. Ta ütles, et ma ei tohi nädal aega joosta, aga jalutada võin küll. Hea kuulda! Kas emal ja isal on ka kõik hästi? Jah, õde käis ka enne lõunat siin ja tõi pagaripoest värsket leiba. Millal sa enda korterisse tagasi lähed? Reede õhtul tulen vanemate juurest koju. Tule nädalavahetusel minu juurde külla! Tulen hea meelega laupäeval, umbes kell kolm. Ma toon sulle kooki kaasa!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Mart! Kuidas sul täna läheb?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Kati! Juba paremini, aitäh küsimast."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma olen praegu vanemate juures, sest siin on rahulikum puhata."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas sa käisid hommikul arsti juures ära?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, ma läksin hommikul kella üheksaks arsti juurde."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Arst vaatas mu haiget põlve ja ütles, et midagi hullu ei ole."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Sain arstilt retsepti ja läksin kohe apteeki rohtu ostma."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ta ütles, et ma ei tohi nädal aega joosta, aga jalutada võin küll."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hea kuulda! Kas emal ja isal on ka kõik hästi?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, õde käis ka enne lõunat siin ja tõi pagaripoest värsket leiba."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Millal sa enda korterisse tagasi lähed?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Reede õhtul tulen vanemate juurest koju. Tule nädalavahetusel minu juurde külla!"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tulen hea meelega laupäeval, umbes kell kolm."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ma toon sulle kooki kaasa!"
+        ],
+        "say": "[warm] Ma toon sulle kooki kaasa!"
+      }
+    ]
+  },
+  "emal-ema-juures/ema-juurde": {
+    "text": "ema juurde",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ema-juures": {
+    "text": "ema juures",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ema-juurest": {
+    "text": "ema juurest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/emal": {
+    "text": "emal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/emal-on-va2ike-aed": {
+    "text": "Emal on väike aed.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/emale": {
+    "text": "emale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/emalt": {
+    "text": "emalt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/juurde": {
+    "text": "juurde",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/juures": {
+    "text": "juures",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/juurest": {
+    "text": "juurest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-andsin-vennale-vo3tme": {
+    "text": "Ma andsin vennale võtme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-elan-sel-na2dalal-ema-juures": {
+    "text": "Ma elan sel nädalal ema juures.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-helistan-so3brale": {
+    "text": "Ma helistan sõbrale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-la2hen-homme-arsti-juurde": {
+    "text": "Ma lähen homme arsti juurde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-la2hen-homme-ema-juurde": {
+    "text": "Ma lähen homme ema juurde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-la2hen-o3htul-so3bra-juurde": {
+    "text": "Ma lähen õhtul sõbra juurde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-la2ksin-eile-venna-juurde": {
+    "text": "Ma läksin eile venna juurde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-olen-ta2na-ema-juures": {
+    "text": "Ma olen täna ema juures.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-sain-arstilt-retsepti": {
+    "text": "Ma sain arstilt retsepti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-sain-o3elt-kirja": {
+    "text": "Ma sain õelt kirja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-tulen-arsti-juurest": {
+    "text": "Ma tulen arsti juurest.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/minu": {
+    "text": "minu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/minu-juures": {
+    "text": "minu juures",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/o3elt": {
+    "text": "õelt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/so3bra": {
+    "text": "sõbra",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/so3bra-juurest": {
+    "text": "sõbra juurest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/so3brale": {
+    "text": "sõbrale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ta-on-ta2na-so3bra-juures": {
+    "text": "Ta on täna sõbra juures.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ta-tuli-just-so3bra-juurest": {
+    "text": "Ta tuli just sõbra juurest.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/tule-o3htul-minu-juurde": {
+    "text": "Tule õhtul minu juurde!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/vennal-on-homme-vaba-pa2ev": {
+    "text": "Vennal on homme vaba päev.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -6712,6 +7247,477 @@
   },
   "kohad/w-linnas": {
     "text": "Ma töötan linnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/aita2h": {
+    "text": "Aitäh!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/arve": {
+    "text": "arve",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/d-kohvik": {
+    "text": "Tere! Palun? Tere! Palun üks kohv ja üks saiake. Siin või kaasa? Siin, palun. Palun! Suhkur on laual. Aitäh! Kas teil on piima? Jah, on. Siin on piim. Palun! Aitäh! Kas teil on ka suppi? Ei, suppi ei ole. Meil on kook ja võileib. Kas kook on hea? Jah, kook on väga hea. Siis palun üks kook. Ja üks mahl, palun. Palun! Kaardiga või sularahas? Kaardiga. Palun arve. Palun! Head isu! Aitäh! Head aega! Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere!",
+          "Palun?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere!",
+          "Palun üks kohv ja üks saiake."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Siin või kaasa?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Siin, palun."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Palun!",
+          "Suhkur on laual."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh!",
+          "Kas teil on piima?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, on.",
+          "Siin on piim.",
+          "Palun!"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh!",
+          "Kas teil on ka suppi?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, suppi ei ole.",
+          "Meil on kook ja võileib."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas kook on hea?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, kook on väga hea."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Siis palun üks kook.",
+          "Ja üks mahl, palun."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Palun!",
+          "Kaardiga või sularahas?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kaardiga.",
+          "Palun arve."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Palun!",
+          "Head isu!"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh!",
+          "Head aega!"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Head aega!"
+        ]
+      }
+    ]
+  },
+  "kohvikus/head-isu": {
+    "text": "Head isu!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/ja": {
+    "text": "ja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/ka": {
+    "text": "ka",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kaardiga": {
+    "text": "kaardiga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kaardiga-palun": {
+    "text": "Kaardiga, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kaardiga-vo3i-sularahas": {
+    "text": "Kaardiga või sularahas?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kaasa": {
+    "text": "kaasa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-kooki": {
+    "text": "Kas teil on kooki?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-mahla": {
+    "text": "Kas teil on mahla?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-piima": {
+    "text": "Kas teil on piima?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-suppi": {
+    "text": "Kas teil on suppi?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-teed": {
+    "text": "Kas teil on teed?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kas-teil-on-vett": {
+    "text": "Kas teil on vett?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kohv": {
+    "text": "kohv",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kohvi": {
+    "text": "kohvi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kohvikus": {
+    "text": "kohvikus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kook": {
+    "text": "kook",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kooki": {
+    "text": "kooki",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/kui-palju-see-maksab": {
+    "text": "Kui palju see maksab?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/laual": {
+    "text": "laual",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/mahl": {
+    "text": "mahl",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/mahla": {
+    "text": "mahla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/maksab": {
+    "text": "maksab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/meil": {
+    "text": "meil",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/o-liis-1": {
+    "text": "Tere! Palun?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/o-liis-2": {
+    "text": "Siin või kaasa?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/o-liis-3": {
+    "text": "Palun! Suhkur on laual.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/o-liis-4": {
+    "text": "Jah, on. Palun! Kaardiga või sularahas?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/o-liis-5": {
+    "text": "Palun! Head aega!",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/o-sina-1": {
+    "text": "Tere! Palun üks tee ja üks saiake.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/o-sina-2": {
+    "text": "Siin, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/o-sina-3": {
+    "text": "Aitäh! Kas teil on piima?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/o-sina-4": {
+    "text": "Kaardiga, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/o-sina-5": {
+    "text": "Aitäh! Head aega!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/on": {
+    "text": "on",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/p-mari": {
+    "text": "Tere, Liis! Ma töötan kohvikus Tallinnas. See on minu kohvik. Meil on kohv, tee, vesi, mahl ja piim. Meil on ka supp, kook, saiake ja võileib. Suhkur on laual. Kohv on väga hea. Kook on ka väga hea. Minu sõber Jaan joob siin palju kohvi. Mina joon teed. Siin või kaasa? Kaardiga või sularahas? Kas sa elad Tallinnas? Head aega!",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kohvikus/p-order": {
+    "text": "Tere! Palun üks kohv ja üks kook. Siin, palun. Kaardiga, palun. Aitäh!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun": {
+    "text": "Palun!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-arve": {
+    "text": "Palun arve.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-kohv": {
+    "text": "Palun üks kohv.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-kook": {
+    "text": "Palun üks kook.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-mahl": {
+    "text": "Palun üks mahl.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-mahl-ja-u2ks-kook": {
+    "text": "Palun üks mahl ja üks kook.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-piim": {
+    "text": "Palun üks piim.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-supp": {
+    "text": "Palun üks supp.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-tee-ja-u2ks-saiake": {
+    "text": "Palun üks tee ja üks saiake.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-vesi": {
+    "text": "Palun üks vesi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/palun-u2ks-vo3ileib": {
+    "text": "Palun üks võileib.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/piim": {
+    "text": "piim",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/piima": {
+    "text": "piima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/saiake": {
+    "text": "saiake",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/see": {
+    "text": "see",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/siin": {
+    "text": "siin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/siin-palun": {
+    "text": "Siin, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/siin-vo3i-kaasa": {
+    "text": "Siin või kaasa?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/siis": {
+    "text": "siis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/suhkur": {
+    "text": "suhkur",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/suhkur-on-laual": {
+    "text": "Suhkur on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/sularahas": {
+    "text": "sularahas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/supp": {
+    "text": "supp",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/suppi": {
+    "text": "suppi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/tee": {
+    "text": "tee",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/teed": {
+    "text": "teed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/teil": {
+    "text": "teil",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/vesi": {
+    "text": "vesi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/vett": {
+    "text": "vett",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/vo3i": {
+    "text": "või",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohvikus/vo3ileib": {
+    "text": "võileib",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -22160,6 +23166,602 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "pere-ja-ankeet/aadress": {
+    "text": "aadress",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/abikaasa": {
+    "text": "abikaasa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/ankeet": {
+    "text": "ankeet",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/d-clerk-1": {
+    "text": "Tere! Mis on sinu eesnimi?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "pere-ja-ankeet/d-clerk-2": {
+    "text": "Ja sinu perekonnanimi?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "pere-ja-ankeet/d-clerk-3": {
+    "text": "Kus sa elad?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "pere-ja-ankeet/d-clerk-4": {
+    "text": "Kas sul on õde?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "pere-ja-ankeet/d-desk": {
+    "text": "Tere! Mis on sinu eesnimi? Minu eesnimi on Andres. Ja sinu perekonnanimi? Minu perekonnanimi on Kask. Mis on sinu vanus? Minu vanus on kolmkümmend. Kus sa elad? Ma elan Pärnus. Minu aadress on Kooli neli. Mis on sinu telefoninumber? Minu telefoninumber on kuus, kaks, kolm, neli, viis. Kas sul on õde? Jah, mul on üks õde ja kaks venda. Hästi, aitäh!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere!",
+          "Mis on sinu eesnimi?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Minu eesnimi on Andres."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja sinu perekonnanimi?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Minu perekonnanimi on Kask."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mis on sinu vanus?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Minu vanus on kolmkümmend."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kus sa elad?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma elan Pärnus.",
+          "Minu aadress on Kooli neli."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mis on sinu telefoninumber?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Minu telefoninumber on kuus, kaks, kolm, neli, viis."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sul on õde?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, mul on üks õde ja kaks venda."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Hästi, aitäh!"
+        ]
+      }
+    ]
+  },
+  "pere-ja-ankeet/d-you-1": {
+    "text": "Minu eesnimi on Liis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/d-you-2": {
+    "text": "Minu perekonnanimi on Mägi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/d-you-3": {
+    "text": "Ma elan Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/d-you-4": {
+    "text": "Jah, mul on üks õde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/eesnimi": {
+    "text": "eesnimi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/elukoht": {
+    "text": "elukoht",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/ema": {
+    "text": "ema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/isa": {
+    "text": "isa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/jah-mul-on-u2ks-vend": {
+    "text": "Jah, mul on üks vend.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/kas-sul-on-vend": {
+    "text": "Kas sul on vend?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/laps": {
+    "text": "laps",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/lapsed": {
+    "text": "lapsed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/last": {
+    "text": "last",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/linn": {
+    "text": "linn",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/ma-elan-tartus-ja-minu-vend-elab-pa2rnus": {
+    "text": "Ma elan Tartus ja minu vend elab Pärnus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu": {
+    "text": "minu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-aadress-on-kooli-kolm": {
+    "text": "Minu aadress on Kooli kolm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-aadress-on-kooli-neli-pa2rnu": {
+    "text": "Minu aadress on Kooli neli, Pärnu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-aadress-on-kooli-viis": {
+    "text": "Minu aadress on Kooli viis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-aadress-on-kooli-viis-tartu": {
+    "text": "Minu aadress on Kooli viis, Tartu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-abikaasa-o3pib-tallinnas": {
+    "text": "Minu abikaasa õpib Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-abikaasa-on-to2o2l": {
+    "text": "Minu abikaasa on tööl.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-eesnimi-on-jaan": {
+    "text": "Minu eesnimi on Jaan.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-eesnimi-on-liis": {
+    "text": "Minu eesnimi on Liis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-eesnimi-on-mari": {
+    "text": "Minu eesnimi on Mari.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-elukoht-on-pa2rnu": {
+    "text": "Minu elukoht on Pärnu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-ema-elab-tartus": {
+    "text": "Minu ema elab Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-ema-to2o2tab-kohvikus": {
+    "text": "Minu ema töötab kohvikus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-isa-o3pib-koolis": {
+    "text": "Minu isa õpib koolis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-isa-on-to2o2l": {
+    "text": "Minu isa on tööl.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-lapsed-on-koolis": {
+    "text": "Minu lapsed on koolis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-linn-on-pa2rnu": {
+    "text": "Minu linn on Pärnu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-linn-on-tallinn": {
+    "text": "Minu linn on Tallinn.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-linn-on-tartu": {
+    "text": "Minu linn on Tartu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-o3de-elab-pa2rnus": {
+    "text": "Minu õde elab Pärnus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-o3de-to2o2tab-kohvikus": {
+    "text": "Minu õde töötab kohvikus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-pere-elab-tartus": {
+    "text": "Minu pere elab Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-perekonnanimi-on-kask": {
+    "text": "Minu perekonnanimi on Kask.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-perekonnanimi-on-ma2gi": {
+    "text": "Minu perekonnanimi on Mägi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-perekonnanimi-on-tamm": {
+    "text": "Minu perekonnanimi on Tamm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-riik-on-eesti": {
+    "text": "Minu riik on Eesti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-riik-on-soome": {
+    "text": "Minu riik on Soome.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-su2nnipa2ev-on-homme": {
+    "text": "Minu sünnipäev on homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-telefoninumber-on-viis-kaks-kolm-neli-viis-kuus-seitse": {
+    "text": "Minu telefoninumber on viis, kaks, kolm, neli, viis, kuus, seitse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-telefoninumber-on-viis-kuus-null-kaks-seitse": {
+    "text": "Minu telefoninumber on viis, kuus, null, kaks, seitse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-vanaema-elab-pa2rnus": {
+    "text": "Minu vanaema elab Pärnus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-vanaema-elab-tallinnas": {
+    "text": "Minu vanaema elab Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-vanaema-on-kodus": {
+    "text": "Minu vanaema on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-vanaisa-elab-tallinnas": {
+    "text": "Minu vanaisa elab Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-vanaisa-on-kodus": {
+    "text": "Minu vanaisa on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-vanus-on-kaksku2mmend-kolm": {
+    "text": "Minu vanus on kakskümmend kolm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-vanus-on-kaksku2mmend-viis": {
+    "text": "Minu vanus on kakskümmend viis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-vanus-on-kolmku2mmend": {
+    "text": "Minu vanus on kolmkümmend.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-vanus-on-kolmku2mmend-kaks": {
+    "text": "Minu vanus on kolmkümmend kaks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-vanus-on-kolmku2mmend-neli": {
+    "text": "Minu vanus on kolmkümmend neli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-vend-o3pib-tartus": {
+    "text": "Minu vend õpib Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/minu-vend-on-kodus": {
+    "text": "Minu vend on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/mis-on-sinu-eesnimi": {
+    "text": "Mis on sinu eesnimi?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/mis-on-sinu-perekonnanimi": {
+    "text": "Mis on sinu perekonnanimi?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/mis-on-sinu-vanus": {
+    "text": "Mis on sinu vanus?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/mul-on": {
+    "text": "Mul on",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/mul-on-kaks-last": {
+    "text": "Mul on kaks last.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/mul-on-kaks-o3de": {
+    "text": "Mul on kaks õde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/mul-on-kaks-venda": {
+    "text": "Mul on kaks venda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/mul-on-kolm-last": {
+    "text": "Mul on kolm last.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/mul-on-kolm-o3de": {
+    "text": "Mul on kolm õde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/mul-on-kolm-venda": {
+    "text": "Mul on kolm venda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/mul-on-neli-last": {
+    "text": "Mul on neli last.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/mul-on-neli-o3de": {
+    "text": "Mul on neli õde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/mul-on-neli-venda": {
+    "text": "Mul on neli venda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/mul-on-u2ks-o3de-ja-kaks-venda": {
+    "text": "Mul on üks õde ja kaks venda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/mul-on-viis-o3de": {
+    "text": "Mul on viis õde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/mul-on-viis-venda": {
+    "text": "Mul on viis venda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/o3de": {
+    "text": "õde",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/p-form": {
+    "text": "Tere! Minu eesnimi on Jaan. Minu perekonnanimi on Tamm. Minu vanus on kolmkümmend neli. Minu riik on Eesti. Minu telefoninumber on viis, kaks, kolm, neli, viis, kuus, seitse. Minu sünnipäev on homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/p-liis": {
+    "text": "Tere! Minu eesnimi on Liis ja minu perekonnanimi on Mägi. Minu vanus on kakskümmend kuus. Minu riik on Eesti ja minu linn on Tartu. Minu aadress on Kooli kaheksa, Tartu. Mul on üks õde ja kaks venda. Minu abikaasa on Mati ja ta töötab koolis. Minu telefoninumber on viis, kaks, kolm, neli, viis, kuus, seitse. Täna on esmaspäev ja minu sünnipäev on homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/p-writing": {
+    "text": "Tere! Minu eesnimi on Kati ja minu perekonnanimi on Kuusk. Ma elan Tallinnas. Minu vanus on kakskümmend kaheksa. Mul on üks õde ja kaks venda. Minu telefoninumber on viis, kuus, null, kaks, seitse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/pere": {
+    "text": "pere",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/perekonnanimi": {
+    "text": "perekonnanimi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/riik": {
+    "text": "riik",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/see-on-minu-abikaasa": {
+    "text": "See on minu abikaasa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/see-on-minu-ema": {
+    "text": "See on minu ema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/see-on-minu-isa": {
+    "text": "See on minu isa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/see-on-minu-laps": {
+    "text": "See on minu laps.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/see-on-minu-o3de": {
+    "text": "See on minu õde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/see-on-minu-vanaema": {
+    "text": "See on minu vanaema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/see-on-minu-vanaisa": {
+    "text": "See on minu vanaisa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/see-on-minu-vend": {
+    "text": "See on minu vend.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/su2nnipa2ev": {
+    "text": "sünnipäev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/telefoninumber": {
+    "text": "telefoninumber",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/vanaema": {
+    "text": "vanaema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/vanaisa": {
+    "text": "vanaisa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/vanus": {
+    "text": "vanus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/vend": {
+    "text": "vend",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pere-ja-ankeet/venda": {
+    "text": "venda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "pohivormid/auto": {
     "text": "auto",
     "model": "eleven_v4",
@@ -23827,6 +25429,501 @@
   },
   "raagitakse/vanasti-ra2a2giti-siin-saksa-keelt": {
     "text": "Vanasti räägiti siin saksa keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/auto-mis-seisab-o3ues-on-punane": {
+    "text": "Auto, mis seisab õues, on punane.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/c-tiina": {
+    "text": "Tere, Tiina! Kas sa tõid need fotod, millest sa rääkisid? Tõin küll. Vaata, siin on pidu, kus me kõik kokku saime. Kohvik, kus me istusime, oli väike, aga õhtu oli väga lõbus. See on ilus koht. Kas see on kohvik, kus te alati käite? Mina pole seal ammu käinud. Jah, igal reedel. Peremees, kes tunneb meid kõiki, tõi meile teed. Tule järgmisel reedel kaasa, siis näed kohvikut, mida sa nii hästi mäletad. Kes on see mees, kes seisab akna juures? See on mu uus töökaaslane, kellega ma nüüd koos töötan. Ta on lahke inimene, kes aitab alati teisi. Ja kes on see naine, kelle käes on kitarr? See on mu õde Kadri. Kitarr, mida ta mängib, on meie vanaisa oma. Kas ta mängis ka laule, mida sa tead? Mängis küll. Ta mängis laulu, mille sõnad me kõik teadsime, ja siis laulsime koos. Mind seal ei olnud. Ma olin haige ja jäin koju. Me mõtlesime sinule. Meil jäi supp, mida keegi ei jõudnud ära süüa. Ma toon sulle homme natuke. Aitäh, sa oled hea sõber. Kes on see mees, kes naerab nurgas? See on Kadri mees Joosep, kes tegi terve õhtu süüa. Supp, mida ta tegi, oli väga hea, ja ma sõin kolm taldrikut. Mis supp see oli? Hea supp, mille retsepti ma juba küsisin. Kes on see tüdruk, kellele sa midagi ütled? See on Maria, kellega ma koos koolis käisin. Ma ei olnud teda kümme aastat näinud, aga ta on täpselt sama. Siis oli teil kindlasti palju rääkida. Oli küll. Me rääkisime koolist ja õpetajatest, keda me mõlemad mäletame. Mis raamat see on, mille sa talle kinkisid? See on raamat, millest ta on alati unistanud. Ma leidsin selle vanast raamatupoest, mis on pargi kõrval. Küll ta rõõmustas! Aga kes on see poiss, keda sa kallistad? See on mu vennapoeg Marten, kelle sünnipäev oli sel nädalal. Ta tahtis kooki, mille peal on viis küünalt. Mulle meeldib see pilt, kus kõik naeravad. Kas sa saad mulle mõned fotod saata? Siis näitan neid sõbrale, kes ei saanud tulla. Muidugi. Saadan need õhtul. Järgmine pidu on mais, tule ise kaasa! Kes tuleb järgmisele peole? Kõik, kellele ma olen kutse saatnud, ja ka mõned, keda sa veel ei tunne. Siis ma tulen kindlasti. Võtan kaasa oma sõbra, kes mängib kitarri. Aitäh, Tiina! Suurepärane! Nägemist, Madis!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Tiina!",
+          "Kas sa tõid need fotod, millest sa rääkisid?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tõin küll.",
+          "Vaata, siin on pidu, kus me kõik kokku saime.",
+          "Kohvik, kus me istusime, oli väike, aga õhtu oli väga lõbus."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "See on ilus koht.",
+          "Kas see on kohvik, kus te alati käite?",
+          "Mina pole seal ammu käinud."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, igal reedel.",
+          "Peremees, kes tunneb meid kõiki, tõi meile teed.",
+          "Tule järgmisel reedel kaasa, siis näed kohvikut, mida sa nii hästi mäletad."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kes on see mees, kes seisab akna juures?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "See on mu uus töökaaslane, kellega ma nüüd koos töötan.",
+          "Ta on lahke inimene, kes aitab alati teisi."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ja kes on see naine, kelle käes on kitarr?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "See on mu õde Kadri.",
+          "Kitarr, mida ta mängib, on meie vanaisa oma."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas ta mängis ka laule, mida sa tead?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mängis küll.",
+          "Ta mängis laulu, mille sõnad me kõik teadsime, ja siis laulsime koos."
+        ],
+        "say": "[laughs] Mängis küll. Ta mängis laulu, mille sõnad me kõik teadsime, ja siis laulsime koos."
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mind seal ei olnud.",
+          "Ma olin haige ja jäin koju."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Me mõtlesime sinule.",
+          "Meil jäi supp, mida keegi ei jõudnud ära süüa.",
+          "Ma toon sulle homme natuke."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Aitäh, sa oled hea sõber.",
+          "Kes on see mees, kes naerab nurgas?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "See on Kadri mees Joosep, kes tegi terve õhtu süüa.",
+          "Supp, mida ta tegi, oli väga hea, ja ma sõin kolm taldrikut."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mis supp see oli?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hea supp, mille retsepti ma juba küsisin."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kes on see tüdruk, kellele sa midagi ütled?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "See on Maria, kellega ma koos koolis käisin.",
+          "Ma ei olnud teda kümme aastat näinud, aga ta on täpselt sama."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Siis oli teil kindlasti palju rääkida."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Oli küll.",
+          "Me rääkisime koolist ja õpetajatest, keda me mõlemad mäletame."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mis raamat see on, mille sa talle kinkisid?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "See on raamat, millest ta on alati unistanud.",
+          "Ma leidsin selle vanast raamatupoest, mis on pargi kõrval."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Küll ta rõõmustas!",
+          "Aga kes on see poiss, keda sa kallistad?"
+        ],
+        "say": "[happy] Küll ta rõõmustas! Aga kes on see poiss, keda sa kallistad?"
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "See on mu vennapoeg Marten, kelle sünnipäev oli sel nädalal.",
+          "Ta tahtis kooki, mille peal on viis küünalt."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mulle meeldib see pilt, kus kõik naeravad.",
+          "Kas sa saad mulle mõned fotod saata?",
+          "Siis näitan neid sõbrale, kes ei saanud tulla."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Muidugi.",
+          "Saadan need õhtul.",
+          "Järgmine pidu on mais, tule ise kaasa!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kes tuleb järgmisele peole?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kõik, kellele ma olen kutse saatnud, ja ka mõned, keda sa veel ei tunne."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Siis ma tulen kindlasti.",
+          "Võtan kaasa oma sõbra, kes mängib kitarri.",
+          "Aitäh, Tiina!"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Suurepärane!",
+          "Nägemist, Madis!"
+        ]
+      }
+    ]
+  },
+  "raamat-mille-ostsin/film-mida-ma-ootan-on-pikk": {
+    "text": "Film, mida ma ootan, on pikk.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/film-mis-algab-kell-kaheksa-on-pikk": {
+    "text": "Film, mis algab kell kaheksa, on pikk.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/keda": {
+    "text": "keda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kelle": {
+    "text": "kelle",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kellega": {
+    "text": "kellega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kellel": {
+    "text": "kellel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kellele": {
+    "text": "kellele",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kellest": {
+    "text": "kellest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kes": {
+    "text": "kes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kohvik-kus-me-joome-kohvi-on-odav": {
+    "text": "Kohvik, kus me joome kohvi, on odav.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kott-mis-on-laual-on-raske": {
+    "text": "Kott, mis on laual, on raske.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kuhu": {
+    "text": "kuhu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kus": {
+    "text": "kus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/kust": {
+    "text": "kust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/laps-kes-ma2ngib-o3ues-on-mu-poeg": {
+    "text": "Laps, kes mängib õues, on mu poeg.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/linn-kuhu-ma-so3idan-on-suur": {
+    "text": "Linn, kuhu ma sõidan, on suur.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/linn-kus-ma-elan-on-va2ike": {
+    "text": "Linn, kus ma elan, on väike.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/linn-kust-ma-tulen-on-va2ike": {
+    "text": "Linn, kust ma tulen, on väike.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-lugesin-kirja-millele-sa-vastasid": {
+    "text": "Ma lugesin kirja, millele sa vastasid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-lugesin-raamatut-mis-on-laual": {
+    "text": "Ma lugesin raamatut, mis on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-na2gin-autot-millega-sa-so3itsid": {
+    "text": "Ma nägin autot, millega sa sõitsid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-na2gin-autot-mis-seisab-o3ues": {
+    "text": "Ma nägin autot, mis seisab õues.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-na2gin-maja-mille-uks-on-sinine": {
+    "text": "Ma nägin maja, mille uks on sinine.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-na2gin-maja-millel-on-suur-aed": {
+    "text": "Ma nägin maja, millel on suur aed.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-na2gin-maja-milles-sa-elad": {
+    "text": "Ma nägin maja, milles sa elad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-tunnen-last-kellel-on-koer": {
+    "text": "Ma tunnen last, kellel on koer.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-tunnen-meest-keda-sa-ootad": {
+    "text": "Ma tunnen meest, keda sa ootad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-tunnen-meest-kellele-sa-helistasid": {
+    "text": "Ma tunnen meest, kellele sa helistasid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-tunnen-meest-kes-elab-siin": {
+    "text": "Ma tunnen meest, kes elab siin.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-tunnen-naist-kelle-auto-on-punane": {
+    "text": "Ma tunnen naist, kelle auto on punane.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-tunnen-naist-kellega-sa-ra2a2kisid": {
+    "text": "Ma tunnen naist, kellega sa rääkisid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-tunnen-naist-kellest-sa-ra2a2kisid": {
+    "text": "Ma tunnen naist, kellest sa rääkisid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-vaatan-filmi-mida-sa-ootad": {
+    "text": "Ma vaatan filmi, mida sa ootad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/ma-vaatasin-filmi-millest-sa-ra2a2kisid": {
+    "text": "Ma vaatasin filmi, millest sa rääkisid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/maja-kus-ma-elan-on-vana": {
+    "text": "Maja, kus ma elan, on vana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/maja-milles-ma-elan-on-vana": {
+    "text": "Maja, milles ma elan, on vana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/maja-mis-on-suur-on-vana": {
+    "text": "Maja, mis on suur, on vana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/mees-keda-ma-tunnen-elab-tartus": {
+    "text": "Mees, keda ma tunnen, elab Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/mees-kes-elab-siin-on-arst": {
+    "text": "Mees, kes elab siin, on arst.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/mida": {
+    "text": "mida",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/mille": {
+    "text": "mille",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/millega": {
+    "text": "millega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/millel": {
+    "text": "millel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/millele": {
+    "text": "millele",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/milles": {
+    "text": "milles",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/millest": {
+    "text": "millest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/mis": {
+    "text": "mis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/naaber-kes-ma2ngib-klaverit-on-so3bralik": {
+    "text": "Naaber, kes mängib klaverit, on sõbralik.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/naine-kellega-ma-ra2a2kisin-on-o3petaja": {
+    "text": "Naine, kellega ma rääkisin, on õpetaja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/naine-kes-to2o2tab-poes-on-mu-ema": {
+    "text": "Naine, kes töötab poes, on mu ema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/o3petaja-kes-ra2a2gib-eesti-keelt-on-noor": {
+    "text": "Õpetaja, kes räägib eesti keelt, on noor.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/park-kus-lapsed-ma2ngivad-on-suur": {
+    "text": "Park, kus lapsed mängivad, on suur.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/raamat-mille-ma-ostsin-on-huvitav": {
+    "text": "Raamat, mille ma ostsin, on huvitav.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/raamat-mis-on-laual-on-uus": {
+    "text": "Raamat, mis on laual, on uus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamat-mille-ostsin/so3ber-kellele-ma-helistasin-on-tallinnas": {
+    "text": "Sõber, kellele ma helistasin, on Tallinnas.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -26901,6 +28998,926 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "ta-olevat-haige/c-liisa": {
+    "text": "Tere, Liisa! Kuidas sul täna läheb? Tere, Kalev! Täna on mul väga kiire. Ülemus ütles hommikul, et ta tahab aruannet täna õhtuks. Kas ta küsis, kas sa jõuad? Küsis küll. Ma ütlesin, et ma proovin. Aga kõigepealt helistas mulle Mari. Mis ta ütles? Ta ütles, et ta on haige ja ei tule täna tööle. Oi, see ei ole hea. Kas ta tuleb laupäeval meiega kontserdile? Ma küsisin just seda. Ta ütles, et ta ei tea veel. Kas sa küsisid, kas ta vajab midagi? Küsisin. Ta ütles, et ta vajab ainult und. Hea. Kas ta ütles ka, millal ta tagasi tuleb? Ta ütles, et ta tuleb esmaspäeval, kui ta on terve. Aga mulle räägiti, et Mari olevat eile õhtul kinos käinud. Tõesti? Mari rääkis mulle, et ta oli eile terve päeva kodus. Siis ei ole see vist tõsi. Inimesed räägivad nii palju. Täpselt. Kuule, raadios öeldi, et laupäeval sadavat vihma. Siis võtame vihmavarju kaasa. Kas kontsert on õues? Ei, see on saalis. Piletil on kirjas, et kontsert algab kell kuus. Hea küll. Ma helistasin eile kassasse ja küsisin, kas piletid on veel alles. Mida nad vastasid? Nad ütlesid, et on küll, aga neid on väga vähe. Siis osta need varsti. Naabrid rääkisid, et kontsert olevat peaaegu välja müüdud. Jah, ma ostan need täna õhtul. Mu vend ütles, et ta tuleb ka. Ta küsis, kas ma saan talle pileti osta. Kas sa oled sellel kontserdil varem käinud? Jah, eelmisel aastal. Ma ütlesin siis kõigile, et see oli väga hea kontsert. Mu õde rääkis, et ta oli seal juba kolm korda. Kas talle meeldis? Ta ütles, et meeldis väga ja et ta läheb uuesti. Minu ülemus küsis täna, kas keegi tahab reedel kauem töötada. Ja mida sa ütlesid? Ma ütlesin, et ma tulen hea meelega. Mu ema helistas hommikul ja küsis, kas ma tulen pühapäeval sööma. Ma ütlesin, et ma ei saa, sest mul on kontsert. Ja mis ta vastas? Ta ütles, et siis tuleb ta ise meile. Kolleegid räägivad ka, et sügisel tulevat meile uus ülemus. Oi! Kes sulle seda rääkis? Ei tea. Keegi ütles seda koridoris. Siis ära usu liiga palju. Ma helistan Marile homme hommikul ja küsin, kas ta tuleb. Hästi. Anna mulle siis teada. Nägemist, Kalev! Nägemist, Liisa! Kohtume laupäeval.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Liisa!",
+          "Kuidas sul täna läheb?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Kalev!",
+          "Täna on mul väga kiire.",
+          "Ülemus ütles hommikul, et ta tahab aruannet täna õhtuks."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas ta küsis, kas sa jõuad?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Küsis küll.",
+          "Ma ütlesin, et ma proovin.",
+          "Aga kõigepealt helistas mulle Mari."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mis ta ütles?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ta ütles, et ta on haige ja ei tule täna tööle."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Oi, see ei ole hea.",
+          "Kas ta tuleb laupäeval meiega kontserdile?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ma küsisin just seda.",
+          "Ta ütles, et ta ei tea veel."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas sa küsisid, kas ta vajab midagi?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Küsisin.",
+          "Ta ütles, et ta vajab ainult und."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hea.",
+          "Kas ta ütles ka, millal ta tagasi tuleb?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ta ütles, et ta tuleb esmaspäeval, kui ta on terve."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Aga mulle räägiti, et Mari olevat eile õhtul kinos käinud."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tõesti?",
+          "Mari rääkis mulle, et ta oli eile terve päeva kodus."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Siis ei ole see vist tõsi.",
+          "Inimesed räägivad nii palju."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Täpselt.",
+          "Kuule, raadios öeldi, et laupäeval sadavat vihma."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Siis võtame vihmavarju kaasa.",
+          "Kas kontsert on õues?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, see on saalis.",
+          "Piletil on kirjas, et kontsert algab kell kuus."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hea küll.",
+          "Ma helistasin eile kassasse ja küsisin, kas piletid on veel alles."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mida nad vastasid?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Nad ütlesid, et on küll, aga neid on väga vähe."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Siis osta need varsti.",
+          "Naabrid rääkisid, et kontsert olevat peaaegu välja müüdud."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, ma ostan need täna õhtul.",
+          "Mu vend ütles, et ta tuleb ka.",
+          "Ta küsis, kas ma saan talle pileti osta."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas sa oled sellel kontserdil varem käinud?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, eelmisel aastal.",
+          "Ma ütlesin siis kõigile, et see oli väga hea kontsert."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mu õde rääkis, et ta oli seal juba kolm korda."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas talle meeldis?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ta ütles, et meeldis väga ja et ta läheb uuesti."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Minu ülemus küsis täna, kas keegi tahab reedel kauem töötada."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ja mida sa ütlesid?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma ütlesin, et ma tulen hea meelega."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mu ema helistas hommikul ja küsis, kas ma tulen pühapäeval sööma.",
+          "Ma ütlesin, et ma ei saa, sest mul on kontsert."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ja mis ta vastas?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ta ütles, et siis tuleb ta ise meile.",
+          "Kolleegid räägivad ka, et sügisel tulevat meile uus ülemus."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Oi!",
+          "Kes sulle seda rääkis?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei tea.",
+          "Keegi ütles seda koridoris."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Siis ära usu liiga palju.",
+          "Ma helistan Marile homme hommikul ja küsin, kas ta tuleb."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hästi.",
+          "Anna mulle siis teada.",
+          "Nägemist, Kalev!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Nägemist, Liisa!",
+          "Kohtume laupäeval."
+        ]
+      }
+    ]
+  },
+  "ta-olevat-haige/elama": {
+    "text": "elama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/elavat": {
+    "text": "elavat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/homme-sadavat-vihma": {
+    "text": "Homme sadavat vihma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/jooma": {
+    "text": "jooma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/joovat": {
+    "text": "joovat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/kalev-elavat-nu2u2d-tartus": {
+    "text": "Kalev elavat nüüd Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/kalev-ra2a2kis-et-ta-elab-nu2u2d-tartus": {
+    "text": "Kalev rääkis, et ta elab nüüd Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/kas-sul-on-kiire": {
+    "text": "Kas sul on kiire?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/kontsert-algavat-kell-kuus": {
+    "text": "Kontsert algavat kell kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ku2sis": {
+    "text": "küsis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/kus-sa-elad": {
+    "text": "Kus sa elad?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/liisa-tulevat-laupa2eval": {
+    "text": "Liisa tulevat laupäeval.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/liisa-u2tles-et-ta-tuleb-laupa2eval": {
+    "text": "Liisa ütles, et ta tuleb laupäeval.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/lugema": {
+    "text": "lugema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/lugevat": {
+    "text": "lugevat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ma-ku2sisin-kas-sa-ra2a2gid-eesti-keelt": {
+    "text": "Ma küsisin, kas sa räägid eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ma-ku2sisin-marilt-kas-ta-on-haige": {
+    "text": "Ma küsisin Marilt, kas ta on haige.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ma-tulen-homme": {
+    "text": "Ma tulen homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/magama": {
+    "text": "magama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/magavat": {
+    "text": "magavat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-ku2sis-kas-ma-ra2a2gin-eesti-keelt": {
+    "text": "Mari küsis, kas ma räägin eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-ku2sis-kas-ma-tulen": {
+    "text": "Mari küsis, kas ma tulen.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-ku2sis-kas-peeter-on-kodus": {
+    "text": "Mari küsis, kas Peeter on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-ku2sis-kus-ma-elan": {
+    "text": "Mari küsis, kus ma elan.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-olevat-haige": {
+    "text": "Mari olevat haige.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-ra2a2kis-et-ta-elab-tartus": {
+    "text": "Mari rääkis, et ta elab Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-ra2a2kis-et-ta-ka2is-eile-tallinnas": {
+    "text": "Mari rääkis, et ta käis eile Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-ra2a2kis-et-ta-o3pib-eesti-keelt": {
+    "text": "Mari rääkis, et ta õpib eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-ra2a2kis-et-tema-o3de-elab-tartus": {
+    "text": "Mari rääkis, et tema õde elab Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-kontsert-algab-kell-kuus": {
+    "text": "Mari ütles, et kontsert algab kell kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-ma-ra2a2gin-ha2sti": {
+    "text": "Mari ütles, et ma räägin hästi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-ta-la2heb-homme-koju": {
+    "text": "Mari ütles, et ta läheb homme koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-ta-oli-eile-haige": {
+    "text": "Mari ütles, et ta oli eile haige.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-ta-on-haige": {
+    "text": "Mari ütles, et ta on haige.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-ta-on-va2sinud": {
+    "text": "Mari ütles, et ta on väsinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-ta-ootab-bussi": {
+    "text": "Mari ütles, et ta ootab bussi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-ta-tuleb-homme": {
+    "text": "Mari ütles, et ta tuleb homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-et-tal-on-kiire": {
+    "text": "Mari ütles, et tal on kiire.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mari-u2tles-mulle-et-ma-olen-va2sinud": {
+    "text": "Mari ütles mulle, et ma olen väsinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mida-sa-teed": {
+    "text": "Mida sa teed?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/minema": {
+    "text": "minema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/minevat": {
+    "text": "minevat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mu-vend-to2o2tab-koolis": {
+    "text": "Mu vend töötab koolis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/mul-on-ku2lm": {
+    "text": "Mul on külm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/olema": {
+    "text": "olema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/olevat": {
+    "text": "olevat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ku2sis-kas-mul-on-aega": {
+    "text": "Peeter küsis, kas mul on aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ku2sis-kas-mul-on-kiire": {
+    "text": "Peeter küsis, kas mul on kiire.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ku2sis-kas-ta-on-kodus": {
+    "text": "Peeter küsis, kas ta on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ku2sis-mida-ma-teen": {
+    "text": "Peeter küsis, mida ma teen.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ku2sis-millal-ma-tulen": {
+    "text": "Peeter küsis, millal ma tulen.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ra2a2kis-et-ta-ka2is-eile-tallinnas": {
+    "text": "Peeter rääkis, et ta käis eile Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ra2a2kis-et-ta-ka2is-tallinnas": {
+    "text": "Peeter rääkis, et ta käis Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ra2a2kis-et-ta-so3itis-eile-tartusse": {
+    "text": "Peeter rääkis, et ta sõitis eile Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-ra2a2kis-et-tema-vend-to2o2tab-koolis": {
+    "text": "Peeter rääkis, et tema vend töötab koolis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-tulevat-homme": {
+    "text": "Peeter tulevat homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-u2tles-et-homme-sajab-vihma": {
+    "text": "Peeter ütles, et homme sajab vihma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-u2tles-et-ta-ei-tule": {
+    "text": "Peeter ütles, et ta ei tule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-u2tles-et-ta-o3pib-eesti-keelt": {
+    "text": "Peeter ütles, et ta õpib eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-u2tles-et-ta-tuleb-homme": {
+    "text": "Peeter ütles, et ta tuleb homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-u2tles-et-tal-ei-ole-aega": {
+    "text": "Peeter ütles, et tal ei ole aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-u2tles-et-tal-on-kiire": {
+    "text": "Peeter ütles, et tal on kiire.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/peeter-u2tles-et-tal-on-ku2lm": {
+    "text": "Peeter ütles, et tal on külm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ra2a2kima": {
+    "text": "rääkima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ra2a2kis": {
+    "text": "rääkis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ra2a2kivat": {
+    "text": "rääkivat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/sa-ra2a2gid-ha2sti": {
+    "text": "Sa räägid hästi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/so2o2ma": {
+    "text": "sööma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/so2o2vat": {
+    "text": "söövat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-ei-tulevat-homme": {
+    "text": "Ta ei tulevat homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-elavat-nu2u2d-tartus": {
+    "text": "Ta elavat nüüd Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-joovat-iga-pa2ev-kohvi": {
+    "text": "Ta joovat iga päev kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-lugevat-iga-pa2ev-ajalehte": {
+    "text": "Ta lugevat iga päev ajalehte.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-magavat-terve-pa2eva": {
+    "text": "Ta magavat terve päeva.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-minevat-homme-koju": {
+    "text": "Ta minevat homme koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-olevat-haige": {
+    "text": "Ta olevat haige.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-ra2a2kivat-ha2sti-eesti-keelt": {
+    "text": "Ta rääkivat hästi eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-so2o2vat-ainult-kala": {
+    "text": "Ta söövat ainult kala.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-tegevat-palju-to2o2d": {
+    "text": "Ta tegevat palju tööd.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-to2o2tavat-koolis": {
+    "text": "Ta töötavat koolis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/ta-tulevat-homme": {
+    "text": "Ta tulevat homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/tegema": {
+    "text": "tegema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/tegevat": {
+    "text": "tegevat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/to2o2tama": {
+    "text": "töötama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/to2o2tavat": {
+    "text": "töötavat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/tulema": {
+    "text": "tulema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/tulevat": {
+    "text": "tulevat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ta-olevat-haige/u2tles": {
+    "text": "ütles",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/bussipeatus-on-vasakul": {
+    "text": "Bussipeatus on vasakul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/c-rong": {
+    "text": "Tere! Kuhu te soovite sõita? Tere! Palun üks pilet Tartusse. Mis kell järgmine rong väljub? Järgmine rong väljub kahekümne minuti pärast. Kas soovite ainult ühe suuna piletit või edasi-tagasi? Ainult ühe suuna, aitäh. Tulen tagasi alles pühapäeval. See maksab kaksteist eurot. Kas maksate kaardiga või sularahas? Kaardiga, palun. Kus on teine tee? Minge siit uksest otse välja ja pöörake paremale. Rong ootab teisel teel paremal. Head reisi! Suur aitäh!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere! Kuhu te soovite sõita?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere! Palun üks pilet Tartusse."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mis kell järgmine rong väljub?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Järgmine rong väljub kahekümne minuti pärast."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas soovite ainult ühe suuna piletit või edasi-tagasi?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ainult ühe suuna, aitäh. Tulen tagasi alles pühapäeval."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "See maksab kaksteist eurot. Kas maksate kaardiga või sularahas?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kaardiga, palun. Kus on teine tee?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Minge siit uksest otse välja ja pöörake paremale."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Rong ootab teisel teel paremal. Head reisi!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Suur aitäh!"
+        ],
+        "say": "[warm] Suur aitäh!"
+      }
+    ]
+  },
+  "tee-ja-reisimine/ei-ainult-viis-minutit-jalgsi": {
+    "text": "Ei, ainult viis minutit jalgsi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/jaam": {
+    "text": "jaam",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/jaam-on-paremal": {
+    "text": "Jaam on paremal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/jah-suur-punane-maja-paremal": {
+    "text": "Jah, suur punane maja paremal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/kas-jaam-on-paremal": {
+    "text": "Kas jaam on paremal?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/kas-see-on-kaugel": {
+    "text": "Kas see on kaugel?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/kohvik-on-vasakul": {
+    "text": "Kohvik on vasakul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/kus-on-bussipeatus": {
+    "text": "Kus on bussipeatus?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/minge-otse-edasi": {
+    "text": "Minge otse edasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/minge-otse-edasi-ja-siis-po2o2rake-pargi-juures-vasakule": {
+    "text": "Minge otse edasi ja siis pöörake pargi juures vasakule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/minge-pargi-juures-vasakule": {
+    "text": "Minge pargi juures vasakule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/mis-kell-rong-va2ljub": {
+    "text": "Mis kell rong väljub?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/otse": {
+    "text": "otse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/palun-u2ks-pilet-tartusse": {
+    "text": "Palun üks pilet Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/paremal": {
+    "text": "paremal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/paremale": {
+    "text": "paremale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/peatus": {
+    "text": "peatus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/pilet": {
+    "text": "pilet",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/po2o2rake-kooli-juures-paremale": {
+    "text": "Pöörake kooli juures paremale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/po2o2rake-paremale": {
+    "text": "Pöörake paremale!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/po2o2rake-vasakule": {
+    "text": "Pöörake vasakule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/pood-on-paremal": {
+    "text": "Pood on paremal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/suur-aita2h-head-pa2eva": {
+    "text": "Suur aitäh! Head päeva!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/tere-kuidas-ma-saan-teid-aidata": {
+    "text": "Tere! Kuidas ma saan teid aidata?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/vabandage-kus-on-rongijaam": {
+    "text": "Vabandage, kus on rongijaam?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/vasakul": {
+    "text": "vasakul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tee-ja-reisimine/vasakule": {
+    "text": "vasakule",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "tegevusnimed/armastan": {
     "text": "armastan",
     "model": "eleven_v4",
@@ -27345,6 +30362,278 @@
   },
   "tegevusnimed/vo3in": {
     "text": "võin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/aita2h-na2eme-homme": {
+    "text": "Aitäh, näeme homme!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/aruande-ta2htaeg-on-reedel": {
+    "text": "Aruande tähtaeg on reedel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/aruanne-peab-valmis-olema-reedeks": {
+    "text": "Aruanne peab valmis olema reedeks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/c-work": {
+    "text": "Tere tulemast tiimi, Mart! Kuidas esimene nädal läinud on? Aitäh, Anna! Väga hästi, kolleegid on toredad ja töö on huvitav. Rõõm kuulda. Vaatame üle mõned praktilised asjad. Jah, mul on paar küsimust tööaja ja kodukontori kohta. Tööpäev algab tavaliselt kell üheksa ja lõpeb kell viis. Kas ma võin ka mõnel päeval kodust töötada? Muidugi. Pärast esimest kuud võid töötada kaks päeva nädalas kodust. See sobib hästi. Millal meie tiimi koosolek toimub? Igal teisipäeval kell kümme, tavaliselt siin kontoris. Selge. Millal palk tavaliselt üle tuleb? Iga kuu viiendal päeval. Kui see on nädalavahetus, siis reedel. Hea teada. Kuidas puhkusega on? Meil on kakskümmend kaheksa päeva puhkust aastas. Anna lihtsalt kuu aega varem teada. Ma tahaksin augustis kaheks nädalaks puhkusele minna. Sobib, märgime selle juba kalendrisse ära. Suur aitäh, Anna! Kõik on nüüd selge.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere tulemast tiimi, Mart! Kuidas esimene nädal läinud on?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Aitäh, Anna! Väga hästi, kolleegid on toredad ja töö on huvitav."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Rõõm kuulda. Vaatame üle mõned praktilised asjad."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, mul on paar küsimust tööaja ja kodukontori kohta."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tööpäev algab tavaliselt kell üheksa ja lõpeb kell viis."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas ma võin ka mõnel päeval kodust töötada?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Muidugi. Pärast esimest kuud võid töötada kaks päeva nädalas kodust."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "See sobib hästi. Millal meie tiimi koosolek toimub?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Igal teisipäeval kell kümme, tavaliselt siin kontoris."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Selge. Millal palk tavaliselt üle tuleb?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Iga kuu viiendal päeval. Kui see on nädalavahetus, siis reedel."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hea teada. Kuidas puhkusega on?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Meil on kakskümmend kaheksa päeva puhkust aastas. Anna lihtsalt kuu aega varem teada."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma tahaksin augustis kaheks nädalaks puhkusele minna."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Sobib, märgime selle juba kalendrisse ära."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Suur aitäh, Anna! Kõik on nüüd selge."
+        ]
+      }
+    ]
+  },
+  "tookoht/jah-ma-olen-kell-ku2mme-kontoris": {
+    "text": "Jah, ma olen kell kümme kontoris.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/jah-ma-saadan-selle-neljapa2eva-o3htul": {
+    "text": "Jah, ma saadan selle neljapäeva õhtul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/kas-sa-saad-mind-aidata-selle-to2o2ga": {
+    "text": "Kas sa saad mind aidata selle tööga?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/kas-sa-saaksid-uue-aruande-reedeks-valmis-teha": {
+    "text": "Kas sa saaksid uue aruande reedeks valmis teha?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/kas-te-saaksite-selle-reedeks-saata": {
+    "text": "Kas te saaksite selle reedeks saata?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/kolleeg": {
+    "text": "kolleeg",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/kontor": {
+    "text": "kontor",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/koosolek": {
+    "text": "koosolek",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/koosolek-algab-kell-ku2mme": {
+    "text": "Koosolek algab kell kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/leping": {
+    "text": "leping",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ma-kohtusin-eile-uue-kolleegiga": {
+    "text": "Ma kohtusin eile uue kolleegiga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ma-kohtusin-uue-kolleegiga": {
+    "text": "Ma kohtusin uue kolleegiga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ma-la2hen-juulis-puhkusele": {
+    "text": "Ma lähen juulis puhkusele.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ma-la2ksin-eile-to2o2lt-koju-kell-kuus": {
+    "text": "Ma läksin eile töölt koju kell kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ma-olen-ta2na-kontoris": {
+    "text": "Ma olen täna kontoris.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ma-pean-selle-aruande-ta2na-valmis-saama": {
+    "text": "Ma pean selle aruande täna valmis saama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ma-ra2a2kisin-ta2na-oma-u2lemusega": {
+    "text": "Ma rääkisin täna oma ülemusega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ma-to2o2tan-kontoris": {
+    "text": "Ma töötan kontoris.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/me-allkirjastame-uue-lepingu": {
+    "text": "Me allkirjastame uue lepingu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/p-note": {
+    "text": "Tere, kolleegid! Tuletan meelde, et meie nädala koosolek toimub esmaspäeval kell kümme kolmandas ruumis. Palun saatke oma kuu aruanne mulle hiljemalt kolmapäevaks. Kolmapäeval ja neljapäeval võivad kõik soovijad kodust töötada. Reedel tuleb kontorisse uus praktikant ja me joome kell kaks koos kohvi. Kes soovib suvel puhkusele minna, pange oma kuupäevad tabelisse enne kuu lõppu. Head nädalat! Anna.",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "tookoht/palk": {
+    "text": "palk",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/palk-tuleb-iga-kuu-viiendal-pa2eval": {
+    "text": "Palk tuleb iga kuu viiendal päeval.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/palun-saatke-aruanne-mulle-kolmapa2evaks": {
+    "text": "Palun saatke aruanne mulle kolmapäevaks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/puhkus": {
+    "text": "puhkus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/suurepa2rane-na2eme-siis-homme": {
+    "text": "Suurepärane, näeme siis homme!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ta-la2heb-homme-to2o2le": {
+    "text": "Ta läheb homme tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/ta2htaeg": {
+    "text": "tähtaeg",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/tere-anna-jah-muidugi-ra2a2gi": {
+    "text": "Tere, Anna! Jah, muidugi, räägi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/tere-mart-kas-sul-on-hetk-aega": {
+    "text": "Tere, Mart! Kas sul on hetk aega?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/u2lemus": {
+    "text": "ülemus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tookoht/va2ga-hea-kas-sa-tuled-ka-homsele-koosolekule": {
+    "text": "Väga hea! Kas sa tuled ka homsele koosolekule?",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -30409,255 +33698,1004 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "emal-ema-juures/ema-juures": {
-    "text": "ema juures",
+  "meeldima/ma-tahan-lugeda": {
+    "text": "Ma tahan lugeda.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "emal-ema-juures/ma-olen-ta2na-ema-juures": {
-    "text": "Ma olen täna ema juures.",
+  "meeldima/meile-meeldib-lugeda": {
+    "text": "Meile meeldib lugeda.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "emal-ema-juures/arsti-juurde": {
-    "text": "arsti juurde",
+  "meeldima/ta-tahab-ujuda": {
+    "text": "Ta tahab ujuda.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "emal-ema-juures/ma-la2hen-homme-arsti-juurde": {
-    "text": "Ma lähen homme arsti juurde.",
+  "meeldima/nad-tahavad-ra2a2kida": {
+    "text": "Nad tahavad rääkida.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "emal-ema-juures/so3bra-juurest": {
-    "text": "sõbra juurest",
+  "meeldima/ma-tahaksin-kohvi": {
+    "text": "Ma tahaksin kohvi.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "emal-ema-juures/ta-tuli-just-so3bra-juurest": {
-    "text": "Ta tuli just sõbra juurest.",
+  "meeldima/ra2a2kida": {
+    "text": "rääkida",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "emal-ema-juures/emal": {
-    "text": "emal",
+  "meeldima/p-letter": {
+    "text": "Tere, Anu! Ma elan nüüd Pärnus ja mulle meeldib siin väga. Mari ja mina elame nüüd koos ja meil on kass ja koer. Mulle meeldivad kassid, aga Marile meeldivad koerad. Mari õpib koolis ja talle meeldib kodus lugeda. Mulle meeldib ujuda, aga Marile ei meeldi ujuda. Mulle meeldib rääkida, aga mulle ei meeldi kirjutada. Mari räägib juba hästi eesti keelt ja mina tahan õppida eesti keelt hästi. Täna on Pärnus külm ja meil on kodus igav. Meile meeldib Pärnu väga, aga Tallinn ei meeldi meile. Kas sulle meeldib kohv? Tule laupäeval kell kaks meile, siis läheme koos kohvikusse. Kas sa tuled laupäeval?",
     "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
   },
-  "emal-ema-juures/emal-on-va2ike-aed": {
-    "text": "Emal on väike aed.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/so3brale": {
-    "text": "sõbrale",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/ma-helistan-so3brale": {
-    "text": "Ma helistan sõbrale.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/o3elt": {
-    "text": "õelt",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/ma-sain-o3elt-kirja": {
-    "text": "Ma sain õelt kirja.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/ema-juurde": {
-    "text": "ema juurde",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/ema-juurest": {
-    "text": "ema juurest",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/emale": {
-    "text": "emale",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/emalt": {
-    "text": "emalt",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/minu-juures": {
-    "text": "minu juures",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/juures": {
-    "text": "juures",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/juurde": {
-    "text": "juurde",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/juurest": {
-    "text": "juurest",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/minu": {
-    "text": "minu",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/so3bra": {
-    "text": "sõbra",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/ma-la2hen-o3htul-so3bra-juurde": {
-    "text": "Ma lähen õhtul sõbra juurde.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/ma-sain-arstilt-retsepti": {
-    "text": "Ma sain arstilt retsepti.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/ma-tulen-arsti-juurest": {
-    "text": "Ma tulen arsti juurest.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/ma-andsin-vennale-vo3tme": {
-    "text": "Ma andsin vennale võtme.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/ma-la2ksin-eile-venna-juurde": {
-    "text": "Ma läksin eile venna juurde.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/ma-elan-sel-na2dalal-ema-juures": {
-    "text": "Ma elan sel nädalal ema juures.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/tule-o3htul-minu-juurde": {
-    "text": "Tule õhtul minu juurde!",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/vennal-on-homme-vaba-pa2ev": {
-    "text": "Vennal on homme vaba päev.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/ma-la2hen-homme-ema-juurde": {
-    "text": "Ma lähen homme ema juurde.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/ta-on-ta2na-so3bra-juures": {
-    "text": "Ta on täna sõbra juures.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "emal-ema-juures/c-kula": {
-    "text": "Tere, Mart! Kuidas sul täna läheb? Tere, Kati! Juba paremini, aitäh küsimast. Ma olen praegu vanemate juures, sest siin on rahulikum puhata. Kas sa käisid hommikul arsti juures ära? Jah, ma läksin hommikul kella üheksaks arsti juurde. Arst vaatas mu haiget põlve ja ütles, et midagi hullu ei ole. Sain arstilt retsepti ja läksin kohe apteeki rohtu ostma. Ta ütles, et ma ei tohi nädal aega joosta, aga jalutada võin küll. Hea kuulda! Kas emal ja isal on ka kõik hästi? Jah, õde käis ka enne lõunat siin ja tõi pagaripoest värsket leiba. Millal sa enda korterisse tagasi lähed? Reede õhtul tulen vanemate juurest koju. Tule nädalavahetusel minu juurde külla! Tulen hea meelega laupäeval, umbes kell kolm. Ma toon sulle kooki kaasa!",
+  "meeldima/c-plans": {
+    "text": "Tere, Mart! Kas sa oled kodus? Tere, Liis! Jah, ma olen kodus. Mul on täna igav. Mul on ka igav. Tule homme kohvikusse! Seal on kass ja koer. Kas sulle meeldib kohv? Ei, mulle ei meeldi kohv. Aga mulle meeldivad kassid! Ma tulen hea meelega. Tore! Mulle meeldivad koerad. Kas sulle meeldivad koerad ka? Jah, mulle meeldivad koerad ja kassid. Kes veel tuleb? Jaan tuleb ka. Talle meeldib kohv. Aga talle ei meeldi koerad. Siis on Jaanil igav! Kas Jaan tuleb kell kaks? Jah, kell kaks. Pühapäeval lähen ma Pärnusse. Mulle meeldib ujuda. Kas sa tuled ka? Ei, mulle ei meeldi ujuda. Mul on külm. Mul on palav! Mis sa siis teed? Ma loen eesti raamatut. Mulle meeldib lugeda. Kas sulle meeldivad eesti raamatud? Jah, väga. Ma tahan õppida eesti keelt. Mulle meeldib ka eesti keel. Sa räägid juba hästi! Mulle meeldib sinu eesti keel. Aitäh, Liis! Mul on hea meel. Kas Jaan tuleb Pärnusse? Ei, Jaanile ei meeldi ujuda. Talle meeldib Tartu. Mulle meeldib Tartu ka. Homme kell kaks kohvikus! Jah, homme kell kaks. Head aega! Head aega!",
     "model": "eleven_v4",
     "turns": [
       {
         "voice": "xd3ufyLcuKKZZXDZO9H7",
         "sentences": [
-          "Tere, Mart! Kuidas sul täna läheb?"
+          "Tere, Mart!",
+          "Kas sa oled kodus?"
         ]
       },
       {
-        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "voice": "jGja51dd7gcoK0zkxeyg",
         "sentences": [
-          "Tere, Kati! Juba paremini, aitäh küsimast."
-        ]
-      },
-      {
-        "voice": "0cuaFlR2we1Gl3woPjeJ",
-        "sentences": [
-          "Ma olen praegu vanemate juures, sest siin on rahulikum puhata."
-        ]
-      },
-      {
-        "voice": "xd3ufyLcuKKZZXDZO9H7",
-        "sentences": [
-          "Kas sa käisid hommikul arsti juures ära?"
-        ]
-      },
-      {
-        "voice": "0cuaFlR2we1Gl3woPjeJ",
-        "sentences": [
-          "Jah, ma läksin hommikul kella üheksaks arsti juurde."
-        ]
-      },
-      {
-        "voice": "0cuaFlR2we1Gl3woPjeJ",
-        "sentences": [
-          "Arst vaatas mu haiget põlve ja ütles, et midagi hullu ei ole."
-        ]
-      },
-      {
-        "voice": "0cuaFlR2we1Gl3woPjeJ",
-        "sentences": [
-          "Sain arstilt retsepti ja läksin kohe apteeki rohtu ostma."
-        ]
-      },
-      {
-        "voice": "0cuaFlR2we1Gl3woPjeJ",
-        "sentences": [
-          "Ta ütles, et ma ei tohi nädal aega joosta, aga jalutada võin küll."
+          "Tere, Liis!",
+          "Jah, ma olen kodus.",
+          "Mul on täna igav."
         ]
       },
       {
         "voice": "xd3ufyLcuKKZZXDZO9H7",
         "sentences": [
-          "Hea kuulda! Kas emal ja isal on ka kõik hästi?"
-        ]
-      },
-      {
-        "voice": "0cuaFlR2we1Gl3woPjeJ",
-        "sentences": [
-          "Jah, õde käis ka enne lõunat siin ja tõi pagaripoest värsket leiba."
-        ]
-      },
-      {
-        "voice": "xd3ufyLcuKKZZXDZO9H7",
-        "sentences": [
-          "Millal sa enda korterisse tagasi lähed?"
-        ]
-      },
-      {
-        "voice": "0cuaFlR2we1Gl3woPjeJ",
-        "sentences": [
-          "Reede õhtul tulen vanemate juurest koju. Tule nädalavahetusel minu juurde külla!"
-        ]
-      },
-      {
-        "voice": "xd3ufyLcuKKZZXDZO9H7",
-        "sentences": [
-          "Tulen hea meelega laupäeval, umbes kell kolm."
-        ]
-      },
-      {
-        "voice": "xd3ufyLcuKKZZXDZO9H7",
-        "sentences": [
-          "Ma toon sulle kooki kaasa!"
+          "Mul on ka igav.",
+          "Tule homme kohvikusse!",
+          "Seal on kass ja koer.",
+          "Kas sulle meeldib kohv?"
         ],
-        "say": "[warm] Ma toon sulle kooki kaasa!"
+        "say": "[cheerful] Mul on ka igav. Tule homme kohvikusse! Seal on kass ja koer. Kas sulle meeldib kohv?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, mulle ei meeldi kohv.",
+          "Aga mulle meeldivad kassid!",
+          "Ma tulen hea meelega."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tore!",
+          "Mulle meeldivad koerad.",
+          "Kas sulle meeldivad koerad ka?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, mulle meeldivad koerad ja kassid.",
+          "Kes veel tuleb?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jaan tuleb ka.",
+          "Talle meeldib kohv.",
+          "Aga talle ei meeldi koerad."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Siis on Jaanil igav!",
+          "Kas Jaan tuleb kell kaks?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, kell kaks.",
+          "Pühapäeval lähen ma Pärnusse.",
+          "Mulle meeldib ujuda.",
+          "Kas sa tuled ka?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, mulle ei meeldi ujuda.",
+          "Mul on külm."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mul on palav!",
+          "Mis sa siis teed?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma loen eesti raamatut.",
+          "Mulle meeldib lugeda."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas sulle meeldivad eesti raamatud?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, väga.",
+          "Ma tahan õppida eesti keelt.",
+          "Mulle meeldib ka eesti keel."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Sa räägid juba hästi!",
+          "Mulle meeldib sinu eesti keel."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh, Liis!",
+          "Mul on hea meel.",
+          "Kas Jaan tuleb Pärnusse?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, Jaanile ei meeldi ujuda.",
+          "Talle meeldib Tartu."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mulle meeldib Tartu ka.",
+          "Homme kell kaks kohvikus!"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, homme kell kaks.",
+          "Head aega!"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Head aega!"
+        ]
       }
     ]
+  },
+  "korter/c-talk": {
+    "text": "Tere, Jaan! Kas sa käisid täna korterit vaatamas? Tere, Liis! Jah, ma käisin kahes korteris. Üks on kesklinnas ja teine Annelinnas. Tore! Kumb on parem? Kesklinnas on korter suurem ja ilusam. Seal on kaks tuba ja suur köök. Köögis on ka pesumasin. Kui palju see maksab? Kuussada eurot. See on minu jaoks liiga kallis. Kas seal on ka rõdu? Jah, ja rõdult näeb jõge. See meeldib mulle väga. Aga kesklinnas ei ole vaikne. Ja teine korter? Teine on väiksem, ainult üks tuba ja väike köök. Aga see on palju odavam, nelisada eurot. Kas see on kesklinnast kaugel? Bussiga kakskümmend minutit. Bussipeatus on maja ees. See pole palju. Kas seal on vaikne? Jah, see on kõige vaiksem maja Annelinnas. Maja kõrval on park. Mis korrusel see on? Viiendal korrusel, aga majas on lift. Kas sa tahad elada üksi? Ei, ma tahan elada koos Katiga. Kati töötab Tallinnas, aga tuleb reedeks Tartusse. Kas keegi elab seal praegu? Ei, praegu ei ela seal keegi. Omanik üürib korteri välja üheks aastaks. Ja millal sa saad sisse kolida? Väike korter on vaba esimesest detsembrist. Suur korter on vaba alles jaanuarist. Siis on väike korter parem. Ja odavam ka! Sa ei vaja suurt korterit. Jah. Homme helistan ma omanikule. Kas ma tulen siis appi? Jah, palun! Mul on ainult kaks kasti ja voodi. Esimesel detsembril tõusen ma vara üles ja kolin sisse. Hästi. Ma võtan oma auto kaasa. Aitäh sulle! Õhtul läheme koos välja sööma.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Kas sa käisid täna korterit vaatamas?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Liis!",
+          "Jah, ma käisin kahes korteris.",
+          "Üks on kesklinnas ja teine Annelinnas."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tore!",
+          "Kumb on parem?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kesklinnas on korter suurem ja ilusam.",
+          "Seal on kaks tuba ja suur köök.",
+          "Köögis on ka pesumasin."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kui palju see maksab?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kuussada eurot.",
+          "See on minu jaoks liiga kallis."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas seal on ka rõdu?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, ja rõdult näeb jõge.",
+          "See meeldib mulle väga.",
+          "Aga kesklinnas ei ole vaikne."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja teine korter?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Teine on väiksem, ainult üks tuba ja väike köök.",
+          "Aga see on palju odavam, nelisada eurot."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas see on kesklinnast kaugel?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Bussiga kakskümmend minutit.",
+          "Bussipeatus on maja ees."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "See pole palju.",
+          "Kas seal on vaikne?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, see on kõige vaiksem maja Annelinnas.",
+          "Maja kõrval on park."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mis korrusel see on?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Viiendal korrusel, aga majas on lift."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sa tahad elada üksi?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, ma tahan elada koos Katiga.",
+          "Kati töötab Tallinnas, aga tuleb reedeks Tartusse."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas keegi elab seal praegu?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, praegu ei ela seal keegi.",
+          "Omanik üürib korteri välja üheks aastaks."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja millal sa saad sisse kolida?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Väike korter on vaba esimesest detsembrist.",
+          "Suur korter on vaba alles jaanuarist."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Siis on väike korter parem.",
+          "Ja odavam ka!",
+          "Sa ei vaja suurt korterit."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah.",
+          "Homme helistan ma omanikule."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas ma tulen siis appi?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, palun!",
+          "Mul on ainult kaks kasti ja voodi.",
+          "Esimesel detsembril tõusen ma vara üles ja kolin sisse."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Hästi.",
+          "Ma võtan oma auto kaasa."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aitäh sulle!",
+          "Õhtul läheme koos välja sööma."
+        ]
+      }
+    ]
+  },
+  "korter/d-mari-1": {
+    "text": "Tere! Tulge sisse!",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "korter/d-mari-2": {
+    "text": "See on suur tuba. Siin on kaks akent.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "korter/d-mari-3": {
+    "text": "Köök on seal. Kas teil on kass?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "korter/d-mari-4": {
+    "text": "Hea. Millal te tahate sisse kolida?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "korter/d-sina-1": {
+    "text": "Tere! Aitäh.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/d-sina-2": {
+    "text": "Tuba on väga ilus. Kus on köök?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/d-sina-3": {
+    "text": "Ei, mul ei ole kassi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/d-sina-4": {
+    "text": "Esimesel detsembril.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/kas-ma-vo3in-homme-korterit-vaatama-tulla": {
+    "text": "Kas ma võin homme korterit vaatama tulla?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/kas-majas-on-lift": {
+    "text": "Kas majas on lift?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/kesklinnas": {
+    "text": "kesklinnas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ko2o2gis": {
+    "text": "köögis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ko2o2k": {
+    "text": "köök",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ko2o2k-on-va2ike-aga-uus": {
+    "text": "Köök on väike, aga uus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ko2o2k-on-va2iksem-kui-tuba": {
+    "text": "Köök on väiksem kui tuba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ko2o2ki": {
+    "text": "kööki",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korter": {
+    "text": "korter",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korter-on-kolmandal-korrusel": {
+    "text": "Korter on kolmandal korrusel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korter-on-vaba-esimesest-detsembrist": {
+    "text": "Korter on vaba esimesest detsembrist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korter-on-viiendal-korrusel": {
+    "text": "Korter on viiendal korrusel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korteris": {
+    "text": "korteris",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korteris-ei-ole-ro3du": {
+    "text": "Korteris ei ole rõdu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korterisse": {
+    "text": "korterisse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/kui-palju-on-u2u2r": {
+    "text": "Kui palju on üür?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/lift": {
+    "text": "lift",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-elan-neljandal-korrusel": {
+    "text": "Ma elan neljandal korrusel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-la2hen-korterisse": {
+    "text": "Ma lähen korterisse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-olen-ko2o2gis": {
+    "text": "Ma olen köögis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-tahan-reedel-sisse-kolida": {
+    "text": "Ma tahan reedel sisse kolida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-tahan-sisse-kolida": {
+    "text": "Ma tahan sisse kolida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-to2o2tan-tartus-o3petajana": {
+    "text": "Ma töötan Tartus õpetajana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/majas-ei-ole-lifti": {
+    "text": "Majas ei ole lifti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/mari-elab-teisel-korrusel": {
+    "text": "Mari elab teisel korrusel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/mari-to2o2tab-poes-mu2u2jana": {
+    "text": "Mari töötab poes müüjana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/mul-ei-ole-kassi": {
+    "text": "Mul ei ole kassi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/p-advert": {
+    "text": "Kahetoaline korter Tartu kesklinnas. Korter on kolmandal korrusel ja majas on lift. Maja on vana, aga korter on uus ja ilus. Suures toas on kaks suurt akent ja väike rõdu. Väiksem tuba on magamistuba. Toad on soojad ja valged. Köök on väike, aga seal on pesumasin. Köök on uuem kui toad. Korter on ilma mööblita, aga köögis on pliit. Korteris on ka vannituba. See on kesklinna kõige vaiksem maja. Naabrid on sõbralikud ja vaiksed. Üür on nelisada viiskümmend eurot kuus. Ma üürin korteri välja üheks aastaks. Korter on vaba esimesest detsembrist. Pood on maja kõrval ja bussipeatus on maja ees. Maja kõrval on ilus park ja väike kohvik. Bussiga on rongijaama viis minutit. Kass või koer ei saa korteris elada. Praegu ei ela korteris keegi. Korter sobib hästi ühele või kahele inimesele. Korterit saab vaadata esmaspäevast reedeni. Helistage mulle õhtul pärast kella kuut! Minuga saab rääkida ka inglise keeles. Mari Tamm, telefon 5555 1234.",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "korter/p-message": {
+    "text": "Tere, Mari! Mina olen Jaan ja ma nägin teie kuulutust. Ma töötan Tartus õpetajana. Ma tahan korteris elada üheks aastaks. Kas ma võin homme koos sõbraga korterit vaatama tulla? Ma tahan sisse kolida esimesel detsembril. Palun helistage mulle õhtul. Aitäh! Jaan.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/p-reply": {
+    "text": "Tere, Mari! Mina olen Jaan ja ma nägin teie kuulutust. Korter meeldib mulle väga. Ma töötan Tartus õpetajana. Mul ei ole kassi. Kas ma võin homme korterit vaatama tulla? Ma tahan sisse kolida esimesel detsembril. Kas köögis on ka pliit? Aitäh!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ro3du": {
+    "text": "rõdu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ro3dul": {
+    "text": "rõdul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ro3dule": {
+    "text": "rõdule",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/sisse-kolima": {
+    "text": "sisse kolima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/toas": {
+    "text": "toas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/tuba": {
+    "text": "tuba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/tuppa": {
+    "text": "tuppa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/u2u2r": {
+    "text": "üür",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/helistage-mulle-o3htul": {
+    "text": "Helistage mulle õhtul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-tahan-korteri-u2heks-aastaks-u2u2rida": {
+    "text": "Ma tahan korteri üheks aastaks üürida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korter-on-suures-majas": {
+    "text": "Korter on suures majas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-tulen-koos-so3braga": {
+    "text": "Ma tulen koos sõbraga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korter-on-ilma-mo2o2blita": {
+    "text": "Korter on ilma mööblita.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/suures-toas-on-kaks-suurt-akent": {
+    "text": "Suures toas on kaks suurt akent.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/see-on-ko3ige-vaiksem-maja": {
+    "text": "See on kõige vaiksem maja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/korteris-ei-ela-keegi": {
+    "text": "Korteris ei ela keegi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/tule-minuga-korterit-vaatama": {
+    "text": "Tule minuga korterit vaatama!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/kass-on-ro3dul": {
+    "text": "Kass on rõdul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/tule-ko2o2ki": {
+    "text": "Tule kööki!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "korter/ma-elan-siin-u2heks-aastaks": {
+    "text": "Ma elan siin üheks aastaks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/halloo": {
+    "text": "Halloo!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/hetk": {
+    "text": "hetk",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/korrata": {
+    "text": "korrata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/tagasi": {
+    "text": "tagasi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/so3num": {
+    "text": "sõnum",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/u2hendus": {
+    "text": "ühendus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/mari-kuuleb": {
+    "text": "Mari kuuleb.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/kas-mart-on-seal": {
+    "text": "Kas Mart on seal?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/kas-ma-saaksin-ra2a2kida-mardiga": {
+    "text": "Kas ma saaksin rääkida Mardiga?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/hetk-palun": {
+    "text": "Hetk, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/kas-te-saaksite-korrata": {
+    "text": "Kas te saaksite korrata?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/palun-ra2a2kige-aeglasemalt": {
+    "text": "Palun rääkige aeglasemalt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/u2hendus-on-halb": {
+    "text": "Ühendus on halb.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/ma-ei-kuule-teid-ha2sti": {
+    "text": "Ma ei kuule teid hästi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/kas-ma-vo3in-so3numi-ja2tta": {
+    "text": "Kas ma võin sõnumi jätta?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/palun-helistage-mulle-tagasi": {
+    "text": "Palun helistage mulle tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/ma-helistasin-sulle-eile": {
+    "text": "Ma helistasin sulle eile.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/ma-helistan-sulle-homme": {
+    "text": "Ma helistan sulle homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/ta-helistas-mulle-hommikul": {
+    "text": "Ta helistas mulle hommikul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/mart-helistas-o3htul": {
+    "text": "Mart helistas õhtul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/ma-ja2tsin-so3numi": {
+    "text": "Ma jätsin sõnumi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/ma-helistan-sulle-varsti-tagasi": {
+    "text": "Ma helistan sulle varsti tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/ma-helistan-hiljem-tagasi": {
+    "text": "Ma helistan hiljem tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/kas-ma-saaksin-ra2a2kida-arstiga": {
+    "text": "Kas ma saaksin rääkida arstiga?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/ma-helistan-teile-kell-kolm-tagasi": {
+    "text": "Ma helistan teile kell kolm tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/d-kati-1": {
+    "text": "Halloo! Kati kuuleb.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "telefonikone/d-sina-1": {
+    "text": "Tere! Kas ma saaksin rääkida Mardiga?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/d-kati-2": {
+    "text": "Mart ei ole praegu kohal. Kas soovite sõnumi jätta?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "telefonikone/d-sina-2": {
+    "text": "Jah. Palun helistage mulle tagasi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/d-kati-3": {
+    "text": "Mis on teie number?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "telefonikone/d-sina-3": {
+    "text": "Minu number on viis kaks üks neli kolm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/d-kati-4": {
+    "text": "Hästi, Mart helistab teile varsti tagasi.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "telefonikone/d-sina-4": {
+    "text": "Aitäh! Head aega!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "telefonikone/p-note": {
+    "text": "Tere, Mari! Eile õhtul helistasin sulle, aga sa ei vastanud. Siis helistasin Jaanile ja ta vastas kohe. Ühendus oli väga halb ja ma ei kuulnud teda hästi. Ta rääkis aeglasemalt, aga ma ei saanud ikka aru. Siis kirjutasin talle sõnumi. Ma jätsin talle ka sinu numbri. Täna hommikul helistas Jaan mulle tagasi. Ühendus oli nüüd hea ja me rääkisime kaua. Ta tahab homme kell kolm kohvikus sinuga kohtuda. Ma olen homme kell kolm tööl, aga sina võid minna. Kas sa saaksid talle varsti helistada? Täna õhtul on ta kodus. Ma ootan sinu vastust kell kuus. Aitäh abi eest!",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "telefonikone/c-office": {
+    "text": "Halloo! Peeter kuuleb. Tere, mina olen Mari. Kas ma saaksin rääkida Katiga? Vabandust, ma ei kuule teid hästi. Ühendus on väga halb. Kas te kuulete mind nüüd? Ma helistasin teile ka eile, aga keegi ei vastanud. Jah, nüüd kuulen. Eile õhtul ei olnud keegi kontoris. Kati ei ole praegu kohal. Ma tahan temaga homme kohtuda. Millal ta tuleb tagasi? Ta tuleb homme hommikul kell kaheksa või üheksa tagasi. Vabandust, kas te saaksite korrata? Palun rääkige aeglasemalt. Homme hommikul, kell kaheksa või üheksa. Aitäh! Siis ma tulen homme kell kümme teie kontorisse. Kas see on hea aeg? Jah, kell kümme on hea aeg. Siis on Kati kohal. Kas ma võin sõnumi jätta? Jah, palun. Kas te saaksite öelda ka oma nime? Minu nimi on Mari Mägi. Mis on teie number? Minu number on viis kaks üks neli kolm. Viis kaks üks neli neli? Ei, viis kaks üks neli kolm. Palun helistage mulle tagasi. Hästi, kolm. Kati helistab teile homme. Kas teil on veel midagi? Ei, aitäh. Head aega! Head aega!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Halloo!",
+          "Peeter kuuleb."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, mina olen Mari.",
+          "Kas ma saaksin rääkida Katiga?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Vabandust, ma ei kuule teid hästi.",
+          "Ühendus on väga halb."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas te kuulete mind nüüd?",
+          "Ma helistasin teile ka eile, aga keegi ei vastanud."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, nüüd kuulen.",
+          "Eile õhtul ei olnud keegi kontoris.",
+          "Kati ei ole praegu kohal."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ma tahan temaga homme kohtuda.",
+          "Millal ta tuleb tagasi?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ta tuleb homme hommikul kell kaheksa või üheksa tagasi."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Vabandust, kas te saaksite korrata?",
+          "Palun rääkige aeglasemalt."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Homme hommikul, kell kaheksa või üheksa."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Aitäh!",
+          "Siis ma tulen homme kell kümme teie kontorisse.",
+          "Kas see on hea aeg?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, kell kümme on hea aeg.",
+          "Siis on Kati kohal."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas ma võin sõnumi jätta?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, palun.",
+          "Kas te saaksite öelda ka oma nime?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Minu nimi on Mari Mägi."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mis on teie number?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Minu number on viis kaks üks neli kolm."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Viis kaks üks neli neli?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, viis kaks üks neli kolm.",
+          "Palun helistage mulle tagasi."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Hästi, kolm.",
+          "Kati helistab teile homme.",
+          "Kas teil on veel midagi?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ei, aitäh.",
+          "Head aega!"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Head aega!"
+        ]
+      }
+    ]
+  },
+  "telefonikone/ta-helistab-homme": {
+    "text": "Ta helistab homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

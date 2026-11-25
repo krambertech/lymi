@@ -1,0 +1,745 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 00:32+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0>-vat</0> usually names no source and is mostly met in news and reports. In everyday talk people usually say who said it with <1>ütles, et</1>."
+msgstr "<0>-vat</0> usually names no source and is mostly met in news and reports. In everyday talk people usually say who said it with <1>ütles, et</1>."
+
+msgid "<0>-vat</0> usually passes the news on without saying who said it."
+msgstr "<0>-vat</0> usually passes the news on without saying who said it."
+
+#. placeholder {0}: each.said
+#. placeholder {1}: i18n._(HEARD_MEANS[each.id])
+#. placeholder {1}: i18n._(STAYS_MEANS[each.id])
+msgid "<0>{0}</0> {1}"
+msgstr "<0>{0}</0> {1}"
+
+msgid "<0>Ma</0> becomes <1>ta</1>, and the verb takes the new person’s ending: <2>tulen</2> becomes <3>tuleb</3>. <4>Homme</4> stays."
+msgstr "<0>Ma</0> becomes <1>ta</1>, and the verb takes the new person’s ending: <2>tulen</2> becomes <3>tuleb</3>. <4>Homme</4> stays."
+
+msgid "<0>Mida</0>, what, stays too. <1>Sa</1> becomes <2>ma</2>, and <3>teed</3> becomes <4>teen</4>."
+msgstr "<0>Mida</0>, what, stays too. <1>Sa</1> becomes <2>ma</2>, and <3>teed</3> becomes <4>teen</4>."
+
+msgid "<0>Mu</0>, my, becomes <1>tema</1>, his or her."
+msgstr "<0>Mu</0>, my, becomes <1>tema</1>, his or her."
+
+msgid "<0>Mul</0> becomes <1>tal</1> when the person is someone else."
+msgstr "<0>Mul</0> becomes <1>tal</1> when the person is someone else."
+
+msgid "<0>olema</0> without <1>-ma</1>, plus <2>-vat</2>: <3>olevat</3>."
+msgstr "<0>olema</0> without <1>-ma</1>, plus <2>-vat</2>: <3>olevat</3>."
+
+msgid "<0>Ta ütles, et tal on kiire</0> reports what someone said. <1>Ta olevat haige</1> passes on what is said about someone. Learn to make the first and to recognise the second."
+msgstr "<0>Ta ütles, et tal on kiire</0> reports what someone said. <1>Ta olevat haige</1> passes on what is said about someone. Learn to make the first and to recognise the second."
+
+msgid "<0>Ütles, et</0> and <1>rääkis, et</1> name who said it."
+msgstr "<0>Ütles, et</0> and <1>rääkis, et</1> name who said it."
+
+msgid "<0>Ütles, et</0> names the person. <1>-vat</1> usually names no one: it passes the news on."
+msgstr "<0>Ütles, et</0> names the person. <1>-vat</1> usually names no one: it passes the news on."
+
+msgid "<et>Ütles, et</et> and <et>rääkis, et</et> name who said it. <et>-vat</et> usually passes the news on without saying who said it."
+msgstr "<et>Ütles, et</et> and <et>rääkis, et</et> name who said it. <et>-vat</et> usually passes the news on without saying who said it."
+
+msgid "24 minutes"
+msgstr "24 minutes"
+
+msgid "9 exercises"
+msgstr "9 exercises"
+
+msgid "A neighbour does not want a shop on the street because of the cars."
+msgstr "A neighbour does not want a shop on the street because of the cars."
+
+msgid "A question that starts with a question word keeps the word and drops <0>kas</0>: <1>Peeter küsis, millal ma tulen.</1> Tap a sentence to hear it."
+msgstr "A question that starts with a question word keeps the word and drops <0>kas</0>: <1>Peeter küsis, millal ma tulen.</1> Tap a sentence to hear it."
+
+msgid "A question word stays as it is: <0>kus</0>, where. There is no <1>kas</1> and no <2>et</2>."
+msgstr "A question word stays as it is: <0>kus</0>, where. There is no <1>kas</1> and no <2>et</2>."
+
+msgid "A statement after <0>rääkis</0> takes <1>et</1>. <2>Kas</2> is for yes-or-no questions."
+msgstr "A statement after <0>rääkis</0> takes <1>et</1>. <2>Kas</2> is for yes-or-no questions."
+
+msgid "A yes-or-no question after <0>küsis</0> takes <1>kas</1>, not <2>et</2>."
+msgstr "A yes-or-no question after <0>küsis</0> takes <1>kas</1>, not <2>et</2>."
+
+msgid "A yes-or-no question follows <0/> with <1>kas</1>, not <2>et</2>: <3>Mari küsis: „Kas sa tuled?“</3> becomes <4>Mari küsis, kas ma tulen.</4> The person changes as before."
+msgstr "A yes-or-no question follows <0/> with <1>kas</1>, not <2>et</2>: <3>Mari küsis: „Kas sa tuled?“</3> becomes <4>Mari küsis, kas ma tulen.</4> The person changes as before."
+
+msgid "A yes-or-no question follows <0>kas</0>, and a question word stays where it was."
+msgstr "A yes-or-no question follows <0>kas</0>, and a question word stays where it was."
+
+msgid "A yes-or-no question follows <0>küsis</0> with <1>kas</1>, not <2>et</2>."
+msgstr "A yes-or-no question follows <0>küsis</0> with <1>kas</1>, not <2>et</2>."
+
+msgid "A yes-or-no question follows <0>küsis</0> with <1>kas</1>: <2>Mari küsis, kas ma tulen.</2> A question word stays and <3>kas</3> goes: <4>Peeter küsis, millal ma tulen.</4>"
+msgstr "A yes-or-no question follows <0>küsis</0> with <1>kas</1>: <2>Mari küsis, kas ma tulen.</2> A question word stays and <3>kas</3> goes: <4>Peeter küsis, millal ma tulen.</4>"
+
+msgid "A yes-or-no question follows <et>küsis</et> with <et>kas</et>. A question word stays where it was."
+msgstr "A yes-or-no question follows <et>küsis</et> with <et>kas</et>. A question word stays where it was."
+
+msgid "A yes-or-no question keeps <0>kas</0>. Only the person changes: <1>sul</1> becomes <2>mul</2>."
+msgstr "A yes-or-no question keeps <0>kas</0>. Only the person changes: <1>sul</1> becomes <2>mul</2>."
+
+msgid "According to the radio, what will fall on Saturday? Write it as Liisa says it."
+msgstr "According to the radio, what will fall on Saturday? Write it as Liisa says it."
+
+msgid "After <0>ütles</0> put a comma and <1>et</1>. Peeter’s <2>ma tulen</2> becomes <3>ta tuleb</3>."
+msgstr "After <0>ütles</0> put a comma and <1>et</1>. Peeter’s <2>ma tulen</2> becomes <3>ta tuleb</3>."
+
+msgid "After <et>ütles</et> or <et>rääkis</et>, put a comma and <et>et</et>. The person words change with the speaker, and the verb takes the new person’s ending."
+msgstr "After <et>ütles</et> or <et>rääkis</et>, put a comma and <et>et</et>. The person words change with the speaker, and the verb takes the new person’s ending."
+
+msgid "All eight forms right."
+msgstr "All eight forms right."
+
+msgid "All eight heard the right time."
+msgstr "All eight heard the right time."
+
+msgid "All eight reported correctly."
+msgstr "All eight reported correctly."
+
+msgid "All eight, told apart by ear."
+msgstr "All eight, told apart by ear."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six reported correctly."
+msgstr "All six reported correctly."
+
+msgid "All six written correctly."
+msgstr "All six written correctly."
+
+msgid "asked"
+msgstr "asked"
+
+msgid "At half past eight"
+msgstr "At half past eight"
+
+msgid "At seven, when the doors open"
+msgstr "At seven, when the doors open"
+
+msgid "At six, as on the ticket"
+msgstr "At six, as on the ticket"
+
+msgid "at that moment"
+msgstr "at that moment"
+
+msgid "At that moment"
+msgstr "At that moment"
+
+msgid "Both can carry the same news, but they work differently. <0>Mari ütles, et ta on haige</0> names who said it. <1>Mari olevat haige</1> names no one: it passes on what is said, and the speaker is usually not vouching for it."
+msgstr "Both can carry the same news, but they work differently. <0>Mari ütles, et ta on haige</0> names who said it. <1>Mari olevat haige</1> names no one: it passes on what is said, and the speaker is usually not vouching for it."
+
+msgid "By the river"
+msgstr "By the river"
+
+#. placeholder {0}: each.inf
+#. placeholder {1}: each.form
+msgid "Drop <0>-ma</0> from <1>{0}</1> and add <2>-vat</2>: <3>{1}</3>."
+msgstr "Drop <0>-ma</0> from <1>{0}</1> and add <2>-vat</2>: <3>{1}</3>."
+
+msgid "Drop <0>-ma</0> from <1>tulema</1> and add <2>-vat</2>: <3>tulevat</3>."
+msgstr "Drop <0>-ma</0> from <1>tulema</1> and add <2>-vat</2>: <3>tulevat</3>."
+
+msgid "Drop <et>-ma</et> from the <et>-ma</et> form and add <et>-vat</et>. The form is the same for every person."
+msgstr "Drop <et>-ma</et> from the <et>-ma</et> form and add <et>-vat</et>. The form is the same for every person."
+
+msgid "Each sentence has one wrong word: a person that did not change, the wrong link word, or a -vat form that does not exist. Tap it, then type it right."
+msgstr "Each sentence has one wrong word: a person that did not change, the wrong link word, or a -vat form that does not exist. Tap it, then type it right."
+
+msgid "earlier"
+msgstr "earlier"
+
+msgid "Earlier"
+msgstr "Earlier"
+
+msgid "English usually moves the verb back in time: “She said she was ill.” Estonian usually keeps the verb as it was said. <0>Mari ütles: „Ma olen haige.“</0> becomes <1>Mari ütles, et ta on haige</1>, with <2>on</2>, not <3>oli</3>."
+msgstr "English usually moves the verb back in time: “She said she was ill.” Estonian usually keeps the verb as it was said. <0>Mari ütles: „Ma olen haige.“</0> becomes <1>Mari ütles, et ta on haige</1>, with <2>on</2>, not <3>oli</3>."
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "For no, put <0>ei</0> before it: <1>Ta ei tulevat homme.</1> For the past, add the <2>-nud</2> form from lesson {perfect}: <3>Ta olevat eile Tallinnas käinud.</3> He is said to have been in Tallinn yesterday."
+msgstr "For no, put <0>ei</0> before it: <1>Ta ei tulevat homme.</1> For the past, add the <2>-nud</2> form from lesson {perfect}: <3>Ta olevat eile Tallinnas käinud.</3> He is said to have been in Tallinn yesterday."
+
+msgid "For no, put <0>ei</0> before the <1>-vat</1> form."
+msgstr "For no, put <0>ei</0> before the <1>-vat</1> form."
+
+msgid "From a local news site"
+msgstr "From a local news site"
+
+msgid "Go through the table once more, then try again."
+msgstr "Go through the table once more, then try again."
+
+msgid "He saw her there himself, by chance."
+msgstr "He saw her there himself, by chance."
+
+msgid "How does Kalev know that Mari went to the cinema?"
+msgstr "How does Kalev know that Mari went to the cinema?"
+
+msgid "How many days will it be closed? Write the number word as the text does."
+msgstr "How many days will it be closed? Write the number word as the text does."
+
+msgid "I → he or she"
+msgstr "I → he or she"
+
+msgid "I asked if you speak Estonian."
+msgstr "I asked if you speak Estonian."
+
+msgid "I have → he or she has"
+msgstr "I have → he or she has"
+
+msgid "Infinitive"
+msgstr "Infinitive"
+
+msgid "is said to be"
+msgstr "is said to be"
+
+msgid "is said to come"
+msgstr "is said to come"
+
+msgid "is said to do"
+msgstr "is said to do"
+
+msgid "is said to drink"
+msgstr "is said to drink"
+
+msgid "is said to eat"
+msgstr "is said to eat"
+
+msgid "is said to go"
+msgstr "is said to go"
+
+msgid "is said to live"
+msgstr "is said to live"
+
+msgid "is said to read"
+msgstr "is said to read"
+
+msgid "is said to sleep"
+msgstr "is said to sleep"
+
+msgid "is said to speak"
+msgstr "is said to speak"
+
+msgid "is said to work"
+msgstr "is said to work"
+
+msgid "It is said it will rain tomorrow."
+msgstr "It is said it will rain tomorrow."
+
+msgid "Its owner is selling it."
+msgstr "Its owner is selling it."
+
+msgid "Kalev"
+msgstr "Kalev"
+
+msgid "Kalev and Liisa talk the day before a concert. Listen to them twice and answer the questions."
+msgstr "Kalev and Liisa talk the day before a concert. Listen to them twice and answer the questions."
+
+msgid "Kalev is said to live in Tartu now."
+msgstr "Kalev is said to live in Tartu now."
+
+msgid "Kalev said he now lives in Tartu."
+msgstr "Kalev said he now lives in Tartu."
+
+msgid "Kalev’s brother wants a ticket too."
+msgstr "Kalev’s brother wants a ticket too."
+
+msgid "later"
+msgstr "later"
+
+msgid "Later"
+msgstr "Later"
+
+msgid "Liisa"
+msgstr "Liisa"
+
+msgid "Liisa is said to be coming on Saturday."
+msgstr "Liisa is said to be coming on Saturday."
+
+msgid "Liisa is sure that a new boss is coming in the autumn."
+msgstr "Liisa is sure that a new boss is coming in the autumn."
+
+msgid "Liisa said she is coming on Saturday."
+msgstr "Liisa said she is coming on Saturday."
+
+msgid "Listen, then pick when it was true for the person who spoke: at that moment, earlier or later."
+msgstr "Listen, then pick when it was true for the person who spoke: at that moment, earlier or later."
+
+msgid "Listen: Kalev and Liisa"
+msgstr "Listen: Kalev and Liisa"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Longer verbs"
+msgstr "Longer verbs"
+
+msgid "Make the -vat form"
+msgstr "Make the -vat form"
+
+msgid "Mari asked if I am coming."
+msgstr "Mari asked if I am coming."
+
+msgid "Mari has already decided to come to the concert."
+msgstr "Mari has already decided to come to the concert."
+
+msgid "Mari is ill"
+msgstr "Mari is ill"
+
+msgid "Mari said she is busy."
+msgstr "Mari said she is busy."
+
+msgid "Mari said she is going home tomorrow."
+msgstr "Mari said she is going home tomorrow."
+
+msgid "Mari said she is ill."
+msgstr "Mari said she is ill."
+
+msgid "Mari said she is waiting for the bus."
+msgstr "Mari said she is waiting for the bus."
+
+msgid "Mari said she lives in Tartu."
+msgstr "Mari said she lives in Tartu."
+
+msgid "Mari said she was ill yesterday."
+msgstr "Mari said she was ill yesterday."
+
+msgid "Mari said the concert begins at six."
+msgstr "Mari said the concert begins at six."
+
+msgid "Mari says she spent yesterday at home."
+msgstr "Mari says she spent yesterday at home."
+
+msgid "Mari told him about it herself on the phone."
+msgstr "Mari told him about it herself on the phone."
+
+msgid "Mari’s <0>mul</0> becomes <1>tal</1> for you: it is about her."
+msgstr "Mari’s <0>mul</0> becomes <1>tal</1> for you: it is about her."
+
+msgid "my → his or her"
+msgstr "my → his or her"
+
+msgid "Nearly. Check the link word and the form in the ones you missed."
+msgstr "Nearly. Check the link word and the form in the ones you missed."
+
+msgid "Nearly. Check the ones you missed against the table."
+msgstr "Nearly. Check the ones you missed against the table."
+
+msgid "Nearly. Check the person words in the ones you missed."
+msgstr "Nearly. Check the person words in the ones you missed."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Nearly. Play the ones you got wrong once more."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Nearly. Read the reason under each one you got wrong."
+
+msgid "News from the library"
+msgstr "News from the library"
+
+msgid "Next to the railway station"
+msgstr "Next to the railway station"
+
+msgid "On Friday, if she feels better by then"
+msgstr "On Friday, if she feels better by then"
+
+msgid "On Monday, if she is well"
+msgstr "On Monday, if she is well"
+
+msgid "On the old town square"
+msgstr "On the old town square"
+
+msgid "only passed on"
+msgstr "only passed on"
+
+msgid "Only passed on"
+msgstr "Only passed on"
+
+msgid "Passes it on"
+msgstr "Passes it on"
+
+msgid "Peeter asked if she is at home."
+msgstr "Peeter asked if she is at home."
+
+msgid "Peeter is coming tomorrow"
+msgstr "Peeter is coming tomorrow"
+
+msgid "Peeter said he drove to Tartu yesterday."
+msgstr "Peeter said he drove to Tartu yesterday."
+
+msgid "Peeter said he is coming tomorrow."
+msgstr "Peeter said he is coming tomorrow."
+
+msgid "Peeter said he is studying Estonian."
+msgstr "Peeter said he is studying Estonian."
+
+msgid "Peeter said he went to Tallinn yesterday."
+msgstr "Peeter said he went to Tallinn yesterday."
+
+msgid "Peeter said he went to Tallinn."
+msgstr "Peeter said he went to Tallinn."
+
+msgid "Peeter said it will rain tomorrow."
+msgstr "Peeter said it will rain tomorrow."
+
+msgid "Questions, and how you report them"
+msgstr "Questions, and how you report them"
+
+msgid "Read a short news item about a library, as in the reading part of the B1 exam. Notice which news comes from a named person and which only passes on what is said."
+msgstr "Read a short news item about a library, as in the reading part of the B1 exam. Notice which news comes from a named person and which only passes on what is said."
+
+msgid "Read the explanation under each one you missed, then try again."
+msgstr "Read the explanation under each one you missed, then try again."
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "Readers wanted a new name."
+msgstr "Readers wanted a new name."
+
+msgid "Report each question."
+msgstr "Report each question."
+
+msgid "Report each sentence. Keep the tense, change the person."
+msgstr "Report each sentence. Keep the tense, change the person."
+
+msgid "report it"
+msgstr "report it"
+
+msgid "report the question"
+msgstr "report the question"
+
+msgid "Reportedly, he is coming tomorrow."
+msgstr "Reportedly, he is coming tomorrow."
+
+msgid "Reportedly, she is ill."
+msgstr "Reportedly, she is ill."
+
+msgid "Reportedly, she is ill. (use the -vat form)"
+msgstr "Reportedly, she is ill. (use the -vat form)"
+
+msgid "Reportedly, she isn’t coming tomorrow. (use the -vat form)"
+msgstr "Reportedly, she isn’t coming tomorrow. (use the -vat form)"
+
+msgid "Reporting with <et>küsis, kas</et>"
+msgstr "Reporting with <et>küsis, kas</et>"
+
+msgid "Reporting with <et>ütles, et</et>"
+msgstr "Reporting with <et>ütles, et</et>"
+
+msgid "said"
+msgstr "said"
+
+msgid "Said by someone, or passed on?"
+msgstr "Said by someone, or passed on?"
+
+msgid "Said, or passed on"
+msgstr "Said, or passed on"
+
+msgid "Said, or passed on?"
+msgstr "Said, or passed on?"
+
+msgid "Say what they asked"
+msgstr "Say what they asked"
+
+msgid "Say what they said"
+msgstr "Say what they said"
+
+msgid "Says who said it"
+msgstr "Says who said it"
+
+msgid "Short verbs"
+msgstr "Short verbs"
+
+msgid "So the tense tells you when the thing was true for the speaker: <0>ta oli eile haige</0> is about yesterday, and <1>ta tuleb homme</1> is about tomorrow, because the present tense also speaks about what comes next."
+msgstr "So the tense tells you when the thing was true for the speaker: <0>ta oli eile haige</0> is about yesterday, and <1>ta tuleb homme</1> is about tomorrow, because the present tense also speaks about what comes next."
+
+msgid "someone named said it"
+msgstr "someone named said it"
+
+msgid "Someone named said it"
+msgstr "Someone named said it"
+
+msgid "Someone told him, but not who."
+msgstr "Someone told him, but not who."
+
+msgid "Spoken, <0>-vat</0> sounds almost the same as the <1>-vad</1> of <2>nad tulevad</2>, they are coming. The subject tells you which: <3>ta tulevat</3> or <4>nad tulevad</4>."
+msgstr "Spoken, <0>-vat</0> sounds almost the same as the <1>-vad</1> of <2>nad tulevad</2>, they are coming. The subject tells you which: <3>ta tulevat</3> or <4>nad tulevad</4>."
+
+msgid "Ta elavat nüüd Tartus."
+msgstr "Ta elavat nüüd Tartus."
+
+msgid "Ta joovat iga päev kohvi."
+msgstr "Ta joovat iga päev kohvi."
+
+msgid "Ta küsis, kas ma tulen."
+msgstr "Ta küsis, kas ma tulen."
+
+msgid "Ta lugevat iga päev ajalehte."
+msgstr "Ta lugevat iga päev ajalehte."
+
+msgid "Ta magavat terve päeva."
+msgstr "Ta magavat terve päeva."
+
+msgid "Ta minevat homme koju."
+msgstr "Ta minevat homme koju."
+
+msgid "Ta olevat haige."
+msgstr "Ta olevat haige."
+
+msgid "Ta rääkis, et ta käis Tallinnas."
+msgstr "Ta rääkis, et ta käis Tallinnas."
+
+msgid "Ta rääkivat hästi eesti keelt."
+msgstr "Ta rääkivat hästi eesti keelt."
+
+msgid "Ta söövat ainult kala."
+msgstr "Ta söövat ainult kala."
+
+msgid "Ta tegevat palju tööd."
+msgstr "Ta tegevat palju tööd."
+
+msgid "Ta töötavat koolis."
+msgstr "Ta töötavat koolis."
+
+msgid "Ta tulevat homme."
+msgstr "Ta tulevat homme."
+
+msgid "Ta ütles, et tal on kiire."
+msgstr "Ta ütles, et tal on kiire."
+
+msgid "Take the <0>-ma</0> form, drop <1>-ma</1> and add <2>-vat</2>: <3>tulema</3> gives <4/>. The form is the same for every person, so you never change it for <5>ma</5> or <6>nad</6>."
+msgstr "Take the <0>-ma</0> form, drop <1>-ma</1> and add <2>-vat</2>: <3>tulema</3> gives <4/>. The form is the same for every person, so you never change it for <5>ma</5> or <6>nad</6>."
+
+msgid "Take the <0>-ma</0> form, drop <1>-ma</1> and add <2>-vat</2>: <3>tulema</3>, <4>tulevat</4>."
+msgstr "Take the <0>-ma</0> form, drop <1>-ma</1> and add <2>-vat</2>: <3>tulema</3>, <4>tulevat</4>."
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap a sentence"
+msgstr "Tap a sentence"
+
+msgid "Tap the pairs above once more, then try again."
+msgstr "Tap the pairs above once more, then try again."
+
+msgid "Tap the sentences above once more, then try again."
+msgstr "Tap the sentences above once more, then try again."
+
+msgid "Telling what someone asked"
+msgstr "Telling what someone asked"
+
+msgid "Telling what someone said"
+msgstr "Telling what someone said"
+
+msgid "That she is busy and cannot come in today."
+msgstr "That she is busy and cannot come in today."
+
+msgid "That she is going abroad."
+msgstr "That she is going abroad."
+
+msgid "That she is ill and not coming to work."
+msgstr "That she is ill and not coming to work."
+
+msgid "the -vat form"
+msgstr "the -vat form"
+
+msgid "The -vat form"
+msgstr "The -vat form"
+
+msgid "the <0>-vat</0> form"
+msgstr "the <0>-vat</0> form"
+
+msgid "The <0>-vat</0> form is the <1>-ma</1> form without <2>-ma</2>, plus <3>-vat</3>: <4>tulevat</4>, <5>olevat</5>. It has no person ending, and <6>ei</6> before it makes it no: <7>Ta ei tulevat.</7>"
+msgstr "The <0>-vat</0> form is the <1>-ma</1> form without <2>-ma</2>, plus <3>-vat</3>: <4>tulevat</4>, <5>olevat</5>. It has no person ending, and <6>ei</6> before it makes it no: <7>Ta ei tulevat.</7>"
+
+msgid "The <0>-vat</0> form passes on what is said about someone, usually without saying who said it: <1/> in <2>Ta olevat haige.</2> He is said to be ill; they say he is ill."
+msgstr "The <0>-vat</0> form passes on what is said about someone, usually without saying who said it: <1/> in <2>Ta olevat haige.</2> He is said to be ill; they say he is ill."
+
+msgid "The <et>-vat</et> form"
+msgstr "The <et>-vat</et> form"
+
+msgid "The city has already confirmed that a shop will open in the old building."
+msgstr "The city has already confirmed that a shop will open in the old building."
+
+msgid "The concert is said to begin at six."
+msgstr "The concert is said to begin at six."
+
+msgid "The form ends in <0>-vat</0>, whoever the person is: <1>olevat</1>."
+msgstr "The form ends in <0>-vat</0>, whoever the person is: <1>olevat</1>."
+
+msgid "The library will be closed for the whole time of the move."
+msgstr "The library will be closed for the whole time of the move."
+
+msgid "The old building is too small to hold all the books."
+msgstr "The old building is too small to hold all the books."
+
+msgid "The person changed to <0>ta</0>, so the verb changes too: <1>tuleb</1>, not <2>tulen</2>."
+msgstr "The person changed to <0>ta</0>, so the verb changes too: <1>tuleb</1>, not <2>tulen</2>."
+
+msgid "The person words change with the speaker. Mari’s <0>ma</0> becomes <1>ta</1> and the verb follows: <2>olen</2> becomes <3>on</3>. Tap a sentence to hear it."
+msgstr "The person words change with the speaker. Mari’s <0>ma</0> becomes <1>ta</1> and the verb follows: <2>olen</2> becomes <3>on</3>. Tap a sentence to hear it."
+
+msgid "The present tense with <0>homme</0>, tomorrow, speaks about what comes next."
+msgstr "The present tense with <0>homme</0>, tomorrow, speaks about what comes next."
+
+msgid "The reported sentence follows <0>et</0>. The person words change; the rest stays."
+msgstr "The reported sentence follows <0>et</0>. The person words change; the rest stays."
+
+msgid "The same news said by someone and passed on"
+msgstr "The same news said by someone and passed on"
+
+msgid "The same rule works for short verbs: <0>olema</0>, <1>olevat</1>; <2>sööma</2>, <3>söövat</3>."
+msgstr "The same rule works for short verbs: <0>olema</0>, <1>olevat</1>; <2>sööma</2>, <3>söövat</3>."
+
+msgid "The verb is in the past because the person spoke about something earlier."
+msgstr "The verb is in the past because the person spoke about something earlier."
+
+msgid "The verb is in the present because the person spoke about the present."
+msgstr "The verb is in the present because the person spoke about the present."
+
+msgid "The verb usually keeps its tense"
+msgstr "The verb usually keeps its tense"
+
+msgid "The verb usually keeps the tense it had when it was said, so it shows when the thing was true for the speaker."
+msgstr "The verb usually keeps the tense it had when it was said, so it shows when the thing was true for the speaker."
+
+msgid "The verb usually keeps the tense it had when it was said: <0>Ta ütles, et ta on haige</0> for “I am ill”, <1>Ta ütles, et ta oli eile haige</1> for “I was ill yesterday”. English moves the verb back; Estonian usually does not."
+msgstr "The verb usually keeps the tense it had when it was said: <0>Ta ütles, et ta on haige</0> for “I am ill”, <1>Ta ütles, et ta oli eile haige</1> for “I was ill yesterday”. English moves the verb back; Estonian usually does not."
+
+msgid "Things people said, and how you report them"
+msgstr "Things people said, and how you report them"
+
+msgid "to be"
+msgstr "to be"
+
+msgid "to come"
+msgstr "to come"
+
+msgid "to do, to make"
+msgstr "to do, to make"
+
+msgid "to drink"
+msgstr "to drink"
+
+msgid "to eat"
+msgstr "to eat"
+
+msgid "to go"
+msgstr "to go"
+
+msgid "to live"
+msgstr "to live"
+
+msgid "to read"
+msgstr "to read"
+
+msgid "To report what someone said, put a comma and <0>et</0> after <1/> or <2/>, then the sentence itself: <3>Mari ütles: „Ma olen väsinud.“</3> becomes <4>Mari ütles, et ta on väsinud.</4> Mari said she is tired."
+msgstr "To report what someone said, put a comma and <0>et</0> after <1/> or <2/>, then the sentence itself: <3>Mari ütles: „Ma olen väsinud.“</3> becomes <4>Mari ütles, et ta on väsinud.</4> Mari said she is tired."
+
+msgid "To report what someone said, put a comma and <0>et</0> after <1>ütles</1> or <2>rääkis</2>. The person words change with the speaker: <3>ma</3> becomes <4>ta</4>, <5>mul</5> becomes <6>tal</6>, and the verb takes the new person’s ending."
+msgstr "To report what someone said, put a comma and <0>et</0> after <1>ütles</1> or <2>rääkis</2>. The person words change with the speaker: <3>ma</3> becomes <4>ta</4>, <5>mul</5> becomes <6>tal</6>, and the verb takes the new person’s ending."
+
+msgid "to sleep"
+msgstr "to sleep"
+
+msgid "to talk, to tell"
+msgstr "to talk, to tell"
+
+msgid "to work"
+msgstr "to work"
+
+msgid "told, talked"
+msgstr "told, talked"
+
+msgid "Tomorrow, but only for a few hours"
+msgstr "Tomorrow, but only for a few hours"
+
+msgid "Two friends talk about a concert"
+msgstr "Two friends talk about a concert"
+
+msgid "Type the form for each verb."
+msgstr "Type the form for each verb."
+
+msgid "Verbs"
+msgstr "Verbs"
+
+msgid "Verbs and their -vat forms"
+msgstr "Verbs and their -vat forms"
+
+msgid "what"
+msgstr "what"
+
+msgid "What did Kalev’s boss ask?"
+msgstr "What did Kalev’s boss ask?"
+
+msgid "What did Mari say when she phoned Liisa?"
+msgstr "What did Mari say when she phoned Liisa?"
+
+msgid "What is happening to the library?"
+msgstr "What is happening to the library?"
+
+msgid "What was said"
+msgstr "What was said"
+
+msgid "What you report"
+msgstr "What you report"
+
+msgid "When does Mari say she will be back at work?"
+msgstr "When does Mari say she will be back at work?"
+
+msgid "When does the concert begin?"
+msgstr "When does the concert begin?"
+
+msgid "When is the opening planned? Write it as the text does."
+msgstr "When is the opening planned? Write it as the text does."
+
+msgid "When the person was speaking to you, <0>sa</0> becomes <1>ma</1>, and the verb takes <2>ma</2>’s ending: <3>räägid</3> becomes <4>räägin</4>."
+msgstr "When the person was speaking to you, <0>sa</0> becomes <1>ma</1>, and the verb takes <2>ma</2>’s ending: <3>räägid</3> becomes <4>räägin</4>."
+
+msgid "When was it true?"
+msgstr "When was it true?"
+
+msgid "where"
+msgstr "where"
+
+msgid "Where is the new building?"
+msgstr "Where is the new building?"
+
+msgid "Whether anyone can work later on Friday."
+msgstr "Whether anyone can work later on Friday."
+
+msgid "Whether anyone has a concert ticket."
+msgstr "Whether anyone has a concert ticket."
+
+msgid "Whether Mari is ill."
+msgstr "Whether Mari is ill."
+
+msgid "Who is said to come to the opening? Write it as the text does."
+msgstr "Who is said to come to the opening? Write it as the text does."
+
+msgid "Why does the library move?"
+msgstr "Why does the library move?"
+
+msgid "Write each sentence. Where the English says <0>reportedly</0>, use the <1>-vat</1> form; otherwise report with <2>et</2> or <3>kas</3>."
+msgstr "Write each sentence. Where the English says <0>reportedly</0>, use the <1>-vat</1> form; otherwise report with <2>et</2> or <3>kas</3>."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "yes or no"
+msgstr "yes or no"
+
+msgid "you → I"
+msgstr "you → I"
+
+msgid "You will meet <0>-vat</0> mainly in news and reports, such as <1>Kontsert algavat kell kuus.</1> In everyday talk people usually say who said it, with <2>ütles, et</2>. Tap the pairs, then listen and pick."
+msgstr "You will meet <0>-vat</0> mainly in news and reports, such as <1>Kontsert algavat kell kuus.</1> In everyday talk people usually say who said it, with <2>ütles, et</2>. Tap the pairs, then listen and pick."

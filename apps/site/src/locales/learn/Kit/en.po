@@ -239,6 +239,9 @@ msgstr "a foot"
 msgid "A free Estonian lesson for beginners: family words (ema, isa, vend, õde, laps), saying how many brothers, sisters and children you have, and the words on a registration form: first name, surname, address, phone number, age, birthday, country and town. Read a form, follow a conversation at a desk, fill in a form and write about yourself. Every sentence is read aloud."
 msgstr "A free Estonian lesson for beginners: family words (ema, isa, vend, õde, laps), saying how many brothers, sisters and children you have, and the words on a registration form: first name, surname, address, phone number, age, birthday, country and town. Read a form, follow a conversation at a desk, fill in a form and write about yourself. Every sentence is read aloud."
 
+msgid "A free Estonian lesson for the café counter: ask for a drink and something to eat with palun, ask if they have it, answer here or to take away and card or cash, and ask for the bill. Every sentence is read aloud."
+msgstr "A free Estonian lesson for the café counter: ask for a drink and something to eat with palun, ask if they have it, answer here or to take away and card or cash, and ask for the bill. Every sentence is read aloud."
+
 msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the partitive. Every word is read aloud."
 msgstr "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the partitive. Every word is read aloud."
 
@@ -307,6 +310,9 @@ msgstr "A free Estonian practice lesson on looking for a flat: read an advert, w
 
 msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
 msgstr "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
+
+msgid "A free Estonian situation lesson on asking the way and getting around: otse (straight), vasakule (left), paremale (right), peatus (stop), pilet (ticket), buying a ticket, and following directions on the street. Every sentence is read aloud."
+msgstr "A free Estonian situation lesson on asking the way and getting around: otse (straight), vasakule (left), paremale (right), peatus (stop), pilet (ticket), buying a ticket, and following directions on the street. Every sentence is read aloud."
 
 msgid "A free lesson on consonant gradation in Estonian: why jalg becomes jala and tuba becomes toa, which forms take the strong or the weak stem, the four usual ways a consonant weakens (kapp, kapi; pank, panga; pood, poe; lind, linnu), words that go the other way (mõte, mõtte), and the same change in verbs (lugema, loen). Every sentence is read aloud."
 msgstr "A free lesson on consonant gradation in Estonian: why jalg becomes jala and tuba becomes toa, which forms take the strong or the weak stem, the four usual ways a consonant weakens (kapp, kapi; pank, panga; pood, poe; lind, linnu), words that go the other way (mõte, mõtte), and the same change in verbs (lugema, loen). Every sentence is read aloud."
@@ -572,8 +578,14 @@ msgstr "Answer every question first."
 msgid "Answers"
 msgstr "Answers"
 
+msgid "Asking for directions and travelling in Estonian"
+msgstr "Asking for directions and travelling in Estonian"
+
 msgid "Asking questions in Estonian"
 msgstr "Asking questions in Estonian"
+
+msgid "At a café"
+msgstr "At a café"
 
 msgid "at home"
 msgstr "at home"
@@ -947,6 +959,9 @@ msgstr "Free Estonian practice at the market: read a friend’s message and answ
 
 msgid "Free Estonian practice for beginners: read opening hours and a message, sort times, prices and days, follow a voice message and a phone call with times and days, write what you hear, write short sentences in Estonian, fill in a plan for Saturday, talk with a friend at a café and write back. Every sentence is read aloud."
 msgstr "Free Estonian practice for beginners: read opening hours and a message, sort times, prices and days, follow a voice message and a phone call with times and days, write what you hear, write short sentences in Estonian, fill in a plan for Saturday, talk with a friend at a café and write back. Every sentence is read aloud."
+
+msgid "Free Estonian practice for phone calls: answer a call (halloo, Mari kuuleb), ask for someone (kas ma saaksin rääkida Mardiga), ask to repeat or speak slower (kas te saaksite korrata, ühendus on halb), leave a message and give a number. Every sentence is read aloud."
+msgstr "Free Estonian practice for phone calls: answer a call (halloo, Mari kuuleb), ask for someone (kas ma saaksin rääkida Mardiga), ask to repeat or speak slower (kas te saaksite korrata, ühendus on halb), leave a message and give a number. Every sentence is read aloud."
 
 msgid "Free Estonian practice in the past and the future: read about a friend’s weekend and write back, say what you did and didn’t do (olin, ei läinud), what you will do (homme lähen, hakkan õppima, kavatsen tulla), fix verbs in the wrong form, and follow a conversation you can play twice. Every sentence is read aloud."
 msgstr "Free Estonian practice in the past and the future: read about a friend’s weekend and write back, say what you did and didn’t do (olin, ei läinud), what you will do (homme lähen, hakkan õppima, kavatsen tulla), fix verbs in the wrong form, and follow a conversation you can play twice. Every sentence is read aloud."
@@ -1633,6 +1648,12 @@ msgstr "on"
 msgid "On a surface, at work or at a market: -l."
 msgstr "On a surface, at work or at a market: -l."
 
+msgid "On the phone"
+msgstr "On the phone"
+
+msgid "On the phone in Estonian"
+msgstr "On the phone in Estonian"
+
 msgid "on the table"
 msgstr "on the table"
 
@@ -1659,6 +1680,9 @@ msgstr "Onto and off in Estonian: -le and -lt"
 
 msgid "or *pole*"
 msgstr "or *pole*"
+
+msgid "Ordering at a café in Estonian"
+msgstr "Ordering at a café in Estonian"
 
 msgid "Ordinals and dates"
 msgstr "Ordinals and dates"
@@ -2407,6 +2431,9 @@ msgstr "Tomorrow I’ll eat at home."
 
 msgid "Tööl, at work, takes -l like a market does."
 msgstr "Tööl, at work, takes -l like a market does."
+
+msgid "Travel and directions"
+msgstr "Travel and directions"
 
 msgctxt "the statement is true"
 msgid "True"

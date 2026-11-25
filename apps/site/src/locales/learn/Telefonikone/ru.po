@@ -1,0 +1,467 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 02:05+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "<0/> asks <1>kellele?</1>, so you phone to someone: <2>mulle</2>, <3>sulle</3>, <4>teile</4>. For what already happened, use the past: <5>helistasin</5>, as in lesson {past}. For what will happen, the present with a time word such as <6/> is usually enough: <7>helistan</7> <8>homme</8>."
+msgstr "<0/> спрашивает <1>kellele?</1>, то есть «кому?», поэтому звонишь кому-то: <2>mulle</2>, <3>sulle</3>, <4>teile</4>. О том, что уже случилось, говори в прошедшем времени, как в уроке {past}: <5>helistasin</5>. О том, что будет, обычно хватает настоящего времени со словом вроде <6/>: <7>helistan</7> <8>homme</8>."
+
+msgid "<0>Eile</0>, yesterday, needs the past: <1>helistasin</1>."
+msgstr "<0>Eile</0>, «вчера», требует прошедшего времени: <1>helistasin</1>."
+
+msgid "<0>Helistama</0> asks <1>kellele?</1>: <2>mulle</2>, <3>sulle</3>, <4>teile</4>. The past is <5>helistasin</5>, and the present with a time word usually says the future: <6>helistan homme</6>."
+msgstr "<0>Helistama</0> спрашивает <1>kellele?</1>: <2>mulle</2>, <3>sulle</3>, <4>teile</4>. Прошедшее время — <5>helistasin</5>, а будущее обычно передаёт настоящее время со словом о времени: <6>helistan homme</6>."
+
+msgid "<0>Helistama</0> asks <1>kellele?</1>: <2>mulle</2>."
+msgstr "<0>Helistama</0> спрашивает <1>kellele?</1>: <2>mulle</2>."
+
+msgid "<0>Homme</0>, tomorrow, takes the present: <1>helistan</1>."
+msgstr "<0>Homme</0>, «завтра», берёт настоящее время: <1>helistan</1>."
+
+msgid "<0>Mardist</0> is about Mart. To speak with him, use <1>Mardiga</1>."
+msgstr "<0>Mardist</0> значит «о Марте». Чтобы поговорить с ним, скажи <1>Mardiga</1>."
+
+msgid "<0>Palun</0> answers a thank you, and Kati has not thanked you. Say <1>aitäh</1>."
+msgstr "<0>Palun</0> отвечает на благодарность, а Кати тебя ещё не благодарила. Скажи <1>aitäh</1>."
+
+msgid "<0>Rääkima</0> asks <1>kellega?</1>, so the name takes <2>ga</2>: <3>Kas ma saaksin rääkida Mardiga?</3>"
+msgstr "<0>Rääkima</0> спрашивает <1>kellega?</1>, то есть «с кем?», поэтому имя получает окончание <2>ga</2>: <3>Kas ma saaksin rääkida Mardiga?</3>"
+
+msgid "<0>Rääkima</0> asks <1>kellega?</1>, so the name takes <2>ga</2>: <3>Mardiga</3>."
+msgstr "<0>Rääkima</0> спрашивает <1>kellega?</1>, то есть «с кем?», поэтому имя получает окончание <2>ga</2>: <3>Mardiga</3>."
+
+msgid "<0>Te</0> is you to one person you don’t know well, as in lesson {pronouns}. The command for <1>te</1> usually ends in <2>ge</2>: <3>rääkige</3>, <4>helistage</4>."
+msgstr "<0>Te</0> — это «вы» к одному малознакомому человеку, как в уроке {pronouns}. Команда для <1>te</1> обычно оканчивается на <2>ge</2>: <3>rääkige</3>, <4>helistage</4>."
+
+msgid "<0>Teie</0> is Kati’s word for your. You give your own number: <1>minu</1>."
+msgstr "<0>Teie</0> значит «ваш», то есть номер Кати. Свой номер ты называешь словом <1>minu</1>, «мой»."
+
+msgid "<0>Tere</0> is hello. The call is ending, so say <1>head aega</1>."
+msgstr "<0>Tere</0> — это приветствие. Разговор заканчивается, поэтому скажи <1>head aega</1>."
+
+msgid "<et>Helistama</et> asks <et>kellele?</et>: <et>mulle</et>, <et>sulle</et>, <et>teile</et>."
+msgstr "<et>Helistama</et> спрашивает <et>kellele?</et>: <et>mulle</et>, <et>sulle</et>, <et>teile</et>."
+
+msgid "<et>Rääkima</et> asks <et>kellega?</et>, so the name takes <et>-ga</et>."
+msgstr "<et>Rääkima</et> спрашивает <et>kellega?</et>, поэтому имя получает <et>-ga</et>."
+
+msgid "25 minutes"
+msgstr "25 минут"
+
+msgid "4 quizzes, a conversation, a reading and a recording you can play twice"
+msgstr "4 упражнения, разговор, текст для чтения и запись, которую можно прослушать дважды"
+
+msgid "A command says how to speak with an adverb: <0>aeglasemalt</0>, more slowly."
+msgstr "В команде «как говорить» ставится наречие: <0>aeglasemalt</0>, «медленнее»."
+
+msgid "A command says how to speak with an adverb: <et>aeglasemalt</et>."
+msgstr "В команде «как говорить» ставится наречие: <et>aeglasemalt</et>."
+
+msgid "a moment"
+msgstr "момент"
+
+msgid "a name"
+msgstr "имя"
+
+msgid "A past form: <0>helistasin</0>, <1>helistas</1> or <2>jätsin</2>."
+msgstr "Прошедшее время: <0>helistasin</0>, <1>helistas</1> или <2>jätsin</2>."
+
+msgid "A present form with a time word such as <0>homme</0>, <1>varsti</1> or <2>hiljem</2> usually says what will happen."
+msgstr "Настоящее время со словом о времени вроде <0>homme</0>, <1>varsti</1> или <2>hiljem</2> обычно говорит о том, что будет."
+
+msgid "A short message, such as a text or a voicemail."
+msgstr "Короткое сообщение, например эсэмэска или голосовое."
+
+msgid "After <0>ei</0> the verb loses its ending: <1>kuule</1>."
+msgstr "После <0>ei</0> глагол теряет окончание: <1>kuule</1>."
+
+msgid "After <et>ei</et> the verb loses its ending: <et>kuule</et>."
+msgstr "После <et>ei</et> глагол теряет окончание: <et>kuule</et>."
+
+msgid "All eight: the verb and the time word told you each time."
+msgstr "Все восемь: каждый раз о времени говорили глагол и слово о времени."
+
+msgid "All seven found and fixed."
+msgstr "Все семь найдены и исправлены."
+
+msgid "All six written right."
+msgstr "Все шесть написаны правильно."
+
+msgid "An Estonian answers the phone with <0/> or with their own name: <1/>, which English says as “Mari speaking”. To ask whether someone is there, say <2/>"
+msgstr "Эстонцы отвечают на звонок словом <0/> или называют своё имя: <1/>. Чтобы спросить, на месте ли кто-то, скажи <2/>"
+
+msgid "Answer a call, ask for someone, ask them to repeat, leave a message and give your number. It uses <0>rääkima</0> with <1>ga</1>, <2>helistama</2> with <3>le</3>, the polite <4>saaksite</4> and the past tense."
+msgstr "Ответить на звонок, попросить к телефону, переспросить, оставить сообщение и назвать свой номер. Здесь работают <0>rääkima</0> с окончанием <1>ga</1>, <2>helistama</2> с окончанием <3>le</3>, вежливое <4>saaksite</4> и прошедшее время."
+
+msgid "Answer with <0>Halloo!</0> or your name: <1>Mari kuuleb.</1> Ask for someone with <2>Kas Mart on seal?</2>"
+msgstr "Отвечай словом <0>Halloo!</0> или называй имя: <1>Mari kuuleb.</1> Спроси, на месте ли кто-то, так: <2>Kas Mart on seal?</2>"
+
+msgid "Answering and asking for someone"
+msgstr "Ответ на звонок и просьба позвать кого-то"
+
+msgid "Asking for someone with <et>-ga</et>"
+msgstr "Просьба позвать кого-то: <et>-ga</et>"
+
+msgid "Asking politely with <et>te</et>"
+msgstr "Вежливая просьба с <et>te</et>"
+
+msgid "Asking someone to repeat"
+msgstr "Просьба повторить"
+
+msgid "At his home"
+msgstr "У него дома"
+
+msgid "At Liis’s work"
+msgstr "На работе у Лийс"
+
+msgid "At what time will Mari come to the office? Write it in Estonian."
+msgstr "Во сколько Мари придёт в офис? Напиши по-эстонски."
+
+msgid "back"
+msgstr "назад"
+
+msgid "Can I leave a message?"
+msgstr "Можно оставить сообщение?"
+
+msgid "connection"
+msgstr "связь"
+
+msgid "Could I speak with Mart?"
+msgstr "Можно поговорить с Мартом?"
+
+msgid "Could I speak with the doctor?"
+msgstr "Можно поговорить с врачом?"
+
+msgid "Could you repeat that?"
+msgstr "Не могли бы вы повторить?"
+
+msgid "doctor"
+msgstr "врач"
+
+msgid "Each sentence has one word in the wrong form. Tap it, then write the right form."
+msgstr "В каждом предложении одно слово в неправильной форме. Нажми на него, а потом напиши правильную форму."
+
+msgid "Estonian"
+msgstr "Эстонский"
+
+msgid "Find and fix the mistake"
+msgstr "Найди и исправь ошибку"
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
+
+msgid "Hear a sentence, then say whether the call already happened or will happen."
+msgstr "Послушай предложение и скажи, звонок уже был или ещё будет."
+
+msgid "Helistama tagasi is to call back."
+msgstr "«Helistama tagasi» значит «перезвонить»."
+
+msgid "hello (on the phone)"
+msgstr "алло"
+
+msgid "Hello! (answering the phone)"
+msgstr "Алло! (ответ на звонок)"
+
+msgid "Her mother"
+msgstr "Её мама"
+
+msgid "I can’t hear you well."
+msgstr "Я вас плохо слышу."
+
+msgid "I can’t hear you well. (To a stranger.)"
+msgstr "Я вас плохо слышу. (Незнакомому человеку.)"
+
+msgid "I left a message."
+msgstr "Я оставил(а) сообщение."
+
+msgid "I phoned you yesterday."
+msgstr "Я звонил(а) тебе вчера."
+
+msgid "I, me"
+msgstr "я, меня"
+
+msgid "I’ll call you back at three. (To a stranger.)"
+msgstr "Я перезвоню вам в три. (Незнакомому человеку.)"
+
+msgid "I’ll phone you tomorrow."
+msgstr "Я позвоню тебе завтра."
+
+msgid "In a café in town"
+msgstr "В кафе в городе"
+
+msgid "Is Mart there?"
+msgstr "Март на месте?"
+
+msgid "It already happened"
+msgstr "Это уже было"
+
+msgid "It will happen"
+msgstr "Это ещё будет"
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan phoned Liis back"
+msgstr "Яан перезвонил Лийс"
+
+msgid "Kati"
+msgstr "Кати"
+
+msgid "Kati, her neighbour"
+msgstr "Кати, её соседка"
+
+msgid "Leaving a message"
+msgstr "Оставить сообщение"
+
+msgid "Liis can go to the meeting."
+msgstr "Лийс может пойти на встречу."
+
+msgid "Liis heard Jaan well in the evening."
+msgstr "Лийс хорошо слышала Яана вечером."
+
+msgid "Liis phoned Jaan again"
+msgstr "Лийс снова позвонила Яану"
+
+msgid "Liis writes"
+msgstr "Лийс пишет"
+
+msgid "Liis writes to Mari about a day of calls. Read her message, then answer the questions. Once you check your answers, tap a word in the message to open its card."
+msgstr "Лийс пишет Мари о дне, полном звонков. Прочитай её сообщение и ответь на вопросы. После проверки нажми на слово в сообщении, чтобы открыть его карточку."
+
+msgid "Liis’s message"
+msgstr "Сообщение от Лийс"
+
+msgid "Liis’s message to Mari"
+msgstr "Сообщение Лийс для Мари"
+
+msgid "Listen: Mari and Peeter"
+msgstr "Послушай: Мари и Пеэтер"
+
+msgid "Listen: Mari phones an office"
+msgstr "Послушай: Мари звонит в офис"
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Mari"
+msgstr "Мари"
+
+msgid "Mari asks Peeter to speak more slowly."
+msgstr "Мари просит Пеэтера говорить медленнее."
+
+msgid "Mari phoned Liis"
+msgstr "Мари позвонила Лийс"
+
+msgid "Mari phoned yesterday and someone answered."
+msgstr "Мари звонила вчера, и кто-то ответил."
+
+msgid "Mari phones an office and the line is bad. Read the questions first. You can play the recording twice, as in the A2 exam."
+msgstr "Мари звонит в офис, а связь плохая. Сначала прочитай вопросы. Запись можно прослушать дважды, как на экзамене A2."
+
+msgid "Mari speaking."
+msgstr "Мари слушает."
+
+msgid "Mart"
+msgstr "Март"
+
+msgid "Match each phrase with its meaning."
+msgstr "Соедини каждую фразу с её значением."
+
+msgid "Meaning"
+msgstr "Значение"
+
+msgid "message"
+msgstr "сообщение"
+
+msgid "Most of them. Play the ones you missed once more."
+msgstr "Почти все. Переслушай ещё раз те, где были ошибки."
+
+msgid "Most of them. Read the ones you missed once more."
+msgstr "Почти все. Ещё раз прочитай те, где была ошибка."
+
+msgid "Most of them. Read the reason under each one you missed."
+msgstr "Большинство. Прочитай пояснения к тем, что не получились."
+
+msgid "On Friday"
+msgstr "В пятницу"
+
+msgid "One moment, please."
+msgstr "Минутку, пожалуйста."
+
+msgid "Past or future?"
+msgstr "Было или будет?"
+
+msgid "Peeter"
+msgstr "Пеэтер"
+
+msgid "Peeter first says Mari’s number wrongly."
+msgstr "Сначала Пеэтер неправильно называет номер Мари."
+
+msgid "Peeter hears Mari well at first."
+msgstr "Сначала Пеэтер хорошо слышит Мари."
+
+msgid "Peeter says ten o’clock is a good time."
+msgstr "Пеэтер говорит, что десять часов — хорошее время."
+
+msgid "Phone her back"
+msgstr "Перезвонить ей"
+
+msgid "Phoning Mart’s office"
+msgstr "Звонок в офис Марта"
+
+msgid "Phoning to someone with <et>-le</et>"
+msgstr "Звонок кому-то: <et>-le</et>"
+
+msgid "Play the phrases above once more, then try again."
+msgstr "Ещё раз послушай фразы выше и попробуй снова."
+
+msgid "Play the sentences above once more, then try again."
+msgstr "Ещё раз послушай предложения выше и попробуй снова."
+
+msgid "Please call me back."
+msgstr "Перезвоните мне, пожалуйста."
+
+msgid "Please call me back. (To a stranger.)"
+msgstr "Перезвоните мне, пожалуйста. (Незнакомому человеку.)"
+
+msgid "Please speak more slowly."
+msgstr "Говорите помедленнее, пожалуйста."
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Что запомнить» ниже, потом попробуй снова."
+
+msgid "Say what is wrong with <0>Ühendus on halb.</0> or <1>Ma ei kuule teid hästi.</1> Ask for a message with <2>Kas ma võin sõnumi jätta?</2>"
+msgstr "Скажи, что не так, фразой <0>Ühendus on halb.</0> или <1>Ma ei kuule teid hästi.</1> Попроси оставить сообщение так: <2>Kas ma võin sõnumi jätta?</2>"
+
+msgid "Talk: asking for Mart"
+msgstr "Разговор: просим позвать Марта"
+
+msgid "That gives a name, and <0>teie</0> is Kati’s word for your. She asked for your number: <1>minu number</1>."
+msgstr "Это имя, да ещё со словом <0>teie</0>, которым Кати говорит «ваш». Она спрашивала про номер: <1>minu number</1>."
+
+msgid "That says you will call later. You want Mart to call you."
+msgstr "Это значит, что ты позвонишь позже. А тебе нужно, чтобы перезвонил Март."
+
+msgid "The -da infinitive of kordama."
+msgstr "Инфинитив на -da от kordama."
+
+msgid "The connection is bad."
+msgstr "Связь плохая."
+
+msgid "The connection was good this morning."
+msgstr "Сегодня утром связь была хорошая."
+
+msgid "The line between two phones."
+msgstr "Соединение между двумя телефонами."
+
+msgid "The past and the future of a call"
+msgstr "Звонок: было или будет"
+
+msgid "The past says what already happened: <et>helistasin</et>, <et>helistas</et>."
+msgstr "Прошедшее время говорит о том, что уже случилось: <et>helistasin</et>, <et>helistas</et>."
+
+msgid "The present with a time word such as <et>homme</et> usually says what will happen."
+msgstr "Настоящее время со словом о времени вроде <et>homme</et> обычно говорит о том, что будет."
+
+msgid "This evening"
+msgstr "Сегодня вечером"
+
+msgid "To a friend, use <0>sa</0> instead: <1>Kas sa saaksid korrata?</1> and <2>räägi aeglasemalt</2>."
+msgstr "Другу говори <0>sa</0>: <1>Kas sa saaksid korrata?</1> и <2>räägi aeglasemalt</2>."
+
+msgid "To a stranger, use <0>te</0>: <1>Kas te saaksite korrata?</1> The command usually ends in <2>ge</2>: <3>rääkige</3>, <4>helistage</4>."
+msgstr "Незнакомому человеку говори <0>te</0>: <1>Kas te saaksite korrata?</1> Команда обычно оканчивается на <2>ge</2>: <3>rääkige</3>, <4>helistage</4>."
+
+msgid "To ask to speak with someone, say <0/> <1/> asks <2>kellega?</2>, with whom, so the name takes <3>ga</3>: Mart becomes <4>Mardiga</4>. Lesson {government} explains how verbs choose a case, and lesson {conditional} the polite <5>saaksin</5>."
+msgstr "Чтобы попросить к телефону, скажи <0/> <1/> спрашивает <2>kellega?</2>, то есть «с кем?», поэтому имя получает окончание <3>ga</3>: имя Март превращается в <4>Mardiga</4>. О том, как глаголы выбирают падеж, рассказывает урок {government}, а о вежливом <5>saaksin</5> — урок {conditional}."
+
+msgid "To leave a message, ask <0/> To ask for a call, use the polite command <1/>"
+msgstr "Чтобы оставить сообщение, спроси <0/> А чтобы попросить перезвонить, используй вежливую команду: <1/>"
+
+msgid "to phone"
+msgstr "звонить"
+
+msgid "to repeat"
+msgstr "повторить"
+
+msgid "to talk, to speak"
+msgstr "говорить, разговаривать"
+
+msgid "tomorrow"
+msgstr "завтра"
+
+msgid "Tomorrow morning"
+msgstr "Завтра утром"
+
+msgid "Wait for her at the office"
+msgstr "Ждать её в офисе"
+
+msgid "What did Liis write to Jaan? Write it in Estonian."
+msgstr "Что Лийс написала Яану? Напиши по-эстонски."
+
+msgid "What does Liis ask Mari to do for Jaan? Write one word in Estonian."
+msgstr "Что Лийс просит Мари сделать для Яана? Напиши одно слово по-эстонски."
+
+msgid "What does Mari ask Kati to do?"
+msgstr "Что Мари просит сделать Кати?"
+
+msgid "What happened this morning?"
+msgstr "Что случилось сегодня утром?"
+
+msgid "When does Kati come back?"
+msgstr "Когда Кати вернётся?"
+
+msgid "When the line is bad, say <0/> or <1/> Then ask <2/> and add <3/> To ask someone to wait, say <4/>"
+msgstr "Когда связь плохая, скажи <0/> или <1/> Потом спроси <2/> и добавь <3/> А чтобы попросить подождать, скажи <4/>"
+
+msgid "Where does Jaan want to meet Mari?"
+msgstr "Где Яан хочет встретиться с Мари?"
+
+msgid "Which meaning?"
+msgstr "Какое значение?"
+
+msgid "Who did Liis phone after Mari did not answer?"
+msgstr "Кому позвонила Лийс, когда Мари не ответила?"
+
+msgid "Who does Mari want to speak with?"
+msgstr "С кем Мари хочет поговорить?"
+
+msgid "With <0>te</0>, the conditional ends in <1>ksite</1>: <2>saaksite</2>."
+msgstr "С <0>te</0> условная форма оканчивается на <1>ksite</1>: <2>saaksite</2>."
+
+msgid "With <et>te</et>, the conditional ends in <et>-ksite</et> and the command usually ends in <et>-ge</et>."
+msgstr "С <et>te</et> условная форма оканчивается на <et>-ksite</et>, а команда обычно — на <et>-ge</et>."
+
+msgid "with the doctor"
+msgstr "с врачом"
+
+msgid "Word for word: “Mari hears.”"
+msgstr "Слово в слово: «Мари слышит»."
+
+msgid "Write her a message"
+msgstr "Написать ей сообщение"
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"
+
+msgid "Write what you would say."
+msgstr "Напиши, что ты скажешь в разговоре."
+
+msgid "yesterday"
+msgstr "вчера"
+
+msgid "you"
+msgstr "ты"
+
+msgid "You are Anna. You want to speak with Mart, and your number is 5 2 1 4 3."
+msgstr "Ты — Анна. Ты хочешь поговорить с Мартом, а твой номер — 5 2 1 4 3."
+
+msgid "You phone Mart’s office. Kati answers, and you hear her lines as sound only; tap one to read it. Pick what you say back. A wrong reply says why, then you hear the right one."
+msgstr "Ты звонишь в офис Марта. Отвечает Кати, а её реплики звучат только звуком; нажми на реплику, чтобы прочитать её. Выбирай, что ответить. Неправильный ответ объясняет, почему, а потом ты слышишь правильный."
+
+msgid "you, polite"
+msgstr "вы (вежливо)"

@@ -1,0 +1,452 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 02:16+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0>Aru saama</0> takes <1>-st</1> (<2>sinu kirjast</2>), and <3>ära jääma</3> means to be cancelled."
+msgstr "<0>Aru saama</0> takes <1>-st</1> (<2>sinu kirjast</2>), and <3>ära jääma</3> means to be cancelled."
+
+msgid "<0>Soovitama</0> usually takes the partitive relative pronoun: <1>mida</1>."
+msgstr "<0>Soovitama</0> usually takes the partitive relative pronoun: <1>mida</1>."
+
+msgid "7 marked parts and a formal letter"
+msgstr "7 marked parts and a formal letter"
+
+msgid "75 minutes"
+msgstr "75 minutes"
+
+msgid "A completed object in a relative clause usually uses <0>mille</0> for things."
+msgstr "A completed object in a relative clause usually uses <0>mille</0> for things."
+
+msgid "A full timed practice test modelled on Estonia’s official B1 exam: a news report and official notice, grammar structure, sentence fixes and translations, radio news and an interview played twice, and a formal letter."
+msgstr "A full timed practice test modelled on Estonia’s official B1 exam: a news report and official notice, grammar structure, sentence fixes and translations, radio news and an interview played twice, and a formal letter."
+
+msgid "A radio host talks to Kadri about flexible working hours at her company. Listen up to twice and answer all seven questions."
+msgstr "A radio host talks to Kadri about flexible working hours at her company. Listen up to twice and answer all seven questions."
+
+msgid "A reason needs <0>sest</0> or <1>kuna</1>, not <2>kuigi</2> (although)."
+msgstr "A reason needs <0>sest</0> or <1>kuna</1>, not <2>kuigi</2> (although)."
+
+msgid "A reason takes <0>kuna</0> or <1>sest</1>."
+msgstr "A reason takes <0>kuna</0> or <1>sest</1>."
+
+msgid "A sleeper train"
+msgstr "A sleeper train"
+
+msgid "access"
+msgstr "access"
+
+msgid "All six B1 errors found and fixed."
+msgstr "All six B1 errors found and fixed."
+
+msgid "All six sentences right — strong B1 control."
+msgstr "All six sentences right — strong B1 control."
+
+msgid "An old river bridge closed."
+msgstr "An old river bridge closed."
+
+msgid "Apparently she moved to Pärnu last month."
+msgstr "Apparently she moved to Pärnu last month."
+
+msgid "Asks whether flexible hours have had any drawbacks"
+msgstr "Asks whether flexible hours have had any drawbacks"
+
+msgid "At least fifteen minutes"
+msgstr "At least fifteen minutes"
+
+msgid "Borrowing town bikes requires no deposit anymore."
+msgstr "Borrowing town bikes requires no deposit anymore."
+
+msgid "Both hot and cold water will be turned off during the work."
+msgstr "Both hot and cold water will be turned off during the work."
+
+msgid "building manager"
+msgstr "building manager"
+
+msgid "By calling the city’s twenty-four-hour emergency line"
+msgstr "By calling the city’s twenty-four-hour emergency line"
+
+msgid "By email straight away"
+msgstr "By email straight away"
+
+msgid "By visiting the management office in person"
+msgstr "By visiting the management office in person"
+
+msgid "Campus garages charge no fee near lecture halls."
+msgstr "Campus garages charge no fee near lecture halls."
+
+msgid "Check the explanations below, then try once more."
+msgstr "Check the explanations below, then try once more."
+
+msgid "Close formally and sign with your full name."
+msgstr "Close formally and sign with your full name."
+
+msgid "Close. Read the note under each sentence you missed."
+msgstr "Close. Read the note under each sentence you missed."
+
+msgid "cycle path"
+msgstr "cycle path"
+
+msgid "Describe the local traffic or street problem clearly."
+msgstr "Describe the local traffic or street problem clearly."
+
+msgid "Do you know when this shop is opened?"
+msgstr "Do you know when this shop is opened?"
+
+msgid "Doing two things at once usually takes <0>-des</0>: <1>koju jalutades</1>."
+msgstr "Doing two things at once usually takes <0>-des</0>: <1>koju jalutades</1>."
+
+msgid "Dozens of street parking spaces vanished."
+msgstr "Dozens of street parking spaces vanished."
+
+msgid "Each B1 sentence has one wrong word. Tap it and type the right form."
+msgstr "Each B1 sentence has one wrong word. Tap it and type the right form."
+
+msgid "Eight to twelve"
+msgstr "Eight to twelve"
+
+msgid "Entry tolls are coming."
+msgstr "Entry tolls are coming."
+
+msgid "essential, urgently needed"
+msgstr "essential, urgently needed"
+
+msgid "Explain why it matters with <0>kuna</0> or <1>sest</1>."
+msgstr "Explain why it matters with <0>kuna</0> or <1>sest</1>."
+
+msgid "Fill each gap with the right B1 form from the word bank. Two words in the bank are spare."
+msgstr "Fill each gap with the right B1 form from the word bank. Two words in the bank are spare."
+
+msgid "Fill the sentences"
+msgstr "Fill the sentences"
+
+msgid "Five minutes"
+msgstr "Five minutes"
+
+msgid "Fix one wrong word"
+msgstr "Fix one wrong word"
+
+msgid "flexible"
+msgstr "flexible"
+
+msgid "Free weekend city buses."
+msgstr "Free weekend city buses."
+
+msgid "From ten until two"
+msgstr "From ten until two"
+
+msgid "From twelve noon until four in the afternoon"
+msgstr "From twelve noon until four in the afternoon"
+
+msgid "Half an hour or even longer"
+msgstr "Half an hour or even longer"
+
+msgid "Half-price morning fares"
+msgstr "Half-price morning fares"
+
+msgid "He went out in the morning without eating."
+msgstr "He went out in the morning without eating."
+
+msgid "heating system"
+msgstr "heating system"
+
+msgid "Host"
+msgstr "Host"
+
+msgid "How does the team help new employees settle in?"
+msgstr "How does the team help new employees settle in?"
+
+msgid "How does the weather change in the afternoon?"
+msgstr "How does the weather change in the afternoon?"
+
+msgid "How long ago did Kadri’s company switch to flexible hours?"
+msgstr "How long ago did Kadri’s company switch to flexible hours?"
+
+msgid "How many new benches were installed along the path? Write the number word from the article."
+msgstr "How many new benches were installed along the path? Write the number word from the article."
+
+msgid "How much extra time are drivers on Pärnu Road advised to allow?"
+msgstr "How much extra time are drivers on Pärnu Road advised to allow?"
+
+msgid "How should you report a radiator that stays cold afterwards?"
+msgstr "How should you report a radiator that stays cold afterwards?"
+
+msgid "I bought a used car yesterday."
+msgstr "I bought a used car yesterday."
+
+msgid "I stayed home because I was ill."
+msgstr "I stayed home because I was ill."
+
+msgid "I understood from your letter that the meeting is cancelled."
+msgstr "I understood from your letter that the meeting is cancelled."
+
+msgid "In a formal B1 letter, state the problem, give a clear reason, propose a solution with the would form and close with <0>Lugupidamisega</0>."
+msgstr "In a formal B1 letter, state the problem, give a clear reason, propose a solution with the would form and close with <0>Lugupidamisega</0>."
+
+msgid "In the real Harno B1 exam, reading (50 minutes), listening (30–35 minutes) and writing (35 minutes) are separate timed tests. You read adapted news and notices, hear each recording twice, and write both a short message and a longer text. This mock is a shorter version of all three."
+msgstr "In the real Harno B1 exam, reading (50 minutes), listening (30–35 minutes) and writing (35 minutes) are separate timed tests. You read adapted news and notices, hear each recording twice, and write both a short message and a longer text. This mock is a shorter version of all three."
+
+msgid "It clears and calms down."
+msgstr "It clears and calms down."
+
+msgid "Just at the start of last month"
+msgstr "Just at the start of last month"
+
+msgid "Kadri"
+msgstr "Kadri"
+
+msgid "Leave a key with a trusted neighbour or arrange a new time"
+msgstr "Leave a key with a trusted neighbour or arrange a new time"
+
+msgid "Listen to a short morning news and weather bulletin. You can play the recording twice, as in the B1 exam."
+msgstr "Listen to a short morning news and weather bulletin. You can play the recording twice, as in the B1 exam."
+
+msgid "Listening 1: morning radio news"
+msgstr "Listening 1: morning radio news"
+
+msgid "Listening 2: flexible working hours"
+msgstr "Listening 2: flexible working hours"
+
+msgid "Listening played twice, as in the exam"
+msgstr "Listening played twice, as in the exam"
+
+msgid "Make one or two concrete proposals using the would form (<0>võiks</0>, <1>muudaks</1>)."
+msgstr "Make one or two concrete proposals using the would form (<0>võiks</0>, <1>muudaks</1>)."
+
+msgid "Monday morning"
+msgstr "Monday morning"
+
+msgid "More people now drive to work because of the flexible start times."
+msgstr "More people now drive to work because of the flexible start times."
+
+msgid "More than two years ago"
+msgstr "More than two years ago"
+
+msgid "Most colleagues come to the office two or three times a week."
+msgstr "Most colleagues come to the office two or three times a week."
+
+msgid "Nearly there. Compare the forms in the sentences you missed."
+msgstr "Nearly there. Compare the forms in the sentences you missed."
+
+msgid "News announcements without a named subject usually use the impersonal: <0>avatakse</0>."
+msgstr "News announcements without a named subject usually use the impersonal: <0>avatakse</0>."
+
+msgid "Next Tuesday from nine until one"
+msgstr "Next Tuesday from nine until one"
+
+msgid "Next Wednesday from ten in the morning until two"
+msgstr "Next Wednesday from ten in the morning until two"
+
+msgid "Only half of the new cycle path has street lighting."
+msgstr "Only half of the new cycle path has street lighting."
+
+msgid "Open formally to the transport office or town council."
+msgstr "Open formally to the transport office or town council."
+
+msgid "Part 1: Reading a news report"
+msgstr "Part 1: Reading a news report"
+
+msgid "Part 2: Reading an official notice"
+msgstr "Part 2: Reading an official notice"
+
+msgid "Part 3: Language structure"
+msgstr "Part 3: Language structure"
+
+msgid "Part 4: Fix the mistake"
+msgstr "Part 4: Fix the mistake"
+
+msgid "Part 5: Write in Estonian"
+msgstr "Part 5: Write in Estonian"
+
+msgid "Part 6: Listening to radio news"
+msgstr "Part 6: Listening to radio news"
+
+msgid "Part 7: Listening to a studio interview"
+msgstr "Part 7: Listening to a studio interview"
+
+msgid "Part 8: Writing a formal letter"
+msgstr "Part 8: Writing a formal letter"
+
+msgid "pavement, sidewalk"
+msgstr "pavement, sidewalk"
+
+msgid "Read the notes under each answer, then try again."
+msgstr "Read the notes under each answer, then try again."
+
+msgid "Read the notice from a housing association board about a building inspection and answer six questions."
+msgstr "Read the notice from a housing association board about a building inspection and answer six questions."
+
+msgid "Reading 1: Tartu’s new cycle path"
+msgstr "Reading 1: Tartu’s new cycle path"
+
+msgid "Reading 2: heating system inspection"
+msgstr "Reading 2: heating system inspection"
+
+msgid "Reported speech for a past event uses <0>olevat</0> + <1>-nud</1>."
+msgstr "Reported speech for a past event uses <0>olevat</0> + <1>-nud</1>."
+
+msgid "Reported speech uses <0>olevat</0> + the <1>-nud</1> participle for a past event."
+msgstr "Reported speech uses <0>olevat</0> + the <1>-nud</1> participle for a past event."
+
+msgid "residential district"
+msgstr "residential district"
+
+msgid "Residents can ask questions and suggest ideas at Thursday’s meeting."
+msgstr "Residents can ask questions and suggest ideas at Thursday’s meeting."
+
+msgid "roadworks"
+msgstr "roadworks"
+
+msgid "rush hour"
+msgstr "rush hour"
+
+msgid "Says shared discussions are easier face to face"
+msgstr "Says shared discussions are easier face to face"
+
+msgid "Six months ago"
+msgstr "Six months ago"
+
+msgid "Something that has been used usually takes the passive participle <0>-tud</0>: <1>kasutatud</1>."
+msgstr "Something that has been used usually takes the passive participle <0>-tud</0>: <1>kasutatud</1>."
+
+msgid "Speaking with someone takes <0>-ga</0>: <1>kellega</1>."
+msgstr "Speaking with someone takes <0>-ga</0>: <1>kellega</1>."
+
+msgid "Start the 75-minute timer if you want exam conditions, or work through the test at your own pace. Read the local news report from Tartu and answer six questions."
+msgstr "Start the 75-minute timer if you want exam conditions, or work through the test at your own pace. Read the local news report from Tartu and answer six questions."
+
+msgid "Stronger wind and much heavier evening showers arrive."
+msgstr "Stronger wind and much heavier evening showers arrive."
+
+msgid "The book that I bought yesterday is very exciting."
+msgstr "The book that I bought yesterday is very exciting."
+
+msgid "The book that is on the table is mine."
+msgstr "The book that is on the table is mine."
+
+msgid "The city lowered the speed limit across every single main street."
+msgstr "The city lowered the speed limit across every single main street."
+
+msgid "The number of cyclists has grown sharply over the last three years."
+msgstr "The number of cyclists has grown sharply over the last three years."
+
+msgid "The technician needs access to the radiators inside each flat."
+msgstr "The technician needs access to the radiators inside each flat."
+
+msgid "The woman with whom I spoke lives in Tartu."
+msgstr "The woman with whom I spoke lives in Tartu."
+
+msgid "They agree on extra shared office days during the first month."
+msgstr "They agree on extra shared office days during the first month."
+
+msgid "They hand out a short guide."
+msgstr "They hand out a short guide."
+
+msgid "They shorten the first work week."
+msgstr "They shorten the first work week."
+
+msgid "Thick fog spreads across the inland towns."
+msgstr "Thick fog spreads across the inland towns."
+
+msgid "Things usually take <0>mis</0> and people <1>kes</1>."
+msgstr "Things usually take <0>mis</0> and people <1>kes</1>."
+
+msgid "Through a place takes the preposition <0>läbi</0> + genitive."
+msgstr "Through a place takes the preposition <0>läbi</0> + genitive."
+
+msgid "timetable, schedule"
+msgstr "timetable, schedule"
+
+msgid "Tomorrow will be rainy across most of Estonia."
+msgstr "Tomorrow will be rainy across most of Estonia."
+
+msgid "Two extra express trains on weekdays"
+msgstr "Two extra express trains on weekdays"
+
+msgid "Two foreign languages are spoken in this school."
+msgstr "Two foreign languages are spoken in this school."
+
+msgid "Two suburban bus routes stopped running."
+msgstr "Two suburban bus routes stopped running."
+
+msgid "Use the postbox"
+msgstr "Use the postbox"
+
+msgid "Wait until next year’s inspection"
+msgstr "Wait until next year’s inspection"
+
+msgid "Watch for B1 links and forms that change meaning: <0>kuigi</0> vs <1>kuna</1>, <2>-des</2> vs <3>-mata</3>, impersonal verbs and reported <4>olevat</4>."
+msgstr "Watch for B1 links and forms that change meaning: <0>kuigi</0> vs <1>kuna</1>, <2>-des</2> vs <3>-mata</3>, impersonal verbs and reported <4>olevat</4>."
+
+msgid "We have to look over all the documents before the trip."
+msgstr "We have to look over all the documents before the trip."
+
+msgid "Western Estonia may see patches of rain this morning."
+msgstr "Western Estonia may see patches of rain this morning."
+
+msgid "What changes for university students from September?"
+msgstr "What changes for university students from September?"
+
+msgid "What does the new Tallinn–Tartu timetable add on weekdays?"
+msgstr "What does the new Tallinn–Tartu timetable add on weekdays?"
+
+msgid "What is the earliest hour staff can start work? Write the word from the interview."
+msgstr "What is the earliest hour staff can start work? Write the word from the interview."
+
+msgid "What is the highest temperature mentioned for today? Write the word from the forecast."
+msgstr "What is the highest temperature mentioned for today? Write the word from the forecast."
+
+msgid "What should residents do if they cannot stay at home?"
+msgstr "What should residents do if they cannot stay at home?"
+
+msgid "When does the heating inspection take place?"
+msgstr "When does the heating inspection take place?"
+
+msgid "When must everyone in Kadri’s team be reachable?"
+msgstr "When must everyone in Kadri’s team be reachable?"
+
+msgid "When no subject is named, Estonian usually uses the impersonal: <0>avatakse</0>."
+msgstr "When no subject is named, Estonian usually uses the impersonal: <0>avatakse</0>."
+
+msgid "While doing something takes <0>-des</0>: <1>oodates</1>."
+msgstr "While doing something takes <0>-des</0>: <1>oodates</1>."
+
+msgid "While walking home, I listened to the radio."
+msgstr "While walking home, I listened to the radio."
+
+msgid "Who issued the notice? Write two words from the end of the text."
+msgstr "Who issued the notice? Write two words from the end of the text."
+
+msgid "Who raises or states each point?"
+msgstr "Who raises or states each point?"
+
+msgid "Why are some car drivers unhappy?"
+msgstr "Why are some car drivers unhappy?"
+
+msgid "Why did the city representative say the new path was essential?"
+msgstr "Why did the city representative say the new path was essential?"
+
+msgid "With no named speaker, Estonian usually uses the impersonal: <0>räägitakse</0>."
+msgstr "With no named speaker, Estonian usually uses the impersonal: <0>räägitakse</0>."
+
+msgid "Without doing something usually takes <0>-mata</0>: <1>söömata</1>."
+msgstr "Without doing something usually takes <0>-mata</0>: <1>söömata</1>."
+
+msgid "Write a formal letter of about 90–120 words to the town transport office about a busy junction near a school, then check it against the checklist and model."
+msgstr "Write a formal letter of about 90–120 words to the town transport office about a busy junction near a school, then check it against the checklist and model."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "Write six B1 sentences in Estonian using relative clauses, impersonal verbs, <0>-des</0> and reported speech."
+msgstr "Write six B1 sentences in Estonian using relative clauses, impersonal verbs, <0>-des</0> and reported speech."
+
+msgid "Write to the local transport office about a busy junction near a school. Describe the problem, explain why parents are worried, propose two concrete improvements using the would form and close formally."
+msgstr "Write to the local transport office about a busy junction near a school. Describe the problem, explain why parents are worried, propose two concrete improvements using the would form and close formally."
+
+msgid "Write to the transport office"
+msgstr "Write to the transport office"

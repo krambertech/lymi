@@ -13,14 +13,14 @@ msgstr "15 minutes"
 msgid "20 mixed questions"
 msgstr "20 mixed questions"
 
-msgid "Check what Stage 3 taught: verb base forms, infinitives, modals, going and coming back, liking, past tense, negation in the past and the future — mixed, with no hints beforehand."
-msgstr "Check what Stage 3 taught: verb base forms, infinitives, modals, going and coming back, liking, past tense, negation in the past and the future — mixed, with no hints beforehand."
+msgid "Check what Stage 3 taught: the three forms of a verb, infinitives, modals, going and coming back, liking, past tense, negation in the past and the future — mixed, with no hints beforehand."
+msgstr "Check what Stage 3 taught: the three forms of a verb, infinitives, modals, going and coming back, liking, past tense, negation in the past and the future — mixed, with no hints beforehand."
 
-msgid "Checkpoint"
-msgstr "Checkpoint"
+msgid "Final challenge"
+msgstr "Final challenge"
 
-msgid "Stage 3 checkpoint"
-msgstr "Stage 3 checkpoint"
+msgid "Mixed questions"
+msgstr "Mixed questions"
 
 msgid "Twenty mixed questions from Stage 3. At the end you see your score for each rule with a link back to the lesson that teaches it."
 msgstr "Twenty mixed questions from Stage 3. At the end you see your score for each rule with a link back to the lesson that teaches it."

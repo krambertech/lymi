@@ -56,7 +56,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "mina-sina-tema",
-        name: msg`Personal pronouns and “to be”`,
+        name: msg`I am, you are`,
         title: msg`Estonian personal pronouns and “to be”`,
         et: "Mina, sina, tema",
         minutes: 15,
@@ -72,7 +72,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "eitus",
-        name: msg`Negation`,
+        name: msg`Saying no`,
         title: msg`How to say no in Estonian`,
         et: "Ei ole",
         minutes: 15,
@@ -80,7 +80,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "kusimused",
-        name: msg`Questions`,
+        name: msg`Asking questions`,
         title: msg`Asking questions in Estonian`,
         et: "Kas? Mis? Kus?",
         minutes: 15,
@@ -88,7 +88,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "kohad",
-        name: msg`Saying where: -s and -l`,
+        name: msg`Saying where`,
         title: msg`In, on and at in Estonian: -s and -l`,
         et: "Tallinnas, Tartus",
         minutes: 15,
@@ -96,7 +96,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "tutvumine",
-        name: msg`Practice: meeting someone`,
+        name: msg`Meeting someone`,
         title: msg`Estonian conversation practice: meeting someone`,
         et: "Tere! Mina olen Mari.",
         minutes: 20,
@@ -144,7 +144,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "paev-tallinnas",
-        name: msg`Practice: a day in Tallinn`,
+        name: msg`A day in Tallinn`,
         title: msg`Estonian reading and listening practice: a day in Tallinn`,
         et: "Päev Tallinnas",
         minutes: 20,
@@ -152,11 +152,19 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "pere-ja-ankeet",
-        name: msg`Family and a form`,
+        name: msg`Family and forms`,
         title: msg`Estonian family words and filling in a form`,
         et: "Pere ja ankeet",
         minutes: 25,
         blurb: msg`A free Estonian lesson for beginners: family words (ema, isa, vend, õde, laps), saying how many brothers, sisters and children you have, and the words on a registration form: first name, surname, address, phone number, age, birthday, country and town. Read a form, follow a conversation at a desk, fill in a form and write about yourself. Every sentence is read aloud.`,
+      },
+      {
+        slug: "kontrolltoo-1",
+        name: msg`Final challenge`,
+        title: msg`Estonian stage 1 final challenge`,
+        et: "Proovikivi",
+        minutes: 15,
+        blurb: msg`The free Estonian stage 1 final challenge: twenty mixed questions on pronouns and “to be”, the present tense, saying no, questions, saying where, numbers, the time, the days and commands, with no hints beforehand and a score per rule linked to its lesson.`,
       },
     ],
   },
@@ -168,7 +176,7 @@ export const STAGES: readonly Stage[] = [
     lessons: [
       {
         slug: "pood-poe",
-        name: msg`Stem changes`,
+        name: msg`How nouns change`,
         title: msg`Estonian noun stems`,
         et: "Pood, poe",
         minutes: 10,
@@ -176,7 +184,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "pohivormid",
-        name: msg`The three forms of a noun`,
+        name: msg`Three forms of a noun`,
         title: msg`The three forms of an Estonian noun`,
         et: "Kolm põhivormi",
         minutes: 12,
@@ -184,7 +192,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "omastav",
-        name: msg`The genitive case`,
+        name: msg`The genitive`,
         title: msg`The Estonian genitive case: my, your and whose`,
         et: "Minu raamat",
         minutes: 12,
@@ -192,7 +200,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "mul-on",
-        name: msg`“To have”`,
+        name: msg`Saying “I have”`,
         title: msg`How to say “I have” in Estonian`,
         et: "Mul on",
         minutes: 12,
@@ -200,7 +208,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "osastav",
-        name: msg`The partitive case`,
+        name: msg`The partitive`,
         title: msg`The Estonian partitive case: after numbers, amounts and negation`,
         et: "Kaks kassi",
         minutes: 16,
@@ -208,7 +216,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "mitmus",
-        name: msg`Plural`,
+        name: msg`The plural`,
         title: msg`Estonian plural`,
         et: "Kassid",
         minutes: 12,
@@ -232,7 +240,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "peal-all-taga",
-        name: msg`Place words: on, under, behind`,
+        name: msg`Under, behind, next to`,
         title: msg`Estonian postpositions: on, under, behind`,
         et: "Kass ja kast",
         minutes: 22,
@@ -240,11 +248,19 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "tee-ja-reisimine",
-        name: msg`Travel and directions`,
+        name: msg`Getting around`,
         title: msg`Asking for directions and travelling in Estonian`,
         et: "Otse, vasakule, paremale",
         minutes: 18,
         blurb: msg`A free Estonian situation lesson on asking the way and getting around: otse (straight), vasakule (left), paremale (right), peatus (stop), pilet (ticket), buying a ticket, and following directions on the street. Every sentence is read aloud.`,
+      },
+      {
+        slug: "kontrolltoo-2",
+        name: msg`Final challenge`,
+        title: msg`Estonian stage 2 final challenge`,
+        et: "Proovikivi",
+        minutes: 15,
+        blurb: msg`The free Estonian stage 2 final challenge: twenty mixed questions on noun stems, the genitive, saying “I have”, the partitive, the plural, in and into, on and onto, and place words, with no hints beforehand and a score per rule linked to its lesson.`,
       },
     ],
   },
@@ -256,7 +272,7 @@ export const STAGES: readonly Stage[] = [
     lessons: [
       {
         slug: "verbi-pohivormid",
-        name: msg`The three forms of a verb`,
+        name: msg`Three forms of a verb`,
         title: msg`The three forms of an Estonian verb`,
         et: "Lugema, lugeda, loen",
         minutes: 12,
@@ -264,7 +280,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "tegevusnimed",
-        name: msg`Infinitives after other verbs`,
+        name: msg`Two verbs together`,
         title: msg`Estonian infinitives after other verbs`,
         et: "Pean minema, tahan lugeda",
         minutes: 12,
@@ -280,7 +296,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "ujuma-ujumas-ujumast",
-        name: msg`Going, being, coming back: -ma, -mas, -mast`,
+        name: msg`Going, doing, coming back`,
         title: msg`Estonian -ma, -mas and -mast: going, being and coming back`,
         et: "Lähen ujuma, olen ujumas",
         minutes: 12,
@@ -288,7 +304,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "siia-siin-siit",
-        name: msg`Here and there with go, come and visit`,
+        name: msg`Here and there`,
         title: msg`Estonian here and there: to, at and from`,
         et: "Siia, siin, siit",
         minutes: 20,
@@ -296,7 +312,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "meeldima",
-        name: msg`“To like” and feelings`,
+        name: msg`Saying “I like”`,
         title: msg`How to say “I like” in Estonian`,
         et: "Mulle meeldib",
         minutes: 20,
@@ -304,7 +320,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "turul",
-        name: msg`Practice: at the market`,
+        name: msg`At the market`,
         title: msg`Estonian practice: shopping at the market`,
         et: "Turul",
         minutes: 15,
@@ -336,7 +352,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "nadalavahetusel",
-        name: msg`Practice: last weekend, next week`,
+        name: msg`Last weekend, next week`,
         title: msg`Estonian practice: last weekend and next week`,
         et: "Nädalavahetusel",
         minutes: 15,
@@ -344,11 +360,11 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "kontrolltoo-3",
-        name: msg`Stage 3 checkpoint`,
-        title: msg`Estonian stage 3 checkpoint`,
-        et: "Kontrolltöö 3",
+        name: msg`Final challenge`,
+        title: msg`Estonian stage 3 final challenge`,
+        et: "Proovikivi",
         minutes: 15,
-        blurb: msg`Free Estonian stage 3 checkpoint: twenty mixed questions on verbs, modals, liking, past tense and the future, with no hints beforehand and a score per rule linked to its lesson.`,
+        blurb: msg`The free Estonian stage 3 final challenge: twenty mixed questions on verbs, modals, liking, past tense and the future, with no hints beforehand and a score per rule linked to its lesson.`,
       },
     ],
   },
@@ -368,7 +384,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "asesonad",
-        name: msg`Pronouns in every case`,
+        name: msg`Me, to me, with me`,
         title: msg`Estonian personal pronouns in every case`,
         et: "Mind, mulle, minuga",
         minutes: 18,
@@ -376,7 +392,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "jargarvud",
-        name: msg`Ordinals and dates`,
+        name: msg`Dates`,
         title: msg`Estonian ordinal numbers and dates`,
         et: "Esimene, teine, kolmas",
         minutes: 20,
@@ -384,7 +400,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "millal",
-        name: msg`Time expressions: when things happen`,
+        name: msg`Saying when`,
         title: msg`Estonian time expressions: when things happen`,
         et: "Esmaspäeval, aasta pärast",
         minutes: 18,
@@ -392,7 +408,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "sonajarg",
-        name: msg`Word order: the verb usually comes second`,
+        name: msg`Word order`,
         title: msg`Estonian word order: the verb usually comes second`,
         et: "Täna lähen ma",
         minutes: 16,
@@ -400,7 +416,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "omadussonad",
-        name: msg`Adjective agreement`,
+        name: msg`Adjectives with nouns`,
         title: msg`Estonian adjectives: agreeing with the noun`,
         et: "Suures majas",
         minutes: 16,
@@ -408,7 +424,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "vordlus",
-        name: msg`Comparatives and superlatives`,
+        name: msg`Comparing`,
         title: msg`Estonian comparatives and superlatives`,
         et: "Suurem, kõige suurem",
         minutes: 18,
@@ -416,7 +432,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "kiiresti-aeglaselt",
-        name: msg`Adverbs: how you do something`,
+        name: msg`Adverbs`,
         title: msg`Estonian adverbs with -lt and -sti`,
         et: "Kiiresti, aeglaselt",
         minutes: 20,
@@ -424,7 +440,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "saav",
-        name: msg`The translative case`,
+        name: msg`Becoming something`,
         title: msg`The Estonian translative case: becoming, by and for`,
         et: "Arstiks",
         minutes: 18,
@@ -432,7 +448,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "keegi",
-        name: msg`Somebody, nobody: -gi and -ki`,
+        name: msg`Somebody, nobody`,
         title: msg`Estonian somebody and nobody: -gi and -ki`,
         et: "Keegi, mitte keegi",
         minutes: 18,
@@ -448,7 +464,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "emal-ema-juures",
-        name: msg`Having or staying at`,
+        name: msg`At someone’s place`,
         title: msg`Having or staying at someone’s place in Estonian`,
         et: "Emal, ema juures",
         minutes: 20,
@@ -456,7 +472,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "ules-valja-ara",
-        name: msg`Particle verbs: up, out, away`,
+        name: msg`Up, out, away`,
         title: msg`Estonian particle verbs: up, out and away`,
         et: "Üles, välja, ära",
         minutes: 20,
@@ -464,7 +480,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "korter",
-        name: msg`Practice: looking for a flat`,
+        name: msg`Looking for a flat`,
         title: msg`Estonian practice: looking for a flat`,
         et: "Korter",
         minutes: 25,
@@ -472,11 +488,11 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "kontrolltoo-4",
-        name: msg`Stage 4 checkpoint`,
-        title: msg`Estonian stage 4 checkpoint`,
-        et: "Kontrolltöö 4",
+        name: msg`Final challenge`,
+        title: msg`Estonian stage 4 final challenge`,
+        et: "Proovikivi",
         minutes: 15,
-        blurb: msg`Free Estonian stage 4 checkpoint: twenty mixed questions on cases, pronouns, dates, word order, adjectives, comparing and -gi / -ki, with no hints beforehand and a score per rule linked to its lesson.`,
+        blurb: msg`The free Estonian stage 4 final challenge: twenty mixed questions on cases, pronouns, dates, word order, adjectives, comparing and -gi / -ki, with no hints beforehand and a score per rule linked to its lesson.`,
       },
     ],
   },
@@ -496,7 +512,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "raamatut-voi-raamatu",
-        name: msg`The object: whole or part`,
+        name: msg`Whole or partial object`,
         title: msg`Estonian total and partial object`,
         et: "Raamatut või raamatu",
         minutes: 20,
@@ -504,7 +520,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "raamatuid-maju",
-        name: msg`Plural partitive`,
+        name: msg`The plural partitive`,
         title: msg`Estonian plural partitive`,
         et: "Raamatuid, maju",
         minutes: 20,
@@ -520,7 +536,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "olen-lugenud",
-        name: msg`Perfect and pluperfect`,
+        name: msg`Have done, had done`,
         title: msg`Estonian perfect and pluperfect`,
         et: "Olen lugenud, olin lugenud",
         minutes: 22,
@@ -528,7 +544,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "laheksin",
-        name: msg`Conditional mood`,
+        name: msg`Saying “would”`,
         title: msg`Estonian conditional mood`,
         et: "Läheksin",
         minutes: 22,
@@ -544,7 +560,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "raagitakse",
-        name: msg`Impersonal voice`,
+        name: msg`The impersonal`,
         title: msg`Estonian impersonal voice`,
         et: "Räägitakse",
         minutes: 22,
@@ -552,7 +568,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "ootan-sind",
-        name: msg`Which case a verb takes`,
+        name: msg`Verbs and their cases`,
         title: msg`Which case an Estonian verb takes`,
         et: "Ootan sind, räägin sinust",
         minutes: 22,
@@ -576,7 +592,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "juba-veel-alles",
-        name: msg`Already, still, not yet, only`,
+        name: msg`Already, still, only`,
         title: msg`Already, still, not yet and only in Estonian`,
         et: "Juba, veel, alles",
         minutes: 20,
@@ -584,7 +600,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "kiri",
-        name: msg`Practice: a message to the landlord`,
+        name: msg`Writing to a landlord`,
         title: msg`Estonian writing practice: a message to the landlord`,
         et: "Kiri",
         minutes: 25,
@@ -592,19 +608,11 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "kontrolltoo-5",
-        name: msg`Stage 5 checkpoint`,
-        title: msg`Estonian stage 5 checkpoint`,
-        et: "Kontrolltöö 5",
-        minutes: 15,
-        blurb: msg`Free Estonian stage 5 checkpoint: twenty mixed questions on gradation, total and partial object, plural cases, perfect, conditional, impersonal and verb cases, with no hints beforehand and a score per rule linked to its lesson.`,
-      },
-      {
-        slug: "eksam-a2",
-        name: msg`A2 mock exam`,
-        title: msg`Estonian A2 mock exam`,
-        et: "A2 proovieksam",
-        minutes: 60,
-        blurb: msg`A free timed Estonian A2 mock exam in Harno format: notices and an email to read, grammar gaps, fixing and writing sentences, two listening recordings played twice, and a short writing task with a model.`,
+        name: msg`Final challenge`,
+        title: msg`Estonian stage 5 final challenge`,
+        et: "Proovikivi",
+        minutes: 70,
+        blurb: msg`The free Estonian stage 5 final challenge: twenty mixed questions on stage 5 grammar with a score per rule, then notices and an email to read, a message to fill, sentences to fix and write, a voice message and a phone call played twice, and a short email to write. It asks about as much as an A2 exam does.`,
       },
     ],
   },
@@ -616,7 +624,7 @@ export const STAGES: readonly Stage[] = [
     lessons: [
       {
         slug: "aru-saama",
-        name: msg`Particle verbs with new meanings`,
+        name: msg`Verbs with new meanings`,
         title: msg`Estonian particle verbs with new meanings`,
         et: "Aru saama",
         minutes: 24,
@@ -632,7 +640,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "opetaja-lugemine",
-        name: msg`Words from verbs: -ja, -mine`,
+        name: msg`Nouns from verbs`,
         title: msg`Estonian nouns made from verbs`,
         et: "Õpetaja, lugemine",
         minutes: 24,
@@ -640,7 +648,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "sobralik-kodutu",
-        name: msg`Words from words: -lik, -tu, -ke`,
+        name: msg`Making new words`,
         title: msg`Making new Estonian words from nouns`,
         et: "Sõbralik, kodutu",
         minutes: 24,
@@ -648,7 +656,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "lugedes-lugemata",
-        name: msg`The -des and -mata forms`,
+        name: msg`While doing, without doing`,
         title: msg`Estonian -des and -mata forms: while and without`,
         et: "Lugedes, lugemata",
         minutes: 24,
@@ -664,7 +672,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "et-sest-kui",
-        name: msg`Conjunctions and word order`,
+        name: msg`Linking sentences`,
         title: msg`Estonian conjunctions and linking words`,
         et: "Et, sest, kui",
         minutes: 24,
@@ -672,7 +680,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "raamat-mille-ostsin",
-        name: msg`Relative clauses`,
+        name: msg`Which and who`,
         title: msg`Estonian relative clauses: who, which and where`,
         et: "Raamat, mille ostsin",
         minutes: 28,
@@ -688,7 +696,7 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "uudised",
-        name: msg`Practice: reading the news`,
+        name: msg`Reading the news`,
         title: msg`Estonian B1 practice: reading and listening to the news`,
         et: "Uudised",
         minutes: 25,
@@ -696,19 +704,11 @@ export const STAGES: readonly Stage[] = [
       },
       {
         slug: "kontrolltoo-6",
-        name: msg`Stage 6 checkpoint`,
-        title: msg`Estonian stage 6 checkpoint`,
-        et: "Kontrolltöö 6",
-        minutes: 15,
-        blurb: msg`Free Estonian stage 6 checkpoint: twenty mixed questions on B1 particle verbs, word building, -des and -mata, participles, conjunctions, relative clauses and reported speech, with no hints beforehand and a score per rule linked to its lesson.`,
-      },
-      {
-        slug: "eksam-b1",
-        name: msg`B1 mock exam`,
-        title: msg`Estonian B1 mock exam`,
-        et: "B1 proovieksam",
-        minutes: 75,
-        blurb: msg`A free timed Estonian B1 mock exam in Harno format: a news article and building notice to read, B1 grammar gaps, fixing and writing sentences, a radio brief and interview played twice, and a formal writing task with a model.`,
+        name: msg`Final challenge`,
+        title: msg`Estonian stage 6 final challenge`,
+        et: "Proovikivi",
+        minutes: 85,
+        blurb: msg`The free Estonian stage 6 final challenge: twenty mixed questions on stage 6 grammar with a score per rule, then a news report and a notice to read, a text to fill, sentences to fix and write, radio news and an interview played twice, and a formal letter to write. It asks about as much as a B1 exam does.`,
       },
     ],
   },

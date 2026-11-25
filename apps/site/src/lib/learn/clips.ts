@@ -20958,7 +20958,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "siia-siin-siit": DIR_CLIPS,
   "kiiresti-aeglaselt": ADV_CLIPS,
   "ules-valja-ara": PV_CLIPS,
-  "eksam-a2": EXAM_A2_CLIPS,
-  "eksam-b1": EXAM_B1_CLIPS,
+  "kontrolltoo-5": EXAM_A2_CLIPS,
+  "kontrolltoo-6": EXAM_B1_CLIPS,
   kit: KIT_CLIPS,
 };

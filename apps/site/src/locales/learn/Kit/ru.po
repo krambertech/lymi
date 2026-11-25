@@ -45,12 +45,6 @@ msgstr "Отрицание сейчас и в будущем"
 msgid "“Have done”"
 msgstr "Уже произошло"
 
-msgid "“To have”"
-msgstr "«Иметь»"
-
-msgid "“To like” and feelings"
-msgstr "«Нравиться» и чувства"
-
 msgid "“Would”"
 msgstr "С частицей «бы»"
 
@@ -226,6 +220,9 @@ msgstr "Кот и дом"
 
 msgid "A conversation in two voices: the learner picks each reply. Shown first, then sound only for a harder one."
 msgstr "Разговор в два голоса: ученик выбирает каждый ответ. Сначала с текстом, потом только на слух — уровень посложнее."
+
+msgid "A day in Tallinn"
+msgstr "Один день в Таллине"
 
 msgid "A drawing on the tray: pressing a place, on a key or on the drawing, moves the cat there and plays the sentence."
 msgstr "Рисунок на подложке: нажатие на место, на клавише или на рисунке, переносит туда кота и проигрывает предложение."
@@ -431,12 +428,6 @@ msgstr "Бесплатный урок о трёх основных формах 
 msgid "A free lesson on which Estonian verbs take the -da infinitive after them and which take the -ma infinitive: tahan lugeda but pean lugema, with võin, saan, oskan, tohin, proovin, armastan and mulle meeldib on one side and hakkan, lähen, tule and jään on the other. Every sentence is read aloud."
 msgstr "Бесплатный урок о том, после каких эстонских глаголов идёт инфинитив на -da, а после каких — на -ma: tahan lugeda, но pean lugema. Инфинитив на -da требуют ещё võin, saan, oskan, tohin, proovin, armastan и mulle meeldib, инфинитив на -ma — hakkan, lähen, tule и jään. Каждое предложение озвучено."
 
-msgid "A free timed Estonian A2 mock exam in Harno format: notices and an email to read, grammar gaps, fixing and writing sentences, two listening recordings played twice, and a short writing task with a model."
-msgstr "Бесплатный пробный экзамен по эстонскому A2 с таймером в формате Harno: объявления и письмо для чтения, грамматические пропуски, исправление и написание предложений, два аудирования по два прослушивания и короткое письменное задание с образцом."
-
-msgid "A free timed Estonian B1 mock exam in Harno format: a news article and building notice to read, B1 grammar gaps, fixing and writing sentences, a radio brief and interview played twice, and a formal writing task with a model."
-msgstr "Бесплатный пробный экзамен по эстонскому B1 с таймером в формате Harno: новость и объявление дома для чтения, грамматические пропуски B1, исправление и написание предложений, радиовыпуск и интервью по два прослушивания и официальное письменное задание с образцом."
-
 msgid "a friend"
 msgstr "друг"
 
@@ -509,17 +500,14 @@ msgstr "Три формы слова и то, что от каждой обра�
 msgid "A written sentence, marked"
 msgstr "Написанное предложение с оценкой"
 
-msgid "A2 mock exam"
-msgstr "Пробный экзамен A2"
-
 msgid "about many"
 msgstr "о многих"
 
-msgid "Adjective agreement"
-msgstr "Согласование прилагательных"
+msgid "Adjectives with nouns"
+msgstr "Прилагательные с существительными"
 
-msgid "Adverbs: how you do something"
-msgstr "Наречия: как что-то делается"
+msgid "Adverbs"
+msgstr "Наречия"
 
 msgid "After “one”"
 msgstr "После «один»"
@@ -563,8 +551,8 @@ msgstr "Всё целиком. Какое-то количество — парт
 msgid "Already, still, not yet and only in Estonian"
 msgstr "«Уже», «ещё», «ещё не» и «только» в эстонском"
 
-msgid "Already, still, not yet, only"
-msgstr "Уже, ещё, ещё не, только"
+msgid "Already, still, only"
+msgstr "Уже, ещё, только"
 
 msgid "Also after “it’s good”, “there’s time” and a question word."
 msgstr "И после «хорошо», «есть время» и вопросительного слова."
@@ -620,6 +608,9 @@ msgstr "Варианты ответа"
 msgid "Asking for directions and travelling in Estonian"
 msgstr "Дорога и транспорт по-эстонски"
 
+msgid "Asking questions"
+msgstr "Вопросы"
+
 msgid "Asking questions in Estonian"
 msgstr "Вопросы в эстонском языке"
 
@@ -635,6 +626,9 @@ msgstr "В каждом этапе верно не меньше двух из т
 msgid "at school"
 msgstr "в школе"
 
+msgid "At someone’s place"
+msgstr "В гостях"
+
 msgid "At the doctor"
 msgstr "У врача"
 
@@ -643,6 +637,9 @@ msgstr "У врача по-эстонски"
 
 msgid "at the market"
 msgstr "на рынке"
+
+msgid "At the market"
+msgstr "На рынке"
 
 msgid "at work"
 msgstr "на работе"
@@ -653,11 +650,11 @@ msgstr "На работе"
 msgid "At work in Estonian"
 msgstr "На работе по-эстонски"
 
-msgid "B1 mock exam"
-msgstr "Пробный экзамен B1"
-
 msgid "Back 5 seconds"
 msgstr "Назад на 5 секунд"
+
+msgid "Becoming something"
+msgstr "Стать кем-то"
 
 msgid "Before words like “under”"
 msgstr "Перед словами вроде «под»"
@@ -714,14 +711,8 @@ msgstr "Идите сюда!"
 msgid "Commands"
 msgstr "Повелительное наклонение"
 
-msgid "Comparatives and superlatives"
-msgstr "Сравнительная и превосходная степень"
-
-msgid "Conditional mood"
-msgstr "Условное наклонение"
-
-msgid "Conjunctions and word order"
-msgstr "Союзы и порядок слов"
+msgid "Comparing"
+msgstr "Сравнение"
 
 msgid "Consonant gradation"
 msgstr "Чередование согласных"
@@ -734,6 +725,9 @@ msgstr "Не поможешь мне?"
 
 msgid "Counted on your first answer to each question."
 msgstr "Учтён первый ответ на каждый вопрос."
+
+msgid "Dates"
+msgstr "Даты"
 
 msgid "Days of the week"
 msgstr "Дни недели"
@@ -809,17 +803,11 @@ msgstr "Эстонские формы -des и -mata: «одновременно�
 msgid "Estonian -ma, -mas and -mast: going, being and coming back"
 msgstr "Эстонские формы на -ma, -mas и -mast: иду, там, возвращаюсь"
 
-msgid "Estonian A2 mock exam"
-msgstr "Пробный экзамен по эстонскому A2"
-
 msgid "Estonian adjectives: agreeing with the noun"
 msgstr "Эстонские прилагательные: согласование по падежу"
 
 msgid "Estonian adverbs with -lt and -sti"
 msgstr "Эстонские наречия на -lt и -sti"
-
-msgid "Estonian B1 mock exam"
-msgstr "Пробный экзамен по эстонскому B1"
 
 msgid "Estonian B1 practice: reading and listening to the news"
 msgstr "Практика эстонского B1: читаем и слушаем новости"
@@ -941,17 +929,23 @@ msgstr "Косвенная речь и форма на -vat в эстонско�
 msgid "Estonian somebody and nobody: -gi and -ki"
 msgstr "Эстонские «кто-то» и «никто»: -gi и -ki"
 
-msgid "Estonian stage 3 checkpoint"
-msgstr "Контрольная работа 3 этапа эстонского"
+msgid "Estonian stage 1 final challenge"
+msgstr "Итоговое задание этапа 1 по эстонскому языку"
 
-msgid "Estonian stage 4 checkpoint"
-msgstr "Контрольная работа 4 этапа эстонского"
+msgid "Estonian stage 2 final challenge"
+msgstr "Итоговое задание этапа 2 по эстонскому языку"
 
-msgid "Estonian stage 5 checkpoint"
-msgstr "Контрольная работа 5 этапа эстонского"
+msgid "Estonian stage 3 final challenge"
+msgstr "Итоговое задание этапа 3 по эстонскому языку"
 
-msgid "Estonian stage 6 checkpoint"
-msgstr "Контрольная работа 6 этапа эстонского"
+msgid "Estonian stage 4 final challenge"
+msgstr "Итоговое задание этапа 4 по эстонскому языку"
+
+msgid "Estonian stage 5 final challenge"
+msgstr "Итоговое задание этапа 5 по эстонскому языку"
+
+msgid "Estonian stage 6 final challenge"
+msgstr "Итоговое задание этапа 6 по эстонскому языку"
 
 msgid "Estonian time expressions: when things happen"
 msgstr "Как сказать «когда» по-эстонски"
@@ -971,15 +965,12 @@ msgstr "Все слова в группах. Можно проверять."
 msgid "Every word is in its group."
 msgstr "Каждое слово в своей группе."
 
-msgid "Exam timer"
-msgstr "Таймер экзамена"
-
 msgctxt "the statement is false"
 msgid "False"
 msgstr "Неверно"
 
-msgid "Family and a form"
-msgstr "Семья и анкета"
+msgid "Family and forms"
+msgstr "Семья и анкеты"
 
 msgid "Fill every gap first."
 msgstr "Сначала заполни все пропуски."
@@ -990,11 +981,11 @@ msgstr "Заполни пропуск"
 msgid "Fill the gaps"
 msgstr "Заполни пропуски"
 
+msgid "Final challenge"
+msgstr "Итоговое задание"
+
 msgid "Find your level"
 msgstr "Определи свой уровень"
-
-msgid "Five minutes remaining."
-msgstr "Осталось пять минут."
 
 msgid "Fix the sentence"
 msgstr "Исправь предложение"
@@ -1062,18 +1053,6 @@ msgstr "Бесплатная практика эстонского для тел
 msgid "Free Estonian practice in the past and the future: read about a friend’s weekend and write back, say what you did and didn’t do (olin, ei läinud), what you will do (homme lähen, hakkan õppima, kavatsen tulla), fix verbs in the wrong form, and follow a conversation you can play twice. Every sentence is read aloud."
 msgstr "Бесплатная практика эстонского в прошедшем и будущем: прочитай о выходных подруги и ответь, скажи, что ты делал и чего не делал (olin, ei läinud), что будешь делать (homme lähen, hakkan õppima, kavatsen tulla), исправь глаголы в неверной форме и пойми разговор, который можно прослушать дважды. Каждое предложение озвучено."
 
-msgid "Free Estonian stage 3 checkpoint: twenty mixed questions on verbs, modals, liking, past tense and the future, with no hints beforehand and a score per rule linked to its lesson."
-msgstr "Бесплатная контрольная 3 этапа эстонского: двадцать смешанных вопросов на глаголы, модальные глаголы, предпочтения, прошедшее и будущее время, без подсказок заранее и с разбором по правилам."
-
-msgid "Free Estonian stage 4 checkpoint: twenty mixed questions on cases, pronouns, dates, word order, adjectives, comparing and -gi / -ki, with no hints beforehand and a score per rule linked to its lesson."
-msgstr "Бесплатная контрольная 4 этапа эстонского: двадцать смешанных вопросов на падежи, местоимения, даты, порядок слов, прилагательные, сравнения и -gi / -ki, без подсказок заранее и с разбором по правилам."
-
-msgid "Free Estonian stage 5 checkpoint: twenty mixed questions on gradation, total and partial object, plural cases, perfect, conditional, impersonal and verb cases, with no hints beforehand and a score per rule linked to its lesson."
-msgstr "Бесплатная контрольная 5 этапа эстонского: двадцать смешанных вопросов на чередование, полный и частичный объект, множественные падежи, перфект, условное наклонение, безличную форму и управление глаголов."
-
-msgid "Free Estonian stage 6 checkpoint: twenty mixed questions on B1 particle verbs, word building, -des and -mata, participles, conjunctions, relative clauses and reported speech, with no hints beforehand and a score per rule linked to its lesson."
-msgstr "Бесплатная контрольная 6 этапа эстонского: двадцать смешанных вопросов на глаголы с частицами B1, словообразование, -des и -mata, причастия, союзы, придаточные предложения и косвенную речь."
-
 msgid "Free Estonian writing practice: read a message to a landlady, learn the phrases for a polite message (kas te saaksite, aitäh ette, lugupidamisega), follow a phone call about a cold radiator, then write your own message and compare it with a model. Every sentence is read aloud."
 msgstr "Бесплатная практика письма на эстонском: прочитай письмо хозяйке квартиры, выучи фразы для вежливого письма (kas te saaksite, aitäh ette, lugupidamisega), послушай телефонный разговор о холодной батарее, а потом напиши своё письмо и сравни его с образцом. Каждое предложение озвучено."
 
@@ -1129,11 +1108,14 @@ msgctxt "a noun's form on the form map"
 msgid "Genitive"
 msgstr "Родительный"
 
+msgid "Getting around"
+msgstr "Как добраться"
+
 msgid "Go to the lesson"
 msgstr "К уроку"
 
-msgid "Going, being, coming back: -ma, -mas, -mast"
-msgstr "Идти, быть там, возвращаться: -ma, -mas, -mast"
+msgid "Going, doing, coming back"
+msgstr "Иду, делаю, возвращаюсь"
 
 msgid "Greets Mari."
 msgstr "Есть приветствие."
@@ -1147,11 +1129,11 @@ msgstr "Сложная грамматика"
 msgid "Have a good day!"
 msgstr "Хорошего тебе дня!"
 
+msgid "Have done, had done"
+msgstr "Перфект и плюсквамперфект"
+
 msgid "Have you been to Tartu?"
 msgstr "Ты бывал(а) в Тарту?"
-
-msgid "Having or staying at"
-msgstr "Есть или в гостях"
 
 msgid "Having or staying at someone’s place in Estonian"
 msgstr "«У кого-то есть» против «у кого-то дома» в эстонском"
@@ -1216,11 +1198,14 @@ msgstr "Послушать весь разговор"
 msgid "Hear the whole passage"
 msgstr "Послушай весь текст"
 
-msgid "Here and there with go, come and visit"
-msgstr "«Здесь» и «там» с глаголами движения"
+msgid "Here and there"
+msgstr "Здесь и там"
 
 msgid "How many cats do you have?"
 msgstr "Сколько у вас кошек?"
+
+msgid "How nouns change"
+msgstr "Как меняются существительные"
 
 msgid "How to say “I have” in Estonian"
 msgstr "Как сказать «у меня есть» по-эстонски"
@@ -1236,6 +1221,9 @@ msgstr "Как сказать «нет» в прошедшем времени п
 
 msgid "I"
 msgstr "я"
+
+msgid "I am, you are"
+msgstr "Местоимения и «быть»"
 
 msgid "I bought the book."
 msgstr "Я купил(а) книгу."
@@ -1348,9 +1336,6 @@ msgstr "Я уже поел(а)."
 msgid "Illative"
 msgstr "Иллатив"
 
-msgid "Impersonal voice"
-msgstr "Безличная форма"
-
 msgid "In a command"
 msgstr "В приказе"
 
@@ -1404,9 +1389,6 @@ msgstr "«В» и «на» по-эстонски: -s и -l"
 
 msgid "Inessive"
 msgstr "Инессив"
-
-msgid "Infinitives after other verbs"
-msgstr "Инфинитив после других глаголов"
 
 msgid "inside"
 msgstr "внутри"
@@ -1493,6 +1475,9 @@ msgstr "Kodu — дом; kodus — дома."
 msgid "Language"
 msgstr "Язык"
 
+msgid "Last weekend, next week"
+msgstr "Прошлые выходные, следующая неделя"
+
 msgid "Left column"
 msgstr "Левая колонка"
 
@@ -1525,6 +1510,9 @@ msgstr "«Пойдём» и «пусть»"
 
 msgid "Let’s and let them in Estonian"
 msgstr "«Пойдём» и «пусть» в эстонском языке"
+
+msgid "Linking sentences"
+msgstr "Соединение предложений"
 
 msgid "Listen"
 msgstr "Послушать"
@@ -1559,6 +1547,9 @@ msgstr "слушает"
 msgid "Longer sentences"
 msgstr "Сложные предложения"
 
+msgid "Looking for a flat"
+msgstr "Поиск квартиры"
+
 msgid "looks like the nominative"
 msgstr "как в именительном"
 
@@ -1579,6 +1570,9 @@ msgstr "Образуй форму"
 
 msgid "Making new Estonian words from nouns"
 msgstr "Новые эстонские слова от существительных"
+
+msgid "Making new words"
+msgstr "Новые слова из знакомых"
 
 msgid "Mari"
 msgstr "Мари"
@@ -1613,8 +1607,14 @@ msgstr "рынок"
 msgid "Match"
 msgstr "Пары"
 
+msgid "Me, to me, with me"
+msgstr "Я, мне, со мной"
+
 msgid "Me, we, takes -me: elame."
 msgstr "Me, мы, берёт -me: elame."
+
+msgid "Meeting someone"
+msgstr "Знакомство"
 
 msgid "Mina takes -n: loen."
 msgstr "Mina берёт -n: loen."
@@ -1624,6 +1624,9 @@ msgstr "Mina, я, берёт olen."
 
 msgid "Missing: <0>{right}</0>."
 msgstr "Не хватает: <0>{right}</0>."
+
+msgid "Mixed questions"
+msgstr "Смешанные вопросы"
 
 msgid "More are on the way."
 msgstr "Новые уже в работе."
@@ -1667,9 +1670,6 @@ msgstr "Почти верно: ошибка в двух буквах."
 
 msgid "Nearly right."
 msgstr "Почти верно."
-
-msgid "Negation"
-msgstr "Отрицание"
 
 msgid "Next"
 msgstr "Дальше"
@@ -1722,6 +1722,9 @@ msgstr "Существительные"
 
 msgid "Nouns and cases"
 msgstr "Существительные и падежи"
+
+msgid "Nouns from verbs"
+msgstr "Существительные от глаголов"
 
 msgid "Now"
 msgstr "Сейчас"
@@ -1805,9 +1808,6 @@ msgstr "или *pole*"
 msgid "Ordering at a café in Estonian"
 msgstr "Заказ в кафе по-эстонски"
 
-msgid "Ordinals and dates"
-msgstr "Порядковые числительные и даты"
-
 msgid "Out doing it"
 msgstr "За этим занятием или уже после"
 
@@ -1831,12 +1831,6 @@ msgstr "Часть чего-то, а также после числительн�
 
 msgid "Participles"
 msgstr "Причастия"
-
-msgid "Particle verbs with new meanings"
-msgstr "Глаголы с частицами: новые значения"
-
-msgid "Particle verbs: up, out, away"
-msgstr "Глаголы с частицами: вверх, наружу, прочь"
 
 msgid "partitive"
 msgstr "партитив"
@@ -1863,12 +1857,6 @@ msgstr "Пауза"
 msgid "Peeter is ta, he, so: on."
 msgstr "Пеэтер — это ta, он, значит: on."
 
-msgid "Perfect and pluperfect"
-msgstr "Перфект и плюсквамперфект"
-
-msgid "Personal pronouns and “to be”"
-msgstr "Личные местоимения и «быть»"
-
 msgid "Pick a word first."
 msgstr "Сначала выбери слово."
 
@@ -1880,9 +1868,6 @@ msgstr "Выбери слово для пропуска"
 
 msgid "Pick up where you left off"
 msgstr "Продолжи с того же места"
-
-msgid "Place words: on, under, behind"
-msgstr "Где что: на, под, за"
 
 msgid "Placement test"
 msgstr "Тест на уровень"
@@ -1935,41 +1920,14 @@ msgstr "Воспроизводится"
 msgid "Pluperfect"
 msgstr "Давнопрошедшее"
 
-msgid "Plural"
-msgstr "Множественное число"
-
 msgid "Plural cases"
 msgstr "Падежи во множественном числе"
-
-msgid "Plural partitive"
-msgstr "Партитив множественного числа"
 
 msgid "Poe- plus -s: in a shop."
 msgstr "Poe- плюс -s: в магазине."
 
 msgid "Practice parts"
 msgstr "Части для практики"
-
-msgid "Practice: a day in Tallinn"
-msgstr "Практика: день в Таллине"
-
-msgid "Practice: a message to the landlord"
-msgstr "Практика: письмо арендодателю"
-
-msgid "Practice: at the market"
-msgstr "Практика: на рынке"
-
-msgid "Practice: last weekend, next week"
-msgstr "Практика: прошлые выходные, следующая неделя"
-
-msgid "Practice: looking for a flat"
-msgstr "Практика: ищем квартиру"
-
-msgid "Practice: meeting someone"
-msgstr "Практика: знакомство"
-
-msgid "Practice: reading the news"
-msgstr "Практика: читаем новости"
 
 msgid "Present"
 msgstr "Настоящее"
@@ -1983,9 +1941,6 @@ msgstr "Перфект"
 
 msgid "Present tense"
 msgstr "Настоящее время"
-
-msgid "Pronouns in every case"
-msgstr "Местоимения во всех падежах"
 
 msgid "Pronunciation"
 msgstr "Произношение"
@@ -2002,9 +1957,6 @@ msgstr "Расставь слова по порядку"
 msgid "Question"
 msgstr "Вопрос"
 
-msgid "Questions"
-msgstr "Вопросы"
-
 msgid "Questions done: {settled} of {total}"
 msgstr "Вопросов пройдено: {settled} из {total}"
 
@@ -2017,21 +1969,15 @@ msgstr "Перечитать"
 msgid "Reading"
 msgstr "Чтение"
 
+msgid "Reading the news"
+msgstr "Читаем новости"
+
 #. placeholder {0}: targetStage?.level
 msgid "Recommended start · Stage {targetNumber} ({0})"
 msgstr "Рекомендованный старт · Этап {targetNumber} ({0})"
 
-msgid "Relative clauses"
-msgstr "Придаточные с «который»"
-
 msgid "Reported speech"
 msgstr "Косвенная речь"
-
-msgid "Reset"
-msgstr "Сбросить"
-
-msgid "Resume"
-msgstr "Продолжить"
 
 msgid "Review"
 msgstr "Повторение"
@@ -2082,11 +2028,26 @@ msgstr "Скажи, кто ты, чем занимаешься и где жив�
 msgid "Say with whom and without what, give a date and a time, put words in the right order, describe and compare things, and say what someone became."
 msgstr "Скажи, с кем и без чего, назови дату и время, ставь слова в правильном порядке, описывай и сравнивай вещи и расскажи, кем кто-то стал."
 
+msgid "Saying “I have”"
+msgstr "Как сказать «у меня есть»"
+
+msgid "Saying “I like”"
+msgstr "Как сказать «мне нравится»"
+
+msgid "Saying “would”"
+msgstr "Как сказать «я бы»"
+
+msgid "Saying no"
+msgstr "Отрицание"
+
 msgid "Saying no in the past"
 msgstr "Отрицание в прошлом"
 
-msgid "Saying where: -s and -l"
-msgstr "Как сказать, где: окончания -s и -l"
+msgid "Saying when"
+msgstr "Как сказать, когда"
+
+msgid "Saying where"
+msgstr "Как сказать, где"
 
 msgid "Says what you do."
 msgstr "Сказано, чем ты занимаешься."
@@ -2163,8 +2124,8 @@ msgstr "Медленнее"
 msgid "Some of it"
 msgstr "Какое-то количество"
 
-msgid "Somebody, nobody: -gi and -ki"
-msgstr "Кто-то, никто: -gi и -ki"
+msgid "Somebody, nobody"
+msgstr "Кто-то, никто"
 
 msgid "Soon"
 msgstr "Скоро"
@@ -2188,26 +2149,8 @@ msgstr "Скорость"
 msgid "Stage {0} · {1} · {2}"
 msgstr "Этап {0} · {1} · {2}"
 
-msgid "Stage 3 checkpoint"
-msgstr "Контрольная этапа 3"
-
-msgid "Stage 4 checkpoint"
-msgstr "Контрольная этапа 4"
-
-msgid "Stage 5 checkpoint"
-msgstr "Контрольная этапа 5"
-
-msgid "Stage 6 checkpoint"
-msgstr "Контрольная этапа 6"
-
-msgid "Stage checkpoint"
-msgstr "Контрольная работа"
-
 msgid "Start"
 msgstr "Начать"
-
-msgid "Start checkpoint"
-msgstr "Начать контрольную"
 
 msgid "Start here"
 msgstr "Начни отсюда"
@@ -2221,15 +2164,12 @@ msgstr "Начать тест на уровень"
 msgid "Start the conversation"
 msgstr "Начать разговор"
 
-msgid "Start timer"
-msgstr "Запустить таймер"
+msgid "Start the questions"
+msgstr "Начать"
 
 #. placeholder {0}: i18n._(targetStage.name)
 msgid "Start with {0}"
 msgstr "Начни с темы «{0}»"
-
-msgid "Stem changes"
-msgstr "Изменение основы"
 
 msgid "Still going on"
 msgstr "Ещё длится"
@@ -2336,9 +2276,6 @@ msgstr "Это вопрос, кто она, а она уже сказала."
 msgid "That’s good morning; Mari is leaving."
 msgstr "Это «доброе утро», а Мари уходит."
 
-msgid "The -des and -mata forms"
-msgstr "Формы на -des и -mata"
-
 msgid "the -ma infinitive"
 msgstr "инфинитив на -ma"
 
@@ -2420,6 +2357,24 @@ msgstr "Эстонский транслатив: становиться, к и �
 msgid "The form isn’t <0>{wrote}</0>."
 msgstr "Форма не <0>{wrote}</0>."
 
+msgid "The free Estonian stage 1 final challenge: twenty mixed questions on pronouns and “to be”, the present tense, saying no, questions, saying where, numbers, the time, the days and commands, with no hints beforehand and a score per rule linked to its lesson."
+msgstr "Бесплатное итоговое задание этапа 1 по эстонскому: двадцать смешанных вопросов о местоимениях и глаголе «быть», настоящем времени, отрицании, вопросах, «где», числах, времени, днях недели и повелительном наклонении. Без подсказок заранее, а результат по каждому правилу ведёт к его уроку."
+
+msgid "The free Estonian stage 2 final challenge: twenty mixed questions on noun stems, the genitive, saying “I have”, the partitive, the plural, in and into, on and onto, and place words, with no hints beforehand and a score per rule linked to its lesson."
+msgstr "Бесплатное итоговое задание этапа 2 по эстонскому: двадцать смешанных вопросов об основе существительных, родительном падеже, «у меня есть», партитиве, множественном числе, «в» и «во что», «на» и «на что», а также словах места. Без подсказок заранее, а результат по каждому правилу ведёт к его уроку."
+
+msgid "The free Estonian stage 3 final challenge: twenty mixed questions on verbs, modals, liking, past tense and the future, with no hints beforehand and a score per rule linked to its lesson."
+msgstr "Бесплатное итоговое задание этапа 3 по эстонскому: двадцать смешанных вопросов о глаголах, модальных глаголах, «мне нравится», прошедшем и будущем времени. Без подсказок заранее, а результат по каждому правилу ведёт к его уроку."
+
+msgid "The free Estonian stage 4 final challenge: twenty mixed questions on cases, pronouns, dates, word order, adjectives, comparing and -gi / -ki, with no hints beforehand and a score per rule linked to its lesson."
+msgstr "Бесплатное итоговое задание этапа 4 по эстонскому: двадцать смешанных вопросов о падежах, местоимениях, датах, порядке слов, прилагательных, сравнении и -gi / -ki. Без подсказок заранее, а результат по каждому правилу ведёт к его уроку."
+
+msgid "The free Estonian stage 5 final challenge: twenty mixed questions on stage 5 grammar with a score per rule, then notices and an email to read, a message to fill, sentences to fix and write, a voice message and a phone call played twice, and a short email to write. It asks about as much as an A2 exam does."
+msgstr "Бесплатное итоговое задание этапа 5 по эстонскому: двадцать смешанных вопросов по грамматике этапа 5 с результатом по каждому правилу, затем объявления и письмо для чтения, сообщение с пропусками, предложения для исправления и составления, голосовое сообщение и телефонный разговор (каждый можно послушать дважды) и короткое письмо. По объёму примерно как экзамен A2."
+
+msgid "The free Estonian stage 6 final challenge: twenty mixed questions on stage 6 grammar with a score per rule, then a news report and a notice to read, a text to fill, sentences to fix and write, radio news and an interview played twice, and a formal letter to write. It asks about as much as a B1 exam does."
+msgstr "Бесплатное итоговое задание этапа 6 по эстонскому: двадцать смешанных вопросов по грамматике этапа 6 с результатом по каждому правилу, затем новостной репортаж и объявление для чтения, текст с пропусками, предложения для исправления и составления, радионовости и интервью (каждое можно послушать дважды) и официальное письмо. По объёму примерно как экзамен B1."
+
 msgid "The future"
 msgstr "Будущее"
 
@@ -2432,11 +2387,14 @@ msgstr "g выпадает, а появляется a."
 msgid "The g drops and the u becomes o: loe-, plus -n for ma."
 msgstr "g выпадает, а u становится o: loe-, плюс -n для ma."
 
-msgid "The genitive case"
+msgid "The genitive"
 msgstr "Родительный падеж"
 
 msgid "The genitive with *-d*."
 msgstr "Родительный и *-d*."
+
+msgid "The impersonal"
+msgstr "Безличная форма"
 
 msgid "The lesson kit’s parts for practice after a rule is taught: listening, a passage with gaps, reading, a dialogue, sorting, matching, building a sentence, making a form, writing a sentence and fixing one. docs/design/estonian-lessons.md says when to use each."
 msgstr "Части набора для упражнений после правила: слушание, текст с пропусками, чтение, диалог, сортировка, пары, составление предложения, образование формы, написание предложения и исправление. Когда какую брать, объясняет docs/design/estonian-lessons.md."
@@ -2453,16 +2411,13 @@ msgstr "Молоко стоит два евро."
 msgid "The most common words, each brought back on the day you’d forget it."
 msgstr "Самые частые слова, и каждое возвращается как раз тогда, когда ты бы его забыл."
 
-msgid "The object: whole or part"
-msgstr "Дополнение: целое или часть"
-
 msgid "The od drops and an e comes in: poe- carries most forms."
 msgstr "od выпадает, а появляется e: от poe- образуется большинство форм."
 
 msgid "The owner comes first."
 msgstr "Владелец стоит первым."
 
-msgid "The partitive case"
+msgid "The partitive"
 msgstr "Партитив"
 
 msgid "The partitive of muusika."
@@ -2473,6 +2428,12 @@ msgstr "Текст"
 
 msgid "The past of <0>joob</0> is <1>jõi</1>."
 msgstr "Прошедшее от <0>joob</0> — <1>jõi</1>."
+
+msgid "The plural"
+msgstr "Множественное число"
+
+msgid "The plural partitive"
+msgstr "Партитив множественного числа"
 
 msgid "The questions didn’t load. Check your connection and try again."
 msgstr "Вопросы не загрузились. Проверь соединение и попробуй ещё раз."
@@ -2513,20 +2474,11 @@ msgstr "Таблица одного слова поверх страницы, о
 msgid "The table is in the middle of the room."
 msgstr "Стол посреди комнаты."
 
-msgid "The three forms of a noun"
-msgstr "Три основные формы существительного"
-
-msgid "The three forms of a verb"
-msgstr "Три основные формы глагола"
-
 msgid "The three forms of an Estonian noun"
 msgstr "Три основные формы слова в эстонском"
 
 msgid "The three forms of an Estonian verb"
 msgstr "Три основные формы эстонского глагола"
-
-msgid "The translative case"
-msgstr "Транслатив"
 
 msgid "The verb stays second, whichever word comes first."
 msgstr "Глагол остаётся вторым, какое бы слово ни стояло первым."
@@ -2561,6 +2513,12 @@ msgstr "Завтра они не придут."
 msgid "This is Martin’s coffee."
 msgstr "Это кофе Мартина."
 
+msgid "Three forms of a noun"
+msgstr "Три формы существительного"
+
+msgid "Three forms of a verb"
+msgstr "Три формы глагола"
+
 msgid "Through, across and along in Estonian"
 msgstr "Сквозь, через и вдоль по-эстонски"
 
@@ -2569,12 +2527,6 @@ msgstr "Сквозь, через, вдоль"
 
 msgid "Tick what your text does."
 msgstr "Отметь, что есть в твоём тексте."
-
-msgid "Time expressions: when things happen"
-msgstr "Выражения времени: когда что происходит"
-
-msgid "Time is up. You can still finish and check your answers."
-msgstr "Время вышло. Ты всё равно можешь закончить и проверить ответы."
 
 msgid "Timeline"
 msgstr "Линия времени"
@@ -2609,9 +2561,6 @@ msgstr "Завтра я буду есть дома."
 msgid "Tööl, at work, takes -l like a market does."
 msgstr "Tööl, на работе, берёт -l, как и рынок."
 
-msgid "Travel and directions"
-msgstr "Дорога и транспорт"
-
 msgctxt "the statement is true"
 msgid "True"
 msgstr "Верно"
@@ -2624,6 +2573,9 @@ msgstr "Попробовать ещё раз"
 
 msgid "Turg becomes turu- before an ending: turul."
 msgstr "Перед окончанием turg становится turu-: turul."
+
+msgid "Two verbs together"
+msgstr "Два глагола вместе"
 
 msgid "Type <0>{letter}</0>"
 msgstr "Ввести <0>{letter}</0>"
@@ -2646,6 +2598,12 @@ msgstr "Напиши слово"
 msgid "under"
 msgstr "под"
 
+msgid "Under, behind, next to"
+msgstr "Под, за, рядом"
+
+msgid "Up, out, away"
+msgstr "Вверх, наружу, прочь"
+
 msgid "Use"
 msgstr "Случай"
 
@@ -2667,8 +2625,14 @@ msgstr "Обычно, когда такое слово стоит после с�
 msgid "Verbs"
 msgstr "Глаголы"
 
+msgid "Verbs and their cases"
+msgstr "Глаголы и падежи"
+
 msgid "Verbs or nouns"
 msgstr "Глаголы или существительные"
+
+msgid "Verbs with new meanings"
+msgstr "Глаголы с новым значением"
 
 msgid "Warm-up"
 msgstr "Разминка"
@@ -2766,8 +2730,8 @@ msgstr "Куда идёт кот"
 msgid "Where the cat is"
 msgstr "Где кот"
 
-msgid "Which case a verb takes"
-msgstr "Какой падеж нужен глаголу"
+msgid "Which and who"
+msgstr "Предложения с «который»"
 
 msgid "Which case an Estonian verb takes"
 msgstr "Какой падеж нужен эстонскому глаголу"
@@ -2780,6 +2744,9 @@ msgstr "В каком городе живёт Мари? Напиши так, к�
 
 msgid "While doing it"
 msgstr "Во время действия"
+
+msgid "While doing, without doing"
+msgstr "Делая, не делая"
 
 msgid "Who is Mari?"
 msgstr "Кто такая Мари?"
@@ -2795,6 +2762,9 @@ msgstr "О ком или о чём речь"
 
 msgid "Who says it?"
 msgstr "Кто это говорит?"
+
+msgid "Whole or partial object"
+msgstr "Полное и частичное дополнение"
 
 msgid "Whose it is"
 msgstr "Чьё это"
@@ -2823,8 +2793,8 @@ msgstr "Как меняется слово"
 msgid "Word meanings open once you have answered."
 msgstr "Значения слов откроются, когда ответишь."
 
-msgid "Word order: the verb usually comes second"
-msgstr "Порядок слов: глагол обычно на втором месте"
+msgid "Word order"
+msgstr "Порядок слов"
 
 msgid "Word pairs"
 msgstr "Пары слов"
@@ -2837,12 +2807,6 @@ msgstr "Слова"
 
 msgid "Words from this lesson"
 msgstr "Слова из этого урока"
-
-msgid "Words from verbs: -ja, -mine"
-msgstr "Слова от глаголов: -ja, -mine"
-
-msgid "Words from words: -lik, -tu, -ke"
-msgstr "Слова от слов: -lik, -tu, -ke"
 
 msgid "Words in colour open their meaning."
 msgstr "Цветные слова показывают своё значение."
@@ -2894,6 +2858,9 @@ msgstr "Напиши, что слышишь"
 
 msgid "Writing"
 msgstr "Письмо"
+
+msgid "Writing to a landlord"
+msgstr "Письмо хозяину жилья"
 
 msgid "Yes, she is"
 msgstr "Да"

@@ -30,7 +30,7 @@ export function Checkpoint({ stageIndex, count = 20 }: { stageIndex: number; cou
     if (section) finishSection(section);
   }, [section, finishSection]);
 
-  const title = <Trans>Stage checkpoint</Trans>;
+  const title = <Trans>Mixed questions</Trans>;
   if (session.status === "open")
     return (
       <DrillRunner
@@ -52,7 +52,7 @@ export function Checkpoint({ stageIndex, count = 20 }: { stageIndex: number; cou
   return (
     <QuizCard title={title}>
       <Button variant="primary" loading={session.status === "loading"} onClick={open}>
-        <Trans>Start checkpoint</Trans>
+        <Trans>Start the questions</Trans>
       </Button>
       {session.status === "idle" && session.failed && <LoadProblem />}
     </QuizCard>

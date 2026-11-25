@@ -18,7 +18,7 @@ export function Kontrolltoo4Lesson() {
         </Trans>
       }
       facts={[
-        <Trans key="t">Checkpoint</Trans>,
+        <Trans key="t">Final challenge</Trans>,
         <Trans key="m">15 minutes</Trans>,
         <Trans key="q">20 mixed questions</Trans>,
       ]}
@@ -27,7 +27,7 @@ export function Kontrolltoo4Lesson() {
       sections={[
         {
           id: "test",
-          title: t`Stage 4 checkpoint`,
+          title: t`Mixed questions`,
           quiz: true,
           children: (
             <>

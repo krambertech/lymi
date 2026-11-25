@@ -16405,10 +16405,18 @@ export const JUBA_ANSWERS: Record<(typeof JUBA_TRANSLATE)[number], readonly [str
   {
     "Kell on juba kümme.": ["Kell on juba kümme."],
     "Kell on alles seitse.": ["Kell on alles seitse."],
-    "Ta ei ole veel kodus.": newsClosed(["Ta ei ole veel kodus.", "Ta pole veel kodus."]),
+    "Ta ei ole veel kodus.": newsClosed([
+      "Ta ei ole veel kodus.",
+      "Ta pole veel kodus.",
+      "Ta ei ole kodus veel.",
+    ]),
     "Ma ei ela enam seal.": newsClosed(["Ma ei ela enam seal.", "Ma ei ela seal enam."]),
-    "Kas sa oled veel tööl?": newsClosed(["Kas sa oled veel tööl?", "Kas te olete veel tööl?"]),
-    "Ta tuli alles eile.": newsClosed(["Ta tuli alles eile."]),
+    "Kas sa oled veel tööl?": newsClosed([
+      "Kas sa oled veel tööl?",
+      "Kas te olete veel tööl?",
+      "Oled sa veel tööl?",
+    ]),
+    "Ta tuli alles eile.": newsClosed(["Ta tuli alles eile.", "Ta tuli eile alles."]),
   };
 
 export const JUBA_FIXES = [

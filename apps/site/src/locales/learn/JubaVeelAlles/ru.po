@@ -24,8 +24,8 @@ msgstr "<0>Enam</0> обычно употребляется только в от
 msgid "<0>Juba</0> marks something sooner than expected; <1>alles</1> marks something less, later or just recent; <2>veel</2> means still or more."
 msgstr "<0>Juba</0> обозначает то, что произошло раньше ожидаемого; <1>alles</1> — меньше, позже или совсем недавно; <2>veel</2> означает «ещё»."
 
-msgid "<0>Juba</0> means already (sooner or more than expected): <1>Kell on juba kümme.</1>"
-msgstr "<0>Juba</0> означает «уже» (раньше или больше, чем ожидалось): <1>Kell on juba kümme.</1>"
+msgid "<0>Juba</0> means already (sooner than expected): <1>Kell on juba kümme.</1>"
+msgstr "<0>Juba</0> означает «уже» (раньше, чем ожидалось): <1>Kell on juba kümme.</1>"
 
 msgid "<0>Veel</0> also means “more” in offers and requests: <1>Kas sa tahad veel kohvi?</1> (Would you like more coffee?)."
 msgstr "<0>Veel</0> также означает «ещё» в предложениях и просьбах: <1>Kas sa tahad veel kohvi?</1> («Хочешь ещё кофе?»)."
@@ -86,6 +86,9 @@ msgstr "Уже или только?"
 
 msgid "Already vs only: <et>juba, alles</et>"
 msgstr "«Уже» против «только»: <et>juba, alles</et>"
+
+msgid "Answers"
+msgstr "Варианты ответа"
 
 msgid "Are you still at work?"
 msgstr "Ты ещё на работе?"
@@ -339,8 +342,8 @@ msgstr "Обустройство в новой квартире"
 msgid "Something continuing in a positive sentence uses <0>veel</0>."
 msgstr "То, что продолжается в утвердительном предложении, требует <0>veel</0>."
 
-msgid "Sooner or later than expected — already ten — uses <0>juba</0>."
-msgstr "Раньше или больше ожидаемого — «уже десять» — требует <0>juba</0>."
+msgid "Sooner than expected — already ten — uses <0>juba</0>."
+msgstr "Раньше ожидаемого — «уже десять» — требует <0>juba</0>."
 
 msgid "Staff still need the old office keys every morning."
 msgstr "Сотрудникам до сих пор каждое утро нужны старые ключи от офиса."

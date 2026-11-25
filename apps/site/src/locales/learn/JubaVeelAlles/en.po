@@ -24,8 +24,8 @@ msgstr "<0>Enam</0> usually appears only in negative sentences; positive still i
 msgid "<0>Juba</0> marks something sooner than expected; <1>alles</1> marks something less, later or just recent; <2>veel</2> means still or more."
 msgstr "<0>Juba</0> marks something sooner than expected; <1>alles</1> marks something less, later or just recent; <2>veel</2> means still or more."
 
-msgid "<0>Juba</0> means already (sooner or more than expected): <1>Kell on juba kümme.</1>"
-msgstr "<0>Juba</0> means already (sooner or more than expected): <1>Kell on juba kümme.</1>"
+msgid "<0>Juba</0> means already (sooner than expected): <1>Kell on juba kümme.</1>"
+msgstr "<0>Juba</0> means already (sooner than expected): <1>Kell on juba kümme.</1>"
 
 msgid "<0>Veel</0> also means “more” in offers and requests: <1>Kas sa tahad veel kohvi?</1> (Would you like more coffee?)."
 msgstr "<0>Veel</0> also means “more” in offers and requests: <1>Kas sa tahad veel kohvi?</1> (Would you like more coffee?)."
@@ -86,6 +86,9 @@ msgstr "Already or only?"
 
 msgid "Already vs only: <et>juba, alles</et>"
 msgstr "Already vs only: <et>juba, alles</et>"
+
+msgid "Answers"
+msgstr "Answers"
 
 msgid "Are you still at work?"
 msgstr "Are you still at work?"
@@ -339,8 +342,8 @@ msgstr "Settling into the new flat"
 msgid "Something continuing in a positive sentence uses <0>veel</0>."
 msgstr "Something continuing in a positive sentence uses <0>veel</0>."
 
-msgid "Sooner or later than expected — already ten — uses <0>juba</0>."
-msgstr "Sooner or later than expected — already ten — uses <0>juba</0>."
+msgid "Sooner than expected — already ten — uses <0>juba</0>."
+msgstr "Sooner than expected — already ten — uses <0>juba</0>."
 
 msgid "Staff still need the old office keys every morning."
 msgstr "Staff still need the old office keys every morning."

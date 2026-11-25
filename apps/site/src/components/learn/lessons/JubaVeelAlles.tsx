@@ -16,6 +16,7 @@ import {
   JUBA_TELL,
   JUBA_TRANSLATE,
 } from "../../../lib/learn/clips";
+import { playSound } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Panel } from "../Explore";
 import { type FixItem, FixRound, fixRecall } from "../FixRound";
@@ -24,8 +25,9 @@ import { Aside, LessonView, Prose } from "../LessonView";
 import { Match, type MatchPair } from "../Match";
 import { Paradigm, type ParadigmRow } from "../Paradigm";
 import { Listening, type PassageQuestion, Reading } from "../Passage";
-import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { Answer, type ChoiceItem, ChoiceRound, Feedback, Quiz, type RoundProps } from "../Quiz";
 import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
+import { Listen } from "../Sound";
 import { Word } from "../Word";
 
 const SLUG = "juba-veel-alles";
@@ -122,7 +124,7 @@ const GAP_PROMPTS: Record<(typeof JUBA_GAPS)[number]["id"], MessageDescriptor> =
 const GAP_WHY: Record<(typeof JUBA_GAPS)[number]["id"], ReactNode> = {
   "already-ten": (
     <Trans>
-      Sooner or later than expected — already ten — uses <b lang="et">juba</b>.
+      Sooner than expected — already ten — uses <b lang="et">juba</b>.
     </Trans>
   ),
   "only-seven": (
@@ -246,6 +248,46 @@ const gapRun = <
     item === pinned ? item : { ...item, options: shuffle([...item.options]) },
   );
 
+type GapPick = ChoiceItem & { said: string; prompt: ReactNode; pair: readonly [string, string] };
+
+function PickRound({ item, state, heard, answer }: RoundProps<GapPick>) {
+  const { t } = useLingui();
+  const done = state.status === "answered";
+  const picked = done ? state.picked : null;
+  return (
+    <>
+      <p className="text-lg leading-snug">{item.prompt}</p>
+      {done && <Listen src={item.src} onPlay={heard} />}
+      <fieldset className="m-0 flex w-full min-w-0 flex-wrap gap-2 border-0 p-0">
+        <legend className="sr-only">{t`Answers`}</legend>
+        {item.options.map((option) => (
+          <Answer
+            key={option.id}
+            className="grow basis-36"
+            label={option.label}
+            mark={
+              !done
+                ? undefined
+                : option.id === item.answer
+                  ? "right"
+                  : option.id === picked
+                    ? "wrong"
+                    : "out"
+            }
+            onPick={() => {
+              if (done) return;
+              heard();
+              answer(option.id, option.id === item.answer);
+              void playSound(item.src);
+            }}
+          />
+        ))}
+      </fieldset>
+      {done && <Feedback right={state.right}>{item.explain}</Feedback>}
+    </>
+  );
+}
+
 function useContent() {
   const { t, i18n } = useLingui();
   return useMemo(() => {
@@ -283,27 +325,25 @@ function useContent() {
       id: w,
       label: <span lang="et">{w}</span>,
     }));
-    const gaps: (ChoiceItem & { said: string; pair: readonly [string, string] })[] = JUBA_GAPS.map(
-      (item) => {
-        const said = gapSaid(item);
-        return {
-          said,
-          src: src(said),
-          prompt: (
-            <>
-              <span lang="et" className="font-semibold text-ink">
-                {`${item.before} ___${/^[.,!?]/.test(item.after) ? "" : " "}${item.after}`}
-              </span>{" "}
-              <span className="text-ink-secondary">{i18n._(GAP_PROMPTS[item.id])}</span>
-            </>
-          ),
-          answer: item.answer,
-          options: gapOpts,
-          pair: [item.id, item.id] as const,
-          explain: GAP_WHY[item.id],
-        };
-      },
-    );
+    const gaps: GapPick[] = JUBA_GAPS.map((item) => {
+      const said = gapSaid(item);
+      return {
+        said,
+        src: src(said),
+        prompt: (
+          <>
+            <span lang="et" className="font-semibold text-ink">
+              {`${item.before} ___${/^[.,!?]/.test(item.after) ? "" : " "}${item.after}`}
+            </span>{" "}
+            <span className="text-ink-secondary">{i18n._(GAP_PROMPTS[item.id])}</span>
+          </>
+        ),
+        answer: item.answer,
+        options: gapOpts,
+        pair: [item.id, item.id] as const,
+        explain: GAP_WHY[item.id],
+      };
+    });
 
     const translations: (SentenceItem & { pair: readonly [string, string] })[] = JUBA_TRANSLATE.map(
       (said) => ({
@@ -483,7 +523,7 @@ export function JubaVeelAllesLesson() {
       words={["juba", "veel", "alles", "enam"]}
       recap={[
         <Trans key="1">
-          <b lang="et">Juba</b> means already (sooner or more than expected):{" "}
+          <b lang="et">Juba</b> means already (sooner than expected):{" "}
           <b lang="et">Kell on juba kümme.</b>
         </Trans>,
         <Trans key="2">
@@ -610,7 +650,7 @@ export function JubaVeelAllesLesson() {
                 }
                 recall={(item) => ({ label: item.said, src: item.src })}
                 order={gapRun}
-                round={(props) => <ChoiceRound {...props} />}
+                round={(props) => <PickRound {...props} />}
               />
             </>
           ),

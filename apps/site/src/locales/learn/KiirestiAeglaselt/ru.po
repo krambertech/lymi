@@ -24,9 +24,6 @@ msgstr "7 упражнений"
 msgid "A message from the teacher"
 msgstr "Сообщение от учительницы"
 
-msgid "A small set of common adjectives takes <0>-sti</0> instead: <1/>, <2/>, <3/>. And <4>hea</4> becomes <5/>, while <6>halb</6> becomes <7/>. Switch groups and tap a form to hear it."
-msgstr "Небольшая группа частых прилагательных вместо этого берёт <0>-sti</0>: <1/>, <2/>, <3/>. А <4>hea</4> становится <5/>, тогда как <6>halb</6> становится <7/>. Переключай группы и нажимай на форму, чтобы послушать её."
-
 msgid "Adjective"
 msgstr "Прилагательное"
 
@@ -129,8 +126,8 @@ msgstr "точно, ровно"
 msgid "fast"
 msgstr "быстрый"
 
-msgid "Fast, never repeating his points"
-msgstr "Быстро, совсем без повторных пояснений"
+msgid "Fast, never explaining anything twice"
+msgstr "Быстро, ничего не объясняя дважды"
 
 msgid "Fix the sentence"
 msgstr "Исправь предложение"
@@ -204,8 +201,8 @@ msgstr "Я обязательно приду."
 msgid "in a simple way"
 msgstr "просто"
 
-msgid "In lesson {adjectives} you used adjectives with nouns: <0>aeglane buss</0>, a slow bus. To say how an action happens, Estonian usually adds <1>-lt</1> to the genitive stem from lesson {genitive}: <2/>, <3/>, <4/>."
-msgstr "В уроке {adjectives} ты сочетал прилагательные с существительными: <0>aeglane buss</0> («медленный автобус»). Чтобы сказать, как происходит действие, эстонский обычно добавляет <1>-lt</1> к основе родительного падежа из урока {genitive}: <2/>, <3/>, <4/>."
+msgid "In lesson {adjectives} you used adjectives with nouns: <0>aeglane buss</0>, a slow bus. To say how an action happens, Estonian often adds <1>-lt</1> to the genitive stem from lesson {genitive}, above all with adjectives ending in <2>-ne</2>: <3/>, <4/>, <5/>."
+msgstr "В уроке {adjectives} ты сочетал прилагательные с существительными: <0>aeglane buss</0> («медленный автобус»). Чтобы сказать, как происходит действие, эстонский часто добавляет <1>-lt</1> к основе родительного падежа из урока {genitive}, чаще всего у прилагательных на <2>-ne</2>: <3/>, <4/>, <5/>."
 
 msgid "Into town"
 msgstr "В центр"
@@ -249,6 +246,27 @@ msgstr "Ma tulen kindlasti."
 msgid "Make the adverb"
 msgstr "Образуй наречие"
 
+msgid "Many adjectives, above all those ending in <0>-ne</0>, usually add <1>-lt</1> to the genitive stem: <2>aeglane → aeglase → aeglaselt</2>."
+msgstr "Многие прилагательные, чаще всего на <0>-ne</0>, обычно добавляют <1>-lt</1> к основе родительного падежа: <2>aeglane → aeglase → aeglaselt</2>."
+
+msgid "Many adjectives, above all those ending in <0>-ne</0>, usually build their adverb by adding <1>-lt</1> to the genitive stem: <2>aeglane → aeglase → aeglaselt</2>, <3>vaikne → vaikse → vaikselt</3>."
+msgstr "Многие прилагательные, чаще всего на <0>-ne</0>, обычно образуют наречие, добавляя <1>-lt</1> к основе родительного: <2>aeglane → aeglase → aeglaselt</2>, <3>vaikne → vaikse → vaikselt</3>."
+
+msgid "Many adjectives, above all those ending in <et>-ne</et>, usually add <et>-lt</et> to the genitive stem: <et>aeglane</et> → <et>aeglaselt</et>, <et>vaikne</et> → <et>vaikselt</et>."
+msgstr "Многие прилагательные, чаще всего на <et>-ne</et>, обычно добавляют <et>-lt</et> к основе родительного падежа: <et>aeglane</et> → <et>aeglaselt</et>, <et>vaikne</et> → <et>vaikselt</et>."
+
+msgid "Many other adjectives take <0>-sti</0> instead: <1/>, <2/>, <3/>. And <4>hea</4> becomes <5/>, while <6>halb</6> becomes <7/>. Switch groups and tap a form to hear it."
+msgstr "Многие другие прилагательные берут <0>-sti</0>: <1/>, <2/>, <3/>. А <4>hea</4> превращается в <5/>, тогда как <6>halb</6> — в <7/>. Переключай группы и нажимай на форму, чтобы услышать её."
+
+msgid "Many other adjectives take <0>-sti</0> on the genitive stem, and <1>hea</1> becomes <2>hästi</2>."
+msgstr "Многие другие прилагательные берут <0>-sti</0> к основе родительного, а <1>hea</1> превращается в <2>hästi</2>."
+
+msgid "Many other adjectives take <0>-sti</0> on the genitive stem: <1>kiiresti</1>, <2>kindlasti</2>, <3>ilusasti</3>, <4>kõvasti</4>."
+msgstr "Многие другие прилагательные берут <0>-sti</0> к основе родительного: <1>kiiresti</1>, <2>kindlasti</2>, <3>ilusasti</3>, <4>kõvasti</4>."
+
+msgid "Many other adjectives take <et>-sti</et> on the genitive stem (<et>kiiresti</et>, <et>kindlasti</et>), and <et>hea</et> becomes <et>hästi</et>."
+msgstr "Многие другие прилагательные берут <et>-sti</et> к основе родительного (<et>kiiresti</et>, <et>kindlasti</et>), а <et>hea</et> превращается в <et>hästi</et>."
+
 msgid "Mart"
 msgstr "Март"
 
@@ -266,15 +284,6 @@ msgstr "Соедини каждое наречие с его значением.
 
 msgid "Meaning"
 msgstr "Значение"
-
-msgid "Most adjectives usually add <0>-lt</0> to the genitive stem: <1>aeglane → aeglase → aeglaselt</1>."
-msgstr "Большинство прилагательных обычно добавляют <0>-lt</0> к основе родительного падежа: <1>aeglane → aeglase → aeglaselt</1>."
-
-msgid "Most adjectives usually add <et>-lt</et> to the genitive stem: <et>aeglane</et> → <et>aeglaselt</et>, <et>vaikne</et> → <et>vaikselt</et>."
-msgstr "Большинство прилагательных обычно добавляют <et>-lt</et> к основе родительного падежа: <et>aeglane</et> → <et>aeglaselt</et>, <et>vaikne</et> → <et>vaikselt</et>."
-
-msgid "Most adjectives usually build their adverb by adding <0>-lt</0> to the genitive stem: <1>aeglane → aeglase → aeglaselt</1>, <2>vaikne → vaikse → vaikselt</2>."
-msgstr "Большинство прилагательных обычно образуют наречие, добавляя <0>-lt</0> к основе родительного: <1>aeglane → aeglase → aeglaselt</1>, <2>vaikne → vaikse → vaikselt</2>."
 
 msgid "Nearly. Check the adverb ending in the ones you missed."
 msgstr "Почти. Проверь окончание наречия в предложениях с ошибками."
@@ -318,6 +327,9 @@ msgstr "тихий"
 msgid "quietly"
 msgstr "тихо"
 
+msgid "Read one long text together"
+msgstr "Вместе прочитать один длинный текст"
+
 msgid "Read What to remember below, then try again."
 msgstr "Прочитай «Что запомнить» ниже и попробуй ещё раз."
 
@@ -329,15 +341,6 @@ msgstr "Rong sõidab kiiresti."
 
 msgid "Says how it happens"
 msgstr "Говорит, как происходит действие"
-
-msgid "Several common adjectives take <0>-sti</0> on the genitive stem: <1>kiiresti</1>, <2>kindlasti</2>, <3>ilusasti</3>, <4>kõvasti</4>."
-msgstr "Несколько частых прилагательных берут <0>-sti</0> к основе родительного: <1>kiiresti</1>, <2>kindlasti</2>, <3>ilusasti</3>, <4>kõvasti</4>."
-
-msgid "Several common adjectives take <et>-sti</et> on the genitive stem (<et>kiiresti</et>, <et>kindlasti</et>), and <et>hea</et> becomes <et>hästi</et>."
-msgstr "Несколько частых прилагательных берут <et>-sti</et> к основе родительного (<et>kiiresti</et>, <et>kindlasti</et>), а <et>hea</et> становится <et>hästi</et>."
-
-msgid "Several everyday adjectives take <0>-sti</0> on the genitive stem, and <1>hea</1> becomes <2>hästi</2>."
-msgstr "Несколько повседневных прилагательных берут <0>-sti</0> к основе родительного, а <1>hea</1> становится <2>hästi</2>."
 
 msgid "simple"
 msgstr "простой"
@@ -351,10 +354,10 @@ msgstr "медленно"
 msgid "Slowly across an empty training lot"
 msgstr "Медленно по пустой учебной площадке"
 
-msgid "Some adjectives, such as <0>ilus</0>, can take either ending in speech (<1>ilusasti</1> or <2>ilusalt</2>). When in doubt, <3>-lt</3> is usually the productive ending."
-msgstr "Некоторые прилагательные, например <0>ilus</0>, в речи допускают оба окончания (<1>ilusasti</1> или <2>ilusalt</2>). Если сомневаешься, обычно выбирают продуктивное окончание <3>-lt</3>."
+msgid "Some adjectives take either ending: <0>kiiresti</0> or <1>kiirelt</1>, <2>ilusasti</2> or <3>ilusalt</3>. The exercises ask for the form in the table."
+msgstr "Некоторые прилагательные принимают оба окончания: <0>kiiresti</0> или <1>kiirelt</1>, <2>ilusasti</2> или <3>ilusalt</3>. В упражнениях нужна форма из таблицы."
 
-msgid "Students have to copy every sentence down into a notebook."
+msgid "Students have to copy every sentence into a notebook."
 msgstr "Ученики должны переписывать каждое предложение в тетрадь."
 
 msgid "sure"
@@ -368,6 +371,9 @@ msgstr "Ta räägib eesti keelt hästi."
 
 msgid "Ta selgitab seda lihtsalt."
 msgstr "Ta selgitab seda lihtsalt."
+
+msgid "Take a written test"
+msgstr "Писать письменную контрольную"
 
 msgid "Tap a form"
 msgstr "Нажми на форму"
@@ -426,8 +432,8 @@ msgstr "Это медленный автобус."
 msgid "To say how someone speaks, use <0>hästi</0>, not the adjective <1>hea</1>."
 msgstr "Чтобы сказать, как кто-то говорит, используй <0>hästi</0>, а не прилагательное <1>hea</1>."
 
-msgid "Turn an adjective into a word that says how something happens: most adjectives usually add <0>-lt</0> to the genitive (<1>aeglaselt</1>), a small group takes <2>-sti</2> (<3>kiiresti</3>), and <4>hea</4> becomes <5>hästi</5>."
-msgstr "Преврати прилагательное в слово, которое объясняет, как происходит действие: большинство прилагательных обычно добавляют <0>-lt</0> к родительному (<1>aeglaselt</1>), небольшая группа берёт <2>-sti</2> (<3>kiiresti</3>), а <4>hea</4> становится <5>hästi</5>."
+msgid "Turn an adjective into a word that says how something happens: many adjectives, above all those ending in <0>-ne</0>, usually add <1>-lt</1> to the genitive (<2>aeglaselt</2>), many others take <3>-sti</3> (<4>kiiresti</4>), and <5>hea</5> becomes <6>hästi</6>."
+msgstr "Преврати прилагательное в слово, которое объясняет, как происходит действие: многие прилагательные, чаще всего на <0>-ne</0>, обычно добавляют <1>-lt</1> к родительному (<2>aeglaselt</2>), многие другие берут <3>-sti</3> (<4>kiiresti</4>), а <5>hea</5> превращается в <6>hästi</6>."
 
 msgid "Two everyday adverbs to know by heart: <0>hea → hästi</0> (well) and <1>halb → halvasti</1> (badly)."
 msgstr "Два повседневных наречия, которые стоит запомнить: <0>hea → hästi</0> («хорошо») и <1>halb → halvasti</1> («плохо»)."
@@ -446,9 +452,6 @@ msgstr "обычно"
 
 msgid "Väljas sajab kõvasti vihma."
 msgstr "Väljas sajab kõvasti vihma."
-
-msgid "Watch an old Estonian film together"
-msgstr "Вместе посмотреть старый эстонский фильм"
 
 msgid "We came in quietly."
 msgstr "Мы вошли тихо."
@@ -479,9 +482,6 @@ msgstr "Где Март хочет поездить в следующий раз
 
 msgid "Why does Kadri advise speaking slowly?"
 msgstr "Почему Кадри советует говорить медленно?"
-
-msgid "Write a long grammar test in silence"
-msgstr "В тишине писать большую контрольную по грамматике"
 
 msgid "Write each sentence in Estonian using an adverb."
 msgstr "Напиши каждое предложение по-эстонски, используя наречие."

@@ -24,9 +24,6 @@ msgstr "7 вправ"
 msgid "A message from the teacher"
 msgstr "Повідомлення від учительки"
 
-msgid "A small set of common adjectives takes <0>-sti</0> instead: <1/>, <2/>, <3/>. And <4>hea</4> becomes <5/>, while <6>halb</6> becomes <7/>. Switch groups and tap a form to hear it."
-msgstr "Невелика група поширених прикметників натомість бере <0>-sti</0>: <1/>, <2/>, <3/>. А <4>hea</4> стає <5/>, тоді як <6>halb</6> стає <7/>. Перемикай групи й натискай на форму, щоб почути її."
-
 msgid "Adjective"
 msgstr "Прикметник"
 
@@ -129,8 +126,8 @@ msgstr "точно, рівно"
 msgid "fast"
 msgstr "швидкий"
 
-msgid "Fast, never repeating his points"
-msgstr "Швидко, зовсім не повторюючи пояснень"
+msgid "Fast, never explaining anything twice"
+msgstr "Швидко, нічого не пояснюючи двічі"
 
 msgid "Fix the sentence"
 msgstr "Виправ речення"
@@ -204,8 +201,8 @@ msgstr "Я обов’язково прийду."
 msgid "in a simple way"
 msgstr "просто"
 
-msgid "In lesson {adjectives} you used adjectives with nouns: <0>aeglane buss</0>, a slow bus. To say how an action happens, Estonian usually adds <1>-lt</1> to the genitive stem from lesson {genitive}: <2/>, <3/>, <4/>."
-msgstr "В уроці {adjectives} ти поєднував прикметники з іменниками: <0>aeglane buss</0> («повільний автобус»). Щоб сказати, як відбувається дія, естонська зазвичай додає <1>-lt</1> до основи родового відмінка з уроку {genitive}: <2/>, <3/>, <4/>."
+msgid "In lesson {adjectives} you used adjectives with nouns: <0>aeglane buss</0>, a slow bus. To say how an action happens, Estonian often adds <1>-lt</1> to the genitive stem from lesson {genitive}, above all with adjectives ending in <2>-ne</2>: <3/>, <4/>, <5/>."
+msgstr "В уроці {adjectives} ти поєднував прикметники з іменниками: <0>aeglane buss</0> («повільний автобус»). Щоб сказати, як відбувається дія, естонська часто додає <1>-lt</1> до основи родового відмінка з уроку {genitive}, найчастіше до прикметників на <2>-ne</2>: <3/>, <4/>, <5/>."
 
 msgid "Into town"
 msgstr "У центр"
@@ -249,6 +246,27 @@ msgstr "Ma tulen kindlasti."
 msgid "Make the adverb"
 msgstr "Утвори прислівник"
 
+msgid "Many adjectives, above all those ending in <0>-ne</0>, usually add <1>-lt</1> to the genitive stem: <2>aeglane → aeglase → aeglaselt</2>."
+msgstr "Багато прикметників, найчастіше на <0>-ne</0>, зазвичай додають <1>-lt</1> до основи родового відмінка: <2>aeglane → aeglase → aeglaselt</2>."
+
+msgid "Many adjectives, above all those ending in <0>-ne</0>, usually build their adverb by adding <1>-lt</1> to the genitive stem: <2>aeglane → aeglase → aeglaselt</2>, <3>vaikne → vaikse → vaikselt</3>."
+msgstr "Багато прикметників, найчастіше на <0>-ne</0>, зазвичай утворюють прислівник, додаючи <1>-lt</1> до основи родового: <2>aeglane → aeglase → aeglaselt</2>, <3>vaikne → vaikse → vaikselt</3>."
+
+msgid "Many adjectives, above all those ending in <et>-ne</et>, usually add <et>-lt</et> to the genitive stem: <et>aeglane</et> → <et>aeglaselt</et>, <et>vaikne</et> → <et>vaikselt</et>."
+msgstr "Багато прикметників, найчастіше на <et>-ne</et>, зазвичай додають <et>-lt</et> до основи родового відмінка: <et>aeglane</et> → <et>aeglaselt</et>, <et>vaikne</et> → <et>vaikselt</et>."
+
+msgid "Many other adjectives take <0>-sti</0> instead: <1/>, <2/>, <3/>. And <4>hea</4> becomes <5/>, while <6>halb</6> becomes <7/>. Switch groups and tap a form to hear it."
+msgstr "Багато інших прикметників натомість беруть <0>-sti</0>: <1/>, <2/>, <3/>. А <4>hea</4> стає <5/>, тоді як <6>halb</6> стає <7/>. Перемикай групи й натискай на форму, щоб почути її."
+
+msgid "Many other adjectives take <0>-sti</0> on the genitive stem, and <1>hea</1> becomes <2>hästi</2>."
+msgstr "Багато інших прикметників беруть <0>-sti</0> до основи родового, а <1>hea</1> стає <2>hästi</2>."
+
+msgid "Many other adjectives take <0>-sti</0> on the genitive stem: <1>kiiresti</1>, <2>kindlasti</2>, <3>ilusasti</3>, <4>kõvasti</4>."
+msgstr "Багато інших прикметників беруть <0>-sti</0> до основи родового: <1>kiiresti</1>, <2>kindlasti</2>, <3>ilusasti</3>, <4>kõvasti</4>."
+
+msgid "Many other adjectives take <et>-sti</et> on the genitive stem (<et>kiiresti</et>, <et>kindlasti</et>), and <et>hea</et> becomes <et>hästi</et>."
+msgstr "Багато інших прикметників беруть <et>-sti</et> до основи родового (<et>kiiresti</et>, <et>kindlasti</et>), а <et>hea</et> стає <et>hästi</et>."
+
 msgid "Mart"
 msgstr "Март"
 
@@ -266,15 +284,6 @@ msgstr "З’єднай кожен прислівник із його значе
 
 msgid "Meaning"
 msgstr "Значення"
-
-msgid "Most adjectives usually add <0>-lt</0> to the genitive stem: <1>aeglane → aeglase → aeglaselt</1>."
-msgstr "Більшість прикметників зазвичай додають <0>-lt</0> до основи родового відмінка: <1>aeglane → aeglase → aeglaselt</1>."
-
-msgid "Most adjectives usually add <et>-lt</et> to the genitive stem: <et>aeglane</et> → <et>aeglaselt</et>, <et>vaikne</et> → <et>vaikselt</et>."
-msgstr "Більшість прикметників зазвичай додають <et>-lt</et> до основи родового відмінка: <et>aeglane</et> → <et>aeglaselt</et>, <et>vaikne</et> → <et>vaikselt</et>."
-
-msgid "Most adjectives usually build their adverb by adding <0>-lt</0> to the genitive stem: <1>aeglane → aeglase → aeglaselt</1>, <2>vaikne → vaikse → vaikselt</2>."
-msgstr "Більшість прикметників зазвичай утворюють прислівник, додаючи <0>-lt</0> до основи родового: <1>aeglane → aeglase → aeglaselt</1>, <2>vaikne → vaikse → vaikselt</2>."
 
 msgid "Nearly. Check the adverb ending in the ones you missed."
 msgstr "Майже. Перевір закінчення прислівника в реченнях із помилками."
@@ -318,6 +327,9 @@ msgstr "тихий"
 msgid "quietly"
 msgstr "тихо"
 
+msgid "Read one long text together"
+msgstr "Прочитати разом один довгий текст"
+
 msgid "Read What to remember below, then try again."
 msgstr "Прочитай «Що запам’ятати» нижче й спробуй ще раз."
 
@@ -329,15 +341,6 @@ msgstr "Rong sõidab kiiresti."
 
 msgid "Says how it happens"
 msgstr "Показує, як відбувається дія"
-
-msgid "Several common adjectives take <0>-sti</0> on the genitive stem: <1>kiiresti</1>, <2>kindlasti</2>, <3>ilusasti</3>, <4>kõvasti</4>."
-msgstr "Кілька поширених прикметників беруть <0>-sti</0> до основи родового: <1>kiiresti</1>, <2>kindlasti</2>, <3>ilusasti</3>, <4>kõvasti</4>."
-
-msgid "Several common adjectives take <et>-sti</et> on the genitive stem (<et>kiiresti</et>, <et>kindlasti</et>), and <et>hea</et> becomes <et>hästi</et>."
-msgstr "Кілька поширених прикметників беруть <et>-sti</et> до основи родового (<et>kiiresti</et>, <et>kindlasti</et>), а <et>hea</et> стає <et>hästi</et>."
-
-msgid "Several everyday adjectives take <0>-sti</0> on the genitive stem, and <1>hea</1> becomes <2>hästi</2>."
-msgstr "Кілька повсякденних прикметників беруть <0>-sti</0> до основи родового, а <1>hea</1> стає <2>hästi</2>."
 
 msgid "simple"
 msgstr "простий"
@@ -351,10 +354,10 @@ msgstr "повільно"
 msgid "Slowly across an empty training lot"
 msgstr "Повільно по порожньому навчальному майданчику"
 
-msgid "Some adjectives, such as <0>ilus</0>, can take either ending in speech (<1>ilusasti</1> or <2>ilusalt</2>). When in doubt, <3>-lt</3> is usually the productive ending."
-msgstr "Деякі прикметники, наприклад <0>ilus</0>, у мовленні можуть мати обидва закінчення (<1>ilusasti</1> або <2>ilusalt</2>). Якщо сумніваєшся, зазвичай продуктивним є <3>-lt</3>."
+msgid "Some adjectives take either ending: <0>kiiresti</0> or <1>kiirelt</1>, <2>ilusasti</2> or <3>ilusalt</3>. The exercises ask for the form in the table."
+msgstr "Деякі прикметники приймають обидва закінчення: <0>kiiresti</0> або <1>kiirelt</1>, <2>ilusasti</2> або <3>ilusalt</3>. Вправи просять форму з таблиці."
 
-msgid "Students have to copy every sentence down into a notebook."
+msgid "Students have to copy every sentence into a notebook."
 msgstr "Учні мають переписувати кожне речення в зошит."
 
 msgid "sure"
@@ -368,6 +371,9 @@ msgstr "Ta räägib eesti keelt hästi."
 
 msgid "Ta selgitab seda lihtsalt."
 msgstr "Ta selgitab seda lihtsalt."
+
+msgid "Take a written test"
+msgstr "Писати письмову контрольну"
 
 msgid "Tap a form"
 msgstr "Натисни на форму"
@@ -426,8 +432,8 @@ msgstr "Це повільний автобус."
 msgid "To say how someone speaks, use <0>hästi</0>, not the adjective <1>hea</1>."
 msgstr "Щоб сказати, як хтось говорить, використовуй <0>hästi</0>, а не прикметник <1>hea</1>."
 
-msgid "Turn an adjective into a word that says how something happens: most adjectives usually add <0>-lt</0> to the genitive (<1>aeglaselt</1>), a small group takes <2>-sti</2> (<3>kiiresti</3>), and <4>hea</4> becomes <5>hästi</5>."
-msgstr "Перетвори прикметник на слово, яке пояснює, як відбувається дія: більшість прикметників зазвичай додають <0>-lt</0> до родового (<1>aeglaselt</1>), невелика група бере <2>-sti</2> (<3>kiiresti</3>), а <4>hea</4> стає <5>hästi</5>."
+msgid "Turn an adjective into a word that says how something happens: many adjectives, above all those ending in <0>-ne</0>, usually add <1>-lt</1> to the genitive (<2>aeglaselt</2>), many others take <3>-sti</3> (<4>kiiresti</4>), and <5>hea</5> becomes <6>hästi</6>."
+msgstr "Перетвори прикметник на слово, яке пояснює, як відбувається дія: багато прикметників, найчастіше на <0>-ne</0>, зазвичай додають <1>-lt</1> до родового (<2>aeglaselt</2>), багато інших беруть <3>-sti</3> (<4>kiiresti</4>), а <5>hea</5> стає <6>hästi</6>."
 
 msgid "Two everyday adverbs to know by heart: <0>hea → hästi</0> (well) and <1>halb → halvasti</1> (badly)."
 msgstr "Два повсякденні прислівники, які варто запам’ятати: <0>hea → hästi</0> («добре») і <1>halb → halvasti</1> («погано»)."
@@ -446,9 +452,6 @@ msgstr "зазвичай"
 
 msgid "Väljas sajab kõvasti vihma."
 msgstr "Väljas sajab kõvasti vihma."
-
-msgid "Watch an old Estonian film together"
-msgstr "Разом подивитися старий естонський фільм"
 
 msgid "We came in quietly."
 msgstr "Ми зайшли тихо."
@@ -479,9 +482,6 @@ msgstr "Де Март хоче поїздити наступного разу?"
 
 msgid "Why does Kadri advise speaking slowly?"
 msgstr "Чому Кадрі радить говорити повільно?"
-
-msgid "Write a long grammar test in silence"
-msgstr "У тиші писати велику контрольну з граматики"
 
 msgid "Write each sentence in Estonian using an adverb."
 msgstr "Напиши кожне речення естонською, використавши прислівник."

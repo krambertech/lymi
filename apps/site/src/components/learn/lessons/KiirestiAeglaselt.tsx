@@ -6,7 +6,9 @@ import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   ADV_ANSWERS,
   ADV_CONVERSATION,
+  ADV_FIX_ALSO,
   ADV_FIXES,
+  ADV_FORM_ALSO,
   ADV_FORMS,
   ADV_GROUPS,
   ADV_MATCH,
@@ -121,12 +123,13 @@ function AdverbTable() {
           tip:
             group === "lt" ? (
               <Trans>
-                Most adjectives usually add <b lang="et">-lt</b> to the genitive stem:{" "}
+                Many adjectives, above all those ending in <b lang="et">-ne</b>, usually add{" "}
+                <b lang="et">-lt</b> to the genitive stem:{" "}
                 <b lang="et">aeglane → aeglase → aeglaselt</b>.
               </Trans>
             ) : (
               <Trans>
-                Several everyday adjectives take <b lang="et">-sti</b> on the genitive stem, and{" "}
+                Many other adjectives take <b lang="et">-sti</b> on the genitive stem, and{" "}
                 <b lang="et">hea</b> becomes <b lang="et">hästi</b>.
               </Trans>
             ),
@@ -266,7 +269,7 @@ function useContent() {
         gloss: i18n._(ADJ_MEANS[item.base] as MessageDescriptor),
         cue: `${item.before} ___${/^[.,!?]/.test(item.after) ? "" : " "}${item.after}`,
         cueLang: "et",
-        answers: [item.answer],
+        answers: [item.answer, ...(ADV_FORM_ALSO[item.id] ?? [])],
         src: src(said),
         said: <span lang="et">{said}</span>,
         explain: FORM_WHY[item.id],
@@ -313,7 +316,7 @@ function useContent() {
       id: `fix-${item.id}`,
       wrong: item.wrong,
       prompt: i18n._(FIX_PROMPTS[item.id]),
-      answers: [item.right],
+      answers: [item.right, ...(ADV_FIX_ALSO[item.id] ?? [])],
       src: src(item.right),
       explain: FIX_WHY[item.id],
     }));
@@ -323,16 +326,16 @@ function useContent() {
         id: "time",
         kind: "short",
         ask: t`What time does tomorrow’s lesson start? Write two words from the message.`,
-        answers: ["kell kümme", "kümme"],
+        answers: ["kell kümme", "kümme", "kell 10", "10"],
         line: 2,
       },
       {
         id: "plan",
         ask: t`What will the class do tomorrow instead of reading long texts?`,
         options: [
-          { id: "write", label: t`Write a long grammar test in silence` },
           { id: "talk", label: t`Only talk` },
-          { id: "watch", label: t`Watch an old Estonian film together` },
+          { id: "test", label: t`Take a written test` },
+          { id: "text", label: t`Read one long text together` },
         ],
         answer: "talk",
         line: 3,
@@ -349,8 +352,8 @@ function useContent() {
         ask: t`Why does Kadri advise speaking slowly?`,
         options: [
           { id: "short", label: t`The lesson finishes early.` },
+          { id: "notes", label: t`Students have to copy every sentence into a notebook.` },
           { id: "clear", label: t`Everyone can hear each word better.` },
-          { id: "notes", label: t`Students have to copy every sentence down into a notebook.` },
         ],
         answer: "clear",
         line: 6,
@@ -389,7 +392,7 @@ function useContent() {
         options: [
           { id: "loud", label: t`Loudly, rushing` },
           { id: "calm", label: t`Calmly, softly, clearly` },
-          { id: "fast", label: t`Fast, never repeating his points` },
+          { id: "fast", label: t`Fast, never explaining anything twice` },
         ],
         answer: "calm",
         line: 5,
@@ -463,10 +466,10 @@ export function KiirestiAeglaseltLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Turn an adjective into a word that says how something happens: most adjectives usually add{" "}
-          <b lang="et">-lt</b> to the genitive (<b lang="et">aeglaselt</b>), a small group takes{" "}
-          <b lang="et">-sti</b> (<b lang="et">kiiresti</b>), and <b lang="et">hea</b> becomes{" "}
-          <b lang="et">hästi</b>.
+          Turn an adjective into a word that says how something happens: many adjectives, above all
+          those ending in <b lang="et">-ne</b>, usually add <b lang="et">-lt</b> to the genitive (
+          <b lang="et">aeglaselt</b>), many others take <b lang="et">-sti</b> (
+          <b lang="et">kiiresti</b>), and <b lang="et">hea</b> becomes <b lang="et">hästi</b>.
         </Trans>
       }
       facts={[
@@ -491,12 +494,13 @@ export function KiirestiAeglaseltLesson() {
       ]}
       recap={[
         <Trans key="1">
-          Most adjectives usually build their adverb by adding <b lang="et">-lt</b> to the genitive
-          stem: <b lang="et">aeglane → aeglase → aeglaselt</b>,{" "}
+          Many adjectives, above all those ending in <b lang="et">-ne</b>, usually build their
+          adverb by adding <b lang="et">-lt</b> to the genitive stem:{" "}
+          <b lang="et">aeglane → aeglase → aeglaselt</b>,{" "}
           <b lang="et">vaikne → vaikse → vaikselt</b>.
         </Trans>,
         <Trans key="2">
-          Several common adjectives take <b lang="et">-sti</b> on the genitive stem:{" "}
+          Many other adjectives take <b lang="et">-sti</b> on the genitive stem:{" "}
           <b lang="et">kiiresti</b>, <b lang="et">kindlasti</b>, <b lang="et">ilusasti</b>,{" "}
           <b lang="et">kõvasti</b>.
         </Trans>,
@@ -521,25 +525,26 @@ export function KiirestiAeglaseltLesson() {
                   <Trans>
                     In lesson {adjectives} you used adjectives with nouns:{" "}
                     <b lang="et">aeglane buss</b>, a slow bus. To say how an action happens,
-                    Estonian usually adds <b lang="et">-lt</b> to the genitive stem from lesson{" "}
-                    {genitive}: <Word w="aeglaselt" />, <Word w="vaikselt" />, <Word w="selgelt" />.
+                    Estonian often adds <b lang="et">-lt</b> to the genitive stem from lesson{" "}
+                    {genitive}, above all with adjectives ending in <b lang="et">-ne</b>:{" "}
+                    <Word w="aeglaselt" />, <Word w="vaikselt" />, <Word w="selgelt" />.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    A small set of common adjectives takes <b lang="et">-sti</b> instead:{" "}
-                    <Word w="kiiresti" />, <Word w="kindlasti" />, <Word w="ilusasti" />. And{" "}
-                    <b lang="et">hea</b> becomes <Word w="hästi" />, while <b lang="et">halb</b>{" "}
-                    becomes <Word w="halvasti" />. Switch groups and tap a form to hear it.
+                    Many other adjectives take <b lang="et">-sti</b> instead: <Word w="kiiresti" />,{" "}
+                    <Word w="kindlasti" />, <Word w="ilusasti" />. And <b lang="et">hea</b> becomes{" "}
+                    <Word w="hästi" />, while <b lang="et">halb</b> becomes <Word w="halvasti" />.
+                    Switch groups and tap a form to hear it.
                   </Trans>
                 </p>
               </Prose>
               <AdverbTable />
               <Aside>
                 <Trans>
-                  Some adjectives, such as <b lang="et">ilus</b>, can take either ending in speech (
-                  <b lang="et">ilusasti</b> or <b lang="et">ilusalt</b>). When in doubt,{" "}
-                  <b lang="et">-lt</b> is usually the productive ending.
+                  Some adjectives take either ending: <b lang="et">kiiresti</b> or{" "}
+                  <b lang="et">kiirelt</b>, <b lang="et">ilusasti</b> or <b lang="et">ilusalt</b>.
+                  The exercises ask for the form in the table.
                 </Trans>
               </Aside>
               <Prose>

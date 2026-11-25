@@ -2,15 +2,17 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import {
   ADV_ANSWERS,
+  ADV_FIX_ALSO,
   ADV_FIXES,
+  ADV_FORM_ALSO,
   ADV_FORMS,
   ADV_TELL,
   ADV_TRANSLATE,
 } from "../../../lib/learn/clips";
 import type { ChoiceDrill, DrillBank, FormDrill } from "../../../lib/learn/drill";
 
-const LT_RULE = msg`Most adjectives usually add <et>-lt</et> to the genitive stem: <et>aeglane</et> → <et>aeglaselt</et>, <et>vaikne</et> → <et>vaikselt</et>.`;
-const STI_RULE = msg`Several common adjectives take <et>-sti</et> on the genitive stem (<et>kiiresti</et>, <et>kindlasti</et>), and <et>hea</et> becomes <et>hästi</et>.`;
+const LT_RULE = msg`Many adjectives, above all those ending in <et>-ne</et>, usually add <et>-lt</et> to the genitive stem: <et>aeglane</et> → <et>aeglaselt</et>, <et>vaikne</et> → <et>vaikselt</et>.`;
+const STI_RULE = msg`Many other adjectives take <et>-sti</et> on the genitive stem (<et>kiiresti</et>, <et>kindlasti</et>), and <et>hea</et> becomes <et>hästi</et>.`;
 const TELL_RULE = msg`An adjective describes a noun (<et>kiire rong</et>); an adverb says how an action happens (<et>rong sõidab kiiresti</et>).`;
 
 const ADJ_GLOSS: Record<string, MessageDescriptor> = {
@@ -42,7 +44,7 @@ const formItem = (index: number): FormDrill => {
     base: item.base,
     gloss: ADJ_GLOSS[item.base] as MessageDescriptor,
     cue: { et: `${item.before} ___${/^[.,!?]/.test(item.after) ? "" : " "}${item.after}` },
-    answers: [item.answer],
+    answers: [item.answer, ...(ADV_FORM_ALSO[item.id] ?? [])],
     say: gapSaid(item),
     explain: rule === "lt" ? LT_RULE : STI_RULE,
   };
@@ -127,7 +129,7 @@ export const DRILLS: DrillBank = {
         | "sti",
       wrong: item.wrong,
       prompt: FIX_PROMPTS[item.id],
-      answers: [item.right] as readonly [string, ...string[]],
+      answers: [item.right, ...(ADV_FIX_ALSO[item.id] ?? [])] as readonly [string, ...string[]],
       say: item.right,
       explain: item.id === "good" || item.id === "fast" || item.id === "bad" ? STI_RULE : LT_RULE,
     })),

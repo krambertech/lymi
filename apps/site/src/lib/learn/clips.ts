@@ -16040,9 +16040,17 @@ export const ADV_ANSWERS: Record<(typeof ADV_TRANSLATE)[number], readonly [strin
     "Palun räägi aeglaselt.",
     "Räägi palun aeglaselt.",
     "Räägi aeglaselt, palun.",
+    "Palun rääkige aeglaselt.",
+    "Rääkige palun aeglaselt.",
+    "Rääkige aeglaselt, palun.",
   ],
-  "Rong sõidab kiiresti.": ["Rong sõidab kiiresti."],
-  "Laps magab vaikselt.": ["Laps magab vaikselt."],
+  "Rong sõidab kiiresti.": [
+    "Rong sõidab kiiresti.",
+    "Rong sõidab kiirelt.",
+    "Kiiresti sõidab rong.",
+    "Kiirelt sõidab rong.",
+  ],
+  "Laps magab vaikselt.": ["Laps magab vaikselt.", "Vaikselt magab laps."],
   "Ma tulen kindlasti.": [
     "Ma tulen kindlasti.",
     "Mina tulen kindlasti.",
@@ -16053,8 +16061,16 @@ export const ADV_ANSWERS: Record<(typeof ADV_TRANSLATE)[number], readonly [strin
     "Kindlasti tulen ma.",
     "Kindlasti tulen mina.",
   ],
-  "Ta vastas selgelt.": ["Ta vastas selgelt.", "Tema vastas selgelt."],
+  "Ta vastas selgelt.": [
+    "Ta vastas selgelt.",
+    "Tema vastas selgelt.",
+    "Selgelt vastas ta.",
+    "Selgelt vastas tema.",
+  ],
 };
+
+export const ADV_FORM_ALSO: Record<string, readonly string[]> = { fast: ["kiirelt"] };
+export const ADV_FIX_ALSO: Record<string, readonly string[]> = { fast: ["Buss sõidab kiirelt."] };
 
 export const ADV_FIXES = [
   { id: "good", wrong: "Ta räägib eesti keelt hea.", right: "Ta räägib eesti keelt hästi." },

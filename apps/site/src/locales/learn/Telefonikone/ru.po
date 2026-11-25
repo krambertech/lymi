@@ -346,8 +346,8 @@ msgstr "Это имя, да ещё со словом <0>teie</0>, которым
 msgid "That says you will call later. You want Mart to call you."
 msgstr "Это значит, что ты позвонишь позже. А тебе нужно, чтобы перезвонил Март."
 
-msgid "The -da infinitive of korrama."
-msgstr "Инфинитив на -da от korrama."
+msgid "The -da infinitive of kordama."
+msgstr "Инфинитив на -da от kordama."
 
 msgid "The connection is bad."
 msgstr "Связь плохая."

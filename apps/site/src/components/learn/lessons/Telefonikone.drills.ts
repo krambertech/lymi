@@ -8,6 +8,8 @@ const POLITE = msg`With <et>te</et>, the conditional ends in <et>-ksite</et> and
 const PAST = msg`The past says what already happened: <et>helistasin</et>, <et>helistas</et>.`;
 const FUTURE = msg`The present with a time word such as <et>homme</et> usually says what will happen.`;
 
+const LONG: Record<string, string[]> = { sulle: ["sinule"], mulle: ["minule"] };
+
 const form = (
   id: string,
   rule: string,
@@ -24,7 +26,7 @@ const form = (
   base,
   gloss,
   cue: { et: cue },
-  answers: [answer],
+  answers: [answer, ...(LONG[answer] ?? [])],
   say,
   explain,
 });
@@ -40,7 +42,9 @@ const fix = (
   id,
   rule,
   wrong,
-  answers: [right],
+  answers: right.endsWith("aeglasemalt.")
+    ? [right, right.replace("aeglasemalt", "aeglaselt")]
+    : [right],
   say: right,
   explain,
 });

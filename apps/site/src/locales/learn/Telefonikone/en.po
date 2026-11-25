@@ -346,8 +346,8 @@ msgstr "That gives a name, and <0>teie</0> is Kati’s word for your. She asked 
 msgid "That says you will call later. You want Mart to call you."
 msgstr "That says you will call later. You want Mart to call you."
 
-msgid "The -da infinitive of korrama."
-msgstr "The -da infinitive of korrama."
+msgid "The -da infinitive of kordama."
+msgstr "The -da infinitive of kordama."
 
 msgid "The connection is bad."
 msgstr "The connection is bad."

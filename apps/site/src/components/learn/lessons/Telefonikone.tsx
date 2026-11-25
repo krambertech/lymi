@@ -80,7 +80,7 @@ const GLOSSARY: Glossary = {
   },
   halloo: { en: msg`hello (on the phone)` },
   hetk: { en: msg`a moment` },
-  korrata: { en: msg`to repeat`, note: msg`The -da infinitive of korrama.` },
+  korrata: { en: msg`to repeat`, note: msg`The -da infinitive of kordama.` },
   tagasi: { en: msg`back`, note: msg`Helistama tagasi is to call back.` },
   sõnum: { en: msg`message`, note: msg`A short message, such as a text or a voicemail.` },
   ühendus: { en: msg`connection`, note: msg`The line between two phones.` },
@@ -166,7 +166,7 @@ export function fixItems(): FixItem[] {
     kind: "fix",
     id: `fix-${id}`,
     wrong,
-    answers: [right],
+    answers: id === "aeglasem" ? [right, "Palun rääkige aeglaselt."] : [right],
     src: src(right),
     explain: FIX_WHY[id],
   }));
@@ -444,7 +444,7 @@ function useContent() {
         kind: "short",
         id: "time",
         ask: t`At what time will Mari come to the office? Write it in Estonian.`,
-        answers: ["kell kümme", "kümme", "10", "kell 10"],
+        answers: ["kell kümme", "kümme", "10", "kell 10", "10.00", "kell 10.00"],
         line: 18,
       },
       {

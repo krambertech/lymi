@@ -510,6 +510,8 @@ export const STAGES: readonly Stage[] = [
         et: "Halloo! Kas Mart on seal?",
         minutes: 25,
         blurb: msg`Free Estonian practice for phone calls: answer a call (halloo, Mari kuuleb), ask for someone (kas ma saaksin rääkida Mardiga), ask to repeat or speak slower (kas te saaksite korrata, ühendus on halb), leave a message and give a number. Every sentence is read aloud.`,
+      },
+      {
         slug: "tookoht",
         name: msg`At work`,
         title: msg`At work in Estonian`,

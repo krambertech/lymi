@@ -248,6 +248,9 @@ msgstr "A free Estonian lesson on a noun’s three main forms, põhivormid (kool
 msgid "A free Estonian lesson on adjectives with nouns: suures majas and uut raamatut, where the adjective usually takes the noun’s case, suure autoga with -ga, -ta, -ni and -na, and suured majad in the plural. Every sentence is read aloud."
 msgstr "A free Estonian lesson on adjectives with nouns: suures majas and uut raamatut, where the adjective usually takes the noun’s case, suure autoga with -ga, -ta, -ni and -na, and suured majad in the plural. Every sentence is read aloud."
 
+msgid "A free Estonian lesson on adverbs of manner: adding -lt to the genitive (aeglaselt, vaikselt, selgelt, tavaliselt), common -sti adverbs (kiiresti, kindlasti), the two everyday odd ones hästi and halvasti, and telling an adjective apart from an adverb. Every sentence is read aloud."
+msgstr "A free Estonian lesson on adverbs of manner: adding -lt to the genitive (aeglaselt, vaikselt, selgelt, tavaliselt), common -sti adverbs (kiiresti, kindlasti), the two everyday odd ones hästi and halvasti, and telling an adjective apart from an adverb. Every sentence is read aloud."
+
 msgid "A free Estonian lesson on comparing: suurem and uuem built on the genitive, suurem kui Tartu and Tartust suurem, kõige suurem for the biggest, sama suur kui for as big as, and two odd ones, hea, parem, parim and väike, väiksem. Every sentence is read aloud."
 msgstr "A free Estonian lesson on comparing: suurem and uuem built on the genitive, suurem kui Tartu and Tartust suurem, kõige suurem for the biggest, sama suur kui for as big as, and two odd ones, hea, parem, parim and väike, väiksem. Every sentence is read aloud."
 
@@ -502,6 +505,9 @@ msgstr "about many"
 
 msgid "Adjective agreement"
 msgstr "Adjective agreement"
+
+msgid "Adverbs: how you do something"
+msgstr "Adverbs: how you do something"
 
 msgid "After “one”"
 msgstr "After “one”"
@@ -784,6 +790,9 @@ msgstr "Estonian -ma, -mas and -mast: going, being and coming back"
 
 msgid "Estonian adjectives: agreeing with the noun"
 msgstr "Estonian adjectives: agreeing with the noun"
+
+msgid "Estonian adverbs with -lt and -sti"
+msgstr "Estonian adverbs with -lt and -sti"
 
 msgid "Estonian B1 practice: reading and listening to the news"
 msgstr "Estonian B1 practice: reading and listening to the news"

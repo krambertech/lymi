@@ -1,0 +1,463 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 01:49+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+#. placeholder {0}: item.said
+#. placeholder {1}: i18n._(TELL_MEANS[item.id])
+msgid "<0>{0}</0> {1}"
+msgstr "<0>{0}</0> {1}"
+
+msgid "20 minutes"
+msgstr "20 минут"
+
+msgid "7 exercises"
+msgstr "7 упражнений"
+
+msgid "Across the square"
+msgstr "Через площадь"
+
+msgid "After five o’clock"
+msgstr "После пяти часов"
+
+msgid "After numbers from two up, the noun usually takes the partitive singular: <0>kolm päeva</0>."
+msgstr "После числительных от двух и выше существительное обычно стоит в партитиве единственного числа: <0>kolm päeva</0>."
+
+msgid "All eight right."
+msgstr "Все восемь верно."
+
+msgid "All six found and fixed."
+msgstr "Все шесть найдены и исправлены."
+
+msgid "All six sentences right."
+msgstr "Все шесть предложений верны."
+
+msgid "Arst kirjutab mulle retsepti."
+msgstr "Врач выписывает мне рецепт."
+
+msgid "at the doctor’s"
+msgstr "у врача"
+
+msgid "At the doctor’s: <et>arsti juurde, arsti juures</et>"
+msgstr "У врача: <et>arsti juurde, arsti juures</et>"
+
+msgid "At the family doctor’s"
+msgstr "У семейного врача"
+
+msgid "at the pharmacy"
+msgstr "в аптеке"
+
+msgid "back"
+msgstr "спина"
+
+msgid "Back"
+msgstr "Спина"
+
+msgid "Before your visit"
+msgstr "Перед приёмом"
+
+msgid "Being at the doctor’s uses <0>juures</0>, not <1>juurde</1>."
+msgstr "Нахождение у врача требует <0>juures</0>, а не <1>juurde</1>."
+
+msgid "Book an appointment"
+msgstr "Запись на приём"
+
+msgid "Calling the clinic"
+msgstr "Звонок в клинику"
+
+msgid "Check the table above, then try again."
+msgstr "Загляни в таблицу выше и попробуй ещё раз."
+
+msgid "Clinic message"
+msgstr "Сообщение из клиники"
+
+msgid "cough"
+msgstr "кашель"
+
+msgid "Cough"
+msgstr "Кашель"
+
+msgid "Describe pain and symptoms, book a visit and follow medical advice: <0>Mul valutab pea</0>, <1>Mul on palavik</1>, <2>arsti juurde</2> and polite instructions like <3>Võtke seda rohtu</3>."
+msgstr "Опиши боль и симптомы, запишись на приём и пойми советы врача: <0>Mul valutab pea</0>, <1>Mul on palavik</1>, <2>arsti juurde</2> и вежливые указания вроде <3>Võtke seda rohtu</3>."
+
+msgid "Doctor"
+msgstr "Врач"
+
+msgid "Doctor vocabulary in Estonian"
+msgstr "Медицинская лексика по-эстонски"
+
+msgid "Doctor’s advice: <et>Võtke seda rohtu, Puhake kodus</et>"
+msgstr "Советы врача: <et>Võtke seda rohtu, Puhake kodus</et>"
+
+msgid "Each sentence has one wrong word. Tap the wrong word, then type the right one."
+msgstr "В каждом предложении одно слово неверное. Нажми на него и впиши правильное."
+
+msgid "Estonian"
+msgstr "По-эстонски"
+
+msgid "fever"
+msgstr "температура, жар"
+
+msgid "Fever"
+msgstr "Температура"
+
+msgid "Fix the sentence"
+msgstr "Исправь предложение"
+
+msgid "For how many days must Mart take the medicine? Write the number word."
+msgstr "Сколько дней Март должен принимать лекарство? Напиши числительное словом."
+
+msgid "For one aching part, the verb is singular (<0>Mul valutab pea</0>). For more than one, it usually becomes plural (<1>Mul valutavad jalad</1>)."
+msgstr "Если болит одна часть тела, глагол стоит в единственном числе (<0>Mul valutab pea</0>). Если несколько, он обычно во множественном (<1>Mul valutavad jalad</1>)."
+
+msgid "Going to the doctor is <0>arsti juurde</0>; being there is <1>arsti juures</1>."
+msgstr "Идти к врачу — <0>arsti juurde</0>; быть у врача — <1>arsti juures</1>."
+
+msgid "Going to the doctor is <et>arsti juurde</et>; being there is <et>arsti juures</et>."
+msgstr "Идти к врачу — <et>arsti juurde</et>; быть у врача — <et>arsti juures</et>."
+
+msgid "Group"
+msgstr "Группа"
+
+msgid "Hands and feet"
+msgstr "Руки и ноги"
+
+msgid "head"
+msgstr "голова"
+
+msgid "Head"
+msgstr "Голова"
+
+msgid "Hear each sentence and decide whether it says what hurts (<0>valutab</0>) or names a symptom or medicine."
+msgstr "Послушай каждое предложение и реши, говорит ли оно, что болит (<0>valutab</0>), или называет симптом либо лекарство."
+
+msgid "How should Mart take the medicine?"
+msgstr "Как Март должен принимать лекарство?"
+
+msgid "I have a fever and a cough."
+msgstr "У меня температура и кашель."
+
+msgid "I have a high fever."
+msgstr "У меня высокая температура."
+
+msgid "I have a runny nose."
+msgstr "У меня насморк."
+
+msgid "I have a strong cough."
+msgstr "У меня сильный кашель."
+
+msgid "I have to rest at home for two days."
+msgstr "Мне нужно отдыхать дома два дня."
+
+msgid "I want to come to the doctor."
+msgstr "Я хочу прийти к врачу."
+
+msgid "I went to the pharmacy yesterday."
+msgstr "Я вчера ходил в аптеку."
+
+msgid "In a sentence"
+msgstr "В предложении"
+
+msgid "In Estonian, you usually name pain with <0>mul</0> (from lesson {have}) and <1>valutab</1>: <2/>, <3/>, <4/> and <5/>."
+msgstr "В эстонском о боли обычно говорят с <0>mul</0> (из урока {have}) и глаголом <1>valutab</1>: <2/>, <3/>, <4/> и <5/>."
+
+msgid "Listen: at the doctor’s"
+msgstr "Послушай: у врача"
+
+msgid "Listening only, no microphone"
+msgstr "Только аудио, без микрофона"
+
+msgid "Mart"
+msgstr "Март"
+
+msgid "Mart sees his family doctor about a sore throat and cough. Listen and answer. You can play the conversation twice."
+msgstr "Март пришёл к семейному врачу с болью в горле и кашлем. Послушай и ответь. Разговор можно включить дважды."
+
+msgid "Mart should arrive ten minutes early and bring his ID."
+msgstr "Март должен прийти на десять минут раньше и взять документ."
+
+msgid "Match each Estonian health word with its meaning."
+msgstr "Соедини каждое эстонское слово о здоровье с его значением."
+
+msgid "Meaning"
+msgstr "Значение"
+
+msgid "Mul on kõrge palavik."
+msgstr "У меня высокая температура."
+
+msgid "Mul on nohu."
+msgstr "У меня насморк."
+
+msgid "Mul on tugev köha."
+msgstr "У меня сильный кашель."
+
+msgid "Mul valutab kõht."
+msgstr "У меня болит живот."
+
+msgid "Mul valutab kurk."
+msgstr "У меня болит горло."
+
+msgid "Mul valutab pea."
+msgstr "У меня болит голова."
+
+msgid "Mul valutab selg."
+msgstr "У меня болит спина."
+
+msgid "My back hurts."
+msgstr "У меня болит спина."
+
+msgid "My head hurts."
+msgstr "У меня болит голова."
+
+msgid "My stomach hurts."
+msgstr "У меня болит живот."
+
+msgid "My throat has hurt for three days already."
+msgstr "У меня горло болит уже три дня."
+
+msgid "My throat hurts."
+msgstr "У меня болит горло."
+
+msgid "Nearly. Check the endings in the ones you missed."
+msgstr "Почти. Проверь окончания там, где была ошибка."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Почти. Прослушай ещё раз предложения с ошибками."
+
+msgid "Nearly. Read the reason under each one you missed."
+msgstr "Почти. Прочитай объяснение под каждым предложением с ошибкой."
+
+msgid "Next Monday noon"
+msgstr "В понедельник днём"
+
+msgid "Nurse"
+msgstr "Медсестра"
+
+msgid "Nurse Kati sends confirmation details before Mart’s visit. Read and answer."
+msgstr "Медсестра Кати присылает подтверждение перед визитом Марта. Прочитай и ответь."
+
+msgid "On Friday night"
+msgstr "В пятницу вечером"
+
+msgid "On Monday again"
+msgstr "В понедельник снова"
+
+msgid "On rainy mornings"
+msgstr "Дождливым утром"
+
+msgid "On Saturday noon"
+msgstr "В субботу в полдень"
+
+msgid "On the first floor"
+msgstr "На первом этаже"
+
+msgid "On the second floor"
+msgstr "На втором этаже"
+
+msgid "On the third floor"
+msgstr "На третьем этаже"
+
+msgid "On which day did Mart’s symptoms start? Write one word as he says it."
+msgstr "В какой день начались симптомы Марта? Напиши одно слово так, как он говорит."
+
+msgid "Once before sleep"
+msgstr "Раз перед сном"
+
+msgid "One aching part takes the singular verb <0>valutab</0>, not <1>valutavad</1>."
+msgstr "С одной частью тела ставится единственное число <0>valutab</0>, а не <1>valutavad</1>."
+
+msgid "Pain and symptoms"
+msgstr "Боль и симптомы"
+
+msgid "Pain or symptom?"
+msgstr "Боль или симптом?"
+
+msgid "Pain usually uses <0>mul / sul / tal valutab</0> plus the aching part: <1>Mul valutab pea</1>, <2>Mul valutab kurk</2>."
+msgstr "О боли обычно говорят с <0>mul / sul / tal valutab</0> и частью тела: <1>Mul valutab pea</1>, <2>Mul valutab kurk</2>."
+
+msgid "Pain usually uses <et>mul / sul / tal valutab</et> with the aching body part."
+msgstr "О боли обычно говорят с <et>mul / sul / tal valutab</et> и частью тела."
+
+msgid "Polite instructions from a doctor usually take <0>-ge / -ke</0>: <1>Võtke seda rohtu veega</1>, <2>Puhake kodus</2>."
+msgstr "Вежливые указания врача обычно оканчиваются на <0>-ge / -ke</0>: <1>Võtke seda rohtu veega</1>, <2>Puhake kodus</2>."
+
+msgid "Polite medical instructions usually take <et>-ge / -ke</et>, and <et>veega</et> takes <et>-ga</et>."
+msgstr "Вежливые советы врача обычно берут <et>-ge / -ke</et>, а <et>veega</et> — <et>-ga</et>."
+
+msgid "prescription"
+msgstr "рецепт"
+
+msgid "Prescription"
+msgstr "Рецепт"
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай «Что запомнить» ниже и попробуй ещё раз."
+
+msgid "Rest at home for three days."
+msgstr "Отдыхайте дома три дня."
+
+msgid "runny nose"
+msgstr "насморк"
+
+msgid "Runny nose"
+msgstr "Насморк"
+
+msgid "Saying what hurts usually takes <0>mul</0>, not <1>ma</1>: <2>Mul valutab pea</2>."
+msgstr "Чтобы сказать, что болит, обычно нужно <0>mul</0>, а не <1>ma</1>: <2>Mul valutab pea</2>."
+
+msgid "Saying with water takes <0>-ga</0> on the genitive: <1>veega</1>, not <2>vee</2>."
+msgstr "«С водой» требует <0>-ga</0> от родительного падежа: <1>veega</1>, а не <2>vee</2>."
+
+msgid "Saying you visited a place takes the <0>-s</0> form: <1>apteegis</1>, not <2>apteeki</2>."
+msgstr "Когда говоришь, что побывал где-то, нужна форма на <0>-s</0>: <1>apteegis</1>, а не <2>apteeki</2>."
+
+msgid "stomach"
+msgstr "живот"
+
+msgid "Stomach"
+msgstr "Живот"
+
+msgid "Stomach and back"
+msgstr "Живот и спина"
+
+msgid "Symptom or medicine"
+msgstr "Симптом или лекарство"
+
+msgid "Symptoms and medicine"
+msgstr "Симптомы и лекарства"
+
+msgid "Symptoms use <0>mul on</0>: <1/>, <2/> and <3/>. A prescription is <4/>."
+msgstr "Для симптомов используется <0>mul on</0>: <1/>, <2/> и <3/>. Рецепт — <4/>."
+
+msgid "Symptoms use <0>mul on</0>: <1>Mul on palavik</1>, <2>Mul on köha</2>, <3>Mul on nohu</3>."
+msgstr "Для симптомов используется <0>mul on</0>: <1>Mul on palavik</1>, <2>Mul on köha</2>, <3>Mul on nohu</3>."
+
+msgid "Symptoms usually use <et>mul on</et>: <et>Mul on palavik</et>, <et>Mul on köha</et>, <et>Mul on nohu</et>."
+msgstr "Для симптомов обычно используется <et>mul on</et>: <et>Mul on palavik</et>, <et>Mul on köha</et>, <et>Mul on nohu</et>."
+
+msgid "Symptoms: <et>Mul on palavik, köha, nohu</et>"
+msgstr "Симптомы: <et>Mul on palavik, köha, nohu</et>"
+
+msgid "Take this medicine twice a day."
+msgstr "Принимайте это лекарство дважды в день."
+
+msgid "Take this medicine with water."
+msgstr "Принимайте это лекарство с водой."
+
+msgid "That orders coffee instead of asking for an appointment."
+msgstr "Это заказ кофе, а не просьба записаться на приём."
+
+msgid "That says where you live rather than why you are calling."
+msgstr "Эта фраза о том, где ты живёшь, а не причина звонка."
+
+msgid "That talks about shopping instead of confirming the time."
+msgstr "Это о покупках, а не подтверждение времени приёма."
+
+msgid "That talks about the weather instead of how you feel."
+msgstr "Это о погоде, а не о твоём самочувствии."
+
+msgid "The appointment is booked — thank the nurse and say goodbye."
+msgstr "Время уже назначено — поблагодари медсестру и попрощайся."
+
+msgid "The doctor says Mart’s lungs sound clear."
+msgstr "Врач говорит, что лёгкие Марта чистые."
+
+msgid "The doctor tells Mart he can go to work tomorrow."
+msgstr "Врач говорит Марту, что завтра можно идти на работу."
+
+msgid "The doctor writes me a prescription."
+msgstr "Врач выписывает мне рецепт."
+
+msgid "The nurse asked whether tomorrow at ten suits you."
+msgstr "Медсестра спросила, подходит ли завтра в десять."
+
+msgid "The nurse is asking about your symptoms, not your pets."
+msgstr "Медсестра спрашивает о симптомах, а не о домашних животных."
+
+msgid "The nurse tells Mart to eat a big meal right before the visit."
+msgstr "Медсестра советует Марту плотно поесть прямо перед визитом."
+
+msgid "They are at the doctor’s today."
+msgstr "Он или она сегодня у врача."
+
+msgid "three days"
+msgstr "три дня"
+
+msgid "Three times dry"
+msgstr "Трижды без воды"
+
+msgid "throat"
+msgstr "горло"
+
+msgid "Throat"
+msgstr "Горло"
+
+msgid "Throat and head"
+msgstr "Горло и голова"
+
+msgid "Today before five"
+msgstr "Сегодня до пяти"
+
+msgid "Tomorrow at nine"
+msgstr "Завтра в девять"
+
+msgid "Twice with water"
+msgstr "Дважды с водой"
+
+msgid "What does each word mean?"
+msgstr "Что означает каждое слово?"
+
+msgid "What hurts"
+msgstr "Что болит"
+
+msgid "What hurts: <et>Mul valutab pea</et>"
+msgstr "Что болит: <et>Mul valutab pea</et>"
+
+msgid "What time is Mart’s appointment tomorrow? Write two words from the message."
+msgstr "Во сколько завтра приём у Марта? Напиши два слова из сообщения."
+
+msgid "When does the clinic ask you to wear a mask?"
+msgstr "Когда клиника просит надеть маску?"
+
+msgid "When should Mart call back if the fever stays?"
+msgstr "Когда Марту нужно перезвонить, если температура не спадёт?"
+
+msgid "When should Mart call if he cannot make it?"
+msgstr "Когда Марту нужно позвонить, если он не сможет прийти?"
+
+msgid "Where is the pharmacy located?"
+msgstr "Где находится аптека?"
+
+msgid "Which floor is the clinic on?"
+msgstr "На каком этаже находится клиника?"
+
+msgid "Which parts of Mart’s body feel fine?"
+msgstr "Какие части тела у Марта не болят?"
+
+msgid "With a high fever"
+msgstr "При жаре"
+
+msgid "with water"
+msgstr "с водой"
+
+msgid "Word"
+msgstr "Слово"
+
+msgid "Write each sentence for a doctor’s visit in Estonian."
+msgstr "Напиши каждое предложение для визита к врачу по-эстонски."
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"
+
+msgid "You are calling the family doctor’s office to book a visit. Listen and pick the right reply."
+msgstr "Ты звонишь в центр семейных врачей, чтобы записаться на приём. Послушай и выбери правильный ответ."
+
+msgid "You are calling the family doctor’s office."
+msgstr "Ты звонишь в центр семейных врачей."
+
+msgid "You are ending a call with the clinic, not asking about a train."
+msgstr "Ты завершаешь разговор с клиникой, а не спрашиваешь о поезде."

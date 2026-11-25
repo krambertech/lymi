@@ -17604,6 +17604,277 @@ const NEWS_CLIPS: Record<string, Clip> = {
   "c-raadio": NEWS_CONVERSATION,
 };
 
+export const EMAL_GROUPS = {
+  place: [
+    { id: "at", form: "ema juures", said: "Ma olen täna ema juures." },
+    { id: "toward", form: "arsti juurde", said: "Ma lähen homme arsti juurde." },
+    { id: "away", form: "sõbra juurest", said: "Ta tuli just sõbra juurest." },
+  ],
+  have: [
+    { id: "have", form: "emal", said: "Emal on väike aed." },
+    { id: "to", form: "sõbrale", said: "Ma helistan sõbrale." },
+    { id: "from", form: "õelt", said: "Ma sain õelt kirja." },
+  ],
+} as const;
+
+export const EMAL_MATCH = [
+  "ema juures",
+  "ema juurde",
+  "ema juurest",
+  "emal",
+  "emale",
+  "emalt",
+  "minu juures",
+  "arsti juurde",
+] as const;
+
+export const EMAL_TELL = [
+  { id: "ema-have", kind: "have", said: "Emal on väike aed." },
+  { id: "ema-place", kind: "place", said: "Ma olen täna ema juures." },
+  { id: "sober-give", kind: "have", said: "Ma helistan sõbrale." },
+  { id: "sober-place", kind: "place", said: "Ma lähen õhtul sõbra juurde." },
+  { id: "arst-get", kind: "have", said: "Ma sain arstilt retsepti." },
+  { id: "arst-place", kind: "place", said: "Ma tulen arsti juurest." },
+  { id: "vend-give", kind: "have", said: "Ma andsin vennale võtme." },
+  { id: "vend-place", kind: "place", said: "Ma läksin eile venna juurde." },
+] as const;
+
+export const EMAL_FORMS = [
+  {
+    id: "ema-place",
+    base: "ema",
+    before: "Ma elan sel nädalal",
+    answer: "ema juures",
+    answers: ["ema juures"],
+    after: ".",
+  },
+  {
+    id: "arst-to",
+    base: "arst",
+    before: "Ma lähen homme",
+    answer: "arsti juurde",
+    answers: ["arsti juurde"],
+    after: ".",
+  },
+  {
+    id: "sober-from",
+    base: "sõber",
+    before: "Ta tuli just",
+    answer: "sõbra juurest",
+    answers: ["sõbra juurest"],
+    after: ".",
+  },
+  {
+    id: "mina-to",
+    base: "mina",
+    before: "Tule õhtul",
+    answer: "minu juurde",
+    answers: ["minu juurde", "mu juurde"],
+    after: "!",
+  },
+  {
+    id: "ema-have",
+    base: "ema",
+    before: "",
+    answer: "Emal",
+    answers: ["Emal"],
+    after: "on väike aed.",
+  },
+  {
+    id: "sober-to",
+    base: "sõber",
+    before: "Ma helistan",
+    answer: "sõbrale",
+    answers: ["sõbrale"],
+    after: ".",
+  },
+  {
+    id: "ode-from",
+    base: "õde",
+    before: "Ma sain",
+    answer: "õelt",
+    answers: ["õelt"],
+    after: "kirja.",
+  },
+  {
+    id: "vend-have",
+    base: "vend",
+    before: "",
+    answer: "Vennal",
+    answers: ["Vennal"],
+    after: "on homme vaba päev.",
+  },
+] as const;
+
+export const EMAL_TRANSLATE = [
+  "Ma olen täna ema juures.",
+  "Ma lähen homme arsti juurde.",
+  "Ta tuli just sõbra juurest.",
+  "Emal on väike aed.",
+  "Ma sain õelt kirja.",
+  "Tule õhtul minu juurde!",
+] as const;
+
+export const EMAL_ANSWERS: Record<(typeof EMAL_TRANSLATE)[number], readonly [string, ...string[]]> =
+  {
+    "Ma olen täna ema juures.": newsClosed([
+      "Ma olen täna ema juures.",
+      "Täna olen ma ema juures.",
+      "Täna ma olen ema juures.",
+      "Ma olen ema juures täna.",
+    ]),
+    "Ma lähen homme arsti juurde.": newsClosed([
+      "Ma lähen homme arsti juurde.",
+      "Homme lähen ma arsti juurde.",
+      "Homme ma lähen arsti juurde.",
+      "Ma lähen arsti juurde homme.",
+    ]),
+    "Ta tuli just sõbra juurest.": newsClosed([
+      "Ta tuli just sõbra juurest.",
+      "Ta tuli sõbra juurest just.",
+    ]),
+    "Emal on väike aed.": [
+      "Emal on väike aed.",
+      "Minu emal on väike aed.",
+      "Mu emal on väike aed.",
+    ],
+    "Ma sain õelt kirja.": newsClosed([
+      "Ma sain õelt kirja.",
+      "Ma sain kirja õelt.",
+      "Ma sain oma õelt kirja.",
+      "Ma sain kirja oma õelt.",
+      "Õelt sain ma kirja.",
+      "Õelt ma sain kirja.",
+    ]),
+    "Tule õhtul minu juurde!": [
+      "Tule õhtul minu juurde!",
+      "Tule õhtul mu juurde!",
+      "Tule minu juurde õhtul!",
+      "Tule mu juurde õhtul!",
+      "Õhtul tule minu juurde!",
+      "Õhtul tule mu juurde!",
+    ],
+  };
+
+export const EMAL_FIXES = [
+  {
+    id: "at",
+    wrong: "Ma olen täna ema juurde.",
+    right: "Ma olen täna ema juures.",
+    answers: ["Ma olen täna ema juures."],
+  },
+  {
+    id: "to",
+    wrong: "Ma lähen homme arsti juures.",
+    right: "Ma lähen homme arsti juurde.",
+    answers: ["Ma lähen homme arsti juurde."],
+  },
+  {
+    id: "from",
+    wrong: "Ta tuli just sõbra juures.",
+    right: "Ta tuli just sõbra juurest.",
+    answers: ["Ta tuli just sõbra juurest."],
+  },
+  {
+    id: "genEma",
+    wrong: "Ma lähen homme emale juurde.",
+    right: "Ma lähen homme ema juurde.",
+    answers: ["Ma lähen homme ema juurde."],
+  },
+  {
+    id: "genSober",
+    wrong: "Ta on täna sõbrale juures.",
+    right: "Ta on täna sõbra juures.",
+    answers: ["Ta on täna sõbra juures."],
+  },
+  {
+    id: "genMina",
+    wrong: "Tule õhtul mul juurde!",
+    right: "Tule õhtul minu juurde!",
+    answers: ["Tule õhtul minu juurde!", "Tule õhtul mu juurde!"],
+  },
+] as const;
+
+export const EMAL_NOTE = [
+  "Tere, Mart!",
+  "Ma olen sel nädalavahetusel vanaema juures maal.",
+  "Vanaemal on maja taga väike õunaaed ja praegu on seal väga vaikne.",
+  "Eile õhtul sain vanaemalt paki vanu pilte, mida ma polnud varem näinud.",
+  "Täna hommikul küpsetasime koos õunakooki ja jõime aias teed.",
+  "Pühapäeval kell neli tulen vanaema juurest linna tagasi.",
+  "Kas ma võin õhtul sinu juurde tulla ja eelmisel nädalal laenatud raamatu tagasi tuua?",
+  "Helista mulle, kui sulle sobib!",
+  "Kati",
+] as const;
+
+export const EMAL_CONVERSATION: Conversation = {
+  turns: [
+    { voice: "third", text: "Tere, Mart! Kuidas sul täna läheb?" },
+    { voice: "fourth", text: "Tere, Kati! Juba paremini, aitäh küsimast." },
+    {
+      voice: "fourth",
+      text: "Ma olen praegu vanemate juures, sest siin on rahulikum puhata.",
+    },
+    { voice: "third", text: "Kas sa käisid hommikul arsti juures ära?" },
+    {
+      voice: "fourth",
+      text: "Jah, ma läksin hommikul kella üheksaks arsti juurde.",
+    },
+    {
+      voice: "fourth",
+      text: "Arst vaatas mu haiget põlve ja ütles, et midagi hullu ei ole.",
+    },
+    {
+      voice: "fourth",
+      text: "Sain arstilt retsepti ja läksin kohe apteeki rohtu ostma.",
+    },
+    {
+      voice: "fourth",
+      text: "Ta ütles, et ma ei tohi nädal aega joosta, aga jalutada võin küll.",
+    },
+    { voice: "third", text: "Hea kuulda! Kas emal ja isal on ka kõik hästi?" },
+    {
+      voice: "fourth",
+      text: "Jah, õde käis ka enne lõunat siin ja tõi pagaripoest värsket leiba.",
+    },
+    { voice: "third", text: "Millal sa enda korterisse tagasi lähed?" },
+    {
+      voice: "fourth",
+      text: "Reede õhtul tulen vanemate juurest koju. Tule nädalavahetusel minu juurde külla!",
+    },
+    {
+      voice: "third",
+      text: "Tulen hea meelega laupäeval, umbes kell kolm.",
+    },
+    {
+      voice: "third",
+      text: "Ma toon sulle kooki kaasa!",
+      say: "[warm] Ma toon sulle kooki kaasa!",
+    },
+  ],
+};
+
+const EMAL_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...EMAL_GROUPS.place.flatMap(({ form, said }) => [form, said]),
+    ...EMAL_GROUPS.have.flatMap(({ form, said }) => [form, said]),
+    ...EMAL_MATCH,
+    "juures",
+    "juurde",
+    "juurest",
+    "minu",
+    "sõbra",
+    ...EMAL_TELL.map(({ said }) => said),
+    ...EMAL_FORMS.map(
+      ({ before, answer, after }) =>
+        `${before ? `${before} ` : ""}${answer}${/^[.,!?]/.test(after) ? "" : " "}${after}`,
+    ),
+    ...EMAL_TRANSLATE,
+    ...EMAL_FIXES.map(({ right }) => right),
+  ]),
+  "c-kula": EMAL_CONVERSATION,
+};
+
 export const WORK_GROUPS = {
   office: [
     { id: "meeting", form: "koosolek", said: "Koosolek algab kell kümme." },
@@ -19359,5 +19630,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "pere-ja-ankeet": PERE_CLIPS,
   "arsti-juures": DOCTOR_CLIPS,
   tookoht: WORK_CLIPS,
+  "emal-ema-juures": EMAL_CLIPS,
   kit: KIT_CLIPS,
 };

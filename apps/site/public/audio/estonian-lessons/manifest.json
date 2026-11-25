@@ -2233,6 +2233,257 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "emal-ema-juures/arsti-juurde": {
+    "text": "arsti juurde",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/c-kula": {
+    "text": "Tere, Mart! Kuidas sul täna läheb? Tere, Kati! Juba paremini, aitäh küsimast. Ma olen praegu vanemate juures, sest siin on rahulikum puhata. Kas sa käisid hommikul arsti juures ära? Jah, ma läksin hommikul kella üheksaks arsti juurde. Arst vaatas mu haiget põlve ja ütles, et midagi hullu ei ole. Sain arstilt retsepti ja läksin kohe apteeki rohtu ostma. Ta ütles, et ma ei tohi nädal aega joosta, aga jalutada võin küll. Hea kuulda! Kas emal ja isal on ka kõik hästi? Jah, õde käis ka enne lõunat siin ja tõi pagaripoest värsket leiba. Millal sa enda korterisse tagasi lähed? Reede õhtul tulen vanemate juurest koju. Tule nädalavahetusel minu juurde külla! Tulen hea meelega laupäeval, umbes kell kolm. Ma toon sulle kooki kaasa!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Mart! Kuidas sul täna läheb?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, Kati! Juba paremini, aitäh küsimast."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ma olen praegu vanemate juures, sest siin on rahulikum puhata."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas sa käisid hommikul arsti juures ära?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, ma läksin hommikul kella üheksaks arsti juurde."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Arst vaatas mu haiget põlve ja ütles, et midagi hullu ei ole."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Sain arstilt retsepti ja läksin kohe apteeki rohtu ostma."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ta ütles, et ma ei tohi nädal aega joosta, aga jalutada võin küll."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Hea kuulda! Kas emal ja isal on ka kõik hästi?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, õde käis ka enne lõunat siin ja tõi pagaripoest värsket leiba."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Millal sa enda korterisse tagasi lähed?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Reede õhtul tulen vanemate juurest koju. Tule nädalavahetusel minu juurde külla!"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tulen hea meelega laupäeval, umbes kell kolm."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ma toon sulle kooki kaasa!"
+        ],
+        "say": "[warm] Ma toon sulle kooki kaasa!"
+      }
+    ]
+  },
+  "emal-ema-juures/ema-juurde": {
+    "text": "ema juurde",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ema-juures": {
+    "text": "ema juures",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ema-juurest": {
+    "text": "ema juurest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/emal": {
+    "text": "emal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/emal-on-va2ike-aed": {
+    "text": "Emal on väike aed.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/emale": {
+    "text": "emale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/emalt": {
+    "text": "emalt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/juurde": {
+    "text": "juurde",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/juures": {
+    "text": "juures",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/juurest": {
+    "text": "juurest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-andsin-vennale-vo3tme": {
+    "text": "Ma andsin vennale võtme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-elan-sel-na2dalal-ema-juures": {
+    "text": "Ma elan sel nädalal ema juures.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-helistan-so3brale": {
+    "text": "Ma helistan sõbrale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-la2hen-homme-arsti-juurde": {
+    "text": "Ma lähen homme arsti juurde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-la2hen-homme-ema-juurde": {
+    "text": "Ma lähen homme ema juurde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-la2hen-o3htul-so3bra-juurde": {
+    "text": "Ma lähen õhtul sõbra juurde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-la2ksin-eile-venna-juurde": {
+    "text": "Ma läksin eile venna juurde.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-olen-ta2na-ema-juures": {
+    "text": "Ma olen täna ema juures.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-sain-arstilt-retsepti": {
+    "text": "Ma sain arstilt retsepti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-sain-o3elt-kirja": {
+    "text": "Ma sain õelt kirja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ma-tulen-arsti-juurest": {
+    "text": "Ma tulen arsti juurest.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/minu": {
+    "text": "minu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/minu-juures": {
+    "text": "minu juures",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/o3elt": {
+    "text": "õelt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/so3bra": {
+    "text": "sõbra",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/so3bra-juurest": {
+    "text": "sõbra juurest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/so3brale": {
+    "text": "sõbrale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ta-on-ta2na-so3bra-juures": {
+    "text": "Ta on täna sõbra juures.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/ta-tuli-just-so3bra-juurest": {
+    "text": "Ta tuli just sõbra juurest.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/tule-o3htul-minu-juurde": {
+    "text": "Tule õhtul minu juurde!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "emal-ema-juures/vennal-on-homme-vaba-pa2ev": {
+    "text": "Vennal on homme vaba päev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "et-sest-kui/buss-hilines-nii-et-ma-tulin-to2o2le-hilja": {
     "text": "Buss hilines, nii et ma tulin tööle hilja.",
     "model": "eleven_v4",

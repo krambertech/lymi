@@ -290,6 +290,9 @@ msgstr "Бесплатный урок эстонского о косвенной
 msgid "A free Estonian lesson on saying when: hommikul and suvel with -l, mais with -s, hommikuti for every morning, nädala pärast and nädal tagasi, pärast tööd, and from and until with -st and -ni. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о том, как сказать «когда»: hommikul и suvel с -l, mais с -s, hommikuti — «по утрам», nädala pärast и nädal tagasi, pärast tööd, а также «с» и «до» с -st и -ni. Каждое предложение озвучено."
 
+msgid "A free Estonian lesson on telling -l, -le and -lt on a person (emal on auto, helistan sõbrale, sain emalt kirja) apart from the genitive plus juures, juurde and juurest (olen ema juures, lähen arsti juurde, tulen sõbra juurest) for being at, going to or coming from someone’s place. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о разнице между -l, -le, -lt с человеком (emal on auto, helistan sõbrale, sain emalt kirja) и родительным с juures, juurde и juurest (olen ema juures, lähen arsti juurde, tulen sõbra juurest) для нахождения или движения к кому-то. Каждое предложение озвучено."
+
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, minutes past and to, and writing the time in words. Every time is read aloud."
 msgstr "Бесплатный урок эстонского о том, как сказать, который час: целые часы, pool, veerand и kolmveerand, которые называют следующий час, минуты до и после, а также как написать время словами. Каждый пример озвучен."
 
@@ -1059,6 +1062,12 @@ msgstr "Хорошего тебе дня!"
 
 msgid "Have you been to Tartu?"
 msgstr "Ты бывал(а) в Тарту?"
+
+msgid "Having or staying at"
+msgstr "Есть или в гостях"
+
+msgid "Having or staying at someone’s place in Estonian"
+msgstr "«У кого-то есть» против «у кого-то дома» в эстонском"
 
 msgid "He listens to music"
 msgstr "Он слушает музыку"

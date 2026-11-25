@@ -13278,6 +13278,10 @@ export const IDIOM_LETTER = [
   "Mõnikord tahan alla anda ja tagasi koju kolida.",
   "Teisalt saan ma tööga väga hästi hakkama ja ülemus kiitis mind eile koosolekul.",
   "Kas ma peaksin veel järele mõtlema või kohe uut tööd otsima?",
+  "Mu sõber Tartus soovitas mul rääkida ühe kolleegiga rahulikult kahekesi ja küsida, kas midagi on valesti läinud.",
+  "Ta arvas, et uues kohas võtab kohanemine tihti rohkem kui pool aastat aega ja ma ei tohiks liiga ruttu käega lüüa.",
+  "Teine mõte on liituda mõne spordiklubi või kooriga, et leida uusi tutvusi ka väljaspool kontorit.",
+  "Oleksin väga tänulik, kui saaksite öelda, kuidas sellises olukorras edasi minna.",
   "Kaisa.",
 ] as const;
 
@@ -14942,6 +14946,11 @@ export const ROUTE_TRAIL = [
   "Kevadel võib jõe ääres olla väga märg, nii et pange jalga kummikud.",
   "Bussiga saab parklasse Tallinnast Aegviidu kaudu.",
   "Palun võtke oma prügi endaga kaasa.",
+  "Kui soovite pikemat matka, võite järve äärest pöörata mööda kitsast metsateed põhja poole ja kõndida veel neli kilomeetrit üle küngaste.",
+  "Sellel pikemal ringil läheb tee läbi vana kuusemetsa, kus sügisel kasvab palju seeni ja mustikaid.",
+  "Suvel on raba kohal sageli palju sääski, nii et pange selga pikad varrukad ja võtke kaasa joogivesi.",
+  "Parkla kõrval asub väike puhkemaja, kust saab nädalavahetustel osta kuuma teed, suppi ja värsket saiakest.",
+  "Õhtul enne pimedat tasub kindlasti tagasi jõuda, sest metsas ei ole valgustust.",
 ] as const;
 
 export const ROUTE_MODEL = [
@@ -15272,6 +15281,12 @@ export const AGENT_AD = [
   "Kirjas kirjutage, milline on teie lemmikraamat ja miks.",
   "Vestlused toimuvad märtsi lõpus.",
   "Küsimuste korral helistage poe juhatajale Mari Tammele.",
+  "Meie pood on tegutsenud juba kaksteist aastat ning siin käivad nii tudengid, õpetajad kui ka kohalikud pered.",
+  "Lisaks müümisele ja riiulite korrastamisele aitab müüja korraldada ka väikesi õhtuid ja kohtumisi autoritega.",
+  "Sügisel ja enne jõule on tööpäevad kiiremad, kuid vaiksematel hommikutel jääb aega uute raamatutega tutvumiseks.",
+  "Palk sõltub kogemusest ja töökoormusest, ning täiskohaga töötajale pakume igal aastal ka tasuta koolitusi.",
+  "Tööle asumine on planeeritud aprilli algusesse, aga täpse kuupäeva saame koos kokku leppida.",
+  "Ootame rõõmsameelset ja abivalmis inimest, kellele meeldib lugejatega suhelda ja häid raamatuid soovitada.",
 ] as const;
 
 export const AGENT_MODEL = [
@@ -15598,6 +15613,11 @@ export const SUFFIX_AD = [
   "Hind on seitsekümmend eurot öö eest, nädala eest on hind odavam.",
   "Omanik on sõbralik ja räägib eesti, inglise ja soome keelt.",
   "Kui soovite majakest broneerida, kirjutage meile e-posti teel.",
+  "Köögis on olemas pliit, külmkapp, kohvimasin ja kõik vajalikud nõud, nii et saate ise süüa teha.",
+  "Õues on ka väike grill ja puidust laud, kus on suveõhtutel mõnus istuda.",
+  "Soovi korral saate meilt tasuta laenutada kaks jalgratast, millega on mugav sõita lähimasse sadamasse või vanasse tuletorni.",
+  "Sauna kütmiseks on kuivad puud kuuris alati valmis ning värske vesi tuleb oma kaevust.",
+  "Palun andke teada oma saabumise kellaaeg vähemalt päev varem, et saaksime võtmed õigel ajal üle anda.",
 ] as const;
 
 export const SUFFIX_MODEL = [

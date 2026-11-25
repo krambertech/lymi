@@ -446,7 +446,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 20,
         blurb: msg`A free Estonian lesson on telling -l, -le and -lt on a person (emal on auto, helistan sõbrale, sain emalt kirja) apart from the genitive plus juures, juurde and juurest (olen ema juures, lähen arsti juurde, tulen sõbra juurest) for being at, going to or coming from someone’s place. Every sentence is read aloud.`,
       },
-      { name: msg`Particle verbs: up, out, away`, et: "Üles, välja, ära" },
+      {
+        slug: "ules-valja-ara",
+        name: msg`Particle verbs: up, out, away`,
+        title: msg`Estonian particle verbs: up, out and away`,
+        et: "Üles, välja, ära",
+        minutes: 20,
+        blurb: msg`A free Estonian lesson on particle verbs with üles, alla, sisse, välja, ära, tagasi, lahti and kinni: what each particle adds, where the particle usually goes in a sentence and with a second verb, and telling ära (away, completely) apart from ära (don’t). Every sentence is read aloud.`,
+      },
       {
         slug: "korter",
         name: msg`Practice: looking for a flat`,

@@ -278,6 +278,9 @@ msgstr "Бесплатный урок эстонского о причастия
 msgid "A free Estonian lesson on particle verbs whose meaning you can’t guess from their parts: aru saama, kokku saama, läbi saama, hakkama saama, otsa saama, maha jääma, ära jääma, välja nägema, ära tundma, vastu võtma, järele mõtlema and alla andma; the case each one usually takes, and where the particle goes. Every example is read aloud."
 msgstr "Бесплатный урок эстонского о глаголах с частицами, значение которых не угадать по частям: aru saama, kokku saama, läbi saama, hakkama saama, otsa saama, maha jääma, ära jääma, välja nägema, ära tundma, vastu võtma, järele mõtlema и alla andma; какой падеж обычно нужен каждому и где стоит частица. Каждый пример озвучен."
 
+msgid "A free Estonian lesson on particle verbs with üles, alla, sisse, välja, ära, tagasi, lahti and kinni: what each particle adds, where the particle usually goes in a sentence and with a second verb, and telling ära (away, completely) apart from ära (don’t). Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о глаголах с частицами üles, alla, sisse, välja, ära, tagasi, lahti и kinni: что добавляет каждая частица, где она обычно стоит в предложении и со вторым глаголом, и как отличить ära («прочь, до конца») от ära («не»). Каждое предложение озвучено."
+
 msgid "A free Estonian lesson on personal pronouns in their cases: minuga and sinuta on the genitive, the short forms mulle, mul and mult, the partitive mind, sind, teda, and telling minu, mul and mind apart. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о склонении личных местоимений: minuga и sinuta от родительного падежа, короткие формы mulle, mul и mult, партитив mind, sind, teda и как не путать minu, mul и mind. Каждое предложение озвучено."
 
@@ -859,6 +862,9 @@ msgstr "Эстонские причастия в роли прилагатель
 
 msgid "Estonian particle verbs with new meanings"
 msgstr "Эстонские глаголы с частицами, у которых новое значение"
+
+msgid "Estonian particle verbs: up, out and away"
+msgstr "Эстонские глаголы с частицами: вверх, наружу и прочь"
 
 msgid "Estonian past tense"
 msgstr "Прошедшее время в эстонском языке"

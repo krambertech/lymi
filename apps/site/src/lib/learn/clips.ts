@@ -17051,6 +17051,261 @@ const CONJ_CLIPS: Record<string, Clip> = {
   "c-matk": CONJ_CONVERSATION,
 };
 
+export const PV_GROUPS = {
+  updown: [
+    { verb: "üles tõusma", said: "Ma tõusen kell seitse üles." },
+    { verb: "üles ärkama", said: "Ta ärkas vara üles." },
+    { verb: "üles kirjutama", said: "Ma kirjutan numbri üles." },
+    { verb: "alla tulema", said: "Tule palun alla!" },
+    { verb: "maha istuma", said: "Istu palun maha!" },
+  ],
+  inout: [
+    { verb: "sisse tulema", said: "Tule sisse, uks on lahti!" },
+    { verb: "sisse minema", said: "Me läksime kohvikusse sisse." },
+    { verb: "välja minema", said: "Ma lähen õhtul sõpradega välja." },
+    { verb: "välja võtma", said: "Võta külmkapist piim välja." },
+  ],
+  away: [
+    { verb: "ära minema", said: "Ta läks juba ära." },
+    { verb: "ära sööma", said: "Ma sõin võileiva ära." },
+    { verb: "ära viskama", said: "Viska vanad ajalehed ära." },
+    { verb: "tagasi tulema", said: "Ma tulen kell kuus tagasi." },
+    { verb: "lahti tegema", said: "Ma tegin akna lahti." },
+    { verb: "kinni panema", said: "Pane palun uks kinni." },
+  ],
+} as const;
+
+export const PV_PARTICLES = [
+  "üles",
+  "alla",
+  "sisse",
+  "välja",
+  "ära",
+  "tagasi",
+  "lahti",
+  "kinni",
+] as const;
+
+export const PV_GAPS = [
+  { id: "rise", before: "Ma tõusen kell seitse", answer: "üles", after: "." },
+  { id: "in", before: "Tule palun", answer: "sisse", after: ", siin on soe." },
+  { id: "out", before: "Me läheme õhtul", answer: "välja", after: "." },
+  { id: "close", before: "Pane palun uks", answer: "kinni", after: "." },
+  { id: "open", before: "Tee aken", answer: "lahti", after: ", siin on palav." },
+  { id: "back", before: "Ma tulen homme", answer: "tagasi", after: "." },
+  { id: "eat", before: "Ta sõi kogu koogi", answer: "ära", after: "." },
+  { id: "down", before: "Me viime kastid", answer: "alla", after: "." },
+] as const;
+
+export const PV_TELL = [
+  { id: "leave", kind: "particle", said: "Ta läks vara ära." },
+  { id: "dont-go", kind: "dont", said: "Ära mine veel koju!" },
+  { id: "ate", kind: "particle", said: "Ma sõin võileiva ära." },
+  { id: "dont-sit", kind: "dont", said: "Ära istu siia!" },
+  { id: "throw", kind: "particle", said: "Viska see paber ära." },
+  { id: "dont-forget", kind: "dont", said: "Ära unusta võtmeid!" },
+] as const;
+
+export const PV_ORDER = [
+  {
+    id: "rise",
+    answers: [
+      "Ma tõusen kell seitse üles.",
+      "Kell seitse tõusen ma üles.",
+      "Ma tõusen üles kell seitse.",
+    ],
+  },
+  {
+    id: "write",
+    answers: ["Ma kirjutan numbri üles.", "Numbri kirjutan ma üles.", "Ma kirjutan üles numbri."],
+  },
+  {
+    id: "must-rise",
+    answers: [
+      "Ma pean vara üles tõusma.",
+      "Vara pean ma üles tõusma.",
+      "Ma pean üles tõusma vara.",
+    ],
+  },
+  {
+    id: "close-door",
+    answers: ["Kas sa saad ukse kinni panna?", "Kas sa saad panna ukse kinni?"],
+  },
+  {
+    id: "go-out",
+    answers: ["Me läheme õhtul välja.", "Õhtul läheme me välja.", "Me läheme välja õhtul."],
+  },
+  {
+    id: "give-back",
+    answers: [
+      "Ma annan raamatu homme tagasi.",
+      "Homme annan ma raamatu tagasi.",
+      "Ma annan homme raamatu tagasi.",
+      "Ma annan raamatu tagasi homme.",
+    ],
+  },
+] as const;
+
+const pvClosed = (sentences: readonly [string, ...string[]]): [string, ...string[]] => {
+  let now = withPronouns(sentences);
+  for (let i = 0; i < 3; i++) {
+    const next = withPronouns(now);
+    if (next.length === now.length) break;
+    now = next;
+  }
+  return now;
+};
+
+export const PV_TRANSLATE = [
+  "Ma tõusen kell seitse üles.",
+  "Pane palun uks kinni.",
+  "Ma tegin akna lahti.",
+  "Ta läks juba ära.",
+  "Ma tulen kell kuus tagasi.",
+  "Ma kirjutan numbri üles.",
+  "Ma pean vara üles tõusma.",
+  "Me läheme õhtul välja.",
+] as const;
+
+export const PV_ANSWERS: Record<(typeof PV_TRANSLATE)[number], readonly [string, ...string[]]> = {
+  "Ma tõusen kell seitse üles.": pvClosed([
+    "Ma tõusen kell seitse üles.",
+    "Kell seitse tõusen ma üles.",
+    "Ma tõusen üles kell seitse.",
+  ]),
+  "Pane palun uks kinni.": [
+    "Pane palun uks kinni.",
+    "Palun pane uks kinni.",
+    "Pane uks kinni, palun.",
+    "Pane uks palun kinni.",
+    "Pange palun uks kinni.",
+    "Palun pange uks kinni.",
+    "Pange uks palun kinni.",
+  ],
+  "Ma tegin akna lahti.": pvClosed(["Ma tegin akna lahti.", "Akna tegin ma lahti."]),
+  "Ta läks juba ära.": pvClosed(["Ta läks juba ära.", "Ta läks ära juba."]),
+  "Ma tulen kell kuus tagasi.": pvClosed([
+    "Ma tulen kell kuus tagasi.",
+    "Kell kuus tulen ma tagasi.",
+    "Ma tulen tagasi kell kuus.",
+  ]),
+  "Ma kirjutan numbri üles.": pvClosed([
+    "Ma kirjutan numbri üles.",
+    "Numbri kirjutan ma üles.",
+    "Ma kirjutan üles numbri.",
+  ]),
+  "Ma pean vara üles tõusma.": pvClosed([
+    "Ma pean vara üles tõusma.",
+    "Vara pean ma üles tõusma.",
+    "Ma pean üles tõusma vara.",
+  ]),
+  "Me läheme õhtul välja.": pvClosed([
+    "Me läheme õhtul välja.",
+    "Õhtul läheme me välja.",
+    "Me läheme välja õhtul.",
+  ]),
+};
+
+export const PV_FIXES = [
+  { id: "open", wrong: "Ma tegin akna kinni.", right: "Ma tegin akna lahti." },
+  { id: "close", wrong: "Pane palun uks lahti.", right: "Pane palun uks kinni." },
+  { id: "come-in", wrong: "Tule välja, siin on soe!", right: "Tule sisse, siin on soe!" },
+  { id: "rise", wrong: "Ma tõusen kell seitse alla.", right: "Ma tõusen kell seitse üles." },
+  { id: "back", wrong: "Ma tulen homme ära.", right: "Ma tulen homme tagasi." },
+  { id: "write", wrong: "Ma kirjutan numbri alla.", right: "Ma kirjutan numbri üles." },
+] as const;
+
+export const PV_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> = Object.fromEntries(
+  PV_FIXES.map(({ right }) => [right, [right]]),
+);
+
+export const PV_NOTE = [
+  "Tere, Kati!",
+  "Ma tõusin täna kell seitse üles ja läksin kohe koeraga välja.",
+  "Ilm oli soe, nii et ma tegin köögi akna lahti.",
+  "Kui sa kodust ära lähed, pane palun kõik aknad kinni.",
+  "Võta külmkapist piim ja juust välja, ma sõin leiva juba hommikul ära.",
+  "Poes osta palun värsket leiba ja õunu.",
+  "Vanad ajalehed on laua peal, viska need palun ära.",
+  "Kirjuta mulle üles, mida veel vaja on.",
+  "Ma tulen õhtul kell kuus töölt tagasi ja siis teeme koos õhtusööki.",
+  "Kui vend sulle helistab, ütle talle, et ma helistan talle õhtul tagasi.",
+  "Peeter",
+] as const;
+
+export const PV_CONVERSATION: Conversation = {
+  turns: [
+    { voice: "third", text: ["Tere, Jaan!", "Tule sisse, uks on lahti!"] },
+    { voice: "fourth", text: ["Tere, Mari! Aitäh!", "Kas sa tõusid täna vara üles?"] },
+    {
+      voice: "third",
+      text: [
+        "Jah, ma ärkasin kell kuus üles, sest korteris on veel palju pakkida.",
+        "Pane palun uks kinni, koridoris on külm.",
+      ],
+    },
+    { voice: "fourth", text: ["Panen kohe kinni.", "Kuhu me need suured kastid viime?"] },
+    {
+      voice: "third",
+      text: ["Viime need alla auto juurde.", "Aga enne võta palun köögist kohvitassid välja."],
+    },
+    { voice: "fourth", text: "Kas need vanad ajalehed lähevad kaasa?" },
+    {
+      voice: "third",
+      text: [
+        "Ei, viska need palun ära, ma olen need kõik juba läbi lugenud.",
+        "Aga sinine raamat on raamatukogu oma, selle pean ma homme tagasi andma.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: [
+        "Hea küll, ma panen selle lauale, et sa ei unustaks.",
+        "Kas sa oled midagi söönud ka?",
+      ],
+    },
+    {
+      voice: "third",
+      text: [
+        "Ma sõin hommikul ühe võileiva ära ja jõin tassi kohvi.",
+        "Lõunaks võime välja sööma minna, kui kastid on autos.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: ["See on hea mõte.", "Millal me uue korteri võtmed kätte saame?"],
+    },
+    {
+      voice: "third",
+      text: [
+        "Kell kaks tuleb omanik kohale.",
+        "Kirjuta palun tema telefoninumber üles, mul on käed täis.",
+      ],
+    },
+    {
+      voice: "fourth",
+      text: ["Ütle number, ma kirjutan kohe üles.", "Ja siis viime esimesed kastid alla."],
+      say: "[warm] Ütle number, ma kirjutan kohe üles. Ja siis viime esimesed kastid alla.",
+    },
+  ],
+};
+
+const pvGapSaid = (gap: { before: string; answer: string; after: string }) =>
+  `${gap.before} ${gap.answer}${/^[.,!?]/.test(gap.after) ? "" : " "}${gap.after}`;
+
+const PV_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...PV_PARTICLES,
+    ...Object.values(PV_GROUPS).flatMap((rows) => rows.flatMap(({ verb, said }) => [verb, said])),
+    ...PV_GAPS.map(pvGapSaid),
+    ...PV_TELL.map(({ said }) => said),
+    ...PV_ORDER.map(({ answers }) => answers[0]),
+    ...PV_TRANSLATE,
+    ...PV_FIXES.map(({ right }) => right),
+  ]),
+  "c-kolimine": PV_CONVERSATION,
+};
+
 export const ADV_GROUPS = {
   lt: [
     { adj: "aeglane", gen: "aeglase", adv: "aeglaselt", said: "Palun räägi aeglaselt." },
@@ -20332,5 +20587,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "juba-veel-alles": JUBA_CLIPS,
   "siia-siin-siit": DIR_CLIPS,
   "kiiresti-aeglaselt": ADV_CLIPS,
+  "ules-valja-ara": PV_CLIPS,
   kit: KIT_CLIPS,
 };

@@ -278,6 +278,9 @@ msgstr "A free Estonian lesson on participles used as adjectives: -tud for what 
 msgid "A free Estonian lesson on particle verbs whose meaning you can’t guess from their parts: aru saama, kokku saama, läbi saama, hakkama saama, otsa saama, maha jääma, ära jääma, välja nägema, ära tundma, vastu võtma, järele mõtlema and alla andma; the case each one usually takes, and where the particle goes. Every example is read aloud."
 msgstr "A free Estonian lesson on particle verbs whose meaning you can’t guess from their parts: aru saama, kokku saama, läbi saama, hakkama saama, otsa saama, maha jääma, ära jääma, välja nägema, ära tundma, vastu võtma, järele mõtlema and alla andma; the case each one usually takes, and where the particle goes. Every example is read aloud."
 
+msgid "A free Estonian lesson on particle verbs with üles, alla, sisse, välja, ära, tagasi, lahti and kinni: what each particle adds, where the particle usually goes in a sentence and with a second verb, and telling ära (away, completely) apart from ära (don’t). Every sentence is read aloud."
+msgstr "A free Estonian lesson on particle verbs with üles, alla, sisse, välja, ära, tagasi, lahti and kinni: what each particle adds, where the particle usually goes in a sentence and with a second verb, and telling ära (away, completely) apart from ära (don’t). Every sentence is read aloud."
+
 msgid "A free Estonian lesson on personal pronouns in their cases: minuga and sinuta on the genitive, the short forms mulle, mul and mult, the partitive mind, sind, teda, and telling minu, mul and mind apart. Every sentence is read aloud."
 msgstr "A free Estonian lesson on personal pronouns in their cases: minuga and sinuta on the genitive, the short forms mulle, mul and mult, the partitive mind, sind, teda, and telling minu, mul and mind apart. Every sentence is read aloud."
 
@@ -859,6 +862,9 @@ msgstr "Estonian participles used as adjectives"
 
 msgid "Estonian particle verbs with new meanings"
 msgstr "Estonian particle verbs with new meanings"
+
+msgid "Estonian particle verbs: up, out and away"
+msgstr "Estonian particle verbs: up, out and away"
 
 msgid "Estonian past tense"
 msgstr "Estonian past tense"

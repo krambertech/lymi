@@ -414,6 +414,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 18,
         blurb: msg`A free Estonian lesson on keegi, midagi, kuskil and kuhugi: question words with -gi or -ki for somebody and something, ei for nobody and nothing, mitte keegi on its own, and -gi or -ki on every case, as in kellelegi and kellestki, and which one to use. Every sentence is read aloud.`,
       },
+      {
+        slug: "arsti-juures",
+        name: msg`At the doctor`,
+        title: msg`At the doctor in Estonian`,
+        et: "Mul valutab pea",
+        minutes: 20,
+        blurb: msg`A free Estonian situation lesson for a visit to the doctor: body parts, mul valutab for pain, mul on palavik and köha for symptoms, booking an appointment by phone, reading clinic instructions and following a consultation. Every sentence is read aloud.`,
+      },
       { name: msg`Particle verbs: up, out, away`, et: "Üles, välja, ära" },
       {
         slug: "korter",

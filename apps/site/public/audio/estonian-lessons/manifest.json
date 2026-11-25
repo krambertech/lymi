@@ -1,4 +1,288 @@
 {
+  "arsti-juures/aita2h-na2gemist": {
+    "text": "Aitäh! Nägemist!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/arst-kirjutab-mulle-retsepti": {
+    "text": "Arst kirjutab mulle retsepti.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/c-doctor": {
+    "text": "Tere, Mart! Istuge palun. Mis mureks? Tere, doktor! Mul valutab kurk ja mul on ka tugev köha. Millal see algas? Juba teisipäeval. Eile õhtul tõusis ka palavik, kolmkümmend kaheksa. Kas pea või selg ka valutab? Pea valutab natuke, aga kõht ja selg on korras. Selge, vaatame kurku. Palun tehke suu lahti ja hingake sügavalt. Olgu, doktor. Kurk on punane, aga kopsud on puhtad. See on tavaline külmetus. Kas ma pean rohtu võtma? Jah, ma kirjutan teile retsepti. Võtke seda rohtu kaks korda päevas koos veega. Mitu päeva ma pean seda võtma? Viis päeva. Apteek on siin samas esimesel korrusel, kohe ukse kõrval. Kas ma võin homme tööle minna? Parem ärge minge. Puhake kodus reedeni ja jooge palju sooja teed. Olgu, ma jään koju. Mis siis, kui palavik ei lähe ära? Kui esmaspäeval on veel palavik, helistage meile ja tulge tagasi. Suur aitäh, doktor! Head päeva!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Mart! Istuge palun. Mis mureks?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Tere, doktor! Mul valutab kurk ja mul on ka tugev köha."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Millal see algas?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Juba teisipäeval. Eile õhtul tõusis ka palavik, kolmkümmend kaheksa."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas pea või selg ka valutab?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Pea valutab natuke, aga kõht ja selg on korras."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Selge, vaatame kurku. Palun tehke suu lahti ja hingake sügavalt."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Olgu, doktor."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kurk on punane, aga kopsud on puhtad. See on tavaline külmetus."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas ma pean rohtu võtma?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jah, ma kirjutan teile retsepti. Võtke seda rohtu kaks korda päevas koos veega."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Mitu päeva ma pean seda võtma?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Viis päeva. Apteek on siin samas esimesel korrusel, kohe ukse kõrval."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Kas ma võin homme tööle minna?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Parem ärge minge. Puhake kodus reedeni ja jooge palju sooja teed."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Olgu, ma jään koju. Mis siis, kui palavik ei lähe ära?"
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kui esmaspäeval on veel palavik, helistage meile ja tulge tagasi."
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Suur aitäh, doktor! Head päeva!"
+        ]
+      }
+    ]
+  },
+  "arsti-juures/jah-homme-kell-ku2mme-sobib-ha2sti": {
+    "text": "Jah, homme kell kümme sobib hästi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/kas-homme-kell-ku2mme-sobib": {
+    "text": "Kas homme kell kümme sobib?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/ko2ha": {
+    "text": "köha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/ko3ht": {
+    "text": "kõht",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/kurk": {
+    "text": "kurk",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/ma-ka2isin-eile-apteegis": {
+    "text": "Ma käisin eile apteegis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/ma-pean-kaks-pa2eva-kodus-puhkama": {
+    "text": "Ma pean kaks päeva kodus puhkama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/ma-tahan-arsti-juurde-tulla": {
+    "text": "Ma tahan arsti juurde tulla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mis-teil-viga-on": {
+    "text": "Mis teil viga on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-on-ko3rge-palavik": {
+    "text": "Mul on kõrge palavik.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-on-nohu": {
+    "text": "Mul on nohu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-on-palavik-ja-ko2ha": {
+    "text": "Mul on palavik ja köha.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-on-palavik-ja-kurk-valutab": {
+    "text": "Mul on palavik ja kurk valutab.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-on-tugev-ko2ha": {
+    "text": "Mul on tugev köha.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-valutab-ko3ht": {
+    "text": "Mul valutab kõht.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-valutab-kurk": {
+    "text": "Mul valutab kurk.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-valutab-kurk-juba-kolm-pa2eva": {
+    "text": "Mul valutab kurk juba kolm päeva.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-valutab-pea": {
+    "text": "Mul valutab pea.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/mul-valutab-selg": {
+    "text": "Mul valutab selg.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/nohu": {
+    "text": "nohu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/p-note": {
+    "text": "Tere, Mart! Teie aeg perearsti juures on homme kell kümme. Meie keskus asub kolmandal korrusel, kabinet kaksteist. Palun tulge kümme minutit varem ja võtke isikutunnistus kaasa. Kui teil on kõrge palavik, pange palun mask ette. Enne vastuvõttu jooge vett, aga ärge sööge kaks tundi. Kui te ei saa tulla, helistage meile täna enne kella viit. Head paranemist! Õde Kati.",
+    "model": "eleven_v4",
+    "voice": "xd3ufyLcuKKZZXDZO9H7"
+  },
+  "arsti-juures/palavik": {
+    "text": "palavik",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/palun-vo3tke-isikutunnistus-kaasa-head-pa2eva": {
+    "text": "Palun võtke isikutunnistus kaasa. Head päeva!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/pea": {
+    "text": "pea",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/perearstikeskus-tere": {
+    "text": "Perearstikeskus, tere!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/puhake-kodus-kolm-pa2eva": {
+    "text": "Puhake kodus kolm päeva.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/retsept": {
+    "text": "retsept",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/selg": {
+    "text": "selg",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/ta-on-ta2na-arsti-juures": {
+    "text": "Ta on täna arsti juures.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/tere-ma-soovin-arsti-juurde-aega-panna": {
+    "text": "Tere! Ma soovin arsti juurde aega panna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/vo3tke-seda-rohtu-kaks-korda-pa2evas": {
+    "text": "Võtke seda rohtu kaks korda päevas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "arsti-juures/vo3tke-seda-rohtu-veega": {
+    "text": "Võtke seda rohtu veega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "aru-saama/a2ra-anna-alla": {
     "text": "Ära anna alla!",
     "model": "eleven_v4",

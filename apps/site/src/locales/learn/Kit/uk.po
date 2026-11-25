@@ -311,6 +311,9 @@ msgstr "Безкоштовний урок-практика з естонсько
 msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress, usually on the first syllable, and how a double letter can change a word. Every word is read aloud."
 msgstr "Безкоштовний урок естонської вимови: дев’ять голосних з õ, ä, ö та ü, наголос, зазвичай на першому складі, і те, як подвоєна літера може змінити слово. Кожне слово озвучено."
 
+msgid "A free Estonian situation lesson for a visit to the doctor: body parts, mul valutab for pain, mul on palavik and köha for symptoms, booking an appointment by phone, reading clinic instructions and following a consultation. Every sentence is read aloud."
+msgstr "Безкоштовний ситуаційний урок естонської для візиту до лікаря: частини тіла, mul valutab для болю, mul on palavik і köha для симптомів, запис телефоном, пам’ятка з клініки й прийом у лікаря. Кожне речення озвучено."
+
 msgid "A free Estonian situation lesson on asking the way and getting around: otse (straight), vasakule (left), paremale (right), peatus (stop), pilet (ticket), buying a ticket, and following directions on the street. Every sentence is read aloud."
 msgstr "Безкоштовний ситуаційний урок естонської про дорогу й транспорт: otse (прямо), vasakule (ліворуч), paremale (праворуч), peatus (зупинка), pilet (квиток), купівля квитка й орієнтування на вулиці. Кожне речення озвучено."
 
@@ -592,6 +595,12 @@ msgstr "вдома"
 
 msgid "at school"
 msgstr "у школі"
+
+msgid "At the doctor"
+msgstr "У лікаря"
+
+msgid "At the doctor in Estonian"
+msgstr "У лікаря естонською"
 
 msgid "at the market"
 msgstr "на ринку"

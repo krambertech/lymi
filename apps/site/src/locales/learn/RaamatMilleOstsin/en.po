@@ -1,0 +1,801 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 00:25+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0/> is the owner, and it is usually the whole thing done too: <1>Raamat, mille ma ostsin, on huvitav.</1> I bought the whole book. <2/> is the part, as after <3>ei</3> and after verbs such as <4>ootama</4>, in lesson {object}: <5>Film, mida ma ootan.</5>"
+msgstr "<0/> is the owner, and it is usually the whole thing done too: <1>Raamat, mille ma ostsin, on huvitav.</1> I bought the whole book. <2/> is the part, as after <3>ei</3> and after verbs such as <4>ootama</4>, in lesson {object}: <5>Film, mida ma ootan.</5>"
+
+msgid "<0/> is to a place and <1/> is from a place. Tap a sentence."
+msgstr "<0/> is to a place and <1/> is from a place. Tap a sentence."
+
+msgid "<0/> usually follows a thing or an idea, and <1/> follows a person: <2>Mees, kes elab siin, on arst.</2> The man who lives here is a doctor. They are the question words from lesson {questions}."
+msgstr "<0/> usually follows a thing or an idea, and <1/> follows a person: <2>Mees, kes elab siin, on arst.</2> The man who lives here is a doctor. They are the question words from lesson {questions}."
+
+#. placeholder {0}: each.said
+#. placeholder {1}: i18n._(HEARD_MEANS[each.id])
+#. placeholder {1}: i18n._(PLACE_MEANS[each.id])
+#. placeholder {1}: i18n._(ROLE_MEANS[each.id])
+msgid "<0>{0}</0> {1}"
+msgstr "<0>{0}</0> {1}"
+
+msgid "<0>Helistama</0> takes <1>-le</1>, so the friend is <2>kellele</2>."
+msgstr "<0>Helistama</0> takes <1>-le</1>, so the friend is <2>kellele</2>."
+
+msgid "<0>Helistama</0> takes <1>-le</1>: <2>kellele</2>, not <3>kellega</3>."
+msgstr "<0>Helistama</0> takes <1>-le</1>: <2>kellele</2>, not <3>kellega</3>."
+
+msgid "<0>Kelle</0> and <1>mille</1> are the owner and, usually, the whole thing done. <2>Keda</2> and <3>mida</3> are the part, as after <4>ootama</4> and after <5>ei</5>."
+msgstr "<0>Kelle</0> and <1>mille</1> are the owner and, usually, the whole thing done. <2>Keda</2> and <3>mida</3> are the part, as after <4>ootama</4> and after <5>ei</5>."
+
+msgid "<0>Kes</0> follows a person."
+msgstr "<0>Kes</0> follows a person."
+
+msgid "<0>mis</0> usually follows a thing or an idea, and <1>kes</1> follows a person."
+msgstr "<0>mis</0> usually follows a thing or an idea, and <1>kes</1> follows a person."
+
+msgid "<0>Mis</0> usually follows a thing."
+msgstr "<0>Mis</0> usually follows a thing."
+
+msgid "<0>Ootama</0> takes the partitive, so the word is <1>keda</1>, not <2>kelle</2>."
+msgstr "<0>Ootama</0> takes the partitive, so the word is <1>keda</1>, not <2>kelle</2>."
+
+msgid "<0>Raamat, mille ma ostsin</0> is the book I bought: a clause that says more about a noun, with <1>mis</1> for things and <2>kes</2> for people."
+msgstr "<0>Raamat, mille ma ostsin</0> is the book I bought: a clause that says more about a noun, with <1>mis</1> for things and <2>kes</2> for people."
+
+msgid "<0>Tundma</0> takes the partitive, so the man is <1>keda</1>."
+msgstr "<0>Tundma</0> takes the partitive, so the man is <1>keda</1>."
+
+msgid "<et>mis</et> or <et>kes</et>"
+msgstr "<et>mis</et> or <et>kes</et>"
+
+msgid "<et>mis</et> usually follows a thing or an idea, and <et>kes</et> follows a person."
+msgstr "<et>mis</et> usually follows a thing or an idea, and <et>kes</et> follows a person."
+
+msgid "28 minutes"
+msgstr "28 minutes"
+
+msgid "9 exercises"
+msgstr "9 exercises"
+
+msgid "A book is a thing, so the word is <0>mis</0>, not <1>kes</1>."
+msgstr "A book is a thing, so the word is <0>mis</0>, not <1>kes</1>."
+
+msgid "A cake he baked himself"
+msgstr "A cake he baked himself"
+
+msgid "A chair for the kitchen"
+msgstr "A chair for the kitchen"
+
+msgid "A comma goes before <0>mis</0> or <1>kes</1>. In the middle of a sentence, a second comma closes the clause."
+msgstr "A comma goes before <0>mis</0> or <1>kes</1>. In the middle of a sentence, a second comma closes the clause."
+
+msgid "A comma goes before the clause. In the middle of a sentence a second comma closes it: <0>Mees, kes elab siin, on arst.</0>"
+msgstr "A comma goes before the clause. In the middle of a sentence a second comma closes it: <0>Mees, kes elab siin, on arst.</0>"
+
+msgid "A cup of coffee"
+msgstr "A cup of coffee"
+
+msgid "A letter about a new flat"
+msgstr "A letter about a new flat"
+
+msgid "A man is a person, so the word is <0>kes</0>, not <1>mis</1>."
+msgstr "A man is a person, so the word is <0>kes</0>, not <1>mis</1>."
+
+msgid "A place where something happens is <0>kus</0>. <1>Milles</1> also works."
+msgstr "A place where something happens is <0>kus</0>. <1>Milles</1> also works."
+
+msgid "A place where something is or happens is <0>kus</0>."
+msgstr "A place where something is or happens is <0>kus</0>."
+
+msgid "A relative clause is set off by commas. One goes before <0>mis</0> or <1>kes</1>: <2>Ma tunnen meest, kes elab siin.</2>"
+msgstr "A relative clause is set off by commas. One goes before <0>mis</0> or <1>kes</1>: <2>Ma tunnen meest, kes elab siin.</2>"
+
+msgid "A relative clause says more about a noun: <0>Raamat, mis on laual, on uus.</0> The book that is on the table is new. The clause starts with <1/> or <2/> and works like a small sentence inside the big one."
+msgstr "A relative clause says more about a noun: <0>Raamat, mis on laual, on uus.</0> The book that is on the table is new. The clause starts with <1/> or <2/> and works like a small sentence inside the big one."
+
+msgid "A relative clause says more about a noun. <0>Mis</0> usually follows a thing or an idea and <1>kes</1> follows a person: <2>raamat, mis on laual</2>, <3>mees, kes elab siin</3>."
+msgstr "A relative clause says more about a noun. <0>Mis</0> usually follows a thing or an idea and <1>kes</1> follows a person: <2>raamat, mis on laual</2>, <3>mees, kes elab siin</3>."
+
+msgid "A thing that is described is <0>mis</0>."
+msgstr "A thing that is described is <0>mis</0>."
+
+msgid "about what, out of which"
+msgstr "about what, out of which"
+
+msgid "about whom, out of whom"
+msgstr "about whom, out of whom"
+
+msgid "About, out of: -st"
+msgstr "About, out of: -st"
+
+msgid "All eight forms right."
+msgstr "All eight forms right."
+
+msgid "All eight, each matched to its noun."
+msgstr "All eight, each matched to its noun."
+
+msgid "All nine, with the ending heard each time."
+msgstr "All nine, with the ending heard each time."
+
+msgid "All seven, each with the right word."
+msgstr "All seven, each with the right word."
+
+msgid "All six built."
+msgstr "All six built."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "An old car in the yard"
+msgstr "An old car in the yard"
+
+msgid "Ask what the word does in its own clause: whose it is, what is done to it, who is with it, who is given or sent something, or what it is about. Hear each sentence and pick the job."
+msgstr "Ask what the word does in its own clause: whose it is, what is done to it, who is with it, who is given or sent something, or what it is about. Hear each sentence and pick the job."
+
+msgid "At a big market in town"
+msgstr "At a big market in town"
+
+msgid "Big, and the evening was dull."
+msgstr "Big, and the evening was dull."
+
+msgid "Book, man"
+msgstr "Book, man"
+
+msgid "Build each sentence from what it means."
+msgstr "Build each sentence from what it means."
+
+msgid "Build the sentence"
+msgstr "Build the sentence"
+
+msgid "Car, woman"
+msgstr "Car, woman"
+
+msgid "Choose <0>mis</0>, <1>kes</1> or <2>kus</2>, put it in the case its clause needs, then write the whole sentence."
+msgstr "Choose <0>mis</0>, <1>kes</1> or <2>kus</2>, put it in the case its clause needs, then write the whole sentence."
+
+msgid "Clause at the end"
+msgstr "Clause at the end"
+
+msgid "Clause in the middle"
+msgstr "Clause in the middle"
+
+msgid "Cold, and nobody stayed late."
+msgstr "Cold, and nobody stayed late."
+
+msgid "Each clause says more about a city or a house."
+msgstr "Each clause says more about a city or a house."
+
+msgid "Each sentence has one wrong relative word: the wrong word for the noun or the wrong case. Tap it, then type it right."
+msgstr "Each sentence has one wrong relative word: the wrong word for the noun or the wrong case. Tap it, then type it right."
+
+msgid "Film, child"
+msgstr "Film, child"
+
+msgid "Five"
+msgstr "Five"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "For a place where something is or happens, <et>kus</et> usually works. <et>Milles</et> also works."
+msgstr "For a place where something is or happens, <et>kus</et> usually works. <et>Milles</et> also works."
+
+msgid "For a place you come from."
+msgstr "For a place you come from."
+
+msgid "For a place you go to."
+msgstr "For a place you go to."
+
+msgid "For a place, <0/> usually works: <1>Linn, kus ma elan, on väike.</1> The city where I live is small. The same idea with <2>mis</2> is <3/>, which usually sounds more formal."
+msgstr "For a place, <0/> usually works: <1>Linn, kus ma elan, on väike.</1> The city where I live is small. The same idea with <2>mis</2> is <3/>, which usually sounds more formal."
+
+msgid "For a place, <0>kus</0> usually works: <1>linn, kus ma elan</1>. <2>Kuhu</2> is to a place and <3>kust</3> is from a place."
+msgstr "For a place, <0>kus</0> usually works: <1>linn, kus ma elan</1>. <2>Kuhu</2> is to a place and <3>kust</3> is from a place."
+
+msgid "For a place, <0>kus</0> usually works. <1>Milles</1> also works."
+msgstr "For a place, <0>kus</0> usually works. <1>Milles</1> also works."
+
+msgid "Four hundred and fifty euros"
+msgstr "Four hundred and fifty euros"
+
+msgid "from where"
+msgstr "from where"
+
+msgid "From where"
+msgstr "From where"
+
+msgid "Genitive: whose"
+msgstr "Genitive: whose"
+
+msgid "Given or sent to"
+msgstr "Given or sent to"
+
+msgid "Go through the table once more, then try again."
+msgstr "Go through the table once more, then try again."
+
+msgid "Has, on: -l"
+msgstr "Has, on: -l"
+
+msgid "He had to work late."
+msgstr "He had to work late."
+
+msgid "He was ill."
+msgstr "He was ill."
+
+msgid "Hear each sentence and pick the word that starts its clause."
+msgstr "Hear each sentence and pick the word that starts its clause."
+
+msgid "Helen bought the kitchen table from her grandmother."
+msgstr "Helen bought the kitchen table from her grandmother."
+
+msgid "Helen had drunk this coffee many times before."
+msgstr "Helen had drunk this coffee many times before."
+
+msgid "Helen writes"
+msgstr "Helen writes"
+
+msgid "Helen writes to a friend about her new flat and her neighbours. Read her letter and answer the questions, as in the reading part of the B1 exam."
+msgstr "Helen writes to a friend about her new flat and her neighbours. Read her letter and answer the questions, as in the reading part of the B1 exam."
+
+msgid "House, teacher"
+msgstr "House, teacher"
+
+msgid "How many candles are on the cake?"
+msgstr "How many candles are on the cake?"
+
+msgid "How much does the flat cost a month?"
+msgstr "How much does the flat cost a month?"
+
+msgid "I am watching the film you are waiting for."
+msgstr "I am watching the film you are waiting for."
+
+msgid "I bought the whole book, so the object is <0>mille</0>. <1>Mida</1> also works when the buying is not finished or is not the point."
+msgstr "I bought the whole book, so the object is <0>mille</0>. <1>Mida</1> also works when the buying is not finished or is not the point."
+
+msgid "I know the child who has a dog."
+msgstr "I know the child who has a dog."
+
+msgid "I know the man who lives here."
+msgstr "I know the man who lives here."
+
+msgid "I know the man you are waiting for."
+msgstr "I know the man you are waiting for."
+
+msgid "I know the man you phoned."
+msgstr "I know the man you phoned."
+
+msgid "I know the woman whose car is red."
+msgstr "I know the woman whose car is red."
+
+msgid "I know the woman you talked with."
+msgstr "I know the woman you talked with."
+
+msgid "I read the book that is on the table."
+msgstr "I read the book that is on the table."
+
+msgid "I saw the car that stands outside."
+msgstr "I saw the car that stands outside."
+
+msgid "I saw the car you were driving."
+msgstr "I saw the car you were driving."
+
+msgid "I saw the house whose door is blue."
+msgstr "I saw the house whose door is blue."
+
+msgid "I watched the film you talked about."
+msgstr "I watched the film you talked about."
+
+msgid "In a library"
+msgstr "In a library"
+
+msgid "In an old bookshop"
+msgstr "In an old bookshop"
+
+msgid "In which"
+msgstr "In which"
+
+msgid "in which, in what"
+msgstr "in which, in what"
+
+msgid "In: -s"
+msgstr "In: -s"
+
+msgid "join with a relative clause"
+msgstr "join with a relative clause"
+
+msgid "Kadri’s own"
+msgstr "Kadri’s own"
+
+msgid "Keda sa ootad?"
+msgstr "Keda sa ootad?"
+
+msgid "Kelle auto see on?"
+msgstr "Kelle auto see on?"
+
+msgid "Kellega sa räägid?"
+msgstr "Kellega sa räägid?"
+
+msgid "Kellel on koer?"
+msgstr "Kellel on koer?"
+
+msgid "Kellele sa helistad?"
+msgstr "Kellele sa helistad?"
+
+msgid "Kellest sa räägid?"
+msgstr "Kellest sa räägid?"
+
+msgid "Kes elab siin?"
+msgstr "Kes elab siin?"
+
+msgid "Kuhu sa sõidad?"
+msgstr "Kuhu sa sõidad?"
+
+msgid "Kus sa elad?"
+msgstr "Kus sa elad?"
+
+msgid "Kust sa tuled?"
+msgstr "Kust sa tuled?"
+
+msgid "Listen: Tiina and Madis"
+msgstr "Listen: Tiina and Madis"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Madis"
+msgstr "Madis"
+
+msgid "Madis wants to show the photos to a friend who couldn’t come."
+msgstr "Madis wants to show the photos to a friend who couldn’t come."
+
+msgid "Madis’s"
+msgstr "Madis’s"
+
+msgid "Madis’s friend from school"
+msgstr "Madis’s friend from school"
+
+msgid "Make the form"
+msgstr "Make the form"
+
+msgid "Mida sa ootad?"
+msgstr "Mida sa ootad?"
+
+msgid "Millega sa kirjutad?"
+msgstr "Millega sa kirjutad?"
+
+msgid "Millel on suur aed?"
+msgstr "Millel on suur aed?"
+
+msgid "Millele sa vastad?"
+msgstr "Millele sa vastad?"
+
+msgid "Milles sa elad?"
+msgstr "Milles sa elad?"
+
+msgid "Millest sa räägid?"
+msgstr "Millest sa räägid?"
+
+msgid "Mis see on?"
+msgstr "Mis see on?"
+
+msgid "Nearly. Check the ones you missed against the table."
+msgstr "Nearly. Check the ones you missed against the table."
+
+msgid "Nearly. Check the relative word in the ones you missed."
+msgstr "Nearly. Check the relative word in the ones you missed."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Nearly. Read the reason under each one you got wrong."
+
+msgid "Nobody at the party knew the words of the song."
+msgstr "Nobody at the party knew the words of the song."
+
+msgid "Nobody had told him about it."
+msgstr "Nobody had told him about it."
+
+msgid "Nominative: the subject"
+msgstr "Nominative: the subject"
+
+msgid "Partitive: part of it"
+msgstr "Partitive: part of it"
+
+msgid "People"
+msgstr "People"
+
+msgid "Pick <0>kus</0> or <1>mis</1>"
+msgstr "Pick <0>kus</0> or <1>mis</1>"
+
+msgid "Pick <0>mis</0> or <1>kes</1>"
+msgstr "Pick <0>mis</0> or <1>kes</1>"
+
+msgid "Places"
+msgstr "Places"
+
+msgid "Places: <et>kus</et>"
+msgstr "Places: <et>kus</et>"
+
+msgid "Raamat, mille ma ostsin."
+msgstr "Raamat, mille ma ostsin."
+
+msgid "Read the note under each one you missed, then try again."
+msgstr "Read the note under each one you missed, then try again."
+
+msgid "Read What to remember below, then try again."
+msgstr "Read What to remember below, then try again."
+
+msgid "Relative clauses about a place"
+msgstr "Relative clauses about a place"
+
+msgid "Relative clauses about things and people"
+msgstr "Relative clauses about things and people"
+
+msgid "Relative words in every case"
+msgstr "Relative words in every case"
+
+msgid "Seven"
+msgstr "Seven"
+
+msgid "Small, but fun."
+msgstr "Small, but fun."
+
+msgid "So <0/> and <1/> have cases like a noun, and the endings are the ones you know from lesson {pronouns}. Tap a sentence and read what the lit word does in its clause."
+msgstr "So <0/> and <1/> have cases like a noun, and the endings are the ones you know from lesson {pronouns}. Tap a sentence and read what the lit word does in its clause."
+
+msgid "Tap a sentence"
+msgstr "Tap a sentence"
+
+msgid "Tap the sentences above once more, then try again."
+msgstr "Tap the sentences above once more, then try again."
+
+msgid "Tap the table above once more, then try again."
+msgstr "Tap the table above once more, then try again."
+
+msgid "The bag that is on the table is heavy."
+msgstr "The bag that is on the table is heavy."
+
+msgid "The book"
+msgstr "The book"
+
+msgid "The book I bought is interesting."
+msgstr "The book I bought is interesting."
+
+msgid "The book that is on the table is new."
+msgstr "The book that is on the table is new."
+
+msgid "The café where we drink coffee is cheap."
+msgstr "The café where we drink coffee is cheap."
+
+msgid "The car"
+msgstr "The car"
+
+msgid "The car belongs to the woman, so the word is in the genitive, like any owner."
+msgstr "The car belongs to the woman, so the word is in the genitive, like any owner."
+
+msgid "The car that stands outside is red."
+msgstr "The car that stands outside is red."
+
+msgid "the car you were driving"
+msgstr "the car you were driving"
+
+msgid "The case of the word"
+msgstr "The case of the word"
+
+msgid "The child has a dog, so the word takes -l."
+msgstr "The child has a dog, so the word takes -l."
+
+msgid "The child has a dog, so the word takes <0>-l</0>: <1>kellel</1>."
+msgstr "The child has a dog, so the word takes <0>-l</0>: <1>kellel</1>."
+
+msgid "the child who has a dog"
+msgstr "the child who has a dog"
+
+msgid "The child who plays outside is my son."
+msgstr "The child who plays outside is my son."
+
+msgid "The city where I live is small."
+msgstr "The city where I live is small."
+
+msgid "The clause usually comes right after the noun it describes. A comma goes before it and, in the middle of a sentence, a second one after it. Inside the clause, the verb can come before or after the other words: <0>kes elab siin</0> or <1>kes siin elab</1>."
+msgstr "The clause usually comes right after the noun it describes. A comma goes before it and, in the middle of a sentence, a second one after it. Inside the clause, the verb can come before or after the other words: <0>kes elab siin</0> or <1>kes siin elab</1>."
+
+msgid "The clause usually stands right after the noun it describes. When that noun starts the sentence, the clause ends in the middle, and a second comma closes it: <0>Mees, kes elab siin, on arst.</0>"
+msgstr "The clause usually stands right after the noun it describes. When that noun starts the sentence, the clause ends in the middle, and a second comma closes it: <0>Mees, kes elab siin, on arst.</0>"
+
+msgid "The door belongs to the house, so the word is in the genitive: <0>mille</0>."
+msgstr "The door belongs to the house, so the word is in the genitive: <0>mille</0>."
+
+msgid "The film I am waiting for is long."
+msgstr "The film I am waiting for is long."
+
+msgid "The film that starts at eight is long."
+msgstr "The film that starts at eight is long."
+
+msgid "the film you are waiting for"
+msgstr "the film you are waiting for"
+
+msgid "the film you talked about"
+msgstr "the film you talked about"
+
+msgid "The friend I phoned is in Tallinn."
+msgstr "The friend I phoned is in Tallinn."
+
+msgid "The house that is big is old."
+msgstr "The house that is big is old."
+
+msgid "The house where I live is old."
+msgstr "The house where I live is old."
+
+msgid "the house whose door is blue"
+msgstr "the house whose door is blue"
+
+msgid "The man"
+msgstr "The man"
+
+msgid "The man I know lives in Tartu."
+msgstr "The man I know lives in Tartu."
+
+msgid "The man is the subject of the clause, so the word stays in the nominative."
+msgstr "The man is the subject of the clause, so the word stays in the nominative."
+
+msgid "The man who lives here is a doctor."
+msgstr "The man who lives here is a doctor."
+
+msgid "the man you are waiting for"
+msgstr "the man you are waiting for"
+
+msgid "the man you phoned"
+msgstr "the man you phoned"
+
+msgid "The neighbour who plays the piano is friendly."
+msgstr "The neighbour who plays the piano is friendly."
+
+msgid "The next party is in June."
+msgstr "The next party is in June."
+
+msgid "The noisy street right under the window"
+msgstr "The noisy street right under the window"
+
+msgid "The owner of the car lives abroad."
+msgstr "The owner of the car lives abroad."
+
+msgid "The park being far away from home"
+msgstr "The park being far away from home"
+
+msgid "The park where the children play is big."
+msgstr "The park where the children play is big."
+
+msgid "The same idea with mis in the -s case. It usually sounds more formal than kus."
+msgstr "The same idea with mis in the -s case. It usually sounds more formal than kus."
+
+msgid "The usual word for a place where something is or happens."
+msgstr "The usual word for a place where something is or happens."
+
+msgid "The woman I talked with is a teacher."
+msgstr "The woman I talked with is a teacher."
+
+msgid "The woman who works in the shop is my mother."
+msgstr "The woman who works in the shop is my mother."
+
+msgid "The woman with the guitar is Tiina’s sister."
+msgstr "The woman with the guitar is Tiina’s sister."
+
+msgid "the woman you talked with"
+msgstr "the woman you talked with"
+
+msgid "The word after the comma does not copy the noun’s case. It takes the case it would have if its clause stood alone. Take <0>Sa ootad meest.</0> You wait for the man, and <1>ootama</1> takes the partitive. The word that stands for the man in a relative clause is <2/>: <3>Ma tunnen meest, keda sa ootad.</3>"
+msgstr "The word after the comma does not copy the noun’s case. It takes the case it would have if its clause stood alone. Take <0>Sa ootad meest.</0> You wait for the man, and <1>ootama</1> takes the partitive. The word that stands for the man in a relative clause is <2/>: <3>Ma tunnen meest, keda sa ootad.</3>"
+
+msgid "The word after the comma takes the case it would have inside its own clause."
+msgstr "The word after the comma takes the case it would have inside its own clause."
+
+msgid "The word takes its own case"
+msgstr "The word takes its own case"
+
+msgid "The word takes the case it would have inside its own clause: <0>kelle</0>, <1>keda</1>, <2>kellega</2>, <3>kellele</3>, <4>kellest</4>, <5>kellel</5> and <6>mille</6>, <7>mida</7>, <8>millega</8>, <9>millele</9>, <10>millest</10>, <11>millel</11>."
+msgstr "The word takes the case it would have inside its own clause: <0>kelle</0>, <1>keda</1>, <2>kellega</2>, <3>kellele</3>, <4>kellest</4>, <5>kellel</5> and <6>mille</6>, <7>mida</7>, <8>millega</8>, <9>millele</9>, <10>millest</10>, <11>millel</11>."
+
+msgid "Their grandfather’s"
+msgstr "Their grandfather’s"
+
+msgid "Things"
+msgstr "Things"
+
+msgid "Things and people"
+msgstr "Things and people"
+
+msgid "Three"
+msgstr "Three"
+
+msgid "Three hundred euros"
+msgstr "Three hundred euros"
+
+msgid "Tiina"
+msgstr "Tiina"
+
+msgid "Tiina had seen Maria often over the last ten years."
+msgstr "Tiina had seen Maria often over the last ten years."
+
+msgid "Tiina has brought photos of a party, and Madis asks who is who. Listen to them twice and answer the questions."
+msgstr "Tiina has brought photos of a party, and Madis asks who is who. Listen to them twice and answer the questions."
+
+msgid "Tiina’s brother"
+msgstr "Tiina’s brother"
+
+msgid "Tiina’s new colleague"
+msgstr "Tiina’s new colleague"
+
+msgid "to what, to which"
+msgstr "to what, to which"
+
+msgid "to where"
+msgstr "to where"
+
+msgid "To where"
+msgstr "To where"
+
+msgid "to whom"
+msgstr "to whom"
+
+msgid "To: -le"
+msgstr "To: -le"
+
+msgid "Together with"
+msgstr "Together with"
+
+msgid "Two friends look at photos"
+msgstr "Two friends look at photos"
+
+msgid "Two hundred euros"
+msgstr "Two hundred euros"
+
+msgid "Two things cause most mix-ups. <0/> and <1/> mean whose, and they are usually the whole thing done, while <2/> and <3/> are the part. And the endings <4>-ga</4>, <5>-le</5> and <6>-st</6> look alike."
+msgstr "Two things cause most mix-ups. <0/> and <1/> mean whose, and they are usually the whole thing done, while <2/> and <3/> are the part. And the endings <4>-ga</4>, <5>-le</5> and <6>-st</6> look alike."
+
+msgid "Type the form of <0>kes</0> or <1>mis</1> that fits the gap."
+msgstr "Type the form of <0>kes</0> or <1>mis</1> that fits the gap."
+
+msgid "What did the neighbour bring her?"
+msgstr "What did the neighbour bring her?"
+
+msgid "What does Helen ask her friend to bring? Write it as Helen does."
+msgstr "What does Helen ask her friend to bring? Write it as Helen does."
+
+msgid "What does Helen not like about the place?"
+msgstr "What does Helen not like about the place?"
+
+msgid "What does Helen write?"
+msgstr "What does Helen write?"
+
+msgid "What does the word do?"
+msgstr "What does the word do?"
+
+msgid "What is done to"
+msgstr "What is done to"
+
+msgid "What is the name of the girl Tiina talks to? Write it as Tiina says it."
+msgstr "What is the name of the girl Tiina talks to? Write it as Tiina says it."
+
+msgid "What it is about"
+msgstr "What it is about"
+
+msgid "What was the café like?"
+msgstr "What was the café like?"
+
+msgid "what, which (part)"
+msgstr "what, which (part)"
+
+msgid "what, which, that"
+msgstr "what, which, that"
+
+msgid "When was Marten’s birthday? Write it as Tiina says it."
+msgstr "When was Marten’s birthday? Write it as Tiina says it."
+
+msgid "where"
+msgstr "where"
+
+msgid "Where"
+msgstr "Where"
+
+msgid "Where did Tiina find the book?"
+msgstr "Where did Tiina find the book?"
+
+msgid "Where does the neighbour’s daughter work? Write it as Helen does."
+msgstr "Where does the neighbour’s daughter work? Write it as Helen does."
+
+msgid "Where the clause goes and its commas"
+msgstr "Where the clause goes and its commas"
+
+msgid "Where the commas go"
+msgstr "Where the commas go"
+
+msgid "Which form is it?"
+msgstr "Which form is it?"
+
+msgid "which has, on which"
+msgstr "which has, on which"
+
+msgid "which, that"
+msgstr "which, that"
+
+msgid "who"
+msgstr "who"
+
+msgid "who has, on whom"
+msgstr "who has, on whom"
+
+msgid "Who is the man by the window?"
+msgstr "Who is the man by the window?"
+
+msgid "whom, who (part)"
+msgstr "whom, who (part)"
+
+msgid "Whose car is <0>kelle auto</0>, the genitive. <1>Keda</1> is the partitive."
+msgstr "Whose car is <0>kelle auto</0>, the genitive. <1>Keda</1> is the partitive."
+
+msgid "Whose guitar is it?"
+msgstr "Whose guitar is it?"
+
+msgid "Whose it is"
+msgstr "Whose it is"
+
+msgid "whose, of which; the whole thing done"
+msgstr "whose, of which; the whole thing done"
+
+msgid "whose, whom"
+msgstr "whose, whom"
+
+msgid "Why wasn’t Madis at the party?"
+msgstr "Why wasn’t Madis at the party?"
+
+msgid "with what, with which"
+msgstr "with what, with which"
+
+msgid "with whom"
+msgstr "with whom"
+
+msgid "With: -ga"
+msgstr "With: -ga"
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "You drove in it, so the word takes <0>-ga</0>: <1>millega</1>."
+msgstr "You drove in it, so the word takes <0>-ga</0>: <1>millega</1>."
+
+msgid "You live in the house, so the word takes -s. It is the same idea as kus."
+msgstr "You live in the house, so the word takes -s. It is the same idea as kus."
+
+msgid "You phoned him, so the word takes -le."
+msgstr "You phoned him, so the word takes -le."
+
+msgid "You phoned him, so the word takes <0>-le</0>: <1>kellele</1>."
+msgstr "You phoned him, so the word takes <0>-le</0>: <1>kellele</1>."
+
+msgid "You talked about her, so the word takes -st."
+msgstr "You talked about her, so the word takes -st."
+
+msgid "You talked about it, so the word takes <0>-st</0>: <1>millest</1>."
+msgstr "You talked about it, so the word takes <0>-st</0>: <1>millest</1>."
+
+msgid "You talked with her, so the word takes -ga."
+msgstr "You talked with her, so the word takes -ga."
+
+msgid "You talked with her, so the word takes <0>-ga</0>: <1>kellega</1>."
+msgstr "You talked with her, so the word takes <0>-ga</0>: <1>kellega</1>."
+
+msgid "You wait for him, and <0>ootama</0> takes the partitive: <1>keda</1>."
+msgstr "You wait for him, and <0>ootama</0> takes the partitive: <1>keda</1>."
+
+msgid "You wait for him, and ootama takes the partitive, so the word is in the partitive."
+msgstr "You wait for him, and ootama takes the partitive, so the word is in the partitive."
+
+msgid "You wait for the film, and <0>ootama</0> takes the partitive: <1>mida</1>."
+msgstr "You wait for the film, and <0>ootama</0> takes the partitive: <1>mida</1>."

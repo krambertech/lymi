@@ -4,11 +4,16 @@ import { clsx } from "clsx";
 import { ArrowLeft, ArrowRight, Info } from "lucide-react";
 import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { lessonBySlug, lessonPath, nextLesson, previousLesson } from "../../lib/learn/catalogue";
-import { finishSection as saveSection, startLesson } from "../../lib/learn/progress";
+import { progressStore, finishSection as saveSection, startLesson } from "../../lib/learn/progress";
 import { localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
 import { LastExercise } from "./Drill";
-import { type DrillKind, LAST_EXERCISE, scheduleLesson } from "./drill-banks";
+import {
+  type DrillKind,
+  LAST_EXERCISE,
+  scheduleFinishedLesson,
+  scheduleLesson,
+} from "./drill-banks";
 import { Endings } from "./endings";
 import { LearnLayout } from "./LearnLayout";
 import { type Glossary, LessonContext, SectionContext, useLesson } from "./lesson-context";
@@ -67,7 +72,10 @@ export function LessonView({ slug, sub, facts, glossary, sections: taught, recap
   const number = lesson.n;
   const level = lesson.stage.level;
 
-  useEffect(() => startLesson(slug), [slug]);
+  useEffect(() => {
+    scheduleFinishedLesson(slug, progressStore.current().lessons[slug]?.state === "done");
+    startLesson(slug);
+  }, [slug]);
   // The lesson's sections never change, so the callback reads them from a ref and stays stable.
   const sectionIds = useRef(all);
   const finishSection = useCallback(

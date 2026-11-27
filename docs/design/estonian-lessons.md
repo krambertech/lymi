@@ -183,7 +183,7 @@ A run on the server would differ from the browser's, so nothing of it renders th
 `apps/site/src/lib/learn/review.ts` keeps one entry per answered item in `localStorage`: how many right answers in a row it has, the day it is due and the day it was last answered. It is not Lymi's scheduler and never reaches Lymi's product, database or API.
 
 - The first answer in a run counts. A miss is due the next day, from any point.
-- Finishing a lesson puts ten of its questions not yet answered, spread over its rules, in review for the next day, as a miss would.
+- Finishing a lesson puts ten of its questions not yet answered, spread over its rules, in review for the next day, as a miss would. A finished lesson with none of its questions in review, because that load failed or it was finished before this rule, is scheduled the next time it opens.
 - A right answer is due again after 1 day, then 3, 7 and 21. Right after the 21 days, the item rests: it is no longer due, and a later miss in a drill brings it back.
 - A right answer before an item's day leaves its day as it is, so drilling ten times in an evening is not ten steps.
 - Days are the visitor's own, from midnight.

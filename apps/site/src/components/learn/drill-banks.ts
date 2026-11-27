@@ -5,6 +5,7 @@ import { learnI18n } from "../../lib/learn/i18n";
 import {
   currentReview,
   drawDrill,
+  hasLessonItems,
   itemId,
   lessonOf,
   localDay,
@@ -107,6 +108,10 @@ export async function scheduleLesson(lesson: string): Promise<void> {
     rule: itemId(lesson, item.rule),
   }));
   saveScheduled(drawDrill(questions, currentReview(), localDay()).map(({ id }) => id));
+}
+
+export function scheduleFinishedLesson(lesson: string, finished: boolean): void {
+  if (finished && !hasLessonItems(currentReview(), lesson)) scheduleLesson(lesson).catch(() => {});
 }
 
 export const LAST_EXERCISE_SIZE = 6;

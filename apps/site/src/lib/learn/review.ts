@@ -79,6 +79,9 @@ export function recordAnswer(review: Review, id: string, right: boolean, today: 
   return bounded({ items: { ...review.items, [id]: entry } });
 }
 
+export const hasLessonItems = (review: Review, lesson: string): boolean =>
+  Object.keys(review.items).some((id) => lessonOf(id) === lesson);
+
 export function scheduleNew(review: Review, ids: readonly string[], today: number): Review {
   const fresh = ids.filter((id) => ITEM_ID.test(id) && !review.items[id]);
   if (fresh.length === 0) return review;

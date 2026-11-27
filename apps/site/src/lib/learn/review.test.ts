@@ -17,6 +17,7 @@ import {
   recordAnswer,
   saveAnswer,
   saveRemoved,
+  hasLessonItems,
   scheduleNew,
   warmUpIds,
 } from "./review";
@@ -257,5 +258,13 @@ describe("scheduleNew", () => {
     expect(review.items["osastav/b"]).toEqual({ step: 0, due: 101, last: 100 });
     expect(dueIds(review, 100, new Set(["osastav"]))).toEqual([]);
     expect(dueIds(review, 101, new Set(["osastav"]))).toContain("osastav/b");
+  });
+});
+
+describe("hasLessonItems", () => {
+  it("says whether any of a lesson's questions are in review", () => {
+    const review = scheduleNew(EMPTY_REVIEW, ["osastav/a"], 100);
+    expect(hasLessonItems(review, "osastav")).toBe(true);
+    expect(hasLessonItems(review, "mitmus")).toBe(false);
   });
 });

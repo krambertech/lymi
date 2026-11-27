@@ -79,6 +79,14 @@ export function recordAnswer(review: Review, id: string, right: boolean, today: 
   return bounded({ items: { ...review.items, [id]: entry } });
 }
 
+export function scheduleNew(review: Review, ids: readonly string[], today: number): Review {
+  const fresh = ids.filter((id) => ITEM_ID.test(id) && !review.items[id]);
+  if (fresh.length === 0) return review;
+  const items = { ...review.items };
+  for (const id of fresh) items[id] = { step: 0, due: today + 1, last: today };
+  return bounded({ items });
+}
+
 export function forgetRemoved(
   review: Review,
   lesson: string,
@@ -182,6 +190,14 @@ export function saveAnswer(
   storage?: Storage | null,
 ): void {
   reviewStore.update((review) => recordAnswer(review, id, right, today), storage);
+}
+
+export function saveScheduled(
+  ids: readonly string[],
+  today: number = localDay(),
+  storage?: Storage | null,
+): void {
+  reviewStore.update((review) => scheduleNew(review, ids, today), storage);
 }
 
 export function saveRemoved(

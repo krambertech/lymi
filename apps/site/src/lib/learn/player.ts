@@ -46,7 +46,18 @@ export function playSound(
   rate = 1,
 ): Promise<SoundEnd> {
   turn += 1;
+  setSequence(null);
   return start(src, key, onFrame, from, rate);
+}
+
+export function toggleSound(src: string, key: string = src): Promise<SoundEnd> {
+  if (isPlaying(key)) return Promise.resolve(stopAll());
+  return playSound(src, key);
+}
+
+export function toggleSlowly(src: string): Promise<SoundEnd> {
+  if (isPlaying(slowKey(src))) return Promise.resolve(stopAll());
+  return playSlowly(src);
 }
 
 export const SLOW_RATE = 0.75;
@@ -54,6 +65,7 @@ export const slowKey = (src: string) => `${src}#slow`;
 
 export function playSlowly(src: string): Promise<SoundEnd> {
   turn += 1;
+  setSequence(null);
   return start(src, slowKey(src), undefined, 0, SLOW_RATE);
 }
 
@@ -111,15 +123,50 @@ function start(
   });
 }
 
+let sequenceKey: string | null = null;
+
+const isPlaying = (key: string) => playingKey === key || sequenceKey === key;
+
+function stopAll(): SoundEnd {
+  turn += 1;
+  stopSound();
+  setSequence(null);
+  return "cut";
+}
+
+function setSequence(key: string | null) {
+  if (sequenceKey === key) return;
+  sequenceKey = key;
+  emit();
+}
+
 /** Plays clips one after another; any other sound started meanwhile ends the sequence. */
-export async function playInTurn(items: readonly { src: string; key: string }[]): Promise<void> {
+export async function playInTurn(
+  items: readonly { src: string; key: string }[],
+  key: string | null = null,
+): Promise<{ finished: boolean; at: number }> {
   turn += 1;
   const mine = turn;
-  for (const item of items) {
-    if (turn !== mine) return;
-    await start(item.src, item.key);
-    await new Promise((resolve) => setTimeout(resolve, 260));
+  setSequence(key);
+  try {
+    for (const [i, item] of items.entries()) {
+      if (turn !== mine) return { finished: false, at: i };
+      if ((await start(item.src, item.key)) === "cut") return { finished: false, at: i };
+      if (i < items.length - 1) await new Promise((resolve) => setTimeout(resolve, 260));
+    }
+    return { finished: true, at: items.length };
+  } finally {
+    if (turn === mine) setSequence(null);
   }
+}
+
+export function toggleInTurn(
+  items: readonly { src: string; key: string }[],
+  key: string,
+): Promise<{ finished: boolean; at: number }> | null {
+  if (sequenceKey !== key) return playInTurn(items, key);
+  stopAll();
+  return null;
 }
 
 function subscribe(listener: () => void): () => void {
@@ -130,7 +177,7 @@ function subscribe(listener: () => void): () => void {
 export function usePlaying(key: string): boolean {
   return useSyncExternalStore(
     subscribe,
-    () => playingKey === key,
+    () => isPlaying(key),
     () => false,
   );
 }

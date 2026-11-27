@@ -1,7 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { captureAnalytics } from "@lymi/client/analytics";
 import { clsx } from "clsx";
-import { ArrowRight, Check, Ear, MessageCircle, RotateCcw, X } from "lucide-react";
+import { ArrowRight, Check, Ear, MessageCircle, Pause, Play, RotateCcw, X } from "lucide-react";
 import {
   type ReactNode,
   type Ref,
@@ -19,7 +19,13 @@ import {
   sayReply,
   startDialogue,
 } from "../../lib/learn/passage";
-import { playInTurn, playSound, stopSound, usePlaying } from "../../lib/learn/player";
+import {
+  playInTurn,
+  stopSound,
+  toggleInTurn,
+  toggleSound,
+  usePlaying,
+} from "../../lib/learn/player";
 import { Button } from "../Button";
 import { SectionContext, useLesson } from "./lesson-context";
 import { Feedback, QuizCard, ResultDots } from "./Quiz";
@@ -81,6 +87,17 @@ export function Dialogue({ id, title, part, them, turns, text = "shown" }: Dialo
   const src = (clip: string) => clipUrl(slug, clip);
   // Keyed by the dialogue too, so two dialogues with the same lines don't light up together.
   const key = (clip: string) => `dialogue:${slug}:${id}:${clip}`;
+  const wholeKey = `dialogue:${slug}:${id}`;
+  const playingWhole = usePlaying(wholeKey);
+  const [resumeAt, setResumeAt] = useState(0);
+  const hearWhole = () => {
+    const from = resumeAt;
+    const run = toggleInTurn(
+      turns.slice(from).map((turn) => ({ src: src(turn.clip), key: key(turn.clip) })),
+      wholeKey,
+    );
+    void run?.then(({ finished, at }) => setResumeAt(finished ? 0 : from + at));
+  };
   const rightLine = (turn: Extract<DialogueTurn, { who: "you" }>) =>
     turn.replies.find((reply) => reply.right)?.line ?? "";
   const yours = turns.filter((turn) => turn.who === "you").length;
@@ -257,19 +274,28 @@ export function Dialogue({ id, title, part, them, turns, text = "shown" }: Dialo
                 </Trans>
               </p>
               <div className="flex flex-wrap gap-2">
-                <Button
-                  onClick={() =>
-                    void playInTurn(
-                      turns.map((turn) => ({ src: src(turn.clip), key: key(turn.clip) })),
-                    )
-                  }
-                >
-                  <Ear aria-hidden="true" data-icon="inline-start" />
-                  <Trans>Hear the whole conversation</Trans>
+                <Button onClick={hearWhole}>
+                  {playingWhole ? (
+                    <>
+                      <Pause aria-hidden="true" data-icon="inline-start" />
+                      <Trans context="dialogue: pause the whole conversation">Pause</Trans>
+                    </>
+                  ) : resumeAt > 0 ? (
+                    <>
+                      <Play aria-hidden="true" data-icon="inline-start" />
+                      <Trans context="dialogue: go on playing the whole conversation">Resume</Trans>
+                    </>
+                  ) : (
+                    <>
+                      <Ear aria-hidden="true" data-icon="inline-start" />
+                      <Trans>Hear the whole conversation</Trans>
+                    </>
+                  )}
                 </Button>
                 <Button
                   onClick={() => {
                     stopSound();
+                    setResumeAt(0);
                     restarted.current = true;
                     dispatch({ type: "restart" });
                   }}
@@ -314,7 +340,7 @@ function TheirLine({
         <button
           type="button"
           aria-label={shown ? t`Play ${name}: ${line}` : t`Play what ${name} said`}
-          onClick={() => void playSound(src, playKey)}
+          onClick={() => void toggleSound(src, playKey)}
           className="flex cursor-pointer items-center gap-3 rounded-2xl rounded-ss-sm bg-plate-nested py-2 ps-2 pe-4 text-start"
         >
           <PlayMark playing={playing} />
@@ -365,7 +391,7 @@ function YourLine({ line, src, playKey }: { line: string; src: string; playKey: 
       type="button"
       lang="et"
       aria-label={t`Play your line: ${line}`}
-      onClick={() => void playSound(src, playKey)}
+      onClick={() => void toggleSound(src, playKey)}
       className={clsx(
         "max-w-[80%] cursor-pointer justify-self-end rounded-2xl rounded-se-sm bg-(--form-soft) px-4 py-2.5 text-start text-lg font-medium transition-shadow duration-150",
         playing && "ring-2 ring-(--form)",

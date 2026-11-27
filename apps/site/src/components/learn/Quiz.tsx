@@ -1,7 +1,7 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { captureAnalytics } from "@lymi/client/analytics";
 import { clsx } from "clsx";
-import { ArrowRight, Check, Ear, RotateCcw, Sparkles, SpellCheck, X } from "lucide-react";
+import { ArrowRight, Check, Ear, Pause, RotateCcw, Sparkles, SpellCheck, X } from "lucide-react";
 import {
   Fragment,
   type ReactNode,
@@ -11,7 +11,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { playInTurn, playSound, usePlaying } from "../../lib/learn/player";
+import { playSound, toggleInTurn, toggleSound, usePlaying } from "../../lib/learn/player";
 import {
   type QuizState,
   quizReducer,
@@ -268,14 +268,7 @@ export function Quiz<Item>({
               </Fragment>
               {state.status === "answered" && (extra || total > 1) && (
                 <div className="flex w-full flex-wrap items-center justify-end gap-2.5 pt-1">
-                  {extra && (
-                    <Button
-                      onClick={() => void playInTurn(extra.map((src) => ({ src, key: src })))}
-                    >
-                      <Ear aria-hidden="true" data-icon="inline-start" />
-                      <Trans>Hear both</Trans>
-                    </Button>
-                  )}
+                  {extra && <HearBoth srcs={extra} />}
                   {total > 1 && (
                     <Button
                       ref={nextRef}
@@ -330,6 +323,33 @@ export function QuizCard({
         {children}
       </div>
     </div>
+  );
+}
+
+function HearBoth({ srcs }: { srcs: readonly string[] }) {
+  const key = `both:${srcs.join(" ")}`;
+  const playing = usePlaying(key);
+  return (
+    <Button
+      onClick={() =>
+        void toggleInTurn(
+          srcs.map((src) => ({ src, key: src })),
+          key,
+        )
+      }
+    >
+      {playing ? (
+        <>
+          <Pause aria-hidden="true" data-icon="inline-start" />
+          <Trans context="quiz: stop the two clips playing">Pause</Trans>
+        </>
+      ) : (
+        <>
+          <Ear aria-hidden="true" data-icon="inline-start" />
+          <Trans>Hear both</Trans>
+        </>
+      )}
+    </Button>
   );
 }
 
@@ -445,7 +465,7 @@ function RecallChip({ word, mark }: { word: Recall; mark: "right" | "slip" | "wr
   const Tag = src ? "button" : "span";
   return (
     <Tag
-      {...(src ? { type: "button" as const, onClick: () => void playSound(src) } : {})}
+      {...(src ? { type: "button" as const, onClick: () => void toggleSound(src) } : {})}
       className={clsx(
         "inline-flex items-center gap-1.5 rounded-full border py-1 ps-2 pe-3 text-md font-medium transition-colors duration-150",
         mark === "right" && "border-success/40 bg-success-soft text-ink",
@@ -494,10 +514,14 @@ export function ResultDots({
   now: number;
   total: number;
 }) {
+  const dense = total > 12;
   return (
     <span
       aria-hidden="true"
-      className="flex items-center gap-1.5 rounded-full bg-plate px-2.5 py-1.5"
+      className={clsx(
+        "flex min-w-0 flex-wrap items-center gap-1.5 rounded-full bg-plate px-2.5 py-1.5",
+        dense && "max-sm:gap-1",
+      )}
     >
       {Array.from({ length: total }, (_, i) => {
         const result = results[i];
@@ -507,6 +531,7 @@ export function ResultDots({
             key={i}
             className={clsx(
               "size-2 rounded-full transition-colors duration-200",
+              dense && "max-sm:size-1.5",
               result === true
                 ? slips.includes(i)
                   ? "ring-2 ring-success ring-inset"
@@ -517,6 +542,7 @@ export function ResultDots({
               result === undefined &&
                 i === now &&
                 "bg-ink-faint outline-2 outline-offset-2 outline-ink-muted",
+              result === undefined && i === now && dense && "max-sm:mx-1",
             )}
           />
         );

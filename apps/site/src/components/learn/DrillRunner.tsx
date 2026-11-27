@@ -22,7 +22,7 @@ import { KeepEndings } from "./endings";
 import { QuizCard, ResultDots, Score } from "./Quiz";
 
 interface Props {
-  id: "drill" | "warm-up" | "review" | "checkpoint" | "placement";
+  id: "last" | "warm-up" | "review" | "checkpoint" | "placement";
   lesson: string;
   title: ReactNode;
   questions: readonly Question[];
@@ -91,8 +91,8 @@ export function DrillRunner(props: Props) {
     <QuizCard
       title={title}
       aside={
-        <span className="flex flex-wrap items-center gap-2">
-          <span className="flex items-center rounded-full bg-plate">
+        <span className="flex min-w-0 flex-wrap items-center gap-2">
+          <span className="flex min-w-0 items-center rounded-full bg-plate">
             <ResultDots
               results={run.items.map((each) => run.first[each.id])}
               now={position}

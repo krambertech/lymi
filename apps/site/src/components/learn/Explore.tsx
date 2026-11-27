@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { type ReactNode, useEffect, useState } from "react";
-import { loudness, playSound, usePlaying } from "../../lib/learn/player";
+import { loudness, playSound, toggleSound, usePlaying } from "../../lib/learn/player";
 import { Playing, PlayMark } from "./Sound";
 
 /** The stage's tray, where anything to play with sits. Nothing on it is marked right or wrong. */
@@ -105,7 +105,7 @@ function Key({
       data-playing={playing ? "" : undefined}
       onClick={() => {
         onPress();
-        void playSound(item.src);
+        void toggleSound(item.src);
       }}
       className="learn-key relative grid cursor-pointer justify-items-center gap-0.5 rounded-tile bg-plate px-0.5 pt-3 pb-2.5 hoverable:hover:bg-plate-hover"
     >
@@ -248,7 +248,7 @@ function Row({ item, lead }: { item: RowItem; lead: string | undefined }) {
         <button
           type="button"
           aria-label={item.label}
-          onClick={() => void playSound(item.src as string)}
+          onClick={() => void toggleSound(item.src as string)}
           style={grid}
           className="grid w-full cursor-pointer items-center gap-x-3.5 py-3 ps-4 pe-3 text-start transition-colors duration-150 hoverable:hover:bg-plate-hover"
         >
@@ -352,6 +352,7 @@ function CompareRow(props: {
         type="button"
         aria-label={t`Play ${word}`}
         onClick={() => {
+          if (playing) return void toggleSound(src, key);
           if (!clip) return void playSound(src, key);
           void playSound(src, key, (time) =>
             setLit(Math.min(1, Math.max(0, (time - clip.lead) / clip.seconds))),

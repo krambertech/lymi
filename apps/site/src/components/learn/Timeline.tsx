@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 import { Plus } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import { formText, timelinePlaces } from "../../lib/learn/forms";
-import { playSound, usePlaying } from "../../lib/learn/player";
+import { toggleSound, usePlaying } from "../../lib/learn/player";
 import { Lit } from "./Paradigm";
 import { PlayButton } from "./Sound";
 
@@ -70,7 +70,7 @@ export function Timeline({ label, points, empty }: TimelineProps) {
   const press = (i: number) => {
     setPicked(i);
     const first = points[i]?.examples[0];
-    if (first) void playSound(first.src);
+    if (first) void toggleSound(first.src);
   };
   const point = picked === null ? undefined : points[picked];
 

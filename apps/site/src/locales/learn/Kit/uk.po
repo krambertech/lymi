@@ -56,6 +56,10 @@ msgstr "{0, plural, =0 {Прослуховувань не лишилося} one 
 msgid "{0, plural, one {# of them has a slip in spelling.} other {# of them have a slip in spelling.}}"
 msgstr "{0, plural, one {У # з них є описка.} few {У # з них є описка.} many {У # з них є описка.} other {У # з них є описка.}}"
 
+#. placeholder {0}: session.questions.length
+msgid "{0, plural, one {# question} other {# questions}}"
+msgstr "{0, plural, one {# питання} few {# питання} many {# питань} other {# питання}}"
+
 #. placeholder {0}: state.mistakes
 msgid "{0, plural, one {# wrong try} other {# wrong tries}}"
 msgstr "{0, plural, one {# хибна спроба} few {# хибні спроби} many {# хибних спроб} other {# хибної спроби}}"
@@ -226,6 +230,9 @@ msgstr "Один день у Таллінні"
 
 msgid "A drawing on the tray: pressing a place, on a key or on the drawing, moves the cat there and plays the sentence."
 msgstr "Малюнок на підкладці: натискання на місце, на клавіші чи на малюнку, переносить туди кота й програє речення."
+
+msgid "A few questions"
+msgstr "Кілька питань"
 
 msgid "A fixed sentence, marked"
 msgstr "Виправлене речення з оцінкою"
@@ -443,6 +450,9 @@ msgstr "будинок"
 msgid "a kilo of cheese"
 msgstr "кілограм сиру"
 
+msgid "A kind of question the sections above didn’t ask, on this lesson’s rules. Once the lesson is done, its questions come back in Review on later days."
+msgstr "Тут питання такого типу, якого в розділах вище не було, на правила цього уроку. Коли закінчиш урок, його питання повертатимуться в «Повторенні» в наступні дні."
+
 msgid "A longer conversation"
 msgstr "Довша розмова"
 
@@ -605,6 +615,9 @@ msgstr "Спершу дай відповідь на всі питання."
 msgid "Answers"
 msgstr "Варіанти відповіді"
 
+msgid "Ask the question"
+msgstr "Постав питання"
+
 msgid "Asking for directions and travelling in Estonian"
 msgstr "Дорога й транспорт естонською"
 
@@ -682,6 +695,9 @@ msgstr "Склади речення"
 
 msgid "Can, may, must"
 msgstr "Можу, можна, треба"
+
+msgid "Change the sentence"
+msgstr "Зміни речення"
 
 msgid "Check"
 msgstr "Перевірити"
@@ -772,9 +788,6 @@ msgstr "Перетягни кожне слово в його пропуск аб
 
 msgid "Drag each word to its gap, or tap it. Some words are spare."
 msgstr "Перетягни кожне слово в його пропуск або торкнися його. Деякі слова зайві."
-
-msgid "Drill"
-msgstr "Тренування"
 
 msgid "Due today"
 msgstr "На сьогодні"
@@ -1475,6 +1488,9 @@ msgstr "Kodu — дім; kodus — удома."
 msgid "Language"
 msgstr "Мова"
 
+msgid "Last exercise"
+msgstr "Остання вправа"
+
 msgid "Last weekend, next week"
 msgstr "Минулі вихідні, наступний тиждень"
 
@@ -1714,8 +1730,8 @@ msgstr "Не буває з <0>{word}</0>"
 msgid "Nothing is due today. The next questions are due on {date}."
 msgstr "На сьогодні нічого немає. Наступні запитання: {date}."
 
-msgid "Nothing to review yet. Do the drill at the end of a lesson, and its questions come back here."
-msgstr "Поки нема чого повторювати. Пройди тренування в кінці уроку, і його запитання повернуться сюди."
+msgid "Nothing to review yet. Finish a lesson, and its questions come back here from the next day."
+msgstr "Повторювати поки нічого. Закінчи урок, і його питання з’являться тут наступного дня."
 
 msgid "Nouns"
 msgstr "Іменники"
@@ -1854,11 +1870,22 @@ msgstr "минулий, для ma"
 msgid "Pause"
 msgstr "Пауза"
 
+msgctxt "dialogue: pause the whole conversation"
+msgid "Pause"
+msgstr "Пауза"
+
+msgctxt "quiz: stop the two clips playing"
+msgid "Pause"
+msgstr "Пауза"
+
 msgid "Peeter is ta, he, so: on."
 msgstr "Пеетер — це ta, він, тож: on."
 
 msgid "Pick a word first."
 msgstr "Спершу вибери слово."
+
+msgid "Pick the answer"
+msgstr "Обери відповідь"
 
 msgid "Pick the form"
 msgstr "Вибери форму"
@@ -1960,8 +1987,8 @@ msgstr "Питання"
 msgid "Questions done: {settled} of {total}"
 msgstr "Запитань пройдено: {settled} з {total}"
 
-msgid "Questions from the drills you’ve done, mixed across lessons, each on the day it’s due."
-msgstr "Запитання з пройдених тренувань, упереміш з різних уроків, кожне у свій день."
+msgid "Questions from the lessons you’ve finished, mixed across lessons, each on the day it’s due."
+msgstr "Питання з пройдених уроків упереміш, кожне в той день, коли настає його черга."
 
 msgid "Read it again"
 msgstr "Перечитати"
@@ -1978,6 +2005,10 @@ msgstr "Рекомендований старт · Етап {targetNumber} ({0})
 
 msgid "Reported speech"
 msgstr "Непряма мова"
+
+msgctxt "dialogue: go on playing the whole conversation"
+msgid "Resume"
+msgstr "Продовжити"
 
 msgid "Review"
 msgstr "Повторення"
@@ -2254,15 +2285,6 @@ msgstr "Котра година"
 
 msgid "Telling the time in Estonian"
 msgstr "Котра година естонською"
-
-msgid "Ten more"
-msgstr "Ще десять"
-
-msgid "Ten questions"
-msgstr "Десять запитань"
-
-msgid "Ten questions on this lesson’s rules, mixed. One you miss comes back until you answer it right twice, and they all return on later days."
-msgstr "Десять запитань на правила цього уроку, упереміш. Запитання з помилкою повертається, доки не відповіси на нього правильно двічі, а всі вони ще прийдуть в інші дні."
 
 msgid "Tenses of sööma"
 msgstr "Часи sööma"

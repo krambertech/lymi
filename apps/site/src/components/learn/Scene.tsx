@@ -2,7 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Check, X } from "lucide-react";
 import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
-import { playSound, usePlaying } from "../../lib/learn/player";
+import { toggleSound, usePlaying } from "../../lib/learn/player";
 import { Feedback, type RoundProps, useAutoplay, useNudge } from "./Quiz";
 import { Listen, PlayButton } from "./Sound";
 
@@ -589,7 +589,7 @@ export function Scene({ scene, label, keysLabel, places }: SceneProps) {
   const press = useCallback(
     (place: ScenePlace) => {
       setPicked(place.id);
-      void playSound(place.src);
+      void toggleSound(place.src);
       void stage.current?.go(place.id);
     },
     [stage],

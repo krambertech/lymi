@@ -50,7 +50,8 @@ export function ReviewView() {
           </h1>
           <p className="max-w-[44ch] text-[clamp(1.125rem,2vw,1.3125rem)] text-pretty text-ink-secondary">
             <Trans>
-              Questions from the drills you’ve done, mixed across lessons, each on the day it’s due.
+              Questions from the lessons you’ve finished, mixed across lessons, each on the day it’s
+              due.
             </Trans>
           </p>
         </header>
@@ -150,8 +151,8 @@ function NothingDue({ day }: { day: number | null }) {
     return (
       <p className="text-lg text-ink-secondary">
         <Trans>
-          Nothing to review yet. Do the drill at the end of a lesson, and its questions come back
-          here.
+          Nothing to review yet. Finish a lesson, and its questions come back here from the next
+          day.
         </Trans>
       </p>
     );

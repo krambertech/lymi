@@ -17,6 +17,7 @@ import {
   recordAnswer,
   saveAnswer,
   saveRemoved,
+  scheduleNew,
   warmUpIds,
 } from "./review";
 
@@ -245,5 +246,16 @@ describe("a drill's set", () => {
       const repeats = order.filter((each, i) => each.rule === order[i - 1]?.rule).length;
       expect(repeats).toBe(Math.max(0, most - (mixed.length - most) - 1));
     }
+  });
+});
+
+describe("scheduleNew", () => {
+  it("puts unanswered questions in review for tomorrow and leaves answered ones as they are", () => {
+    const answered = recordAnswer(EMPTY_REVIEW, "osastav/a", true, 100);
+    const review = scheduleNew(answered, ["osastav/a", "osastav/b"], 100);
+    expect(review.items["osastav/a"]).toEqual(answered.items["osastav/a"]);
+    expect(review.items["osastav/b"]).toEqual({ step: 0, due: 101, last: 100 });
+    expect(dueIds(review, 100, new Set(["osastav"]))).toEqual([]);
+    expect(dueIds(review, 101, new Set(["osastav"]))).toContain("osastav/b");
   });
 });

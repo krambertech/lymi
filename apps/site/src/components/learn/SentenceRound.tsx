@@ -118,7 +118,7 @@ function Prompt({ item, heard }: { item: SentenceItem; heard: () => void }) {
           </Task>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <p lang="et" className={GIVEN}>
-              {item.words.join(" · ")}
+              {item.words.join(" · ")}
             </p>
             {item.cue && <Cue>{item.cue}</Cue>}
           </div>

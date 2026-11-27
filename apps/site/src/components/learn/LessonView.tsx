@@ -7,8 +7,8 @@ import { lessonBySlug, lessonPath, nextLesson, previousLesson } from "../../lib/
 import { finishSection as saveSection, startLesson } from "../../lib/learn/progress";
 import { localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
-import { Drill } from "./Drill";
-import { drillSlugs } from "./drill-banks";
+import { LastExercise } from "./Drill";
+import { type DrillKind, LAST_EXERCISE, scheduleLesson } from "./drill-banks";
 import { Endings } from "./endings";
 import { LearnLayout } from "./LearnLayout";
 import { type Glossary, LessonContext, SectionContext, useLesson } from "./lesson-context";
@@ -42,7 +42,24 @@ interface Props {
 /** A lesson page: its head, a read bar, its sections, what to remember, its words and the next lesson. */
 export function LessonView({ slug, sub, facts, glossary, sections: taught, recap, words }: Props) {
   const { t, i18n } = useLingui();
-  const sections = drillSlugs.has(slug) ? [...taught, drillSection(t`Drill`)] : taught;
+  const last = LAST_EXERCISE[slug];
+  const kindTitles: Record<DrillKind, string> = {
+    dictation: t`Write what you hear`,
+    rewrite: t`Change the sentence`,
+    form: t`Make the form`,
+    ask: t`Ask the question`,
+    build: t`Build the sentence`,
+    translate: t`Write it in Estonian`,
+    fix: t`Fix the sentence`,
+    gap: t`Fill the gap`,
+    choice: t`Pick the answer`,
+  };
+  const sections = last
+    ? [
+        ...taught,
+        lastSection(last, last.length === 1 ? kindTitles[last[0] as DrillKind] : t`Last exercise`),
+      ]
+    : taught;
   const lesson = lessonBySlug(slug);
   if (!lesson) throw new Error(`No lesson ${slug}`);
   const hasRecap = recap.length > 0 || words.length > 0;
@@ -55,8 +72,9 @@ export function LessonView({ slug, sub, facts, glossary, sections: taught, recap
   const sectionIds = useRef(all);
   const finishSection = useCallback(
     (section: string) => {
-      if (saveSection(slug, section, sectionIds.current).lessonFinished)
-        captureAnalytics("learn_lesson_finished", { lesson: slug });
+      if (!saveSection(slug, section, sectionIds.current).lessonFinished) return;
+      captureAnalytics("learn_lesson_finished", { lesson: slug });
+      scheduleLesson(slug).catch(() => {});
     },
     [slug],
   );
@@ -151,8 +169,8 @@ export function LessonView({ slug, sub, facts, glossary, sections: taught, recap
   );
 }
 
-const drillSection = (title: string): LessonSection => ({
-  id: "drill",
+const lastSection = (kinds: readonly DrillKind[], title: string): LessonSection => ({
+  id: "last-exercise",
   title,
   quiz: true,
   children: (
@@ -160,12 +178,12 @@ const drillSection = (title: string): LessonSection => ({
       <Prose>
         <p>
           <Trans>
-            Ten questions on this lesson’s rules, mixed. One you miss comes back until you answer it
-            right twice, and they all return on later days.
+            A kind of question the sections above didn’t ask, on this lesson’s rules. Once the
+            lesson is done, its questions come back in Review on later days.
           </Trans>
         </p>
       </Prose>
-      <Drill />
+      <LastExercise kinds={kinds} />
     </>
   ),
 });

@@ -1,8 +1,8 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import { Play, Turtle } from "lucide-react";
+import { Pause, Play, Turtle } from "lucide-react";
 import type { ReactNode } from "react";
-import { playSlowly, playSound, slowKey, usePlaying } from "../../lib/learn/player";
+import { slowKey, toggleSlowly, toggleSound, usePlaying } from "../../lib/learn/player";
 
 /** Three bars that move while a sound plays. */
 export function Playing({ className }: { className?: string | undefined }) {
@@ -32,7 +32,8 @@ export function PlayButton({ src, label, className }: PlayProps) {
     <button
       type="button"
       aria-label={typeof label === "string" ? label : undefined}
-      onClick={() => void playSound(src)}
+      aria-pressed={playing}
+      onClick={() => void toggleSound(src)}
       className={clsx(
         "relative grid size-9 shrink-0 cursor-pointer place-items-center rounded-full transition-[background-color,color,scale] duration-150 active:scale-[0.94]",
         playing
@@ -75,9 +76,10 @@ export function Listen({ src, onPlay, children }: ListenProps) {
   return (
     <button
       type="button"
+      aria-pressed={playing}
       onClick={() => {
         onPlay?.();
-        void playSound(src);
+        void toggleSound(src);
       }}
       className="edge-lift inline-flex h-14 cursor-pointer items-center gap-3 rounded-full bg-plate ps-2 pe-5 text-md font-medium text-ink transition-[background-color,scale] duration-150 active:scale-[0.97] hoverable:hover:bg-plate-hover"
     >
@@ -87,7 +89,11 @@ export function Listen({ src, onPlay, children }: ListenProps) {
           playing && "shadow-[0_0_0_4px_var(--form-faint)]",
         )}
       >
-        {playing ? <Playing /> : <Play aria-hidden="true" className="size-4 fill-current" />}
+        {playing ? (
+          <Pause aria-hidden="true" className="size-4 fill-current" />
+        ) : (
+          <Play aria-hidden="true" className="size-4 fill-current" />
+        )}
       </span>
       {children ?? t`Listen`}
     </button>
@@ -104,9 +110,10 @@ export function ListenSlowly({ src, onPlay }: ListenSlowlyProps) {
   return (
     <button
       type="button"
+      aria-pressed={playing}
       onClick={() => {
         onPlay?.();
-        void playSlowly(src);
+        void toggleSlowly(src);
       }}
       className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-full px-3.5 text-md font-medium text-(--form) transition-[background-color,scale] duration-150 active:scale-[0.97] hoverable:hover:bg-(--form-soft)"
     >

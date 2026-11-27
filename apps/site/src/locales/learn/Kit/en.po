@@ -56,6 +56,10 @@ msgstr "{0, plural, =0 {No plays left} one {# play left} other {# plays left}}"
 msgid "{0, plural, one {# of them has a slip in spelling.} other {# of them have a slip in spelling.}}"
 msgstr "{0, plural, one {# of them has a slip in spelling.} other {# of them have a slip in spelling.}}"
 
+#. placeholder {0}: session.questions.length
+msgid "{0, plural, one {# question} other {# questions}}"
+msgstr "{0, plural, one {# question} other {# questions}}"
+
 #. placeholder {0}: state.mistakes
 msgid "{0, plural, one {# wrong try} other {# wrong tries}}"
 msgstr "{0, plural, one {# wrong try} other {# wrong tries}}"
@@ -226,6 +230,9 @@ msgstr "A day in Tallinn"
 
 msgid "A drawing on the tray: pressing a place, on a key or on the drawing, moves the cat there and plays the sentence."
 msgstr "A drawing on the tray: pressing a place, on a key or on the drawing, moves the cat there and plays the sentence."
+
+msgid "A few questions"
+msgstr "A few questions"
 
 msgid "A fixed sentence, marked"
 msgstr "A fixed sentence, marked"
@@ -443,6 +450,9 @@ msgstr "a house"
 msgid "a kilo of cheese"
 msgstr "a kilo of cheese"
 
+msgid "A kind of question the sections above didn’t ask, on this lesson’s rules. Once the lesson is done, its questions come back in Review on later days."
+msgstr "A kind of question the sections above didn’t ask, on this lesson’s rules. Once the lesson is done, its questions come back in Review on later days."
+
 msgid "A longer conversation"
 msgstr "A longer conversation"
 
@@ -605,6 +615,9 @@ msgstr "Answer every question first."
 msgid "Answers"
 msgstr "Answers"
 
+msgid "Ask the question"
+msgstr "Ask the question"
+
 msgid "Asking for directions and travelling in Estonian"
 msgstr "Asking for directions and travelling in Estonian"
 
@@ -682,6 +695,9 @@ msgstr "Build the sentence"
 
 msgid "Can, may, must"
 msgstr "Can, may, must"
+
+msgid "Change the sentence"
+msgstr "Change the sentence"
 
 msgid "Check"
 msgstr "Check"
@@ -772,9 +788,6 @@ msgstr "Drag each word to its gap, or tap it."
 
 msgid "Drag each word to its gap, or tap it. Some words are spare."
 msgstr "Drag each word to its gap, or tap it. Some words are spare."
-
-msgid "Drill"
-msgstr "Drill"
 
 msgid "Due today"
 msgstr "Due today"
@@ -1475,6 +1488,9 @@ msgstr "Kodu is home; kodus, at home."
 msgid "Language"
 msgstr "Language"
 
+msgid "Last exercise"
+msgstr "Last exercise"
+
 msgid "Last weekend, next week"
 msgstr "Last weekend, next week"
 
@@ -1714,8 +1730,8 @@ msgstr "Not with <0>{word}</0>"
 msgid "Nothing is due today. The next questions are due on {date}."
 msgstr "Nothing is due today. The next questions are due on {date}."
 
-msgid "Nothing to review yet. Do the drill at the end of a lesson, and its questions come back here."
-msgstr "Nothing to review yet. Do the drill at the end of a lesson, and its questions come back here."
+msgid "Nothing to review yet. Finish a lesson, and its questions come back here from the next day."
+msgstr "Nothing to review yet. Finish a lesson, and its questions come back here from the next day."
 
 msgid "Nouns"
 msgstr "Nouns"
@@ -1854,11 +1870,22 @@ msgstr "past, for ma"
 msgid "Pause"
 msgstr "Pause"
 
+msgctxt "dialogue: pause the whole conversation"
+msgid "Pause"
+msgstr "Pause"
+
+msgctxt "quiz: stop the two clips playing"
+msgid "Pause"
+msgstr "Pause"
+
 msgid "Peeter is ta, he, so: on."
 msgstr "Peeter is ta, he, so: on."
 
 msgid "Pick a word first."
 msgstr "Pick a word first."
+
+msgid "Pick the answer"
+msgstr "Pick the answer"
 
 msgid "Pick the form"
 msgstr "Pick the form"
@@ -1960,8 +1987,8 @@ msgstr "Question"
 msgid "Questions done: {settled} of {total}"
 msgstr "Questions done: {settled} of {total}"
 
-msgid "Questions from the drills you’ve done, mixed across lessons, each on the day it’s due."
-msgstr "Questions from the drills you’ve done, mixed across lessons, each on the day it’s due."
+msgid "Questions from the lessons you’ve finished, mixed across lessons, each on the day it’s due."
+msgstr "Questions from the lessons you’ve finished, mixed across lessons, each on the day it’s due."
 
 msgid "Read it again"
 msgstr "Read it again"
@@ -1978,6 +2005,10 @@ msgstr "Recommended start · Stage {targetNumber} ({0})"
 
 msgid "Reported speech"
 msgstr "Reported speech"
+
+msgctxt "dialogue: go on playing the whole conversation"
+msgid "Resume"
+msgstr "Resume"
 
 msgid "Review"
 msgstr "Review"
@@ -2254,15 +2285,6 @@ msgstr "Telling the time"
 
 msgid "Telling the time in Estonian"
 msgstr "Telling the time in Estonian"
-
-msgid "Ten more"
-msgstr "Ten more"
-
-msgid "Ten questions"
-msgstr "Ten questions"
-
-msgid "Ten questions on this lesson’s rules, mixed. One you miss comes back until you answer it right twice, and they all return on later days."
-msgstr "Ten questions on this lesson’s rules, mixed. One you miss comes back until you answer it right twice, and they all return on later days."
 
 msgid "Tenses of sööma"
 msgstr "Tenses of sööma"

@@ -122,7 +122,7 @@ export function DeckTagsView({
                         </DropdownMenuItem>
                       )}
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={() => onArchive(tag)}>
+                      <DropdownMenuItem variant="danger" onClick={() => onArchive(tag)}>
                         <Archive />
                         <Trans>Archive</Trans>
                       </DropdownMenuItem>

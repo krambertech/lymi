@@ -3,6 +3,7 @@ import aiConsent from "./rules/ai-consent.mjs";
 import announceLiveRegion from "./rules/announce-live-region.mjs";
 import clearText from "./rules/clear-text.mjs";
 import clipOwner from "./rules/clip-owner.mjs";
+import dangerMenuItem from "./rules/danger-menu-item.mjs";
 import dismissOnDrag from "./rules/dismiss-on-drag.mjs";
 import edgeSwipe from "./rules/edge-swipe.mjs";
 import enterComposing from "./rules/enter-composing.mjs";
@@ -42,6 +43,7 @@ export default definePlugin({
     "failed-write-said": failedWriteSaid,
     "ai-consent": aiConsent,
     "clip-owner": clipOwner,
+    "danger-menu-item": dangerMenuItem,
     "field-error": fieldError,
     "fixed-host": fixedHost,
     "form-header": formHeader,

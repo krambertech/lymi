@@ -288,6 +288,12 @@
       }
     },
     {
+      "files": ["apps/web/src/client/**"],
+      "rules": {
+        "lymi/danger-menu-item": "error"
+      }
+    },
+    {
       "files": ["apps/mobile/src/app/**", "apps/mobile/src/ui/form-header.tsx"],
       "rules": {
         "lymi/form-header": "error"

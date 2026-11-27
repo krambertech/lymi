@@ -35,8 +35,12 @@ Diff touches a drawer, dialog, menu, popover,
   or form?                                            → add keyboard: open, move, submit, Escape, focus return
 Diff adds or changes an animation or transition?      → add reduced motion
 Diff adds or changes learner-facing text?             → add Ukrainian at 393 px
-Diff touches loading, empty, error, offline,
-  or pending code paths?                              → add each state the code can enter
+Diff adds an element, or touches loading, empty,
+  error, offline, or pending code paths?              → add each state it can enter, transient ones held
+                                                        with a stubbed request, at 393 px and 1280 px
+                                                        in both themes
+Diff renders a list, a count, or history?             → add 0, 1, 2, and 20+ items, a three-digit count,
+                                                        and one day of history, at 393 px and 1280 px
 ```
 
 The reasons: 393 px is the phone Lymi is designed on, so it is always the first cell. Dark is a separate warm palette, not an inversion, so a colour change can pass in light and fail in dark. Ukrainian runs longer than English and wraps first. The drawer and dialog swap at the desktop breakpoint, so an overlay change needs both widths.
@@ -55,7 +59,7 @@ For what counts as a finding in each area, read [`references/checks.md`](referen
 
 - **Critical:** blocks or corrupts the intended task, risks data loss, materially misleads the learner, creates a serious accessibility barrier on the affected path, or makes necessary content or controls unreachable.
 - **Major:** meaningfully regresses an important interaction, comprehension, responsive or theme behavior, state handling, maintainability, or measured performance.
-- **Minor:** a localized, observable Lymi-system or finish regression worth fixing in this change. Preferences and optional nits are not findings.
+- **Minor:** a localized, observable Lymi-system or finish defect worth fixing in this change. Preferences and optional nits are not findings.
 
 Use **Blocked** for a Critical finding or when a coverage cell on the release path could not be observed; **Changes needed** for any other introduced finding; and **Ship it** when no introduced finding remains and every coverage cell was observed.
 

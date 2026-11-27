@@ -5,6 +5,7 @@
 
 import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { availableParallelism, loadavg } from "node:os";
 import { sep } from "node:path";
 import { pathToFileURL } from "node:url";
 import { requiresWorkersTests, runsEverything, selectComponentInstances } from "./test-plan.mjs";
@@ -36,10 +37,14 @@ export function changedPaths(git = (args) => execFileSync("git", args, { encodin
   return { base, paths };
 }
 
-export function planSteps({ base, paths, routeTreeCurrent }) {
+export function isLoaded([oneMinute] = loadavg(), cores = availableParallelism()) {
+  return oneMinute > cores * 2;
+}
+
+export function planSteps({ base, paths, routeTreeCurrent, loaded = false }) {
   if (paths.length === 0) return [];
 
-  if (runsEverything(paths)) {
+  if (runsEverything(paths) && !loaded) {
     return [
       {
         label: "everything: the change reaches configuration the tests depend on",
@@ -55,7 +60,7 @@ export function planSteps({ base, paths, routeTreeCurrent }) {
     env: { LYMI_COMPONENT_INSTANCES: instances },
   });
 
-  return [
+  const checks = [
     { label: "formatting and lint", args: ["check"] },
     { label: "interface strings", args: ["i18n:check"] },
     { label: "migration safety", args: ["check:migrations"] },
@@ -64,6 +69,11 @@ export function planSteps({ base, paths, routeTreeCurrent }) {
       ? []
       : [{ label: "product build", args: ["--filter", "@lymi/web", "build"] }]),
     { label: "TypeScript", args: ["typecheck"] },
+  ];
+  if (loaded) return checks;
+
+  return [
+    ...checks,
     vitest("@lymi/core"),
     vitest("@lymi/client"),
     vitest("@lymi/design"),
@@ -93,11 +103,18 @@ function run(step) {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const { base, paths } = changedPaths();
-  const steps = planSteps({ base, paths, routeTreeCurrent: routeTreeIsCurrent() });
+  const loaded = isLoaded();
+  const steps = planSteps({ base, paths, routeTreeCurrent: routeTreeIsCurrent(), loaded });
   process.stdout.write(
     steps.length === 0
       ? "Nothing changed against origin/main; nothing to verify.\n"
       : `${paths.length} changed path(s) against origin/main.\n`,
   );
+  const skipped =
+    loaded && steps.length > 0
+      ? `\nSKIPPED every test: this machine's load is over twice its cores, so CI is the test gate. Say so in the PR's Verification section.\n`
+      : "";
+  process.stdout.write(skipped);
   for (const step of steps) run(step);
+  process.stdout.write(skipped);
 }

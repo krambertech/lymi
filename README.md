@@ -58,7 +58,7 @@ pnpm verify       # full gate: check, i18n:check, build, typecheck, test
 pnpm check        # lint, formatting, design, styling, regression, workflow, cache, agent-doc and phone-symbol checks
 pnpm check:regressions # bug patterns that reached pull requests before: dead shadows, undefined CSS properties, storage keys spelled twice, retired claims
 pnpm check:workflows # GitHub workflows: secrets and write permissions only where reviewed code runs, no event text in scripts
-pnpm check:design # the phone's values match packages/design; DESIGN.md keeps no tokens in its frontmatter; design docs name real components
+pnpm check:design # the phone's values match packages/design; DESIGN.md keeps no tokens in its frontmatter; design docs name real components and variants
 pnpm build        # production build
 pnpm fix          # oxfmt and Oxlint, writing fixes
 pnpm i18n:extract # pull new interface strings into the uk and ru catalogs

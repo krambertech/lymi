@@ -26,9 +26,15 @@ Report a breakpoint or token only when it produces an observed failure or breaks
 
 ## Visual system and voice
 
-A visual finding needs one of: a contradiction with a named rule in `DESIGN.md` or `docs/design/system`, hierarchy that hides the task or state, equivalent elements that behave differently, content that becomes unreadable, or a one-off treatment that forks an established pattern. A preference for another density, radius, phrase, or composition is not a finding, because the review judges against Lymi's committed system, not taste.
+A visual finding needs one of: a contradiction with a named rule in `DESIGN.md` or `docs/design/system`, hierarchy that hides the task or state, equivalent elements that behave differently, content that becomes unreadable, a one-off treatment that forks an established pattern, or one of these:
 
-Report wording only when it harms meaning, recovery, trust, or consistency with `CONTEXT.md` and nearby copy. Check polish only after the flow, interaction, and coverage cells pass.
+- **Out of line.** An edge, baseline, centre, or height lines up with nothing beside it, or differs from its sibling. Show a full-resolution crop with both coordinates.
+- **Moves.** Content shifts when the state changes, other than in a move [motion.md](../../../../docs/design/system/motion.md) describes. Show the same crop in both states.
+- **Removable.** List under Verification every divider, caption, badge, label, and repeated word the diff adds, with what breaks without it. One that breaks nothing is a finding, and the fix is to delete it.
+
+Any other preference for a density, radius, phrase, or composition is not a finding, because the review judges against Lymi's committed system, not taste.
+
+Report wording only when it harms meaning, recovery, trust, or consistency with `CONTEXT.md` and nearby copy.
 
 ## Motion
 
@@ -51,7 +57,7 @@ Read this section only when the diff touches `apps/mobile`. [phone.md](../../../
 - A screen sets no inset of its own for a sheet's or a page's text: a sheet's intro is `Sheet`'s `description` and a page's is `Screen`'s, so a `Text` with `px-1` or `-mt-1` at the top of either is a finding.
 - A sheet that saves uses `save` (close, centred title, amber ✓). A full-width button under a field, or a second commit such as the number pad's Done beside a Save, is a finding.
 - Commands from a button are `ActionMenu`; a sheet of command rows from a ⋯ is a finding. A choice that needs a second line, a long list, a search, or editing stays a sheet.
-- A sheet never swaps its content for a second level, and a part-height sheet never opens another sheet over itself; both make iOS jump or hide it.
+- A sheet never swaps its content for a second level, which makes iOS jump. A part-height sheet may open another sheet once it has risen to full height; opened before that, iOS hides the first one, which is a finding.
 - A change of what a control holds moves smoothly: two components swapped for one state (a button that becomes a capsule) need a shared element or an entering animation from a `@lymi/design` preset.
 - Order changes by a handle, never Move up and Move down rows.
 - A layout fix proved in the Simulator, not in code: a `formSheet` route's header beside its scroll view needs `collapsable={false}`, and a multi-line field needs `MULTILINE`.

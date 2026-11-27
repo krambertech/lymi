@@ -3,7 +3,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
-import { changedPaths, planSteps, routeTreeIsCurrent } from "./verify-changed.mjs";
+import { changedPaths, isLoaded, planSteps, routeTreeIsCurrent } from "./verify-changed.mjs";
 
 const base = "abc123";
 
@@ -53,6 +53,21 @@ test("configuration the tests depend on hands over to the full gate", () => {
     steps.map((step) => step.args),
     [["verify"]],
   );
+});
+
+test("a loaded machine runs the static checks and leaves every test to CI", () => {
+  for (const path of ["apps/web/src/server/cimd-fetch.ts", "apps/web/migrations/0031_x.sql"]) {
+    const steps = planSteps({ base, paths: [path], routeTreeCurrent: true, loaded: true });
+    assert.deepEqual(
+      steps.map((step) => step.args.join(" ")),
+      ["check", "i18n:check", "check:migrations", "typecheck"],
+    );
+  }
+});
+
+test("a machine is loaded past twice its cores", () => {
+  assert.equal(isLoaded([16, 0, 0], 8), false);
+  assert.equal(isLoaded([17, 0, 0], 8), true);
 });
 
 test("a missing or stale route tree builds the product before typechecking", () => {

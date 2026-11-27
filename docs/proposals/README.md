@@ -20,6 +20,7 @@ Update the status as the direction changes. An accepted proposal may add a short
 
 - Use frontmatter with `status`, `date`, and a short `decision`; use `decision: none` while exploring.
 - Lead with the learner or system outcome and say what is not decided.
+- When the direction changes a screen or has a cost, link a short private HTML page with the options side by side, the numbers and the pick marked; this file stays the source of truth.
 - Separate confirmed evidence, hypotheses, and the current leaning. Date external facts that may change.
 - Keep only alternatives, boundaries, and open questions that could change the decision.
 - After acceptance, add only enough delivery detail to define safe slices and completion. Put execution state in the linked issue or pull request.

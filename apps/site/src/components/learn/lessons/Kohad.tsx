@@ -15,7 +15,7 @@ import {
   KOHAD_TYPED,
   KOHAD_WRITTEN,
 } from "../../../lib/learn/clips";
-import { playSound, usePlaying } from "../../../lib/learn/player";
+import { toggleSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, type KeyItem, Keys, Panel } from "../Explore";
 import { type FormItem, FormRound, formRecall } from "../FormRound";
@@ -278,7 +278,7 @@ function Line({ id, reply }: { id: Id; reply?: boolean }) {
   return (
     <button
       type="button"
-      onClick={() => void playSound(clip)}
+      onClick={() => void toggleSound(clip)}
       className={clsx(
         "grid w-full cursor-pointer items-center gap-x-3.5 py-2.5 pe-3 text-start transition-colors duration-150 hoverable:hover:bg-plate-hover",
         reply ? "grid-cols-[auto_minmax(0,1fr)_auto] ps-5" : "grid-cols-[minmax(0,1fr)_auto] ps-4",
@@ -368,7 +368,7 @@ function PlaceButton(props: { src: string; word: React.ReactNode; means: string;
   return (
     <button
       type="button"
-      onClick={() => void playSound(props.src)}
+      onClick={() => void toggleSound(props.src)}
       className="grid h-full w-full cursor-pointer grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 py-3 ps-4 pe-3 text-start transition-colors duration-150 hoverable:hover:bg-plate-hover"
     >
       <span className="grid min-w-0">

@@ -18,7 +18,7 @@ import {
   VORMID_SAY,
   VORMID_TALK,
 } from "../../../lib/learn/clips";
-import { playSound, usePlaying } from "../../../lib/learn/player";
+import { playSound, toggleSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Keys, Panel } from "../Explore";
 import { type FixItem, FixRound, fixRecall } from "../FixRound";
@@ -210,7 +210,7 @@ function FormTile({
     <button
       type="button"
       data-playing={playing ? "" : undefined}
-      onClick={() => void playSound(clip)}
+      onClick={() => void toggleSound(clip)}
       className={clsx(
         "learn-key relative flex cursor-pointer items-baseline justify-between gap-3 rounded-tile bg-plate px-4 py-2.5 text-start hoverable:hover:bg-plate-hover sm:grid sm:content-start sm:justify-start sm:gap-1 sm:px-3.5 sm:pb-3",
         isNew && "outline-2 -outline-offset-2 outline-(--form)",
@@ -294,7 +294,7 @@ function FlipLine({ parts, mode }: { parts: readonly [string, string]; mode: str
     <button
       type="button"
       data-playing={playing ? "" : undefined}
-      onClick={() => void playSound(clip)}
+      onClick={() => void toggleSound(clip)}
       className="learn-key flex min-h-13 cursor-pointer items-center justify-between gap-3 rounded-tile bg-plate py-2 ps-4 pe-3 text-start hoverable:hover:bg-plate-hover"
     >
       <span
@@ -460,7 +460,7 @@ function PairWord({ said, children }: { said: string; children: ReactNode }) {
   return (
     <button
       type="button"
-      onClick={() => void playSound(clip)}
+      onClick={() => void toggleSound(clip)}
       className={clsx(
         "flex cursor-pointer items-center gap-2 rounded-xs px-2 py-1 text-start text-xl font-semibold tracking-tight transition-colors duration-150 hoverable:hover:bg-plate-hover max-sm:text-lg",
         playing && "bg-plate-hover",

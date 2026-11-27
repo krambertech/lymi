@@ -19,13 +19,7 @@ import {
   sayReply,
   startDialogue,
 } from "../../lib/learn/passage";
-import {
-  playInTurn,
-  stopSound,
-  toggleInTurn,
-  toggleSound,
-  usePlaying,
-} from "../../lib/learn/player";
+import { playInTurn, stopAll, toggleInTurn, toggleSound, usePlaying } from "../../lib/learn/player";
 import { Button } from "../Button";
 import { SectionContext, useLesson } from "./lesson-context";
 import { Feedback, QuizCard, ResultDots } from "./Quiz";
@@ -90,13 +84,18 @@ export function Dialogue({ id, title, part, them, turns, text = "shown" }: Dialo
   const wholeKey = `dialogue:${slug}:${id}`;
   const playingWhole = usePlaying(wholeKey);
   const [resumeAt, setResumeAt] = useState(0);
+  const wholeRun = useRef(0);
   const hearWhole = () => {
     const from = resumeAt;
     const run = toggleInTurn(
       turns.slice(from).map((turn) => ({ src: src(turn.clip), key: key(turn.clip) })),
       wholeKey,
     );
-    void run?.then(({ finished, at }) => setResumeAt(finished ? 0 : from + at));
+    if (!run) return;
+    const mine = ++wholeRun.current;
+    void run.then(({ finished, at }) => {
+      if (wholeRun.current === mine) setResumeAt(finished ? 0 : from + at);
+    });
   };
   const rightLine = (turn: Extract<DialogueTurn, { who: "you" }>) =>
     turn.replies.find((reply) => reply.right)?.line ?? "";
@@ -294,7 +293,8 @@ export function Dialogue({ id, title, part, them, turns, text = "shown" }: Dialo
                 </Button>
                 <Button
                   onClick={() => {
-                    stopSound();
+                    stopAll();
+                    wholeRun.current += 1;
                     setResumeAt(0);
                     restarted.current = true;
                     dispatch({ type: "restart" });

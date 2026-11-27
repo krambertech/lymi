@@ -15,7 +15,7 @@ import {
   STEM_WORDS,
   type StemKind,
 } from "../../../lib/learn/clips";
-import { playSound, usePlaying } from "../../../lib/learn/player";
+import { toggleSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Panel } from "../Explore";
 import { type FixItem, FixRound, fixRecall } from "../FixRound";
@@ -184,7 +184,7 @@ function NounButton({ noun, show }: { noun: Noun; show: Show }) {
   return (
     <button
       type="button"
-      onClick={() => void playSound(clip)}
+      onClick={() => void toggleSound(clip)}
       className="grid h-full w-full cursor-pointer grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 py-3 ps-4 pe-3 text-start transition-colors duration-150 hoverable:hover:bg-plate-hover"
     >
       <span className="grid min-w-0">
@@ -262,7 +262,7 @@ function PoodSteps() {
       />
       <button
         type="button"
-        onClick={() => void playSound(said)}
+        onClick={() => void toggleSound(said)}
         className="grid cursor-pointer grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 rounded-lg bg-plate py-2.5 ps-4 pe-3 text-start ring-1 ring-edge transition-colors duration-150 hoverable:hover:bg-plate-hover"
       >
         <span lang="et" className="text-xl font-medium tracking-tight max-sm:text-lg">

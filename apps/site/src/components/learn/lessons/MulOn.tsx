@@ -19,7 +19,7 @@ import {
   MUL_ON_TALK,
   type MulOnOwner,
 } from "../../../lib/learn/clips";
-import { playSound, usePlaying } from "../../../lib/learn/player";
+import { toggleSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, ListenRows, Panel } from "../Explore";
@@ -214,7 +214,7 @@ function FlipLine({ said, mode }: { said: string; mode: string }) {
     <button
       type="button"
       data-playing={playing ? "" : undefined}
-      onClick={() => void playSound(clip)}
+      onClick={() => void toggleSound(clip)}
       className="learn-key flex min-h-13 cursor-pointer items-center justify-between gap-3 rounded-tile bg-plate py-2 ps-4 pe-3 text-start hoverable:hover:bg-plate-hover"
     >
       <span key={mode} className="learn-swap grid min-w-0">

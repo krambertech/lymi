@@ -51,10 +51,10 @@ export function finishSection(
   let lessonFinished = false;
   progressStore.update((progress) => {
     const done = progress.sections[slug] ?? [];
-    if (done.includes(section)) return progress;
-    const sections = [...done, section];
+    const sections = done.includes(section) ? done : [...done, section];
     lessonFinished =
       progress.lessons[slug]?.state !== "done" && allSections.every((s) => sections.includes(s));
+    if (sections === done && !lessonFinished) return progress;
     return {
       lessons: lessonFinished
         ? { ...progress.lessons, [slug]: { state: "done" } }

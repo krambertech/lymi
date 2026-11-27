@@ -1,5 +1,5 @@
 import { afterEach, beforeAll, describe, expect, it } from "vitest";
-import { playInTurn, stopSound, toggleInTurn, toggleSound } from "./player";
+import { playInTurn, stopAll, stopSound, toggleInTurn, toggleSound } from "./player";
 
 class FakeAudio {
   static last: FakeAudio | null = null;
@@ -78,6 +78,16 @@ describe("a sequence", () => {
     stopSound();
     await expect(run).resolves.toEqual({ finished: false, at: 0 });
     await settle(400);
+    expect(audio().started.at(-1)).toBe("/one.mp3");
+  });
+
+  it("ends when stopped in the pause between two clips", async () => {
+    const run = playInTurn(lines, "whole");
+    await settle();
+    audio().onended?.();
+    await settle(50);
+    stopAll();
+    await expect(run).resolves.toEqual({ finished: false, at: 1 });
     expect(audio().started.at(-1)).toBe("/one.mp3");
   });
 

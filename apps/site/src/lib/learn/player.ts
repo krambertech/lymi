@@ -127,7 +127,7 @@ let sequenceKey: string | null = null;
 
 const isPlaying = (key: string) => playingKey === key || sequenceKey === key;
 
-function stopAll(): SoundEnd {
+export function stopAll(): SoundEnd {
   turn += 1;
   stopSound();
   setSequence(null);

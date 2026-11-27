@@ -16,7 +16,7 @@ import {
   pronounOrders,
   pronounWithOlema,
 } from "../../../lib/learn/clips";
-import { playSound, usePlaying } from "../../../lib/learn/player";
+import { playSound, toggleSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst } from "../../../lib/learn/quiz";
 import { Chips, Keys, ListenRows, Panel } from "../Explore";
 import { type FormItem, FormRound, formRecall } from "../FormRound";
@@ -208,7 +208,7 @@ function Form({ word, short }: { word: string; short?: boolean }) {
       type="button"
       aria-label={t`Play ${word}`}
       data-playing={playing ? "" : undefined}
-      onClick={() => void playSound(src)}
+      onClick={() => void toggleSound(src)}
       className={clsx(
         "learn-key grid h-11 cursor-pointer place-items-center rounded-tile bg-plate px-2 text-xl font-semibold tracking-tight hoverable:hover:bg-plate-hover",
         short && "text-(--form)",

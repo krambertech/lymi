@@ -20,7 +20,7 @@ import {
   KASKIV_TYPED,
   notSentence,
 } from "../../../lib/learn/clips";
-import { playSound, usePlaying } from "../../../lib/learn/player";
+import { toggleSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, ListenRows, Panel } from "../Explore";
@@ -138,7 +138,7 @@ function FlipLine({
     <button
       type="button"
       data-playing={playing ? "" : undefined}
-      onClick={() => void playSound(clip)}
+      onClick={() => void toggleSound(clip)}
       className="learn-key flex min-h-13 cursor-pointer items-center justify-between gap-3 rounded-tile bg-plate py-2 ps-4 pe-3 text-start hoverable:hover:bg-plate-hover"
     >
       <span
@@ -199,7 +199,7 @@ function PairWord({ src, children }: { src: string; children: ReactNode }) {
   return (
     <button
       type="button"
-      onClick={() => void playSound(src)}
+      onClick={() => void toggleSound(src)}
       className={clsx(
         "flex cursor-pointer items-center gap-2 rounded-xs px-2 py-1 text-start text-xl font-semibold tracking-tight transition-colors duration-150 hoverable:hover:bg-plate-hover max-sm:text-lg",
         playing && "bg-plate-hover",

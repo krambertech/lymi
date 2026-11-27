@@ -356,7 +356,8 @@ function CompareRow(props: {
           if (!clip) return void playSound(src, key);
           void playSound(src, key, (time) =>
             setLit(Math.min(1, Math.max(0, (time - clip.lead) / clip.seconds))),
-          ).then(() => {
+          ).then((end) => {
+            if (end !== "ended") return setLit(0);
             setLit(1);
             setTimeout(() => setLit(0), 900);
           });

@@ -22,7 +22,7 @@ import {
   ownedBook,
   phraseOf,
 } from "../../../lib/learn/clips";
-import { playSound, usePlaying } from "../../../lib/learn/player";
+import { playSound, toggleSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, Panel } from "../Explore";
@@ -296,7 +296,7 @@ function Line({ said, reply }: { said: string; reply?: boolean }) {
   return (
     <button
       type="button"
-      onClick={() => void playSound(clip)}
+      onClick={() => void toggleSound(clip)}
       className={clsx(
         "grid w-full cursor-pointer items-center gap-x-3.5 py-2.5 pe-3 text-start transition-colors duration-150 hoverable:hover:bg-plate-hover",
         reply ? "grid-cols-[auto_minmax(0,1fr)_auto] ps-5" : "grid-cols-[minmax(0,1fr)_auto] ps-4",
@@ -349,7 +349,7 @@ function FormCell({ form, word, lit }: { form: string; word: string; lit: "new" 
     <td className="p-0.5">
       <button
         type="button"
-        onClick={() => void playSound(clip)}
+        onClick={() => void toggleSound(clip)}
         className={clsx(
           "flex w-full min-w-0 cursor-pointer items-center rounded-xs px-2 py-2 text-start text-xl font-semibold tracking-tight transition-colors duration-150 hoverable:hover:bg-plate-hover max-sm:px-1.5 max-sm:text-lg",
           playing && "bg-plate-hover",

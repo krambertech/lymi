@@ -16,7 +16,7 @@ import {
   presentWithPronoun,
   pronounOrders,
 } from "../../../lib/learn/clips";
-import { playSound, usePlaying } from "../../../lib/learn/player";
+import { playSound, toggleSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Keys, ListenRows, Panel } from "../Explore";
 import { type FixItem, FixRound, fixRecall } from "../FixRound";
@@ -306,7 +306,7 @@ function FormKey({ person, verb }: { person: Person; verb: Verb }) {
       type="button"
       aria-label={t`Play ${text}`}
       data-playing={playing ? "" : undefined}
-      onClick={() => void playSound(src)}
+      onClick={() => void toggleSound(src)}
       className="learn-key relative grid cursor-pointer items-baseline gap-x-2 rounded-tile bg-plate px-3.5 py-2.5 text-start hoverable:hover:bg-plate-hover max-sm:px-3 max-sm:py-2 sm:grid-cols-[2.25rem_minmax(0,1fr)]"
     >
       <span lang="et" className="text-md text-ink-muted max-sm:text-sm">

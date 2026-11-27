@@ -7,7 +7,7 @@ import {
   type StreakDay,
   summariseStreak,
 } from "@lymi/core";
-import { and, eq, isNotNull, isNull, ne, sql } from "@lymi/core/db";
+import { and, eq, isNotNull, isNull, ne, notInArray, sql } from "@lymi/core/db";
 import type { ReviewDay } from "@lymi/core/schema";
 import { schema } from "../db";
 import { log } from "../log";
@@ -251,11 +251,17 @@ export async function applyGoalToToday(ctx: ServiceContext, goal: number) {
     .from(schema.reviewDays)
     .where(and(eq(schema.reviewDays.userId, ctx.userId), eq(schema.reviewDays.date, date)));
   if (!day || daySatisfied(day.outcome) || day.goal === goal) return;
-  // A grade that completed the day since it was read keeps the goal it was measured against.
+  // A grade that completed the day since it was read keeps the goal it was measured against;
+  // a visit that only confirmed nothing due does not, or the day would keep the old goal.
   const [moved] = await ctx.db
     .update(schema.reviewDays)
     .set({ goal, updatedAt: new Date() })
-    .where(and(eq(schema.reviewDays.id, day.id), eq(schema.reviewDays.outcome, day.outcome)))
+    .where(
+      and(
+        eq(schema.reviewDays.id, day.id),
+        notInArray(schema.reviewDays.outcome, ["goal_met", "exhausted"]),
+      ),
+    )
     .returning();
   if (moved) await settleDay(ctx, moved, "goal");
 }

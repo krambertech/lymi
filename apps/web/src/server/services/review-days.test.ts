@@ -504,6 +504,19 @@ describe("a grade that lands while the day is being settled", () => {
     expect((await streak(ctx)).today.goal).toBe(4);
   });
 
+  it("moves today's goal when a visit confirms nothing due during the goal change", async () => {
+    const { ctx } = await setup(10, []);
+    // The welcome's visit opened the row; its settle lands while the new goal is being applied.
+    await db
+      .insert(schema.reviewDays)
+      .values({ id: newId(), userId: ctx.userId, date: today(), goal: 10, timezone: "UTC" });
+    const changing = racedBy(ctx, schema.reviewDays, () => checkToday(ctx));
+
+    await updateSettings(changing, { dailyGoal: 4 });
+    expect(await stored(ctx)).toMatchObject({ goal: 4, outcome: "nothing_due" });
+    expect((await streak(ctx)).today.goal).toBe(4);
+  });
+
   it("settles an Undo on the day as it is when the Undo lands, not as it read it", async () => {
     const { ctx, card, other } = await nothingDue(2);
     const { reviewId } = await grade(ctx, card.id, 3, new Date());

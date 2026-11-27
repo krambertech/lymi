@@ -240,8 +240,8 @@ export function Prose({ children }: { children: ReactNode }) {
 /** A short note beside the lesson's main line, one that can be skipped: an exception, a comparison. */
 export function Aside({ children }: { children: ReactNode }) {
   return (
-    <p className="flex max-w-[62ch] gap-3 rounded-lg border border-edge px-4 py-3 text-md text-pretty text-ink-secondary">
-      <Info aria-hidden="true" className="mt-[0.2em] size-4.5 shrink-0 text-(--form)" />
+    <p className="flex max-w-[62ch] gap-3.5 rounded-xl bg-(--tray) px-5.5 py-4.5 text-[1.1875rem] leading-[1.62] text-pretty text-ink-secondary max-sm:-mx-1 max-sm:gap-3 max-sm:px-4 max-sm:text-lg [&_b]:font-medium [&_b]:text-ink">
+      <Info aria-hidden="true" className="mt-[0.3em] size-5 shrink-0 text-(--form)" />
       <span className="min-w-0">{children}</span>
     </p>
   );

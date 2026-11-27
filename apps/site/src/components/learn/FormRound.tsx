@@ -115,14 +115,14 @@ export function FormRound({ item, state, heard, answer, autoplay }: RoundProps<F
 
   return (
     <>
-      <div className="flex flex-wrap items-end gap-x-4 gap-y-2">
+      <div className="flex flex-wrap items-start gap-x-4 gap-y-2">
         <p className="grid gap-0.5">
           <b lang="et" className="text-4xl/none font-semibold tracking-tight">
             {item.base}
           </b>
           {item.gloss && <span className="text-sm text-ink-muted">{item.gloss}</span>}
         </p>
-        <p className="inline-flex items-center gap-2 pb-0.5">
+        <p className="inline-flex h-[1em] items-center gap-2 text-4xl/none">
           <ArrowRight aria-hidden="true" className="size-4 text-ink-muted" strokeWidth={2.25} />
           <span
             lang={item.cueLang}

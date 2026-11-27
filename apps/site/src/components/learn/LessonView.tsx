@@ -4,11 +4,16 @@ import { clsx } from "clsx";
 import { ArrowLeft, ArrowRight, Info } from "lucide-react";
 import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { lessonBySlug, lessonPath, nextLesson, previousLesson } from "../../lib/learn/catalogue";
-import { finishSection as saveSection, startLesson } from "../../lib/learn/progress";
+import { progressStore, finishSection as saveSection, startLesson } from "../../lib/learn/progress";
 import { localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
-import { Drill } from "./Drill";
-import { drillSlugs } from "./drill-banks";
+import { LastExercise } from "./Drill";
+import {
+  type DrillKind,
+  LAST_EXERCISE,
+  scheduleFinishedLesson,
+  scheduleLesson,
+} from "./drill-banks";
 import { Endings } from "./endings";
 import { LearnLayout } from "./LearnLayout";
 import { type Glossary, LessonContext, SectionContext, useLesson } from "./lesson-context";
@@ -42,7 +47,24 @@ interface Props {
 /** A lesson page: its head, a read bar, its sections, what to remember, its words and the next lesson. */
 export function LessonView({ slug, sub, facts, glossary, sections: taught, recap, words }: Props) {
   const { t, i18n } = useLingui();
-  const sections = drillSlugs.has(slug) ? [...taught, drillSection(t`Drill`)] : taught;
+  const last = LAST_EXERCISE[slug];
+  const kindTitles: Record<DrillKind, string> = {
+    dictation: t`Write what you hear`,
+    rewrite: t`Change the sentence`,
+    form: t`Make the form`,
+    ask: t`Ask the question`,
+    build: t`Build the sentence`,
+    translate: t`Write it in Estonian`,
+    fix: t`Fix the sentence`,
+    gap: t`Fill the gap`,
+    choice: t`Pick the answer`,
+  };
+  const sections = last
+    ? [
+        ...taught,
+        lastSection(last, last.length === 1 ? kindTitles[last[0] as DrillKind] : t`Last exercise`),
+      ]
+    : taught;
   const lesson = lessonBySlug(slug);
   if (!lesson) throw new Error(`No lesson ${slug}`);
   const hasRecap = recap.length > 0 || words.length > 0;
@@ -50,13 +72,17 @@ export function LessonView({ slug, sub, facts, glossary, sections: taught, recap
   const number = lesson.n;
   const level = lesson.stage.level;
 
-  useEffect(() => startLesson(slug), [slug]);
+  useEffect(() => {
+    scheduleFinishedLesson(slug, progressStore.current().lessons[slug]?.state === "done");
+    startLesson(slug);
+  }, [slug]);
   // The lesson's sections never change, so the callback reads them from a ref and stays stable.
   const sectionIds = useRef(all);
   const finishSection = useCallback(
     (section: string) => {
-      if (saveSection(slug, section, sectionIds.current).lessonFinished)
-        captureAnalytics("learn_lesson_finished", { lesson: slug });
+      if (!saveSection(slug, section, sectionIds.current).lessonFinished) return;
+      captureAnalytics("learn_lesson_finished", { lesson: slug });
+      scheduleLesson(slug).catch(() => {});
     },
     [slug],
   );
@@ -151,8 +177,8 @@ export function LessonView({ slug, sub, facts, glossary, sections: taught, recap
   );
 }
 
-const drillSection = (title: string): LessonSection => ({
-  id: "drill",
+const lastSection = (kinds: readonly DrillKind[], title: string): LessonSection => ({
+  id: "last-exercise",
   title,
   quiz: true,
   children: (
@@ -160,12 +186,12 @@ const drillSection = (title: string): LessonSection => ({
       <Prose>
         <p>
           <Trans>
-            Ten questions on this lesson’s rules, mixed. One you miss comes back until you answer it
-            right twice, and they all return on later days.
+            A kind of question the sections above didn’t ask, on this lesson’s rules. Once the
+            lesson is done, its questions come back in Review on later days.
           </Trans>
         </p>
       </Prose>
-      <Drill />
+      <LastExercise kinds={kinds} />
     </>
   ),
 });
@@ -222,8 +248,8 @@ export function Prose({ children }: { children: ReactNode }) {
 /** A short note beside the lesson's main line, one that can be skipped: an exception, a comparison. */
 export function Aside({ children }: { children: ReactNode }) {
   return (
-    <p className="flex max-w-[62ch] gap-3 rounded-lg border border-edge px-4 py-3 text-md text-pretty text-ink-secondary">
-      <Info aria-hidden="true" className="mt-[0.2em] size-4.5 shrink-0 text-(--form)" />
+    <p className="flex max-w-[62ch] gap-3.5 rounded-xl bg-(--tray) px-5.5 py-4.5 text-[1.1875rem] leading-[1.62] text-pretty text-ink-secondary max-sm:-mx-1 max-sm:gap-3 max-sm:px-4 max-sm:text-lg [&_b]:font-medium [&_b]:text-ink">
+      <Info aria-hidden="true" className="mt-[0.3em] size-5 shrink-0 text-(--form)" />
       <span className="min-w-0">{children}</span>
     </p>
   );

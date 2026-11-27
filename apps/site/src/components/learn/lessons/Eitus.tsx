@@ -24,7 +24,7 @@ import {
   verbSentence,
   withLongPronoun,
 } from "../../../lib/learn/clips";
-import { playSound, usePlaying } from "../../../lib/learn/player";
+import { toggleSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst } from "../../../lib/learn/quiz";
 import { Chips, Panel } from "../Explore";
 import { type FixItem, FixRound, fixRecall } from "../FixRound";
@@ -119,7 +119,7 @@ function FlipLine({ row, mode }: { row: FlipRow; mode: string }) {
       type="button"
       aria-label={t`Play ${said}`}
       data-playing={playing ? "" : undefined}
-      onClick={() => void playSound(row.src)}
+      onClick={() => void toggleSound(row.src)}
       className="learn-key flex min-h-13 cursor-pointer items-center justify-between gap-3 rounded-tile bg-plate py-2 ps-4 pe-3 text-start hoverable:hover:bg-plate-hover"
     >
       <span lang="et" className="text-xl font-medium tracking-tight max-sm:text-lg">
@@ -248,7 +248,7 @@ function PairWord({ src, label, children }: { src: string; label: string; childr
     <button
       type="button"
       aria-label={label}
-      onClick={() => void playSound(src)}
+      onClick={() => void toggleSound(src)}
       className={clsx(
         "flex cursor-pointer items-center gap-2 rounded-xs px-2 py-1 text-start text-xl font-semibold tracking-tight transition-colors duration-150 hoverable:hover:bg-plate-hover max-sm:text-lg",
         playing && "bg-plate-hover",
@@ -370,7 +370,7 @@ function AnswerKey({ say, en }: { say: string; en: ReactNode }) {
     <button
       type="button"
       data-playing={playing ? "" : undefined}
-      onClick={() => void playSound(clip)}
+      onClick={() => void toggleSound(clip)}
       className="learn-key grid cursor-pointer content-start gap-0.5 rounded-tile bg-plate px-3.5 pt-2.5 pb-2.5 text-start hoverable:hover:bg-plate-hover"
     >
       <b lang="et" className="text-xl/tight font-semibold tracking-tight">

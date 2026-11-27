@@ -228,7 +228,7 @@ function Row({ lesson, status }: { lesson: PlacedLesson; status: Status }) {
       <span
         aria-hidden="true"
         className={clsx(
-          "text-md font-semibold tabular-nums",
+          "min-w-[2.5ch] text-md font-semibold tabular-nums",
           open ? "text-(--form)" : "text-ink-muted",
         )}
       >
@@ -254,7 +254,7 @@ function Row({ lesson, status }: { lesson: PlacedLesson; status: Status }) {
     </>
   );
   const row =
-    "-mx-3 grid grid-cols-[40px_minmax(0,1fr)_auto] items-center gap-3.5 rounded-tile px-3 py-3.5 max-@3xl:grid-cols-[32px_minmax(0,1fr)_auto] max-@3xl:gap-2.5";
+    "-mx-3 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-tile px-3 py-3.5 max-@3xl:gap-2.5";
   return (
     <li className="border-t border-edge first:border-t-0">
       {lesson.slug ? (

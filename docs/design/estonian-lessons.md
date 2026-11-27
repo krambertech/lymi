@@ -42,12 +42,12 @@ The parts live in `apps/site/src/components/learn`. A new lesson reaches for the
 | Part | Use it for |
 | --- | --- |
 | `Word` | Any Estonian word in prose: `<Word w="kõrv" />` inside `<Trans>`. Resting on it for half a second opens its card with the meaning and a note; a tap plays it and keeps the card open. The cursor is the help cursor. It flows as text, so a full stop or comma after it never wraps onto a line of its own. |
-| `PlayButton`, `Listen` | One clip; the sound a quiz round asks about. While a sound plays, its triangle becomes three moving bars and a ring leaves the button. |
+| `PlayButton`, `Listen` | One clip; the sound a quiz round asks about. While a sound plays, its triangle becomes three moving bars and a ring leaves the button; `Listen` shows a pause sign instead. A press on any control while its own sound plays stops it, through `toggleSound`, `toggleSlowly` or `toggleInTurn` in `player.ts`. A sequence such as Hear both or the whole conversation turns its button into Pause while it plays, and the conversation then goes on from the line it stopped at. |
 | `ListenRows` | A list of things to hear on one plate, with an optional first column such as a numeral. The words at the end of a lesson are one. |
 | `Panel` | The tray anything to play with sits on. |
 | `Keys` | A row of sounds to press, with a line under it that explains the last key. Accent keys, for what is new, carry the hue and a dot. A key's word can light part of itself, such as an ending set under its digit. |
 | `Chips` | Pick one of a few. |
-| `Aside` | A short note that can be skipped, such as an exception or a comparison: a bordered callout with an info mark in the stage's ink. |
+| `Aside` | A short note that can be skipped, such as an exception or a comparison: body-size text on the stage's tray, as What to remember is, with an info mark in the stage's ink. A smaller size in an outlined box read as a different system. |
 | `Compare` | Two words drawn as bars on one time scale, one bar per 12 ms, so the longer word takes more room. |
 | `Paradigm` | A table of forms on the tray: a noun's cases, a verb's persons or tenses. Each form is written with `\|` before the part to light (`maja\|s`); a tap plays it, and the line under the table names it and says what its ending does. Optional: a first column of question words (`milles?`), an Estonian name under each row's label, and one row or column tinted with `highlight`. With more than one column the rows stack into a list on a narrow tray, each form keeping its column's name. |
 | `Scene` | An illustrated scene on the tray, drawn flat in the lesson's colours. Pressing a place, on its key or on the drawing, moves the cat there and plays its sentence: around a box with `scene="box"` (`peal`, `all`, `taga`, `ees`, `korval`, `sees`), walking into, sitting in and coming out of a house with `scene="house"` (`majja`, `majas`, `majast`), or jumping onto, sitting on and jumping off a table with `scene="table"` (`lauale`, `laual`, `laualt`). The lesson gives each place its word, meaning, sentence and gloss; the scene knows where the place is and how the cat gets there. |
@@ -72,7 +72,7 @@ The parts live in `apps/site/src/components/learn`. A new lesson reaches for the
 | `Writing` | Write a short text, such as a message, then compare it with a model. The learner types into a field with the Estonian letters and taps Show the model; their text appears above the model, which can play, and a checklist of what the text should do. They tick what theirs does and tap Done. Nothing is marked for them. A letter's closing lines, such as the thanks, the sign-off and the name, go in `signOff`, each on its own line under the model. |
 | `Sort` | Six to ten words into two or three labelled bins: tap a word, then its bin, or drag it; a keyboard picks with Enter, places with the bin's number and takes a word back with Backspace. One Check marks every word; a wrong one stays in its bin, marked, with an arrow to its right bin, and the bin's `rule` (or the word's `why`) is listed under the bins. Then the score with each word as a chip. |
 | `Match` | Four to six pairs across two columns, such as form and meaning or question word and ending: tap one side, then the other. A right pair locks with its number on both sides and plays its clip; a wrong one shakes and counts against the pair tapped first. The band's dots fill as pairs lock, green first time, red after a wrong try, and the score says how many wrong tries there were. |
-| `Drill` | The end of a lesson with a bank: ten of its questions, mixed across its rules. A miss comes back later in the run until it is right twice, then the result says how each rule went and links to the section that teaches it. “Ten more” goes on with questions not yet met. `LessonView` adds it, as a section the lesson needs to be done. |
+| `LastExercise` | The last section of a lesson whose bank asks a kind of question its own quizzes don't, such as writing what you hear: up to six questions of those kinds only, each asked once, then how each rule went with a link to the section that teaches it. `LAST_EXERCISE` in `drill-banks.ts` lists the kinds per lesson, and `lesson-checks.test.ts` fails when it disagrees with the lesson and its bank. A lesson whose bank only asks what its quizzes already did ends at its last quiz: a mix of what it has just asked would only ask it again. When a lesson is finished, ten of its bank's questions, spread over its rules, go into review for the next day. |
 | `WarmUp` | Up to five questions from earlier lessons, offered at the top of a lesson once the visitor has answered some on an earlier day. `LessonView` adds it. |
 | `QuizCard`, `ResultDots` | The card and round dots every marked part shares, for a new kind of practice. |
 
@@ -105,7 +105,7 @@ A grammar or contrast lesson takes the learner from noticing a rule to using it 
 4. **Tell it apart** from the rule it is confused with.
 5. **Make** it: type the form, then the whole sentence.
 6. **Use** it in a passage, dialogue or short text.
-7. **Drill.** More of the same, missed items returning until each is right twice.
+7. **Come back.** The lesson's bank returns in the warm-up and on the review page from the next day. A kind of question the lesson hasn't asked, if its bank has one, ends the lesson as its last exercise.
 
 At least six marked parts, two of them typed, one listening and one that tells two rules apart, with at least forty marked items between them. Explanations stay in sentences: a table of forms is something to look up, never the exercise. Errors to fix come from what learners write, as Harno's A2 and B1 handbooks and EKI's grammar profile record them.
 
@@ -174,7 +174,7 @@ A lesson's bank in `components/learn/lessons/<File>.drills.ts` is data with no J
 - A bank uses only its lesson's clips and forms already in `verified-forms.json`.
 - An id is renamed only when the question is a different one. Answers to an item that is gone are dropped the next time its bank loads.
 
-A run (`drillReducer`) asks ten questions. A missed question waits for three others, or fewer when fewer are left. Among the questions free to ask, the run never takes the same rule twice in a row while another rule is free. A missed question leaves the run once it is right twice; it is asked twice in a row only when it is the last one left. A set takes what is due first, then what the learner has not met, then what they met longest ago.
+A run (`drillReducer`) asks ten questions, or six in a last exercise, where a miss doesn't come back in the run. A missed question waits for three others, or fewer when fewer are left. Among the questions free to ask, the run never takes the same rule twice in a row while another rule is free. A missed question leaves the run once it is right twice; it is asked twice in a row only when it is the last one left. A set takes what is due first, then what the learner has not met, then what they met longest ago.
 
 A run on the server would differ from the browser's, so nothing of it renders there: a drill is a Start button until it is pressed.
 
@@ -183,6 +183,7 @@ A run on the server would differ from the browser's, so nothing of it renders th
 `apps/site/src/lib/learn/review.ts` keeps one entry per answered item in `localStorage`: how many right answers in a row it has, the day it is due and the day it was last answered. It is not Lymi's scheduler and never reaches Lymi's product, database or API.
 
 - The first answer in a run counts. A miss is due the next day, from any point.
+- Finishing a lesson puts ten of its questions not yet answered, spread over its rules, in review for the next day, as a miss would. A finished lesson with none of its questions in review, because that load failed or it was finished before this rule, is scheduled the next time it opens.
 - A right answer is due again after 1 day, then 3, 7 and 21. Right after the 21 days, the item rests: it is no longer due, and a later miss in a drill brings it back.
 - A right answer before an item's day leaves its day as it is, so drilling ten times in an evening is not ten steps.
 - Days are the visitor's own, from midnight.

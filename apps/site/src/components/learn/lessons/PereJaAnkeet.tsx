@@ -22,7 +22,7 @@ import {
   PERE_WRITING,
   PERE_WRITTEN,
 } from "../../../lib/learn/clips";
-import { playSound, usePlaying } from "../../../lib/learn/player";
+import { toggleSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { type KeyItem, Keys, ListenRows, Panel, type RowItem } from "../Explore";
@@ -219,7 +219,7 @@ function Line({ sentence, reply }: { sentence: string; reply?: boolean }) {
   return (
     <button
       type="button"
-      onClick={() => void playSound(clip)}
+      onClick={() => void toggleSound(clip)}
       className={clsx(
         "grid w-full cursor-pointer items-center gap-x-3.5 py-2.5 pe-3 text-start transition-colors duration-150 hoverable:hover:bg-plate-hover",
         reply ? "grid-cols-[auto_minmax(0,1fr)_auto] ps-5" : "grid-cols-[minmax(0,1fr)_auto] ps-4",

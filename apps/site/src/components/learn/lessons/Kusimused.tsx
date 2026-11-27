@@ -13,7 +13,7 @@ import {
   KUSIMUSED_TALK,
   KUSIMUSED_TRANSLATED,
 } from "../../../lib/learn/clips";
-import { playSound, usePlaying } from "../../../lib/learn/player";
+import { playSound, toggleSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst } from "../../../lib/learn/quiz";
 import { Chips, Panel } from "../Explore";
 import type { Glossary } from "../lesson-context";
@@ -250,7 +250,7 @@ function Line(props: {
   return (
     <button
       type="button"
-      onClick={() => void playSound(clip)}
+      onClick={() => void toggleSound(clip)}
       className={clsx(
         "grid w-full cursor-pointer items-center gap-x-3.5 py-2.5 pe-3 text-start transition-colors duration-150 hoverable:hover:bg-plate-hover",
         reply ? "grid-cols-[auto_minmax(0,1fr)_auto] ps-5" : "grid-cols-[minmax(0,1fr)_auto] ps-4",

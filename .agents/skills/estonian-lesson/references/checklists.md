@@ -117,7 +117,7 @@ Drive the lesson in Playwright at 1280 and 375 px, light and night (`colorScheme
 
 - Every `Word` card, by resting on it and by tapping it.
 - Every key, chip, switch, line and play button.
-- The drill from Start to its result and Ten more, with a miss and its return; the warm-up and the review page with the clock moved a day.
+- The last exercise, when `LAST_EXERCISE` lists the lesson, from Start to its result and Try again; the warm-up and the review page with the clock moved a day after the lesson is finished.
 - Every quiz: the Listen-first nudge, right and wrong picks, Hear both, the score, and Try again.
 - A conversation: play, pause, a tap on a speaker's line, the sentence before and after, five seconds back, both speeds, and a turn's button in the text. In exam mode: a play cut short by another sound, the last play, and Try again.
 - What to remember, the words card opened, and the links to the previous and next lessons.

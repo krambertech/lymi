@@ -13,7 +13,7 @@ import {
   WEEK,
 } from "../../../lib/learn/clips";
 import { type Day, dayChoices, weekDay } from "../../../lib/learn/days";
-import { playSound, usePlaying } from "../../../lib/learn/player";
+import { playSound, toggleSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffledRun } from "../../../lib/learn/quiz";
 import { Chips, Keys, Panel } from "../Explore";
 import type { Glossary } from "../lesson-context";
@@ -334,7 +334,7 @@ function RelativeDay(props: { word: string; day: Day | null; meaning: string; li
       type="button"
       aria-current={lit ? "date" : undefined}
       data-playing={playing ? "" : undefined}
-      onClick={() => void playSound(clip)}
+      onClick={() => void toggleSound(clip)}
       className={clsx(
         "learn-key grid cursor-pointer items-center gap-x-3 gap-y-1.5 rounded-tile bg-plate px-4 py-2.5 text-start hoverable:hover:bg-plate-hover max-sm:grid-cols-[7rem_minmax(0,1fr)] sm:grid-rows-[1fr_auto] sm:justify-items-center sm:px-1.5 sm:pt-3 sm:pb-3 sm:text-center",
         lit && "outline-2 outline-(--form)",

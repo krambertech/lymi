@@ -34,6 +34,20 @@ describe("lesson progress", () => {
     expect(progressStore.read(store).lessons.numbrid).toEqual({ state: "done" });
   });
 
+  it("finishes a lesson whose sections were all done before a section was taken out", () => {
+    const store = memoryStorage();
+    startLesson("osastav", store);
+    finishSection("osastav", "fix", ["fix", "drill", "recap"], store);
+    finishSection("osastav", "recap", ["fix", "drill", "recap"], store);
+    expect(finishSection("osastav", "recap", ["fix", "recap"], store)).toEqual({
+      lessonFinished: true,
+    });
+    expect(progressStore.read(store).lessons.osastav).toEqual({ state: "done" });
+    expect(finishSection("osastav", "recap", ["fix", "recap"], store)).toEqual({
+      lessonFinished: false,
+    });
+  });
+
   it("keeps only well-formed progress from storage", () => {
     const store = memoryStorage();
     store.setItem(

@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 import { ArrowRight } from "lucide-react";
 import { Fragment, type ReactNode, useState } from "react";
 import { type MorphPart, morph } from "../../lib/learn/forms";
-import { playSound, usePlaying } from "../../lib/learn/player";
+import { playSound, toggleSound, usePlaying } from "../../lib/learn/player";
 import { Chips } from "./Explore";
 import { PlayButton } from "./Sound";
 
@@ -137,7 +137,7 @@ function MorphChainView({ chain }: { chain: MorphChain }) {
                 onPress={() => {
                   setAt(i);
                   setTurn((n) => n + 1);
-                  void playSound(each.src);
+                  void toggleSound(each.src);
                 }}
               />
             </li>

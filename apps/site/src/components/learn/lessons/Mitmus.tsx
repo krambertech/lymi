@@ -22,7 +22,7 @@ import {
   type PluralSentence,
   pluralSentence,
 } from "../../../lib/learn/clips";
-import { playSound, usePlaying } from "../../../lib/learn/player";
+import { toggleSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Panel } from "../Explore";
 import { type FixItem, FixRound, fixRecall } from "../FixRound";
@@ -161,7 +161,7 @@ function FlipLine({
     <button
       type="button"
       data-playing={playing ? "" : undefined}
-      onClick={() => void playSound(clip)}
+      onClick={() => void toggleSound(clip)}
       className="learn-key flex min-h-13 cursor-pointer items-center justify-between gap-3 rounded-tile bg-plate py-2 ps-4 pe-3 text-start hoverable:hover:bg-plate-hover"
     >
       <span key={mode} className="learn-swap grid gap-0.5">

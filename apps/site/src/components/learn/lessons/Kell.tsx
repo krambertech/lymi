@@ -21,7 +21,7 @@ import {
   timeWords,
   withMinute,
 } from "../../../lib/learn/estonian-time";
-import { playSound, usePlaying } from "../../../lib/learn/player";
+import { toggleSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Keys, ListenRows, Panel } from "../Explore";
 import { type FormItem, FormRound, formRecall } from "../FormRound";
@@ -211,7 +211,7 @@ function TrackStop({ time, label }: { time: ClockTime; label: string }) {
       type="button"
       aria-label={label}
       data-playing={playing ? "" : undefined}
-      onClick={() => void playSound(src)}
+      onClick={() => void toggleSound(src)}
       className="learn-key grid h-full w-full cursor-pointer justify-items-center gap-1.5 rounded-tile bg-plate px-1.5 pt-3.5 pb-3 text-center hoverable:hover:bg-plate-hover max-sm:grid-cols-[auto_minmax(0,1fr)_auto] max-sm:items-center max-sm:justify-items-start max-sm:gap-3.5 max-sm:px-3.5 max-sm:py-2.5 max-sm:text-start"
     >
       <Clock

@@ -11,8 +11,11 @@ import { I18nProvider } from "@lingui/react";
 import { createElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { type DrillKind, LAST_EXERCISE } from "../../../components/learn/drill-banks";
 import { LearnPage, prepareLearnPage } from "../../../components/learn/learn-page";
+import { lessonName } from "../catalogue";
 import { CLIPS, clipSentences, clipText, isConversation, isPassage } from "../clips";
+import type { DrillBank } from "../drill";
 import { gapLine } from "../passage";
 import type { PassageQuestion } from "../questions";
 import { shuffledRun } from "../quiz";
@@ -590,6 +593,29 @@ describe("the kit page", () => {
   });
 });
 
+const BANKS = import.meta.glob<{ DRILLS: DrillBank }>(
+  "../../../components/learn/lessons/*.drills.ts",
+  { eager: true },
+);
+
+function itemKind(item: Record<string, unknown>): DrillKind {
+  const kind = item.kind as DrillKind;
+  if (kind === "fix" || (SENTENCE_KINDS as readonly unknown[]).includes(kind)) return kind;
+  if ("base" in item && "cue" in item) return "form";
+  if ("before" in item && "after" in item) return "gap";
+  return "choice";
+}
+
+function lessonKinds(slug: Slug): Set<DrillKind> {
+  const kinds = new Set<DrillKind>(["choice"]);
+  for (const { part, props } of rendered(slug, "en").recording.parts) {
+    if (part === "GapPassage") kinds.add("gap");
+    if (part !== "Quiz") continue;
+    for (const item of props.items as readonly Record<string, unknown>[]) kinds.add(itemKind(item));
+  }
+  return kinds;
+}
+
 describe.each(SLUGS)("lesson %s", (slug) => {
   // Simulating every pick quiz's runs is the slow part, and pickUnits caches it. Warming it here,
   // with its own timeout, keeps a loaded CI runner from timing out whichever test comes first.
@@ -597,6 +623,26 @@ describe.each(SLUGS)("lesson %s", (slug) => {
     for (const locale of LOCALES) pickUnits(slug, locale);
     reachableClips(slug);
   }, 120_000);
+
+  it("ends with an exercise only for questions its quizzes don't ask", () => {
+    const bank = BANKS[`../../../components/learn/lessons/${lessonName(slug)}.drills.ts`]?.DRILLS;
+    const asked = lessonKinds(slug);
+    const fresh = bank
+      ? [...new Set(bank.items.map((item) => item.kind))].filter((kind) => !asked.has(kind)).sort()
+      : [];
+    const listed = [...(LAST_EXERCISE[slug] ?? [])].sort();
+    const line = fresh.length
+      ? `"${slug}": [${fresh.map((kind) => `"${kind}"`).join(", ")}],`
+      : `no entry for "${slug}"`;
+    expectNone(
+      fresh.join() === listed.join()
+        ? []
+        : [
+            `${where(slug, "LessonView")}: its bank asks ${fresh.length ? fresh.join(", ") : "nothing"} that its own quizzes don't, but LAST_EXERCISE lists ${listed.length ? listed.join(", ") : "nothing"}. Fix: in apps/site/src/components/learn/drill-banks.ts, ${line}`,
+          ],
+      "A lesson ends with a last exercise only when its bank asks something new",
+    );
+  });
 
   it("gives each quiz a fixed id of lowercase letters, digits and hyphens, once", () => {
     const problems: string[] = [];

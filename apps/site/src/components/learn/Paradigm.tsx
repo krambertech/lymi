@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { type ReactNode, useState } from "react";
 import { formText, splitForm } from "../../lib/learn/forms";
-import { playSound, usePlaying } from "../../lib/learn/player";
+import { toggleSound, usePlaying } from "../../lib/learn/player";
 import { Playing } from "./Sound";
 
 /** One form in the table: written with `|` before the part to light, such as "maja|s". */
@@ -286,7 +286,7 @@ function FormKey(props: {
       data-playing={playing ? "" : undefined}
       onClick={() => {
         onPress();
-        void playSound(cell.src);
+        void toggleSound(cell.src);
       }}
       className={clsx(
         "learn-key relative grid w-full min-w-0 cursor-pointer justify-items-start rounded-tile px-3 py-2 text-start",
